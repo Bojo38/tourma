@@ -9,9 +9,19 @@ package tourma;
  *
  * @author Frederic Berger
  */
-public class Coach {
+public class Coach implements Comparable{
     public String _name;
     public String _team;
     public String _roster;
     public int _naf;
+
+    public int compareTo(Object obj)
+    {
+        if (obj instanceof Coach)
+        {
+            return _name.compareTo(((Coach)obj)._name);
+        }
+        else
+            return -1;
+    }
 }

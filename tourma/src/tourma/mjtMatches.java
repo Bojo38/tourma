@@ -9,34 +9,34 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.EventObject;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-class InternalActionListener implements ActionListener {
+class InternalActionListener implements ActionListener, FocusListener {
 
     int _col;
     Match _m;
     mjtMatches _model;
 
-    public InternalActionListener(int col, Match m,mjtMatches model) {
+    public InternalActionListener(int col, Match m, mjtMatches model) {
         _col = col;
         _m = m;
-        _model=model;
+        _model = model;
     }
 
-    public void actionPerformed(ActionEvent e) {
+    private void updateData(JTextField source) {
         int data = 0;
         Match m = _m;
         try {
-            data = Integer.parseInt(((JTextField) e.getSource()).getText());
+            data = Integer.parseInt(source.getText());
         } catch (NumberFormatException ex) {
         }
         switch (_col) {
@@ -60,6 +60,18 @@ class InternalActionListener implements ActionListener {
                 break;
         }
         _model.stopCellEditing();
+        _model.fireTableStructureChanged();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        updateData((JTextField) e.getSource());
+    }
+
+    public void focusGained(FocusEvent e) {
+    }
+
+    public void focusLost(FocusEvent e) {
+        updateData((JTextField) e.getSource());
     }
 }
 
@@ -319,7 +331,8 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
         jtf.setBackground(bkg);
         jtf.setForeground(frg);
         jtf.setHorizontalAlignment(JTextField.CENTER);
-        jtf.addActionListener(new InternalActionListener(column, _matchs.get(row),this));
+        jtf.addActionListener(new InternalActionListener(column, _matchs.get(row), this));
+        jtf.addFocusListener(new InternalActionListener(column, _matchs.get(row), this));
         return jtf;
     }
 
@@ -348,7 +361,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
     }
 
     public boolean shouldSelectCell(EventObject anEvent) {
-        return false;
+        return true;
     }
 
     public boolean stopCellEditing() {

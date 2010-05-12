@@ -10,6 +10,7 @@
  */
 package tourma;
 
+import java.awt.Component;
 import java.text.ParseException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -32,7 +33,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
 
-    private void update() {
+    public void update() {
         jtfOrgas.setText(_tournament._params._tournament_orga);
         jtfTournamentName.setText(_tournament._params._tournament_name);
         jtffDraw.setValue(new Integer(_tournament._params._draw_points));
@@ -56,8 +57,8 @@ public class MainFrame extends javax.swing.JFrame {
         mjtCoaches coachModel = new mjtCoaches(_tournament._coachs);
         jtbCoachs.setModel(coachModel);
 
-        for (int i = 0; i < jtpRounds.getComponentCount(); i++) {
-            Object o = jtpRounds.getComponentAt(i);
+        for (int i = 0; i < jtpMain.getComponentCount(); i++) {
+            Object o = jtpMain.getComponentAt(i);
             if (o instanceof JPNRound) {
                 ((JPNRound) o).update();
             }
@@ -125,9 +126,6 @@ public class MainFrame extends javax.swing.JFrame {
         jtbCoachs = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jbtFirstRound = new javax.swing.JButton();
-        jpnMatchs = new javax.swing.JPanel();
-        jtpRounds = new javax.swing.JTabbedPane();
-        jpnRanking = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TOURnoi MAnager");
@@ -450,43 +448,188 @@ public class MainFrame extends javax.swing.JFrame {
 
         jtpMain.addTab("Paramètres du tournoi", jpnParameters);
 
-        jpnMatchs.setLayout(new java.awt.BorderLayout());
-        jpnMatchs.add(jtpRounds, java.awt.BorderLayout.CENTER);
-
-        jtpMain.addTab("Matchs", jpnMatchs);
-
-        javax.swing.GroupLayout jpnRankingLayout = new javax.swing.GroupLayout(jpnRanking);
-        jpnRanking.setLayout(jpnRankingLayout);
-        jpnRankingLayout.setHorizontalGroup(
-            jpnRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 892, Short.MAX_VALUE)
-        );
-        jpnRankingLayout.setVerticalGroup(
-            jpnRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 449, Short.MAX_VALUE)
-        );
-
-        jtpMain.addTab("Classements", jpnRanking);
-
         getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
-        _tournament._params._tournament_name = jtfTournamentName.getText();
-    }//GEN-LAST:event_jtfTournamentNameKeyPressed
-
-    private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
-        _tournament._params._tournament_orga = jtfOrgas.getText();
-    }//GEN-LAST:event_jtfOrgasKeyPressed
-
-    private void jbtSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSaveActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            Tournament.getTournament().saveXML(jfc.getSelectedFile());
+    private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
+        if (JOptionPane.showConfirmDialog(this, "Etes vous sûr ? Cela va effacer toutes les rondes", "Première ronde", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (_tournament._coachs.size() % 2 > 0) {
+                JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
+            } else {
+                _tournament.generateFirstRound();
+                for (int i=jtpMain.getTabCount()-1; i>=0; i--)
+                {
+                    Component obj=jtpMain.getComponentAt(i);
+                    if (obj instanceof JPNRound)
+                    {
+                        jtpMain.remove(obj);
+                    }
+                }
+                for (int i = 0; i < _tournament._rounds.size(); i++) {
+                    JPNRound jpnr = new JPNRound(_tournament._rounds.get(i), _tournament);
+                    jtpMain.add("Ronde " + (i + 1), jpnr);
+                }
+                update();
+            }
         }
-    }//GEN-LAST:event_jbtSaveActionPerformed
+}//GEN-LAST:event_jbtFirstRoundActionPerformed
+
+    private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
+
+        if (jtbCoachs.getSelectedRow() >= 0) {
+            jdgCoach w = new jdgCoach(this, true, _tournament._coachs.get(jtbCoachs.getSelectedRow()));
+            w.setVisible(true);
+            update();
+        }
+}//GEN-LAST:event_jbtModifyActionPerformed
+
+    private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
+        _tournament._coachs.remove(jtbCoachs.getSelectedRow());
+        update();
+}//GEN-LAST:event_jbtRemoveActionPerformed
+
+    private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
+        jdgCoach w = new jdgCoach(this, true);
+        w.setVisible(true);
+        update();
+}//GEN-LAST:event_jbtAddActionPerformed
+
+    private void jcbRank5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5ActionPerformed
+        _tournament._params._ranking5 = jcbRank5.getSelectedIndex();
+        update();
+}//GEN-LAST:event_jcbRank5ActionPerformed
+
+    private void jcbRank4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4ActionPerformed
+        _tournament._params._ranking4 = jcbRank4.getSelectedIndex();
+        update();
+}//GEN-LAST:event_jcbRank4ActionPerformed
+
+    private void jcbRank3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3ActionPerformed
+        _tournament._params._ranking3 = jcbRank3.getSelectedIndex();
+         update();
+}//GEN-LAST:event_jcbRank3ActionPerformed
+
+    private void jcbRank2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2ActionPerformed
+        _tournament._params._ranking2 = jcbRank2.getSelectedIndex();
+         update();
+}//GEN-LAST:event_jcbRank2ActionPerformed
+
+    private void jcbRank1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1ActionPerformed
+        _tournament._params._ranking1 = jcbRank1.getSelectedIndex();
+         update();
+}//GEN-LAST:event_jcbRank1ActionPerformed
+
+    private void jtffFoulNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffFoulNegFocusLost
+        try {
+            jtffFoulNeg.commitEdit();
+            int points = ((Long) jtffFoulNeg.getValue()).intValue();
+            _tournament._params._bonus_neg_foul_points = points;
+        } catch (ParseException e) {
+            jtffFoulNeg.setValue(jtffFoulNeg.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffFoulNegFocusLost
+
+    private void jtffSorNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffSorNegFocusLost
+        try {
+            jtffSorNeg.commitEdit();
+            int points = ((Long) jtffSorNeg.getValue()).intValue();
+            _tournament._params._bonus_neg_sor_points = points;
+        } catch (ParseException e) {
+            jtffSorNeg.setValue(jtffSorNeg.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffSorNegFocusLost
+
+    private void jtffTdNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTdNegFocusLost
+        try {
+            jtffTdNeg.commitEdit();
+            int points = ((Long) jtffTdNeg.getValue()).intValue();
+            _tournament._params._bonus_neg_td_points = points;
+        } catch (ParseException e) {
+            jtffTdNeg.setValue(jtffTdNeg.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffTdNegFocusLost
+
+    private void jtffFoulPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffFoulPosFocusLost
+        try {
+            jtffFoulPos.commitEdit();
+            int points = ((Long) jtffFoulPos.getValue()).intValue();
+            _tournament._params._bonus_foul_points = points;
+        } catch (ParseException e) {
+            jtffFoulPos.setValue(jtffFoulPos.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffFoulPosFocusLost
+
+    private void jtffSorPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffSorPosFocusLost
+        try {
+            jtffSorPos.commitEdit();
+            int points = ((Long) jtffSorPos.getValue()).intValue();
+            _tournament._params._bonus_sor_points = points;
+        } catch (ParseException e) {
+            jtffSorPos.setValue(jtffSorPos.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffSorPosFocusLost
+
+    private void jtffTdPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTdPosFocusLost
+        try {
+            jtffTdPos.commitEdit();
+            int points = ((Long) jtffTdPos.getValue()).intValue();
+            _tournament._params._bonus_td_points = points;
+        } catch (ParseException e) {
+            jtffTdPos.setValue(jtffTdPos.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffTdPosFocusLost
+
+    private void jtffLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostFocusLost
+        try {
+            jtffLost.commitEdit();
+            int points = ((Long) jtffLost.getValue()).intValue();
+            _tournament._params._lost_points = points;
+        } catch (ParseException e) {
+            jtffLost.setValue(jtffLost.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffLostFocusLost
+
+    private void jtffLittleLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostFocusLost
+        try {
+            jtffLittleLost.commitEdit();
+            int points = ((Long) jtffLittleLost.getValue()).intValue();
+            _tournament._params._little_lost_points = points;
+        } catch (ParseException e) {
+            jtffLittleLost.setValue(jtffLittleLost.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffLittleLostFocusLost
+
+    private void jtffDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawFocusLost
+        try {
+            jtffDraw.commitEdit();
+            int points = ((Long) jtffDraw.getValue()).intValue();
+            _tournament._params._draw_points = points;
+        } catch (ParseException e) {
+            jtffDraw.setValue(jtffDraw.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffDrawFocusLost
+
+    private void jtffVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryFocusLost
+        try {
+            jtffVictory.commitEdit();
+            int points = ((Long) jtffVictory.getValue()).intValue();
+            _tournament._params._victory_points = points;
+        } catch (ParseException e) {
+            jtffVictory.setValue(jtffVictory.getValue());
+        }
+         update();
+}//GEN-LAST:event_jtffVictoryFocusLost
 
     private void jtffLargeVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryFocusLost
 
@@ -497,177 +640,44 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffLargeVictory.setValue(jtffLargeVictory.getValue());
         }
-    }//GEN-LAST:event_jtffLargeVictoryFocusLost
-
-    private void jcbRank1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1ActionPerformed
-        _tournament._params._ranking1 = jcbRank1.getSelectedIndex();
-    }//GEN-LAST:event_jcbRank1ActionPerformed
-
-    private void jcbRank2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2ActionPerformed
-        _tournament._params._ranking2 = jcbRank2.getSelectedIndex();
-    }//GEN-LAST:event_jcbRank2ActionPerformed
-
-    private void jcbRank3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3ActionPerformed
-        _tournament._params._ranking4 = jcbRank4.getSelectedIndex();
-    }//GEN-LAST:event_jcbRank3ActionPerformed
-
-    private void jcbRank4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbRank4ActionPerformed
-
-    private void jcbRank5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5ActionPerformed
-        _tournament._params._ranking5 = jcbRank5.getSelectedIndex();
-    }//GEN-LAST:event_jcbRank5ActionPerformed
-
-    private void jtffVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryFocusLost
-        try {
-            jtffVictory.commitEdit();
-            int points = ((Long) jtffVictory.getValue()).intValue();
-            _tournament._params._victory_points = points;
-        } catch (ParseException e) {
-            jtffVictory.setValue(jtffVictory.getValue());
-        }
-    }//GEN-LAST:event_jtffVictoryFocusLost
-
-    private void jtffDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawFocusLost
-        try {
-            jtffDraw.commitEdit();
-            int points = ((Long) jtffDraw.getValue()).intValue();
-            _tournament._params._draw_points = points;
-        } catch (ParseException e) {
-            jtffDraw.setValue(jtffDraw.getValue());
-        }
-    }//GEN-LAST:event_jtffDrawFocusLost
-
-    private void jtffLittleLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostFocusLost
-        try {
-            jtffLittleLost.commitEdit();
-            int points = ((Long) jtffLittleLost.getValue()).intValue();
-            _tournament._params._little_lost_points = points;
-        } catch (ParseException e) {
-            jtffLittleLost.setValue(jtffLittleLost.getValue());
-        }
-    }//GEN-LAST:event_jtffLittleLostFocusLost
-
-    private void jtffLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostFocusLost
-        try {
-            jtffLost.commitEdit();
-            int points = ((Long) jtffLost.getValue()).intValue();
-            _tournament._params._lost_points = points;
-        } catch (ParseException e) {
-            jtffLost.setValue(jtffLost.getValue());
-        }
-    }//GEN-LAST:event_jtffLostFocusLost
-
-    private void jtffTdPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTdPosFocusLost
-        try {
-            jtffTdPos.commitEdit();
-            int points = ((Long) jtffTdPos.getValue()).intValue();
-            _tournament._params._bonus_td_points = points;
-        } catch (ParseException e) {
-            jtffTdPos.setValue(jtffTdPos.getValue());
-        }
-    }//GEN-LAST:event_jtffTdPosFocusLost
-
-    private void jtffSorPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffSorPosFocusLost
-        try {
-            jtffSorPos.commitEdit();
-            int points = ((Long) jtffSorPos.getValue()).intValue();
-            _tournament._params._bonus_sor_points = points;
-        } catch (ParseException e) {
-            jtffSorPos.setValue(jtffSorPos.getValue());
-        }
-    }//GEN-LAST:event_jtffSorPosFocusLost
-
-    private void jtffFoulPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffFoulPosFocusLost
-        try {
-            jtffFoulPos.commitEdit();
-            int points = ((Long) jtffFoulPos.getValue()).intValue();
-            _tournament._params._bonus_foul_points = points;
-        } catch (ParseException e) {
-            jtffFoulPos.setValue(jtffFoulPos.getValue());
-        }
-    }//GEN-LAST:event_jtffFoulPosFocusLost
-
-    private void jtffTdNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTdNegFocusLost
-        try {
-            jtffTdNeg.commitEdit();
-            int points = ((Long) jtffTdNeg.getValue()).intValue();
-            _tournament._params._bonus_neg_td_points = points;
-        } catch (ParseException e) {
-            jtffTdNeg.setValue(jtffTdNeg.getValue());
-        }
-    }//GEN-LAST:event_jtffTdNegFocusLost
-
-    private void jtffSorNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffSorNegFocusLost
-        try {
-            jtffSorNeg.commitEdit();
-            int points = ((Long) jtffSorNeg.getValue()).intValue();
-            _tournament._params._bonus_neg_sor_points = points;
-        } catch (ParseException e) {
-            jtffSorNeg.setValue(jtffSorNeg.getValue());
-        }
-    }//GEN-LAST:event_jtffSorNegFocusLost
-
-    private void jtffFoulNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffFoulNegFocusLost
-        try {
-            jtffFoulNeg.commitEdit();
-            int points = ((Long) jtffFoulNeg.getValue()).intValue();
-            _tournament._params._bonus_neg_foul_points = points;
-        } catch (ParseException e) {
-            jtffFoulNeg.setValue(jtffFoulNeg.getValue());
-        }
-    }//GEN-LAST:event_jtffFoulNegFocusLost
-
-    private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
-        jdgCoach w = new jdgCoach(this, true);
-        w.setVisible(true);
-        update();
-    }//GEN-LAST:event_jbtAddActionPerformed
-
-    private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        _tournament._coachs.remove(jtbCoachs.getSelectedRow());
-        update();
-    }//GEN-LAST:event_jbtRemoveActionPerformed
+         update();
+}//GEN-LAST:event_jtffLargeVictoryFocusLost
 
     private void jbtLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLoadActionPerformed
         JFileChooser jfc = new JFileChooser();
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
-            jtpRounds.removeAll();
+            for (int i=jtpMain.getTabCount()-1; i>=0; i--)
+                {
+                    Component obj=jtpMain.getComponentAt(i);
+                    if (obj instanceof JPNRound)
+                    {
+                        jtpMain.remove(obj);
+                    }
+                }
             for (int i = 0; i < _tournament._rounds.size(); i++) {
                 JPNRound jpnr = new JPNRound(_tournament._rounds.get(i), _tournament);
-                jtpRounds.add("Ronde " + (i + 1), jpnr);
+                jtpMain.add("Ronde " + (i + 1), jpnr);
             }
             update();
 
         }
-    }//GEN-LAST:event_jbtLoadActionPerformed
+}//GEN-LAST:event_jbtLoadActionPerformed
 
-    private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
-
-        if (jtbCoachs.getSelectedRow() >= 0) {
-            jdgCoach w = new jdgCoach(this, true, _tournament._coachs.get(jtbCoachs.getSelectedRow()));
-            w.setVisible(true);
-            update();
+    private void jbtSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSaveActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            Tournament.getTournament().saveXML(jfc.getSelectedFile());
         }
-    }//GEN-LAST:event_jbtModifyActionPerformed
+}//GEN-LAST:event_jbtSaveActionPerformed
 
-    private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
-        if (JOptionPane.showConfirmDialog(this, "Etes vous sûr ? Cela va effacer toutes les rondes", "Première ronde", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (_tournament._coachs.size() % 2 > 0) {
-                JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
-            } else {
-                _tournament.generateFirstRound();
-                jtpRounds.removeAll();
-                for (int i = 0; i < _tournament._rounds.size(); i++) {
-                    JPNRound jpnr = new JPNRound(_tournament._rounds.get(i), _tournament);
-                    jtpRounds.add("Ronde " + (i + 1), jpnr);
-                }
-                update();
-            }
-        }
-    }//GEN-LAST:event_jbtFirstRoundActionPerformed
+    private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
+        _tournament._params._tournament_orga = jtfOrgas.getText();
+}//GEN-LAST:event_jtfOrgasKeyPressed
+
+    private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
+        _tournament._params._tournament_name = jtfTournamentName.getText();
+}//GEN-LAST:event_jtfTournamentNameKeyPressed
 
     /**
      * @param args the command line arguments
@@ -725,9 +735,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox jcbRank3;
     private javax.swing.JComboBox jcbRank4;
     private javax.swing.JComboBox jcbRank5;
-    private javax.swing.JPanel jpnMatchs;
     private javax.swing.JPanel jpnParameters;
-    private javax.swing.JPanel jpnRanking;
     private javax.swing.JTable jtbCoachs;
     private javax.swing.JTextField jtfOrgas;
     private javax.swing.JTextField jtfTournamentName;
@@ -742,7 +750,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jtffTdNeg;
     private javax.swing.JFormattedTextField jtffTdPos;
     private javax.swing.JFormattedTextField jtffVictory;
-    private javax.swing.JTabbedPane jtpMain;
-    private javax.swing.JTabbedPane jtpRounds;
+    public javax.swing.JTabbedPane jtpMain;
     // End of variables declaration//GEN-END:variables
 }
