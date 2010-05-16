@@ -28,8 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
         _tournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
-
-
+        update();
 
     }
 
@@ -126,6 +125,17 @@ public class MainFrame extends javax.swing.JFrame {
         jtbCoachs = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jbtFirstRound = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jmnFile = new javax.swing.JMenu();
+        jmiNouveau = new javax.swing.JMenuItem();
+        jmiCharger = new javax.swing.JMenuItem();
+        jmiSave = new javax.swing.JMenuItem();
+        jmiSaveAs = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JSeparator();
+        jmiExport = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JSeparator();
+        jmiExit = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TOURnoi MAnager");
@@ -450,6 +460,35 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
 
+        jmnFile.setText("Fichier");
+
+        jmiNouveau.setText("Nouveau tournoi");
+        jmnFile.add(jmiNouveau);
+
+        jmiCharger.setText("Charger un tounoi");
+        jmnFile.add(jmiCharger);
+
+        jmiSave.setText("Enregistrer le tournoi");
+        jmnFile.add(jmiSave);
+
+        jmiSaveAs.setText("Enregistrer le tournoi sous ");
+        jmnFile.add(jmiSaveAs);
+        jmnFile.add(jSeparator1);
+
+        jmiExport.setText("Exporter les résultats");
+        jmnFile.add(jmiExport);
+        jmnFile.add(jSeparator2);
+
+        jmiExit.setText("Quitter");
+        jmnFile.add(jmiExit);
+
+        jMenuBar1.add(jmnFile);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -717,6 +756,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -724,6 +765,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtFirstRound;
     private javax.swing.JButton jbtLoad;
@@ -735,6 +778,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox jcbRank3;
     private javax.swing.JComboBox jcbRank4;
     private javax.swing.JComboBox jcbRank5;
+    private javax.swing.JMenuItem jmiCharger;
+    private javax.swing.JMenuItem jmiExit;
+    private javax.swing.JMenuItem jmiExport;
+    private javax.swing.JMenuItem jmiNouveau;
+    private javax.swing.JMenuItem jmiSave;
+    private javax.swing.JMenuItem jmiSaveAs;
+    private javax.swing.JMenu jmnFile;
     private javax.swing.JPanel jpnParameters;
     private javax.swing.JTable jtbCoachs;
     private javax.swing.JTextField jtfOrgas;
