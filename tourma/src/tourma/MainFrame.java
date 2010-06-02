@@ -493,6 +493,11 @@ public class MainFrame extends javax.swing.JFrame {
         jmnFile.add(jSeparator2);
 
         jmiExit.setText("Quitter");
+        jmiExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExitActionPerformed(evt);
+            }
+        });
         jmnFile.add(jmiExit);
 
         jMenuBar1.add(jmnFile);
@@ -750,10 +755,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jmiExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportActionPerformed
         JFileChooser jfc = new JFileChooser();
-        if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().exportResults(jfc.getSelectedFile());
         }
     }//GEN-LAST:event_jmiExportActionPerformed
+
+    private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jmiExitActionPerformed
 
     /**
      * @param args the command line arguments

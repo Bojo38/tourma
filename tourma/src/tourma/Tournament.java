@@ -85,7 +85,7 @@ public class Tournament {
             coach.setAttribute("Team", _coachs.get(i)._team);
             coach.setAttribute("Roster", _coachs.get(i)._roster);
             coach.setAttribute("NAF", Integer.toString(_coachs.get(i)._naf));
-            coach.setAttribute("Ranking", Integer.toString(_coachs.get(i)._rank));
+            coach.setAttribute("Rank", Integer.toString(_coachs.get(i)._rank));
             document.addContent(coach);
         }
 
