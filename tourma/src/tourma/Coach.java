@@ -14,6 +14,7 @@ public class Coach implements Comparable{
     public String _team;
     public String _roster;
     public int _naf;
+    public int _rank;
 
     public int compareTo(Object obj)
     {

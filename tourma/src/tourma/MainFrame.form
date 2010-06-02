@@ -13,21 +13,33 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nouveau tournoi"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiNouveauActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiCharger">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Charger un tounoi"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiChargerActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Enregistrer le tournoi"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiSaveActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiSaveAs">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Enregistrer le tournoi sous "/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiSaveAsActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator1">
             </MenuItem>
@@ -35,6 +47,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exporter les r&#xe9;sultats"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiExportActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator2">
             </MenuItem>
@@ -122,7 +137,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                     <Property name="columns" type="int" value="2"/>
-                    <Property name="rows" type="int" value="3"/>
+                    <Property name="rows" type="int" value="2"/>
                   </Layout>
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -151,22 +166,6 @@
                       </Properties>
                       <Events>
                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfOrgasKeyPressed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="jbtSave">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Sauver le tournoi sous"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtSaveActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="jbtLoad">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Charger un tournoi"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtLoadActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>

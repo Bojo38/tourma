@@ -11,9 +11,14 @@
 package tourma;
 
 import java.awt.Component;
+import java.io.File;
 import java.text.ParseException;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import org.jvnet.substance.SubstanceLookAndFeel;
+import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 
 /**
  *
@@ -22,6 +27,7 @@ import javax.swing.JOptionPane;
 public class MainFrame extends javax.swing.JFrame {
 
     Tournament _tournament;
+    File file = null;
 
     /** Creates new form MainFrame */
     public MainFrame() {
@@ -81,8 +87,6 @@ public class MainFrame extends javax.swing.JFrame {
         jtfTournamentName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jtfOrgas = new javax.swing.JTextField();
-        jbtSave = new javax.swing.JButton();
-        jbtLoad = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jtffLargeVictory = new javax.swing.JFormattedTextField();
@@ -145,7 +149,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tournoi"));
-        jPanel5.setLayout(new java.awt.GridLayout(3, 2));
+        jPanel5.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Nom du tournoi:");
@@ -170,22 +174,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jPanel5.add(jtfOrgas);
-
-        jbtSave.setText("Sauver le tournoi sous");
-        jbtSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtSaveActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jbtSave);
-
-        jbtLoad.setText("Charger un tournoi");
-        jbtLoad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtLoadActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jbtLoad);
 
         jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
@@ -463,19 +451,44 @@ public class MainFrame extends javax.swing.JFrame {
         jmnFile.setText("Fichier");
 
         jmiNouveau.setText("Nouveau tournoi");
+        jmiNouveau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiNouveauActionPerformed(evt);
+            }
+        });
         jmnFile.add(jmiNouveau);
 
         jmiCharger.setText("Charger un tounoi");
+        jmiCharger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiChargerActionPerformed(evt);
+            }
+        });
         jmnFile.add(jmiCharger);
 
         jmiSave.setText("Enregistrer le tournoi");
+        jmiSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSaveActionPerformed(evt);
+            }
+        });
         jmnFile.add(jmiSave);
 
         jmiSaveAs.setText("Enregistrer le tournoi sous ");
+        jmiSaveAs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSaveAsActionPerformed(evt);
+            }
+        });
         jmnFile.add(jmiSaveAs);
         jmnFile.add(jSeparator1);
 
         jmiExport.setText("Exporter les résultats");
+        jmiExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExportActionPerformed(evt);
+            }
+        });
         jmnFile.add(jmiExport);
         jmnFile.add(jSeparator2);
 
@@ -498,11 +511,9 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
             } else {
                 _tournament.generateFirstRound();
-                for (int i=jtpMain.getTabCount()-1; i>=0; i--)
-                {
-                    Component obj=jtpMain.getComponentAt(i);
-                    if (obj instanceof JPNRound)
-                    {
+                for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
+                    Component obj = jtpMain.getComponentAt(i);
+                    if (obj instanceof JPNRound) {
                         jtpMain.remove(obj);
                     }
                 }
@@ -547,17 +558,17 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jcbRank3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3ActionPerformed
         _tournament._params._ranking3 = jcbRank3.getSelectedIndex();
-         update();
+        update();
 }//GEN-LAST:event_jcbRank3ActionPerformed
 
     private void jcbRank2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2ActionPerformed
         _tournament._params._ranking2 = jcbRank2.getSelectedIndex();
-         update();
+        update();
 }//GEN-LAST:event_jcbRank2ActionPerformed
 
     private void jcbRank1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1ActionPerformed
         _tournament._params._ranking1 = jcbRank1.getSelectedIndex();
-         update();
+        update();
 }//GEN-LAST:event_jcbRank1ActionPerformed
 
     private void jtffFoulNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffFoulNegFocusLost
@@ -568,7 +579,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffFoulNeg.setValue(jtffFoulNeg.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffFoulNegFocusLost
 
     private void jtffSorNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffSorNegFocusLost
@@ -579,7 +590,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffSorNeg.setValue(jtffSorNeg.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffSorNegFocusLost
 
     private void jtffTdNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTdNegFocusLost
@@ -590,7 +601,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffTdNeg.setValue(jtffTdNeg.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffTdNegFocusLost
 
     private void jtffFoulPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffFoulPosFocusLost
@@ -601,7 +612,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffFoulPos.setValue(jtffFoulPos.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffFoulPosFocusLost
 
     private void jtffSorPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffSorPosFocusLost
@@ -612,7 +623,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffSorPos.setValue(jtffSorPos.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffSorPosFocusLost
 
     private void jtffTdPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTdPosFocusLost
@@ -623,7 +634,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffTdPos.setValue(jtffTdPos.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffTdPosFocusLost
 
     private void jtffLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostFocusLost
@@ -634,7 +645,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffLost.setValue(jtffLost.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffLostFocusLost
 
     private void jtffLittleLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostFocusLost
@@ -645,7 +656,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffLittleLost.setValue(jtffLittleLost.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffLittleLostFocusLost
 
     private void jtffDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawFocusLost
@@ -656,7 +667,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffDraw.setValue(jtffDraw.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffDrawFocusLost
 
     private void jtffVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryFocusLost
@@ -667,7 +678,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffVictory.setValue(jtffVictory.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffVictoryFocusLost
 
     private void jtffLargeVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryFocusLost
@@ -679,36 +690,8 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffLargeVictory.setValue(jtffLargeVictory.getValue());
         }
-         update();
+        update();
 }//GEN-LAST:event_jtffLargeVictoryFocusLost
-
-    private void jbtLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLoadActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            Tournament.getTournament().loadXML(jfc.getSelectedFile());
-            for (int i=jtpMain.getTabCount()-1; i>=0; i--)
-                {
-                    Component obj=jtpMain.getComponentAt(i);
-                    if (obj instanceof JPNRound)
-                    {
-                        jtpMain.remove(obj);
-                    }
-                }
-            for (int i = 0; i < _tournament._rounds.size(); i++) {
-                JPNRound jpnr = new JPNRound(_tournament._rounds.get(i), _tournament);
-                jtpMain.add("Ronde " + (i + 1), jpnr);
-            }
-            update();
-
-        }
-}//GEN-LAST:event_jbtLoadActionPerformed
-
-    private void jbtSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSaveActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            Tournament.getTournament().saveXML(jfc.getSelectedFile());
-        }
-}//GEN-LAST:event_jbtSaveActionPerformed
 
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
         _tournament._params._tournament_orga = jtfOrgas.getText();
@@ -718,13 +701,76 @@ public class MainFrame extends javax.swing.JFrame {
         _tournament._params._tournament_name = jtfTournamentName.getText();
 }//GEN-LAST:event_jtfTournamentNameKeyPressed
 
+    private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            Tournament.getTournament().saveXML(jfc.getSelectedFile());
+            file = jfc.getSelectedFile();
+        }
+    }//GEN-LAST:event_jmiSaveAsActionPerformed
+
+    private void jmiSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveActionPerformed
+        if (file != null) {
+            Tournament.getTournament().saveXML(file);
+        } else {
+            jmiSaveAsActionPerformed(evt);
+        }
+    }//GEN-LAST:event_jmiSaveActionPerformed
+
+    private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            Tournament.getTournament().loadXML(jfc.getSelectedFile());
+            file = jfc.getSelectedFile();
+            for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
+                Component obj = jtpMain.getComponentAt(i);
+                if (obj instanceof JPNRound) {
+                    jtpMain.remove(obj);
+                }
+            }
+            for (int i = 0; i < _tournament._rounds.size(); i++) {
+                JPNRound jpnr = new JPNRound(_tournament._rounds.get(i), _tournament);
+                jtpMain.add("Ronde " + (i + 1), jpnr);
+            }
+            update();
+
+        }
+    }//GEN-LAST:event_jmiChargerActionPerformed
+
+    private void jmiNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNouveauActionPerformed
+        for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
+            Component obj = jtpMain.getComponentAt(i);
+            if (obj instanceof JPNRound) {
+                jtpMain.remove(obj);
+            }
+        }
+        _tournament = Tournament.resetTournament();
+        update();
+    }//GEN-LAST:event_jmiNouveauActionPerformed
+
+    private void jmiExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            Tournament.getTournament().exportResults(jfc.getSelectedFile());
+        }
+    }//GEN-LAST:event_jmiExportActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
+
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                try {
+                    SubstanceLookAndFeel lf = new SubstanceMistSilverLookAndFeel();
+                    UIManager.setLookAndFeel(lf);
+                } catch (Exception e) {
+                    System.out.println("Substance Creme Coffee failed to initialize");
+                }
                 MainFrame.getMainFrame().setVisible(true);
             }
         });
@@ -769,10 +815,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtFirstRound;
-    private javax.swing.JButton jbtLoad;
     private javax.swing.JButton jbtModify;
     private javax.swing.JButton jbtRemove;
-    private javax.swing.JButton jbtSave;
     private javax.swing.JComboBox jcbRank1;
     private javax.swing.JComboBox jcbRank2;
     private javax.swing.JComboBox jcbRank3;

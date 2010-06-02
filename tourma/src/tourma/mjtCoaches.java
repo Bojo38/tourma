@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tourma;
 
 import java.util.Vector;
@@ -12,7 +11,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Frederic Berger
  */
-public class mjtCoaches extends AbstractTableModel{
+public class mjtCoaches extends AbstractTableModel {
 
     Vector<Coach> _coachs;
 
@@ -21,7 +20,7 @@ public class mjtCoaches extends AbstractTableModel{
     }
 
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     public int getRowCount() {
@@ -40,23 +39,29 @@ public class mjtCoaches extends AbstractTableModel{
                 return "Roster";
             case 4:
                 return "NAF";
+                case 5:
+                return "Classement";
         }
         return "";
     }
 
     public Object getValueAt(int row, int col) {
-        Coach c= _coachs.get(row);
-        switch (col) {
-            case 0:
-                return row+1;
-            case 1:
-                return c._name;
-            case 2:
-                return c._team;
-            case 3:
-                return c._roster;
-            case 4:
-                return c._naf;
+        if (_coachs.size() > 0) {
+            Coach c = _coachs.get(row);
+            switch (col) {
+                case 0:
+                    return row + 1;
+                case 1:
+                    return c._name;
+                case 2:
+                    return c._team;
+                case 3:
+                    return c._roster;
+                case 4:
+                    return c._naf;
+                     case 5:
+                    return c._rank;
+            }
         }
         return "";
     }

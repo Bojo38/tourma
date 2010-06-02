@@ -39,6 +39,11 @@ public class Tournament {
         _coachs = new Vector<Coach>();
     }
 
+    public static Tournament resetTournament() {
+        _singleton = new Tournament();
+        return _singleton;
+    }
+
     public static Tournament getTournament() {
         if (_singleton == null) {
             _singleton = new Tournament();
@@ -80,6 +85,7 @@ public class Tournament {
             coach.setAttribute("Team", _coachs.get(i)._team);
             coach.setAttribute("Roster", _coachs.get(i)._roster);
             coach.setAttribute("NAF", Integer.toString(_coachs.get(i)._naf));
+            coach.setAttribute("Ranking", Integer.toString(_coachs.get(i)._rank));
             document.addContent(coach);
         }
 
@@ -101,6 +107,161 @@ public class Tournament {
                 round.addContent(match);
             }
             document.addContent(round);
+        }
+
+        try {
+            XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+            sortie.output(document, new FileOutputStream(file));
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        }
+    }
+
+    private String getRosterTranslation(String source) {
+ 
+        if (source.equals("Amazone")) {
+            return "Amazons";
+        }
+        if (source.equals("Bas Fonds")) {
+            return "Underworld";
+        }
+        if (source.equals("Chaos")) {
+            return "Chaos";
+        }
+        if (source.equals("Elfe")) {
+            return "Elves";
+        }
+        if (source.equals("Elfe sylvain")) {
+            return "Wood Elves";
+        }
+        if (source.equals("Elfe noir")) {
+            return "Dark Elves";
+        }
+        if (source.equals("Gobelin")) {
+            return "Goblins";
+        }
+        if (source.equals("Halfling")) {
+            return "Halflings";
+        }
+        if (source.equals("Haut Elfe")) {
+            return "High Elves";
+        }
+        if (source.equals("Homme lézard")) {
+            return "Lizardmen";
+        }
+        if (source.equals("Humain")) {
+            return "Humans";
+        }
+        if (source.equals("Khemri")) {
+            return "Khemri";
+        }
+        if (source.equals("Mort-Vivant")) {
+            return "Undead";
+        }
+        if (source.equals("Nain")) {
+            return "Dwarves";
+        }
+        if (source.equals("Nain du chaos")) {
+            return "Chaos Dwarves";
+        }
+        if (source.equals("Necromantique")) {
+            return "Necromantic";
+        }
+        if (source.equals("Nordique")) {
+            return "Norse";
+        }
+        if (source.equals("Nurgle")) {
+            return "Nurgle's Rotters";
+        }
+        if (source.equals("Ogre")) {
+            return "Ogres";
+        }
+        if (source.equals("Orque")) {
+            return "Orc";
+        }
+        if (source.equals("Pacte Chaotique")) {
+            return "Chaos Pact";
+        }
+        if (source.equals("Skaven")) {
+            return "Skaven";
+        }
+        if (source.equals("Slann")) {
+            return "Slann";
+        }
+        if (source.equals("Vampire")) {
+            return "Vampires";
+        }
+        return "Unknown";
+    }
+
+    public void exportResults(java.io.File file) {
+        Element document = new Element("nafReport");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM:SS");
+
+        Element orgas = new Element("organiser");
+        orgas.setText(_params._tournament_orga);
+
+        document.addContent(orgas);
+
+        Element coaches = new Element("coaches");
+
+        for (int i = 0; i < _coachs.size(); i++) {
+            Element coach = new Element("coach");
+            Element name = new Element("name");
+            Element team = new Element("team");
+            name.setText(_coachs.get(i)._name);
+            String roster = getRosterTranslation(_coachs.get(i)._roster);
+            team.setText(roster);
+            coach.addContent(name);
+            coach.addContent(team);
+            coaches.addContent(coach);
+        }
+
+        document.addContent(coaches);
+
+
+        for (int i = 0; i < _rounds.size(); i++) {
+            for (int j = 0; j < _rounds.get(i)._matchs.size(); j++) {
+                Element game = new Element("game");
+                Element timeStamp = new Element("timeStamp");
+                timeStamp.setText(format.format(_rounds.get(i)._heure));
+                Element playerRecord1 = new Element("playerRecord");
+                Element playerRecord2 = new Element("playerRecord");
+                Element name1 = new Element("name");
+                Element rank1 = new Element("teamRating");
+                Element td1 = new Element("touchDowns");
+                Element bh1 = new Element("badlyHurt");
+                Element name2 = new Element("name");
+                Element rank2 = new Element("teamRating");
+                Element td2 = new Element("touchDowns");
+                Element bh2 = new Element("badlyHurt");
+
+                name1.setText(_rounds.get(i)._matchs.get(j)._coach1._name);
+                name2.setText(_rounds.get(i)._matchs.get(j)._coach2._name);
+                td1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._td1));
+                td2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._td2));
+                bh1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._sor1));
+                bh2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._sor2));
+                rank1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach1._rank));
+                rank2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach2._rank));
+
+                playerRecord1.addContent(name1);
+                playerRecord1.addContent(td1);
+                playerRecord1.addContent(bh1);
+                playerRecord1.addContent(rank1);
+
+                playerRecord2.addContent(name2);
+                playerRecord2.addContent(td2);
+                playerRecord2.addContent(bh2);
+                playerRecord2.addContent(rank2);
+
+                game.addContent(timeStamp);
+                game.addContent(playerRecord1);
+                game.addContent(playerRecord2);
+                document.addContent(game);
+            }
         }
 
         try {
@@ -152,6 +313,7 @@ public class Tournament {
                 c._team = coach.getAttributeValue("Team");
                 c._roster = coach.getAttributeValue("Roster");
                 c._naf = coach.getAttribute("NAF").getIntValue();
+                c._rank = coach.getAttribute("Rank").getIntValue();
                 _coachs.add(c);
             }
 
@@ -188,12 +350,12 @@ public class Tournament {
                             break;
                         }
                     }
-                    m._foul1=match.getAttribute("Foul1").getIntValue();
-                    m._foul2=match.getAttribute("Foul2").getIntValue();
-                    m._sor1=match.getAttribute("Sor1").getIntValue();
-                    m._sor2=match.getAttribute("Sor2").getIntValue();
-                    m._td1=match.getAttribute("Td1").getIntValue();
-                    m._td2=match.getAttribute("Td2").getIntValue();
+                    m._foul1 = match.getAttribute("Foul1").getIntValue();
+                    m._foul2 = match.getAttribute("Foul2").getIntValue();
+                    m._sor1 = match.getAttribute("Sor1").getIntValue();
+                    m._sor2 = match.getAttribute("Sor2").getIntValue();
+                    m._td1 = match.getAttribute("Td1").getIntValue();
+                    m._td2 = match.getAttribute("Td2").getIntValue();
                     r._matchs.add(m);
                 }
 

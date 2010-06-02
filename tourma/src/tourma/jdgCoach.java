@@ -57,13 +57,15 @@ public class jdgCoach extends javax.swing.JDialog {
         jcbRoster = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jtfNAF = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jtfRank = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(4, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(5, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Nom du Coach:");
@@ -86,6 +88,13 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel4.setText("Numéro NAF");
         jPanel1.add(jLabel4);
         jPanel1.add(jtfNAF);
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel5.setText("Classement");
+        jPanel1.add(jLabel5);
+
+        jtfRank.setText("110");
+        jPanel1.add(jtfRank);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -137,6 +146,15 @@ public class jdgCoach extends javax.swing.JDialog {
             c._naf=0;
         }
 
+        try
+        {
+            c._rank=Integer.parseInt(jtfRank.getText());
+        }
+        catch(NumberFormatException e)
+        {
+            c._rank=110;
+        }
+
         if (c._name.equals(""))
         {
             JOptionPane.showMessageDialog(this, "Le nom est vide");
@@ -179,6 +197,7 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtCancel;
@@ -187,6 +206,7 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JTextField jtfEquipe;
     private javax.swing.JTextField jtfNAF;
     private javax.swing.JTextField jtfNom;
+    private javax.swing.JTextField jtfRank;
     // End of variables declaration//GEN-END:variables
 
 }
