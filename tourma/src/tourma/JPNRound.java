@@ -11,6 +11,8 @@
 package tourma;
 
 import java.awt.Component;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -46,7 +48,7 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
         mjtMatches model = new mjtMatches(_round._matchs, locked);
-        jtbMatches.setModel(model);
+        jtbMatches.setModel(model);       
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
         jtbMatches.setDefaultEditor(Integer.class, model);

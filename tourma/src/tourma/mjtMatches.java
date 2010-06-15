@@ -365,7 +365,6 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
     }
 
     public boolean stopCellEditing() {
-
         return true;
     }
 }
