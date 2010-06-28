@@ -52,10 +52,13 @@ public class mjtAnnexRank extends AbstractTableModel implements TableCellRendere
     public static final int C_MOST_FOUL_POS = 4;
     public static final int C_MOST_FOUL_NEG = 5;
 
-    public mjtAnnexRank(Vector<Round> rounds, int ranking_type, Vector<Coach> coachs) {
+    boolean _full_ranking;
+
+    public mjtAnnexRank(Vector<Round> rounds, int ranking_type, Vector<Coach> coachs,boolean full) {
         _rounds = rounds;
         _ranking_type = ranking_type;
         _coachs = coachs;
+        _full_ranking=full;
     }
 
     public int getColumnCount() {
@@ -63,7 +66,14 @@ public class mjtAnnexRank extends AbstractTableModel implements TableCellRendere
     }
 
     public int getRowCount() {
-        return 3;
+        if (_full_ranking)
+        {
+            return _coachs.size();
+        }
+        else
+        {
+            return 3;
+        }
     }
 
     public String getColumnName(int col) {

@@ -66,23 +66,23 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     case Parameters.C_RANKING_POINTS:
                         return "Points";
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Différences d'aggressions";
+                        return "Diff aggressions";
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Différences de sorties";
+                        return "Diff sorties";
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Différences de touchdowns";
+                        return "Diff touchdowns";
                     case Parameters.C_RANKING_FOUL:
-                        return "Nombre d'aggressions";
+                        return "Nb aggressions";
                     case Parameters.C_RANKING_NONE:
                         return "Rien";
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Points adversaires";
+                        return "Pts adv";
                     case Parameters.C_RANKING_SOR:
-                        return "Nombre de sorties";
+                        return "Nb sorties";
                     case Parameters.C_RANKING_TD:
-                        return "Nombre de touchdowns";
+                        return "Nb touchdowns";
                     case Parameters.C_RANKING_VND:
-                        return "Victoires/Nuls/Défaites";
+                        return "V/N/D";
                 }
                 break;
             case 5:

@@ -60,12 +60,12 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
         v.add(_round);
-        mjtAnnexRank mTdPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_POS, _tournament._coachs);
-        mjtAnnexRank mTdNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_NEG, _tournament._coachs);
-        mjtAnnexRank mSorPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_POS, _tournament._coachs);
-        mjtAnnexRank mSorNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_NEG, _tournament._coachs);
-        mjtAnnexRank mFoulPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_POS, _tournament._coachs);
-        mjtAnnexRank mFoulNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_NEG, _tournament._coachs);
+        mjtAnnexRank mTdPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_POS, _tournament._coachs,false);
+        mjtAnnexRank mTdNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_NEG, _tournament._coachs,false);
+        mjtAnnexRank mSorPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_POS, _tournament._coachs,false);
+        mjtAnnexRank mSorNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_NEG, _tournament._coachs,false);
+        mjtAnnexRank mFoulPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_POS, _tournament._coachs,false);
+        mjtAnnexRank mFoulNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_NEG, _tournament._coachs,false);
 
         jtbMostTd.setModel(mTdPos);
         jtbMostTd.setDefaultRenderer(String.class, mTdPos);
@@ -107,6 +107,8 @@ public class JPNRound extends javax.swing.JPanel {
         jtbMatches = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jbtNextRound = new javax.swing.JButton();
+        jbtShowMatches = new javax.swing.JButton();
+        jbtShowResults = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -124,6 +126,14 @@ public class JPNRound extends javax.swing.JPanel {
         jtbMostSorNeg = new javax.swing.JTable();
         jScrollPane10 = new javax.swing.JScrollPane();
         jtbMostFoulNeg = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jbtGeneral = new javax.swing.JButton();
+        jbtScorePos = new javax.swing.JButton();
+        jbtScoreNeg = new javax.swing.JButton();
+        jbtSorPos = new javax.swing.JButton();
+        jbtSorNeg = new javax.swing.JButton();
+        jbtFoulPos = new javax.swing.JButton();
+        jbtFoulNeg = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -152,6 +162,23 @@ public class JPNRound extends javax.swing.JPanel {
             }
         });
         jPanel3.add(jbtNextRound);
+
+        jbtShowMatches.setText("Vue des matchs");
+        jbtShowMatches.setActionCommand("Vue des matchs");
+        jbtShowMatches.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtShowMatchesActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtShowMatches);
+
+        jbtShowResults.setText("Vue des résultats");
+        jbtShowResults.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtShowResultsActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtShowResults);
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
@@ -287,6 +314,64 @@ public class JPNRound extends javax.swing.JPanel {
         jSplitPane1.setTopComponent(jPanel4);
 
         jPanel2.add(jSplitPane1, java.awt.BorderLayout.CENTER);
+
+        jbtGeneral.setText("Général");
+        jbtGeneral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGeneralActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtGeneral);
+
+        jbtScorePos.setText("Scoreur");
+        jbtScorePos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtScorePosActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtScorePos);
+
+        jbtScoreNeg.setText("Passoire");
+        jbtScoreNeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtScoreNegActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtScoreNeg);
+
+        jbtSorPos.setText("Destructeur");
+        jbtSorPos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtSorPosActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtSorPos);
+
+        jbtSorNeg.setText("Punching Ball");
+        jbtSorNeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtSorNegActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtSorNeg);
+
+        jbtFoulPos.setText("Crampon");
+        jbtFoulPos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtFoulPosActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtFoulPos);
+
+        jbtFoulNeg.setText("Paillasson");
+        jbtFoulNeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtFoulNegActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtFoulNeg);
+
+        jPanel2.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
         jTabbedPane1.addTab("Classement", jPanel2);
 
@@ -466,11 +551,112 @@ public class JPNRound extends javax.swing.JPanel {
 
         update();
     }//GEN-LAST:event_jbtNextRoundActionPerformed
+
+    private void jbtShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowMatchesActionPerformed
+         for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRound jdg=new jdgRound(MainFrame.getMainFrame(), true, _round, i+1, _tournament, false);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtShowMatchesActionPerformed
+
+    private void jbtShowResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowResultsActionPerformed
+       for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRound jdg=new jdgRound(MainFrame.getMainFrame(), true, _round, i+1, _tournament, true);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtShowResultsActionPerformed
+
+    private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
+      for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_GENERAL);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtGeneralActionPerformed
+
+    private void jbtScoreNegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScoreNegActionPerformed
+       for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_SCORED);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtScoreNegActionPerformed
+
+    private void jbtScorePosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScorePosActionPerformed
+       for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_SCORER);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtScorePosActionPerformed
+
+    private void jbtSorPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorPosActionPerformed
+         for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_DESTROYER);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtSorPosActionPerformed
+
+    private void jbtSorNegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorNegActionPerformed
+         for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_DESTROYED);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtSorNegActionPerformed
+
+    private void jbtFoulPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulPosActionPerformed
+        for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_FOULER);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtFoulPosActionPerformed
+
+    private void jbtFoulNegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulNegActionPerformed
+        for (int i = 0; i < _tournament._rounds.size(); i++) {
+             if (_round==_tournament._rounds.get(i))
+             {
+                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_FOULED);
+                 jdg.setVisible(true);
+                 break;
+             }
+        }
+    }//GEN-LAST:event_jbtFoulNegActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
@@ -481,7 +667,16 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton jbtFoulNeg;
+    private javax.swing.JButton jbtFoulPos;
+    private javax.swing.JButton jbtGeneral;
     private javax.swing.JButton jbtNextRound;
+    private javax.swing.JButton jbtScoreNeg;
+    private javax.swing.JButton jbtScorePos;
+    private javax.swing.JButton jbtShowMatches;
+    private javax.swing.JButton jbtShowResults;
+    private javax.swing.JButton jbtSorNeg;
+    private javax.swing.JButton jbtSorPos;
     private javax.swing.JTable jtbMatches;
     private javax.swing.JTable jtbMostFoul;
     private javax.swing.JTable jtbMostFoulNeg;
