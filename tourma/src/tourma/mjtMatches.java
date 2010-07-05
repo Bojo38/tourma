@@ -20,7 +20,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-class InternalActionListener implements ActionListener, FocusListener {
+/*class InternalActionListener implements ActionListener, FocusListener {
 
     int _col;
     Match _m;
@@ -73,13 +73,13 @@ class InternalActionListener implements ActionListener, FocusListener {
     public void focusLost(FocusEvent e) {
         updateData((JTextField) e.getSource());
     }
-}
+}*/
 
 /**
  *
  * @author Frederic Berger
  */
-public class mjtMatches extends AbstractTableModel implements TableCellRenderer, /*CellEditorListener,*/ TableCellEditor {
+public class mjtMatches extends AbstractTableModel implements TableCellRenderer/*, CellEditorListener, TableCellEditor*/ {
 
     Vector<Match> _matchs;
     boolean _locked;
@@ -147,7 +147,37 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
         return "";
     }
 
-    public Class getColumnClass(int c) {
+    @Override
+    public void setValueAt(Object value, int row, int col) {
+        if (value != null) {
+            Match m = _matchs.get(row);
+            switch (col) {
+                case 2:
+                    m._td1 = (Integer.valueOf(value.toString()));
+                    break;
+                case 3:
+                    m._td2 = (Integer.valueOf(value.toString()));
+                    break;
+                case 5:
+                    m._sor1 = (Integer.valueOf(value.toString()));
+                    break;
+                case 6:
+                    m._sor2 = (Integer.valueOf(value.toString()));
+                    break;
+                case 7:
+                    m._foul1 = (Integer.valueOf(value.toString()));
+                    break;
+                case 8:
+                    m._foul2 = (Integer.valueOf(value.toString()));
+                    break;
+            }
+        }
+        fireTableDataChanged();
+    }
+
+    @Override
+    public Class getColumnClass(
+            int c) {
         return getValueAt(0, c).getClass();
     }
 
@@ -155,6 +185,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
      * Don't need to implement this method unless your table's
      * editable.
      */
+    @Override
     public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
@@ -164,17 +195,20 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
             if ((col == 1) || (col == 4)) {
                 return false;
             }
+
         }
         return true;
     }
 
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
         if (value instanceof String) {
             jlb.setText((String) value);
         }
+
         if (value instanceof Integer) {
             jlb.setText(Integer.toString((Integer) value));
         }
@@ -187,45 +221,59 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
             switch (column) {
                 case 1:
                     bkg = new Color(200, 50, 50);
-                    frg = new Color(255, 255, 255);
+                    frg =
+                            new Color(255, 255, 255);
                     if (_matchs.get(row)._td1 > _matchs.get(row)._td2) {
                         jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                     }
+
                     if (_matchs.get(row)._td1 == _matchs.get(row)._td2) {
                         jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                     }
+
                     break;
                 case 2:
                     bkg = new Color(250, 200, 200);
                     break;
+
                 case 3:
                     bkg = new Color(200, 200, 250);
                     break;
+
                 case 4:
                     bkg = new Color(50, 50, 250);
-                    frg = new Color(255, 255, 255);
+                    frg =
+                            new Color(255, 255, 255);
                     if (_matchs.get(row)._td1 < _matchs.get(row)._td2) {
                         jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                     }
+
                     if (_matchs.get(row)._td1 == _matchs.get(row)._td2) {
                         jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                     }
+
                     break;
                 case 5:
                     frg = new Color(200, 50, 50);
                     break;
+
                 case 6:
                     frg = new Color(50, 50, 200);
                     break;
+
                 case 7:
                     frg = new Color(200, 50, 50);
                     break;
+
                 case 8:
                     frg = new Color(50, 50, 200);
                     break;
+
                 default:
+
                     break;
             }
+
         }
         jlb.setBackground(bkg);
         jlb.setForeground(frg);
@@ -269,13 +317,15 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
     public void editingCanceled(ChangeEvent e) {
     _editor = null;
     }*/
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+  /*  public Component getTableCellEditorComponent(
+            JTable table, Object value, boolean isSelected, int row, int column) {
         JTextField jtf = new JTextField();
 
         jtf.setEditable(true);
         if (value instanceof String) {
             jtf.setText((String) value);
         }
+
         if (value instanceof Integer) {
             jtf.setText(Integer.toString((Integer) value));
         }
@@ -288,45 +338,59 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
             switch (column) {
                 case 1:
                     bkg = new Color(200, 50, 50);
-                    frg = new Color(255, 255, 255);
+                    frg =
+                            new Color(255, 255, 255);
                     if (_matchs.get(row)._td1 > _matchs.get(row)._td2) {
                         jtf.setFont(jtf.getFont().deriveFont(Font.BOLD));
                     }
+
                     if (_matchs.get(row)._td1 == _matchs.get(row)._td2) {
                         jtf.setFont(jtf.getFont().deriveFont(Font.ITALIC));
                     }
+
                     break;
                 case 2:
                     bkg = new Color(250, 200, 200);
                     break;
+
                 case 3:
                     bkg = new Color(200, 200, 250);
                     break;
+
                 case 4:
                     bkg = new Color(50, 50, 250);
-                    frg = new Color(255, 255, 255);
+                    frg =
+                            new Color(255, 255, 255);
                     if (_matchs.get(row)._td1 < _matchs.get(row)._td2) {
                         jtf.setFont(jtf.getFont().deriveFont(Font.BOLD));
                     }
+
                     if (_matchs.get(row)._td1 == _matchs.get(row)._td2) {
                         jtf.setFont(jtf.getFont().deriveFont(Font.ITALIC));
                     }
+
                     break;
                 case 5:
                     frg = new Color(200, 50, 50);
                     break;
+
                 case 6:
                     frg = new Color(50, 50, 200);
                     break;
+
                 case 7:
                     frg = new Color(200, 50, 50);
                     break;
+
                 case 8:
                     frg = new Color(50, 50, 200);
                     break;
+
                 default:
+
                     break;
             }
+
         }
         jtf.setBackground(bkg);
         jtf.setForeground(frg);
@@ -334,11 +398,11 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
         jtf.addActionListener(new InternalActionListener(column, _matchs.get(row), this));
         jtf.addFocusListener(new InternalActionListener(column, _matchs.get(row), this));
         return jtf;
-    }
+    }*/
 
     /*JTextField _editor = null;
      */
-    Vector<CellEditorListener> _listeners = new Vector<CellEditorListener>();
+  /*  Vector<CellEditorListener> _listeners = new Vector<CellEditorListener>();
 
     public void addCellEditorListener(CellEditorListener l) {
         _listeners.add(l);
@@ -366,5 +430,5 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer,
 
     public boolean stopCellEditing() {
         return true;
-    }
+    }*/
 }

@@ -11,6 +11,7 @@
 package tourma;
 
 import java.awt.Component;
+import java.awt.FontMetrics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 
@@ -51,8 +53,8 @@ public class JPNRound extends javax.swing.JPanel {
         jtbMatches.setModel(model);       
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
-        jtbMatches.setDefaultEditor(Integer.class, model);
-
+/*        jtbMatches.setDefaultEditor(Integer.class, model);*/
+        setColumnSize(jtbMatches);
         Vector<Round> v = new Vector<Round>();
         for (int i = 0; i < _tournament._rounds.size(); i++) {
             if (_tournament._rounds.get(i)._heure.before(_round._heure)) {
@@ -90,6 +92,14 @@ public class JPNRound extends javax.swing.JPanel {
         jtbRanking.setModel(mRanking);
         jtbRanking.setDefaultRenderer(String.class, mRanking);
         jtbRanking.setDefaultRenderer(Integer.class, mRanking);
+
+        setColumnSize(jtbRanking);
+        setColumnSize(jtbMostFoulNeg);
+        setColumnSize(jtbMostFoul);
+        setColumnSize(jtbMostSorNeg);
+        setColumnSize(jtbMostSor);
+        setColumnSize(jtbMostTdNeg);
+        setColumnSize(jtbMostTd);
     }
 
     /** This method is called from within the constructor to
@@ -377,6 +387,36 @@ public class JPNRound extends javax.swing.JPanel {
 
         add(jTabbedPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+     public void setColumnSize(JTable t){
+        FontMetrics fm = t.getFontMetrics(t.getFont());
+        for (int i = 0 ; i < t.getColumnCount() ; i++)
+        {
+            int max = 0;
+            for (int j = 0 ; j < t.getRowCount() ; j++)
+            {
+                Object value=t.getValueAt(j,i);
+                String tmp="";
+                if (value instanceof String)
+                {
+                    tmp=(String)value;
+                }
+                if (value instanceof Integer)
+                {
+                    tmp=""+(Integer)value;
+                }
+               int taille = fm.stringWidth(tmp);
+               if (taille > max)
+                    max = taille;
+            }
+            String nom = (String)t.getColumnModel().getColumn(i).getIdentifier();
+            int taille = fm.stringWidth(nom);
+            if (taille > max)
+                   max = taille;
+           t.getColumnModel().getColumn(i).setPreferredWidth(max+10);
+        }
+    }
+
 
     private void jbtNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextRoundActionPerformed
 
