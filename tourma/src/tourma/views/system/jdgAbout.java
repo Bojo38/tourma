@@ -111,7 +111,7 @@ public class jdgAbout extends javax.swing.JDialog {
         jlbJDom.setText("Jdom");
         jPanel2.add(jlbJDom);
 
-        jlbJDomC.setFont(new java.awt.Font("Tahoma", 0, 10));
+        jlbJDomC.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlbJDomC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbJDomC.setText("Jdom");
         jPanel2.add(jlbJDomC);
@@ -126,12 +126,12 @@ public class jdgAbout extends javax.swing.JDialog {
         jlbJCommonC.setText("JCommon");
         jPanel2.add(jlbJCommonC);
 
-        jlbSubstance.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jlbSubstance.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlbSubstance.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbSubstance.setText("Substance");
         jPanel2.add(jlbSubstance);
 
-        jlbSubstanceC.setFont(new java.awt.Font("Tahoma", 0, 10));
+        jlbSubstanceC.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlbSubstanceC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbSubstanceC.setText("Substance");
         jPanel2.add(jlbSubstanceC);

@@ -56,13 +56,16 @@ public class JPNRound extends javax.swing.JPanel {
                 locked = true;
             }
         }
+        
+        jbtDeleteRound.setEnabled(!locked);
+
         mjtMatches model = new mjtMatches(_round.getMatchs(), locked);
-        jtbMatches.setModel(model);       
+        jtbMatches.setModel(model);
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
 
 
-/*        jtbMatches.setDefaultEditor(Integer.class, model);*/
+        /*        jtbMatches.setDefaultEditor(Integer.class, model);*/
         setColumnSize(jtbMatches);
         Vector<Round> v = new Vector<Round>();
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
@@ -71,12 +74,12 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
         v.add(_round);
-        mjtAnnexRank mTdPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_POS, _tournament.getCoachs(),false);
-        mjtAnnexRank mTdNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_NEG, _tournament.getCoachs(),false);
-        mjtAnnexRank mSorPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_POS, _tournament.getCoachs(),false);
-        mjtAnnexRank mSorNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_NEG, _tournament.getCoachs(),false);
-        mjtAnnexRank mFoulPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_POS, _tournament.getCoachs(),false);
-        mjtAnnexRank mFoulNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_NEG, _tournament.getCoachs(),false);
+        mjtAnnexRank mTdPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_POS, _tournament.getCoachs(), false);
+        mjtAnnexRank mTdNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_NEG, _tournament.getCoachs(), false);
+        mjtAnnexRank mSorPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_POS, _tournament.getCoachs(), false);
+        mjtAnnexRank mSorNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_NEG, _tournament.getCoachs(), false);
+        mjtAnnexRank mFoulPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_POS, _tournament.getCoachs(), false);
+        mjtAnnexRank mFoulNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_NEG, _tournament.getCoachs(), false);
 
         jtbMostTd.setModel(mTdPos);
         jtbMostTd.setDefaultRenderer(String.class, mTdPos);
@@ -128,6 +131,7 @@ public class JPNRound extends javax.swing.JPanel {
         jbtNextRound = new javax.swing.JButton();
         jbtShowMatches = new javax.swing.JButton();
         jbtShowResults = new javax.swing.JButton();
+        jbtDeleteRound = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -199,6 +203,14 @@ public class JPNRound extends javax.swing.JPanel {
             }
         });
         jPanel3.add(jbtShowResults);
+
+        jbtDeleteRound.setText("Effacer la ronde courante");
+        jbtDeleteRound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtDeleteRoundActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtDeleteRound);
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
@@ -398,35 +410,32 @@ public class JPNRound extends javax.swing.JPanel {
         add(jTabbedPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-     public void setColumnSize(JTable t){
+    public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0 ; i < t.getColumnCount() ; i++)
-        {
+        for (int i = 0; i < t.getColumnCount(); i++) {
             int max = 0;
-            for (int j = 0 ; j < t.getRowCount() ; j++)
-            {
-                Object value=t.getValueAt(j,i);
-                String tmp="";
-                if (value instanceof String)
-                {
-                    tmp=(String)value;
+            for (int j = 0; j < t.getRowCount(); j++) {
+                Object value = t.getValueAt(j, i);
+                String tmp = "";
+                if (value instanceof String) {
+                    tmp = (String) value;
                 }
-                if (value instanceof Integer)
-                {
-                    tmp=""+(Integer)value;
+                if (value instanceof Integer) {
+                    tmp = "" + (Integer) value;
                 }
-               int taille = fm.stringWidth(tmp);
-               if (taille > max)
+                int taille = fm.stringWidth(tmp);
+                if (taille > max) {
                     max = taille;
+                }
             }
-            String nom = (String)t.getColumnModel().getColumn(i).getIdentifier();
+            String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
             int taille = fm.stringWidth(nom);
-            if (taille > max)
-                   max = taille;
-           t.getColumnModel().getColumn(i).setPreferredWidth(max+10);
+            if (taille > max) {
+                max = taille;
+            }
+            t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
         }
     }
-
 
     private void jbtNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextRoundActionPerformed
 
@@ -475,10 +484,10 @@ public class JPNRound extends javax.swing.JPanel {
 
         Round r = new Round();
         Calendar cal = Calendar.getInstance();
-        r.setHeure( cal.getTime());
+        r.setHeure(cal.getTime());
 
         // Résolution des doublons
-        if (_tournament.getCoachs().size()-1 <= _tournament.getRounds().size()) {
+        if (_tournament.getCoachs().size() - 1 <= _tournament.getRounds().size()) {
             // Affectation des matchs
             for (int i = 0; i < datas.size() / 2; i++) {
                 Match m = new Match();
@@ -497,9 +506,7 @@ public class JPNRound extends javax.swing.JPanel {
                 for (int i = 0; i < datas2.size(); i++) {
                     boolean have_played = false;
                     for (int j = 0; j < matchs.size(); j++) {
-                        if (
-                                (
-                                    (matchs.get(j)._coach1 == m._coach1) && (matchs.get(j)._coach2 == datas2.get(i).getCoach())) ||
+                        if (((matchs.get(j)._coach1 == m._coach1) && (matchs.get(j)._coach2 == datas2.get(i).getCoach())) ||
                                 ((matchs.get(j)._coach2 == m._coach1) && (matchs.get(j)._coach1 == datas2.get(i).getCoach()))) {
                             have_played = true;
                         }
@@ -605,104 +612,114 @@ public class JPNRound extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtNextRoundActionPerformed
 
     private void jbtShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowMatchesActionPerformed
-         for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRound jdg=new jdgRound(MainFrame.getMainFrame(), true, _round, i+1, _tournament, false);
-                 jdg.setVisible(true);
-                 break;
-             }
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRound jdg = new jdgRound(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, false);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtShowMatchesActionPerformed
 
     private void jbtShowResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowResultsActionPerformed
-       for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRound jdg=new jdgRound(MainFrame.getMainFrame(), true, _round, i+1, _tournament, true);
-                 jdg.setVisible(true);
-                 break;
-             }
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRound jdg = new jdgRound(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, true);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtShowResultsActionPerformed
 
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
-      for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_GENERAL);
-                 jdg.setVisible(true);
-                 break;
-             }
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_GENERAL);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtGeneralActionPerformed
 
     private void jbtScoreNegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScoreNegActionPerformed
-       for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_SCORED);
-                 jdg.setVisible(true);
-                 break;
-             }
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORED);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtScoreNegActionPerformed
 
     private void jbtScorePosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScorePosActionPerformed
-       for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_SCORER);
-                 jdg.setVisible(true);
-                 break;
-             }
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORER);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtScorePosActionPerformed
 
     private void jbtSorPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorPosActionPerformed
-         for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_DESTROYER);
-                 jdg.setVisible(true);
-                 break;
-             }
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYER);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtSorPosActionPerformed
 
     private void jbtSorNegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorNegActionPerformed
-         for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_DESTROYED);
-                 jdg.setVisible(true);
-                 break;
-             }
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYED);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtSorNegActionPerformed
 
     private void jbtFoulPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulPosActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_FOULER);
-                 jdg.setVisible(true);
-                 break;
-             }
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULER);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtFoulPosActionPerformed
 
     private void jbtFoulNegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulNegActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
-             if (_round==_tournament.getRounds().get(i))
-             {
-                 jdgRanking jdg=new jdgRanking(MainFrame.getMainFrame(), true, _round, i+1, _tournament, jdgRanking.RANKING_FOULED);
-                 jdg.setVisible(true);
-                 break;
-             }
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULED);
+                jdg.setVisible(true);
+                break;
+            }
         }
     }//GEN-LAST:event_jbtFoulNegActionPerformed
 
+    private void jbtDeleteRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDeleteRoundActionPerformed
+
+        if (JOptionPane.showConfirmDialog(this, "Etes vous certain de vouloir effacer la ronde courante ?","Effacer une ronde", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            _tournament.getRounds().remove(_round);
+            for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1; i >= 0; i--) {
+                Component obj = MainFrame.getMainFrame().jtpMain.getComponentAt(i);
+                if (obj instanceof JPNRound) {
+                    MainFrame.getMainFrame().jtpMain.remove(obj);
+                }
+            }
+            for (int i = 0; i <
+                    _tournament.getRounds().size(); i++) {
+                JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
+                MainFrame.getMainFrame().jtpMain.add("Ronde " + (i + 1), jpnr);
+            }
+
+            update();
+        }
+    }//GEN-LAST:event_jbtDeleteRoundActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -719,6 +736,7 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton jbtDeleteRound;
     private javax.swing.JButton jbtFoulNeg;
     private javax.swing.JButton jbtFoulPos;
     private javax.swing.JButton jbtGeneral;

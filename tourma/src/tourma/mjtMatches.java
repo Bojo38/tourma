@@ -131,9 +131,23 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer/
             case 1:
                 return m._coach1._team + " (" + m._coach1._name + ")";
             case 2:
-                return m._td1;
+                if (m._td1>=0)
+                {
+                    return m._td1;
+                }
+                else
+                {
+                    return "";
+                }
             case 3:
-                return m._td2;
+                if (m._td2>=0)
+                {
+                    return m._td2;
+                }
+                else
+                {
+                    return "";
+                }
             case 4:
                 return m._coach2._team + " (" + m._coach2._name + ")";
             case 5:

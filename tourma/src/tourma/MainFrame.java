@@ -14,14 +14,17 @@ import tourma.views.system.jdgRevisions;
 import tourma.views.system.jdgAbout;
 import tourma.data.Tournament;
 import java.awt.Component;
+import java.awt.FontMetrics;
 import java.io.File;
 import java.text.ParseException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
+import tourma.views.system.jdgOnlineHelp;
 
 /**
  *
@@ -64,6 +67,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         mjtCoaches coachModel = new mjtCoaches(_tournament.getCoachs());
         jtbCoachs.setModel(coachModel);
+        setColumnSize(jtbCoachs);
 
         for (int i = 0; i < jtpMain.getComponentCount(); i++) {
             Object o = jtpMain.getComponentAt(i);
@@ -532,7 +536,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmnHelp.add(jmiRevisions);
         jmnHelp.add(jSeparator3);
 
-        jmiAideEnLigne.setText("Révisions logicielles");
+        jmiAideEnLigne.setText("Aide");
         jmiAideEnLigne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiAideEnLigneActionPerformed(evt);
@@ -552,7 +556,9 @@ public class MainFrame extends javax.swing.JFrame {
             if (_tournament.getCoachs().size() % 2 > 0) {
                 JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
             } else {
-                _tournament.generateFirstRound();
+                String[] options={"Aléatoire","Ordre d'inscription"};
+                int choice=JOptionPane.showOptionDialog(this, "Choisissez le tirage initial","Tirage", JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
+                _tournament.generateFirstRound(choice);
                 for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
                     Component obj = jtpMain.getComponentAt(i);
                     if (obj instanceof JPNRound) {
@@ -814,9 +820,39 @@ public class MainFrame extends javax.swing.JFrame {
 }//GEN-LAST:event_jmiRevisionsActionPerformed
 
     private void jmiAideEnLigneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAideEnLigneActionPerformed
-        // TODO add your handling code here:
+         jdgOnlineHelp jdg = new jdgOnlineHelp(this, false);
+        jdg.setVisible(true);
+        jdg = null;
     }//GEN-LAST:event_jmiAideEnLigneActionPerformed
 
+    public void setColumnSize(JTable t){
+        FontMetrics fm = t.getFontMetrics(t.getFont());
+        for (int i = 0 ; i < t.getColumnCount() ; i++)
+        {
+            int max = 0;
+            for (int j = 0 ; j < t.getRowCount() ; j++)
+            {
+                Object value=t.getValueAt(j,i);
+                String tmp="";
+                if (value instanceof String)
+                {
+                    tmp=(String)value;
+                }
+                if (value instanceof Integer)
+                {
+                    tmp=""+(Integer)value;
+                }
+               int taille = fm.stringWidth(tmp);
+               if (taille > max)
+                    max = taille;
+            }
+            String nom = (String)t.getColumnModel().getColumn(i).getIdentifier();
+            int taille = fm.stringWidth(nom);
+            if (taille > max)
+                   max = taille;
+           t.getColumnModel().getColumn(i).setPreferredWidth(max+10);
+        }
+    }
     /**
      * @param args the command line arguments
      */

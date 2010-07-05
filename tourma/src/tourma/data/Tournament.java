@@ -387,14 +387,17 @@ public class Tournament {
         }
     }
 
-    public void generateFirstRound() {
+    public void generateFirstRound(int choice) {
         _rounds.clear();
         Round r = new Round();
         Calendar cal = Calendar.getInstance();
         r._heure = cal.getTime();
         Vector<Coach> shuffle = new Vector<Coach>(_coachs);
 
-        Collections.shuffle(shuffle);
+        if (choice==0) /* Aléatoire */
+        {
+            Collections.shuffle(shuffle);
+        }
 
         for (int i = 0; i < shuffle.size() / 2; i++) {
             Match m = new Match();

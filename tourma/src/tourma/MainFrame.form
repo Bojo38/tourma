@@ -93,7 +93,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiAideEnLigne">
               <Properties>
-                <Property name="text" type="java.lang.String" value="R&#xe9;visions logicielles"/>
+                <Property name="text" type="java.lang.String" value="Aide"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiAideEnLigneActionPerformed"/>
