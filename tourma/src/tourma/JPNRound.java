@@ -53,6 +53,8 @@ public class JPNRound extends javax.swing.JPanel {
         jtbMatches.setModel(model);       
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
+
+
 /*        jtbMatches.setDefaultEditor(Integer.class, model);*/
         setColumnSize(jtbMatches);
         Vector<Round> v = new Vector<Round>();
@@ -161,6 +163,8 @@ public class JPNRound extends javax.swing.JPanel {
             }
         ));
         jtbMatches.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbMatches.setColumnSelectionAllowed(true);
+        jtbMatches.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jtbMatches);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -174,7 +178,6 @@ public class JPNRound extends javax.swing.JPanel {
         jPanel3.add(jbtNextRound);
 
         jbtShowMatches.setText("Vue des matchs");
-        jbtShowMatches.setActionCommand("Vue des matchs");
         jbtShowMatches.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtShowMatchesActionPerformed(evt);
