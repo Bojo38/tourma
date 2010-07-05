@@ -134,10 +134,13 @@ public class jdgRound extends javax.swing.JDialog {
             URI uri=getClass().getResource("/tourma").toURI();
             if (uri.toString().contains(".jar!"))
             {
+               /* JOptionPane.showMessageDialog(this,"Dans un jar: "+uri.toString());
                 String tmp=uri.toString();
                 tmp=tmp.substring(10, tmp.indexOf(".jar!")-4);
+                JOptionPane.showMessageDialog(this,tmp);
                 //tmp=tmp+"";
-                cfg.setDirectoryForTemplateLoading(new File(tmp));
+                cfg.setDirectoryForTemplateLoading(new File(tmp));*/
+                cfg.setClassForTemplateLoading(getClass(),"");
             }
             else
             {

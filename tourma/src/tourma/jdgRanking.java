@@ -140,10 +140,11 @@ public class jdgRanking extends javax.swing.JDialog {
             Configuration cfg = new Configuration();
             URI uri = getClass().getResource("/tourma").toURI();
             if (uri.toString().contains(".jar!")) {
-                String tmp = uri.toString();
+                /*String tmp = uri.toString();
                 tmp = tmp.substring(10, tmp.indexOf(".jar!") - 4);
                 //tmp=tmp+"";
-                cfg.setDirectoryForTemplateLoading(new File(tmp));
+                cfg.setDirectoryForTemplateLoading(new File(tmp));*/
+                cfg.setClassForTemplateLoading(getClass(),"");
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
