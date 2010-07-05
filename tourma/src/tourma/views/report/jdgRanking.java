@@ -8,8 +8,11 @@
  *
  * Created on 28 juin 2010, 10:52:47
  */
-package tourma;
+package tourma.views.report;
 
+import tourma.*;
+import tourma.data.Round;
+import tourma.data.Tournament;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -59,7 +62,7 @@ public class jdgRanking extends javax.swing.JDialog {
         _tour = tour;
         _rankType = RankType;
 
-        this.setTitle(tour._params._tournament_name + " - Ronde " + roundNumber);
+        this.setTitle(tour.getParams()._tournament_name + " - Ronde " + roundNumber);
         try {
             jepHTML.setContentType("html");
             File f = CreateReport();
@@ -138,13 +141,13 @@ public class jdgRanking extends javax.swing.JDialog {
 
         try {
             Configuration cfg = new Configuration();
-            URI uri = getClass().getResource("/tourma").toURI();
+            URI uri = getClass().getResource("/tourma/template").toURI();
             if (uri.toString().contains(".jar!")) {
                 /*String tmp = uri.toString();
                 tmp = tmp.substring(10, tmp.indexOf(".jar!") - 4);
                 //tmp=tmp+"";
                 cfg.setDirectoryForTemplateLoading(new File(tmp));*/
-                cfg.setClassForTemplateLoading(getClass(),"");
+                cfg.setClassForTemplateLoading(getClass(),"template");
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
@@ -153,44 +156,44 @@ public class jdgRanking extends javax.swing.JDialog {
 
             TableModel model;
             Vector<Round> rounds = new Vector();
-            for (int i = 0; i < _tour._rounds.size() && i < _roundNumber; i++) {
-                rounds.add(_tour._rounds.get(i));
+            for (int i = 0; i < _tour.getRounds().size() && i < _roundNumber; i++) {
+                rounds.add(_tour.getRounds().get(i));
             }
 
             Map root = new HashMap();
-            root.put("nom", _tour._params._tournament_name + " - Classement Ronde " + _roundNumber);
+            root.put("nom", _tour.getParams()._tournament_name + " - Classement Ronde " + _roundNumber);
             switch (_rankType) {
                 case RANKING_GENERAL:
                     root.put("title", "Classement général");
-                    model = new mjtRanking(rounds, _tour._params._ranking1, _tour._params._ranking2, _tour._params._ranking3, _tour._params._ranking4, _tour._params._ranking5, _tour._coachs);
+                    model = new mjtRanking(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getCoachs());
                     break;
                 case RANKING_SCORER:
                     root.put("title", "Meilleur Marqueur");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_TD_POS, _tour._coachs, true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_TD_POS, _tour.getCoachs(), true);
                     break;
                 case RANKING_DESTROYER:
                     root.put("title", "Meilleur Destructeur");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_SOR_POS, _tour._coachs, true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_SOR_POS, _tour.getCoachs(), true);
                     break;
                 case RANKING_FOULER:
                     root.put("title", "Meilleur Crampon");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_FOUL_POS, _tour._coachs, true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_FOUL_POS, _tour.getCoachs(), true);
                     break;
                 case RANKING_SCORED:
                     root.put("title", "Pire Passoire");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_TD_NEG, _tour._coachs, true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_TD_NEG, _tour.getCoachs(), true);
                     break;
                 case RANKING_DESTROYED:
                     root.put("title", "Pire Punching Ball");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_SOR_NEG, _tour._coachs, true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_SOR_NEG, _tour.getCoachs(), true);
                     break;
                 case RANKING_FOULED:
                     root.put("title", "Pire Paillasson");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_FOUL_NEG, _tour._coachs, true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_FOUL_NEG, _tour.getCoachs(), true);
                     break;
                 default:
                     root.put("title", "Classement général");
-                    model = new mjtRanking(rounds, _tour._params._ranking1, _tour._params._ranking2, _tour._params._ranking3, _tour._params._ranking4, _tour._params._ranking5, _tour._coachs);
+                    model = new mjtRanking(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getCoachs());
             }
 
             Vector rankLines = new Vector();

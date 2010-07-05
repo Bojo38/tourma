@@ -11,6 +11,8 @@
 
 package tourma;
 
+import tourma.data.Tournament;
+import tourma.data.Coach;
 import javax.swing.JOptionPane;
 
 /**
@@ -128,7 +130,7 @@ public class jdgCoach extends javax.swing.JDialog {
         if (_coach==null)
         {
             c=new Coach();
-            Tournament.getTournament()._coachs.add(c);
+            Tournament.getTournament().getCoachs().add(c);
         }
         else
         {

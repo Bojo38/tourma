@@ -4,6 +4,7 @@
  */
 package tourma;
 
+import tourma.data.Match;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;

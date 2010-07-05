@@ -9,8 +9,12 @@
  * Created on 28 juin 2010, 10:52:47
  */
 
-package tourma;
+package tourma.views.report;
 
+import tourma.*;
+import tourma.data.Round;
+import tourma.data.Tournament;
+import tourma.data.Match;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -50,7 +54,7 @@ public class jdgRound extends javax.swing.JDialog {
         _tour=tour;
         _result=result;
 
-        this.setTitle(tour._params._tournament_name+" - Ronde "+roundNumber);
+        this.setTitle(tour.getParams()._tournament_name+" - Ronde "+roundNumber);
         try {
             jepHTML.setContentType("html");
             File f = CreateReport();
@@ -131,7 +135,7 @@ public class jdgRound extends javax.swing.JDialog {
 
         try {
             Configuration cfg = new Configuration();
-            URI uri=getClass().getResource("/tourma").toURI();
+            URI uri=getClass().getResource("/tourma/template").toURI();
             if (uri.toString().contains(".jar!"))
             {
                /* JOptionPane.showMessageDialog(this,"Dans un jar: "+uri.toString());
@@ -140,7 +144,7 @@ public class jdgRound extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this,tmp);
                 //tmp=tmp+"";
                 cfg.setDirectoryForTemplateLoading(new File(tmp));*/
-                cfg.setClassForTemplateLoading(getClass(),"");
+                cfg.setClassForTemplateLoading(getClass(),"template");
             }
             else
             {
@@ -150,10 +154,10 @@ public class jdgRound extends javax.swing.JDialog {
             Template temp = cfg.getTemplate("round.html");
 
             Map root = new HashMap();
-            root.put("nom", _tour._params._tournament_name+" - Ronde "+_roundNumber);
-            root.put("tables", _round._matchs.size());
+            root.put("nom", _tour.getParams()._tournament_name+" - Ronde "+_roundNumber);
+            root.put("tables", _round.getMatchs().size());
 
-            Vector<Match> matches = _round._matchs;
+            Vector<Match> matches = _round.getMatchs();
             Vector parMatches = new Vector();
             for (int i = 0; i < matches.size(); i++) {
                 Match match = matches.get(i);

@@ -4,6 +4,12 @@
  */
 package tourma;
 
+import tourma.data.CoachRanking;
+import tourma.data.Parameters;
+import tourma.data.Round;
+import tourma.data.Tournament;
+import tourma.data.Match;
+import tourma.data.Coach;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -255,47 +261,47 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
         int value = 0;
         if (m._coach2 == c) {
             if (m._td1 > m._td2 + 1) {
-                value += Tournament.getTournament()._params._large_victory_points;
+                value += Tournament.getTournament().getParams()._large_victory_points;
             } else {
                 if (m._td1 > m._td2) {
-                    value += Tournament.getTournament()._params._victory_points;
+                    value += Tournament.getTournament().getParams()._victory_points;
                 } else {
                     if (m._td1 == m._td2) {
-                        value += Tournament.getTournament()._params._draw_points;
+                        value += Tournament.getTournament().getParams()._draw_points;
                     } else {
                         if (m._td1 <= m._td2 + 1) {
-                            value += Tournament.getTournament()._params._little_lost_points;
+                            value += Tournament.getTournament().getParams()._little_lost_points;
                         } else {
-                            value += Tournament.getTournament()._params._lost_points;
+                            value += Tournament.getTournament().getParams()._lost_points;
                         }
                     }
                 }
             }
-            value += m._td1 * Tournament.getTournament()._params._bonus_td_points + m._td2 * Tournament.getTournament()._params._bonus_neg_td_points;
-            value += m._sor1 * Tournament.getTournament()._params._bonus_sor_points + m._sor2 * Tournament.getTournament()._params._bonus_neg_sor_points;
-            value += m._foul1 * Tournament.getTournament()._params._bonus_foul_points + m._foul2 * Tournament.getTournament()._params._bonus_neg_foul_points;
+            value += m._td1 * Tournament.getTournament().getParams()._bonus_td_points + m._td2 * Tournament.getTournament().getParams()._bonus_neg_td_points;
+            value += m._sor1 * Tournament.getTournament().getParams()._bonus_sor_points + m._sor2 * Tournament.getTournament().getParams()._bonus_neg_sor_points;
+            value += m._foul1 * Tournament.getTournament().getParams()._bonus_foul_points + m._foul2 * Tournament.getTournament().getParams()._bonus_neg_foul_points;
         }
         if (m._coach1 == c) {
             if (m._td2 > m._td1 + 1) {
-                value += Tournament.getTournament()._params._large_victory_points;
+                value += Tournament.getTournament().getParams()._large_victory_points;
             } else {
                 if (m._td2 > m._td1) {
-                    value += Tournament.getTournament()._params._victory_points;
+                    value += Tournament.getTournament().getParams()._victory_points;
                 } else {
                     if (m._td2 == m._td1) {
-                        value += Tournament.getTournament()._params._draw_points;
+                        value += Tournament.getTournament().getParams()._draw_points;
                     } else {
                         if (m._td2 <= m._td1 + 1) {
-                            value += Tournament.getTournament()._params._little_lost_points;
+                            value += Tournament.getTournament().getParams()._little_lost_points;
                         } else {
-                            value += Tournament.getTournament()._params._lost_points;
+                            value += Tournament.getTournament().getParams()._lost_points;
                         }
                     }
                 }
             }
-            value += m._td2 * Tournament.getTournament()._params._bonus_td_points + m._td1 * Tournament.getTournament()._params._bonus_neg_td_points;
-            value += m._sor2 * Tournament.getTournament()._params._bonus_sor_points + m._sor1 * Tournament.getTournament()._params._bonus_neg_sor_points;
-            value += m._foul2 * Tournament.getTournament()._params._bonus_foul_points + m._foul1 * Tournament.getTournament()._params._bonus_neg_foul_points;
+            value += m._td2 * Tournament.getTournament().getParams()._bonus_td_points + m._td1 * Tournament.getTournament().getParams()._bonus_neg_td_points;
+            value += m._sor2 * Tournament.getTournament().getParams()._bonus_sor_points + m._sor1 * Tournament.getTournament().getParams()._bonus_neg_sor_points;
+            value += m._foul2 * Tournament.getTournament().getParams()._bonus_foul_points + m._foul1 * Tournament.getTournament().getParams()._bonus_neg_foul_points;
         }
         return value;
     }
@@ -331,47 +337,47 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
         int value = 0;
         if (m._coach1 == c) {
             if (m._td1 > m._td2 + 1) {
-                value += Tournament.getTournament()._params._large_victory_points;
+                value += Tournament.getTournament().getParams()._large_victory_points;
             } else {
                 if (m._td1 > m._td2) {
-                    value += Tournament.getTournament()._params._victory_points;
+                    value += Tournament.getTournament().getParams()._victory_points;
                 } else {
                     if (m._td1 == m._td2) {
-                        value += Tournament.getTournament()._params._draw_points;
+                        value += Tournament.getTournament().getParams()._draw_points;
                     } else {
                         if (m._td1 <= m._td2 + 1) {
-                            value += Tournament.getTournament()._params._little_lost_points;
+                            value += Tournament.getTournament().getParams()._little_lost_points;
                         } else {
-                            value += Tournament.getTournament()._params._lost_points;
+                            value += Tournament.getTournament().getParams()._lost_points;
                         }
                     }
                 }
             }
-            value += m._td1 * Tournament.getTournament()._params._bonus_td_points + m._td2 * Tournament.getTournament()._params._bonus_neg_td_points;
-            value += m._sor1 * Tournament.getTournament()._params._bonus_sor_points + m._sor2 * Tournament.getTournament()._params._bonus_neg_sor_points;
-            value += m._foul1 * Tournament.getTournament()._params._bonus_foul_points + m._foul2 * Tournament.getTournament()._params._bonus_neg_foul_points;
+            value += m._td1 * Tournament.getTournament().getParams()._bonus_td_points + m._td2 * Tournament.getTournament().getParams()._bonus_neg_td_points;
+            value += m._sor1 * Tournament.getTournament().getParams()._bonus_sor_points + m._sor2 * Tournament.getTournament().getParams()._bonus_neg_sor_points;
+            value += m._foul1 * Tournament.getTournament().getParams()._bonus_foul_points + m._foul2 * Tournament.getTournament().getParams()._bonus_neg_foul_points;
         }
         if (m._coach2 == c) {
             if (m._td2 > m._td1 + 1) {
-                value += Tournament.getTournament()._params._large_victory_points;
+                value += Tournament.getTournament().getParams()._large_victory_points;
             } else {
                 if (m._td2 > m._td1) {
-                    value += Tournament.getTournament()._params._victory_points;
+                    value += Tournament.getTournament().getParams()._victory_points;
                 } else {
                     if (m._td2 == m._td1) {
-                        value += Tournament.getTournament()._params._draw_points;
+                        value += Tournament.getTournament().getParams()._draw_points;
                     } else {
                         if (m._td2 <= m._td1 + 1) {
-                            value += Tournament.getTournament()._params._little_lost_points;
+                            value += Tournament.getTournament().getParams()._little_lost_points;
                         } else {
-                            value += Tournament.getTournament()._params._lost_points;
+                            value += Tournament.getTournament().getParams()._lost_points;
                         }
                     }
                 }
             }
-            value += m._td2 * Tournament.getTournament()._params._bonus_td_points + m._td1 * Tournament.getTournament()._params._bonus_neg_td_points;
-            value += m._sor2 * Tournament.getTournament()._params._bonus_sor_points + m._sor1 * Tournament.getTournament()._params._bonus_neg_sor_points;
-            value += m._foul2 * Tournament.getTournament()._params._bonus_foul_points + m._foul1 * Tournament.getTournament()._params._bonus_neg_foul_points;
+            value += m._td2 * Tournament.getTournament().getParams()._bonus_td_points + m._td1 * Tournament.getTournament().getParams()._bonus_neg_td_points;
+            value += m._sor2 * Tournament.getTournament().getParams()._bonus_sor_points + m._sor1 * Tournament.getTournament().getParams()._bonus_neg_sor_points;
+            value += m._foul2 * Tournament.getTournament().getParams()._bonus_foul_points + m._foul1 * Tournament.getTournament().getParams()._bonus_neg_foul_points;
         }
         return value;
     }
@@ -416,8 +422,8 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
     public Object getValueAt(int row, int col) {
         Vector<Match> matchs = new Vector<Match>();
         for (int i = 0; i < _rounds.size(); i++) {
-            for (int j = 0; j < _rounds.get(i)._matchs.size(); j++) {
-                matchs.add(_rounds.get(i)._matchs.get(j));
+            for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
+                matchs.add(_rounds.get(i).getMatchs().get(j));
             }
         }
 
@@ -447,21 +453,21 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
             case 0:
                 return row + 1;
             case 1:
-                return datas.get(row)._coach._team;
+                return datas.get(row).getCoach()._team;
             case 2:
-                return datas.get(row)._coach._name;
+                return datas.get(row).getCoach()._name;
             case 3:
-                return datas.get(row)._coach._roster;
+                return datas.get(row).getCoach()._roster;
             case 4:
-                return datas.get(row)._value1;
+                return datas.get(row).getValue1();
             case 5:
-                return datas.get(row)._value2;
+                return datas.get(row).getValue2();
             case 6:
-                return datas.get(row)._value3;
+                return datas.get(row).getValue3();
             case 7:
-                return datas.get(row)._value4;
+                return datas.get(row).getValue4();
             case 8:
-                return datas.get(row)._value5;
+                return datas.get(row).getValue5();
         }
 
 

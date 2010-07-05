@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma;
+package tourma.data;
 
+import tourma.*;
+import tourma.data.Match;
+import tourma.data.Coach;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,6 +52,21 @@ public class Tournament {
             _singleton = new Tournament();
         }
         return _singleton;
+    }
+
+    public Parameters getParams()
+    {
+        return _params;
+    }
+
+    public Vector<Coach> getCoachs()
+    {
+        return _coachs;
+    }
+
+    public Vector<Round> getRounds()
+    {
+        return _rounds;
     }
 
     public void saveXML(java.io.File file) {

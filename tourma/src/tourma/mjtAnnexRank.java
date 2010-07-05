@@ -4,6 +4,9 @@
  */
 package tourma;
 
+import tourma.data.Round;
+import tourma.data.Match;
+import tourma.data.Coach;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -108,8 +111,8 @@ public class mjtAnnexRank extends AbstractTableModel implements TableCellRendere
     public Object getValueAt(int row, int col) {
         Vector<Match> matchs = new Vector<Match>();
         for (int i = 0; i < _rounds.size(); i++) {
-            for (int j = 0; j < _rounds.get(i)._matchs.size(); j++) {
-                matchs.add(_rounds.get(i)._matchs.get(j));
+            for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
+                matchs.add(_rounds.get(i).getMatchs().get(j));
             }
         }
 
