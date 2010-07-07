@@ -16,6 +16,9 @@ public class Parameters {
     public int _little_lost_points=100;
     public int _lost_points=0;
 
+    public int _large_victory_gap=3;
+    public int _little_lost_gap=1;
+
     public int _bonus_td_points=2;
     public int _bonus_sor_points=1;
     public int _bonus_foul_points=1;

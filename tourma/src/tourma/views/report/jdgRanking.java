@@ -90,6 +90,7 @@ public class jdgRanking extends javax.swing.JDialog {
         jepHTML = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setName("Ranking"); // NOI18N
 
         jbtOK.setText("OK");
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
@@ -141,13 +142,13 @@ public class jdgRanking extends javax.swing.JDialog {
 
         try {
             Configuration cfg = new Configuration();
-            URI uri = getClass().getResource("/tourma/template").toURI();
+            URI uri = getClass().getResource("/tourma/views/report").toURI();
             if (uri.toString().contains(".jar!")) {
                 /*String tmp = uri.toString();
                 tmp = tmp.substring(10, tmp.indexOf(".jar!") - 4);
                 //tmp=tmp+"";
                 cfg.setDirectoryForTemplateLoading(new File(tmp));*/
-                cfg.setClassForTemplateLoading(getClass(),"template");
+                cfg.setClassForTemplateLoading(getClass(),"");
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
@@ -161,7 +162,7 @@ public class jdgRanking extends javax.swing.JDialog {
             }
 
             Map root = new HashMap();
-            root.put("nom", _tour.getParams()._tournament_name + " - Classement Ronde " + _roundNumber);
+            root.put("nom", _tour.getParams()._tournament_name + " - Ronde " + _roundNumber);
             switch (_rankType) {
                 case RANKING_GENERAL:
                     root.put("title", "Classement général");

@@ -54,18 +54,15 @@ public class Tournament {
         return _singleton;
     }
 
-    public Parameters getParams()
-    {
+    public Parameters getParams() {
         return _params;
     }
 
-    public Vector<Coach> getCoachs()
-    {
+    public Vector<Coach> getCoachs() {
         return _coachs;
     }
 
-    public Vector<Round> getRounds()
-    {
+    public Vector<Round> getRounds() {
         return _rounds;
     }
 
@@ -89,11 +86,15 @@ public class Tournament {
         params.setAttribute("Lost", Integer.toString(_params._lost_points));
         params.setAttribute("Little_Lost", Integer.toString(_params._little_lost_points));
 
+        params.setAttribute("Large_Victory_Gap", Integer.toString(_params._large_victory_gap));
+        params.setAttribute("Little_Lost_Gap", Integer.toString(_params._little_lost_gap));
+
         params.setAttribute("Rank1", Integer.toString(_params._ranking1));
         params.setAttribute("Rank2", Integer.toString(_params._ranking2));
         params.setAttribute("Rank3", Integer.toString(_params._ranking3));
         params.setAttribute("Rank4", Integer.toString(_params._ranking4));
         params.setAttribute("Rank5", Integer.toString(_params._ranking5));
+
 
         document.addContent(params);
 
@@ -138,7 +139,7 @@ public class Tournament {
     }
 
     private String getRosterTranslation(String source) {
- 
+
         if (source.equals("Amazone")) {
             return "Amazons";
         }
@@ -319,6 +320,12 @@ public class Tournament {
                 _params._ranking3 = params.getAttribute("Rank3").getIntValue();
                 _params._ranking4 = params.getAttribute("Rank4").getIntValue();
                 _params._ranking5 = params.getAttribute("Rank5").getIntValue();
+
+                try {
+                    _params._large_victory_gap = params.getAttribute("Large_Victory_Gap").getIntValue();
+                    _params._little_lost_gap = params.getAttribute("Little_Lost_Gap").getIntValue();
+                } catch (NullPointerException ne) {
+                }
             }
 
             List coachs = racine.getChildren("Coach");
@@ -394,8 +401,7 @@ public class Tournament {
         r._heure = cal.getTime();
         Vector<Coach> shuffle = new Vector<Coach>(_coachs);
 
-        if (choice==0) /* Aléatoire */
-        {
+        if (choice == 0) /* Aléatoire */ {
             Collections.shuffle(shuffle);
         }
 

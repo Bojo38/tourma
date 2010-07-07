@@ -72,21 +72,21 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     case Parameters.C_RANKING_POINTS:
                         return "Points";
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Diff aggressions";
+                        return "Diff aggr";
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Diff sorties";
+                        return "Diff sor";
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Diff touchdowns";
+                        return "Diff tds";
                     case Parameters.C_RANKING_FOUL:
-                        return "Nb aggressions";
+                        return "Nb aggr";
                     case Parameters.C_RANKING_NONE:
                         return "Rien";
                     case Parameters.C_RANKING_OPP_POINTS:
                         return "Pts adv";
                     case Parameters.C_RANKING_SOR:
-                        return "Nb sorties";
+                        return "Nb sor";
                     case Parameters.C_RANKING_TD:
-                        return "Nb touchdowns";
+                        return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
                 }
@@ -96,23 +96,23 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     case Parameters.C_RANKING_POINTS:
                         return "Points";
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Différences d'aggressions";
+                        return "Diff aggr";
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Différences de sorties";
+                        return "Diff sor";
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Différences de touchdowns";
+                        return "Diff tds";
                     case Parameters.C_RANKING_FOUL:
-                        return "Nombre d'aggressions";
+                        return "Nb aggr";
                     case Parameters.C_RANKING_NONE:
                         return "Rien";
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Points adversaires";
+                        return "Pts adv";
                     case Parameters.C_RANKING_SOR:
-                        return "Nombre de sorties";
+                        return "Nb sor";
                     case Parameters.C_RANKING_TD:
-                        return "Nombre de touchdowns";
+                        return "Nb tds";
                     case Parameters.C_RANKING_VND:
-                        return "Victoires/Nuls/Défaites";
+                        return "V/N/D";
                 }
                 break;
             case 6:
@@ -120,47 +120,47 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     case Parameters.C_RANKING_POINTS:
                         return "Points";
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Différences d'aggressions";
+                        return "Diff aggr";
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Différences de sorties";
+                        return "Diff sor";
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Différences de touchdowns";
+                        return "Diff tds";
                     case Parameters.C_RANKING_FOUL:
-                        return "Nombre d'aggressions";
+                        return "Nb aggr";
                     case Parameters.C_RANKING_NONE:
                         return "Rien";
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Points adversaires";
+                        return "Pts adv";
                     case Parameters.C_RANKING_SOR:
-                        return "Nombre de sorties";
+                        return "Nb sor";
                     case Parameters.C_RANKING_TD:
-                        return "Nombre de touchdowns";
+                        return "Nb tds";
                     case Parameters.C_RANKING_VND:
-                        return "Victoires/Nuls/Défaites";
+                        return "V/N/D";
                 }
                 break;
             case 7:
                 switch (_ranking_type4) {
-                    case Parameters.C_RANKING_POINTS:
+                   case Parameters.C_RANKING_POINTS:
                         return "Points";
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Différences d'aggressions";
+                        return "Diff aggr";
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Différences de sorties";
+                        return "Diff sor";
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Différences de touchdowns";
+                        return "Diff tds";
                     case Parameters.C_RANKING_FOUL:
-                        return "Nombre d'aggressions";
+                        return "Nb aggr";
                     case Parameters.C_RANKING_NONE:
                         return "Rien";
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Points adversaires";
+                        return "Pts adv";
                     case Parameters.C_RANKING_SOR:
-                        return "Nombre de sorties";
+                        return "Nb sor";
                     case Parameters.C_RANKING_TD:
-                        return "Nombre de touchdowns";
+                        return "Nb tds";
                     case Parameters.C_RANKING_VND:
-                        return "Victoires/Nuls/Défaites";
+                        return "V/N/D";
                 }
                 break;
             case 8:
@@ -168,23 +168,23 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     case Parameters.C_RANKING_POINTS:
                         return "Points";
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Différences d'aggressions";
+                        return "Diff aggr";
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Différences de sorties";
+                        return "Diff sor";
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Différences de touchdowns";
+                        return "Diff tds";
                     case Parameters.C_RANKING_FOUL:
-                        return "Nombre d'aggressions";
+                        return "Nb aggr";
                     case Parameters.C_RANKING_NONE:
                         return "Rien";
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Points adversaires";
+                        return "Pts adv";
                     case Parameters.C_RANKING_SOR:
-                        return "Nombre de sorties";
+                        return "Nb sor";
                     case Parameters.C_RANKING_TD:
-                        return "Nombre de touchdowns";
+                        return "Nb tds";
                     case Parameters.C_RANKING_VND:
-                        return "Victoires/Nuls/Défaites";
+                        return "V/N/D";
                 }
                 break;
         }
@@ -260,7 +260,7 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
     public static int getOppPoints(Coach c, Match m) {
         int value = 0;
         if (m._coach2 == c) {
-            if (m._td1 > m._td2 + 1) {
+            if (m._td1 >= m._td2 + Tournament.getTournament().getParams()._large_victory_gap) {
                 value += Tournament.getTournament().getParams()._large_victory_points;
             } else {
                 if (m._td1 > m._td2) {
@@ -269,7 +269,7 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     if (m._td1 == m._td2) {
                         value += Tournament.getTournament().getParams()._draw_points;
                     } else {
-                        if (m._td1 <= m._td2 + 1) {
+                        if (m._td1+Tournament.getTournament().getParams()._little_lost_gap >= m._td2) {
                             value += Tournament.getTournament().getParams()._little_lost_points;
                         } else {
                             value += Tournament.getTournament().getParams()._lost_points;
@@ -282,7 +282,7 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
             value += m._foul1 * Tournament.getTournament().getParams()._bonus_foul_points + m._foul2 * Tournament.getTournament().getParams()._bonus_neg_foul_points;
         }
         if (m._coach1 == c) {
-            if (m._td2 > m._td1 + 1) {
+            if (m._td2 >= m._td1 + Tournament.getTournament().getParams()._large_victory_gap) {
                 value += Tournament.getTournament().getParams()._large_victory_points;
             } else {
                 if (m._td2 > m._td1) {
@@ -291,7 +291,7 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     if (m._td2 == m._td1) {
                         value += Tournament.getTournament().getParams()._draw_points;
                     } else {
-                        if (m._td2 <= m._td1 + 1) {
+                        if (m._td2+Tournament.getTournament().getParams()._little_lost_gap >= m._td1 ) {
                             value += Tournament.getTournament().getParams()._little_lost_points;
                         } else {
                             value += Tournament.getTournament().getParams()._lost_points;
@@ -336,7 +336,7 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
     public static int getPoints(Coach c, Match m) {
         int value = 0;
         if (m._coach1 == c) {
-            if (m._td1 > m._td2 + 1) {
+            if (m._td1 >= m._td2 + Tournament.getTournament().getParams()._large_victory_gap) {
                 value += Tournament.getTournament().getParams()._large_victory_points;
             } else {
                 if (m._td1 > m._td2) {
@@ -345,7 +345,7 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     if (m._td1 == m._td2) {
                         value += Tournament.getTournament().getParams()._draw_points;
                     } else {
-                        if (m._td1 <= m._td2 + 1) {
+                        if (m._td1+Tournament.getTournament().getParams()._little_lost_gap >= m._td2) {
                             value += Tournament.getTournament().getParams()._little_lost_points;
                         } else {
                             value += Tournament.getTournament().getParams()._lost_points;
@@ -358,7 +358,7 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
             value += m._foul1 * Tournament.getTournament().getParams()._bonus_foul_points + m._foul2 * Tournament.getTournament().getParams()._bonus_neg_foul_points;
         }
         if (m._coach2 == c) {
-            if (m._td2 > m._td1 + 1) {
+            if (m._td2 >= m._td1 + Tournament.getTournament().getParams()._large_victory_gap) {
                 value += Tournament.getTournament().getParams()._large_victory_points;
             } else {
                 if (m._td2 > m._td1) {
@@ -367,7 +367,7 @@ public class mjtRanking extends AbstractTableModel implements TableCellRenderer 
                     if (m._td2 == m._td1) {
                         value += Tournament.getTournament().getParams()._draw_points;
                     } else {
-                        if (m._td2 <= m._td1 + 1) {
+                        if (m._td2+Tournament.getTournament().getParams()._little_lost_gap >= m._td1 ) {
                             value += Tournament.getTournament().getParams()._little_lost_points;
                         } else {
                             value += Tournament.getTournament().getParams()._lost_points;

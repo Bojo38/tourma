@@ -8,7 +8,6 @@
  *
  * Created on 28 juin 2010, 10:52:47
  */
-
 package tourma.views.report;
 
 import tourma.*;
@@ -41,20 +40,21 @@ import javax.swing.JOptionPane;
  */
 public class jdgRound extends javax.swing.JDialog {
 
-        Round _round;
-        int _roundNumber;
-        Tournament _tour;
-        boolean _result;
+    Round _round;
+    int _roundNumber;
+    Tournament _tour;
+    boolean _result;
+
     /** Creates new form jdgRoundReport */
-    public jdgRound(java.awt.Frame parent, boolean modal,Round round,int roundNumber, Tournament tour,boolean result) {
+    public jdgRound(java.awt.Frame parent, boolean modal, Round round, int roundNumber, Tournament tour, boolean result) {
         super(parent, modal);
         initComponents();
-        _round=round;
-        _roundNumber=roundNumber;
-        _tour=tour;
-        _result=result;
+        _round = round;
+        _roundNumber = roundNumber;
+        _tour = tour;
+        _result = result;
 
-        this.setTitle(tour.getParams()._tournament_name+" - Ronde "+roundNumber);
+        this.setTitle(tour.getParams()._tournament_name + " - Ronde " + roundNumber);
         try {
             jepHTML.setContentType("html");
             File f = CreateReport();
@@ -62,7 +62,7 @@ public class jdgRound extends javax.swing.JDialog {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
         }
-        this.setPreferredSize(new Dimension(800,600));
+        this.setPreferredSize(new Dimension(800, 600));
         pack();
     }
 
@@ -113,14 +113,13 @@ public class jdgRound extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtOKActionPerformed
 
     private void jbtPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPrintActionPerformed
-         try {
+        try {
             jepHTML.print();
 
         } catch (PrinterException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
         }
     }//GEN-LAST:event_jbtPrintActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -129,51 +128,59 @@ public class jdgRound extends javax.swing.JDialog {
     private javax.swing.JEditorPane jepHTML;
     // End of variables declaration//GEN-END:variables
 
-    private File CreateReport()
-    {
+    private File CreateReport() {
         File address = null;
 
         try {
             Configuration cfg = new Configuration();
-            URI uri=getClass().getResource("/tourma/template").toURI();
-            if (uri.toString().contains(".jar!"))
-            {
-               /* JOptionPane.showMessageDialog(this,"Dans un jar: "+uri.toString());
+            URI uri = getClass().getResource("/tourma/views/report").toURI();
+            if (uri.toString().contains(".jar!")) {
+                /* JOptionPane.showMessageDialog(this,"Dans un jar: "+uri.toString());
                 String tmp=uri.toString();
                 tmp=tmp.substring(10, tmp.indexOf(".jar!")-4);
                 JOptionPane.showMessageDialog(this,tmp);
                 //tmp=tmp+"";
                 cfg.setDirectoryForTemplateLoading(new File(tmp));*/
-                cfg.setClassForTemplateLoading(getClass(),"template");
-            }
-            else
-            {
+                cfg.setClassForTemplateLoading(getClass(), "");
+            } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             Template temp = cfg.getTemplate("round.html");
 
             Map root = new HashMap();
-            root.put("nom", _tour.getParams()._tournament_name+" - Ronde "+_roundNumber);
+            root.put("nom", _tour.getParams()._tournament_name + " - Ronde " + _roundNumber);
             root.put("tables", _round.getMatchs().size());
 
             Vector<Match> matches = _round.getMatchs();
             Vector parMatches = new Vector();
+            if (_result) {
+                root.put("result",1);
+            }
+            else
+            {
+                root.put("result",0);
+            }
             for (int i = 0; i < matches.size(); i++) {
                 Match match = matches.get(i);
 
                 HashMap m = new HashMap();
-                m.put("numero", i+1);
+                m.put("numero", i + 1);
                 m.put("coach1", match._coach1._name);
-                if (_result)
-                {
-                m.put("score1", match._td1);
-                m.put("score2", match._td2);
-            }
-                else
-                {
-                m.put("score1", "&nbsp;");
-                m.put("score2", "&nbsp;");
+                if (_result) {
+                    m.put("score1", match._td1);
+                    m.put("score2", match._td2);
+                    m.put("sorties1", match._sor1);
+                    m.put("sorties2", match._sor2);
+                    m.put("foul1", match._foul1);
+                    m.put("foul2", match._foul2);
+                } else {
+                    m.put("score1", "&nbsp;");
+                    m.put("score2", "&nbsp;");
+                    m.put("sorties1", "&nbsp;");
+                    m.put("sorties2", "&nbsp;");
+                    m.put("foul1", "&nbsp;");
+                    m.put("foul2", "&nbsp;");
                 }
                 m.put("coach2", match._coach2._name);
                 parMatches.add(m);
@@ -199,5 +206,4 @@ public class jdgRound extends javax.swing.JDialog {
         }
         return address;
     }
-
 }

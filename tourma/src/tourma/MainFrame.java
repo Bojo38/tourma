@@ -15,6 +15,7 @@ import tourma.views.system.jdgAbout;
 import tourma.data.Tournament;
 import java.awt.Component;
 import java.awt.FontMetrics;
+import java.awt.Toolkit;
 import java.io.File;
 import java.text.ParseException;
 import javax.swing.JFileChooser;
@@ -25,7 +26,7 @@ import javax.swing.UIManager;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 import tourma.views.system.jdgOnlineHelp;
-
+import java.awt.Image;
 /**
  *
  * @author Frederic Berger
@@ -40,6 +41,10 @@ public class MainFrame extends javax.swing.JFrame {
         _tournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
+
+        /*Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("images/icone.bmp"));
+        setIconImage(icon);*/
+
         update();
 
     }
@@ -52,6 +57,8 @@ public class MainFrame extends javax.swing.JFrame {
         jtffFoulPos.setValue(new Integer(_tournament.getParams()._bonus_foul_points));
         jtffLargeVictory.setValue(new Integer(_tournament.getParams()._large_victory_points));
         jtffLittleLost.setValue(new Integer(_tournament.getParams()._little_lost_points));
+        jtffLargeVictoryGap.setValue(new Integer(_tournament.getParams()._large_victory_gap));
+        jtffLittleLostGap.setValue(new Integer(_tournament.getParams()._little_lost_gap));
         jtffLost.setValue(new Integer(_tournament.getParams()._lost_points));
         jtffSorNeg.setValue(new Integer(_tournament.getParams()._bonus_neg_sor_points));
         jtffSorPos.setValue(new Integer(_tournament.getParams()._bonus_sor_points));
@@ -97,12 +104,16 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jtffLargeVictory = new javax.swing.JFormattedTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jtffLargeVictoryGap = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jtffVictory = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jtffDraw = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
         jtffLittleLost = new javax.swing.JFormattedTextField();
+        jLabel20 = new javax.swing.JLabel();
+        jtffLittleLostGap = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         jtffLost = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -155,400 +166,428 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TOURnoi MAnager");
-
-        jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
-
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tournoi"));
-        jPanel5.setLayout(new java.awt.GridLayout(2, 2));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Nom du tournoi:");
-        jPanel5.add(jLabel1);
-
-        jtfTournamentName.setText("Ain Pacte");
-        jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtfTournamentNameKeyPressed(evt);
-            }
-        });
-        jPanel5.add(jtfTournamentName);
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel2.setText("Organisateurs:");
-        jPanel5.add(jLabel2);
-
-        jtfOrgas.setText("Ain Pacte Team");
-        jtfOrgas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtfOrgasKeyPressed(evt);
-            }
-        });
-        jPanel5.add(jtfOrgas);
-
-        jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
-
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement"));
-        jPanel6.setLayout(new java.awt.GridLayout(16, 2));
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel3.setText("Large victoire:");
-        jLabel3.setToolTipText("Nombre points pour unelarge victoire (2 Touchdowns d'écarts):");
-        jPanel6.add(jLabel3);
-
-        jtffLargeVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffLargeVictory.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffLargeVictoryFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffLargeVictory);
-
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel4.setText("Victoire:");
-        jLabel4.setToolTipText("Nombre points pour une victoire");
-        jPanel6.add(jLabel4);
-
-        jtffVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffVictory.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffVictoryFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffVictory);
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel5.setText("Match nul:");
-        jLabel5.setToolTipText("Nombre de points pour un match nul");
-        jPanel6.add(jLabel5);
-
-        jtffDraw.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffDraw.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffDrawFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffDraw);
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Petite défaite:");
-        jLabel6.setToolTipText("Nombre de points pour une petite défaite (par un Touchdown d'écart)");
-        jPanel6.add(jLabel6);
-
-        jtffLittleLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffLittleLost.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffLittleLostFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffLittleLost);
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel7.setText("Défaite:");
-        jLabel7.setToolTipText("Nombre de points pour une petite défaite:");
-        jPanel6.add(jLabel7);
-
-        jtffLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffLost.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffLostFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffLost);
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel8.setText("Touchdowns marqués:");
-        jLabel8.setToolTipText("Nombre de points pour un touchdown");
-        jPanel6.add(jLabel8);
-
-        jtffTdPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffTdPos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffTdPosFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffTdPos);
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel9.setText("Sorties réalisées:");
-        jLabel9.setToolTipText("Nombre de points pour une sortie réalisée");
-        jPanel6.add(jLabel9);
-
-        jtffSorPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffSorPos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffSorPosFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffSorPos);
-
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel10.setText("Aggressions réussies:");
-        jLabel10.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
-        jPanel6.add(jLabel10);
-
-        jtffFoulPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffFoulPos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffFoulPosFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffFoulPos);
-
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel11.setText("Touchdowns encaissés:");
-        jLabel11.setToolTipText("Nombre de points (éventuellement négatifs) pour les touchdowns encaissés");
-        jPanel6.add(jLabel11);
-
-        jtffTdNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffTdNeg.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffTdNegFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffTdNeg);
-
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel12.setText("Sorties subies:");
-        jLabel12.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies");
-        jPanel6.add(jLabel12);
-
-        jtffSorNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffSorNeg.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffSorNegFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffSorNeg);
-
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel13.setText("Aggressions subies:");
-        jLabel13.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
-        jPanel6.add(jLabel13);
-
-        jtffFoulNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffFoulNeg.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffFoulNegFocusLost(evt);
-            }
-        });
-        jPanel6.add(jtffFoulNeg);
-
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel14.setText("Critère de classement n°1:");
-        jPanel6.add(jLabel14);
-
-        jcbRank1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-        jcbRank1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank1ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jcbRank1);
-
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel15.setText("Critère de classement n°2:");
-        jPanel6.add(jLabel15);
-
-        jcbRank2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-        jcbRank2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank2ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jcbRank2);
-
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel16.setText("Critère de classement n°3:");
-        jPanel6.add(jLabel16);
-
-        jcbRank3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-        jcbRank3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank3ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jcbRank3);
-
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel17.setText("Critère de classement n°4:");
-        jPanel6.add(jLabel17);
-
-        jcbRank4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-        jcbRank4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank4ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jcbRank4);
-
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel18.setText("Critère de classement n°5:");
-        jPanel6.add(jLabel18);
-
-        jcbRank5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-        jcbRank5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank5ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jcbRank5);
-
-        jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
-
-        jpnParameters.add(jPanel1);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Coachs"));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jbtAdd.setText("Ajouter");
-        jbtAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAddActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jbtAdd);
-
-        jbtRemove.setText("Retirer");
-        jbtRemove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRemoveActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jbtRemove);
-
-        jbtModify.setText("Modifier");
-        jbtModify.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtModifyActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jbtModify);
-
-        jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
-
-        jtbCoachs.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtbCoachs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jtbCoachs);
-
-        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jbtFirstRound.setText("Générer la première ronde");
-        jbtFirstRound.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtFirstRoundActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jbtFirstRound);
-
-        jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_END);
-
-        jpnParameters.add(jPanel2);
-
-        jtpMain.addTab("Paramètres du tournoi", jpnParameters);
-
-        getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
-
-        jmnFile.setText("Fichier");
-
-        jmiNouveau.setText("Nouveau tournoi");
-        jmiNouveau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiNouveauActionPerformed(evt);
-            }
-        });
-        jmnFile.add(jmiNouveau);
-
-        jmiCharger.setText("Charger un tounoi");
-        jmiCharger.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiChargerActionPerformed(evt);
-            }
-        });
-        jmnFile.add(jmiCharger);
-
-        jmiSave.setText("Enregistrer le tournoi");
-        jmiSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiSaveActionPerformed(evt);
-            }
-        });
-        jmnFile.add(jmiSave);
-
-        jmiSaveAs.setText("Enregistrer le tournoi sous ");
-        jmiSaveAs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiSaveAsActionPerformed(evt);
-            }
-        });
-        jmnFile.add(jmiSaveAs);
-        jmnFile.add(jSeparator1);
-
-        jmiExport.setText("Exporter les résultats");
-        jmiExport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiExportActionPerformed(evt);
-            }
-        });
-        jmnFile.add(jmiExport);
-        jmnFile.add(jSeparator2);
-
-        jmiExit.setText("Quitter");
-        jmiExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiExitActionPerformed(evt);
-            }
-        });
-        jmnFile.add(jmiExit);
-
-        jMenuBar1.add(jmnFile);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        jmnHelp.setText("?");
-
-        jmiAbout.setText("A propos de");
-        jmiAbout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiAboutActionPerformed(evt);
-            }
-        });
-        jmnHelp.add(jmiAbout);
-
-        jmiRevisions.setText("Révisions logicielles");
-        jmiRevisions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiRevisionsActionPerformed(evt);
-            }
-        });
-        jmnHelp.add(jmiRevisions);
-        jmnHelp.add(jSeparator3);
-
-        jmiAideEnLigne.setText("Aide");
-        jmiAideEnLigne.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiAideEnLigneActionPerformed(evt);
-            }
-        });
-        jmnHelp.add(jmiAideEnLigne);
-
-        jMenuBar1.add(jmnHelp);
-
-        setJMenuBar(jMenuBar1);
-
-        pack();
+        setIconImage((Toolkit.getDefaultToolkit().getImage(
+            MainFrame.class.getResource("images/icone.png"))));
+
+jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
+
+jPanel1.setLayout(new java.awt.BorderLayout());
+
+jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tournoi"));
+jPanel5.setLayout(new java.awt.GridLayout(2, 2));
+
+jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+jLabel1.setText("Nom du tournoi:");
+jPanel5.add(jLabel1);
+
+jtfTournamentName.setText("Ain Pacte");
+jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
+    public void keyPressed(java.awt.event.KeyEvent evt) {
+        jtfTournamentNameKeyPressed(evt);
+    }
+    });
+    jPanel5.add(jtfTournamentName);
+
+    jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel2.setText("Organisateurs:");
+    jPanel5.add(jLabel2);
+
+    jtfOrgas.setText("Ain Pacte Team");
+    jtfOrgas.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            jtfOrgasKeyPressed(evt);
+        }
+    });
+    jPanel5.add(jtfOrgas);
+
+    jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
+
+    jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement"));
+    jPanel6.setLayout(new java.awt.GridLayout(18, 2));
+
+    jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel3.setText("Large victoire:");
+    jLabel3.setToolTipText("Nombre points pour unelarge victoire (2 Touchdowns d'écarts):");
+    jPanel6.add(jLabel3);
+
+    jtffLargeVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffLargeVictory.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffLargeVictoryFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffLargeVictory);
+
+    jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel19.setText("Ecart minimum pour une large victoire:");
+    jLabel19.setToolTipText("Nombre points pour unelarge victoire (2 Touchdowns d'écarts):");
+    jPanel6.add(jLabel19);
+
+    jtffLargeVictoryGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffLargeVictoryGap.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffLargeVictoryGapFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffLargeVictoryGap);
+
+    jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel4.setText("Victoire:");
+    jLabel4.setToolTipText("Nombre points pour une victoire");
+    jPanel6.add(jLabel4);
+
+    jtffVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffVictory.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffVictoryFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffVictory);
+
+    jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel5.setText("Match nul:");
+    jLabel5.setToolTipText("Nombre de points pour un match nul");
+    jPanel6.add(jLabel5);
+
+    jtffDraw.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffDraw.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffDrawFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffDraw);
+
+    jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel6.setText("Petite défaite:");
+    jLabel6.setToolTipText("Nombre de points pour une petite défaite (par un Touchdown d'écart)");
+    jPanel6.add(jLabel6);
+
+    jtffLittleLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffLittleLost.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffLittleLostFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffLittleLost);
+
+    jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel20.setText("Ecart maximum pour une petite défaite:");
+    jLabel20.setToolTipText("Nombre de points pour une petite défaite (par un Touchdown d'écart)");
+    jPanel6.add(jLabel20);
+
+    jtffLittleLostGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffLittleLostGap.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffLittleLostGapFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffLittleLostGap);
+
+    jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel7.setText("Défaite:");
+    jLabel7.setToolTipText("Nombre de points pour une petite défaite:");
+    jPanel6.add(jLabel7);
+
+    jtffLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffLost.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffLostFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffLost);
+
+    jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel8.setText("Touchdowns marqués:");
+    jLabel8.setToolTipText("Nombre de points pour un touchdown");
+    jPanel6.add(jLabel8);
+
+    jtffTdPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffTdPos.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffTdPosFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffTdPos);
+
+    jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel9.setText("Sorties réalisées:");
+    jLabel9.setToolTipText("Nombre de points pour une sortie réalisée");
+    jPanel6.add(jLabel9);
+
+    jtffSorPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffSorPos.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffSorPosFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffSorPos);
+
+    jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel10.setText("Aggressions réussies:");
+    jLabel10.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
+    jPanel6.add(jLabel10);
+
+    jtffFoulPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffFoulPos.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffFoulPosFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffFoulPos);
+
+    jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel11.setText("Touchdowns encaissés:");
+    jLabel11.setToolTipText("Nombre de points (éventuellement négatifs) pour les touchdowns encaissés");
+    jPanel6.add(jLabel11);
+
+    jtffTdNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffTdNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffTdNegFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffTdNeg);
+
+    jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel12.setText("Sorties subies:");
+    jLabel12.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies");
+    jPanel6.add(jLabel12);
+
+    jtffSorNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffSorNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffSorNegFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffSorNeg);
+
+    jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel13.setText("Aggressions subies:");
+    jLabel13.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
+    jPanel6.add(jLabel13);
+
+    jtffFoulNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffFoulNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffFoulNegFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffFoulNeg);
+
+    jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel14.setText("Critère de classement n°1:");
+    jPanel6.add(jLabel14);
+
+    jcbRank1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jcbRank1ActionPerformed(evt);
+        }
+    });
+    jPanel6.add(jcbRank1);
+
+    jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel15.setText("Critère de classement n°2:");
+    jPanel6.add(jLabel15);
+
+    jcbRank2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jcbRank2ActionPerformed(evt);
+        }
+    });
+    jPanel6.add(jcbRank2);
+
+    jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel16.setText("Critère de classement n°3:");
+    jPanel6.add(jLabel16);
+
+    jcbRank3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank3.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jcbRank3ActionPerformed(evt);
+        }
+    });
+    jPanel6.add(jcbRank3);
+
+    jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel17.setText("Critère de classement n°4:");
+    jPanel6.add(jLabel17);
+
+    jcbRank4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank4.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jcbRank4ActionPerformed(evt);
+        }
+    });
+    jPanel6.add(jcbRank4);
+
+    jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel18.setText("Critère de classement n°5:");
+    jPanel6.add(jLabel18);
+
+    jcbRank5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank5.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jcbRank5ActionPerformed(evt);
+        }
+    });
+    jPanel6.add(jcbRank5);
+
+    jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
+
+    jpnParameters.add(jPanel1);
+
+    jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Coachs"));
+    jPanel2.setLayout(new java.awt.BorderLayout());
+
+    jbtAdd.setText("Ajouter");
+    jbtAdd.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jbtAddActionPerformed(evt);
+        }
+    });
+    jPanel3.add(jbtAdd);
+
+    jbtRemove.setText("Retirer");
+    jbtRemove.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jbtRemoveActionPerformed(evt);
+        }
+    });
+    jPanel3.add(jbtRemove);
+
+    jbtModify.setText("Modifier");
+    jbtModify.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jbtModifyActionPerformed(evt);
+        }
+    });
+    jPanel3.add(jbtModify);
+
+    jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
+
+    jtbCoachs.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null}
+        },
+        new String [] {
+            "Title 1", "Title 2", "Title 3", "Title 4"
+        }
+    ));
+    jtbCoachs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+    jScrollPane1.setViewportView(jtbCoachs);
+
+    jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+    jbtFirstRound.setText("Générer la première ronde");
+    jbtFirstRound.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jbtFirstRoundActionPerformed(evt);
+        }
+    });
+    jPanel4.add(jbtFirstRound);
+
+    jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_END);
+
+    jpnParameters.add(jPanel2);
+
+    jtpMain.addTab("Paramètres du tournoi", jpnParameters);
+
+    getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
+
+    jmnFile.setText("Fichier");
+
+    jmiNouveau.setText("Nouveau tournoi");
+    jmiNouveau.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiNouveauActionPerformed(evt);
+        }
+    });
+    jmnFile.add(jmiNouveau);
+
+    jmiCharger.setText("Charger un tounoi");
+    jmiCharger.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiChargerActionPerformed(evt);
+        }
+    });
+    jmnFile.add(jmiCharger);
+
+    jmiSave.setText("Enregistrer le tournoi");
+    jmiSave.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiSaveActionPerformed(evt);
+        }
+    });
+    jmnFile.add(jmiSave);
+
+    jmiSaveAs.setText("Enregistrer le tournoi sous ");
+    jmiSaveAs.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiSaveAsActionPerformed(evt);
+        }
+    });
+    jmnFile.add(jmiSaveAs);
+    jmnFile.add(jSeparator1);
+
+    jmiExport.setLabel("Exporter les résultats (NAF)");
+    jmiExport.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiExportActionPerformed(evt);
+        }
+    });
+    jmnFile.add(jmiExport);
+    jmnFile.add(jSeparator2);
+
+    jmiExit.setText("Quitter");
+    jmiExit.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiExitActionPerformed(evt);
+        }
+    });
+    jmnFile.add(jmiExit);
+
+    jMenuBar1.add(jmnFile);
+
+    jMenu2.setText("Edit");
+    jMenuBar1.add(jMenu2);
+
+    jmnHelp.setText("?");
+
+    jmiAbout.setText("A propos de");
+    jmiAbout.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiAboutActionPerformed(evt);
+        }
+    });
+    jmnHelp.add(jmiAbout);
+
+    jmiRevisions.setText("Révisions logicielles");
+    jmiRevisions.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiRevisionsActionPerformed(evt);
+        }
+    });
+    jmnHelp.add(jmiRevisions);
+    jmnHelp.add(jSeparator3);
+
+    jmiAideEnLigne.setText("Aide");
+    jmiAideEnLigne.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jmiAideEnLigneActionPerformed(evt);
+        }
+    });
+    jmnHelp.add(jmiAideEnLigne);
+
+    jMenuBar1.add(jmnHelp);
+
+    setJMenuBar(jMenuBar1);
+
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
@@ -556,8 +595,8 @@ public class MainFrame extends javax.swing.JFrame {
             if (_tournament.getCoachs().size() % 2 > 0) {
                 JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
             } else {
-                String[] options={"Aléatoire","Ordre d'inscription"};
-                int choice=JOptionPane.showOptionDialog(this, "Choisissez le tirage initial","Tirage", JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
+                String[] options = {"Aléatoire", "Ordre d'inscription"};
+                int choice = JOptionPane.showOptionDialog(this, "Choisissez le tirage initial", "Tirage", JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
                 _tournament.generateFirstRound(choice);
                 for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
                     Component obj = jtpMain.getComponentAt(i);
@@ -820,39 +859,60 @@ public class MainFrame extends javax.swing.JFrame {
 }//GEN-LAST:event_jmiRevisionsActionPerformed
 
     private void jmiAideEnLigneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAideEnLigneActionPerformed
-         jdgOnlineHelp jdg = new jdgOnlineHelp(this, false);
+        jdgOnlineHelp jdg = new jdgOnlineHelp(this, false);
         jdg.setVisible(true);
         jdg = null;
     }//GEN-LAST:event_jmiAideEnLigneActionPerformed
 
-    public void setColumnSize(JTable t){
+    private void jtffLargeVictoryGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryGapFocusLost
+        try {
+            jtffLargeVictoryGap.commitEdit();
+            int points = ((Long) jtffLargeVictoryGap.getValue()).intValue();
+            _tournament.getParams()._large_victory_gap = points;
+        } catch (ParseException e) {
+            jtffLargeVictoryGap.setValue(jtffLargeVictoryGap.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffLargeVictoryGapFocusLost
+
+    private void jtffLittleLostGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostGapFocusLost
+        try {
+            jtffLittleLostGap.commitEdit();
+            int points = ((Long) jtffLittleLostGap.getValue()).intValue();
+            _tournament.getParams()._little_lost_gap = points;
+        } catch (ParseException e) {
+            jtffLittleLostGap.setValue(jtffLittleLostGap.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffLittleLostGapFocusLost
+
+    public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0 ; i < t.getColumnCount() ; i++)
-        {
+        for (int i = 0; i < t.getColumnCount(); i++) {
             int max = 0;
-            for (int j = 0 ; j < t.getRowCount() ; j++)
-            {
-                Object value=t.getValueAt(j,i);
-                String tmp="";
-                if (value instanceof String)
-                {
-                    tmp=(String)value;
+            for (int j = 0; j < t.getRowCount(); j++) {
+                Object value = t.getValueAt(j, i);
+                String tmp = "";
+                if (value instanceof String) {
+                    tmp = (String) value;
                 }
-                if (value instanceof Integer)
-                {
-                    tmp=""+(Integer)value;
+                if (value instanceof Integer) {
+                    tmp = "" + (Integer) value;
                 }
-               int taille = fm.stringWidth(tmp);
-               if (taille > max)
+                int taille = fm.stringWidth(tmp);
+                if (taille > max) {
                     max = taille;
+                }
             }
-            String nom = (String)t.getColumnModel().getColumn(i).getIdentifier();
+            String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
             int taille = fm.stringWidth(nom);
-            if (taille > max)
-                   max = taille;
-           t.getColumnModel().getColumn(i).setPreferredWidth(max+10);
+            if (taille > max) {
+                max = taille;
+            }
+            t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -892,7 +952,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -940,7 +1002,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jtffFoulNeg;
     private javax.swing.JFormattedTextField jtffFoulPos;
     private javax.swing.JFormattedTextField jtffLargeVictory;
+    private javax.swing.JFormattedTextField jtffLargeVictoryGap;
     private javax.swing.JFormattedTextField jtffLittleLost;
+    private javax.swing.JFormattedTextField jtffLittleLostGap;
     private javax.swing.JFormattedTextField jtffLost;
     private javax.swing.JFormattedTextField jtffSorNeg;
     private javax.swing.JFormattedTextField jtffSorPos;
