@@ -56,7 +56,7 @@ public class JPNRound extends javax.swing.JPanel {
                 locked = true;
             }
         }
-        
+
         jbtDeleteRound.setEnabled(!locked);
 
         mjtMatches model = new mjtMatches(_round.getMatchs(), locked);
@@ -74,12 +74,12 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
         v.add(_round);
-        mjtAnnexRank mTdPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_POS, _tournament.getCoachs(), false);
-        mjtAnnexRank mTdNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_NEG, _tournament.getCoachs(), false);
-        mjtAnnexRank mSorPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_POS, _tournament.getCoachs(), false);
-        mjtAnnexRank mSorNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_NEG, _tournament.getCoachs(), false);
-        mjtAnnexRank mFoulPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_POS, _tournament.getCoachs(), false);
-        mjtAnnexRank mFoulNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_NEG, _tournament.getCoachs(), false);
+        mjtAnnexRank mTdPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_POS, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+        mjtAnnexRank mTdNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_TD_NEG, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+        mjtAnnexRank mSorPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_POS, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+        mjtAnnexRank mSorNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_SOR_NEG, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+        mjtAnnexRank mFoulPos = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_POS, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+        mjtAnnexRank mFoulNeg = new mjtAnnexRank(v, mjtAnnexRank.C_MOST_FOUL_NEG, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
 
         jtbMostTd.setModel(mTdPos);
         jtbMostTd.setDefaultRenderer(String.class, mTdPos);
@@ -703,7 +703,7 @@ public class JPNRound extends javax.swing.JPanel {
 
     private void jbtDeleteRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDeleteRoundActionPerformed
 
-        if (JOptionPane.showConfirmDialog(this, "Etes vous certain de vouloir effacer la ronde courante ?","Effacer une ronde", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Etes vous certain de vouloir effacer la ronde courante ?", "Effacer une ronde", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             _tournament.getRounds().remove(_round);
             for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1; i >= 0; i--) {
                 Component obj = MainFrame.getMainFrame().jtpMain.getComponentAt(i);

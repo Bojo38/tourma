@@ -19,34 +19,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-
-class CoachAnnexRanking implements Comparable {
-
-    Coach _coach;
-    int _value;
-
-    public CoachAnnexRanking(Coach c, int value) {
-        _coach = c;
-        _value = value;
-    }
-
-    public int compareTo(Object o) {
-        if (o instanceof CoachAnnexRanking) {
-            return ((CoachAnnexRanking) o)._value - _value;
-        } else {
-            return -65535;
-        }
-    }
-}
+import tourma.data.CoachAnnexRanking;
 
 /**
  *
  * @author Frederic Berger
  */
-public class mjtAnnexRank extends AbstractTableModel implements TableCellRenderer {
+public class mjtAnnexRank extends mjtRanking {
 
-    Vector<Round> _rounds;
-    Vector<Coach> _coachs;
     int _ranking_type;
     public static final int C_MOST_TD_POS = 0;
     public static final int C_MOST_TD_NEG = 1;
@@ -54,61 +34,20 @@ public class mjtAnnexRank extends AbstractTableModel implements TableCellRendere
     public static final int C_MOST_SOR_NEG = 3;
     public static final int C_MOST_FOUL_POS = 4;
     public static final int C_MOST_FOUL_NEG = 5;
-
     boolean _full_ranking;
-
-    public mjtAnnexRank(Vector<Round> rounds, int ranking_type, Vector<Coach> coachs,boolean full) {
+    Vector<CoachAnnexRanking> _datas;
+    public mjtAnnexRank(Vector<Round> rounds, int ranking_type, Vector<Coach> coachs, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5) {
+        super(rounds, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs);
         _rounds = rounds;
         _ranking_type = ranking_type;
         _coachs = coachs;
-        _full_ranking=full;
-    }
+        _full_ranking = full;
+        _ranking_type1 = ranking_type1;
+        _ranking_type2 = ranking_type2;
+        _ranking_type3 = ranking_type3;
+        _ranking_type4 = ranking_type4;
+        _ranking_type5 = ranking_type5;
 
-    public int getColumnCount() {
-        return 5;
-    }
-
-    public int getRowCount() {
-        if (_full_ranking)
-        {
-            return _coachs.size();
-        }
-        else
-        {
-            return 3;
-        }
-    }
-
-    public String getColumnName(int col) {
-        switch (col) {
-            case 0:
-                return "N";
-            case 1:
-                return "Equipe";
-            case 2:
-                return "Coach";
-            case 3:
-                return "Roster";
-            case 4:
-                switch (_ranking_type) {
-                    case C_MOST_TD_POS:
-                        return "Tds";
-                    case C_MOST_TD_NEG:
-                        return "Tds";
-                    case C_MOST_SOR_POS:
-                        return "Sor";
-                    case C_MOST_SOR_NEG:
-                        return "Sor";
-                    case C_MOST_FOUL_POS:
-                        return "Foul";
-                    case C_MOST_FOUL_NEG:
-                        return "Foul";
-                }
-        }
-        return "";
-    }
-
-    public Object getValueAt(int row, int col) {
         Vector<Match> matchs = new Vector<Match>();
         for (int i = 0; i < _rounds.size(); i++) {
             for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
@@ -116,11 +55,16 @@ public class mjtAnnexRank extends AbstractTableModel implements TableCellRendere
             }
         }
 
-        Vector<CoachAnnexRanking> datas = new Vector<CoachAnnexRanking>();
+        _datas = new Vector<CoachAnnexRanking>();
 
         for (int i = 0; i < _coachs.size(); i++) {
             Coach c = _coachs.get(i);
             int value = 0;
+            int value1 = 0;
+            int value2 = 0;
+            int value3 = 0;
+            int value4 = 0;
+            int value5 = 0;
             for (int j = 0; j < matchs.size(); j++) {
                 Match m = matchs.get(j);
                 if (m._coach1 == c) {
@@ -130,7 +74,6 @@ public class mjtAnnexRank extends AbstractTableModel implements TableCellRendere
                             break;
                         case C_MOST_TD_NEG:
                             value += m._td2;
-                            ;
                             break;
                         case C_MOST_SOR_POS:
                             value += m._sor1;
@@ -169,23 +112,77 @@ public class mjtAnnexRank extends AbstractTableModel implements TableCellRendere
                             break;
                     }
                 }
+                value1 += getValue(c, m, _ranking_type1);
+                value2 += getValue(c, m, _ranking_type2);
+                value3 += getValue(c, m, _ranking_type3);
+                value4 += getValue(c, m, _ranking_type4);
+                value5 += getValue(c, m, _ranking_type5);
             }
-            datas.add(new CoachAnnexRanking(c, value));
+            _datas.add(new CoachAnnexRanking(c, value,value1,value2,value3,value4,value5));
         }
 
-        Collections.sort(datas);
+        Collections.sort(_datas);
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 5;
+    }
+
+    @Override
+    public int getRowCount() {
+        if (_full_ranking) {
+            return _coachs.size();
+        } else {
+            return 3;
+        }
+    }
+
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case 0:
+                return "N";
+            case 1:
+                return "Equipe";
+            case 2:
+                return "Coach";
+            case 3:
+                return "Roster";
+            case 4:
+                switch (_ranking_type) {
+                    case C_MOST_TD_POS:
+                        return "Tds";
+                    case C_MOST_TD_NEG:
+                        return "Tds";
+                    case C_MOST_SOR_POS:
+                        return "Sor";
+                    case C_MOST_SOR_NEG:
+                        return "Sor";
+                    case C_MOST_FOUL_POS:
+                        return "Foul";
+                    case C_MOST_FOUL_NEG:
+                        return "Foul";
+                }
+        }
+        return "";
+    }
+
+    @Override
+    public Object getValueAt(int row, int col) {
+        
 
         switch (col) {
             case 0:
                 return row + 1;
             case 1:
-                return datas.get(row)._coach._team;
+                return _datas.get(row)._coach._team;
             case 2:
-                return datas.get(row)._coach._name;
+                return _datas.get(row)._coach._name;
             case 3:
-                return datas.get(row)._coach._roster;
+                return _datas.get(row)._coach._roster;
             case 4:
-                return datas.get(row)._value;
+                return _datas.get(row)._value;
         }
         return "";
     }

@@ -5,6 +5,8 @@
 
 package tourma.data;
 
+import java.util.Date;
+
 /**
  *
  * @author Frederic Berger
@@ -29,6 +31,8 @@ public class Parameters {
 
     public String _tournament_name;
     public String _tournament_orga;
+    public String _place;
+    public Date _date=new Date();
 
     public int _ranking1=1;
     public int _ranking2=2;

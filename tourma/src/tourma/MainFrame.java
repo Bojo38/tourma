@@ -26,7 +26,8 @@ import javax.swing.UIManager;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 import tourma.views.system.jdgOnlineHelp;
-import java.awt.Image;
+import javax.swing.filechooser.FileFilter;
+
 /**
  *
  * @author Frederic Berger
@@ -41,9 +42,6 @@ public class MainFrame extends javax.swing.JFrame {
         _tournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
-
-        /*Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("images/icone.bmp"));
-        setIconImage(icon);*/
 
         update();
 
@@ -66,11 +64,57 @@ public class MainFrame extends javax.swing.JFrame {
         jtffTdPos.setValue(new Integer(_tournament.getParams()._bonus_td_points));
         jtffVictory.setValue(new Integer(_tournament.getParams()._victory_points));
 
+        jcbRank1.removeActionListener(jcbRank1.getActionListeners()[0]);
+        jcbRank2.removeActionListener(jcbRank2.getActionListeners()[0]);
+        jcbRank3.removeActionListener(jcbRank3.getActionListeners()[0]);
+        jcbRank4.removeActionListener(jcbRank4.getActionListeners()[0]);
+        jcbRank5.removeActionListener(jcbRank5.getActionListeners()[0]);
+
         jcbRank1.setSelectedIndex(_tournament.getParams()._ranking1);
         jcbRank2.setSelectedIndex(_tournament.getParams()._ranking2);
         jcbRank3.setSelectedIndex(_tournament.getParams()._ranking3);
         jcbRank4.setSelectedIndex(_tournament.getParams()._ranking4);
         jcbRank5.setSelectedIndex(_tournament.getParams()._ranking5);
+
+        jcbRank1.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank1ActionPerformed(evt);
+            }
+        });
+
+
+        jcbRank2.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank2ActionPerformed(evt);
+            }
+        });
+
+
+
+        jcbRank3.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank3ActionPerformed(evt);
+            }
+        });
+
+        jcbRank4.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank4ActionPerformed(evt);
+            }
+        });
+
+        jcbRank5.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank5ActionPerformed(evt);
+            }
+        });
+        jxdDate.setDate(_tournament.getParams()._date);
+        jtfPlace.setText(_tournament.getParams()._place);
 
         mjtCoaches coachModel = new mjtCoaches(_tournament.getCoachs());
         jtbCoachs.setModel(coachModel);
@@ -101,6 +145,10 @@ public class MainFrame extends javax.swing.JFrame {
         jtfTournamentName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jtfOrgas = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jtfPlace = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        jxdDate = new org.jdesktop.swingx.JXDatePicker();
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jtffLargeVictory = new javax.swing.JFormattedTextField();
@@ -174,7 +222,7 @@ jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
 jPanel1.setLayout(new java.awt.BorderLayout());
 
 jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tournoi"));
-jPanel5.setLayout(new java.awt.GridLayout(2, 2));
+jPanel5.setLayout(new java.awt.GridLayout(4, 2));
 
 jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 jLabel1.setText("Nom du tournoi:");
@@ -199,6 +247,23 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         }
     });
     jPanel5.add(jtfOrgas);
+
+    jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel21.setText("Lieu:");
+    jPanel5.add(jLabel21);
+
+    jtfPlace.setText("Ain Pacte");
+    jtfPlace.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            jtfPlaceKeyPressed(evt);
+        }
+    });
+    jPanel5.add(jtfPlace);
+
+    jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel22.setText("Date:");
+    jPanel5.add(jLabel22);
+    jPanel5.add(jxdDate);
 
     jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
@@ -791,8 +856,18 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
         JFileChooser jfc = new JFileChooser();
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            Tournament.getTournament().saveXML(jfc.getSelectedFile());
-            file = jfc.getSelectedFile();
+            String url2 = jfc.getSelectedFile().getAbsolutePath();
+            String ext = "";
+            int i = url2.lastIndexOf('.');
+            if (i > 0 && i < url2.length() - 1) {
+                ext = url2.substring(i + 1).toLowerCase();
+            }
+
+            if (!ext.equals("xml")) {
+                url2 = url2 + ".xml";
+            }
+            file = new File(url2);
+            Tournament.getTournament().saveXML(file);
         }
     }//GEN-LAST:event_jmiSaveAsActionPerformed
 
@@ -806,30 +881,39 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
 
     private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
         JFileChooser jfc = new JFileChooser();
+        FileFilter filter1 = new ExtensionFileFilter("TourMa XML file", new String[]{"XML", "xml"});
+        jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
-            file = jfc.getSelectedFile();
-            for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
+            file =
+                    jfc.getSelectedFile();
+            for (int i = jtpMain.getTabCount() - 1; i >=
+                    0; i--) {
                 Component obj = jtpMain.getComponentAt(i);
                 if (obj instanceof JPNRound) {
                     jtpMain.remove(obj);
                 }
+
             }
-            for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            for (int i = 0; i <
+                    _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
                 jtpMain.add("Ronde " + (i + 1), jpnr);
             }
+
             update();
 
         }
     }//GEN-LAST:event_jmiChargerActionPerformed
 
     private void jmiNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNouveauActionPerformed
-        for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
+        for (int i = jtpMain.getTabCount() - 1; i >=
+                0; i--) {
             Component obj = jtpMain.getComponentAt(i);
             if (obj instanceof JPNRound) {
                 jtpMain.remove(obj);
             }
+
         }
         _tournament = Tournament.resetTournament();
         update();
@@ -849,19 +933,22 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private void jmiAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAboutActionPerformed
         jdgAbout jdg = new jdgAbout(this, true);
         jdg.setVisible(true);
-        jdg = null;
+        jdg =
+                null;
 }//GEN-LAST:event_jmiAboutActionPerformed
 
     private void jmiRevisionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRevisionsActionPerformed
         jdgRevisions jdg = new jdgRevisions(this, true);
         jdg.setVisible(true);
-        jdg = null;
+        jdg =
+                null;
 }//GEN-LAST:event_jmiRevisionsActionPerformed
 
     private void jmiAideEnLigneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAideEnLigneActionPerformed
         jdgOnlineHelp jdg = new jdgOnlineHelp(this, false);
         jdg.setVisible(true);
-        jdg = null;
+        jdg =
+                null;
     }//GEN-LAST:event_jmiAideEnLigneActionPerformed
 
     private void jtffLargeVictoryGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryGapFocusLost
@@ -872,6 +959,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         } catch (ParseException e) {
             jtffLargeVictoryGap.setValue(jtffLargeVictoryGap.getValue());
         }
+
         update();
     }//GEN-LAST:event_jtffLargeVictoryGapFocusLost
 
@@ -883,34 +971,46 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         } catch (ParseException e) {
             jtffLittleLostGap.setValue(jtffLittleLostGap.getValue());
         }
+
         update();
     }//GEN-LAST:event_jtffLittleLostGapFocusLost
 
+    private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfPlaceKeyPressed
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0; i < t.getColumnCount(); i++) {
+        for (int i = 0; i <
+                t.getColumnCount(); i++) {
             int max = 0;
-            for (int j = 0; j < t.getRowCount(); j++) {
+            for (int j = 0; j <
+                    t.getRowCount(); j++) {
                 Object value = t.getValueAt(j, i);
                 String tmp = "";
                 if (value instanceof String) {
                     tmp = (String) value;
                 }
+
                 if (value instanceof Integer) {
                     tmp = "" + (Integer) value;
                 }
+
                 int taille = fm.stringWidth(tmp);
                 if (taille > max) {
                     max = taille;
                 }
+
             }
             String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
             int taille = fm.stringWidth(nom);
             if (taille > max) {
                 max = taille;
             }
+
             t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
         }
+
     }
 
     /**
@@ -929,6 +1029,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
                 } catch (Exception e) {
                     System.out.println("Substance Creme Coffee failed to initialize");
                 }
+
                 MainFrame.getMainFrame().setVisible(true);
             }
         });
@@ -939,6 +1040,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         if (_singleton == null) {
             _singleton = new MainFrame();
         }
+
         return _singleton;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -955,6 +1057,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -997,6 +1101,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JPanel jpnParameters;
     private javax.swing.JTable jtbCoachs;
     private javax.swing.JTextField jtfOrgas;
+    private javax.swing.JTextField jtfPlace;
     private javax.swing.JTextField jtfTournamentName;
     private javax.swing.JFormattedTextField jtffDraw;
     private javax.swing.JFormattedTextField jtffFoulNeg;
@@ -1012,5 +1117,6 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JFormattedTextField jtffTdPos;
     private javax.swing.JFormattedTextField jtffVictory;
     public javax.swing.JTabbedPane jtpMain;
+    private org.jdesktop.swingx.JXDatePicker jxdDate;
     // End of variables declaration//GEN-END:variables
 }

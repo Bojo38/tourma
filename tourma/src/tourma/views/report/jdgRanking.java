@@ -170,27 +170,27 @@ public class jdgRanking extends javax.swing.JDialog {
                     break;
                 case RANKING_SCORER:
                     root.put("title", "Meilleur Marqueur");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_TD_POS, _tour.getCoachs(), true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_TD_POS, _tour.getCoachs(), true,_tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                     break;
                 case RANKING_DESTROYER:
                     root.put("title", "Meilleur Destructeur");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_SOR_POS, _tour.getCoachs(), true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_SOR_POS, _tour.getCoachs(), true,_tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                     break;
                 case RANKING_FOULER:
                     root.put("title", "Meilleur Crampon");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_FOUL_POS, _tour.getCoachs(), true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_FOUL_POS, _tour.getCoachs(), true,_tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                     break;
                 case RANKING_SCORED:
                     root.put("title", "Pire Passoire");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_TD_NEG, _tour.getCoachs(), true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_TD_NEG, _tour.getCoachs(), true,_tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                     break;
                 case RANKING_DESTROYED:
                     root.put("title", "Pire Punching Ball");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_SOR_NEG, _tour.getCoachs(), true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_SOR_NEG, _tour.getCoachs(), true,_tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                     break;
                 case RANKING_FOULED:
                     root.put("title", "Pire Paillasson");
-                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_FOUL_NEG, _tour.getCoachs(), true);
+                    model = new mjtAnnexRank(rounds, mjtAnnexRank.C_MOST_FOUL_NEG, _tour.getCoachs(), true,_tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                     break;
                 default:
                     root.put("title", "Classement général");

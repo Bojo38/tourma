@@ -5,8 +5,6 @@
 package tourma.data;
 
 import tourma.*;
-import tourma.data.Match;
-import tourma.data.Coach;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,9 +12,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import org.jdom.Element;
@@ -68,11 +67,13 @@ public class Tournament {
 
     public void saveXML(java.io.File file) {
         Element document = new Element("Tournament");
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM:SS");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         Element params = new Element("Parameters");
         params.setAttribute("Organizer", _params._tournament_orga);
         params.setAttribute("Name", _params._tournament_name);
+        params.setAttribute("Date", format.format(_params._date));
+        params.setAttribute("Place", _params._tournament_name);
         params.setAttribute("Bonus_Neg_Foul", Integer.toString(_params._bonus_neg_foul_points));
         params.setAttribute("Bonus_Pos_Foul", Integer.toString(_params._bonus_foul_points));
         params.setAttribute("Bonus_Neg_Td", Integer.toString(_params._bonus_neg_td_points));
@@ -298,7 +299,7 @@ public class Tournament {
         try {
             org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
-
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             /* Utilisateur */
             Element params = racine.getChild("Parameters");
             if (params != null) {
@@ -324,6 +325,15 @@ public class Tournament {
                 try {
                     _params._large_victory_gap = params.getAttribute("Large_Victory_Gap").getIntValue();
                     _params._little_lost_gap = params.getAttribute("Little_Lost_Gap").getIntValue();
+                    _params._place = params.getAttribute("Place").getValue();
+                    try
+                    {
+                        _params._date = format.parse(params.getAttribute("Date").getValue());
+                    }
+                    catch (ParseException pe)
+                    {
+                        
+                    }
                 } catch (NullPointerException ne) {
                 }
             }
@@ -331,6 +341,7 @@ public class Tournament {
             List coachs = racine.getChildren("Coach");
             Iterator i = coachs.iterator();
             _coachs.clear();
+            HashMap<String,Coach> map=new HashMap();
             while (i.hasNext()) {
                 Element coach = (Element) i.next();
                 Coach c = new Coach();
@@ -340,6 +351,7 @@ public class Tournament {
                 c._naf = coach.getAttribute("NAF").getIntValue();
                 c._rank = coach.getAttribute("Rank").getIntValue();
                 _coachs.add(c);
+                map.put(c._name, c);
             }
 
             List rounds = racine.getChildren("Round");
@@ -349,7 +361,6 @@ public class Tournament {
                 Element round = (Element) j.next();
                 Round r = new Round();
                 String date = round.getAttributeValue("Date");
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM:SS");
                 try {
                     r._heure = format.parse(date);
                 } catch (ParseException e) {
@@ -363,7 +374,9 @@ public class Tournament {
                     Match m = new Match();
                     String c1 = match.getAttribute("Coach1").getValue();
                     String c2 = match.getAttribute("Coach2").getValue();
-                    for (int cpt = 0; cpt < _coachs.size(); cpt++) {
+                    m._coach1=map.get(c1);
+                    m._coach2=map.get(c2);
+                    /*for (int cpt = 0; cpt < _coachs.size(); cpt++) {
                         if (c1.equals(_coachs.get(cpt)._name)) {
                             m._coach1 = _coachs.get(cpt);
                             break;
@@ -374,7 +387,7 @@ public class Tournament {
                             m._coach2 = _coachs.get(cpt);
                             break;
                         }
-                    }
+                    }*/
                     m._foul1 = match.getAttribute("Foul1").getIntValue();
                     m._foul2 = match.getAttribute("Foul2").getIntValue();
                     m._sor1 = match.getAttribute("Sor1").getIntValue();
