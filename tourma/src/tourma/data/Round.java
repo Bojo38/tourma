@@ -18,8 +18,7 @@ public class Round {
     Date _heure;
 
     public Round()
-    {
-        
+    {       
         _matchs=new Vector<Match>();
     }
 

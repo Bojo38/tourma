@@ -4,23 +4,22 @@
  */
 package tourma.data;
 
-import tourma.data.Coach;
 
 /**
  *
  * @author Frederic Berger
  */
-public class CoachRanking implements Comparable {
+public class ObjectRanking implements Comparable {
 
-    Coach _coach;
+    Comparable _object;
     int _value1;
     int _value2;
     int _value3;
     int _value4;
     int _value5;
 
-    public Coach getCoach() {
-        return _coach;
+    public Comparable getObject() {
+        return _object;
     }
 
     public int getValue1() {
@@ -43,8 +42,8 @@ public class CoachRanking implements Comparable {
         return _value5;
     }
 
-    public CoachRanking(Coach c, int value1, int value2, int value3, int value4, int value5) {
-        _coach = c;
+    public ObjectRanking(Comparable c, int value1, int value2, int value3, int value4, int value5) {
+        _object = c;
         _value1 = value1;
         _value2 = value2;
         _value3 = value3;
@@ -53,25 +52,25 @@ public class CoachRanking implements Comparable {
     }
 
     public int compareTo(Object o) {
-        if (o instanceof CoachRanking) {
-            if (((CoachRanking) o)._value1 == _value1) {
-                if (((CoachRanking) o)._value2 == _value2) {
-                    if (((CoachRanking) o)._value3 == _value3) {
-                        if (((CoachRanking) o)._value4 == _value4) {
-                            return ((CoachRanking) o)._value5 - _value5;
+        if (o instanceof ObjectRanking) {
+            if (((ObjectRanking) o)._value1 == _value1) {
+                if (((ObjectRanking) o)._value2 == _value2) {
+                    if (((ObjectRanking) o)._value3 == _value3) {
+                        if (((ObjectRanking) o)._value4 == _value4) {
+                            return ((ObjectRanking) o)._value5 - _value5;
                         } else {
-                            return ((CoachRanking) o)._value4 - _value4;
+                            return ((ObjectRanking) o)._value4 - _value4;
                         }
                     } else {
-                        return ((CoachRanking) o)._value3 - _value3;
+                        return ((ObjectRanking) o)._value3 - _value3;
                     }
 
                 } else {
-                    return ((CoachRanking) o)._value2 - _value2;
+                    return ((ObjectRanking) o)._value2 - _value2;
                 }
 
             } else {
-                return ((CoachRanking) o)._value1 - _value1;
+                return ((ObjectRanking) o)._value1 - _value1;
             }
         } else {
             return -65535;

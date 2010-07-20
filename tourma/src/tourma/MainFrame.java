@@ -10,6 +10,8 @@
  */
 package tourma;
 
+import tourma.tableModel.mjtCoaches;
+import tourma.tableModel.mjtTeams;
 import tourma.views.system.jdgRevisions;
 import tourma.views.system.jdgAbout;
 import tourma.data.Tournament;
@@ -27,6 +29,8 @@ import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
+import tourma.data.Coach;
+import tourma.data.Team;
 
 /**
  *
@@ -48,6 +52,33 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public void update() {
+
+        if (_tournament.getParams()._teamTournament) {
+            jpnTeamTour.setVisible(true);
+            jpnCoachButtons.setVisible(false);
+            String text = "";
+            if (_tournament.getParams()._teamPairing == 0) {
+                text = "individuel";
+            } else {
+                text = "par équipe";
+            }
+            jlbDetails.setText("Nombre de membres: " + _tournament.getParams()._teamMatesNumber + " Appariement " + text);
+        } else {
+            jpnTeamTour.setVisible(false);
+            jpnCoachButtons.setVisible(true);
+        }
+
+        boolean teamMatches = _tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1);
+        jrbCoachPoints.setEnabled(teamMatches);
+        jrbTeamVictory.setEnabled(teamMatches);
+
+        jtffTeamVictory.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+        jlbVictoryPoints.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+
+        jrbCoachPoints.setSelected(!_tournament.getParams()._team_victory_only);
+        jrbTeamVictory.setSelected(_tournament.getParams()._team_victory_only);
+        jtffTeamVictory.setValue(_tournament.getParams()._team_victory_points);
+
         jtfOrgas.setText(_tournament.getParams()._tournament_orga);
         jtfTournamentName.setText(_tournament.getParams()._tournament_name);
         jtffDraw.setValue(new Integer(_tournament.getParams()._draw_points));
@@ -63,7 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
         jtffTdNeg.setValue(new Integer(_tournament.getParams()._bonus_neg_td_points));
         jtffTdPos.setValue(new Integer(_tournament.getParams()._bonus_td_points));
         jtffVictory.setValue(new Integer(_tournament.getParams()._victory_points));
-
+       
         jcbRank1.removeActionListener(jcbRank1.getActionListeners()[0]);
         jcbRank2.removeActionListener(jcbRank2.getActionListeners()[0]);
         jcbRank3.removeActionListener(jcbRank3.getActionListeners()[0]);
@@ -120,6 +151,10 @@ public class MainFrame extends javax.swing.JFrame {
         jtbCoachs.setModel(coachModel);
         setColumnSize(jtbCoachs);
 
+        mjtTeams teamModel = new mjtTeams(_tournament.getTeams());
+        jtbTeam.setModel(teamModel);
+        setColumnSize(jtbTeam);
+
         for (int i = 0; i < jtpMain.getComponentCount(); i++) {
             Object o = jtpMain.getComponentAt(i);
             if (o instanceof JPNRound) {
@@ -137,6 +172,7 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jtpMain = new javax.swing.JTabbedPane();
         jpnParameters = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -186,13 +222,27 @@ public class MainFrame extends javax.swing.JFrame {
         jcbRank4 = new javax.swing.JComboBox();
         jLabel18 = new javax.swing.JLabel();
         jcbRank5 = new javax.swing.JComboBox();
+        jlbVictoryPoints = new javax.swing.JLabel();
+        jtffTeamVictory = new javax.swing.JFormattedTextField();
+        jrbTeamVictory = new javax.swing.JRadioButton();
+        jrbCoachPoints = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jpnCoachButtons = new javax.swing.JPanel();
         jbtAdd = new javax.swing.JButton();
         jbtRemove = new javax.swing.JButton();
         jbtModify = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCoachs = new javax.swing.JTable();
+        jpnTeamTour = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jbtAddTeam = new javax.swing.JButton();
+        jbtRemoveTeam = new javax.swing.JButton();
+        jbtModifyTeam = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtbTeam = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jlbDetails = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jbtFirstRound = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -268,7 +318,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
     jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement"));
-    jPanel6.setLayout(new java.awt.GridLayout(18, 2));
+    jPanel6.setLayout(new java.awt.GridLayout(20, 2));
 
     jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
     jLabel3.setText("Large victoire:");
@@ -499,12 +549,48 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jPanel6.add(jcbRank5);
 
+    jlbVictoryPoints.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jlbVictoryPoints.setText("Prime à la victoire d'équipe");
+    jPanel6.add(jlbVictoryPoints);
+
+    jtffTeamVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffTeamVictory.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffTeamVictoryFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffTeamVictory);
+
+    buttonGroup1.add(jrbTeamVictory);
+    jrbTeamVictory.setText("Utiliser la victoire d'équipe");
+    jrbTeamVictory.setHideActionText(true);
+    jrbTeamVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jrbTeamVictory.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+    jrbTeamVictory.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jrbTeamVictoryActionPerformed(evt);
+        }
+    });
+    jPanel6.add(jrbTeamVictory);
+
+    buttonGroup1.add(jrbCoachPoints);
+    jrbCoachPoints.setText("Utiliser le cumul des points des coachs");
+    jrbCoachPoints.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jrbCoachPointsActionPerformed(evt);
+        }
+    });
+    jPanel6.add(jrbCoachPoints);
+
     jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
     jpnParameters.add(jPanel1);
 
-    jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Coachs"));
     jPanel2.setLayout(new java.awt.BorderLayout());
+
+    jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Coachs"));
+    jPanel7.setPreferredSize(new java.awt.Dimension(450, 240));
+    jPanel7.setLayout(new java.awt.BorderLayout());
 
     jbtAdd.setText("Ajouter");
     jbtAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -512,7 +598,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
             jbtAddActionPerformed(evt);
         }
     });
-    jPanel3.add(jbtAdd);
+    jpnCoachButtons.add(jbtAdd);
 
     jbtRemove.setText("Retirer");
     jbtRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -520,7 +606,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
             jbtRemoveActionPerformed(evt);
         }
     });
-    jPanel3.add(jbtRemove);
+    jpnCoachButtons.add(jbtRemove);
 
     jbtModify.setText("Modifier");
     jbtModify.addActionListener(new java.awt.event.ActionListener() {
@@ -528,9 +614,9 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
             jbtModifyActionPerformed(evt);
         }
     });
-    jPanel3.add(jbtModify);
+    jpnCoachButtons.add(jbtModify);
 
-    jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
+    jPanel7.add(jpnCoachButtons, java.awt.BorderLayout.PAGE_START);
 
     jtbCoachs.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {
@@ -546,7 +632,62 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jtbCoachs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     jScrollPane1.setViewportView(jtbCoachs);
 
-    jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+    jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+    jPanel2.add(jPanel7, java.awt.BorderLayout.CENTER);
+
+    jpnTeamTour.setBorder(javax.swing.BorderFactory.createTitledBorder("Equipes"));
+    jpnTeamTour.setPreferredSize(new java.awt.Dimension(450, 240));
+    jpnTeamTour.setLayout(new java.awt.BorderLayout());
+
+    jbtAddTeam.setText("Ajouter");
+    jbtAddTeam.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jbtAddTeamActionPerformed(evt);
+        }
+    });
+    jPanel8.add(jbtAddTeam);
+
+    jbtRemoveTeam.setText("Retirer");
+    jbtRemoveTeam.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jbtRemoveTeamActionPerformed(evt);
+        }
+    });
+    jPanel8.add(jbtRemoveTeam);
+
+    jbtModifyTeam.setText("Modifier");
+    jbtModifyTeam.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jbtModifyTeamActionPerformed(evt);
+        }
+    });
+    jPanel8.add(jbtModifyTeam);
+
+    jpnTeamTour.add(jPanel8, java.awt.BorderLayout.NORTH);
+
+    jtbTeam.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null}
+        },
+        new String [] {
+            "Title 1", "Title 2", "Title 3", "Title 4"
+        }
+    ));
+    jtbTeam.setCellSelectionEnabled(true);
+    jtbTeam.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+    jScrollPane2.setViewportView(jtbTeam);
+
+    jpnTeamTour.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+    jPanel3.add(jlbDetails);
+
+    jpnTeamTour.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+
+    jPanel2.add(jpnTeamTour, java.awt.BorderLayout.NORTH);
 
     jbtFirstRound.setText("Générer la première ronde");
     jbtFirstRound.addActionListener(new java.awt.event.ActionListener() {
@@ -556,7 +697,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jPanel4.add(jbtFirstRound);
 
-    jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_END);
+    jPanel2.add(jPanel4, java.awt.BorderLayout.SOUTH);
 
     jpnParameters.add(jPanel2);
 
@@ -907,15 +1048,40 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     }//GEN-LAST:event_jmiChargerActionPerformed
 
     private void jmiNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNouveauActionPerformed
+
+
         for (int i = jtpMain.getTabCount() - 1; i >=
                 0; i--) {
             Component obj = jtpMain.getComponentAt(i);
             if (obj instanceof JPNRound) {
                 jtpMain.remove(obj);
             }
-
         }
         _tournament = Tournament.resetTournament();
+
+        Object options[] = {"Individuel", "Par équipe"};
+        int res = JOptionPane.showOptionDialog(this, "Type de tournoi", "Nouveau tournoi",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, options, options[0]);
+
+        Tournament.getTournament().getParams()._teamTournament = (res == 1);
+        if (res == 1) {
+            res = JOptionPane.showOptionDialog(this, "Type d'appariement", "Appariement",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, options, options[0]);
+            Tournament.getTournament().getParams()._teamPairing = res;
+            if (res == 1) {
+                Object options2[] = {"Selon classement", "Libre"};
+                res = JOptionPane.showOptionDialog(this, "Type d'appariement individuel", "Appariement individuel",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                        null, options2, options2[0]);
+                Tournament.getTournament().getParams()._teamIndivPairing = res;
+                jdgSelectNumber jdg = new jdgSelectNumber(this, true, _tournament);
+                jdg.setVisible(true);
+            }
+        }
+
+
         update();
     }//GEN-LAST:event_jmiNouveauActionPerformed
 
@@ -978,6 +1144,68 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfPlaceKeyPressed
+
+    private void jbtAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddTeamActionPerformed
+        String name = JOptionPane.showInputDialog(this, "Entrez le nome de l'aquipe", "Nom de l'équipe");
+        Team team = new Team();
+        team._name = name;
+        Coach lastCoach = null;
+        while (team._coachs.size() < _tournament.getParams()._teamMatesNumber) {
+            jdgCoach jdg = new jdgCoach(this, true);
+            jdg.setVisible(true);
+            Coach c = _tournament.getCoachs().lastElement();
+            if (c != lastCoach) {
+                c._teamMates = team;
+                team._coachs.add(c);
+                lastCoach = c;
+            }
+        }
+        _tournament.getTeams().add(team);
+        update();
+    }//GEN-LAST:event_jbtAddTeamActionPerformed
+
+    private void jbtRemoveTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveTeamActionPerformed
+        Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
+        for (int i = 0; i < t._coachs.size(); i++) {
+            _tournament.getCoachs().remove(t._coachs.get(i));
+        }
+        t._coachs.clear();
+        _tournament.getTeams().remove(t);
+        update();
+    }//GEN-LAST:event_jbtRemoveTeamActionPerformed
+
+    private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
+        Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
+        if (jtbTeam.getSelectedColumn() == 1) {
+            String name = JOptionPane.showInputDialog(this, "Entrez le nome de l'aquipe", t._name);
+            t._name = name;
+        } else if (jtbTeam.getSelectedColumn() > 1) {
+            jdgCoach jdg = new jdgCoach(this, true, t._coachs.get(jtbTeam.getSelectedColumn() - 2));
+            jdg.setVisible(true);
+        }
+        update();
+    }//GEN-LAST:event_jbtModifyTeamActionPerformed
+
+    private void jtffTeamVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamVictoryFocusLost
+        try {
+            jtffTeamVictory.commitEdit();
+            int points = ((Long) jtffTeamVictory.getValue()).intValue();
+            _tournament.getParams()._team_victory_points = points;
+        } catch (ParseException e) {
+            jtffTeamVictory.setValue(jtffTeamVictory.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffTeamVictoryFocusLost
+
+    private void jrbTeamVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTeamVictoryActionPerformed
+        _tournament.getParams()._team_victory_only = jrbTeamVictory.isSelected();
+        update();
+    }//GEN-LAST:event_jrbTeamVictoryActionPerformed
+
+    private void jrbCoachPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCoachPointsActionPerformed
+        _tournament.getParams()._team_victory_only = !jrbCoachPoints.isSelected();
+        update();
+    }//GEN-LAST:event_jrbCoachPointsActionPerformed
 
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
@@ -1044,6 +1272,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         return _singleton;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1074,19 +1303,27 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JButton jbtAdd;
+    private javax.swing.JButton jbtAddTeam;
     private javax.swing.JButton jbtFirstRound;
     private javax.swing.JButton jbtModify;
+    private javax.swing.JButton jbtModifyTeam;
     private javax.swing.JButton jbtRemove;
+    private javax.swing.JButton jbtRemoveTeam;
     private javax.swing.JComboBox jcbRank1;
     private javax.swing.JComboBox jcbRank2;
     private javax.swing.JComboBox jcbRank3;
     private javax.swing.JComboBox jcbRank4;
     private javax.swing.JComboBox jcbRank5;
+    private javax.swing.JLabel jlbDetails;
+    private javax.swing.JLabel jlbVictoryPoints;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
     private javax.swing.JMenuItem jmiCharger;
@@ -1098,8 +1335,13 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JMenuItem jmiSaveAs;
     private javax.swing.JMenu jmnFile;
     private javax.swing.JMenu jmnHelp;
+    private javax.swing.JPanel jpnCoachButtons;
     private javax.swing.JPanel jpnParameters;
+    private javax.swing.JPanel jpnTeamTour;
+    private javax.swing.JRadioButton jrbCoachPoints;
+    private javax.swing.JRadioButton jrbTeamVictory;
     private javax.swing.JTable jtbCoachs;
+    private javax.swing.JTable jtbTeam;
     private javax.swing.JTextField jtfOrgas;
     private javax.swing.JTextField jtfPlace;
     private javax.swing.JTextField jtfTournamentName;
@@ -1115,6 +1357,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JFormattedTextField jtffSorPos;
     private javax.swing.JFormattedTextField jtffTdNeg;
     private javax.swing.JFormattedTextField jtffTdPos;
+    private javax.swing.JFormattedTextField jtffTeamVictory;
     private javax.swing.JFormattedTextField jtffVictory;
     public javax.swing.JTabbedPane jtpMain;
     private org.jdesktop.swingx.JXDatePicker jxdDate;

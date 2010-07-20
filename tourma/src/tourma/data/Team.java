@@ -5,20 +5,23 @@
 
 package tourma.data;
 
+import java.util.Vector;
+
 /**
  *
  * @author Frederic Berger
  */
-public class Coach implements Comparable{
+public class Team implements Comparable{
+
+    public Vector<Coach> _coachs;
     public String _name;
-    public String _team;
-    public String _roster;
-    public int _naf;
-    public int _rank;
 
-    public Team _teamMates=null;
+    public Team()
+    {
+        _coachs=new Vector();
+    }
 
-    public int compareTo(Object obj)
+     public int compareTo(Object obj)
     {
         if (obj instanceof Coach)
         {

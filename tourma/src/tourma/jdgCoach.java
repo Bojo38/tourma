@@ -129,13 +129,13 @@ public class jdgCoach extends javax.swing.JDialog {
         Coach c;
         if (_coach==null)
         {
-            c=new Coach();
-            Tournament.getTournament().getCoachs().add(c);
+            c=new Coach();         
         }
         else
         {
             c=_coach;
         }
+        
         c._name=jtfNom.getText();
         c._roster=jcbRoster.getSelectedItem().toString();
         c._team=jtfEquipe.getText();
@@ -147,7 +147,6 @@ public class jdgCoach extends javax.swing.JDialog {
         {
             c._naf=0;
         }
-
         try
         {
             c._rank=Integer.parseInt(jtfRank.getText());
@@ -173,26 +172,15 @@ public class jdgCoach extends javax.swing.JDialog {
             return;
         }
         
+        if (_coach==null)
+        {
+            Tournament.getTournament().getCoachs().add(c);
+        }
+
         this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                jdgCoach dialog = new jdgCoach(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

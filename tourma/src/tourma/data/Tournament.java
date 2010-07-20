@@ -32,6 +32,7 @@ public class Tournament {
 
     protected Vector<Round> _rounds;
     protected Vector<Coach> _coachs;
+    protected Vector<Team> _teams;
     protected Parameters _params;
     protected static Tournament _singleton;
 
@@ -39,6 +40,7 @@ public class Tournament {
         _params = new Parameters();
         _rounds = new Vector<Round>();
         _coachs = new Vector<Coach>();
+        _teams = new Vector();
     }
 
     public static Tournament resetTournament() {
@@ -59,6 +61,10 @@ public class Tournament {
 
     public Vector<Coach> getCoachs() {
         return _coachs;
+    }
+
+    public Vector<Team> getTeams() {
+        return _teams;
     }
 
     public Vector<Round> getRounds() {
@@ -95,7 +101,13 @@ public class Tournament {
         params.setAttribute("Rank3", Integer.toString(_params._ranking3));
         params.setAttribute("Rank4", Integer.toString(_params._ranking4));
         params.setAttribute("Rank5", Integer.toString(_params._ranking5));
+        params.setAttribute("ByTeam", Boolean.toString(_params._teamTournament));
+        params.setAttribute("TeamMates", Integer.toString(_params._teamMatesNumber));
+        params.setAttribute("TeamPairing", Integer.toString(_params._teamPairing));
+        params.setAttribute("TeamIndivPairing", Integer.toString(_params._teamIndivPairing));
 
+        params.setAttribute("TeamVictoryPoints", Integer.toString(_params._team_victory_points));
+        params.setAttribute("TeamVictoryOnly", Boolean.toString(_params._team_victory_only));
 
         document.addContent(params);
 
@@ -107,6 +119,17 @@ public class Tournament {
             coach.setAttribute("NAF", Integer.toString(_coachs.get(i)._naf));
             coach.setAttribute("Rank", Integer.toString(_coachs.get(i)._rank));
             document.addContent(coach);
+        }
+
+        for (int i = 0; i < _teams.size(); i++) {
+            Element team = new Element("Team");
+            team.setAttribute("Name", _teams.get(i)._name);
+            for (int j = 0; j < _teams.get(i)._coachs.size(); j++) {
+                Element coach = new Element("Coach");
+                coach.setAttribute("Name", _teams.get(i)._coachs.get(j)._name);
+                team.addContent(coach);
+            }
+            document.addContent(team);
         }
 
 
@@ -326,22 +349,34 @@ public class Tournament {
                     _params._large_victory_gap = params.getAttribute("Large_Victory_Gap").getIntValue();
                     _params._little_lost_gap = params.getAttribute("Little_Lost_Gap").getIntValue();
                     _params._place = params.getAttribute("Place").getValue();
-                    try
-                    {
+                    _params._teamTournament = params.getAttribute("ByTeam").getBooleanValue();
+                    _params._teamMatesNumber = params.getAttribute("TeamMates").getIntValue();
+                    _params._teamPairing = params.getAttribute("TeamPairing").getIntValue();
+                    _params._teamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
+                    _params._team_victory_points = params.getAttribute("TeamVictoryPoints").getIntValue();
+                    _params._teamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
+                    _params._team_victory_only=params.getAttribute("TeamVictoryOnly").getBooleanValue();
+
+                    try {
                         _params._date = format.parse(params.getAttribute("Date").getValue());
-                    }
-                    catch (ParseException pe)
-                    {
-                        
+                    } catch (ParseException pe) {
                     }
                 } catch (NullPointerException ne) {
+                    _params._large_victory_gap = 3;
+                    _params._little_lost_gap = 1;
+                    _params._place = "";
+                    _params._teamTournament = false;
+                    _params._teamMatesNumber = 6;
+                    _params._teamPairing = 1;
+                    _params._teamIndivPairing = 0;
+
                 }
             }
 
             List coachs = racine.getChildren("Coach");
             Iterator i = coachs.iterator();
             _coachs.clear();
-            HashMap<String,Coach> map=new HashMap();
+            HashMap<String, Coach> map = new HashMap();
             while (i.hasNext()) {
                 Element coach = (Element) i.next();
                 Coach c = new Coach();
@@ -352,6 +387,25 @@ public class Tournament {
                 c._rank = coach.getAttribute("Rank").getIntValue();
                 _coachs.add(c);
                 map.put(c._name, c);
+            }
+
+            List teams = racine.getChildren("Team");
+            Iterator l = teams.iterator();
+            _teams.clear();
+            while (l.hasNext()) {
+                Element team = (Element) l.next();
+                Team t = new Team();
+                t._name = team.getAttributeValue("Name");
+                List coachs2 = team.getChildren("Coach");
+                Iterator m = coachs2.iterator();
+                t._coachs.clear();
+                while (m.hasNext()) {
+                    Element coach = (Element) m.next();
+                    Coach c=map.get(coach.getAttribute("Name").getValue());
+                    c._teamMates=t;
+                    t._coachs.add(c);
+                }
+                _teams.add(t);
             }
 
             List rounds = racine.getChildren("Round");
@@ -374,19 +428,19 @@ public class Tournament {
                     Match m = new Match();
                     String c1 = match.getAttribute("Coach1").getValue();
                     String c2 = match.getAttribute("Coach2").getValue();
-                    m._coach1=map.get(c1);
-                    m._coach2=map.get(c2);
+                    m._coach1 = map.get(c1);
+                    m._coach2 = map.get(c2);
                     /*for (int cpt = 0; cpt < _coachs.size(); cpt++) {
-                        if (c1.equals(_coachs.get(cpt)._name)) {
-                            m._coach1 = _coachs.get(cpt);
-                            break;
-                        }
+                    if (c1.equals(_coachs.get(cpt)._name)) {
+                    m._coach1 = _coachs.get(cpt);
+                    break;
+                    }
                     }
                     for (int cpt = 0; cpt < _coachs.size(); cpt++) {
-                        if (c2.equals(_coachs.get(cpt)._name)) {
-                            m._coach2 = _coachs.get(cpt);
-                            break;
-                        }
+                    if (c2.equals(_coachs.get(cpt)._name)) {
+                    m._coach2 = _coachs.get(cpt);
+                    break;
+                    }
                     }*/
                     m._foul1 = match.getAttribute("Foul1").getIntValue();
                     m._foul2 = match.getAttribute("Foul2").getIntValue();
@@ -412,18 +466,49 @@ public class Tournament {
         Round r = new Round();
         Calendar cal = Calendar.getInstance();
         r._heure = cal.getTime();
-        Vector<Coach> shuffle = new Vector<Coach>(_coachs);
 
-        if (choice == 0) /* Aléatoire */ {
-            Collections.shuffle(shuffle);
-        }
+        /*
+         * Si tournoi individuel
+         */
+        if (!_params._teamTournament) {
+            Vector<Coach> shuffle = new Vector<Coach>(_coachs);
+            if (choice == 0) /* Aléatoire */ {
+                Collections.shuffle(shuffle);
+            }
+            for (int i = 0; i < shuffle.size() / 2; i++) {
+                Match m = new Match();
+                m._coach1 = shuffle.get(2 * i);
+                m._coach2 = shuffle.get(2 * i + 1);
+                r._matchs.add(m);
+            }
+            _rounds.add(r);
+        } /**
+         * Si tournoi par équipe
+         */
+        else {
+            /*
+             * Le premier appariement est aléatoire par équipe
+             */
+            Vector<Team> shuffle = new Vector<Team>(_teams);
+            if (choice == 0) /* Aléatoire */ {
+                Collections.shuffle(shuffle);
+            }
+            for (int i = 0; i < shuffle.size() / 2; i++) {
+                Team team1 = shuffle.get(2 * i);
+                Team team2 = shuffle.get(2 * i + 1);
 
-        for (int i = 0; i < shuffle.size() / 2; i++) {
-            Match m = new Match();
-            m._coach1 = shuffle.get(2 * i);
-            m._coach2 = shuffle.get(2 * i + 1);
-            r._matchs.add(m);
+                Vector<Coach> shuffle2 = new Vector<Coach>(team2._coachs);
+                if (choice == 0) /* Aléatoire */ {
+                    Collections.shuffle(shuffle2);
+                }
+                for (int j = 0; j < shuffle2.size(); j++) {
+                    Match m = new Match();
+                    m._coach1 = team1._coachs.get(j);
+                    m._coach2 = shuffle2.get(j);
+                    r._matchs.add(m);
+                }
+            }
+            _rounds.add(r);
         }
-        _rounds.add(r);
     }
 }

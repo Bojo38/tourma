@@ -2,30 +2,39 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma;
+package tourma.tableModel;
 
 import tourma.data.Coach;
 import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
+import tourma.data.Team;
 
 /**
  *
  * @author Frederic Berger
  */
-public class mjtCoaches extends AbstractTableModel {
+public class mjtTeams extends AbstractTableModel {
 
-    Vector<Coach> _coachs;
+    Vector<Team> _teams;
 
-    public mjtCoaches(Vector<Coach> coachs) {
-        _coachs = coachs;
+    public mjtTeams(Vector<Team> teams) {
+        _teams = teams;
     }
 
     public int getColumnCount() {
-        return 6;
+
+        if (_teams.size()>0)
+        {
+            return _teams.get(0)._coachs.size()+2;
+        }
+        else
+        {
+            return 2;
+        }
     }
 
     public int getRowCount() {
-        return _coachs.size();
+        return _teams.size();
     }
 
     public String getColumnName(int col) {
@@ -33,36 +42,21 @@ public class mjtCoaches extends AbstractTableModel {
             case 0:
                 return "Nb";
             case 1:
-                return "Coach";
-            case 2:
-                return "Equipe";
-            case 3:
-                return "Roster";
-            case 4:
-                return "NAF";
-                case 5:
-                return "Classement";
+                return "Nom";
         }
-        return "";
+        return "Coach "+(col-1);
     }
 
     public Object getValueAt(int row, int col) {
-        if (_coachs.size() > 0) {
-            Coach c = _coachs.get(row);
+        if (_teams.size() > 0) {
+            Team t = _teams.get(row);
             switch (col) {
                 case 0:
                     return row + 1;
                 case 1:
-                    return c._name;
-                case 2:
-                    return c._team;
-                case 3:
-                    return c._roster;
-                case 4:
-                    return c._naf;
-                     case 5:
-                    return c._rank;
+                    return t._name;
             }
+            return t._coachs.get(col-2)._name;
         }
         return "";
     }
