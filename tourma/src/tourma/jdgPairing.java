@@ -42,7 +42,8 @@ public class jdgPairing extends javax.swing.JDialog {
         _team1 = team1;
         _team2 = team2;
         _coachs = new Hashtable<String, Coach>();
-        ;
+
+        this.setTitle(team1._name+" vs "+team2._name);
 
         _round = round;
         _matchs = new Vector<Match>();

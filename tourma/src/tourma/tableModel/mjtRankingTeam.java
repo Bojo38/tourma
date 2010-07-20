@@ -272,9 +272,9 @@ public class mjtRankingTeam extends mjtRanking {
                         nbLost++;
                     }
                 }
-                value += m._td1 * Tournament.getTournament().getParams()._bonus_td_points + m._td2 * Tournament.getTournament().getParams()._bonus_neg_td_points;
-                value += m._sor1 * Tournament.getTournament().getParams()._bonus_sor_points + m._sor2 * Tournament.getTournament().getParams()._bonus_neg_sor_points;
-                value += m._foul1 * Tournament.getTournament().getParams()._bonus_foul_points + m._foul2 * Tournament.getTournament().getParams()._bonus_neg_foul_points;
+                value += m._td1 * Tournament.getTournament().getParams()._bonus_td_points_team + m._td2 * Tournament.getTournament().getParams()._bonus_neg_td_points_team;
+                value += m._sor1 * Tournament.getTournament().getParams()._bonus_sor_points_team + m._sor2 * Tournament.getTournament().getParams()._bonus_neg_sor_points_team;
+                value += m._foul1 * Tournament.getTournament().getParams()._bonus_foul_points_team + m._foul2 * Tournament.getTournament().getParams()._bonus_neg_foul_points_team;
             }
             if (m._coach2._teamMates == t) {
                 if (m._td1 < m._td2) {
@@ -284,18 +284,19 @@ public class mjtRankingTeam extends mjtRanking {
                         nbLost++;
                     }
                 }
-                value += m._td2 * Tournament.getTournament().getParams()._bonus_td_points + m._td1 * Tournament.getTournament().getParams()._bonus_neg_td_points;
-                value += m._sor2 * Tournament.getTournament().getParams()._bonus_sor_points + m._sor1 * Tournament.getTournament().getParams()._bonus_neg_sor_points;
-                value += m._foul2 * Tournament.getTournament().getParams()._bonus_foul_points + m._foul1 * Tournament.getTournament().getParams()._bonus_neg_foul_points;
+                value += m._td2 * Tournament.getTournament().getParams()._bonus_td_points_team + m._td1 * Tournament.getTournament().getParams()._bonus_neg_td_points_team;
+                value += m._sor2 * Tournament.getTournament().getParams()._bonus_sor_points_team + m._sor1 * Tournament.getTournament().getParams()._bonus_neg_sor_points_team;
+                value += m._foul2 * Tournament.getTournament().getParams()._bonus_foul_points_team + m._foul1 * Tournament.getTournament().getParams()._bonus_neg_foul_points_team;
             }
         }
+        
         if (nbVictory > nbLost) {
-            value += Tournament.getTournament().getParams()._victory_points;
+            value += Tournament.getTournament().getParams()._victory_points_team;
         } else {
             if (nbVictory < nbLost) {
-                value += Tournament.getTournament().getParams()._lost_points;
+                value += Tournament.getTournament().getParams()._lost_points_team;
             } else {
-                value += Tournament.getTournament().getParams()._draw_points;
+                value += Tournament.getTournament().getParams()._draw_points_team;
             }
         }
         return value;

@@ -440,7 +440,16 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jtbMostFoulNegTeam.setDefaultRenderer(String.class, mFoulNegTeam);
         jtbMostFoulNegTeam.setDefaultRenderer(Integer.class, mFoulNegTeam);
 
-        mjtRankingTeam mRankingTeam = new mjtRankingTeam(v, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getTeams());
+
+        mjtRankingTeam mRankingTeam = null;
+        if (_tournament.getParams()._team_victory_only)
+        {
+               mRankingTeam= new mjtRankingTeam(v, _tournament.getParams()._ranking1_team, _tournament.getParams()._ranking2_team, _tournament.getParams()._ranking3_team, _tournament.getParams()._ranking4_team, _tournament.getParams()._ranking5_team, _tournament.getTeams());
+        }
+        else
+        {
+            mRankingTeam= new mjtRankingTeam(v, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getTeams());
+        }
         jtbRankingTeam.setModel(mRankingTeam);
         jtbRankingTeam.setDefaultRenderer(String.class, mRankingTeam);
         jtbRankingTeam.setDefaultRenderer(Integer.class, mRankingTeam);

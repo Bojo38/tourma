@@ -87,11 +87,22 @@ public class Tournament {
         params.setAttribute("Bonus_Neg_Sor", Integer.toString(_params._bonus_neg_sor_points));
         params.setAttribute("Bonus_Pos_Sor", Integer.toString(_params._bonus_sor_points));
 
+        params.setAttribute("Bonus_Neg_Foul_Team", Integer.toString(_params._bonus_neg_foul_points_team));
+        params.setAttribute("Bonus_Pos_Foul_Team", Integer.toString(_params._bonus_foul_points_team));
+        params.setAttribute("Bonus_Neg_Td_Team", Integer.toString(_params._bonus_neg_td_points_team));
+        params.setAttribute("Bonus_Pos_Td_Team", Integer.toString(_params._bonus_td_points_team));
+        params.setAttribute("Bonus_Neg_Sor_Team", Integer.toString(_params._bonus_neg_sor_points_team));
+        params.setAttribute("Bonus_Pos_Sor_Team", Integer.toString(_params._bonus_sor_points_team));
+
         params.setAttribute("Victory", Integer.toString(_params._victory_points));
         params.setAttribute("Large_Victory", Integer.toString(_params._large_victory_points));
         params.setAttribute("Draw", Integer.toString(_params._draw_points));
         params.setAttribute("Lost", Integer.toString(_params._lost_points));
         params.setAttribute("Little_Lost", Integer.toString(_params._little_lost_points));
+
+        params.setAttribute("Victory_Team", Integer.toString(_params._victory_points_team));
+        params.setAttribute("Draw_Team", Integer.toString(_params._draw_points_team));
+        params.setAttribute("Lost_Team", Integer.toString(_params._lost_points_team));
 
         params.setAttribute("Large_Victory_Gap", Integer.toString(_params._large_victory_gap));
         params.setAttribute("Little_Lost_Gap", Integer.toString(_params._little_lost_gap));
@@ -101,6 +112,13 @@ public class Tournament {
         params.setAttribute("Rank3", Integer.toString(_params._ranking3));
         params.setAttribute("Rank4", Integer.toString(_params._ranking4));
         params.setAttribute("Rank5", Integer.toString(_params._ranking5));
+
+        params.setAttribute("Rank1_Team", Integer.toString(_params._ranking1_team));
+        params.setAttribute("Rank2_Team", Integer.toString(_params._ranking2_team));
+        params.setAttribute("Rank3_Team", Integer.toString(_params._ranking3_team));
+        params.setAttribute("Rank4_Team", Integer.toString(_params._ranking4_team));
+        params.setAttribute("Rank5_Team", Integer.toString(_params._ranking5_team));
+
         params.setAttribute("ByTeam", Boolean.toString(_params._teamTournament));
         params.setAttribute("TeamMates", Integer.toString(_params._teamMatesNumber));
         params.setAttribute("TeamPairing", Integer.toString(_params._teamPairing));
@@ -269,9 +287,8 @@ public class Tournament {
 
         for (int i = 0; i < _rounds.size(); i++) {
             for (int j = 0; j < _rounds.get(i)._matchs.size(); j++) {
-                if ((_rounds.get(i)._matchs.get(j)._coach1._naf>0)&&
-                        (_rounds.get(i)._matchs.get(j)._coach2._naf>0))
-                {
+                if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0) &&
+                        (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
                     Element game = new Element("game");
                     Element timeStamp = new Element("timeStamp");
                     timeStamp.setText(format.format(_rounds.get(i)._heure));
@@ -367,6 +384,7 @@ public class Tournament {
                         _params._date = format.parse(params.getAttribute("Date").getValue());
                     } catch (ParseException pe) {
                     }
+
                 } catch (NullPointerException ne) {
                     _params._large_victory_gap = 3;
                     _params._little_lost_gap = 1;
@@ -375,7 +393,23 @@ public class Tournament {
                     _params._teamMatesNumber = 6;
                     _params._teamPairing = 1;
                     _params._teamIndivPairing = 0;
-
+                }
+                try {
+                    _params._bonus_foul_points_team = params.getAttribute("Bonus_Pos_Foul_Team").getIntValue();
+                    _params._bonus_neg_foul_points_team = params.getAttribute("Bonus_Neg_Foul_Team").getIntValue();
+                    _params._bonus_td_points_team = params.getAttribute("Bonus_Pos_Td_Team").getIntValue();
+                    _params._bonus_neg_td_points_team = params.getAttribute("Bonus_Neg_Td_Team").getIntValue();
+                    _params._bonus_sor_points_team = params.getAttribute("Bonus_Pos_Sor_Team").getIntValue();
+                    _params._bonus_neg_sor_points_team = params.getAttribute("Bonus_Neg_Sor_Team").getIntValue();
+                    _params._victory_points_team = params.getAttribute("Victory_Team").getIntValue();
+                    _params._draw_points_team = params.getAttribute("Draw_Team").getIntValue();
+                    _params._lost_points_team = params.getAttribute("Lost_Team").getIntValue();
+                    _params._ranking1_team = params.getAttribute("Rank1_Team").getIntValue();
+                    _params._ranking2_team = params.getAttribute("Rank2_Team").getIntValue();
+                    _params._ranking3_team = params.getAttribute("Rank3_Team").getIntValue();
+                    _params._ranking4_team = params.getAttribute("Rank4_Team").getIntValue();
+                    _params._ranking5_team = params.getAttribute("Rank5_Team").getIntValue();
+                } catch (NullPointerException ne2) {
                 }
             }
 
@@ -499,15 +533,23 @@ public class Tournament {
             if (choice == 0) /* Aléatoire */ {
                 Collections.shuffle(shuffle);
             }
+
+            Vector<Team> teams1 = new Vector<Team>();
+            Vector<Team> teams2 = new Vector<Team>();
             for (int i = 0; i < shuffle.size() / 2; i++) {
                 Team team1 = shuffle.get(2 * i);
                 Team team2 = shuffle.get(2 * i + 1);
+                teams1.add(team1);
+                teams2.add(team2);
+            }
+            if (_params._teamIndivPairing == 1) {
+                jdgTeamPairing jdg = new jdgTeamPairing(MainFrame.getMainFrame(), true, teams1, teams2, r);
+                jdg.setVisible(true);
+            } else {
+                for (int i = 0; i < teams1.size(); i++) {
+                    Team team1 = teams1.get(i);
+                    Team team2 = teams2.get(i);
 
-                /* Si l'appariement est libre*/
-                if (_params._teamIndivPairing == 1) {
-                    jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
-                    jdg.setVisible(true);
-                } /* Ou aléatoire pour la première ronde*/ else {
                     Vector<Coach> shuffle2 = new Vector<Coach>(team2._coachs);
                     if (choice == 0) /* Aléatoire */ {
                         Collections.shuffle(shuffle2);

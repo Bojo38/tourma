@@ -233,11 +233,11 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel6">
+                <Container class="javax.swing.JPanel" name="jPanel9">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Classement"/>
+                        <TitledBorder title="Param&#xe8;tres de classement"/>
                       </Border>
                     </Property>
                   </Properties>
@@ -247,408 +247,736 @@
                     </Constraint>
                   </Constraints>
 
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                    <Property name="columns" type="int" value="2"/>
-                    <Property name="rows" type="int" value="20"/>
-                  </Layout>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel3">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Large victoire:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre points pour unelarge victoire (2 Touchdowns d&apos;&#xe9;carts):"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffLargeVictory">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLargeVictoryFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel19">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Ecart minimum pour une large victoire:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre points pour unelarge victoire (2 Touchdowns d&apos;&#xe9;carts):"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffLargeVictoryGap">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLargeVictoryGapFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel4">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Victoire:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre points pour une victoire"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffVictory">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffVictoryFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel5">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Match nul:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour un match nul"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffDraw">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffDrawFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel6">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Petite d&#xe9;faite:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une petite d&#xe9;faite (par un Touchdown d&apos;&#xe9;cart)"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffLittleLost">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLittleLostFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel20">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Ecart maximum pour une petite d&#xe9;faite:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une petite d&#xe9;faite (par un Touchdown d&apos;&#xe9;cart)"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffLittleLostGap">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLittleLostGapFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel7">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="D&#xe9;faite:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une petite d&#xe9;faite:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffLost">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLostFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel8">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Touchdowns marqu&#xe9;s:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour un touchdown"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffTdPos">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffTdPosFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel9">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Sorties r&#xe9;alis&#xe9;es:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;alis&#xe9;e"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffSorPos">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffSorPosFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel10">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Aggressions r&#xe9;ussies:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;ussie sur aggression"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffFoulPos">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffFoulPosFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel11">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Touchdowns encaiss&#xe9;s:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatifs) pour les touchdowns encaiss&#xe9;s"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffTdNeg">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffTdNegFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel12">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Sorties subies:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffSorNeg">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffSorNegFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel13">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Aggressions subies:"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies sur aggression"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffFoulNeg">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffFoulNegFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel14">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;1:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="jcbRank1">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="10">
-                            <StringItem index="0" value="Aucun"/>
-                            <StringItem index="1" value="Points"/>
-                            <StringItem index="2" value="Points adversaires"/>
-                            <StringItem index="3" value="Touchdowns"/>
-                            <StringItem index="4" value="Sorties"/>
-                            <StringItem index="5" value="Aggressions"/>
-                            <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
-                            <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
-                            <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
-                            <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank1ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel15">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;2:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="jcbRank2">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="10">
-                            <StringItem index="0" value="Aucun"/>
-                            <StringItem index="1" value="Points"/>
-                            <StringItem index="2" value="Points adversaires"/>
-                            <StringItem index="3" value="Touchdowns"/>
-                            <StringItem index="4" value="Sorties"/>
-                            <StringItem index="5" value="Aggressions"/>
-                            <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
-                            <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
-                            <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
-                            <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank2ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel16">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;3:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="jcbRank3">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="10">
-                            <StringItem index="0" value="Aucun"/>
-                            <StringItem index="1" value="Points"/>
-                            <StringItem index="2" value="Points adversaires"/>
-                            <StringItem index="3" value="Touchdowns"/>
-                            <StringItem index="4" value="Sorties"/>
-                            <StringItem index="5" value="Aggressions"/>
-                            <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
-                            <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
-                            <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
-                            <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank3ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel17">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;4:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="jcbRank4">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="10">
-                            <StringItem index="0" value="Aucun"/>
-                            <StringItem index="1" value="Points"/>
-                            <StringItem index="2" value="Points adversaires"/>
-                            <StringItem index="3" value="Touchdowns"/>
-                            <StringItem index="4" value="Sorties"/>
-                            <StringItem index="5" value="Aggressions"/>
-                            <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
-                            <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
-                            <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
-                            <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank4ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel18">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;5:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="jcbRank5">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="10">
-                            <StringItem index="0" value="Aucun"/>
-                            <StringItem index="1" value="Points"/>
-                            <StringItem index="2" value="Points adversaires"/>
-                            <StringItem index="3" value="Touchdowns"/>
-                            <StringItem index="4" value="Sorties"/>
-                            <StringItem index="5" value="Aggressions"/>
-                            <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
-                            <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
-                            <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
-                            <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank5ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jlbVictoryPoints">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="text" type="java.lang.String" value="Prime &#xe0; la victoire d&apos;&#xe9;quipe"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jtffTeamVictory">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffTeamVictoryFocusLost"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JRadioButton" name="jrbTeamVictory">
-                      <Properties>
-                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                          <ComponentRef name="buttonGroup1"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Utiliser la victoire d&apos;&#xe9;quipe"/>
-                        <Property name="hideActionText" type="boolean" value="true"/>
-                        <Property name="horizontalAlignment" type="int" value="11"/>
-                        <Property name="horizontalTextPosition" type="int" value="10"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbTeamVictoryActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JRadioButton" name="jrbCoachPoints">
-                      <Properties>
-                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                          <ComponentRef name="buttonGroup1"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Utiliser le cumul des points des coachs"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbCoachPointsActionPerformed"/>
-                      </Events>
-                    </Component>
+                    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                          <BorderConstraints direction="Center"/>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+                      <SubComponents>
+                        <Container class="javax.swing.JPanel" name="jPanel6">
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                              <JTabbedPaneConstraints tabName="Individuel">
+                                <Property name="tabTitle" type="java.lang.String" value="Individuel"/>
+                              </JTabbedPaneConstraints>
+                            </Constraint>
+                          </Constraints>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                            <Property name="columns" type="int" value="2"/>
+                            <Property name="rows" type="int" value="18"/>
+                          </Layout>
+                          <SubComponents>
+                            <Component class="javax.swing.JLabel" name="jLabel3">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Large victoire:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre points pour unelarge victoire (2 Touchdowns d&apos;&#xe9;carts):"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffLargeVictory">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLargeVictoryFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel19">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Ecart minimum pour une large victoire:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre points pour unelarge victoire (2 Touchdowns d&apos;&#xe9;carts):"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffLargeVictoryGap">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLargeVictoryGapFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel4">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Victoire:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre points pour une victoire"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffVictory">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffVictoryFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel5">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Match nul:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour un match nul"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffDraw">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffDrawFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel6">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Petite d&#xe9;faite:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une petite d&#xe9;faite (par un Touchdown d&apos;&#xe9;cart)"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffLittleLost">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLittleLostFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel20">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Ecart maximum pour une petite d&#xe9;faite:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une petite d&#xe9;faite (par un Touchdown d&apos;&#xe9;cart)"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffLittleLostGap">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLittleLostGapFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel7">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="D&#xe9;faite:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une petite d&#xe9;faite:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffLost">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLostFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel8">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Touchdowns marqu&#xe9;s:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour un touchdown"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffTdPos">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffTdPosFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel9">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Sorties r&#xe9;alis&#xe9;es:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;alis&#xe9;e"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffSorPos">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffSorPosFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel10">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Aggressions r&#xe9;ussies:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;ussie sur aggression"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffFoulPos">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffFoulPosFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel11">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Touchdowns encaiss&#xe9;s:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatifs) pour les touchdowns encaiss&#xe9;s"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffTdNeg">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffTdNegFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel12">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Sorties subies:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffSorNeg">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffSorNegFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel13">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Aggressions subies:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies sur aggression"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffFoulNeg">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffFoulNegFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel14">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;1:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank1">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank1ActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel15">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;2:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank2">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank2ActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel16">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;3:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank3">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank3ActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel17">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;4:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank4">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank4ActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel18">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;5:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank5">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank5ActionPerformed"/>
+                              </Events>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                        <Container class="javax.swing.JPanel" name="jPanel10">
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                              <JTabbedPaneConstraints tabName="Par &#xe9;quipe">
+                                <Property name="tabTitle" type="java.lang.String" value="Par &#xe9;quipe"/>
+                              </JTabbedPaneConstraints>
+                            </Constraint>
+                          </Constraints>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                            <Property name="columns" type="int" value="2"/>
+                            <Property name="rows" type="int" value="16"/>
+                          </Layout>
+                          <SubComponents>
+                            <Component class="javax.swing.JRadioButton" name="jrbTeamVictory">
+                              <Properties>
+                                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                  <ComponentRef name="buttonGroup1"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Utiliser la victoire d&apos;&#xe9;quipe"/>
+                                <Property name="hideActionText" type="boolean" value="true"/>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="horizontalTextPosition" type="int" value="10"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbTeamVictoryActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JRadioButton" name="jrbCoachPoints">
+                              <Properties>
+                                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                                  <ComponentRef name="buttonGroup1"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Utiliser le cumul des points des coachs"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbCoachPointsActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel23">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Victoire:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre points pour une victoire"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffVictoryTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffVictoryTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel24">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Match nul:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour un match nul"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffDrawTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffDrawTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel25">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="D&#xe9;faite:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une petite d&#xe9;faite:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffLostTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffLostTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel31">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Touchdowns marqu&#xe9;s:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour un touchdown"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffTdPosTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffTdPosTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel32">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Sorties r&#xe9;alis&#xe9;es:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;alis&#xe9;e"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffSorPosTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffSorPosTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel33">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Aggressions r&#xe9;ussies:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;ussie sur aggression"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffFoulPosTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffFoulPosTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel34">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Touchdowns encaiss&#xe9;s:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatifs) pour les touchdowns encaiss&#xe9;s"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffTdNegTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffTdNegTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel35">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Sorties subies:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffSorNegTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffSorNegTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel36">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Aggressions subies:"/>
+                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies sur aggression"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffFoulNegTeam">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffFoulNegTeamFocusLost"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel26">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;1:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank1Team">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank1TeamActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel27">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;2:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank2Team">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank2TeamActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel28">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;3:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank3Team">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank3TeamActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel29">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;4:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank4Team">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank4TeamActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabel30">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;5:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jcbRank5Team">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="10">
+                                    <StringItem index="0" value="Aucun"/>
+                                    <StringItem index="1" value="Points"/>
+                                    <StringItem index="2" value="Points adversaires"/>
+                                    <StringItem index="3" value="Touchdowns"/>
+                                    <StringItem index="4" value="Sorties"/>
+                                    <StringItem index="5" value="Aggressions"/>
+                                    <StringItem index="6" value="Diff&#xe9;rence de touchdowns"/>
+                                    <StringItem index="7" value="Diff&#xe9;rence de sorties"/>
+                                    <StringItem index="8" value="Diff&#xe9;rence d&apos;aggression"/>
+                                    <StringItem index="9" value="Victoire-Nul-D&#xe9;faite"/>
+                                  </StringArray>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbRank5TeamActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jlbVictoryPoints">
+                              <Properties>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="Prime &#xe0; la victoire d&apos;&#xe9;quipe"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JFormattedTextField" name="jtffTeamVictory">
+                              <Properties>
+                                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                                  <Format subtype="1" type="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtffTeamVictoryFocusLost"/>
+                              </Events>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                      </SubComponents>
+                    </Container>
                   </SubComponents>
                 </Container>
               </SubComponents>

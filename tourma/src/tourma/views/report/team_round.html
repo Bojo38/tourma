@@ -91,6 +91,10 @@
                     <td class="tab_titre">Clan 2</td>
                 </tr>
                 <#list matches as match>
+                 <#if (result == 0)>
+                <#assign style1="draw">
+                <#assign style2="draw">
+                <#else>
                     <#if (match.v1 &gt; match.v2)>
                         <#assign style1="winner">
                         <#assign style2="looser">
@@ -100,6 +104,7 @@
                     <#else>
                         <#assign style1="draw">
                         <#assign style2="draw">
+                    </#if>
                     </#if>
                     <tr>
                         <td class="tab_pos" style="font-size:16px;">${match.numero}</td>

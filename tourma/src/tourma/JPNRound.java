@@ -737,11 +737,14 @@ public class JPNRound extends javax.swing.JPanel {
                 }
             }
 
-            for (int i = 0; i < teams1.size(); i++) {
-                Team team1 = teams1.get(i);
-                Team team2 = teams2.get(i);
+            if (free_pairing) {
+                jdgTeamPairing jdg = new jdgTeamPairing(MainFrame.getMainFrame(), true, teams1, teams2, r);
+                jdg.setVisible(true);
+            } else {
+                for (int i = 0; i < teams1.size(); i++) {
+                    Team team1 = teams1.get(i);
+                    Team team2 = teams2.get(i);
 
-                if (!free_pairing) {
                     Vector<ObjectRanking> coachs1 = subRanking(team1._coachs, matchs, rounds);
                     Vector<ObjectRanking> coachs2 = subRanking(team2._coachs, matchs, rounds);
                     for (int j = 0; j < coachs1.size(); j++) {
@@ -750,9 +753,6 @@ public class JPNRound extends javax.swing.JPanel {
                         m._coach2 = (Coach) coachs2.get(j).getObject();
                         r.getMatchs().add(m);
                     }
-                } else {
-                    jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
-                    jdg.setVisible(true);
                 }
             }
         }
@@ -780,13 +780,25 @@ public class JPNRound extends javax.swing.JPanel {
         }
 
         if (_tournament.getParams()._teamTournament) {
-            mjtRankingTeam ranking = new mjtRankingTeam(v,
-                    _tournament.getParams()._ranking1,
-                    _tournament.getParams()._ranking2,
-                    _tournament.getParams()._ranking3,
-                    _tournament.getParams()._ranking4,
-                    _tournament.getParams()._ranking5,
-                    _tournament.getTeams());
+            mjtRankingTeam ranking = null;
+
+            if (_tournament.getParams()._team_victory_only) {
+                ranking = new mjtRankingTeam(v,
+                        _tournament.getParams()._ranking1_team,
+                        _tournament.getParams()._ranking2_team,
+                        _tournament.getParams()._ranking3_team,
+                        _tournament.getParams()._ranking4_team,
+                        _tournament.getParams()._ranking5_team,
+                        _tournament.getTeams());
+            } else {
+                ranking = new mjtRankingTeam(v,
+                        _tournament.getParams()._ranking1,
+                        _tournament.getParams()._ranking2,
+                        _tournament.getParams()._ranking3,
+                        _tournament.getParams()._ranking4,
+                        _tournament.getParams()._ranking5,
+                        _tournament.getTeams());
+            }
 
             // Ranking class
             datas = ranking.getSortedDatas();

@@ -7,7 +7,6 @@ package tourma.tableModel;
 import tourma.data.Round;
 import tourma.data.Match;
 import tourma.data.Coach;
-import java.awt.Color;
 import java.util.Collections;
 import java.util.Vector;
 import tourma.data.ObjectAnnexRanking;

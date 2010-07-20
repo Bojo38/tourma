@@ -47,6 +47,8 @@ public class jdgRound extends javax.swing.JDialog {
     Tournament _tour;
     boolean _result;
     boolean _team = false;
+    Vector<Team> _teams1;
+    Vector<Team> _teams2;
 
     /** Creates new form jdgRoundReport */
     public jdgRound(java.awt.Frame parent, boolean modal, Round round, int roundNumber, Tournament tour, boolean result, boolean team) {
@@ -68,6 +70,29 @@ public class jdgRound extends javax.swing.JDialog {
             } else {
                 f = CreateReport();
             }
+            jepHTML.setPage(f.toURI().toURL());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
+        }
+        this.setPreferredSize(new Dimension(800, 600));
+        pack();
+    }
+
+    public jdgRound(java.awt.Frame parent, boolean modal, Vector<Team> teams1, Vector<Team> teams2, int roundNumber, Tournament tour) {
+        super(parent, modal);
+        initComponents();
+
+        _teams1 = teams1;
+        _teams2 = teams2;
+        _roundNumber = roundNumber;
+        _tour = tour;
+
+        this.setTitle(tour.getParams()._tournament_name + " - Ronde " + roundNumber);
+        try {
+            jepHTML.setContentType("html");
+            File f;
+            f = CreateEmptyTeamReport();
+
             jepHTML.setPage(f.toURI().toURL());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
@@ -252,18 +277,81 @@ public class jdgRound extends javax.swing.JDialog {
                 }
             }
             mjtMatchTeams model = new mjtMatchTeams(teams, _round);
-
             Vector parMatches = new Vector();
-
             for (int i = 0; i < model.getRowCount(); i++) {
 
                 HashMap m = new HashMap();
                 m.put("numero", model.getValueAt(i, 0));
                 m.put("clan1", model.getValueAt(i, 1));
-                m.put("v1", model.getValueAt(i, 2));
-                m.put("n", model.getValueAt(i, 3));
-                m.put("v2", model.getValueAt(i, 4));
+                if (_result) {
+                    m.put("v1", model.getValueAt(i, 2));
+                    m.put("n", model.getValueAt(i, 3));
+                    m.put("v2", model.getValueAt(i, 4));
+                } else {
+                    m.put("v1", "&nbsp;");
+                    m.put("n", "&nbsp;");
+                    m.put("v2", "&nbsp;");
+                }
                 m.put("clan2", model.getValueAt(i, 5));
+                parMatches.add(m);
+            }
+
+            root.put("matches", parMatches);
+
+            SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy");
+            SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy");
+            root.put("dateGeneration", formatShort.format(new Date()));
+            address = File.createTempFile("result" + format.format(new Date()), ".tmp");
+            address.deleteOnExit();
+            Writer out = new FileWriter(address);
+            temp.process(root, out);
+            out.flush();
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        } catch (TemplateException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        } catch (URISyntaxException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        }
+        return address;
+    }
+
+    private File CreateEmptyTeamReport() {
+        File address = null;
+
+        try {
+            Configuration cfg = new Configuration();
+            URI uri = getClass().getResource("/tourma/views/report").toURI();
+            if (uri.toString().contains(".jar!")) {
+                /* JOptionPane.showMessageDialog(this,"Dans un jar: "+uri.toString());
+                String tmp=uri.toString();
+                tmp=tmp.substring(10, tmp.indexOf(".jar!")-4);
+                JOptionPane.showMessageDialog(this,tmp);
+                //tmp=tmp+"";
+                cfg.setDirectoryForTemplateLoading(new File(tmp));*/
+                cfg.setClassForTemplateLoading(getClass(), "");
+            } else {
+                cfg.setDirectoryForTemplateLoading(new File(uri));
+            }
+            cfg.setObjectWrapper(new DefaultObjectWrapper());
+            Template temp = cfg.getTemplate("team_round.html");
+
+            Map root = new HashMap();
+            root.put("nom", _tour.getParams()._tournament_name + " - Ronde " + _roundNumber);
+            root.put("tables", _tour.getTeams().size() / 2);
+            root.put("result",0);
+
+            Vector parMatches = new Vector();
+            for (int i = 0; i < _teams1.size(); i++) {
+                HashMap m = new HashMap();
+                m.put("numero", i + 1);
+                m.put("clan1", _teams1.get(i)._name);
+                m.put("v1", "&nbsp;");
+                m.put("n", "&nbsp;");
+                m.put("v2", "&nbsp;");
+
+                m.put("clan2", _teams2.get(i)._name);
                 parMatches.add(m);
             }
 

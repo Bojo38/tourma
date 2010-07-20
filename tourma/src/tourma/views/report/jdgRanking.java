@@ -172,7 +172,14 @@ public class jdgRanking extends javax.swing.JDialog {
                 switch (_rankType) {
                     case RANKING_GENERAL:
                         root.put("title", "Classement général");
-                        model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
+                        if (_tour.getParams()._team_victory_only)
+                        {
+                            model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
+                        }
+                        else
+                        {
+                            model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
+                        }
                         break;
                     case RANKING_SCORER:
                         root.put("title", "Meilleurs Marqueurs");
@@ -200,7 +207,14 @@ public class jdgRanking extends javax.swing.JDialog {
                         break;
                     default:
                         root.put("title", "Classement général");
-                        model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
+                        if (_tour.getParams()._team_victory_only)
+                        {
+                            model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
+                        }
+                        else
+                        {
+                            model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
+                        }
                 }
             } else {
                 switch (_rankType) {
