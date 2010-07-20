@@ -21,11 +21,10 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
 
     public mjtAnnexRankTeam(Vector<Round> rounds, int ranking_type, Vector<Team> teams, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5) {
         super(rounds, ranking_type, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5);
-
-
     }
 
     protected void sortDatas() {
+        _datas.clear();
         Vector<Match> matchs = new Vector<Match>();
         for (int i = 0; i < _rounds.size(); i++) {
             for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {

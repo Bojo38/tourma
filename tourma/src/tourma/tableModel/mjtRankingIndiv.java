@@ -7,19 +7,10 @@ package tourma.tableModel;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
-import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Coach;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
 import java.util.Vector;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 
 /**
  *
@@ -37,6 +28,7 @@ public class mjtRankingIndiv extends mjtRanking {
 
     protected void sortDatas()
     {
+        _datas.clear();
         Vector<Match> matchs = new Vector<Match>();
         for (int i = 0; i < _rounds.size(); i++) {
             for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {

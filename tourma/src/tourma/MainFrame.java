@@ -94,7 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
         jtffTdNeg.setValue(new Integer(_tournament.getParams()._bonus_neg_td_points));
         jtffTdPos.setValue(new Integer(_tournament.getParams()._bonus_td_points));
         jtffVictory.setValue(new Integer(_tournament.getParams()._victory_points));
-       
+
         jcbRank1.removeActionListener(jcbRank1.getActionListeners()[0]);
         jcbRank2.removeActionListener(jcbRank2.getActionListeners()[0]);
         jcbRank3.removeActionListener(jcbRank3.getActionListeners()[0]);
@@ -797,24 +797,29 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
+
         if (JOptionPane.showConfirmDialog(this, "Etes vous sûr ? Cela va effacer toutes les rondes", "Première ronde", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (_tournament.getCoachs().size() % 2 > 0) {
-                JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
+            if (_tournament.getParams()._teamTournament && _tournament.getTeams().size() % 2 > 0) {
+                JOptionPane.showMessageDialog(this, "Nombre impair d'équipes");
             } else {
-                String[] options = {"Aléatoire", "Ordre d'inscription"};
-                int choice = JOptionPane.showOptionDialog(this, "Choisissez le tirage initial", "Tirage", JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
-                _tournament.generateFirstRound(choice);
-                for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
-                    Component obj = jtpMain.getComponentAt(i);
-                    if (obj instanceof JPNRound) {
-                        jtpMain.remove(obj);
+                if (_tournament.getCoachs().size() % 2 > 0) {
+                    JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
+                } else {
+                    String[] options = {"Aléatoire", "Ordre d'inscription"};
+                    int choice = JOptionPane.showOptionDialog(this, "Choisissez le tirage initial", "Tirage", JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
+                    _tournament.generateFirstRound(choice);
+                    for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
+                        Component obj = jtpMain.getComponentAt(i);
+                        if (obj instanceof JPNRound) {
+                            jtpMain.remove(obj);
+                        }
                     }
+                    for (int i = 0; i < _tournament.getRounds().size(); i++) {
+                        JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
+                        jtpMain.add("Ronde " + (i + 1), jpnr);
+                    }
+                    update();
                 }
-                for (int i = 0; i < _tournament.getRounds().size(); i++) {
-                    JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
-                    jtpMain.add("Ronde " + (i + 1), jpnr);
-                }
-                update();
             }
         }
 }//GEN-LAST:event_jbtFirstRoundActionPerformed

@@ -25,6 +25,7 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
 
    protected void sortDatas()
    {
+       _datas.clear();
        Vector<Match> matchs = new Vector<Match>();
         for (int i = 0; i < _rounds.size(); i++) {
             for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {

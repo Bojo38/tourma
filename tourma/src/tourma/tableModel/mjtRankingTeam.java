@@ -27,6 +27,7 @@ public class mjtRankingTeam extends mjtRanking {
 
     protected void sortDatas() {
 
+        _datas.clear();
         if (Tournament.getTournament().getParams()._teamPairing == 1) {
 
             for (int k = 0; k < _objects.size(); k++) {

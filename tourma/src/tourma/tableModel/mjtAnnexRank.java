@@ -40,6 +40,7 @@ abstract public class mjtAnnexRank extends mjtRanking {
         super(rounds, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects);
         _ranking_type = ranking_type;
         _full_ranking = full;
+        sortDatas();
     }
 
     abstract protected void sortDatas();

@@ -251,15 +251,17 @@ public class Tournament {
         Element coaches = new Element("coaches");
 
         for (int i = 0; i < _coachs.size(); i++) {
-            Element coach = new Element("coach");
-            Element name = new Element("name");
-            Element team = new Element("team");
-            name.setText(_coachs.get(i)._name);
-            String roster = getRosterTranslation(_coachs.get(i)._roster);
-            team.setText(roster);
-            coach.addContent(name);
-            coach.addContent(team);
-            coaches.addContent(coach);
+            if (_coachs.get(i)._naf > 0) {
+                Element coach = new Element("coach");
+                Element name = new Element("name");
+                Element team = new Element("team");
+                name.setText(_coachs.get(i)._name);
+                String roster = getRosterTranslation(_coachs.get(i)._roster);
+                team.setText(roster);
+                coach.addContent(name);
+                coach.addContent(team);
+                coaches.addContent(coach);
+            }
         }
 
         document.addContent(coaches);
@@ -267,43 +269,47 @@ public class Tournament {
 
         for (int i = 0; i < _rounds.size(); i++) {
             for (int j = 0; j < _rounds.get(i)._matchs.size(); j++) {
-                Element game = new Element("game");
-                Element timeStamp = new Element("timeStamp");
-                timeStamp.setText(format.format(_rounds.get(i)._heure));
-                Element playerRecord1 = new Element("playerRecord");
-                Element playerRecord2 = new Element("playerRecord");
-                Element name1 = new Element("name");
-                Element rank1 = new Element("teamRating");
-                Element td1 = new Element("touchDowns");
-                Element bh1 = new Element("badlyHurt");
-                Element name2 = new Element("name");
-                Element rank2 = new Element("teamRating");
-                Element td2 = new Element("touchDowns");
-                Element bh2 = new Element("badlyHurt");
+                if ((_rounds.get(i)._matchs.get(j)._coach1._naf>0)&&
+                        (_rounds.get(i)._matchs.get(j)._coach2._naf>0))
+                {
+                    Element game = new Element("game");
+                    Element timeStamp = new Element("timeStamp");
+                    timeStamp.setText(format.format(_rounds.get(i)._heure));
+                    Element playerRecord1 = new Element("playerRecord");
+                    Element playerRecord2 = new Element("playerRecord");
+                    Element name1 = new Element("name");
+                    Element rank1 = new Element("teamRating");
+                    Element td1 = new Element("touchDowns");
+                    Element bh1 = new Element("badlyHurt");
+                    Element name2 = new Element("name");
+                    Element rank2 = new Element("teamRating");
+                    Element td2 = new Element("touchDowns");
+                    Element bh2 = new Element("badlyHurt");
 
-                name1.setText(_rounds.get(i)._matchs.get(j)._coach1._name);
-                name2.setText(_rounds.get(i)._matchs.get(j)._coach2._name);
-                td1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._td1));
-                td2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._td2));
-                bh1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._sor1));
-                bh2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._sor2));
-                rank1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach1._rank));
-                rank2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach2._rank));
+                    name1.setText(_rounds.get(i)._matchs.get(j)._coach1._name);
+                    name2.setText(_rounds.get(i)._matchs.get(j)._coach2._name);
+                    td1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._td1));
+                    td2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._td2));
+                    bh1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._sor1));
+                    bh2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._sor2));
+                    rank1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach1._rank));
+                    rank2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach2._rank));
 
-                playerRecord1.addContent(name1);
-                playerRecord1.addContent(td1);
-                playerRecord1.addContent(bh1);
-                playerRecord1.addContent(rank1);
+                    playerRecord1.addContent(name1);
+                    playerRecord1.addContent(td1);
+                    playerRecord1.addContent(bh1);
+                    playerRecord1.addContent(rank1);
 
-                playerRecord2.addContent(name2);
-                playerRecord2.addContent(td2);
-                playerRecord2.addContent(bh2);
-                playerRecord2.addContent(rank2);
+                    playerRecord2.addContent(name2);
+                    playerRecord2.addContent(td2);
+                    playerRecord2.addContent(bh2);
+                    playerRecord2.addContent(rank2);
 
-                game.addContent(timeStamp);
-                game.addContent(playerRecord1);
-                game.addContent(playerRecord2);
-                document.addContent(game);
+                    game.addContent(timeStamp);
+                    game.addContent(playerRecord1);
+                    game.addContent(playerRecord2);
+                    document.addContent(game);
+                }
             }
         }
 
@@ -355,7 +361,7 @@ public class Tournament {
                     _params._teamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
                     _params._team_victory_points = params.getAttribute("TeamVictoryPoints").getIntValue();
                     _params._teamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
-                    _params._team_victory_only=params.getAttribute("TeamVictoryOnly").getBooleanValue();
+                    _params._team_victory_only = params.getAttribute("TeamVictoryOnly").getBooleanValue();
 
                     try {
                         _params._date = format.parse(params.getAttribute("Date").getValue());
@@ -401,8 +407,8 @@ public class Tournament {
                 t._coachs.clear();
                 while (m.hasNext()) {
                     Element coach = (Element) m.next();
-                    Coach c=map.get(coach.getAttribute("Name").getValue());
-                    c._teamMates=t;
+                    Coach c = map.get(coach.getAttribute("Name").getValue());
+                    c._teamMates = t;
                     t._coachs.add(c);
                 }
                 _teams.add(t);
@@ -497,15 +503,21 @@ public class Tournament {
                 Team team1 = shuffle.get(2 * i);
                 Team team2 = shuffle.get(2 * i + 1);
 
-                Vector<Coach> shuffle2 = new Vector<Coach>(team2._coachs);
-                if (choice == 0) /* Aléatoire */ {
-                    Collections.shuffle(shuffle2);
-                }
-                for (int j = 0; j < shuffle2.size(); j++) {
-                    Match m = new Match();
-                    m._coach1 = team1._coachs.get(j);
-                    m._coach2 = shuffle2.get(j);
-                    r._matchs.add(m);
+                /* Si l'appariement est libre*/
+                if (_params._teamIndivPairing == 1) {
+                    jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
+                    jdg.setVisible(true);
+                } /* Ou aléatoire pour la première ronde*/ else {
+                    Vector<Coach> shuffle2 = new Vector<Coach>(team2._coachs);
+                    if (choice == 0) /* Aléatoire */ {
+                        Collections.shuffle(shuffle2);
+                    }
+                    for (int j = 0; j < shuffle2.size(); j++) {
+                        Match m = new Match();
+                        m._coach1 = team1._coachs.get(j);
+                        m._coach2 = shuffle2.get(j);
+                        r._matchs.add(m);
+                    }
                 }
             }
             _rounds.add(r);
