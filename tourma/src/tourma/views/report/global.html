@@ -1,0 +1,546 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <STYLE type="text/css">
+            div#titre {
+                text-align: center;
+                font-size: 28px;
+            }
+
+            div#soustitre {
+                text-align: center;
+                font-size: 20px;
+            }
+
+            td
+            {
+                font-size:12px;
+            }
+            td.tab_titre {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #d9d9d9;
+                background-color: #444444;
+                color: #cccccc;
+                text-align:center;
+            }
+
+            td.tab_pos {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #444444;
+                background-color: #cccccc;
+                color: #444444;
+                text-align:center;
+            }
+
+            td.tab_pos_1 {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #444444;
+                background-color: #cccccc;
+                color: #0000dd;
+                font-weight: 700;
+                text-align:center;
+            }
+
+            td.tab_pos_last {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #444444;
+                background-color: #cccccc;
+                color: #dd0000;
+                font-weight: 700;
+                text-align:center;
+            }
+            td.tab_result {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #444444;
+                background-color: #eeeeee;
+                color: #444444;
+                text-align:center;
+            }
+
+            td.tab_result_1 {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #444444;
+                background-color: #eeeeee;
+                color: #0000dd;
+                font-weight: 700;
+                text-align:center;
+            }
+
+            td.tab_result_last {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #444444;
+                background-color: #eeeeee;
+                color: #dd0000;
+                font-weight: 700;
+                text-align:center;
+            }
+
+        </STYLE>
+
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    </head>
+    <body>
+        <#setting locale="fr_FR">
+        <#setting number_format="0.##">
+
+        <div id="titre">${nom}</div>
+        <div id="soustitre">${title}</div>
+        <br>
+        <table
+            style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+            border="1" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr>
+                    <#list titles as title>
+                    <td class="tab_titre">${title}</td>
+                    </#list>
+                </tr>
+                <#list lines as line>
+                <tr>
+                    <#if line_index==0>
+                    <#assign suffix="_1">
+                    <#elseif !line_has_next>
+                    <#assign suffix="_last">
+                    <#else>
+                    <#assign suffix="">
+                    </#if>
+
+                    <#list line.cols as col>
+                    <#if col_index== 0>
+                    <td  class="tab_pos${suffix}">${col}</td>
+                    <#else>
+                    <td class="tab_result${suffix}">${col}</td>
+                    </#if>
+                    </#list>
+                </tr>
+                </#list>
+
+            </tbody>
+        </table>
+        <br>
+        <table style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+               border="0" cellpadding="0" cellspacing="5">
+            <tr>
+                <td width="33%">
+                    <div id="soustitre">Meilleur Marqueur</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr >
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Tds</td>
+                            </tr>
+                            <#list BestScorerLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_1">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+
+                        </tbody>
+                    </table>
+                </td><td width="33%"><div id="soustitre">Meilleur Destructeur</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Sor</td>
+                            </tr>
+                            <#list BestDestructorLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_1">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+                <td width="33%"><div id="soustitre">Meilleur Crampon</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Foul</td>
+                            </tr>
+                            <#list BestFoulerLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_1">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+            </tr><tr>
+                <td><div id="soustitre">Meilleure défense</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Tds</td>
+                            </tr>
+                            <#list BestDefenseLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_1">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+                <td><div id="soustitre">String d'acier</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Sor</td>
+                            </tr>
+                            <#list WorstDestructedLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_1">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+                <td><div id="soustitre">Le Hérisson</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Foul</td>
+                            </tr>
+                            <#list WorstFouledLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_1">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td></tr>
+            <tr>
+                <td>
+                    <div id="soustitre">La Savonette</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Tds</td>
+                            </tr>
+                            <#list WorstScorerLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_last">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table>
+                </td>
+                <td><div id="soustitre">Moufle d'or</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Sor</td>
+                            </tr>
+                            <#list WorstDestructorLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_last">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+                <td><div id="soustitre">Le Vertueux</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Foul</td>
+                            </tr>
+                            <#list WorstFoulerLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_last">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+            </tr>
+            <tr>
+                <td><div id="soustitre">La Passoire</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Tds</td>
+                            </tr>
+                            <#list WorstDefenseLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_last">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+                <td><div id="soustitre">Punching Ball</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Sor</td>
+                            </tr>
+                            <#list BestDestructedLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_last">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+                <td><div id="soustitre">Paillasson</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Foul</td>
+                            </tr>
+                            <#list BestFouledLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_last">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+            </tr><tr>
+                <td>&nbsp;</td>
+                <td>
+                    <div id="soustitre">Minus</div>
+                    <table
+                        style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
+                        border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="tab_titre">N°</td>
+                                <td class="tab_titre">Nom</td>
+                                <td class="tab_titre">Race</td>
+                                <td class="tab_titre">Pos</td>
+                            </tr>
+                            <#list BestMinusLines as line>
+                            <tr>
+                                <#if line_index==0>
+                                <#assign suffix="_1">
+                                <#else>
+                                <#assign suffix="">
+                                </#if>
+                                <#list line.cols as col>
+                                <#if col_index== 0>
+                                <td  class="tab_pos${suffix}">${col}</td>
+                                <#else>
+                                <td class="tab_result${suffix}">${col}</td>
+                                </#if>
+                                </#list>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table></td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <div align="right">
+            <small>
+                Rapport généré par TourMa © le ${dateGeneration}.
+            </small>
+        </div>
+    </body>
+</html>

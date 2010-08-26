@@ -424,6 +424,14 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtFoulNegIndivActionPerformed"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JButton" name="jbtGlobal">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Global"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtGlobalActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

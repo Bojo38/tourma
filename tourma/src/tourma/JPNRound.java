@@ -35,6 +35,7 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import tourma.data.Team;
 import tourma.tableModel.mjtRankingTeam;
+import tourma.views.report.jdgGlobal;
 
 /**
  *
@@ -180,6 +181,7 @@ public class JPNRound extends javax.swing.JPanel {
         jbtSorNegIndiv = new javax.swing.JButton();
         jbtFoulPosIndiv = new javax.swing.JButton();
         jbtFoulNegIndiv = new javax.swing.JButton();
+        jbtGlobal = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -431,6 +433,14 @@ public class JPNRound extends javax.swing.JPanel {
             }
         });
         jPanel5.add(jbtFoulNegIndiv);
+
+        jbtGlobal.setText("Global");
+        jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGlobalActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtGlobal);
 
         jPanel2.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
@@ -1023,6 +1033,17 @@ public class JPNRound extends javax.swing.JPanel {
     private void jtpGlobalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtpGlobalStateChanged
         update();
     }//GEN-LAST:event_jtpGlobalStateChanged
+
+    private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, false);
+                jdg.setVisible(true);
+                break;
+
+            }
+        }
+    }//GEN-LAST:event_jbtGlobalActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1042,6 +1063,7 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JButton jbtFoulNegIndiv;
     private javax.swing.JButton jbtFoulPosIndiv;
     private javax.swing.JButton jbtGeneralIndiv;
+    private javax.swing.JButton jbtGlobal;
     private javax.swing.JButton jbtNextRound;
     private javax.swing.JButton jbtScoreNegIndiv;
     private javax.swing.JButton jbtScorePosIndiv;
