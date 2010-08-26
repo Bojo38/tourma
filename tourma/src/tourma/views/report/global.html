@@ -145,7 +145,9 @@
                             <tr >
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Tds</td>
                             </tr>
                             <#list BestScorerLines as line>
@@ -176,7 +178,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Sor</td>
                             </tr>
                             <#list BestDestructorLines as line>
@@ -206,7 +210,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Foul</td>
                             </tr>
                             <#list BestFoulerLines as line>
@@ -229,7 +235,7 @@
                         </tbody>
                     </table></td>
             </tr><tr>
-                <td><div id="soustitre">Meilleure défense</div>
+                <td width="33%"><div id="soustitre">Meilleure défense</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
                         border="1" cellpadding="0" cellspacing="0">
@@ -237,7 +243,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Tds</td>
                             </tr>
                             <#list BestDefenseLines as line>
@@ -259,7 +267,7 @@
                             </#list>
                         </tbody>
                     </table></td>
-                <td><div id="soustitre">String d'acier</div>
+                <td width="33%"><div id="soustitre">String d'acier</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
                         border="1" cellpadding="0" cellspacing="0">
@@ -267,7 +275,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Sor</td>
                             </tr>
                             <#list WorstDestructedLines as line>
@@ -289,7 +299,7 @@
                             </#list>
                         </tbody>
                     </table></td>
-                <td><div id="soustitre">Le Hérisson</div>
+                <td width="33%"><div id="soustitre">Le Hérisson</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
                         border="1" cellpadding="0" cellspacing="0">
@@ -297,7 +307,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Foul</td>
                             </tr>
                             <#list WorstFouledLines as line>
@@ -319,7 +331,7 @@
                         </tbody>
                     </table></td></tr>
             <tr>
-                <td>
+                <td width="33%">
                     <div id="soustitre">La Savonette</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
@@ -328,7 +340,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Tds</td>
                             </tr>
                             <#list WorstScorerLines as line>
@@ -351,7 +365,7 @@
                         </tbody>
                     </table>
                 </td>
-                <td><div id="soustitre">Moufle d'or</div>
+               <td width="33%"><div id="soustitre">Moufle d'or</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
                         border="1" cellpadding="0" cellspacing="0">
@@ -359,7 +373,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Sor</td>
                             </tr>
                             <#list WorstDestructorLines as line>
@@ -381,7 +397,7 @@
                             </#list>
                         </tbody>
                     </table></td>
-                <td><div id="soustitre">Le Vertueux</div>
+                <td width="33%"><div id="soustitre">Le Vertueux</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
                         border="1" cellpadding="0" cellspacing="0">
@@ -389,7 +405,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Foul</td>
                             </tr>
                             <#list WorstFoulerLines as line>
@@ -413,7 +431,7 @@
                     </table></td>
             </tr>
             <tr>
-                <td><div id="soustitre">La Passoire</div>
+                <td width="33%"><div id="soustitre">La Passoire</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
                         border="1" cellpadding="0" cellspacing="0">
@@ -421,7 +439,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Tds</td>
                             </tr>
                             <#list WorstDefenseLines as line>
@@ -443,7 +463,7 @@
                             </#list>
                         </tbody>
                     </table></td>
-                <td><div id="soustitre">Punching Ball</div>
+                <td width="33%"><div id="soustitre">Punching Ball</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
                         border="1" cellpadding="0" cellspacing="0">
@@ -451,7 +471,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Sor</td>
                             </tr>
                             <#list BestDestructedLines as line>
@@ -473,7 +495,7 @@
                             </#list>
                         </tbody>
                     </table></td>
-                <td><div id="soustitre">Paillasson</div>
+                <td width="33%"><div id="soustitre">Paillasson</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
                         border="1" cellpadding="0" cellspacing="0">
@@ -481,7 +503,9 @@
                             <tr>
                                 <td class="tab_titre">N°</td>
                                 <td class="tab_titre">Nom</td>
+                                <#if team==0>
                                 <td class="tab_titre">Race</td>
+                                </#if>
                                 <td class="tab_titre">Foul</td>
                             </tr>
                             <#list BestFouledLines as line>
@@ -502,9 +526,11 @@
                             </#list>
                         </tbody>
                     </table></td>
-            </tr><tr>
-                <td>&nbsp;</td>
-                <td>
+            </tr>
+            <#if team==0>
+            <tr>
+                <td width="33%">&nbsp;</td>
+                <td width="33%">
                     <div id="soustitre">Minus</div>
                     <table
                         style="border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;"
@@ -534,8 +560,11 @@
                             </#list>
                         </tbody>
                     </table></td>
-                <td>&nbsp;</td>
+                <td width="33%"><small>
+                Sont considerés comme minus les équipes de Gobelins, Halflings et Ogres
+            </small></td>
             </tr>
+            </#if>
         </table>
         <div align="right">
             <small>

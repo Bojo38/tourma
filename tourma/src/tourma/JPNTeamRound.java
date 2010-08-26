@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import tourma.data.Match;
 import tourma.data.Team;
 import tourma.tableModel.mjtMatchTeams;
+import tourma.views.report.jdgGlobal;
 import tourma.views.report.jdgRanking;
 import tourma.views.report.jdgRound;
 
@@ -72,6 +73,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jbtFoulPosTeam = new javax.swing.JButton();
         jbtFoulNegTeam = new javax.swing.JButton();
         jbtShowMatchTeam = new javax.swing.JButton();
+        jbtGlobal = new javax.swing.JButton();
         jpnTeam = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -155,6 +157,14 @@ public class JPNTeamRound extends javax.swing.JPanel {
             }
         });
         jPanel8.add(jbtShowMatchTeam);
+
+        jbtGlobal.setText("Global");
+        jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGlobalActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jbtGlobal);
 
         add(jPanel8, java.awt.BorderLayout.SOUTH);
 
@@ -372,6 +382,17 @@ public class JPNTeamRound extends javax.swing.JPanel {
             }
         }
 }//GEN-LAST:event_jbtShowMatchTeamActionPerformed
+
+    private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
+         for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, true);
+                jdg.setVisible(true);
+                break;
+            }
+        }
+    }//GEN-LAST:event_jbtGlobalActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -386,6 +407,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private javax.swing.JButton jbtFoulNegTeam;
     private javax.swing.JButton jbtFoulPosTeam;
     private javax.swing.JButton jbtGeneralTeam;
+    private javax.swing.JButton jbtGlobal;
     private javax.swing.JButton jbtScoreNegTeam;
     private javax.swing.JButton jbtScorePosTeam;
     private javax.swing.JButton jbtShowMatchTeam;

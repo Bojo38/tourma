@@ -175,6 +175,14 @@ public class jdgGlobal extends javax.swing.JDialog {
             Map root = new HashMap();
             root.put("nom", _tour.getParams()._tournament_name + " - Ronde " + _roundNumber);
             root.put("title", "Classement Général");
+            if (_team)
+            {
+                root.put ("team",1);
+            }
+            else
+            {
+                root.put ("team",0);
+            }
             if (_team) {
                 if (_tour.getParams()._team_victory_only) {
                     generalModel = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
@@ -203,9 +211,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(tdPosModel.getValueAt(i, 2));
-                l.add(tdPosModel.getValueAt(i, 3));
-                l.add(tdPosModel.getValueAt(i, 4));
+                if (_team) {
+                    l.add(tdPosModel.getValueAt(i, 1));
+                    l.add(tdPosModel.getValueAt(i, 2));
+                } else {
+                    l.add(tdPosModel.getValueAt(i, 2));
+                    l.add(tdPosModel.getValueAt(i, 3));
+                    l.add(tdPosModel.getValueAt(i, 4));
+                }
                 line.put("cols", l);
                 BestScorerLines.add(line);
             }
@@ -217,9 +230,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 2));
-                l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 3));
-                l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 4));
+                if (_team) {
+                    l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 1));
+                    l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 2));
+                } else {
+                    l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 2));
+                    l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 3));
+                    l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 4));
+                }
                 line.put("cols", l);
                 WorstScorerLines.add(line);
             }
@@ -231,9 +249,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(tdNegModel.getValueAt(i, 2));
-                l.add(tdNegModel.getValueAt(i, 3));
-                l.add(tdNegModel.getValueAt(i, 4));
+                if (_team) {
+                    l.add(tdNegModel.getValueAt(i, 1));
+                    l.add(tdNegModel.getValueAt(i, 2));
+                } else {
+                    l.add(tdNegModel.getValueAt(i, 2));
+                    l.add(tdNegModel.getValueAt(i, 3));
+                    l.add(tdNegModel.getValueAt(i, 4));
+                }
                 line.put("cols", l);
                 WorstDefenseLines.add(line);
             }
@@ -245,9 +268,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 2));
-                l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 3));
-                l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 4));
+                if (_team) {
+                    l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 1));
+                    l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 2));
+                } else {
+                    l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 2));
+                    l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 3));
+                    l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 4));
+                }
                 line.put("cols", l);
                 BestDefenseLines.add(line);
             }
@@ -259,9 +287,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(sorPosModel.getValueAt(i, 2));
-                l.add(sorPosModel.getValueAt(i, 3));
-                l.add(sorPosModel.getValueAt(i, 4));
+                if (_team) {
+                    l.add(sorPosModel.getValueAt(i, 1));
+                    l.add(sorPosModel.getValueAt(i, 2));
+                } else {
+                    l.add(sorPosModel.getValueAt(i, 2));
+                    l.add(sorPosModel.getValueAt(i, 3));
+                    l.add(sorPosModel.getValueAt(i, 4));
+                }
                 line.put("cols", l);
                 BestDestructorLines.add(line);
             }
@@ -273,9 +306,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 2));
-                l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 3));
-                l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 4));
+                if (_team) {
+                    l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 1));
+                    l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 2));
+                } else {
+                    l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 2));
+                    l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 3));
+                    l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 4));
+                }
                 line.put("cols", l);
                 WorstDestructorLines.add(line);
             }
@@ -287,9 +325,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(sorNegModel.getValueAt(i, 2));
-                l.add(sorNegModel.getValueAt(i, 3));
-                l.add(sorNegModel.getValueAt(i, 4));
+                if (_team) {
+                    l.add(sorNegModel.getValueAt(i, 1));
+                    l.add(sorNegModel.getValueAt(i, 2));
+                } else {
+                    l.add(sorNegModel.getValueAt(i, 2));
+                    l.add(sorNegModel.getValueAt(i, 3));
+                    l.add(sorNegModel.getValueAt(i, 4));
+                }
                 line.put("cols", l);
                 BestDestructedLines.add(line);
             }
@@ -301,9 +344,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
-                l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 3));
-                l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 4));
+                if (_team) {
+                    l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
+                    l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
+                } else {
+                    l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
+                    l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 3));
+                    l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 4));
+                }
                 line.put("cols", l);
                 WorstDestructedLines.add(line);
             }
@@ -315,9 +363,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(foulPosModel.getValueAt(i, 2));
-                l.add(foulPosModel.getValueAt(i, 3));
-                l.add(foulPosModel.getValueAt(i, 4));
+                if (_team) {
+                    l.add(foulPosModel.getValueAt(i, 1));
+                    l.add(foulPosModel.getValueAt(i, 2));
+                } else {
+                    l.add(foulPosModel.getValueAt(i, 2));
+                    l.add(foulPosModel.getValueAt(i, 3));
+                    l.add(foulPosModel.getValueAt(i, 4));
+                }
                 line.put("cols", l);
                 BestFoulerLines.add(line);
             }
@@ -329,9 +382,15 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 2));
-                l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 3));
-                l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 4));
+                if (_team) {
+                    l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 1));
+                    l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 2));
+
+                } else {
+                    l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 2));
+                    l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 3));
+                    l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 4));
+                }
                 line.put("cols", l);
                 WorstFoulerLines.add(line);
             }
@@ -343,9 +402,14 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(foulNegModel.getValueAt(i, 2));
-                l.add(foulNegModel.getValueAt(i, 3));
-                l.add(foulNegModel.getValueAt(i, 4));
+                if (_team) {
+                    l.add(foulNegModel.getValueAt(i, 1));
+                    l.add(foulNegModel.getValueAt(i, 2));
+                } else {
+                    l.add(foulNegModel.getValueAt(i, 2));
+                    l.add(foulNegModel.getValueAt(i, 3));
+                    l.add(foulNegModel.getValueAt(i, 4));
+                }
                 line.put("cols", l);
                 BestFouledLines.add(line);
             }
@@ -357,32 +421,39 @@ public class jdgGlobal extends javax.swing.JDialog {
                 HashMap line = new HashMap();
                 Vector l = new Vector();
                 l.add(i + 1);
-                l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 2));
-                l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 3));
-                l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 4));
+                if (_team) {
+                    l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 1));
+                    l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 2));
+                } else {
+                    l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 2));
+                    l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 3));
+                    l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 4));
+                }
                 line.put("cols", l);
                 WorstFouledLines.add(line);
             }
             root.put("WorstFouledLines", WorstFouledLines);
 
-            Vector BestMinusLines = new Vector();
-            int count = 1;
-            for (int i = 0; (i < generalModel.getRowCount()) && (count <= 3); i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                if (generalModel.getValueAt(i, 3).equals("Gobelin") ||
-                        generalModel.getValueAt(i, 3).equals("Halfling") ||
-                        generalModel.getValueAt(i, 3).equals("Ogre")) {
-                    l.add(count);
-                    count++;
-                    l.add(generalModel.getValueAt(i, 2));
-                    l.add(generalModel.getValueAt(i, 3));
-                    l.add(i + 1);
-                    line.put("cols", l);
-                    BestMinusLines.add(line);
+            if (!_team) {
+                Vector BestMinusLines = new Vector();
+                int count = 1;
+                for (int i = 0; (i < generalModel.getRowCount()) && (count <= 3); i++) {
+                    HashMap line = new HashMap();
+                    Vector l = new Vector();
+                    if (generalModel.getValueAt(i, 3).equals("Gobelin") ||
+                            generalModel.getValueAt(i, 3).equals("Halfling") ||
+                            generalModel.getValueAt(i, 3).equals("Ogre")) {
+                        l.add(count);
+                        count++;
+                        l.add(generalModel.getValueAt(i, 2));
+                        l.add(generalModel.getValueAt(i, 3));
+                        l.add(i + 1);
+                        line.put("cols", l);
+                        BestMinusLines.add(line);
+                    }
                 }
+                root.put("BestMinusLines", BestMinusLines);
             }
-            root.put("BestMinusLines", BestMinusLines);
 
             Vector rankLines = new Vector();
             Vector titles = new Vector();
