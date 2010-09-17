@@ -74,6 +74,10 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jbtFoulNegTeam = new javax.swing.JButton();
         jbtShowMatchTeam = new javax.swing.JButton();
         jbtGlobal = new javax.swing.JButton();
+        jbtPasPosTeam = new javax.swing.JButton();
+        jbtPasNegTeam = new javax.swing.JButton();
+        jbtIntPosTeam = new javax.swing.JButton();
+        jbtIntNegTeam = new javax.swing.JButton();
         jpnTeam = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -85,12 +89,20 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jtbMostSorTeam = new javax.swing.JTable();
         jScrollPane12 = new javax.swing.JScrollPane();
         jtbMostFoulTeam = new javax.swing.JTable();
+        jScrollPane16 = new javax.swing.JScrollPane();
+        jtbMostPasTeam = new javax.swing.JTable();
+        jScrollPane18 = new javax.swing.JScrollPane();
+        jtbMostIntTeam = new javax.swing.JTable();
         jScrollPane13 = new javax.swing.JScrollPane();
         jtbMostTdNegTeam = new javax.swing.JTable();
         jScrollPane14 = new javax.swing.JScrollPane();
         jtbMostSorNegTeam = new javax.swing.JTable();
         jScrollPane15 = new javax.swing.JScrollPane();
         jtbMostFoulNegTeam = new javax.swing.JTable();
+        jScrollPane17 = new javax.swing.JScrollPane();
+        jtbMostPasNegTeam = new javax.swing.JTable();
+        jScrollPane19 = new javax.swing.JScrollPane();
+        jtbMostIntNegTeam = new javax.swing.JTable();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -166,6 +178,38 @@ public class JPNTeamRound extends javax.swing.JPanel {
         });
         jPanel8.add(jbtGlobal);
 
+        jbtPasPosTeam.setText("Main de Dieu");
+        jbtPasPosTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtPasPosTeamActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jbtPasPosTeam);
+
+        jbtPasNegTeam.setText("Hypnotisé");
+        jbtPasNegTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtPasNegTeamActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jbtPasNegTeam);
+
+        jbtIntPosTeam.setText("Intercepteur");
+        jbtIntPosTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtIntPosTeamActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jbtIntPosTeam);
+
+        jbtIntNegTeam.setText("Daltonien");
+        jbtIntNegTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtIntNegTeamActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jbtIntNegTeam);
+
         add(jPanel8, java.awt.BorderLayout.SOUTH);
 
         jpnTeam.setLayout(new java.awt.BorderLayout());
@@ -192,7 +236,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
 
         jSplitPane2.setBottomComponent(jScrollPane3);
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 3));
+        jPanel7.setLayout(new java.awt.GridLayout(2, 5));
 
         jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder("Scoreur"));
 
@@ -245,6 +289,40 @@ public class JPNTeamRound extends javax.swing.JPanel {
 
         jPanel7.add(jScrollPane12);
 
+        jScrollPane16.setBorder(javax.swing.BorderFactory.createTitledBorder("Main de Dieu"));
+
+        jtbMostPasTeam.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane16.setViewportView(jtbMostPasTeam);
+
+        jPanel7.add(jScrollPane16);
+
+        jScrollPane18.setBorder(javax.swing.BorderFactory.createTitledBorder("Intercepteur"));
+
+        jtbMostIntTeam.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane18.setViewportView(jtbMostIntTeam);
+
+        jPanel7.add(jScrollPane18);
+
         jScrollPane13.setBorder(javax.swing.BorderFactory.createTitledBorder("Passoire"));
 
         jtbMostTdNegTeam.setModel(new javax.swing.table.DefaultTableModel(
@@ -295,6 +373,40 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jScrollPane15.setViewportView(jtbMostFoulNegTeam);
 
         jPanel7.add(jScrollPane15);
+
+        jScrollPane17.setBorder(javax.swing.BorderFactory.createTitledBorder("Hypnotisé"));
+
+        jtbMostPasNegTeam.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane17.setViewportView(jtbMostPasNegTeam);
+
+        jPanel7.add(jScrollPane17);
+
+        jScrollPane19.setBorder(javax.swing.BorderFactory.createTitledBorder("Daltonien"));
+
+        jtbMostIntNegTeam.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane19.setViewportView(jtbMostIntNegTeam);
+
+        jPanel7.add(jScrollPane19);
 
         jSplitPane2.setTopComponent(jPanel7);
 
@@ -393,6 +505,46 @@ public class JPNTeamRound extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jbtGlobalActionPerformed
 
+    private void jbtPasPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasPosTeamActionPerformed
+         for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSER, true);
+                jdg.setVisible(true);
+                break;
+            }
+        }
+    }//GEN-LAST:event_jbtPasPosTeamActionPerformed
+
+    private void jbtPasNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasNegTeamActionPerformed
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSED, true);
+                jdg.setVisible(true);
+                break;
+            }
+        }
+    }//GEN-LAST:event_jbtPasNegTeamActionPerformed
+
+    private void jbtIntPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntPosTeamActionPerformed
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, true);
+                jdg.setVisible(true);
+                break;
+            }
+        }
+    }//GEN-LAST:event_jbtIntPosTeamActionPerformed
+
+    private void jbtIntNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntNegTeamActionPerformed
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, true);
+                jdg.setVisible(true);
+                break;
+            }
+        }
+    }//GEN-LAST:event_jbtIntNegTeamActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -401,6 +553,10 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane15;
+    private javax.swing.JScrollPane jScrollPane16;
+    private javax.swing.JScrollPane jScrollPane17;
+    private javax.swing.JScrollPane jScrollPane18;
+    private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSplitPane jSplitPane2;
@@ -408,6 +564,10 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private javax.swing.JButton jbtFoulPosTeam;
     private javax.swing.JButton jbtGeneralTeam;
     private javax.swing.JButton jbtGlobal;
+    private javax.swing.JButton jbtIntNegTeam;
+    private javax.swing.JButton jbtIntPosTeam;
+    private javax.swing.JButton jbtPasNegTeam;
+    private javax.swing.JButton jbtPasPosTeam;
     private javax.swing.JButton jbtScoreNegTeam;
     private javax.swing.JButton jbtScorePosTeam;
     private javax.swing.JButton jbtShowMatchTeam;
@@ -416,6 +576,10 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private javax.swing.JPanel jpnTeam;
     private javax.swing.JTable jtbMostFoulNegTeam;
     private javax.swing.JTable jtbMostFoulTeam;
+    private javax.swing.JTable jtbMostIntNegTeam;
+    private javax.swing.JTable jtbMostIntTeam;
+    private javax.swing.JTable jtbMostPasNegTeam;
+    private javax.swing.JTable jtbMostPasTeam;
     private javax.swing.JTable jtbMostSorNegTeam;
     private javax.swing.JTable jtbMostSorTeam;
     private javax.swing.JTable jtbMostTdNegTeam;
@@ -441,6 +605,11 @@ public class JPNTeamRound extends javax.swing.JPanel {
         mjtAnnexRankTeam mFoulPosTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
         mjtAnnexRankTeam mFoulNegTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
 
+        mjtAnnexRankTeam mPasPosTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+        mjtAnnexRankTeam mPasNegTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+        mjtAnnexRankTeam mIntPosTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_INT_POS, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+        mjtAnnexRankTeam mIntNegTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
+
         jtbMostTdTeam.setModel(mTdPosTeam);
         jtbMostTdTeam.setDefaultRenderer(String.class, mTdPosTeam);
         jtbMostTdTeam.setDefaultRenderer(Integer.class, mTdPosTeam);
@@ -461,6 +630,20 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jtbMostFoulNegTeam.setModel(mFoulNegTeam);
         jtbMostFoulNegTeam.setDefaultRenderer(String.class, mFoulNegTeam);
         jtbMostFoulNegTeam.setDefaultRenderer(Integer.class, mFoulNegTeam);
+
+        jtbMostPasTeam.setModel(mPasPosTeam);
+        jtbMostPasTeam.setDefaultRenderer(String.class, mPasPosTeam);
+        jtbMostPasTeam.setDefaultRenderer(Integer.class, mPasPosTeam);
+        jtbMostPasNegTeam.setModel(mPasNegTeam);
+        jtbMostPasNegTeam.setDefaultRenderer(String.class, mPasNegTeam);
+        jtbMostPasNegTeam.setDefaultRenderer(Integer.class, mPasNegTeam);
+
+        jtbMostIntTeam.setModel(mIntPosTeam);
+        jtbMostIntTeam.setDefaultRenderer(String.class, mIntPosTeam);
+        jtbMostIntTeam.setDefaultRenderer(Integer.class, mIntPosTeam);
+        jtbMostIntNegTeam.setModel(mIntNegTeam);
+        jtbMostIntNegTeam.setDefaultRenderer(String.class, mIntNegTeam);
+        jtbMostIntNegTeam.setDefaultRenderer(Integer.class, mIntNegTeam);
 
 
         mjtRankingTeam mRankingTeam = null;
@@ -485,6 +668,11 @@ public class JPNTeamRound extends javax.swing.JPanel {
         setColumnSize(jtbMostSorTeam);
         setColumnSize(jtbMostTdNegTeam);
         setColumnSize(jtbMostTdTeam);
+
+        setColumnSize(jtbMostPasNegTeam);
+        setColumnSize(jtbMostPasTeam);
+        setColumnSize(jtbMostIntNegTeam);
+        setColumnSize(jtbMostIntTeam);
 
         if (_jtbTeamMatch != null) {
             Vector<Team> teams = new Vector<Team>();

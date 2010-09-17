@@ -51,6 +51,10 @@ public class jdgRanking extends javax.swing.JDialog {
     public static final int RANKING_SCORED = 4;
     public static final int RANKING_DESTROYED = 5;
     public static final int RANKING_FOULED = 6;
+    public static final int RANKING_PASSER = 7;
+    public static final int RANKING_PASSED = 8;
+    public static final int RANKING_INTERCEPTER = 9;
+    public static final int RANKING_INTERCEPTED = 10;
     Round _round;
     int _roundNumber;
     Tournament _tour;
@@ -172,12 +176,9 @@ public class jdgRanking extends javax.swing.JDialog {
                 switch (_rankType) {
                     case RANKING_GENERAL:
                         root.put("title", "Classement général");
-                        if (_tour.getParams()._team_victory_only)
-                        {
+                        if (_tour.getParams()._team_victory_only) {
                             model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
-                        }
-                        else
-                        {
+                        } else {
                             model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
                         }
                         break;
@@ -205,14 +206,27 @@ public class jdgRanking extends javax.swing.JDialog {
                         root.put("title", "Pires Paillassons");
                         model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
+                    case RANKING_PASSER:
+                        root.put("title", "Meilleurs Passeurs");
+                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        break;
+                    case RANKING_PASSED:
+                        root.put("title", "Passes subies");
+                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        break;
+                    case RANKING_INTERCEPTED:
+                        root.put("title", "Les Daltoniens");
+                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        break;
+                    case RANKING_INTERCEPTER:
+                        root.put("title", "Meilleurs Intercepteurs");
+                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_INT_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        break;
                     default:
                         root.put("title", "Classement général");
-                        if (_tour.getParams()._team_victory_only)
-                        {
+                        if (_tour.getParams()._team_victory_only) {
                             model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
-                        }
-                        else
-                        {
+                        } else {
                             model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
                         }
                 }
@@ -245,6 +259,22 @@ public class jdgRanking extends javax.swing.JDialog {
                     case RANKING_FOULED:
                         root.put("title", "Pire Paillasson");
                         model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                        break;
+                    case RANKING_PASSED:
+                        root.put("title", "Passes subies");
+                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                        break;
+                    case RANKING_PASSER:
+                        root.put("title", "Main de Dieu");
+                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                        break;
+                    case RANKING_INTERCEPTED:
+                        root.put("title", "Daltonien");
+                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                        break;
+                    case RANKING_INTERCEPTER:
+                        root.put("title", "Meilleur Intercepteur");
+                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_INT_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
                         break;
                     default:
                         root.put("title", "Classement général");

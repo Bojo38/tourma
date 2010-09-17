@@ -10,6 +10,9 @@
  */
 package tourma;
 
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.util.Hashtable;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -38,6 +41,16 @@ public class jdgTeamPairing extends javax.swing.JDialog {
     public jdgTeamPairing(java.awt.Frame parent, boolean modal, Vector<Team> teams1, Vector<Team> teams2, Round round) {
         super(parent, modal);
         initComponents();
+
+         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gs = ge.getDefaultScreenDevice();
+        DisplayMode dmode = gs.getDisplayMode();
+        if (dmode != null) {
+            int screenWidth = dmode.getWidth();
+            int screenHeight = dmode.getHeight();
+            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        }
+
         _teams1 = teams1;
         _teams2 = teams2;
         _round = round;

@@ -83,6 +83,12 @@ public class MainFrame extends javax.swing.JFrame {
         jtffSorPosTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
         jtffTdPosTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
         jtffTdNegTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+
+        jtffIntPosTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jtffIntNegTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jtffPasPosTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jtffPasNegTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+
         jtffVictoryTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
 
         jcbRank1Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
@@ -125,6 +131,12 @@ public class MainFrame extends javax.swing.JFrame {
         jtffSorPos.setValue(new Integer(_tournament.getParams()._bonus_sor_points));
         jtffTdNeg.setValue(new Integer(_tournament.getParams()._bonus_neg_td_points));
         jtffTdPos.setValue(new Integer(_tournament.getParams()._bonus_td_points));
+
+        jtffPasNeg.setValue(new Integer(_tournament.getParams()._bonus_neg_pas_points));
+        jtffPasPos.setValue(new Integer(_tournament.getParams()._bonus_pas_points));
+        jtffIntNeg.setValue(new Integer(_tournament.getParams()._bonus_neg_int_points));
+        jtffIntPos.setValue(new Integer(_tournament.getParams()._bonus_int_points));
+
         jtffVictory.setValue(new Integer(_tournament.getParams()._victory_points));
 
         jtffDrawTeam.setValue(new Integer(_tournament.getParams()._draw_points_team));
@@ -135,6 +147,13 @@ public class MainFrame extends javax.swing.JFrame {
         jtffSorPosTeam.setValue(new Integer(_tournament.getParams()._bonus_sor_points_team));
         jtffTdNegTeam.setValue(new Integer(_tournament.getParams()._bonus_neg_td_points_team));
         jtffTdPosTeam.setValue(new Integer(_tournament.getParams()._bonus_td_points_team));
+
+        jtffIntPosTeam.setValue(new Integer(_tournament.getParams()._bonus_int_points_team));
+        jtffIntNegTeam.setValue(new Integer(_tournament.getParams()._bonus_neg_int_points_team));
+        jtffPasPosTeam.setValue(new Integer(_tournament.getParams()._bonus_pas_points_team));
+        jtffPasNegTeam.setValue(new Integer(_tournament.getParams()._bonus_neg_pas_points_team));
+
+
         jtffVictoryTeam.setValue(new Integer(_tournament.getParams()._victory_points_team));
 
         jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
@@ -295,12 +314,20 @@ public class MainFrame extends javax.swing.JFrame {
         jtffSorPos = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
         jtffFoulPos = new javax.swing.JFormattedTextField();
+        jLabel38 = new javax.swing.JLabel();
+        jtffPasPos = new javax.swing.JFormattedTextField();
+        jLabel37 = new javax.swing.JLabel();
+        jtffIntPos = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         jtffTdNeg = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
         jtffSorNeg = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
         jtffFoulNeg = new javax.swing.JFormattedTextField();
+        jLabel39 = new javax.swing.JLabel();
+        jtffPasNeg = new javax.swing.JFormattedTextField();
+        jLabel40 = new javax.swing.JLabel();
+        jtffIntNeg = new javax.swing.JFormattedTextField();
         jLabel14 = new javax.swing.JLabel();
         jcbRank1 = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
@@ -326,12 +353,20 @@ public class MainFrame extends javax.swing.JFrame {
         jtffSorPosTeam = new javax.swing.JFormattedTextField();
         jLabel33 = new javax.swing.JLabel();
         jtffFoulPosTeam = new javax.swing.JFormattedTextField();
+        jLabel41 = new javax.swing.JLabel();
+        jtffPasPosTeam = new javax.swing.JFormattedTextField();
+        jLabel42 = new javax.swing.JLabel();
+        jtffIntPosTeam = new javax.swing.JFormattedTextField();
         jLabel34 = new javax.swing.JLabel();
         jtffTdNegTeam = new javax.swing.JFormattedTextField();
         jLabel35 = new javax.swing.JLabel();
         jtffSorNegTeam = new javax.swing.JFormattedTextField();
         jLabel36 = new javax.swing.JLabel();
         jtffFoulNegTeam = new javax.swing.JFormattedTextField();
+        jLabel44 = new javax.swing.JLabel();
+        jtffPasNegTeam = new javax.swing.JFormattedTextField();
+        jLabel43 = new javax.swing.JLabel();
+        jtffIntNegTeam = new javax.swing.JFormattedTextField();
         jLabel26 = new javax.swing.JLabel();
         jcbRank1Team = new javax.swing.JComboBox();
         jLabel27 = new javax.swing.JLabel();
@@ -438,7 +473,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Paramètres de classement"));
     jPanel9.setLayout(new java.awt.BorderLayout());
 
-    jPanel6.setLayout(new java.awt.GridLayout(18, 2));
+    jPanel6.setLayout(new java.awt.GridLayout(22, 2));
 
     jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
     jLabel3.setText("Large victoire:");
@@ -570,6 +605,32 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jPanel6.add(jtffFoulPos);
 
+    jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel38.setText("Passes réussies:");
+    jLabel38.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
+    jPanel6.add(jLabel38);
+
+    jtffPasPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffPasPos.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffPasPosFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffPasPos);
+
+    jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel37.setText("Interceptions réussies:");
+    jLabel37.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
+    jPanel6.add(jLabel37);
+
+    jtffIntPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffIntPos.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffIntPosFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffIntPos);
+
     jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
     jLabel11.setText("Touchdowns encaissés:");
     jLabel11.setToolTipText("Nombre de points (éventuellement négatifs) pour les touchdowns encaissés");
@@ -609,11 +670,37 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jPanel6.add(jtffFoulNeg);
 
+    jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel39.setText("Passes subies:");
+    jLabel39.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
+    jPanel6.add(jLabel39);
+
+    jtffPasNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffPasNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffPasNegFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffPasNeg);
+
+    jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel40.setText("Interceptions subies:");
+    jLabel40.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
+    jPanel6.add(jLabel40);
+
+    jtffIntNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffIntNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffIntNegFocusLost(evt);
+        }
+    });
+    jPanel6.add(jtffIntNeg);
+
     jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
     jLabel14.setText("Critère de classement n°1:");
     jPanel6.add(jLabel14);
 
-    jcbRank1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
     jcbRank1.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jcbRank1ActionPerformed(evt);
@@ -625,7 +712,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jLabel15.setText("Critère de classement n°2:");
     jPanel6.add(jLabel15);
 
-    jcbRank2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
     jcbRank2.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jcbRank2ActionPerformed(evt);
@@ -637,7 +724,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jLabel16.setText("Critère de classement n°3:");
     jPanel6.add(jLabel16);
 
-    jcbRank3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
     jcbRank3.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jcbRank3ActionPerformed(evt);
@@ -649,7 +736,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jLabel17.setText("Critère de classement n°4:");
     jPanel6.add(jLabel17);
 
-    jcbRank4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
     jcbRank4.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jcbRank4ActionPerformed(evt);
@@ -661,7 +748,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jLabel18.setText("Critère de classement n°5:");
     jPanel6.add(jLabel18);
 
-    jcbRank5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+    jcbRank5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
     jcbRank5.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jcbRank5ActionPerformed(evt);
@@ -671,7 +758,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
 
     jTabbedPane1.addTab("Individuel", jPanel6);
 
-    jPanel10.setLayout(new java.awt.GridLayout(16, 2));
+    jPanel10.setLayout(new java.awt.GridLayout(20, 2));
 
     buttonGroup1.add(jrbTeamVictory);
     jrbTeamVictory.setText("Utiliser la victoire d'équipe");
@@ -772,6 +859,32 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jPanel10.add(jtffFoulPosTeam);
 
+    jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel41.setText("Passes réalisées:");
+    jLabel41.setToolTipText("Nombre de points pour une sortie réalisée");
+    jPanel10.add(jLabel41);
+
+    jtffPasPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffPasPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffPasPosTeamFocusLost(evt);
+        }
+    });
+    jPanel10.add(jtffPasPosTeam);
+
+    jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel42.setText("Interceptions réussies:");
+    jLabel42.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
+    jPanel10.add(jLabel42);
+
+    jtffIntPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffIntPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffIntPosTeamFocusLost(evt);
+        }
+    });
+    jPanel10.add(jtffIntPosTeam);
+
     jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
     jLabel34.setText("Touchdowns encaissés:");
     jLabel34.setToolTipText("Nombre de points (éventuellement négatifs) pour les touchdowns encaissés");
@@ -810,6 +923,32 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         }
     });
     jPanel10.add(jtffFoulNegTeam);
+
+    jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel44.setText("Passes subies:");
+    jLabel44.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
+    jPanel10.add(jLabel44);
+
+    jtffPasNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffPasNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffPasNegTeamFocusLost(evt);
+        }
+    });
+    jPanel10.add(jtffPasNegTeam);
+
+    jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    jLabel43.setText("Interceptions subies:");
+    jLabel43.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies");
+    jPanel10.add(jLabel43);
+
+    jtffIntNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+    jtffIntNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            jtffIntNegTeamFocusLost(evt);
+        }
+    });
+    jPanel10.add(jtffIntNegTeam);
 
     jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
     jLabel26.setText("Critère de classement n°1:");
@@ -1641,6 +1780,94 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         update();
     }//GEN-LAST:event_jtffFoulNegTeamFocusLost
 
+    private void jtffIntPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffIntPosFocusLost
+         try {
+            jtffIntPos.commitEdit();
+            int points = ((Long) jtffIntPos.getValue()).intValue();
+            _tournament.getParams()._bonus_int_points = points;
+        } catch (ParseException e) {
+            jtffIntPos.setValue(jtffIntPos.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffIntPosFocusLost
+
+    private void jtffPasPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffPasPosFocusLost
+        try {
+            jtffPasPos.commitEdit();
+            int points = ((Long) jtffPasPos.getValue()).intValue();
+            _tournament.getParams()._bonus_pas_points = points;
+        } catch (ParseException e) {
+            jtffPasPos.setValue(jtffPasPos.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffPasPosFocusLost
+
+    private void jtffPasNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffPasNegFocusLost
+         try {
+            jtffPasNeg.commitEdit();
+            int points = ((Long) jtffPasNeg.getValue()).intValue();
+            _tournament.getParams()._bonus_neg_pas_points = points;
+        } catch (ParseException e) {
+            jtffPasNeg.setValue(jtffPasNeg.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffPasNegFocusLost
+
+    private void jtffIntNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffIntNegFocusLost
+        try {
+            jtffIntNeg.commitEdit();
+            int points = ((Long) jtffIntNeg.getValue()).intValue();
+            _tournament.getParams()._bonus_neg_int_points = points;
+        } catch (ParseException e) {
+            jtffIntNeg.setValue(jtffIntNeg.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffIntNegFocusLost
+
+    private void jtffPasPosTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffPasPosTeamFocusLost
+        try {
+            jtffPasPosTeam.commitEdit();
+            int points = ((Long) jtffPasPosTeam.getValue()).intValue();
+            _tournament.getParams()._bonus_pas_points_team = points;
+        } catch (ParseException e) {
+            jtffPasPosTeam.setValue(jtffPasPosTeam.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffPasPosTeamFocusLost
+
+    private void jtffIntPosTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffIntPosTeamFocusLost
+         try {
+            jtffIntPosTeam.commitEdit();
+            int points = ((Long) jtffIntPosTeam.getValue()).intValue();
+            _tournament.getParams()._bonus_int_points_team = points;
+        } catch (ParseException e) {
+            jtffIntPosTeam.setValue(jtffIntPosTeam.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffIntPosTeamFocusLost
+
+    private void jtffPasNegTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffPasNegTeamFocusLost
+        try {
+            jtffPasNegTeam.commitEdit();
+            int points = ((Long) jtffPasNegTeam.getValue()).intValue();
+            _tournament.getParams()._bonus_neg_pas_points_team = points;
+        } catch (ParseException e) {
+            jtffPasNegTeam.setValue(jtffPasNegTeam.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffPasNegTeamFocusLost
+
+    private void jtffIntNegTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffIntNegTeamFocusLost
+         try {
+            jtffIntNegTeam.commitEdit();
+            int points = ((Long) jtffIntNegTeam.getValue()).intValue();
+            _tournament.getParams()._bonus_neg_int_points_team = points;
+        } catch (ParseException e) {
+            jtffIntNegTeam.setValue(jtffIntNegTeam.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffIntNegTeamFocusLost
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i <
@@ -1737,7 +1964,15 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1807,12 +2042,20 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JFormattedTextField jtffFoulNegTeam;
     private javax.swing.JFormattedTextField jtffFoulPos;
     private javax.swing.JFormattedTextField jtffFoulPosTeam;
+    private javax.swing.JFormattedTextField jtffIntNeg;
+    private javax.swing.JFormattedTextField jtffIntNegTeam;
+    private javax.swing.JFormattedTextField jtffIntPos;
+    private javax.swing.JFormattedTextField jtffIntPosTeam;
     private javax.swing.JFormattedTextField jtffLargeVictory;
     private javax.swing.JFormattedTextField jtffLargeVictoryGap;
     private javax.swing.JFormattedTextField jtffLittleLost;
     private javax.swing.JFormattedTextField jtffLittleLostGap;
     private javax.swing.JFormattedTextField jtffLost;
     private javax.swing.JFormattedTextField jtffLostTeam;
+    private javax.swing.JFormattedTextField jtffPasNeg;
+    private javax.swing.JFormattedTextField jtffPasNegTeam;
+    private javax.swing.JFormattedTextField jtffPasPos;
+    private javax.swing.JFormattedTextField jtffPasPosTeam;
     private javax.swing.JFormattedTextField jtffSorNeg;
     private javax.swing.JFormattedTextField jtffSorNegTeam;
     private javax.swing.JFormattedTextField jtffSorPos;

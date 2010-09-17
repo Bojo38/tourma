@@ -21,13 +21,12 @@ public class mjtRankingIndiv extends mjtRanking {
     boolean _teamTournament;
 
     public mjtRankingIndiv(Vector<Round> rounds, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector<Coach> coachs, boolean tournament) {
-        super(rounds, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5,coachs);
+        super(rounds, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs);
         _teamTournament = tournament;
         sortDatas();
     }
 
-    protected void sortDatas()
-    {
+    protected void sortDatas() {
         _datas.clear();
         Vector<Match> matchs = new Vector<Match>();
         for (int i = 0; i < _rounds.size(); i++) {
@@ -37,7 +36,7 @@ public class mjtRankingIndiv extends mjtRanking {
         }
 
         for (int i = 0; i < _objects.size(); i++) {
-            Coach c =(Coach) _objects.get(i);
+            Coach c = (Coach) _objects.get(i);
             int value1 = 0;
             int value2 = 0;
             int value3 = 0;
@@ -56,7 +55,7 @@ public class mjtRankingIndiv extends mjtRanking {
 
         Collections.sort(_datas);
     }
-    
+
     public int getColumnCount() {
         if (_teamTournament) {
             return 10;
@@ -64,8 +63,7 @@ public class mjtRankingIndiv extends mjtRanking {
         return 9;
     }
 
-    
-@Override
+    @Override
     public String getColumnName(int col) {
 
         int cl = col;
@@ -109,6 +107,14 @@ public class mjtRankingIndiv extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
             case 5:
@@ -133,6 +139,14 @@ public class mjtRankingIndiv extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
             case 6:
@@ -157,6 +171,14 @@ public class mjtRankingIndiv extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
             case 7:
@@ -181,6 +203,14 @@ public class mjtRankingIndiv extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
             case 8:
@@ -205,6 +235,14 @@ public class mjtRankingIndiv extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
         }
@@ -213,7 +251,7 @@ public class mjtRankingIndiv extends mjtRanking {
 
     public Object getValueAt(int row, int col) {
 
-        ObjectRanking obj=(ObjectRanking)_datas.get(row);
+        ObjectRanking obj = (ObjectRanking) _datas.get(row);
 
         int cl = col;
         if (_teamTournament) {
@@ -250,6 +288,4 @@ public class mjtRankingIndiv extends mjtRanking {
 
         return "";
     }
-
-
 }

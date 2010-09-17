@@ -63,6 +63,19 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                             case C_MOST_FOUL_NEG:
                                 value += m._foul2;
                                 break;
+                            case C_MOST_PAS_POS:
+                                value += m._pas1;
+                                break;
+                            case C_MOST_PAS_NEG:
+                                value += m._pas2;
+                                break;
+                            case C_MOST_INT_POS:
+                                value += m._int1;
+                                break;
+                            case C_MOST_INT_NEG:
+                                value += m._int2;
+                                break;
+
                         }
                     }
                     if (m._coach2 == c) {
@@ -84,6 +97,18 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                                 break;
                             case C_MOST_FOUL_NEG:
                                 value += m._foul1;
+                                break;
+                            case C_MOST_PAS_POS:
+                                value += m._pas2;
+                                break;
+                            case C_MOST_PAS_NEG:
+                                value += m._pas1;
+                                break;
+                            case C_MOST_INT_POS:
+                                value += m._int2;
+                                break;
+                            case C_MOST_INT_NEG:
+                                value += m._int1;
                                 break;
                         }
                     }
@@ -126,6 +151,14 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                         return "Foul";
                     case C_MOST_FOUL_NEG:
                         return "Foul";
+                    case C_MOST_PAS_POS:
+                        return "Pas";
+                    case C_MOST_PAS_NEG:
+                        return "Pas";
+                    case C_MOST_INT_POS:
+                        return "Int";
+                    case C_MOST_INT_NEG:
+                        return "Int";
                 }
         }
         return "";

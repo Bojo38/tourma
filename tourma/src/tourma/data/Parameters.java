@@ -27,6 +27,10 @@ public class Parameters {
     public int _bonus_neg_td_points = 0;
     public int _bonus_neg_sor_points = 0;
     public int _bonus_neg_foul_points = 0;
+    public int _bonus_pas_points = 0;
+    public int _bonus_neg_pas_points = 0;
+    public int _bonus_int_points = 0;
+    public int _bonus_neg_int_points = 0;
     public String _tournament_name;
     public String _tournament_orga;
     public String _place;
@@ -61,6 +65,11 @@ public class Parameters {
     public int _bonus_neg_td_points_team = 0;
     public int _bonus_neg_sor_points_team = 0;
     public int _bonus_neg_foul_points_team = 0;
+
+    public int _bonus_pas_points_team = 0;
+    public int _bonus_neg_pas_points_team = 0;
+    public int _bonus_int_points_team = 0;
+    public int _bonus_neg_int_points_team = 0;
     
     public static final int C_RANKING_NONE = 0;
     public static final int C_RANKING_POINTS = 1;
@@ -70,8 +79,12 @@ public class Parameters {
     public static final int C_RANKING_FOUL = 5;
     public static final int C_RANKING_DIFF_TD = 6;
     public static final int C_RANKING_DIFF_SOR = 7;
-    public static final int C_RANKING_DIFF_FOUL = 8;
+    public static final int C_RANKING_DIFF_FOUL = 8;    
     public static final int C_RANKING_VND = 9;
+    public static final int C_RANKING_PAS = 10;
+    public static final int C_RANKING_INT = 11;
+    public static final int C_RANKING_DIFF_PAS = 12;
+    public static final int C_RANKING_DIFF_INT = 13;
 
     public Parameters() {
         _tournament_name = "";

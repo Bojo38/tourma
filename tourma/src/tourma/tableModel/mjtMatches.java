@@ -18,7 +18,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Frederic Berger
  */
-public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
+public class mjtMatches extends AbstractTableModel implements TableCellRenderer {
 
     Vector<Match> _matchs;
     boolean _locked;
@@ -36,12 +36,12 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
     public int getColumnCount() {
         if (_teamTournament) {
             if (_full) {
-                return 11;
+                return 15;
             } else {
                 return 7;
             }
         } else {
-            return 9;
+            return 13;
         }
     }
 
@@ -75,6 +75,14 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
                     return "Foul 1";
                 case 10:
                     return "Foul 2";
+                case 11:
+                    return "Passes 1";
+                case 12:
+                    return "Passes 2";
+                case 13:
+                    return "Inter. 1";
+                case 14:
+                    return "Inter. 2";
             }
         } else {
 
@@ -97,6 +105,14 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
                     return "Foul 1";
                 case 8:
                     return "Foul 2";
+                case 9:
+                    return "Passes 1";
+                case 10:
+                    return "Passes 2";
+                case 11:
+                    return "Inter. 1";
+                case 12:
+                    return "Inter. 2";
             }
         }
         return "";
@@ -137,6 +153,14 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
                     return m._foul1;
                 case 10:
                     return m._foul2;
+                case 11:
+                    return m._pas1;
+                case 12:
+                    return m._pas2;
+                case 13:
+                    return m._int1;
+                case 14:
+                    return m._int2;
             }
         } else {
             switch (col) {
@@ -166,6 +190,14 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
                     return m._foul1;
                 case 8:
                     return m._foul2;
+                case 9:
+                    return m._pas1;
+                case 10:
+                    return m._pas2;
+                case 11:
+                    return m._int1;
+                case 12:
+                    return m._int2;
             }
         }
         return "";
@@ -195,6 +227,18 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
                     case 10:
                         m._foul2 = (Integer.valueOf(value.toString()));
                         break;
+                    case 11:
+                        m._pas1 = (Integer.valueOf(value.toString()));
+                        break;
+                    case 12:
+                        m._pas2 = (Integer.valueOf(value.toString()));
+                        break;
+                    case 13:
+                        m._int1 = (Integer.valueOf(value.toString()));
+                        break;
+                    case 14:
+                        m._int2 = (Integer.valueOf(value.toString()));
+                        break;
                 }
             } else {
                 switch (col) {
@@ -215,6 +259,18 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
                         break;
                     case 8:
                         m._foul2 = (Integer.valueOf(value.toString()));
+                        break;
+                    case 9:
+                        m._pas1 = (Integer.valueOf(value.toString()));
+                        break;
+                    case 10:
+                        m._pas2 = (Integer.valueOf(value.toString()));
+                        break;
+                    case 11:
+                        m._int1 = (Integer.valueOf(value.toString()));
+                        break;
+                    case 12:
+                        m._int2 = (Integer.valueOf(value.toString()));
                         break;
                 }
             }
@@ -399,6 +455,27 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer{
                         break;
 
                     case 8:
+                        frg = new Color(50, 50, 200);
+                        break;
+                    case 9:
+                        frg = new Color(200, 50, 50);
+                        break;
+
+                    case 10:
+                        frg = new Color(50, 50, 200);
+                        break;
+                    case 11:
+                        frg = new Color(200, 50, 50);
+                        break;
+
+                    case 12:
+                        frg = new Color(50, 50, 200);
+                        break;
+                    case 13:
+                        frg = new Color(200, 50, 50);
+                        break;
+
+                    case 14:
                         frg = new Color(50, 50, 200);
                         break;
 

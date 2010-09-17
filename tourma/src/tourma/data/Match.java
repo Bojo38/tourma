@@ -20,4 +20,9 @@ public class Match {
     public int _sor2;
     public int _foul1;
     public int _foul2;
+
+    public int _pas1;
+    public int _pas2;
+    public int _int1;
+    public int _int2;
 }

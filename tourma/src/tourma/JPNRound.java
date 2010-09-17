@@ -100,6 +100,10 @@ public class JPNRound extends javax.swing.JPanel {
             mjtAnnexRankIndiv mSorNeg = new mjtAnnexRankIndiv(v, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getParams()._teamTournament);
             mjtAnnexRankIndiv mFoulPos = new mjtAnnexRankIndiv(v, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getParams()._teamTournament);
             mjtAnnexRankIndiv mFoulNeg = new mjtAnnexRankIndiv(v, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getParams()._teamTournament);
+            mjtAnnexRankIndiv mPasPos = new mjtAnnexRankIndiv(v, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getParams()._teamTournament);
+            mjtAnnexRankIndiv mPasNeg = new mjtAnnexRankIndiv(v, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getParams()._teamTournament);
+            mjtAnnexRankIndiv mIntPos = new mjtAnnexRankIndiv(v, mjtAnnexRankIndiv.C_MOST_INT_POS, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getParams()._teamTournament);
+            mjtAnnexRankIndiv mIntNeg = new mjtAnnexRankIndiv(v, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tournament.getCoachs(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getParams()._teamTournament);
 
             jtbMostTdIndiv.setModel(mTdPos);
             jtbMostTdIndiv.setDefaultRenderer(String.class, mTdPos);
@@ -120,6 +124,19 @@ public class JPNRound extends javax.swing.JPanel {
             jtbMostFoulNegIndiv.setDefaultRenderer(String.class, mFoulNeg);
             jtbMostFoulNegIndiv.setDefaultRenderer(Integer.class, mFoulNeg);
 
+            jtbMostPasIndiv.setModel(mPasPos);
+            jtbMostPasIndiv.setDefaultRenderer(String.class, mPasPos);
+            jtbMostPasIndiv.setDefaultRenderer(Integer.class, mPasPos);
+            jtbMostPasNegIndiv.setModel(mPasNeg);
+            jtbMostPasNegIndiv.setDefaultRenderer(String.class, mPasNeg);
+            jtbMostPasNegIndiv.setDefaultRenderer(Integer.class, mPasNeg);
+            jtbMostIntIndiv.setModel(mIntPos);
+            jtbMostIntIndiv.setDefaultRenderer(String.class, mIntPos);
+            jtbMostIntIndiv.setDefaultRenderer(Integer.class, mIntPos);
+            jtbMostIntNegIndiv.setModel(mIntNeg);
+            jtbMostIntNegIndiv.setDefaultRenderer(String.class, mIntNeg);
+            jtbMostIntNegIndiv.setDefaultRenderer(Integer.class, mIntNeg);
+
             mjtRankingIndiv mRanking = new mjtRankingIndiv(v, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getCoachs(), _tournament.getParams()._teamTournament);
             jtbRankingIndiv.setModel(mRanking);
             jtbRankingIndiv.setDefaultRenderer(String.class, mRanking);
@@ -133,6 +150,11 @@ public class JPNRound extends javax.swing.JPanel {
             setColumnSize(jtbMostSorIndiv);
             setColumnSize(jtbMostTdNegIndiv);
             setColumnSize(jtbMostTdIndiv);
+
+            setColumnSize(jtbMostIntNegIndiv);
+            setColumnSize(jtbMostIntIndiv);
+            setColumnSize(jtbMostPasNegIndiv);
+            setColumnSize(jtbMostPasIndiv);
 
 
         }
@@ -167,12 +189,20 @@ public class JPNRound extends javax.swing.JPanel {
         jtbMostSorIndiv = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         jtbMostFoulIndiv = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jtbMostPasIndiv = new javax.swing.JTable();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        jtbMostIntIndiv = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
         jtbMostTdNegIndiv = new javax.swing.JTable();
         jScrollPane9 = new javax.swing.JScrollPane();
         jtbMostSorNegIndiv = new javax.swing.JTable();
         jScrollPane10 = new javax.swing.JScrollPane();
         jtbMostFoulNegIndiv = new javax.swing.JTable();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        jtbMostPasNegIndiv = new javax.swing.JTable();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        jtbMostIntNegIndiv = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jbtGeneralIndiv = new javax.swing.JButton();
         jbtScorePosIndiv = new javax.swing.JButton();
@@ -181,6 +211,10 @@ public class JPNRound extends javax.swing.JPanel {
         jbtSorNegIndiv = new javax.swing.JButton();
         jbtFoulPosIndiv = new javax.swing.JButton();
         jbtFoulNegIndiv = new javax.swing.JButton();
+        jbtPasPosIndiv = new javax.swing.JButton();
+        jbtPasNegIndiv = new javax.swing.JButton();
+        jbtIntPosIndiv = new javax.swing.JButton();
+        jbtIntNegIndiv = new javax.swing.JButton();
         jbtGlobal = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
@@ -270,7 +304,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jSplitPane1.setBottomComponent(jScrollPane2);
 
-        jPanel4.setLayout(new java.awt.GridLayout(2, 3));
+        jPanel4.setLayout(new java.awt.GridLayout(2, 5));
 
         jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder("Scoreur"));
 
@@ -323,6 +357,40 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane6);
 
+        jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder("Main de Dieu"));
+
+        jtbMostPasIndiv.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane7.setViewportView(jtbMostPasIndiv);
+
+        jPanel4.add(jScrollPane7);
+
+        jScrollPane12.setBorder(javax.swing.BorderFactory.createTitledBorder("Intercepteur"));
+
+        jtbMostIntIndiv.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane12.setViewportView(jtbMostIntIndiv);
+
+        jPanel4.add(jScrollPane12);
+
         jScrollPane8.setBorder(javax.swing.BorderFactory.createTitledBorder("Passoire"));
 
         jtbMostTdNegIndiv.setModel(new javax.swing.table.DefaultTableModel(
@@ -373,6 +441,40 @@ public class JPNRound extends javax.swing.JPanel {
         jScrollPane10.setViewportView(jtbMostFoulNegIndiv);
 
         jPanel4.add(jScrollPane10);
+
+        jScrollPane11.setBorder(javax.swing.BorderFactory.createTitledBorder("Hypnotisé"));
+
+        jtbMostPasNegIndiv.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane11.setViewportView(jtbMostPasNegIndiv);
+
+        jPanel4.add(jScrollPane11);
+
+        jScrollPane13.setBorder(javax.swing.BorderFactory.createTitledBorder("Daltonien"));
+
+        jtbMostIntNegIndiv.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane13.setViewportView(jtbMostIntNegIndiv);
+
+        jPanel4.add(jScrollPane13);
 
         jSplitPane1.setTopComponent(jPanel4);
 
@@ -433,6 +535,38 @@ public class JPNRound extends javax.swing.JPanel {
             }
         });
         jPanel5.add(jbtFoulNegIndiv);
+
+        jbtPasPosIndiv.setText("Main de Dieu");
+        jbtPasPosIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtPasPosIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtPasPosIndiv);
+
+        jbtPasNegIndiv.setText("Hypnotisé");
+        jbtPasNegIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtPasNegIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtPasNegIndiv);
+
+        jbtIntPosIndiv.setText("Intercepteur");
+        jbtIntPosIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtIntPosIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtIntPosIndiv);
+
+        jbtIntNegIndiv.setText("Daltonien");
+        jbtIntNegIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtIntNegIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtIntNegIndiv);
 
         jbtGlobal.setText("Global");
         jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
@@ -1001,10 +1135,6 @@ public class JPNRound extends javax.swing.JPanel {
                 break;
 
             }
-
-
-
-
         }
     }//GEN-LAST:event_jbtFoulNegIndivActionPerformed
 
@@ -1044,6 +1174,55 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jbtGlobalActionPerformed
+
+    private void jbtIntPosIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntPosIndivActionPerformed
+        for (int i = 0; i <
+                _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, false);
+                jdg.setVisible(true);
+                break;
+
+            }
+        }
+    }//GEN-LAST:event_jbtIntPosIndivActionPerformed
+
+    private void jbtIntNegIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntNegIndivActionPerformed
+        for (int i = 0; i <
+                _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTED, false);
+                jdg.setVisible(true);
+                break;
+
+            }
+        }
+    }//GEN-LAST:event_jbtIntNegIndivActionPerformed
+
+    private void jbtPasNegIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasNegIndivActionPerformed
+        for (int i = 0; i <
+                _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSED, false);
+                jdg.setVisible(true);
+                break;
+
+            }
+        }
+    }//GEN-LAST:event_jbtPasNegIndivActionPerformed
+
+    private void jbtPasPosIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasPosIndivActionPerformed
+        for (int i = 0; i <
+                _tournament.getRounds().size(); i++) {
+            if (_round == _tournament.getRounds().get(i)) {
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSER, false);
+                jdg.setVisible(true);
+                break;
+
+            }
+        }
+    }//GEN-LAST:event_jbtPasPosIndivActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1052,10 +1231,14 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSplitPane jSplitPane1;
@@ -1064,7 +1247,11 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JButton jbtFoulPosIndiv;
     private javax.swing.JButton jbtGeneralIndiv;
     private javax.swing.JButton jbtGlobal;
+    private javax.swing.JButton jbtIntNegIndiv;
+    private javax.swing.JButton jbtIntPosIndiv;
     private javax.swing.JButton jbtNextRound;
+    private javax.swing.JButton jbtPasNegIndiv;
+    private javax.swing.JButton jbtPasPosIndiv;
     private javax.swing.JButton jbtScoreNegIndiv;
     private javax.swing.JButton jbtScorePosIndiv;
     private javax.swing.JButton jbtShowMatches;
@@ -1074,6 +1261,10 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JTable jtbMatches;
     private javax.swing.JTable jtbMostFoulIndiv;
     private javax.swing.JTable jtbMostFoulNegIndiv;
+    private javax.swing.JTable jtbMostIntIndiv;
+    private javax.swing.JTable jtbMostIntNegIndiv;
+    private javax.swing.JTable jtbMostPasIndiv;
+    private javax.swing.JTable jtbMostPasNegIndiv;
     private javax.swing.JTable jtbMostSorIndiv;
     private javax.swing.JTable jtbMostSorNegIndiv;
     private javax.swing.JTable jtbMostTdIndiv;

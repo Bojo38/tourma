@@ -117,6 +117,14 @@ public class mjtRankingTeam extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
             case 3:
@@ -141,6 +149,14 @@ public class mjtRankingTeam extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
             case 4:
@@ -165,6 +181,14 @@ public class mjtRankingTeam extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
             case 5:
@@ -189,6 +213,14 @@ public class mjtRankingTeam extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
             case 6:
@@ -213,6 +245,14 @@ public class mjtRankingTeam extends mjtRanking {
                         return "Nb tds";
                     case Parameters.C_RANKING_VND:
                         return "V/N/D";
+                    case Parameters.C_RANKING_PAS:
+                        return "Passes";
+                    case Parameters.C_RANKING_DIFF_PAS:
+                        return "Diff Pas";
+                    case Parameters.C_RANKING_INT:
+                        return "Inter.";
+                    case Parameters.C_RANKING_DIFF_INT:
+                        return "Diff Int";
                 }
                 break;
         }
@@ -289,7 +329,7 @@ public class mjtRankingTeam extends mjtRanking {
                 value += m._foul2 * Tournament.getTournament().getParams()._bonus_foul_points_team + m._foul1 * Tournament.getTournament().getParams()._bonus_neg_foul_points_team;
             }
         }
-        
+
         if (nbVictory > nbLost) {
             value += Tournament.getTournament().getParams()._victory_points_team;
         } else {
@@ -367,6 +407,20 @@ public class mjtRankingTeam extends mjtRanking {
                     }
                 }
                 break;
+            case Parameters.C_RANKING_DIFF_INT:
+                for (int i = 0; i < t._coachs.size(); i++) {
+                    for (int j = 0; j < v.size(); j++) {
+                        value += getDiffIntByCoach(t._coachs.get(i), v.get(j));
+                    }
+                }
+                break;
+            case Parameters.C_RANKING_DIFF_PAS:
+                for (int i = 0; i < t._coachs.size(); i++) {
+                    for (int j = 0; j < v.size(); j++) {
+                        value += getDiffPasByCoach(t._coachs.get(i), v.get(j));
+                    }
+                }
+                break;
             case Parameters.C_RANKING_FOUL:
                 for (int i = 0; i < t._coachs.size(); i++) {
                     for (int j = 0; j < v.size(); j++) {
@@ -395,6 +449,20 @@ public class mjtRankingTeam extends mjtRanking {
                 for (int i = 0; i < t._coachs.size(); i++) {
                     for (int j = 0; j < v.size(); j++) {
                         value += getSorByCoach(t._coachs.get(i), v.get(j));
+                    }
+                }
+                break;
+            case Parameters.C_RANKING_PAS:
+                for (int i = 0; i < t._coachs.size(); i++) {
+                    for (int j = 0; j < v.size(); j++) {
+                        value += getPasByCoach(t._coachs.get(i), v.get(j));
+                    }
+                }
+                break;
+            case Parameters.C_RANKING_INT:
+                for (int i = 0; i < t._coachs.size(); i++) {
+                    for (int j = 0; j < v.size(); j++) {
+                        value += getIntByCoach(t._coachs.get(i), v.get(j));
                     }
                 }
                 break;

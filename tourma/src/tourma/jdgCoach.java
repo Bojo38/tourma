@@ -11,6 +11,9 @@
 
 package tourma;
 
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import tourma.data.Tournament;
 import tourma.data.Coach;
 import javax.swing.JOptionPane;
@@ -33,6 +36,16 @@ public class jdgCoach extends javax.swing.JDialog {
     public jdgCoach(java.awt.Frame parent, boolean modal,Coach coach) {
         super(parent, modal);
         initComponents();
+
+         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gs = ge.getDefaultScreenDevice();
+        DisplayMode dmode = gs.getDisplayMode();
+        if (dmode != null) {
+            int screenWidth = dmode.getWidth();
+            int screenHeight = dmode.getHeight();
+            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        }
+        
         _coach=coach;
 
         jtfEquipe.setText(_coach._team);

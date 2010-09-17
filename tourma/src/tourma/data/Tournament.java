@@ -87,12 +87,25 @@ public class Tournament {
         params.setAttribute("Bonus_Neg_Sor", Integer.toString(_params._bonus_neg_sor_points));
         params.setAttribute("Bonus_Pos_Sor", Integer.toString(_params._bonus_sor_points));
 
+        params.setAttribute("Bonus_Neg_Sor", Integer.toString(_params._bonus_neg_sor_points));
+        params.setAttribute("Bonus_Pos_Sor", Integer.toString(_params._bonus_sor_points));
+
+        params.setAttribute("Bonus_Neg_Pas", Integer.toString(_params._bonus_neg_pas_points));
+        params.setAttribute("Bonus_Pos_Pas", Integer.toString(_params._bonus_pas_points));
+        params.setAttribute("Bonus_Neg_Int", Integer.toString(_params._bonus_neg_int_points));
+        params.setAttribute("Bonus_Pos_Int", Integer.toString(_params._bonus_int_points));
+
         params.setAttribute("Bonus_Neg_Foul_Team", Integer.toString(_params._bonus_neg_foul_points_team));
         params.setAttribute("Bonus_Pos_Foul_Team", Integer.toString(_params._bonus_foul_points_team));
         params.setAttribute("Bonus_Neg_Td_Team", Integer.toString(_params._bonus_neg_td_points_team));
         params.setAttribute("Bonus_Pos_Td_Team", Integer.toString(_params._bonus_td_points_team));
         params.setAttribute("Bonus_Neg_Sor_Team", Integer.toString(_params._bonus_neg_sor_points_team));
         params.setAttribute("Bonus_Pos_Sor_Team", Integer.toString(_params._bonus_sor_points_team));
+
+        params.setAttribute("Bonus_Neg_Pas_Team", Integer.toString(_params._bonus_neg_pas_points_team));
+        params.setAttribute("Bonus_Pos_Pas_Team", Integer.toString(_params._bonus_pas_points_team));
+        params.setAttribute("Bonus_Neg_Int_Team", Integer.toString(_params._bonus_neg_int_points_team));
+        params.setAttribute("Bonus_Pos_Int_Team", Integer.toString(_params._bonus_int_points_team));
 
         params.setAttribute("Victory", Integer.toString(_params._victory_points));
         params.setAttribute("Large_Victory", Integer.toString(_params._large_victory_points));
@@ -165,6 +178,10 @@ public class Tournament {
                 match.setAttribute("Sor2", Integer.toString(_rounds.get(i)._matchs.get(j)._sor2));
                 match.setAttribute("Foul1", Integer.toString(_rounds.get(i)._matchs.get(j)._foul1));
                 match.setAttribute("Foul2", Integer.toString(_rounds.get(i)._matchs.get(j)._foul2));
+                match.setAttribute("Pas1", Integer.toString(_rounds.get(i)._matchs.get(j)._pas1));
+                match.setAttribute("Pas2", Integer.toString(_rounds.get(i)._matchs.get(j)._pas2));
+                match.setAttribute("Int1", Integer.toString(_rounds.get(i)._matchs.get(j)._int1));
+                match.setAttribute("Int2", Integer.toString(_rounds.get(i)._matchs.get(j)._int2));
                 round.addContent(match);
             }
             document.addContent(round);
@@ -357,6 +374,12 @@ public class Tournament {
                 _params._bonus_neg_td_points = params.getAttribute("Bonus_Neg_Td").getIntValue();
                 _params._bonus_sor_points = params.getAttribute("Bonus_Pos_Sor").getIntValue();
                 _params._bonus_neg_sor_points = params.getAttribute("Bonus_Neg_Sor").getIntValue();
+
+                _params._bonus_pas_points = params.getAttribute("Bonus_Pos_Pas").getIntValue();
+                _params._bonus_neg_pas_points = params.getAttribute("Bonus_Neg_Pas").getIntValue();
+                _params._bonus_int_points = params.getAttribute("Bonus_Pos_Int").getIntValue();
+                _params._bonus_neg_int_points = params.getAttribute("Bonus_Neg_Int").getIntValue();
+
                 _params._victory_points = params.getAttribute("Victory").getIntValue();
                 _params._large_victory_points = params.getAttribute("Large_Victory").getIntValue();
                 _params._draw_points = params.getAttribute("Draw").getIntValue();
@@ -401,6 +424,10 @@ public class Tournament {
                     _params._bonus_neg_td_points_team = params.getAttribute("Bonus_Neg_Td_Team").getIntValue();
                     _params._bonus_sor_points_team = params.getAttribute("Bonus_Pos_Sor_Team").getIntValue();
                     _params._bonus_neg_sor_points_team = params.getAttribute("Bonus_Neg_Sor_Team").getIntValue();
+                    _params._bonus_pas_points_team = params.getAttribute("Bonus_Pos_Pas_Team").getIntValue();
+                    _params._bonus_neg_pas_points_team = params.getAttribute("Bonus_Neg_Pas_Team").getIntValue();
+                    _params._bonus_int_points_team = params.getAttribute("Bonus_Pos_Int_Team").getIntValue();
+                    _params._bonus_neg_int_points_team = params.getAttribute("Bonus_Neg_Int_Team").getIntValue();
                     _params._victory_points_team = params.getAttribute("Victory_Team").getIntValue();
                     _params._draw_points_team = params.getAttribute("Draw_Team").getIntValue();
                     _params._lost_points_team = params.getAttribute("Lost_Team").getIntValue();
@@ -488,6 +515,10 @@ public class Tournament {
                     m._sor2 = match.getAttribute("Sor2").getIntValue();
                     m._td1 = match.getAttribute("Td1").getIntValue();
                     m._td2 = match.getAttribute("Td2").getIntValue();
+                    m._pas1 = match.getAttribute("Pas1").getIntValue();
+                    m._pas2 = match.getAttribute("Pas2").getIntValue();
+                    m._int1 = match.getAttribute("Int1").getIntValue();
+                    m._int2 = match.getAttribute("Int2").getIntValue();
                     r._matchs.add(m);
                 }
 

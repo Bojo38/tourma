@@ -34,6 +34,10 @@ abstract public class mjtAnnexRank extends mjtRanking {
     public static final int C_MOST_SOR_NEG = 3;
     public static final int C_MOST_FOUL_POS = 4;
     public static final int C_MOST_FOUL_NEG = 5;
+    public static final int C_MOST_PAS_POS = 6;
+    public static final int C_MOST_PAS_NEG = 7;
+    public static final int C_MOST_INT_POS = 8;
+    public static final int C_MOST_INT_NEG = 9;
     boolean _full_ranking;
 
     public mjtAnnexRank(Vector<Round> rounds, int ranking_type, Vector objects, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5) {
@@ -80,7 +84,9 @@ abstract public class mjtAnnexRank extends mjtRanking {
 
         if ((_ranking_type == C_MOST_FOUL_POS) ||
                 (_ranking_type == C_MOST_SOR_POS) ||
-                (_ranking_type == C_MOST_TD_POS)) {
+                (_ranking_type == C_MOST_TD_POS) ||
+                (_ranking_type == C_MOST_PAS_POS) ||
+                (_ranking_type == C_MOST_INT_POS)) {
             if (row == 0) {
                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                 jlb.setBackground(new Color(200, 50, 50));
@@ -90,7 +96,9 @@ abstract public class mjtAnnexRank extends mjtRanking {
 
         if ((_ranking_type == C_MOST_FOUL_NEG) ||
                 (_ranking_type == C_MOST_SOR_NEG) ||
-                (_ranking_type == C_MOST_TD_NEG)) {
+                (_ranking_type == C_MOST_TD_NEG) ||
+                (_ranking_type == C_MOST_PAS_NEG) ||
+                (_ranking_type == C_MOST_INT_NEG)) {
             if (row == 0) {
                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                 jlb.setBackground(new Color(50, 50, 200));

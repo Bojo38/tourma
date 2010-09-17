@@ -35,12 +35,11 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
     int _ranking_type5;
     Vector _datas = new Vector<ObjectRanking>();
 
-    public Vector<ObjectRanking> getSortedDatas()
-    {
+    public Vector<ObjectRanking> getSortedDatas() {
         return _datas;
     }
 
-    public mjtRanking(Vector<Round> rounds, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5,Vector objects) {
+    public mjtRanking(Vector<Round> rounds, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector objects) {
         _rounds = rounds;
         _ranking_type1 = ranking_type1;
         _ranking_type2 = ranking_type2;
@@ -71,6 +70,28 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         }
         if (m._coach2 == c) {
             value += m._sor2;
+        }
+        return value;
+    }
+
+    public static int getPasByCoach(Coach c, Match m) {
+        int value = 0;
+        if (m._coach1 == c) {
+            value += m._pas1;
+        }
+        if (m._coach2 == c) {
+            value += m._pas2;
+        }
+        return value;
+    }
+
+    public static int getIntByCoach(Coach c, Match m) {
+        int value = 0;
+        if (m._coach1 == c) {
+            value += m._int1;
+        }
+        if (m._coach2 == c) {
+            value += m._int2;
         }
         return value;
     }
@@ -118,6 +139,29 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         }
         return value;
     }
+
+     public static int getDiffPasByCoach(Coach c, Match m) {
+        int value = 0;
+        if (m._coach1 == c) {
+            value += m._pas1 - m._pas2;
+        }
+        if (m._coach2 == c) {
+            value += m._pas2 - m._pas1;
+        }
+        return value;
+    }
+
+      public static int getDiffIntByCoach(Coach c, Match m) {
+        int value = 0;
+        if (m._coach1 == c) {
+            value += m._int1 - m._int2;
+        }
+        if (m._coach2 == c) {
+            value += m._int2 - m._int1;
+        }
+        return value;
+    }
+
 
     public static int getDiffFoulByCoach(Coach c, Match m) {
         int value = 0;
@@ -256,6 +300,20 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
                 break;
             case Parameters.C_RANKING_VND:
                 value = getVNDByCoach(c, m);
+                break;
+
+            case Parameters.C_RANKING_DIFF_PAS:
+                value = getDiffPasByCoach(c, m);
+                break;
+            case Parameters.C_RANKING_DIFF_INT:
+                value = getDiffIntByCoach(c, m);
+                break;
+
+                case Parameters.C_RANKING_PAS:
+                value = getPasByCoach(c, m);
+                break;
+            case Parameters.C_RANKING_INT:
+                value = getIntByCoach(c, m);
                 break;
         }
         return value;
