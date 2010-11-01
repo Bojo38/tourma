@@ -22,6 +22,8 @@ import freemarker.template.TemplateException;
 import java.awt.Dimension;
 import java.awt.print.PrinterException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -32,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import tourma.data.Team;
 import tourma.tableModel.mjtMatchTeams;
@@ -49,6 +52,7 @@ public class jdgRound extends javax.swing.JDialog {
     boolean _team = false;
     Vector<Team> _teams1;
     Vector<Team> _teams2;
+    File _filename = null;
 
     /** Creates new form jdgRoundReport */
     public jdgRound(java.awt.Frame parent, boolean modal, Round round, int roundNumber, Tournament tour, boolean result, boolean team) {
@@ -66,11 +70,11 @@ public class jdgRound extends javax.swing.JDialog {
             File f;
 
             if (_team) {
-                f = CreateTeamReport();
+                _filename = CreateTeamReport();
             } else {
-                f = CreateReport();
+                _filename = CreateReport();
             }
-            jepHTML.setPage(f.toURI().toURL());
+            jepHTML.setPage(_filename.toURI().toURL());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
         }
@@ -113,6 +117,7 @@ public class jdgRound extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtPrint = new javax.swing.JButton();
+        jbtExport = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jepHTML = new javax.swing.JEditorPane();
 
@@ -133,6 +138,14 @@ public class jdgRound extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jbtPrint);
+
+        jbtExport.setText("Export HTML");
+        jbtExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExportActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtExport);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
@@ -155,9 +168,34 @@ public class jdgRound extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
         }
     }//GEN-LAST:event_jbtPrintActionPerformed
+
+    private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File export = jfc.getSelectedFile();
+
+            try {
+                FileReader in = new FileReader(_filename);
+                FileWriter out = new FileWriter(export);
+                int c;
+
+                while ((c = in.read()) != -1) {
+                    out.write(c);
+                }
+
+                in.close();
+                out.close();
+            } catch (FileNotFoundException fnf) {
+                JOptionPane.showMessageDialog(this, fnf.getLocalizedMessage());
+            } catch (IOException ioe) {
+                JOptionPane.showMessageDialog(this, ioe.getLocalizedMessage());
+            }
+        }
+    }//GEN-LAST:event_jbtExportActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtPrint;
     private javax.swing.JEditorPane jepHTML;
@@ -340,7 +378,7 @@ public class jdgRound extends javax.swing.JDialog {
             Map root = new HashMap();
             root.put("nom", _tour.getParams()._tournament_name + " - Ronde " + _roundNumber);
             root.put("tables", _tour.getTeams().size() / 2);
-            root.put("result",0);
+            root.put("result", 0);
 
             Vector parMatches = new Vector();
             for (int i = 0; i < _teams1.size(); i++) {

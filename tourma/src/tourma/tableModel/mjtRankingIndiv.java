@@ -42,18 +42,31 @@ public class mjtRankingIndiv extends mjtRanking {
             int value3 = 0;
             int value4 = 0;
             int value5 = 0;
-            for (int j = 0; j < matchs.size(); j++) {
-                Match m = matchs.get(j);
-                value1 += getValue(c, m, _ranking_type1, _rounds);
-                value2 += getValue(c, m, _ranking_type2, _rounds);
-                value3 += getValue(c, m, _ranking_type3, _rounds);
-                value4 += getValue(c, m, _ranking_type4, _rounds);
-                value5 += getValue(c, m, _ranking_type5, _rounds);
-            }
+
+            value1 = getValues(c, matchs, _ranking_type1, _rounds);
+            value2 = getValues(c, matchs, _ranking_type2, _rounds);
+            value3 = getValues(c, matchs, _ranking_type3, _rounds);
+            value4 = getValues(c, matchs, _ranking_type4, _rounds);
+            value5 = getValues(c, matchs, _ranking_type5, _rounds);
+
+
             _datas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
         }
 
         Collections.sort(_datas);
+    }
+
+    protected int getValues(Coach c, Vector<Match> matchs, int ranking_type, Vector<Round> rounds) {
+        int value = 0;
+        if (ranking_type == Parameters.C_RANKING_OPP_POINTS) {
+            value += getValue(c, matchs.get(0), ranking_type, rounds);
+        } else {
+            for (int j = 0; j < matchs.size(); j++) {
+                Match m = matchs.get(j);
+                value += getValue(c, m, ranking_type, rounds);
+            }
+        }
+        return value;
     }
 
     public int getColumnCount() {

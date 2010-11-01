@@ -174,19 +174,48 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         return value;
     }
 
-    public static int getOppPointsByCoach(Coach c, Match m, Vector<Round> v) {
-        Coach opponent = null;
-        if (m._coach1 == c) {
-            opponent = m._coach2;
-        } else {
-            opponent = m._coach1;
+    public static int getOppPointsByCoach(Coach c, Vector<Round> v) {
+        
+
+        Vector<Coach> Opponents=new Vector<Coach>();
+        
+        for (int i=0; i<v.size(); i++)
+        {
+            Round r=v.get(i);
+            for (int j=0; j<r.getMatchs().size(); j++)
+            {
+                Match m=r.getMatchs().get(j);
+                if (m._coach1==c)
+                {
+                    Opponents.add(m._coach2);
+                }
+                else
+                {
+                    if (m._coach2==c)
+                    {
+                        Opponents.add(m._coach1);
+                    }
+                }
+            }
         }
+
+
         int value = 0;
+
         for (int i = 0; i < v.size(); i++) {
             Round r = v.get(i);
-            Vector<Match> v2 = r.getMatchs();
-            for (int j = 0; j < v2.size(); j++) {
-                value += getPointsByCoach(opponent, v2.get(j));
+            for (int j = 0; j < r.getMatchs().size(); j++)
+            {
+                Match m=r.getMatchs().get(j);
+                for (int k=0; k<Opponents.size(); k++)
+                {
+                    Coach opp=Opponents.get(k);
+                    if ((m._coach1==opp)||
+                            (m._coach2==opp))
+                    {
+                        value += getPointsByCoach(opp, m);
+                    }
+                }
             }
         }
         return value;
@@ -290,7 +319,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
                 value = 0;
                 break;
             case Parameters.C_RANKING_OPP_POINTS:
-                value = getOppPointsByCoach(c, m, v);
+                value = getOppPointsByCoach(c, v);
                 break;
             case Parameters.C_RANKING_SOR:
                 value = getSorByCoach(c, m);

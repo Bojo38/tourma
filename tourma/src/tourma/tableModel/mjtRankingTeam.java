@@ -437,7 +437,7 @@ public class mjtRankingTeam extends mjtRanking {
                 } else {
                     for (int i = 0; i < t._coachs.size(); i++) {
                         for (int j = 0; j < v.size(); j++) {
-                            value += getOppPointsByCoach(t._coachs.get(i), v.get(j), rounds);
+                            value += getOppPointsByCoach(t._coachs.get(i), rounds);
                         }
                     }
                     if (getTeamVND(t, v) < 1000000) {

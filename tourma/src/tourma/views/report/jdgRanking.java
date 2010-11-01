@@ -23,6 +23,8 @@ import freemarker.template.TemplateException;
 import java.awt.Dimension;
 import java.awt.print.PrinterException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -33,6 +35,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 import tourma.tableModel.mjtAnnexRankTeam;
@@ -61,11 +64,13 @@ public class jdgRanking extends javax.swing.JDialog {
     boolean _result;
     int _rankType;
     boolean _team = false;
+    File filename = null;
 
     /** Creates new form jdgRoundReport */
     public jdgRanking(java.awt.Frame parent, boolean modal, Round round, int roundNumber, Tournament tour, int RankType, boolean team) {
         super(parent, modal);
         initComponents();
+
         _round = round;
         _roundNumber = roundNumber;
         _tour = tour;
@@ -74,8 +79,8 @@ public class jdgRanking extends javax.swing.JDialog {
         this.setTitle(tour.getParams()._tournament_name + " - Ronde " + roundNumber);
         try {
             jepHTML.setContentType("html");
-            File f = CreateReport();
-            jepHTML.setPage(f.toURI().toURL());
+            filename = CreateReport();
+            jepHTML.setPage(filename.toURI().toURL());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
         }
@@ -95,6 +100,7 @@ public class jdgRanking extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtPrint = new javax.swing.JButton();
+        jbtExport = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jepHTML = new javax.swing.JEditorPane();
 
@@ -117,6 +123,14 @@ public class jdgRanking extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
+        jbtExport.setText("Export HTML");
+        jbtExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExportActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtExport);
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         jScrollPane1.setViewportView(jepHTML);
@@ -138,9 +152,40 @@ public class jdgRanking extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
         }
     }//GEN-LAST:event_jbtPrintActionPerformed
+
+    private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File export = jfc.getSelectedFile();
+
+            try
+            {
+                FileReader in = new FileReader(filename);
+                FileWriter out = new FileWriter(export);
+                int c;
+
+                while ((c = in.read()) != -1) {
+                    out.write(c);
+                }
+
+                in.close();
+                out.close();
+            }
+            catch (FileNotFoundException fnf)
+            {
+                JOptionPane.showMessageDialog(this, fnf.getLocalizedMessage());
+            }
+             catch (IOException ioe)
+            {
+                JOptionPane.showMessageDialog(this, ioe.getLocalizedMessage());
+            }
+        }
+
+    }//GEN-LAST:event_jbtExportActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtPrint;
     private javax.swing.JEditorPane jepHTML;

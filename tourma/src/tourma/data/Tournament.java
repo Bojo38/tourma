@@ -304,8 +304,8 @@ public class Tournament {
 
         for (int i = 0; i < _rounds.size(); i++) {
             for (int j = 0; j < _rounds.get(i)._matchs.size(); j++) {
-                if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0) &&
-                        (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
+                if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0)
+                        && (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
                     Element game = new Element("game");
                     Element timeStamp = new Element("timeStamp");
                     timeStamp.setText(format.format(_rounds.get(i)._heure));
@@ -375,10 +375,17 @@ public class Tournament {
                 _params._bonus_sor_points = params.getAttribute("Bonus_Pos_Sor").getIntValue();
                 _params._bonus_neg_sor_points = params.getAttribute("Bonus_Neg_Sor").getIntValue();
 
-                _params._bonus_pas_points = params.getAttribute("Bonus_Pos_Pas").getIntValue();
-                _params._bonus_neg_pas_points = params.getAttribute("Bonus_Neg_Pas").getIntValue();
-                _params._bonus_int_points = params.getAttribute("Bonus_Pos_Int").getIntValue();
-                _params._bonus_neg_int_points = params.getAttribute("Bonus_Neg_Int").getIntValue();
+                try {
+                    _params._bonus_pas_points = params.getAttribute("Bonus_Pos_Pas").getIntValue();
+                    _params._bonus_neg_pas_points = params.getAttribute("Bonus_Neg_Pas").getIntValue();
+                    _params._bonus_int_points = params.getAttribute("Bonus_Pos_Int").getIntValue();
+                    _params._bonus_neg_int_points = params.getAttribute("Bonus_Neg_Int").getIntValue();
+                } catch (NullPointerException npe) {
+                    _params._bonus_pas_points = 0;
+                    _params._bonus_neg_pas_points = 0;
+                    _params._bonus_int_points = 0;
+                    _params._bonus_neg_int_points = 0;
+                }
 
                 _params._victory_points = params.getAttribute("Victory").getIntValue();
                 _params._large_victory_points = params.getAttribute("Large_Victory").getIntValue();
@@ -515,10 +522,17 @@ public class Tournament {
                     m._sor2 = match.getAttribute("Sor2").getIntValue();
                     m._td1 = match.getAttribute("Td1").getIntValue();
                     m._td2 = match.getAttribute("Td2").getIntValue();
+                    try
+                    {
                     m._pas1 = match.getAttribute("Pas1").getIntValue();
                     m._pas2 = match.getAttribute("Pas2").getIntValue();
                     m._int1 = match.getAttribute("Int1").getIntValue();
                     m._int2 = match.getAttribute("Int2").getIntValue();
+                    }
+                    catch (NullPointerException npe)
+                    {
+                        
+                    }
                     r._matchs.add(m);
                 }
 
