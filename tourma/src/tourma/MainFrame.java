@@ -1249,9 +1249,11 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
                 if (_tournament.getCoachs().size() % 2 > 0) {
                     JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
                 } else {
-                    String[] options = {"Aléatoire", "Ordre d'inscription"};
+                    String[] options = {"Aléatoire", "Ordre d'inscription", "Manuel"};
                     int choice = JOptionPane.showOptionDialog(this, "Choisissez le tirage initial", "Tirage", JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
+
                     _tournament.generateFirstRound(choice);
+                    
                     for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
                         Component obj = jtpMain.getComponentAt(i);
                         if (obj instanceof JPNRound) {

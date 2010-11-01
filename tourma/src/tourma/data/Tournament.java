@@ -522,16 +522,12 @@ public class Tournament {
                     m._sor2 = match.getAttribute("Sor2").getIntValue();
                     m._td1 = match.getAttribute("Td1").getIntValue();
                     m._td2 = match.getAttribute("Td2").getIntValue();
-                    try
-                    {
-                    m._pas1 = match.getAttribute("Pas1").getIntValue();
-                    m._pas2 = match.getAttribute("Pas2").getIntValue();
-                    m._int1 = match.getAttribute("Int1").getIntValue();
-                    m._int2 = match.getAttribute("Int2").getIntValue();
-                    }
-                    catch (NullPointerException npe)
-                    {
-                        
+                    try {
+                        m._pas1 = match.getAttribute("Pas1").getIntValue();
+                        m._pas2 = match.getAttribute("Pas2").getIntValue();
+                        m._int1 = match.getAttribute("Int1").getIntValue();
+                        m._int2 = match.getAttribute("Int2").getIntValue();
+                    } catch (NullPointerException npe) {
                     }
                     r._matchs.add(m);
                 }
@@ -552,41 +548,122 @@ public class Tournament {
         Calendar cal = Calendar.getInstance();
         r._heure = cal.getTime();
 
+
         /*
          * Si tournoi individuel
          */
         if (!_params._teamTournament) {
-            Vector<Coach> shuffle = new Vector<Coach>(_coachs);
-            if (choice == 0) /* Aléatoire */ {
-                Collections.shuffle(shuffle);
-            }
-            for (int i = 0; i < shuffle.size() / 2; i++) {
-                Match m = new Match();
-                m._coach1 = shuffle.get(2 * i);
-                m._coach2 = shuffle.get(2 * i + 1);
-                r._matchs.add(m);
+            if (choice == 2) {
+                Vector<Coach> coachs = new Vector<Coach>(_coachs);
+                while (coachs.size() > 0) {
+                    /*
+                     * Choisir un coach pour l'adversaire.
+                     */
+                    Match m = new Match();
+                    m._coach1 = coachs.get(0);
+                    coachs.remove(m._coach1);
+
+                    Object[] possibilities = new Object[coachs.size()];
+                    for (int i = 0; i < coachs.size(); i++) {
+                        possibilities[i] = coachs.get(i)._name + " (" + coachs.get(i)._roster + ")";
+                    }
+
+                    String opp = (String) JOptionPane.showInputDialog(
+                            MainFrame.getMainFrame(),
+                            "Choisissez l'adversaire pour:\n"
+                            + m._coach1._name + " (" + m._coach1._roster + ")",
+                            "Choisir adversaire",
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            possibilities,
+                            possibilities[0]);
+
+                    for (int i = 0; i < coachs.size(); i++) {
+                        if (opp.equals(coachs.get(i)._name + " (" + coachs.get(i)._roster + ")")) {
+                            m._coach2 = coachs.get(i);
+                            coachs.remove(m._coach2);
+                            break;
+                        }
+                    }
+                    r._matchs.add(m);
+
+                }
+            } else {
+
+                Vector<Coach> shuffle = new Vector<Coach>(_coachs);
+                if (choice == 0) /* Aléatoire */ {
+                    Collections.shuffle(shuffle);
+                }
+                for (int i = 0; i < shuffle.size() / 2; i++) {
+                    Match m = new Match();
+                    m._coach1 = shuffle.get(2 * i);
+                    m._coach2 = shuffle.get(2 * i + 1);
+                    r._matchs.add(m);
+                }
             }
             _rounds.add(r);
         } /**
          * Si tournoi par équipe
          */
         else {
-            /*
-             * Le premier appariement est aléatoire par équipe
-             */
-            Vector<Team> shuffle = new Vector<Team>(_teams);
-            if (choice == 0) /* Aléatoire */ {
-                Collections.shuffle(shuffle);
-            }
 
             Vector<Team> teams1 = new Vector<Team>();
             Vector<Team> teams2 = new Vector<Team>();
-            for (int i = 0; i < shuffle.size() / 2; i++) {
-                Team team1 = shuffle.get(2 * i);
-                Team team2 = shuffle.get(2 * i + 1);
-                teams1.add(team1);
-                teams2.add(team2);
+
+            if (choice == 2) {
+
+                Vector<Team> teams = new Vector<Team>(_teams);
+                while (teams.size() > 0) {
+
+                    Team team1 = teams.get(0);
+                    teams1.add(team1);
+                    teams.remove(team1);
+
+                    Object[] possibilities = new Object[teams.size()];
+                    for (int i = 0; i < teams.size(); i++) {
+                        possibilities[i] = teams.get(i)._name;
+                    }
+
+                    String opp = (String) JOptionPane.showInputDialog(
+                            MainFrame.getMainFrame(),
+                            "Choisissez l'adversaire pour:\n"
+                            + team1._name,
+                            "Choisir adversaire",
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            possibilities,
+                            possibilities[0]);
+
+                    for (int i = 0; i < teams.size(); i++) {
+                        if (opp.equals(teams.get(i)._name)) {
+                            Team team2 = teams.get(i);
+                            teams2.add(team2);
+                            teams.remove(team2);
+                            break;
+                        }
+                    }
+                }
+
+            } else {
+                /*
+                 * Le premier appariement est aléatoire par équipe
+                 */
+                Vector<Team> shuffle = new Vector<Team>(_teams);
+                if (choice == 0) /* Aléatoire */ {
+                    Collections.shuffle(shuffle);
+                }
+
+
+                for (int i = 0; i < shuffle.size() / 2; i++) {
+                    Team team1 = shuffle.get(2 * i);
+                    Team team2 = shuffle.get(2 * i + 1);
+                    teams1.add(team1);
+                    teams2.add(team2);
+                }
             }
+
+
+
             if (_params._teamIndivPairing == 1) {
                 jdgTeamPairing jdg = new jdgTeamPairing(MainFrame.getMainFrame(), true, teams1, teams2, r);
                 jdg.setVisible(true);
