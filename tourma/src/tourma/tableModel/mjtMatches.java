@@ -128,7 +128,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 1:
                     return m._coach1._teamMates._name;
                 case 2:
-                    return m._coach1._team + " - " + m._coach1._name;
+                    return m._coach1._name + " - " + m._coach1._team+" ("+m._coach1._roster+")";
                 case 3:
                     if (m._td1 >= 0) {
                         return m._td1;
@@ -142,7 +142,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         return "";
                     }
                 case 5:
-                    return m._coach2._team + " - " + m._coach2._name;
+                    return m._coach2._name + " - " + m._coach2._team+" ("+m._coach2._roster+")";
                 case 6:
                     return m._coach2._teamMates._name;
                 case 7:
@@ -167,7 +167,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 0:
                     return row + 1;
                 case 1:
-                    return m._coach1._team + " - " + m._coach1._name;
+                    return m._coach1._name + " - " + m._coach1._team+" ("+m._coach1._roster+") ";
                 case 2:
                     if (m._td1 >= 0) {
                         return m._td1;
@@ -181,7 +181,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         return "";
                     }
                 case 4:
-                    return m._coach2._team + " (" + m._coach2._name + ")";
+                    return m._coach2._name + " - " + m._coach2._team+" ("+m._coach2._roster+") ";
                 case 5:
                     return m._sor1;
                 case 6:
