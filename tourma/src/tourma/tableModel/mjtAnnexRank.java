@@ -57,7 +57,7 @@ abstract public class mjtAnnexRank extends mjtRanking {
         if (_full_ranking) {
             return _objects.size();
         } else {
-            return 3;
+            return Math.min(3,_objects.size());
         }
     }
 
