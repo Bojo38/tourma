@@ -114,7 +114,8 @@ public class jdgTeamPairing extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jbtOK.setText("OK");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setText(bundle.getString("OKKey")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -122,7 +123,7 @@ public class jdgTeamPairing extends javax.swing.JDialog {
         });
         jPanel2.add(jbtOK);
 
-        jbtSeeMatches.setText("Voir les Matchs");
+        jbtSeeMatches.setText(bundle.getString("SeeMatchsKey")); // NOI18N
         jbtSeeMatches.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtSeeMatchesActionPerformed(evt);
@@ -134,7 +135,7 @@ public class jdgTeamPairing extends javax.swing.JDialog {
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jbtSelect.setText("Sélectionner les matchs");
+        jbtSelect.setText(bundle.getString("SelectMatchsKeys")); // NOI18N
         jbtSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtSelectActionPerformed(evt);
@@ -142,7 +143,7 @@ public class jdgTeamPairing extends javax.swing.JDialog {
         });
         jPanel4.add(jbtSelect);
 
-        jbtRemove.setText("Annuler une sélection");
+        jbtRemove.setText(bundle.getString("CancelSelectionKey")); // NOI18N
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRemoveActionPerformed(evt);

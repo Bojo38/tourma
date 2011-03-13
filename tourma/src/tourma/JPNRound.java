@@ -206,16 +206,16 @@ public class JPNRound extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jbtGeneralIndiv = new javax.swing.JButton();
         jbtScorePosIndiv = new javax.swing.JButton();
-        jbtScoreNegIndiv = new javax.swing.JButton();
         jbtSorPosIndiv = new javax.swing.JButton();
-        jbtSorNegIndiv = new javax.swing.JButton();
         jbtFoulPosIndiv = new javax.swing.JButton();
-        jbtFoulNegIndiv = new javax.swing.JButton();
         jbtPasPosIndiv = new javax.swing.JButton();
-        jbtPasNegIndiv = new javax.swing.JButton();
         jbtIntPosIndiv = new javax.swing.JButton();
-        jbtIntNegIndiv = new javax.swing.JButton();
         jbtGlobal = new javax.swing.JButton();
+        jbtScoreNegIndiv = new javax.swing.JButton();
+        jbtSorNegIndiv = new javax.swing.JButton();
+        jbtFoulNegIndiv = new javax.swing.JButton();
+        jbtPasNegIndiv = new javax.swing.JButton();
+        jbtIntNegIndiv = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -245,6 +245,8 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtNextRound.setText(bundle.getString("GenerateNextRoundKey")); // NOI18N
         jbtNextRound.setLabel("Générer la prochaine ronde");
         jbtNextRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -253,7 +255,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtNextRound);
 
-        jbtShowMatches.setText("Vue des matchs");
+        jbtShowMatches.setText(bundle.getString("ShowMatchsKey")); // NOI18N
         jbtShowMatches.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtShowMatchesActionPerformed(evt);
@@ -261,7 +263,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtShowMatches);
 
-        jbtShowResults.setText("Vue des résultats");
+        jbtShowResults.setText(bundle.getString("ShowResultsKey")); // NOI18N
         jbtShowResults.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtShowResultsActionPerformed(evt);
@@ -269,7 +271,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtShowResults);
 
-        jbtDeleteRound.setText("Effacer la ronde courante");
+        jbtDeleteRound.setText(bundle.getString("DeleteCurrentRoundKey")); // NOI18N
         jbtDeleteRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtDeleteRoundActionPerformed(evt);
@@ -279,14 +281,14 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
-        jtpGlobal.addTab("Matchs", jPanel1);
+        jtpGlobal.addTab(bundle.getString("MatchsKey"), jPanel1); // NOI18N
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jSplitPane1.setDividerLocation(200);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement général"));
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GeneralRankingKey"))); // NOI18N
         jScrollPane2.setPreferredSize(new java.awt.Dimension(466, 300));
 
         jtbRankingIndiv.setModel(new javax.swing.table.DefaultTableModel(
@@ -306,7 +308,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.setLayout(new java.awt.GridLayout(2, 5));
 
-        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder("Scoreur"));
+        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TouchdownForKey"))); // NOI18N
 
         jtbMostTdIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -323,7 +325,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane4);
 
-        jScrollPane5.setBorder(javax.swing.BorderFactory.createTitledBorder("Desctructeur"));
+        jScrollPane5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CasualtiesKey"))); // NOI18N
 
         jtbMostSorIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -340,7 +342,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane5);
 
-        jScrollPane6.setBorder(javax.swing.BorderFactory.createTitledBorder("Crampon"));
+        jScrollPane6.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FoulsForKey"))); // NOI18N
 
         jtbMostFoulIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -357,7 +359,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane6);
 
-        jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder("Main de Dieu"));
+        jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PassesForKey"))); // NOI18N
 
         jtbMostPasIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -374,7 +376,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane7);
 
-        jScrollPane12.setBorder(javax.swing.BorderFactory.createTitledBorder("Intercepteur"));
+        jScrollPane12.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("BestInterceptorKey"))); // NOI18N
 
         jtbMostIntIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -391,7 +393,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane12);
 
-        jScrollPane8.setBorder(javax.swing.BorderFactory.createTitledBorder("Passoire"));
+        jScrollPane8.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TouchdownAgainstKey"))); // NOI18N
 
         jtbMostTdNegIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -408,7 +410,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane8);
 
-        jScrollPane9.setBorder(javax.swing.BorderFactory.createTitledBorder("Punching-Ball"));
+        jScrollPane9.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CasualtiesAgainstKey"))); // NOI18N
 
         jtbMostSorNegIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -425,7 +427,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane9);
 
-        jScrollPane10.setBorder(javax.swing.BorderFactory.createTitledBorder("Paillasson"));
+        jScrollPane10.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FoulsAgainstKey"))); // NOI18N
 
         jtbMostFoulNegIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -442,7 +444,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane10);
 
-        jScrollPane11.setBorder(javax.swing.BorderFactory.createTitledBorder("Hypnotisé"));
+        jScrollPane11.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PassesAgainstKey"))); // NOI18N
 
         jtbMostPasNegIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -459,7 +461,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel4.add(jScrollPane11);
 
-        jScrollPane13.setBorder(javax.swing.BorderFactory.createTitledBorder("Daltonien"));
+        jScrollPane13.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("InterceptionsAgainstKey"))); // NOI18N
 
         jtbMostIntNegIndiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -480,7 +482,9 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel2.add(jSplitPane1, java.awt.BorderLayout.CENTER);
 
-        jbtGeneralIndiv.setText("Général");
+        jPanel5.setLayout(new java.awt.GridLayout(2, 6));
+
+        jbtGeneralIndiv.setText(bundle.getString("GeneralRankingKey")); // NOI18N
         jbtGeneralIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtGeneralIndivActionPerformed(evt);
@@ -488,7 +492,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel5.add(jbtGeneralIndiv);
 
-        jbtScorePosIndiv.setText("Scoreur");
+        jbtScorePosIndiv.setText(bundle.getString("TouchdownForKey")); // NOI18N
         jbtScorePosIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtScorePosIndivActionPerformed(evt);
@@ -496,15 +500,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel5.add(jbtScorePosIndiv);
 
-        jbtScoreNegIndiv.setText("Passoire");
-        jbtScoreNegIndiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtScoreNegIndivActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jbtScoreNegIndiv);
-
-        jbtSorPosIndiv.setText("Destructeur");
+        jbtSorPosIndiv.setText(bundle.getString("CasualtiesKey")); // NOI18N
         jbtSorPosIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtSorPosIndivActionPerformed(evt);
@@ -512,15 +508,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel5.add(jbtSorPosIndiv);
 
-        jbtSorNegIndiv.setText("Punching Ball");
-        jbtSorNegIndiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtSorNegIndivActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jbtSorNegIndiv);
-
-        jbtFoulPosIndiv.setText("Crampon");
+        jbtFoulPosIndiv.setText(bundle.getString("FoulsForKey")); // NOI18N
         jbtFoulPosIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtFoulPosIndivActionPerformed(evt);
@@ -528,15 +516,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel5.add(jbtFoulPosIndiv);
 
-        jbtFoulNegIndiv.setText("Paillasson");
-        jbtFoulNegIndiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtFoulNegIndivActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jbtFoulNegIndiv);
-
-        jbtPasPosIndiv.setText("Main de Dieu");
+        jbtPasPosIndiv.setText(bundle.getString("PassesForKey")); // NOI18N
         jbtPasPosIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtPasPosIndivActionPerformed(evt);
@@ -544,15 +524,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel5.add(jbtPasPosIndiv);
 
-        jbtPasNegIndiv.setText("Hypnotisé");
-        jbtPasNegIndiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtPasNegIndivActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jbtPasNegIndiv);
-
-        jbtIntPosIndiv.setText("Intercepteur");
+        jbtIntPosIndiv.setText(bundle.getString("BestInterceptorKey")); // NOI18N
         jbtIntPosIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtIntPosIndivActionPerformed(evt);
@@ -560,15 +532,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel5.add(jbtIntPosIndiv);
 
-        jbtIntNegIndiv.setText("Daltonien");
-        jbtIntNegIndiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtIntNegIndivActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jbtIntNegIndiv);
-
-        jbtGlobal.setText("Global");
+        jbtGlobal.setText(bundle.getString("GlobalRankingKey")); // NOI18N
         jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtGlobalActionPerformed(evt);
@@ -576,9 +540,49 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel5.add(jbtGlobal);
 
+        jbtScoreNegIndiv.setText(bundle.getString("TouchdownAgainstKey")); // NOI18N
+        jbtScoreNegIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtScoreNegIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtScoreNegIndiv);
+
+        jbtSorNegIndiv.setText(bundle.getString("CasualtiesAgainstKey")); // NOI18N
+        jbtSorNegIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtSorNegIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtSorNegIndiv);
+
+        jbtFoulNegIndiv.setText(bundle.getString("FoulsAgainstKey")); // NOI18N
+        jbtFoulNegIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtFoulNegIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtFoulNegIndiv);
+
+        jbtPasNegIndiv.setText(bundle.getString("PassesAgainstKey")); // NOI18N
+        jbtPasNegIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtPasNegIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtPasNegIndiv);
+
+        jbtIntNegIndiv.setText(bundle.getString("InterceptionsAgainstKey")); // NOI18N
+        jbtIntNegIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtIntNegIndivActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtIntNegIndiv);
+
         jPanel2.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
-        jtpGlobal.addTab("Classements individuels", jPanel2);
+        jtpGlobal.addTab(bundle.getString("IndividualRankingKey"), jPanel2); // NOI18N
 
         add(jtpGlobal, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents

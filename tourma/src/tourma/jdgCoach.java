@@ -37,6 +37,36 @@ public class jdgCoach extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+
+        String[] aszRaces=new String[24];
+        aszRaces[0]=bundle.getString("AmazonKey");
+        aszRaces[1]=bundle.getString("UnderworldKey");
+        aszRaces[2]=bundle.getString("ChaosKey");
+        aszRaces[3]=bundle.getString("ElfKey");
+        aszRaces[4]=bundle.getString("WoodElfKey");
+        aszRaces[5]=bundle.getString("DarkElfKey");
+        aszRaces[6]=bundle.getString("GoblinKey");
+        aszRaces[7]=bundle.getString("HalflingKey");
+        aszRaces[8]=bundle.getString("HighElfKey");
+        aszRaces[9]=bundle.getString("LizardmenKey");
+        aszRaces[10]=bundle.getString("HumanKey");
+        aszRaces[11]=bundle.getString("KhemriKey");
+        aszRaces[12]=bundle.getString("UndeadKey");
+        aszRaces[13]=bundle.getString("DwarfKey");
+        aszRaces[14]=bundle.getString("ChaosDwarfKey");
+        aszRaces[15]=bundle.getString("NecromanticKey");
+        aszRaces[16]=bundle.getString("NorseKey");
+        aszRaces[17]=bundle.getString("NurgleKey");
+        aszRaces[18]=bundle.getString("OgreKey");
+        aszRaces[19]=bundle.getString("OrcKey");
+        aszRaces[20]=bundle.getString("ChaosPactKey");
+        aszRaces[21]=bundle.getString("SkavenKey");
+        aszRaces[22]=bundle.getString("SlannKey");
+        aszRaces[23]=bundle.getString("VampireKey");
+                
+        jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(aszRaces));
+                
          GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
         DisplayMode dmode = gs.getDisplayMode();
@@ -83,29 +113,30 @@ public class jdgCoach extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.GridLayout(5, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Nom du Coach:");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jLabel1.setText(bundle.getString("CoachNameKey")); // NOI18N
         jPanel1.add(jLabel1);
         jPanel1.add(jtfNom);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel2.setText("Nom de l'équipe");
+        jLabel2.setText(bundle.getString("TeamNameKey")); // NOI18N
         jPanel1.add(jLabel2);
         jPanel1.add(jtfEquipe);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel3.setText("Race du Roster");
+        jLabel3.setText(bundle.getString("RaceRosterKey")); // NOI18N
         jPanel1.add(jLabel3);
 
         jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Amazone", "Bas Fonds", "Chaos", "Elfe", "Elfe sylvain", "Elfe noir", "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri", "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique", "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire" }));
         jPanel1.add(jcbRoster);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel4.setText("Numéro NAF");
+        jLabel4.setText(bundle.getString("NAFNumberKey")); // NOI18N
         jPanel1.add(jLabel4);
         jPanel1.add(jtfNAF);
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel5.setText("Classement");
+        jLabel5.setText(bundle.getString("Ranking")); // NOI18N
         jPanel1.add(jLabel5);
 
         jtfRank.setText("110");

@@ -20,6 +20,7 @@ import java.awt.FontMetrics;
 import java.awt.Toolkit;
 import java.io.File;
 import java.text.ParseException;
+import java.util.Locale;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -43,6 +44,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     /** Creates new form MainFrame */
     public MainFrame() {
+        Locale l=Locale.getDefault();
+
         _tournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
@@ -279,6 +282,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        Language = new javax.swing.ButtonGroup();
         jtpMain = new javax.swing.JTabbedPane();
         jpnParameters = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -408,7 +412,6 @@ public class MainFrame extends javax.swing.JFrame {
         jmiExport = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         jmiExit = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -424,11 +427,12 @@ jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
 
 jPanel1.setLayout(new java.awt.BorderLayout());
 
-jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tournoi"));
+java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TournamentKey"))); // NOI18N
 jPanel5.setLayout(new java.awt.GridLayout(4, 2));
 
 jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-jLabel1.setText("Nom du tournoi:");
+jLabel1.setText(bundle.getString("TournamentNameKey")); // NOI18N
 jPanel5.add(jLabel1);
 
 jtfTournamentName.setText("Ain Pacte");
@@ -440,7 +444,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel5.add(jtfTournamentName);
 
     jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel2.setText("Organisateurs:");
+    jLabel2.setText(bundle.getString("OrganizerKey")); // NOI18N
     jPanel5.add(jLabel2);
 
     jtfOrgas.setText("Ain Pacte Team");
@@ -452,7 +456,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel5.add(jtfOrgas);
 
     jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel21.setText("Lieu:");
+    jLabel21.setText(bundle.getString("PlaceKey")); // NOI18N
     jPanel5.add(jLabel21);
 
     jtfPlace.setText("Ain Pacte");
@@ -464,20 +468,20 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel5.add(jtfPlace);
 
     jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel22.setText("Date:");
+    jLabel22.setText(bundle.getString("DateKey")); // NOI18N
     jPanel5.add(jLabel22);
     jPanel5.add(jxdDate);
 
     jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
-    jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Paramètres de classement"));
+    jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("RankingParametersKey"))); // NOI18N
     jPanel9.setLayout(new java.awt.BorderLayout());
 
     jPanel6.setLayout(new java.awt.GridLayout(22, 2));
 
     jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel3.setText("Large victoire:");
-    jLabel3.setToolTipText("Nombre points pour unelarge victoire (2 Touchdowns d'écarts):");
+    jLabel3.setText(bundle.getString("LargeVictoryKey")); // NOI18N
+    jLabel3.setToolTipText(bundle.getString("LargeVictoryTipKey")); // NOI18N
     jPanel6.add(jLabel3);
 
     jtffLargeVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -489,8 +493,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffLargeVictory);
 
     jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel19.setText("Ecart minimum pour une large victoire:");
-    jLabel19.setToolTipText("Nombre points pour unelarge victoire (2 Touchdowns d'écarts):");
+    jLabel19.setText(bundle.getString("MinimumGapForLargeVictoryKey")); // NOI18N
+    jLabel19.setToolTipText(bundle.getString("GapForLargeVictoryTipKey")); // NOI18N
     jPanel6.add(jLabel19);
 
     jtffLargeVictoryGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -502,8 +506,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffLargeVictoryGap);
 
     jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel4.setText("Victoire:");
-    jLabel4.setToolTipText("Nombre points pour une victoire");
+    jLabel4.setText(bundle.getString("VictoryKey")); // NOI18N
+    jLabel4.setToolTipText(bundle.getString("VictoryNumberOfPointsKey")); // NOI18N
     jPanel6.add(jLabel4);
 
     jtffVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -515,8 +519,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffVictory);
 
     jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel5.setText("Match nul:");
-    jLabel5.setToolTipText("Nombre de points pour un match nul");
+    jLabel5.setText(bundle.getString("DrawKey")); // NOI18N
+    jLabel5.setToolTipText(bundle.getString("DrawMatchTipKey")); // NOI18N
     jPanel6.add(jLabel5);
 
     jtffDraw.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -528,8 +532,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffDraw);
 
     jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel6.setText("Petite défaite:");
-    jLabel6.setToolTipText("Nombre de points pour une petite défaite (par un Touchdown d'écart)");
+    jLabel6.setText(bundle.getString("ShortLossKey")); // NOI18N
+    jLabel6.setToolTipText(bundle.getString("ShortLossTipKey")); // NOI18N
     jPanel6.add(jLabel6);
 
     jtffLittleLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -541,8 +545,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffLittleLost);
 
     jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel20.setText("Ecart maximum pour une petite défaite:");
-    jLabel20.setToolTipText("Nombre de points pour une petite défaite (par un Touchdown d'écart)");
+    jLabel20.setText(bundle.getString("MaximumGapForShortLossKey")); // NOI18N
+    jLabel20.setToolTipText(bundle.getString("MaximumGapForShortLossTipKey")); // NOI18N
     jPanel6.add(jLabel20);
 
     jtffLittleLostGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -554,8 +558,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffLittleLostGap);
 
     jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel7.setText("Défaite:");
-    jLabel7.setToolTipText("Nombre de points pour une petite défaite:");
+    jLabel7.setText(bundle.getString("LossKey")); // NOI18N
+    jLabel7.setToolTipText(bundle.getString("LossTipKey")); // NOI18N
     jPanel6.add(jLabel7);
 
     jtffLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -567,8 +571,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffLost);
 
     jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel8.setText("Touchdowns marqués:");
-    jLabel8.setToolTipText("Nombre de points pour un touchdown");
+    jLabel8.setText(bundle.getString("TouchdownForKey")); // NOI18N
+    jLabel8.setToolTipText(bundle.getString("TouchdownForTipKey")); // NOI18N
     jPanel6.add(jLabel8);
 
     jtffTdPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -580,8 +584,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffTdPos);
 
     jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel9.setText("Sorties réalisées:");
-    jLabel9.setToolTipText("Nombre de points pour une sortie réalisée");
+    jLabel9.setText(bundle.getString("CasualtiesKey")); // NOI18N
+    jLabel9.setToolTipText(bundle.getString("CasualtiesForTipKey")); // NOI18N
     jPanel6.add(jLabel9);
 
     jtffSorPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -593,8 +597,8 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jPanel6.add(jtffSorPos);
 
     jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel10.setText("Aggressions réussies:");
-    jLabel10.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
+    jLabel10.setText(bundle.getString("FoulsForKey")); // NOI18N
+    jLabel10.setToolTipText(bundle.getString("FoulForTipKey")); // NOI18N
     jPanel6.add(jLabel10);
 
     jtffFoulPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -756,7 +760,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jPanel6.add(jcbRank5);
 
-    jTabbedPane1.addTab("Individuel", jPanel6);
+    jTabbedPane1.addTab(bundle.getString("IndividualKey"), jPanel6); // NOI18N
 
     jPanel10.setLayout(new java.awt.GridLayout(20, 2));
 
@@ -1022,7 +1026,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jPanel10.add(jtffTeamVictory);
 
-    jTabbedPane1.addTab("Par équipe", jPanel10);
+    jTabbedPane1.addTab(bundle.getString("ByTeamKey"), jPanel10); // NOI18N
 
     jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -1145,13 +1149,13 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
 
     jpnParameters.add(jPanel2);
 
-    jtpMain.addTab("Paramètres du tournoi", jpnParameters);
+    jtpMain.addTab(bundle.getString("TournamentParameterKey"), jpnParameters); // NOI18N
 
     getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
 
-    jmnFile.setText("Fichier");
+    jmnFile.setText(bundle.getString("FileKey")); // NOI18N
 
-    jmiNouveau.setText("Nouveau tournoi");
+    jmiNouveau.setText(bundle.getString("NewTourKey")); // NOI18N
     jmiNouveau.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiNouveauActionPerformed(evt);
@@ -1159,7 +1163,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jmnFile.add(jmiNouveau);
 
-    jmiCharger.setText("Charger un tounoi");
+    jmiCharger.setText(bundle.getString("LoadTourKey")); // NOI18N
     jmiCharger.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiChargerActionPerformed(evt);
@@ -1167,7 +1171,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jmnFile.add(jmiCharger);
 
-    jmiSave.setText("Enregistrer le tournoi");
+    jmiSave.setText(bundle.getString("SaveTourKey")); // NOI18N
     jmiSave.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiSaveActionPerformed(evt);
@@ -1175,7 +1179,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jmnFile.add(jmiSave);
 
-    jmiSaveAs.setText("Enregistrer le tournoi sous ");
+    jmiSaveAs.setText(bundle.getString("SaveTourAsKey")); // NOI18N
     jmiSaveAs.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiSaveAsActionPerformed(evt);
@@ -1184,7 +1188,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jmnFile.add(jmiSaveAs);
     jmnFile.add(jSeparator1);
 
-    jmiExport.setLabel("Exporter les résultats (NAF)");
+    jmiExport.setText(bundle.getString("ExportNafResultKey")); // NOI18N
     jmiExport.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiExportActionPerformed(evt);
@@ -1193,7 +1197,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jmnFile.add(jmiExport);
     jmnFile.add(jSeparator2);
 
-    jmiExit.setText("Quitter");
+    jmiExit.setText(bundle.getString("QuitKey")); // NOI18N
     jmiExit.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiExitActionPerformed(evt);
@@ -1203,12 +1207,9 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
 
     jMenuBar1.add(jmnFile);
 
-    jMenu2.setText("Edit");
-    jMenuBar1.add(jMenu2);
-
     jmnHelp.setText("?");
 
-    jmiAbout.setText("A propos de");
+    jmiAbout.setText(bundle.getString("AboutKey")); // NOI18N
     jmiAbout.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiAboutActionPerformed(evt);
@@ -1216,7 +1217,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     });
     jmnHelp.add(jmiAbout);
 
-    jmiRevisions.setText("Révisions logicielles");
+    jmiRevisions.setText(bundle.getString("SoftwareRevisionsKey")); // NOI18N
     jmiRevisions.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiRevisionsActionPerformed(evt);
@@ -1225,7 +1226,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     jmnHelp.add(jmiRevisions);
     jmnHelp.add(jSeparator3);
 
-    jmiAideEnLigne.setText("Aide");
+    jmiAideEnLigne.setText(bundle.getString("Help")); // NOI18N
     jmiAideEnLigne.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jmiAideEnLigneActionPerformed(evt);
@@ -1935,6 +1936,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         return _singleton;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup Language;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1980,7 +1982,6 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
