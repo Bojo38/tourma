@@ -40,17 +40,17 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return "Nb";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB");
             case 1:
-                return "Clan 1";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN 1");
             case 2:
-                return "V1";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V1");
             case 3:
-                return "N";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
             case 4:
-                return "V2";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V2");
             case 5:
-                return "Clan 2";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN 2");
         }
         return "";
     }

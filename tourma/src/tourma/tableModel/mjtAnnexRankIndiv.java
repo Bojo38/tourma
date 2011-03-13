@@ -135,35 +135,35 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return "N";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
             case 1:
-                return "Equipe";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
             case 2:
-                return "Coach";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH");
             case 3:
-                return "Roster";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
             case 4:
                 switch (_ranking_type) {
                     case C_MOST_TD_POS:
-                        return "Tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TDS");
                     case C_MOST_TD_NEG:
-                        return "Tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TDS");
                     case C_MOST_SOR_POS:
-                        return "Sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SOR");
                     case C_MOST_SOR_NEG:
-                        return "Sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SOR");
                     case C_MOST_FOUL_POS:
-                        return "Foul";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL");
                     case C_MOST_FOUL_NEG:
-                        return "Foul";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL");
                     case C_MOST_PAS_POS:
-                        return "Pas";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS");
                     case C_MOST_PAS_NEG:
-                        return "Pas";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS");
                     case C_MOST_INT_POS:
-                        return "Int";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT");
                     case C_MOST_INT_NEG:
-                        return "Int";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT");
                 }
         }
         return "";

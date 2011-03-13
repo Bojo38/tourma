@@ -56,7 +56,7 @@ public class jdgPairing extends javax.swing.JDialog {
         _team2 = team2;
         _coachs = new Hashtable<String, Coach>();
 
-        this.setTitle(team1._name+" vs "+team2._name);
+        this.setTitle(team1._name+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS ")+team2._name);
 
         _round = round;
         _matchs = new Vector<Match>();
@@ -146,13 +146,14 @@ public class jdgPairing extends javax.swing.JDialog {
         jPanel3.add(jcbTeam1, java.awt.BorderLayout.WEST);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("vs");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jLabel1.setText(bundle.getString("VS")); // NOI18N
         jPanel3.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         jcbTeam2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel3.add(jcbTeam2, java.awt.BorderLayout.EAST);
 
-        jbtAdd.setText("Ajoute");
+        jbtAdd.setText(bundle.getString("AJOUTE")); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddActionPerformed(evt);
@@ -160,7 +161,7 @@ public class jdgPairing extends javax.swing.JDialog {
         });
         jPanel4.add(jbtAdd);
 
-        jbtRemove.setText("Retire");
+        jbtRemove.setText(bundle.getString("RETIRE")); // NOI18N
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRemoveActionPerformed(evt);

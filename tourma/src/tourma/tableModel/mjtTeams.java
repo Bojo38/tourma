@@ -40,11 +40,11 @@ public class mjtTeams extends AbstractTableModel {
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return "Nb";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB");
             case 1:
-                return "Nom";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM");
         }
-        return "Coach "+(col-1);
+        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH ")+(col-1);
     }
 
     public Object getValueAt(int row, int col) {

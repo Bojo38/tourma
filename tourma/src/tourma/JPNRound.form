@@ -86,7 +86,6 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="tourma/languages/language.properties" key="GenerateNextRoundKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
-                    <Property name="label" type="java.lang.String" value="G&#xe9;n&#xe9;rer la prochaine ronde"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtNextRoundActionPerformed"/>
@@ -206,7 +205,7 @@
                       <Properties>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                            <TitledBorder title="Touchdowns Marqu&#xe9;s">
+                            <TitledBorder title="Touchdowns Marqu&#xe9;s:">
                               <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="TouchdownForKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </TitledBorder>
                           </Border>
@@ -236,7 +235,7 @@
                       <Properties>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                            <TitledBorder title="Sorties inflig&#xe9;es">
+                            <TitledBorder title="Sorties inflig&#xe9;es:">
                               <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="CasualtiesKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </TitledBorder>
                           </Border>
@@ -266,7 +265,7 @@
                       <Properties>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                            <TitledBorder title="Aggressions r&#xe9;ussies">
+                            <TitledBorder title="Aggressions r&#xe9;ussies:">
                               <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="FoulsForKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </TitledBorder>
                           </Border>

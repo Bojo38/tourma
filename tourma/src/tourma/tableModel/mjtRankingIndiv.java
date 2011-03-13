@@ -85,177 +85,177 @@ public class mjtRankingIndiv extends mjtRanking {
                 cl = col - 1;
             }
             if (col == 1) {
-                return "Clan";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN");
             }
         }
 
         switch (cl) {
             case 0:
-                return "N";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
             case 1:
-                return "Equipe";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
             case 2:
-                return "Coach";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH");
             case 3:
-                return "Roster";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
             case 4:
                 switch (_ranking_type1) {
                     case Parameters.C_RANKING_POINTS:
-                        return "Points";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Diff aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Diff sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Diff tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
                     case Parameters.C_RANKING_FOUL:
-                        return "Nb aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
                     case Parameters.C_RANKING_NONE:
-                        return "Rien";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Pts adv";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
                     case Parameters.C_RANKING_SOR:
-                        return "Nb sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
                     case Parameters.C_RANKING_TD:
-                        return "Nb tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
                     case Parameters.C_RANKING_VND:
-                        return "V/N/D";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
                     case Parameters.C_RANKING_PAS:
-                        return "Passes";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
                     case Parameters.C_RANKING_DIFF_PAS:
-                        return "Diff Pas";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
                     case Parameters.C_RANKING_INT:
-                        return "Inter.";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
                     case Parameters.C_RANKING_DIFF_INT:
-                        return "Diff Int";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
                 }
                 break;
             case 5:
                 switch (_ranking_type2) {
                     case Parameters.C_RANKING_POINTS:
-                        return "Points";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Diff aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Diff sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Diff tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
                     case Parameters.C_RANKING_FOUL:
-                        return "Nb aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
                     case Parameters.C_RANKING_NONE:
-                        return "Rien";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Pts adv";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
                     case Parameters.C_RANKING_SOR:
-                        return "Nb sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
                     case Parameters.C_RANKING_TD:
-                        return "Nb tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
                     case Parameters.C_RANKING_VND:
-                        return "V/N/D";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
                     case Parameters.C_RANKING_PAS:
-                        return "Passes";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
                     case Parameters.C_RANKING_DIFF_PAS:
-                        return "Diff Pas";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
                     case Parameters.C_RANKING_INT:
-                        return "Inter.";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
                     case Parameters.C_RANKING_DIFF_INT:
-                        return "Diff Int";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
                 }
                 break;
             case 6:
                 switch (_ranking_type3) {
                     case Parameters.C_RANKING_POINTS:
-                        return "Points";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Diff aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Diff sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Diff tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
                     case Parameters.C_RANKING_FOUL:
-                        return "Nb aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
                     case Parameters.C_RANKING_NONE:
-                        return "Rien";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Pts adv";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
                     case Parameters.C_RANKING_SOR:
-                        return "Nb sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
                     case Parameters.C_RANKING_TD:
-                        return "Nb tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
                     case Parameters.C_RANKING_VND:
-                        return "V/N/D";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
                     case Parameters.C_RANKING_PAS:
-                        return "Passes";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
                     case Parameters.C_RANKING_DIFF_PAS:
-                        return "Diff Pas";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
                     case Parameters.C_RANKING_INT:
-                        return "Inter.";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
                     case Parameters.C_RANKING_DIFF_INT:
-                        return "Diff Int";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
                 }
                 break;
             case 7:
                 switch (_ranking_type4) {
                     case Parameters.C_RANKING_POINTS:
-                        return "Points";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Diff aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Diff sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Diff tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
                     case Parameters.C_RANKING_FOUL:
-                        return "Nb aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
                     case Parameters.C_RANKING_NONE:
-                        return "Rien";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Pts adv";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
                     case Parameters.C_RANKING_SOR:
-                        return "Nb sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
                     case Parameters.C_RANKING_TD:
-                        return "Nb tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
                     case Parameters.C_RANKING_VND:
-                        return "V/N/D";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
                     case Parameters.C_RANKING_PAS:
-                        return "Passes";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
                     case Parameters.C_RANKING_DIFF_PAS:
-                        return "Diff Pas";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
                     case Parameters.C_RANKING_INT:
-                        return "Inter.";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
                     case Parameters.C_RANKING_DIFF_INT:
-                        return "Diff Int";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
                 }
                 break;
             case 8:
                 switch (_ranking_type5) {
                     case Parameters.C_RANKING_POINTS:
-                        return "Points";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
                     case Parameters.C_RANKING_DIFF_FOUL:
-                        return "Diff aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
                     case Parameters.C_RANKING_DIFF_SOR:
-                        return "Diff sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
                     case Parameters.C_RANKING_DIFF_TD:
-                        return "Diff tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
                     case Parameters.C_RANKING_FOUL:
-                        return "Nb aggr";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
                     case Parameters.C_RANKING_NONE:
-                        return "Rien";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
                     case Parameters.C_RANKING_OPP_POINTS:
-                        return "Pts adv";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
                     case Parameters.C_RANKING_SOR:
-                        return "Nb sor";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
                     case Parameters.C_RANKING_TD:
-                        return "Nb tds";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
                     case Parameters.C_RANKING_VND:
-                        return "V/N/D";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
                     case Parameters.C_RANKING_PAS:
-                        return "Passes";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
                     case Parameters.C_RANKING_DIFF_PAS:
-                        return "Diff Pas";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
                     case Parameters.C_RANKING_INT:
-                        return "Inter.";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
                     case Parameters.C_RANKING_DIFF_INT:
-                        return "Diff Int";
+                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
                 }
                 break;
         }

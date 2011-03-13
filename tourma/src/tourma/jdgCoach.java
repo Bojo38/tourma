@@ -152,7 +152,7 @@ public class jdgCoach extends javax.swing.JDialog {
         });
         jPanel2.add(jbtOK);
 
-        jbtCancel.setText("Annuler");
+        jbtCancel.setText(bundle.getString("ANNULER")); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtCancelActionPerformed(evt);
@@ -202,17 +202,17 @@ public class jdgCoach extends javax.swing.JDialog {
 
         if (c._name.equals(""))
         {
-            JOptionPane.showMessageDialog(this, "Le nom est vide");
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE NOM EST VIDE"));
             return;
         }
         if (c._team.equals(""))
         {
-            JOptionPane.showMessageDialog(this, "L'équipe est vide");
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("L'ÉQUIPE EST VIDE"));
             return;
         }
         if (c._roster.equals(""))
         {
-            JOptionPane.showMessageDialog(this, "le roster est vide");
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE ROSTER EST VIDE"));
             return;
         }
         

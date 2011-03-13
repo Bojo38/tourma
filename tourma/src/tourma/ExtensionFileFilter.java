@@ -6,6 +6,7 @@
 package tourma;
 
 import java.io.File;
+import java.util.ResourceBundle;
 import javax.swing.filechooser.FileFilter;
 
 /**
@@ -13,6 +14,7 @@ import javax.swing.filechooser.FileFilter;
  * @author Frederic Berger
  */
 class ExtensionFileFilter extends FileFilter {
+    static final ResourceBundle language = ResourceBundle.getBundle("tourma/languages/language");
   String description;
 
   String extensions[];

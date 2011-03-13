@@ -32,17 +32,17 @@ public class mjtCoaches extends AbstractTableModel {
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return "Nb";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB");
             case 1:
-                return "Coach";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH");
             case 2:
-                return "Equipe";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
             case 3:
-                return "Roster";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
             case 4:
-                return "NAF";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF");
                 case 5:
-                return "Classement";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT");
         }
         return "";
     }

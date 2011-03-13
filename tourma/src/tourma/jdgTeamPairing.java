@@ -114,8 +114,9 @@ public class jdgTeamPairing extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/icone.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jbtOK.setText(bundle.getString("OKKey")); // NOI18N
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);

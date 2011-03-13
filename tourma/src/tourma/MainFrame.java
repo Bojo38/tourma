@@ -61,11 +61,11 @@ public class MainFrame extends javax.swing.JFrame {
             jpnCoachButtons.setVisible(false);
             String text = "";
             if (_tournament.getParams()._teamPairing == 0) {
-                text = "individuel";
+                text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUEL");
             } else {
-                text = "par équipe";
+                text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE");
             }
-            jlbDetails.setText("Nombre de membres: " + _tournament.getParams()._teamMatesNumber + " Appariement " + text);
+            jlbDetails.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MEMBRES: ") + _tournament.getParams()._teamMatesNumber + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" APPARIEMENT ") + text);
         } else {
             jpnTeamTour.setVisible(false);
             jpnCoachButtons.setVisible(true);
@@ -419,839 +419,838 @@ public class MainFrame extends javax.swing.JFrame {
         jmiAideEnLigne = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TOURnoi MAnager");
-        setIconImage((Toolkit.getDefaultToolkit().getImage(
-            MainFrame.class.getResource("images/icone.png"))));
-
-jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
-
-jPanel1.setLayout(new java.awt.BorderLayout());
-
-java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TournamentKey"))); // NOI18N
-jPanel5.setLayout(new java.awt.GridLayout(4, 2));
-
-jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-jLabel1.setText(bundle.getString("TournamentNameKey")); // NOI18N
-jPanel5.add(jLabel1);
-
-jtfTournamentName.setText("Ain Pacte");
-jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
-    public void keyPressed(java.awt.event.KeyEvent evt) {
-        jtfTournamentNameKeyPressed(evt);
-    }
-    });
-    jPanel5.add(jtfTournamentName);
-
-    jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel2.setText(bundle.getString("OrganizerKey")); // NOI18N
-    jPanel5.add(jLabel2);
-
-    jtfOrgas.setText("Ain Pacte Team");
-    jtfOrgas.addKeyListener(new java.awt.event.KeyAdapter() {
-        public void keyPressed(java.awt.event.KeyEvent evt) {
-            jtfOrgasKeyPressed(evt);
-        }
-    });
-    jPanel5.add(jtfOrgas);
-
-    jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel21.setText(bundle.getString("PlaceKey")); // NOI18N
-    jPanel5.add(jLabel21);
-
-    jtfPlace.setText("Ain Pacte");
-    jtfPlace.addKeyListener(new java.awt.event.KeyAdapter() {
-        public void keyPressed(java.awt.event.KeyEvent evt) {
-            jtfPlaceKeyPressed(evt);
-        }
-    });
-    jPanel5.add(jtfPlace);
-
-    jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel22.setText(bundle.getString("DateKey")); // NOI18N
-    jPanel5.add(jLabel22);
-    jPanel5.add(jxdDate);
-
-    jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
-
-    jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("RankingParametersKey"))); // NOI18N
-    jPanel9.setLayout(new java.awt.BorderLayout());
-
-    jPanel6.setLayout(new java.awt.GridLayout(22, 2));
-
-    jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel3.setText(bundle.getString("LargeVictoryKey")); // NOI18N
-    jLabel3.setToolTipText(bundle.getString("LargeVictoryTipKey")); // NOI18N
-    jPanel6.add(jLabel3);
-
-    jtffLargeVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffLargeVictory.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffLargeVictoryFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffLargeVictory);
-
-    jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel19.setText(bundle.getString("MinimumGapForLargeVictoryKey")); // NOI18N
-    jLabel19.setToolTipText(bundle.getString("GapForLargeVictoryTipKey")); // NOI18N
-    jPanel6.add(jLabel19);
-
-    jtffLargeVictoryGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffLargeVictoryGap.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffLargeVictoryGapFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffLargeVictoryGap);
-
-    jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel4.setText(bundle.getString("VictoryKey")); // NOI18N
-    jLabel4.setToolTipText(bundle.getString("VictoryNumberOfPointsKey")); // NOI18N
-    jPanel6.add(jLabel4);
-
-    jtffVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffVictory.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffVictoryFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffVictory);
-
-    jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel5.setText(bundle.getString("DrawKey")); // NOI18N
-    jLabel5.setToolTipText(bundle.getString("DrawMatchTipKey")); // NOI18N
-    jPanel6.add(jLabel5);
-
-    jtffDraw.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffDraw.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffDrawFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffDraw);
-
-    jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel6.setText(bundle.getString("ShortLossKey")); // NOI18N
-    jLabel6.setToolTipText(bundle.getString("ShortLossTipKey")); // NOI18N
-    jPanel6.add(jLabel6);
-
-    jtffLittleLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffLittleLost.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffLittleLostFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffLittleLost);
-
-    jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel20.setText(bundle.getString("MaximumGapForShortLossKey")); // NOI18N
-    jLabel20.setToolTipText(bundle.getString("MaximumGapForShortLossTipKey")); // NOI18N
-    jPanel6.add(jLabel20);
-
-    jtffLittleLostGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffLittleLostGap.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffLittleLostGapFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffLittleLostGap);
-
-    jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel7.setText(bundle.getString("LossKey")); // NOI18N
-    jLabel7.setToolTipText(bundle.getString("LossTipKey")); // NOI18N
-    jPanel6.add(jLabel7);
-
-    jtffLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffLost.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffLostFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffLost);
-
-    jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel8.setText(bundle.getString("TouchdownForKey")); // NOI18N
-    jLabel8.setToolTipText(bundle.getString("TouchdownForTipKey")); // NOI18N
-    jPanel6.add(jLabel8);
-
-    jtffTdPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffTdPos.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffTdPosFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffTdPos);
-
-    jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel9.setText(bundle.getString("CasualtiesKey")); // NOI18N
-    jLabel9.setToolTipText(bundle.getString("CasualtiesForTipKey")); // NOI18N
-    jPanel6.add(jLabel9);
-
-    jtffSorPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffSorPos.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffSorPosFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffSorPos);
-
-    jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel10.setText(bundle.getString("FoulsForKey")); // NOI18N
-    jLabel10.setToolTipText(bundle.getString("FoulForTipKey")); // NOI18N
-    jPanel6.add(jLabel10);
-
-    jtffFoulPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffFoulPos.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffFoulPosFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffFoulPos);
-
-    jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel38.setText("Passes réussies:");
-    jLabel38.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
-    jPanel6.add(jLabel38);
-
-    jtffPasPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffPasPos.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffPasPosFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffPasPos);
-
-    jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel37.setText("Interceptions réussies:");
-    jLabel37.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
-    jPanel6.add(jLabel37);
-
-    jtffIntPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffIntPos.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffIntPosFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffIntPos);
-
-    jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel11.setText("Touchdowns encaissés:");
-    jLabel11.setToolTipText("Nombre de points (éventuellement négatifs) pour les touchdowns encaissés");
-    jPanel6.add(jLabel11);
-
-    jtffTdNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffTdNeg.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffTdNegFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffTdNeg);
-
-    jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel12.setText("Sorties subies:");
-    jLabel12.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies");
-    jPanel6.add(jLabel12);
-
-    jtffSorNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffSorNeg.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffSorNegFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffSorNeg);
-
-    jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel13.setText("Aggressions subies:");
-    jLabel13.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
-    jPanel6.add(jLabel13);
-
-    jtffFoulNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffFoulNeg.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffFoulNegFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffFoulNeg);
-
-    jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel39.setText("Passes subies:");
-    jLabel39.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
-    jPanel6.add(jLabel39);
-
-    jtffPasNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffPasNeg.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffPasNegFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffPasNeg);
-
-    jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel40.setText("Interceptions subies:");
-    jLabel40.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
-    jPanel6.add(jLabel40);
-
-    jtffIntNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffIntNeg.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffIntNegFocusLost(evt);
-        }
-    });
-    jPanel6.add(jtffIntNeg);
-
-    jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel14.setText("Critère de classement n°1:");
-    jPanel6.add(jLabel14);
-
-    jcbRank1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
-    jcbRank1.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank1ActionPerformed(evt);
-        }
-    });
-    jPanel6.add(jcbRank1);
-
-    jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel15.setText("Critère de classement n°2:");
-    jPanel6.add(jLabel15);
-
-    jcbRank2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
-    jcbRank2.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank2ActionPerformed(evt);
-        }
-    });
-    jPanel6.add(jcbRank2);
-
-    jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel16.setText("Critère de classement n°3:");
-    jPanel6.add(jLabel16);
-
-    jcbRank3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
-    jcbRank3.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank3ActionPerformed(evt);
-        }
-    });
-    jPanel6.add(jcbRank3);
-
-    jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel17.setText("Critère de classement n°4:");
-    jPanel6.add(jLabel17);
-
-    jcbRank4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
-    jcbRank4.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank4ActionPerformed(evt);
-        }
-    });
-    jPanel6.add(jcbRank4);
-
-    jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel18.setText("Critère de classement n°5:");
-    jPanel6.add(jLabel18);
-
-    jcbRank5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
-    jcbRank5.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank5ActionPerformed(evt);
-        }
-    });
-    jPanel6.add(jcbRank5);
-
-    jTabbedPane1.addTab(bundle.getString("IndividualKey"), jPanel6); // NOI18N
-
-    jPanel10.setLayout(new java.awt.GridLayout(20, 2));
-
-    buttonGroup1.add(jrbTeamVictory);
-    jrbTeamVictory.setText("Utiliser la victoire d'équipe");
-    jrbTeamVictory.setHideActionText(true);
-    jrbTeamVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jrbTeamVictory.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-    jrbTeamVictory.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jrbTeamVictoryActionPerformed(evt);
-        }
-    });
-    jPanel10.add(jrbTeamVictory);
-
-    buttonGroup1.add(jrbCoachPoints);
-    jrbCoachPoints.setText("Utiliser le cumul des points des coachs");
-    jrbCoachPoints.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jrbCoachPointsActionPerformed(evt);
-        }
-    });
-    jPanel10.add(jrbCoachPoints);
-
-    jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel23.setText("Victoire:");
-    jLabel23.setToolTipText("Nombre points pour une victoire");
-    jPanel10.add(jLabel23);
-
-    jtffVictoryTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffVictoryTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffVictoryTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffVictoryTeam);
-
-    jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel24.setText("Match nul:");
-    jLabel24.setToolTipText("Nombre de points pour un match nul");
-    jPanel10.add(jLabel24);
-
-    jtffDrawTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffDrawTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffDrawTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffDrawTeam);
-
-    jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel25.setText("Défaite:");
-    jLabel25.setToolTipText("Nombre de points pour une petite défaite:");
-    jPanel10.add(jLabel25);
-
-    jtffLostTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffLostTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffLostTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffLostTeam);
-
-    jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel31.setText("Touchdowns marqués:");
-    jLabel31.setToolTipText("Nombre de points pour un touchdown");
-    jPanel10.add(jLabel31);
-
-    jtffTdPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffTdPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffTdPosTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffTdPosTeam);
-
-    jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel32.setText("Sorties réalisées:");
-    jLabel32.setToolTipText("Nombre de points pour une sortie réalisée");
-    jPanel10.add(jLabel32);
-
-    jtffSorPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffSorPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffSorPosTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffSorPosTeam);
-
-    jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel33.setText("Aggressions réussies:");
-    jLabel33.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
-    jPanel10.add(jLabel33);
-
-    jtffFoulPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffFoulPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffFoulPosTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffFoulPosTeam);
-
-    jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel41.setText("Passes réalisées:");
-    jLabel41.setToolTipText("Nombre de points pour une sortie réalisée");
-    jPanel10.add(jLabel41);
-
-    jtffPasPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffPasPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffPasPosTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffPasPosTeam);
-
-    jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel42.setText("Interceptions réussies:");
-    jLabel42.setToolTipText("Nombre de points pour une sortie réussie sur aggression");
-    jPanel10.add(jLabel42);
-
-    jtffIntPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffIntPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffIntPosTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffIntPosTeam);
-
-    jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel34.setText("Touchdowns encaissés:");
-    jLabel34.setToolTipText("Nombre de points (éventuellement négatifs) pour les touchdowns encaissés");
-    jPanel10.add(jLabel34);
-
-    jtffTdNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffTdNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffTdNegTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffTdNegTeam);
-
-    jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel35.setText("Sorties subies:");
-    jLabel35.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies");
-    jPanel10.add(jLabel35);
-
-    jtffSorNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffSorNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffSorNegTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffSorNegTeam);
-
-    jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel36.setText("Aggressions subies:");
-    jLabel36.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
-    jPanel10.add(jLabel36);
-
-    jtffFoulNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffFoulNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffFoulNegTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffFoulNegTeam);
-
-    jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel44.setText("Passes subies:");
-    jLabel44.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies sur aggression");
-    jPanel10.add(jLabel44);
-
-    jtffPasNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffPasNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffPasNegTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffPasNegTeam);
-
-    jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel43.setText("Interceptions subies:");
-    jLabel43.setToolTipText("Nombre de points (éventuellement négatif) pour les sorties subies");
-    jPanel10.add(jLabel43);
-
-    jtffIntNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffIntNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffIntNegTeamFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffIntNegTeam);
-
-    jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel26.setText("Critère de classement n°1:");
-    jPanel10.add(jLabel26);
-
-    jcbRank1Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-    jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank1TeamActionPerformed(evt);
-        }
-    });
-    jPanel10.add(jcbRank1Team);
-
-    jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel27.setText("Critère de classement n°2:");
-    jPanel10.add(jLabel27);
-
-    jcbRank2Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-    jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank2TeamActionPerformed(evt);
-        }
-    });
-    jPanel10.add(jcbRank2Team);
-
-    jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel28.setText("Critère de classement n°3:");
-    jPanel10.add(jLabel28);
-
-    jcbRank3Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-    jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank3TeamActionPerformed(evt);
-        }
-    });
-    jPanel10.add(jcbRank3Team);
-
-    jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel29.setText("Critère de classement n°4:");
-    jPanel10.add(jLabel29);
-
-    jcbRank4Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-    jcbRank4Team.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank4TeamActionPerformed(evt);
-        }
-    });
-    jPanel10.add(jcbRank4Team);
-
-    jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jLabel30.setText("Critère de classement n°5:");
-    jPanel10.add(jLabel30);
-
-    jcbRank5Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
-    jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jcbRank5TeamActionPerformed(evt);
-        }
-    });
-    jPanel10.add(jcbRank5Team);
-
-    jlbVictoryPoints.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-    jlbVictoryPoints.setText("Prime à la victoire d'équipe");
-    jPanel10.add(jlbVictoryPoints);
-
-    jtffTeamVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-    jtffTeamVictory.addFocusListener(new java.awt.event.FocusAdapter() {
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            jtffTeamVictoryFocusLost(evt);
-        }
-    });
-    jPanel10.add(jtffTeamVictory);
-
-    jTabbedPane1.addTab(bundle.getString("ByTeamKey"), jPanel10); // NOI18N
-
-    jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
-
-    jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
-
-    jpnParameters.add(jPanel1);
-
-    jPanel2.setLayout(new java.awt.BorderLayout());
-
-    jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Coachs"));
-    jPanel7.setPreferredSize(new java.awt.Dimension(450, 240));
-    jPanel7.setLayout(new java.awt.BorderLayout());
-
-    jbtAdd.setText("Ajouter");
-    jbtAdd.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbtAddActionPerformed(evt);
-        }
-    });
-    jpnCoachButtons.add(jbtAdd);
-
-    jbtRemove.setText("Retirer");
-    jbtRemove.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbtRemoveActionPerformed(evt);
-        }
-    });
-    jpnCoachButtons.add(jbtRemove);
-
-    jbtModify.setText("Modifier");
-    jbtModify.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbtModifyActionPerformed(evt);
-        }
-    });
-    jpnCoachButtons.add(jbtModify);
-
-    jPanel7.add(jpnCoachButtons, java.awt.BorderLayout.PAGE_START);
-
-    jtbCoachs.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null}
-        },
-        new String [] {
-            "Title 1", "Title 2", "Title 3", "Title 4"
-        }
-    ));
-    jtbCoachs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-    jScrollPane1.setViewportView(jtbCoachs);
-
-    jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-    jPanel2.add(jPanel7, java.awt.BorderLayout.CENTER);
-
-    jpnTeamTour.setBorder(javax.swing.BorderFactory.createTitledBorder("Equipes"));
-    jpnTeamTour.setPreferredSize(new java.awt.Dimension(450, 240));
-    jpnTeamTour.setLayout(new java.awt.BorderLayout());
-
-    jbtAddTeam.setText("Ajouter");
-    jbtAddTeam.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbtAddTeamActionPerformed(evt);
-        }
-    });
-    jPanel8.add(jbtAddTeam);
-
-    jbtRemoveTeam.setText("Retirer");
-    jbtRemoveTeam.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbtRemoveTeamActionPerformed(evt);
-        }
-    });
-    jPanel8.add(jbtRemoveTeam);
-
-    jbtModifyTeam.setText("Modifier");
-    jbtModifyTeam.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbtModifyTeamActionPerformed(evt);
-        }
-    });
-    jPanel8.add(jbtModifyTeam);
-
-    jpnTeamTour.add(jPanel8, java.awt.BorderLayout.NORTH);
-
-    jtbTeam.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null}
-        },
-        new String [] {
-            "Title 1", "Title 2", "Title 3", "Title 4"
-        }
-    ));
-    jtbTeam.setCellSelectionEnabled(true);
-    jtbTeam.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-    jScrollPane2.setViewportView(jtbTeam);
-
-    jpnTeamTour.add(jScrollPane2, java.awt.BorderLayout.CENTER);
-
-    jPanel3.add(jlbDetails);
-
-    jpnTeamTour.add(jPanel3, java.awt.BorderLayout.PAGE_END);
-
-    jPanel2.add(jpnTeamTour, java.awt.BorderLayout.NORTH);
-
-    jbtFirstRound.setText("Générer la première ronde");
-    jbtFirstRound.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbtFirstRoundActionPerformed(evt);
-        }
-    });
-    jPanel4.add(jbtFirstRound);
-
-    jPanel2.add(jPanel4, java.awt.BorderLayout.SOUTH);
-
-    jpnParameters.add(jPanel2);
-
-    jtpMain.addTab(bundle.getString("TournamentParameterKey"), jpnParameters); // NOI18N
-
-    getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
-
-    jmnFile.setText(bundle.getString("FileKey")); // NOI18N
-
-    jmiNouveau.setText(bundle.getString("NewTourKey")); // NOI18N
-    jmiNouveau.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiNouveauActionPerformed(evt);
-        }
-    });
-    jmnFile.add(jmiNouveau);
-
-    jmiCharger.setText(bundle.getString("LoadTourKey")); // NOI18N
-    jmiCharger.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiChargerActionPerformed(evt);
-        }
-    });
-    jmnFile.add(jmiCharger);
-
-    jmiSave.setText(bundle.getString("SaveTourKey")); // NOI18N
-    jmiSave.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiSaveActionPerformed(evt);
-        }
-    });
-    jmnFile.add(jmiSave);
-
-    jmiSaveAs.setText(bundle.getString("SaveTourAsKey")); // NOI18N
-    jmiSaveAs.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiSaveAsActionPerformed(evt);
-        }
-    });
-    jmnFile.add(jmiSaveAs);
-    jmnFile.add(jSeparator1);
-
-    jmiExport.setText(bundle.getString("ExportNafResultKey")); // NOI18N
-    jmiExport.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiExportActionPerformed(evt);
-        }
-    });
-    jmnFile.add(jmiExport);
-    jmnFile.add(jSeparator2);
-
-    jmiExit.setText(bundle.getString("QuitKey")); // NOI18N
-    jmiExit.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiExitActionPerformed(evt);
-        }
-    });
-    jmnFile.add(jmiExit);
-
-    jMenuBar1.add(jmnFile);
-
-    jmnHelp.setText("?");
-
-    jmiAbout.setText(bundle.getString("AboutKey")); // NOI18N
-    jmiAbout.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiAboutActionPerformed(evt);
-        }
-    });
-    jmnHelp.add(jmiAbout);
-
-    jmiRevisions.setText(bundle.getString("SoftwareRevisionsKey")); // NOI18N
-    jmiRevisions.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiRevisionsActionPerformed(evt);
-        }
-    });
-    jmnHelp.add(jmiRevisions);
-    jmnHelp.add(jSeparator3);
-
-    jmiAideEnLigne.setText(bundle.getString("Help")); // NOI18N
-    jmiAideEnLigne.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jmiAideEnLigneActionPerformed(evt);
-        }
-    });
-    jmnHelp.add(jmiAideEnLigne);
-
-    jMenuBar1.add(jmnHelp);
-
-    setJMenuBar(jMenuBar1);
-
-    pack();
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        setTitle(bundle.getString("TOURNOI MANAGER")); // NOI18N
+        setIconImage((Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("images/icone.png"))));
+
+        jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TournamentKey"))); // NOI18N
+        jPanel5.setLayout(new java.awt.GridLayout(4, 2));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel1.setText(bundle.getString("TournamentNameKey")); // NOI18N
+        jPanel5.add(jLabel1);
+
+        jtfTournamentName.setText(bundle.getString("AIN PACTE")); // NOI18N
+        jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfTournamentNameKeyPressed(evt);
+            }
+        });
+        jPanel5.add(jtfTournamentName);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel2.setText(bundle.getString("OrganizerKey")); // NOI18N
+        jPanel5.add(jLabel2);
+
+        jtfOrgas.setText(bundle.getString("AIN PACTE TEAM")); // NOI18N
+        jtfOrgas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfOrgasKeyPressed(evt);
+            }
+        });
+        jPanel5.add(jtfOrgas);
+
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel21.setText(bundle.getString("PlaceKey")); // NOI18N
+        jPanel5.add(jLabel21);
+
+        jtfPlace.setText(bundle.getString("AIN PACTE")); // NOI18N
+        jtfPlace.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfPlaceKeyPressed(evt);
+            }
+        });
+        jPanel5.add(jtfPlace);
+
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel22.setText(bundle.getString("DateKey")); // NOI18N
+        jPanel5.add(jLabel22);
+        jPanel5.add(jxdDate);
+
+        jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
+
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("RankingParametersKey"))); // NOI18N
+        jPanel9.setLayout(new java.awt.BorderLayout());
+
+        jPanel6.setLayout(new java.awt.GridLayout(22, 2));
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel3.setText(bundle.getString("LargeVictoryKey")); // NOI18N
+        jLabel3.setToolTipText(bundle.getString("LargeVictoryTipKey")); // NOI18N
+        jPanel6.add(jLabel3);
+
+        jtffLargeVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffLargeVictory.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffLargeVictoryFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffLargeVictory);
+
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel19.setText(bundle.getString("MinimumGapForLargeVictoryKey")); // NOI18N
+        jLabel19.setToolTipText(bundle.getString("GapForLargeVictoryTipKey")); // NOI18N
+        jPanel6.add(jLabel19);
+
+        jtffLargeVictoryGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffLargeVictoryGap.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffLargeVictoryGapFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffLargeVictoryGap);
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel4.setText(bundle.getString("VictoryKey")); // NOI18N
+        jLabel4.setToolTipText(bundle.getString("VictoryNumberOfPointsKey")); // NOI18N
+        jPanel6.add(jLabel4);
+
+        jtffVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffVictory.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffVictoryFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffVictory);
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel5.setText(bundle.getString("DrawKey")); // NOI18N
+        jLabel5.setToolTipText(bundle.getString("DrawMatchTipKey")); // NOI18N
+        jPanel6.add(jLabel5);
+
+        jtffDraw.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffDraw.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffDrawFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffDraw);
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setText(bundle.getString("ShortLossKey")); // NOI18N
+        jLabel6.setToolTipText(bundle.getString("ShortLossTipKey")); // NOI18N
+        jPanel6.add(jLabel6);
+
+        jtffLittleLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffLittleLost.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffLittleLostFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffLittleLost);
+
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel20.setText(bundle.getString("MaximumGapForShortLossKey")); // NOI18N
+        jLabel20.setToolTipText(bundle.getString("MaximumGapForShortLossTipKey")); // NOI18N
+        jPanel6.add(jLabel20);
+
+        jtffLittleLostGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffLittleLostGap.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffLittleLostGapFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffLittleLostGap);
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel7.setText(bundle.getString("LossKey")); // NOI18N
+        jLabel7.setToolTipText(bundle.getString("LossTipKey")); // NOI18N
+        jPanel6.add(jLabel7);
+
+        jtffLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffLost.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffLostFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffLost);
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel8.setText(bundle.getString("TouchdownForKey")); // NOI18N
+        jLabel8.setToolTipText(bundle.getString("TouchdownForTipKey")); // NOI18N
+        jPanel6.add(jLabel8);
+
+        jtffTdPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffTdPos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffTdPosFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffTdPos);
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel9.setText(bundle.getString("CasualtiesKey")); // NOI18N
+        jLabel9.setToolTipText(bundle.getString("CasualtiesForTipKey")); // NOI18N
+        jPanel6.add(jLabel9);
+
+        jtffSorPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffSorPos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffSorPosFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffSorPos);
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel10.setText(bundle.getString("FoulsForKey")); // NOI18N
+        jLabel10.setToolTipText(bundle.getString("FoulForTipKey")); // NOI18N
+        jPanel6.add(jLabel10);
+
+        jtffFoulPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffFoulPos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffFoulPosFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffFoulPos);
+
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel38.setText(bundle.getString("PASSES RÉUSSIES:")); // NOI18N
+        jLabel38.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UNE SORTIE RÉUSSIE SUR AGGRESSION")); // NOI18N
+        jPanel6.add(jLabel38);
+
+        jtffPasPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffPasPos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffPasPosFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffPasPos);
+
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel37.setText(bundle.getString("INTERCEPTIONS RÉUSSIES:")); // NOI18N
+        jLabel37.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UNE SORTIE RÉUSSIE SUR AGGRESSION")); // NOI18N
+        jPanel6.add(jLabel37);
+
+        jtffIntPos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffIntPos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffIntPosFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffIntPos);
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel11.setText(bundle.getString("TOUCHDOWNS ENCAISSÉS:")); // NOI18N
+        jLabel11.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIFS) POUR LES TOUCHDOWNS ENCAISSÉS")); // NOI18N
+        jPanel6.add(jLabel11);
+
+        jtffTdNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffTdNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffTdNegFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffTdNeg);
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel12.setText(bundle.getString("SORTIES SUBIES:")); // NOI18N
+        jLabel12.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIF) POUR LES SORTIES SUBIES")); // NOI18N
+        jPanel6.add(jLabel12);
+
+        jtffSorNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffSorNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffSorNegFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffSorNeg);
+
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel13.setText(bundle.getString("AGGRESSIONS SUBIES:")); // NOI18N
+        jLabel13.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIF) POUR LES SORTIES SUBIES SUR AGGRESSION")); // NOI18N
+        jPanel6.add(jLabel13);
+
+        jtffFoulNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffFoulNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffFoulNegFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffFoulNeg);
+
+        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel39.setText(bundle.getString("PASSES SUBIES:")); // NOI18N
+        jLabel39.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIF) POUR LES SORTIES SUBIES SUR AGGRESSION")); // NOI18N
+        jPanel6.add(jLabel39);
+
+        jtffPasNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffPasNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffPasNegFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffPasNeg);
+
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel40.setText(bundle.getString("INTERCEPTIONS SUBIES:")); // NOI18N
+        jLabel40.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIF) POUR LES SORTIES SUBIES SUR AGGRESSION")); // NOI18N
+        jPanel6.add(jLabel40);
+
+        jtffIntNeg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffIntNeg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffIntNegFocusLost(evt);
+            }
+        });
+        jPanel6.add(jtffIntNeg);
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel14.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°1:")); // NOI18N
+        jPanel6.add(jLabel14);
+
+        jcbRank1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
+        jcbRank1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jcbRank1);
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel15.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°2:")); // NOI18N
+        jPanel6.add(jLabel15);
+
+        jcbRank2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
+        jcbRank2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank2ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jcbRank2);
+
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel16.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°3:")); // NOI18N
+        jPanel6.add(jLabel16);
+
+        jcbRank3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
+        jcbRank3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank3ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jcbRank3);
+
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel17.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°4:")); // NOI18N
+        jPanel6.add(jLabel17);
+
+        jcbRank4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
+        jcbRank4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank4ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jcbRank4);
+
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel18.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°5:")); // NOI18N
+        jPanel6.add(jLabel18);
+
+        jcbRank5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
+        jcbRank5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank5ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jcbRank5);
+
+        jTabbedPane1.addTab(bundle.getString("IndividualKey"), jPanel6); // NOI18N
+
+        jPanel10.setLayout(new java.awt.GridLayout(20, 2));
+
+        buttonGroup1.add(jrbTeamVictory);
+        jrbTeamVictory.setText(bundle.getString("UTILISER LA VICTOIRE D'ÉQUIPE")); // NOI18N
+        jrbTeamVictory.setHideActionText(true);
+        jrbTeamVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jrbTeamVictory.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jrbTeamVictory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbTeamVictoryActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jrbTeamVictory);
+
+        buttonGroup1.add(jrbCoachPoints);
+        jrbCoachPoints.setText(bundle.getString("UTILISER LE CUMUL DES POINTS DES COACHS")); // NOI18N
+        jrbCoachPoints.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbCoachPointsActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jrbCoachPoints);
+
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel23.setText(bundle.getString("VICTOIRE:")); // NOI18N
+        jLabel23.setToolTipText(bundle.getString("NOMBRE POINTS POUR UNE VICTOIRE")); // NOI18N
+        jPanel10.add(jLabel23);
+
+        jtffVictoryTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffVictoryTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffVictoryTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffVictoryTeam);
+
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel24.setText(bundle.getString("MATCH NUL:")); // NOI18N
+        jLabel24.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UN MATCH NUL")); // NOI18N
+        jPanel10.add(jLabel24);
+
+        jtffDrawTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffDrawTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffDrawTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffDrawTeam);
+
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel25.setText(bundle.getString("DÉFAITE:")); // NOI18N
+        jLabel25.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UNE PETITE DÉFAITE:")); // NOI18N
+        jPanel10.add(jLabel25);
+
+        jtffLostTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffLostTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffLostTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffLostTeam);
+
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel31.setText(bundle.getString("TOUCHDOWNS MARQUÉS:")); // NOI18N
+        jLabel31.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UN TOUCHDOWN")); // NOI18N
+        jPanel10.add(jLabel31);
+
+        jtffTdPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffTdPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffTdPosTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffTdPosTeam);
+
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel32.setText(bundle.getString("SORTIES RÉALISÉES:")); // NOI18N
+        jLabel32.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UNE SORTIE RÉALISÉE")); // NOI18N
+        jPanel10.add(jLabel32);
+
+        jtffSorPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffSorPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffSorPosTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffSorPosTeam);
+
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel33.setText(bundle.getString("AGGRESSIONS RÉUSSIES:")); // NOI18N
+        jLabel33.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UNE SORTIE RÉUSSIE SUR AGGRESSION")); // NOI18N
+        jPanel10.add(jLabel33);
+
+        jtffFoulPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffFoulPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffFoulPosTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffFoulPosTeam);
+
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel41.setText(bundle.getString("PASSES RÉALISÉES:")); // NOI18N
+        jLabel41.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UNE SORTIE RÉALISÉE")); // NOI18N
+        jPanel10.add(jLabel41);
+
+        jtffPasPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffPasPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffPasPosTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffPasPosTeam);
+
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel42.setText(bundle.getString("INTERCEPTIONS RÉUSSIES:")); // NOI18N
+        jLabel42.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UNE SORTIE RÉUSSIE SUR AGGRESSION")); // NOI18N
+        jPanel10.add(jLabel42);
+
+        jtffIntPosTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffIntPosTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffIntPosTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffIntPosTeam);
+
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel34.setText(bundle.getString("TOUCHDOWNS ENCAISSÉS:")); // NOI18N
+        jLabel34.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIFS) POUR LES TOUCHDOWNS ENCAISSÉS")); // NOI18N
+        jPanel10.add(jLabel34);
+
+        jtffTdNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffTdNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffTdNegTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffTdNegTeam);
+
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel35.setText(bundle.getString("SORTIES SUBIES:")); // NOI18N
+        jLabel35.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIF) POUR LES SORTIES SUBIES")); // NOI18N
+        jPanel10.add(jLabel35);
+
+        jtffSorNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffSorNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffSorNegTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffSorNegTeam);
+
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel36.setText(bundle.getString("AGGRESSIONS SUBIES:")); // NOI18N
+        jLabel36.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIF) POUR LES SORTIES SUBIES SUR AGGRESSION")); // NOI18N
+        jPanel10.add(jLabel36);
+
+        jtffFoulNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffFoulNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffFoulNegTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffFoulNegTeam);
+
+        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel44.setText(bundle.getString("PASSES SUBIES:")); // NOI18N
+        jLabel44.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIF) POUR LES SORTIES SUBIES SUR AGGRESSION")); // NOI18N
+        jPanel10.add(jLabel44);
+
+        jtffPasNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffPasNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffPasNegTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffPasNegTeam);
+
+        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel43.setText(bundle.getString("INTERCEPTIONS SUBIES:")); // NOI18N
+        jLabel43.setToolTipText(bundle.getString("NOMBRE DE POINTS (ÉVENTUELLEMENT NÉGATIF) POUR LES SORTIES SUBIES")); // NOI18N
+        jPanel10.add(jLabel43);
+
+        jtffIntNegTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffIntNegTeam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffIntNegTeamFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffIntNegTeam);
+
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel26.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°1:")); // NOI18N
+        jPanel10.add(jLabel26);
+
+        jcbRank1Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+        jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank1TeamActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jcbRank1Team);
+
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel27.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°2:")); // NOI18N
+        jPanel10.add(jLabel27);
+
+        jcbRank2Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+        jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank2TeamActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jcbRank2Team);
+
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel28.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°3:")); // NOI18N
+        jPanel10.add(jLabel28);
+
+        jcbRank3Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+        jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank3TeamActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jcbRank3Team);
+
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel29.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°4:")); // NOI18N
+        jPanel10.add(jLabel29);
+
+        jcbRank4Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+        jcbRank4Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank4TeamActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jcbRank4Team);
+
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel30.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°5:")); // NOI18N
+        jPanel10.add(jLabel30);
+
+        jcbRank5Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
+        jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank5TeamActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jcbRank5Team);
+
+        jlbVictoryPoints.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbVictoryPoints.setText(bundle.getString("PRIME À LA VICTOIRE D'ÉQUIPE")); // NOI18N
+        jPanel10.add(jlbVictoryPoints);
+
+        jtffTeamVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffTeamVictory.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffTeamVictoryFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffTeamVictory);
+
+        jTabbedPane1.addTab(bundle.getString("ByTeamKey"), jPanel10); // NOI18N
+
+        jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
+
+        jpnParameters.add(jPanel1);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Coachs"));
+        jPanel7.setPreferredSize(new java.awt.Dimension(450, 240));
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        jbtAdd.setText(bundle.getString("AJOUTER")); // NOI18N
+        jbtAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddActionPerformed(evt);
+            }
+        });
+        jpnCoachButtons.add(jbtAdd);
+
+        jbtRemove.setText(bundle.getString("RETIRER")); // NOI18N
+        jbtRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveActionPerformed(evt);
+            }
+        });
+        jpnCoachButtons.add(jbtRemove);
+
+        jbtModify.setText(bundle.getString("MODIFIER")); // NOI18N
+        jbtModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtModifyActionPerformed(evt);
+            }
+        });
+        jpnCoachButtons.add(jbtModify);
+
+        jPanel7.add(jpnCoachButtons, java.awt.BorderLayout.PAGE_START);
+
+        jtbCoachs.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbCoachs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jtbCoachs);
+
+        jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanel7, java.awt.BorderLayout.CENTER);
+
+        jpnTeamTour.setBorder(javax.swing.BorderFactory.createTitledBorder("Equipes"));
+        jpnTeamTour.setPreferredSize(new java.awt.Dimension(450, 240));
+        jpnTeamTour.setLayout(new java.awt.BorderLayout());
+
+        jbtAddTeam.setText(bundle.getString("AJOUTER")); // NOI18N
+        jbtAddTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddTeamActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jbtAddTeam);
+
+        jbtRemoveTeam.setText(bundle.getString("RETIRER")); // NOI18N
+        jbtRemoveTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveTeamActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jbtRemoveTeam);
+
+        jbtModifyTeam.setText(bundle.getString("MODIFIER")); // NOI18N
+        jbtModifyTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtModifyTeamActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jbtModifyTeam);
+
+        jpnTeamTour.add(jPanel8, java.awt.BorderLayout.NORTH);
+
+        jtbTeam.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbTeam.setCellSelectionEnabled(true);
+        jtbTeam.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(jtbTeam);
+
+        jpnTeamTour.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jPanel3.add(jlbDetails);
+
+        jpnTeamTour.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+
+        jPanel2.add(jpnTeamTour, java.awt.BorderLayout.NORTH);
+
+        jbtFirstRound.setText(bundle.getString("GÉNÉRER LA PREMIÈRE RONDE")); // NOI18N
+        jbtFirstRound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtFirstRoundActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jbtFirstRound);
+
+        jPanel2.add(jPanel4, java.awt.BorderLayout.SOUTH);
+
+        jpnParameters.add(jPanel2);
+
+        jtpMain.addTab(bundle.getString("TournamentParameterKey"), jpnParameters); // NOI18N
+
+        getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
+
+        jmnFile.setText(bundle.getString("FileKey")); // NOI18N
+
+        jmiNouveau.setText(bundle.getString("NewTourKey")); // NOI18N
+        jmiNouveau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiNouveauActionPerformed(evt);
+            }
+        });
+        jmnFile.add(jmiNouveau);
+
+        jmiCharger.setText(bundle.getString("LoadTourKey")); // NOI18N
+        jmiCharger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiChargerActionPerformed(evt);
+            }
+        });
+        jmnFile.add(jmiCharger);
+
+        jmiSave.setText(bundle.getString("SaveTourKey")); // NOI18N
+        jmiSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSaveActionPerformed(evt);
+            }
+        });
+        jmnFile.add(jmiSave);
+
+        jmiSaveAs.setText(bundle.getString("SaveTourAsKey")); // NOI18N
+        jmiSaveAs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSaveAsActionPerformed(evt);
+            }
+        });
+        jmnFile.add(jmiSaveAs);
+        jmnFile.add(jSeparator1);
+
+        jmiExport.setText(bundle.getString("ExportNafResultKey")); // NOI18N
+        jmiExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExportActionPerformed(evt);
+            }
+        });
+        jmnFile.add(jmiExport);
+        jmnFile.add(jSeparator2);
+
+        jmiExit.setText(bundle.getString("QuitKey")); // NOI18N
+        jmiExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExitActionPerformed(evt);
+            }
+        });
+        jmnFile.add(jmiExit);
+
+        jMenuBar1.add(jmnFile);
+
+        jmnHelp.setText("?");
+
+        jmiAbout.setText(bundle.getString("AboutKey")); // NOI18N
+        jmiAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAboutActionPerformed(evt);
+            }
+        });
+        jmnHelp.add(jmiAbout);
+
+        jmiRevisions.setText(bundle.getString("SoftwareRevisionsKey")); // NOI18N
+        jmiRevisions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiRevisionsActionPerformed(evt);
+            }
+        });
+        jmnHelp.add(jmiRevisions);
+        jmnHelp.add(jSeparator3);
+
+        jmiAideEnLigne.setText(bundle.getString("Help")); // NOI18N
+        jmiAideEnLigne.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAideEnLigneActionPerformed(evt);
+            }
+        });
+        jmnHelp.add(jmiAideEnLigne);
+
+        jMenuBar1.add(jmnHelp);
+
+        setJMenuBar(jMenuBar1);
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
 
-        if (JOptionPane.showConfirmDialog(this, "Etes vous sûr ? Cela va effacer toutes les rondes", "Première ronde", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ETES VOUS SÛR ? CELA VA EFFACER TOUTES LES RONDES"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PREMIÈRE RONDE"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (_tournament.getParams()._teamTournament && _tournament.getTeams().size() % 2 > 0) {
-                JOptionPane.showMessageDialog(this, "Nombre impair d'équipes");
+                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE IMPAIR D'ÉQUIPES"));
             } else {
                 if (_tournament.getCoachs().size() % 2 > 0) {
-                    JOptionPane.showMessageDialog(this, "Nombre impair de joueurs");
+                    JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE IMPAIR DE JOUEURS"));
                 } else {
-                    String[] options = {"Aléatoire", "Ordre d'inscription", "Manuel"};
-                    int choice = JOptionPane.showOptionDialog(this, "Choisissez le tirage initial", "Tirage", JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
+                    String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORDRE D'INSCRIPTION"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MANUEL")};
+                    int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LE TIRAGE INITIAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIRAGE"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
 
                     _tournament.generateFirstRound(choice);
                     
@@ -1263,7 +1262,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
                     }
                     for (int i = 0; i < _tournament.getRounds().size(); i++) {
                         JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
-                        jtpMain.add("Ronde " + (i + 1), jpnr);
+                        jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
                     }
                     update();
                 }
@@ -1474,7 +1473,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
 
     private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
         JFileChooser jfc = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter("TourMa XML file", new String[]{"XML", "xml"});
+        FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURMA XML FILE"), new String[]{"XML", "xml"});
         jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
@@ -1491,7 +1490,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
             for (int i = 0; i <
                     _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
-                jtpMain.add("Ronde " + (i + 1), jpnr);
+                jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
             }
 
             update();
@@ -1511,20 +1510,20 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
         }
         _tournament = Tournament.resetTournament();
 
-        Object options[] = {"Individuel", "Par équipe"};
-        int res = JOptionPane.showOptionDialog(this, "Type de tournoi", "Nouveau tournoi",
+        Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUEL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE")};
+        int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE DE TOURNOI"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOUVEAU TOURNOI"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
 
         Tournament.getTournament().getParams()._teamTournament = (res == 1);
         if (res == 1) {
-            res = JOptionPane.showOptionDialog(this, "Type d'appariement", "Appariement",
+            res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE D'APPARIEMENT"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APPARIEMENT"),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
             Tournament.getTournament().getParams()._teamPairing = res;
             if (res == 1) {
-                Object options2[] = {"Selon classement", "Libre"};
-                res = JOptionPane.showOptionDialog(this, "Type d'appariement individuel", "Appariement individuel",
+                Object options2[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SELON CLASSEMENT"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LIBRE")};
+                res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE D'APPARIEMENT INDIVIDUEL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APPARIEMENT INDIVIDUEL"),
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options2, options2[0]);
                 Tournament.getTournament().getParams()._teamIndivPairing = res;
@@ -1598,7 +1597,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     }//GEN-LAST:event_jtfPlaceKeyPressed
 
     private void jbtAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddTeamActionPerformed
-        String name = JOptionPane.showInputDialog(this, "Entrez le nome de l'aquipe", "Nom de l'équipe");
+        String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOME DE L'AQUIPE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM DE L'ÉQUIPE"));
         Team team = new Team();
         team._name = name;
         Coach lastCoach = null;
@@ -1629,7 +1628,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
     private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
         Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
         if (jtbTeam.getSelectedColumn() == 1) {
-            String name = JOptionPane.showInputDialog(this, "Entrez le nome de l'aquipe", t._name);
+            String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOME DE L'AQUIPE"), t._name);
             t._name = name;
         } else if (jtbTeam.getSelectedColumn() > 1) {
             jdgCoach jdg = new jdgCoach(this, true, t._coachs.get(jtbTeam.getSelectedColumn() - 2));
@@ -1919,7 +1918,7 @@ jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
                     SubstanceLookAndFeel lf = new SubstanceMistSilverLookAndFeel();
                     UIManager.setLookAndFeel(lf);
                 } catch (Exception e) {
-                    System.out.println("Substance Creme Coffee failed to initialize");
+                    System.out.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBSTANCE CREME COFFEE FAILED TO INITIALIZE"));
                 }
 
                 MainFrame.getMainFrame().setVisible(true);

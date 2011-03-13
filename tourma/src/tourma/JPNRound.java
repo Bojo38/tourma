@@ -55,7 +55,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         if (_tournament.getParams()._teamTournament) {
             _jpnTeamRound = new JPNTeamRound(r, t);
-            jtpGlobal.add(_jpnTeamRound, "Par équipe");
+            jtpGlobal.add(_jpnTeamRound, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE"));
         }
 
         update();
@@ -627,7 +627,7 @@ public class JPNRound extends javax.swing.JPanel {
                 m._coach2 = (Coach) datas.get(2 * i + 1).getObject();
                 r.getMatchs().add(m);
             }
-            JOptionPane.showMessageDialog(this, "Pas assez de ronde pour éviter des doublons, génération sans gestion des doublons");
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS ASSEZ DE RONDE POUR ÉVITER DES DOUBLONS, GÉNÉRATION SANS GESTION DES DOUBLONS"));
         } else {
             Vector<ObjectRanking> datas2 = new Vector<ObjectRanking>(datas);
             // Première passe de haut en bas
@@ -764,7 +764,7 @@ public class JPNRound extends javax.swing.JPanel {
         // Résolution des doublons
         if (_tournament.getTeams().size() - 1 <= _tournament.getRounds().size()) {
             // Affectation des matchs
-            JOptionPane.showMessageDialog(this, "Pas assez de ronde pour éviter des doublons, génération sans gestion des doublons");
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS ASSEZ DE RONDE POUR ÉVITER DES DOUBLONS, GÉNÉRATION SANS GESTION DES DOUBLONS"));
             for (int i = 0; i < datas.size() / 2; i++) {
                 Team team1 = (Team) datas.get(2 * i).getObject();
                 Team team2 = (Team) datas.get(2 * i + 1).getObject();
@@ -996,7 +996,7 @@ public class JPNRound extends javax.swing.JPanel {
                 i < _tournament.getRounds().size();
                 i++) {
             JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
-            MainFrame.getMainFrame().jtpMain.add("Ronde " + (i + 1), jpnr);
+            MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
         }
 
         update();
@@ -1144,7 +1144,7 @@ public class JPNRound extends javax.swing.JPanel {
 
     private void jbtDeleteRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDeleteRoundActionPerformed
 
-        if (JOptionPane.showConfirmDialog(this, "Etes vous certain de vouloir effacer la ronde courante ?", "Effacer une ronde", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ETES VOUS CERTAIN DE VOULOIR EFFACER LA RONDE COURANTE ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EFFACER UNE RONDE"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             _tournament.getRounds().remove(_round);
             for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1; i >=
                     0; i--) {
@@ -1157,7 +1157,7 @@ public class JPNRound extends javax.swing.JPanel {
             for (int i = 0; i <
                     _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
-                MainFrame.getMainFrame().jtpMain.add("Ronde " + (i + 1), jpnr);
+                MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
             }
 
             update();

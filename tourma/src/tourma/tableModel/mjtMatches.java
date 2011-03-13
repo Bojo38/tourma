@@ -54,65 +54,65 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
         if (_teamTournament) {
             switch (col) {
                 case 0:
-                    return "Table";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE");
                 case 1:
-                    return "Equipe 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE 1");
                 case 2:
-                    return "Coach 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH 1");
                 case 3:
-                    return "Score 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE 1");
                 case 4:
-                    return "Score 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE 2");
                 case 5:
-                    return "Coach 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH 2");
                 case 6:
-                    return "Equipe 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE 2");
                 case 7:
-                    return "Sorties 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SORTIES 1");
                 case 8:
-                    return "Sorties 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SORTIES 2");
                 case 9:
-                    return "Foul 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL 1");
                 case 10:
-                    return "Foul 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL 2");
                 case 11:
-                    return "Passes 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES 1");
                 case 12:
-                    return "Passes 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES 2");
                 case 13:
-                    return "Inter. 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER. 1");
                 case 14:
-                    return "Inter. 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER. 2");
             }
         } else {
 
             switch (col) {
                 case 0:
-                    return "Table";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE");
                 case 1:
-                    return "Coach 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH 1");
                 case 2:
-                    return "Score 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE 1");
                 case 3:
-                    return "Score 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE 2");
                 case 4:
-                    return "Coach 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH 2");
                 case 5:
-                    return "Sorties 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SORTIES 1");
                 case 6:
-                    return "Sorties 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SORTIES 2");
                 case 7:
-                    return "Foul 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL 1");
                 case 8:
-                    return "Foul 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL 2");
                 case 9:
-                    return "Passes 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES 1");
                 case 10:
-                    return "Passes 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES 2");
                 case 11:
-                    return "Inter. 1";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER. 1");
                 case 12:
-                    return "Inter. 2";
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER. 2");
             }
         }
         return "";

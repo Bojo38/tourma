@@ -14,6 +14,7 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.util.ResourceBundle;
 import tourma.data.Tournament;
 import tourma.data.Coach;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
  * @author Frederic Berger
  */
 public class jdgSelectNumber extends javax.swing.JDialog {
+    static final ResourceBundle language = ResourceBundle.getBundle("tourma/languages/language");
 
     Tournament _tournament;
 
@@ -64,7 +66,7 @@ public class jdgSelectNumber extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.GridLayout(1, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Nombre de Coachs:");
+        jLabel1.setText(language.getString("NOMBRE DE COACHS:")); // NOI18N
         jPanel1.add(jLabel1);
 
         jspCoachNumber.setModel(new javax.swing.SpinnerNumberModel(1, 1, 16, 1));
@@ -72,7 +74,7 @@ public class jdgSelectNumber extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jbtOK.setText("OK");
+        jbtOK.setText(language.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);

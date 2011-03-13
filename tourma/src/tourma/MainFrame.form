@@ -125,9 +125,11 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="TOURnoi MAnager"/>
+    <Property name="title" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+      <ResourceString bundle="tourma/languages/language.properties" key="TOURNOI MANAGER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+    </Property>
     <Property name="iconImage" type="java.awt.Image" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-      <Connection code="(Toolkit.getDefaultToolkit().getImage(&#xd;&#xa;       MainFrame.class.getResource(&quot;images/icone.png&quot;)))" type="code"/>
+      <Connection code="(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource(&quot;images/icone.png&quot;)))" type="code"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -212,7 +214,9 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="jtfTournamentName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Ain Pacte"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="tourma/languages/language.properties" key="AIN PACTE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfTournamentNameKeyPressed"/>
@@ -228,7 +232,9 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="jtfOrgas">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Ain Pacte Team"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="tourma/languages/language.properties" key="AIN PACTE TEAM" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfOrgasKeyPressed"/>
@@ -244,7 +250,9 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="jtfPlace">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Ain Pacte"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="tourma/languages/language.properties" key="AIN PACTE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfPlaceKeyPressed"/>
@@ -518,8 +526,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel38">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Passes r&#xe9;ussies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;ussie sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="PASSES R&#xc9;USSIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UNE SORTIE R&#xc9;USSIE SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffPasPos">
@@ -535,8 +547,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel37">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Interceptions r&#xe9;ussies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;ussie sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="INTERCEPTIONS R&#xc9;USSIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UNE SORTIE R&#xc9;USSIE SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffIntPos">
@@ -552,8 +568,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel11">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Touchdowns encaiss&#xe9;s:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatifs) pour les touchdowns encaiss&#xe9;s"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="TOUCHDOWNS ENCAISS&#xc9;S:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIFS) POUR LES TOUCHDOWNS ENCAISS&#xc9;S" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffTdNeg">
@@ -569,8 +589,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel12">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Sorties subies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="SORTIES SUBIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIF) POUR LES SORTIES SUBIES" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffSorNeg">
@@ -586,8 +610,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel13">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Aggressions subies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="AGGRESSIONS SUBIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIF) POUR LES SORTIES SUBIES SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffFoulNeg">
@@ -603,8 +631,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel39">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Passes subies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="PASSES SUBIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIF) POUR LES SORTIES SUBIES SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffPasNeg">
@@ -620,8 +652,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel40">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Interceptions subies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="INTERCEPTIONS SUBIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIF) POUR LES SORTIES SUBIES SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffIntNeg">
@@ -637,7 +673,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel14">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;1:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;1:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank1">
@@ -668,7 +706,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel15">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;2:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;2:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank2">
@@ -699,7 +739,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel16">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;3:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;3:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank3">
@@ -730,7 +772,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel17">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;4:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;4:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank4">
@@ -761,7 +805,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel18">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;5:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;5:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank5">
@@ -812,7 +858,9 @@
                                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                   <ComponentRef name="buttonGroup1"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="Utiliser la victoire d&apos;&#xe9;quipe"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="UTILISER LA VICTOIRE D&apos;&#xc9;QUIPE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                                 <Property name="hideActionText" type="boolean" value="true"/>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
                                 <Property name="horizontalTextPosition" type="int" value="10"/>
@@ -826,7 +874,9 @@
                                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                                   <ComponentRef name="buttonGroup1"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="Utiliser le cumul des points des coachs"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="UTILISER LE CUMUL DES POINTS DES COACHS" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbCoachPointsActionPerformed"/>
@@ -835,8 +885,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel23">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Victoire:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre points pour une victoire"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="VICTOIRE:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE POINTS POUR UNE VICTOIRE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffVictoryTeam">
@@ -852,8 +906,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel24">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Match nul:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour un match nul"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="MATCH NUL:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UN MATCH NUL" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffDrawTeam">
@@ -869,8 +927,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel25">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="D&#xe9;faite:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une petite d&#xe9;faite:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="D&#xc9;FAITE:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UNE PETITE D&#xc9;FAITE:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffLostTeam">
@@ -886,8 +948,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel31">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Touchdowns marqu&#xe9;s:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour un touchdown"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="TOUCHDOWNS MARQU&#xc9;S:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UN TOUCHDOWN" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffTdPosTeam">
@@ -903,8 +969,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel32">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Sorties r&#xe9;alis&#xe9;es:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;alis&#xe9;e"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="SORTIES R&#xc9;ALIS&#xc9;ES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UNE SORTIE R&#xc9;ALIS&#xc9;E" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffSorPosTeam">
@@ -920,8 +990,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel33">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Aggressions r&#xe9;ussies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;ussie sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="AGGRESSIONS R&#xc9;USSIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UNE SORTIE R&#xc9;USSIE SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffFoulPosTeam">
@@ -937,8 +1011,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel41">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Passes r&#xe9;alis&#xe9;es:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;alis&#xe9;e"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="PASSES R&#xc9;ALIS&#xc9;ES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UNE SORTIE R&#xc9;ALIS&#xc9;E" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffPasPosTeam">
@@ -954,8 +1032,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel42">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Interceptions r&#xe9;ussies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points pour une sortie r&#xe9;ussie sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="INTERCEPTIONS R&#xc9;USSIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UNE SORTIE R&#xc9;USSIE SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffIntPosTeam">
@@ -971,8 +1053,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel34">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Touchdowns encaiss&#xe9;s:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatifs) pour les touchdowns encaiss&#xe9;s"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="TOUCHDOWNS ENCAISS&#xc9;S:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIFS) POUR LES TOUCHDOWNS ENCAISS&#xc9;S" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffTdNegTeam">
@@ -988,8 +1074,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel35">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Sorties subies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="SORTIES SUBIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIF) POUR LES SORTIES SUBIES" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffSorNegTeam">
@@ -1005,8 +1095,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel36">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Aggressions subies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="AGGRESSIONS SUBIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIF) POUR LES SORTIES SUBIES SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffFoulNegTeam">
@@ -1022,8 +1116,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel44">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Passes subies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies sur aggression"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="PASSES SUBIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIF) POUR LES SORTIES SUBIES SUR AGGRESSION" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffPasNegTeam">
@@ -1039,8 +1137,12 @@
                             <Component class="javax.swing.JLabel" name="jLabel43">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Interceptions subies:"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Nombre de points (&#xe9;ventuellement n&#xe9;gatif) pour les sorties subies"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="INTERCEPTIONS SUBIES:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS (&#xc9;VENTUELLEMENT N&#xc9;GATIF) POUR LES SORTIES SUBIES" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffIntNegTeam">
@@ -1056,7 +1158,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel26">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;1:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;1:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank1Team">
@@ -1083,7 +1187,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel27">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;2:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;2:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank2Team">
@@ -1110,7 +1216,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel28">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;3:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;3:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank3Team">
@@ -1137,7 +1245,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel29">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;4:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;4:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank4Team">
@@ -1164,7 +1274,9 @@
                             <Component class="javax.swing.JLabel" name="jLabel30">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Crit&#xe8;re de classement n&#xb0;5:"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;5:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank5Team">
@@ -1191,7 +1303,9 @@
                             <Component class="javax.swing.JLabel" name="jlbVictoryPoints">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="Prime &#xe0; la victoire d&apos;&#xe9;quipe"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="tourma/languages/language.properties" key="PRIME &#xc0; LA VICTOIRE D&apos;&#xc9;QUIPE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffTeamVictory">
@@ -1246,7 +1360,9 @@
                       <SubComponents>
                         <Component class="javax.swing.JButton" name="jbtAdd">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Ajouter"/>
+                            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                              <ResourceString bundle="tourma/languages/language.properties" key="AJOUTER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtAddActionPerformed"/>
@@ -1254,7 +1370,9 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="jbtRemove">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Retirer"/>
+                            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                              <ResourceString bundle="tourma/languages/language.properties" key="RETIRER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtRemoveActionPerformed"/>
@@ -1262,7 +1380,9 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="jbtModify">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Modifier"/>
+                            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                              <ResourceString bundle="tourma/languages/language.properties" key="MODIFIER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtModifyActionPerformed"/>
@@ -1331,7 +1451,9 @@
                       <SubComponents>
                         <Component class="javax.swing.JButton" name="jbtAddTeam">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Ajouter"/>
+                            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                              <ResourceString bundle="tourma/languages/language.properties" key="AJOUTER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtAddTeamActionPerformed"/>
@@ -1339,7 +1461,9 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="jbtRemoveTeam">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Retirer"/>
+                            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                              <ResourceString bundle="tourma/languages/language.properties" key="RETIRER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtRemoveTeamActionPerformed"/>
@@ -1347,7 +1471,9 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="jbtModifyTeam">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Modifier"/>
+                            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                              <ResourceString bundle="tourma/languages/language.properties" key="MODIFIER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtModifyTeamActionPerformed"/>
@@ -1411,7 +1537,9 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="jbtFirstRound">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer la premi&#xe8;re ronde"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="tourma/languages/language.properties" key="G&#xc9;N&#xc9;RER LA PREMI&#xc8;RE RONDE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtFirstRoundActionPerformed"/>

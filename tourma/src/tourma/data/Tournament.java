@@ -92,7 +92,7 @@ public class Tournament {
 
         params.setAttribute("Bonus_Neg_Pas", Integer.toString(_params._bonus_neg_pas_points));
         params.setAttribute("Bonus_Pos_Pas", Integer.toString(_params._bonus_pas_points));
-        params.setAttribute("Bonus_Neg_Int", Integer.toString(_params._bonus_neg_int_points));
+        params.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_INT"), Integer.toString(_params._bonus_neg_int_points));
         params.setAttribute("Bonus_Pos_Int", Integer.toString(_params._bonus_int_points));
 
         params.setAttribute("Bonus_Neg_Foul_Team", Integer.toString(_params._bonus_neg_foul_points_team));
@@ -107,7 +107,7 @@ public class Tournament {
         params.setAttribute("Bonus_Neg_Int_Team", Integer.toString(_params._bonus_neg_int_points_team));
         params.setAttribute("Bonus_Pos_Int_Team", Integer.toString(_params._bonus_int_points_team));
 
-        params.setAttribute("Victory", Integer.toString(_params._victory_points));
+        params.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTORY"), Integer.toString(_params._victory_points));
         params.setAttribute("Large_Victory", Integer.toString(_params._large_victory_points));
         params.setAttribute("Draw", Integer.toString(_params._draw_points));
         params.setAttribute("Lost", Integer.toString(_params._lost_points));
@@ -165,7 +165,7 @@ public class Tournament {
 
 
         for (int i = 0; i < _rounds.size(); i++) {
-            Element round = new Element("Round");
+            Element round = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"));
             round.setAttribute("Date", format.format(_rounds.get(i)._heure));
 
             for (int j = 0; j < _rounds.get(i)._matchs.size(); j++) {
@@ -199,83 +199,83 @@ public class Tournament {
 
     private String getRosterTranslation(String source) {
 
-        if (source.equals("Amazone")) {
-            return "Amazons";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AMAZONE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AMAZONS");
         }
-        if (source.equals("Bas Fonds")) {
-            return "Underworld";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BAS FONDS"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNDERWORLD");
         }
-        if (source.equals("Chaos")) {
-            return "Chaos";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS");
         }
-        if (source.equals("Elfe")) {
-            return "Elves";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELVES");
         }
-        if (source.equals("Elfe sylvain")) {
-            return "Wood Elves";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE SYLVAIN"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WOOD ELVES");
         }
-        if (source.equals("Elfe noir")) {
-            return "Dark Elves";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE NOIR"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DARK ELVES");
         }
-        if (source.equals("Gobelin")) {
-            return "Goblins";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBELIN"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBLINS");
         }
-        if (source.equals("Halfling")) {
-            return "Halflings";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLING"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLINGS");
         }
-        if (source.equals("Haut Elfe")) {
-            return "High Elves";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HAUT ELFE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HIGH ELVES");
         }
-        if (source.equals("Homme lézard")) {
-            return "Lizardmen";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HOMME LÉZARD"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LIZARDMEN");
         }
-        if (source.equals("Humain")) {
-            return "Humans";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HUMAIN"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HUMANS");
         }
-        if (source.equals("Khemri")) {
-            return "Khemri";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KHEMRI"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KHEMRI");
         }
-        if (source.equals("Mort-Vivant")) {
-            return "Undead";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MORT-VIVANT"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNDEAD");
         }
-        if (source.equals("Nain")) {
-            return "Dwarves";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAIN"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DWARVES");
         }
-        if (source.equals("Nain du chaos")) {
-            return "Chaos Dwarves";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAIN DU CHAOS"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS DWARVES");
         }
-        if (source.equals("Necromantique")) {
-            return "Necromantic";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NECROMANTIQUE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NECROMANTIC");
         }
-        if (source.equals("Nordique")) {
-            return "Norse";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NORDIQUE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NORSE");
         }
-        if (source.equals("Nurgle")) {
-            return "Nurgle's Rotters";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NURGLE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NURGLE'S ROTTERS");
         }
-        if (source.equals("Ogre")) {
-            return "Ogres";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRES");
         }
-        if (source.equals("Orque")) {
-            return "Orc";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORQUE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORC");
         }
-        if (source.equals("Pacte Chaotique")) {
-            return "Chaos Pact";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PACTE CHAOTIQUE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS PACT");
         }
-        if (source.equals("Skaven")) {
-            return "Skaven";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKAVEN"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKAVEN");
         }
-        if (source.equals("Slann")) {
-            return "Slann";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SLANN"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SLANN");
         }
-        if (source.equals("Vampire")) {
-            return "Vampires";
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VAMPIRE"))) {
+            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VAMPIRES");
         }
-        return "Unknown";
+        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNKNOWN");
     }
 
     public void exportResults(java.io.File file) {
-        Element document = new Element("nafReport");
+        Element document = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAFREPORT"));
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM:SS");
 
         Element orgas = new Element("organiser");
@@ -307,7 +307,7 @@ public class Tournament {
                 if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0)
                         && (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
                     Element game = new Element("game");
-                    Element timeStamp = new Element("timeStamp");
+                    Element timeStamp = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIMESTAMP"));
                     timeStamp.setText(format.format(_rounds.get(i)._heure));
                     Element playerRecord1 = new Element("playerRecord");
                     Element playerRecord2 = new Element("playerRecord");
@@ -482,7 +482,7 @@ public class Tournament {
                 _teams.add(t);
             }
 
-            List rounds = racine.getChildren("Round");
+            List rounds = racine.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"));
             Iterator j = rounds.iterator();
             _rounds.clear();
             while (j.hasNext()) {
@@ -570,9 +570,9 @@ public class Tournament {
 
                     String opp = (String) JOptionPane.showInputDialog(
                             MainFrame.getMainFrame(),
-                            "Choisissez l'adversaire pour:\n"
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ L'ADVERSAIRE POUR:")
                             + m._coach1._name + " (" + m._coach1._roster + ")",
-                            "Choisir adversaire",
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISIR ADVERSAIRE"),
                             JOptionPane.PLAIN_MESSAGE,
                             null,
                             possibilities,
@@ -626,9 +626,9 @@ public class Tournament {
 
                     String opp = (String) JOptionPane.showInputDialog(
                             MainFrame.getMainFrame(),
-                            "Choisissez l'adversaire pour:\n"
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ L'ADVERSAIRE POUR:")
                             + team1._name,
-                            "Choisir adversaire",
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISIR ADVERSAIRE"),
                             JOptionPane.PLAIN_MESSAGE,
                             null,
                             possibilities,

@@ -43,13 +43,13 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
 
         switch (col) {
             case 0:
-                return "Table";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE");
             case 1:
-                return "Clan 1";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN 1");
             case 2:
                 return "";
             case 3:
-                return "Clan 2";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN 2");
         }
         return "";
     }
@@ -62,7 +62,7 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
             case 1:
                 return _teams1.get(row)._name;
             case 2:
-                return "vs";
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VS");
             case 3:
                 return _teams2.get(row)._name;
         }

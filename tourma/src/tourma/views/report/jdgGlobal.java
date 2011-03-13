@@ -70,9 +70,9 @@ public class jdgGlobal extends javax.swing.JDialog {
         _roundNumber = roundNumber;
         _tour = tour;
         _team = team;
-        this.setTitle(tour.getParams()._tournament_name + " - Ronde " + roundNumber);
+        this.setTitle(tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + roundNumber);
         try {
-            jepHTML.setContentType("html");
+            jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
             _filename = CreateReport();
             jepHTML.setPage(_filename.toURI().toURL());
         } catch (IOException e) {
@@ -101,7 +101,8 @@ public class jdgGlobal extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Ranking"); // NOI18N
 
-        jbtOK.setText("OK");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -109,7 +110,7 @@ public class jdgGlobal extends javax.swing.JDialog {
         });
         jPanel1.add(jbtOK);
 
-        jbtPrint.setText("Imprimer");
+        jbtPrint.setText(bundle.getString("IMPRIMER")); // NOI18N
         jbtPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtPrintActionPerformed(evt);
@@ -117,7 +118,7 @@ public class jdgGlobal extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
-        jbtExport.setText("Export HTML");
+        jbtExport.setText(bundle.getString("EXPORT HTML")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtExportActionPerformed(evt);
@@ -217,8 +218,8 @@ public class jdgGlobal extends javax.swing.JDialog {
             }
 
             Map root = new HashMap();
-            root.put("nom", _tour.getParams()._tournament_name + " - Ronde " + _roundNumber);
-            root.put("title", "Classement Général");
+            root.put("nom", _tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + _roundNumber);
+            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
             if (_team)
             {
                 root.put ("team",1);
@@ -484,9 +485,9 @@ public class jdgGlobal extends javax.swing.JDialog {
                 for (int i = 0; (i < generalModel.getRowCount()) && (count <= 3); i++) {
                     HashMap line = new HashMap();
                     Vector l = new Vector();
-                    if (generalModel.getValueAt(i, 3).equals("Gobelin") ||
-                            generalModel.getValueAt(i, 3).equals("Halfling") ||
-                            generalModel.getValueAt(i, 3).equals("Ogre")) {
+                    if (generalModel.getValueAt(i, 3).equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBELIN")) ||
+                            generalModel.getValueAt(i, 3).equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLING")) ||
+                            generalModel.getValueAt(i, 3).equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRE"))) {
                         l.add(count);
                         count++;
                         l.add(generalModel.getValueAt(i, 2));
