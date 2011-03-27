@@ -421,7 +421,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtGeneralTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_GENERAL, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_GENERAL, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -431,7 +431,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtScorePosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScorePosTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORER, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORER, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -441,7 +441,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtScoreNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScoreNegTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORED, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORED, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -451,7 +451,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtSorPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorPosTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYER, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYER, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -461,7 +461,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtSorNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorNegTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYED, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYED, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -471,7 +471,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtFoulPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulPosTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULER, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULER, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -481,7 +481,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtFoulNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulNegTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULED, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULED, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -501,7 +501,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
          for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, true);
+                jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -511,7 +511,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtPasPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasPosTeamActionPerformed
          for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSER, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSER, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -521,7 +521,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtPasNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasNegTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSED, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSED, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -531,7 +531,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtIntPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntPosTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, 1);
                 jdg.setVisible(true);
                 break;
             }
@@ -541,7 +541,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtIntNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntNegTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, true);
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, 1);
                 jdg.setVisible(true);
                 break;
             }

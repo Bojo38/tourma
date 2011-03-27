@@ -7,6 +7,7 @@ package tourma.tableModel;
 import tourma.data.Coach;
 import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
+import tourma.data.Tournament;
 
 /**
  *
@@ -22,7 +23,14 @@ public class mjtCoaches extends AbstractTableModel {
 
     public int getColumnCount() {
 
-        return 6;
+        if (Tournament.getTournament().getParams()._enableClans)
+        {
+            return 7;
+        }
+        else
+        {
+            return 6;
+        }
     }
 
     public int getRowCount() {
@@ -41,8 +49,10 @@ public class mjtCoaches extends AbstractTableModel {
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
             case 4:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF");
-                case 5:
+            case 5:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT");
+            case 6:
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
         }
         return "";
     }
@@ -63,6 +73,8 @@ public class mjtCoaches extends AbstractTableModel {
                     return c._naf;
                      case 5:
                     return c._rank;
+                case 6:
+                    return c._clan._name;
             }
         }
         return "";

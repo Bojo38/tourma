@@ -14,9 +14,11 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import javax.swing.DefaultComboBoxModel;
 import tourma.data.Tournament;
 import tourma.data.Coach;
 import javax.swing.JOptionPane;
+import tourma.data.Clan;
 
 /**
  *
@@ -66,7 +68,14 @@ public class jdgCoach extends javax.swing.JDialog {
         aszRaces[23]=bundle.getString("VampireKey");
                 
         jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(aszRaces));
-                
+
+        DefaultComboBoxModel clanListModel=new DefaultComboBoxModel();
+        for (int i=0; i<Tournament.getTournament().getClans().size(); i++)
+        {
+            clanListModel.addElement(Tournament.getTournament().getClans().get(i)._name);
+        }
+        jcbClan.setModel(clanListModel);
+
          GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
         DisplayMode dmode = gs.getDisplayMode();
@@ -82,6 +91,8 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfNAF.setText(Integer.toString(_coach._naf));
         jtfNom.setText(_coach._name);
         jcbRoster.setSelectedItem(_coach._roster);
+        jcbClan.setSelectedItem(_coach._clan._name);
+
     }
 
     /** This method is called from within the constructor to
@@ -104,13 +115,15 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfNAF = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jtfRank = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jcbClan = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(5, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(6, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
@@ -141,6 +154,13 @@ public class jdgCoach extends javax.swing.JDialog {
 
         jtfRank.setText("110");
         jPanel1.add(jtfRank);
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setText(bundle.getString("ClanKey:")); // NOI18N
+        jPanel1.add(jLabel6);
+
+        jcbClan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Amazone", "Bas Fonds", "Chaos", "Elfe", "Elfe sylvain", "Elfe noir", "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri", "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique", "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire" }));
+        jPanel1.add(jcbClan);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -215,11 +235,15 @@ public class jdgCoach extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE ROSTER EST VIDE"));
             return;
         }
-        
+
+        c._clan=(Clan)Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
+
         if (_coach==null)
         {
             Tournament.getTournament().getCoachs().add(c);
         }
+
+
 
         this.setVisible(false);
 
@@ -232,10 +256,12 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtCancel;
     private javax.swing.JButton jbtOK;
+    private javax.swing.JComboBox jcbClan;
     private javax.swing.JComboBox jcbRoster;
     private javax.swing.JTextField jtfEquipe;
     private javax.swing.JTextField jtfNAF;

@@ -38,7 +38,9 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
+import tourma.tableModel.mjtAnnexRankClan;
 import tourma.tableModel.mjtAnnexRankTeam;
+import tourma.tableModel.mjtRankingClan;
 import tourma.tableModel.mjtRankingTeam;
 
 /**
@@ -63,11 +65,16 @@ public class jdgRanking extends javax.swing.JDialog {
     Tournament _tour;
     boolean _result;
     int _rankType;
-    boolean _team = false;
+    int _type = 0;
+    /**
+     * 0: indiv
+     * 1: team
+     * 2: clan
+     */
     File filename = null;
 
     /** Creates new form jdgRoundReport */
-    public jdgRanking(java.awt.Frame parent, boolean modal, Round round, int roundNumber, Tournament tour, int RankType, boolean team) {
+    public jdgRanking(java.awt.Frame parent, boolean modal, Round round, int roundNumber, Tournament tour, int RankType, int type) {
         super(parent, modal);
         initComponents();
 
@@ -75,10 +82,10 @@ public class jdgRanking extends javax.swing.JDialog {
         _roundNumber = roundNumber;
         _tour = tour;
         _rankType = RankType;
-        _team = team;
+        _type = type;
         this.setTitle(tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + roundNumber);
         try {
-            jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
+            jepHTML.setContentType("html");
             filename = CreateReport();
             jepHTML.setPage(filename.toURI().toURL());
         } catch (IOException e) {
@@ -159,8 +166,7 @@ public class jdgRanking extends javax.swing.JDialog {
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File export = jfc.getSelectedFile();
 
-            try
-            {
+            try {
                 FileReader in = new FileReader(filename);
                 FileWriter out = new FileWriter(export);
                 int c;
@@ -171,13 +177,9 @@ public class jdgRanking extends javax.swing.JDialog {
 
                 in.close();
                 out.close();
-            }
-            catch (FileNotFoundException fnf)
-            {
+            } catch (FileNotFoundException fnf) {
                 JOptionPane.showMessageDialog(this, fnf.getLocalizedMessage());
-            }
-             catch (IOException ioe)
-            {
+            } catch (IOException ioe) {
                 JOptionPane.showMessageDialog(this, ioe.getLocalizedMessage());
             }
         }
@@ -196,8 +198,9 @@ public class jdgRanking extends javax.swing.JDialog {
         File address = null;
 
         try {
+
             Configuration cfg = new Configuration();
-            URI uri = getClass().getResource("rank.html").toURI();
+            URI uri = getClass().getResource("/tourma/views/report").toURI();
             if (uri.toString().contains(".jar!")) {
                 /*String tmp = uri.toString();
                 tmp = tmp.substring(10, tmp.indexOf(".jar!") - 4);
@@ -208,7 +211,7 @@ public class jdgRanking extends javax.swing.JDialog {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
             cfg.setObjectWrapper(new DefaultObjectWrapper());
-            Template temp = cfg.getTemplate(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK.HTML"));
+            Template temp = cfg.getTemplate("rank.html");
 
             TableModel model;
             Vector<Round> rounds = new Vector();
@@ -217,123 +220,182 @@ public class jdgRanking extends javax.swing.JDialog {
             }
 
             Map root = new HashMap();
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), _tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + _roundNumber);
-            if (_team) {
+            root.put("nom", _tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + _roundNumber);
+            if (_type == 2) {
                 switch (_rankType) {
                     case RANKING_GENERAL:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
                         if (_tour.getParams()._team_victory_only) {
-                            model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
+                            model = new mjtRankingClan(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getClans());
                         } else {
-                            model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
+                            model = new mjtRankingClan(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getClans());
                         }
                         break;
                     case RANKING_SCORER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS MARQUEURS"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_TD_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS MARQUEURS"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_TD_POS, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_DESTROYER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS DESTRUCTEURS"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS DESTRUCTEURS"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_FOULER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS CRAMPONS"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS CRAMPONS"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_SCORED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PASSOIRES"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PASSOIRES"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_DESTROYED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PUNCHING BALLS"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PUNCHING BALLS"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_FOULED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PAILLASSONS"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PAILLASSONS"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_PASSER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS PASSEURS"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS PASSEURS"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_PASSED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES SUBIES"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES SUBIES"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_INTERCEPTED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LES DALTONIENS"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LES DALTONIENS"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     case RANKING_INTERCEPTER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS INTERCEPTEURS"));
-                        model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_INT_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS INTERCEPTEURS"));
+                        model = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_INT_POS, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
                         break;
                     default:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
+                        root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
                         if (_tour.getParams()._team_victory_only) {
-                            model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
+                            model = new mjtRankingClan(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getClans());
                         } else {
-                            model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
+                            model = new mjtRankingClan(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getClans());
                         }
                 }
             } else {
-                switch (_rankType) {
-                    case RANKING_GENERAL:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
-                        model = new mjtRankingIndiv(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getCoachs(), _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_SCORER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEUR MARQUEUR"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_TD_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_DESTROYER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEUR DESTRUCTEUR"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_FOULER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEUR CRAMPON"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_SCORED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRE PASSOIRE"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_DESTROYED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRE PUNCHING BALL"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_FOULED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRE PAILLASSON"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_PASSED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES SUBIES"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_PASSER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAIN DE DIEU"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_INTERCEPTED:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DALTONIEN"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    case RANKING_INTERCEPTER:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEUR INTERCEPTEUR"));
-                        model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_INT_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                        break;
-                    default:
-                        root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
-                        model = new mjtRankingIndiv(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getCoachs(), _tour.getParams()._teamTournament);
+                if (_type == 1) {
+                    switch (_rankType) {
+                        case RANKING_GENERAL:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
+                            if (_tour.getParams()._team_victory_only) {
+                                model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
+                            } else {
+                                model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
+                            }
+                            break;
+                        case RANKING_SCORER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS MARQUEURS"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_TD_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_DESTROYER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS DESTRUCTEURS"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_FOULER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS CRAMPONS"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_SCORED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PASSOIRES"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_DESTROYED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PUNCHING BALLS"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_FOULED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRES PAILLASSONS"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_PASSER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS PASSEURS"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_PASSED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES SUBIES"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_INTERCEPTED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LES DALTONIENS"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        case RANKING_INTERCEPTER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEURS INTERCEPTEURS"));
+                            model = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_INT_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            break;
+                        default:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
+                            if (_tour.getParams()._team_victory_only) {
+                                model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
+                            } else {
+                                model = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
+                            }
+                    }
+                } else {
+                    switch (_rankType) {
+                        case RANKING_GENERAL:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
+                            model = new mjtRankingIndiv(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getCoachs(), _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_SCORER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEUR MARQUEUR"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_TD_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_DESTROYER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEUR DESTRUCTEUR"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_FOULER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEUR CRAMPON"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_SCORED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRE PASSOIRE"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_DESTROYED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRE PUNCHING BALL"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_FOULED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PIRE PAILLASSON"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_PASSED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES SUBIES"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_PASSER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAIN DE DIEU"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_INTERCEPTED:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DALTONIEN"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        case RANKING_INTERCEPTER:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEILLEUR INTERCEPTEUR"));
+                            model = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_INT_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            break;
+                        default:
+                            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
+                            model = new mjtRankingIndiv(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getCoachs(), _tour.getParams()._teamTournament);
+                    }
                 }
             }
-
             Vector rankLines = new Vector();
             Vector titles = new Vector();
             for (int i = 0; i < model.getColumnCount(); i++) {
                 titles.add(model.getColumnName(i));
             }
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLES"), titles);
+            root.put("titles", titles);
 
             for (int i = 0; i < model.getRowCount(); i++) {
                 HashMap line = new HashMap();
@@ -341,16 +403,16 @@ public class jdgRanking extends javax.swing.JDialog {
                 for (int j = 0; j < model.getColumnCount(); j++) {
                     l.add(model.getValueAt(i, j));
                 }
-                line.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COLS"), l);
+                line.put("cols", l);
                 rankLines.add(line);
             }
 
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LINES"), rankLines);
+            root.put("lines", rankLines);
 
             SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy");
             SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy");
             root.put("dateGeneration", formatShort.format(new Date()));
-            address = File.createTempFile(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULT") + format.format(new Date()), ".tmp");
+            address = File.createTempFile("result" + format.format(new Date()), ".tmp");
             address.deleteOnExit();
             Writer out = new FileWriter(address);
             temp.process(root, out);

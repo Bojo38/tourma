@@ -50,7 +50,6 @@ public class Parameters {
      */
     public int _teamIndivPairing = 0;
     public int _teamMatesNumber = 1;
-
     public int _victory_points_team = 1000;
     public int _draw_points_team = 400;
     public int _lost_points_team = 0;
@@ -65,12 +64,32 @@ public class Parameters {
     public int _bonus_neg_td_points_team = 0;
     public int _bonus_neg_sor_points_team = 0;
     public int _bonus_neg_foul_points_team = 0;
-
     public int _bonus_pas_points_team = 0;
     public int _bonus_neg_pas_points_team = 0;
     public int _bonus_int_points_team = 0;
     public int _bonus_neg_int_points_team = 0;
-    
+
+    /***********************
+     * Clan management
+     ***********************/
+
+    /**
+     * Activate clan management
+     */
+    public boolean _enableClans = true;
+    /**
+     * Avoid match between members of a clan
+     */
+    public boolean _avoidClansFirstMatch = true;
+    /**
+     * Avoid match between members of the same clan
+     */
+    public boolean _avoidClansMatch = false;
+    /**
+     * Number of player of one clan used for clan ranking
+     */
+    public int _teamMatesClansNumber = 3;
+
     public static final int C_RANKING_NONE = 0;
     public static final int C_RANKING_POINTS = 1;
     public static final int C_RANKING_OPP_POINTS = 2;
@@ -79,7 +98,7 @@ public class Parameters {
     public static final int C_RANKING_FOUL = 5;
     public static final int C_RANKING_DIFF_TD = 6;
     public static final int C_RANKING_DIFF_SOR = 7;
-    public static final int C_RANKING_DIFF_FOUL = 8;    
+    public static final int C_RANKING_DIFF_FOUL = 8;
     public static final int C_RANKING_VND = 9;
     public static final int C_RANKING_PAS = 10;
     public static final int C_RANKING_INT = 11;

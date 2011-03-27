@@ -21,6 +21,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.text.ParseException;
 import java.util.Locale;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -30,6 +31,7 @@ import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
+import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Team;
 
@@ -44,7 +46,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     /** Creates new form MainFrame */
     public MainFrame() {
-        Locale l=Locale.getDefault();
+        Locale l = Locale.getDefault();
 
         _tournament = Tournament.getTournament();
         this.setSize(800, 600);
@@ -55,6 +57,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public void update() {
+
+        jcxActivatesClans.setSelected(!_tournament.getParams()._teamTournament);
+        jcxActivatesClans.setEnabled(!_tournament.getParams()._teamTournament);
 
         if (_tournament.getParams()._teamTournament) {
             jpnTeamTour.setVisible(true);
@@ -270,6 +275,52 @@ public class MainFrame extends javax.swing.JFrame {
                 ((JPNRound) o).update();
             }
         }
+
+
+        boolean clansEnable = _tournament.getParams()._enableClans;
+        jlbAvoidClansMembersMatch.setEnabled(clansEnable);
+        jlbClansMembersNUmbers.setEnabled(clansEnable);
+        jlbTeamMatesNumber.setEnabled(clansEnable);
+
+        jspTeamMembers.setEnabled(clansEnable);
+        jcxAvoidFirstMatch.setEnabled(clansEnable);
+        jcxAvoidMatch.setEnabled(clansEnable);
+
+        jbtAddClan.setEnabled(clansEnable);
+        jbtRemoveClan.setEnabled(clansEnable);
+        jbtEditClan.setEnabled(clansEnable);
+        jlsClans.setEnabled(clansEnable);
+
+        jcxActivatesClans.setSelected(clansEnable);
+        jcxAvoidFirstMatch.setSelected(_tournament.getParams()._avoidClansFirstMatch);
+        jcxAvoidMatch.setSelected(_tournament.getParams()._avoidClansMatch);
+        jspTeamMembers.setValue(_tournament.getParams()._teamMatesNumber);
+
+        int selectedClan=jlsClans.getSelectedIndex();
+        DefaultListModel coachListModel=new DefaultListModel();
+        if (selectedClan>=0)
+        {
+            
+            String clanName=_tournament.getClans().get(selectedClan)._name;
+            for( int i=0; i<_tournament.getCoachs().size(); i++)
+            {
+                if (clanName.equals(_tournament.getCoachs().get(i)._clan._name))
+                {
+                    coachListModel.addElement(_tournament.getCoachs().get(i)._name);
+                }
+            }
+        }
+        jlsCoachList.setModel(coachListModel);
+
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < _tournament.getClans().size(); i++) {
+            listModel.addElement(_tournament.getClans().get(i)._name);
+        }
+
+        jlsClans.setModel(listModel);
+
+
+
     }
 
     /** This method is called from within the constructor to
@@ -383,6 +434,25 @@ public class MainFrame extends javax.swing.JFrame {
         jcbRank5Team = new javax.swing.JComboBox();
         jlbVictoryPoints = new javax.swing.JLabel();
         jtffTeamVictory = new javax.swing.JFormattedTextField();
+        jPanel11 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jlbActivateClans = new javax.swing.JLabel();
+        jcxActivatesClans = new javax.swing.JCheckBox();
+        jlbTeamMatesNumber = new javax.swing.JLabel();
+        jspTeamMembers = new javax.swing.JSpinner();
+        jlbClansMembersNUmbers = new javax.swing.JLabel();
+        jcxAvoidFirstMatch = new javax.swing.JCheckBox();
+        jlbAvoidClansMembersMatch = new javax.swing.JLabel();
+        jcxAvoidMatch = new javax.swing.JCheckBox();
+        jPanel13 = new javax.swing.JPanel();
+        jbtAddClan = new javax.swing.JButton();
+        jbtEditClan = new javax.swing.JButton();
+        jbtRemoveClan = new javax.swing.JButton();
+        jPanel14 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jlsClans = new javax.swing.JList();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jlsCoachList = new javax.swing.JList();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jpnCoachButtons = new javax.swing.JPanel();
@@ -1027,6 +1097,124 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab(bundle.getString("ByTeamKey"), jPanel10); // NOI18N
 
+        jPanel11.setLayout(new java.awt.BorderLayout());
+
+        jPanel12.setLayout(new java.awt.GridLayout(4, 2));
+
+        jlbActivateClans.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbActivateClans.setText(bundle.getString("EnableClansKey")); // NOI18N
+        jPanel12.add(jlbActivateClans);
+
+        jcxActivatesClans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxActivatesClansActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jcxActivatesClans);
+
+        jlbTeamMatesNumber.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbTeamMatesNumber.setText(bundle.getString("TeamMatesNumber")); // NOI18N
+        jlbTeamMatesNumber.setEnabled(false);
+        jPanel12.add(jlbTeamMatesNumber);
+
+        jspTeamMembers.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(3), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jspTeamMembers.setEnabled(false);
+        jspTeamMembers.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jspTeamMembersStateChanged(evt);
+            }
+        });
+        jPanel12.add(jspTeamMembers);
+
+        jlbClansMembersNUmbers.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbClansMembersNUmbers.setText(bundle.getString("AvoidMembersMatchsFirstRoundKey")); // NOI18N
+        jlbClansMembersNUmbers.setEnabled(false);
+        jPanel12.add(jlbClansMembersNUmbers);
+
+        jcxAvoidFirstMatch.setEnabled(false);
+        jcxAvoidFirstMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxAvoidFirstMatchActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jcxAvoidFirstMatch);
+
+        jlbAvoidClansMembersMatch.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbAvoidClansMembersMatch.setText(bundle.getString("AvoidCLansMemberMatchKey")); // NOI18N
+        jlbAvoidClansMembersMatch.setEnabled(false);
+        jPanel12.add(jlbAvoidClansMembersMatch);
+
+        jcxAvoidMatch.setEnabled(false);
+        jcxAvoidMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxAvoidMatchActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jcxAvoidMatch);
+
+        jPanel11.add(jPanel12, java.awt.BorderLayout.NORTH);
+
+        jbtAddClan.setText(bundle.getString("AddKey")); // NOI18N
+        jbtAddClan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddClanActionPerformed(evt);
+            }
+        });
+        jPanel13.add(jbtAddClan);
+
+        jbtEditClan.setText(bundle.getString("EditKey")); // NOI18N
+        jbtEditClan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtEditClanActionPerformed(evt);
+            }
+        });
+        jPanel13.add(jbtEditClan);
+
+        jbtRemoveClan.setText(bundle.getString("RemoveKey")); // NOI18N
+        jbtRemoveClan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveClanActionPerformed(evt);
+            }
+        });
+        jPanel13.add(jbtRemoveClan);
+
+        jPanel11.add(jPanel13, java.awt.BorderLayout.SOUTH);
+
+        jPanel14.setLayout(new java.awt.GridLayout(1, 2));
+
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("ClansKey"))); // NOI18N
+
+        jlsClans.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jlsClans.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlsClans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlsClansMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jlsClans);
+
+        jPanel14.add(jScrollPane3);
+
+        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CLansCoachsKey"))); // NOI18N
+
+        jlsCoachList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jlsCoachList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(jlsCoachList);
+
+        jPanel14.add(jScrollPane4);
+
+        jPanel11.add(jPanel14, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane1.addTab(bundle.getString("ClanKey"), jPanel11); // NOI18N
+
         jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
@@ -1253,7 +1441,7 @@ public class MainFrame extends javax.swing.JFrame {
                     int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LE TIRAGE INITIAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIRAGE"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
 
                     _tournament.generateFirstRound(choice);
-                    
+
                     for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
                         Component obj = jtpMain.getComponentAt(i);
                         if (obj instanceof JPNRound) {
@@ -1479,16 +1667,16 @@ public class MainFrame extends javax.swing.JFrame {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
             file =
                     jfc.getSelectedFile();
-            for (int i = jtpMain.getTabCount() - 1; i >=
-                    0; i--) {
+            for (int i = jtpMain.getTabCount() - 1; i
+                    >= 0; i--) {
                 Component obj = jtpMain.getComponentAt(i);
                 if (obj instanceof JPNRound) {
                     jtpMain.remove(obj);
                 }
 
             }
-            for (int i = 0; i <
-                    _tournament.getRounds().size(); i++) {
+            for (int i = 0; i
+                    < _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(_tournament.getRounds().get(i), _tournament);
                 jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
             }
@@ -1501,8 +1689,8 @@ public class MainFrame extends javax.swing.JFrame {
     private void jmiNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNouveauActionPerformed
 
 
-        for (int i = jtpMain.getTabCount() - 1; i >=
-                0; i--) {
+        for (int i = jtpMain.getTabCount() - 1; i
+                >= 0; i--) {
             Component obj = jtpMain.getComponentAt(i);
             if (obj instanceof JPNRound) {
                 jtpMain.remove(obj);
@@ -1783,7 +1971,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jtffFoulNegTeamFocusLost
 
     private void jtffIntPosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffIntPosFocusLost
-         try {
+        try {
             jtffIntPos.commitEdit();
             int points = ((Long) jtffIntPos.getValue()).intValue();
             _tournament.getParams()._bonus_int_points = points;
@@ -1805,7 +1993,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jtffPasPosFocusLost
 
     private void jtffPasNegFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffPasNegFocusLost
-         try {
+        try {
             jtffPasNeg.commitEdit();
             int points = ((Long) jtffPasNeg.getValue()).intValue();
             _tournament.getParams()._bonus_neg_pas_points = points;
@@ -1838,7 +2026,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jtffPasPosTeamFocusLost
 
     private void jtffIntPosTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffIntPosTeamFocusLost
-         try {
+        try {
             jtffIntPosTeam.commitEdit();
             int points = ((Long) jtffIntPosTeam.getValue()).intValue();
             _tournament.getParams()._bonus_int_points_team = points;
@@ -1860,7 +2048,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jtffPasNegTeamFocusLost
 
     private void jtffIntNegTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffIntNegTeamFocusLost
-         try {
+        try {
             jtffIntNegTeam.commitEdit();
             int points = ((Long) jtffIntNegTeam.getValue()).intValue();
             _tournament.getParams()._bonus_neg_int_points_team = points;
@@ -1870,13 +2058,89 @@ public class MainFrame extends javax.swing.JFrame {
         update();
     }//GEN-LAST:event_jtffIntNegTeamFocusLost
 
+    private void jcxActivatesClansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxActivatesClansActionPerformed
+        boolean clansEnable = jcxActivatesClans.isSelected();
+
+        jlbAvoidClansMembersMatch.setEnabled(clansEnable);
+        jlbClansMembersNUmbers.setEnabled(clansEnable);
+        jlbTeamMatesNumber.setEnabled(clansEnable);
+
+        jspTeamMembers.setEnabled(clansEnable);
+        jcxAvoidFirstMatch.setEnabled(clansEnable);
+        jcxAvoidMatch.setEnabled(clansEnable);
+
+        jbtAddClan.setEnabled(clansEnable);
+        jbtRemoveClan.setEnabled(clansEnable);
+        jbtEditClan.setEnabled(clansEnable);
+        jlsClans.setEnabled(clansEnable);
+
+        _tournament.getParams()._enableClans = clansEnable;
+    }//GEN-LAST:event_jcxActivatesClansActionPerformed
+
+    private void jspTeamMembersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspTeamMembersStateChanged
+        _tournament.getParams()._teamMatesNumber = (Integer) jspTeamMembers.getValue();
+    }//GEN-LAST:event_jspTeamMembersStateChanged
+
+    private void jcxAvoidFirstMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidFirstMatchActionPerformed
+        _tournament.getParams()._avoidClansFirstMatch = jcxAvoidFirstMatch.isSelected();
+    }//GEN-LAST:event_jcxAvoidFirstMatchActionPerformed
+
+    private void jcxAvoidMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidMatchActionPerformed
+        _tournament.getParams()._avoidClansMatch = jcxAvoidMatch.isSelected();
+    }//GEN-LAST:event_jcxAvoidMatchActionPerformed
+
+    /**
+     * Press Add CLan name callback
+     * @param evt not used
+     */
+    private void jbtAddClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddClanActionPerformed
+
+        String enterClanName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterClanNameKey");
+        String clanName = JOptionPane.showInputDialog(this, enterClanName);
+        if (!clanName.equals("")) {
+            _tournament.getClans().addElement(new Clan(clanName));
+        }
+        update();
+    }//GEN-LAST:event_jbtAddClanActionPerformed
+
+    /**
+     * Press Edit clan name callback
+     * @param evt not used
+     */
+    private void jbtEditClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditClanActionPerformed
+        String enterClanName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterClanNameKey");
+        String clanName = (String) jlsClans.getSelectedValue();
+        String newClanName = JOptionPane.showInputDialog(this, enterClanName, clanName);
+        if (!clanName.equals("")) {
+            _tournament.getClans().get(jlsClans.getSelectedIndex())._name = newClanName;
+        }
+        update();
+    }//GEN-LAST:event_jbtEditClanActionPerformed
+
+    /**
+     * Press Remove clan button callback
+     * @param evt Not used
+     */
+    private void jbtRemoveClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveClanActionPerformed
+        int index = jlsClans.getSelectedIndex();
+
+        if (index > 0) {
+            _tournament.getClans().remove(index);
+        }
+        update();
+    }//GEN-LAST:event_jbtRemoveClanActionPerformed
+
+    private void jlsClansMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlsClansMouseClicked
+       update();
+    }//GEN-LAST:event_jlsClansMouseClicked
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0; i <
-                t.getColumnCount(); i++) {
+        for (int i = 0; i
+                < t.getColumnCount(); i++) {
             int max = 0;
-            for (int j = 0; j <
-                    t.getRowCount(); j++) {
+            for (int j = 0; j
+                    < t.getRowCount(); j++) {
                 Object value = t.getValueAt(j, i);
                 String tmp = "";
                 if (value instanceof String) {
@@ -1984,6 +2248,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1994,16 +2262,21 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jbtAdd;
+    private javax.swing.JButton jbtAddClan;
     private javax.swing.JButton jbtAddTeam;
+    private javax.swing.JButton jbtEditClan;
     private javax.swing.JButton jbtFirstRound;
     private javax.swing.JButton jbtModify;
     private javax.swing.JButton jbtModifyTeam;
     private javax.swing.JButton jbtRemove;
+    private javax.swing.JButton jbtRemoveClan;
     private javax.swing.JButton jbtRemoveTeam;
     private javax.swing.JComboBox jcbRank1;
     private javax.swing.JComboBox jcbRank1Team;
@@ -2015,8 +2288,17 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox jcbRank4Team;
     private javax.swing.JComboBox jcbRank5;
     private javax.swing.JComboBox jcbRank5Team;
+    private javax.swing.JCheckBox jcxActivatesClans;
+    private javax.swing.JCheckBox jcxAvoidFirstMatch;
+    private javax.swing.JCheckBox jcxAvoidMatch;
+    private javax.swing.JLabel jlbActivateClans;
+    private javax.swing.JLabel jlbAvoidClansMembersMatch;
+    private javax.swing.JLabel jlbClansMembersNUmbers;
     private javax.swing.JLabel jlbDetails;
+    private javax.swing.JLabel jlbTeamMatesNumber;
     private javax.swing.JLabel jlbVictoryPoints;
+    private javax.swing.JList jlsClans;
+    private javax.swing.JList jlsCoachList;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
     private javax.swing.JMenuItem jmiCharger;
@@ -2033,6 +2315,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jpnTeamTour;
     private javax.swing.JRadioButton jrbCoachPoints;
     private javax.swing.JRadioButton jrbTeamVictory;
+    private javax.swing.JSpinner jspTeamMembers;
     private javax.swing.JTable jtbCoachs;
     private javax.swing.JTable jtbTeam;
     private javax.swing.JTextField jtfOrgas;
