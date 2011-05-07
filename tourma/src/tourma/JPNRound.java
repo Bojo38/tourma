@@ -188,6 +188,7 @@ public class JPNRound extends javax.swing.JPanel {
         jbtShowMatches = new javax.swing.JButton();
         jbtShowResults = new javax.swing.JButton();
         jbtDeleteRound = new javax.swing.JButton();
+        jbtChangeMatchs = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -257,7 +258,6 @@ public class JPNRound extends javax.swing.JPanel {
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtNextRound.setText(bundle.getString("GenerateNextRoundKey")); // NOI18N
-        jbtNextRound.setLabel("Générer la prochaine ronde");
         jbtNextRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextRoundActionPerformed(evt);
@@ -288,6 +288,14 @@ public class JPNRound extends javax.swing.JPanel {
             }
         });
         jPanel3.add(jbtDeleteRound);
+
+        jbtChangeMatchs.setText(bundle.getString("DeleteCurrentRoundKey")); // NOI18N
+        jbtChangeMatchs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtChangeMatchsActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtChangeMatchs);
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
@@ -1265,6 +1273,13 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jbtPasPosIndivActionPerformed
+
+    private void jbtChangeMatchsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtChangeMatchsActionPerformed
+        jdgChangePairing jdg=new jdgChangePairing(MainFrame.getMainFrame(), true, _round);
+        jdg.setVisible(true);
+        update();
+    }//GEN-LAST:event_jbtChangeMatchsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1284,6 +1299,7 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton jbtChangeMatchs;
     private javax.swing.JButton jbtDeleteRound;
     private javax.swing.JButton jbtFoulNegIndiv;
     private javax.swing.JButton jbtFoulPosIndiv;
