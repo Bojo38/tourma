@@ -18,15 +18,15 @@ import tourma.data.ObjectAnnexRanking;
 public class mjtAnnexRankIndiv extends mjtAnnexRank {
 
     boolean _teamTournament;
+
     public mjtAnnexRankIndiv(Vector<Round> rounds, int ranking_type, Vector<Coach> coachs, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, boolean teamTournament) {
         super(rounds, ranking_type, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5);
-        _teamTournament=teamTournament;
+        _teamTournament = teamTournament;
     }
 
-   protected void sortDatas()
-   {
-       _datas.clear();
-       Vector<Match> matchs = new Vector<Match>();
+    protected void sortDatas() {
+        _datas.clear();
+        Vector<Match> matchs = new Vector<Match>();
         for (int i = 0; i < _rounds.size(); i++) {
             for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
                 matchs.add(_rounds.get(i).getMatchs().get(j));
@@ -36,7 +36,7 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
         _datas = new Vector<ObjectAnnexRanking>();
 
         for (int i = 0; i < _objects.size(); i++) {
-            Coach c = (Coach)_objects.get(i);
+            Coach c = (Coach) _objects.get(i);
             int value = 0;
             int value1 = 0;
             int value2 = 0;
@@ -48,13 +48,18 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
                 if (m._coach1 == c) {
                     switch (_ranking_type) {
                         case C_MOST_TD_POS:
-                            value += m._td1;
+                            if (m._td1 >= 0) {
+                                value += m._td1;
+                            }
                             break;
                         case C_MOST_TD_NEG:
-                            value += m._td2;
+                            if (m._td2 >= 0) {
+                                value += m._td2;
+                            }
                             break;
                         case C_MOST_SOR_POS:
                             value += m._sor1;
+
                             break;
                         case C_MOST_SOR_NEG:
                             value += m._sor2;
@@ -82,11 +87,14 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
                 if (m._coach2 == c) {
                     switch (_ranking_type) {
                         case C_MOST_TD_POS:
-                            value += m._td2;
+                            if (m._td2 >= 0) {
+                                value += m._td2;
+                            }
                             break;
                         case C_MOST_TD_NEG:
-                            value += m._td1;
-                            ;
+                            if (m._td1 >= 0) {
+                                value += m._td1;
+                            }
                             break;
                         case C_MOST_SOR_POS:
                             value += m._sor2;
@@ -114,21 +122,23 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
                             break;
                     }
                 }
-                value1 += getValue(c, m, _ranking_type1,_rounds);
-                value2 += getValue(c, m, _ranking_type2,_rounds);
-                value3 += getValue(c, m, _ranking_type3,_rounds);
-                value4 += getValue(c, m, _ranking_type4,_rounds);
-                value5 += getValue(c, m, _ranking_type5,_rounds);
+                value1 += getValue(c, m, _ranking_type1, _rounds);
+                value2 += getValue(c, m, _ranking_type2, _rounds);
+                value3 += getValue(c, m, _ranking_type3, _rounds);
+                value4 += getValue(c, m, _ranking_type4, _rounds);
+                value5 += getValue(c, m, _ranking_type5, _rounds);
             }
-            _datas.add(new ObjectAnnexRanking(c, value,value1,value2,value3,value4,value5));
+            _datas.add(new ObjectAnnexRanking(c, value, value1, value2, value3, value4, value5));
         }
 
         Collections.sort(_datas);
-   }
-    
+    }
+
     @Override
     public int getColumnCount() {
         return 5;
+
+
     }
 
     @Override
@@ -136,58 +146,99 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
         switch (col) {
             case 0:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
+
+
             case 1:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
+
+
             case 2:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH");
+
+
             case 3:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
+
+
             case 4:
                 switch (_ranking_type) {
                     case C_MOST_TD_POS:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TDS");
+
+
                     case C_MOST_TD_NEG:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TDS");
+
+
                     case C_MOST_SOR_POS:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SOR");
+
+
                     case C_MOST_SOR_NEG:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SOR");
+
+
                     case C_MOST_FOUL_POS:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL");
+
+
                     case C_MOST_FOUL_NEG:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL");
+
+
                     case C_MOST_PAS_POS:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS");
+
+
                     case C_MOST_PAS_NEG:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS");
+
+
                     case C_MOST_INT_POS:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT");
+
+
                     case C_MOST_INT_NEG:
                         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT");
+
+
                 }
         }
         return "";
+
+
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        
-        ObjectAnnexRanking obj=(ObjectAnnexRanking) _datas.get(row);
+
+        ObjectAnnexRanking obj = (ObjectAnnexRanking) _datas.get(row);
+
+
 
         switch (col) {
             case 0:
                 return row + 1;
+
+
             case 1:
-                return ((Coach)obj.getObject())._team;
+                return ((Coach) obj.getObject())._team;
+
+
             case 2:
-                return ((Coach)obj.getObject())._name;
+                return ((Coach) obj.getObject())._name;
+
+
             case 3:
-                return ((Coach)obj.getObject())._roster;
+                return ((Coach) obj.getObject())._roster;
+
+
             case 4:
                 return obj.getValue();
+
+
         }
         return "";
+
     }
-
-
 }

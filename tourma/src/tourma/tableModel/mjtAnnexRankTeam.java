@@ -46,10 +46,14 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                     if (m._coach1 == c) {
                         switch (_ranking_type) {
                             case C_MOST_TD_POS:
-                                value += m._td1;
+                                if (m._td1 >= 0) {
+                                    value += m._td1;
+                                }
                                 break;
                             case C_MOST_TD_NEG:
-                                value += m._td2;
+                                if (m._td2 >= 0) {
+                                    value += m._td2;
+                                }
                                 break;
                             case C_MOST_SOR_POS:
                                 value += m._sor1;
@@ -81,10 +85,14 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                     if (m._coach2 == c) {
                         switch (_ranking_type) {
                             case C_MOST_TD_POS:
-                                value += m._td2;
+                                if (m._td2 >= 0) {
+                                    value += m._td2;
+                                }
                                 break;
                             case C_MOST_TD_NEG:
-                                value += m._td1;
+                                if (m._td1 >= 0) {
+                                    value += m._td1;
+                                }
                                 break;
                             case C_MOST_SOR_POS:
                                 value += m._sor2;

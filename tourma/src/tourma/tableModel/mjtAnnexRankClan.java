@@ -78,10 +78,14 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
                     if (m._coach1 == c) {
                         switch (_ranking_type) {
                             case C_MOST_TD_POS:
-                                valuesMap.put(c, valuesMap.get(c) + m._td1);
+                                if (m._td1 >= 0) {
+                                    valuesMap.put(c, valuesMap.get(c) + m._td1);
+                                }
                                 break;
                             case C_MOST_TD_NEG:
-                                valuesMap.put(c, valuesMap.get(c) + m._td2);
+                                if (m._td2 >= 0) {
+                                    valuesMap.put(c, valuesMap.get(c) + m._td2);
+                                }
                                 break;
                             case C_MOST_SOR_POS:
                                 valuesMap.put(c, valuesMap.get(c) + m._sor1);
@@ -113,10 +117,14 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
                     if (m._coach2 == c) {
                         switch (_ranking_type) {
                             case C_MOST_TD_POS:
-                                valuesMap.put(c, valuesMap.get(c) + m._td2);
+                                if (m._td2 >= 0) {
+                                    valuesMap.put(c, valuesMap.get(c) + m._td2);
+                                }
                                 break;
                             case C_MOST_TD_NEG:
-                                valuesMap.put(c, valuesMap.get(c) + m._td1);
+                                if (m._td1 >= 0) {
+                                    valuesMap.put(c, valuesMap.get(c) + m._td1);
+                                }
                                 break;
                             case C_MOST_SOR_POS:
                                 valuesMap.put(c, valuesMap.get(c) + m._sor2);
