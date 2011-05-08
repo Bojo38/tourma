@@ -124,7 +124,7 @@
                 <Component class="javax.swing.JButton" name="jbtChangeMatchs">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="tourma/languages/language.properties" key="DeleteCurrentRoundKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="tourma/languages/language.properties" key="ChangePairing" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Events>

@@ -24,6 +24,7 @@ import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -57,12 +58,9 @@ public class JPNRound extends javax.swing.JPanel {
         if (_tournament.getParams()._teamTournament) {
             _jpnTeamRound = new JPNTeamRound(r, t);
             jtpGlobal.add(_jpnTeamRound, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE"));
-        }
-        else
-        {
-            if (_tournament.getParams()._enableClans)
-            {
-                _jpnClanRound=new JPNClanRound(r, t);
+        } else {
+            if (_tournament.getParams()._enableClans) {
+                _jpnClanRound = new JPNClanRound(r, t);
                 jtpGlobal.add(_jpnClanRound, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByClan"));
             }
         }
@@ -289,7 +287,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtDeleteRound);
 
-        jbtChangeMatchs.setText(bundle.getString("DeleteCurrentRoundKey")); // NOI18N
+        jbtChangeMatchs.setText(bundle.getString("ChangePairing")); // NOI18N
         jbtChangeMatchs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtChangeMatchsActionPerformed(evt);
@@ -720,7 +718,7 @@ public class JPNRound extends javax.swing.JPanel {
                         boolean canMatch = !have_played;
                         if ((_tournament.getParams()._enableClans) && (_tournament.getParams()._avoidClansMatch)) {
                             if (r.getMatchs().get(i)._coach2._clan != _tournament.getClans().get(0)) {
-                                if (r.getMatchs().get(i)._coach2._clan ==  r.getMatchs().get(k)._coach2._clan) {
+                                if (r.getMatchs().get(i)._coach2._clan == r.getMatchs().get(k)._coach2._clan) {
                                     canMatch = false;
                                 }
                             }
@@ -747,7 +745,7 @@ public class JPNRound extends javax.swing.JPanel {
 
                         if ((_tournament.getParams()._enableClans) && (_tournament.getParams()._avoidClansMatch)) {
                             if (r.getMatchs().get(i)._coach1._clan != _tournament.getClans().get(0)) {
-                                if (r.getMatchs().get(i)._coach2._clan ==  r.getMatchs().get(k)._coach1._clan) {
+                                if (r.getMatchs().get(i)._coach2._clan == r.getMatchs().get(k)._coach1._clan) {
                                     canMatch = false;
                                 }
                             }
@@ -1046,6 +1044,14 @@ public class JPNRound extends javax.swing.JPanel {
             MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
         }
 
+        String filename = Tournament.getTournament().getParams()._tournament_name;
+        filename = filename + "." + Tournament.getTournament().getRounds().size();
+        Date date = new Date();
+        filename = filename + "." + Long.toString(date.getTime()) + ".xml";
+
+        File file = new File(filename);
+        Tournament.getTournament().saveXML(file);
+
         update();
     }//GEN-LAST:event_jbtNextRoundActionPerformed
 
@@ -1058,10 +1064,6 @@ public class JPNRound extends javax.swing.JPanel {
                 break;
 
             }
-
-
-
-
         }
     }//GEN-LAST:event_jbtShowMatchesActionPerformed
 
@@ -1072,12 +1074,7 @@ public class JPNRound extends javax.swing.JPanel {
                 jdgRound jdg = new jdgRound(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, true, false);
                 jdg.setVisible(true);
                 break;
-
             }
-
-
-
-
         }
     }//GEN-LAST:event_jbtShowResultsActionPerformed
 
@@ -1275,11 +1272,10 @@ public class JPNRound extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtPasPosIndivActionPerformed
 
     private void jbtChangeMatchsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtChangeMatchsActionPerformed
-        jdgChangePairing jdg=new jdgChangePairing(MainFrame.getMainFrame(), true, _round);
+        jdgChangePairing jdg = new jdgChangePairing(MainFrame.getMainFrame(), true, _round);
         jdg.setVisible(true);
         update();
     }//GEN-LAST:event_jbtChangeMatchsActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
