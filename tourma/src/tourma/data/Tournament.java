@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.File;
 import tourma.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -632,26 +634,24 @@ public class Tournament {
                         }
                         if (possibleCoachs.size() == 0) {
                             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OnlyOneClanCoachKey"));
-                            possibleCoachs=coachs;
+                            possibleCoachs = coachs;
                         }
                     }
 
                     Object[] possibilities = new Object[possibleCoachs.size()];
                     for (int i = 0; i < possibleCoachs.size(); i++) {
-                        String tmpString=possibleCoachs.get(i)._name + " (" + possibleCoachs.get(i)._roster + ")";
-                        if (_params._enableClans)
-                        {
-                            tmpString=tmpString+" ("+possibleCoachs.get(i)._clan._name+")";
+                        String tmpString = possibleCoachs.get(i)._name + " (" + possibleCoachs.get(i)._roster + ")";
+                        if (_params._enableClans) {
+                            tmpString = tmpString + " (" + possibleCoachs.get(i)._clan._name + ")";
                         }
                         possibilities[i] = tmpString;
                     }
 
-                    ResourceBundle bundle=java.util.ResourceBundle.getBundle("tourma/languages/language");
+                    ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
 
-                    String coachString=m._coach1._name + " (" + m._coach1._roster + ")";
-                    if (_params._enableClans)
-                    {
-                        coachString=coachString+" ("+m._coach1._clan._name+")";
+                    String coachString = m._coach1._name + " (" + m._coach1._roster + ")";
+                    if (_params._enableClans) {
+                        coachString = coachString + " (" + m._coach1._clan._name + ")";
                     }
 
                     String opp = (String) JOptionPane.showInputDialog(
@@ -665,10 +665,9 @@ public class Tournament {
                             possibilities[0]);
 
                     for (int i = 0; i < coachs.size(); i++) {
-                        String tmpString=possibleCoachs.get(i)._name + " (" + possibleCoachs.get(i)._roster + ")";
-                        if (_params._enableClans)
-                        {
-                            tmpString=tmpString+" ("+possibleCoachs.get(i)._clan._name+")";
+                        String tmpString = possibleCoachs.get(i)._name + " (" + possibleCoachs.get(i)._roster + ")";
+                        if (_params._enableClans) {
+                            tmpString = tmpString + " (" + possibleCoachs.get(i)._clan._name + ")";
                         }
 
                         if (opp.equals(tmpString)) {
@@ -853,5 +852,13 @@ public class Tournament {
             _rounds.add(r);
 
         }
+
+        String filename = Tournament.getTournament().getParams()._tournament_name;
+        filename = filename + "." + Tournament.getTournament().getRounds().size();
+        Date date = new Date();
+        filename = filename + "." + Long.toString(date.getTime()) + ".xml";
+
+        File file = new File(filename);
+        Tournament.getTournament().saveXML(file);
     }
 }
