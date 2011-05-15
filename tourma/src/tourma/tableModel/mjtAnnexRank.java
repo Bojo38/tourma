@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.data.Criteria;
 import tourma.data.ObjectAnnexRanking;
 
 /**
@@ -27,8 +28,8 @@ import tourma.data.ObjectAnnexRanking;
  */
 abstract public class mjtAnnexRank extends mjtRanking {
 
-    int _ranking_type;
-    public static final int C_MOST_TD_POS = 0;
+    //int _ranking_type;
+    /*public static final int C_MOST_TD_POS = 0;
     public static final int C_MOST_TD_NEG = 1;
     public static final int C_MOST_SOR_POS = 2;
     public static final int C_MOST_SOR_NEG = 3;
@@ -37,12 +38,16 @@ abstract public class mjtAnnexRank extends mjtRanking {
     public static final int C_MOST_PAS_POS = 6;
     public static final int C_MOST_PAS_NEG = 7;
     public static final int C_MOST_INT_POS = 8;
-    public static final int C_MOST_INT_NEG = 9;
+    public static final int C_MOST_INT_NEG = 9;*/
     boolean _full_ranking;
+    Criteria _criteria;
+    int _subtype;
 
-    public mjtAnnexRank(Vector<Round> rounds, int ranking_type, Vector objects, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5) {
-        super(rounds, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects);
-        _ranking_type = ranking_type;
+    public mjtAnnexRank(int round, Criteria criteria, int subtype, Vector objects, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects);
+        _criteria = criteria;
+        _subtype = subtype;
+        //_ranking_type = ranking_type;
         _full_ranking = full;
         sortDatas();
     }
@@ -57,7 +62,7 @@ abstract public class mjtAnnexRank extends mjtRanking {
         if (_full_ranking) {
             return _objects.size();
         } else {
-            return Math.min(3,_objects.size());
+            return Math.min(3, _objects.size());
         }
     }
 
@@ -67,7 +72,6 @@ abstract public class mjtAnnexRank extends mjtRanking {
     @Override
     abstract public Object getValueAt(int row, int col);
 
- 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JTextField jlb = new JTextField();
@@ -82,11 +86,7 @@ abstract public class mjtAnnexRank extends mjtRanking {
             jlb.setText(Integer.toString((Integer) value));
         }
 
-        if ((_ranking_type == C_MOST_FOUL_POS) ||
-                (_ranking_type == C_MOST_SOR_POS) ||
-                (_ranking_type == C_MOST_TD_POS) ||
-                (_ranking_type == C_MOST_PAS_POS) ||
-                (_ranking_type == C_MOST_INT_POS)) {
+        if (_subtype == 0) {
             if (row == 0) {
                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                 jlb.setBackground(new Color(200, 50, 50));
@@ -94,11 +94,15 @@ abstract public class mjtAnnexRank extends mjtRanking {
             }
         }
 
-        if ((_ranking_type == C_MOST_FOUL_NEG) ||
-                (_ranking_type == C_MOST_SOR_NEG) ||
-                (_ranking_type == C_MOST_TD_NEG) ||
-                (_ranking_type == C_MOST_PAS_NEG) ||
-                (_ranking_type == C_MOST_INT_NEG)) {
+        if (_subtype == 2) {
+            if (row == 0) {
+                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                jlb.setBackground(new Color(50, 200, 50));
+                jlb.setForeground(new Color(255, 255, 255));
+            }
+        }
+
+        if (_subtype == 1) {
             if (row == 0) {
                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                 jlb.setBackground(new Color(50, 50, 200));

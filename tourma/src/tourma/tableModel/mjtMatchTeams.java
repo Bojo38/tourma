@@ -14,6 +14,8 @@ import javax.swing.table.TableCellRenderer;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.Tournament;
+import tourma.data.Value;
 
 /**
  *
@@ -82,10 +84,11 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
             for (int i = 0; i < matchs.size(); i++) {
                 Match m = matchs.get(i);
                 if (m._coach1._teamMates == t) {
-                    if (m._td1 > m._td2) {
+                    Value val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
+                    if (val._value1 > val._value2) {
                         nbVictory++;
                     } else {
-                        if (m._td1 < m._td2) {
+                        if (val._value1 < val._value2) {
                             nbLost++;
                         } else {
                             nbDraw++;
@@ -93,10 +96,11 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
                     }
                 }
                 if (m._coach2._teamMates == t) {
-                    if (m._td1 < m._td2) {
+                     Value val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
+                    if (val._value1 < val._value2) {
                         nbVictory++;
                     } else {
-                        if (m._td1 > m._td2) {
+                        if (val._value1 > val._value2) {
                             nbLost++;
                         } else {
                             nbDraw++;

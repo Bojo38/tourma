@@ -6,12 +6,14 @@ package tourma.tableModel;
 
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
+import tourma.data.Value;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Coach;
 import java.util.Collections;
 import java.util.Vector;
+import tourma.data.Criteria;
 import tourma.data.Team;
 
 /**
@@ -20,69 +22,367 @@ import tourma.data.Team;
  */
 public class mjtRankingTeam extends mjtRanking {
 
-    public mjtRankingTeam(Vector<Round> rounds, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector<Team> teams) {
-        super(rounds, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams);
+    boolean _teamVictory;
+
+    public mjtRankingTeam(boolean teamVictory, int round, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector<Team> teams) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams);
+        _teamVictory = teamVictory;
         sortDatas();
+    }
+
+    int getPointsByTeam(Team t) {
+
+        int value = 0;
+        int countTeamVictories = 0;
+        int countTeamLoss = 0;
+        int countTeamDraw = 0;
+
+        for (int i = 0; i <= _round; i++) {
+            int victories = 0;
+            int draw = 0;
+            int loss = 0;
+
+            for (int j = 0; j < t._coachs.size(); j++) {
+                Coach c = t._coachs.get(j);
+                if (c._matchs.size() > i) {
+                    Match m = c._matchs.get(i);
+                    Criteria crit = Tournament.getTournament().getParams()._criterias.get(0);
+                    Value val = m._values.get(crit);
+                    if (m._coach1 == c) {
+                        if (val._value1 > val._value2) {
+                            victories++;
+                        } else {
+                            if (val._value1 < val._value2) {
+                                loss++;
+                            } else {
+                                draw++;
+                            }
+                        }
+                        for (int k = 0; k < Tournament.getTournament().getParams()._criterias.size(); k++) {
+                            Criteria criteria = Tournament.getTournament().getParams()._criterias.get(k);
+                            value +=  Math.max(m._values.get(criteria)._value1,0) * criteria._pointsTeamFor;
+                            value +=  Math.max(m._values.get(criteria)._value2,0) * criteria._pointsTeamAgainst;
+                        }
+
+                    } else {
+                        if (val._value1 < val._value2) {
+                            victories++;
+                        } else {
+                            if (val._value1 > val._value2) {
+                                loss++;
+                            } else {
+                                draw++;
+                            }
+                        }
+                        for (int k = 0; k < Tournament.getTournament().getParams()._criterias.size(); k++) {
+                            Criteria criteria = Tournament.getTournament().getParams()._criterias.get(k);
+                            value += Math.max(m._values.get(criteria)._value2,0) * criteria._pointsTeamFor;
+                            value +=  Math.max(m._values.get(criteria)._value1,0) * criteria._pointsTeamAgainst;
+                        }
+                    }
+                }
+            }
+            if (victories > loss) {
+                countTeamVictories++;
+            } else {
+                if (victories < loss) {
+                    countTeamLoss++;
+                } else {
+                    countTeamDraw++;
+                }
+            }
+        }
+
+        value += countTeamVictories * Tournament.getTournament().getParams()._victory_points_team;
+        value += countTeamLoss * Tournament.getTournament().getParams()._lost_points_team;
+        value += countTeamDraw * Tournament.getTournament().getParams()._draw_points_team;
+
+
+        return value;
+    }
+
+    int getVNDByTeam(Team t) {
+
+        int value = 0;
+        int countTeamVictories = 0;
+        int countTeamLoss = 0;
+        int countTeamDraw = 0;
+
+        for (int i = 0; i <= _round; i++) {
+            int victories = 0;
+            int draw = 0;
+            int loss = 0;
+
+            for (int j = 0; j < t._coachs.size(); j++) {
+                Coach c = t._coachs.get(j);
+                if (c._matchs.size() > i) {
+                    Match m = c._matchs.get(i);
+                    Criteria crit = Tournament.getTournament().getParams()._criterias.get(0);
+                    Value val = m._values.get(crit);
+                    if (m._coach1 == c) {
+                        if (val._value1 > val._value2) {
+                            victories++;
+                        } else {
+                            if (val._value1 < val._value2) {
+                                loss++;
+                            } else {
+                                draw++;
+                            }
+                        }
+                    } else {
+                        if (val._value1 < val._value2) {
+                            victories++;
+                        } else {
+                            if (val._value1 > val._value2) {
+                                loss++;
+                            } else {
+                                draw++;
+                            }
+                        }
+                    }
+                }
+            }
+            if (victories > loss) {
+                countTeamVictories++;
+            } else {
+                if (victories < loss) {
+                    countTeamLoss++;
+                } else {
+                    countTeamDraw++;
+                }
+            }
+        }
+
+        value += countTeamVictories * 1000000;
+        value += countTeamLoss * 1;
+        value += countTeamDraw * 1000;
+        return value;
+    }
+
+    int getOppPointsByTeam(Team t) {
+
+        int value = 0;
+        Coach c = t._coachs.get(0);
+        //Vector<Team> opponents = new Vector<Team>();
+        if (_round <= c._matchs.size()) {
+            for (int i = 0; i <= _round; i++) {
+                Match m = c._matchs.get(i);
+                if (m._coach1 == c) {
+                    value += getPointsByTeam(m._coach2._teamMates);
+                } else {
+                    value += getPointsByTeam(m._coach1._teamMates);
+                }
+            }
+        }
+        return value;
+    }
+
+    int getValue(Team t, int rankingType) {
+        int value = 0;
+
+        // Find opposing team in using first Coach
+
+        if (_teamVictory) {
+            switch (rankingType) {
+                case Parameters.C_RANKING_POINTS:
+                    value += getPointsByTeam(t);
+                    break;
+                case Parameters.C_RANKING_NONE:
+                    value = 0;
+                    break;
+                case Parameters.C_RANKING_OPP_POINTS:
+                    value += getOppPointsByTeam(t);
+                    break;
+                case Parameters.C_RANKING_VND:
+                    value += getVNDByTeam(t);
+                    break;
+            }
+        } else {
+            for (int i = 0; i < t._coachs.size(); i++) {
+                Coach c = t._coachs.get(i);
+                for (int j = 0; j < c._matchs.size(); j++) {
+                    Match m = c._matchs.get(j);
+                    switch (rankingType) {
+                        case Parameters.C_RANKING_POINTS:
+                            value += getPointsByCoach(c, m);
+                            break;
+                        case Parameters.C_RANKING_NONE:
+                            value += 0;
+                            break;
+                        case Parameters.C_RANKING_OPP_POINTS:
+                            value += getOppPointsByCoach(c, m);
+                            break;
+                        case Parameters.C_RANKING_VND:
+                            value += getVNDByCoach(c, m);
+                            break;
+                    }
+                }
+            }
+            switch (rankingType) {
+                case Parameters.C_RANKING_POINTS:
+                    value += (getVNDByTeam(t) / 1000000) * Tournament.getTournament().getParams()._team_victory_points;
+                    break;
+                case Parameters.C_RANKING_OPP_POINTS:
+                    Coach c = t._coachs.get(0);
+                    for (int i = 0; i <= _round; i++) {
+                        if (c._matchs.size() > i) {
+                            Match m = c._matchs.get(i);
+                            if (m._coach1 == c) {
+                                value += (getVNDByTeam(m._coach2._teamMates) / 1000000) * Tournament.getTournament().getParams()._team_victory_points;
+                            } else {
+                                value += (getVNDByTeam(m._coach1._teamMates) / 1000000) * Tournament.getTournament().getParams()._team_victory_points;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+        return value;
+    }
+
+    int getValue(Team t, Criteria crit,
+            int subtype) {
+        int value = 0;
+        for (int i = 0; i < t._coachs.size(); i++) {
+            Coach c = t._coachs.get(i);
+            for (int j = 0; j < c._matchs.size(); j++) {
+                value += getValue(c, c._matchs.get(j), crit, subtype);
+            }
+        }
+        return value;
+    }
+
+    int getValue(Team t, int rankingType, int round) {
+        int value = 0;
+        Criteria c = getCriteriaByValue(rankingType);
+        int subType = getSubtypeByValue(rankingType);
+        if (c == null) {
+            value += getValue(t, rankingType);
+        } else {
+            value += getValue(t, c, subType);
+        }
+        return value;
     }
 
     protected void sortDatas() {
 
         _datas.clear();
-        if (Tournament.getTournament().getParams()._teamPairing == 1) {
+        _datas = new Vector<ObjectRanking>();
+        for (int i = 0; i < _objects.size(); i++) {
+            Team t = (Team) _objects.get(i);
+            int value1 = getValue(t, _ranking_type1, _round);
+            int value2 = getValue(t, _ranking_type2, _round);
+            int value3 = getValue(t, _ranking_type3, _round);
+            int value4 = getValue(t, _ranking_type4, _round);
+            int value5 = getValue(t, _ranking_type5, _round);
 
-            for (int k = 0; k < _objects.size(); k++) {
-                Team teamref = (Team) _objects.get(k);
-                Vector<Match> matchs = new Vector<Match>();
-                int value1 = 0;
-                int value2 = 0;
-                int value3 = 0;
-                int value4 = 0;
-                int value5 = 0;
-                for (int i = 0; i < _rounds.size(); i++) {
-                    for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
-                        Match m = _rounds.get(i).getMatchs().get(j);
-                        if ((m._coach1._teamMates == teamref) || (m._coach2._teamMates == teamref)) {
-                            matchs.add(m);
-                        }
-                    }
-                    value1 += getValue(teamref, matchs, _ranking_type1, _rounds);
-                    value2 += getValue(teamref, matchs, _ranking_type2, _rounds);
-                    value3 += getValue(teamref, matchs, _ranking_type3, _rounds);
-                    value4 += getValue(teamref, matchs, _ranking_type4, _rounds);
-                    value5 += getValue(teamref, matchs, _ranking_type5, _rounds);
-                }
-                _datas.add(new ObjectRanking(teamref, value1, value2, value3, value4, value5));
+            /*for (int k = 0; k < t._coachs.size(); k++) {
+            Coach c = t._coachs.get(k);
+            Match m = c._matchs.get(_round);
+
+            Round round = Tournament.getTournament().getRounds().get(_round);
+
+            Criteria c1 = getCriteriaByValue(_ranking_type1);
+            int subType1 = getSubtypeByValue(_ranking_type1);
+            if (c1 == null) {
+            value1 += getValue(c, m, _ranking_type1, round);
+            } else {
+            value1 += getValue(c, m, c1, subType1);
             }
-        } else {
-            Vector<Match> matchs = new Vector<Match>();
-            for (int i = 0; i < _rounds.size(); i++) {
-                for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
-                    matchs.add(_rounds.get(i).getMatchs().get(j));
-                }
+
+            Criteria c2 = getCriteriaByValue(_ranking_type2);
+            int subType2 = getSubtypeByValue(_ranking_type2);
+            if (c2 == null) {
+            value2 += getValue(c, m, _ranking_type2, round);
+            } else {
+            value2 += getValue(c, m, c2, subType2);
             }
-            for (int i = 0; i < _objects.size(); i++) {
-                Team t = (Team) _objects.get(i);
-                int value1 = 0;
-                int value2 = 0;
-                int value3 = 0;
-                int value4 = 0;
-                int value5 = 0;
-                for (int j = 0; j < matchs.size(); j++) {
-                    Match m = matchs.get(j);
-                    for (int k = 0; k < t._coachs.size(); k++) {
-                        Coach c = t._coachs.get(k);
-                        value1 += getValue(c, m, _ranking_type1, _rounds);
-                        value2 += getValue(c, m, _ranking_type2, _rounds);
-                        value3 += getValue(c, m, _ranking_type3, _rounds);
-                        value4 += getValue(c, m, _ranking_type4, _rounds);
-                        value5 += getValue(c, m, _ranking_type5, _rounds);
-                    }
-                }
-                _datas.add(new ObjectRanking(t, value1, value2, value3, value4, value5));
+
+            Criteria c3 = getCriteriaByValue(_ranking_type3);
+            int subType3 = getSubtypeByValue(_ranking_type3);
+            if (c3 == null) {
+            value3 += getValue(c, m, _ranking_type3, round);
+            } else {
+            value3 += getValue(c, m, c3, subType3);
             }
+
+            Criteria c4 = getCriteriaByValue(_ranking_type4);
+            int subType4 = getSubtypeByValue(_ranking_type4);
+            if (c4 == null) {
+            value4 += getValue(c, m, _ranking_type4, round);
+            } else {
+            value4 += getValue(c, m, c4, subType4);
+            }
+
+            Criteria c5 = getCriteriaByValue(_ranking_type5);
+            int subType5 = getSubtypeByValue(_ranking_type5);
+            if (c5 == null) {
+            value5 += getValue(c, m, _ranking_type5, round);
+            } else {
+            value5 += getValue(c, m, c5, subType5);
+            }
+            }*/
+            _datas.add(new ObjectRanking(t, value1, value2, value3, value4, value5));
         }
 
         Collections.sort(_datas);
+
+        /*_datas.clear();
+        if (Tournament.getTournament().getParams()._teamPairing == 1) {
+
+        for (int k = 0; k < _objects.size(); k++) {
+        Team teamref = (Team) _objects.get(k);
+        Vector<Match> matchs = new Vector<Match>();
+        int value1 = 0;
+        int value2 = 0;
+        int value3 = 0;
+        int value4 = 0;
+        int value5 = 0;
+        for (int i = 0; i < _rounds.size(); i++) {
+        for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
+        Match m = _rounds.get(i).getMatchs().get(j);
+        if ((m._coach1._teamMates == teamref) || (m._coach2._teamMates == teamref)) {
+        matchs.add(m);
+        }
+        }
+        value1 += getValue(teamref, matchs, _ranking_type1, _rounds);
+        value2 += getValue(teamref, matchs, _ranking_type2, _rounds);
+        value3 += getValue(teamref, matchs, _ranking_type3, _rounds);
+        value4 += getValue(teamref, matchs, _ranking_type4, _rounds);
+        value5 += getValue(teamref, matchs, _ranking_type5, _rounds);
+        }
+        _datas.add(new ObjectRanking(teamref, value1, value2, value3, value4, value5));
+        }
+        } else {
+        Vector<Match> matchs = new Vector<Match>();
+        for (int i = 0; i < _rounds.size(); i++) {
+        for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
+        matchs.add(_rounds.get(i).getMatchs().get(j));
+        }
+        }
+        for (int i = 0; i < _objects.size(); i++) {
+        Team t = (Team) _objects.get(i);
+        int value1 = 0;
+        int value2 = 0;
+        int value3 = 0;
+        int value4 = 0;
+        int value5 = 0;
+        for (int j = 0; j < matchs.size(); j++) {
+        Match m = matchs.get(j);
+        for (int k = 0; k < t._coachs.size(); k++) {
+        Coach c = t._coachs.get(k);
+        value1 += getValue(c, m, _ranking_type1, _rounds);
+        value2 += getValue(c, m, _ranking_type2, _rounds);
+        value3 += getValue(c, m, _ranking_type3, _rounds);
+        value4 += getValue(c, m, _ranking_type4, _rounds);
+        value5 += getValue(c, m, _ranking_type5, _rounds);
+        }
+        }
+        _datas.add(new ObjectRanking(t, value1, value2, value3, value4, value5));
+        }
+        }
+
+        Collections.sort(_datas);*/
     }
 
     public int getColumnCount() {
@@ -96,165 +396,15 @@ public class mjtRankingTeam extends mjtRanking {
             case 1:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
             case 2:
-                switch (_ranking_type1) {
-                    case Parameters.C_RANKING_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
-                    case Parameters.C_RANKING_DIFF_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
-                    case Parameters.C_RANKING_DIFF_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
-                    case Parameters.C_RANKING_DIFF_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
-                    case Parameters.C_RANKING_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
-                    case Parameters.C_RANKING_NONE:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
-                    case Parameters.C_RANKING_OPP_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
-                    case Parameters.C_RANKING_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
-                    case Parameters.C_RANKING_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
-                    case Parameters.C_RANKING_VND:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
-                    case Parameters.C_RANKING_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
-                    case Parameters.C_RANKING_DIFF_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
-                    case Parameters.C_RANKING_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
-                    case Parameters.C_RANKING_DIFF_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
-                }
-                break;
+                return getRankingString(_ranking_type1);
             case 3:
-                switch (_ranking_type2) {
-                    case Parameters.C_RANKING_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
-                    case Parameters.C_RANKING_DIFF_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
-                    case Parameters.C_RANKING_DIFF_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
-                    case Parameters.C_RANKING_DIFF_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
-                    case Parameters.C_RANKING_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
-                    case Parameters.C_RANKING_NONE:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
-                    case Parameters.C_RANKING_OPP_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
-                    case Parameters.C_RANKING_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
-                    case Parameters.C_RANKING_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
-                    case Parameters.C_RANKING_VND:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
-                    case Parameters.C_RANKING_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
-                    case Parameters.C_RANKING_DIFF_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
-                    case Parameters.C_RANKING_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
-                    case Parameters.C_RANKING_DIFF_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
-                }
-                break;
+                return getRankingString(_ranking_type2);
             case 4:
-                switch (_ranking_type3) {
-                    case Parameters.C_RANKING_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
-                    case Parameters.C_RANKING_DIFF_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
-                    case Parameters.C_RANKING_DIFF_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
-                    case Parameters.C_RANKING_DIFF_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
-                    case Parameters.C_RANKING_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
-                    case Parameters.C_RANKING_NONE:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
-                    case Parameters.C_RANKING_OPP_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
-                    case Parameters.C_RANKING_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
-                    case Parameters.C_RANKING_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
-                    case Parameters.C_RANKING_VND:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
-                    case Parameters.C_RANKING_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
-                    case Parameters.C_RANKING_DIFF_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
-                    case Parameters.C_RANKING_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
-                    case Parameters.C_RANKING_DIFF_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
-                }
-                break;
+                return getRankingString(_ranking_type3);
             case 5:
-                switch (_ranking_type4) {
-                    case Parameters.C_RANKING_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
-                    case Parameters.C_RANKING_DIFF_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
-                    case Parameters.C_RANKING_DIFF_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
-                    case Parameters.C_RANKING_DIFF_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
-                    case Parameters.C_RANKING_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
-                    case Parameters.C_RANKING_NONE:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
-                    case Parameters.C_RANKING_OPP_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
-                    case Parameters.C_RANKING_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
-                    case Parameters.C_RANKING_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
-                    case Parameters.C_RANKING_VND:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
-                    case Parameters.C_RANKING_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
-                    case Parameters.C_RANKING_DIFF_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
-                    case Parameters.C_RANKING_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
-                    case Parameters.C_RANKING_DIFF_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
-                }
-                break;
+                return getRankingString(_ranking_type4);
             case 6:
-                switch (_ranking_type5) {
-                    case Parameters.C_RANKING_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
-                    case Parameters.C_RANKING_DIFF_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF AGGR");
-                    case Parameters.C_RANKING_DIFF_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF SOR");
-                    case Parameters.C_RANKING_DIFF_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF TDS");
-                    case Parameters.C_RANKING_FOUL:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB AGGR");
-                    case Parameters.C_RANKING_NONE:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
-                    case Parameters.C_RANKING_OPP_POINTS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
-                    case Parameters.C_RANKING_SOR:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB SOR");
-                    case Parameters.C_RANKING_TD:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NB TDS");
-                    case Parameters.C_RANKING_VND:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
-                    case Parameters.C_RANKING_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES");
-                    case Parameters.C_RANKING_DIFF_PAS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF PAS");
-                    case Parameters.C_RANKING_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTER.");
-                    case Parameters.C_RANKING_DIFF_INT:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIFF INT");
-                }
-                break;
+                return getRankingString(_ranking_type5);
         }
         return "";
     }
@@ -266,20 +416,21 @@ public class mjtRankingTeam extends mjtRanking {
         int nbLost = 0;
         for (int i = 0; i < v.size(); i++) {
             Match m = v.get(i);
+            Value val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
             if (m._coach1._teamMates == t) {
-                if (m._td1 > m._td2) {
+                if (val._value1 > val._value2) {
                     nbVictory++;
                 } else {
-                    if (m._td1 < m._td2) {
+                    if (val._value1 < val._value2) {
                         nbLost++;
                     }
                 }
             }
             if (m._coach2._teamMates == t) {
-                if (m._td1 < m._td2) {
+                if (val._value1 < val._value2) {
                     nbVictory++;
                 } else {
-                    if (m._td1 > m._td2) {
+                    if (val._value1 > val._value2) {
                         nbLost++;
                     }
                 }
@@ -304,34 +455,39 @@ public class mjtRankingTeam extends mjtRanking {
         int nbLost = 0;
         for (int i = 0; i < v.size(); i++) {
             Match m = v.get(i);
+            Value val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
             if (m._coach1._teamMates == t) {
-                if (m._td1 > m._td2) {
+                if (val._value1 > val._value2) {
                     nbVictory++;
                 } else {
-                    if (m._td1 < m._td2) {
+                    if (val._value1 < val._value2) {
                         nbLost++;
                     }
-                }
-                if (m._td1 >= 0) {
-                    value += m._td1 * Tournament.getTournament().getParams()._bonus_td_points_team + m._td2 * Tournament.getTournament().getParams()._bonus_neg_td_points_team;
-                }
-                value += m._sor1 * Tournament.getTournament().getParams()._bonus_sor_points_team + m._sor2 * Tournament.getTournament().getParams()._bonus_neg_sor_points_team;
-                value += m._foul1 * Tournament.getTournament().getParams()._bonus_foul_points_team + m._foul2 * Tournament.getTournament().getParams()._bonus_neg_foul_points_team;
-            }
-            if (m._coach2._teamMates == t) {
-                if (m._td1 < m._td2) {
-                    nbVictory++;
-                } else {
-                    if (m._td1 > m._td2) {
-                        nbLost++;
-                    }
-                }
-                if (m._td2 >= 0) {
-                    value += m._td2 * Tournament.getTournament().getParams()._bonus_td_points_team + m._td1 * Tournament.getTournament().getParams()._bonus_neg_td_points_team;
                 }
 
-                value += m._sor2 * Tournament.getTournament().getParams()._bonus_sor_points_team + m._sor1 * Tournament.getTournament().getParams()._bonus_neg_sor_points_team;
-                value += m._foul2 * Tournament.getTournament().getParams()._bonus_foul_points_team + m._foul1 * Tournament.getTournament().getParams()._bonus_neg_foul_points_team;
+                for (int j = 0; j < Tournament.getTournament().getParams()._criterias.size(); j++) {
+
+                    Criteria cri = Tournament.getTournament().getParams()._criterias.get(j);
+                    Value va = m._values.get(cri._name);
+                    value += va._value1 + cri._pointsFor;
+                    value += va._value2 + cri._pointsAgainst;
+                }
+
+            }
+            if (m._coach2._teamMates == t) {
+                if (val._value1 < val._value2) {
+                    nbVictory++;
+                } else {
+                    if (val._value1 > val._value2) {
+                        nbLost++;
+                    }
+                }
+                for (int j = 0; j < Tournament.getTournament().getParams()._criterias.size(); j++) {
+                    Criteria cri = Tournament.getTournament().getParams()._criterias.get(j);
+                    Value va = m._values.get(cri._name);
+                    value += va._value2 + cri._pointsFor;
+                    value += va._value1 + cri._pointsAgainst;
+                }
             }
         }
 
@@ -374,125 +530,54 @@ public class mjtRankingTeam extends mjtRanking {
         return value;
     }
 
-    public static int getValue(Team t, Vector<Match> v, int valueType, Vector<Round> rounds) {
-        int value = 0;
-        switch (valueType) {
-            case Parameters.C_RANKING_POINTS:
-                if (Tournament.getTournament().getParams()._team_victory_only) {
-                    value = getTeamPoints(t, v);
-                } else {
-                    for (int i = 0; i < t._coachs.size(); i++) {
-                        for (int j = 0; j < v.size(); j++) {
-                            value += getPointsByCoach(t._coachs.get(i), v.get(j));
-                        }
-                    }
-                    if (getTeamVND(t, v) >= 1000000) {
-                        value += Tournament.getTournament().getParams()._team_victory_points;
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_DIFF_FOUL:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getDiffFoulByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_DIFF_SOR:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getDiffSorByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_DIFF_TD:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getDiffTdByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_DIFF_INT:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getDiffIntByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_DIFF_PAS:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getDiffPasByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_FOUL:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getFoulByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_NONE:
-                value = 0;
-                break;
-            case Parameters.C_RANKING_OPP_POINTS:
-                if (Tournament.getTournament().getParams()._team_victory_only) {
-                    value = getOppTeamPoints(t, v, rounds);
-                } else {
-                    for (int i = 0; i < t._coachs.size(); i++) {
-                        for (int j = 0; j < v.size(); j++) {
-                            value += getOppPointsByCoach(t._coachs.get(i), rounds);
-                        }
-                    }
-                    if (getTeamVND(t, v) < 1000000) {
-                        value += Tournament.getTournament().getParams()._team_victory_points;
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_SOR:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getSorByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_PAS:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getPasByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_INT:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getIntByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_TD:
-                for (int i = 0; i < t._coachs.size(); i++) {
-                    for (int j = 0; j < v.size(); j++) {
-                        value += getTdByCoach(t._coachs.get(i), v.get(j));
-                    }
-                }
-                break;
-            case Parameters.C_RANKING_VND:
-                if (Tournament.getTournament().getParams()._team_victory_only) {
-                    value = getTeamVND(t, v);
-                } else {
-                    for (int i = 0; i < t._coachs.size(); i++) {
-                        for (int j = 0; j < v.size(); j++) {
-                            value += getVNDByCoach(t._coachs.get(i), v.get(j));
-                        }
-                    }
-                }
-                break;
-        }
-        return value;
+    /*public static int getValue(Team t, Vector<Match> v, int valueType, Vector<Round> rounds) {
+    int value = 0;
+    switch (valueType) {
+    case Parameters.C_RANKING_POINTS:
+    if (Tournament.getTournament().getParams()._team_victory_only) {
+    value = getTeamPoints(t, v);
+    } else {
+    for (int i = 0; i < t._coachs.size(); i++) {
+    for (int j = 0; j < v.size(); j++) {
+    value += getPointsByCoach(t._coachs.get(i), v.get(j));
     }
-
+    }
+    if (getTeamVND(t, v) >= 1000000) {
+    value += Tournament.getTournament().getParams()._team_victory_points;
+    }
+    }
+    break;
+    case Parameters.C_RANKING_NONE:
+    value = 0;
+    break;
+    case Parameters.C_RANKING_OPP_POINTS:
+    if (Tournament.getTournament().getParams()._team_victory_only) {
+    value = getOppTeamPoints(t, v, rounds);
+    } else {
+    for (int i = 0; i < t._coachs.size(); i++) {
+    for (int j = 0; j < v.size(); j++) {
+    value += getOppPointsByCoach(t._coachs.get(i), rounds);
+    }
+    }
+    if (getTeamVND(t, v) < 1000000) {
+    value += Tournament.getTournament().getParams()._team_victory_points;
+    }
+    }
+    break;
+    case Parameters.C_RANKING_VND:
+    if (Tournament.getTournament().getParams()._team_victory_only) {
+    value = getTeamVND(t, v);
+    } else {
+    for (int i = 0; i < t._coachs.size(); i++) {
+    for (int j = 0; j < v.size(); j++) {
+    value += getVNDByCoach(t._coachs.get(i), v.get(j));
+    }
+    }
+    }
+    break;
+    }
+    return value;
+    }*/
     public Object getValueAt(int row, int col) {
 
         ObjectRanking obj = (ObjectRanking) _datas.get(row);

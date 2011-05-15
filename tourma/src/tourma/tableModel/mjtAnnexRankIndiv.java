@@ -9,7 +9,9 @@ import tourma.data.Match;
 import tourma.data.Coach;
 import java.util.Collections;
 import java.util.Vector;
+import tourma.data.Criteria;
 import tourma.data.ObjectAnnexRanking;
+import tourma.data.Tournament;
 
 /**
  *
@@ -19,114 +21,67 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
 
     boolean _teamTournament;
 
-    public mjtAnnexRankIndiv(Vector<Round> rounds, int ranking_type, Vector<Coach> coachs, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, boolean teamTournament) {
-        super(rounds, ranking_type, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5);
+    public mjtAnnexRankIndiv(int round, Criteria criteria, int subtype, Vector<Coach> coachs, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, boolean teamTournament) {
+        super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5);
         _teamTournament = teamTournament;
     }
 
     protected void sortDatas() {
         _datas.clear();
-        Vector<Match> matchs = new Vector<Match>();
-        for (int i = 0; i < _rounds.size(); i++) {
-            for (int j = 0; j < _rounds.get(i).getMatchs().size(); j++) {
-                matchs.add(_rounds.get(i).getMatchs().get(j));
-            }
-        }
-
         _datas = new Vector<ObjectAnnexRanking>();
-
-        for (int i = 0; i < _objects.size(); i++) {
-            Coach c = (Coach) _objects.get(i);
+        Vector<Coach> coaches = Tournament.getTournament().getCoachs();
+        for (int k = 0; k < coaches.size(); k++) {
+            Coach c = coaches.get(k);
             int value = 0;
             int value1 = 0;
             int value2 = 0;
             int value3 = 0;
             int value4 = 0;
             int value5 = 0;
-            for (int j = 0; j < matchs.size(); j++) {
-                Match m = matchs.get(j);
-                if (m._coach1 == c) {
-                    switch (_ranking_type) {
-                        case C_MOST_TD_POS:
-                            if (m._td1 >= 0) {
-                                value += m._td1;
-                            }
-                            break;
-                        case C_MOST_TD_NEG:
-                            if (m._td2 >= 0) {
-                                value += m._td2;
-                            }
-                            break;
-                        case C_MOST_SOR_POS:
-                            value += m._sor1;
 
-                            break;
-                        case C_MOST_SOR_NEG:
-                            value += m._sor2;
-                            break;
-                        case C_MOST_FOUL_POS:
-                            value += m._foul1;
-                            break;
-                        case C_MOST_FOUL_NEG:
-                            value += m._foul2;
-                            break;
-                        case C_MOST_PAS_POS:
-                            value += m._pas1;
-                            break;
-                        case C_MOST_PAS_NEG:
-                            value += m._pas2;
-                            break;
-                        case C_MOST_INT_POS:
-                            value += m._int1;
-                            break;
-                        case C_MOST_INT_NEG:
-                            value += m._int2;
-                            break;
-                    }
+            for (int j = 0; j < c._matchs.size(); j++) {
+                Match m = c._matchs.get(j);
+                value += getValue(c, m, _criteria, _subtype);
+
+                Criteria c1 = getCriteriaByValue(_ranking_type1);
+                int subType1 = getSubtypeByValue(_ranking_type1);
+                if (c1 == null) {
+                    value1 += getValue(c, m, _ranking_type1);
+                } else {
+                    value1 += getValue(c, m, c1, subType1);
                 }
-                if (m._coach2 == c) {
-                    switch (_ranking_type) {
-                        case C_MOST_TD_POS:
-                            if (m._td2 >= 0) {
-                                value += m._td2;
-                            }
-                            break;
-                        case C_MOST_TD_NEG:
-                            if (m._td1 >= 0) {
-                                value += m._td1;
-                            }
-                            break;
-                        case C_MOST_SOR_POS:
-                            value += m._sor2;
-                            break;
-                        case C_MOST_SOR_NEG:
-                            value += m._sor1;
-                            break;
-                        case C_MOST_FOUL_POS:
-                            value += m._foul2;
-                            break;
-                        case C_MOST_FOUL_NEG:
-                            value += m._foul1;
-                            break;
-                        case C_MOST_PAS_POS:
-                            value += m._pas2;
-                            break;
-                        case C_MOST_PAS_NEG:
-                            value += m._pas1;
-                            break;
-                        case C_MOST_INT_POS:
-                            value += m._int2;
-                            break;
-                        case C_MOST_INT_NEG:
-                            value += m._int1;
-                            break;
-                    }
+
+                Criteria c2 = getCriteriaByValue(_ranking_type2);
+                int subType2 = getSubtypeByValue(_ranking_type2);
+                if (c2 == null) {
+                    value2 += getValue(c, m, _ranking_type2);
+                } else {
+                    value2 += getValue(c, m, c2, subType2);
                 }
-                value1 += getValue(c, m, _ranking_type1, _rounds);
-                value2 += getValue(c, m, _ranking_type2, _rounds);
-                value3 += getValue(c, m, _ranking_type3, _rounds);
-                value4 += getValue(c, m, _ranking_type4, _rounds);
-                value5 += getValue(c, m, _ranking_type5, _rounds);
+
+                Criteria c3 = getCriteriaByValue(_ranking_type3);
+                int subType3 = getSubtypeByValue(_ranking_type3);
+                if (c3 == null) {
+                    value3 += getValue(c, m, _ranking_type3);
+                } else {
+                    value3 += getValue(c, m, c3, subType3);
+                }
+
+                Criteria c4 = getCriteriaByValue(_ranking_type4);
+                int subType4 = getSubtypeByValue(_ranking_type4);
+                if (c4 == null) {
+                    value4 += getValue(c, m, _ranking_type4);
+                } else {
+                    value4 += getValue(c, m, c4, subType4);
+                }
+
+                Criteria c5 = getCriteriaByValue(_ranking_type5);
+                int subType5 = getSubtypeByValue(_ranking_type5);
+                if (c5 == null) {
+                    value5 += getValue(c, m, _ranking_type5);
+                } else {
+                    value5 += getValue(c, m, c5, subType5);
+                }
             }
             _datas.add(new ObjectAnnexRanking(c, value, value1, value2, value3, value4, value5));
         }
@@ -137,82 +92,49 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
     @Override
     public int getColumnCount() {
         return 5;
-
-
     }
 
     @Override
-    public String getColumnName(int col) {
+    public String getColumnName(
+            int col) {
         switch (col) {
             case 0:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
-
-
             case 1:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
-
-
             case 2:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH");
-
-
             case 3:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
-
-
             case 4:
-                switch (_ranking_type) {
-                    case C_MOST_TD_POS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TDS");
-
-
-                    case C_MOST_TD_NEG:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TDS");
-
-
-                    case C_MOST_SOR_POS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SOR");
-
-
-                    case C_MOST_SOR_NEG:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SOR");
-
-
-                    case C_MOST_FOUL_POS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL");
-
-
-                    case C_MOST_FOUL_NEG:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL");
-
-
-                    case C_MOST_PAS_POS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS");
-
-
-                    case C_MOST_PAS_NEG:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS");
-
-
-                    case C_MOST_INT_POS:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT");
-
-
-                    case C_MOST_INT_NEG:
-                        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT");
-
-
+                if (_subtype == 0) {
+                    return _criteria._name + " Coach";
+                } else {
+                    if (_subtype == 1) {
+                        return _criteria._name + " Adversaire";
+                    } else {
+                        return _criteria._name + " Difference";
+                    }
                 }
         }
         return "";
 
 
+
+
+
+
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
+    public Object getValueAt(
+            int row, int col) {
 
         ObjectAnnexRanking obj = (ObjectAnnexRanking) _datas.get(row);
+
+
+
+
 
 
 
@@ -221,24 +143,46 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
                 return row + 1;
 
 
+
+
+
+
             case 1:
                 return ((Coach) obj.getObject())._team;
+
+
+
+
 
 
             case 2:
                 return ((Coach) obj.getObject())._name;
 
 
+
+
+
+
             case 3:
-                return ((Coach) obj.getObject())._roster;
+                return ((Coach) obj.getObject())._roster._name;
+
+
+
+
 
 
             case 4:
                 return obj.getValue();
 
 
+
+
+
+
         }
         return "";
+
+
 
     }
 }

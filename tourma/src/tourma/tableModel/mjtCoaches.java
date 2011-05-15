@@ -68,7 +68,7 @@ public class mjtCoaches extends AbstractTableModel {
                 case 2:
                     return c._team;
                 case 3:
-                    return c._roster;
+                    return c._roster._name;
                 case 4:
                     return c._naf;
                      case 5:
