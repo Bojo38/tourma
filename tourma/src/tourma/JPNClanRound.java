@@ -10,10 +10,13 @@
  */
 package tourma;
 
-import tourma.tableModel.mjtAnnexRankIndiv;
+import tourma.tableModel.mjtAnnexRank;
 import java.awt.FontMetrics;
+import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JTable;
+import tourma.data.Criteria;
+import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.tableModel.mjtAnnexRankClan;
@@ -36,6 +39,13 @@ public class JPNClanRound extends javax.swing.JPanel {
         initComponents();
         _round = r;
         _tournament = t;
+
+        for (int i = 0; i < _tournament.getParams()._criterias.size(); i++) {
+            Criteria criteria = _tournament.getParams()._criterias.get(i);
+            JPNAnnexRanking jpn = new JPNAnnexRanking(criteria._name, criteria, _tournament, _round, true, false);
+            jtpAnnexRank.add(criteria._name, jpn);
+        }
+
         update();
     }
 
@@ -48,23 +58,8 @@ public class JPNClanRound extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel8 = new javax.swing.JPanel();
-        jbtGeneralClan = new javax.swing.JButton();
-        jbtScorePosClan = new javax.swing.JButton();
-        jbtSorPosClan = new javax.swing.JButton();
-        jbtFoulPosClan = new javax.swing.JButton();
-        jbtPasPosClan = new javax.swing.JButton();
-        jbtIntPosClan = new javax.swing.JButton();
-        jbtGGlobalClan = new javax.swing.JButton();
-        jbtScoreNegClan = new javax.swing.JButton();
-        jbtSorNegClan = new javax.swing.JButton();
-        jbtFoulNegClan = new javax.swing.JButton();
-        jbtPasNegClan = new javax.swing.JButton();
-        jbtIntNegClan = new javax.swing.JButton();
         jpnClan = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jtbRankingClan = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jtbMostTdClan = new javax.swing.JTable();
@@ -86,136 +81,26 @@ public class JPNClanRound extends javax.swing.JPanel {
         jtbMostPasNegClan = new javax.swing.JTable();
         jScrollPane19 = new javax.swing.JScrollPane();
         jtbMostIntNegClan = new javax.swing.JTable();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtbRankingClan = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jbtGeneralClan = new javax.swing.JButton();
+        jbtGGlobalClan = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jtpAnnexRank = new javax.swing.JTabbedPane();
 
         setLayout(new java.awt.BorderLayout());
-
-        jPanel8.setLayout(new java.awt.GridLayout(2, 7));
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jbtGeneralClan.setText(bundle.getString("GeneralRankingKey")); // NOI18N
-        jbtGeneralClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGeneralClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtGeneralClan);
-
-        jbtScorePosClan.setText(bundle.getString("TouchdownForKey")); // NOI18N
-        jbtScorePosClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtScorePosClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtScorePosClan);
-
-        jbtSorPosClan.setText(bundle.getString("CasualtiesKey")); // NOI18N
-        jbtSorPosClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtSorPosClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtSorPosClan);
-
-        jbtFoulPosClan.setText(bundle.getString("FoulsForKey")); // NOI18N
-        jbtFoulPosClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtFoulPosClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtFoulPosClan);
-
-        jbtPasPosClan.setText(bundle.getString("PassesForKey")); // NOI18N
-        jbtPasPosClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtPasPosClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtPasPosClan);
-
-        jbtIntPosClan.setText(bundle.getString("BestInterceptorKey")); // NOI18N
-        jbtIntPosClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtIntPosClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtIntPosClan);
-
-        jbtGGlobalClan.setText(bundle.getString("GeneralRankingKey")); // NOI18N
-        jbtGGlobalClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGGlobalClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtGGlobalClan);
-
-        jbtScoreNegClan.setText(bundle.getString("TouchdownAgainstKey")); // NOI18N
-        jbtScoreNegClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtScoreNegClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtScoreNegClan);
-
-        jbtSorNegClan.setText(bundle.getString("CasualtiesAgainstKey")); // NOI18N
-        jbtSorNegClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtSorNegClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtSorNegClan);
-
-        jbtFoulNegClan.setText(bundle.getString("FoulsAgainstKey")); // NOI18N
-        jbtFoulNegClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtFoulNegClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtFoulNegClan);
-
-        jbtPasNegClan.setText(bundle.getString("PassesAgainstKey")); // NOI18N
-        jbtPasNegClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtPasNegClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtPasNegClan);
-
-        jbtIntNegClan.setText(bundle.getString("InterceptionsAgainstKey")); // NOI18N
-        jbtIntNegClan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtIntNegClanActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtIntNegClan);
-
-        add(jPanel8, java.awt.BorderLayout.SOUTH);
 
         jpnClan.setLayout(new java.awt.BorderLayout());
 
         jSplitPane2.setDividerLocation(200);
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GeneralRankingKey"))); // NOI18N
-        jScrollPane3.setPreferredSize(new java.awt.Dimension(466, 300));
-
-        jtbRankingClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtbRankingClan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane3.setViewportView(jtbRankingClan);
-
-        jSplitPane2.setBottomComponent(jScrollPane3);
-
         jPanel7.setLayout(new java.awt.GridLayout(2, 5));
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TouchdownForKey"))); // NOI18N
 
         jtbMostTdClan.setModel(new javax.swing.table.DefaultTableModel(
@@ -391,131 +276,103 @@ public class JPNClanRound extends javax.swing.JPanel {
         jpnClan.add(jSplitPane2, java.awt.BorderLayout.CENTER);
 
         add(jpnClan, java.awt.BorderLayout.CENTER);
+
+        jSplitPane1.setDividerLocation(600);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GeneralRankingKey"))); // NOI18N
+        jScrollPane3.setPreferredSize(new java.awt.Dimension(466, 300));
+
+        jtbRankingClan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbRankingClan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane3.setViewportView(jtbRankingClan);
+
+        jPanel2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+
+        jbtGeneralClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGeneralClan.setText(bundle.getString("GeneralRankingKey")); // NOI18N
+        jbtGeneralClan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGeneralClanActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtGeneralClan);
+
+        jbtGGlobalClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGGlobalClan.setText(bundle.getString("GeneralRankingKey")); // NOI18N
+        jbtGGlobalClan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGGlobalClanActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtGGlobalClan);
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.SOUTH);
+
+        jSplitPane1.setLeftComponent(jPanel2);
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(jtpAnnexRank, java.awt.BorderLayout.CENTER);
+
+        jSplitPane1.setRightComponent(jPanel1);
+
+        add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtGeneralClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralClanActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_GENERAL, 2);
+                mjtRankingClan model = new mjtRankingClan(i, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getDisplayClans());
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, "General par Clan", i + 1, _tournament, model, 0);
                 jdg.setVisible(true);
                 break;
             }
         }
 }//GEN-LAST:event_jbtGeneralClanActionPerformed
 
-    private void jbtScorePosClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScorePosClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORER, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtScorePosClanActionPerformed
-
-    private void jbtScoreNegClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScoreNegClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORED, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtScoreNegClanActionPerformed
-
-    private void jbtSorPosClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorPosClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYER, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtSorPosClanActionPerformed
-
-    private void jbtSorNegClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorNegClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYED, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtSorNegClanActionPerformed
-
-    private void jbtFoulPosClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulPosClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULER, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtFoulPosClanActionPerformed
-
-    private void jbtFoulNegClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulNegClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULED, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtFoulNegClanActionPerformed
-
-    private void jbtPasPosClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasPosClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSER, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-    }//GEN-LAST:event_jbtPasPosClanActionPerformed
-
-    private void jbtPasNegClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasNegClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSED, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-    }//GEN-LAST:event_jbtPasNegClanActionPerformed
-
-    private void jbtIntPosClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntPosClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-    }//GEN-LAST:event_jbtIntPosClanActionPerformed
-
-    private void jbtIntNegClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntNegClanActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, 2);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-    }//GEN-LAST:event_jbtIntNegClanActionPerformed
-
     private void jbtGGlobalClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGGlobalClanActionPerformed
-       for (int i = 0; i < _tournament.getRounds().size(); i++) {
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, 2);
+                mjtRankingClan model = new mjtRankingClan(i, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getDisplayClans());
+                HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<Criteria, mjtAnnexRank>();
+                HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new  HashMap<Criteria, mjtAnnexRank>();
+                for (int j = 0; j < _tournament.getParams()._criterias.size(); j++) {
+                    Criteria crit=_tournament.getParams()._criterias.get(j);
+                    mjtAnnexRank annex=new mjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                            _tournament.getDisplayClans(), true,
+                            _tournament.getParams()._ranking1, _tournament.getParams()._ranking2,
+                            _tournament.getParams()._ranking3, _tournament.getParams()._ranking4,
+                            _tournament.getParams()._ranking5);
+                    annexForRankings.put(crit,annex);
+                    annex=new mjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                            _tournament.getDisplayClans(), true,
+                            _tournament.getParams()._ranking1, _tournament.getParams()._ranking2,
+                            _tournament.getParams()._ranking3, _tournament.getParams()._ranking4,
+                            _tournament.getParams()._ranking5);
+                    annexAgainstRankings.put(crit,annex);
+                }
+                jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, i + 1, _tournament, model, annexForRankings, annexAgainstRankings, false, false);
                 jdg.setVisible(true);
                 break;
             }
         }
     }//GEN-LAST:event_jbtGGlobalClanActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
@@ -527,19 +384,10 @@ public class JPNClanRound extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JButton jbtFoulNegClan;
-    private javax.swing.JButton jbtFoulPosClan;
     private javax.swing.JButton jbtGGlobalClan;
     private javax.swing.JButton jbtGeneralClan;
-    private javax.swing.JButton jbtIntNegClan;
-    private javax.swing.JButton jbtIntPosClan;
-    private javax.swing.JButton jbtPasNegClan;
-    private javax.swing.JButton jbtPasPosClan;
-    private javax.swing.JButton jbtScoreNegClan;
-    private javax.swing.JButton jbtScorePosClan;
-    private javax.swing.JButton jbtSorNegClan;
-    private javax.swing.JButton jbtSorPosClan;
     private javax.swing.JPanel jpnClan;
     private javax.swing.JTable jtbMostFoulClan;
     private javax.swing.JTable jtbMostFoulNegClan;
@@ -552,6 +400,7 @@ public class JPNClanRound extends javax.swing.JPanel {
     private javax.swing.JTable jtbMostTdClan;
     private javax.swing.JTable jtbMostTdNegClan;
     private javax.swing.JTable jtbRankingClan;
+    private javax.swing.JTabbedPane jtpAnnexRank;
     // End of variables declaration//GEN-END:variables
 
     public void update() {
@@ -564,78 +413,16 @@ public class JPNClanRound extends javax.swing.JPanel {
         }
         v.add(_round);
 
-        mjtAnnexRankClan mTdPosClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_TD_POS, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankClan mTdNegClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-
-        mjtAnnexRankClan mSorPosClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankClan mSorNegClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankClan mFoulPosClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankClan mFoulNegClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-
-        mjtAnnexRankClan mPasPosClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankClan mPasNegClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankClan mIntPosClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_INT_POS, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankClan mIntNegClan = new mjtAnnexRankClan(v, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tournament.getClans(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-
-        jtbMostTdClan.setModel(mTdPosClan);
-        jtbMostTdClan.setDefaultRenderer(String.class, mTdPosClan);
-        jtbMostTdClan.setDefaultRenderer(Integer.class, mTdPosClan);
-
-        jtbMostTdNegClan.setModel(mTdNegClan);
-        jtbMostTdNegClan.setDefaultRenderer(String.class, mTdNegClan);
-        jtbMostTdNegClan.setDefaultRenderer(Integer.class, mTdNegClan);
-
-        jtbMostSorClan.setModel(mSorPosClan);
-        jtbMostSorClan.setDefaultRenderer(String.class, mSorPosClan);
-        jtbMostSorClan.setDefaultRenderer(Integer.class, mSorPosClan);
-        jtbMostSorNegClan.setModel(mSorNegClan);
-        jtbMostSorNegClan.setDefaultRenderer(String.class, mSorNegClan);
-        jtbMostSorNegClan.setDefaultRenderer(Integer.class, mSorNegClan);
-        jtbMostFoulClan.setModel(mFoulPosClan);
-        jtbMostFoulClan.setDefaultRenderer(String.class, mFoulPosClan);
-        jtbMostFoulClan.setDefaultRenderer(Integer.class, mFoulPosClan);
-        jtbMostFoulNegClan.setModel(mFoulNegClan);
-        jtbMostFoulNegClan.setDefaultRenderer(String.class, mFoulNegClan);
-        jtbMostFoulNegClan.setDefaultRenderer(Integer.class, mFoulNegClan);
-
-        jtbMostPasClan.setModel(mPasPosClan);
-        jtbMostPasClan.setDefaultRenderer(String.class, mPasPosClan);
-        jtbMostPasClan.setDefaultRenderer(Integer.class, mPasPosClan);
-        jtbMostPasNegClan.setModel(mPasNegClan);
-        jtbMostPasNegClan.setDefaultRenderer(String.class, mPasNegClan);
-        jtbMostPasNegClan.setDefaultRenderer(Integer.class, mPasNegClan);
-
-        jtbMostIntClan.setModel(mIntPosClan);
-        jtbMostIntClan.setDefaultRenderer(String.class, mIntPosClan);
-        jtbMostIntClan.setDefaultRenderer(Integer.class, mIntPosClan);
-        jtbMostIntNegClan.setModel(mIntNegClan);
-        jtbMostIntNegClan.setDefaultRenderer(String.class, mIntNegClan);
-        jtbMostIntNegClan.setDefaultRenderer(Integer.class, mIntNegClan);
-
-
         mjtRankingClan mRankingClan = null;
-
-        mRankingClan = new mjtRankingClan(v, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getClans());
-
+        mRankingClan = new mjtRankingClan(v.size() - 1, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getDisplayClans());
         jtbRankingClan.setModel(mRankingClan);
         jtbRankingClan.setDefaultRenderer(String.class, mRankingClan);
         jtbRankingClan.setDefaultRenderer(Integer.class, mRankingClan);
-
         setColumnSize(jtbRankingClan);
 
-        setColumnSize(jtbRankingClan);
-        setColumnSize(jtbMostFoulNegClan);
-        setColumnSize(jtbMostFoulClan);
-        setColumnSize(jtbMostSorNegClan);
-        setColumnSize(jtbMostSorClan);
-        setColumnSize(jtbMostTdNegClan);
-        setColumnSize(jtbMostTdClan);
-
-        setColumnSize(jtbMostPasNegClan);
-        setColumnSize(jtbMostPasClan);
-        setColumnSize(jtbMostIntNegClan);
-        setColumnSize(jtbMostIntClan);
-
+        for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
+            ((JPNAnnexRanking) jtpAnnexRank.getComponent(i)).update();
+        }
     }
 
     public void setColumnSize(JTable t) {
