@@ -5,6 +5,7 @@
 
 package tourma.data;
 
+import java.util.HashMap;
 import tourma.data.Coach;
 
 /**
@@ -14,15 +15,24 @@ import tourma.data.Coach;
 public class Match {
     public Coach _coach1;
     public Coach _coach2;
-    public int _td1=-1;
-    public int _td2=-1;
-    public int _sor1;
-    public int _sor2;
-    public int _foul1;
-    public int _foul2;
 
-    public int _pas1;
-    public int _pas2;
-    public int _int1;
-    public int _int2;
+    public HashMap<Criteria,Value> _values;
+
+    public Match()
+    {
+        _values=new HashMap<Criteria,Value>();
+
+        int size=Tournament.getTournament()._params._criterias.size();
+        for (int i=0; i<size; i++)
+        {
+            Criteria crit=Tournament.getTournament()._params._criterias.get(i);
+            Value val=new Value(crit);
+            if (crit._name.equals("Touchdowns"))
+            {
+                val._value1=-1;
+                val._value2=-1;
+            }
+            _values.put(crit, val);
+        }
+    }
 }

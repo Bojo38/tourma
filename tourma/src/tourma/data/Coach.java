@@ -5,6 +5,8 @@
 
 package tourma.data;
 
+import java.util.Vector;
+
 /**
  * This class contains data relative to coach
  * @author Frederic Berger
@@ -17,11 +19,18 @@ public class Coach implements Comparable{
     public Clan _clan;
     public String _name;
     public String _team;
-    public String _roster;
+    public Roster _roster;
     public int _naf;
     public int _rank;
 
     public Team _teamMates=null;
+
+    public Vector<Match> _matchs;
+
+    public Coach()
+    {
+        _matchs=new Vector<Match>();
+    }
 
     public int compareTo(Object obj)
     {
