@@ -44,7 +44,7 @@
                 border-width: 1px 1px 0px 0px ;
                 border-color: rgb(68,68,68) rgb(68,68,68);
                 background-color: #eeeeee;
-                color: rgb(0,0,68);
+                color: rgb(0,0,88);
                 font-weight: 700;
                 text-align:center;
             }
@@ -55,7 +55,7 @@
                 border-width: 1px 1px 0px 0px ;
                 border-color:  #444444;
                 background-color: #eeeeee;
-                color: #440000;
+                color: #880000;
                 text-align:center;
             }
 
@@ -83,14 +83,13 @@
             border="1" cellpadding="0" cellspacing="0">
             <tbody>
                 <tr>
-                    <td rowspan="2" class="tab_titre">Table</td>
-                    <td colspan="1" rowspan="2" class="tab_titre">Coach 1</td>
-                    <td colspan="4" class="tab_titre">Touchdowns</td>
-                    <td colspan="1" rowspan="2" class="tab_titre">Coach 2</td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="tab_titre">Sorties</td>
-                    <td colspan="2" class="tab_titre">Aggressions</td>
+                    <td class="tab_titre">Table</td>
+                    <td class="tab_titre">Coach 1</td>
+                    <td colspan="2" class="tab_titre">Touchdowns</td>
+                    <td class="tab_titre">Coach 2</td>
+                    <#list criterias as criteria>
+                    <td colspan="2" class="tab_titre">${criteria}</td>
+                    </#list>
                 </tr>
                 <#list matches as match>
                 <#if (result == 0)>
@@ -109,23 +108,18 @@
                 </#if>
                 </#if>
                 <tr>
-                    <td rowspan="2" class="tab_pos" style="font-size:16px;">${match.numero}</td>
-                    <td colspan="1" rowspan="2" class="${style1}" style="font-size:16px;">${match.coach1} </td>
-                    <td colspan="2" class="${style1}" style="font-size:14px;">${match.score1}</td>
-                    <td colspan="2" class="${style2}" style="font-size:14px;">${match.score2}</td>
-                    <td colspan="1" rowspan="2" class="${style2}" style="font-size:16px;">${match.coach2}</td>
-                </tr>
-                <tr>
-                    <td class="${style1}" style="font-size:10px;">${match.sorties1}</td>
-                    <td class="${style2}" style="font-size:10px;">${match.sorties2}</td>
-                    <td class="${style1}" style="font-size:10px;">${match.foul1}</td>
-                    <td class="${style2}" style="font-size:10px;">${match.foul2}</td>
+                    <td class="tab_pos" style="font-size:16px;">${match.numero}</td>
+                    <td class="${style1}" style="font-size:16px;">${match.coach1} </td>
+                    <td class="${style1}" style="font-size:14px;">${match.score1}</td>
+                    <td class="${style2}" style="font-size:14px;">${match.score2}</td>
+                    <td class="${style2}" style="font-size:16px;">${match.coach2}</td>
+                    <#list match.values as value>
+                    <td class="${style1}" style="font-size:14px;">${value.value1}</td>
+                    <td class="${style2}" style="font-size:14px;">${value.value2}</td>
+                    </#list>
                 </tr>
 
                 </#list>
-
-
-
             </tbody>
         </table>
 

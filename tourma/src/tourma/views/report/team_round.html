@@ -84,11 +84,11 @@
             <tbody>
                 <tr>
                     <td class="tab_titre">Table</td>
-                    <td class="tab_titre">Clan 1</td>
+                    <td class="tab_titre">Equipe 1</td>
                     <td class="tab_titre">V1</td>
                     <td class="tab_titre">N</td>
                     <td class="tab_titre">V2</td>
-                    <td class="tab_titre">Clan 2</td>
+                    <td class="tab_titre">Equipe 2</td>
                 </tr>
                 <#list matches as match>
                  <#if (result == 0)>
@@ -108,11 +108,11 @@
                     </#if>
                     <tr>
                         <td class="tab_pos" style="font-size:16px;">${match.numero}</td>
-                        <td class="${style1}" style="font-size:16px;">${match.clan1} </td>
+                        <td class="${style1}" style="font-size:16px;">${match.team1} </td>
                         <td class="${style1}" style="font-size:14px;">${match.v1}</td>
                         <td class="${style1}" style="font-size:14px;">${match.n}</td>
                         <td class="${style2}" style="font-size:14px;">${match.v2}</td>
-                        <td class="${style2}" style="font-size:16px;">${match.clan2}</td>
+                        <td class="${style2}" style="font-size:16px;">${match.team2}</td>
                     </tr>
                 </#list>
 

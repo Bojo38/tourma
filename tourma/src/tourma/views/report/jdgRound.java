@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import tourma.data.Criteria;
 import tourma.data.Team;
 import tourma.tableModel.mjtMatchTeams;
 
@@ -122,7 +123,10 @@ public class jdgRound extends javax.swing.JDialog {
         jepHTML = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/options-des-dossiers.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +136,7 @@ public class jdgRound extends javax.swing.JDialog {
         });
         jPanel1.add(jbtOK);
 
+        jbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
         jbtPrint.setText(bundle.getString("IMPRIMER")); // NOI18N
         jbtPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +145,7 @@ public class jdgRound extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
+        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/mes-téléchargements.png"))); // NOI18N
         jbtExport.setText(bundle.getString("EXPORT HTML")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,28 +237,59 @@ public class jdgRound extends javax.swing.JDialog {
             } else {
                 root.put("result", 0);
             }
+
+            Vector crits = new Vector();
+            Vector<Criteria> criterias = Tournament.getTournament().getParams()._criterias;
+            for (int i = 1; i < criterias.size(); i++) {
+                crits.add(criterias.get(i)._name);
+            }
+            root.put("criterias", crits);
+
             for (int i = 0; i < matches.size(); i++) {
                 Match match = matches.get(i);
 
                 HashMap m = new HashMap();
                 m.put("numero", i + 1);
-                m.put("coach1", match._coach1._name);
+                if (!_tour.getParams()._teamTournament) {
+                    m.put("coach1", match._coach1._name);
+                }
+                else
+                {
+                       m.put("coach1", match._coach1._teamMates._name+" - "+ match._coach1._name);
+                }
                 if (_result) {
-                    m.put("score1", match._td1);
-                    m.put("score2", match._td2);
-                    m.put("sorties1", match._sor1);
-                    m.put("sorties2", match._sor2);
-                    m.put("foul1", match._foul1);
-                    m.put("foul2", match._foul2);
+                    m.put("score1", match._values.get(Tournament.getTournament().getParams()._criterias.get(0))._value1);
+                    m.put("score2", match._values.get(Tournament.getTournament().getParams()._criterias.get(0))._value2);
+
+                    Vector values = new Vector();
+                    for (int j = 1; j < criterias.size(); j++) {
+                        HashMap value = new HashMap();
+                        value.put("value1", match._values.get(criterias.get(j))._value1);
+                        value.put("value2", match._values.get(criterias.get(j))._value2);
+                        values.add(value);
+                    }
+                    m.put("values", values);
+
                 } else {
                     m.put("score1", "&nbsp;");
                     m.put("score2", "&nbsp;");
-                    m.put("sorties1", "&nbsp;");
-                    m.put("sorties2", "&nbsp;");
-                    m.put("foul1", "&nbsp;");
-                    m.put("foul2", "&nbsp;");
+                    Vector values = new Vector();
+                    for (int j = 1; j < criterias.size(); j++) {
+                        HashMap value = new HashMap();
+                        value.put("value1", "&nbsp;");
+                        value.put("value2", "&nbsp;");
+                        values.add(value);
+                    }
+                    m.put("values", values);
                 }
-                m.put("coach2", match._coach2._name);
+                if (!_tour.getParams()._teamTournament) {
+                    m.put("coach2", match._coach2._name);
+                }
+                else
+                {
+                       m.put("coach2", match._coach2._teamMates._name+" - "+ match._coach2._name);
+                }
+                //m.put("coach2", match._coach2._name);
                 parMatches.add(m);
             }
 
@@ -295,11 +332,17 @@ public class jdgRound extends javax.swing.JDialog {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
             cfg.setObjectWrapper(new DefaultObjectWrapper());
-            Template temp = cfg.getTemplate("round.html");
+            Template temp = cfg.getTemplate("team_round.html");
 
             Map root = new HashMap();
             root.put("nom", _tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + _roundNumber);
             root.put("tables", _round.getMatchs().size());
+
+            if (_result) {
+                root.put("result", 1);
+            } else {
+                root.put("result", 0);
+            }
 
             Vector<Team> teams = new Vector<Team>();
             for (int i = 0; i < _round.getMatchs().size(); i++) {
@@ -319,17 +362,17 @@ public class jdgRound extends javax.swing.JDialog {
 
                 HashMap m = new HashMap();
                 m.put("numero", model.getValueAt(i, 0));
-                m.put("clan1", model.getValueAt(i, 1));
+                m.put("team1", model.getValueAt(i, 1));
                 if (_result) {
-                    m.put("V1", model.getValueAt(i, 2));
-                    m.put("N", model.getValueAt(i, 3));
-                    m.put("V2", model.getValueAt(i, 4));
+                    m.put("v1", model.getValueAt(i, 2));
+                    m.put("n", model.getValueAt(i, 3));
+                    m.put("v2", model.getValueAt(i, 4));
                 } else {
-                    m.put("V1", "&nbsp;");
-                    m.put("N", "&nbsp;");
-                    m.put("V2", "&nbsp;");
+                    m.put("v1", "&nbsp;");
+                    m.put("n", "&nbsp;");
+                    m.put("v2", "&nbsp;");
                 }
-                m.put("clan2", model.getValueAt(i, 5));
+                m.put("team2", model.getValueAt(i, 5));
                 parMatches.add(m);
             }
 

@@ -11,7 +11,7 @@
 package tourma.views.report;
 
 import tourma.tableModel.mjtAnnexRankIndiv;
-import tourma.tableModel.mjtRankingIndiv;
+import tourma.tableModel.mjtRanking;
 import tourma.*;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -38,6 +38,8 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
+import tourma.data.Criteria;
+import tourma.tableModel.mjtAnnexRank;
 import tourma.tableModel.mjtAnnexRankClan;
 import tourma.tableModel.mjtAnnexRankTeam;
 import tourma.tableModel.mjtRankingClan;
@@ -49,29 +51,31 @@ import tourma.tableModel.mjtRankingTeam;
  */
 public class jdgGlobal extends javax.swing.JDialog {
 
-    public static final int RANKING_GENERAL = 0;
-    public static final int RANKING_SCORER = 1;
-    public static final int RANKING_DESTROYER = 2;
-    public static final int RANKING_FOULER = 3;
-    public static final int RANKING_SCORED = 4;
-    public static final int RANKING_DESTROYED = 5;
-    public static final int RANKING_FOULED = 6;
-    Round _round;
     int _roundNumber;
     Tournament _tour;
     boolean _result;
-    int _rankType;
-    int _type = 0;
     File _filename = null;
+    mjtRanking _ranking;
+    HashMap<Criteria, mjtAnnexRank> _annexAgainstRankings;
+    HashMap<Criteria, mjtAnnexRank> _annexForRankings;
+    boolean _clan;
+    boolean _team;
 
     /** Creates new form jdgRoundReport */
-    public jdgGlobal(java.awt.Frame parent, boolean modal, Round round, int roundNumber, Tournament tour, int type) {
+    public jdgGlobal(java.awt.Frame parent, boolean modal,  int roundNumber, Tournament tour,mjtRanking model, HashMap<Criteria, mjtAnnexRank> annexForRankings,HashMap<Criteria, mjtAnnexRank> annexAgainstRankings, boolean clan, boolean team) {
         super(parent, modal);
         initComponents();
-        _round = round;
+        //_round = round;
         _roundNumber = roundNumber;
         _tour = tour;
-        _type = type;
+
+        _clan = clan;
+        _team = team;
+
+        _ranking = model;
+        _annexForRankings = annexForRankings;
+        _annexAgainstRankings = annexAgainstRankings;
+
         this.setTitle(tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + roundNumber);
         try {
             jepHTML.setContentType("html");
@@ -103,6 +107,7 @@ public class jdgGlobal extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Ranking"); // NOI18N
 
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/options-des-dossiers.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +117,7 @@ public class jdgGlobal extends javax.swing.JDialog {
         });
         jPanel1.add(jbtOK);
 
+        jbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
         jbtPrint.setText(bundle.getString("IMPRIMER")); // NOI18N
         jbtPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +126,7 @@ public class jdgGlobal extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
+        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/mes-téléchargements.png"))); // NOI18N
         jbtExport.setText(bundle.getString("EXPORT HTML")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,6 +190,7 @@ public class jdgGlobal extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private File CreateReport() {
+
         File address = null;
 
         try {
@@ -200,13 +208,6 @@ public class jdgGlobal extends javax.swing.JDialog {
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             Template temp = cfg.getTemplate("global.html");
 
-            TableModel generalModel;
-            TableModel tdPosModel;
-            TableModel tdNegModel;
-            TableModel sorPosModel;
-            TableModel sorNegModel;
-            TableModel foulPosModel;
-            TableModel foulNegModel;
 
             Vector<Round> rounds = new Vector();
             for (int i = 0; i < _tour.getRounds().size() && i < _roundNumber; i++) {
@@ -215,380 +216,60 @@ public class jdgGlobal extends javax.swing.JDialog {
 
             Map root = new HashMap();
             root.put("nom", _tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + _roundNumber);
-            root.put("title", java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT GÉNÉRAL"));
-            if (_type == 1) {
-                root.put("team", 1);
+            String name = "Classements";
+            if (_clan) {
+                name = " par clan";
             } else {
-                if (_type == 2) {
-                    root.put("team", 2);
+                if (_team) {
+                    name = " par &eacute;quipe";
                 } else {
-                    root.put("team", 0);
-                }
-            }
-            if (_type == 2) {
-                if (_tour.getParams()._team_victory_only) {
-                    generalModel = new mjtRankingClan(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getClans());
-                } else {
-                    generalModel = new mjtRankingClan(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getClans());
-                }
-                tdPosModel = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_TD_POS, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                sorPosModel = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                foulPosModel = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                tdNegModel = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                sorNegModel = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                foulNegModel = new mjtAnnexRankClan(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-            } else {
-                if (_type == 1) {
-                    if (_tour.getParams()._team_victory_only) {
-                        generalModel = new mjtRankingTeam(rounds, _tour.getParams()._ranking1_team, _tour.getParams()._ranking2_team, _tour.getParams()._ranking3_team, _tour.getParams()._ranking4_team, _tour.getParams()._ranking5_team, _tour.getTeams());
-                    } else {
-                        generalModel = new mjtRankingTeam(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getTeams());
-                    }
-                    tdPosModel = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_TD_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                    sorPosModel = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                    foulPosModel = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                    tdNegModel = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                    sorNegModel = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                    foulNegModel = new mjtAnnexRankTeam(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
-                } else {
-                    generalModel = new mjtRankingIndiv(rounds, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getCoachs(), _tour.getParams()._teamTournament);
-                    tdPosModel = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_TD_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                    sorPosModel = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                    foulPosModel = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                    tdNegModel = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                    sorNegModel = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
-                    foulNegModel = new mjtAnnexRankIndiv(rounds, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                    name = " par coach";
                 }
             }
 
-            // Meilleur Marqueur
-            Vector BestScorerLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(tdPosModel.getValueAt(i, 1));
-                    l.add(tdPosModel.getValueAt(i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(tdPosModel.getValueAt(i, 1));
-                        l.add(tdPosModel.getValueAt(i, 2));
-                    } else {
-                        l.add(tdPosModel.getValueAt(i, 2));
-                        l.add(tdPosModel.getValueAt(i, 3));
-                        l.add(tdPosModel.getValueAt(i, 4));
-                    }
-                }
-                line.put("cols", l);
-                BestScorerLines.add(line);
-            }
-            root.put("BestScorerLines", BestScorerLines);
+            root.put("title", name);
 
-            // Moins bon marqueur (Savonette)
-            Vector WorstScorerLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 1));
-                    l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 1));
-                        l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 2));
-                    } else {
-                        l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 2));
-                        l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 3));
-                        l.add(tdPosModel.getValueAt(tdPosModel.getRowCount() - 1 - i, 4));
-                    }
-                }
-                line.put("cols", l);
-                WorstScorerLines.add(line);
-            }
-            root.put("WorstScorerLines", WorstScorerLines);
 
-            // Passoire
-            Vector WorstDefenseLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(tdNegModel.getValueAt(i, 1));
-                    l.add(tdNegModel.getValueAt(i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(tdNegModel.getValueAt(i, 1));
-                        l.add(tdNegModel.getValueAt(i, 2));
-                    } else {
-                        l.add(tdNegModel.getValueAt(i, 2));
-                        l.add(tdNegModel.getValueAt(i, 3));
-                        l.add(tdNegModel.getValueAt(i, 4));
-                    }
-                }
-                line.put("cols", l);
-                WorstDefenseLines.add(line);
-            }
-            root.put("WorstDefenseLines", WorstDefenseLines);
-
-            // Muraille
-            Vector BestDefenseLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 1));
-                    l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 1));
-                        l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 2));
-                    } else {
-                        l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 2));
-                        l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 3));
-                        l.add(tdNegModel.getValueAt(tdNegModel.getRowCount() - 1 - i, 4));
-                    }
-                }
-                line.put("cols", l);
-                BestDefenseLines.add(line);
-            }
-            root.put("BestDefenseLines", BestDefenseLines);
-
-            // Meilleur Destructer
-            Vector BestDestructorLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(sorPosModel.getValueAt(i, 1));
-                    l.add(sorPosModel.getValueAt(i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(sorPosModel.getValueAt(i, 1));
-                        l.add(sorPosModel.getValueAt(i, 2));
-                    } else {
-                        l.add(sorPosModel.getValueAt(i, 2));
-                        l.add(sorPosModel.getValueAt(i, 3));
-                        l.add(sorPosModel.getValueAt(i, 4));
-                    }
-                }
-                line.put("cols", l);
-                BestDestructorLines.add(line);
-            }
-            root.put("BestDestructorLines", BestDestructorLines);
-
-            // Moufle d'or
-            Vector WorstDestructorLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 1));
-                    l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 1));
-                        l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 2));
-                    } else {
-                        l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 2));
-                        l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 3));
-                        l.add(sorPosModel.getValueAt(sorPosModel.getRowCount() - 1 - i, 4));
-                    }
-                }
-                line.put("cols", l);
-                WorstDestructorLines.add(line);
-            }
-            root.put("WorstDestructorLines", WorstDestructorLines);
-
-            // Punching Ball
-            Vector BestDestructedLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(sorNegModel.getValueAt(i, 1));
-                    l.add(sorNegModel.getValueAt(i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(sorNegModel.getValueAt(i, 1));
-                        l.add(sorNegModel.getValueAt(i, 2));
-                    } else {
-                        l.add(sorNegModel.getValueAt(i, 2));
-                        l.add(sorNegModel.getValueAt(i, 3));
-                        l.add(sorNegModel.getValueAt(i, 4));
-                    }
-                }
-                line.put("cols", l);
-                BestDestructedLines.add(line);
-            }
-            root.put("BestDestructedLines", BestDestructedLines);
-
-            // String D'acier
-            Vector WorstDestructedLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
-                    l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
-                        l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
-                    } else {
-                        l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 2));
-                        l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 3));
-                        l.add(sorNegModel.getValueAt(sorNegModel.getRowCount() - 1 - i, 4));
-                    }
-                }
-                line.put("cols", l);
-                WorstDestructedLines.add(line);
-            }
-            root.put("WorstDestructedLines", WorstDestructedLines);
-
-            // Crampon
-            Vector BestFoulerLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(foulPosModel.getValueAt(i, 1));
-                    l.add(foulPosModel.getValueAt(i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(foulPosModel.getValueAt(i, 1));
-                        l.add(foulPosModel.getValueAt(i, 2));
-                    } else {
-                        l.add(foulPosModel.getValueAt(i, 2));
-                        l.add(foulPosModel.getValueAt(i, 3));
-                        l.add(foulPosModel.getValueAt(i, 4));
-                    }
-                }
-                line.put("cols", l);
-                BestFoulerLines.add(line);
-            }
-            root.put("BestFoulerLines", BestFoulerLines);
-
-            // Vertueux
-            Vector WorstFoulerLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 1));
-                    l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 2));
-
-                } else {
-                    if (_type == 1) {
-                        l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 1));
-                        l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 2));
-
-                    } else {
-                        l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 2));
-                        l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 3));
-                        l.add(foulPosModel.getValueAt(foulPosModel.getRowCount() - 1 - i, 4));
-                    }
-                }
-                line.put("cols", l);
-                WorstFoulerLines.add(line);
-            }
-            root.put("WorstFoulerLines", WorstFoulerLines);
-
-            // Paillasson
-            Vector BestFouledLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(foulNegModel.getValueAt(i, 1));
-                    l.add(foulNegModel.getValueAt(i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(foulNegModel.getValueAt(i, 1));
-                        l.add(foulNegModel.getValueAt(i, 2));
-                    } else {
-                        l.add(foulNegModel.getValueAt(i, 2));
-                        l.add(foulNegModel.getValueAt(i, 3));
-                        l.add(foulNegModel.getValueAt(i, 4));
-                    }
-                }
-                line.put("cols", l);
-                BestFouledLines.add(line);
-            }
-            root.put("BestFouledLines", BestFouledLines);
-
-            // 
-            Vector WorstFouledLines = new Vector();
-            for (int i = 0; i < 3; i++) {
-                HashMap line = new HashMap();
-                Vector l = new Vector();
-                l.add(i + 1);
-                if (_type == 2) {
-                    l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 1));
-                    l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 2));
-                } else {
-                    if (_type == 1) {
-                        l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 1));
-                        l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 2));
-                    } else {
-                        l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 2));
-                        l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 3));
-                        l.add(foulNegModel.getValueAt(foulNegModel.getRowCount() - 1 - i, 4));
-                    }
-                }
-                line.put("cols", l);
-                WorstFouledLines.add(line);
-            }
-            root.put("WorstFouledLines", WorstFouledLines);
-
-            if (_type == 0) {
-                Vector BestMinusLines = new Vector();
-                int count = 1;
-                for (int i = 0; (i < generalModel.getRowCount()) && (count <= 3); i++) {
-                    HashMap line = new HashMap();
-                    Vector l = new Vector();
-                    if (generalModel.getValueAt(i, 3).equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBELIN"))
-                            || generalModel.getValueAt(i, 3).equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLING"))
-                            || generalModel.getValueAt(i, 3).equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRE"))) {
-                        l.add(count);
-                        count++;
-                        l.add(generalModel.getValueAt(i, 2));
-                        l.add(generalModel.getValueAt(i, 3));
-                        l.add(i + 1);
-                        line.put("cols", l);
-                        BestMinusLines.add(line);
-                    }
-                }
-                root.put("BestMinusLines", BestMinusLines);
-            }
-
-            Vector rankLines = new Vector();
             Vector titles = new Vector();
-            for (int i = 0; i < generalModel.getColumnCount(); i++) {
-                titles.add(generalModel.getColumnName(i));
+            for (int i = 0; i < _ranking.getColumnCount(); i++) {
+                titles.add(_ranking.getColumnName(i));
             }
             root.put("titles", titles);
 
-            for (int i = 0; i < generalModel.getRowCount(); i++) {
+            Vector lines = new Vector();
+            for (int i = 0; i < _ranking.getRowCount(); i++) {
                 HashMap line = new HashMap();
-                Vector l = new Vector();
-                for (int j = 0; j < generalModel.getColumnCount(); j++) {
-                    l.add(generalModel.getValueAt(i, j));
+                Vector cols = new Vector();
+                for (int j = 0; j < _ranking.getColumnCount(); j++) {
+                    cols.add(_ranking.getValueAt(i, j));
                 }
-                line.put("cols", l);
-                rankLines.add(line);
+                line.put("cols", cols);
+                lines.add(line);
             }
-            root.put("lines", rankLines);
+            root.put("lines", lines);
+
+            root.put("titreMoreFor","Le plus réalisé");
+            root.put("titreLessFor","Le moins réalisé");
+            root.put("titreMoreAgainst","Le plus subi");
+            root.put("titreLessAgainst","Le moins subi");
+
+            Vector criterias=new Vector();
+            for (int i=0; i<_tour.getParams()._criterias.size(); i++)
+            {
+                HashMap criteria=new HashMap();
+                Criteria c=_tour.getParams()._criterias.get(i);
+                criteria.put("name", c._name);
+
+                mjtAnnexRank annexFor=_annexForRankings.get(c);
+                mjtAnnexRank annexAgainst=_annexAgainstRankings.get(c);
+                criteria.put("MoreFor",annexFor.getValueAt(0, 1));
+                criteria.put("LessFor",annexFor.getValueAt(annexFor.getRowCount()-1, 1));
+                criteria.put("MoreAgainst",annexAgainst.getValueAt(0, 1));
+                criteria.put("LessAgainst",annexAgainst.getValueAt(annexAgainst.getRowCount()-1, 1));
+
+                criterias.add(criteria);
+            }
+            root.put("criterias",criterias);
 
             SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy");
             SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy");
@@ -606,8 +287,6 @@ public class jdgGlobal extends javax.swing.JDialog {
         } catch (URISyntaxException e) {
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
         }
-
-
 
 
         return address;
