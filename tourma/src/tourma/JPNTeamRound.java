@@ -11,16 +11,19 @@
 package tourma;
 
 import java.awt.BorderLayout;
-import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.tableModel.mjtRankingTeam;
 import tourma.tableModel.mjtAnnexRankTeam;
+import tourma.tableModel.mjtAnnexRank;
 import java.awt.FontMetrics;
+import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JTable;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import javax.swing.JScrollPane;
+import tourma.data.Criteria;
 import tourma.data.Match;
+import tourma.data.Parameters;
 import tourma.data.Team;
 import tourma.tableModel.mjtMatchTeams;
 import tourma.views.report.jdgGlobal;
@@ -47,11 +50,21 @@ public class JPNTeamRound extends javax.swing.JPanel {
             JScrollPane jsp = new JScrollPane();
             _jtbTeamMatch = new JTable();
             jsp.setViewportView(_jtbTeamMatch);
-            jpnTeam.add(jsp, BorderLayout.EAST);
+            jtpTeams.add("Matchs", jsp);
+            /*jpnTeam.add(jsp, BorderLayout.EAST);*/
             jbtShowMatchTeam.setVisible(true);
         } else {
             jbtShowMatchTeam.setVisible(false);
         }
+
+        for (int i = 0; i < _tournament.getParams()._criterias.size(); i++) {
+            Criteria criteria = _tournament.getParams()._criterias.get(i);
+            JPNAnnexRanking jpn = new JPNAnnexRanking(criteria._name,
+                    criteria, t, _round, false, true);
+            jtpAnnexRank.add(criteria._name, jpn);
+        }
+
+        update();
 
     }
 
@@ -64,162 +77,25 @@ public class JPNTeamRound extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel8 = new javax.swing.JPanel();
-        jbtGeneralTeam = new javax.swing.JButton();
-        jbtScorePosTeam = new javax.swing.JButton();
-        jbtSorPosTeam = new javax.swing.JButton();
-        jbtFoulPosTeam = new javax.swing.JButton();
-        jbtPasPosTeam = new javax.swing.JButton();
-        jbtIntPosTeam = new javax.swing.JButton();
-        jbtShowMatchTeam = new javax.swing.JButton();
-        jbtGlobal = new javax.swing.JButton();
-        jbtScoreNegTeam = new javax.swing.JButton();
-        jbtSorNegTeam = new javax.swing.JButton();
-        jbtFoulNegTeam = new javax.swing.JButton();
-        jbtPasNegTeam = new javax.swing.JButton();
-        jbtIntNegTeam = new javax.swing.JButton();
+        jSplitPane1 = new javax.swing.JSplitPane();
         jpnTeam = new javax.swing.JPanel();
-        jSplitPane2 = new javax.swing.JSplitPane();
+        jtpTeams = new javax.swing.JTabbedPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbRankingTeam = new javax.swing.JTable();
-        jPanel7 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jtbMostTdTeam = new javax.swing.JTable();
-        jScrollPane11 = new javax.swing.JScrollPane();
-        jtbMostSorTeam = new javax.swing.JTable();
-        jScrollPane12 = new javax.swing.JScrollPane();
-        jtbMostFoulTeam = new javax.swing.JTable();
-        jScrollPane16 = new javax.swing.JScrollPane();
-        jtbMostPasTeam = new javax.swing.JTable();
-        jScrollPane18 = new javax.swing.JScrollPane();
-        jtbMostIntTeam = new javax.swing.JTable();
-        jScrollPane13 = new javax.swing.JScrollPane();
-        jtbMostTdNegTeam = new javax.swing.JTable();
-        jScrollPane14 = new javax.swing.JScrollPane();
-        jtbMostSorNegTeam = new javax.swing.JTable();
-        jScrollPane15 = new javax.swing.JScrollPane();
-        jtbMostFoulNegTeam = new javax.swing.JTable();
-        jScrollPane17 = new javax.swing.JScrollPane();
-        jtbMostPasNegTeam = new javax.swing.JTable();
-        jScrollPane19 = new javax.swing.JScrollPane();
-        jtbMostIntNegTeam = new javax.swing.JTable();
+        jPanel8 = new javax.swing.JPanel();
+        jbtGeneralTeam = new javax.swing.JButton();
+        jbtGlobal = new javax.swing.JButton();
+        jbtShowMatchTeam = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jtpAnnexRank = new javax.swing.JTabbedPane();
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel8.setLayout(new java.awt.GridLayout(2, 7));
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jbtGeneralTeam.setText(bundle.getString("GeneralRankingKey")); // NOI18N
-        jbtGeneralTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGeneralTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtGeneralTeam);
-
-        jbtScorePosTeam.setText(bundle.getString("TouchdownForKey")); // NOI18N
-        jbtScorePosTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtScorePosTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtScorePosTeam);
-
-        jbtSorPosTeam.setText(bundle.getString("CasualtiesKey")); // NOI18N
-        jbtSorPosTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtSorPosTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtSorPosTeam);
-
-        jbtFoulPosTeam.setText(bundle.getString("FoulsForKey")); // NOI18N
-        jbtFoulPosTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtFoulPosTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtFoulPosTeam);
-
-        jbtPasPosTeam.setText(bundle.getString("PassesForKey")); // NOI18N
-        jbtPasPosTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtPasPosTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtPasPosTeam);
-
-        jbtIntPosTeam.setText(bundle.getString("BestInterceptorKey")); // NOI18N
-        jbtIntPosTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtIntPosTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtIntPosTeam);
-
-        jbtShowMatchTeam.setText(bundle.getString("TeamMatchViewKey")); // NOI18N
-        jbtShowMatchTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtShowMatchTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtShowMatchTeam);
-
-        jbtGlobal.setText(bundle.getString("GlobalRankingKey")); // NOI18N
-        jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGlobalActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtGlobal);
-
-        jbtScoreNegTeam.setText(bundle.getString("TouchdownAgainstKey")); // NOI18N
-        jbtScoreNegTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtScoreNegTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtScoreNegTeam);
-
-        jbtSorNegTeam.setText(bundle.getString("CasualtiesAgainstKey")); // NOI18N
-        jbtSorNegTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtSorNegTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtSorNegTeam);
-
-        jbtFoulNegTeam.setText(bundle.getString("FoulsAgainstKey")); // NOI18N
-        jbtFoulNegTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtFoulNegTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtFoulNegTeam);
-
-        jbtPasNegTeam.setText(bundle.getString("PassesAgainstKey")); // NOI18N
-        jbtPasNegTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtPasNegTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtPasNegTeam);
-
-        jbtIntNegTeam.setText(bundle.getString("InterceptionsAgainstKey")); // NOI18N
-        jbtIntNegTeam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtIntNegTeamActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jbtIntNegTeam);
-
-        add(jPanel8, java.awt.BorderLayout.SOUTH);
+        jSplitPane1.setDividerLocation(600);
 
         jpnTeam.setLayout(new java.awt.BorderLayout());
 
-        jSplitPane2.setDividerLocation(200);
-        jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GeneralRankingKey"))); // NOI18N
         jScrollPane3.setPreferredSize(new java.awt.Dimension(466, 300));
 
@@ -237,256 +113,59 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jtbRankingTeam.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jtbRankingTeam);
 
-        jSplitPane2.setBottomComponent(jScrollPane3);
+        jtpTeams.addTab("Classement", jScrollPane3);
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 5));
+        jpnTeam.add(jtpTeams, java.awt.BorderLayout.CENTER);
 
-        jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TouchdownForKey"))); // NOI18N
-
-        jtbMostTdTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jbtGeneralTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGeneralTeam.setText(bundle.getString("GeneralRankingKey")); // NOI18N
+        jbtGeneralTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGeneralTeamActionPerformed(evt);
             }
-        ));
-        jScrollPane7.setViewportView(jtbMostTdTeam);
+        });
+        jPanel8.add(jbtGeneralTeam);
 
-        jPanel7.add(jScrollPane7);
-
-        jScrollPane11.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CasualtiesKey"))); // NOI18N
-
-        jtbMostSorTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jbtGlobal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGlobal.setText(bundle.getString("GlobalRankingKey")); // NOI18N
+        jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGlobalActionPerformed(evt);
             }
-        ));
-        jScrollPane11.setViewportView(jtbMostSorTeam);
+        });
+        jPanel8.add(jbtGlobal);
 
-        jPanel7.add(jScrollPane11);
-
-        jScrollPane12.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FoulsForKey"))); // NOI18N
-
-        jtbMostFoulTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jbtShowMatchTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtShowMatchTeam.setText(bundle.getString("TeamMatchViewKey")); // NOI18N
+        jbtShowMatchTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtShowMatchTeamActionPerformed(evt);
             }
-        ));
-        jScrollPane12.setViewportView(jtbMostFoulTeam);
+        });
+        jPanel8.add(jbtShowMatchTeam);
 
-        jPanel7.add(jScrollPane12);
+        jpnTeam.add(jPanel8, java.awt.BorderLayout.SOUTH);
 
-        jScrollPane16.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PassesForKey"))); // NOI18N
+        jSplitPane1.setLeftComponent(jpnTeam);
 
-        jtbMostPasTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane16.setViewportView(jtbMostPasTeam);
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(jtpAnnexRank, java.awt.BorderLayout.CENTER);
 
-        jPanel7.add(jScrollPane16);
+        jSplitPane1.setRightComponent(jPanel1);
 
-        jScrollPane18.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("BestInterceptorKey"))); // NOI18N
-
-        jtbMostIntTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane18.setViewportView(jtbMostIntTeam);
-
-        jPanel7.add(jScrollPane18);
-
-        jScrollPane13.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TouchdownAgainstKey"))); // NOI18N
-
-        jtbMostTdNegTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane13.setViewportView(jtbMostTdNegTeam);
-
-        jPanel7.add(jScrollPane13);
-
-        jScrollPane14.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CasualtiesAgainstKey"))); // NOI18N
-
-        jtbMostSorNegTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane14.setViewportView(jtbMostSorNegTeam);
-
-        jPanel7.add(jScrollPane14);
-
-        jScrollPane15.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FoulsAgainstKey"))); // NOI18N
-
-        jtbMostFoulNegTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane15.setViewportView(jtbMostFoulNegTeam);
-
-        jPanel7.add(jScrollPane15);
-
-        jScrollPane17.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PassesAgainstKey"))); // NOI18N
-
-        jtbMostPasNegTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane17.setViewportView(jtbMostPasNegTeam);
-
-        jPanel7.add(jScrollPane17);
-
-        jScrollPane19.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("InterceptionsAgainstKey"))); // NOI18N
-
-        jtbMostIntNegTeam.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane19.setViewportView(jtbMostIntNegTeam);
-
-        jPanel7.add(jScrollPane19);
-
-        jSplitPane2.setTopComponent(jPanel7);
-
-        jpnTeam.add(jSplitPane2, java.awt.BorderLayout.CENTER);
-
-        add(jpnTeam, java.awt.BorderLayout.CENTER);
+        add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtGeneralTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_GENERAL, 1);
+                mjtRankingTeam model = new mjtRankingTeam(_tournament.getParams()._team_victory_only, i, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getTeams());
+                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, "General par Equipe", i + 1, _tournament, model, 0);
                 jdg.setVisible(true);
                 break;
             }
         }
 }//GEN-LAST:event_jbtGeneralTeamActionPerformed
-
-    private void jbtScorePosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScorePosTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORER, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtScorePosTeamActionPerformed
-
-    private void jbtScoreNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtScoreNegTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_SCORED, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtScoreNegTeamActionPerformed
-
-    private void jbtSorPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorPosTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYER, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtSorPosTeamActionPerformed
-
-    private void jbtSorNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSorNegTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_DESTROYED, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtSorNegTeamActionPerformed
-
-    private void jbtFoulPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulPosTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULER, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtFoulPosTeamActionPerformed
-
-    private void jbtFoulNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFoulNegTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_FOULED, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-}//GEN-LAST:event_jbtFoulNegTeamActionPerformed
 
     private void jbtShowMatchTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowMatchTeamActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
@@ -501,93 +180,42 @@ public class JPNTeamRound extends javax.swing.JPanel {
     private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
          for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, 1);
+                mjtRankingTeam model = new mjtRankingTeam(_tournament.getParams()._team_victory_only, i, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getTeams());
+                HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<Criteria, mjtAnnexRank>();
+                HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new  HashMap<Criteria, mjtAnnexRank>();
+                for (int j = 0; j < _tournament.getParams()._criterias.size(); j++) {
+                    Criteria crit=_tournament.getParams()._criterias.get(j);
+                    mjtAnnexRank annex=new mjtAnnexRankTeam(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                            _tournament.getTeams(), true,
+                            _tournament.getParams()._ranking1, _tournament.getParams()._ranking2,
+                            _tournament.getParams()._ranking3, _tournament.getParams()._ranking4,
+                            _tournament.getParams()._ranking5);
+                    annexForRankings.put(crit,annex);
+                    annex=new mjtAnnexRankTeam(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                            _tournament.getTeams(), true,
+                            _tournament.getParams()._ranking1, _tournament.getParams()._ranking2,
+                            _tournament.getParams()._ranking3, _tournament.getParams()._ranking4,
+                            _tournament.getParams()._ranking5);
+                    annexAgainstRankings.put(crit,annex);
+                }
+                jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, i + 1, _tournament, model, annexForRankings, annexAgainstRankings, false, false);
                 jdg.setVisible(true);
                 break;
             }
         }
     }//GEN-LAST:event_jbtGlobalActionPerformed
-
-    private void jbtPasPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasPosTeamActionPerformed
-         for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSER, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-    }//GEN-LAST:event_jbtPasPosTeamActionPerformed
-
-    private void jbtPasNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPasNegTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_PASSED, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-    }//GEN-LAST:event_jbtPasNegTeamActionPerformed
-
-    private void jbtIntPosTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntPosTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-    }//GEN-LAST:event_jbtIntPosTeamActionPerformed
-
-    private void jbtIntNegTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtIntNegTeamActionPerformed
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_round == _tournament.getRounds().get(i)) {
-                jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, jdgRanking.RANKING_INTERCEPTER, 1);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-    }//GEN-LAST:event_jbtIntNegTeamActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane11;
-    private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JScrollPane jScrollPane13;
-    private javax.swing.JScrollPane jScrollPane14;
-    private javax.swing.JScrollPane jScrollPane15;
-    private javax.swing.JScrollPane jScrollPane16;
-    private javax.swing.JScrollPane jScrollPane17;
-    private javax.swing.JScrollPane jScrollPane18;
-    private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JButton jbtFoulNegTeam;
-    private javax.swing.JButton jbtFoulPosTeam;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton jbtGeneralTeam;
     private javax.swing.JButton jbtGlobal;
-    private javax.swing.JButton jbtIntNegTeam;
-    private javax.swing.JButton jbtIntPosTeam;
-    private javax.swing.JButton jbtPasNegTeam;
-    private javax.swing.JButton jbtPasPosTeam;
-    private javax.swing.JButton jbtScoreNegTeam;
-    private javax.swing.JButton jbtScorePosTeam;
     private javax.swing.JButton jbtShowMatchTeam;
-    private javax.swing.JButton jbtSorNegTeam;
-    private javax.swing.JButton jbtSorPosTeam;
     private javax.swing.JPanel jpnTeam;
-    private javax.swing.JTable jtbMostFoulNegTeam;
-    private javax.swing.JTable jtbMostFoulTeam;
-    private javax.swing.JTable jtbMostIntNegTeam;
-    private javax.swing.JTable jtbMostIntTeam;
-    private javax.swing.JTable jtbMostPasNegTeam;
-    private javax.swing.JTable jtbMostPasTeam;
-    private javax.swing.JTable jtbMostSorNegTeam;
-    private javax.swing.JTable jtbMostSorTeam;
-    private javax.swing.JTable jtbMostTdNegTeam;
-    private javax.swing.JTable jtbMostTdTeam;
     private javax.swing.JTable jtbRankingTeam;
+    private javax.swing.JTabbedPane jtpAnnexRank;
+    private javax.swing.JTabbedPane jtpTeams;
     // End of variables declaration//GEN-END:variables
 
     public void update() {
@@ -600,82 +228,23 @@ public class JPNTeamRound extends javax.swing.JPanel {
         }
         v.add(_round);
 
-        mjtAnnexRankTeam mTdPosTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_TD_POS, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankTeam mTdNegTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_TD_NEG, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
 
-        mjtAnnexRankTeam mSorPosTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_SOR_POS, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankTeam mSorNegTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_SOR_NEG, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankTeam mFoulPosTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_FOUL_POS, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankTeam mFoulNegTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_FOUL_NEG, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-
-        mjtAnnexRankTeam mPasPosTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_PAS_POS, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankTeam mPasNegTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_PAS_NEG, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankTeam mIntPosTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_INT_POS, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-        mjtAnnexRankTeam mIntNegTeam = new mjtAnnexRankTeam(v, mjtAnnexRankIndiv.C_MOST_INT_NEG, _tournament.getTeams(), false, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5);
-
-        jtbMostTdTeam.setModel(mTdPosTeam);
-        jtbMostTdTeam.setDefaultRenderer(String.class, mTdPosTeam);
-        jtbMostTdTeam.setDefaultRenderer(Integer.class, mTdPosTeam);
-
-        jtbMostTdNegTeam.setModel(mTdNegTeam);
-        jtbMostTdNegTeam.setDefaultRenderer(String.class, mTdNegTeam);
-        jtbMostTdNegTeam.setDefaultRenderer(Integer.class, mTdNegTeam);
-
-        jtbMostSorTeam.setModel(mSorPosTeam);
-        jtbMostSorTeam.setDefaultRenderer(String.class, mSorPosTeam);
-        jtbMostSorTeam.setDefaultRenderer(Integer.class, mSorPosTeam);
-        jtbMostSorNegTeam.setModel(mSorNegTeam);
-        jtbMostSorNegTeam.setDefaultRenderer(String.class, mSorNegTeam);
-        jtbMostSorNegTeam.setDefaultRenderer(Integer.class, mSorNegTeam);
-        jtbMostFoulTeam.setModel(mFoulPosTeam);
-        jtbMostFoulTeam.setDefaultRenderer(String.class, mFoulPosTeam);
-        jtbMostFoulTeam.setDefaultRenderer(Integer.class, mFoulPosTeam);
-        jtbMostFoulNegTeam.setModel(mFoulNegTeam);
-        jtbMostFoulNegTeam.setDefaultRenderer(String.class, mFoulNegTeam);
-        jtbMostFoulNegTeam.setDefaultRenderer(Integer.class, mFoulNegTeam);
-
-        jtbMostPasTeam.setModel(mPasPosTeam);
-        jtbMostPasTeam.setDefaultRenderer(String.class, mPasPosTeam);
-        jtbMostPasTeam.setDefaultRenderer(Integer.class, mPasPosTeam);
-        jtbMostPasNegTeam.setModel(mPasNegTeam);
-        jtbMostPasNegTeam.setDefaultRenderer(String.class, mPasNegTeam);
-        jtbMostPasNegTeam.setDefaultRenderer(Integer.class, mPasNegTeam);
-
-        jtbMostIntTeam.setModel(mIntPosTeam);
-        jtbMostIntTeam.setDefaultRenderer(String.class, mIntPosTeam);
-        jtbMostIntTeam.setDefaultRenderer(Integer.class, mIntPosTeam);
-        jtbMostIntNegTeam.setModel(mIntNegTeam);
-        jtbMostIntNegTeam.setDefaultRenderer(String.class, mIntNegTeam);
-        jtbMostIntNegTeam.setDefaultRenderer(Integer.class, mIntNegTeam);
-
+        for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
+            JPNAnnexRanking jpn = (JPNAnnexRanking) jtpAnnexRank.getComponent(i);
+            jpn.update();
+        }
 
         mjtRankingTeam mRankingTeam = null;
-        if (_tournament.getParams()._team_victory_only)
-        {
-               mRankingTeam= new mjtRankingTeam(v, _tournament.getParams()._ranking1_team, _tournament.getParams()._ranking2_team, _tournament.getParams()._ranking3_team, _tournament.getParams()._ranking4_team, _tournament.getParams()._ranking5_team, _tournament.getTeams());
-        }
-        else
-        {
-            mRankingTeam= new mjtRankingTeam(v, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getTeams());
+        if (_tournament.getParams()._team_victory_only) {
+            mRankingTeam = new mjtRankingTeam(true,v.size()-1, _tournament.getParams()._ranking1_team, _tournament.getParams()._ranking2_team, _tournament.getParams()._ranking3_team, _tournament.getParams()._ranking4_team, _tournament.getParams()._ranking5_team, _tournament.getTeams());
+        } else {
+            mRankingTeam = new mjtRankingTeam(false,v.size()-1, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getTeams());
         }
         jtbRankingTeam.setModel(mRankingTeam);
         jtbRankingTeam.setDefaultRenderer(String.class, mRankingTeam);
         jtbRankingTeam.setDefaultRenderer(Integer.class, mRankingTeam);
 
         setColumnSize(jtbRankingTeam);
-
-        setColumnSize(jtbRankingTeam);
-        setColumnSize(jtbMostFoulNegTeam);
-        setColumnSize(jtbMostFoulTeam);
-        setColumnSize(jtbMostSorNegTeam);
-        setColumnSize(jtbMostSorTeam);
-        setColumnSize(jtbMostTdNegTeam);
-        setColumnSize(jtbMostTdTeam);
-
-        setColumnSize(jtbMostPasNegTeam);
-        setColumnSize(jtbMostPasTeam);
-        setColumnSize(jtbMostIntNegTeam);
-        setColumnSize(jtbMostIntTeam);
 
         if (_jtbTeamMatch != null) {
             Vector<Team> teams = new Vector<Team>();
@@ -699,6 +268,8 @@ public class JPNTeamRound extends javax.swing.JPanel {
         }
 
     }
+
+
 
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());

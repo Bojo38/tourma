@@ -64,16 +64,16 @@ public class jdgPairing extends javax.swing.JDialog {
         _items1 = new Vector();
         for (int i = 0; i < _team1._coachs.size(); i++) {
             Coach c = _team1._coachs.get(i);
-            _items1.add(c._name + " - " + c._team + " - " + c._roster);
-            _coachs.put(c._name + " - " + c._team + " - " + c._roster, c);
+            _items1.add(c._name + " - " + c._team + " - " + c._roster._name);
+            _coachs.put(c._name + " - " + c._team + " - " + c._roster._name, c);
         }
 
 
         _items2 = new Vector();
         for (int i = 0; i < _team1._coachs.size(); i++) {
             Coach c = _team2._coachs.get(i);
-            _items2.add(c._name + " - " + c._team + " - " + c._roster);
-            _coachs.put(c._name + " - " + c._team + " - " + c._roster, c);
+            _items2.add(c._name + " - " + c._team + " - " + c._roster._name);
+            _coachs.put(c._name + " - " + c._team + " - " + c._roster._name, c);
         }
 
         update();
@@ -201,8 +201,8 @@ public class jdgPairing extends javax.swing.JDialog {
 
         if (jtbMatches.getSelectedRow() >= 0) {
             Match m = _matchs.get(jtbMatches.getSelectedRow());
-            _items1.add(m._coach1._name + " - " + m._coach1._team + " - " + m._coach1._roster);
-            _items2.add(m._coach2._name + " - " + m._coach2._team + " - " + m._coach2._roster);
+            _items1.add(m._coach1._name + " - " + m._coach1._team + " - " + m._coach1._roster._name);
+            _items2.add(m._coach2._name + " - " + m._coach2._team + " - " + m._coach2._roster._name);
             _matchs.remove(jtbMatches.getSelectedRow());
         }
         update();

@@ -184,7 +184,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
 
         Vector<String> playersNames = new Vector<String>();
         for (int i = 0; i < _playersTmp.size(); i++) {
-            playersNames.add(_playersTmp.get(i)._name + " - " + _playersTmp.get(i)._team + " (" + _playersTmp.get(i)._roster + ")");
+            playersNames.add(_playersTmp.get(i)._name + " - " + _playersTmp.get(i)._team + " (" + _playersTmp.get(i)._roster._name + ")");
         }
 
         _playersSelected.removeAllElements();

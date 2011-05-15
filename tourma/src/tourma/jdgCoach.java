@@ -8,7 +8,6 @@
  *
  * Created on 10 mai 2010, 19:37:53
  */
-
 package tourma;
 
 import java.awt.DisplayMode;
@@ -19,6 +18,7 @@ import tourma.data.Tournament;
 import tourma.data.Coach;
 import javax.swing.JOptionPane;
 import tourma.data.Clan;
+import tourma.data.Roster;
 
 /**
  *
@@ -26,57 +26,70 @@ import tourma.data.Clan;
  */
 public class jdgCoach extends javax.swing.JDialog {
 
+    boolean _teamTournament;
+
     /** Creates new form jdgCoach */
     public jdgCoach(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        _coach=null;
-    }
 
+        _teamTournament = Tournament.getTournament().getParams()._teamTournament;
+
+        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters));
+
+        if (_teamTournament) {
+            jcbClan.setEnabled(false);
+        } else {
+            jcbClan.setEnabled(true);
+        }
+        _coach = null;
+    }
     Coach _coach;
+
     /** Creates new form jdgCoach */
-    public jdgCoach(java.awt.Frame parent, boolean modal,Coach coach) {
+    public jdgCoach(java.awt.Frame parent, boolean modal, Coach coach) {
         super(parent, modal);
         initComponents();
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
 
-        String[] aszRaces=new String[24];
-        aszRaces[0]=bundle.getString("AmazonKey");
-        aszRaces[1]=bundle.getString("UnderworldKey");
-        aszRaces[2]=bundle.getString("ChaosKey");
-        aszRaces[3]=bundle.getString("ElfKey");
-        aszRaces[4]=bundle.getString("WoodElfKey");
-        aszRaces[5]=bundle.getString("DarkElfKey");
-        aszRaces[6]=bundle.getString("GoblinKey");
-        aszRaces[7]=bundle.getString("HalflingKey");
-        aszRaces[8]=bundle.getString("HighElfKey");
-        aszRaces[9]=bundle.getString("LizardmenKey");
-        aszRaces[10]=bundle.getString("HumanKey");
-        aszRaces[11]=bundle.getString("KhemriKey");
-        aszRaces[12]=bundle.getString("UndeadKey");
-        aszRaces[13]=bundle.getString("DwarfKey");
-        aszRaces[14]=bundle.getString("ChaosDwarfKey");
-        aszRaces[15]=bundle.getString("NecromanticKey");
-        aszRaces[16]=bundle.getString("NorseKey");
-        aszRaces[17]=bundle.getString("NurgleKey");
-        aszRaces[18]=bundle.getString("OgreKey");
-        aszRaces[19]=bundle.getString("OrcKey");
-        aszRaces[20]=bundle.getString("ChaosPactKey");
-        aszRaces[21]=bundle.getString("SkavenKey");
-        aszRaces[22]=bundle.getString("SlannKey");
-        aszRaces[23]=bundle.getString("VampireKey");
-                
+        String[] aszRaces = new String[24];
+        aszRaces[0] = bundle.getString("AmazonKey");
+        aszRaces[1] = bundle.getString("UnderworldKey");
+        aszRaces[2] = bundle.getString("ChaosKey");
+        aszRaces[3] = bundle.getString("ElfKey");
+        aszRaces[4] = bundle.getString("WoodElfKey");
+        aszRaces[5] = bundle.getString("DarkElfKey");
+        aszRaces[6] = bundle.getString("GoblinKey");
+        aszRaces[7] = bundle.getString("HalflingKey");
+        aszRaces[8] = bundle.getString("HighElfKey");
+        aszRaces[9] = bundle.getString("LizardmenKey");
+        aszRaces[10] = bundle.getString("HumanKey");
+        aszRaces[11] = bundle.getString("KhemriKey");
+        aszRaces[12] = bundle.getString("UndeadKey");
+        aszRaces[13] = bundle.getString("DwarfKey");
+        aszRaces[14] = bundle.getString("ChaosDwarfKey");
+        aszRaces[15] = bundle.getString("NecromanticKey");
+        aszRaces[16] = bundle.getString("NorseKey");
+        aszRaces[17] = bundle.getString("NurgleKey");
+        aszRaces[18] = bundle.getString("OgreKey");
+        aszRaces[19] = bundle.getString("OrcKey");
+        aszRaces[20] = bundle.getString("ChaosPactKey");
+        aszRaces[21] = bundle.getString("SkavenKey");
+        aszRaces[22] = bundle.getString("SlannKey");
+        aszRaces[23] = bundle.getString("VampireKey");
+
         jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(aszRaces));
 
-        DefaultComboBoxModel clanListModel=new DefaultComboBoxModel();
-        for (int i=0; i<Tournament.getTournament().getClans().size(); i++)
-        {
-            clanListModel.addElement(Tournament.getTournament().getClans().get(i)._name);
+        if (!_teamTournament) {
+            DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
+            for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
+                clanListModel.addElement(Tournament.getTournament().getClans().get(i)._name);
+            }
+            jcbClan.setModel(clanListModel);
         }
-        jcbClan.setModel(clanListModel);
 
-         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
         DisplayMode dmode = gs.getDisplayMode();
         if (dmode != null) {
@@ -84,14 +97,16 @@ public class jdgCoach extends javax.swing.JDialog {
             int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
-        
-        _coach=coach;
+
+        _coach = coach;
 
         jtfEquipe.setText(_coach._team);
         jtfNAF.setText(Integer.toString(_coach._naf));
         jtfNom.setText(_coach._name);
-        jcbRoster.setSelectedItem(_coach._roster);
-        jcbClan.setSelectedItem(_coach._clan._name);
+        jcbRoster.setSelectedItem(_coach._roster._name);
+        if (!_teamTournament) {
+            jcbClan.setSelectedItem(_coach._clan._name);
+        }
 
     }
 
@@ -159,7 +174,6 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel6.setText(bundle.getString("ClanKey:")); // NOI18N
         jPanel1.add(jLabel6);
 
-        jcbClan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Amazone", "Bas Fonds", "Chaos", "Elfe", "Elfe sylvain", "Elfe noir", "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri", "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique", "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire" }));
         jPanel1.add(jcbClan);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -191,55 +205,48 @@ public class jdgCoach extends javax.swing.JDialog {
 
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
         Coach c;
-        if (_coach==null)
-        {
-            c=new Coach();         
-        }
-        else
-        {
-            c=_coach;
-        }
-        
-        c._name=jtfNom.getText();
-        c._roster=jcbRoster.getSelectedItem().toString();
-        c._team=jtfEquipe.getText();
-        try
-        {
-            c._naf=Integer.parseInt(jtfNAF.getText());
-        }
-        catch(NumberFormatException e)
-        {
-            c._naf=0;
-        }
-        try
-        {
-            c._rank=Integer.parseInt(jtfRank.getText());
-        }
-        catch(NumberFormatException e)
-        {
-            c._rank=110;
+        if (_coach == null) {
+            c = new Coach();
+        } else {
+            c = _coach;
         }
 
-        if (c._name.equals(""))
-        {
+        c._name = jtfNom.getText();
+        c._roster = new Roster(jcbRoster.getSelectedIndex());
+        c._team = jtfEquipe.getText();
+        try {
+            c._naf = Integer.parseInt(jtfNAF.getText());
+        } catch (NumberFormatException e) {
+            c._naf = 0;
+        }
+        try {
+            c._rank = Integer.parseInt(jtfRank.getText());
+        } catch (NumberFormatException e) {
+            c._rank = 110;
+        }
+
+        if (c._name.equals("")) {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE NOM EST VIDE"));
             return;
         }
-        if (c._team.equals(""))
-        {
+        if (c._team.equals("")) {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("L'ÉQUIPE EST VIDE"));
             return;
         }
-        if (c._roster.equals(""))
-        {
+        if (c._roster._name.equals("")) {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE ROSTER EST VIDE"));
             return;
         }
 
-        c._clan=(Clan)Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
-
-        if (_coach==null)
+        if (!_teamTournament) {
+        c._clan = (Clan) Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
+        }
+        else
         {
+            c._clan=Tournament.getTournament().getClans().get(0);
+        }
+
+        if (_coach == null) {
             Tournament.getTournament().getCoachs().add(c);
         }
 
@@ -248,8 +255,6 @@ public class jdgCoach extends javax.swing.JDialog {
         this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -268,5 +273,4 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JTextField jtfNom;
     private javax.swing.JTextField jtfRank;
     // End of variables declaration//GEN-END:variables
-
 }
