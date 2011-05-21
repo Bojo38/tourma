@@ -239,11 +239,13 @@ public class jdgCoach extends javax.swing.JDialog {
         }
 
         if (!_teamTournament) {
-        c._clan = (Clan) Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
-        }
-        else
-        {
-            c._clan=Tournament.getTournament().getClans().get(0);
+            if (jcbClan.getSelectedIndex() > 0) {
+                c._clan = (Clan) Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
+            } else {
+                c._clan = (Clan) Tournament.getTournament().getClans().get(0);
+            }
+        } else {
+            c._clan = Tournament.getTournament().getClans().get(0);
         }
 
         if (_coach == null) {

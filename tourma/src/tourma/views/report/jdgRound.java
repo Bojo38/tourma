@@ -126,7 +126,7 @@ public class jdgRound extends javax.swing.JDialog {
         setAlwaysOnTop(true);
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/options-des-dossiers.png"))); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/OK.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +145,7 @@ public class jdgRound extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
-        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/mes-téléchargements.png"))); // NOI18N
+        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/export.png"))); // NOI18N
         jbtExport.setText(bundle.getString("EXPORT HTML")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

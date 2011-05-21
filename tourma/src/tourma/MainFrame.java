@@ -50,7 +50,7 @@ import tourma.tableModel.mjtCriterias;
 public class MainFrame extends javax.swing.JFrame {
 
     Tournament _tournament;
-    File file = null;
+    File _file = null;
 
     /** Creates new form MainFrame */
     public MainFrame() {
@@ -449,6 +449,11 @@ public class MainFrame extends javax.swing.JFrame {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         setTitle(bundle.getString("TOURNOI MANAGER")); // NOI18N
         setIconImage((Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("images/icone.png"))));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -1315,14 +1320,14 @@ public class MainFrame extends javax.swing.JFrame {
             if (!ext.equals("xml")) {
                 url2 = url2 + ".xml";
             }
-            file = new File(url2);
-            Tournament.getTournament().saveXML(file);
+            _file = new File(url2);
+            Tournament.getTournament().saveXML(_file);
         }
     }//GEN-LAST:event_jmiSaveAsActionPerformed
 
     private void jmiSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveActionPerformed
-        if (file != null) {
-            Tournament.getTournament().saveXML(file);
+        if (_file != null) {
+            Tournament.getTournament().saveXML(_file);
         } else {
             jmiSaveAsActionPerformed(evt);
         }
@@ -1334,7 +1339,7 @@ public class MainFrame extends javax.swing.JFrame {
         jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
-            file =
+            _file =
                     jfc.getSelectedFile();
             for (int i = jtpMain.getTabCount() - 1; i
                     >= 0; i--) {
@@ -1677,6 +1682,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         update();
     }//GEN-LAST:event_jbtAddCriteriaActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+
+        if (JOptionPane.showConfirmDialog(this, "Voulez vous sauvgarder ?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (_file.equals("")) {
+                jmiSaveAsActionPerformed(null);
+            } else {
+                jmiSaveActionPerformed(null);
+            }
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
