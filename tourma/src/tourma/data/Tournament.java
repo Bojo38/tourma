@@ -44,22 +44,27 @@ public class Tournament {
      * Clans used in the tournement
      */
     protected Vector<Clan> _clans;
-
     /**
      * Rosters Groups
      */
-    //  protected Vector<Group> _groups;
+    protected Vector<Group> _groups;
+
     private Tournament() {
         _params = new Parameters();
         _rounds = new Vector<Round>();
         _coachs = new Vector<Coach>();
         _clans = new Vector<Clan>();
         _teams = new Vector();
-//        _groups = new Vector<Group>();
+        _groups = new Vector<Group>();
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         _clans.add(new Clan(bundle.getString("NoneKey")));
-  //      _groups.add(new Group(bundle.getString("NoneKey")));
+        Group group = new Group(bundle.getString("NoneKey"));
+        _groups.add(group);
+
+        for (int i = 0; i < Roster.Rosters.length; i++) {
+            group._rosters.add(new Roster(Roster.Rosters[i]));
+        }
     }
 
     public static Tournament resetTournament() {
@@ -117,20 +122,16 @@ public class Tournament {
 
     }
 
+    public Vector<Group> getGroups() {
+        return _groups;
+    }
+
     public Vector<Team> getTeams() {
         return _teams;
-
-
-
-
     }
 
     public Vector<Round> getRounds() {
         return _rounds;
-
-
-
-
     }
 
     /*    public Vector<Group> getGroups() {
@@ -213,16 +214,16 @@ public class Tournament {
             document.addContent(clan);
         }
 
-        /*for (int i = 0; i < _groups.size(); i++) {
+        for (int i = 0; i < _groups.size(); i++) {
             Element group = new Element("Group");
             group.setAttribute("Name", _groups.get(i)._name);
             for (int j = 0; j < _groups.get(i)._rosters.size(); j++) {
                 Element roster = new Element("Roster");
-                roster.setAttribute("name", _groups.get(i)._rosters.get(j)._name);
+                roster.setAttribute("Name", _groups.get(i)._rosters.get(j)._name);
                 group.addContent(roster);
             }
             document.addContent(group);
-        }*/
+        }
 
         for (int i = 0; i
                 < _coachs.size(); i++) {
@@ -234,47 +235,25 @@ public class Tournament {
             coach.setAttribute("Rank", Integer.toString(_coachs.get(i)._rank));
             coach.setAttribute("Clan", _coachs.get(i)._clan._name);
             document.addContent(coach);
-
-
-
-
         }
 
         for (int i = 0; i
                 < _teams.size(); i++) {
             Element team = new Element("Team");
             team.setAttribute("Name", _teams.get(i)._name);
-
-
-
-
             for (int j = 0; j
                     < _teams.get(i)._coachs.size(); j++) {
                 Element coach = new Element("Coach");
                 coach.setAttribute("Name", _teams.get(i)._coachs.get(j)._name);
                 team.addContent(coach);
-
-
-
-
             }
             document.addContent(team);
-
-
-
-
         }
-
-
 
         for (int i = 0; i
                 < _rounds.size(); i++) {
             Element round = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"));
             round.setAttribute("Date", format.format(_rounds.get(i)._heure));
-
-
-
-
 
             for (int j = 0; j
                     < _rounds.get(i)._matchs.size(); j++) {
@@ -282,10 +261,6 @@ public class Tournament {
                 Match m = _rounds.get(i)._matchs.get(j);
                 match.setAttribute("Coach1", m._coach1._name);
                 match.setAttribute("Coach2", m._coach2._name);
-
-
-
-
 
                 for (int k = 0; k
                         < _params._criterias.size(); k++) {
@@ -295,43 +270,20 @@ public class Tournament {
                     value.setAttribute("Value1", Integer.toString(val._value1));
                     value.setAttribute("Value2", Integer.toString(val._value2));
                     match.addContent(value);
-
-
-
-
                 }
                 round.addContent(match);
-
-
-
-
             }
             document.addContent(round);
-
-
-
-
         }
 
         try {
             XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
             sortie.output(document, new FileOutputStream(file));
 
-
-
-
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
-
-
-
-
         } catch (IOException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
-
-
-
-
         }
     }
 
@@ -348,156 +300,68 @@ public class Tournament {
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELVES");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE SYLVAIN"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WOOD ELVES");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE NOIR"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DARK ELVES");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBELIN"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBLINS");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLING"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLINGS");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HAUT ELFE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HIGH ELVES");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HOMME LÉZARD"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LIZARDMEN");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HUMAIN"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HUMANS");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KHEMRI"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KHEMRI");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MORT-VIVANT"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNDEAD");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAIN"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DWARVES");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAIN DU CHAOS"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS DWARVES");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NECROMANTIQUE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NECROMANTIC");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NORDIQUE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NORSE");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NURGLE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NURGLE'S ROTTERS");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRES");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORQUE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORC");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PACTE CHAOTIQUE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS PACT");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKAVEN"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKAVEN");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SLANN"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SLANN");
-
-
-
-
         }
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VAMPIRE"))) {
             return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VAMPIRES");
-
-
-
-
         }
         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNKNOWN");
-
-
-
-
     }
 
     public void exportResults(java.io.File file) {
@@ -510,11 +374,6 @@ public class Tournament {
         document.addContent(orgas);
 
         Element coaches = new Element("coaches");
-
-
-
-
-
         for (int i = 0; i
                 < _coachs.size(); i++) {
             if (_coachs.get(i)._naf > 0) {
@@ -527,19 +386,9 @@ public class Tournament {
                 coach.addContent(name);
                 coach.addContent(team);
                 coaches.addContent(coach);
-
-
-
-
             }
         }
-
         document.addContent(coaches);
-
-
-
-
-
 
         for (int i = 0; i
                 < _rounds.size(); i++) {
@@ -585,9 +434,6 @@ public class Tournament {
                     game.addContent(playerRecord2);
                     document.addContent(game);
 
-
-
-
                 }
             }
         }
@@ -596,20 +442,11 @@ public class Tournament {
             XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
             sortie.output(document, new FileOutputStream(file));
 
-
-
-
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
 
-
-
-
         } catch (IOException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
-
-
-
 
         }
     }
@@ -624,18 +461,12 @@ public class Tournament {
         Criteria c4 = new Criteria("Passes");
         Criteria c5 = new Criteria("Interceptions");
 
-
-
-
         try {
             if (params != null) {
                 _params._tournament_orga = params.getAttribute("Organizer").getValue();
                 _params._tournament_name = params.getAttribute("Name").getValue();
 
                 _params._criterias.removeAllElements();
-
-
-
                 c1._pointsFor = params.getAttribute("Bonus_Pos_Td").getIntValue();
                 c1._pointsAgainst = params.getAttribute("Bonus_Neg_Td").getIntValue();
                 c2._pointsFor = params.getAttribute("Bonus_Pos_Sor").getIntValue();
@@ -1102,55 +933,43 @@ public class Tournament {
                 _params._criterias.add(crit);
             }
 
-            /*try {
-            List groups = params.getChildren("Group");
-            Iterator gr = groups.iterator();
-            _groups.removeAllElements();
+            try {
+                List groups = racine.getChildren("Group");
+                Iterator gr = groups.iterator();
+                _groups.removeAllElements();
 
-            while (gr.hasNext()) {
-            Element group = (Element) gr.next();
-            Group groupe = new Group(group.getAttributeValue("Name"));
+                while (gr.hasNext()) {
+                    Element group = (Element) gr.next();
+                    Group groupe = new Group(group.getAttributeValue("Name"));
 
-            List rosters = group.getChildren("Roster");
-            Iterator ro = groups.iterator();
-            while (ro.hasNext()) {
-            Element roster = (Element) ro.next();
-            Roster rost = new Roster(roster.getAttributeValue("Name"));
-            groupe._rosters.add(rost);
-            }
-            _groups.add(groupe);
-            }
+                    List rosters = group.getChildren("Roster");
+                    Iterator ro = rosters.iterator();
+                    while (ro.hasNext()) {
+                        Element roster = (Element) ro.next();
+                        Roster rost = new Roster(roster.getAttributeValue("Name"));
+                        groupe._rosters.add(rost);
+                    }
+                    _groups.add(groupe);
+                }
             } catch (NullPointerException npe) {
-            }*/
+            }
 
             List clans = racine.getChildren("Clan");
             Iterator h = clans.iterator();
             _clans.clear();
             HashMap<String, Clan> clanMap = new HashMap();
 
-
-
-
-
             while (h.hasNext()) {
                 Element clan = (Element) h.next();
                 Clan c = new Clan(clan.getAttributeValue("Name"));
                 _clans.addElement(c);
                 clanMap.put(c._name, c);
-
-
-
-
             }
 
             List coachs = racine.getChildren("Coach");
             Iterator i = coachs.iterator();
             _coachs.clear();
             HashMap<String, Coach> map = new HashMap();
-
-
-
-
 
             while (i.hasNext()) {
                 Element coach = (Element) i.next();
@@ -1162,42 +981,23 @@ public class Tournament {
                 c._rank = coach.getAttribute("Rank").getIntValue();
                 c._clan = clanMap.get(coach.getAttributeValue("Clan"));
 
-
-
-
-
                 if (c._clan == null) {
                     if (_clans.size() == 0) {
                         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
                         _clans.add(new Clan(bundle.getString("NoneKey")));
 
-
-
-
                     }
                     c._clan = _clans.get(0);
-
-
-
 
                 }
                 _coachs.add(c);
                 c._matchs.removeAllElements();
                 map.put(c._name, c);
-
-
-
-
             }
 
             List teams = racine.getChildren("Team");
             Iterator l = teams.iterator();
             _teams.clear();
-
-
-
-
-
             while (l.hasNext()) {
                 Element team = (Element) l.next();
                 Team t = new Team();
@@ -1743,17 +1543,9 @@ public class Tournament {
                     teams.remove(team1);
 
                     Object[] possibilities = new Object[teams.size()];
-
-
-
-
                     for (int i = 0; i
                             < teams.size(); i++) {
                         possibilities[i] = teams.get(i)._name;
-
-
-
-
                     }
 
                     String opp = (String) JOptionPane.showInputDialog(
@@ -1765,45 +1557,23 @@ public class Tournament {
                             null,
                             possibilities,
                             possibilities[0]);
-
-
-
-
                     for (int i = 0; i
                             < teams.size(); i++) {
                         if (opp.equals(teams.get(i)._name)) {
                             Team team2 = teams.get(i);
                             teams2.add(team2);
                             teams.remove(team2);
-
-
-
-
                             break;
-
-
-
-
                         }
                     }
                 }
-
             } else {
                 /*
                  * Le premier appariement est aléatoire par équipe
                  */
                 Vector<Team> shuffle = new Vector<Team>(_teams);
-
-
-
-
-
                 if (choice == 0) /* Aléatoire */ {
                     Collections.shuffle(shuffle);
-
-
-
-
                 }
                 for (int i = 0; i
                         < shuffle.size() / 2; i++) {
@@ -1811,38 +1581,20 @@ public class Tournament {
                     Team team2 = shuffle.get(2 * i + 1);
                     teams1.add(team1);
                     teams2.add(team2);
-
-
-
-
                 }
             }
 
             if (_params._teamIndivPairing == 1) {
                 jdgTeamPairing jdg = new jdgTeamPairing(MainFrame.getMainFrame(), true, teams1, teams2, r);
                 jdg.setVisible(true);
-
-
-
-
-
             } else {
                 for (int i = 0; i
                         < teams1.size(); i++) {
                     Team team1 = teams1.get(i);
                     Team team2 = teams2.get(i);
-
                     Vector<Coach> shuffle2 = new Vector<Coach>(team2._coachs);
-
-
-
-
                     if (choice == 0) /* Aléatoire */ {
                         Collections.shuffle(shuffle2);
-
-
-
-
                     }
                     for (int j = 0; j
                             < shuffle2.size(); j++) {
@@ -1850,18 +1602,10 @@ public class Tournament {
                         m._coach1 = team1._coachs.get(j);
                         m._coach2 = shuffle2.get(j);
                         r._matchs.add(m);
-
-
-
-
                     }
                 }
             }
             _rounds.add(r);
-
-
-
-
         }
 
         if (_rounds.size() > 0) {
@@ -1873,43 +1617,23 @@ public class Tournament {
                 m._coach2._matchs = new Vector<Match>();
                 m._coach2._matchs.add(m);
 
-
-
-
-
                 for (int j = 0; j
                         < _params._criterias.size(); j++) {
                     Criteria criteria = _params._criterias.get(j);
                     Value val = new Value(criteria);
-
-
-
-
                     if (criteria._name.equals("Touchdowns")) {
                         val._value1 = -1;
                         val._value2 = -1;
-
-
-
-
                     }
                     m._values.put(criteria, val);
-
-
-
-
                 }
             }
         }
-
         String filename = Tournament.getTournament().getParams()._tournament_name;
         filename = filename + "." + Tournament.getTournament().getRounds().size();
         Date date = new Date();
         filename = filename + "." + Long.toString(date.getTime()) + ".xml";
-
         File file = new File(filename);
         Tournament.getTournament().saveXML(file);
-
-
     }
 }

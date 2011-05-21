@@ -310,7 +310,7 @@ public class JPNClanRound extends javax.swing.JPanel {
         jPanel3.add(jbtGeneralClan);
 
         jbtGGlobalClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
-        jbtGGlobalClan.setText(bundle.getString("GeneralRankingKey")); // NOI18N
+        jbtGGlobalClan.setText(bundle.getString("GlobalRankingKey")); // NOI18N
         jbtGGlobalClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtGGlobalClanActionPerformed(evt);

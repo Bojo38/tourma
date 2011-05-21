@@ -36,6 +36,7 @@ import javax.swing.JTable;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import tourma.data.Criteria;
+import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.Team;
 import tourma.tableModel.mjtAnnexRankIndiv;
@@ -68,6 +69,14 @@ public class JPNRound extends javax.swing.JPanel {
             if (_tournament.getParams()._enableClans) {
                 _jpnClanRound = new JPNClanRound(r, t);
                 jtpGlobal.add(_jpnClanRound, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByClan"));
+            }
+
+            if (_tournament.getGroups().size() > 1) {
+                for (int i = 0; i < _tournament.getGroups().size(); i++) {
+                    Group g=_tournament.getGroups().get(i);
+                    JPNGroup jpnGroup = new JPNGroup( t,g,_roundNumber);
+                    jtpGlobal.add(jpnGroup,"Groupe: "+g._name);
+                }
             }
         }
 
@@ -764,7 +773,7 @@ public class JPNRound extends javax.swing.JPanel {
         for (int i = 0; i
                 < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                jdgRound jdg = new jdgRound(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, true,  false);
+                jdgRound jdg = new jdgRound(MainFrame.getMainFrame(), true, _round, i + 1, _tournament, true, false);
                 jdg.setVisible(true);
                 break;
 
@@ -823,21 +832,21 @@ public class JPNRound extends javax.swing.JPanel {
             if (_round == _tournament.getRounds().get(i)) {
                 mjtRankingIndiv model = new mjtRankingIndiv(_roundNumber, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getCoachs(), _tournament.getParams()._teamTournament);
                 HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<Criteria, mjtAnnexRank>();
-                HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new  HashMap<Criteria, mjtAnnexRank>();
+                HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<Criteria, mjtAnnexRank>();
                 for (int j = 0; j < _tournament.getParams()._criterias.size(); j++) {
-                    Criteria crit=_tournament.getParams()._criterias.get(j);
-                    mjtAnnexRank annex=new mjtAnnexRankIndiv(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                    Criteria crit = _tournament.getParams()._criterias.get(j);
+                    mjtAnnexRank annex = new mjtAnnexRankIndiv(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                             _tournament.getCoachs(), true,
                             _tournament.getParams()._ranking1, _tournament.getParams()._ranking2,
                             _tournament.getParams()._ranking3, _tournament.getParams()._ranking4,
                             _tournament.getParams()._ranking5, false);
-                    annexForRankings.put(crit,annex);
-                    annex=new mjtAnnexRankIndiv(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                    annexForRankings.put(crit, annex);
+                    annex = new mjtAnnexRankIndiv(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                             _tournament.getCoachs(), true,
                             _tournament.getParams()._ranking1, _tournament.getParams()._ranking2,
                             _tournament.getParams()._ranking3, _tournament.getParams()._ranking4,
                             _tournament.getParams()._ranking5, false);
-                    annexAgainstRankings.put(crit,annex);
+                    annexAgainstRankings.put(crit, annex);
                 }
                 jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, i + 1, _tournament, model, annexForRankings, annexAgainstRankings, false, false);
                 jdg.setVisible(true);

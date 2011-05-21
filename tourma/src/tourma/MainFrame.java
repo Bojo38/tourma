@@ -37,7 +37,9 @@ import javax.swing.filechooser.FileFilter;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Group;
 import tourma.data.Match;
+import tourma.data.Roster;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Value;
@@ -312,6 +314,27 @@ public class MainFrame extends javax.swing.JFrame {
 
         jlsClans.setModel(listModel);
 
+        DefaultListModel groupModel = new DefaultListModel();
+        DefaultComboBoxModel groupsLeftModel = new DefaultComboBoxModel();
+        DefaultComboBoxModel groupsRightModel = new DefaultComboBoxModel();
+        for (int i = 0; i < _tournament.getGroups().size(); i++) {
+            groupModel.addElement(_tournament.getGroups().get(i)._name);
+            groupsLeftModel.addElement(_tournament.getGroups().get(i)._name);
+            groupsRightModel.addElement(_tournament.getGroups().get(i)._name);
+        }
+        jlsGroups.setModel(groupModel);
+        jcbGroupLeft.setModel(groupsLeftModel);
+        jcbGroupRight.setModel(groupsRightModel);
+
+        if (_tournament.getGroups().size() > 0) {
+            jcbGroupLeft.setSelectedIndex(0);
+            if (_tournament.getGroups().size() > 1) {
+                jcbGroupRight.setSelectedIndex(1);
+            } else {
+                jcbGroupRight.setSelectedIndex(0);
+            }
+        }
+
     }
 
     /** This method is called from within the constructor to
@@ -410,6 +433,29 @@ public class MainFrame extends javax.swing.JFrame {
         jlsClans = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
         jlsCoachList = new javax.swing.JList();
+        jPanel17 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jlsGroups = new javax.swing.JList();
+        jPanel19 = new javax.swing.JPanel();
+        jbtAddGroup = new javax.swing.JButton();
+        jbtRemoveGroup = new javax.swing.JButton();
+        jbtRenameGroup = new javax.swing.JButton();
+        jPanel20 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jlsLeft = new javax.swing.JList();
+        jcbGroupLeft = new javax.swing.JComboBox();
+        jPanel22 = new javax.swing.JPanel();
+        jPanel24 = new javax.swing.JPanel();
+        jbtGroupToRight = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jbtGrouToLeft = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel23 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jlsRight = new javax.swing.JList();
+        jcbGroupRight = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jpnCoachButtons = new javax.swing.JPanel();
@@ -953,6 +999,123 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel11.add(jPanel14, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab(bundle.getString("ClanKey"), jPanel11); // NOI18N
+
+        jPanel17.setLayout(new java.awt.BorderLayout());
+
+        jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste de groupes"));
+        jPanel18.setLayout(new java.awt.BorderLayout(1, 1));
+
+        jlsGroups.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jlsGroups.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane6.setViewportView(jlsGroups);
+
+        jPanel18.add(jScrollPane6, java.awt.BorderLayout.CENTER);
+
+        jPanel19.setLayout(new java.awt.GridLayout(3, 1, 1, 1));
+
+        jbtAddGroup.setText("Ajouter");
+        jbtAddGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddGroupActionPerformed(evt);
+            }
+        });
+        jPanel19.add(jbtAddGroup);
+
+        jbtRemoveGroup.setText("Retirer");
+        jbtRemoveGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveGroupActionPerformed(evt);
+            }
+        });
+        jPanel19.add(jbtRemoveGroup);
+
+        jbtRenameGroup.setText("Renommer");
+        jbtRenameGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRenameGroupActionPerformed(evt);
+            }
+        });
+        jPanel19.add(jbtRenameGroup);
+
+        jPanel18.add(jPanel19, java.awt.BorderLayout.LINE_END);
+
+        jPanel17.add(jPanel18, java.awt.BorderLayout.PAGE_START);
+
+        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("Edition des groupes"));
+        jPanel20.setLayout(new java.awt.GridLayout(1, 3, 2, 0));
+
+        jPanel21.setLayout(new java.awt.BorderLayout(2, 2));
+
+        jlsLeft.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane7.setViewportView(jlsLeft);
+
+        jPanel21.add(jScrollPane7, java.awt.BorderLayout.CENTER);
+
+        jcbGroupLeft.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbGroupLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbGroupLeftActionPerformed(evt);
+            }
+        });
+        jPanel21.add(jcbGroupLeft, java.awt.BorderLayout.PAGE_START);
+
+        jPanel20.add(jPanel21);
+
+        jPanel22.setLayout(new java.awt.GridLayout(5, 1));
+        jPanel22.add(jPanel24);
+
+        jbtGroupToRight.setText(">>");
+        jbtGroupToRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGroupToRightActionPerformed(evt);
+            }
+        });
+        jPanel22.add(jbtGroupToRight);
+        jPanel22.add(jLabel8);
+
+        jbtGrouToLeft.setText("<<");
+        jbtGrouToLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtGrouToLeftActionPerformed(evt);
+            }
+        });
+        jPanel22.add(jbtGrouToLeft);
+        jPanel22.add(jLabel9);
+
+        jPanel20.add(jPanel22);
+
+        jPanel23.setLayout(new java.awt.BorderLayout(2, 2));
+
+        jlsRight.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane8.setViewportView(jlsRight);
+
+        jPanel23.add(jScrollPane8, java.awt.BorderLayout.CENTER);
+
+        jcbGroupRight.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbGroupRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbGroupRightActionPerformed(evt);
+            }
+        });
+        jPanel23.add(jcbGroupRight, java.awt.BorderLayout.PAGE_START);
+
+        jPanel20.add(jPanel23);
+
+        jPanel17.add(jPanel20, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane1.addTab("Groupe", jPanel17);
 
         jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -1694,6 +1857,103 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosed
 
+    private void jbtAddGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddGroupActionPerformed
+        String newGroup = JOptionPane.showInputDialog("Entrez le nom du nouveau groupe");
+        if (newGroup != null) {
+            _tournament.getGroups().add(new Group(newGroup));
+            update();
+        }
+    }//GEN-LAST:event_jbtAddGroupActionPerformed
+
+    private void jbtRenameGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRenameGroupActionPerformed
+
+        if (jlsGroups.getSelectedIndex() >= 0) {
+            String currentName = _tournament.getGroups().get(jlsGroups.getSelectedIndex())._name;
+
+            String newGroup = JOptionPane.showInputDialog("Entrez le nouveau nom du groupe", currentName);
+            if (newGroup != null) {
+                _tournament.getGroups().get(jlsGroups.getSelectedIndex())._name = newGroup;
+                update();
+            }
+        }
+    }//GEN-LAST:event_jbtRenameGroupActionPerformed
+
+    private void jbtRemoveGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveGroupActionPerformed
+        if (jlsGroups.getSelectedIndex() > 0) {
+            Vector<Roster> rosters = _tournament.getGroups().get(jlsGroups.getSelectedIndex())._rosters;
+            for (int i = 0; i < rosters.size(); i++) {
+                _tournament.getGroups().get(0)._rosters.add(rosters.get(i));
+            }
+            _tournament.getGroups().remove(jlsGroups.getSelectedIndex());
+            update();
+        }
+    }//GEN-LAST:event_jbtRemoveGroupActionPerformed
+
+    private void jcbGroupLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupLeftActionPerformed
+        DefaultListModel listModel = new DefaultListModel();
+        Vector<Roster> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
+        for (int i = 0; i < rosters.size(); i++) {
+            listModel.addElement(rosters.get(i)._name);
+        }
+        jlsLeft.setModel(listModel);
+    }//GEN-LAST:event_jcbGroupLeftActionPerformed
+
+    private void jcbGroupRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupRightActionPerformed
+        DefaultListModel listModel = new DefaultListModel();
+        Vector<Roster> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
+        for (int i = 0; i < rosters.size(); i++) {
+            listModel.addElement(rosters.get(i)._name);
+        }
+        jlsRight.setModel(listModel);
+    }//GEN-LAST:event_jcbGroupRightActionPerformed
+
+    private void jbtGroupToRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGroupToRightActionPerformed
+
+        if (jlsLeft.getSelectedIndex() > -1) {
+            int index = jlsLeft.getSelectedIndex();
+            Roster roster = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.get(index);
+            _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.remove(roster);
+            _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.add(roster);
+
+            Vector<Roster> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
+            DefaultListModel listModelLeft = new DefaultListModel();
+            for (int i = 0; i < rosters.size(); i++) {
+                listModelLeft.addElement(rosters.get(i)._name);
+            }
+            jlsLeft.setModel(listModelLeft);
+
+            DefaultListModel listModelRight = new DefaultListModel();
+            rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
+            for (int i = 0; i < rosters.size(); i++) {
+                listModelRight.addElement(rosters.get(i)._name);
+            }
+            jlsRight.setModel(listModelRight);
+        }
+    }//GEN-LAST:event_jbtGroupToRightActionPerformed
+
+    private void jbtGrouToLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGrouToLeftActionPerformed
+        if (jlsRight.getSelectedIndex() > -1) {
+            int index = jlsRight.getSelectedIndex();
+            Roster roster = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.get(index);
+            _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.remove(roster);
+            _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.add(roster);
+
+            Vector<Roster> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
+            DefaultListModel listModelRight = new DefaultListModel();
+            for (int i = 0; i < rosters.size(); i++) {
+                listModelRight.addElement(rosters.get(i)._name);
+            }
+            jlsRight.setModel(listModelRight);
+
+            DefaultListModel listModelLeft = new DefaultListModel();
+            rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
+            for (int i = 0; i < rosters.size(); i++) {
+                listModelLeft.addElement(rosters.get(i)._name);
+            }
+            jlsLeft.setModel(listModelLeft);
+        }
+    }//GEN-LAST:event_jbtGrouToLeftActionPerformed
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
@@ -1785,6 +2045,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -1794,7 +2056,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1807,6 +2077,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1814,15 +2087,22 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddClan;
     private javax.swing.JButton jbtAddCriteria;
+    private javax.swing.JButton jbtAddGroup;
     private javax.swing.JButton jbtAddTeam;
     private javax.swing.JButton jbtEditClan;
     private javax.swing.JButton jbtFirstRound;
+    private javax.swing.JButton jbtGrouToLeft;
+    private javax.swing.JButton jbtGroupToRight;
     private javax.swing.JButton jbtModify;
     private javax.swing.JButton jbtModifyTeam;
     private javax.swing.JButton jbtRemove;
     private javax.swing.JButton jbtRemoveClan;
     private javax.swing.JButton jbtRemoveCriteria;
+    private javax.swing.JButton jbtRemoveGroup;
     private javax.swing.JButton jbtRemoveTeam;
+    private javax.swing.JButton jbtRenameGroup;
+    private javax.swing.JComboBox jcbGroupLeft;
+    private javax.swing.JComboBox jcbGroupRight;
     private javax.swing.JComboBox jcbRank1;
     private javax.swing.JComboBox jcbRank1Team;
     private javax.swing.JComboBox jcbRank2;
@@ -1844,6 +2124,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jlbVictoryPoints;
     private javax.swing.JList jlsClans;
     private javax.swing.JList jlsCoachList;
+    private javax.swing.JList jlsGroups;
+    private javax.swing.JList jlsLeft;
+    private javax.swing.JList jlsRight;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
     private javax.swing.JMenuItem jmiCharger;
