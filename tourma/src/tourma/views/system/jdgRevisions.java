@@ -91,6 +91,7 @@ public class jdgRevisions extends javax.swing.JDialog {
         jPanel1.setMinimumSize(new java.awt.Dimension(320, 33));
         jPanel1.setPreferredSize(new java.awt.Dimension(320, 33));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         jButton1.setText(bundle.getString("OK")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

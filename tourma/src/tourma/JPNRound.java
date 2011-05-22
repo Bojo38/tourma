@@ -64,18 +64,18 @@ public class JPNRound extends javax.swing.JPanel {
 
         if (_tournament.getParams()._teamTournament) {
             _jpnTeamRound = new JPNTeamRound(r, t);
-            jtpGlobal.add(_jpnTeamRound, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE"));
+            jtpGlobal.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), _jpnTeamRound);
         } else {
             if (_tournament.getParams()._enableClans) {
                 _jpnClanRound = new JPNClanRound(r, t);
-                jtpGlobal.add(_jpnClanRound, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByClan"));
+                jtpGlobal.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByClan"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")), _jpnClanRound);
             }
 
             if (_tournament.getGroups().size() > 1) {
                 for (int i = 0; i < _tournament.getGroups().size(); i++) {
-                    Group g=_tournament.getGroups().get(i);
-                    JPNGroup jpnGroup = new JPNGroup( t,g,_roundNumber);
-                    jtpGlobal.add(jpnGroup,"Groupe: "+g._name);
+                    Group g = _tournament.getGroups().get(i);
+                    JPNGroup jpnGroup = new JPNGroup(t, g, _roundNumber);
+                    jtpGlobal.addTab("Groupe: " + g._name, new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), jpnGroup);
                 }
             }
         }
@@ -134,6 +134,21 @@ public class JPNRound extends javax.swing.JPanel {
                 ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
             }
             setColumnSize(jtbRankingIndiv);
+        }
+
+        for (int i = 0; i < jtpGlobal.getTabCount(); i++) {
+            Object panel = jtpGlobal.getTabComponentAt(i);
+            if (panel instanceof JPNGroup) {
+                ((JPNGroup) panel).update();
+            } else {
+                if (panel instanceof JPNTeamRound) {
+                    ((JPNTeamRound) panel).update();
+                } else {
+                    if (panel instanceof JPNClanRound) {
+                        ((JPNClanRound) panel).update();
+                    }
+                }
+            }
         }
     }
 
@@ -194,7 +209,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jbtNextRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/forward.png"))); // NOI18N
+        jbtNextRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtNextRound.setText(bundle.getString("GenerateNextRoundKey")); // NOI18N
         jbtNextRound.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +219,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtNextRound);
 
-        jbtShowMatches.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtShowMatches.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtShowMatches.setText(bundle.getString("ShowMatchsKey")); // NOI18N
         jbtShowMatches.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,7 +228,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtShowMatches);
 
-        jbtShowResults.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtShowResults.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtShowResults.setText(bundle.getString("ShowResultsKey")); // NOI18N
         jbtShowResults.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +237,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtShowResults);
 
-        jbtDeleteRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/delete.png"))); // NOI18N
+        jbtDeleteRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
         jbtDeleteRound.setText(bundle.getString("DeleteCurrentRoundKey")); // NOI18N
         jbtDeleteRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,7 +246,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtDeleteRound);
 
-        jbtChangeMatchs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/resize hor.png"))); // NOI18N
+        jbtChangeMatchs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
         jbtChangeMatchs.setText(bundle.getString("ChangePairing")); // NOI18N
         jbtChangeMatchs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,7 +257,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
-        jtpGlobal.addTab(bundle.getString("MatchsKey"), jPanel1); // NOI18N
+        jtpGlobal.addTab(bundle.getString("MatchsKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png")), jPanel1); // NOI18N
 
         jSplitPane1.setDividerLocation(640);
 
@@ -266,7 +281,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jPanel6.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jbtGeneralIndiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGeneralIndiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGeneralIndiv.setText(bundle.getString("GeneralRankingKey")); // NOI18N
         jbtGeneralIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,7 +290,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel7.add(jbtGeneralIndiv);
 
-        jbtGlobal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGlobal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGlobal.setText(bundle.getString("GlobalRankingKey")); // NOI18N
         jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,7 +308,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jSplitPane1.setRightComponent(jPanel8);
 
-        jtpGlobal.addTab(bundle.getString("IndividualRankingKey"), jSplitPane1); // NOI18N
+        jtpGlobal.addTab(bundle.getString("IndividualRankingKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User.png")), jSplitPane1); // NOI18N
 
         add(jtpGlobal, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -742,7 +757,8 @@ public class JPNRound extends javax.swing.JPanel {
                 i < _tournament.getRounds().size();
                 i++) {
             JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-            MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
+//            MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
+            MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1) ,new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")),jpnr);
         }
 
         String filename = Tournament.getTournament().getParams()._tournament_name;
@@ -816,7 +832,7 @@ public class JPNRound extends javax.swing.JPanel {
             for (int i = 0; i
                     < _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
+                MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1) ,new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")),jpnr);
             }
 
             update();

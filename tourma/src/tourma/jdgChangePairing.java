@@ -81,6 +81,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
         jsp = new javax.swing.JScrollPane();
         jpnMatchs = new javax.swing.JPanel();
 
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         jbtOK.setText("OK");
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +90,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
         });
         jPanel1.add(jbtOK);
 
+        jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
         jbtCancel.setText("Annuler");
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

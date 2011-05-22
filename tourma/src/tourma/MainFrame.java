@@ -499,6 +499,9 @@ public class MainFrame extends javax.swing.JFrame {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
         });
 
         jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
@@ -707,10 +710,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel6.add(jcbRank5);
 
-        jTabbedPane1.addTab(bundle.getString("IndividualKey"), jPanel6); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("IndividualKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User.png")), jPanel6); // NOI18N
 
         jPanel15.setLayout(new java.awt.BorderLayout());
 
+        jbtAddCriteria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         jbtAddCriteria.setText("Ajouter Critère");
         jbtAddCriteria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -719,6 +723,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel16.add(jbtAddCriteria);
 
+        jbtRemoveCriteria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
         jbtRemoveCriteria.setText("Retirer critère");
         jbtRemoveCriteria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -744,7 +749,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel15.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Critères", jPanel15);
+        jTabbedPane1.addTab("Critères", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")), jPanel15); // NOI18N
 
         jPanel10.setLayout(new java.awt.GridLayout(10, 2));
 
@@ -880,7 +885,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel10.add(jtffTeamVictory);
 
-        jTabbedPane1.addTab(bundle.getString("ByTeamKey"), jPanel10); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("ByTeamKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), jPanel10); // NOI18N
 
         jPanel11.setLayout(new java.awt.BorderLayout());
 
@@ -939,6 +944,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel11.add(jPanel12, java.awt.BorderLayout.NORTH);
 
+        jbtAddClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         jbtAddClan.setText(bundle.getString("AddKey")); // NOI18N
         jbtAddClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -947,6 +953,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel13.add(jbtAddClan);
 
+        jbtEditClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
         jbtEditClan.setText(bundle.getString("EditKey")); // NOI18N
         jbtEditClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -955,6 +962,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel13.add(jbtEditClan);
 
+        jbtRemoveClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
         jbtRemoveClan.setText(bundle.getString("RemoveKey")); // NOI18N
         jbtRemoveClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -998,7 +1006,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel11.add(jPanel14, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab(bundle.getString("ClanKey"), jPanel11); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("ClanKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")), jPanel11); // NOI18N
 
         jPanel17.setLayout(new java.awt.BorderLayout());
 
@@ -1017,6 +1025,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel19.setLayout(new java.awt.GridLayout(3, 1, 1, 1));
 
+        jbtAddGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         jbtAddGroup.setText("Ajouter");
         jbtAddGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1025,6 +1034,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel19.add(jbtAddGroup);
 
+        jbtRemoveGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
         jbtRemoveGroup.setText("Retirer");
         jbtRemoveGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1033,6 +1043,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel19.add(jbtRemoveGroup);
 
+        jbtRenameGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
         jbtRenameGroup.setText("Renommer");
         jbtRenameGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1072,7 +1083,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel22.setLayout(new java.awt.GridLayout(5, 1));
         jPanel22.add(jPanel24);
 
-        jbtGroupToRight.setText(">>");
+        jbtGroupToRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/forward.png"))); // NOI18N
         jbtGroupToRight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtGroupToRightActionPerformed(evt);
@@ -1081,7 +1092,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel22.add(jbtGroupToRight);
         jPanel22.add(jLabel8);
 
-        jbtGrouToLeft.setText("<<");
+        jbtGrouToLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
         jbtGrouToLeft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtGrouToLeftActionPerformed(evt);
@@ -1115,7 +1126,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel17.add(jPanel20, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Groupe", jPanel17);
+        jTabbedPane1.addTab("Groupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), jPanel17); // NOI18N
 
         jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -1129,6 +1140,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel7.setPreferredSize(new java.awt.Dimension(450, 240));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         jbtAdd.setText(bundle.getString("AJOUTER")); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1137,6 +1149,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jpnCoachButtons.add(jbtAdd);
 
+        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
         jbtRemove.setText(bundle.getString("RETIRER")); // NOI18N
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1145,6 +1158,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jpnCoachButtons.add(jbtRemove);
 
+        jbtModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
         jbtModify.setText(bundle.getString("MODIFIER")); // NOI18N
         jbtModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1177,6 +1191,7 @@ public class MainFrame extends javax.swing.JFrame {
         jpnTeamTour.setPreferredSize(new java.awt.Dimension(450, 240));
         jpnTeamTour.setLayout(new java.awt.BorderLayout());
 
+        jbtAddTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         jbtAddTeam.setText(bundle.getString("AJOUTER")); // NOI18N
         jbtAddTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1185,6 +1200,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel8.add(jbtAddTeam);
 
+        jbtRemoveTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
         jbtRemoveTeam.setText(bundle.getString("RETIRER")); // NOI18N
         jbtRemoveTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1193,6 +1209,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel8.add(jbtRemoveTeam);
 
+        jbtModifyTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
         jbtModifyTeam.setText(bundle.getString("MODIFIER")); // NOI18N
         jbtModifyTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1226,7 +1243,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel2.add(jpnTeamTour, java.awt.BorderLayout.NORTH);
 
-        jbtFirstRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/forward.png"))); // NOI18N
+        jbtFirstRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         jbtFirstRound.setText(bundle.getString("GÉNÉRER LA PREMIÈRE RONDE")); // NOI18N
         jbtFirstRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1239,12 +1256,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         jpnParameters.add(jPanel2);
 
-        jtpMain.addTab(bundle.getString("TournamentParameterKey"), jpnParameters); // NOI18N
+        jtpMain.addTab(bundle.getString("TournamentParameterKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")), jpnParameters); // NOI18N
 
         getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
 
         jmnFile.setText(bundle.getString("FileKey")); // NOI18N
 
+        jmiNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
         jmiNouveau.setText(bundle.getString("NewTourKey")); // NOI18N
         jmiNouveau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1253,6 +1271,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jmnFile.add(jmiNouveau);
 
+        jmiCharger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Open.png"))); // NOI18N
         jmiCharger.setText(bundle.getString("LoadTourKey")); // NOI18N
         jmiCharger.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1261,6 +1280,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jmnFile.add(jmiCharger);
 
+        jmiSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Save.png"))); // NOI18N
         jmiSave.setText(bundle.getString("SaveTourKey")); // NOI18N
         jmiSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1269,6 +1289,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jmnFile.add(jmiSave);
 
+        jmiSaveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Save.png"))); // NOI18N
         jmiSaveAs.setText(bundle.getString("SaveTourAsKey")); // NOI18N
         jmiSaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1278,6 +1299,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmnFile.add(jmiSaveAs);
         jmnFile.add(jSeparator1);
 
+        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/html.png"))); // NOI18N
         jmiExport.setText(bundle.getString("ExportNafResultKey")); // NOI18N
         jmiExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1287,6 +1309,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmnFile.add(jmiExport);
         jmnFile.add(jSeparator2);
 
+        jmiExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
         jmiExit.setText(bundle.getString("QuitKey")); // NOI18N
         jmiExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1353,7 +1376,7 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                     for (int i = 0; i < _tournament.getRounds().size(); i++) {
                         JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                        jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
+                        jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1) ,new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")),jpnr);
                     }
                     update();
                 }
@@ -1515,7 +1538,8 @@ public class MainFrame extends javax.swing.JFrame {
             for (int i = 0; i
                     < _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
+//                jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
+                jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1) ,new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")),jpnr);
             }
 
             update();
@@ -1571,13 +1595,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jmiExitActionPerformed
-
-    private void jmiAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAboutActionPerformed
-        jdgAbout jdg = new jdgAbout(this, true);
-        jdg.setVisible(true);
-        jdg =
-                null;
-}//GEN-LAST:event_jmiAboutActionPerformed
 
     private void jmiRevisionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRevisionsActionPerformed
         jdgRevisions jdg = new jdgRevisions(this, true);
@@ -1758,6 +1775,8 @@ public class MainFrame extends javax.swing.JFrame {
         jlsClans.setEnabled(clansEnable);
 
         _tournament.getParams()._enableClans = clansEnable;
+
+        update();
     }//GEN-LAST:event_jcxActivatesClansActionPerformed
 
     private void jspTeamMembersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspTeamMembersStateChanged
@@ -1953,6 +1972,28 @@ public class MainFrame extends javax.swing.JFrame {
             jlsLeft.setModel(listModelLeft);
         }
     }//GEN-LAST:event_jbtGrouToLeftActionPerformed
+
+    private void jmiAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAboutActionPerformed
+        jdgAbout jdg = new jdgAbout(this, true);
+        jdg.setVisible(true);
+        jdg =
+                null;
+}//GEN-LAST:event_jmiAboutActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (JOptionPane.showConfirmDialog(this, "Voulez vous sauvgarder ?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (_file == null) {
+                 jmiSaveAsActionPerformed(null);
+            } else {
+
+                if (_file.equals("")) {
+                    jmiSaveAsActionPerformed(null);
+                } else {
+                    jmiSaveActionPerformed(null);
+                }
+            }
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());

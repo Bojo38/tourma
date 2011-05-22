@@ -66,7 +66,7 @@ public class Parameters {
     /**
      * Activate clan management
      */
-    public boolean _enableClans = true;
+    public boolean _enableClans = false;
     /**
      * Avoid match between members of a clan
      */

@@ -117,7 +117,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
 
         jpnTeam.add(jtpTeams, java.awt.BorderLayout.CENTER);
 
-        jbtGeneralTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGeneralTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGeneralTeam.setText(bundle.getString("GeneralRankingKey")); // NOI18N
         jbtGeneralTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +126,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
         });
         jPanel8.add(jbtGeneralTeam);
 
-        jbtGlobal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGlobal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGlobal.setText(bundle.getString("GlobalRankingKey")); // NOI18N
         jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,7 +135,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
         });
         jPanel8.add(jbtGlobal);
 
-        jbtShowMatchTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtShowMatchTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtShowMatchTeam.setText(bundle.getString("TeamMatchViewKey")); // NOI18N
         jbtShowMatchTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

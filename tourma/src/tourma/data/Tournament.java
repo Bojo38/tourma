@@ -1526,16 +1526,8 @@ public class Tournament {
             Vector<Team> teams1 = new Vector<Team>();
             Vector<Team> teams2 = new Vector<Team>();
 
-
-
-
-
             if (choice == 2) {
                 Vector<Team> teams = new Vector<Team>(_teams);
-
-
-
-
                 while (teams.size() > 0) {
 
                     Team team1 = teams.get(0);

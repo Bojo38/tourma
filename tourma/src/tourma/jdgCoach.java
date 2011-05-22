@@ -27,6 +27,7 @@ import tourma.data.Roster;
 public class jdgCoach extends javax.swing.JDialog {
 
     boolean _teamTournament;
+    Coach _coach;
 
     /** Creates new form jdgCoach */
     public jdgCoach(java.awt.Frame parent, boolean modal) {
@@ -37,49 +38,37 @@ public class jdgCoach extends javax.swing.JDialog {
 
         jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters));
 
+        if (!_teamTournament) {
+            DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
+            for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
+                clanListModel.addElement(Tournament.getTournament().getClans().get(i)._name);
+            }
+            jcbClan.setModel(clanListModel);
+        }
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gs = ge.getDefaultScreenDevice();
+        DisplayMode dmode = gs.getDisplayMode();
+        if (dmode != null) {
+            int screenWidth = dmode.getWidth();
+            int screenHeight = dmode.getHeight();
+            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        }
+
         if (_teamTournament) {
             jcbClan.setEnabled(false);
         } else {
-            jcbClan.setEnabled(true);
+            jcbClan.setEnabled(Tournament.getTournament().getParams()._enableClans);
         }
         _coach = null;
     }
-    Coach _coach;
 
-    /** Creates new form jdgCoach */
+    /** Creates new form jdgCoach form an existing coach */
     public jdgCoach(java.awt.Frame parent, boolean modal, Coach coach) {
         super(parent, modal);
         initComponents();
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-
-        String[] aszRaces = new String[24];
-        aszRaces[0] = bundle.getString("AmazonKey");
-        aszRaces[1] = bundle.getString("UnderworldKey");
-        aszRaces[2] = bundle.getString("ChaosKey");
-        aszRaces[3] = bundle.getString("ElfKey");
-        aszRaces[4] = bundle.getString("WoodElfKey");
-        aszRaces[5] = bundle.getString("DarkElfKey");
-        aszRaces[6] = bundle.getString("GoblinKey");
-        aszRaces[7] = bundle.getString("HalflingKey");
-        aszRaces[8] = bundle.getString("HighElfKey");
-        aszRaces[9] = bundle.getString("LizardmenKey");
-        aszRaces[10] = bundle.getString("HumanKey");
-        aszRaces[11] = bundle.getString("KhemriKey");
-        aszRaces[12] = bundle.getString("UndeadKey");
-        aszRaces[13] = bundle.getString("DwarfKey");
-        aszRaces[14] = bundle.getString("ChaosDwarfKey");
-        aszRaces[15] = bundle.getString("NecromanticKey");
-        aszRaces[16] = bundle.getString("NorseKey");
-        aszRaces[17] = bundle.getString("NurgleKey");
-        aszRaces[18] = bundle.getString("OgreKey");
-        aszRaces[19] = bundle.getString("OrcKey");
-        aszRaces[20] = bundle.getString("ChaosPactKey");
-        aszRaces[21] = bundle.getString("SkavenKey");
-        aszRaces[22] = bundle.getString("SlannKey");
-        aszRaces[23] = bundle.getString("VampireKey");
-
-        jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(aszRaces));
+        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters));
 
         if (!_teamTournament) {
             DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
@@ -104,8 +93,16 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfNAF.setText(Integer.toString(_coach._naf));
         jtfNom.setText(_coach._name);
         jcbRoster.setSelectedItem(_coach._roster._name);
+
         if (!_teamTournament) {
-            jcbClan.setSelectedItem(_coach._clan._name);
+            if (_teamTournament) {
+                jcbClan.setEnabled(false);
+            } else {
+                if (Tournament.getTournament().getParams()._enableClans) {
+                    jcbClan.setEnabled(true);
+                    jcbClan.setSelectedItem(_coach._clan._name);
+                }
+            }
         }
 
     }
@@ -178,6 +175,7 @@ public class jdgCoach extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         jbtOK.setText("OK");
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,6 +184,7 @@ public class jdgCoach extends javax.swing.JDialog {
         });
         jPanel2.add(jbtOK);
 
+        jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
         jbtCancel.setText(bundle.getString("ANNULER")); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -85,6 +85,7 @@ public class jdgAbout extends javax.swing.JDialog {
         setResizable(false);
         setUndecorated(true);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         jButton1.setText(bundle.getString("OK")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

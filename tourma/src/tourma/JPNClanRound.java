@@ -300,7 +300,7 @@ public class JPNClanRound extends javax.swing.JPanel {
 
         jPanel2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
-        jbtGeneralClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGeneralClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGeneralClan.setText(bundle.getString("GeneralRankingKey")); // NOI18N
         jbtGeneralClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,7 +309,7 @@ public class JPNClanRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtGeneralClan);
 
-        jbtGGlobalClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/printer.png"))); // NOI18N
+        jbtGGlobalClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGGlobalClan.setText(bundle.getString("GlobalRankingKey")); // NOI18N
         jbtGGlobalClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
