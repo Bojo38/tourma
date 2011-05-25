@@ -1083,7 +1083,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel22.setLayout(new java.awt.GridLayout(5, 1));
         jPanel22.add(jPanel24);
 
-        jbtGroupToRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/forward.png"))); // NOI18N
+        jbtGroupToRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
         jbtGroupToRight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtGroupToRightActionPerformed(evt);
@@ -1299,7 +1299,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmnFile.add(jmiSaveAs);
         jmnFile.add(jSeparator1);
 
-        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/html.png"))); // NOI18N
+        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
         jmiExport.setText(bundle.getString("ExportNafResultKey")); // NOI18N
         jmiExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
