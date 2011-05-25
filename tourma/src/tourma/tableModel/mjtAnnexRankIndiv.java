@@ -39,7 +39,7 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
             int value4 = 0;
             int value5 = 0;
 
-            for (int j = 0; j < c._matchs.size(); j++) {
+            for (int j = 0; j <= Math.min(c._matchs.size(),_round); j++) {
                 Match m = c._matchs.get(j);
                 value += getValue(c, m, _criteria, _subtype);
 

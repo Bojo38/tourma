@@ -38,7 +38,7 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
             int value5 = 0;
             for (int k = 0; k < t._coachs.size(); k++) {
                 Coach c = t._coachs.get(k);
-                for (int j = 0; j < c._matchs.size(); j++) {
+                for (int j = 0; j <= Math.min(c._matchs.size(),_round); j++) {
                     Match m = c._matchs.get(j);
 
                     value += getValue(c, m, _criteria, _subtype);

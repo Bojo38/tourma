@@ -191,32 +191,27 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         int value = 0;
 
         int i = 0;
-        Match tmp_m;
-        do {
-            tmp_m = c._matchs.get(i);
-            if (sub_type == Parameters.C_RANKING_SUBTYPE_POSITIVE) {
-                if (c == tmp_m._coach1) {
-                    value += Math.max(tmp_m._values.get(criteria)._value1, 0);
+        if (sub_type == Parameters.C_RANKING_SUBTYPE_POSITIVE) {
+            if (c == m._coach1) {
+                value += Math.max(m._values.get(criteria)._value1, 0);
+            } else {
+                value += Math.max(m._values.get(criteria)._value2, 0);
+            }
+        } else {
+            if (sub_type == Parameters.C_RANKING_SUBTYPE_NEGATIVE) {
+                if (c == m._coach1) {
+                    value += Math.max(m._values.get(criteria)._value2, 0);
                 } else {
-                    value += Math.max(tmp_m._values.get(criteria)._value2, 0);
+                    value += Math.max(m._values.get(criteria)._value1, 0);
                 }
             } else {
-                if (sub_type == Parameters.C_RANKING_SUBTYPE_NEGATIVE) {
-                    if (c == tmp_m._coach1) {
-                        value += Math.max(tmp_m._values.get(criteria)._value2, 0);
-                    } else {
-                        value += Math.max(tmp_m._values.get(criteria)._value1, 0);
-                    }
+                if (c == m._coach1) {
+                    value += m._values.get(criteria)._value1 - m._values.get(criteria)._value2;
                 } else {
-                    if (c == tmp_m._coach1) {
-                        value += tmp_m._values.get(criteria)._value1 - tmp_m._values.get(criteria)._value2;
-                    } else {
-                        value += tmp_m._values.get(criteria)._value2 - tmp_m._values.get(criteria)._value1;
-                    }
+                    value += m._values.get(criteria)._value2 - m._values.get(criteria)._value1;
                 }
             }
-            i++;
-        } while (tmp_m != m);
+        }
 
         return value;
     }
@@ -245,26 +240,22 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
      */
     public static int getValue(Coach c, Match m, int valueType) {
         int value = 0;
-        Match tmp_m;
-        int i = 0;
-        do {
-            tmp_m = c._matchs.get(i);
-            switch (valueType) {
-                case Parameters.C_RANKING_POINTS:
-                    value = getPointsByCoach(c, tmp_m);
-                    break;
-                case Parameters.C_RANKING_NONE:
-                    value = 0;
-                    break;
-                case Parameters.C_RANKING_OPP_POINTS:
-                    value = getOppPointsByCoach(c, tmp_m);
-                    break;
-                case Parameters.C_RANKING_VND:
-                    value = getVNDByCoach(c, tmp_m);
-                    break;
-            }
-            i++;
-        } while (tmp_m != m);
+
+        switch (valueType) {
+            case Parameters.C_RANKING_POINTS:
+                value = getPointsByCoach(c, m);
+                break;
+            case Parameters.C_RANKING_NONE:
+                value = 0;
+                break;
+            case Parameters.C_RANKING_OPP_POINTS:
+                value = getOppPointsByCoach(c, m);
+                break;
+            case Parameters.C_RANKING_VND:
+                value = getVNDByCoach(c, m);
+                break;
+        }
+
         return value;
     }
 

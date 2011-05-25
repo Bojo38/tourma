@@ -475,18 +475,12 @@ public class Tournament {
                 c3._pointsAgainst = params.getAttribute("Bonus_Neg_Foul").getIntValue();
 
 
-
-
-
                 try {
                     c4._pointsFor = params.getAttribute("Bonus_Pos_Pas").getIntValue();
                     c4._pointsAgainst = params.getAttribute("Bonus_Neg_Pas").getIntValue();
 
                     c5._pointsFor = params.getAttribute("Bonus_Pos_Int").getIntValue();
                     c5._pointsAgainst = params.getAttribute("Bonus_Neg_Int").getIntValue();
-
-
-
 
 
                 } catch (NullPointerException npe) {
@@ -650,31 +644,17 @@ public class Tournament {
                     if (_clans.size() == 0) {
                         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
                         _clans.add(new Clan(bundle.getString("NoneKey")));
-
-
-
-
                     }
                     c._clan = _clans.get(0);
-
-
-
 
                 }
                 _coachs.add(c);
                 map.put(c._name, c);
-
-
-
-
             }
 
             List teams = Root.getChildren("Team");
             Iterator l = teams.iterator();
             _teams.clear();
-
-
-
 
             while (l.hasNext()) {
                 Element team = (Element) l.next();
@@ -684,17 +664,11 @@ public class Tournament {
                 Iterator m = coachs2.iterator();
                 t._coachs.clear();
 
-
-
-
                 while (m.hasNext()) {
                     Element coach = (Element) m.next();
                     Coach c = map.get(coach.getAttribute("Name").getValue());
                     c._teamMates = t;
                     t._coachs.add(c);
-
-
-
 
                 }
                 _teams.add(t);
@@ -715,26 +689,13 @@ public class Tournament {
                 Element round = (Element) j.next();
                 Round r = new Round();
                 String date = round.getAttributeValue("Date");
-
-
-
-
                 try {
                     r._heure = format.parse(date);
-
-
-
-
                 } catch (ParseException e) {
                 }
-
                 List matchs = round.getChildren("Match");
                 Iterator k = matchs.iterator();
                 r._matchs.clear();
-
-
-
-
                 while (k.hasNext()) {
                     Element match = (Element) k.next();
                     Match m = new Match();
@@ -742,37 +703,18 @@ public class Tournament {
                     String coach2 = match.getAttribute("Coach2").getValue();
                     m._coach1 = map.get(coach1);
                     m._coach2 = map.get(coach2);
-
-
-
-
                     for (int cpt = 0; cpt
                             < _coachs.size(); cpt++) {
                         if (c1.equals(_coachs.get(cpt)._name)) {
                             m._coach1 = _coachs.get(cpt);
-
-
-
-
                             break;
-
-
-
-
                         }
                     }
                     for (int cpt = 0; cpt
                             < _coachs.size(); cpt++) {
                         if (c2.equals(_coachs.get(cpt)._name)) {
                             m._coach2 = _coachs.get(cpt);
-
-
-
-
                             break;
-
-
-
 
                         }
                     }
@@ -783,7 +725,7 @@ public class Tournament {
 
                     Value v2 = new Value(c2);
                     v2._value1 = match.getAttribute("Sor1").getIntValue();
-                    v2._value2 = match.getAttribute("Sor1").getIntValue();
+                    v2._value2 = match.getAttribute("Sor2").getIntValue();
                     m._values.put(c2, v2);
 
                     Value v3 = new Value(c3);
@@ -794,9 +736,6 @@ public class Tournament {
                     Value v4 = new Value(c4);
                     Value v5 = new Value(c5);
 
-
-
-
                     try {
                         v4._value1 = match.getAttribute("Pas1").getIntValue();
                         v4._value2 = match.getAttribute("Pas2").getIntValue();
@@ -805,12 +744,13 @@ public class Tournament {
                         v5._value2 = match.getAttribute("Int2").getIntValue();
 
 
-
-
                     } catch (NullPointerException npe) {
                     }
                     m._values.put(c4, v4);
                     m._values.put(c5, v5);
+
+                    m._coach1._matchs.add(m);
+                    m._coach2._matchs.add(m);
 
                     r._matchs.add(m);
 

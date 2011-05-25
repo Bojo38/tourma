@@ -56,7 +56,7 @@ public class mjtRankingClan extends mjtRanking {
                     int value3 = 0;
                     int value4 = 0;
                     int value5 = 0;
-                    for (int j = 0; j < c._matchs.size(); j++) {
+                    for (int j = 0; j <= Math.min(c._matchs.size(),_round); j++) {
                         Match m = c._matchs.get(j);
 
                         Criteria c1 = getCriteriaByValue(_ranking_type1);
