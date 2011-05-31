@@ -145,7 +145,7 @@ public class jdgRound extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
-        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/html.png"))); // NOI18N
+        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
         jbtExport.setText(bundle.getString("EXPORT HTML")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
