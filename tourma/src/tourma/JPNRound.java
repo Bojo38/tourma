@@ -385,7 +385,7 @@ public class JPNRound extends javax.swing.JPanel {
                     boolean canMatch = !have_played;
 
                     if ((_tournament.getParams()._enableClans) && (_tournament.getParams()._avoidClansMatch)) {
-                        if (m._coach1._clan != _tournament.getDisplayClans().get(0)) {
+                        if (!m._coach1._clan._name.equals("Aucun")) {
                             if (m._coach1._clan == ((Coach) datas2.get(i).getObject())._clan) {
                                 canMatch = false;
                             }
@@ -431,7 +431,7 @@ public class JPNRound extends javax.swing.JPanel {
 
                         boolean canMatch = !have_played;
                         if ((_tournament.getParams()._enableClans) && (_tournament.getParams()._avoidClansMatch)) {
-                            if (r.getMatchs().get(i)._coach2._clan != _tournament.getDisplayClans().get(0)) {
+                            if (!r.getMatchs().get(i)._coach2._clan._name.equals("Aucun")) {
                                 if (r.getMatchs().get(i)._coach2._clan == r.getMatchs().get(k)._coach2._clan) {
                                     canMatch = false;
                                 }
@@ -458,7 +458,7 @@ public class JPNRound extends javax.swing.JPanel {
                         canMatch = !have_played;
 
                         if ((_tournament.getParams()._enableClans) && (_tournament.getParams()._avoidClansMatch)) {
-                            if (r.getMatchs().get(i)._coach1._clan != _tournament.getDisplayClans().get(0)) {
+                            if (!r.getMatchs().get(i)._coach1._clan._name.equals("Aucun")) {
                                 if (r.getMatchs().get(i)._coach2._clan == r.getMatchs().get(k)._coach1._clan) {
                                     canMatch = false;
                                 }
@@ -841,7 +841,7 @@ public class JPNRound extends javax.swing.JPanel {
                 MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
             }
 
-            update();
+             MainFrame.getMainFrame().update();
         }
     }//GEN-LAST:event_jbtDeleteRoundActionPerformed
 

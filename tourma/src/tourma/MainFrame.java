@@ -1376,7 +1376,7 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                     for (int i = 0; i < _tournament.getRounds().size(); i++) {
                         JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                        jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1) ,new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")),jpnr);
+                        jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
                     }
                     update();
                 }
@@ -1539,7 +1539,7 @@ public class MainFrame extends javax.swing.JFrame {
                     < _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
 //                jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
-                jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1) ,new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")),jpnr);
+                jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
             }
 
             update();
@@ -1566,6 +1566,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         Tournament.getTournament().getParams()._teamTournament = (res == 1);
         if (res == 1) {
+            jdgSelectNumber jdg = new jdgSelectNumber(this, true, _tournament);
+            jdg.setVisible(true);
             res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE D'APPARIEMENT"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APPARIEMENT"),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
@@ -1576,8 +1578,6 @@ public class MainFrame extends javax.swing.JFrame {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options2, options2[0]);
                 Tournament.getTournament().getParams()._teamIndivPairing = res;
-                jdgSelectNumber jdg = new jdgSelectNumber(this, true, _tournament);
-                jdg.setVisible(true);
             }
         }
 
@@ -1983,7 +1983,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (JOptionPane.showConfirmDialog(this, "Voulez vous sauvgarder ?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (_file == null) {
-                 jmiSaveAsActionPerformed(null);
+                jmiSaveAsActionPerformed(null);
             } else {
 
                 if (_file.equals("")) {
