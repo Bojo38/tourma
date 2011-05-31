@@ -248,8 +248,8 @@ public class jdgGlobal extends javax.swing.JDialog {
             }
             root.put("lines", lines);
 
-            root.put("titreMoreFor","Le plus réalisé");
-            root.put("titreLessFor","Le moins réalisé");
+            root.put("titreMoreFor","Le plus r&eacute;alis&eacute;");
+            root.put("titreLessFor","Le moins r&eacute;alis&eacute;");
             root.put("titreMoreAgainst","Le plus subi");
             root.put("titreLessAgainst","Le moins subi");
 
