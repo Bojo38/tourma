@@ -71,9 +71,7 @@
               <Font name="Tahoma" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="FREEMARKER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="FreeMarker" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbFreeMarkerC">
@@ -82,9 +80,7 @@
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="FREEMARKER COPYRIGHT" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="FREEMARKER COPYRIGHT"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbJDom">
@@ -93,9 +89,7 @@
               <Font name="Tahoma" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="JDOM" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="JDOM" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbJDomC">
@@ -104,9 +98,7 @@
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="JDOM" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="JDOM" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbJCommon">
@@ -115,9 +107,7 @@
               <Font name="Tahoma" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="JCOMMON" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="JCommon" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbJCommonC">
@@ -126,9 +116,7 @@
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="JCOMMON" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="JCOMMON" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbSubstance">
@@ -137,9 +125,7 @@
               <Font name="Tahoma" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="SUBSTANCE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="Substance" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlbSubstanceC">
@@ -148,9 +134,7 @@
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="SUBSTANCE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="SUBSTANCE" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -183,7 +167,7 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="tourma/languages/language.properties" key="NOM" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="tourma/languages/language.properties" key="Name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
             </Component>
@@ -205,7 +189,7 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="tourma/languages/language.properties" key="DATE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="tourma/languages/language.properties" key="Date" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
             </Component>

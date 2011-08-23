@@ -41,16 +41,16 @@ public class jdgOnlineHelp extends javax.swing.JDialog {
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
 
-         jepCreateTour.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepAddCoach.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepEnterMatchs.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepEraseRound.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepGenerateNextRound.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepLoadSave.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepPrint.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepUpload.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepNafExport.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
-         jepVoirClassements.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
+         jepCreateTour.setContentType("HTML");
+         jepAddCoach.setContentType("HTML");
+         jepEnterMatchs.setContentType("HTML");
+         jepEraseRound.setContentType("HTML");
+         jepGenerateNextRound.setContentType("HTML");
+         jepLoadSave.setContentType("HTML");
+         jepPrint.setContentType("HTML");
+         jepUpload.setContentType("HTML");
+         jepNafExport.setContentType("HTML");
+         jepVoirClassements.setContentType("HTML");
          try
          {
             jepCreateTour.setPage(getClass().getResource("/tourma/views/system/help/createtour.html").toString());
@@ -131,27 +131,27 @@ public class jdgOnlineHelp extends javax.swing.JDialog {
 
         jScrollPane2.setViewportView(jepAddCoach);
 
-        jTabbedPane1.addTab(bundle.getString("AJOUTER DES COACHS"), jScrollPane2); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("AddCoach"), jScrollPane2); // NOI18N
 
         jScrollPane3.setViewportView(jepGenerateNextRound);
 
-        jTabbedPane1.addTab(bundle.getString("GÉNÉRER UNE RONDE"), jScrollPane3); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("GenerateRound"), jScrollPane3); // NOI18N
 
         jScrollPane4.setViewportView(jepEnterMatchs);
 
-        jTabbedPane1.addTab(bundle.getString("SAISIR LES MATCHS"), jScrollPane4); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("Enter matches"), jScrollPane4); // NOI18N
 
         jScrollPane5.setViewportView(jepLoadSave);
 
-        jTabbedPane1.addTab(bundle.getString("ENREGISTRER/CHARGER TOURNOI"), jScrollPane5); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("Save/LoadTournament"), jScrollPane5); // NOI18N
 
         jScrollPane6.setViewportView(jepUpload);
 
-        jTabbedPane1.addTab(bundle.getString("UPLOADER SUR LE WEB"), jScrollPane6); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("WebUpload"), jScrollPane6); // NOI18N
 
         jScrollPane7.setViewportView(jepPrint);
 
-        jTabbedPane1.addTab(bundle.getString("IMPRIMER UN CLASSEMENT"), jScrollPane7); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("PrintRanking"), jScrollPane7); // NOI18N
 
         jScrollPane8.setViewportView(jepEraseRound);
 
@@ -159,19 +159,19 @@ public class jdgOnlineHelp extends javax.swing.JDialog {
 
         jScrollPane9.setViewportView(jepVoirClassements);
 
-        jTabbedPane1.addTab(bundle.getString("VOIR LES CLASSEMENTS"), jScrollPane9); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("WatchRanking"), jScrollPane9); // NOI18N
 
         jScrollPane10.setViewportView(jepNafExport);
 
-        jTabbedPane1.addTab(bundle.getString("EXPORTER POUR LA NAF"), jScrollPane10); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("NAFExport"), jScrollPane10); // NOI18N
 
         jPanel3.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(bundle.getString("UN PEU D'AIDE EN LIGNE")); // NOI18N
+        jLabel1.setText(bundle.getString("ABitOfHelp")); // NOI18N
         getContentPane().add(jLabel1, java.awt.BorderLayout.NORTH);
 
         pack();

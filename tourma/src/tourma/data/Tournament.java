@@ -364,7 +364,7 @@ public class Tournament {
         if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VampireKey"))) {
             return "Vampires";
         }
-        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNKNOWN");
+        return "Unknown";
     }
 
     public void exportResults(java.io.File file) {

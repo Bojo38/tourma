@@ -384,13 +384,13 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         if (c == null) {
             switch (rankingType) {
                 case Parameters.C_RANKING_POINTS:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Points");
                 case Parameters.C_RANKING_NONE:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RIEN");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Nothing");
                 case Parameters.C_RANKING_OPP_POINTS:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PTS ADV");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Opp. Pts");
                 case Parameters.C_RANKING_VND:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/D/L");
             }
         } else {
             int subRanking = mjtRanking.getSubtypeByValue(rankingType);

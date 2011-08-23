@@ -170,6 +170,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText(bundle.getString("ClanKey:")); // NOI18N
         jPanel1.add(jLabel6);
+        jLabel6.getAccessibleContext().setAccessibleName(bundle.getString("ClanKey")); // NOI18N
 
         jPanel1.add(jcbClan);
 
@@ -185,7 +186,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jPanel2.add(jbtOK);
 
         jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
-        jbtCancel.setText(bundle.getString("ANNULER")); // NOI18N
+        jbtCancel.setText(bundle.getString("Cancel")); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtCancelActionPerformed(evt);
@@ -225,15 +226,15 @@ public class jdgCoach extends javax.swing.JDialog {
         }
 
         if (c._name.equals("")) {
-            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE NOM EST VIDE"));
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NameIsEmpty"));
             return;
         }
         if (c._team.equals("")) {
-            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("L'ÉQUIPE EST VIDE"));
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TeamIsEmpty"));
             return;
         }
         if (c._roster._name.equals("")) {
-            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE ROSTER EST VIDE"));
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RosterIsEmpty"));
             return;
         }
 

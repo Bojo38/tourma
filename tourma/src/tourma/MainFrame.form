@@ -740,7 +740,7 @@
                                   <ComponentRef name="buttonGroup1"/>
                                 </Property>
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="UTILISER LA VICTOIRE D&apos;&#xc9;QUIPE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="UseTeamVictory" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
                                 <Property name="hideActionText" type="boolean" value="true"/>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
@@ -756,7 +756,7 @@
                                   <ComponentRef name="buttonGroup1"/>
                                 </Property>
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="UTILISER LE CUMUL DES POINTS DES COACHS" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="UseCoachsPointsSum" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
                               </Properties>
                               <Events>
@@ -767,10 +767,10 @@
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="VICTOIRE:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="Victory" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
                                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE POINTS POUR UNE VICTOIRE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="VictoryNumberOfPointsKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -788,10 +788,10 @@
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="MATCH NUL:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="Draw" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
                                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UN MATCH NUL" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="DrawMatchTipKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -809,10 +809,10 @@
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="D&#xc9;FAITE:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="Loss" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
                                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE POINTS POUR UNE PETITE D&#xc9;FAITE:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="LossTipKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -832,6 +832,7 @@
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                   <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 1:&quot;" type="code"/>
                                 </Property>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank1Team">
@@ -861,6 +862,7 @@
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                   <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 2:&quot;" type="code"/>
                                 </Property>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank2Team">
@@ -890,6 +892,7 @@
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                   <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 3:&quot;" type="code"/>
                                 </Property>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank3Team">
@@ -919,6 +922,7 @@
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                   <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 4:&quot;" type="code"/>
                                 </Property>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank4Team">
@@ -948,6 +952,7 @@
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                   <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 5:&quot;" type="code"/>
                                 </Property>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JComboBox" name="jcbRank5Team">
@@ -975,8 +980,9 @@
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
                                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="PRIME &#xc0; LA VICTOIRE D&apos;&#xc9;QUIPE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                  <ResourceString bundle="tourma/languages/language.properties" key="TeamVictoryBonus" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                                 </Property>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jtffTeamVictory">
@@ -1550,7 +1556,7 @@
                               <Image iconType="3" name="/tourma/images/Add.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="tourma/languages/language.properties" key="AJOUTER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString bundle="tourma/languages/language.properties" key="Add" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -1563,7 +1569,7 @@
                               <Image iconType="3" name="/tourma/images/Close.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="tourma/languages/language.properties" key="RETIRER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString bundle="tourma/languages/language.properties" key="Remove" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -1576,7 +1582,7 @@
                               <Image iconType="3" name="/tourma/images/Swap.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="tourma/languages/language.properties" key="MODIFIER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString bundle="tourma/languages/language.properties" key="Modify" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -1650,7 +1656,7 @@
                               <Image iconType="3" name="/tourma/images/Add.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="tourma/languages/language.properties" key="AJOUTER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString bundle="tourma/languages/language.properties" key="Add" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -1663,7 +1669,7 @@
                               <Image iconType="3" name="/tourma/images/Close.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="tourma/languages/language.properties" key="RETIRER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString bundle="tourma/languages/language.properties" key="Remove" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -1676,7 +1682,7 @@
                               <Image iconType="3" name="/tourma/images/Swap.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="tourma/languages/language.properties" key="MODIFIER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString bundle="tourma/languages/language.properties" key="Modify" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -1745,7 +1751,7 @@
                           <Image iconType="3" name="/tourma/images/Generate.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="tourma/languages/language.properties" key="G&#xc9;N&#xc9;RER LA PREMI&#xc8;RE RONDE" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="tourma/languages/language.properties" key="GenerateFirstRound" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </Properties>
                       <Events>

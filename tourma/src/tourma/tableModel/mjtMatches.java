@@ -52,19 +52,19 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
         if (_teamTournament) {
             switch (col) {
                 case 0:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Table");
                 case 1:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE 1");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team1");
                 case 2:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH 1");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach1");
                 case 3:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE 1");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Score1");
                 case 4:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE 2");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Score2");
                 case 5:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH 2");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach2");
                 case 6:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE 2");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team2");
                 default:
                     Criteria crit = Tournament.getTournament().getParams()._criterias.get((col - 5) / 2);
                     int ind = (col - 5) % 2;
@@ -77,15 +77,15 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
         } else {
             switch (col) {
                 case 0:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Table");
                 case 1:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH 1");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach1");
                 case 2:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE 1");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Score1");
                 case 3:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE 2");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Score2");
                 case 4:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH 2");
+                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach2");
                 default:
                     Criteria crit = Tournament.getTournament().getParams()._criterias.get((col - 3) / 2);
                     if ((col - 3) % 2 > 0) {

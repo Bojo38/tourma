@@ -130,19 +130,19 @@ public class mjtRankingIndiv extends mjtRanking {
                 cl = col - 1;
             }
             if (col == 1) {
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
             }
         }
 
         switch (cl) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
+                return "#";
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team");
             case 2:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach");
             case 3:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Roster");
             case 4:
                 return getRankingString(_ranking_type1);
             case 5:

@@ -392,9 +392,9 @@ public class mjtRankingTeam extends mjtRanking {
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
+                return "#";
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team");
             case 2:
                 return getRankingString(_ranking_type1);
             case 3:

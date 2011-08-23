@@ -99,13 +99,13 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
             int col) {
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
+                return "#";
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EQUIPE");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team");
             case 2:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach");
             case 3:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Roster");
             case 4:
                 if (_subtype == 0) {
                     return _criteria._name + " Coach";

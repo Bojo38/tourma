@@ -99,17 +99,17 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
+                return "#";
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
             case 2:
                 if (_subtype == 0) {
-                    return _criteria._name + " Coach";
+                    return _criteria._name +  " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach");
                 } else {
                     if (_subtype == 1) {
-                        return _criteria._name + " Adversaire";
+                        return _criteria._name + " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Opponent");
                     } else {
-                        return _criteria._name + " Difference";
+                        return _criteria._name +  " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Difference");
                     }
                 }
         }

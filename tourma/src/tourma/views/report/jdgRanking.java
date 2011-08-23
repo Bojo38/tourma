@@ -91,7 +91,7 @@ public class jdgRanking extends javax.swing.JDialog {
         _tour = tour;
         //_rankType = RankType;
         _type = type;
-        this.setTitle(tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + roundNumber);
+        this.setTitle(tour.getParams()._tournament_name + " - " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" "+ + roundNumber);
         try {
             jepHTML.setContentType("html");
             filename = CreateReport();
@@ -133,7 +133,7 @@ public class jdgRanking extends javax.swing.JDialog {
         jPanel1.add(jbtOK);
 
         jbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
-        jbtPrint.setText(bundle.getString("IMPRIMER")); // NOI18N
+        jbtPrint.setText(bundle.getString("Print")); // NOI18N
         jbtPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtPrintActionPerformed(evt);
@@ -142,7 +142,7 @@ public class jdgRanking extends javax.swing.JDialog {
         jPanel1.add(jbtPrint);
 
         jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
-        jbtExport.setText(bundle.getString("EXPORT HTML")); // NOI18N
+        jbtExport.setText(bundle.getString("HTMLExport")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtExportActionPerformed(evt);
@@ -231,7 +231,7 @@ public class jdgRanking extends javax.swing.JDialog {
             }*/
 
             Map root = new HashMap();
-            root.put("nom", _tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + _roundNumber);
+            root.put("nom", _tour.getParams()._tournament_name + " - " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" "+ + _roundNumber);
             root.put("title", _title);
 
             Vector titles = new Vector();

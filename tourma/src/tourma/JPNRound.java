@@ -841,7 +841,7 @@ public class JPNRound extends javax.swing.JPanel {
             for (int i = 0; i
                     < _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
             }
 
              MainFrame.getMainFrame().update();

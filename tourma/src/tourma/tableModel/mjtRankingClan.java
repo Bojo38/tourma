@@ -260,7 +260,7 @@ public class mjtRankingClan extends mjtRanking {
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
+                return "#";
             case 1:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
             case 2:

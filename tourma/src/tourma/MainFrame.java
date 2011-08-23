@@ -769,7 +769,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.setLayout(new java.awt.GridLayout(10, 2));
 
         buttonGroup1.add(jrbTeamVictory);
-        jrbTeamVictory.setText(bundle.getString("UTILISER LA VICTOIRE D'ÉQUIPE")); // NOI18N
+        jrbTeamVictory.setText(bundle.getString("UseTeamVictory")); // NOI18N
         jrbTeamVictory.setHideActionText(true);
         jrbTeamVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jrbTeamVictory.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -781,7 +781,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jrbTeamVictory);
 
         buttonGroup1.add(jrbCoachPoints);
-        jrbCoachPoints.setText(bundle.getString("UTILISER LE CUMUL DES POINTS DES COACHS")); // NOI18N
+        jrbCoachPoints.setText(bundle.getString("UseCoachsPointsSum")); // NOI18N
         jrbCoachPoints.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbCoachPointsActionPerformed(evt);
@@ -790,8 +790,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jrbCoachPoints);
 
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel23.setText(bundle.getString("VICTOIRE:")); // NOI18N
-        jLabel23.setToolTipText(bundle.getString("NOMBRE POINTS POUR UNE VICTOIRE")); // NOI18N
+        jLabel23.setText(bundle.getString("Victory")); // NOI18N
+        jLabel23.setToolTipText(bundle.getString("VictoryNumberOfPointsKey")); // NOI18N
         jPanel10.add(jLabel23);
 
         jtffVictoryTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -803,8 +803,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jtffVictoryTeam);
 
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel24.setText(bundle.getString("MATCH NUL:")); // NOI18N
-        jLabel24.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UN MATCH NUL")); // NOI18N
+        jLabel24.setText(bundle.getString("Draw")); // NOI18N
+        jLabel24.setToolTipText(bundle.getString("DrawMatchTipKey")); // NOI18N
         jPanel10.add(jLabel24);
 
         jtffDrawTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -816,8 +816,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jtffDrawTeam);
 
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel25.setText(bundle.getString("DÉFAITE:")); // NOI18N
-        jLabel25.setToolTipText(bundle.getString("NOMBRE DE POINTS POUR UNE PETITE DÉFAITE:")); // NOI18N
+        jLabel25.setText(bundle.getString("Loss")); // NOI18N
+        jLabel25.setToolTipText(bundle.getString("LossTipKey")); // NOI18N
         jPanel10.add(jLabel25);
 
         jtffLostTeam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -830,6 +830,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel26.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 1:");
+        jLabel26.setToolTipText("");
         jPanel10.add(jLabel26);
 
         jcbRank1Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -842,6 +843,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel27.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 2:");
+        jLabel27.setToolTipText("");
         jPanel10.add(jLabel27);
 
         jcbRank2Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -854,6 +856,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel28.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 3:");
+        jLabel28.setToolTipText("");
         jPanel10.add(jLabel28);
 
         jcbRank3Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -866,6 +869,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel29.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 4:");
+        jLabel29.setToolTipText("");
         jPanel10.add(jLabel29);
 
         jcbRank4Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -878,6 +882,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel30.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 5:");
+        jLabel30.setToolTipText("");
         jPanel10.add(jLabel30);
 
         jcbRank5Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -889,7 +894,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jcbRank5Team);
 
         jlbVictoryPoints.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbVictoryPoints.setText(bundle.getString("PRIME À LA VICTOIRE D'ÉQUIPE")); // NOI18N
+        jlbVictoryPoints.setText(bundle.getString("TeamVictoryBonus")); // NOI18N
+        jlbVictoryPoints.setToolTipText("");
         jPanel10.add(jlbVictoryPoints);
 
         jtffTeamVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -1156,7 +1162,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel7.setLayout(new java.awt.BorderLayout());
 
         jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAdd.setText(bundle.getString("AJOUTER")); // NOI18N
+        jbtAdd.setText(bundle.getString("Add")); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddActionPerformed(evt);
@@ -1165,7 +1171,7 @@ public class MainFrame extends javax.swing.JFrame {
         jpnCoachButtons.add(jbtAdd);
 
         jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemove.setText(bundle.getString("RETIRER")); // NOI18N
+        jbtRemove.setText(bundle.getString("Remove")); // NOI18N
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRemoveActionPerformed(evt);
@@ -1174,7 +1180,7 @@ public class MainFrame extends javax.swing.JFrame {
         jpnCoachButtons.add(jbtRemove);
 
         jbtModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
-        jbtModify.setText(bundle.getString("MODIFIER")); // NOI18N
+        jbtModify.setText(bundle.getString("Modify")); // NOI18N
         jbtModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtModifyActionPerformed(evt);
@@ -1207,7 +1213,7 @@ public class MainFrame extends javax.swing.JFrame {
         jpnTeamTour.setLayout(new java.awt.BorderLayout());
 
         jbtAddTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAddTeam.setText(bundle.getString("AJOUTER")); // NOI18N
+        jbtAddTeam.setText(bundle.getString("Add")); // NOI18N
         jbtAddTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddTeamActionPerformed(evt);
@@ -1216,7 +1222,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel8.add(jbtAddTeam);
 
         jbtRemoveTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemoveTeam.setText(bundle.getString("RETIRER")); // NOI18N
+        jbtRemoveTeam.setText(bundle.getString("Remove")); // NOI18N
         jbtRemoveTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRemoveTeamActionPerformed(evt);
@@ -1225,7 +1231,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel8.add(jbtRemoveTeam);
 
         jbtModifyTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
-        jbtModifyTeam.setText(bundle.getString("MODIFIER")); // NOI18N
+        jbtModifyTeam.setText(bundle.getString("Modify")); // NOI18N
         jbtModifyTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtModifyTeamActionPerformed(evt);
@@ -1259,7 +1265,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2.add(jpnTeamTour, java.awt.BorderLayout.NORTH);
 
         jbtFirstRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
-        jbtFirstRound.setText(bundle.getString("GÉNÉRER LA PREMIÈRE RONDE")); // NOI18N
+        jbtFirstRound.setText(bundle.getString("GenerateFirstRound")); // NOI18N
         jbtFirstRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtFirstRoundActionPerformed(evt);
@@ -1371,15 +1377,15 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
 
-        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ETES VOUS SÛR ? CELA VA EFFACER TOUTES LES RONDES"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PREMIÈRE RONDE"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (_tournament.getParams()._teamTournament && _tournament.getTeams().size() % 2 > 0) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE IMPAIR D'ÉQUIPES"));
+                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OddTeamNumber"));
             } else {
                 if (_tournament.getCoachs().size() % 2 > 0) {
-                    JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE IMPAIR DE JOUEURS"));
+                    JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OddCoachNumber"));
                 } else {
-                    String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANDOM"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORDRE D'INSCRIPTION"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MANUEL")};
-                    int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LE TIRAGE INITIAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIRAGE"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
+                    String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Random"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RegisteringOrder"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Manual")};
+                    int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseFirstDraw"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Draw"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
 
                     _tournament.generateFirstRound(choice);
 
@@ -1391,7 +1397,7 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                     for (int i = 0; i < _tournament.getRounds().size(); i++) {
                         JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                        jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND") + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                        jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
                     }
                     update();
 
@@ -1511,7 +1517,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
         JFileChooser jfc = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURMA XML FILE"), new String[]{"XML", "xml"});
+        FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             String url2 = jfc.getSelectedFile().getAbsolutePath();
@@ -1539,7 +1545,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
         JFileChooser jfc = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURMA XML FILE"), new String[]{"XML", "xml"});
+        FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
         jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
@@ -1578,7 +1584,7 @@ public class MainFrame extends javax.swing.JFrame {
         _tournament = Tournament.resetTournament();
 
         Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Single"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam")};
-        int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE DE TOURNOI"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOUVEAU TOURNOI"),
+        int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TournamentType"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewTournament"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
 
@@ -1586,13 +1592,13 @@ public class MainFrame extends javax.swing.JFrame {
         if (res == 1) {
             jdgSelectNumber jdg = new jdgSelectNumber(this, true, _tournament);
             jdg.setVisible(true);
-            res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE D'APPARIEMENT"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APPARIEMENT"),
+            res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PairingType"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pairing"),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
             Tournament.getTournament().getParams()._teamPairing = res;
             if (res == 1) {
-                Object options2[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SELON CLASSEMENT"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LIBRE")};
-                res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE D'APPARIEMENT INDIVIDUEL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APPARIEMENT INDIVIDUEL"),
+                Object options2[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AccordingToRanking"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Free")};
+                res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IndividualPairingType"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IndividualPairing"),
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options2, options2[0]);
                 Tournament.getTournament().getParams()._teamIndivPairing = res;
@@ -1659,7 +1665,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfPlaceKeyPressed
 
     private void jbtAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddTeamActionPerformed
-        String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOME DE L'AQUIPE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM DE L'ÉQUIPE"));
+        String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TeamName"));
         Team team = new Team();
         team._name = name;
         Coach lastCoach = null;
@@ -1690,7 +1696,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
         Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
         if (jtbTeam.getSelectedColumn() == 1) {
-            String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOME DE L'AQUIPE"), t._name);
+            String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), t._name);
             t._name = name;
         } else if (jtbTeam.getSelectedColumn() > 1) {
             jdgCoach jdg = new jdgCoach(this, true, t._coachs.get(jtbTeam.getSelectedColumn() - 2));
@@ -2066,7 +2072,7 @@ public class MainFrame extends javax.swing.JFrame {
                     SubstanceLookAndFeel lf = new SubstanceMistSilverLookAndFeel();
                     UIManager.setLookAndFeel(lf);
                 } catch (Exception e) {
-                    System.out.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBSTANCE CREME COFFEE FAILED TO INITIALIZE"));
+                    System.out.println(e.getLocalizedMessage());
                 }
 
                 MainFrame.getMainFrame().setVisible(true);

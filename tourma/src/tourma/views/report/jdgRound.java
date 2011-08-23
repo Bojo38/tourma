@@ -65,7 +65,7 @@ public class jdgRound extends javax.swing.JDialog {
         _result = result;
         _team = team;
 
-        this.setTitle(tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + roundNumber);
+        this.setTitle(tour.getParams()._tournament_name + " -" +" - " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" "+ + roundNumber);
         try {
             jepHTML.setContentType("html");
             File f;
@@ -92,7 +92,7 @@ public class jdgRound extends javax.swing.JDialog {
         _roundNumber = roundNumber;
         _tour = tour;
 
-        this.setTitle(tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + roundNumber);
+        this.setTitle(tour.getParams()._tournament_name + " - " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" "+ + roundNumber);
         try {
             jepHTML.setContentType("html");
             File f;
@@ -137,7 +137,7 @@ public class jdgRound extends javax.swing.JDialog {
         jPanel1.add(jbtOK);
 
         jbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
-        jbtPrint.setText(bundle.getString("IMPRIMER")); // NOI18N
+        jbtPrint.setText(bundle.getString("Print")); // NOI18N
         jbtPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtPrintActionPerformed(evt);
@@ -146,7 +146,7 @@ public class jdgRound extends javax.swing.JDialog {
         jPanel1.add(jbtPrint);
 
         jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
-        jbtExport.setText(bundle.getString("EXPORT HTML")); // NOI18N
+        jbtExport.setText(bundle.getString("HTMLExport")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtExportActionPerformed(evt);
@@ -227,7 +227,7 @@ public class jdgRound extends javax.swing.JDialog {
             Template temp = cfg.getTemplate("round.html");
 
             Map root = new HashMap();
-            root.put("nom", _tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + _roundNumber);
+            root.put("nom", _tour.getParams()._tournament_name + " - " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" "+ + _roundNumber);
             root.put("table", _round.getMatchs().size());
 
             Vector<Match> matches = _round.getMatchs();
@@ -335,7 +335,7 @@ public class jdgRound extends javax.swing.JDialog {
             Template temp = cfg.getTemplate("team_round.html");
 
             Map root = new HashMap();
-            root.put("nom", _tour.getParams()._tournament_name + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE ") + _roundNumber);
+            root.put("nom", _tour.getParams()._tournament_name + " - " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" "+ + _roundNumber);
             root.put("tables", _round.getMatchs().size());
 
             if (_result) {
