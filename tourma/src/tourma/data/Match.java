@@ -27,7 +27,12 @@ public class Match {
         {
             Criteria crit=Tournament.getTournament()._params._criterias.get(i);
             Value val=new Value(crit);
-            if (crit._name.equals("Touchdowns"))
+            if (crit._name.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Touchdowns")))
+            {
+                val._value1=-1;
+                val._value2=-1;
+            }
+             if ( crit._name.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Injuries")))
             {
                 val._value1=-1;
                 val._value2=-1;

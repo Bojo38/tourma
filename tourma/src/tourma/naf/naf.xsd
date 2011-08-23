@@ -1,0 +1,115 @@
+<!--
+Reported data per game:
+
+Time/Date stamp (2003-11-15 10:00)
+
+Home Coach (NAF id or NAF number)
+Home TR
+Home Score
+
+Away Coach (NAF id or NAF number)
+Away TR
+Away Score
+
+Optional:
+
+Gate
+Home Winnings
+Away Winnings
+
+Home Casuaties Caused:
+BH
+SI
+KILLS
+
+Away Casuaties Caused:
+BH
+SI
+KILLS
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.bloodbowl.net"
+           xmlns:naf="http://www.bloodbowl.net"
+           elementFormDefault="qualified">
+
+  <xs:element name="nafReport" type="naf:nafReportType"/>
+
+  <xs:complexType name="nafReportType">
+    <xs:sequence>
+      <xs:element name="organiser" type="xs:string" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="coaches" type="naf:coachesType" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="game" type="naf:gameType" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="coachesType">
+    <xs:sequence>
+      <xs:element name="coach" type="naf:coachRecordType" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="coachRecordType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="number" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="team" maxOccurs="1" minOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:whiteSpace value="collapse"/>
+            <xs:enumeration value="Unknown"/>
+            <xs:enumeration value="Amazons"/>
+            <xs:enumeration value="Chaos"/>
+            <xs:enumeration value="Chaos Dwarves"/>
+            <xs:enumeration value="Dark Elves"/>
+            <xs:enumeration value="Dwarves"/>
+            <xs:enumeration value="Elves"/>
+            <xs:enumeration value="Goblins"/>
+            <xs:enumeration value="Halflings"/>
+            <xs:enumeration value="High Elves"/>
+            <xs:enumeration value="Humans"/>
+            <xs:enumeration value="Khemri"/>
+            <xs:enumeration value="Lizardmen"/>
+            <xs:enumeration value="Necromantic"/>
+            <xs:enumeration value="Norse"/>
+            <xs:enumeration value="Nurgle's Rotters"/>
+            <xs:enumeration value="Ogres"/>
+            <xs:enumeration value="Orc"/>
+            <xs:enumeration value="Skaven"/>
+            <xs:enumeration value="Undead"/>
+            <xs:enumeration value="Vampires"/>
+            <xs:enumeration value="Wood Elves"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="gameType">
+    <xs:sequence>
+      <xs:element name="timeStamp" maxOccurs="1" minOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:whiteSpace value="collapse"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="playerRecord" type="naf:playerRecordType" maxOccurs="2" minOccurs="2"/>
+      <xs:element name="gate" type="xs:positiveInteger" maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="playerRecordType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="number" type="xs:int" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="teamRating" type="xs:int" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="touchDowns" type="xs:int" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="badlyHurt" type="xs:int" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="seriouslyInjured" type="xs:int" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="dead" type="xs:int" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="winnings" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

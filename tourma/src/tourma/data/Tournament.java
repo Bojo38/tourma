@@ -4,11 +4,14 @@
  */
 package tourma.data;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import tourma.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -252,7 +255,7 @@ public class Tournament {
 
         for (int i = 0; i
                 < _rounds.size(); i++) {
-            Element round = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"));
+            Element round = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round"));
             round.setAttribute("Date", format.format(_rounds.get(i)._heure));
 
             for (int j = 0; j
@@ -365,11 +368,83 @@ public class Tournament {
     }
 
     public void exportResults(java.io.File file) {
-
-        Element document = new Element("nafReport");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM:SS");
 
-        /*document.setNamespace(Namespace.getNamespace("blo","http://www.bloodbowl.net"));*/
+        Criteria critTd = null;
+        Criteria critInj = null;
+
+        for (int i = 0; i < Tournament.getTournament()._params._criterias.size(); i++) {
+            Criteria crit = Tournament.getTournament()._params._criterias.get(i);
+            if (crit._name.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Touchdowns"))) {
+                critTd = crit;
+            }
+            if (crit._name.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Injuries"))) {
+                critInj = crit;
+            }
+        }
+
+        try {
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+
+            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            writer.println("<nafReport xmlns='http://www.bloodbowl.net' xsi:schemaLocation='http://www.bloodbowl.net ../../../test/naf.xsd'>");
+            writer.println("<organiser>" + _params._tournament_orga + "</organiser>");
+            writer.println("<coaches>");
+            for (int i = 0; i < _coachs.size(); i++) {
+                if (_coachs.get(i)._naf > 0) {
+                    writer.println("<coach>");
+                    writer.println("<name>" + _coachs.get(i)._name + "</name>");
+                    writer.println("<number>" + _coachs.get(i)._naf + "</number>");
+                    writer.println("<team>" + getRosterTranslation(_coachs.get(i)._roster._name) + "</team>");
+                    writer.println("</coach>");
+                }
+            }
+            writer.println("</coaches>");
+
+            for (int i = 0; i
+                    < _rounds.size(); i++) {
+                for (int j = 0; j
+                        < _rounds.get(i)._matchs.size(); j++) {
+                    if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0)
+                            && (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
+                        writer.println("<game>");
+                        Match m = _rounds.get(i)._matchs.get(j);
+                        writer.println("<timeStamp>" + format.format(_rounds.get(i)._heure) + "</timeStamp>");
+                        Coach p = m._coach1;
+                        writer.println("<playerRecord>");
+                        writer.println("<name>" + p._name + "</name>");
+                        writer.println("<number>" + p._naf + "</number>");
+                        writer.println("<teamRating>" + p._rank + "</teamRating>");
+                        writer.println("<touchDowns>" + m._values.get(critTd)._value1 + "</touchDowns>");
+                        writer.println("<badlyHurt>" + m._values.get(critInj)._value1 + "</badlyHurt>");
+                        writer.println("<seriouslyInjured></seriouslyInjured>");
+                        writer.println("<dead></dead>");
+                        writer.println("<winnings></winnings>");
+                        writer.println("</playerRecord>");
+                        p = m._coach2;
+                        writer.println("<playerRecord>");
+                        writer.println("<name>" + p._name + "</name>");
+                        writer.println("<number>" + p._naf + "</number>");
+                        writer.println("<teamRating>" + p._rank + "</teamRating>");
+                        writer.println("<touchDowns>" + m._values.get(critTd)._value2 + "</touchDowns>");
+                        writer.println("<badlyHurt>" + m._values.get(critInj)._value2 + "</badlyHurt>");
+                        writer.println("<seriouslyInjured></seriouslyInjured>");
+                        writer.println("<dead></dead>");
+                        writer.println("<winnings></winnings>");
+                        writer.println("</playerRecord>");
+                        writer.println("<gate></gate>");
+                        writer.println("</game>");
+                    }
+                }
+            }
+            writer.println("</nafReport>");
+            writer.close();
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        }
+
+        /* Element document = new Element("nafReport");
 
         Element orgas = new Element("organiser");
         orgas.setText(_params._tournament_orga);
@@ -378,81 +453,81 @@ public class Tournament {
 
         Element coaches = new Element("coaches");
         for (int i = 0; i
-                < _coachs.size(); i++) {
-            if (_coachs.get(i)._naf > 0) {
-                Element coach = new Element("coach");
-                Element name = new Element("name");
-                Element team = new Element("team");
-                name.setText(_coachs.get(i)._name);
-                String roster = getRosterTranslation(_coachs.get(i)._roster._name);
-                team.setText(roster);
-                coach.addContent(name);
-                coach.addContent(team);
-                coaches.addContent(coach);
-            }
+        < _coachs.size(); i++) {
+        if (_coachs.get(i)._naf > 0) {
+        Element coach = new Element("coach");
+        Element name = new Element("name");
+        Element team = new Element("team");
+        name.setText(_coachs.get(i)._name);
+        String roster = getRosterTranslation(_coachs.get(i)._roster._name);
+        team.setText(roster);
+        coach.addContent(name);
+        coach.addContent(team);
+        coaches.addContent(coach);
+        }
         }
         document.addContent(coaches);
 
         for (int i = 0; i
-                < _rounds.size(); i++) {
-            for (int j = 0; j
-                    < _rounds.get(i)._matchs.size(); j++) {
-                if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0)
-                        && (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
-                    Element game = new Element("game");
-                    Element timeStamp = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIMESTAMP"));
-                    timeStamp.setText(format.format(_rounds.get(i)._heure));
-                    Element playerRecord1 = new Element("playerRecord");
-                    Element playerRecord2 = new Element("playerRecord");
-                    Element name1 = new Element("name");
-                    Element rank1 = new Element("teamRating");
-                    Element td1 = new Element("touchDowns");
-                    Element bh1 = new Element("badlyHurt");
-                    Element name2 = new Element("name");
-                    Element rank2 = new Element("teamRating");
-                    Element td2 = new Element("touchDowns");
-                    Element bh2 = new Element("badlyHurt");
+        < _rounds.size(); i++) {
+        for (int j = 0; j
+        < _rounds.get(i)._matchs.size(); j++) {
+        if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0)
+        && (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
+        Element game = new Element("game");
+        Element timeStamp = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIMESTAMP"));
+        timeStamp.setText(format.format(_rounds.get(i)._heure));
+        Element playerRecord1 = new Element("playerRecord");
+        Element playerRecord2 = new Element("playerRecord");
+        Element name1 = new Element("name");
+        Element rank1 = new Element("teamRating");
+        Element td1 = new Element("touchDowns");
+        Element bh1 = new Element("badlyHurt");
+        Element name2 = new Element("name");
+        Element rank2 = new Element("teamRating");
+        Element td2 = new Element("touchDowns");
+        Element bh2 = new Element("badlyHurt");
 
-                    name1.setText(_rounds.get(i)._matchs.get(j)._coach1._name);
-                    name2.setText(_rounds.get(i)._matchs.get(j)._coach2._name);
-                    td1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Touchdowns")._value1));
-                    td2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Touchdowns")._value2));
-                    bh1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Sorties")._value1));
-                    bh2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Sorties")._value2));
-                    rank1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach1._rank));
-                    rank2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach2._rank));
+        name1.setText(_rounds.get(i)._matchs.get(j)._coach1._name);
+        name2.setText(_rounds.get(i)._matchs.get(j)._coach2._name);
+        td1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Touchdowns")._value1));
+        td2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Touchdowns")._value2));
+        bh1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Sorties")._value1));
+        bh2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Sorties")._value2));
+        rank1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach1._rank));
+        rank2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach2._rank));
 
-                    playerRecord1.addContent(name1);
-                    playerRecord1.addContent(td1);
-                    playerRecord1.addContent(bh1);
-                    playerRecord1.addContent(rank1);
+        playerRecord1.addContent(name1);
+        playerRecord1.addContent(td1);
+        playerRecord1.addContent(bh1);
+        playerRecord1.addContent(rank1);
 
-                    playerRecord2.addContent(name2);
-                    playerRecord2.addContent(td2);
-                    playerRecord2.addContent(bh2);
-                    playerRecord2.addContent(rank2);
+        playerRecord2.addContent(name2);
+        playerRecord2.addContent(td2);
+        playerRecord2.addContent(bh2);
+        playerRecord2.addContent(rank2);
 
-                    game.addContent(timeStamp);
-                    game.addContent(playerRecord1);
-                    game.addContent(playerRecord2);
-                    document.addContent(game);
+        game.addContent(timeStamp);
+        game.addContent(playerRecord1);
+        game.addContent(playerRecord2);
+        document.addContent(game);
 
-                }
-            }
+        }
+        }
         }
 
         try {
-            Format f = Format.getPrettyFormat();
-            XMLOutputter sortie = new XMLOutputter(f);
-            sortie.output(document, new FileOutputStream(file));
+        Format f = Format.getPrettyFormat();
+        XMLOutputter sortie = new XMLOutputter(f);
+        sortie.output(document, new FileOutputStream(file));
 
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
 
-        }
+        }*/
     }
 
     protected void LoadXMLv2(Element Root) {
@@ -1392,7 +1467,7 @@ public class Tournament {
 
                     String opp = (String) JOptionPane.showInputDialog(
                             MainFrame.getMainFrame(),
-                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseOpponentFor")+": "
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseOpponentFor") + ": "
                             + team1._name,
                             java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseOpponent"),
                             JOptionPane.PLAIN_MESSAGE,

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : sample.xml.xml
+    Created on : 23 août 2011, 09:49
+    Author     : e_fberge
+    Description:
+        Purpose of the document follows.
+-->
+
+<nafReport  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://www.bloodbowl.net'
+   xsi:schemaLocation='http://www.bloodbowl.net ../../../test/naf.xsd'>
+    <organiser></organiser>
+    <coaches>
+        <coach>
+            <name></name>
+            <number></number>
+            <team>Unknown</team>
+        </coach>
+        <coach>
+            <name></name>
+            <number></number>
+            <team>Unknown</team>
+        </coach>
+        <coach>
+            <name></name>
+            <number></number>
+            <team>Unknown</team>
+        </coach>
+    </coaches>
+    <game>
+        <timeStamp></timeStamp>
+        <playerRecord>
+            <name></name>
+            <number></number>
+            <teamRating></teamRating>
+            <touchDowns></touchDowns>
+            <badlyHurt></badlyHurt>
+            <seriouslyInjured></seriouslyInjured>
+            <dead></dead>
+            <winnings></winnings>
+        </playerRecord>
+        <playerRecord>
+            <name></name>
+            <number></number>
+            <teamRating></teamRating>
+            <touchDowns></touchDowns>
+            <badlyHurt></badlyHurt>
+            <seriouslyInjured></seriouslyInjured>
+            <dead></dead>
+            <winnings></winnings>
+        </playerRecord>
+        <gate></gate>
+    </game>
+    <game>
+        <timeStamp></timeStamp>
+        <playerRecord>
+            <name></name>
+            <number></number>
+            <teamRating></teamRating>
+            <touchDowns></touchDowns>
+            <badlyHurt></badlyHurt>
+            <seriouslyInjured></seriouslyInjured>
+            <dead></dead>
+            <winnings></winnings>
+        </playerRecord>
+        <playerRecord>
+            <name></name>
+            <number></number>
+            <teamRating></teamRating>
+            <touchDowns></touchDowns>
+            <badlyHurt></badlyHurt>
+            <seriouslyInjured></seriouslyInjured>
+            <dead></dead>
+            <winnings></winnings>
+        </playerRecord>
+        <gate></gate>
+    </game>
+    <game>
+        <timeStamp></timeStamp>
+        <playerRecord>
+            <name></name>
+            <number></number>
+            <teamRating></teamRating>
+            <touchDowns></touchDowns>
+            <badlyHurt></badlyHurt>
+            <seriouslyInjured></seriouslyInjured>
+            <dead></dead>
+            <winnings></winnings>
+        </playerRecord>
+        <playerRecord>
+            <name></name>
+            <number></number>
+            <teamRating></teamRating>
+            <touchDowns></touchDowns>
+            <badlyHurt></badlyHurt>
+            <seriouslyInjured></seriouslyInjured>
+            <dead></dead>
+            <winnings></winnings>
+        </playerRecord>
+        <gate></gate>
+    </game>
+
+</nafReport>

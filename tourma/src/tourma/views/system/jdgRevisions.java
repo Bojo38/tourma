@@ -85,7 +85,7 @@ public class jdgRevisions extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        setTitle(bundle.getString("RÉVISIONS")); // NOI18N
+        setTitle(bundle.getString("Revisions")); // NOI18N
         setMinimumSize(new java.awt.Dimension(640, 480));
 
         jPanel1.setMinimumSize(new java.awt.Dimension(320, 33));

@@ -107,10 +107,11 @@ public class Parameters {
         _tournament_name = "";
         _tournament_orga = "";
         _criterias=new Vector<Criteria>();
-        Criteria c=new Criteria("Touchdowns");
+        
+        Criteria c=new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Touchdowns"));
         c._pointsFor=2;
         _criterias.add(c);
-        c=new Criteria("Sorties");
+        c=new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Injuries"));
         c._pointsFor=1;
         _criterias.add(c);
     }

@@ -1511,6 +1511,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
         JFileChooser jfc = new JFileChooser();
+        FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURMA XML FILE"), new String[]{"XML", "xml"});
+        jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             String url2 = jfc.getSelectedFile().getAbsolutePath();
             String ext = "";
@@ -1603,6 +1605,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jmiExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportActionPerformed
         JFileChooser jfc = new JFileChooser();
+        FileFilter filter1 = new ExtensionFileFilter("NAF XML file", new String[]{"XML", "xml"});
+        jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().exportResults(jfc.getSelectedFile());
         }
