@@ -1369,7 +1369,7 @@ public class Tournament {
             _rounds.add(r);
 
         } /**
-         * Si tournoi par équipe
+         * Si tournoi ByTeam
          */
         else {
 
@@ -1411,7 +1411,7 @@ public class Tournament {
                 }
             } else {
                 /*
-                 * Le premier appariement est aléatoire par équipe
+                 * Le premier appariement est aléatoire ByTeam
                  */
                 Vector<Team> shuffle = new Vector<Team>(_teams);
                 if (choice == 0) /* Aléatoire */ {

@@ -313,7 +313,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+                    <Container class="javax.swing.JTabbedPane" name="jtpOptions">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                           <BorderConstraints direction="Center"/>
@@ -491,8 +491,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel14">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;1:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 1:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -524,8 +524,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel15">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;2:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 2:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -557,8 +557,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel16">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;3:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 3:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -590,8 +590,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel17">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;4:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 4:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -623,8 +623,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel18">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;5:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 5:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -844,8 +844,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel26">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;1:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 1:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -873,8 +873,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel27">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;2:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 2:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -902,8 +902,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel28">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;3:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 3:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -931,8 +931,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel29">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;4:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 4:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>
@@ -960,8 +960,8 @@
                             <Component class="javax.swing.JLabel" name="jLabel30">
                               <Properties>
                                 <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                  <ResourceString bundle="tourma/languages/language.properties" key="CRIT&#xc8;RE DE CLASSEMENT N&#xb0;5:" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                                  <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+&quot; 5:&quot;" type="code"/>
                                 </Property>
                               </Properties>
                             </Component>

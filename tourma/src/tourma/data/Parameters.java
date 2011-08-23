@@ -37,7 +37,7 @@ public class Parameters {
     public int _ranking5 = 5;
     public boolean _teamTournament = false;
     /* Pairing: 0: Individuel
-    1: Par équipe
+    1: ByTeam
      */
     public int _teamPairing = 0;
     /* IndivPairing:    0: Classement

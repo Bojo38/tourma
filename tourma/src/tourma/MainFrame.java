@@ -68,8 +68,23 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void update() {
 
-        jcxActivatesClans.setSelected(!_tournament.getParams()._teamTournament);
-        jcxActivatesClans.setEnabled(!_tournament.getParams()._teamTournament);
+         boolean bTourStarted=_tournament.getRounds().size()>0;
+        jbtAdd.setEnabled(!bTourStarted);
+        jbtRemove.setEnabled(!bTourStarted);
+        jbtAddGroup.setEnabled(!bTourStarted);
+        jbtRemoveGroup.setEnabled(!bTourStarted);
+        jbtRenameGroup.setEnabled(!bTourStarted);
+        jbtGrouToLeft.setEnabled(!bTourStarted);
+        jbtGroupToRight.setEnabled(!bTourStarted);
+        jbtAddTeam.setEnabled(!bTourStarted);
+        jbtRemoveTeam.setEnabled(!bTourStarted);
+
+        jbtAddCriteria.setEnabled(!bTourStarted);
+        jbtRemoveCriteria.setEnabled(!bTourStarted);
+
+
+        jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
+        jcxActivatesClans.setEnabled(!bTourStarted && !_tournament.getParams()._teamTournament);
 
         if (_tournament.getParams()._teamTournament) {
             jpnTeamTour.setVisible(true);
@@ -78,14 +93,17 @@ public class MainFrame extends javax.swing.JFrame {
             if (_tournament.getParams()._teamPairing == 0) {
                 text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUEL");
             } else {
-                text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE");
+                text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam");
             }
-            jlbDetails.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MEMBRES: ") + _tournament.getParams()._teamMatesNumber + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" APPARIEMENT ") + text);
+            jlbDetails.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MembersNumber")+": " + _tournament.getParams()._teamMatesNumber + " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAIRING")+" " + text);
         } else {
             jpnTeamTour.setVisible(false);
             jpnCoachButtons.setVisible(true);
         }
 
+        jtpOptions.setEnabledAt(2, _tournament.getParams()._teamTournament);
+        jtpOptions.setEnabledAt(3, !_tournament.getParams()._teamTournament);
+        
         boolean teamMatches = _tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1);
         jrbCoachPoints.setEnabled(teamMatches);
         jrbTeamVictory.setEnabled(teamMatches);
@@ -274,7 +292,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
 
-        boolean clansEnable = _tournament.getParams()._enableClans && (!_tournament.getParams()._teamTournament);
+        boolean clansEnable = (_tournament.getParams()._enableClans) && (!_tournament.getParams()._teamTournament);
         jlbActivateClans.setEnabled(!_tournament.getParams()._teamTournament);
         jlbAvoidClansMembersMatch.setEnabled(clansEnable);
         jlbClansMembersNUmbers.setEnabled(clansEnable);
@@ -284,10 +302,10 @@ public class MainFrame extends javax.swing.JFrame {
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
 
-        jbtAddClan.setEnabled(clansEnable);
-        jbtRemoveClan.setEnabled(clansEnable);
-        jbtEditClan.setEnabled(clansEnable);
-        jlsClans.setEnabled(clansEnable);
+        jbtAddClan.setEnabled(clansEnable&&!bTourStarted);
+        jbtRemoveClan.setEnabled(clansEnable&&!bTourStarted);
+        jbtEditClan.setEnabled(clansEnable&&!bTourStarted);
+        jlsClans.setEnabled(clansEnable&&!bTourStarted);
 
         jcxActivatesClans.setSelected(clansEnable);
         jcxAvoidFirstMatch.setSelected(_tournament.getParams()._avoidClansFirstMatch);
@@ -333,7 +351,7 @@ public class MainFrame extends javax.swing.JFrame {
             } else {
                 jcbGroupRight.setSelectedIndex(0);
             }
-        }
+        }      
 
     }
 
@@ -361,7 +379,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jxdDate = new org.jdesktop.swingx.JXDatePicker();
         jPanel9 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jtpOptions = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jtffLargeVictory = new javax.swing.JFormattedTextField();
@@ -651,7 +669,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6.add(jtffLost);
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel14.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°1:")); // NOI18N
+        jLabel14.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 1:");
         jPanel6.add(jLabel14);
 
         jcbRank1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -663,7 +681,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6.add(jcbRank1);
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel15.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°2:")); // NOI18N
+        jLabel15.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 2:");
         jPanel6.add(jLabel15);
 
         jcbRank2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -675,7 +693,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6.add(jcbRank2);
 
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel16.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°3:")); // NOI18N
+        jLabel16.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 3:");
         jPanel6.add(jLabel16);
 
         jcbRank3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -687,7 +705,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6.add(jcbRank3);
 
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel17.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°4:")); // NOI18N
+        jLabel17.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 4:");
         jPanel6.add(jLabel17);
 
         jcbRank4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -699,7 +717,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6.add(jcbRank4);
 
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel18.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°5:")); // NOI18N
+        jLabel18.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 5:");
         jPanel6.add(jLabel18);
 
         jcbRank5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -710,7 +728,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel6.add(jcbRank5);
 
-        jTabbedPane1.addTab(bundle.getString("IndividualKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User.png")), jPanel6); // NOI18N
+        jtpOptions.addTab(bundle.getString("IndividualKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User.png")), jPanel6); // NOI18N
 
         jPanel15.setLayout(new java.awt.BorderLayout());
 
@@ -749,7 +767,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel15.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Critères", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")), jPanel15); // NOI18N
+        jtpOptions.addTab("Critères", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")), jPanel15); // NOI18N
 
         jPanel10.setLayout(new java.awt.GridLayout(10, 2));
 
@@ -814,7 +832,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jtffLostTeam);
 
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel26.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°1:")); // NOI18N
+        jLabel26.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 1:");
         jPanel10.add(jLabel26);
 
         jcbRank1Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -826,7 +844,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jcbRank1Team);
 
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel27.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°2:")); // NOI18N
+        jLabel27.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 2:");
         jPanel10.add(jLabel27);
 
         jcbRank2Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -838,7 +856,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jcbRank2Team);
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel28.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°3:")); // NOI18N
+        jLabel28.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 3:");
         jPanel10.add(jLabel28);
 
         jcbRank3Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -850,7 +868,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jcbRank3Team);
 
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel29.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°4:")); // NOI18N
+        jLabel29.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 4:");
         jPanel10.add(jLabel29);
 
         jcbRank4Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -862,7 +880,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jcbRank4Team);
 
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel30.setText(bundle.getString("CRITÈRE DE CLASSEMENT N°5:")); // NOI18N
+        jLabel30.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 5:");
         jPanel10.add(jLabel30);
 
         jcbRank5Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -885,7 +903,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel10.add(jtffTeamVictory);
 
-        jTabbedPane1.addTab(bundle.getString("ByTeamKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), jPanel10); // NOI18N
+        jtpOptions.addTab(bundle.getString("ByTeamKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), jPanel10); // NOI18N
 
         jPanel11.setLayout(new java.awt.BorderLayout());
 
@@ -1006,7 +1024,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel11.add(jPanel14, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab(bundle.getString("ClanKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")), jPanel11); // NOI18N
+        jtpOptions.addTab(bundle.getString("ClanKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")), jPanel11); // NOI18N
 
         jPanel17.setLayout(new java.awt.BorderLayout());
 
@@ -1126,9 +1144,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel17.add(jPanel20, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Groupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), jPanel17); // NOI18N
+        jtpOptions.addTab("Groupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), jPanel17); // NOI18N
 
-        jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        jPanel9.add(jtpOptions, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
 
@@ -1363,7 +1381,7 @@ public class MainFrame extends javax.swing.JFrame {
                 if (_tournament.getCoachs().size() % 2 > 0) {
                     JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE IMPAIR DE JOUEURS"));
                 } else {
-                    String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORDRE D'INSCRIPTION"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MANUEL")};
+                    String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANDOM"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORDRE D'INSCRIPTION"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MANUEL")};
                     int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LE TIRAGE INITIAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIRAGE"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
 
                     _tournament.generateFirstRound(choice);
@@ -1376,9 +1394,10 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                     for (int i = 0; i < _tournament.getRounds().size(); i++) {
                         JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                        jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                        jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND") + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
                     }
                     update();
+
                 }
             }
         }
@@ -1539,7 +1558,7 @@ public class MainFrame extends javax.swing.JFrame {
                     < _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
 //                jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
-                jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
             }
 
             update();
@@ -1559,7 +1578,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         _tournament = Tournament.resetTournament();
 
-        Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUEL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE")};
+        Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUEL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam")};
         int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE DE TOURNOI"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOUVEAU TOURNOI"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
@@ -1799,8 +1818,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         String enterClanName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterClanNameKey");
         String clanName = JOptionPane.showInputDialog(this, enterClanName);
-        if (!clanName.equals("")) {
-            _tournament.getClans().addElement(new Clan(clanName));
+        if (clanName!=null)
+        {
+            if (!clanName.equals("")) {
+                _tournament.getClans().addElement(new Clan(clanName));
+            }
         }
         update();
     }//GEN-LAST:event_jbtAddClanActionPerformed
@@ -2124,7 +2146,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddClan;
     private javax.swing.JButton jbtAddCriteria;
@@ -2203,6 +2224,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jtffVictory;
     private javax.swing.JFormattedTextField jtffVictoryTeam;
     public javax.swing.JTabbedPane jtpMain;
+    private javax.swing.JTabbedPane jtpOptions;
     private org.jdesktop.swingx.JXDatePicker jxdDate;
     // End of variables declaration//GEN-END:variables
 }

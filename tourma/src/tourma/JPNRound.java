@@ -64,7 +64,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         if (_tournament.getParams()._teamTournament) {
             _jpnTeamRound = new JPNTeamRound(r, t);
-            jtpGlobal.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAR ÉQUIPE"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), _jpnTeamRound);
+            jtpGlobal.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), _jpnTeamRound);
         } else {
             if (_tournament.getParams()._enableClans) {
                 _jpnClanRound = new JPNClanRound(r, t);
@@ -74,8 +74,11 @@ public class JPNRound extends javax.swing.JPanel {
             if (_tournament.getGroups().size() > 1) {
                 for (int i = 0; i < _tournament.getGroups().size(); i++) {
                     Group g = _tournament.getGroups().get(i);
-                    JPNGroup jpnGroup = new JPNGroup(t, g, _roundNumber);
-                    jtpGlobal.addTab("Groupe: " + g._name, new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), jpnGroup);
+                    if (!g._name.equals("Aucun"))
+                    {
+                        JPNGroup jpnGroup = new JPNGroup(t, g, _roundNumber);
+                        jtpGlobal.addTab("Groupe: " + g._name, new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), jpnGroup);
+                    }
                 }
             }
         }
@@ -814,7 +817,7 @@ public class JPNRound extends javax.swing.JPanel {
 
     private void jbtDeleteRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDeleteRoundActionPerformed
 
-        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ETES VOUS CERTAIN DE VOULOIR EFFACER LA RONDE COURANTE ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EFFACER UNE RONDE"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ConfirmEraseCurrentRound"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EFFACER UNE RONDE"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
             // Remove _round
             _tournament.getRounds().remove(_round);
