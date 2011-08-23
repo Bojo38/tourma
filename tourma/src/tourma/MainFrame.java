@@ -91,11 +91,11 @@ public class MainFrame extends javax.swing.JFrame {
             jpnCoachButtons.setVisible(false);
             String text = "";
             if (_tournament.getParams()._teamPairing == 0) {
-                text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUEL");
+                text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Single");
             } else {
                 text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam");
             }
-            jlbDetails.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MembersNumber")+": " + _tournament.getParams()._teamMatesNumber + " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAIRING")+" " + text);
+            jlbDetails.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MembersNumber")+": " + _tournament.getParams()._teamMatesNumber + " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pairing")+" " + text);
         } else {
             jpnTeamTour.setVisible(false);
             jpnCoachButtons.setVisible(true);
@@ -511,7 +511,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        setTitle(bundle.getString("TOURNOI MANAGER")); // NOI18N
+        setTitle(bundle.getString("SoftwareTitle")); // NOI18N
         setIconImage((Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("images/icone.png"))));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -533,7 +533,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setText(bundle.getString("TournamentNameKey")); // NOI18N
         jPanel5.add(jLabel1);
 
-        jtfTournamentName.setText(bundle.getString("AIN PACTE")); // NOI18N
         jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtfTournamentNameKeyPressed(evt);
@@ -545,7 +544,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setText(bundle.getString("OrganizerKey")); // NOI18N
         jPanel5.add(jLabel2);
 
-        jtfOrgas.setText(bundle.getString("AIN PACTE TEAM")); // NOI18N
         jtfOrgas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtfOrgasKeyPressed(evt);
@@ -557,7 +555,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel21.setText(bundle.getString("PlaceKey")); // NOI18N
         jPanel5.add(jLabel21);
 
-        jtfPlace.setText(bundle.getString("AIN PACTE")); // NOI18N
         jtfPlace.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtfPlaceKeyPressed(evt);
@@ -1578,7 +1575,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         _tournament = Tournament.resetTournament();
 
-        Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUEL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam")};
+        Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Single"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam")};
         int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE DE TOURNOI"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOUVEAU TOURNOI"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);

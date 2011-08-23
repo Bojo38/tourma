@@ -66,7 +66,7 @@ public class jdgSelectNumber extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.GridLayout(1, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText(language.getString("NOMBRE DE COACHS:")); // NOI18N
+        jLabel1.setText(language.getString("CoachNumber")); // NOI18N
         jPanel1.add(jLabel1);
 
         jspCoachNumber.setModel(new javax.swing.SpinnerNumberModel(1, 1, 16, 1));

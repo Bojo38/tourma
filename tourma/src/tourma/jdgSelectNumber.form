@@ -38,7 +38,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="NOMBRE DE COACHS:" replaceFormat="language.getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="tourma/languages/language.properties" key="CoachNumber" replaceFormat="language.getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>

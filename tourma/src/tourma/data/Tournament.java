@@ -289,77 +289,77 @@ public class Tournament {
 
     private String getRosterTranslation(String source) {
 
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AMAZONE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AMAZONS");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AmazonKey"))) {
+            return "Amazons";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BAS FONDS"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNDERWORLD");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UnderworldKey"))) {
+            return "Underworld";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChaosKey"))) {
+            return "Chaos";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELVES");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ElfKey"))) {
+            return "Elves";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE SYLVAIN"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WOOD ELVES");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WoodElfKey"))) {
+            return "Wood Elves";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELFE NOIR"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DARK ELVES");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DarkElfKey"))) {
+            return "Dark Elves";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBELIN"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBLINS");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GoblinKey"))) {
+            return "Goblins";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLING"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLINGS");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HalflingKey"))) {
+            return "Halflings";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HAUT ELFE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HIGH ELVES");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HighElfKey"))) {
+            return "High Elves";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HOMME LÉZARD"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LIZARDMEN");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LizardmenKey"))) {
+            return "Lizardmen";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HUMAIN"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HUMANS");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HumanKey"))) {
+            return "Humans";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KHEMRI"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KHEMRI");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KhemriKey"))) {
+            return "Khemri";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MORT-VIVANT"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNDEAD");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UndeadKey"))) {
+            return "Undead";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAIN"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DWARVES");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DwarfKey"))) {
+            return "Dwarves";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAIN DU CHAOS"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS DWARVES");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChaosDwarfKey"))) {
+            return "Chaos Dwarves";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NECROMANTIQUE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NECROMANTIC");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NecromanticKey"))) {
+            return "Necromantic";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NORDIQUE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NORSE");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NorseKey"))) {
+            return "Norse";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NURGLE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NURGLE'S ROTTERS");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NurgleKey"))) {
+            return "Nurgle's Rotters";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRES");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OgreKey"))) {
+            return "Ogres";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORQUE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORC");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OrcKey"))) {
+            return "Orc";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PACTE CHAOTIQUE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS PACT");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChaosPactKey"))) {
+            return "Chaos Pact";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKAVEN"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKAVEN");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SkavenKey"))) {
+            return "Skaven";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SLANN"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SLANN");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SlannKey"))) {
+            return "Slann";
         }
-        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VAMPIRE"))) {
-            return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VAMPIRES");
+        if (source.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VampireKey"))) {
+            return "Vampires";
         }
         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNKNOWN");
     }
@@ -1392,9 +1392,9 @@ public class Tournament {
 
                     String opp = (String) JOptionPane.showInputDialog(
                             MainFrame.getMainFrame(),
-                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ L'ADVERSAIRE POUR:")
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseOpponentFor")+": "
                             + team1._name,
-                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISIR ADVERSAIRE"),
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseOpponent"),
                             JOptionPane.PLAIN_MESSAGE,
                             null,
                             possibilities,

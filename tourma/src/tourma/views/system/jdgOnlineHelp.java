@@ -155,7 +155,7 @@ public class jdgOnlineHelp extends javax.swing.JDialog {
 
         jScrollPane8.setViewportView(jepEraseRound);
 
-        jTabbedPane1.addTab(bundle.getString("EFFACER UNE RONDE"), jScrollPane8); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("EraseRound"), jScrollPane8); // NOI18N
 
         jScrollPane9.setViewportView(jepVoirClassements);
 

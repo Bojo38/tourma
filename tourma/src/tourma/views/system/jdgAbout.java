@@ -39,9 +39,9 @@ public class jdgAbout extends javax.swing.JDialog {
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
 
-        jlbNom.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM: ")+Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LONG_NAME")));
-        jlbDate.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE: ")+Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE")));
-        jlbVersion.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION: ")+Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION")));
+        jlbNom.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM: ")+Version.getSingleton().getProperty("long_name"));
+        jlbDate.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE: ")+Version.getSingleton().getProperty("date"));
+        jlbVersion.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Version")+": "+Version.getSingleton().getProperty("version"));
 
         jlbFreeMarker.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREEMARKER")));
         jlbFreeMarkerC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREEMARKER_COPYRIGHT")));
@@ -149,9 +149,9 @@ public class jdgAbout extends javax.swing.JDialog {
         jlbNom.setText(bundle.getString("NOM")); // NOI18N
         jPanel4.add(jlbNom);
 
-        jlbVersion.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jlbVersion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlbVersion.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbVersion.setText(bundle.getString("VERSION")); // NOI18N
+        jlbVersion.setText(bundle.getString("Version")); // NOI18N
         jPanel4.add(jlbVersion);
 
         jlbDate.setFont(new java.awt.Font("Tahoma", 1, 12));

@@ -36,9 +36,9 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Version");
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DESCRIPTION");
+                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Description");
         }
         return "";
     }
