@@ -203,7 +203,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         val._value2 = (Integer.valueOf(value.toString()));
                         break;
                     default:
-                        int index = (col - 2) / 2;
+                        int index = (col - 3) / 2;
                         val = m._values.get(Tournament.getTournament().getParams()._criterias.get(index));
                         if ((col -3) % 2 == 0) {
                             val._value1 = (Integer.valueOf(value.toString()));
