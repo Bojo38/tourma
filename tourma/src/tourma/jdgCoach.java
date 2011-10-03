@@ -36,7 +36,7 @@ public class jdgCoach extends javax.swing.JDialog {
 
         _teamTournament = Tournament.getTournament().getParams()._teamTournament;
 
-        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters));
+        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters.toArray()));
 
         if (!_teamTournament) {
             DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
@@ -68,7 +68,7 @@ public class jdgCoach extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters));
+        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters.toArray()));
 
         if (!_teamTournament) {
             DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();

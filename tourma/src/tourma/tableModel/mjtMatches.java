@@ -100,6 +100,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
     public Object getValueAt(int row, int col) {
         Match m = _matchs.get(row);
         Value val;
+        int index;
         if (_teamTournament) {
             switch (col) {
                 case 0:
@@ -127,8 +128,9 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 6:
                     return m._coach2._teamMates._name;
                 default:
-                    int index=(col - 5) / 2;
-                    val = m._values.get(Tournament.getTournament().getParams()._criterias.get(index));
+                    index=(col - 5) / 2;
+                    Criteria crit=Tournament.getTournament().getParams()._criterias.get(index);
+                    val = m._values.get(crit);
                     if ((col - 5) % 2 == 0) {
                         return val._value1;
                     } else {
@@ -158,7 +160,9 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 4:
                     return m._coach2._name + " - " + m._coach2._team + " (" + m._coach2._roster._name + ") ";
                 default:
-                    val = m._values.get(Tournament.getTournament().getParams()._criterias.get((col - 3) / 2));
+                    index=(col - 3) / 2;
+                    Criteria crit=Tournament.getTournament().getParams()._criterias.get(index);
+                    val = m._values.get(crit);
                     if ((col - 3) % 2 == 0) {
                         return val._value1;
                     } else {

@@ -136,6 +136,11 @@ public class jdgChangePairing extends JDialog implements ActionListener {
                 Match m = _round.getMatchs().get(i);
                 m._coach1 = _playersTmp.get(2 * i);
                 m._coach2 = _playersTmp.get(2 * i + 1);
+
+                m._coach1._matchs.remove(m._coach1._matchs.lastElement());
+                m._coach2._matchs.remove(m._coach2._matchs.lastElement());
+                m._coach1._matchs.add(m);
+                m._coach2._matchs.add(m);
             }
 
             this.setVisible(false);

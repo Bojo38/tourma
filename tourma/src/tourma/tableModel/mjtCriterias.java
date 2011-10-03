@@ -116,15 +116,7 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
         }
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        if (row <= 1) {
-            if (col == 0) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
+        return true;
     }
 
     public Component getTableCellRendererComponent(

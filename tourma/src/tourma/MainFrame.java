@@ -68,7 +68,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void update() {
 
-         boolean bTourStarted=_tournament.getRounds().size()>0;
+        boolean bTourStarted=_tournament.getRounds().size()>0;
         jbtAdd.setEnabled(!bTourStarted);
         jbtRemove.setEnabled(!bTourStarted);
         jbtAddGroup.setEnabled(!bTourStarted);
@@ -81,6 +81,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         jbtAddCriteria.setEnabled(!bTourStarted);
         jbtRemoveCriteria.setEnabled(!bTourStarted);
+
+        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size()==1)&&(_tournament.getCoachs().size()==0));
 
 
         jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
@@ -503,6 +505,8 @@ public class MainFrame extends javax.swing.JFrame {
         jmiExport = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         jmiExit = new javax.swing.JMenuItem();
+        jmnFile1 = new javax.swing.JMenu();
+        jmiEditrosters = new javax.swing.JMenuItem();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -1341,6 +1345,19 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jmnFile);
 
+        jmnFile1.setText(bundle.getString("Parametres")); // NOI18N
+
+        jmiEditrosters.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
+        jmiEditrosters.setText(bundle.getString("ChangeRosters")); // NOI18N
+        jmiEditrosters.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditrostersActionPerformed(evt);
+            }
+        });
+        jmnFile1.add(jmiEditrosters);
+
+        jMenuBar1.add(jmnFile1);
+
         jmnHelp.setText("?");
 
         jmiAbout.setText(bundle.getString("AboutKey")); // NOI18N
@@ -1866,7 +1883,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jlsClansMouseClicked
 
     private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
-        if (jtbCriteria.getSelectedRow() > 1) {
+        if ((jtbCriteria.getSelectedRow() > 1)&&(jtbCriteria.getSelectedRow()<_tournament.getParams()._criterias.size())) {
             Criteria crit = _tournament.getParams()._criterias.get(jtbCriteria.getSelectedRow());
             for (int i = 0; i < _tournament.getRounds().size(); i++) {
                 Round r = _tournament.getRounds().get(i);
@@ -1877,6 +1894,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             _tournament.getParams()._criterias.remove(jtbCriteria.getSelectedRow());
         }
+        repaint();
     }//GEN-LAST:event_jbtRemoveCriteriaActionPerformed
 
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
@@ -2024,6 +2042,11 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void jmiEditrostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditrostersActionPerformed
+        jdgRosters jdg=new jdgRosters(this, true);
+        jdg.setVisible(true);
+    }//GEN-LAST:event_jmiEditrostersActionPerformed
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
@@ -2075,6 +2098,8 @@ public class MainFrame extends javax.swing.JFrame {
                     System.out.println(e.getLocalizedMessage());
                 }
 
+                Roster.initCollection();
+                
                 MainFrame.getMainFrame().setVisible(true);
             }
         });
@@ -2199,6 +2224,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
     private javax.swing.JMenuItem jmiCharger;
+    private javax.swing.JMenuItem jmiEditrosters;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
     private javax.swing.JMenuItem jmiNouveau;
@@ -2206,6 +2232,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiSave;
     private javax.swing.JMenuItem jmiSaveAs;
     private javax.swing.JMenu jmnFile;
+    private javax.swing.JMenu jmnFile1;
     private javax.swing.JMenu jmnHelp;
     private javax.swing.JPanel jpnCoachButtons;
     private javax.swing.JPanel jpnParameters;

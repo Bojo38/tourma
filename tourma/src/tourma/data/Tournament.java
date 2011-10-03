@@ -65,8 +65,8 @@ public class Tournament {
         Group group = new Group(bundle.getString("NoneKey"));
         _groups.add(group);
 
-        for (int i = 0; i < Roster.Rosters.length; i++) {
-            group._rosters.add(new Roster(Roster.Rosters[i]));
+        for (int i = 0; i < Roster.Rosters.size(); i++) {
+            group._rosters.add(new Roster(Roster.Rosters.get(i)));
         }
     }
 
@@ -145,6 +145,13 @@ public class Tournament {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         document.setAttribute("Version", "3");
+
+        for (int i = 0; i
+                < Roster.Rosters.size(); i++) {
+            Element ros = new Element("Roster");
+            ros.setAttribute("Name", Roster.Rosters.get(i));
+            document.addContent(ros);
+        }
 
         Element params = new Element("Parameters");
         params.setAttribute("Organizer", _params._tournament_orga);
@@ -375,10 +382,10 @@ public class Tournament {
 
         for (int i = 0; i < Tournament.getTournament()._params._criterias.size(); i++) {
             Criteria crit = Tournament.getTournament()._params._criterias.get(i);
-            if (crit._name.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Touchdowns"))) {
+            if (i == 0) {
                 critTd = crit;
             }
-            if (crit._name.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Injuries"))) {
+            if (i == 1) {
                 critInj = crit;
             }
         }
@@ -856,6 +863,28 @@ public class Tournament {
     protected void LoadXMLv3(Element racine) {
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        try {
+            List ros = racine.getChildren("Roster");
+            if (ros != null) {
+                if (ros.size() > 0) {
+                    Roster.Rosters = new Vector<String>();
+                    Iterator it_ros = ros.iterator();
+                    while (it_ros.hasNext()) {
+                        Element r = (Element) it_ros.next();
+                        Roster.Rosters.add(r.getAttributeValue("Name"));
+                    }
+                } else {
+                    Roster.initCollection();
+                }
+            } else {
+                Roster.initCollection();
+            }
+        } catch (NullPointerException ne) {
+            Roster.initCollection();
+        }
+
+
         /* Utilisateur */
         Element params = racine.getChild("Parameters");
 
@@ -1537,7 +1566,7 @@ public class Tournament {
                         < _params._criterias.size(); j++) {
                     Criteria criteria = _params._criterias.get(j);
                     Value val = new Value(criteria);
-                    if (criteria._name.equals("Touchdowns")) {
+                    if (j == 0) {
                         val._value1 = -1;
                         val._value2 = -1;
                     }
