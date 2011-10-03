@@ -1,0 +1,159 @@
+<Tournament Version="3">
+  <Parameters Organizer="Mo" Name="Tournoi de tes" Date="03/10/2011 08:25:03" Place="Tournoi de tes" Victory="1000" Large_Victory="1100" Draw="400" Lost="0" Little_Lost="100" Victory_Team="1000" Draw_Team="400" Lost_Team="0" Large_Victory_Gap="3" Little_Lost_Gap="1" Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Rank1_Team="1" Rank2_Team="2" Rank3_Team="3" Rank4_Team="4" Rank5_Team="5" ByTeam="false" TeamMates="1" TeamPairing="0" TeamIndivPairing="0" TeamVictoryPoints="0" TeamVictoryOnly="false" GroupEnable="false" ActvateClans="false" AvoidFirstMatch="true" AvoidMatch="false" ClanTeammatesNumber="3">
+    <Criteria Name="Touchdowns" PointsFor="3" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+    <Criteria Name="Sorties" PointsFor="2" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+    <Criteria Name="Foul" PointsFor="2" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+    <Criteria Name="Table rase" PointsFor="50" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+    <Criteria Name="As" PointsFor="0" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+    <Criteria Name="Expulsions" PointsFor="-1" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+  </Parameters>
+  <Clan Name="Aucun" />
+  <Group Name="Aucun">
+    <Roster Name="Amazone" />
+    <Roster Name="Bas Fonds" />
+    <Roster Name="Chaos" />
+    <Roster Name="Elfe" />
+    <Roster Name="Elfe sylvain" />
+    <Roster Name="Elfe noir" />
+    <Roster Name="Gobelin" />
+    <Roster Name="Halfling" />
+    <Roster Name="Haut Elfe" />
+    <Roster Name="Homme lézard" />
+    <Roster Name="Humain" />
+    <Roster Name="Khemri" />
+    <Roster Name="Mort-Vivant" />
+    <Roster Name="Nain" />
+    <Roster Name="Nain du chaos" />
+    <Roster Name="Necromantique" />
+    <Roster Name="Nordique" />
+    <Roster Name="Nurgle" />
+    <Roster Name="Ogre" />
+    <Roster Name="Orque" />
+    <Roster Name="Pacte Chaotique" />
+    <Roster Name="Skaven" />
+    <Roster Name="Slann" />
+    <Roster Name="Vampire" />
+  </Group>
+  <Coach Name="A" Team="A" Roster="Amazone" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="B" Team="B" Roster="Bas Fonds" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="C" Team="C" Roster="Chaos" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="D" Team="D" Roster="Elfe" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="E" Team="E" Roster="Elfe sylvain" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="F" Team="F" Roster="Elfe noir" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="G" Team="G" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="H" Team="H" Roster="Halfling" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="I" Team="I" Roster="Haut Elfe" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="J" Team="J" Roster="Homme lézard" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="K" Team="K" Roster="Humain" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="L" Team="L" Roster="Khemri" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="M" Team="M" Roster="Mort-Vivant" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="N" Team="N" Roster="Nain" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="O" Team="O" Roster="Nain du chaos" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="P" Team="P" Roster="Nordique" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Q" Team="Q" Roster="Necromantique" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="R" Team="R" Roster="Nurgle" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="S" Team="S" Roster="Ogre" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="T" Team="T" Roster="Orque" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="U" Team="U" Roster="Pacte Chaotique" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="V" Team="V" Roster="Skaven" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="W" Team="W" Roster="Slann" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="X" Team="X" Roster="Vampire" NAF="0" Rank="110" Clan="Aucun" />
+  <Ronde Date="03/10/2011 08:30:53">
+    <Match Coach1="W" Coach2="J">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Foul" Value1="1" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="1" Value2="0" />
+      <Value Name="Expulsions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="F" Coach2="P">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Foul" Value1="2" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="2" Value2="0" />
+      <Value Name="Expulsions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Q" Coach2="M">
+      <Value Name="Touchdowns" Value1="3" Value2="2" />
+      <Value Name="Sorties" Value1="4" Value2="0" />
+      <Value Name="Foul" Value1="0" Value2="2" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="3" Value2="2" />
+      <Value Name="Expulsions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="T" Coach2="R">
+      <Value Name="Touchdowns" Value1="4" Value2="3" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Foul" Value1="0" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="3" Value2="3" />
+      <Value Name="Expulsions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="D" Coach2="G">
+      <Value Name="Touchdowns" Value1="5" Value2="4" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Foul" Value1="0" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="4" Value2="4" />
+      <Value Name="Expulsions" Value1="0" Value2="2" />
+    </Match>
+    <Match Coach1="B" Coach2="V">
+      <Value Name="Touchdowns" Value1="2" Value2="5" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Foul" Value1="0" Value2="1" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="5" Value2="5" />
+      <Value Name="Expulsions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="I" Coach2="E">
+      <Value Name="Touchdowns" Value1="1" Value2="4" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Foul" Value1="0" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="7" Value2="5" />
+      <Value Name="Expulsions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="C" Coach2="S">
+      <Value Name="Touchdowns" Value1="6" Value2="3" />
+      <Value Name="Sorties" Value1="9" Value2="3" />
+      <Value Name="Foul" Value1="2" Value2="0" />
+      <Value Name="Table rase" Value1="1" Value2="0" />
+      <Value Name="As" Value1="8" Value2="6" />
+      <Value Name="Expulsions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="U" Coach2="A">
+      <Value Name="Touchdowns" Value1="2" Value2="2" />
+      <Value Name="Sorties" Value1="8" Value2="5" />
+      <Value Name="Foul" Value1="0" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="9" Value2="7" />
+      <Value Name="Expulsions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="X" Coach2="L">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Foul" Value1="0" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="10" Value2="8" />
+      <Value Name="Expulsions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="N" Coach2="O">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Foul" Value1="0" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="11" Value2="9" />
+      <Value Name="Expulsions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="H" Coach2="K">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Foul" Value1="5" Value2="0" />
+      <Value Name="Table rase" Value1="0" Value2="0" />
+      <Value Name="As" Value1="12" Value2="10" />
+      <Value Name="Expulsions" Value1="2" Value2="0" />
+    </Match>
+  </Ronde>
+</Tournament>
