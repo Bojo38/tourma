@@ -89,10 +89,10 @@
   <Coach Name="E" Team="E" Roster="Elfe sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="F" Team="F" Roster="Elfe noir" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="G" Team="G" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" Active="true" />
-  <Coach Name="H" Team="H" Roster="Halfling" NAF="0" Rank="110" Clan="Aucun" Active="true" />
+  <Coach Name="H" Team="H" Roster="Halfling" NAF="0" Rank="110" Clan="Aucun" Active="false" />
   <Coach Name="I" Team="I" Roster="Haut Elfe" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="J" Team="J" Roster="Homme lézard" NAF="0" Rank="110" Clan="Aucun" Active="true" />
-  <Coach Name="K" Team="K" Roster="Humain" NAF="0" Rank="110" Clan="Aucun" Active="true" />
+  <Coach Name="K" Team="K" Roster="Humain" NAF="0" Rank="110" Clan="Aucun" Active="false" />
   <Coach Name="L" Team="L" Roster="Khemri" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="M" Team="M" Roster="Mort-Vivant" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="N" Team="N" Roster="Nain" NAF="0" Rank="110" Clan="Aucun" Active="true" />
@@ -204,10 +204,10 @@
       <Value Name="Expulsions" Value1="2" Value2="0" />
     </Match>
   </Ronde>
-  <Ronde Date="03/10/2011 08:34:45">
+  <Ronde Date="11/10/2011 07:07:21">
     <Match Coach1="C" Coach2="V">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -215,7 +215,7 @@
     </Match>
     <Match Coach1="E" Coach2="D">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -223,7 +223,7 @@
     </Match>
     <Match Coach1="Q" Coach2="F">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -231,7 +231,7 @@
     </Match>
     <Match Coach1="T" Coach2="W">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -239,7 +239,7 @@
     </Match>
     <Match Coach1="N" Coach2="U">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -247,7 +247,7 @@
     </Match>
     <Match Coach1="A" Coach2="H">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -255,7 +255,7 @@
     </Match>
     <Match Coach1="L" Coach2="K">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -263,7 +263,7 @@
     </Match>
     <Match Coach1="X" Coach2="G">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -271,7 +271,7 @@
     </Match>
     <Match Coach1="M" Coach2="R">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -279,7 +279,7 @@
     </Match>
     <Match Coach1="J" Coach2="P">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -287,7 +287,7 @@
     </Match>
     <Match Coach1="O" Coach2="S">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />
@@ -295,7 +295,7 @@
     </Match>
     <Match Coach1="B" Coach2="I">
       <Value Name="Touchdowns" Value1="-1" Value2="-1" />
-      <Value Name="Sorties" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
       <Value Name="Foul" Value1="0" Value2="0" />
       <Value Name="Table rase" Value1="0" Value2="0" />
       <Value Name="As" Value1="0" Value2="0" />

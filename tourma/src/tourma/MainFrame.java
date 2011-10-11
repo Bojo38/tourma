@@ -82,7 +82,7 @@ public class MainFrame extends javax.swing.JFrame {
         jbtAddCriteria.setEnabled(!bTourStarted);
         jbtRemoveCriteria.setEnabled(!bTourStarted);
 
-        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size()==1)&&(_tournament.getCoachs().size()==0));
+        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size()==1)&&(_tournament.getCoachs().isEmpty()));
 
 
         jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
@@ -1416,6 +1416,7 @@ public class MainFrame extends javax.swing.JFrame {
                         JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
                         jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
                     }
+                    jtpMain.setSelectedIndex(_tournament.getRounds().size());
                     update();
 
                 }

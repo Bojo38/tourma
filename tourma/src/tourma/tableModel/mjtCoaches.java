@@ -23,13 +23,10 @@ public class mjtCoaches extends AbstractTableModel {
 
     public int getColumnCount() {
 
-        if (Tournament.getTournament().getParams()._enableClans)
-        {
+        if (Tournament.getTournament().getParams()._enableClans) {
+            return 8;
+        } else {
             return 7;
-        }
-        else
-        {
-            return 6;
         }
     }
 
@@ -51,8 +48,10 @@ public class mjtCoaches extends AbstractTableModel {
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF");
             case 5:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Ranking");
-            case 6:
+            case 7:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
+                case 6:
+                return "";
         }
         return "";
     }
@@ -71,10 +70,16 @@ public class mjtCoaches extends AbstractTableModel {
                     return c._roster._name;
                 case 4:
                     return c._naf;
-                     case 5:
+                case 5:
                     return c._rank;
-                case 6:
+                case 7:
                     return c._clan._name;
+                case 6:
+                    if (c._active) {
+                        return "Actif";
+                    } else {
+                        return "Inactif";
+                    }
             }
         }
         return "";

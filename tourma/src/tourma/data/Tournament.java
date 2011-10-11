@@ -244,6 +244,7 @@ public class Tournament {
             coach.setAttribute("NAF", Integer.toString(_coachs.get(i)._naf));
             coach.setAttribute("Rank", Integer.toString(_coachs.get(i)._rank));
             coach.setAttribute("Clan", _coachs.get(i)._clan._name);
+            coach.setAttribute("Active", Boolean.toString(_coachs.get(i)._active));
             document.addContent(coach);
         }
 
@@ -861,9 +862,7 @@ public class Tournament {
     }
 
     protected void LoadXMLv3(Element racine) {
-
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
         try {
             List ros = racine.getChildren("Roster");
             if (ros != null) {
@@ -904,9 +903,6 @@ public class Tournament {
                 _params._ranking4 = params.getAttribute("Rank4").getIntValue();
                 _params._ranking5 = params.getAttribute("Rank5").getIntValue();
 
-
-
-
                 try {
                     _params._large_victory_gap = params.getAttribute("Large_Victory_Gap").getIntValue();
                     _params._little_lost_gap = params.getAttribute("Little_Lost_Gap").getIntValue();
@@ -919,16 +915,8 @@ public class Tournament {
                     _params._teamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
                     _params._team_victory_only = params.getAttribute("TeamVictoryOnly").getBooleanValue();
 
-
-
-
-
                     try {
                         _params._date = format.parse(params.getAttribute("Date").getValue());
-
-
-
-
                     } catch (ParseException pe) {
                     }
 
@@ -1028,6 +1016,10 @@ public class Tournament {
                 c._naf = coach.getAttribute("NAF").getIntValue();
                 c._rank = coach.getAttribute("Rank").getIntValue();
                 c._clan = clanMap.get(coach.getAttributeValue("Clan"));
+                try {
+                    c._active = coach.getAttribute("Active").getBooleanValue();
+                } catch (NullPointerException npe) {
+                }
 
                 if (c._clan == null) {
                     if (_clans.size() == 0) {
@@ -1265,6 +1257,27 @@ public class Tournament {
         }
     }
 
+    public int GetActiveCoachNumber() {
+        int nb = 0;
+        for (int i = 0; i < _coachs.size(); i++) {
+            if (_coachs.get(i)._active) {
+                nb++;
+            }
+        }
+        return nb;
+    }
+
+    public Vector<Coach> GetActiveCoaches() {
+        Vector<Coach> v=new Vector<Coach>();
+
+        for (int i = 0; i < _coachs.size(); i++) {
+            if (_coachs.get(i)._active) {
+                v.add(_coachs.get(i));
+            }
+        }
+        return v;
+    }
+
     public void generateFirstRound(int choice) {
         _rounds.clear();
         Round r = new Round();
@@ -1275,153 +1288,92 @@ public class Tournament {
          * Si tournoi individuel
          */
         if (!_params._teamTournament) {
-            if (choice == 2) {
-                Vector<Coach> coachs = new Vector<Coach>(_coachs);
-                while (coachs.size() > 0) {
-                    /*
-                     * Choisir un coach pour l'adversaire.
-                     */
-                    Match m = new Match();
-                    m._coach1 = coachs.get(0);
-                    coachs.remove(m._coach1);
-                    Vector<Coach> possibleCoachs = new Vector(coachs);
 
-                    if (m._coach1._clan != _clans.get(0)) {
-                        if ((_params._enableClans) && ((_params._avoidClansFirstMatch) || (_params._avoidClansMatch))) {
-                            for (int i = 0; i
-                                    < possibleCoachs.size(); i++) {
-                                if (possibleCoachs.get(i)._clan._name.equals(m._coach1._clan._name)) {
-                                    possibleCoachs.remove(i);
-                                    i--;
-                                }
-                            }
-                        }
-                        if (possibleCoachs.size() == 0) {
-                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OnlyOneClanCoachKey"));
-                            possibleCoachs = coachs;
-                        }
-                    }
-
-                    Object[] possibilities = new Object[possibleCoachs.size()];
-                    for (int i = 0; i
-                            < possibleCoachs.size(); i++) {
-                        String tmpString = possibleCoachs.get(i)._name + " (" + possibleCoachs.get(i)._roster._name + ")";
-                        if (_params._enableClans) {
-                            tmpString = tmpString + " (" + possibleCoachs.get(i)._clan._name + ")";
-                        }
-                        possibilities[i] = tmpString;
-                    }
-                    ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
-                    String coachString = m._coach1._name + " (" + m._coach1._roster._name + ")";
-                    if (_params._enableClans) {
-                        coachString = coachString + " (" + m._coach1._clan._name + ")";
-                    }
-
-                    String opp = null;
-
-                    while (opp == null) {
-                        opp = (String) JOptionPane.showInputDialog(
-                                MainFrame.getMainFrame(),
-                                bundle.getString("ChooseOpponentFor")
-                                + coachString,
-                                bundle.getString("ChoosOpponent"),
-                                JOptionPane.INFORMATION_MESSAGE,
-                                null,
-                                possibilities,
-                                possibilities[0]);
-                    }
-
-                    for (int i = 0; i
-                            < coachs.size(); i++) {
-                        String tmpString = possibleCoachs.get(i)._name + " (" + possibleCoachs.get(i)._roster._name + ")";
-                        if (_params._enableClans) {
-                            tmpString = tmpString + " (" + possibleCoachs.get(i)._clan._name + ")";
-                        }
-
-                        if (opp.equals(tmpString)) {
-                            m._coach2 = possibleCoachs.get(i);
-                            coachs.remove(m._coach2);
-                            break;
-                        }
-                    }
-                    r._matchs.add(m);
-                }
+            int nb_coach = GetActiveCoachNumber();
+            if (nb_coach % 2>0) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(),"Nombre impair de coach actifs","Erreur de génération",JOptionPane.WARNING_MESSAGE);
             } else {
+                if (choice == 2) {
+                    Vector<Coach> coachs = new Vector<Coach>(GetActiveCoaches());
 
-                boolean NotOK = true;
-                int counter = 0;
-
-                while ((NotOK) && (counter < 500)) {
-
-                    NotOK = false;
-                    Vector<Coach> shuffle = new Vector<Coach>(_coachs);
-                    if (choice == 0) /* Aléatoire */ {
-                        Collections.shuffle(shuffle);
-                    }
-
-                    r._matchs.removeAllElements();
-
-                    while (shuffle.size() > 0) {
+                    while (coachs.size() > 0) {
+                        /*
+                         * Choisir un coach pour l'adversaire.
+                         */
                         Match m = new Match();
-                        m._coach1 = shuffle.get(0);
-                        shuffle.remove(m._coach1);
+                        m._coach1 = coachs.get(0);
+                        coachs.remove(m._coach1);
+                        Vector<Coach> possibleCoachs = new Vector(coachs);
+
                         if (m._coach1._clan != _clans.get(0)) {
                             if ((_params._enableClans) && ((_params._avoidClansFirstMatch) || (_params._avoidClansMatch))) {
-                                int j = 0;
-                                while (j < shuffle.size() && (m._coach1._clan == shuffle.get(j)._clan)) {
-                                    j++;
+                                for (int i = 0; i
+                                        < possibleCoachs.size(); i++) {
+                                    if (possibleCoachs.get(i)._clan._name.equals(m._coach1._clan._name)) {
+                                        possibleCoachs.remove(i);
+                                        i--;
+                                    }
                                 }
-                                if (j == shuffle.size()) {
-                                    NotOK = true;
-                                    j = 0;
-                                }
-                                m._coach2 = shuffle.get(j);
-                                shuffle.remove(j);
-                            } else {
-                                m._coach2 = shuffle.get(0);
-                                shuffle.remove(0);
                             }
-                        } else {
-                            m._coach2 = shuffle.get(0);
-                            shuffle.remove(0);
+                            if (possibleCoachs.size() == 0) {
+                                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OnlyOneClanCoachKey"));
+                                possibleCoachs = coachs;
+                            }
                         }
-                        r._matchs.add(m);
-                    }
 
-                    /*  for (int i = 0; i < shuffle.size() / 2; i++) {
-                    Match m = new Match();
-                    m._coach1 = shuffle.get(2 * i);
-                    m._coach2 = shuffle.get(2 * i + 1);
-                    r._matchs.add(m);
-                    }*/
-                    counter++;
-                }
+                        Object[] possibilities = new Object[possibleCoachs.size()];
+                        for (int i = 0; i
+                                < possibleCoachs.size(); i++) {
+                            String tmpString = possibleCoachs.get(i)._name + " (" + possibleCoachs.get(i)._roster._name + ")";
+                            if (_params._enableClans) {
+                                tmpString = tmpString + " (" + possibleCoachs.get(i)._clan._name + ")";
+                            }
+                            possibilities[i] = tmpString;
+                        }
+                        ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
+                        String coachString = m._coach1._name + " (" + m._coach1._roster._name + ")";
+                        if (_params._enableClans) {
+                            coachString = coachString + " (" + m._coach1._clan._name + ")";
+                        }
 
-                /*
-                 * Check the clans
-                 *
-                 */
-                boolean bSameClan = false;
-                for (int i = 0; i < r._matchs.size(); i++) {
-                    Match m = r._matchs.get(i);
-                    if (m._coach1._clan != _clans.get(0)) {
-                        if ((_params._enableClans) && ((_params._avoidClansFirstMatch) || (_params._avoidClansMatch))) {
-                            if (m._coach1._clan == m._coach2._clan) {
-                                bSameClan = true;
+                        String opp = null;
+
+                        while (opp == null) {
+                            opp = (String) JOptionPane.showInputDialog(
+                                    MainFrame.getMainFrame(),
+                                    bundle.getString("ChooseOpponentFor")
+                                    + coachString,
+                                    bundle.getString("ChoosOpponent"),
+                                    JOptionPane.INFORMATION_MESSAGE,
+                                    null,
+                                    possibilities,
+                                    possibilities[0]);
+                        }
+
+                        for (int i = 0; i
+                                < coachs.size(); i++) {
+                            String tmpString = possibleCoachs.get(i)._name + " (" + possibleCoachs.get(i)._roster._name + ")";
+                            if (_params._enableClans) {
+                                tmpString = tmpString + " (" + possibleCoachs.get(i)._clan._name + ")";
+                            }
+
+                            if (opp.equals(tmpString)) {
+                                m._coach2 = possibleCoachs.get(i);
+                                coachs.remove(m._coach2);
                                 break;
                             }
                         }
+                        r._matchs.add(m);
                     }
-                }
+                } else {
 
-                if (bSameClan) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OnlyOneClanCoachKey"));
-                }
+                    boolean NotOK = true;
+                    int counter = 0;
 
+                    while ((NotOK) && (counter < 500)) {
 
-                if (counter == 500) {
-                    if ((_params._enableClans) && ((_params._avoidClansFirstMatch) || (_params._avoidClansMatch))) {
-                        Vector<Coach> shuffle = new Vector<Coach>(_coachs);
+                        NotOK = false;
+                        Vector<Coach> shuffle = new Vector<Coach>(GetActiveCoaches());
                         if (choice == 0) /* Aléatoire */ {
                             Collections.shuffle(shuffle);
                         }
@@ -1439,7 +1391,7 @@ public class Tournament {
                                         j++;
                                     }
                                     if (j == shuffle.size()) {
-
+                                        NotOK = true;
                                         j = 0;
                                     }
                                     m._coach2 = shuffle.get(j);
@@ -1454,23 +1406,91 @@ public class Tournament {
                             }
                             r._matchs.add(m);
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CanMatchKey"));
-                        Vector<Coach> shuffle = new Vector<Coach>(_coachs);
-                        if (choice == 0) /* Aléatoire */ {
-                            Collections.shuffle(shuffle);
+
+                        /*  for (int i = 0; i < shuffle.size() / 2; i++) {
+                        Match m = new Match();
+                        m._coach1 = shuffle.get(2 * i);
+                        m._coach2 = shuffle.get(2 * i + 1);
+                        r._matchs.add(m);
+                        }*/
+                        counter++;
+                    }
+
+                    /*
+                     * Check the clans
+                     *
+                     */
+                    boolean bSameClan = false;
+                    for (int i = 0; i < r._matchs.size(); i++) {
+                        Match m = r._matchs.get(i);
+                        if (m._coach1._clan != _clans.get(0)) {
+                            if ((_params._enableClans) && ((_params._avoidClansFirstMatch) || (_params._avoidClansMatch))) {
+                                if (m._coach1._clan == m._coach2._clan) {
+                                    bSameClan = true;
+                                    break;
+                                }
+                            }
                         }
-                        for (int i = 0; i
-                                < shuffle.size() / 2; i++) {
-                            Match m = new Match();
-                            m._coach1 = shuffle.get(2 * i);
-                            m._coach2 = shuffle.get(2 * i + 1);
-                            r._matchs.add(m);
+                    }
+
+                    if (bSameClan) {
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OnlyOneClanCoachKey"));
+                    }
+
+
+                    if (counter == 500) {
+                        if ((_params._enableClans) && ((_params._avoidClansFirstMatch) || (_params._avoidClansMatch))) {
+                            Vector<Coach> shuffle = new Vector<Coach>(GetActiveCoaches());
+                            if (choice == 0) /* Aléatoire */ {
+                                Collections.shuffle(shuffle);
+                            }
+
+                            r._matchs.removeAllElements();
+
+                            while (shuffle.size() > 0) {
+                                Match m = new Match();
+                                m._coach1 = shuffle.get(0);
+                                shuffle.remove(m._coach1);
+                                if (m._coach1._clan != _clans.get(0)) {
+                                    if ((_params._enableClans) && ((_params._avoidClansFirstMatch) || (_params._avoidClansMatch))) {
+                                        int j = 0;
+                                        while (j < shuffle.size() && (m._coach1._clan == shuffle.get(j)._clan)) {
+                                            j++;
+                                        }
+                                        if (j == shuffle.size()) {
+
+                                            j = 0;
+                                        }
+                                        m._coach2 = shuffle.get(j);
+                                        shuffle.remove(j);
+                                    } else {
+                                        m._coach2 = shuffle.get(0);
+                                        shuffle.remove(0);
+                                    }
+                                } else {
+                                    m._coach2 = shuffle.get(0);
+                                    shuffle.remove(0);
+                                }
+                                r._matchs.add(m);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CanMatchKey"));
+                            Vector<Coach> shuffle = new Vector<Coach>(GetActiveCoaches());
+                            if (choice == 0) /* Aléatoire */ {
+                                Collections.shuffle(shuffle);
+                            }
+                            for (int i = 0; i
+                                    < shuffle.size() / 2; i++) {
+                                Match m = new Match();
+                                m._coach1 = shuffle.get(2 * i);
+                                m._coach2 = shuffle.get(2 * i + 1);
+                                r._matchs.add(m);
+                            }
                         }
                     }
                 }
+                _rounds.add(r);
             }
-            _rounds.add(r);
 
         } /**
          * Si tournoi ByTeam
@@ -1581,5 +1601,6 @@ public class Tournament {
         File file = new File(filename);
 
         Tournament.getTournament().saveXML(file);
+
     }
 }

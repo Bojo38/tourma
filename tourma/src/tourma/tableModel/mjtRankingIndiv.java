@@ -33,7 +33,7 @@ public class mjtRankingIndiv extends mjtRanking {
         _datas.clear();
         _datas = new Vector<ObjectRanking>();
 
-        Vector<Round> rounds=Tournament.getTournament().getRounds();
+        Vector<Round> rounds = Tournament.getTournament().getRounds();
 
         for (int i = 0; i < _objects.size(); i++) {
             Coach c = (Coach) _objects.get(i);
@@ -43,55 +43,65 @@ public class mjtRankingIndiv extends mjtRanking {
             int value4 = 0;
             int value5 = 0;
 
-            for (int j = 0; j <= Math.min(c._matchs.size(),_round); j++) {
-                Match m=c._matchs.get(j);
-                Criteria c1 = getCriteriaByValue(_ranking_type1);
-                int subType1 = getSubtypeByValue(_ranking_type1);
-                if (c1 == null) {
-                    value1 += getValue(c, m, _ranking_type1);
-                } else {
-                    value1 += getValue(c, m, c1, subType1);
+            for (int j = 0; j <= c._matchs.size() - 1; j++) {
+
+                Match m = c._matchs.get(j);
+                boolean bFound = false;
+                for (int l = 0; (l <= _round) && (!bFound); l++) {
+                    Round r = rounds.get(l);
+                    if (r.getMatchs().contains(m)) {
+                        bFound = true;
+                    }
                 }
+                // test if match is in round
+                if (bFound) {
+                    Criteria c1 = getCriteriaByValue(_ranking_type1);
+                    int subType1 = getSubtypeByValue(_ranking_type1);
+                    if (c1 == null) {
+                        value1 += getValue(c, m, _ranking_type1);
+                    } else {
+                        value1 += getValue(c, m, c1, subType1);
+                    }
 
-                Criteria c2 = getCriteriaByValue(_ranking_type2);
-                int subType2 = getSubtypeByValue(_ranking_type2);
-                if (c2 == null) {
-                    value2 += getValue(c, m, _ranking_type2);
-                } else {
-                    value2 += getValue(c, m, c1, subType2);
+                    Criteria c2 = getCriteriaByValue(_ranking_type2);
+                    int subType2 = getSubtypeByValue(_ranking_type2);
+                    if (c2 == null) {
+                        value2 += getValue(c, m, _ranking_type2);
+                    } else {
+                        value2 += getValue(c, m, c1, subType2);
+                    }
+
+                    Criteria c3 = getCriteriaByValue(_ranking_type3);
+                    int subType3 = getSubtypeByValue(_ranking_type3);
+                    if (c3 == null) {
+                        value3 += getValue(c, m, _ranking_type3);
+                    } else {
+                        value3 += getValue(c, m, c3, subType3);
+                    }
+
+                    Criteria c4 = getCriteriaByValue(_ranking_type4);
+                    int subType4 = getSubtypeByValue(_ranking_type4);
+                    if (c4 == null) {
+                        value4 += getValue(c, m, _ranking_type4);
+                    } else {
+                        value4 += getValue(c, m, c4, subType4);
+                    }
+
+                    Criteria c5 = getCriteriaByValue(_ranking_type5);
+                    int subType5 = getSubtypeByValue(_ranking_type5);
+                    if (c5 == null) {
+                        value5 += getValue(c, m, _ranking_type5);
+                    } else {
+                        value5 += getValue(c, m, c5, subType5);
+                    }
+
+
+                    /*value1 = getValue(c, matchs, _ranking_type1, _rounds);
+                    value2 = getValue(c, matchs, _ranking_type2, _rounds);
+                    value3 = getValue(c, matchs, _ranking_type3, _rounds);
+                    value4 = getValue(c, matchs, _ranking_type4, _rounds);
+                    value5 = getValue(c, matchs, _ranking_type5, _rounds);*/
                 }
-
-                Criteria c3 = getCriteriaByValue(_ranking_type3);
-                int subType3 = getSubtypeByValue(_ranking_type3);
-                if (c3 == null) {
-                    value3 += getValue(c, m, _ranking_type3);
-                } else {
-                    value3 += getValue(c,m, c3, subType3);
-                }
-
-                Criteria c4 = getCriteriaByValue(_ranking_type4);
-                int subType4 = getSubtypeByValue(_ranking_type4);
-                if (c4 == null) {
-                    value4 += getValue(c, m, _ranking_type4);
-                } else {
-                    value4 += getValue(c, m, c4, subType4);
-                }
-
-                Criteria c5 = getCriteriaByValue(_ranking_type5);
-                int subType5 = getSubtypeByValue(_ranking_type5);
-                if (c5 == null) {
-                    value5 += getValue(c, m, _ranking_type5);
-                } else {
-                    value5 += getValue(c, m, c5, subType5);
-                }
-
-
-                /*value1 = getValue(c, matchs, _ranking_type1, _rounds);
-                value2 = getValue(c, matchs, _ranking_type2, _rounds);
-                value3 = getValue(c, matchs, _ranking_type3, _rounds);
-                value4 = getValue(c, matchs, _ranking_type4, _rounds);
-                value5 = getValue(c, matchs, _ranking_type5, _rounds);*/
-
             }
             _datas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
         }

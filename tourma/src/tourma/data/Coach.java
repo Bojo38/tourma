@@ -22,6 +22,7 @@ public class Coach implements Comparable{
     public Roster _roster;
     public int _naf;
     public int _rank;
+    public boolean _active=true;
 
     public Team _teamMates=null;
 
@@ -30,6 +31,7 @@ public class Coach implements Comparable{
     public Coach()
     {
         _matchs=new Vector<Match>();
+        _active=true;
     }
 
     public int compareTo(Object obj)

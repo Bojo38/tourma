@@ -94,6 +94,8 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfNom.setText(_coach._name);
         jcbRoster.setSelectedItem(_coach._roster._name);
 
+        jckActive.setSelected(_coach._active);
+
         if (!_teamTournament) {
             if (_teamTournament) {
                 jcbClan.setEnabled(false);
@@ -129,13 +131,15 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfRank = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jcbClan = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
+        jckActive = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(6, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(7, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
@@ -173,6 +177,13 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel6.getAccessibleContext().setAccessibleName(bundle.getString("ClanKey")); // NOI18N
 
         jPanel1.add(jcbClan);
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jPanel1.add(jLabel7);
+
+        jckActive.setSelected(true);
+        jckActive.setText(bundle.getString("Active")); // NOI18N
+        jPanel1.add(jckActive);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -214,6 +225,7 @@ public class jdgCoach extends javax.swing.JDialog {
         c._name = jtfNom.getText();
         c._roster = new Roster(jcbRoster.getSelectedIndex());
         c._team = jtfEquipe.getText();
+        c._active = jckActive.isSelected();
         try {
             c._naf = Integer.parseInt(jtfNAF.getText());
         } catch (NumberFormatException e) {
@@ -252,8 +264,6 @@ public class jdgCoach extends javax.swing.JDialog {
             Tournament.getTournament().getCoachs().add(c);
         }
 
-
-
         this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
@@ -264,12 +274,14 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtCancel;
     private javax.swing.JButton jbtOK;
     private javax.swing.JComboBox jcbClan;
     private javax.swing.JComboBox jcbRoster;
+    private javax.swing.JCheckBox jckActive;
     private javax.swing.JTextField jtfEquipe;
     private javax.swing.JTextField jtfNAF;
     private javax.swing.JTextField jtfNom;

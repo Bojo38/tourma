@@ -37,6 +37,7 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import tourma.data.Criteria;
 import tourma.data.Group;
+import tourma.data.ObjectAnnexRanking;
 import tourma.data.Parameters;
 import tourma.data.Team;
 import tourma.tableModel.mjtAnnexRankIndiv;
@@ -74,8 +75,7 @@ public class JPNRound extends javax.swing.JPanel {
             if (_tournament.getGroups().size() > 1) {
                 for (int i = 0; i < _tournament.getGroups().size(); i++) {
                     Group g = _tournament.getGroups().get(i);
-                    if (!g._name.equals("Aucun"))
-                    {
+                    if (!g._name.equals("Aucun")) {
                         JPNGroup jpnGroup = new JPNGroup(t, g, _roundNumber);
                         jtpGlobal.addTab("Groupe: " + g._name, new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), jpnGroup);
                     }
@@ -352,17 +352,32 @@ public class JPNRound extends javax.swing.JPanel {
         Calendar cal = Calendar.getInstance();
         r.setHeure(cal.getTime());
         // Résolution des doublons
-        if (_tournament.getCoachs().size() - 1 <= _tournament.getRounds().size()) {
+        Vector<Coach> coachs = _tournament.getCoachs();
+
+        // Build ranking without inactive coachs
+        Vector<ObjectRanking> datas_tmp = new Vector<ObjectRanking>(datas);
+        for (int i = 0; i < coachs.size(); i++) {
+            Coach c = coachs.get(i);
+            if (!c._active) {
+                for (int j = 0; j < datas_tmp.size(); j++) {
+                    if (datas_tmp.get(j).getObject().equals(c)) {
+                        datas_tmp.remove(j);
+                    }
+                }
+            }
+        }
+
+        if (coachs.size() - 1 <= _tournament.getRounds().size()) {
             // Affectation des matchs
-            for (int i = 0; i < datas.size() / 2; i++) {
+            for (int i = 0; i < datas_tmp.size() / 2; i++) {
                 Match m = new Match();
-                m._coach1 = (Coach) datas.get(2 * i).getObject();
-                m._coach2 = (Coach) datas.get(2 * i + 1).getObject();
+                m._coach1 = (Coach) datas_tmp.get(2 * i).getObject();
+                m._coach2 = (Coach) datas_tmp.get(2 * i + 1).getObject();
                 r.getMatchs().add(m);
             }
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NotEnoughRoundToAvoidSameMatch"));
         } else {
-            Vector<ObjectRanking> datas2 = new Vector<ObjectRanking>(datas);
+            Vector<ObjectRanking> datas2 = new Vector<ObjectRanking>(datas_tmp);
             // Première passe de haut en bas
             while (datas2.size() > 0) {
                 Match m = new Match();
@@ -404,7 +419,7 @@ public class JPNRound extends javax.swing.JPanel {
                 r.getMatchs().add(m);
             }
 
-            datas2 = new Vector<ObjectRanking>(datas);
+            datas2 = new Vector<ObjectRanking>(datas_tmp);
             // Seconde passe de bas en haut
             for (int i = r.getMatchs().size() - 1; i > 0; i--) {
                 boolean have_played = false;
@@ -493,6 +508,7 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
         return r;
+
     }
 
     private Vector<ObjectRanking> subRanking(Vector<Coach> coachs, Vector<Match> matchs, Vector<Round> rounds) {
@@ -734,7 +750,12 @@ public class JPNRound extends javax.swing.JPanel {
                 r = TeamAffectation(matchs, datas, _tournament.getParams()._teamIndivPairing == 1, v);
             }
         } else {
-            r = IndivAffectation(matchs, datas, false);
+            if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else {
+                r = IndivAffectation(matchs, datas, false);
+            }
         }
 
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
@@ -743,6 +764,7 @@ public class JPNRound extends javax.swing.JPanel {
                 i--;
             }
         }
+
         _tournament.getRounds().add(r);
 
         // Add Matchs to Coach internal reference list
@@ -765,8 +787,9 @@ public class JPNRound extends javax.swing.JPanel {
                 i++) {
             JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
 //            MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
-            MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+            MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
         }
+        MainFrame.getMainFrame().jtpMain.setSelectedIndex(_tournament.getRounds().size());
 
         String filename = Tournament.getTournament().getParams()._tournament_name;
         filename = filename + "." + Tournament.getTournament().getRounds().size();
@@ -841,10 +864,10 @@ public class JPNRound extends javax.swing.JPanel {
             for (int i = 0; i
                     < _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
             }
 
-             MainFrame.getMainFrame().update();
+            MainFrame.getMainFrame().update();
         }
     }//GEN-LAST:event_jbtDeleteRoundActionPerformed
 

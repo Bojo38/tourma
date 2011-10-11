@@ -82,7 +82,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
             opponent = m._coach1;
         }
 
-        for (int i = 0; i <= index; i++) {
+        for (int i = 0; i < opponent._matchs.size(); i++) {
             value += getPointsByCoach(opponent, opponent._matchs.get(i));
         }
 
