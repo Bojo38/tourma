@@ -705,7 +705,7 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
 
-        if (_tournament.getParams()._teamTournament) {
+        if ((_tournament.getParams()._teamTournament) && (_tournament.getParams()._teamPairing != 0)) {
             mjtRankingTeam ranking = null;
 
             if (_tournament.getParams()._team_victory_only) {
@@ -725,7 +725,6 @@ public class JPNRound extends javax.swing.JPanel {
                         _tournament.getParams()._ranking5,
                         _tournament.getTeams());
             }
-
             // Ranking class
             datas = ranking.getSortedDatas();
         } else {
