@@ -22,7 +22,7 @@ public class Parameters {
     public boolean _team_victory_only = false;
     public int _large_victory_gap = 3;
     public int _little_lost_gap = 1;
-   
+    public boolean _substitutes=false;
 
     public Vector<Criteria> _criterias;
 
@@ -40,8 +40,9 @@ public class Parameters {
     1: ByTeam
      */
     public int _teamPairing = 0;
-    /* IndivPairing:    0: Classement
-    1: Libre
+    /* IndivPairing:
+     0: Classement
+     1: Libre
      */
     public int _teamIndivPairing = 0;
     public int _teamMatesNumber = 1;

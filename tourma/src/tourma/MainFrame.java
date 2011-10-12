@@ -68,7 +68,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void update() {
 
-        boolean bTourStarted=_tournament.getRounds().size()>0;
+        boolean bTourStarted = _tournament.getRounds().size() > 0;
         jbtAdd.setEnabled(!bTourStarted);
         jbtRemove.setEnabled(!bTourStarted);
         jbtAddGroup.setEnabled(!bTourStarted);
@@ -82,7 +82,7 @@ public class MainFrame extends javax.swing.JFrame {
         jbtAddCriteria.setEnabled(!bTourStarted);
         jbtRemoveCriteria.setEnabled(!bTourStarted);
 
-        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size()==1)&&(_tournament.getCoachs().isEmpty()));
+        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size() == 1) && (_tournament.getCoachs().isEmpty()));
 
 
         jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
@@ -97,7 +97,7 @@ public class MainFrame extends javax.swing.JFrame {
             } else {
                 text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam");
             }
-            jlbDetails.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MembersNumber")+": " + _tournament.getParams()._teamMatesNumber + " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pairing")+" " + text);
+            jlbDetails.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MembersNumber") + ": " + _tournament.getParams()._teamMatesNumber + " " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pairing") + " " + text);
         } else {
             jpnTeamTour.setVisible(false);
             jpnCoachButtons.setVisible(true);
@@ -105,7 +105,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jtpOptions.setEnabledAt(2, _tournament.getParams()._teamTournament);
         jtpOptions.setEnabledAt(3, !_tournament.getParams()._teamTournament);
-        
+
         boolean teamMatches = _tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1);
         jrbCoachPoints.setEnabled(teamMatches);
         jrbTeamVictory.setEnabled(teamMatches);
@@ -282,9 +282,14 @@ public class MainFrame extends javax.swing.JFrame {
         jtbCoachs.setModel(coachModel);
         setColumnSize(jtbCoachs);
 
+        jtbCoachs.setDefaultRenderer(String.class, coachModel);
+        jtbCoachs.setDefaultRenderer(Integer.class, coachModel);
+
         mjtTeams teamModel = new mjtTeams(_tournament.getTeams());
         jtbTeam.setModel(teamModel);
         setColumnSize(jtbTeam);
+        jtbTeam.setDefaultRenderer(String.class, teamModel);
+        jtbTeam.setDefaultRenderer(Integer.class, teamModel);
 
         for (int i = 0; i < jtpMain.getComponentCount(); i++) {
             Object o = jtpMain.getComponentAt(i);
@@ -304,10 +309,10 @@ public class MainFrame extends javax.swing.JFrame {
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
 
-        jbtAddClan.setEnabled(clansEnable&&!bTourStarted);
-        jbtRemoveClan.setEnabled(clansEnable&&!bTourStarted);
-        jbtEditClan.setEnabled(clansEnable&&!bTourStarted);
-        jlsClans.setEnabled(clansEnable&&!bTourStarted);
+        jbtAddClan.setEnabled(clansEnable && !bTourStarted);
+        jbtRemoveClan.setEnabled(clansEnable && !bTourStarted);
+        jbtEditClan.setEnabled(clansEnable && !bTourStarted);
+        jlsClans.setEnabled(clansEnable && !bTourStarted);
 
         jcxActivatesClans.setSelected(clansEnable);
         jcxAvoidFirstMatch.setSelected(_tournament.getParams()._avoidClansFirstMatch);
@@ -353,7 +358,7 @@ public class MainFrame extends javax.swing.JFrame {
             } else {
                 jcbGroupRight.setSelectedIndex(0);
             }
-        }      
+        }
 
     }
 
@@ -1395,32 +1400,29 @@ public class MainFrame extends javax.swing.JFrame {
     private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
 
         if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (_tournament.getParams()._teamTournament && _tournament.getTeams().size() % 2 > 0) {
+            if (_tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1) && _tournament.getTeams().size() % 2 > 0) {
                 JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OddTeamNumber"));
             } else {
-                if (_tournament.getCoachs().size() % 2 > 0) {
-                    JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OddCoachNumber"));
-                } else {
-                    String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Random"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RegisteringOrder"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Manual")};
-                    int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseFirstDraw"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Draw"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
+                String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Random"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RegisteringOrder"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Manual")};
+                int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseFirstDraw"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Draw"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
 
-                    _tournament.generateFirstRound(choice);
+                _tournament.generateFirstRound(choice);
 
-                    for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
-                        Component obj = jtpMain.getComponentAt(i);
-                        if (obj instanceof JPNRound) {
-                            jtpMain.remove(obj);
-                        }
+                for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
+                    Component obj = jtpMain.getComponentAt(i);
+                    if (obj instanceof JPNRound) {
+                        jtpMain.remove(obj);
                     }
-                    for (int i = 0; i < _tournament.getRounds().size(); i++) {
-                        JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                        jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-                    }
-                    jtpMain.setSelectedIndex(_tournament.getRounds().size());
-                    update();
-
                 }
+                for (int i = 0; i < _tournament.getRounds().size(); i++) {
+                    JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
+                    jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                }
+                jtpMain.setSelectedIndex(_tournament.getRounds().size());
+                update();
+
             }
+
         }
 }//GEN-LAST:event_jbtFirstRoundActionPerformed
 
@@ -1581,7 +1583,7 @@ public class MainFrame extends javax.swing.JFrame {
                     < _tournament.getRounds().size(); i++) {
                 JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
 //                jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
-                jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
             }
 
             update();
@@ -1683,21 +1685,25 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfPlaceKeyPressed
 
     private void jbtAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddTeamActionPerformed
-        String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TeamName"));
+        /*String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TeamName"));
         Team team = new Team();
         team._name = name;
         Coach lastCoach = null;
         while (team._coachs.size() < _tournament.getParams()._teamMatesNumber) {
-            jdgCoach jdg = new jdgCoach(this, true);
-            jdg.setVisible(true);
-            Coach c = _tournament.getCoachs().lastElement();
-            if (c != lastCoach) {
-                c._teamMates = team;
-                team._coachs.add(c);
-                lastCoach = c;
-            }
+        jdgCoach jdg = new jdgCoach(this, true);
+        jdg.setVisible(true);
+        Coach c = _tournament.getCoachs().lastElement();
+        if (c != lastCoach) {
+        c._teamMates = team;
+        team._coachs.add(c);
+        lastCoach = c;
         }
-        _tournament.getTeams().add(team);
+        }
+        _tournament.getTeams().add(team);*/
+
+        jdgTeam jdg = new jdgTeam(this, true);
+        jdg.setVisible(true);
+
         update();
     }//GEN-LAST:event_jbtAddTeamActionPerformed
 
@@ -1712,15 +1718,17 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtRemoveTeamActionPerformed
 
     private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
-        Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
-        if (jtbTeam.getSelectedColumn() == 1) {
-            String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), t._name);
-            t._name = name;
-        } else if (jtbTeam.getSelectedColumn() > 1) {
-            jdgCoach jdg = new jdgCoach(this, true, t._coachs.get(jtbTeam.getSelectedColumn() - 2));
-            jdg.setVisible(true);
+        if (_tournament.getTeams().size() > jtbTeam.getSelectedRow()) {
+            Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
+            if (jtbTeam.getSelectedColumn() == 1) {
+                String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), t._name);
+                t._name = name;
+            } else if (jtbTeam.getSelectedColumn() > 1) {
+                jdgCoach jdg = new jdgCoach(this, true, t._coachs.get(jtbTeam.getSelectedColumn() - 2));
+                jdg.setVisible(true);
+            }
+            update();
         }
-        update();
     }//GEN-LAST:event_jbtModifyTeamActionPerformed
 
     private void jtffTeamVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamVictoryFocusLost
@@ -1843,8 +1851,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         String enterClanName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterClanNameKey");
         String clanName = JOptionPane.showInputDialog(this, enterClanName);
-        if (clanName!=null)
-        {
+        if (clanName != null) {
             if (!clanName.equals("")) {
                 _tournament.getClans().addElement(new Clan(clanName));
             }
@@ -1884,7 +1891,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jlsClansMouseClicked
 
     private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
-        if ((jtbCriteria.getSelectedRow() > 1)&&(jtbCriteria.getSelectedRow()<_tournament.getParams()._criterias.size())) {
+        if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < _tournament.getParams()._criterias.size())) {
             Criteria crit = _tournament.getParams()._criterias.get(jtbCriteria.getSelectedRow());
             for (int i = 0; i < _tournament.getRounds().size(); i++) {
                 Round r = _tournament.getRounds().get(i);
@@ -2044,7 +2051,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jmiEditrostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditrostersActionPerformed
-        jdgRosters jdg=new jdgRosters(this, true);
+        jdgRosters jdg = new jdgRosters(this, true);
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditrostersActionPerformed
 
@@ -2100,7 +2107,7 @@ public class MainFrame extends javax.swing.JFrame {
                 }
 
                 Roster.initCollection();
-                
+
                 MainFrame.getMainFrame().setVisible(true);
             }
         });

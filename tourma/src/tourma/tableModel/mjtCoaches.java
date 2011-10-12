@@ -4,16 +4,21 @@
  */
 package tourma.tableModel;
 
+import java.awt.Component;
+import java.awt.Font;
 import tourma.data.Coach;
 import java.util.Vector;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
 import tourma.data.Tournament;
 
 /**
  *
  * @author Frederic Berger
  */
-public class mjtCoaches extends AbstractTableModel {
+public class mjtCoaches extends AbstractTableModel implements TableCellRenderer {
 
     Vector<Coach> _coachs;
 
@@ -50,7 +55,7 @@ public class mjtCoaches extends AbstractTableModel {
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Ranking");
             case 7:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
-                case 6:
+            case 6:
                 return "";
         }
         return "";
@@ -96,6 +101,32 @@ public class mjtCoaches extends AbstractTableModel {
     public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
+        if (col > 0) {
+            return true;
+        }
+
         return false;
+    }
+
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+        JTextField jlb = new JTextField();
+
+        jlb.setEditable(false);
+        if (value instanceof String) {
+            jlb.setText((String) value);
+        }
+
+        if (value instanceof Integer) {
+            jlb.setText(Integer.toString((Integer) value));
+        }
+
+        Coach c = _coachs.get(row);
+        if (!c._active) {
+            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+        }
+        jlb.setHorizontalAlignment(JTextField.CENTER);
+        return jlb;
     }
 }

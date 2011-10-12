@@ -19,6 +19,7 @@ import tourma.data.Coach;
 import javax.swing.JOptionPane;
 import tourma.data.Clan;
 import tourma.data.Roster;
+import tourma.data.Team;
 
 /**
  *
@@ -34,6 +35,41 @@ public class jdgCoach extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        _teamTournament = Tournament.getTournament().getParams()._teamTournament;
+
+        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters.toArray()));
+
+        if (!_teamTournament) {
+            DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
+            for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
+                clanListModel.addElement(Tournament.getTournament().getClans().get(i)._name);
+            }
+            jcbClan.setModel(clanListModel);
+        }
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gs = ge.getDefaultScreenDevice();
+        DisplayMode dmode = gs.getDisplayMode();
+        if (dmode != null) {
+            int screenWidth = dmode.getWidth();
+            int screenHeight = dmode.getHeight();
+            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        }
+
+        if (_teamTournament) {
+            jcbClan.setEnabled(false);
+        } else {
+            jcbClan.setEnabled(Tournament.getTournament().getParams()._enableClans);
+        }
+        _coach = null;
+    }
+    Team _team = null;
+
+    public jdgCoach(java.awt.Frame parent, boolean modal, Team team) {
+        super(parent, modal);
+        initComponents();
+
+        _team = team;
         _teamTournament = Tournament.getTournament().getParams()._teamTournament;
 
         jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters.toArray()));
@@ -222,6 +258,14 @@ public class jdgCoach extends javax.swing.JDialog {
             c = _coach;
         }
 
+        for (int i = 0; i < Tournament.getTournament().getCoachs().size(); i++) {
+            Coach tmp = Tournament.getTournament().getCoachs().get(i);
+            if ((tmp._name.equals(jtfNom.getText())) && (!tmp.equals(c))) {
+                JOptionPane.showMessageDialog(this, "Un autre coach a déjà le même nom");
+                return;
+            }
+        }
+
         c._name = jtfNom.getText();
         c._roster = new Roster(jcbRoster.getSelectedIndex());
         c._team = jtfEquipe.getText();
@@ -261,6 +305,10 @@ public class jdgCoach extends javax.swing.JDialog {
         }
 
         if (_coach == null) {
+            if (_team != null) {
+                c._teamMates = _team;
+                _team._coachs.add(c);
+            }
             Tournament.getTournament().getCoachs().add(c);
         }
 

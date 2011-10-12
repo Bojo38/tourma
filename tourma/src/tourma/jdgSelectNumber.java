@@ -58,12 +58,14 @@ public class jdgSelectNumber extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jspCoachNumber = new javax.swing.JSpinner();
+        jckSubstitutes = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText(language.getString("CoachNumber")); // NOI18N
@@ -71,6 +73,13 @@ public class jdgSelectNumber extends javax.swing.JDialog {
 
         jspCoachNumber.setModel(new javax.swing.SpinnerNumberModel(1, 1, 16, 1));
         jPanel1.add(jspCoachNumber);
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jckSubstitutes.setText(bundle.getString("AllowedSubstitutes")); // NOI18N
+        jckSubstitutes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jckSubstitutes.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jPanel1.add(jckSubstitutes);
+        jPanel1.add(jLabel2);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -90,6 +99,7 @@ public class jdgSelectNumber extends javax.swing.JDialog {
 
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
         _tournament.getParams()._teamMatesNumber=(Integer)jspCoachNumber.getValue();
+        _tournament.getParams()._substitutes=jckSubstitutes.isSelected();
         this.setVisible(false);
     }//GEN-LAST:event_jbtOKActionPerformed
 
@@ -97,9 +107,11 @@ public class jdgSelectNumber extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtOK;
+    private javax.swing.JCheckBox jckSubstitutes;
     private javax.swing.JSpinner jspCoachNumber;
     // End of variables declaration//GEN-END:variables
 

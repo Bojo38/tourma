@@ -206,6 +206,8 @@ public class Tournament {
         params.setAttribute("TeamVictoryOnly", Boolean.toString(_params._team_victory_only));
 
         params.setAttribute("GroupEnable", Boolean.toString(_params._groupsEnable));
+        params.setAttribute("Substitutes", Boolean.toString(_params._substitutes));
+        
 
         /*
          * Clan parameters 
@@ -949,6 +951,7 @@ public class Tournament {
                     _params._avoidClansFirstMatch = params.getAttribute("AvoidFirstMatch").getBooleanValue();
                     _params._avoidClansMatch = params.getAttribute("AvoidMatch").getBooleanValue();
                     _params._teamMatesClansNumber = params.getAttribute("ClanTeammatesNumber").getIntValue();
+                    _params._substitutes = params.getAttribute("Substitutes").getBooleanValue();
 
                 } catch (NullPointerException ne3) {
                     JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ne3.getLocalizedMessage());
@@ -1500,6 +1503,19 @@ public class Tournament {
             Vector<Team> teams1 = new Vector<Team>();
             Vector<Team> teams2 = new Vector<Team>();
 
+            /**
+             * First check the number of active players
+             */
+            for (int i=0; i<_teams.size(); i++ )
+            {
+                if (_teams.get(i).getActivePlayerNumber()!=_params._teamMatesNumber)
+                {
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(),"Mauvais nombre de joueurs actif pour l'équipe "+_teams.get(i)._name);
+                    return;
+                }
+            }
+
+
             if (choice == 2) {
                 Vector<Team> teams = new Vector<Team>(_teams);
                 while (teams.size() > 0) {
@@ -1558,14 +1574,15 @@ public class Tournament {
                         < teams1.size(); i++) {
                     Team team1 = teams1.get(i);
                     Team team2 = teams2.get(i);
-                    Vector<Coach> shuffle2 = new Vector<Coach>(team2._coachs);
+                    Vector<Coach> coachs1=team1.getActivePlayers();
+                    Vector<Coach> shuffle2 = new Vector<Coach>(team2.getActivePlayers());
                     if (choice == 0) /* Aléatoire */ {
                         Collections.shuffle(shuffle2);
                     }
                     for (int j = 0; j
                             < shuffle2.size(); j++) {
                         Match m = new Match();
-                        m._coach1 = team1._coachs.get(j);
+                        m._coach1 = coachs1.get(j);
                         m._coach2 = shuffle2.get(j);
                         r._matchs.add(m);
                     }

@@ -71,13 +71,54 @@
     nbproject/build-impl.xml file. 
 
     -->
-	<target name="-post-jar">
+    <target name="-post-jar">
         
-      
+        
         
     </target>
 
 
+ <target name="yguard">
+      <taskdef name="yguard"
+      classname="com.yworks.yguard.YGuardTask"
+      classpath="tools/yguard.jar"/>
+       <yguard>
+
+    <!--<inoutpair in="dist/TourMa.jar" out="dist/TourMa_obf.jar"/>-->
+    <inoutpair in="store/TourMa.jar" out="store/TourMa_obf.jar"/>
+
+    <!--<externalclasses>
+      <pathelement location="dist/lib/freemarker.jar"/>
+      <pathelement location="dist/lib/jdom.jar"/>
+      <pathelement location="dist/lib/substance.jar"/>
+      <pathelement location="dist/lib/swingx-0.9.5-2.jar"/>
+    </externalclasses>-->
+
+    <!--<externalclasses>
+      <pathelement location="deps/jython-2.2.jar"/>
+      <pathelement location="deps/j2ee-1.4.jar"/>
+      <pathelement location="deps/dom4j-1.4.jar"/>
+      <pathelement location="deps/jaxen-1.0-FCS.jar"/>
+      <pathelement location="deps/ant-1.6.5.jar"/>      
+    </externalclasses>-->
+
+    <shrink logfile="shrinklog.xml">
+      <!--<property name="error-checking" value="pedantic"/>-->
+      <keep>
+        <method name="void main(java.lang.String[])" class="tourma.MainFrame" />
+        <class classes="public"/>
+      </keep>
+    </shrink>
+
+    <rename mainclass="tourma.MainFrame" logfile="renamelog.xml">
+      <!--<property name="error-checking" value="pedantic"/>-->
+      <keep>
+        <class classes="public"/>
+      </keep>
+    </rename>
+
+  </yguard>
+    </target>
 
     <target name="package-for-store" depends="jar">
 

@@ -38,49 +38,61 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
             int value5 = 0;
             for (int k = 0; k < t._coachs.size(); k++) {
                 Coach c = t._coachs.get(k);
-                for (int j = 0; j <= Math.min(c._matchs.size(),_round); j++) {
+                for (int j = 0; j <= c._matchs.size() - 1; j++) {
+
                     Match m = c._matchs.get(j);
-
-                    value += getValue(c, m, _criteria, _subtype);
-
-                    Criteria c1 = getCriteriaByValue(_ranking_type1);
-                    int subType1 = getSubtypeByValue(_ranking_type1);
-                    if (c1 == null) {
-                        value1 += getValue(c, m, _ranking_type1);
-                    } else {
-                        value1 += getValue(c, m, c1, subType1);
+                    boolean bFound = false;
+                    for (int l = 0; (l <= _round) && (!bFound); l++) {
+                        Round r = Tournament.getTournament().getRounds().get(l);
+                        if (r.getMatchs().contains(m)) {
+                            bFound = true;
+                        }
                     }
+                    // test if match is in round
+                    if (bFound) {
 
-                    Criteria c2 = getCriteriaByValue(_ranking_type2);
-                    int subType2 = getSubtypeByValue(_ranking_type2);
-                    if (c2 == null) {
-                        value2 += getValue(c, m, _ranking_type2);
-                    } else {
-                        value2 += getValue(c, m, c2, subType2);
-                    }
 
-                    Criteria c3 = getCriteriaByValue(_ranking_type3);
-                    int subType3 = getSubtypeByValue(_ranking_type3);
-                    if (c3 == null) {
-                        value3 += getValue(c, m, _ranking_type3);
-                    } else {
-                        value3 += getValue(c, m, c3, subType3);
-                    }
+                        value += getValue(c, m, _criteria, _subtype);
 
-                    Criteria c4 = getCriteriaByValue(_ranking_type4);
-                    int subType4 = getSubtypeByValue(_ranking_type4);
-                    if (c4 == null) {
-                        value4 += getValue(c, m, _ranking_type4);
-                    } else {
-                        value4 += getValue(c, m, c4, subType4);
-                    }
+                        Criteria c1 = getCriteriaByValue(_ranking_type1);
+                        int subType1 = getSubtypeByValue(_ranking_type1);
+                        if (c1 == null) {
+                            value1 += getValue(c, m, _ranking_type1);
+                        } else {
+                            value1 += getValue(c, m, c1, subType1);
+                        }
 
-                    Criteria c5 = getCriteriaByValue(_ranking_type5);
-                    int subType5 = getSubtypeByValue(_ranking_type5);
-                    if (c5 == null) {
-                        value5 += getValue(c, m, _ranking_type5);
-                    } else {
-                        value5 += getValue(c, m, c5, subType5);
+                        Criteria c2 = getCriteriaByValue(_ranking_type2);
+                        int subType2 = getSubtypeByValue(_ranking_type2);
+                        if (c2 == null) {
+                            value2 += getValue(c, m, _ranking_type2);
+                        } else {
+                            value2 += getValue(c, m, c2, subType2);
+                        }
+
+                        Criteria c3 = getCriteriaByValue(_ranking_type3);
+                        int subType3 = getSubtypeByValue(_ranking_type3);
+                        if (c3 == null) {
+                            value3 += getValue(c, m, _ranking_type3);
+                        } else {
+                            value3 += getValue(c, m, c3, subType3);
+                        }
+
+                        Criteria c4 = getCriteriaByValue(_ranking_type4);
+                        int subType4 = getSubtypeByValue(_ranking_type4);
+                        if (c4 == null) {
+                            value4 += getValue(c, m, _ranking_type4);
+                        } else {
+                            value4 += getValue(c, m, c4, subType4);
+                        }
+
+                        Criteria c5 = getCriteriaByValue(_ranking_type5);
+                        int subType5 = getSubtypeByValue(_ranking_type5);
+                        if (c5 == null) {
+                            value5 += getValue(c, m, _ranking_type5);
+                        } else {
+                            value5 += getValue(c, m, c5, subType5);
+                        }
                     }
                 }
             }
@@ -104,12 +116,12 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
             case 2:
                 if (_subtype == 0) {
-                    return _criteria._name +  " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach");
+                    return _criteria._name + " " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach");
                 } else {
                     if (_subtype == 1) {
-                        return _criteria._name + " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Opponent");
+                        return _criteria._name + " " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Opponent");
                     } else {
-                        return _criteria._name +  " "+java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Difference");
+                        return _criteria._name + " " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Difference");
                     }
                 }
         }
