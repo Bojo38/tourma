@@ -18,7 +18,7 @@ import tourma.data.Tournament;
 import tourma.data.Coach;
 import javax.swing.JOptionPane;
 import tourma.data.Clan;
-import tourma.data.Roster;
+import tourma.data.RosterType;
 import tourma.data.Team;
 
 /**
@@ -37,7 +37,7 @@ public class jdgCoach extends javax.swing.JDialog {
 
         _teamTournament = Tournament.getTournament().getParams()._teamTournament;
 
-        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters.toArray()));
+        jcbRoster.setModel(new DefaultComboBoxModel(RosterType.RostersNames.toArray()));
 
         if (!_teamTournament) {
             DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
@@ -72,7 +72,7 @@ public class jdgCoach extends javax.swing.JDialog {
         _team = team;
         _teamTournament = Tournament.getTournament().getParams()._teamTournament;
 
-        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters.toArray()));
+        jcbRoster.setModel(new DefaultComboBoxModel(RosterType.RostersNames.toArray()));
 
         if (!_teamTournament) {
             DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
@@ -104,7 +104,7 @@ public class jdgCoach extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        jcbRoster.setModel(new DefaultComboBoxModel(Roster.Rosters.toArray()));
+        jcbRoster.setModel(new DefaultComboBoxModel(RosterType.RostersNames.toArray()));
 
         if (!_teamTournament) {
             DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
@@ -267,7 +267,7 @@ public class jdgCoach extends javax.swing.JDialog {
         }
 
         c._name = jtfNom.getText();
-        c._roster = new Roster(jcbRoster.getSelectedIndex());
+        c._roster = new RosterType(jcbRoster.getSelectedIndex());
         c._team = jtfEquipe.getText();
         c._active = jckActive.isSelected();
         try {

@@ -21,7 +21,7 @@ import tourma.data.Tournament;
 import tourma.data.Coach;
 import javax.swing.JOptionPane;
 import tourma.data.Match;
-import tourma.data.Roster;
+import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.tableModel.mjtMatches;
@@ -48,9 +48,9 @@ public class jdgRosters extends javax.swing.JDialog {
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
 
-        for (int i=0; i<Roster.Rosters.size(); i++)
+        for (int i=0; i<RosterType.RostersNames.size(); i++)
         {
-            _model.addElement(Roster.Rosters.get(i));
+            _model.addElement(RosterType.RostersNames.get(i));
         }
 
         jlsRosters.setModel(_model);
@@ -165,7 +165,7 @@ public class jdgRosters extends javax.swing.JDialog {
         {
             rosters.addElement((String)_model.get(i));
         }
-        Roster.Rosters=rosters;
+        RosterType.RostersNames=rosters;
         this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed

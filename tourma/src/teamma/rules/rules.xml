@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+    <name>LRB6+Khorne</name>
+    <teams>
+        <team>amazons.xml</team>
+        <team>chaos.xml</team>
+        <team>chaosdwarves.xml</team>
+        <team>chaospact.xml</team>
+        <team>darkelves.xml</team>
+        <team>dwarves.xml</team>
+        <team>elves.xml</team>
+        <team>goblins.xml</team>
+        <team>halflings.xml</team>
+        <team>highelves.xml</team>
+        <team>humans.xml</team>
+        <team>khemris.xml</team>
+        <team>khornesdaemons.xml</team>
+        <team>lizardmen.xml</team>
+        <team>necromantics.xml</team>
+        <team>norses.xml</team>
+        <team>nurgle.xml</team>
+        <team>ogres.xml</team>
+        <team>orcs.xml</team>
+        <team>skavens</team>
+        <team>slanns.xml</team>
+        <team>undeads.xml</team>
+        <team>underworld.xml</team>
+        <team>vampire.xml</team>
+        <team>woodelves.xml</team>
+    </teams>
+    <starplayers>starplayers.xml</starplayers>    
+    <skills>skills.xml</skills>
+</rules>

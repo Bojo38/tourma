@@ -15,12 +15,12 @@ public class Group {
 
     public String _name="";
 
-    public Vector<Roster> _rosters;
+    public Vector<RosterType> _rosters;
 
     public Group(String name)
     {
         _name=name;
-        _rosters=new Vector<Roster>();
+        _rosters=new Vector<RosterType>();
     }
 
 }

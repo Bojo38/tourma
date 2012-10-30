@@ -18,7 +18,7 @@ import tourma.data.Tournament;
 import tourma.data.Coach;
 import javax.swing.JOptionPane;
 import tourma.data.Clan;
-import tourma.data.Roster;
+import tourma.data.RosterType;
 import tourma.data.Team;
 import tourma.tableModel.mjtCoaches;
 import tourma.tableModel.mjtMatchTeams;

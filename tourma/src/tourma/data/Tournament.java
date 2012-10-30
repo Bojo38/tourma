@@ -48,7 +48,7 @@ public class Tournament {
      */
     protected Vector<Clan> _clans;
     /**
-     * Rosters Groups
+     * RostersNames Groups
      */
     protected Vector<Group> _groups;
 
@@ -65,8 +65,8 @@ public class Tournament {
         Group group = new Group(bundle.getString("NoneKey"));
         _groups.add(group);
 
-        for (int i = 0; i < Roster.Rosters.size(); i++) {
-            group._rosters.add(new Roster(Roster.Rosters.get(i)));
+        for (int i = 0; i < RosterType.RostersNames.size(); i++) {
+            group._rosters.add(new RosterType(RosterType.RostersNames.get(i)));
         }
     }
 
@@ -147,9 +147,9 @@ public class Tournament {
         document.setAttribute("Version", "3");
 
         for (int i = 0; i
-                < Roster.Rosters.size(); i++) {
+                < RosterType.RostersNames.size(); i++) {
             Element ros = new Element("Roster");
-            ros.setAttribute("Name", Roster.Rosters.get(i));
+            ros.setAttribute("Name", RosterType.RostersNames.get(i));
             document.addContent(ros);
         }
 
@@ -721,7 +721,7 @@ public class Tournament {
                 Coach c = new Coach();
                 c._name = coach.getAttributeValue("Name");
                 c._team = coach.getAttributeValue("Team");
-                c._roster = new Roster(coach.getAttributeValue("Roster"));
+                c._roster = new RosterType(coach.getAttributeValue("Roster"));
                 c._naf = coach.getAttribute("NAF").getIntValue();
                 c._rank = coach.getAttribute("Rank").getIntValue();
                 c._clan = clanMap.get(coach.getAttributeValue("Clan"));
@@ -869,20 +869,20 @@ public class Tournament {
             List ros = racine.getChildren("Roster");
             if (ros != null) {
                 if (ros.size() > 0) {
-                    Roster.Rosters = new Vector<String>();
+                    RosterType.RostersNames = new Vector<String>();
                     Iterator it_ros = ros.iterator();
                     while (it_ros.hasNext()) {
                         Element r = (Element) it_ros.next();
-                        Roster.Rosters.add(r.getAttributeValue("Name"));
+                        RosterType.RostersNames.add(r.getAttributeValue("Name"));
                     }
                 } else {
-                    Roster.initCollection();
+                    RosterType.initCollection();
                 }
             } else {
-                Roster.initCollection();
+                RosterType.initCollection();
             }
         } catch (NullPointerException ne) {
-            Roster.initCollection();
+            RosterType.initCollection();
         }
 
 
@@ -985,7 +985,7 @@ public class Tournament {
                     Iterator ro = rosters.iterator();
                     while (ro.hasNext()) {
                         Element roster = (Element) ro.next();
-                        Roster rost = new Roster(roster.getAttributeValue("Name"));
+                        RosterType rost = new RosterType(roster.getAttributeValue("Name"));
                         groupe._rosters.add(rost);
                     }
                     _groups.add(groupe);
@@ -1015,7 +1015,7 @@ public class Tournament {
                 Coach c = new Coach();
                 c._name = coach.getAttributeValue("Name");
                 c._team = coach.getAttributeValue("Team");
-                c._roster = new Roster(coach.getAttributeValue("Roster"));
+                c._roster = new RosterType(coach.getAttributeValue("Roster"));
                 c._naf = coach.getAttribute("NAF").getIntValue();
                 c._rank = coach.getAttribute("Rank").getIntValue();
                 c._clan = clanMap.get(coach.getAttributeValue("Clan"));

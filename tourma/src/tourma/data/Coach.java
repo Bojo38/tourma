@@ -19,7 +19,7 @@ public class Coach implements Comparable{
     public Clan _clan;
     public String _name;
     public String _team;
-    public Roster _roster;
+    public RosterType _roster;
     public int _naf;
     public int _rank;
     public boolean _active=true;

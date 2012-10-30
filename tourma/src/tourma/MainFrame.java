@@ -39,7 +39,7 @@ import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.Group;
 import tourma.data.Match;
-import tourma.data.Roster;
+import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Value;
@@ -1954,7 +1954,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jbtRemoveGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveGroupActionPerformed
         if (jlsGroups.getSelectedIndex() > 0) {
-            Vector<Roster> rosters = _tournament.getGroups().get(jlsGroups.getSelectedIndex())._rosters;
+            Vector<RosterType> rosters = _tournament.getGroups().get(jlsGroups.getSelectedIndex())._rosters;
             for (int i = 0; i < rosters.size(); i++) {
                 _tournament.getGroups().get(0)._rosters.add(rosters.get(i));
             }
@@ -1965,7 +1965,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jcbGroupLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupLeftActionPerformed
         DefaultListModel listModel = new DefaultListModel();
-        Vector<Roster> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
+        Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
         for (int i = 0; i < rosters.size(); i++) {
             listModel.addElement(rosters.get(i)._name);
         }
@@ -1974,7 +1974,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jcbGroupRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupRightActionPerformed
         DefaultListModel listModel = new DefaultListModel();
-        Vector<Roster> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
+        Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
         for (int i = 0; i < rosters.size(); i++) {
             listModel.addElement(rosters.get(i)._name);
         }
@@ -1985,11 +1985,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         if (jlsLeft.getSelectedIndex() > -1) {
             int index = jlsLeft.getSelectedIndex();
-            Roster roster = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.get(index);
+            RosterType roster = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.get(index);
             _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.remove(roster);
             _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.add(roster);
 
-            Vector<Roster> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
+            Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
             DefaultListModel listModelLeft = new DefaultListModel();
             for (int i = 0; i < rosters.size(); i++) {
                 listModelLeft.addElement(rosters.get(i)._name);
@@ -2008,11 +2008,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void jbtGrouToLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGrouToLeftActionPerformed
         if (jlsRight.getSelectedIndex() > -1) {
             int index = jlsRight.getSelectedIndex();
-            Roster roster = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.get(index);
+            RosterType roster = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.get(index);
             _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.remove(roster);
             _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.add(roster);
 
-            Vector<Roster> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
+            Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
             DefaultListModel listModelRight = new DefaultListModel();
             for (int i = 0; i < rosters.size(); i++) {
                 listModelRight.addElement(rosters.get(i)._name);
@@ -2106,7 +2106,7 @@ public class MainFrame extends javax.swing.JFrame {
                     System.out.println(e.getLocalizedMessage());
                 }
 
-                Roster.initCollection();
+                RosterType.initCollection();
 
                 MainFrame.getMainFrame().setVisible(true);
             }
