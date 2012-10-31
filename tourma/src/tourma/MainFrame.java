@@ -34,6 +34,7 @@ import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
+import teamma.data.lrb;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
@@ -2107,7 +2108,7 @@ public class MainFrame extends javax.swing.JFrame {
                 }
 
                 RosterType.initCollection();
-
+                lrb.getLRB();
                 MainFrame.getMainFrame().setVisible(true);
             }
         });

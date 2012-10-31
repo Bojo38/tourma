@@ -138,8 +138,8 @@ public class Tournament {
     }
 
     /*    public Vector<Group> getGroups() {
-    return _groups;
-    }*/
+     return _groups;
+     }*/
     public void saveXML(java.io.File file) {
         Element document = new Element("Tournament");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -207,7 +207,7 @@ public class Tournament {
 
         params.setAttribute("GroupEnable", Boolean.toString(_params._groupsEnable));
         params.setAttribute("Substitutes", Boolean.toString(_params._substitutes));
-        
+
 
         /*
          * Clan parameters 
@@ -456,88 +456,88 @@ public class Tournament {
 
         /* Element document = new Element("nafReport");
 
-        Element orgas = new Element("organiser");
-        orgas.setText(_params._tournament_orga);
+         Element orgas = new Element("organiser");
+         orgas.setText(_params._tournament_orga);
 
-        document.addContent(orgas);
+         document.addContent(orgas);
 
-        Element coaches = new Element("coaches");
-        for (int i = 0; i
-        < _coachs.size(); i++) {
-        if (_coachs.get(i)._naf > 0) {
-        Element coach = new Element("coach");
-        Element name = new Element("name");
-        Element team = new Element("team");
-        name.setText(_coachs.get(i)._name);
-        String roster = getRosterTranslation(_coachs.get(i)._roster._name);
-        team.setText(roster);
-        coach.addContent(name);
-        coach.addContent(team);
-        coaches.addContent(coach);
-        }
-        }
-        document.addContent(coaches);
+         Element coaches = new Element("coaches");
+         for (int i = 0; i
+         < _coachs.size(); i++) {
+         if (_coachs.get(i)._naf > 0) {
+         Element coach = new Element("coach");
+         Element name = new Element("name");
+         Element team = new Element("team");
+         name.setText(_coachs.get(i)._name);
+         String roster = getRosterTranslation(_coachs.get(i)._roster._name);
+         team.setText(roster);
+         coach.addContent(name);
+         coach.addContent(team);
+         coaches.addContent(coach);
+         }
+         }
+         document.addContent(coaches);
 
-        for (int i = 0; i
-        < _rounds.size(); i++) {
-        for (int j = 0; j
-        < _rounds.get(i)._matchs.size(); j++) {
-        if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0)
-        && (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
-        Element game = new Element("game");
-        Element timeStamp = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIMESTAMP"));
-        timeStamp.setText(format.format(_rounds.get(i)._heure));
-        Element playerRecord1 = new Element("playerRecord");
-        Element playerRecord2 = new Element("playerRecord");
-        Element name1 = new Element("name");
-        Element rank1 = new Element("teamRating");
-        Element td1 = new Element("touchDowns");
-        Element bh1 = new Element("badlyHurt");
-        Element name2 = new Element("name");
-        Element rank2 = new Element("teamRating");
-        Element td2 = new Element("touchDowns");
-        Element bh2 = new Element("badlyHurt");
+         for (int i = 0; i
+         < _rounds.size(); i++) {
+         for (int j = 0; j
+         < _rounds.get(i)._matchs.size(); j++) {
+         if ((_rounds.get(i)._matchs.get(j)._coach1._naf > 0)
+         && (_rounds.get(i)._matchs.get(j)._coach2._naf > 0)) {
+         Element game = new Element("game");
+         Element timeStamp = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TIMESTAMP"));
+         timeStamp.setText(format.format(_rounds.get(i)._heure));
+         Element playerRecord1 = new Element("playerRecord");
+         Element playerRecord2 = new Element("playerRecord");
+         Element name1 = new Element("name");
+         Element rank1 = new Element("teamRating");
+         Element td1 = new Element("touchDowns");
+         Element bh1 = new Element("badlyHurt");
+         Element name2 = new Element("name");
+         Element rank2 = new Element("teamRating");
+         Element td2 = new Element("touchDowns");
+         Element bh2 = new Element("badlyHurt");
 
-        name1.setText(_rounds.get(i)._matchs.get(j)._coach1._name);
-        name2.setText(_rounds.get(i)._matchs.get(j)._coach2._name);
-        td1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Touchdowns")._value1));
-        td2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Touchdowns")._value2));
-        bh1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Sorties")._value1));
-        bh2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Sorties")._value2));
-        rank1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach1._rank));
-        rank2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach2._rank));
+         name1.setText(_rounds.get(i)._matchs.get(j)._coach1._name);
+         name2.setText(_rounds.get(i)._matchs.get(j)._coach2._name);
+         td1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Touchdowns")._value1));
+         td2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Touchdowns")._value2));
+         bh1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Sorties")._value1));
+         bh2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._values.get("Sorties")._value2));
+         rank1.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach1._rank));
+         rank2.setText(Integer.toString(_rounds.get(i)._matchs.get(j)._coach2._rank));
 
-        playerRecord1.addContent(name1);
-        playerRecord1.addContent(td1);
-        playerRecord1.addContent(bh1);
-        playerRecord1.addContent(rank1);
+         playerRecord1.addContent(name1);
+         playerRecord1.addContent(td1);
+         playerRecord1.addContent(bh1);
+         playerRecord1.addContent(rank1);
 
-        playerRecord2.addContent(name2);
-        playerRecord2.addContent(td2);
-        playerRecord2.addContent(bh2);
-        playerRecord2.addContent(rank2);
+         playerRecord2.addContent(name2);
+         playerRecord2.addContent(td2);
+         playerRecord2.addContent(bh2);
+         playerRecord2.addContent(rank2);
 
-        game.addContent(timeStamp);
-        game.addContent(playerRecord1);
-        game.addContent(playerRecord2);
-        document.addContent(game);
+         game.addContent(timeStamp);
+         game.addContent(playerRecord1);
+         game.addContent(playerRecord2);
+         document.addContent(game);
 
-        }
-        }
-        }
+         }
+         }
+         }
 
-        try {
-        Format f = Format.getPrettyFormat();
-        XMLOutputter sortie = new XMLOutputter(f);
-        sortie.output(document, new FileOutputStream(file));
+         try {
+         Format f = Format.getPrettyFormat();
+         XMLOutputter sortie = new XMLOutputter(f);
+         sortie.output(document, new FileOutputStream(file));
 
-        } catch (FileNotFoundException e) {
-        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+         } catch (FileNotFoundException e) {
+         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
 
-        } catch (IOException e) {
-        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+         } catch (IOException e) {
+         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
 
-        }*/
+         }*/
     }
 
     protected void LoadXMLv2(Element Root) {
@@ -1271,7 +1271,7 @@ public class Tournament {
     }
 
     public Vector<Coach> GetActiveCoaches() {
-        Vector<Coach> v=new Vector<Coach>();
+        Vector<Coach> v = new Vector<Coach>();
 
         for (int i = 0; i < _coachs.size(); i++) {
             if (_coachs.get(i)._active) {
@@ -1293,8 +1293,8 @@ public class Tournament {
         if (!_params._teamTournament) {
 
             int nb_coach = GetActiveCoachNumber();
-            if (nb_coach % 2>0) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(),"Nombre impair de coach actifs","Erreur de génération",JOptionPane.WARNING_MESSAGE);
+            if (nb_coach % 2 > 0) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Nombre impair de coach actifs", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
             } else {
                 if (choice == 2) {
                     Vector<Coach> coachs = new Vector<Coach>(GetActiveCoaches());
@@ -1411,11 +1411,11 @@ public class Tournament {
                         }
 
                         /*  for (int i = 0; i < shuffle.size() / 2; i++) {
-                        Match m = new Match();
-                        m._coach1 = shuffle.get(2 * i);
-                        m._coach2 = shuffle.get(2 * i + 1);
-                        r._matchs.add(m);
-                        }*/
+                         Match m = new Match();
+                         m._coach1 = shuffle.get(2 * i);
+                         m._coach2 = shuffle.get(2 * i + 1);
+                         r._matchs.add(m);
+                         }*/
                         counter++;
                     }
 
@@ -1506,11 +1506,9 @@ public class Tournament {
             /**
              * First check the number of active players
              */
-            for (int i=0; i<_teams.size(); i++ )
-            {
-                if (_teams.get(i).getActivePlayerNumber()!=_params._teamMatesNumber)
-                {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(),"Mauvais nombre de joueurs actif pour l'équipe "+_teams.get(i)._name);
+            for (int i = 0; i < _teams.size(); i++) {
+                if (_teams.get(i).getActivePlayerNumber() != _params._teamMatesNumber) {
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Mauvais nombre de joueurs actif pour l'équipe " + _teams.get(i)._name);
                     return;
                 }
             }
@@ -1574,7 +1572,7 @@ public class Tournament {
                         < teams1.size(); i++) {
                     Team team1 = teams1.get(i);
                     Team team2 = teams2.get(i);
-                    Vector<Coach> coachs1=team1.getActivePlayers();
+                    Vector<Coach> coachs1 = team1.getActivePlayers();
                     Vector<Coach> shuffle2 = new Vector<Coach>(team2.getActivePlayers());
                     if (choice == 0) /* Aléatoire */ {
                         Collections.shuffle(shuffle2);

@@ -36,7 +36,7 @@ public class Roster {
     public boolean _igor;
     public boolean _wizard;
     /*
-     * No mercenary
+     * No mercenary ?
      */
     public Vector<StarPlayer> _champions;
 }

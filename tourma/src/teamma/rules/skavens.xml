@@ -44,7 +44,7 @@ and open the template in the editor.
             <agility>3</agility>
             <armor>7</armor>
             <skills>
-                <skill>Sure hands</skill>
+                <skill>Sure Hands</skill>
                 <skill>Pass</skill>
             </skills>
             <cost>70000</cost>
@@ -108,7 +108,7 @@ and open the template in the editor.
             <skills>
                 <skill>Loner</skill>
                 <skill>Wild Animal</skill>
-                <skill>Presensile Tail</skill>
+                <skill>Prehensile Tail</skill>
                 <skill>Frenzy</skill>
                 <skill>Mighty Blow</skill>
             </skills>

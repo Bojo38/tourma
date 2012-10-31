@@ -41,8 +41,8 @@ and open the template in the editor.
             <skill>Hail Mary Pass</skill>
             <skill>Pass</skill>
             <skill>Secret Weapon</skill>
-            <skill>Strong arm</skill>
-            <skill>Sure Hards</skill>
+            <skill>Strong Arm</skill>
+            <skill>Sure Hands</skill>
             <skill>Thick Skull</skill>
         </skills>
         <cost>60000</cost>
@@ -59,7 +59,7 @@ and open the template in the editor.
         <skills>
             <skill>Accurate</skill>
             <skill>Block</skill>
-            <skill>Bomber</skill>
+            <skill>Bombardier</skill>
             <skill>Secret Weapon</skill>
             <skill>Loner</skill>
             <skill>Thick Skull</skill>
@@ -90,7 +90,7 @@ and open the template in the editor.
     
     <starplayer>
         <name>Boomer Dribblesnot</name>
-        <position>Bomber</position>
+        <position>Bombardier</position>
         <movement>6</movement>
         <strength>2</strength>
         <agility>3</agility>
@@ -98,7 +98,7 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Accurate</skill>
-            <skill>Bomber</skill>
+            <skill>Bombardier</skill>
             <skill>Dodge</skill>
             <skill>Stunty</skill>
             <skill>Right Stuff</skill>
@@ -160,7 +160,7 @@ and open the template in the editor.
             <skill>Loner</skill>
             <skill>Diving Catch</skill>
             <skill>Hail Mary Pass</skill>
-            <skill>Kick Off Return</skill>
+            <skill>Kick-off Return</skill>
             <skill>Pass Block</skill>
             <skill>Kick</skill>
         </skills>
@@ -181,7 +181,7 @@ and open the template in the editor.
             <skill>Loner</skill>
             <skill>Pass Block</skill>
             <skill>Dodge</skill>
-            <skill>Nerves Of Steel</skill>
+            <skill>Nerves of Steel</skill>
             <skill>Catch</skill>
             <skill>Hypnotic Gaze</skill>
         </skills>
@@ -204,7 +204,7 @@ and open the template in the editor.
             <skill>Ball And Chain</skill>
             <skill>Disturbing Presence</skill>
             <skill>Foul Appearance</skill>
-            <skill>No Arm</skill>
+            <skill>No Hands</skill>
             <skill>Secret Weapon</skill>
         </skills>
         <cost>80000</cost>
@@ -222,7 +222,7 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Ball And Chain</skill>
-            <skill>No Arm</skill>
+            <skill>No Hands</skill>
             <skill>Secret Weapon</skill>
             <skill>Mighty Blow</skill>
             <skill>Stunty</skill>
@@ -241,8 +241,8 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Block</skill>
-            <skill>Claws</skill>
-            <skill>Juggernaught</skill>
+            <skill>Claw</skill>
+            <skill>Juggernaut</skill>
         </skills>
         <cost>200000</cost>
         <team>Skavens</team>
@@ -266,7 +266,7 @@ and open the template in the editor.
         <cost>310000</cost>
         <team>Chaos</team>
         <team>Chaos Dwarves</team>
-        <team>Nurlge's Rotters</team>
+        <team>Nurgle's Rotters</team>
         <team>Khorne's Dameons</team>
     </starplayer>
     
@@ -421,7 +421,7 @@ and open the template in the editor.
             <skill>Sure Feet</skill>
             <skill>Break Tackle</skill>
             <skill>Sprint</skill>
-            <skill>Juggernaught</skill>
+            <skill>Juggernaut</skill>
         </skills>
         <cost>330000</cost>
         <team>Chaos Dwarves</team>
@@ -457,7 +457,7 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Mighty Blow</skill>
-            <skill>Claws</skill>
+            <skill>Claw</skill>
             <skill>Frenzy</skill>
             <skill>Disturbing Presence</skill>
             <skill>Regeneration</skill>
@@ -497,7 +497,7 @@ and open the template in the editor.
             <skill>Catch</skill>
             <skill>Dodge</skill>
             <skill>Regeneration</skill>
-            <skill>Nerves Of Steel</skill>
+            <skill>Nerves of Steel</skill>
         </skills>
         <cost>130000</cost>
         <team>Khemris</team>
@@ -513,8 +513,8 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Accurate</skill>
-            <skill>Dump Off</skill>
-            <skill>Nerves Of Steel</skill>
+            <skill>Dump-Off</skill>
+            <skill>Nerves of Steel</skill>
             <skill>Pass</skill>
             <skill>Regeneration</skill>
             <skill>Sure Hands</skill>
@@ -674,7 +674,7 @@ and open the template in the editor.
         <team>Skavens</team>
         <team>Slanns</team>
         <team>Underworld</team>
-        <team>Vampire</team>
+        <team>Vampires</team>
         <team>Wood Elves</team>
         <team>Khorne's Dameons</team>
     </starplayer>
@@ -714,7 +714,7 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
             <skill>Strong Arm</skill>
             <skill>Throw Team-Mate</skill>
-            <skill>Nerves Of Steel</skill>
+            <skill>Nerves of Steel</skill>
         </skills>
         <cost>290000</cost>
         <team>Nurgle's Rotters</team>
@@ -766,7 +766,7 @@ and open the template in the editor.
             <skill>Loner</skill>
             <skill>Block</skill>
             <skill>Dodge</skill>
-            <skill>Nerves Of Steel</skill>
+            <skill>Nerves of Steel</skill>
             <skill>Stunty</skill>
             <skill>Right Stuff</skill>
         </skills>
@@ -786,9 +786,9 @@ and open the template in the editor.
             <skill>Catch</skill>
             <skill>Diving Catch</skill>
             <skill>Fend</skill>
-            <skill>Kick Of Return</skill>
+            <skill>Kick-off Return</skill>
             <skill>Leap</skill>
-            <skill>Nerves Of Steel</skill>
+            <skill>Nerves of Steel</skill>
             <skill>Very Long Legs</skill>
         </skills>
         <cost>250000</cost>
@@ -845,7 +845,7 @@ and open the template in the editor.
             <skill>Dodge</skill>
             <skill>Side Step</skill>
             <skill>Stab</skill>
-            <skill>Sneaky Gits</skill>
+            <skill>Sneaky Git</skill>
         </skills>
         <cost>200000</cost>
         <team>Chaos Dwarves</team>
@@ -862,7 +862,7 @@ and open the template in the editor.
             <skill>Dodge</skill>
             <skill>Frenzy</skill>
             <skill>Jump Up</skill>
-            <skill>Juggernaught</skill>
+            <skill>Juggernaut</skill>
             <skill>Leap</skill>
         </skills>
         <cost>250000</cost>
@@ -904,7 +904,7 @@ and open the template in the editor.
             <skill>Strip Ball</skill>
             <skill>Block</skill>
             <skill>Break Tackle</skill>
-            <skill>Juggernaught</skill>
+            <skill>Juggernaut</skill>
             <skill>Regeneration</skill>
         </skills>
         <cost>220000</cost>
@@ -979,7 +979,7 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Fend</skill>
-            <skill>Kick Off Return</skill>
+            <skill>Kick-off Return</skill>
             <skill>Pass</skill>
             <skill>Safe Throw</skill>
             <skill>Sure Hands</skill>
@@ -1048,7 +1048,7 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Catch</skill>
-            <skill>Claws</skill>
+            <skill>Claw</skill>
             <skill>Frenzy</skill>
             <skill>Wrestle</skill>
             <skill>Regeneration</skill>
@@ -1097,8 +1097,8 @@ and open the template in the editor.
         <team>Humans</team>
         <team>Dwarves</team>
         <team>Norses</team>
-        <team>Halflins</team>
-        <team>High Elfes</team>
+        <team>Halflings</team>
+        <team>High Elves</team>
         <team>Wood Elves</team>
     </starplayer>
     <starplayer>
@@ -1138,18 +1138,5 @@ and open the template in the editor.
         <team>Chaos Dwarves</team>
         <team>Khorne's Dameons</team>
     </starplayer>
-    <starplayer>
-        <name></name>
-        <position></position>
-        <movement></movement>
-        <strength></strength>
-        <agility></agility>
-        <armor></armor>
-        <skills>
-            <skill>
-            </skill>
-        </skills>
-        <cost></cost>
-        <team></team>
-    </starplayer>    
+   
 </StarPlayerList>

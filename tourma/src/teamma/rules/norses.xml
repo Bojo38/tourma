@@ -25,9 +25,9 @@ and open the template in the editor.
             <skills>
                 <skill>Loner</skill>
                 <skill>Wild Animal</skill>
-                <skill>Claws</skill>
+                <skill>Claw</skill>
                 <skill>Frenzy</skill>
-                <skill>Disturbing presence</skill>
+                <skill>Disturbing Presence</skill>
             </skills>
             <cost>140000</cost>
             <single>                
@@ -68,7 +68,7 @@ and open the template in the editor.
             <armor>7</armor>
             <skills>
                 <skill>Block</skill>
-                <skill>Jump-Up</skill>
+                <skill>Jump Up</skill>
                 <skill>Frenzy</skill>
             </skills>
             <cost>90000</cost>

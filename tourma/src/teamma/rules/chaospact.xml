@@ -28,7 +28,7 @@ and open the template in the editor.
                 <skill>Always Hungry</skill>
                 <skill>Mighty Blow</skill>
                 <skill>Regeneration</skill>
-                <skill>Throw team-mate</skill>
+                <skill>Throw Team-Mate</skill>
             </skills>
             <cost>110000</cost>
             <single>
@@ -53,7 +53,7 @@ and open the template in the editor.
                 <skill>Bone Head</skill>
                 <skill>Mighty Blow</skill>
                 <skill>Thick Skull</skill>
-                <skill>Thrown Team Mate</skill>
+                <skill>Throw Team-Mate</skill>
             </skills>
             <cost>140000</cost>
             <single>
@@ -77,7 +77,7 @@ and open the template in the editor.
                 <skill>Loner</skill>
                 <skill>Wild Animal</skill>
                 <skill>Mighty Blow</skill>
-                <skill>Claws</skill>
+                <skill>Claw</skill>
             </skills>
             <cost>150000</cost>
             <single>

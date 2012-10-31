@@ -13,10 +13,12 @@ import java.util.Vector;
 public class SkillType {
 
     public String _name;
+    public String _accronym;
     public Vector<Skill> _skills;
 
-    public SkillType(String name) {
+    public SkillType(String name,String accronym) {
         _skills = new Vector<Skill>();
         _name = name;
+        _accronym=accronym;
     }
 }

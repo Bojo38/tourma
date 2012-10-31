@@ -25,9 +25,9 @@ and open the template in the editor.
             <skills>
                 <skill>Loner</skill>
                 <skill>Wild Animal</skill>
-                <skill>Juggernaught</skill>
+                <skill>Juggernaut</skill>
                 <skill>Frenzy</skill>
-                <skill>Claws</skill>
+                <skill>Claw</skill>
                 <skill>Regeneration</skill>
                 <skill>Horns</skill>
             </skills>
@@ -51,7 +51,7 @@ and open the template in the editor.
             <skills>
                 <skill>Horns</skill>
                 <skill>Frenzy</skill>
-                <skill>Juggernaught</skill>
+                <skill>Juggernaut</skill>
             </skills>
             <cost>90000</cost>
             <single>
@@ -72,7 +72,7 @@ and open the template in the editor.
             <armor>7</armor>
             <skills>
                 <skill>Horns</skill>
-                <skill>Juggernaught</skill>
+                <skill>Juggernaut</skill>
                 <skill>Regeneration</skill>
             </skills>
             <cost>80000</cost>

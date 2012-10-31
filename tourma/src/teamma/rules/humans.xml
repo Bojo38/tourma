@@ -8,7 +8,7 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>Humabs</name>
+    <name>Humans</name>
     <reroll>50000</reroll>
     <apothecary>true</apothecary>
     <chef>300000</chef>
@@ -110,7 +110,7 @@ and open the template in the editor.
                 <skill>Bone Head</skill>
                 <skill>Mighty Blow</skill>
                 <skill>Thick Skull</skill>
-                <skill>Thrown Team Mate</skill>
+                <skill>Throw Team-Mate</skill>
             </skills>
             <cost>140000</cost>
             <single>

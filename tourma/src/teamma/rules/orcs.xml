@@ -103,7 +103,7 @@ and open the template in the editor.
             <agility>3</agility>
             <armor>8</armor>
             <skills>
-                <skill>Sure hands</skill>
+                <skill>Sure Hands</skill>
                 <skill>Pass</skill>
             </skills>
             <cost>70000</cost>
@@ -129,7 +129,7 @@ and open the template in the editor.
                 <skill>Always Hungry</skill>
                 <skill>Mighty Blow</skill>
                 <skill>Regeneration</skill>
-                <skill>Throw team-mate</skill>
+                <skill>Throw Team-Mate</skill>
             </skills>
             <cost>110000</cost>
             <single>

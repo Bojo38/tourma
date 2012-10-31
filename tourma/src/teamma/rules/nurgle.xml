@@ -8,7 +8,7 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>Nurlge's Rotters</name>
+    <name>Nurgle's Rotters</name>
     <reroll>70000</reroll>
     <apothecary>false</apothecary>
     <chef>300000</chef>
@@ -23,8 +23,8 @@ and open the template in the editor.
             <agility>2</agility>
             <armor>9</armor>
             <skills>
-                <skill>Distrurbing Presence</skill>
-                <skill>Fouling Appearance</skill>
+                <skill>Disturbing Presence</skill>
+                <skill>Foul Appearance</skill>
                 <skill>Nurgle's Rot</skill>
                 <skill>Regeneration</skill>
             </skills>
@@ -70,8 +70,8 @@ and open the template in the editor.
             <agility>1</agility>
             <armor>9</armor>
             <skills>
-                <skill>Distrurbing Presence</skill>
-                <skill>Fouling Appearance</skill>
+                <skill>Disturbing Presence</skill>
+                <skill>Foul Appearance</skill>
                 <skill>Nurgle's Rot</skill>
                 <skill>Regeneration</skill>
                 <skill>Loner</skill>

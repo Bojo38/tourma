@@ -50,7 +50,7 @@ and open the template in the editor.
                 <skill>Always Hungry</skill>
                 <skill>Mighty Blow</skill>
                 <skill>Regeneration</skill>
-                <skill>Throw team-mate</skill>
+                <skill>Throw Team-Mate</skill>
             </skills>
             <cost>110000</cost>
             <single>
@@ -64,15 +64,15 @@ and open the template in the editor.
         </playerType>
         <playerType>
             <limit>1</limit>
-            <position>Bomber</position>
+            <position>Bombardier</position>
             <movement>6</movement>
             <strength>2</strength>
             <agility>3</agility>
             <armor>7</armor>
             <skills>
                 <skill>Dodge</skill>
-                <skill>No Arm</skill>
-                <skill>Bomber</skill>
+                <skill>No Hands</skill>
+                <skill>Bombardier</skill>
                 <skill>Secret Weapon</skill>
             </skills>
             <cost>40000</cost>
@@ -95,7 +95,7 @@ and open the template in the editor.
             <skills>
                 <skill>Dodge</skill>
                 <skill>Leap</skill>
-                <skill>Very long legs</skill>
+                <skill>Very Long Legs</skill>
                 <skill>Stunty</skill>
             </skills>
             <cost>70000</cost>
@@ -117,7 +117,7 @@ and open the template in the editor.
             <armor>7</armor>
             <skills>
                 <skill>Chainsaw</skill>
-                <skill>Secret weapon</skill>
+                <skill>Secret Weapon</skill>
                 <skill>Stunty</skill>
             </skills>
             <cost>40000</cost>
@@ -139,9 +139,9 @@ and open the template in the editor.
             <armor>7</armor>
             <skills>
                 <skill>Stunty</skill>
-                <skill>No arm</skill>
-                <skill>Secret weapon</skill>
-                <skill>Ball and chain</skill>
+                <skill>No Hands</skill>
+                <skill>Secret Weapon</skill>
+                <skill>Ball And Chain</skill>
             </skills>
             <cost>70000</cost>
             <single>

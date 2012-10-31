@@ -106,13 +106,13 @@ and open the template in the editor.
             <agility>1</agility>
             <armor>10</armor>
             <skills>
-                  <skill>Take root</skill>
+                  <skill>Take Roots</skill>
                   <skill>Loner</skill>
-                  <skill>Stand firm</skill>
+                  <skill>Stand Firm</skill>
                   <skill>Mighty Blow</skill>
-                  <skill>Thick skull</skill>
-                  <skill>Strong arm</skill>
-                  <skill>Throw team-mate</skill>
+                  <skill>Thick Skull</skill>
+                  <skill>Strong Arm</skill>
+                  <skill>Throw Team-Mate</skill>
             </skills>
             <cost>120000</cost>
             <single>

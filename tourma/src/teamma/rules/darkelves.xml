@@ -65,7 +65,7 @@ and open the template in the editor.
             <agility>4</agility>
             <armor>7</armor>
             <skills>
-                <skill>Dump Off</skill>
+                <skill>Dump-Off</skill>
             </skills>
             <cost>80000</cost>
             <single>

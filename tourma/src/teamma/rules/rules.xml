@@ -21,11 +21,11 @@
         <team>nurgle.xml</team>
         <team>ogres.xml</team>
         <team>orcs.xml</team>
-        <team>skavens</team>
+        <team>skavens.xml</team>
         <team>slanns.xml</team>
         <team>undeads.xml</team>
         <team>underworld.xml</team>
-        <team>vampire.xml</team>
+        <team>vampires.xml</team>
         <team>woodelves.xml</team>
     </teams>
     <starplayers>starplayers.xml</starplayers>    
