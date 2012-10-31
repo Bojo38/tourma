@@ -39,4 +39,10 @@ public class Roster {
      * No mercenary ?
      */
     public Vector<StarPlayer> _champions;
+    
+    public Roster()
+    {
+        _players=new Vector<Player>();
+        _champions=new Vector<StarPlayer>();
+    }
 }

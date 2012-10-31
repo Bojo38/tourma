@@ -4,11 +4,26 @@
  */
 package teamma.views;
 
+import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import teamma.data.Player;
+import teamma.data.PlayerType;
+import teamma.data.Roster;
+import teamma.data.lrb;
+import teamma.data.RosterType;
+import teamma.tableModel.mjtTeamPlayers;
+
 /**
  *
  * @author WFMJ7631
  */
 public class JdgRoster extends javax.swing.JDialog {
+
+    Roster _data = null;
 
     /**
      * Creates new form JdgRoster
@@ -16,6 +31,24 @@ public class JdgRoster extends javax.swing.JDialog {
     public JdgRoster(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        _data = new Roster();
+
+        this.setPreferredSize(new Dimension(800, 600));
+        pack();
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gs = ge.getDefaultScreenDevice();
+        DisplayMode dmode = gs.getDisplayMode();
+
+        this.setSize(800, 600);
+
+        if (dmode != null) {
+            int screenWidth = dmode.getWidth();
+            int screenHeight = dmode.getHeight();
+            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        }
+
+        update();
     }
 
     /**
@@ -27,23 +60,375 @@ public class JdgRoster extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jpnTitle = new javax.swing.JPanel();
+        jlbTeamName = new javax.swing.JLabel();
+        jlbRosterType = new javax.swing.JLabel();
+        jlbCoachName = new javax.swing.JLabel();
+        jpnCenter = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtbPlayers = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jbtAdd = new javax.swing.JButton();
+        jbtRemove = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jbtAdd1 = new javax.swing.JButton();
+        jbtRemove1 = new javax.swing.JButton();
+        jpnSouth = new javax.swing.JPanel();
+        jpnSouthWest = new javax.swing.JPanel();
+        jlbInducements = new javax.swing.JLabel();
+        jtbInducements = new javax.swing.JScrollPane();
+        jTable6 = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jlbInducements1 = new javax.swing.JLabel();
+        jtbGoods = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        jlbIcon = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jLabel1.setText("jLabel1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new org.jdesktop.swingx.VerticalLayout());
+
+        jpnTitle.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jpnTitle.setLayout(new java.awt.GridLayout(1, 3, 5, 5));
+
+        jlbTeamName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlbTeamName.setText("TeamName");
+        jpnTitle.add(jlbTeamName);
+
+        jlbRosterType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbRosterType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbRosterType.setText("Roster: Unknown");
+        jlbRosterType.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbRosterTypeMouseClicked(evt);
+            }
+        });
+        jpnTitle.add(jlbRosterType);
+
+        jlbCoachName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbCoachName.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbCoachName.setText("Coach: Unknown");
+        jpnTitle.add(jlbCoachName);
+
+        getContentPane().add(jpnTitle);
+
+        jpnCenter.setMinimumSize(new java.awt.Dimension(640, 200));
+        jpnCenter.setPreferredSize(new java.awt.Dimension(320, 400));
+        jpnCenter.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Players"));
+        jPanel1.setMinimumSize(new java.awt.Dimension(640, 100));
+        jPanel1.setPreferredSize(new java.awt.Dimension(120, 150));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 100));
+
+        jtbPlayers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbPlayers.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbPlayers.setPreferredSize(new java.awt.Dimension(640, 64));
+        jScrollPane1.setViewportView(jtbPlayers);
+
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(80, 100));
+        jPanel2.setLayout(new org.jdesktop.swingx.VerticalLayout());
+
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtAdd.setText(bundle.getString("Add")); // NOI18N
+        jbtAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtAdd.setPreferredSize(new java.awt.Dimension(60, 60));
+        jbtAdd.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jbtAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtAdd);
+
+        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemove.setText(bundle.getString("Remove")); // NOI18N
+        jbtRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtRemove.setPreferredSize(new java.awt.Dimension(60, 60));
+        jbtRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtRemove);
+
+        jPanel1.add(jPanel2, java.awt.BorderLayout.WEST);
+
+        jpnCenter.add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
+        jPanel4.setPreferredSize(new java.awt.Dimension(120, 150));
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable3);
+
+        jPanel4.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jPanel5.setMinimumSize(new java.awt.Dimension(120, 100));
+        jPanel5.setPreferredSize(new java.awt.Dimension(120, 100));
+        jPanel5.setLayout(new org.jdesktop.swingx.VerticalLayout());
+
+        jbtAdd1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd1.setText(bundle.getString("Add")); // NOI18N
+        jbtAdd1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAdd1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtAdd1);
+
+        jbtRemove1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemove1.setText(bundle.getString("Remove")); // NOI18N
+        jbtRemove1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemove1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jbtRemove1);
+
+        jPanel4.add(jPanel5, java.awt.BorderLayout.WEST);
+
+        jpnCenter.add(jPanel4, java.awt.BorderLayout.SOUTH);
+
+        getContentPane().add(jpnCenter);
+
+        jpnSouth.setPreferredSize(new java.awt.Dimension(640, 300));
+        jpnSouth.setLayout(new java.awt.BorderLayout());
+
+        jpnSouthWest.setPreferredSize(new java.awt.Dimension(300, 300));
+        jpnSouthWest.setLayout(new java.awt.BorderLayout());
+
+        jlbInducements.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlbInducements.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbInducements.setText(bundle.getString("Primes de match")); // NOI18N
+        jpnSouthWest.add(jlbInducements, java.awt.BorderLayout.NORTH);
+
+        jTable6.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbInducements.setViewportView(jTable6);
+
+        jpnSouthWest.add(jtbInducements, java.awt.BorderLayout.CENTER);
+
+        jpnSouth.add(jpnSouthWest, java.awt.BorderLayout.LINE_START);
+
+        jPanel3.setPreferredSize(new java.awt.Dimension(300, 150));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jlbInducements1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlbInducements1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbInducements1.setText(bundle.getString("Biens d'équipe")); // NOI18N
+        jlbInducements1.setFocusable(false);
+        jlbInducements1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel3.add(jlbInducements1, java.awt.BorderLayout.NORTH);
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbGoods.setViewportView(jTable4);
+
+        jPanel3.add(jtbGoods, java.awt.BorderLayout.CENTER);
+
+        jpnSouth.add(jPanel3, java.awt.BorderLayout.EAST);
+
+        jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/what.png"))); // NOI18N
+        jlbIcon.setPreferredSize(new java.awt.Dimension(150, 150));
+        jpnSouth.add(jlbIcon, java.awt.BorderLayout.CENTER);
+
+        jPanel6.setPreferredSize(new java.awt.Dimension(640, 30));
+
+        jButton1.setText("jButton1");
+        jPanel6.add(jButton1);
+
+        jButton2.setText("jButton1");
+        jPanel6.add(jButton2);
+
+        jpnSouth.add(jPanel6, java.awt.BorderLayout.SOUTH);
+
+        getContentPane().add(jpnSouth);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
+        if (_data._roster == null) {
+            JOptionPane.showMessageDialog(this, "Roster type not selected, please click on roster");
+        } else {
+            int i;
+            /**
+             * Build Avilable Positions
+             */
+            Vector<String> positions = new Vector<String>();
+            for (i = 0; i < _data._roster._player_types.size(); i++) {
+                PlayerType pt = _data._roster._player_types.get(i);
+                /*
+                 * Count the number of player possible
+                 */
+                int limit = pt._limit;
+                int j;
+                for (j = 0; j < _data._players.size(); j++) {
+                    if (_data._players.get(j)._playertype == pt) {
+                        limit--;
+                    }
+                }
+                if (limit > 0) {
+                    positions.add(pt._position);
+                }
+            }
+
+            String input = (String) JOptionPane.showInputDialog(this,
+                    "Choisissez le type de joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
+                    null, positions.toArray(), "Amazons");
+            PlayerType pt = _data._roster.getPlayerType(input);
+            Player p = new Player(pt);
+
+            _data._players.add(p);
+        }
+        update();
+    }//GEN-LAST:event_jbtAddActionPerformed
+
+    private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
+    }//GEN-LAST:event_jbtRemoveActionPerformed
+
+    private void jbtAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAdd1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtAdd1ActionPerformed
+
+    private void jbtRemove1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemove1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtRemove1ActionPerformed
+
+    private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
+
+        Vector<String> rosterlist = lrb.getLRB().getRosterTypeListAsString();
+        String input = (String) JOptionPane.showInputDialog(this,
+                "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
+                null, rosterlist.toArray(), "Amazons");
+        RosterType rt = lrb.getLRB().getRosterType(input);
+        if (rt != null) {
+            if (_data._roster != rt) {
+                _data._roster = rt;
+                _data._players.removeAllElements();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
+        }
+        update();
+
+    }//GEN-LAST:event_jlbRosterTypeMouseClicked
+
+    private void update() {
+        if (_data._roster != null) {
+            jlbRosterType.setText("Roster: " + _data._roster._name);
+        } else {
+            jlbRosterType.setText("Roster: Unknown");
+        }
+
+        jbtAdd.setEnabled(_data._champions.size() + _data._players.size() < 16);
+        jbtRemove.setEnabled(_data._players.size() > 0);
+
+        mjtTeamPlayers playersModel = new mjtTeamPlayers(_data._players);
+        jtbPlayers.setModel(playersModel);
+
+        jtbPlayers.setDefaultRenderer(String.class, playersModel);
+        jtbPlayers.setDefaultRenderer(Integer.class, playersModel);
+
+        jtbPlayers.getColumnModel().getColumn(0).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(1).setMinWidth(80);
+        jtbPlayers.getColumnModel().getColumn(2).setMinWidth(80);
+        jtbPlayers.getColumnModel().getColumn(3).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(4).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(5).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(6).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(7).setMinWidth(200);
+        jtbPlayers.getColumnModel().getColumn(8).setMinWidth(10);
+        jtbPlayers.getColumnModel().getColumn(9).setMinWidth(10);
+        jtbPlayers.getColumnModel().getColumn(10).setMinWidth(10);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTable6;
+    private javax.swing.JButton jbtAdd;
+    private javax.swing.JButton jbtAdd1;
+    private javax.swing.JButton jbtRemove;
+    private javax.swing.JButton jbtRemove1;
+    private javax.swing.JLabel jlbCoachName;
+    private javax.swing.JLabel jlbIcon;
+    private javax.swing.JLabel jlbInducements;
+    private javax.swing.JLabel jlbInducements1;
+    private javax.swing.JLabel jlbRosterType;
+    private javax.swing.JLabel jlbTeamName;
+    private javax.swing.JPanel jpnCenter;
+    private javax.swing.JPanel jpnSouth;
+    private javax.swing.JPanel jpnSouthWest;
+    private javax.swing.JPanel jpnTitle;
+    private javax.swing.JScrollPane jtbGoods;
+    private javax.swing.JScrollPane jtbInducements;
+    private javax.swing.JTable jtbPlayers;
     // End of variables declaration//GEN-END:variables
 }

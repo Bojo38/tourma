@@ -323,4 +323,16 @@ public class lrb {
         }
         return null;
     }
+    
+    public Vector<String> getRosterTypeListAsString()
+    {
+        int i;
+        Vector<String> res=new Vector<String>();
+        for (i=0; i<_rosterTypes.size(); i++)
+        {
+            res.add(_rosterTypes.get(i)._name);
+        }
+        
+        return res;
+    }
 }

@@ -28,4 +28,17 @@ public class RosterType {
         _available_starplayers=new Vector<StarPlayer>();
     }
     
+    public PlayerType getPlayerType(String name) {
+        int i;
+        for (i = 0; i < _player_types.size(); i++) {
+            PlayerType rt = _player_types.get(i);
+
+            if (name.equals(rt._position)) {
+                return rt;
+            }
+
+        }
+        return null;
+    }
+    
 }

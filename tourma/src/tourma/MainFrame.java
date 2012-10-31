@@ -35,6 +35,7 @@ import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
 import teamma.data.lrb;
+import teamma.views.JdgRoster;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
@@ -513,6 +514,8 @@ public class MainFrame extends javax.swing.JFrame {
         jmiExit = new javax.swing.JMenuItem();
         jmnFile1 = new javax.swing.JMenu();
         jmiEditrosters = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jmiEditTeam = new javax.swing.JMenuItem();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -1355,12 +1358,23 @@ public class MainFrame extends javax.swing.JFrame {
 
         jmiEditrosters.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
         jmiEditrosters.setText(bundle.getString("ChangeRosters")); // NOI18N
+        jmiEditrosters.setEnabled(false);
         jmiEditrosters.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiEditrostersActionPerformed(evt);
             }
         });
         jmnFile1.add(jmiEditrosters);
+        jmnFile1.add(jSeparator4);
+
+        jmiEditTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
+        jmiEditTeam.setText(bundle.getString("ChangeRosters")); // NOI18N
+        jmiEditTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditTeamActionPerformed(evt);
+            }
+        });
+        jmnFile1.add(jmiEditTeam);
 
         jMenuBar1.add(jmnFile1);
 
@@ -2056,6 +2070,11 @@ public class MainFrame extends javax.swing.JFrame {
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditrostersActionPerformed
 
+    private void jmiEditTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditTeamActionPerformed
+       JdgRoster jdg=new JdgRoster(this, true);
+       jdg.setVisible(true);
+    }//GEN-LAST:event_jmiEditTeamActionPerformed
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
@@ -2187,6 +2206,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddClan;
     private javax.swing.JButton jbtAddCriteria;
@@ -2233,6 +2253,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
     private javax.swing.JMenuItem jmiCharger;
+    private javax.swing.JMenuItem jmiEditTeam;
     private javax.swing.JMenuItem jmiEditrosters;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
