@@ -8,14 +8,19 @@ import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Vector;
+import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
 import teamma.data.Player;
 import teamma.data.PlayerType;
 import teamma.data.Roster;
+import teamma.data.Skill;
 import teamma.data.lrb;
 import teamma.data.RosterType;
 import teamma.tableModel.mjtTeamPlayers;
+import tourma.MainFrame;
 
 /**
  *
@@ -33,14 +38,14 @@ public class JdgRoster extends javax.swing.JDialog {
         initComponents();
         _data = new Roster();
 
-        this.setPreferredSize(new Dimension(800, 600));
+        this.setPreferredSize(new Dimension(1024, 768));
         pack();
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
         DisplayMode dmode = gs.getDisplayMode();
 
-        this.setSize(800, 600);
+        this.setSize(1024, 768);
 
         if (dmode != null) {
             int screenWidth = dmode.getWidth();
@@ -49,6 +54,8 @@ public class JdgRoster extends javax.swing.JDialog {
         }
 
         update();
+        jbtAddSkill.setEnabled(false);
+        jbtRemoveSkill.setEnabled(false);
     }
 
     /**
@@ -66,18 +73,20 @@ public class JdgRoster extends javax.swing.JDialog {
         jlbRosterType = new javax.swing.JLabel();
         jlbCoachName = new javax.swing.JLabel();
         jpnCenter = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jxtpCenter = new org.jdesktop.swingx.JXTitledPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbPlayers = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jbtAdd = new javax.swing.JButton();
         jbtRemove = new javax.swing.JButton();
+        jbtAddSkill = new javax.swing.JButton();
+        jbtRemoveSkill = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        jbtAdd1 = new javax.swing.JButton();
-        jbtRemove1 = new javax.swing.JButton();
+        jbtAddStar = new javax.swing.JButton();
+        jbtRemoveStar = new javax.swing.JButton();
         jpnSouth = new javax.swing.JPanel();
         jpnSouthWest = new javax.swing.JPanel();
         jlbInducements = new javax.swing.JLabel();
@@ -87,15 +96,15 @@ public class JdgRoster extends javax.swing.JDialog {
         jlbInducements1 = new javax.swing.JLabel();
         jtbGoods = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
-        jlbIcon = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbtOK = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jlbIcon = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new org.jdesktop.swingx.VerticalLayout());
+        setPreferredSize(new java.awt.Dimension(1024, 724));
 
         jpnTitle.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jpnTitle.setLayout(new java.awt.GridLayout(1, 3, 5, 5));
@@ -119,16 +128,16 @@ public class JdgRoster extends javax.swing.JDialog {
         jlbCoachName.setText("Coach: Unknown");
         jpnTitle.add(jlbCoachName);
 
-        getContentPane().add(jpnTitle);
+        getContentPane().add(jpnTitle, java.awt.BorderLayout.NORTH);
 
         jpnCenter.setMinimumSize(new java.awt.Dimension(640, 200));
-        jpnCenter.setPreferredSize(new java.awt.Dimension(320, 400));
+        jpnCenter.setPreferredSize(new java.awt.Dimension(320, 450));
         jpnCenter.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Players"));
-        jPanel1.setMinimumSize(new java.awt.Dimension(640, 100));
-        jPanel1.setPreferredSize(new java.awt.Dimension(120, 150));
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jxtpCenter.setTitle("Players");
+        jxtpCenter.setName("Players"); // NOI18N
+        jxtpCenter.setPreferredSize(new java.awt.Dimension(800, 400));
+        jxtpCenter.getContentContainer().setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 100));
 
@@ -144,19 +153,24 @@ public class JdgRoster extends javax.swing.JDialog {
             }
         ));
         jtbPlayers.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jtbPlayers.setPreferredSize(new java.awt.Dimension(640, 64));
+        jtbPlayers.setPreferredSize(null);
+        jtbPlayers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbPlayersMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtbPlayers);
 
-        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jxtpCenter.getContentContainer().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(80, 100));
+        jPanel2.setPreferredSize(new java.awt.Dimension(100, 100));
         jPanel2.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jbtAdd.setText(bundle.getString("Add")); // NOI18N
+        jbtAdd.setText(bundle.getString("Player")); // NOI18N
         jbtAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtAdd.setPreferredSize(new java.awt.Dimension(60, 60));
+        jbtAdd.setPreferredSize(new java.awt.Dimension(100, 60));
         jbtAdd.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jbtAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -167,9 +181,9 @@ public class JdgRoster extends javax.swing.JDialog {
         jPanel2.add(jbtAdd);
 
         jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemove.setText(bundle.getString("Remove")); // NOI18N
+        jbtRemove.setText(bundle.getString("Player")); // NOI18N
         jbtRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtRemove.setPreferredSize(new java.awt.Dimension(60, 60));
+        jbtRemove.setPreferredSize(new java.awt.Dimension(100, 60));
         jbtRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,12 +192,37 @@ public class JdgRoster extends javax.swing.JDialog {
         });
         jPanel2.add(jbtRemove);
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.WEST);
+        jbtAddSkill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddSkill.setText(bundle.getString("Skill")); // NOI18N
+        jbtAddSkill.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtAddSkill.setPreferredSize(new java.awt.Dimension(100, 60));
+        jbtAddSkill.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jbtAddSkill.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtAddSkill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddSkillActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtAddSkill);
 
-        jpnCenter.add(jPanel1, java.awt.BorderLayout.CENTER);
+        jbtRemoveSkill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveSkill.setText(bundle.getString("Skill")); // NOI18N
+        jbtRemoveSkill.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtRemoveSkill.setPreferredSize(new java.awt.Dimension(100, 60));
+        jbtRemoveSkill.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtRemoveSkill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveSkillActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtRemoveSkill);
+
+        jxtpCenter.getContentContainer().add(jPanel2, java.awt.BorderLayout.WEST);
+
+        jpnCenter.add(jxtpCenter, java.awt.BorderLayout.CENTER);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
-        jPanel4.setPreferredSize(new java.awt.Dimension(120, 150));
+        jPanel4.setPreferredSize(new java.awt.Dimension(160, 150));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -202,34 +241,38 @@ public class JdgRoster extends javax.swing.JDialog {
         jPanel4.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jPanel5.setMinimumSize(new java.awt.Dimension(120, 100));
-        jPanel5.setPreferredSize(new java.awt.Dimension(120, 100));
+        jPanel5.setPreferredSize(new java.awt.Dimension(100, 160));
         jPanel5.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
-        jbtAdd1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAdd1.setText(bundle.getString("Add")); // NOI18N
-        jbtAdd1.addActionListener(new java.awt.event.ActionListener() {
+        jbtAddStar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddStar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtAddStar.setLabel(bundle.getString("Star")); // NOI18N
+        jbtAddStar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtAddStar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAdd1ActionPerformed(evt);
+                jbtAddStarActionPerformed(evt);
             }
         });
-        jPanel5.add(jbtAdd1);
+        jPanel5.add(jbtAddStar);
 
-        jbtRemove1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemove1.setText(bundle.getString("Remove")); // NOI18N
-        jbtRemove1.addActionListener(new java.awt.event.ActionListener() {
+        jbtRemoveStar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveStar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtRemoveStar.setLabel(bundle.getString("Star")); // NOI18N
+        jbtRemoveStar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtRemoveStar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRemove1ActionPerformed(evt);
+                jbtRemoveStarActionPerformed(evt);
             }
         });
-        jPanel5.add(jbtRemove1);
+        jPanel5.add(jbtRemoveStar);
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.WEST);
 
-        jpnCenter.add(jPanel4, java.awt.BorderLayout.SOUTH);
+        jpnCenter.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
-        getContentPane().add(jpnCenter);
+        getContentPane().add(jpnCenter, java.awt.BorderLayout.CENTER);
 
-        jpnSouth.setPreferredSize(new java.awt.Dimension(640, 300));
+        jpnSouth.setPreferredSize(new java.awt.Dimension(640, 200));
         jpnSouth.setLayout(new java.awt.BorderLayout());
 
         jpnSouthWest.setPreferredSize(new java.awt.Dimension(300, 300));
@@ -284,21 +327,20 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jpnSouth.add(jPanel3, java.awt.BorderLayout.EAST);
 
-        jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/what.png"))); // NOI18N
-        jlbIcon.setPreferredSize(new java.awt.Dimension(150, 150));
-        jpnSouth.add(jlbIcon, java.awt.BorderLayout.CENTER);
-
         jPanel6.setPreferredSize(new java.awt.Dimension(640, 30));
 
-        jButton1.setText("jButton1");
-        jPanel6.add(jButton1);
-
-        jButton2.setText("jButton1");
-        jPanel6.add(jButton2);
+        jbtOK.setText("OK");
+        jPanel6.add(jbtOK);
 
         jpnSouth.add(jPanel6, java.awt.BorderLayout.SOUTH);
 
-        getContentPane().add(jpnSouth);
+        jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/what.png"))); // NOI18N
+        jlbIcon.setPreferredSize(new java.awt.Dimension(150, 150));
+        jPanel7.add(jlbIcon);
+
+        jpnSouth.add(jPanel7, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jpnSouth, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -337,19 +379,28 @@ public class JdgRoster extends javax.swing.JDialog {
 
             _data._players.add(p);
         }
+
+
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
 
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
+        /* Get Selected line */
+        int selectedLine = jtbPlayers.getSelectedRow();
+        if (selectedLine > -1) {
+            _data._players.remove(selectedLine);
+            update();
+        }
+
     }//GEN-LAST:event_jbtRemoveActionPerformed
 
-    private void jbtAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAdd1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtAdd1ActionPerformed
+    private void jbtAddStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStarActionPerformed
+        
+    }//GEN-LAST:event_jbtAddStarActionPerformed
 
-    private void jbtRemove1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemove1ActionPerformed
+    private void jbtRemoveStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveStarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbtRemove1ActionPerformed
+    }//GEN-LAST:event_jbtRemoveStarActionPerformed
 
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
 
@@ -366,9 +417,61 @@ public class JdgRoster extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
         }
+        
+         jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/"+rt._image))); // NOI18N
         update();
 
     }//GEN-LAST:event_jlbRosterTypeMouseClicked
+
+    private void jbtRemoveSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveSkillActionPerformed
+        int index = jtbPlayers.getSelectedRow();
+        if (index > -1) {
+            Vector<String> skills = new Vector<String>();
+            Player p = _data._players.get(index);
+            if (p._skills.size() > 0) {
+                int i;
+                for (i = 0; i < p._skills.size(); i++) {
+                    Skill s = p._skills.get(i);
+                    skills.add(s._name);
+                }
+
+                Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(), "Select skill to remove", "Skill", JOptionPane.INFORMATION_MESSAGE, null, skills.toArray(), null);
+                if (choice != null) {
+                    
+                    for (i=0; i<p._skills.size(); i++)
+                    {
+                        if (p._skills.get(i)._name.equals(choice))
+                        {
+                            p._skills.remove(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        update();
+    }//GEN-LAST:event_jbtRemoveSkillActionPerformed
+
+    private void jbtAddSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddSkillActionPerformed
+        int index = jtbPlayers.getSelectedRow();
+        if (index > -1) {
+            JdgSelectSkill jdg = new JdgSelectSkill(MainFrame.getMainFrame(), true, _data._players.get(index));
+            jdg.setVisible(true);
+        }
+        update();
+    }//GEN-LAST:event_jbtAddSkillActionPerformed
+
+    private void jtbPlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbPlayersMouseClicked
+        jbtAddSkill.setEnabled(jtbPlayers.getSelectedRow() > -1);
+        boolean removable = false;
+        int i = jtbPlayers.getSelectedRow();
+        if (jtbPlayers.getSelectedRow() > -1) {
+            if (_data._players.get(jtbPlayers.getSelectedRow())._skills.size() > 0) {
+                removable = true;
+            }
+        }
+        jbtRemoveSkill.setEnabled(removable);
+    }//GEN-LAST:event_jtbPlayersMouseClicked
 
     private void update() {
         if (_data._roster != null) {
@@ -381,11 +484,9 @@ public class JdgRoster extends javax.swing.JDialog {
         jbtRemove.setEnabled(_data._players.size() > 0);
 
         mjtTeamPlayers playersModel = new mjtTeamPlayers(_data._players);
+
+
         jtbPlayers.setModel(playersModel);
-
-        jtbPlayers.setDefaultRenderer(String.class, playersModel);
-        jtbPlayers.setDefaultRenderer(Integer.class, playersModel);
-
         jtbPlayers.getColumnModel().getColumn(0).setMinWidth(5);
         jtbPlayers.getColumnModel().getColumn(1).setMinWidth(80);
         jtbPlayers.getColumnModel().getColumn(2).setMinWidth(80);
@@ -397,26 +498,44 @@ public class JdgRoster extends javax.swing.JDialog {
         jtbPlayers.getColumnModel().getColumn(8).setMinWidth(10);
         jtbPlayers.getColumnModel().getColumn(9).setMinWidth(10);
         jtbPlayers.getColumnModel().getColumn(10).setMinWidth(10);
+        jtbPlayers.getColumnModel().getColumn(11).setMinWidth(10);
+
+        jtbPlayers.getColumnModel().getColumn(7).addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("width")) {
+                    jtbPlayers.setRowHeight(1);
+                    mjtTeamPlayers playersModel = new mjtTeamPlayers(_data._players);
+                    jtbPlayers.setDefaultRenderer(String.class, playersModel);
+                }
+            }
+        });
+
+        jtbPlayers.setDefaultRenderer(Integer.class, playersModel);
+        jtbPlayers.setDefaultRenderer(String.class, playersModel);
+
+
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable6;
     private javax.swing.JButton jbtAdd;
-    private javax.swing.JButton jbtAdd1;
+    private javax.swing.JButton jbtAddSkill;
+    private javax.swing.JButton jbtAddStar;
+    private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtRemove;
-    private javax.swing.JButton jbtRemove1;
+    private javax.swing.JButton jbtRemoveSkill;
+    private javax.swing.JButton jbtRemoveStar;
     private javax.swing.JLabel jlbCoachName;
     private javax.swing.JLabel jlbIcon;
     private javax.swing.JLabel jlbInducements;
@@ -430,5 +549,6 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JScrollPane jtbGoods;
     private javax.swing.JScrollPane jtbInducements;
     private javax.swing.JTable jtbPlayers;
+    private org.jdesktop.swingx.JXTitledPanel jxtpCenter;
     // End of variables declaration//GEN-END:variables
 }

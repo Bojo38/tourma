@@ -18,6 +18,7 @@ public class RosterType {
     public int _bribe_cost;
     public int _chef_cost;
     public boolean _igor;
+    public String _image;
     public Vector<PlayerType> _player_types;
     public Vector<StarPlayer> _available_starplayers;
     

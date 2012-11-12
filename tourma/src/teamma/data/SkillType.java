@@ -15,6 +15,7 @@ public class SkillType {
     public String _name;
     public String _accronym;
     public Vector<Skill> _skills;
+    public boolean _special;
 
     public SkillType(String name,String accronym) {
         _skills = new Vector<Skill>();

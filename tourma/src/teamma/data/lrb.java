@@ -27,6 +27,7 @@ public class lrb {
     public Vector<SkillType> _skillTypes = null;
     private static lrb _singleton = null;
     public String _name;
+    public boolean _allowSpecialSkills=false;
 
     private lrb() {
         _rosterTypes = new Vector<RosterType>();
@@ -73,8 +74,9 @@ public class lrb {
             while (cr.hasNext()) {
                 Element e_team = (Element) cr.next();
                 String teamfile = e_team.getValue();
+                String imagename=e_team.getAttribute("image").getValue();
                 System.out.println("loading " + teamfile + " file");
-                loadTeam(getClass().getResourceAsStream("/teamma/rules/" + teamfile));
+                loadTeam(getClass().getResourceAsStream("/teamma/rules/" + teamfile),imagename);
             }
             /*
              * Get Star Players file name
@@ -111,8 +113,11 @@ public class lrb {
                 Element e_accro = e_skillType.getChild("accronym");
                 String st_accro = e_accro.getValue();
 
+                
                 SkillType st = new SkillType(st_name, st_accro);
 
+                Element e_special = e_skillType.getChild("special");
+                st._special=Boolean.parseBoolean(e_special.getValue());
                 List l_skills = e_skillType.getChildren("skill");
                 Iterator i = l_skills.iterator();
 
@@ -132,7 +137,7 @@ public class lrb {
         }
     }
 
-    private void loadTeam(InputStream file) {
+    private void loadTeam(InputStream file,String image) {
         try {
             SAXBuilder sxb = new SAXBuilder();
             org.jdom.Document document = sxb.build(file);
@@ -140,7 +145,7 @@ public class lrb {
 
             Element e_name = racine.getChild("name");
             RosterType rt = new RosterType(e_name.getValue());
-
+            rt._image=image;
             Element e_reroll_cost = racine.getChild("reroll");
             rt._reroll_cost = Integer.parseInt(e_reroll_cost.getValue());
 

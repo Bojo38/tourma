@@ -77,6 +77,26 @@ and open the template in the editor.
                 <skillType>Strength</skillType>
             </double>
         </playerType>
+         <playerType>
+            <limit>2</limit>
+            <position>Assassin</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Stab</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>   
+            </double>
+        </playerType>
         <playerType>
             <limit>16</limit>
             <position>Lineman</position>

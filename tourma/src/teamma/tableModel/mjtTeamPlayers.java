@@ -4,16 +4,18 @@
  */
 package teamma.tableModel;
 
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.util.Vector;
-import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import teamma.data.Player;
 import teamma.data.Skill;
+import teamma.data.SkillType;
+import teamma.data.lrb;
 
 /**
  *
@@ -25,11 +27,11 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
 
     public mjtTeamPlayers(Vector<Player> players) {
         _players = players;
-        
-          }
+
+    }
 
     public int getColumnCount() {
-        return 14;
+        return 12;
     }
 
     public int getRowCount() {
@@ -55,16 +57,12 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
             case 7:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Skills");
             case 8:
-                return "";
-            case 9:
-                return "";
-            case 10:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SR");
-            case 11:
+            case 9:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DR");
-            case 12:
+            case 10:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Base Cost");
-            case 13:
+            case 11:
                 return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cost");
         }
         return "";
@@ -104,51 +102,9 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     }
                     for (i = 0; i < player._skills.size(); i++) {
                         Skill s = player._skills.get(i);
-                        /*
-                         * If simple Roll => Blue Italic
-                         */
-                        boolean sr = false;
-                        boolean dr = false;
-                        int j;
-                        for (j = 0; j < player._playertype._single.size(); j++) {
-                            if (s._category._accronym.equals(player._playertype._single.get(j)._accronym)) {
-                                sr = true;
-                            }
-                        }
-                        if (sr) {
-                            skills.add("<FONT color=\"4b2e9f\"><I>" + s._name + "</I></FONT>");
-                        }
-
-
-                        /*
-                         * If double Roll => Bule Bold
-                         */
-                        for (j = 0; j < player._playertype._double.size(); j++) {
-                            if (s._category._accronym.equals(player._playertype._double.get(j)._accronym)) {
-                                dr = true;
-                            }
-                        }
-                        if (dr) {
-                            skills.add("<FONT color=\"4b2e9f\"><B>" + s._name + "</B></FONT>");
-                        }
-                        /*
-                         * If Char => Green Bold
-                         */
-                        if (s._category._accronym.equals("C")) {
-                            skills.add("<FONT color=\"128043\"><B>" + s._name + "</B></FONT>");
-                        }
-                        /*
-                         * If Inj => Red Bold
-                         */
-                        if (s._category._accronym.equals("I")) {
-                            skills.add("<FONT color=\"c6001c\"><B>" + s._name + "</B></FONT>");
-                        }
-                        /*
-                         * If Extr =>  Gold Bold
-                         */
-                        if (s._category._accronym.equals("E")) {
-                            skills.add("<FONT color=\"c6ab1c\"><B>" + s._name + "</B></FONT>");
-                        }
+                            //int rgb=s._color.getRGB();
+                              int rgb=s._color.getRed()*65536+s._color.getGreen()*256+s._color.getBlue();
+                            skills.add("<FONT color=\""+Integer.toHexString(rgb) +"\"><I>" + s._name + "</I></FONT>");
                     }
 
                     for (i = 0; i < skills.size(); i++) {
@@ -157,37 +113,82 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                             tmpstring = tmpstring + ", ";
                         }
                     }
-                    return ("<html>"+tmpstring+"</html>");
+                    return (tmpstring);
                 case 8:
-                    /**
-                     * Add button to add skill
-                     */
-                    return "";
-                case 9:
-                    /**
-                     * Add button to remove skill
-                     */
-                    return "";
-                case 10:
                     /**
                      * SR
                      */
-                    return "";
-                case 11:
+                    String sr = "";
+                    for (i = 0; i < player._playertype._single.size(); i++) {
+                        SkillType st = player._playertype._single.get(i);
+                        sr = sr + st._accronym;
+                    }
+                    return sr;
+                case 9:
                     /**
                      * DR
                      */
-                    return "";
-                case 12:
+                    String dr = "";
+                    for (i = 0; i < player._playertype._double.size(); i++) {
+                        SkillType st = player._playertype._double.get(i);
+                        dr = dr + st._accronym;
+                    }
+                    return dr;
+                case 10:
                     /**
                      * Base Cost
                      */
-                    return "";
-                case 13:
+                    return player._playertype._cost;
+                case 11:
                     /**
                      * Real Cost
                      */
-                    return "";
+                    int skillCost = 0;
+                    for (i = 0; i < player._skills.size(); i++) {
+                        int j;
+                        SkillType st = player._skills.get(i)._category;
+
+                        /**
+                         * If Single Roll, add 20000
+                         */
+                        for (j = 0; j < player._playertype._single.size(); j++) {
+                            if (st.equals(player._playertype._single.get(j))) {
+                                skillCost = skillCost + 20000;
+                            }
+                        }
+                        /**
+                         * If Double Roll, add 30000
+                         */
+                        for (j = 0; j < player._playertype._double.size(); j++) {
+                            if (st.equals(player._playertype._double.get(j))) {
+                                skillCost = skillCost + 30000;
+                            }
+                        }
+                        
+                        /*
+                         * If charactristics, it depends.
+                         */
+                        if (st.equals(lrb.getLRB().getSkillType("Characteristics"))) {
+                            Skill s=player._skills.get(i);
+                            if (s._name.equals("+1 Movement"))
+                            {
+                                skillCost = skillCost + 30000;
+                            }
+                            if (s._name.equals("+1 Armor"))
+                            {
+                                skillCost = skillCost + 30000;
+                            }
+                            if (s._name.equals("+1 Agility"))
+                            {
+                                skillCost = skillCost + 40000;
+                            }
+                            if (s._name.equals("+1 Strength"))
+                            {
+                                skillCost = skillCost + 50000;
+                            }
+                        }
+                    }
+                    return skillCost+player._playertype._cost;
 
             }
         }
@@ -205,27 +206,53 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
     public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        if ((col == 8)||(col == 9)) {
-            return true;
-        }
-
         return false;
     }
 
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
-        JLabel jlb = new JLabel();
 
+        /*JEditorPane jta = new JEditorPane();
+         jta.setContentType("text/html");
+         jta.setPreferredSize(new Dimension(100,30));*/
+
+        JEditorPane jta = new JEditorPane();
+        jta.setContentType("text/html");
+
+        if (isSelected)
+        {
+            jta.setBackground(Color.LIGHT_GRAY);
+        }
+        else
+        {
+            if (row % 2==1)
+            {
+                jta.setBackground(new Color(220,220,220));
+            }
+            else
+            {
+                 jta.setBackground(Color.WHITE);
+            }
+        }
+        
+        jta.setEditable(false);
         if (value instanceof String) {
-            jlb.setText((String) value);
+            jta.setText("<center>" + (String) value + "</center>");
         }
 
         if (value instanceof Integer) {
-            jlb.setText(Integer.toString((Integer) value));
+            jta.setText("<center>" + Integer.toString((Integer) value) + "</center>");
         }
 
-        jlb.setHorizontalAlignment(JTextField.CENTER);
-        return jlb;
+        int width = table.getTableHeader().getColumnModel().getColumn(column).getWidth();
+        jta.setSize(width, 1000);
+        int prefH = jta.getPreferredSize().height;
+
+        if (table.getRowHeight(row) < prefH) {
+            table.setRowHeight(row,prefH);
+        }
+
+        return jta;
     }
 }

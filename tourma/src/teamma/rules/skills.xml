@@ -9,6 +9,7 @@ and open the template in the editor.
     <category>
         <name>General</name>
         <accronym>G</accronym>
+        <special>false</special>
         <skill>Kick-off Return</skill>
         <skill>Strip Ball</skill>
         <skill>Block</skill>
@@ -27,6 +28,7 @@ and open the template in the editor.
     <category>
         <name>Pass</name>
         <accronym>P</accronym>
+        <special>false</special>
         <skill>Leader</skill>
         <skill>Hail Mary Pass</skill>
         <skill>Safe Throw</skill>
@@ -38,6 +40,7 @@ and open the template in the editor.
     <category>
         <name>Strength</name>
         <accronym>S</accronym>
+        <special>false</special>
         <skill>Multiple Block</skill>
         <skill>Mighty Blow</skill>
         <skill>Strong Arm</skill>
@@ -52,6 +55,7 @@ and open the template in the editor.
     <category>
         <name>Mutation</name>
         <accronym>M</accronym>
+        <special>false</special>
         <skill>Extra Arms</skill>
         <skill>Horns</skill>
         <skill>Two Heads</skill>
@@ -66,6 +70,7 @@ and open the template in the editor.
     <category>
         <name>Agility</name>
         <accronym>A</accronym>
+        <special>false</special>
         <skill>Jump Up</skill>
         <skill>Sure Feet</skill>
         <skill>Dodge</skill>
@@ -80,6 +85,7 @@ and open the template in the editor.
     <category>
         <name>Extraordinary</name>
         <accronym>E</accronym>
+        <special>true</special>
         <skill>Wild Animal</skill>
         <skill>Animosity</skill>
         <skill>Secret Weapon</skill>
@@ -108,6 +114,7 @@ and open the template in the editor.
     <category>
         <name>Characteristics</name>
         <accronym>C</accronym>
+        <special>true</special>
         <skill>+1 Movement</skill>
         <skill>+1 Strength</skill>
         <skill>+1 Agility</skill>
@@ -116,6 +123,7 @@ and open the template in the editor.
     <category>
         <name>Injury</name>
         <accronym>I</accronym>
+        <special>true</special>
         <skill>Niggling Injury</skill>
         <skill>-1 Movement</skill>
         <skill>-1 Strength</skill>
