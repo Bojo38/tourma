@@ -30,10 +30,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import org.jvnet.substance.SubstanceLookAndFeel;
-import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
+//import org.jvnet.substance.SubstanceLookAndFeel;
+//import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceMistSilverLookAndFeel;
 import teamma.data.lrb;
 import teamma.views.JdgRoster;
 import tourma.data.Clan;
@@ -512,10 +514,12 @@ public class MainFrame extends javax.swing.JFrame {
         jmiExport = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         jmiExit = new javax.swing.JMenuItem();
-        jmnFile1 = new javax.swing.JMenu();
+        jmnParameters = new javax.swing.JMenu();
         jmiEditrosters = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jmiEditTeam = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jcxAllowSpecialSkill = new javax.swing.JCheckBoxMenuItem();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -1354,7 +1358,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jmnFile);
 
-        jmnFile1.setText(bundle.getString("Parametres")); // NOI18N
+        jmnParameters.setText(bundle.getString("Parametres")); // NOI18N
 
         jmiEditrosters.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
         jmiEditrosters.setText(bundle.getString("ChangeRosters")); // NOI18N
@@ -1364,8 +1368,8 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiEditrostersActionPerformed(evt);
             }
         });
-        jmnFile1.add(jmiEditrosters);
-        jmnFile1.add(jSeparator4);
+        jmnParameters.add(jmiEditrosters);
+        jmnParameters.add(jSeparator4);
 
         jmiEditTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
         jmiEditTeam.setText(bundle.getString("ChangeRosters")); // NOI18N
@@ -1374,9 +1378,18 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiEditTeamActionPerformed(evt);
             }
         });
-        jmnFile1.add(jmiEditTeam);
+        jmnParameters.add(jmiEditTeam);
+        jmnParameters.add(jSeparator5);
 
-        jMenuBar1.add(jmnFile1);
+        jcxAllowSpecialSkill.setText("Autoriser les compétences spéciales");
+        jcxAllowSpecialSkill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxAllowSpecialSkillActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jcxAllowSpecialSkill);
+
+        jMenuBar1.add(jmnParameters);
 
         jmnHelp.setText("?");
 
@@ -2075,6 +2088,10 @@ public class MainFrame extends javax.swing.JFrame {
        jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditTeamActionPerformed
 
+    private void jcxAllowSpecialSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAllowSpecialSkillActionPerformed
+        lrb.getLRB()._allowSpecialSkills=jcxAllowSpecialSkill.getState();
+    }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
@@ -2206,7 +2223,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddClan;
     private javax.swing.JButton jbtAddCriteria;
@@ -2237,6 +2255,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox jcbRank5;
     private javax.swing.JComboBox jcbRank5Team;
     private javax.swing.JCheckBox jcxActivatesClans;
+    private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JCheckBox jcxAvoidFirstMatch;
     private javax.swing.JCheckBox jcxAvoidMatch;
     private javax.swing.JLabel jlbActivateClans;
@@ -2262,8 +2281,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiSave;
     private javax.swing.JMenuItem jmiSaveAs;
     private javax.swing.JMenu jmnFile;
-    private javax.swing.JMenu jmnFile1;
     private javax.swing.JMenu jmnHelp;
+    private javax.swing.JMenu jmnParameters;
     private javax.swing.JPanel jpnCoachButtons;
     private javax.swing.JPanel jpnParameters;
     private javax.swing.JPanel jpnTeamTour;
