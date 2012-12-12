@@ -203,6 +203,7 @@ public class Tournament {
         params.setAttribute("TeamIndivPairing", Integer.toString(_params._teamIndivPairing));
 
         params.setAttribute("TeamVictoryPoints", Integer.toString(_params._team_victory_points));
+        params.setAttribute("TeamDrawPoints", Integer.toString(_params._team_draw_points));
         params.setAttribute("TeamVictoryOnly", Boolean.toString(_params._team_victory_only));
 
         params.setAttribute("GroupEnable", Boolean.toString(_params._groupsEnable));
@@ -916,6 +917,11 @@ public class Tournament {
                     _params._team_victory_points = params.getAttribute("TeamVictoryPoints").getIntValue();
                     _params._teamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
                     _params._team_victory_only = params.getAttribute("TeamVictoryOnly").getBooleanValue();
+                    try {
+                        _params._team_draw_points = params.getAttribute("TeamDrawPoints").getIntValue();
+                    } catch (Exception e) {
+                        _params._team_draw_points = 0;
+                    }
 
                     try {
                         _params._date = format.parse(params.getAttribute("Date").getValue());
@@ -1049,25 +1055,13 @@ public class Tournament {
                 Iterator m = coachs2.iterator();
                 t._coachs.clear();
 
-
-
-
-
                 while (m.hasNext()) {
                     Element coach = (Element) m.next();
                     Coach c = map.get(coach.getAttribute("Name").getValue());
                     c._teamMates = t;
                     t._coachs.add(c);
-
-
-
-
                 }
                 _teams.add(t);
-
-
-
-
             }
 
             List rounds = racine.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"));

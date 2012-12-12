@@ -221,6 +221,7 @@ public class mjtRankingTeam extends mjtRanking {
             switch (rankingType) {
                 case Parameters.C_RANKING_POINTS:
                     value += (getVNDByTeam(t) / 1000000) * Tournament.getTournament().getParams()._team_victory_points;
+                    value += ((getVNDByTeam(t) % 1000000)/1000) * Tournament.getTournament().getParams()._team_draw_points;
                     break;
                 case Parameters.C_RANKING_OPP_POINTS:
                     Coach c = t._coachs.get(0);
@@ -229,8 +230,10 @@ public class mjtRankingTeam extends mjtRanking {
                             Match m = c._matchs.get(i);
                             if (m._coach1 == c) {
                                 value += (getVNDByTeam(m._coach2._teamMates) / 1000000) * Tournament.getTournament().getParams()._team_victory_points;
+                                value += ((getVNDByTeam(m._coach2._teamMates) % 1000000)/1000) * Tournament.getTournament().getParams()._team_draw_points;
                             } else {
                                 value += (getVNDByTeam(m._coach1._teamMates) / 1000000) * Tournament.getTournament().getParams()._team_victory_points;
+                                value += ((getVNDByTeam(m._coach1._teamMates) % 1000000)/1000) * Tournament.getTournament().getParams()._team_draw_points;
                             }
                         }
                     }

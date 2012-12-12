@@ -18,7 +18,10 @@ public class Parameters {
     public int _draw_points = 400;
     public int _little_lost_points = 100;
     public int _lost_points = 0;
+    
     public int _team_victory_points = 0;
+    public int _team_draw_points = 0;
+    
     public boolean _team_victory_only = false;
     public int _large_victory_gap = 3;
     public int _little_lost_gap = 1;
@@ -46,9 +49,11 @@ public class Parameters {
      */
     public int _teamIndivPairing = 0;
     public int _teamMatesNumber = 1;
+    
     public int _victory_points_team = 1000;
     public int _draw_points_team = 400;
     public int _lost_points_team = 0;
+    
     public int _ranking1_team = 1;
     public int _ranking2_team = 2;
     public int _ranking3_team = 3;

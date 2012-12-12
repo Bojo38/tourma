@@ -115,12 +115,14 @@ public class MainFrame extends javax.swing.JFrame {
         jrbTeamVictory.setEnabled(teamMatches);
 
         jtffTeamVictory.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+        jtffTeamDraw.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
         jlbVictoryPoints.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
 
         jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
         jtffLostTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
 
         jtffVictoryTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        
 
         Vector<String> rankChoices = new Vector<String>();
         rankChoices.add("Aucun");
@@ -180,8 +182,8 @@ public class MainFrame extends javax.swing.JFrame {
         jtffDrawTeam.setValue(new Integer(_tournament.getParams()._draw_points_team));
         jtffLostTeam.setValue(new Integer(_tournament.getParams()._lost_points_team));
 
-
         jtffVictoryTeam.setValue(new Integer(_tournament.getParams()._victory_points_team));
+        jtffDrawTeam.setValue(new Integer(_tournament.getParams()._draw_points_team));
 
         jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
         jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
@@ -443,6 +445,8 @@ public class MainFrame extends javax.swing.JFrame {
         jcbRank5Team = new javax.swing.JComboBox();
         jlbVictoryPoints = new javax.swing.JLabel();
         jtffTeamVictory = new javax.swing.JFormattedTextField();
+        jlbVictoryPoints1 = new javax.swing.JLabel();
+        jtffTeamDraw = new javax.swing.JFormattedTextField();
         jPanel11 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jlbActivateClans = new javax.swing.JLabel();
@@ -783,7 +787,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jtpOptions.addTab("Critères", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")), jPanel15); // NOI18N
 
-        jPanel10.setLayout(new java.awt.GridLayout(10, 2));
+        jPanel10.setLayout(new java.awt.GridLayout(11, 2));
 
         buttonGroup1.add(jrbTeamVictory);
         jrbTeamVictory.setText(bundle.getString("UseTeamVictory")); // NOI18N
@@ -922,6 +926,19 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jPanel10.add(jtffTeamVictory);
+
+        jlbVictoryPoints1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbVictoryPoints1.setText(bundle.getString("TeamVictoryBonus")); // NOI18N
+        jlbVictoryPoints1.setToolTipText("");
+        jPanel10.add(jlbVictoryPoints1);
+
+        jtffTeamDraw.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffTeamDraw.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffTeamDrawFocusLost(evt);
+            }
+        });
+        jPanel10.add(jtffTeamDraw);
 
         jtpOptions.addTab(bundle.getString("ByTeamKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), jPanel10); // NOI18N
 
@@ -2092,6 +2109,17 @@ public class MainFrame extends javax.swing.JFrame {
         lrb.getLRB()._allowSpecialSkills=jcxAllowSpecialSkill.getState();
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
 
+    private void jtffTeamDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamDrawFocusLost
+         try {
+            jtffTeamDraw.commitEdit();
+            int points = ((Long) jtffTeamDraw.getValue()).intValue();
+            _tournament.getParams()._team_draw_points = points;
+        } catch (ParseException e) {
+            jtffTeamDraw.setValue(jtffTeamDraw.getValue());
+        }
+        update();
+    }//GEN-LAST:event_jtffTeamDrawFocusLost
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
@@ -2264,6 +2292,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jlbDetails;
     private javax.swing.JLabel jlbTeamMatesNumber;
     private javax.swing.JLabel jlbVictoryPoints;
+    private javax.swing.JLabel jlbVictoryPoints1;
     private javax.swing.JList jlsClans;
     private javax.swing.JList jlsCoachList;
     private javax.swing.JList jlsGroups;
@@ -2303,6 +2332,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jtffLittleLostGap;
     private javax.swing.JFormattedTextField jtffLost;
     private javax.swing.JFormattedTextField jtffLostTeam;
+    private javax.swing.JFormattedTextField jtffTeamDraw;
     private javax.swing.JFormattedTextField jtffTeamVictory;
     private javax.swing.JFormattedTextField jtffVictory;
     private javax.swing.JFormattedTextField jtffVictoryTeam;
