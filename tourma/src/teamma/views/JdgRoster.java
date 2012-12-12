@@ -81,6 +81,58 @@ public class JdgRoster extends javax.swing.JDialog {
         jbtRemove = new javax.swing.JButton();
         jbtAddSkill = new javax.swing.JButton();
         jbtRemoveSkill = new javax.swing.JButton();
+        jpnCenterSouth = new javax.swing.JPanel();
+        jXTaskPane2 = new org.jdesktop.swingx.JXTaskPane();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jslExtraReroll = new javax.swing.JSlider();
+        jlbNbExtraReroll = new javax.swing.JLabel();
+        jlbX = new javax.swing.JLabel();
+        jlbPriceExtraReroll = new javax.swing.JLabel();
+        jlbX1 = new javax.swing.JLabel();
+        jlbCostExtraReroll = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jslBribeTheRef = new javax.swing.JSlider();
+        jlbNbBribeTheRef = new javax.swing.JLabel();
+        jlbX2 = new javax.swing.JLabel();
+        jlbPriceBribeTheRef = new javax.swing.JLabel();
+        jlbX3 = new javax.swing.JLabel();
+        jlbCostBribeTheRef = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jslLocalApothecary = new javax.swing.JSlider();
+        jlbNbLocalApothecary = new javax.swing.JLabel();
+        jlbX4 = new javax.swing.JLabel();
+        jlbPriceLocalApothecary = new javax.swing.JLabel();
+        jlbX5 = new javax.swing.JLabel();
+        jlbCostLocalApothecary = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jslWizard = new javax.swing.JSlider();
+        jlbNbWizard = new javax.swing.JLabel();
+        jlbX6 = new javax.swing.JLabel();
+        jlbPriceWizard = new javax.swing.JLabel();
+        jlbX7 = new javax.swing.JLabel();
+        jlbCostWizard = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jslIgor = new javax.swing.JSlider();
+        jlbNbIgor = new javax.swing.JLabel();
+        jlbX8 = new javax.swing.JLabel();
+        jlbPriceIgor = new javax.swing.JLabel();
+        jlbX9 = new javax.swing.JLabel();
+        jlbCostIgor = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jslCardBudget = new javax.swing.JSlider();
+        jlbNbCard = new javax.swing.JLabel();
+        jlbX10 = new javax.swing.JLabel();
+        jlbPriceIgor1 = new javax.swing.JLabel();
+        jlbX11 = new javax.swing.JLabel();
+        jlbCostCard = new javax.swing.JLabel();
+        jXTaskPane1 = new org.jdesktop.swingx.JXTaskPane();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -88,10 +140,6 @@ public class JdgRoster extends javax.swing.JDialog {
         jbtAddStar = new javax.swing.JButton();
         jbtRemoveStar = new javax.swing.JButton();
         jpnSouth = new javax.swing.JPanel();
-        jpnSouthWest = new javax.swing.JPanel();
-        jlbInducements = new javax.swing.JLabel();
-        jtbInducements = new javax.swing.JScrollPane();
-        jTable6 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jlbInducements1 = new javax.swing.JLabel();
         jtbGoods = new javax.swing.JScrollPane();
@@ -221,6 +269,264 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jpnCenter.add(jxtpCenter, java.awt.BorderLayout.CENTER);
 
+        jpnCenterSouth.setLayout(new org.jdesktop.swingx.VerticalLayout());
+
+        jXTaskPane2.setCollapsed(true);
+        jXTaskPane2.setTitle("Primes de match");
+        jXTaskPane2.getContentPane().setLayout(new java.awt.BorderLayout());
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
+        jPanel8.setPreferredSize(new java.awt.Dimension(160, 150));
+        jPanel8.setLayout(new org.jdesktop.swingx.VerticalLayout());
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel2.setText("Extra Reroll");
+        jLabel2.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel1.add(jLabel2);
+
+        jslExtraReroll.setMaximum(4);
+        jslExtraReroll.setValue(0);
+        jslExtraReroll.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslExtraReroll.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslExtraReroll.setPreferredSize(new java.awt.Dimension(50, 23));
+        jPanel1.add(jslExtraReroll);
+
+        jlbNbExtraReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbExtraReroll.setLabelFor(jslExtraReroll);
+        jlbNbExtraReroll.setText("0");
+        jlbNbExtraReroll.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel1.add(jlbNbExtraReroll);
+
+        jlbX.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX.setText("x");
+        jlbX.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel1.add(jlbX);
+
+        jlbPriceExtraReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceExtraReroll.setText("100 000");
+        jlbPriceExtraReroll.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel1.add(jlbPriceExtraReroll);
+
+        jlbX1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX1.setText("=");
+        jlbX1.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel1.add(jlbX1);
+
+        jlbCostExtraReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostExtraReroll.setText("0");
+        jlbCostExtraReroll.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel1.add(jlbCostExtraReroll);
+
+        jPanel8.add(jPanel1);
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel3.setText("Bribe the Ref");
+        jLabel3.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel9.add(jLabel3);
+
+        jslBribeTheRef.setMaximum(4);
+        jslBribeTheRef.setValue(0);
+        jslBribeTheRef.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslBribeTheRef.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslBribeTheRef.setPreferredSize(new java.awt.Dimension(50, 23));
+        jPanel9.add(jslBribeTheRef);
+
+        jlbNbBribeTheRef.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbBribeTheRef.setLabelFor(jslBribeTheRef);
+        jlbNbBribeTheRef.setText("0");
+        jlbNbBribeTheRef.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel9.add(jlbNbBribeTheRef);
+
+        jlbX2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX2.setText("x");
+        jlbX2.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel9.add(jlbX2);
+
+        jlbPriceBribeTheRef.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceBribeTheRef.setText("100 000");
+        jlbPriceBribeTheRef.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel9.add(jlbPriceBribeTheRef);
+
+        jlbX3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX3.setText("=");
+        jlbX3.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel9.add(jlbX3);
+
+        jlbCostBribeTheRef.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostBribeTheRef.setText("0");
+        jlbCostBribeTheRef.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel9.add(jlbCostBribeTheRef);
+
+        jPanel8.add(jPanel9);
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel4.setText("Local Apothecary");
+        jLabel4.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel10.add(jLabel4);
+
+        jslLocalApothecary.setMaximum(4);
+        jslLocalApothecary.setValue(0);
+        jslLocalApothecary.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslLocalApothecary.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslLocalApothecary.setPreferredSize(new java.awt.Dimension(50, 23));
+        jPanel10.add(jslLocalApothecary);
+
+        jlbNbLocalApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbLocalApothecary.setLabelFor(jslLocalApothecary);
+        jlbNbLocalApothecary.setText("0");
+        jlbNbLocalApothecary.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel10.add(jlbNbLocalApothecary);
+
+        jlbX4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX4.setText("x");
+        jlbX4.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel10.add(jlbX4);
+
+        jlbPriceLocalApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceLocalApothecary.setText("100 000");
+        jlbPriceLocalApothecary.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel10.add(jlbPriceLocalApothecary);
+
+        jlbX5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX5.setText("=");
+        jlbX5.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel10.add(jlbX5);
+
+        jlbCostLocalApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostLocalApothecary.setText("0");
+        jlbCostLocalApothecary.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel10.add(jlbCostLocalApothecary);
+
+        jPanel8.add(jPanel10);
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel5.setText("Wizard");
+        jLabel5.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel11.add(jLabel5);
+
+        jslWizard.setMaximum(1);
+        jslWizard.setValue(0);
+        jslWizard.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslWizard.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslWizard.setPreferredSize(new java.awt.Dimension(50, 23));
+        jPanel11.add(jslWizard);
+
+        jlbNbWizard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbWizard.setLabelFor(jslWizard);
+        jlbNbWizard.setText("0");
+        jlbNbWizard.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel11.add(jlbNbWizard);
+
+        jlbX6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX6.setText("x");
+        jlbX6.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel11.add(jlbX6);
+
+        jlbPriceWizard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceWizard.setText("150 000");
+        jlbPriceWizard.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel11.add(jlbPriceWizard);
+
+        jlbX7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX7.setText("=");
+        jlbX7.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel11.add(jlbX7);
+
+        jlbCostWizard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostWizard.setText("0");
+        jlbCostWizard.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel11.add(jlbCostWizard);
+
+        jPanel8.add(jPanel11);
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setText("Igor");
+        jLabel6.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel12.add(jLabel6);
+
+        jslIgor.setMaximum(1);
+        jslIgor.setValue(0);
+        jslIgor.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslIgor.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslIgor.setPreferredSize(new java.awt.Dimension(50, 23));
+        jPanel12.add(jslIgor);
+
+        jlbNbIgor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbIgor.setLabelFor(jslIgor);
+        jlbNbIgor.setText("0");
+        jlbNbIgor.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel12.add(jlbNbIgor);
+
+        jlbX8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX8.setText("x");
+        jlbX8.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel12.add(jlbX8);
+
+        jlbPriceIgor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceIgor.setText("100 000");
+        jlbPriceIgor.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel12.add(jlbPriceIgor);
+
+        jlbX9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX9.setText("=");
+        jlbX9.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel12.add(jlbX9);
+
+        jlbCostIgor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostIgor.setText("0");
+        jlbCostIgor.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel12.add(jlbCostIgor);
+
+        jPanel8.add(jPanel12);
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel7.setText("Card Budget");
+        jLabel7.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel13.add(jLabel7);
+
+        jslCardBudget.setMaximum(1000000);
+        jslCardBudget.setValue(0);
+        jslCardBudget.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslCardBudget.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslCardBudget.setPreferredSize(new java.awt.Dimension(50, 23));
+        jPanel13.add(jslCardBudget);
+
+        jlbNbCard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbCard.setLabelFor(jslCardBudget);
+        jlbNbCard.setText("0");
+        jlbNbCard.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel13.add(jlbNbCard);
+
+        jlbX10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX10.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel13.add(jlbX10);
+        jlbX10.getAccessibleContext().setAccessibleDescription("");
+
+        jlbPriceIgor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceIgor1.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel13.add(jlbPriceIgor1);
+
+        jlbX11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX11.setText("=");
+        jlbX11.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel13.add(jlbX11);
+
+        jlbCostCard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostCard.setLabelFor(jslCardBudget);
+        jlbCostCard.setText("0");
+        jlbCostCard.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel13.add(jlbCostCard);
+
+        jPanel8.add(jPanel13);
+
+        jXTaskPane2.getContentPane().add(jPanel8, java.awt.BorderLayout.CENTER);
+
+        jpnCenterSouth.add(jXTaskPane2);
+
+        jXTaskPane1.setCollapsed(true);
+        jXTaskPane1.setTitle("Star Players");
+        jXTaskPane1.getContentPane().setLayout(new java.awt.BorderLayout());
+
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 150));
         jPanel4.setLayout(new java.awt.BorderLayout());
@@ -268,37 +574,16 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.WEST);
 
-        jpnCenter.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+        jXTaskPane1.getContentPane().add(jPanel4, java.awt.BorderLayout.PAGE_START);
+
+        jpnCenterSouth.add(jXTaskPane1);
+
+        jpnCenter.add(jpnCenterSouth, java.awt.BorderLayout.SOUTH);
 
         getContentPane().add(jpnCenter, java.awt.BorderLayout.CENTER);
 
         jpnSouth.setPreferredSize(new java.awt.Dimension(640, 200));
         jpnSouth.setLayout(new java.awt.BorderLayout());
-
-        jpnSouthWest.setPreferredSize(new java.awt.Dimension(300, 300));
-        jpnSouthWest.setLayout(new java.awt.BorderLayout());
-
-        jlbInducements.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jlbInducements.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbInducements.setText(bundle.getString("Primes de match")); // NOI18N
-        jpnSouthWest.add(jlbInducements, java.awt.BorderLayout.NORTH);
-
-        jTable6.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtbInducements.setViewportView(jTable6);
-
-        jpnSouthWest.add(jtbInducements, java.awt.BorderLayout.CENTER);
-
-        jpnSouth.add(jpnSouthWest, java.awt.BorderLayout.LINE_START);
 
         jPanel3.setPreferredSize(new java.awt.Dimension(300, 150));
         jPanel3.setLayout(new java.awt.BorderLayout());
@@ -518,17 +803,31 @@ public class JdgRoster extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable6;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPane1;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPane2;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddSkill;
     private javax.swing.JButton jbtAddStar;
@@ -537,17 +836,51 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JButton jbtRemoveSkill;
     private javax.swing.JButton jbtRemoveStar;
     private javax.swing.JLabel jlbCoachName;
+    private javax.swing.JLabel jlbCostBribeTheRef;
+    private javax.swing.JLabel jlbCostCard;
+    private javax.swing.JLabel jlbCostExtraReroll;
+    private javax.swing.JLabel jlbCostIgor;
+    private javax.swing.JLabel jlbCostLocalApothecary;
+    private javax.swing.JLabel jlbCostWizard;
     private javax.swing.JLabel jlbIcon;
-    private javax.swing.JLabel jlbInducements;
     private javax.swing.JLabel jlbInducements1;
+    private javax.swing.JLabel jlbNbBribeTheRef;
+    private javax.swing.JLabel jlbNbCard;
+    private javax.swing.JLabel jlbNbExtraReroll;
+    private javax.swing.JLabel jlbNbIgor;
+    private javax.swing.JLabel jlbNbLocalApothecary;
+    private javax.swing.JLabel jlbNbWizard;
+    private javax.swing.JLabel jlbPriceBribeTheRef;
+    private javax.swing.JLabel jlbPriceExtraReroll;
+    private javax.swing.JLabel jlbPriceIgor;
+    private javax.swing.JLabel jlbPriceIgor1;
+    private javax.swing.JLabel jlbPriceLocalApothecary;
+    private javax.swing.JLabel jlbPriceWizard;
     private javax.swing.JLabel jlbRosterType;
     private javax.swing.JLabel jlbTeamName;
+    private javax.swing.JLabel jlbX;
+    private javax.swing.JLabel jlbX1;
+    private javax.swing.JLabel jlbX10;
+    private javax.swing.JLabel jlbX11;
+    private javax.swing.JLabel jlbX2;
+    private javax.swing.JLabel jlbX3;
+    private javax.swing.JLabel jlbX4;
+    private javax.swing.JLabel jlbX5;
+    private javax.swing.JLabel jlbX6;
+    private javax.swing.JLabel jlbX7;
+    private javax.swing.JLabel jlbX8;
+    private javax.swing.JLabel jlbX9;
     private javax.swing.JPanel jpnCenter;
+    private javax.swing.JPanel jpnCenterSouth;
     private javax.swing.JPanel jpnSouth;
-    private javax.swing.JPanel jpnSouthWest;
     private javax.swing.JPanel jpnTitle;
+    private javax.swing.JSlider jslBribeTheRef;
+    private javax.swing.JSlider jslCardBudget;
+    private javax.swing.JSlider jslExtraReroll;
+    private javax.swing.JSlider jslIgor;
+    private javax.swing.JSlider jslLocalApothecary;
+    private javax.swing.JSlider jslWizard;
     private javax.swing.JScrollPane jtbGoods;
-    private javax.swing.JScrollPane jtbInducements;
     private javax.swing.JTable jtbPlayers;
     private org.jdesktop.swingx.JXTitledPanel jxtpCenter;
     // End of variables declaration//GEN-END:variables
