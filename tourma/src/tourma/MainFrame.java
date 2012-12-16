@@ -86,7 +86,7 @@ public class MainFrame extends javax.swing.JFrame {
         jbtAddCriteria.setEnabled(!bTourStarted);
         jbtRemoveCriteria.setEnabled(!bTourStarted);
 
-        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size() == 1) && (_tournament.getCoachs().isEmpty()));
+//        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size() == 1) && (_tournament.getCoachs().isEmpty()));
 
 
         jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
@@ -519,8 +519,6 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jmiExit = new javax.swing.JMenuItem();
         jmnParameters = new javax.swing.JMenu();
-        jmiEditrosters = new javax.swing.JMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jmiEditTeam = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jcxAllowSpecialSkill = new javax.swing.JCheckBoxMenuItem();
@@ -1377,17 +1375,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jmnParameters.setText(bundle.getString("Parametres")); // NOI18N
 
-        jmiEditrosters.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
-        jmiEditrosters.setText(bundle.getString("ChangeRosters")); // NOI18N
-        jmiEditrosters.setEnabled(false);
-        jmiEditrosters.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiEditrostersActionPerformed(evt);
-            }
-        });
-        jmnParameters.add(jmiEditrosters);
-        jmnParameters.add(jSeparator4);
-
         jmiEditTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
         jmiEditTeam.setText(bundle.getString("ChangeRosters")); // NOI18N
         jmiEditTeam.addActionListener(new java.awt.event.ActionListener() {
@@ -2095,11 +2082,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
-    private void jmiEditrostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditrostersActionPerformed
-        jdgRosters jdg = new jdgRosters(this, true);
-        jdg.setVisible(true);
-    }//GEN-LAST:event_jmiEditrostersActionPerformed
-
     private void jmiEditTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditTeamActionPerformed
        JdgRoster jdg=new JdgRoster(this, true);
        jdg.setVisible(true);
@@ -2251,7 +2233,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddClan;
@@ -2302,7 +2283,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiAideEnLigne;
     private javax.swing.JMenuItem jmiCharger;
     private javax.swing.JMenuItem jmiEditTeam;
-    private javax.swing.JMenuItem jmiEditrosters;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
     private javax.swing.JMenuItem jmiNouveau;

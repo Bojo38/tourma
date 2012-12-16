@@ -12,6 +12,11 @@ import java.util.Vector;
  */
 public class RosterType {
     
+    public static final int _extra_reroll_cost=100000;
+    public static final int _wizard_cost=150000;
+    public static final int _local_apo_cost=100000;
+    public static final int  _igor_cost=100000;
+    
     public String _name;
     public int _reroll_cost;
     public boolean _apothecary;

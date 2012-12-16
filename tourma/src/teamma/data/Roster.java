@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package teamma.data;
+
 import java.util.Vector;
 
 /**
@@ -13,8 +14,8 @@ public class Roster {
     /*
      * Pointer to coach owning the team
      */
+
     public RosterType _roster;
-    
     /**
      * Standard creation team
      */
@@ -24,7 +25,6 @@ public class Roster {
     public int _fanfactor;
     public int _cheerleaders;
     public int _assistants;
-    
     /**
      * Inducements
      */
@@ -35,14 +35,14 @@ public class Roster {
     public boolean _chef;
     public boolean _igor;
     public boolean _wizard;
+    public int _cards;
     /*
      * No mercenary ?
      */
     public Vector<StarPlayer> _champions;
-    
-    public Roster()
-    {
-        _players=new Vector<Player>();
-        _champions=new Vector<StarPlayer>();
+
+    public Roster() {
+        _players = new Vector<Player>();
+        _champions = new Vector<StarPlayer>();
     }
 }

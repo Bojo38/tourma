@@ -358,7 +358,7 @@
                       </Border>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[160, 150]"/>
+                      <Dimension value="[200, 220]"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -382,7 +382,11 @@
                         </Component>
                         <Component class="javax.swing.JSlider" name="jslExtraReroll">
                           <Properties>
+                            <Property name="majorTickSpacing" type="int" value="2"/>
                             <Property name="maximum" type="int" value="4"/>
+                            <Property name="minorTickSpacing" type="int" value="1"/>
+                            <Property name="paintTicks" type="boolean" value="true"/>
+                            <Property name="snapToTicks" type="boolean" value="true"/>
                             <Property name="value" type="int" value="0"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[50, 23]"/>
@@ -394,6 +398,9 @@
                               <Dimension value="[50, 23]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jslExtraRerollStateChanged"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jlbNbExtraReroll">
                           <Properties>
@@ -460,7 +467,11 @@
                         </Component>
                         <Component class="javax.swing.JSlider" name="jslBribeTheRef">
                           <Properties>
+                            <Property name="majorTickSpacing" type="int" value="2"/>
                             <Property name="maximum" type="int" value="4"/>
+                            <Property name="minorTickSpacing" type="int" value="1"/>
+                            <Property name="paintTicks" type="boolean" value="true"/>
+                            <Property name="snapToTicks" type="boolean" value="true"/>
                             <Property name="value" type="int" value="0"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[50, 23]"/>
@@ -472,6 +483,9 @@
                               <Dimension value="[50, 23]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jslBribeTheRefStateChanged"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jlbNbBribeTheRef">
                           <Properties>
@@ -538,7 +552,11 @@
                         </Component>
                         <Component class="javax.swing.JSlider" name="jslLocalApothecary">
                           <Properties>
+                            <Property name="majorTickSpacing" type="int" value="2"/>
                             <Property name="maximum" type="int" value="4"/>
+                            <Property name="minorTickSpacing" type="int" value="1"/>
+                            <Property name="paintTicks" type="boolean" value="true"/>
+                            <Property name="snapToTicks" type="boolean" value="true"/>
                             <Property name="value" type="int" value="0"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[50, 23]"/>
@@ -550,6 +568,9 @@
                               <Dimension value="[50, 23]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jslLocalApothecaryStateChanged"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jlbNbLocalApothecary">
                           <Properties>
@@ -616,7 +637,10 @@
                         </Component>
                         <Component class="javax.swing.JSlider" name="jslWizard">
                           <Properties>
+                            <Property name="majorTickSpacing" type="int" value="1"/>
                             <Property name="maximum" type="int" value="1"/>
+                            <Property name="paintTicks" type="boolean" value="true"/>
+                            <Property name="snapToTicks" type="boolean" value="true"/>
                             <Property name="value" type="int" value="0"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[50, 23]"/>
@@ -628,6 +652,9 @@
                               <Dimension value="[50, 23]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jslWizardStateChanged"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jlbNbWizard">
                           <Properties>
@@ -694,7 +721,11 @@
                         </Component>
                         <Component class="javax.swing.JSlider" name="jslIgor">
                           <Properties>
+                            <Property name="majorTickSpacing" type="int" value="1"/>
                             <Property name="maximum" type="int" value="1"/>
+                            <Property name="minorTickSpacing" type="int" value="1"/>
+                            <Property name="paintTicks" type="boolean" value="true"/>
+                            <Property name="snapToTicks" type="boolean" value="true"/>
                             <Property name="value" type="int" value="0"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[50, 23]"/>
@@ -706,6 +737,9 @@
                               <Dimension value="[50, 23]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jslIgorStateChanged"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jlbNbIgor">
                           <Properties>
@@ -772,7 +806,11 @@
                         </Component>
                         <Component class="javax.swing.JSlider" name="jslCardBudget">
                           <Properties>
+                            <Property name="majorTickSpacing" type="int" value="200000"/>
                             <Property name="maximum" type="int" value="1000000"/>
+                            <Property name="minorTickSpacing" type="int" value="50000"/>
+                            <Property name="paintTicks" type="boolean" value="true"/>
+                            <Property name="snapToTicks" type="boolean" value="true"/>
                             <Property name="value" type="int" value="0"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[50, 23]"/>
@@ -781,40 +819,12 @@
                               <Dimension value="[30, 23]"/>
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[50, 23]"/>
+                              <Dimension value="[155, 23]"/>
                             </Property>
                           </Properties>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="jlbNbCard">
-                          <Properties>
-                            <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                              <ComponentRef name="jslCardBudget"/>
-                            </Property>
-                            <Property name="text" type="java.lang.String" value="0"/>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 14]"/>
-                            </Property>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="jlbX10">
-                          <Properties>
-                            <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 14]"/>
-                            </Property>
-                          </Properties>
-                          <AccessibilityProperties>
-                            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
-                          </AccessibilityProperties>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="jlbPriceIgor1">
-                          <Properties>
-                            <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[70, 14]"/>
-                            </Property>
-                          </Properties>
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jslCardBudgetStateChanged"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jlbX11">
                           <Properties>

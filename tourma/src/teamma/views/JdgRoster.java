@@ -27,7 +27,7 @@ import tourma.MainFrame;
  * @author WFMJ7631
  */
 public class JdgRoster extends javax.swing.JDialog {
-
+    
     Roster _data = null;
 
     /**
@@ -35,24 +35,25 @@ public class JdgRoster extends javax.swing.JDialog {
      */
     public JdgRoster(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
         _data = new Roster();
-
+        initComponents();
+        
+        
         this.setPreferredSize(new Dimension(1024, 768));
         pack();
-
+        
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
         DisplayMode dmode = gs.getDisplayMode();
-
+        
         this.setSize(1024, 768);
-
+        
         if (dmode != null) {
             int screenWidth = dmode.getWidth();
             int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
-
+        
         update();
         jbtAddSkill.setEnabled(false);
         jbtRemoveSkill.setEnabled(false);
@@ -127,9 +128,6 @@ public class JdgRoster extends javax.swing.JDialog {
         jPanel13 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jslCardBudget = new javax.swing.JSlider();
-        jlbNbCard = new javax.swing.JLabel();
-        jlbX10 = new javax.swing.JLabel();
-        jlbPriceIgor1 = new javax.swing.JLabel();
         jlbX11 = new javax.swing.JLabel();
         jlbCostCard = new javax.swing.JLabel();
         jXTaskPane1 = new org.jdesktop.swingx.JXTaskPane();
@@ -276,7 +274,7 @@ public class JdgRoster extends javax.swing.JDialog {
         jXTaskPane2.getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
-        jPanel8.setPreferredSize(new java.awt.Dimension(160, 150));
+        jPanel8.setPreferredSize(new java.awt.Dimension(200, 220));
         jPanel8.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -284,11 +282,20 @@ public class JdgRoster extends javax.swing.JDialog {
         jLabel2.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel1.add(jLabel2);
 
+        jslExtraReroll.setMajorTickSpacing(2);
         jslExtraReroll.setMaximum(4);
+        jslExtraReroll.setMinorTickSpacing(1);
+        jslExtraReroll.setPaintTicks(true);
+        jslExtraReroll.setSnapToTicks(true);
         jslExtraReroll.setValue(0);
         jslExtraReroll.setMaximumSize(new java.awt.Dimension(50, 23));
         jslExtraReroll.setMinimumSize(new java.awt.Dimension(30, 23));
         jslExtraReroll.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslExtraReroll.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslExtraRerollStateChanged(evt);
+            }
+        });
         jPanel1.add(jslExtraReroll);
 
         jlbNbExtraReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -324,11 +331,20 @@ public class JdgRoster extends javax.swing.JDialog {
         jLabel3.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel9.add(jLabel3);
 
+        jslBribeTheRef.setMajorTickSpacing(2);
         jslBribeTheRef.setMaximum(4);
+        jslBribeTheRef.setMinorTickSpacing(1);
+        jslBribeTheRef.setPaintTicks(true);
+        jslBribeTheRef.setSnapToTicks(true);
         jslBribeTheRef.setValue(0);
         jslBribeTheRef.setMaximumSize(new java.awt.Dimension(50, 23));
         jslBribeTheRef.setMinimumSize(new java.awt.Dimension(30, 23));
         jslBribeTheRef.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslBribeTheRef.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslBribeTheRefStateChanged(evt);
+            }
+        });
         jPanel9.add(jslBribeTheRef);
 
         jlbNbBribeTheRef.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -364,11 +380,20 @@ public class JdgRoster extends javax.swing.JDialog {
         jLabel4.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel10.add(jLabel4);
 
+        jslLocalApothecary.setMajorTickSpacing(2);
         jslLocalApothecary.setMaximum(4);
+        jslLocalApothecary.setMinorTickSpacing(1);
+        jslLocalApothecary.setPaintTicks(true);
+        jslLocalApothecary.setSnapToTicks(true);
         jslLocalApothecary.setValue(0);
         jslLocalApothecary.setMaximumSize(new java.awt.Dimension(50, 23));
         jslLocalApothecary.setMinimumSize(new java.awt.Dimension(30, 23));
         jslLocalApothecary.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslLocalApothecary.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslLocalApothecaryStateChanged(evt);
+            }
+        });
         jPanel10.add(jslLocalApothecary);
 
         jlbNbLocalApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -404,11 +429,19 @@ public class JdgRoster extends javax.swing.JDialog {
         jLabel5.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel11.add(jLabel5);
 
+        jslWizard.setMajorTickSpacing(1);
         jslWizard.setMaximum(1);
+        jslWizard.setPaintTicks(true);
+        jslWizard.setSnapToTicks(true);
         jslWizard.setValue(0);
         jslWizard.setMaximumSize(new java.awt.Dimension(50, 23));
         jslWizard.setMinimumSize(new java.awt.Dimension(30, 23));
         jslWizard.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslWizard.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslWizardStateChanged(evt);
+            }
+        });
         jPanel11.add(jslWizard);
 
         jlbNbWizard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -444,11 +477,20 @@ public class JdgRoster extends javax.swing.JDialog {
         jLabel6.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel12.add(jLabel6);
 
+        jslIgor.setMajorTickSpacing(1);
         jslIgor.setMaximum(1);
+        jslIgor.setMinorTickSpacing(1);
+        jslIgor.setPaintTicks(true);
+        jslIgor.setSnapToTicks(true);
         jslIgor.setValue(0);
         jslIgor.setMaximumSize(new java.awt.Dimension(50, 23));
         jslIgor.setMinimumSize(new java.awt.Dimension(30, 23));
         jslIgor.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslIgor.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslIgorStateChanged(evt);
+            }
+        });
         jPanel12.add(jslIgor);
 
         jlbNbIgor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -484,27 +526,21 @@ public class JdgRoster extends javax.swing.JDialog {
         jLabel7.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel13.add(jLabel7);
 
+        jslCardBudget.setMajorTickSpacing(200000);
         jslCardBudget.setMaximum(1000000);
+        jslCardBudget.setMinorTickSpacing(50000);
+        jslCardBudget.setPaintTicks(true);
+        jslCardBudget.setSnapToTicks(true);
         jslCardBudget.setValue(0);
         jslCardBudget.setMaximumSize(new java.awt.Dimension(50, 23));
         jslCardBudget.setMinimumSize(new java.awt.Dimension(30, 23));
-        jslCardBudget.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslCardBudget.setPreferredSize(new java.awt.Dimension(155, 23));
+        jslCardBudget.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslCardBudgetStateChanged(evt);
+            }
+        });
         jPanel13.add(jslCardBudget);
-
-        jlbNbCard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbCard.setLabelFor(jslCardBudget);
-        jlbNbCard.setText("0");
-        jlbNbCard.setPreferredSize(new java.awt.Dimension(10, 14));
-        jPanel13.add(jlbNbCard);
-
-        jlbX10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbX10.setPreferredSize(new java.awt.Dimension(10, 14));
-        jPanel13.add(jlbX10);
-        jlbX10.getAccessibleContext().setAccessibleDescription("");
-
-        jlbPriceIgor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbPriceIgor1.setPreferredSize(new java.awt.Dimension(70, 14));
-        jPanel13.add(jlbPriceIgor1);
 
         jlbX11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbX11.setText("=");
@@ -655,20 +691,20 @@ public class JdgRoster extends javax.swing.JDialog {
                     positions.add(pt._position);
                 }
             }
-
+            
             String input = (String) JOptionPane.showInputDialog(this,
                     "Choisissez le type de joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
                     null, positions.toArray(), "Amazons");
             PlayerType pt = _data._roster.getPlayerType(input);
             Player p = new Player(pt);
-
+            
             _data._players.add(p);
         }
-
-
+        
+        
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
-
+    
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
         /* Get Selected line */
         int selectedLine = jtbPlayers.getSelectedRow();
@@ -676,19 +712,18 @@ public class JdgRoster extends javax.swing.JDialog {
             _data._players.remove(selectedLine);
             update();
         }
-
-    }//GEN-LAST:event_jbtRemoveActionPerformed
-
-    private void jbtAddStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStarActionPerformed
         
+    }//GEN-LAST:event_jbtRemoveActionPerformed
+    
+    private void jbtAddStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStarActionPerformed
     }//GEN-LAST:event_jbtAddStarActionPerformed
-
+    
     private void jbtRemoveStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveStarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtRemoveStarActionPerformed
-
+    
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
-
+        
         Vector<String> rosterlist = lrb.getLRB().getRosterTypeListAsString();
         String input = (String) JOptionPane.showInputDialog(this,
                 "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
@@ -703,11 +738,11 @@ public class JdgRoster extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
         }
         
-         jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/"+rt._image))); // NOI18N
+        jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + rt._image))); // NOI18N
         update();
-
+        
     }//GEN-LAST:event_jlbRosterTypeMouseClicked
-
+    
     private void jbtRemoveSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveSkillActionPerformed
         int index = jtbPlayers.getSelectedRow();
         if (index > -1) {
@@ -719,14 +754,12 @@ public class JdgRoster extends javax.swing.JDialog {
                     Skill s = p._skills.get(i);
                     skills.add(s._name);
                 }
-
+                
                 Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(), "Select skill to remove", "Skill", JOptionPane.INFORMATION_MESSAGE, null, skills.toArray(), null);
                 if (choice != null) {
                     
-                    for (i=0; i<p._skills.size(); i++)
-                    {
-                        if (p._skills.get(i)._name.equals(choice))
-                        {
+                    for (i = 0; i < p._skills.size(); i++) {
+                        if (p._skills.get(i)._name.equals(choice)) {
                             p._skills.remove(i);
                             break;
                         }
@@ -736,7 +769,7 @@ public class JdgRoster extends javax.swing.JDialog {
         }
         update();
     }//GEN-LAST:event_jbtRemoveSkillActionPerformed
-
+    
     private void jbtAddSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddSkillActionPerformed
         int index = jtbPlayers.getSelectedRow();
         if (index > -1) {
@@ -745,7 +778,7 @@ public class JdgRoster extends javax.swing.JDialog {
         }
         update();
     }//GEN-LAST:event_jbtAddSkillActionPerformed
-
+    
     private void jtbPlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbPlayersMouseClicked
         jbtAddSkill.setEnabled(jtbPlayers.getSelectedRow() > -1);
         boolean removable = false;
@@ -757,20 +790,53 @@ public class JdgRoster extends javax.swing.JDialog {
         }
         jbtRemoveSkill.setEnabled(removable);
     }//GEN-LAST:event_jtbPlayersMouseClicked
-
+    
+    private void jslExtraRerollStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslExtraRerollStateChanged
+        _data._extrarerolls = jslExtraReroll.getValue();
+        update();
+    }//GEN-LAST:event_jslExtraRerollStateChanged
+    
+    private void jslBribeTheRefStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslBribeTheRefStateChanged
+        _data._corruptions = jslBribeTheRef.getValue();
+        update();
+    }//GEN-LAST:event_jslBribeTheRefStateChanged
+    
+    private void jslLocalApothecaryStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslLocalApothecaryStateChanged
+        _data._localapothecary = jslLocalApothecary.getValue();
+        update();
+    }//GEN-LAST:event_jslLocalApothecaryStateChanged
+    
+    private void jslWizardStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslWizardStateChanged
+        _data._wizard = jslWizard.getValue() == 1;
+        update();
+    }//GEN-LAST:event_jslWizardStateChanged
+    
+    private void jslIgorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslIgorStateChanged
+        _data._igor = jslIgor.getValue() == 1;
+        update();
+    }//GEN-LAST:event_jslIgorStateChanged
+    
+    private void jslCardBudgetStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslCardBudgetStateChanged
+        _data._cards = jslCardBudget.getValue();
+        update();
+    }//GEN-LAST:event_jslCardBudgetStateChanged
+    
     private void update() {
         if (_data._roster != null) {
             jlbRosterType.setText("Roster: " + _data._roster._name);
         } else {
             jlbRosterType.setText("Roster: Unknown");
         }
-
+        
         jbtAdd.setEnabled(_data._champions.size() + _data._players.size() < 16);
         jbtRemove.setEnabled(_data._players.size() > 0);
-
+        
         mjtTeamPlayers playersModel = new mjtTeamPlayers(_data._players);
-
-
+        
+        if (_data._roster != null) {
+            jlbPriceBribeTheRef.setText(Integer.toString(_data._roster._bribe_cost));
+        }
+        
         jtbPlayers.setModel(playersModel);
         jtbPlayers.getColumnModel().getColumn(0).setMinWidth(5);
         jtbPlayers.getColumnModel().getColumn(1).setMinWidth(80);
@@ -784,7 +850,7 @@ public class JdgRoster extends javax.swing.JDialog {
         jtbPlayers.getColumnModel().getColumn(9).setMinWidth(10);
         jtbPlayers.getColumnModel().getColumn(10).setMinWidth(10);
         jtbPlayers.getColumnModel().getColumn(11).setMinWidth(10);
-
+        
         jtbPlayers.getColumnModel().getColumn(7).addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("width")) {
@@ -794,12 +860,87 @@ public class JdgRoster extends javax.swing.JDialog {
                 }
             }
         });
-
+        
         jtbPlayers.setDefaultRenderer(Integer.class, playersModel);
         jtbPlayers.setDefaultRenderer(String.class, playersModel);
-
-
-
+        
+        jlbPriceExtraReroll.setText(Integer.toString(RosterType._extra_reroll_cost));
+        jlbNbExtraReroll.setText(Integer.toString(_data._extrarerolls));
+        jlbCostExtraReroll.setText(Integer.toString(_data._extrarerolls * RosterType._extra_reroll_cost));
+        
+        if (_data._wizard) {
+            jlbNbWizard.setText("1");
+            jlbCostWizard.setText(Integer.toString(RosterType._wizard_cost));
+        } else {
+            jlbNbWizard.setText("0");
+            jlbCostWizard.setText("0");
+        }
+        jlbPriceWizard.setText(Integer.toString(RosterType._wizard_cost));
+        
+        jlbNbBribeTheRef.setText(Integer.toString(_data._corruptions));
+        if (_data._roster != null) {
+            jlbCostBribeTheRef.setText(Integer.toString(_data._corruptions * _data._roster._bribe_cost));
+        }
+        
+        boolean canHaveApo = false;
+        if (_data._roster != null) {
+            if (_data._roster._apothecary) {
+                canHaveApo = true;
+            }
+        }
+        
+        jlbCostLocalApothecary.setEnabled(canHaveApo);
+        jslLocalApothecary.setEnabled(canHaveApo);
+        jlbCostLocalApothecary.setEnabled(canHaveApo);
+        jlbPriceLocalApothecary.setEnabled(canHaveApo);
+        jlbNbLocalApothecary.setEnabled(canHaveApo);
+        jlbX4.setEnabled(canHaveApo);
+        
+        if (!canHaveApo) {
+            _data._localapothecary = 0;
+            jlbCostLocalApothecary.setText("0");
+            jlbPriceLocalApothecary.setText("100000");
+            jlbNbLocalApothecary.setText("0");
+            jslLocalApothecary.setValue(0);
+        } else {
+            jlbNbLocalApothecary.setText(Integer.toString(_data._localapothecary));
+            jlbCostLocalApothecary.setText(Integer.toString(_data._localapothecary * RosterType._local_apo_cost));
+            jlbPriceLocalApothecary.setText(Integer.toString(RosterType._local_apo_cost));
+        }
+        
+        boolean canIgor = false;
+        if (_data._roster != null) {
+            if (_data._roster._igor) {
+                canIgor = true;
+            }
+        }
+        
+        jlbCostIgor.setEnabled(canIgor);
+        jslIgor.setEnabled(canIgor);
+        jlbCostIgor.setEnabled(canIgor);
+        jlbPriceIgor.setEnabled(canIgor);
+        jlbNbIgor.setEnabled(canIgor);
+        jlbX6.setEnabled(canIgor);
+        
+        if (!canIgor) {
+            _data._igor = false;
+            jlbCostIgor.setText("0");
+            jlbPriceIgor.setText("100000");
+            jlbNbIgor.setText("0");
+            jslIgor.setValue(0);
+        } else {
+            
+            jlbNbIgor.setText(Integer.toString(jslIgor.getValue()));
+            jlbCostIgor.setText(Integer.toString(jslIgor.getValue() * RosterType._igor_cost));
+            jlbPriceIgor.setText(Integer.toString(RosterType._igor_cost));
+        }
+        
+        jlbCostCard.setText(Integer.toString(_data._cards));
+//        jlbCardBudget.setText(Integer.toString(_data._cards));
+        if (_data._roster != null) {
+            jlbCostBribeTheRef.setText(Integer.toString(_data._corruptions * _data._roster._bribe_cost));
+        }
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -845,7 +986,6 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbIcon;
     private javax.swing.JLabel jlbInducements1;
     private javax.swing.JLabel jlbNbBribeTheRef;
-    private javax.swing.JLabel jlbNbCard;
     private javax.swing.JLabel jlbNbExtraReroll;
     private javax.swing.JLabel jlbNbIgor;
     private javax.swing.JLabel jlbNbLocalApothecary;
@@ -853,14 +993,12 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbPriceBribeTheRef;
     private javax.swing.JLabel jlbPriceExtraReroll;
     private javax.swing.JLabel jlbPriceIgor;
-    private javax.swing.JLabel jlbPriceIgor1;
     private javax.swing.JLabel jlbPriceLocalApothecary;
     private javax.swing.JLabel jlbPriceWizard;
     private javax.swing.JLabel jlbRosterType;
     private javax.swing.JLabel jlbTeamName;
     private javax.swing.JLabel jlbX;
     private javax.swing.JLabel jlbX1;
-    private javax.swing.JLabel jlbX10;
     private javax.swing.JLabel jlbX11;
     private javax.swing.JLabel jlbX2;
     private javax.swing.JLabel jlbX3;
