@@ -8,7 +8,7 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>Necromantics</name>
+    <name>NecromanticKey</name>
     <reroll>70000</reroll>
     <apothecary>false</apothecary>
     <chef>300000</chef>

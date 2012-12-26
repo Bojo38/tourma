@@ -109,6 +109,17 @@ public class Tournament {
         return clans;
     }
 
+    
+    public Coach getCoach(String input)
+    {
+        for (int i = 0; i < _coachs.size(); i++) {
+            if (_coachs.get(i).equals(input)) {
+                return _coachs.get(i);
+            }
+        }
+        return null;
+    }
+            
     public Parameters getParams() {
         return _params;
 

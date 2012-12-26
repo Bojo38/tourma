@@ -8,7 +8,7 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>Lizardmen</name>
+    <name>LizardmenKey</name>
     <reroll>60000</reroll>
     <apothecary>true</apothecary>
     <chef>300000</chef>

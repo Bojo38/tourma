@@ -144,7 +144,7 @@ public class lrb {
             Element racine = document.getRootElement();
 
             Element e_name = racine.getChild("name");
-            RosterType rt = new RosterType(e_name.getValue());
+            RosterType rt = new RosterType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString( e_name.getValue()));
             rt._image=image;
             Element e_reroll_cost = racine.getChild("reroll");
             rt._reroll_cost = Integer.parseInt(e_reroll_cost.getValue());
@@ -254,6 +254,7 @@ public class lrb {
                 sp._strength = Integer.parseInt(e_star.getChild("strength").getValue());
                 sp._agility = Integer.parseInt(e_star.getChild("agility").getValue());
                 sp._armor = Integer.parseInt(e_star.getChild("armor").getValue());
+                sp._cost = Integer.parseInt(e_star.getChild("cost").getValue());
 
                 List skilllist = e_star.getChild("skills").getChildren("skill");
                 Iterator i = skilllist.iterator();
@@ -271,7 +272,7 @@ public class lrb {
                 i = rosterlist.iterator();
                 while (i.hasNext()) {
                     Element e_team = (Element) i.next();
-                    RosterType rt = getRosterType(e_team.getValue());
+                    RosterType rt = getRosterType( java.util.ResourceBundle.getBundle("tourma/languages/language").getString(e_team.getValue()));
                     if (rt == null) {
                         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "RosterType not found: " + e_team.getValue() + " for player " + sp._name);
                     } else {
@@ -324,7 +325,6 @@ public class lrb {
             if (name.equals(rt._name)) {
                 return rt;
             }
-
         }
         return null;
     }
@@ -340,4 +340,6 @@ public class lrb {
         
         return res;
     }
+    
+    
 }

@@ -19,8 +19,12 @@ import teamma.data.Roster;
 import teamma.data.Skill;
 import teamma.data.lrb;
 import teamma.data.RosterType;
+import teamma.data.StarPlayer;
 import teamma.tableModel.mjtTeamPlayers;
+import teamma.tableModel.mjtTeamStars;
 import tourma.MainFrame;
+import tourma.data.Coach;
+import tourma.data.Tournament;
 
 /**
  *
@@ -29,16 +33,21 @@ import tourma.MainFrame;
 public class JdgRoster extends javax.swing.JDialog {
     
     Roster _data = null;
+    Coach _coach=null;
 
     /**
      * Creates new form JdgRoster
      */
     public JdgRoster(java.awt.Frame parent, boolean modal) {
+        this(parent,null,modal);       
+    }
+    
+     public JdgRoster(java.awt.Frame parent, Coach coach, boolean modal) {
         super(parent, modal);
         _data = new Roster();
         initComponents();
         
-        
+        _coach=coach;
         this.setPreferredSize(new Dimension(1024, 768));
         pack();
         
@@ -68,20 +77,19 @@ public class JdgRoster extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jpnTitle = new javax.swing.JPanel();
         jlbTeamName = new javax.swing.JLabel();
         jlbRosterType = new javax.swing.JLabel();
         jlbCoachName = new javax.swing.JLabel();
         jpnCenter = new javax.swing.JPanel();
         jxtpCenter = new org.jdesktop.swingx.JXTitledPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtbPlayers = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jbtAdd = new javax.swing.JButton();
         jbtRemove = new javax.swing.JButton();
         jbtAddSkill = new javax.swing.JButton();
         jbtRemoveSkill = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtbPlayers = new javax.swing.JTable();
         jpnCenterSouth = new javax.swing.JPanel();
         jXTaskPane2 = new org.jdesktop.swingx.JXTaskPane();
         jPanel8 = new javax.swing.JPanel();
@@ -130,24 +138,79 @@ public class JdgRoster extends javax.swing.JDialog {
         jslCardBudget = new javax.swing.JSlider();
         jlbX11 = new javax.swing.JLabel();
         jlbCostCard = new javax.swing.JLabel();
+        jPanel21 = new javax.swing.JPanel();
+        jlbBabes = new javax.swing.JLabel();
+        jslBabes = new javax.swing.JSlider();
+        jlbNbBabes = new javax.swing.JLabel();
+        jlbX12 = new javax.swing.JLabel();
+        jlbPriceBabes = new javax.swing.JLabel();
+        jlbX13 = new javax.swing.JLabel();
+        jlbCostBabes = new javax.swing.JLabel();
         jXTaskPane1 = new org.jdesktop.swingx.JXTaskPane();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jtbStars = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jbtAddStar = new javax.swing.JButton();
         jbtRemoveStar = new javax.swing.JButton();
         jpnSouth = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jlbInducements1 = new javax.swing.JLabel();
-        jtbGoods = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
-        jlbIcon = new javax.swing.JLabel();
-
-        jLabel1.setText("jLabel1");
+        jlbIcon = new javax.swing.JButton();
+        jbtSelectCoach = new javax.swing.JButton();
+        jlbGoods = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jslAssists = new javax.swing.JSlider();
+        jlbNbAssists = new javax.swing.JLabel();
+        jlbNbAssists1 = new javax.swing.JLabel();
+        jlbPriceAssist = new javax.swing.JLabel();
+        jlbNbAssists3 = new javax.swing.JLabel();
+        jlbCostAssists = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jslCheerleaders = new javax.swing.JSlider();
+        jlbNbCherrleaders = new javax.swing.JLabel();
+        jlbNbAssists2 = new javax.swing.JLabel();
+        jlbPriceCheerleaders = new javax.swing.JLabel();
+        jlbNbAssists4 = new javax.swing.JLabel();
+        jlbCostCheerleaders = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jslFanFactor = new javax.swing.JSlider();
+        jlbNbFanFactor = new javax.swing.JLabel();
+        jlbNbAssists5 = new javax.swing.JLabel();
+        jlbPriceFanFactor = new javax.swing.JLabel();
+        jlbNbAssists6 = new javax.swing.JLabel();
+        jlbCostFanFactor = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jslReroll = new javax.swing.JSlider();
+        jlbNbReroll = new javax.swing.JLabel();
+        jlbNbAssists8 = new javax.swing.JLabel();
+        jlbPriceReroll = new javax.swing.JLabel();
+        jlbNbAssists9 = new javax.swing.JLabel();
+        jlbCostReroll = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        jlbApothecary = new javax.swing.JLabel();
+        jslApothecary = new javax.swing.JSlider();
+        jlbNbApothecary = new javax.swing.JLabel();
+        jlbX10 = new javax.swing.JLabel();
+        jlbPriceApothecary = new javax.swing.JLabel();
+        jlbX20 = new javax.swing.JLabel();
+        jlbCostApothecary = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
+        jcbWithSkills = new javax.swing.JCheckBox();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jlbTotalCost = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jlbRanking = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 724));
@@ -177,37 +240,13 @@ public class JdgRoster extends javax.swing.JDialog {
         getContentPane().add(jpnTitle, java.awt.BorderLayout.NORTH);
 
         jpnCenter.setMinimumSize(new java.awt.Dimension(640, 200));
-        jpnCenter.setPreferredSize(new java.awt.Dimension(320, 450));
+        jpnCenter.setPreferredSize(new java.awt.Dimension(320, 430));
         jpnCenter.setLayout(new java.awt.BorderLayout());
 
         jxtpCenter.setTitle("Players");
         jxtpCenter.setName("Players"); // NOI18N
         jxtpCenter.setPreferredSize(new java.awt.Dimension(800, 400));
         jxtpCenter.getContentContainer().setLayout(new java.awt.BorderLayout());
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 100));
-
-        jtbPlayers.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtbPlayers.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jtbPlayers.setPreferredSize(null);
-        jtbPlayers.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtbPlayersMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jtbPlayers);
-
-        jxtpCenter.getContentContainer().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel2.setPreferredSize(new java.awt.Dimension(100, 100));
         jPanel2.setLayout(new org.jdesktop.swingx.VerticalLayout());
@@ -265,6 +304,30 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jxtpCenter.getContentContainer().add(jPanel2, java.awt.BorderLayout.WEST);
 
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 100));
+
+        jtbPlayers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbPlayers.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbPlayers.setPreferredSize(null);
+        jtbPlayers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbPlayersMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtbPlayers);
+
+        jxtpCenter.getContentContainer().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
         jpnCenter.add(jxtpCenter, java.awt.BorderLayout.CENTER);
 
         jpnCenterSouth.setLayout(new org.jdesktop.swingx.VerticalLayout());
@@ -274,7 +337,7 @@ public class JdgRoster extends javax.swing.JDialog {
         jXTaskPane2.getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
-        jPanel8.setPreferredSize(new java.awt.Dimension(200, 220));
+        jPanel8.setPreferredSize(new java.awt.Dimension(200, 250));
         jPanel8.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -555,6 +618,54 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jPanel8.add(jPanel13);
 
+        jlbBabes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbBabes.setText("Bloodweiser Babes");
+        jlbBabes.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel21.add(jlbBabes);
+
+        jslBabes.setMajorTickSpacing(1);
+        jslBabes.setMaximum(2);
+        jslBabes.setPaintTicks(true);
+        jslBabes.setSnapToTicks(true);
+        jslBabes.setValue(0);
+        jslBabes.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslBabes.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslBabes.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslBabes.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslBabesStateChanged(evt);
+            }
+        });
+        jPanel21.add(jslBabes);
+
+        jlbNbBabes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbBabes.setLabelFor(jslExtraReroll);
+        jlbNbBabes.setText("0");
+        jlbNbBabes.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel21.add(jlbNbBabes);
+
+        jlbX12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX12.setText("x");
+        jlbX12.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel21.add(jlbX12);
+
+        jlbPriceBabes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceBabes.setText("50 000");
+        jlbPriceBabes.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel21.add(jlbPriceBabes);
+
+        jlbX13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX13.setText("=");
+        jlbX13.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel21.add(jlbX13);
+
+        jlbCostBabes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostBabes.setText("0");
+        jlbCostBabes.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel21.add(jlbCostBabes);
+
+        jPanel8.add(jPanel21);
+
         jXTaskPane2.getContentPane().add(jPanel8, java.awt.BorderLayout.CENTER);
 
         jpnCenterSouth.add(jXTaskPane2);
@@ -567,7 +678,7 @@ public class JdgRoster extends javax.swing.JDialog {
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 150));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        jtbStars.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -578,7 +689,12 @@ public class JdgRoster extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable3);
+        jtbStars.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbStarsMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtbStars);
 
         jPanel4.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -618,48 +734,324 @@ public class JdgRoster extends javax.swing.JDialog {
 
         getContentPane().add(jpnCenter, java.awt.BorderLayout.CENTER);
 
-        jpnSouth.setPreferredSize(new java.awt.Dimension(640, 200));
+        jpnSouth.setPreferredSize(new java.awt.Dimension(640, 260));
         jpnSouth.setLayout(new java.awt.BorderLayout());
 
-        jPanel3.setPreferredSize(new java.awt.Dimension(300, 150));
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel6.setPreferredSize(new java.awt.Dimension(640, 50));
 
-        jlbInducements1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jlbInducements1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbInducements1.setText(bundle.getString("Biens d'équipe")); // NOI18N
-        jlbInducements1.setFocusable(false);
-        jlbInducements1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(jlbInducements1, java.awt.BorderLayout.NORTH);
-
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtbGoods.setViewportView(jTable4);
-
-        jPanel3.add(jtbGoods, java.awt.BorderLayout.CENTER);
-
-        jpnSouth.add(jPanel3, java.awt.BorderLayout.EAST);
-
-        jPanel6.setPreferredSize(new java.awt.Dimension(640, 30));
-
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         jbtOK.setText("OK");
+        jbtOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtOKActionPerformed(evt);
+            }
+        });
         jPanel6.add(jbtOK);
 
         jpnSouth.add(jPanel6, java.awt.BorderLayout.SOUTH);
 
+        jPanel7.setLayout(new org.jdesktop.swingx.VerticalLayout());
+
         jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/what.png"))); // NOI18N
-        jlbIcon.setPreferredSize(new java.awt.Dimension(150, 150));
+        jlbIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jlbIconActionPerformed(evt);
+            }
+        });
         jPanel7.add(jlbIcon);
 
-        jpnSouth.add(jPanel7, java.awt.BorderLayout.CENTER);
+        jbtSelectCoach.setText("Associer un coach");
+        jbtSelectCoach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtSelectCoachActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jbtSelectCoach);
+
+        jpnSouth.add(jPanel7, java.awt.BorderLayout.WEST);
+
+        jlbGoods.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlbGoods.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbGoods.setText(bundle.getString("Biens d'équipe")); // NOI18N
+        jlbGoods.setFocusable(false);
+        jlbGoods.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jpnSouth.add(jlbGoods, java.awt.BorderLayout.NORTH);
+
+        jPanel14.setMinimumSize(new java.awt.Dimension(400, 260));
+        jPanel14.setPreferredSize(new java.awt.Dimension(300, 150));
+        jPanel14.setLayout(new org.jdesktop.swingx.VerticalLayout());
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel1.setText("Assistants :");
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel3.add(jLabel1);
+
+        jslAssists.setMajorTickSpacing(5);
+        jslAssists.setMaximum(10);
+        jslAssists.setMinorTickSpacing(1);
+        jslAssists.setPaintTicks(true);
+        jslAssists.setSnapToTicks(true);
+        jslAssists.setValue(0);
+        jslAssists.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslAssists.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslAssistsStateChanged(evt);
+            }
+        });
+        jPanel3.add(jslAssists);
+
+        jlbNbAssists.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists.setText("0");
+        jlbNbAssists.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel3.add(jlbNbAssists);
+
+        jlbNbAssists1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists1.setText("X");
+        jlbNbAssists1.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel3.add(jlbNbAssists1);
+
+        jlbPriceAssist.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceAssist.setText("10 000");
+        jlbPriceAssist.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel3.add(jlbPriceAssist);
+
+        jlbNbAssists3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists3.setText("=");
+        jlbNbAssists3.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel3.add(jlbNbAssists3);
+
+        jlbCostAssists.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostAssists.setText("0");
+        jlbCostAssists.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel3.add(jlbCostAssists);
+
+        jPanel14.add(jPanel3);
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel8.setText("Pom Pom girls :");
+        jLabel8.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel15.add(jLabel8);
+
+        jslCheerleaders.setMajorTickSpacing(5);
+        jslCheerleaders.setMaximum(10);
+        jslCheerleaders.setMinorTickSpacing(1);
+        jslCheerleaders.setPaintTicks(true);
+        jslCheerleaders.setSnapToTicks(true);
+        jslCheerleaders.setValue(0);
+        jslCheerleaders.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslCheerleaders.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslCheerleadersStateChanged(evt);
+            }
+        });
+        jPanel15.add(jslCheerleaders);
+
+        jlbNbCherrleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbCherrleaders.setText("0");
+        jlbNbCherrleaders.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel15.add(jlbNbCherrleaders);
+
+        jlbNbAssists2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists2.setText("X");
+        jlbNbAssists2.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel15.add(jlbNbAssists2);
+
+        jlbPriceCheerleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceCheerleaders.setText("10 000");
+        jlbPriceCheerleaders.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel15.add(jlbPriceCheerleaders);
+
+        jlbNbAssists4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists4.setText("=");
+        jlbNbAssists4.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel15.add(jlbNbAssists4);
+
+        jlbCostCheerleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostCheerleaders.setText("0");
+        jlbCostCheerleaders.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel15.add(jlbCostCheerleaders);
+
+        jPanel14.add(jPanel15);
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel9.setText("Popularité :");
+        jLabel9.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel16.add(jLabel9);
+
+        jslFanFactor.setMajorTickSpacing(5);
+        jslFanFactor.setMaximum(18);
+        jslFanFactor.setMinorTickSpacing(1);
+        jslFanFactor.setPaintTicks(true);
+        jslFanFactor.setSnapToTicks(true);
+        jslFanFactor.setValue(0);
+        jslFanFactor.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslFanFactor.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslFanFactorStateChanged(evt);
+            }
+        });
+        jPanel16.add(jslFanFactor);
+
+        jlbNbFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbFanFactor.setText("0");
+        jlbNbFanFactor.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel16.add(jlbNbFanFactor);
+
+        jlbNbAssists5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists5.setText("X");
+        jlbNbAssists5.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel16.add(jlbNbAssists5);
+
+        jlbPriceFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceFanFactor.setText("10 000");
+        jlbPriceFanFactor.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel16.add(jlbPriceFanFactor);
+
+        jlbNbAssists6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists6.setText("=");
+        jlbNbAssists6.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel16.add(jlbNbAssists6);
+
+        jlbCostFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostFanFactor.setText("0");
+        jlbCostFanFactor.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel16.add(jlbCostFanFactor);
+
+        jPanel14.add(jPanel16);
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel10.setText("Relances :");
+        jLabel10.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel17.add(jLabel10);
+
+        jslReroll.setMajorTickSpacing(5);
+        jslReroll.setMaximum(8);
+        jslReroll.setMinorTickSpacing(1);
+        jslReroll.setPaintTicks(true);
+        jslReroll.setSnapToTicks(true);
+        jslReroll.setValue(0);
+        jslReroll.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslReroll.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslRerollStateChanged(evt);
+            }
+        });
+        jPanel17.add(jslReroll);
+
+        jlbNbReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbReroll.setText("0");
+        jlbNbReroll.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel17.add(jlbNbReroll);
+
+        jlbNbAssists8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists8.setText("X");
+        jlbNbAssists8.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel17.add(jlbNbAssists8);
+
+        jlbPriceReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceReroll.setText("10 000");
+        jlbPriceReroll.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel17.add(jlbPriceReroll);
+
+        jlbNbAssists9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists9.setText("=");
+        jlbNbAssists9.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel17.add(jlbNbAssists9);
+
+        jlbCostReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostReroll.setText("0");
+        jlbCostReroll.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel17.add(jlbCostReroll);
+
+        jPanel14.add(jPanel17);
+
+        jlbApothecary.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbApothecary.setText("Apothecary :");
+        jlbApothecary.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel18.add(jlbApothecary);
+
+        jslApothecary.setMajorTickSpacing(1);
+        jslApothecary.setMaximum(1);
+        jslApothecary.setMinorTickSpacing(1);
+        jslApothecary.setPaintTicks(true);
+        jslApothecary.setSnapToTicks(true);
+        jslApothecary.setValue(0);
+        jslApothecary.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslApothecary.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslApothecaryStateChanged(evt);
+            }
+        });
+        jPanel18.add(jslApothecary);
+
+        jlbNbApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbApothecary.setText("0");
+        jlbNbApothecary.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel18.add(jlbNbApothecary);
+
+        jlbX10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX10.setText("X");
+        jlbX10.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel18.add(jlbX10);
+
+        jlbPriceApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceApothecary.setText("50 000");
+        jlbPriceApothecary.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel18.add(jlbPriceApothecary);
+
+        jlbX20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX20.setText("=");
+        jlbX20.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel18.add(jlbX20);
+
+        jlbCostApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostApothecary.setText("0");
+        jlbCostApothecary.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel18.add(jlbCostApothecary);
+
+        jPanel14.add(jPanel18);
+        jPanel14.add(jPanel19);
+
+        jpnSouth.add(jPanel14, java.awt.BorderLayout.CENTER);
+
+        jPanel20.setLayout(new org.jdesktop.swingx.VerticalLayout());
+
+        jcbWithSkills.setText("Inclure les compétences");
+        jcbWithSkills.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbWithSkillsActionPerformed(evt);
+            }
+        });
+        jPanel20.add(jcbWithSkills);
+
+        jLabel17.setText(" ");
+        jPanel20.add(jLabel17);
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Prix total");
+        jPanel20.add(jLabel12);
+
+        jlbTotalCost.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbTotalCost.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTotalCost.setText("0");
+        jPanel20.add(jlbTotalCost);
+
+        jLabel16.setText(" ");
+        jPanel20.add(jLabel16);
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Classement");
+        jPanel20.add(jLabel15);
+
+        jlbRanking.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbRanking.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbRanking.setText("0");
+        jPanel20.add(jlbRanking);
+
+        jLabel18.setText(" ");
+        jPanel20.add(jLabel18);
+
+        jpnSouth.add(jPanel20, java.awt.BorderLayout.EAST);
 
         getContentPane().add(jpnSouth, java.awt.BorderLayout.SOUTH);
 
@@ -716,10 +1108,44 @@ public class JdgRoster extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtRemoveActionPerformed
     
     private void jbtAddStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStarActionPerformed
+        if (_data._roster == null) {
+            JOptionPane.showMessageDialog(this, "Roster type not selected, please click on roster");
+        } else {
+            int i, j;
+            /**
+             * Build Avilable Positions
+             */
+            Vector<String> names = new Vector<String>();
+            for (i = 0; i < _data._roster._available_starplayers.size(); i++) {
+                StarPlayer sp = _data._roster._available_starplayers.get(i);
+                boolean found = false;
+                for (j = 0; j < _data._champions.size(); j++) {
+                    if (_data._champions.get(j)._name.equals(sp._name)) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    names.add(sp._name);
+                }
+                
+            }
+            
+            
+            String input = (String) JOptionPane.showInputDialog(this,
+                    "Choisissez le joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
+                    null, names.toArray(), "");
+            StarPlayer sp = _data._roster.getStarPlayer(input);
+            _data._champions.add(sp);
+        }
+        update();
     }//GEN-LAST:event_jbtAddStarActionPerformed
     
     private void jbtRemoveStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveStarActionPerformed
-        // TODO add your handling code here:
+        int i = jtbStars.getSelectedRow();
+        if (i > -1) {
+            _data._champions.remove(i);
+        }
+        update();
     }//GEN-LAST:event_jbtRemoveStarActionPerformed
     
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
@@ -729,6 +1155,10 @@ public class JdgRoster extends javax.swing.JDialog {
                 "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
                 null, rosterlist.toArray(), "Amazons");
         RosterType rt = lrb.getLRB().getRosterType(input);
+        if (_coach!=null)
+        {
+            _coach._roster=new tourma.data.RosterType(input);
+        }
         if (rt != null) {
             if (_data._roster != rt) {
                 _data._roster = rt;
@@ -821,6 +1251,76 @@ public class JdgRoster extends javax.swing.JDialog {
         update();
     }//GEN-LAST:event_jslCardBudgetStateChanged
     
+    private void jtbStarsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbStarsMouseClicked
+        jbtRemoveStar.setEnabled(jtbStars.getSelectedRow() > -1);
+    }//GEN-LAST:event_jtbStarsMouseClicked
+    
+    private void jslAssistsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslAssistsStateChanged
+        _data._assistants = jslAssists.getValue();
+        update();
+    }//GEN-LAST:event_jslAssistsStateChanged
+    
+    private void jslCheerleadersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslCheerleadersStateChanged
+        _data._cheerleaders = jslCheerleaders.getValue();
+        update();
+    }//GEN-LAST:event_jslCheerleadersStateChanged
+    
+    private void jslFanFactorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslFanFactorStateChanged
+        _data._fanfactor = jslFanFactor.getValue();
+        update();
+    }//GEN-LAST:event_jslFanFactorStateChanged
+    
+    private void jslRerollStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslRerollStateChanged
+        _data._rerolls = jslReroll.getValue();
+        update();
+    }//GEN-LAST:event_jslRerollStateChanged
+    
+    private void jslApothecaryStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslApothecaryStateChanged
+        _data._apothecary = (jslApothecary.getValue() == 1);
+        update();
+    }//GEN-LAST:event_jslApothecaryStateChanged
+
+    private void jcbWithSkillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbWithSkillsActionPerformed
+        update();
+    }//GEN-LAST:event_jcbWithSkillsActionPerformed
+
+    private void jslBabesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslBabesStateChanged
+        _data._bloodweiserbabes = jslBabes.getValue();
+        update();
+    }//GEN-LAST:event_jslBabesStateChanged
+
+    private void jbtSelectCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelectCoachActionPerformed
+       int i;
+            /**
+             * Build Avilable Positions
+             */
+            Vector<String> coachs_name = new Vector<String>();
+            Vector<Coach> coaches=Tournament.getTournament().getCoachs();
+            for (i = 0; i < coaches.size(); i++) {
+                Coach c = coaches.get(i);
+                coachs_name.add(c._name);
+            }
+            
+            String input = (String) JOptionPane.showInputDialog(this,
+                    "Choisissez le coach", "Choix du coach", JOptionPane.INFORMATION_MESSAGE,
+                    null, coachs_name.toArray(), coachs_name.get(0));
+            if (!input.equals(""))
+            {
+                Coach c = Tournament.getTournament().getCoach(input);
+                c._composition=_data;
+                _coach=c;
+            }
+
+    }//GEN-LAST:event_jbtSelectCoachActionPerformed
+
+    private void jlbIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlbIconActionPerformed
+       jlbRosterTypeMouseClicked(null);
+    }//GEN-LAST:event_jlbIconActionPerformed
+
+    private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jbtOKActionPerformed
+    
     private void update() {
         if (_data._roster != null) {
             jlbRosterType.setText("Roster: " + _data._roster._name);
@@ -828,10 +1328,37 @@ public class JdgRoster extends javax.swing.JDialog {
             jlbRosterType.setText("Roster: Unknown");
         }
         
+        if (_coach==null)
+        {
+            jbtSelectCoach.setText("Associer un coach");
+        }
+        else
+        {
+            jbtSelectCoach.setText(_coach._name);
+            jlbCoachName.setText("Coach: "+_coach._name);
+            if (_coach._roster!=null)
+            {
+                _data._roster=lrb.getLRB().getRosterType(_coach._roster._name);
+                if (_data._roster!=null)
+                {
+                    jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data._roster._image)));
+                }
+                jlbTeamName.setText(_coach._team);
+                jlbRosterType.setText("Roster: "+_data._roster._name);
+            }
+            _coach._composition=_data;
+        }
+        
+        jbtSelectCoach.setEnabled(Tournament.getTournament().GetActiveCoachNumber()>0);
+        
         jbtAdd.setEnabled(_data._champions.size() + _data._players.size() < 16);
         jbtRemove.setEnabled(_data._players.size() > 0);
-        
+
+        /**
+         * Players
+         */
         mjtTeamPlayers playersModel = new mjtTeamPlayers(_data._players);
+        
         
         if (_data._roster != null) {
             jlbPriceBribeTheRef.setText(Integer.toString(_data._roster._bribe_cost));
@@ -850,6 +1377,20 @@ public class JdgRoster extends javax.swing.JDialog {
         jtbPlayers.getColumnModel().getColumn(9).setMinWidth(10);
         jtbPlayers.getColumnModel().getColumn(10).setMinWidth(10);
         jtbPlayers.getColumnModel().getColumn(11).setMinWidth(10);
+
+        /**
+         * Star players
+         */
+        mjtTeamStars starsModel = new mjtTeamStars(_data._champions);
+        jtbStars.setModel(starsModel);
+        jtbStars.getColumnModel().getColumn(0).setMinWidth(80);
+        jtbStars.getColumnModel().getColumn(1).setMinWidth(80);
+        jtbStars.getColumnModel().getColumn(2).setMinWidth(5);
+        jtbStars.getColumnModel().getColumn(3).setMinWidth(5);
+        jtbStars.getColumnModel().getColumn(4).setMinWidth(5);
+        jtbStars.getColumnModel().getColumn(5).setMinWidth(5);
+        jtbStars.getColumnModel().getColumn(6).setMinWidth(500);
+        jtbStars.getColumnModel().getColumn(7).setMinWidth(10);
         
         jtbPlayers.getColumnModel().getColumn(7).addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
@@ -860,13 +1401,65 @@ public class JdgRoster extends javax.swing.JDialog {
                 }
             }
         });
-        
+
+        /**
+         * Team goods
+         */
         jtbPlayers.setDefaultRenderer(Integer.class, playersModel);
         jtbPlayers.setDefaultRenderer(String.class, playersModel);
+        jtbStars.setDefaultRenderer(Integer.class, starsModel);
+        jtbStars.setDefaultRenderer(String.class, starsModel);
         
+        jlbNbAssists.setText(Integer.toString(_data._assistants));
+        jlbCostAssists.setText(Integer.toString(_data._assistants * RosterType._assistant_cost));
+        jlbPriceAssist.setText(Integer.toString(RosterType._assistant_cost));
+        
+        jlbNbReroll.setText(Integer.toString(_data._rerolls));
+        jlbCostReroll.setText(Integer.toString(_data._rerolls * (_data._roster!=null?_data._roster._reroll_cost:0)));
+        jlbPriceReroll.setText(Integer.toString((_data._roster!=null?_data._roster._reroll_cost:0)));
+        
+        jlbNbCherrleaders.setText(Integer.toString(_data._cheerleaders));
+        jlbCostCheerleaders.setText(Integer.toString(_data._cheerleaders * RosterType._cheerleader_cost));
+        jlbPriceCheerleaders.setText(Integer.toString(RosterType._cheerleader_cost));
+        
+        jlbNbFanFactor.setText(Integer.toString(_data._fanfactor));
+        jlbCostFanFactor.setText(Integer.toString(_data._fanfactor * RosterType._fan_factor_cost));
+        jlbPriceFanFactor.setText(Integer.toString(RosterType._fan_factor_cost));
+        
+        if (_data._roster!=null)
+        {
+        jlbCostApothecary.setEnabled(_data._roster._apothecary);
+        jslApothecary.setEnabled(_data._roster._apothecary);
+        jlbPriceApothecary.setEnabled(_data._roster._apothecary);
+            jlbApothecary.setEnabled(_data._roster._apothecary);
+            jlbX10.setEnabled(_data._roster._apothecary);
+            jlbX20.setEnabled(_data._roster._apothecary);
+
+            if (!_data._roster._apothecary) {
+                jslApothecary.setValue(0);
+            } else {
+                jlbPriceApothecary.setText(Integer.toString(RosterType._apothecary_cost));
+                if (_data._apothecary) {
+                    jlbNbApothecary.setText("1");
+                    jlbCostApothecary.setText(Integer.toString(RosterType._apothecary_cost));
+                } else {
+                    jlbNbApothecary.setText("0");
+                    jlbCostApothecary.setText("0");
+                }
+            }
+        }
+
+        /**
+         * Team inducements
+         */
         jlbPriceExtraReroll.setText(Integer.toString(RosterType._extra_reroll_cost));
         jlbNbExtraReroll.setText(Integer.toString(_data._extrarerolls));
         jlbCostExtraReroll.setText(Integer.toString(_data._extrarerolls * RosterType._extra_reroll_cost));
+        
+        jlbPriceBabes.setText(Integer.toString(RosterType._babe_cost));
+        jlbNbBribeTheRef.setText(Integer.toString(_data._bloodweiserbabes));
+        jlbCostBabes.setText(Integer.toString(_data._bloodweiserbabes * RosterType._babe_cost));
+        
         
         if (_data._wizard) {
             jlbNbWizard.setText("1");
@@ -941,21 +1534,47 @@ public class JdgRoster extends javax.swing.JDialog {
             jlbCostBribeTheRef.setText(Integer.toString(_data._corruptions * _data._roster._bribe_cost));
         }
         
+        jbtAddStar.setEnabled(_data._champions.size() < 2);
+        jbtRemoveStar.setEnabled(jtbStars.getSelectedRow() > -1);
+
+        
+        /**
+         * Ranking
+         */
+        int cost=_data.getValue(jcbWithSkills.isSelected());
+        jlbTotalCost.setText(Integer.toString(cost));
+        jlbRanking.setText(Integer.toString(cost/10000));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -965,8 +1584,6 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private org.jdesktop.swingx.JXTaskPane jXTaskPane1;
     private org.jdesktop.swingx.JXTaskPane jXTaskPane2;
     private javax.swing.JButton jbtAdd;
@@ -976,31 +1593,67 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JButton jbtRemove;
     private javax.swing.JButton jbtRemoveSkill;
     private javax.swing.JButton jbtRemoveStar;
+    private javax.swing.JButton jbtSelectCoach;
+    private javax.swing.JCheckBox jcbWithSkills;
+    private javax.swing.JLabel jlbApothecary;
+    private javax.swing.JLabel jlbBabes;
     private javax.swing.JLabel jlbCoachName;
+    private javax.swing.JLabel jlbCostApothecary;
+    private javax.swing.JLabel jlbCostAssists;
+    private javax.swing.JLabel jlbCostBabes;
     private javax.swing.JLabel jlbCostBribeTheRef;
     private javax.swing.JLabel jlbCostCard;
+    private javax.swing.JLabel jlbCostCheerleaders;
     private javax.swing.JLabel jlbCostExtraReroll;
+    private javax.swing.JLabel jlbCostFanFactor;
     private javax.swing.JLabel jlbCostIgor;
     private javax.swing.JLabel jlbCostLocalApothecary;
+    private javax.swing.JLabel jlbCostReroll;
     private javax.swing.JLabel jlbCostWizard;
-    private javax.swing.JLabel jlbIcon;
-    private javax.swing.JLabel jlbInducements1;
+    private javax.swing.JLabel jlbGoods;
+    private javax.swing.JButton jlbIcon;
+    private javax.swing.JLabel jlbNbApothecary;
+    private javax.swing.JLabel jlbNbAssists;
+    private javax.swing.JLabel jlbNbAssists1;
+    private javax.swing.JLabel jlbNbAssists2;
+    private javax.swing.JLabel jlbNbAssists3;
+    private javax.swing.JLabel jlbNbAssists4;
+    private javax.swing.JLabel jlbNbAssists5;
+    private javax.swing.JLabel jlbNbAssists6;
+    private javax.swing.JLabel jlbNbAssists8;
+    private javax.swing.JLabel jlbNbAssists9;
+    private javax.swing.JLabel jlbNbBabes;
     private javax.swing.JLabel jlbNbBribeTheRef;
+    private javax.swing.JLabel jlbNbCherrleaders;
     private javax.swing.JLabel jlbNbExtraReroll;
+    private javax.swing.JLabel jlbNbFanFactor;
     private javax.swing.JLabel jlbNbIgor;
     private javax.swing.JLabel jlbNbLocalApothecary;
+    private javax.swing.JLabel jlbNbReroll;
     private javax.swing.JLabel jlbNbWizard;
+    private javax.swing.JLabel jlbPriceApothecary;
+    private javax.swing.JLabel jlbPriceAssist;
+    private javax.swing.JLabel jlbPriceBabes;
     private javax.swing.JLabel jlbPriceBribeTheRef;
+    private javax.swing.JLabel jlbPriceCheerleaders;
     private javax.swing.JLabel jlbPriceExtraReroll;
+    private javax.swing.JLabel jlbPriceFanFactor;
     private javax.swing.JLabel jlbPriceIgor;
     private javax.swing.JLabel jlbPriceLocalApothecary;
+    private javax.swing.JLabel jlbPriceReroll;
     private javax.swing.JLabel jlbPriceWizard;
+    private javax.swing.JLabel jlbRanking;
     private javax.swing.JLabel jlbRosterType;
     private javax.swing.JLabel jlbTeamName;
+    private javax.swing.JLabel jlbTotalCost;
     private javax.swing.JLabel jlbX;
     private javax.swing.JLabel jlbX1;
+    private javax.swing.JLabel jlbX10;
     private javax.swing.JLabel jlbX11;
+    private javax.swing.JLabel jlbX12;
+    private javax.swing.JLabel jlbX13;
     private javax.swing.JLabel jlbX2;
+    private javax.swing.JLabel jlbX20;
     private javax.swing.JLabel jlbX3;
     private javax.swing.JLabel jlbX4;
     private javax.swing.JLabel jlbX5;
@@ -1012,14 +1665,20 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JPanel jpnCenterSouth;
     private javax.swing.JPanel jpnSouth;
     private javax.swing.JPanel jpnTitle;
+    private javax.swing.JSlider jslApothecary;
+    private javax.swing.JSlider jslAssists;
+    private javax.swing.JSlider jslBabes;
     private javax.swing.JSlider jslBribeTheRef;
     private javax.swing.JSlider jslCardBudget;
+    private javax.swing.JSlider jslCheerleaders;
     private javax.swing.JSlider jslExtraReroll;
+    private javax.swing.JSlider jslFanFactor;
     private javax.swing.JSlider jslIgor;
     private javax.swing.JSlider jslLocalApothecary;
+    private javax.swing.JSlider jslReroll;
     private javax.swing.JSlider jslWizard;
-    private javax.swing.JScrollPane jtbGoods;
     private javax.swing.JTable jtbPlayers;
+    private javax.swing.JTable jtbStars;
     private org.jdesktop.swingx.JXTitledPanel jxtpCenter;
     // End of variables declaration//GEN-END:variables
 }

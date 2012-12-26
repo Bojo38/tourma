@@ -25,9 +25,9 @@ and open the template in the editor.
             <skill>Throw Team-Mate</skill>
         </skills>
         <cost>260000</cost>
-        <team>Amazons</team>
-        <team>Halflings</team>
-        <team>Ogres</team>
+        <team>AmazonKey</team>
+        <team>HalflingKey</team>
+        <team>OgreKey</team>
     </starplayer>
     
     <starplayer>
@@ -46,7 +46,7 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
         </skills>
         <cost>60000</cost>
-        <team>Dwarves</team>
+        <team>DwarfKey</team>
     </starplayer>
     
     <starplayer>
@@ -65,8 +65,8 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
         </skills>
         <cost>60000</cost>
-        <team>Dwarves</team>
-        <team>Norses</team>
+        <team>DwarfKey</team>
+        <team>NorseKey</team>
     </starplayer>
     
     <starplayer>
@@ -84,8 +84,8 @@ and open the template in the editor.
             <skill>Regeneration</skill>
         </skills>
         <cost>270000</cost>
-        <team>Goblins</team>
-        <team>Orcs</team>       
+        <team>GoblinKey</team>
+        <team>OrcKey</team>       
     </starplayer>
     
     <starplayer>
@@ -105,11 +105,11 @@ and open the template in the editor.
             <skill>Secret Weapon</skill>
         </skills>
         <cost>60000</cost>
-        <team>Goblins</team>
-        <team>Orcs</team>
-        <team>Ogres</team>
-        <team>Chaos Pact</team>
-        <team>Underworld</team>
+        <team>GoblinKey</team>
+        <team>OrcKey</team>
+        <team>OgreKey</team>
+        <team>ChaosPactKey</team>
+        <team>UnderworldKey</team>
     </starplayer>
     
     <starplayer>
@@ -126,7 +126,7 @@ and open the template in the editor.
             <skill>Mighty Blow</skill>
         </skills>
         <cost>340000</cost>
-        <team>Skavens</team>
+        <team>SkavenKey</team>
     </starplayer>
     
     <starplayer>
@@ -144,9 +144,9 @@ and open the template in the editor.
             <skill>Side Step</skill>
         </skills>
         <cost>390000</cost>
-        <team>Undeads</team>
-        <team>Necromantics</team>
-        <team>Vampires</team>
+        <team>UndeadKey</team>
+        <team>NecromanticKey</team>
+        <team>VampireKey</team>
     </starplayer>
     
     <starplayer>
@@ -165,9 +165,9 @@ and open the template in the editor.
             <skill>Kick</skill>
         </skills>
         <cost>170000</cost>
-        <team>Elves</team>
-        <team>High Elves</team>
-        <team>Wood Elves</team>
+        <team>ElfKey</team>
+        <team>HighElfKey</team>
+        <team>WoodElfKey</team>
     </starplayer>
     
     <starplayer>
@@ -186,10 +186,10 @@ and open the template in the editor.
             <skill>Hypnotic Gaze</skill>
         </skills>
         <cost>170000</cost>
-        <team>Dark Elves</team>
-        <team>Elves</team>
-        <team>High Elves</team>
-        <team>Wood Elves</team>
+        <team>DarkElfKey</team>
+        <team>ElfKey</team>
+        <team>HighElfKey</team>
+        <team>WoodElfKey</team>
     </starplayer>
     
     <starplayer>
@@ -208,8 +208,8 @@ and open the template in the editor.
             <skill>Secret Weapon</skill>
         </skills>
         <cost>80000</cost>
-        <team>Skavens</team>
-        <team>Underworld</team>
+        <team>SkavenKey</team>
+        <team>UnderworldKey</team>
     </starplayer>
     
     <starplayer>
@@ -228,7 +228,7 @@ and open the template in the editor.
             <skill>Stunty</skill>
         </skills>
         <cost>80000</cost>
-        <team>Goblins</team>
+        <team>GoblinKey</team>
     </starplayer>
     
     <starplayer>
@@ -245,8 +245,8 @@ and open the template in the editor.
             <skill>Juggernaut</skill>
         </skills>
         <cost>200000</cost>
-        <team>Skavens</team>
-        <team>Underworld</team>
+        <team>SkavenKey</team>
+        <team>UnderworldKey</team>
     </starplayer>
     
     <starplayer>
@@ -264,10 +264,10 @@ and open the template in the editor.
             <skill>Frenzy</skill>
         </skills>
         <cost>310000</cost>
-        <team>Chaos</team>
-        <team>Chaos Dwarves</team>
-        <team>Nurgle's Rotters</team>
-        <team>Khorne's Dameons</team>
+        <team>ChaosKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>NurgleKey</team>
+        <team>KhornesDaemonsKey</team>
     </starplayer>
     
     <starplayer>
@@ -285,7 +285,7 @@ and open the template in the editor.
             <skill>Sprint</skill>
         </skills>
         <cost>320000</cost>
-        <team>Humans</team>
+        <team>HumanKey</team>
     </starplayer>
     
     <starplayer>
@@ -304,7 +304,7 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
         </skills>
         <cost>220000</cost>
-        <team>Dwarves</team>
+        <team>DwarfKey</team>
     </starplayer>
     
     <starplayer>
@@ -322,9 +322,9 @@ and open the template in the editor.
             <skill>Side Step</skill>
         </skills>
         <cost>120000</cost>
-        <team>Khemris</team>
-        <team>Necromantics</team>
-        <team>Undeads</team>
+        <team>KhemriKey</team>
+        <team>NecromanticKey</team>
+        <team>UndeadKey</team>
     </starplayer>
     
     <starplayer>
@@ -342,7 +342,7 @@ and open the template in the editor.
             <skill>Prehensile Tail</skill>
         </skills>
         <cost>200000</cost>
-        <team>Skavens</team>
+        <team>SkavenKey</team>
     </starplayer>
     
     <starplayer>
@@ -359,12 +359,12 @@ and open the template in the editor.
             <skill>Stand Firm</skill>
         </skills>
         <cost>110000</cost>
-        <team>Amazons</team>
-        <team>Lizardmen</team>
-        <team>Humans</team>
-        <team>Norses</team>
-        <team>Vampires</team>
-        <team>Slanns</team>
+        <team>AmazonKey</team>
+        <team>LizardmenKey</team>
+        <team>HumanKey</team>
+        <team>NorseKey</team>
+        <team>VampireKey</team>
+        <team>SlannKey</team>
     </starplayer>
     
     <starplayer>
@@ -384,8 +384,8 @@ and open the template in the editor.
             <skill>Stab</skill>
         </skills>
         <cost>170000</cost>
-        <team>Lizardmen</team>
-        <team>Slanns</team>
+        <team>LizardmenKey</team>
+        <team>SlannKey</team>
     </starplayer>
     
     <starplayer>
@@ -404,7 +404,7 @@ and open the template in the editor.
             <skill>Leap</skill>
         </skills>
         <cost>210000</cost>
-        <team>Dark Elves</team>
+        <team>DarkElfKey</team>
     </starplayer>
     
     <starplayer>
@@ -424,7 +424,7 @@ and open the template in the editor.
             <skill>Juggernaut</skill>
         </skills>
         <cost>330000</cost>
-        <team>Chaos Dwarves</team>
+        <team>ChaosDwarfKey</team>
     </starplayer>
     
     <starplayer>
@@ -443,8 +443,8 @@ and open the template in the editor.
             <skill>Dirty Player</skill>
         </skills>
         <cost>260000</cost>
-        <team>Elves</team>
-        <team>Dark Elves</team>
+        <team>ElfKey</team>
+        <team>DarkElfKey</team>
     </starplayer>
     
     <starplayer>
@@ -463,7 +463,7 @@ and open the template in the editor.
             <skill>Regeneration</skill>
         </skills>
         <cost>330000</cost>
-        <team>Norses</team>
+        <team>NorseKey</team>
     </starplayer>
     
     <starplayer>
@@ -480,9 +480,9 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
         </skills>
         <cost>130000</cost>
-        <team>Vampires</team>
-        <team>Chaos Pact</team>
-        <team>Khorne's Dameons</team>
+        <team>VampireKey</team>
+        <team>ChaosPactKey</team>
+        <team>KhornesDaemonsKey</team>
     </starplayer>
     
     <starplayer>
@@ -500,7 +500,7 @@ and open the template in the editor.
             <skill>Nerves of Steel</skill>
         </skills>
         <cost>130000</cost>
-        <team>Khemris</team>
+        <team>KhemriKey</team>
     </starplayer>
     
     <starplayer>
@@ -520,8 +520,8 @@ and open the template in the editor.
             <skill>Sure Hands</skill>
         </skills>
         <cost>220000</cost>
-        <team>Khemris</team>
-        <team>Dark Elves</team>
+        <team>KhemriKey</team>
+        <team>DarkElfKey</team>
     </starplayer>
     
     <starplayer>
@@ -539,9 +539,9 @@ and open the template in the editor.
             <skill>Sprint</skill>
         </skills>
         <cost>180000</cost>
-        <team>Necromantics</team>
-        <team>Undeads</team>
-        <team>Vampires</team>
+        <team>NecromanticKey</team>
+        <team>UndeadKey</team>
+        <team>VampireKey</team>
     </starplayer>
     
     <starplayer>
@@ -559,9 +559,9 @@ and open the template in the editor.
             <skill>Tentacles</skill>
         </skills>
         <cost>150000</cost>
-        <team>Chaos</team>
-        <team>Chaos Pact</team>
-        <team>Nurgle's Rotters</team>
+        <team>ChaosKey</team>
+        <team>ChaosPactKey</team>
+        <team>NurgleKey</team>
     </starplayer>
     
     <starplayer>
@@ -580,8 +580,8 @@ and open the template in the editor.
             <skill>Diving Catch</skill>
         </skills>
         <cost>230000</cost>
-        <team>Elves</team>
-        <team>Wood Elves</team>
+        <team>ElfKey</team>
+        <team>WoodElfKey</team>
     </starplayer>
     
     <starplayer>
@@ -598,9 +598,9 @@ and open the template in the editor.
             <skill>Dirty Player</skill>
         </skills>
         <cost>300000</cost>
-        <team>Chaos</team>
-        <team>Nurgle's Rotters</team>
-        <team>Khorne's Dameons</team>
+        <team>ChaosKey</team>
+        <team>NurgleKey</team>
+        <team>KhornesDaemonsKey</team>
     </starplayer>
     
     <starplayer>
@@ -621,8 +621,8 @@ and open the template in the editor.
             <skill>Very Long Legs</skill>
         </skills>
         <cost>220000</cost>
-        <team>Lizardmen</team>
-        <team>Slanns</team>
+        <team>LizardmenKey</team>
+        <team>SlannKey</team>
     </starplayer>
     <starplayer>
         <name>Max Spleenripper</name>
@@ -637,9 +637,9 @@ and open the template in the editor.
             <skill>Secret Weapon</skill>
         </skills>
         <cost>130000</cost>
-        <team>Chaos</team>
-        <team>Nurgle's Rotters</team>
-        <team>Khorne's Dameons</team>
+        <team>ChaosKey</team>
+        <team>NurgleKey</team>
+        <team>KhornesDaemonsKey</team>
     </starplayer>
     <starplayer>
         <name>Morg'N'Torg</name>
@@ -656,27 +656,27 @@ and open the template in the editor.
             <skill>Throw Team-Mate</skill>
         </skills>
         <cost>450000</cost>
-        <team>Amazons</team>
-        <team>Chaos</team>
-        <team>Chaos Dwarves</team>
-        <team>Chaos Pact</team>
-        <team>Dark Elves</team>
-        <team>Elves</team>
-        <team>Goblins</team>
-        <team>Halflings</team>
-        <team>High Elves</team>
-        <team>Humans</team>
-        <team>Lizardmen</team>
-        <team>Norses</team>
-        <team>Nurgle's Rotters</team>
-        <team>Ogres</team>
-        <team>Orcs</team>
-        <team>Skavens</team>
-        <team>Slanns</team>
-        <team>Underworld</team>
-        <team>Vampires</team>
-        <team>Wood Elves</team>
-        <team>Khorne's Dameons</team>
+        <team>AmazonKey</team>
+        <team>ChaosKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>ChaosPactKey</team>
+        <team>DarkElfKey</team>
+        <team>ElfKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>LizardmenKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>UnderworldKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+        <team>KhornesDaemonsKey</team>
     </starplayer>
     
     <starplayer>
@@ -695,10 +695,10 @@ and open the template in the editor.
             <skill>Stunty</skill>
         </skills>
         <cost>130000</cost>
-        <team>Goblins</team>
-        <team>Ogres</team>
-        <team>Chaos Dwarves</team>
-        <team>Underworld</team>
+        <team>GoblinKey</team>
+        <team>OgreKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>UnderworldKey</team>
     </starplayer>
     <starplayer>
         <name>Brick Far'th</name>
@@ -717,8 +717,8 @@ and open the template in the editor.
             <skill>Nerves of Steel</skill>
         </skills>
         <cost>290000</cost>
-        <team>Nurgle's Rotters</team>
-        <team>Ogres</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
     </starplayer>
     <starplayer>
         <name>Grotty</name>
@@ -734,8 +734,8 @@ and open the template in the editor.
             <skill>Right Stuff</skill>
         </skills>
         <cost>0</cost>
-        <team>Nurgle's Rotters</team>
-        <team>Ogres</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
     </starplayer>
     <starplayer>
         <name>Prince Moranion</name>
@@ -752,8 +752,8 @@ and open the template in the editor.
             <skill>Wrestle</skill>
         </skills>
         <cost>230000</cost>
-        <team>Elves</team>
-        <team>High Elves</team>
+        <team>ElfKey</team>
+        <team>HighElfKey</team>
     </starplayer>
     <starplayer>
         <name>Puggy Baconbreath</name>
@@ -771,8 +771,8 @@ and open the template in the editor.
             <skill>Right Stuff</skill>
         </skills>
         <cost>140000</cost>
-        <team>Humans</team>
-        <team>Halflings</team>
+        <team>HumanKey</team>
+        <team>HalflingKey</team>
     </starplayer>
     <starplayer>
         <name>Quetzal Leap</name>
@@ -792,8 +792,8 @@ and open the template in the editor.
             <skill>Very Long Legs</skill>
         </skills>
         <cost>250000</cost>
-        <team>Lizardmen</team>
-        <team>Slanns</team>
+        <team>LizardmenKey</team>
+        <team>SlannKey</team>
     </starplayer>
     <starplayer>
         <name>Deeproot Strongbranch</name>
@@ -812,7 +812,7 @@ and open the template in the editor.
             <skill>Throw Team-Mate</skill>
         </skills>
         <cost>250000</cost>
-        <team>Halflings</team>
+        <team>HalflingKey</team>
     </starplayer>
     <starplayer>
         <name>Ratmut III</name>
@@ -829,9 +829,9 @@ and open the template in the editor.
             <skill>Regeneration</skill>
         </skills>
         <cost>380000</cost>
-        <team>Khemris</team>
-        <team>Undeads</team>
-        <team>Necromantics</team>
+        <team>KhemriKey</team>
+        <team>UndeadKey</team>
+        <team>NecromanticKey</team>
     </starplayer>
     <starplayer>
         <name>Rashnak Backstab</name>
@@ -848,7 +848,7 @@ and open the template in the editor.
             <skill>Sneaky Git</skill>
         </skills>
         <cost>200000</cost>
-        <team>Chaos Dwarves</team>
+        <team>ChaosDwarfKey</team>
     </starplayer>
     <starplayer>
         <name>Roxanna Darknails</name>
@@ -866,8 +866,8 @@ and open the template in the editor.
             <skill>Leap</skill>
         </skills>
         <cost>250000</cost>
-        <team>Dark Elves</team>
-        <team>Amazons</team>
+        <team>DarkElfKey</team>
+        <team>AmazonKey</team>
     </starplayer>
     <starplayer>
         <name>Scrappa Sorehead</name>
@@ -888,9 +888,9 @@ and open the template in the editor.
             <skill>Sure Feet</skill>
         </skills>
         <cost>150000</cost>
-        <team>Goblins</team>
-        <team>Ogres</team>
-        <team>Orcs</team>
+        <team>GoblinKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
     </starplayer>
     <starplayer>
         <name>Setekh</name>
@@ -908,9 +908,9 @@ and open the template in the editor.
             <skill>Regeneration</skill>
         </skills>
         <cost>220000</cost>
-        <team>Khemris</team>
-        <team>Undeads</team>
-        <team>Necromantics</team>
+        <team>KhemriKey</team>
+        <team>UndeadKey</team>
+        <team>NecromanticKey</team>
     </starplayer>
     <starplayer>
         <name>Skitter Stab-Stab</name>
@@ -927,8 +927,8 @@ and open the template in the editor.
             <skill>Shadowing</skill>
         </skills>
         <cost>160000</cost>
-        <team>Skavens</team>
-        <team>Underworld</team>
+        <team>SkavenKey</team>
+        <team>UnderworldKey</team>
     </starplayer>
     <starplayer>
         <name>Silibili</name>
@@ -945,8 +945,8 @@ and open the template in the editor.
             <skill>Stand Firm</skill>
         </skills>
         <cost>250000</cost>
-        <team>Lizardmen</team>
-        <team>Slanns</team>
+        <team>LizardmenKey</team>
+        <team>SlannKey</team>
     </starplayer>
     <starplayer>
         <name>Sinnedbad</name>
@@ -966,8 +966,8 @@ and open the template in the editor.
             <skill>Stab</skill>
         </skills>
         <cost>80000</cost>
-        <team>Undeads</team>
-        <team>Khemris</team>
+        <team>UndeadKey</team>
+        <team>KhemriKey</team>
     </starplayer>
     <starplayer>
         <name>Soaren Hightower</name>
@@ -986,7 +986,7 @@ and open the template in the editor.
             <skill>Strong Arm</skill>
         </skills>
         <cost>180000</cost>
-        <team>High Elves</team>
+        <team>HighElfKey</team>
     </starplayer>
     <starplayer>
         <name>Flint Churnblade</name>
@@ -1003,7 +1003,7 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
         </skills>
         <cost>130000</cost>
-        <team>Dwarves</team>
+        <team>DwarfKey</team>
     </starplayer>
     <starplayer>
         <name>Ugroth Bolgrot</name>
@@ -1018,8 +1018,8 @@ and open the template in the editor.
             <skill>Secret Weapon</skill>
         </skills>
         <cost>100000</cost>
-        <team>Orcs</team>
-        <team>Chaos Pact</team>
+        <team>OrcKey</team>
+        <team>ChaosPactKey</team>
     </starplayer>
     <starplayer>
         <name>Varag Ghoul-Chewer</name>
@@ -1036,7 +1036,7 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
         </skills>
         <cost>290000</cost>
-        <team>Orcs</team>
+        <team>OrcKey</team>
     </starplayer>
     <starplayer>
         <name>Wilhelm Chaney</name>
@@ -1054,9 +1054,9 @@ and open the template in the editor.
             <skill>Regeneration</skill>
         </skills>
         <cost>240000</cost>
-        <team>Necromantics</team>
-        <team>Norses</team>
-        <team>Vampires</team>
+        <team>NecromanticKey</team>
+        <team>NorseKey</team>
+        <team>VampireKey</team>
     </starplayer>
     <starplayer>
         <name>Willow Rosebark</name>
@@ -1072,9 +1072,9 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
         </skills>
         <cost>150000</cost>
-        <team>Amazons</team>
-        <team>Halflings</team>
-        <team>Wood Elves</team>
+        <team>AmazonKey</team>
+        <team>HalflingKey</team>
+        <team>WoodElfKey</team>
     </starplayer>
     <starplayer>
         <name>Zara The Slayer</name>
@@ -1093,13 +1093,13 @@ and open the template in the editor.
             <skill>Stakes</skill>
         </skills>
         <cost>270000</cost>
-        <team>Amazons</team>
-        <team>Humans</team>
-        <team>Dwarves</team>
-        <team>Norses</team>
-        <team>Halflings</team>
-        <team>High Elves</team>
-        <team>Wood Elves</team>
+        <team>AmazonKey</team>
+        <team>HumanKey</team>
+        <team>DwarfKey</team>
+        <team>NorseKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>WoodElfKey</team>
     </starplayer>
     <starplayer>
         <name>Mighty Zug</name>
@@ -1114,7 +1114,7 @@ and open the template in the editor.
             <skill>Mighty Blow</skill>
         </skills>
         <cost>260000</cost>
-        <team>Humans</team>
+        <team>HumanKey</team>
     </starplayer>
     <starplayer>
         <name>Zzharg Madeye</name>
@@ -1134,9 +1134,9 @@ and open the template in the editor.
             <skill>Tackle</skill> 
         </skills>
         <cost>60000</cost>
-        <team>Chaos Pact</team>
-        <team>Chaos Dwarves</team>
-        <team>Khorne's Dameons</team>
+        <team>ChaosPactKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>KhornesDaemonsKey</team>
     </starplayer>
    
 </StarPlayerList>

@@ -12,6 +12,13 @@ import java.awt.Color;
  */
 public class Skill {
 
+    public static final int _single_cost=20000;
+    public static final int _double_cost=30000;
+    public static final int _strenght_cost=50000;
+    public static final int _agility_cost=40000;
+    public static final int _armor_cost=30000;
+    public static final int _movement_cost=30000;
+    
     public String _name;
     public SkillType _category;
     public Color _color;

@@ -13,9 +13,15 @@ import java.util.Vector;
 public class RosterType {
     
     public static final int _extra_reroll_cost=100000;
+    public static final int _babe_cost=50000;
     public static final int _wizard_cost=150000;
     public static final int _local_apo_cost=100000;
     public static final int  _igor_cost=100000;
+    
+    public static final int  _assistant_cost=10000;
+    public static final int  _fan_factor_cost=10000;
+    public static final int  _cheerleader_cost=10000;
+    public static final int  _apothecary_cost=50000;
     
     public String _name;
     public int _reroll_cost;
@@ -43,6 +49,18 @@ public class RosterType {
                 return rt;
             }
 
+        }
+        return null;
+    }
+    
+     public StarPlayer getStarPlayer(String name) {
+        int i;
+        for (i = 0; i < _available_starplayers.size(); i++) {
+           StarPlayer sp = _available_starplayers.get(i);
+
+            if (name.equals(sp._name)) {
+                return sp;
+            }
         }
         return null;
     }

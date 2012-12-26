@@ -28,6 +28,8 @@ public class Coach implements Comparable{
 
     public Vector<Match> _matchs;
 
+    public teamma.data.Roster _composition;
+    
     public Coach()
     {
         _matchs=new Vector<Match>();
