@@ -44,10 +44,26 @@ public class JdgRoster extends javax.swing.JDialog {
     
      public JdgRoster(java.awt.Frame parent, Coach coach, boolean modal) {
         super(parent, modal);
-        _data = new Roster();
+        _coach=coach;
+        if (_coach!=null)
+        {
+          if (_coach._composition!=null)
+          {
+              _data=_coach._composition;
+          }
+          else
+          {
+              _coach._composition = new Roster();
+          }
+        }
+        else
+        {
+            _coach._composition = new Roster();
+        }
+         _data=_coach._composition;
         initComponents();
         
-        _coach=coach;
+        
         this.setPreferredSize(new Dimension(1024, 768));
         pack();
         

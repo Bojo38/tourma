@@ -329,6 +329,18 @@ public class lrb {
         return null;
     }
     
+     public StarPlayer getStarPlayer(String name) {
+        int i;
+        for (i = 0; i < _starPlayers.size(); i++) {
+            StarPlayer rt = _starPlayers.get(i);
+
+            if (name.equals(rt._name)) {
+                return rt;
+            }
+        }
+        return null;
+    }
+    
     public Vector<String> getRosterTypeListAsString()
     {
         int i;
