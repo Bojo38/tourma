@@ -1325,6 +1325,7 @@ public class JdgRoster extends javax.swing.JDialog {
                 Coach c = Tournament.getTournament().getCoach(input);
                 c._composition=_data;
                 _coach=c;
+                _coach._rank=_data.getValue(false)/10000;
             }
 
     }//GEN-LAST:event_jbtSelectCoachActionPerformed
@@ -1363,6 +1364,7 @@ public class JdgRoster extends javax.swing.JDialog {
                 jlbRosterType.setText("Roster: "+_data._roster._name);
             }
             _coach._composition=_data;
+            _coach._rank=_data.getValue(false)/10000;
         }
         
         jbtSelectCoach.setEnabled(Tournament.getTournament().GetActiveCoachNumber()>0);

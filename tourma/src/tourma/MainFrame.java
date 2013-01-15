@@ -115,13 +115,16 @@ public class MainFrame extends javax.swing.JFrame {
         jrbTeamVictory.setEnabled(teamMatches);
 
         jtffTeamVictory.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+        
         jtffTeamDraw.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
         jlbVictoryPoints.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+        jlbVictoryPoints1.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
 
         jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
         jtffLostTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
 
         jtffVictoryTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
         
 
         Vector<String> rankChoices = new Vector<String>();
@@ -166,7 +169,8 @@ public class MainFrame extends javax.swing.JFrame {
         jrbCoachPoints.setSelected(!_tournament.getParams()._team_victory_only);
         jrbTeamVictory.setSelected(_tournament.getParams()._team_victory_only);
         jtffTeamVictory.setValue(_tournament.getParams()._team_victory_points);
-
+        jtffTeamDraw.setValue(_tournament.getParams()._team_draw_points);
+        
         jtfOrgas.setText(_tournament.getParams()._tournament_orga);
         jtfTournamentName.setText(_tournament.getParams()._tournament_name);
 
@@ -183,7 +187,7 @@ public class MainFrame extends javax.swing.JFrame {
         jtffLostTeam.setValue(new Integer(_tournament.getParams()._lost_points_team));
 
         jtffVictoryTeam.setValue(new Integer(_tournament.getParams()._victory_points_team));
-        jtffDrawTeam.setValue(new Integer(_tournament.getParams()._draw_points_team));
+        
 
         jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
         jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
@@ -1436,7 +1440,7 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OddTeamNumber"));
             } else {
                 String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Random"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RegisteringOrder"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Manual")};
-                int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseFirstDraw"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Draw"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
+                int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseFirstDraw"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FirstRound"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
 
                 _tournament.generateFirstRound(choice);
 

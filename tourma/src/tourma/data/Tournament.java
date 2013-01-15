@@ -1149,6 +1149,7 @@ public class Tournament {
                         }
 
                         c._composition._players.add(pl);
+                        c._rank=c._composition.getValue(false)/10000;
                     }
                 }
 
@@ -1180,9 +1181,6 @@ public class Tournament {
             List rounds = racine.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"));
             Iterator j = rounds.iterator();
             _rounds.clear();
-
-
-
 
             while (j.hasNext()) {
                 Element round = (Element) j.next();
