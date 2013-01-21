@@ -19,6 +19,7 @@ import com.adobe.acrobat.Viewer;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URI;
 
 /**
@@ -49,14 +50,14 @@ public class jdgOnlineHelp extends javax.swing.JDialog {
         }
 
         try {
-            viewer = new Viewer();
-            URI uri = getClass().getResource("/tourma/views/system/help/help_fr.pdf").toURI();
-            FileInputStream fis = new FileInputStream(new File(uri));
-            viewer.setDocumentInputStream(fis);
+            /*viewer = new Viewer();
+            //URI uri = getClass().getResource("/tourma/views/system/help/help_fr.pdf").toURI();
+             InputStream is=MainFrame.class.getClassLoader().getResourceAsStream("/tourma/views/system/help/help_fr.pdf");
+            viewer.setDocumentInputStream(is);
             this.add(viewer, BorderLayout.CENTER);
             viewer.activate();
 
-            String page1 = viewer.getTextForPage(0);
+            String page1 = viewer.getTextForPage(0);*/
             
         } catch (Exception e) {
             e.printStackTrace();
