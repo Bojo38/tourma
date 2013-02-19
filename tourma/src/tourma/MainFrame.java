@@ -930,7 +930,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel10.add(jtffTeamVictory);
 
         jlbVictoryPoints1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbVictoryPoints1.setText(bundle.getString("TeamVictoryBonus")); // NOI18N
+        jlbVictoryPoints1.setText(bundle.getString("TeamDrawBonus")); // NOI18N
         jlbVictoryPoints1.setToolTipText("");
         jPanel10.add(jlbVictoryPoints1);
 

@@ -101,7 +101,7 @@ public class jdgTeam extends javax.swing.JDialog {
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jLabel1.setText(bundle.getString("CoachNameKey")); // NOI18N
+        jLabel1.setText(bundle.getString("TeamNameKey")); // NOI18N
         jPanel1.add(jLabel1);
         jPanel1.add(jtfNom);
 
