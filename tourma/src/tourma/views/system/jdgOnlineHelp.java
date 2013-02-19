@@ -15,7 +15,6 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
-import com.adobe.acrobat.Viewer;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +27,6 @@ import java.net.URI;
  */
 public class jdgOnlineHelp extends javax.swing.JDialog {
 
-    private Viewer viewer;
 
     /**
      * Creates new form jdgAbout
