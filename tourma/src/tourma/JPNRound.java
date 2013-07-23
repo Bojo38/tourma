@@ -10,6 +10,7 @@
  */
 package tourma;
 
+import java.awt.BorderLayout;
 import tourma.tableModel.mjtAnnexRank;
 import tourma.tableModel.mjtRankingIndiv;
 import tourma.tableModel.mjtMatches;
@@ -31,7 +32,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
@@ -180,6 +184,7 @@ public class JPNRound extends javax.swing.JPanel {
         jbtShowResults = new javax.swing.JButton();
         jbtDeleteRound = new javax.swing.JButton();
         jbtChangeMatchs = new javax.swing.JButton();
+        jbtAddMatch = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -263,6 +268,15 @@ public class JPNRound extends javax.swing.JPanel {
             }
         });
         jPanel3.add(jbtChangeMatchs);
+
+        jbtAddMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddMatch.setText(bundle.getString("AddMatch")); // NOI18N
+        jbtAddMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddMatchActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtAddMatch);
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
@@ -910,6 +924,64 @@ public class JPNRound extends javax.swing.JPanel {
         jdg.setVisible(true);
         update();
     }//GEN-LAST:event_jbtChangeMatchsActionPerformed
+
+    private void jbtAddMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddMatchActionPerformed
+
+        Vector<Coach> Coachs1 = new Vector<Coach>();
+        Vector<Coach> Coachs2 = new Vector<Coach>();
+
+        JComboBox<String> jcb1 = new JComboBox<String>();
+        JComboBox<String> jcb2 = new JComboBox<String>();
+
+        for (int i = 0; i < _tournament.GetActiveCoaches().size(); i++) {
+            Coach c = _tournament.GetActiveCoaches().get(i);
+            Coachs1.add(c);
+            Coachs2.add(c);
+            jcb1.addItem(c._name);
+            jcb2.addItem(c._name);
+        }
+
+
+
+        boolean ValidMatch = false;
+
+        while (!ValidMatch) {
+            jcb1.setSelectedIndex(0);
+            jcb2.setSelectedIndex(1);
+            
+            JPanel jpnQuestion=new JPanel(new BorderLayout(0,0));
+            jpnQuestion.add(jcb1,BorderLayout.WEST);
+            jpnQuestion.add(jcb2,BorderLayout.EAST);
+            JLabel jlb=new JLabel(" vs ");
+            jpnQuestion.add(jlb,BorderLayout.CENTER);
+
+             int ret=JOptionPane.showOptionDialog(MainFrame.getMainFrame(),jpnQuestion,"Match libre", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,null,null,null);
+         
+            if (ret==JOptionPane.OK_OPTION)
+            {
+                if (jcb1.getSelectedIndex()!=jcb2.getSelectedIndex())
+                {
+                    Match m=new Match();
+                    m._coach1=Coachs1.get(jcb1.getSelectedIndex());
+                    m._coach2=Coachs2.get(jcb2.getSelectedIndex());
+                    
+                    _round.getMatchs().add(m);
+                    ValidMatch=true;
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Match impossible","Erreur",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else
+            {
+                ValidMatch=true;
+            }
+        }
+
+
+        update();
+    }//GEN-LAST:event_jbtAddMatchActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -919,6 +991,7 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton jbtAddMatch;
     private javax.swing.JButton jbtChangeMatchs;
     private javax.swing.JButton jbtDeleteRound;
     private javax.swing.JButton jbtGeneralIndiv;
