@@ -69,32 +69,15 @@ public class MainFrame extends javax.swing.JFrame {
         _tournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
-        
-        Vector<String> StartOptions=new Vector<String>();
+
+        Vector<String> StartOptions = new Vector<String>();
         StartOptions.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGame"));
         StartOptions.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
-        int res=JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGameOrOpen"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
+        int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGameOrOpen"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
 
-        if (res==0)
-        {
-            Vector<String> Games=new Vector<String>();
-            Games.add("Blood Bowl");
-            Games.add("DreadBall");
-            int res2=JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseGame"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, Games.toArray(), "Blood Bowl");
-            if (res2==0)
-            {
-                RosterType.initCollection(RosterType.C_BLOOD_BOWL);
-                lrb.getLRB();
-                Tournament.getTournament().getParams()._game=RosterType.C_BLOOD_BOWL;
-            }
-            else
-            {
-                RosterType.initCollection(RosterType.C_DREAD_BALL);
-                Tournament.getTournament().getParams()._game=RosterType.C_DREAD_BALL;
-            }
-        }
-        else
-        {
+        if (res == 0) {
+            jmiNouveauActionPerformed(null);
+        } else {
             JFileChooser jfc = new JFileChooser();
             FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
             jfc.setFileFilter(filter1);
@@ -116,7 +99,7 @@ public class MainFrame extends javax.swing.JFrame {
                     jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
                 }
             }
-        }        
+        }
 
         update();
     }
@@ -138,7 +121,7 @@ public class MainFrame extends javax.swing.JFrame {
         jbtRemoveCriteria.setEnabled(!bTourStarted);
 
 //        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size() == 1) && (_tournament.getCoachs().isEmpty()));
-        jmiEditTeam.setEnabled(_tournament.getParams()._game==RosterType.C_BLOOD_BOWL);
+        jmiEditTeam.setEnabled(_tournament.getParams()._game == RosterType.C_BLOOD_BOWL);
 
         jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
         jcxActivatesClans.setEnabled(!bTourStarted && !_tournament.getParams()._teamTournament);
@@ -1689,6 +1672,33 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
         _tournament = Tournament.resetTournament();
+
+        Vector<String> Games = new Vector<String>();
+        Games.add("Blood Bowl");
+        Games.add("DreadBall");
+        int res2 = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseGame"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, Games.toArray(), "Blood Bowl");
+        if (res2 == 0) {
+            RosterType.initCollection(RosterType.C_BLOOD_BOWL);
+            lrb.getLRB();
+            Tournament.getTournament().getParams()._game = RosterType.C_BLOOD_BOWL;
+
+        } else {
+            RosterType.initCollection(RosterType.C_DREAD_BALL);
+            Tournament.getTournament().getParams()._game = RosterType.C_DREAD_BALL;
+            jmiExport.setEnabled(false);
+            jmiExportFbb.setEnabled(false);
+            jcxAllowSpecialSkill.setEnabled(false);
+        }
+
+        _tournament = Tournament.getTournament();
+        _tournament.getGroups().clear();
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
+        Group group = new Group(bundle.getString("NoneKey"));
+        _tournament.getGroups().add(group);
+
+        for (int i = 0; i < RosterType.RostersNames.size(); i++) {
+            group._rosters.add(new RosterType(RosterType.RostersNames.get(i)));
+        }
 
         Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Single"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam")};
         int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TournamentType"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewTournament"),
