@@ -25,8 +25,10 @@ import java.util.Vector;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
@@ -58,16 +60,65 @@ public class MainFrame extends javax.swing.JFrame {
     Tournament _tournament;
     File _file = null;
 
-    /** Creates new form MainFrame */
+    /**
+     * Creates new form MainFrame
+     */
     public MainFrame() {
         Locale l = Locale.getDefault();
 
         _tournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
+        
+        Vector<String> StartOptions=new Vector<String>();
+        StartOptions.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGame"));
+        StartOptions.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
+        int res=JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGameOrOpen"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
+
+        if (res==0)
+        {
+            Vector<String> Games=new Vector<String>();
+            Games.add("Blood Bowl");
+            Games.add("DreadBall");
+            int res2=JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseGame"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, Games.toArray(), "Blood Bowl");
+            if (res2==0)
+            {
+                RosterType.initCollection(RosterType.C_BLOOD_BOWL);
+                lrb.getLRB();
+                Tournament.getTournament().getParams()._game=RosterType.C_BLOOD_BOWL;
+            }
+            else
+            {
+                RosterType.initCollection(RosterType.C_DREAD_BALL);
+                Tournament.getTournament().getParams()._game=RosterType.C_DREAD_BALL;
+            }
+        }
+        else
+        {
+            JFileChooser jfc = new JFileChooser();
+            FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
+            jfc.setFileFilter(filter1);
+            if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                Tournament.getTournament().loadXML(jfc.getSelectedFile());
+                _file =
+                        jfc.getSelectedFile();
+                for (int i = jtpMain.getTabCount() - 1; i
+                        >= 0; i--) {
+                    Component obj = jtpMain.getComponentAt(i);
+                    if (obj instanceof JPNRound) {
+                        jtpMain.remove(obj);
+                    }
+
+                }
+                for (int i = 0; i
+                        < _tournament.getRounds().size(); i++) {
+                    JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
+                    jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                }
+            }
+        }        
 
         update();
-
     }
 
     public void update() {
@@ -87,7 +138,7 @@ public class MainFrame extends javax.swing.JFrame {
         jbtRemoveCriteria.setEnabled(!bTourStarted);
 
 //        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size() == 1) && (_tournament.getCoachs().isEmpty()));
-
+        jmiEditTeam.setEnabled(_tournament.getParams()._game==RosterType.C_BLOOD_BOWL);
 
         jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
         jcxActivatesClans.setEnabled(!bTourStarted && !_tournament.getParams()._teamTournament);
@@ -115,7 +166,7 @@ public class MainFrame extends javax.swing.JFrame {
         jrbTeamVictory.setEnabled(teamMatches);
 
         jtffTeamVictory.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-        
+
         jtffTeamDraw.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
         jlbVictoryPoints.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
         jlbVictoryPoints1.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
@@ -125,7 +176,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jtffVictoryTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
         jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        
+
 
         Vector<String> rankChoices = new Vector<String>();
         rankChoices.add("Aucun");
@@ -170,7 +221,7 @@ public class MainFrame extends javax.swing.JFrame {
         jrbTeamVictory.setSelected(_tournament.getParams()._team_victory_only);
         jtffTeamVictory.setValue(_tournament.getParams()._team_victory_points);
         jtffTeamDraw.setValue(_tournament.getParams()._team_draw_points);
-        
+
         jtfOrgas.setText(_tournament.getParams()._tournament_orga);
         jtfTournamentName.setText(_tournament.getParams()._tournament_name);
 
@@ -187,7 +238,7 @@ public class MainFrame extends javax.swing.JFrame {
         jtffLostTeam.setValue(new Integer(_tournament.getParams()._lost_points_team));
 
         jtffVictoryTeam.setValue(new Integer(_tournament.getParams()._victory_points_team));
-        
+
 
         jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
         jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
@@ -215,56 +266,48 @@ public class MainFrame extends javax.swing.JFrame {
         jtbCriteria.setModel(new mjtCriterias(_tournament));
 
         jcbRank1.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank1ActionPerformed(evt);
             }
         });
 
         jcbRank2.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank2ActionPerformed(evt);
             }
         });
 
         jcbRank3.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank3ActionPerformed(evt);
             }
         });
 
         jcbRank4.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank4ActionPerformed(evt);
             }
         });
 
         jcbRank5.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank5ActionPerformed(evt);
             }
         });
 
         jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank1TeamActionPerformed(evt);
             }
         });
 
         jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank2TeamActionPerformed(evt);
             }
         });
 
         jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank3TeamActionPerformed(evt);
             }
@@ -272,14 +315,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         jcbRank4Team.addActionListener(
                 new java.awt.event.ActionListener() {
-
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jcbRank4TeamActionPerformed(evt);
                     }
                 });
 
         jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRank5TeamActionPerformed(evt);
             }
@@ -372,10 +413,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -1732,20 +1773,20 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jbtAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddTeamActionPerformed
         /*String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TeamName"));
-        Team team = new Team();
-        team._name = name;
-        Coach lastCoach = null;
-        while (team._coachs.size() < _tournament.getParams()._teamMatesNumber) {
-        jdgCoach jdg = new jdgCoach(this, true);
-        jdg.setVisible(true);
-        Coach c = _tournament.getCoachs().lastElement();
-        if (c != lastCoach) {
-        c._teamMates = team;
-        team._coachs.add(c);
-        lastCoach = c;
-        }
-        }
-        _tournament.getTeams().add(team);*/
+         Team team = new Team();
+         team._name = name;
+         Coach lastCoach = null;
+         while (team._coachs.size() < _tournament.getParams()._teamMatesNumber) {
+         jdgCoach jdg = new jdgCoach(this, true);
+         jdg.setVisible(true);
+         Coach c = _tournament.getCoachs().lastElement();
+         if (c != lastCoach) {
+         c._teamMates = team;
+         team._coachs.add(c);
+         lastCoach = c;
+         }
+         }
+         _tournament.getTeams().add(team);*/
 
         jdgTeam jdg = new jdgTeam(this, true);
         jdg.setVisible(true);
@@ -1891,6 +1932,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     /**
      * Press Add CLan name callback
+     *
      * @param evt not used
      */
     private void jbtAddClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddClanActionPerformed
@@ -1907,6 +1949,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     /**
      * Press Edit clan name callback
+     *
      * @param evt not used
      */
     private void jbtEditClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditClanActionPerformed
@@ -1921,6 +1964,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     /**
      * Press Remove clan button callback
+     *
      * @param evt Not used
      */
     private void jbtRemoveClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveClanActionPerformed
@@ -2097,16 +2141,16 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jmiEditTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditTeamActionPerformed
-       JdgRoster jdg=new JdgRoster(this, true);
-       jdg.setVisible(true);
+        JdgRoster jdg = new JdgRoster(this, true);
+        jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditTeamActionPerformed
 
     private void jcxAllowSpecialSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAllowSpecialSkillActionPerformed
-        lrb.getLRB()._allowSpecialSkills=jcxAllowSpecialSkill.getState();
+        lrb.getLRB()._allowSpecialSkills = jcxAllowSpecialSkill.getState();
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
 
     private void jtffTeamDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamDrawFocusLost
-         try {
+        try {
             jtffTeamDraw.commitEdit();
             int points = ((Long) jtffTeamDraw.getValue()).intValue();
             _tournament.getParams()._team_draw_points = points;
@@ -2165,7 +2209,6 @@ public class MainFrame extends javax.swing.JFrame {
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
-
             public void run() {
 
                 JFrame.setDefaultLookAndFeelDecorated(true);
@@ -2176,8 +2219,6 @@ public class MainFrame extends javax.swing.JFrame {
                     System.out.println(e.getLocalizedMessage());
                 }
 
-                RosterType.initCollection();
-                lrb.getLRB();
                 MainFrame.getMainFrame().setVisible(true);
             }
         });

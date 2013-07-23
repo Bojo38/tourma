@@ -4,6 +4,19 @@
  */
 package tourma.data;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.google.zxing.qrcode.encoder.Encoder;
+import com.google.zxing.qrcode.encoder.QRCode;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import tourma.*;
@@ -23,6 +36,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import java.util.Vector;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -34,6 +48,9 @@ import org.jdom.output.XMLOutputter;
 import teamma.data.Player;
 import teamma.data.StarPlayer;
 import teamma.data.lrb;
+import tourma.tableModel.mjtAnnexRankIndiv;
+import tourma.tableModel.mjtRankingIndiv;
+import tourma.tableModel.mjtRankingTeam;
 
 /**
  *
@@ -45,6 +62,8 @@ public class Tournament {
     protected Vector<Coach> _coachs;
     protected Vector<Team> _teams;
     protected Parameters _params;
+    
+    
     protected static Tournament _singleton;
     /**
      * Clans used in the tournement
@@ -220,6 +239,7 @@ public class Tournament {
 
         params.setAttribute("GroupEnable", Boolean.toString(_params._groupsEnable));
         params.setAttribute("Substitutes", Boolean.toString(_params._substitutes));
+        params.setAttribute("GameType", Integer.toString(_params._game));
 
 
         /*
@@ -437,6 +457,173 @@ public class Tournament {
             return "Vampires";
         }
         return "Unknown";
+    }
+
+    protected String generateCSVRanking(int round,boolean withRoster, boolean withNaf) {
+        String s = this._params._tournament_name + ";" + this._params._date.toString() + ";" + this._params._teamTournament + "\n";
+        s = s + ";\n";
+        if (this._params._teamTournament) {
+            mjtRankingTeam rt = new mjtRankingTeam(true, round - 1,
+                    _params._ranking1_team,
+                    _params._ranking2_team,
+                    _params._ranking3_team,
+                    _params._ranking4_team,
+                    _params._ranking5_team,
+                    _teams);
+
+            for (int i = 0; i < rt.getRowCount(); i++) {
+                String team = (String) rt.getValueAt(i, 1);
+                s = s + (i + 1) + ";" + team;
+                for (int j = 0; j < _teams.size(); j++) {
+                    if (_teams.get(j)._name.equals(team)) {
+                        for (int k = 0; k < _teams.get(j)._coachs.size(); k++) {
+                            s = s + ";" + _teams.get(j)._coachs.get(k)._name;
+                        }
+                    }
+                }
+                s = s + "\n";
+            }
+
+            s = s + ";\n";
+        }
+
+        mjtRankingIndiv ri = new mjtRankingIndiv(round,
+                _params._ranking1,
+                _params._ranking2,
+                _params._ranking3,
+                _params._ranking4,
+                _params._ranking5,
+                _coachs, false);
+        for (int i = 0; i < ri.getRowCount(); i++) {
+            String coach = (String) ri.getValueAt(i, 2);
+            s = s + (i + 1) + ";" + coach;
+            for (int j = 0; j < _coachs.size(); j++) {
+                if (_coachs.get(j)._name.equals(coach)) {
+                    if (withNaf)
+                    {
+                        s = s + ";" + _coachs.get(j)._naf;
+                    }
+                    if (withRoster)
+                    {
+                        s = s + ";" + _coachs.get(j)._roster._name;
+                    }
+                }
+            }
+            s = s + "\n";
+        }
+        return s;
+    }
+
+    public RenderedImage generateRankingQRCode(int round) {
+        String s = generateCSVRanking(round,false,false);
+        QRCode qrcode = null;;
+        try {
+            qrcode = Encoder.encode(s, ErrorCorrectionLevel.H);
+
+            int magnify = 10; //The resolution of the QRCode 
+            byte[][] matrix = qrcode.getMatrix().getArray();
+            int size = qrcode.getMatrix().getWidth() * magnify;
+
+            //Make the BufferedImage that are to hold the QRCode 
+            BufferedImage im = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+            im.createGraphics();
+            Graphics2D g = (Graphics2D) im.getGraphics();
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, size * magnify, size * magnify);
+
+            //paint the image using the ByteMatrik 
+            for (int h = 0; h < qrcode.getMatrix().getHeight(); h++) {
+                for (int w = 0; w < qrcode.getMatrix().getWidth(); w++) {
+                    //Find the colour of the dot 
+                    if (matrix[h][w] == 0) {
+                        g.setColor(Color.WHITE);
+                    } else {
+                        g.setColor(Color.BLACK);
+                    }
+
+                    //Paint the dot 
+                    g.fillRect(h * magnify, w * magnify, magnify, magnify);
+                }
+            }
+            return im;
+
+        } catch (WriterException e) {
+
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+            return null;
+        }
+    }
+
+    public void exportFBB(java.io.File file) {
+        try {
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            String s=generateCSVRanking(_rounds.size(),true,true);
+            String s_tmp=s;
+            while (s_tmp.length()>0)
+            {
+                writer.print(s_tmp.substring(0, Math.min(255,s_tmp.length()-1)));
+                s_tmp=s_tmp.substring(Math.min(256,s_tmp.length()));
+            }
+
+             writer.close();
+             
+            RenderedImage im = generateRankingQRCode(_rounds.size());
+
+            try {
+                ImageIO.write(im, "png", new File(file.getAbsoluteFile() + ".png"));
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+            }
+
+            /*writer.println(this._params._tournament_name + ";" + this._params._date.toString() + ";" + this._params._teamTournament);
+             writer.println(";");
+             if (this._params._teamTournament) {
+             mjtRankingTeam rt = new mjtRankingTeam(true, this._rounds.size() - 1,
+             _params._ranking1_team,
+             _params._ranking2_team,
+             _params._ranking3_team,
+             _params._ranking4_team,
+             _params._ranking5_team,
+             _teams);
+
+             for (int i = 0; i < rt.getRowCount(); i++) {
+             String team = (String) rt.getValueAt(i, 1);
+             writer.print((i + 1) + ";" + team);
+             for (int j = 0; j < _teams.size(); j++) {
+             if (_teams.get(j)._name.equals(team)) {
+             for (int k = 0; k < _teams.get(j)._coachs.size(); k++) {
+             writer.print(";" + _teams.get(j)._coachs.get(k)._name);
+             }
+             }
+             }
+             writer.print("\n");
+             }
+
+             writer.println(";");
+             }
+
+             mjtRankingIndiv ri = new mjtRankingIndiv(_rounds.size(),
+             _params._ranking1,
+             _params._ranking2,
+             _params._ranking3,
+             _params._ranking4,
+             _params._ranking5,
+             _coachs, false);
+             for (int i = 0; i < ri.getRowCount(); i++) {
+             String coach = (String) ri.getValueAt(i, 2);
+             writer.print((i + 1) + ";" + coach);
+             for (int j = 0; j < _coachs.size(); j++) {
+             if (_coachs.get(j)._name.equals(coach)) {
+             writer.print(";" + _coachs.get(j)._naf);
+             writer.print(";" + _coachs.get(j)._roster._name);
+             }
+             }
+             writer.print("\n");
+             }*/
+           
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        }
     }
 
     public void exportResults(java.io.File file) {
@@ -927,6 +1114,7 @@ public class Tournament {
 
     protected void LoadXMLv3(Element racine) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        
         try {
             List ros = racine.getChildren("Roster");
             if (ros != null) {
@@ -987,6 +1175,12 @@ public class Tournament {
                     try {
                         _params._date = format.parse(params.getAttribute("Date").getValue());
                     } catch (ParseException pe) {
+                    }
+                    
+                    try {
+                        _params._game = params.getAttribute("GameType").getIntValue();
+                    } catch (Exception pe) {
+                        _params._game=1;
                     }
 
                     _params._groupsEnable = params.getAttribute("GroupEnable").getBooleanValue();
@@ -1149,7 +1343,7 @@ public class Tournament {
                         }
 
                         c._composition._players.add(pl);
-                        c._rank=c._composition.getValue(false)/10000;
+                        c._rank = c._composition.getValue(false) / 10000;
                     }
                 }
 
@@ -1317,29 +1511,14 @@ public class Tournament {
     public void loadXML(java.io.File file) {
         SAXBuilder sxb = new SAXBuilder();
 
-
-
-
-
         try {
             org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
-
-
-
-
             try {
                 String version = racine.getAttributeValue("Version");
-
-
-
-
                 if (Integer.parseInt(version) == 3) {
                     LoadXMLv3(racine);
-
-
-
 
                 }
             } catch (NumberFormatException npe) {

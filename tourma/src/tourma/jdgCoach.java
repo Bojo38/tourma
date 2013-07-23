@@ -67,6 +67,9 @@ public class jdgCoach extends javax.swing.JDialog {
         } else {
             jcbClan.setEnabled(Tournament.getTournament().getParams()._enableClans);
         }
+        jbtEditRoster.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
+        jLabel4.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
+        jtfNAF.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
 
     }
     Team _team = null;
@@ -103,7 +106,9 @@ public class jdgCoach extends javax.swing.JDialog {
         } else {
             jcbClan.setEnabled(Tournament.getTournament().getParams()._enableClans);
         }
-
+        jbtEditRoster.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
+        jLabel4.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
+        jtfNAF.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
     }
 
     /**
@@ -155,6 +160,10 @@ public class jdgCoach extends javax.swing.JDialog {
         if (_coach._clan != null) {
             jcbClan.setSelectedItem(_coach._clan._name);
         }
+        
+        jbtEditRoster.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
+        jLabel4.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
+        jtfNAF.setEnabled(Tournament.getTournament().getParams()._game==RosterType.C_BLOOD_BOWL);
     }
 
     /**

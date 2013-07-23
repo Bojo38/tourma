@@ -13,6 +13,8 @@ import java.util.Vector;
  */
 public class Parameters {
 
+    public int _game=RosterType.C_BLOOD_BOWL;
+    
     public int _victory_points = 1000;
     public int _large_victory_points = 1100;
     public int _draw_points = 400;

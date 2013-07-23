@@ -10,16 +10,9 @@
  */
 package tourma.views.system;
 
-import tourma.*;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.io.IOException;
-import java.awt.BorderLayout;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URI;
 
 /**
  *
