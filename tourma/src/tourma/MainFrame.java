@@ -520,6 +520,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmiSaveAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
         jmiExport = new javax.swing.JMenuItem();
+        jmiExportFbb = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         jmiExit = new javax.swing.JMenuItem();
         jmnParameters = new javax.swing.JMenu();
@@ -1364,6 +1365,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnFile.add(jmiExport);
+
+        jmiExportFbb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExportFbb.setText(bundle.getString("ExportFBBResultKey")); // NOI18N
+        jmiExportFbb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExportFbbActionPerformed(evt);
+            }
+        });
+        jmnFile.add(jmiExportFbb);
         jmnFile.add(jSeparator2);
 
         jmiExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
@@ -2106,6 +2116,15 @@ public class MainFrame extends javax.swing.JFrame {
         update();
     }//GEN-LAST:event_jtffTeamDrawFocusLost
 
+    private void jmiExportFbbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbbActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        FileFilter filter1 = new ExtensionFileFilter("FBB csv file", new String[]{"CSV", "csv"});
+        jfc.setFileFilter(filter1);
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            Tournament.getTournament().exportFBB(jfc.getSelectedFile());
+        }
+    }//GEN-LAST:event_jmiExportFbbActionPerformed
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
@@ -2289,6 +2308,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiEditTeam;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
+    private javax.swing.JMenuItem jmiExportFbb;
     private javax.swing.JMenuItem jmiNouveau;
     private javax.swing.JMenuItem jmiRevisions;
     private javax.swing.JMenuItem jmiSave;
