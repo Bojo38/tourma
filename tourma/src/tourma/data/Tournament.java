@@ -469,7 +469,7 @@ public class Tournament {
                     _params._ranking3_team,
                     _params._ranking4_team,
                     _params._ranking5_team,
-                    _teams);
+                    _teams,false);
 
             for (int i = 0; i < rt.getRowCount(); i++) {
                 String team = (String) rt.getValueAt(i, 1);
@@ -493,7 +493,7 @@ public class Tournament {
                 _params._ranking3,
                 _params._ranking4,
                 _params._ranking5,
-                _coachs, false);
+                _coachs, false,false);
         for (int i = 0; i < ri.getRowCount(); i++) {
             String coach = (String) ri.getValueAt(i, 2);
             s = s + (i + 1) + ";" + coach;

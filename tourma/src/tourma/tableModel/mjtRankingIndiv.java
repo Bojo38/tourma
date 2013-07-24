@@ -22,10 +22,12 @@ public class mjtRankingIndiv extends mjtRanking {
 
     boolean _teamTournament;
     boolean _positive;
+    boolean _round_only;
 
-    public mjtRankingIndiv(int round, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector<Coach> coachs, boolean tournament) {
+    public mjtRankingIndiv(int round, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector<Coach> coachs, boolean tournament, boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs);
         _teamTournament = tournament;
+        _round_only = round_only;
         sortDatas();
     }
 
@@ -33,7 +35,15 @@ public class mjtRankingIndiv extends mjtRanking {
         _datas.clear();
         _datas = new Vector<ObjectRanking>();
 
-        Vector<Round> rounds = Tournament.getTournament().getRounds();
+        Vector<Round> rounds = new Vector<Round>();
+
+        if (_round_only) {
+            rounds.add(Tournament.getTournament().getRounds().get(_round));
+        } else {
+            for (int l = 0; (l <= _round); l++) {
+                rounds.add(Tournament.getTournament().getRounds().get(l));
+            }
+        }
 
         for (int i = 0; i < _objects.size(); i++) {
             Coach c = (Coach) _objects.get(i);
@@ -47,7 +57,7 @@ public class mjtRankingIndiv extends mjtRanking {
 
                 Match m = c._matchs.get(j);
                 boolean bFound = false;
-                for (int l = 0; (l <= _round) && (!bFound); l++) {
+                for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
                     Round r = rounds.get(l);
                     if (r.getMatchs().contains(m)) {
                         bFound = true;
@@ -97,10 +107,10 @@ public class mjtRankingIndiv extends mjtRanking {
 
 
                     /*value1 = getValue(c, matchs, _ranking_type1, _rounds);
-                    value2 = getValue(c, matchs, _ranking_type2, _rounds);
-                    value3 = getValue(c, matchs, _ranking_type3, _rounds);
-                    value4 = getValue(c, matchs, _ranking_type4, _rounds);
-                    value5 = getValue(c, matchs, _ranking_type5, _rounds);*/
+                     value2 = getValue(c, matchs, _ranking_type2, _rounds);
+                     value3 = getValue(c, matchs, _ranking_type3, _rounds);
+                     value4 = getValue(c, matchs, _ranking_type4, _rounds);
+                     value5 = getValue(c, matchs, _ranking_type5, _rounds);*/
                 }
             }
             _datas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
@@ -110,20 +120,20 @@ public class mjtRankingIndiv extends mjtRanking {
     }
 
     /*protected int getValues(Coach c, int ranking_type, int round) {
-    int value = 0;
+     int value = 0;
 
-    Criteria criteria=getCriteriaByValue(ranking_type);
-    if (criteria!=null)
-    {
-    getValue(c, c._matchs.get(round), ranking_type, round);
-    }
-    else
-    {
-    getValue(c, c._matchs.get(round), criteria, _positive);
-    }
+     Criteria criteria=getCriteriaByValue(ranking_type);
+     if (criteria!=null)
+     {
+     getValue(c, c._matchs.get(round), ranking_type, round);
+     }
+     else
+     {
+     getValue(c, c._matchs.get(round), criteria, _positive);
+     }
 
-    return value;
-    }*/
+     return value;
+     }*/
     public int getColumnCount() {
         if (_teamTournament) {
             return 10;

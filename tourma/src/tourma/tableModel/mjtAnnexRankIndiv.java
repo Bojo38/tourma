@@ -20,10 +20,11 @@ import tourma.data.Tournament;
 public class mjtAnnexRankIndiv extends mjtAnnexRank {
 
     boolean _teamTournament;
-
-    public mjtAnnexRankIndiv(int round, Criteria criteria, int subtype, Vector<Coach> coachs, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, boolean teamTournament) {
+    boolean _round_only=false;
+    public mjtAnnexRankIndiv(int round, Criteria criteria, int subtype, Vector<Coach> coachs, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, boolean teamTournament,boolean round_only) {
         super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5);
         _teamTournament = teamTournament;
+        _round_only=round_only;
     }
 
     protected void sortDatas() {
@@ -39,11 +40,22 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
             int value4 = 0;
             int value5 = 0;
 
+             Vector<Round> rounds = new Vector<Round>();
+
+        if (_round_only) {
+            rounds.add(Tournament.getTournament().getRounds().get(_round));
+        } else {
+            for (int l = 0; (l <= _round); l++) {
+                rounds.add(Tournament.getTournament().getRounds().get(l));
+            }
+        }
+        
+            
             for (int j = 0; j <= c._matchs.size() - 1; j++) {
 
                 Match m = c._matchs.get(j);
                 boolean bFound = false;
-                for (int i = 0; (i <= _round)&&(!bFound); i++) {
+                for (int i = 0; (i <rounds.size())&&(!bFound); i++) {
                     Round r = Tournament.getTournament().getRounds().get(i);
                     if (r.getMatchs().contains(m)) {
                         bFound = true;

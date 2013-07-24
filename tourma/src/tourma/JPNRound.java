@@ -59,6 +59,7 @@ public class JPNRound extends javax.swing.JPanel {
     Tournament _tournament;
     JPNTeamRound _jpnTeamRound = null;
     JPNClanRound _jpnClanRound = null;
+    boolean _round_only=false;
 
     /**
      * Creates new form JPNRound
@@ -135,12 +136,13 @@ public class JPNRound extends javax.swing.JPanel {
             v.add(_round);
 
             if (_roundNumber < _tournament.getRounds().size()) {
-                mjtRankingIndiv mRanking = new mjtRankingIndiv(_roundNumber, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getCoachs(), _tournament.getParams()._teamTournament);
+                mjtRankingIndiv mRanking = new mjtRankingIndiv(_roundNumber, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getCoachs(), _tournament.getParams()._teamTournament,_round_only);
                 jtbRankingIndiv.setModel(mRanking);
                 jtbRankingIndiv.setDefaultRenderer(String.class, mRanking);
                 jtbRankingIndiv.setDefaultRenderer(Integer.class, mRanking);
 
                 for (int i = 0; i < jtpAnnexRankings.getComponentCount(); i++) {
+                    ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i))._round_only=_round_only;
                     ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
                 }
                 setColumnSize(jtbRankingIndiv);
@@ -150,13 +152,17 @@ public class JPNRound extends javax.swing.JPanel {
 
         for (int i = 0; i < jtpGlobal.getTabCount(); i++) {
             Object panel = jtpGlobal.getTabComponentAt(i);
+            panel=jtpGlobal.getComponent(i);
             if (panel instanceof JPNGroup) {
+                ((JPNGroup) panel)._round_only=_round_only;
                 ((JPNGroup) panel).update();
             } else {
                 if (panel instanceof JPNTeamRound) {
+                    ((JPNTeamRound) panel)._round_only=_round_only;
                     ((JPNTeamRound) panel).update();
                 } else {
                     if (panel instanceof JPNClanRound) {
+                        ((JPNClanRound) panel)._round_only=_round_only;
                         ((JPNClanRound) panel).update();
                     }
                 }
@@ -185,6 +191,8 @@ public class JPNRound extends javax.swing.JPanel {
         jbtDeleteRound = new javax.swing.JButton();
         jbtChangeMatchs = new javax.swing.JButton();
         jbtAddMatch = new javax.swing.JButton();
+        jbtDelMatch = new javax.swing.JButton();
+        jtbRoundSum = new javax.swing.JToggleButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -222,6 +230,8 @@ public class JPNRound extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jtbMatches);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         jbtNextRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
@@ -271,6 +281,7 @@ public class JPNRound extends javax.swing.JPanel {
 
         jbtAddMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         jbtAddMatch.setText(bundle.getString("AddMatch")); // NOI18N
+        jbtAddMatch.setActionCommand("Ajouter un match");
         jbtAddMatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddMatchActionPerformed(evt);
@@ -278,7 +289,26 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtAddMatch);
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+        jbtDelMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtDelMatch.setText(bundle.getString("DelMatch")); // NOI18N
+        jbtDelMatch.setActionCommand("Retirer un match");
+        jbtDelMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtDelMatchActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtDelMatch);
+
+        jtbRoundSum.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Zoom.png"))); // NOI18N
+        jtbRoundSum.setText("Classement au cumul des rondes");
+        jtbRoundSum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtbRoundSumActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jtbRoundSum);
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.WEST);
 
         jtpGlobal.addTab(bundle.getString("MatchsKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png")), jPanel1); // NOI18N
 
@@ -731,7 +761,7 @@ public class JPNRound extends javax.swing.JPanel {
                         _tournament.getParams()._ranking3_team,
                         _tournament.getParams()._ranking4_team,
                         _tournament.getParams()._ranking5_team,
-                        _tournament.getTeams());
+                        _tournament.getTeams(),_round_only);
             } else {
                 ranking = new mjtRankingTeam(false, _roundNumber,
                         _tournament.getParams()._ranking1,
@@ -739,7 +769,7 @@ public class JPNRound extends javax.swing.JPanel {
                         _tournament.getParams()._ranking3,
                         _tournament.getParams()._ranking4,
                         _tournament.getParams()._ranking5,
-                        _tournament.getTeams());
+                        _tournament.getTeams(),_round_only);
             }
             // Ranking class
             datas = ranking.getSortedDatas();
@@ -751,7 +781,7 @@ public class JPNRound extends javax.swing.JPanel {
                     _tournament.getParams()._ranking3,
                     _tournament.getParams()._ranking4,
                     _tournament.getParams()._ranking5,
-                    _tournament.getCoachs(), false);
+                    _tournament.getCoachs(), false,_round_only);
 
             // Ranking class
             datas = ranking.getSortedDatas();
@@ -845,7 +875,7 @@ public class JPNRound extends javax.swing.JPanel {
     private void jbtGeneralIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralIndivActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                mjtRankingIndiv model = new mjtRankingIndiv(_roundNumber, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getCoachs(), _tournament.getParams()._teamTournament);
+                mjtRankingIndiv model = new mjtRankingIndiv(_roundNumber, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getCoachs(), _tournament.getParams()._teamTournament,_round_only);
                 jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, "General par Coach", i + 1, _tournament, model, 0);
                 jdg.setVisible(true);
                 break;
@@ -893,7 +923,7 @@ public class JPNRound extends javax.swing.JPanel {
     private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_round == _tournament.getRounds().get(i)) {
-                mjtRankingIndiv model = new mjtRankingIndiv(_roundNumber, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getCoachs(), _tournament.getParams()._teamTournament);
+                mjtRankingIndiv model = new mjtRankingIndiv(_roundNumber, _tournament.getParams()._ranking1, _tournament.getParams()._ranking2, _tournament.getParams()._ranking3, _tournament.getParams()._ranking4, _tournament.getParams()._ranking5, _tournament.getCoachs(), _tournament.getParams()._teamTournament,_round_only);
                 HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<Criteria, mjtAnnexRank>();
                 HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<Criteria, mjtAnnexRank>();
                 for (int j = 0; j < _tournament.getParams()._criterias.size(); j++) {
@@ -902,13 +932,13 @@ public class JPNRound extends javax.swing.JPanel {
                             _tournament.getCoachs(), true,
                             _tournament.getParams()._ranking1, _tournament.getParams()._ranking2,
                             _tournament.getParams()._ranking3, _tournament.getParams()._ranking4,
-                            _tournament.getParams()._ranking5, false);
+                            _tournament.getParams()._ranking5, false,_round_only);
                     annexForRankings.put(crit, annex);
                     annex = new mjtAnnexRankIndiv(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                             _tournament.getCoachs(), true,
                             _tournament.getParams()._ranking1, _tournament.getParams()._ranking2,
                             _tournament.getParams()._ranking3, _tournament.getParams()._ranking4,
-                            _tournament.getParams()._ranking5, false);
+                            _tournament.getParams()._ranking5, false,_round_only);
                     annexAgainstRankings.put(crit, annex);
                 }
                 jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, i + 1, _tournament, model, annexForRankings, annexAgainstRankings, false, false);
@@ -982,6 +1012,22 @@ public class JPNRound extends javax.swing.JPanel {
 
         update();
     }//GEN-LAST:event_jbtAddMatchActionPerformed
+
+    private void jbtDelMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDelMatchActionPerformed
+        
+        if (jtbMatches.getSelectedRow()>=0)
+        {
+            _round.getMatchs().remove(jtbMatches.getSelectedRow());
+            update();
+        }
+    }//GEN-LAST:event_jbtDelMatchActionPerformed
+
+    private void jtbRoundSumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbRoundSumActionPerformed
+        _round_only=jtbRoundSum.isSelected();
+               
+        update();
+    }//GEN-LAST:event_jtbRoundSumActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -993,6 +1039,7 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton jbtAddMatch;
     private javax.swing.JButton jbtChangeMatchs;
+    private javax.swing.JButton jbtDelMatch;
     private javax.swing.JButton jbtDeleteRound;
     private javax.swing.JButton jbtGeneralIndiv;
     private javax.swing.JButton jbtGlobal;
@@ -1001,6 +1048,7 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JButton jbtShowResults;
     private javax.swing.JTable jtbMatches;
     private javax.swing.JTable jtbRankingIndiv;
+    private javax.swing.JToggleButton jtbRoundSum;
     private javax.swing.JTabbedPane jtpAnnexRankings;
     private javax.swing.JTabbedPane jtpGlobal;
     // End of variables declaration//GEN-END:variables

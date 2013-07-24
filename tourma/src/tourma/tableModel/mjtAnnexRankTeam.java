@@ -20,8 +20,11 @@ import tourma.data.Tournament;
  */
 public class mjtAnnexRankTeam extends mjtAnnexRank {
 
-    public mjtAnnexRankTeam(int round, Criteria criteria, int subtype, Vector<Team> teams, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5) {
+    boolean _round_only = false;
+
+    public mjtAnnexRankTeam(int round, Criteria criteria, int subtype, Vector<Team> teams, boolean full, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, boolean round_only) {
         super(round, criteria, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5);
+        _round_only = round_only;
     }
 
     protected void sortDatas() {
@@ -42,11 +45,20 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
 
                     Match m = c._matchs.get(j);
                     boolean bFound = false;
-                    for (int l = 0; (l <= _round) && (!bFound); l++) {
+
+                    int l = 0;
+                    if (_round_only) {
+                        l = _round;
+                    }
+
+                    while ((l <= _round) && (!bFound)) {
+
+                        // for (int l = 0; (l <= _round) && (!bFound); l++) {
                         Round r = Tournament.getTournament().getRounds().get(l);
                         if (r.getMatchs().contains(m)) {
                             bFound = true;
                         }
+                        l++;
                     }
                     // test if match is in round
                     if (bFound) {

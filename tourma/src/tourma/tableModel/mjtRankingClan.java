@@ -22,8 +22,11 @@ import tourma.data.Tournament;
  */
 public class mjtRankingClan extends mjtRanking {
 
-    public mjtRankingClan(int round, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector<Clan> clans) {
+    boolean _round_only=false;
+    
+    public mjtRankingClan(int round, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector<Clan> clans, boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, clans);
+        _round_only=round_only;
         sortDatas();
     }
 
@@ -56,7 +59,16 @@ public class mjtRankingClan extends mjtRanking {
                     int value3 = 0;
                     int value4 = 0;
                     int value5 = 0;
-                    for (int j = 0; j <= Math.min(c._matchs.size(),_round); j++) {
+                    
+                    int j=0;
+                    
+                    if (_round_only)
+                    {
+                        j= _round;
+                    }
+                    
+                    while (j <= Math.min(c._matchs.size(),_round)) {
+                    //for (int j = 0; j <= Math.min(c._matchs.size(),_round); j++) {
                         Match m = c._matchs.get(j);
 
                         Criteria c1 = getCriteriaByValue(_ranking_type1);
@@ -98,6 +110,7 @@ public class mjtRankingClan extends mjtRanking {
                         } else {
                             value5 += getValue(c, m, c5, subType5);
                         }
+                        j++;
                     }
                     Vvalue1.add(value1);
                     Vvalue2.add(value2);

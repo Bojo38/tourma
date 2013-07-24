@@ -36,6 +36,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
     Round _round = null;
     boolean _clan;
     boolean _team;
+    public boolean _round_only=false;
 
     /** Creates new form JPNAnnexRanking */
     public JPNAnnexRanking(String name, Criteria criteria, Tournament tour, Round round, boolean clan, boolean team) {
@@ -164,16 +165,16 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
                     model = new mjtAnnexRankClan(i, _criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                             _tour.getDisplayClans(), true, _tour.getParams()._ranking1,
                             _tour.getParams()._ranking2, _tour.getParams()._ranking3,
-                            _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            _tour.getParams()._ranking4, _tour.getParams()._ranking5,_round_only);
                 } else {
                     if (_team) {
                         model = new mjtAnnexRankTeam(i, _criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                 _tour.getTeams(), true, _tour.getParams()._ranking1,
                                 _tour.getParams()._ranking2, _tour.getParams()._ranking3,
-                                _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                                _tour.getParams()._ranking4, _tour.getParams()._ranking5,_round_only);
 
                     } else {
-                        model = new mjtAnnexRankIndiv(i, _criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                        model = new mjtAnnexRankIndiv(i, _criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament,_round_only);
                     }
                 }
                 String name = _criteria._name;
@@ -201,19 +202,19 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
                     model = new mjtAnnexRankClan(i, _criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                             _tour.getDisplayClans(), true, _tour.getParams()._ranking1,
                             _tour.getParams()._ranking2, _tour.getParams()._ranking3,
-                            _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            _tour.getParams()._ranking4, _tour.getParams()._ranking5,_round_only);
                 } else {
                     if (_team) {
                         model = new mjtAnnexRankTeam(i, _criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                 _tour.getTeams(), true, _tour.getParams()._ranking1,
                                 _tour.getParams()._ranking2, _tour.getParams()._ranking3,
-                                _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                                _tour.getParams()._ranking4, _tour.getParams()._ranking5,_round_only);
                     } else {
                         model = new mjtAnnexRankIndiv(i, _criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                 _tour.getCoachs(), true, _tour.getParams()._ranking1,
                                 _tour.getParams()._ranking2, _tour.getParams()._ranking3,
                                 _tour.getParams()._ranking4, _tour.getParams()._ranking5,
-                                _tour.getParams()._teamTournament);
+                                _tour.getParams()._teamTournament,_round_only);
                     }
                 }
                 String name = _criteria._name;
@@ -290,23 +291,23 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
             if (_clan) {
                 modelPos =
                         new mjtAnnexRankClan(v.size() - 1, _criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                        _tour.getDisplayClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        _tour.getDisplayClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5,_round_only);
                 modelNeg =
                         new mjtAnnexRankClan(v.size() - 1, _criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                        _tour.getDisplayClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                        _tour.getDisplayClans(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5,_round_only);
             } else {
                 if (_team) {
                     modelPos =
                             new mjtAnnexRankTeam(v.size() - 1, _criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5,_round_only);
                     modelNeg =
                             new mjtAnnexRankTeam(v.size() - 1, _criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5);
+                            _tour.getTeams(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5,_round_only);
                 } else {
                     modelPos =
-                            new mjtAnnexRankIndiv(v.size() - 1, _criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            new mjtAnnexRankIndiv(v.size() - 1, _criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament,_round_only);
                     modelNeg =
-                            new mjtAnnexRankIndiv(v.size() - 1, _criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament);
+                            new mjtAnnexRankIndiv(v.size() - 1, _criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, _tour.getCoachs(), true, _tour.getParams()._ranking1, _tour.getParams()._ranking2, _tour.getParams()._ranking3, _tour.getParams()._ranking4, _tour.getParams()._ranking5, _tour.getParams()._teamTournament,_round_only);
                 }
             }
             jtbNegative.setModel(modelNeg);

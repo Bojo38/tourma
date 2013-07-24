@@ -31,6 +31,8 @@ public class JPNGroup extends javax.swing.JPanel {
     Group _group;
     int _roundNumber;
 
+    public boolean _round_only=false;
+    
     /** Creates new form JPNGroup */
     public JPNGroup(Tournament t, Group g, int roundNumber) {
         initComponents();
@@ -40,6 +42,7 @@ public class JPNGroup extends javax.swing.JPanel {
         update();
     }
 
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -103,7 +106,7 @@ public class JPNGroup extends javax.swing.JPanel {
                 _tournament.getParams()._ranking3,
                 _tournament.getParams()._ranking4,
                 _tournament.getParams()._ranking5,
-                vector, _tournament.getParams()._teamTournament);
+                vector, _tournament.getParams()._teamTournament,_round_only);
         jtbGroup.setModel(tableModel);
         jtbGroup.setDefaultRenderer(String.class, tableModel);
         jtbGroup.setDefaultRenderer(Integer.class, tableModel);
