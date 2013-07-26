@@ -238,6 +238,7 @@ public class JPNRound extends javax.swing.JPanel {
         jbtNextRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtNextRound.setText(bundle.getString("GenerateNextRoundKeySwiss")); // NOI18N
+        jbtNextRound.setActionCommand("Générer ronde Suisse");
         jbtNextRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextRoundActionPerformed(evt);
@@ -247,6 +248,8 @@ public class JPNRound extends javax.swing.JPanel {
 
         jbtNextRoundRandom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         jbtNextRoundRandom.setText(bundle.getString("GenerateNextRoundKeyRandom")); // NOI18N
+        jbtNextRoundRandom.setToolTipText("Cette méthode permet de générer une ronde totalement aléatoire. Cependant, au plus le nombre de ronde se rapprocher de la limite (nombre de joueurs-1) au plus le logiciel aura du mal à déterminer un tirage aléatoire satisfaisant.\n"); // NOI18N
+        jbtNextRoundRandom.setActionCommand("Générer ronde Aléatoire");
         jbtNextRoundRandom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextRoundRandomActionPerformed(evt);
@@ -256,6 +259,8 @@ public class JPNRound extends javax.swing.JPanel {
 
         jbtNextRoundQuickSwiss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         jbtNextRoundQuickSwiss.setText(bundle.getString("GenerateNextRoundKeyQuick")); // NOI18N
+        jbtNextRoundQuickSwiss.setToolTipText("Une ronde suisse accelerée fait se partage le classement en 4: Q1, Q2 Q3 et Q4. Q1 rencontre Q2 et Q3 rencontre Q4.\nCette méthode permet de créer plus rapidement un groupe de vainqueurs possible. Sur un tournoi en 5 ou  6 ronde avec plus de 32 joueurs, cette méthode peut être utilisée lors des rondes 2 (et 3 sur plus de 64 joueurs).\n"); // NOI18N
+        jbtNextRoundQuickSwiss.setActionCommand("Générer ronde Suisse Accelerée");
         jbtNextRoundQuickSwiss.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextRoundQuickSwissActionPerformed(evt);
@@ -319,7 +324,7 @@ public class JPNRound extends javax.swing.JPanel {
         jPanel3.add(jbtDelMatch);
 
         jtbRoundSum.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Zoom.png"))); // NOI18N
-        jtbRoundSum.setText("Classement au cumul des rondes");
+        jtbRoundSum.setText("Sur la ronde / Cumul  des rondes");
         jtbRoundSum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtbRoundSumActionPerformed(evt);
@@ -432,7 +437,7 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
 
-        if (coachs.size() - 1 <= _tournament.getRounds().size()) {
+        if (Tournament.getTournament().GetActiveCoaches().size() - 1 <= _tournament.getRounds().size()) {
             // Affectation des matchs
             for (int i = 0; i < datas_tmp.size() / 2; i++) {
                 Match m = new Match();
@@ -632,7 +637,7 @@ public class JPNRound extends javax.swing.JPanel {
         }
 
 
-        if (coachs.size() - 1 <= _tournament.getRounds().size()) {
+        if (Tournament.getTournament().GetActiveCoaches().size() - 1 <= _tournament.getRounds().size()) {
             // Affectation des matchs
             for (int i = 0; i < datas_1.size(); i++) {
                 Match m = new Match();
@@ -835,10 +840,11 @@ public class JPNRound extends javax.swing.JPanel {
         Vector<Coach> shuffle = new Vector<Coach>(coachs);
 
         boolean bOK = false;
+        int count = 0;
         while (!bOK) {
             r.getMatchs().clear();
             Collections.shuffle(shuffle);
-
+            count++;
             int i = 0;
             for (i = 0; i < coachs.size(); i++) {
                 if (!coachs.get(i)._active) {
@@ -846,39 +852,73 @@ public class JPNRound extends javax.swing.JPanel {
                 }
             }
 
-            for (i = 0; i < shuffle.size() / 2; i++) {
-                Match m = new Match();
-                m._coach1 = shuffle.get(2 * i);
-                m._coach2 = shuffle.get(2 * i + 1);
-                r.getMatchs().add(m);
+            if (count > 100000) {
+                // Affectation des matchs           
+                JOptionPane.showMessageDialog(this, "Le moteur aléatoire n'est pas parvenu à éviter les doubles rencontres");
+
+                for (i = 0; i < shuffle.size() / 2; i++) {
+                    Match m = new Match();
+                    m._coach1 = shuffle.get(2 * i);
+                    m._coach2 = shuffle.get(2 * i + 1);
+                    r.getMatchs().add(m);
+                }
+
+                bOK = true;
+                return r;
             }
 
 
-
-            if (coachs.size() - 1 <= _tournament.getRounds().size()) {
+            if (Tournament.getTournament().GetActiveCoaches().size() - 1 <= _tournament.getRounds().size()) {
                 // Affectation des matchs           
                 JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NotEnoughRoundToAvoidSameMatch"));
+
+                for (i = 0; i < shuffle.size() / 2; i++) {
+                    Match m = new Match();
+                    m._coach1 = shuffle.get(2 * i);
+                    m._coach2 = shuffle.get(2 * i + 1);
+                    r.getMatchs().add(m);
+                }
+
                 bOK = true;
+                return r;
             } else {
+
+                Vector<Coach> data_tmp = new Vector<Coach>(shuffle);
                 bOK = true;
-                for (i = 0; (i < r.getMatchs().size()) && (bOK); i++) {
-                    Match m = r.getMatchs().get(i);
-                    Coach c1 = m._coach1;
-                    Coach c2 = m._coach2;
-                    for (int j = 0; j < c1._matchs.size(); j++) {
-                        Match tmp_m = c1._matchs.get(j);
-                        if (tmp_m != m) {
-                            if (((tmp_m._coach1 == c2) && (tmp_m._coach2 == c1))
-                                    || ((tmp_m._coach1 == c1) && (tmp_m._coach2 == c2))) {
-                                bOK = false;
+                while (data_tmp.size() > 0) {
+                    Match m = new Match();
+                    m._coach1 = data_tmp.get(0);
+                    m._coach2 = null;
+                    data_tmp.remove(m._coach1);
+                    for (i = 0; i < data_tmp.size(); i++) {
+                        Coach candidate = data_tmp.get(i);
+
+                        boolean have_played = false;
+                        for (int j = 0; j < candidate._matchs.size(); j++) {
+                            if (((candidate._matchs.get(j)._coach1 == m._coach1) && (candidate._matchs.get(j)._coach2 == candidate))
+                                    || ((candidate._matchs.get(j)._coach2 == m._coach1) && (candidate._matchs.get(j)._coach1 == candidate))) {
+                                have_played = true;
                                 break;
                             }
                         }
+                        if (!have_played) {
+                            m._coach2 = candidate;
+                            data_tmp.remove(candidate);
+                            r.getMatchs().add(m);
+                            break;
+                        }
+                    }
+                    if (m._coach2 == null) {
+                        bOK = false;
+                        break;
                     }
                 }
 
             }
         }
+
+
+
         return r;
 
     }
@@ -1145,7 +1185,7 @@ public class JPNRound extends javax.swing.JPanel {
             // Première passe de haut en bas
             Vector<Team> teams1 = new Vector<Team>();
             Vector<Team> teams2 = new Vector<Team>();
-            while ((datas_tmp2.size() > 0)&&(datas_tmp1.size() > 0)) {
+            while ((datas_tmp2.size() > 0) && (datas_tmp1.size() > 0)) {
                 Team team1 = (Team) datas_tmp1.get(0).getObject();
                 Team team2 = null;
                 datas_tmp1.remove(0);
@@ -1167,10 +1207,10 @@ public class JPNRound extends javax.swing.JPanel {
                 teams1.add(team1);
                 teams2.add(team2);
             }
-            
+
             Vector<ObjectRanking> datas_tmp3 = new Vector<ObjectRanking>(datas_3);
             Vector<ObjectRanking> datas_tmp4 = new Vector<ObjectRanking>(datas_4);
-            while ((datas_tmp4.size() > 0)&&(datas_tmp3.size() > 0)) {
+            while ((datas_tmp4.size() > 0) && (datas_tmp3.size() > 0)) {
                 Team team1 = (Team) datas_tmp3.get(0).getObject();
                 Team team2 = null;
                 datas_tmp3.remove(0);
@@ -1297,75 +1337,143 @@ public class JPNRound extends javax.swing.JPanel {
         Vector<Team> datas = new Vector<Team>(_tournament.getTeams());
 
         boolean bOK = false;
+        int count = 0;
         while (!bOK) {
+            count++;
             r.getMatchs().clear();
             Collections.shuffle(datas);
-            for (int i = 0; i < datas.size() / 2; i++) {
-                Team team1 = datas.get(2 * i);
-                Team team2 = datas.get(2 * i + 1);
-                if (!free_pairing) {
-                    if (!random) {
-                        Vector<ObjectRanking> coachs1 = subRanking(team1._coachs, matchs, rounds);
-                        Vector<ObjectRanking> coachs2 = subRanking(team2._coachs, matchs, rounds);
-                        for (int j = 0; j < coachs1.size(); j++) {
-                            Match m = new Match();
-                            m._coach1 = (Coach) coachs1.get(j).getObject();
-                            m._coach2 = (Coach) coachs2.get(j).getObject();
-                            r.getMatchs().add(m);
+
+            // Résolution des doublons
+            if (count > 100000) {
+                // Affectation des matchs
+                JOptionPane.showMessageDialog(this, "Le moteur aléatoire n'est pas parvenu à éviter les doubles rencontres");
+                for (int i = 0; i < datas.size() / 2; i++) {
+                    Team team1 = datas.get(2 * i);
+                    Team team2 = datas.get(2 * i + 1);
+                    if (!free_pairing) {
+                        if (!random) {
+                            Vector<ObjectRanking> coachs1 = subRanking(team1._coachs, matchs, rounds);
+                            Vector<ObjectRanking> coachs2 = subRanking(team2._coachs, matchs, rounds);
+                            for (int j = 0; j < coachs1.size(); j++) {
+                                Match m = new Match();
+                                m._coach1 = (Coach) coachs1.get(j).getObject();
+                                m._coach2 = (Coach) coachs2.get(j).getObject();
+                                r.getMatchs().add(m);
+                            }
+                        } else {
+                            Vector<Coach> coachs1 = new Vector<Coach>(team1._coachs);
+                            Collections.shuffle(coachs1);
+                            Vector<Coach> coachs2 = new Vector<Coach>(team2._coachs);
+                            Collections.shuffle(coachs2);
+                            for (int j = 0; j < coachs1.size(); j++) {
+                                Match m = new Match();
+                                m._coach1 = (Coach) coachs1.get(j);
+                                m._coach2 = (Coach) coachs2.get(j);
+                                r.getMatchs().add(m);
+                            }
                         }
                     } else {
-                        Vector<Coach> coachs1 = new Vector<Coach>(team1._coachs);
-                        Collections.shuffle(coachs1);
-                        Vector<Coach> coachs2 = new Vector<Coach>(team2._coachs);
-                        Collections.shuffle(coachs2);
-                        for (int j = 0; j < coachs1.size(); j++) {
-                            Match m = new Match();
-                            m._coach1 = (Coach) coachs1.get(j);
-                            m._coach2 = (Coach) coachs2.get(j);
-                            r.getMatchs().add(m);
-                        }
+                        jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
+                        jdg.setVisible(true);
                     }
-                } else {
-                    jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
-                    jdg.setVisible(true);
                 }
+
+                bOK = true;
             }
 
             // Résolution des doublons
             if (_tournament.getTeams().size() - 1 <= _tournament.getRounds().size()) {
                 // Affectation des matchs
                 JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NotEnoughRoundToAvoidSameMatch"));
+                for (int i = 0; i < datas.size() / 2; i++) {
+                    Team team1 = datas.get(2 * i);
+                    Team team2 = datas.get(2 * i + 1);
+                    if (!free_pairing) {
+                        if (!random) {
+                            Vector<ObjectRanking> coachs1 = subRanking(team1._coachs, matchs, rounds);
+                            Vector<ObjectRanking> coachs2 = subRanking(team2._coachs, matchs, rounds);
+                            for (int j = 0; j < coachs1.size(); j++) {
+                                Match m = new Match();
+                                m._coach1 = (Coach) coachs1.get(j).getObject();
+                                m._coach2 = (Coach) coachs2.get(j).getObject();
+                                r.getMatchs().add(m);
+                            }
+                        } else {
+                            Vector<Coach> coachs1 = new Vector<Coach>(team1._coachs);
+                            Collections.shuffle(coachs1);
+                            Vector<Coach> coachs2 = new Vector<Coach>(team2._coachs);
+                            Collections.shuffle(coachs2);
+                            for (int j = 0; j < coachs1.size(); j++) {
+                                Match m = new Match();
+                                m._coach1 = (Coach) coachs1.get(j);
+                                m._coach2 = (Coach) coachs2.get(j);
+                                r.getMatchs().add(m);
+                            }
+                        }
+                    } else {
+                        jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
+                        jdg.setVisible(true);
+                    }
+                }
+
                 bOK = true;
             } else {
                 bOK = true;
-                for (int i = 0; (i < r.getMatchs().size()) && (bOK); i++) {
-                    Match m = r.getMatchs().get(i);
-                    Coach c1 = m._coach1;
-                    Coach c2 = m._coach2;
-                    Team t1 = null;
-                    for (int k = 0; k < _tournament.getTeams().size(); k++) {
-                        if (_tournament.getTeams().get(k)._coachs.contains(c1)) {
-                            t1 = _tournament.getTeams().get(k);
+
+                Vector<Team> data_tmp = new Vector<Team>(datas);
+                while (data_tmp.size() > 0) {
+                    Team team1 = data_tmp.get(0);
+                    data_tmp.remove(team1);
+                    Team team2 = null;
+
+                    for (int i = 0; i < data_tmp.size(); i++) {
+                        boolean have_played = false;
+                        for (int j = 0; j < matchs.size(); j++) {
+                            if (((matchs.get(j)._coach1._teamMates == team1) && (matchs.get(j)._coach2._teamMates == data_tmp.get(i)))
+                                    || ((matchs.get(j)._coach2._teamMates == team1) && (matchs.get(j)._coach1._teamMates == data_tmp.get(i)))) {
+                                have_played = true;
+                            }
+                        }
+                        if ((!have_played) || (i == data_tmp.size() - 1)) {
+                            team2 = data_tmp.get(i);
+                            data_tmp.remove(i);
                             break;
                         }
                     }
-                    if (t1 != null) {
-                        for (int j = 0; j < t1._coachs.size(); j++) {
-                            Coach c3 = t1._coachs.get(j);
-                            for (int k = 0; k < c3._matchs.size(); k++) {
-                                Match m_tmp = c3._matchs.get(k);
-                                if (m_tmp != m) {
-                                    if (((m_tmp._coach1 == c3) && (m_tmp._coach2 == c2))
-                                            || ((m_tmp._coach1 == c2) && (m_tmp._coach2 == c3))) {
-                                        bOK = false;
-                                        break;
-                                    }
+
+                    if (team2 != null) {
+                        if (!free_pairing) {
+                            if (!random) {
+                                Vector<ObjectRanking> coachs1 = subRanking(team1._coachs, matchs, rounds);
+                                Vector<ObjectRanking> coachs2 = subRanking(team2._coachs, matchs, rounds);
+                                for (int j = 0; j < coachs1.size(); j++) {
+                                    Match m = new Match();
+                                    m._coach1 = (Coach) coachs1.get(j).getObject();
+                                    m._coach2 = (Coach) coachs2.get(j).getObject();
+                                    r.getMatchs().add(m);
+                                }
+                            } else {
+                                Vector<Coach> coachs1 = new Vector<Coach>(team1._coachs);
+                                Collections.shuffle(coachs1);
+                                Vector<Coach> coachs2 = new Vector<Coach>(team2._coachs);
+                                Collections.shuffle(coachs2);
+                                for (int j = 0; j < coachs1.size(); j++) {
+                                    Match m = new Match();
+                                    m._coach1 = (Coach) coachs1.get(j);
+                                    m._coach2 = (Coach) coachs2.get(j);
+                                    r.getMatchs().add(m);
                                 }
                             }
+                        } else {
+                            jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
+                            jdg.setVisible(true);
                         }
+                    } else {
+                        bOK = false;
+                        break;
                     }
-
                 }
+
             }
         }
         return r;
