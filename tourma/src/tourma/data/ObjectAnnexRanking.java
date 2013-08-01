@@ -4,6 +4,8 @@
  */
 package tourma.data;
 
+import org.jdom.Attribute;
+import org.jdom.Element;
 import tourma.data.Coach;
 
 /**
@@ -37,5 +39,24 @@ public class ObjectAnnexRanking extends ObjectRanking {
         } else {
             return -65535;
         }
+    }
+    
+    @Override
+    public Element getXMLElement() {
+        Element ic = super.getXMLElement();
+        
+        ic.setAttribute(new Attribute("value", Integer.toString(_value)));
+      
+        ic.removeAttribute("rank1");
+        ic.removeAttribute("rank2");
+        ic.removeAttribute("rank3");
+        ic.removeAttribute("rank4");
+        ic.removeAttribute("rank5");
+        return ic;
+    }
+    
+    @Override
+    public void setXMLElement(Element e) {
+         super.setXMLElement(e);
     }
 }

@@ -4,12 +4,14 @@
  */
 package tourma.data;
 
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  *
  * @author Frederic Berger
  */
-public class ObjectRanking implements Comparable {
+public class ObjectRanking implements Comparable, XMLExport {
 
     Comparable _object;
     int _value1;
@@ -75,5 +77,94 @@ public class ObjectRanking implements Comparable {
         } else {
             return -65535;
         }
+    }
+
+    /*public Element getXMLElement(int index) {
+        Element ic = new Element("Position");
+        ic.setAttribute(new Attribute("pos", Integer.toString(index)));
+
+        if (_object instanceof Coach) {
+            Coach c = (Coach) _object;
+            ic.setAttribute(new Attribute("coach", c._name));
+            ic.setAttribute(new Attribute("team", c._team));
+            ic.setAttribute(new Attribute("clan", c._clan._name));
+            ic.setAttribute(new Attribute("roster", c._roster._name));
+        }
+
+        if (_object instanceof Team) {
+            Team t = (Team) _object;
+            ic.setAttribute(new Attribute("name", t._name));
+            for (int k = 0; k < t._coachs.size(); k++) {
+                Element c = new Element("member");
+                c.setAttribute("name", t._coachs.get(k)._name);
+                ic.addContent(c);
+            }
+        }
+
+        if (_object instanceof Clan) {
+            Clan t = (Clan) _object;
+            ic.setAttribute(new Attribute("clan", t._name));
+            for (int k = 0; k < Tournament.getTournament().getCoachs().size(); k++) {
+                if (Tournament.getTournament().getCoachs().get(k)._clan == t) {
+                    Element m = new Element("member");
+                    m.setAttribute("name", Tournament.getTournament().getCoachs().get(k)._name);
+                    ic.addContent(m);
+                }
+            }
+        }
+        ic.setAttribute(new Attribute("rank1", Integer.toString(_value1)));
+        ic.setAttribute(new Attribute("rank2", Integer.toString(_value2)));
+        ic.setAttribute(new Attribute("rank3", Integer.toString(_value3)));
+        ic.setAttribute(new Attribute("rank4", Integer.toString(_value4)));
+        ic.setAttribute(new Attribute("rank5", Integer.toString(_value5)));
+
+        return ic;
+    }*/
+    
+    public Element getXMLElement() {
+        Element ic = new Element("Position");
+        //ic.setAttribute(new Attribute("pos", Integer.toString(index)));
+
+        if (_object instanceof Coach) {
+            Coach c = (Coach) _object;
+            ic.setAttribute(new Attribute("coach", c._name));
+            ic.setAttribute(new Attribute("team", c._team));
+            ic.setAttribute(new Attribute("clan", c._clan._name));
+            ic.setAttribute(new Attribute("roster", c._roster._name));
+        }
+
+        if (_object instanceof Team) {
+            Team t = (Team) _object;
+            ic.setAttribute(new Attribute("name", t._name));
+            for (int k = 0; k < t._coachs.size(); k++) {
+                Element c = new Element("member");
+                c.setAttribute("name", t._coachs.get(k)._name);
+                ic.addContent(c);
+            }
+        }
+
+        if (_object instanceof Clan) {
+            Clan t = (Clan) _object;
+            ic.setAttribute(new Attribute("clan", t._name));
+            for (int k = 0; k < Tournament.getTournament().getCoachs().size(); k++) {
+                if (Tournament.getTournament().getCoachs().get(k)._clan == t) {
+                    Element m = new Element("member");
+                    m.setAttribute("name", Tournament.getTournament().getCoachs().get(k)._name);
+                    ic.addContent(m);
+                }
+            }
+        }
+        ic.setAttribute(new Attribute("rank1", Integer.toString(_value1)));
+        ic.setAttribute(new Attribute("rank2", Integer.toString(_value2)));
+        ic.setAttribute(new Attribute("rank3", Integer.toString(_value3)));
+        ic.setAttribute(new Attribute("rank4", Integer.toString(_value4)));
+        ic.setAttribute(new Attribute("rank5", Integer.toString(_value5)));
+
+        return ic;
+    }
+    
+    @Override
+    public void setXMLElement(Element e) {
+        
     }
 }

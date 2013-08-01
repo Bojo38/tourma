@@ -545,6 +545,7 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jmiExport = new javax.swing.JMenuItem();
         jmiExportFbb = new javax.swing.JMenuItem();
+        jmiExportFbb1 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         jmiExit = new javax.swing.JMenuItem();
         jmnParameters = new javax.swing.JMenu();
@@ -1398,6 +1399,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnFile.add(jmiExportFbb);
+
+        jmiExportFbb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExportFbb1.setText(bundle.getString("ExportFBBResultKey")); // NOI18N
+        jmiExportFbb1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExportFbb1ActionPerformed(evt);
+            }
+        });
+        jmnFile.add(jmiExportFbb1);
         jmnFile.add(jSeparator2);
 
         jmiExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
@@ -2179,6 +2189,22 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmiExportFbbActionPerformed
 
+    private void jmiExportFbb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbb1ActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        FileFilter filter1 = new ExtensionFileFilter("FBB xml file", new String[]{"FBB_XML", "fbb_xml"});
+        jfc.setFileFilter(filter1);
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File f = jfc.getSelectedFile();
+            if (f.getName().endsWith(".fbb_xml")) {
+                Tournament.getTournament().exportFullFBB(f);
+            }
+            else
+            {
+                Tournament.getTournament().exportFullFBB(new File(f.getAbsolutePath()+".fbb_xml"));
+            }
+        }
+    }//GEN-LAST:event_jmiExportFbb1ActionPerformed
+
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
@@ -2360,6 +2386,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
     private javax.swing.JMenuItem jmiExportFbb;
+    private javax.swing.JMenuItem jmiExportFbb1;
     private javax.swing.JMenuItem jmiNouveau;
     private javax.swing.JMenuItem jmiRevisions;
     private javax.swing.JMenuItem jmiSave;
