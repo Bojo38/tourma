@@ -105,7 +105,6 @@
                       <ResourceString bundle="tourma/languages/language.properties" key="GenerateNextRoundKeyRandom" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Cette m&#xe9;thode permet de g&#xe9;n&#xe9;rer une ronde totalement al&#xe9;atoire. Cependant, au plus le nombre de ronde se rapprocher de la limite (nombre de joueurs-1) au plus le logiciel aura du mal &#xe0; d&#xe9;terminer un tirage al&#xe9;atoire satisfaisant.&#xa;" noResource="true"/>
-                    <Property name="actionCommand" type="java.lang.String" value="G&#xe9;n&#xe9;rer ronde Al&#xe9;atoire"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtNextRoundRandomActionPerformed"/>
@@ -120,7 +119,6 @@
                       <ResourceString bundle="tourma/languages/language.properties" key="GenerateNextRoundKeyQuick" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Une ronde suisse acceler&#xe9;e fait se partage le classement en 4: Q1, Q2 Q3 et Q4. Q1 rencontre Q2 et Q3 rencontre Q4.&#xa;Cette m&#xe9;thode permet de cr&#xe9;er plus rapidement un groupe de vainqueurs possible. Sur un tournoi en 5 ou  6 ronde avec plus de 32 joueurs, cette m&#xe9;thode peut &#xea;tre utilis&#xe9;e lors des rondes 2 (et 3 sur plus de 64 joueurs).&#xa;" noResource="true"/>
-                    <Property name="actionCommand" type="java.lang.String" value="G&#xe9;n&#xe9;rer ronde Suisse Acceler&#xe9;e"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtNextRoundQuickSwissActionPerformed"/>

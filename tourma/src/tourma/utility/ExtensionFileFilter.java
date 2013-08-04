@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package tourma;
+package tourma.utility;
 
 import java.io.File;
 import java.util.ResourceBundle;
@@ -13,7 +13,7 @@ import javax.swing.filechooser.FileFilter;
  *
  * @author Frederic Berger
  */
-class ExtensionFileFilter extends FileFilter {
+public class ExtensionFileFilter extends FileFilter {
     static final ResourceBundle language = ResourceBundle.getBundle("tourma/languages/language");
   String description;
 

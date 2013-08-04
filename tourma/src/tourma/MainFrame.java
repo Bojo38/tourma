@@ -10,6 +10,7 @@
  */
 package tourma;
 
+import tourma.utility.ExtensionFileFilter;
 import tourma.tableModel.mjtCoaches;
 import tourma.tableModel.mjtTeams;
 import tourma.views.system.jdgRevisions;
@@ -22,18 +23,13 @@ import java.io.File;
 import java.text.ParseException;
 import java.util.Locale;
 import java.util.Vector;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-//import org.jvnet.substance.SubstanceLookAndFeel;
-//import org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
@@ -41,7 +37,6 @@ import org.pushingpixels.substance.api.skin.SubstanceMistSilverLookAndFeel;
 import teamma.data.lrb;
 import teamma.views.JdgRoster;
 import tourma.data.Clan;
-import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.Group;
 import tourma.data.Match;
@@ -56,7 +51,7 @@ import tourma.tableModel.mjtCriterias;
  * @author Frederic Berger
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    
     Tournament _tournament;
     File _file = null;
 
@@ -65,16 +60,16 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         Locale l = Locale.getDefault();
-
+        
         _tournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
-
+        
         Vector<String> StartOptions = new Vector<String>();
         StartOptions.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGame"));
         StartOptions.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
         int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGameOrOpen"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
-
+        
         if (res == 0) {
             jmiNouveauActionPerformed(null);
         } else {
@@ -91,7 +86,7 @@ public class MainFrame extends javax.swing.JFrame {
                     if (obj instanceof JPNRound) {
                         jtpMain.remove(obj);
                     }
-
+                    
                 }
                 for (int i = 0; i
                         < _tournament.getRounds().size(); i++) {
@@ -100,32 +95,282 @@ public class MainFrame extends javax.swing.JFrame {
                 }
             }
         }
-
+        
         update();
     }
+    
+    protected void updateCriterias(boolean bTourStarted) {
 
-    public void update() {
-
-        boolean bTourStarted = _tournament.getRounds().size() > 0;
-        jbtAdd.setEnabled(!bTourStarted);
-        jbtRemove.setEnabled(!bTourStarted);
+        jtbCriteria.setModel(new mjtCriterias(_tournament));
+        jbtAddCriteria.setEnabled(!bTourStarted);
+        jbtRemoveCriteria.setEnabled(!bTourStarted);
+    }
+    
+    protected void updateGroup(boolean bTourStarted) {
         jbtAddGroup.setEnabled(!bTourStarted);
         jbtRemoveGroup.setEnabled(!bTourStarted);
         jbtRenameGroup.setEnabled(!bTourStarted);
         jbtGrouToLeft.setEnabled(!bTourStarted);
         jbtGroupToRight.setEnabled(!bTourStarted);
-        jbtAddTeam.setEnabled(!bTourStarted);
-        jbtRemoveTeam.setEnabled(!bTourStarted);
+        
+        DefaultListModel groupModel = new DefaultListModel();
+        DefaultComboBoxModel groupsLeftModel = new DefaultComboBoxModel();
+        DefaultComboBoxModel groupsRightModel = new DefaultComboBoxModel();
+        for (int i = 0; i < _tournament.getGroups().size(); i++) {
+            groupModel.addElement(_tournament.getGroups().get(i)._name);
+            groupsLeftModel.addElement(_tournament.getGroups().get(i)._name);
+            groupsRightModel.addElement(_tournament.getGroups().get(i)._name);
+        }
+        jlsGroups.setModel(groupModel);
+        jcbGroupLeft.setModel(groupsLeftModel);
+        jcbGroupRight.setModel(groupsRightModel);
+        
+        if (_tournament.getGroups().size() > 0) {
+            jcbGroupLeft.setSelectedIndex(0);
+            if (_tournament.getGroups().size() > 1) {
+                jcbGroupRight.setSelectedIndex(1);
+            } else {
+                jcbGroupRight.setSelectedIndex(0);
+            }
+        }
+    }
+    
+    protected void updateRankIndivParameters() {
 
-        jbtAddCriteria.setEnabled(!bTourStarted);
-        jbtRemoveCriteria.setEnabled(!bTourStarted);
-
-//        jmiEditrosters.setEnabled((!bTourStarted) && (_tournament.getGroups().size() == 1) && (_tournament.getCoachs().isEmpty()));
-        jmiEditTeam.setEnabled(_tournament.getParams()._game == RosterType.C_BLOOD_BOWL);
-
+        jtffDraw.setValue(new Integer(_tournament.getParams()._draw_points));
+        jtffLargeVictory.setValue(new Integer(_tournament.getParams()._large_victory_points));
+        jtffLittleLost.setValue(new Integer(_tournament.getParams()._little_lost_points));
+        jtffLargeVictoryGap.setValue(new Integer(_tournament.getParams()._large_victory_gap));
+        jtffLittleLostGap.setValue(new Integer(_tournament.getParams()._little_lost_gap));
+        jtffLost.setValue(new Integer(_tournament.getParams()._lost_points));
+        
+        jtffVictory.setValue(new Integer(_tournament.getParams()._victory_points));
+        
+        Vector<String> rankChoices = new Vector<String>();
+        rankChoices.add("Aucun");
+        rankChoices.add("Points");
+        rankChoices.add("Points Adversaires");
+        rankChoices.add("V/N/D");
+        for (int i = 0; i < Tournament.getTournament().getParams()._criterias.size(); i++) {
+            Criteria criteria = Tournament.getTournament().getParams()._criterias.get(i);
+            rankChoices.add(criteria._name + " Joueur");
+            rankChoices.add(criteria._name + " Adversaire");
+            rankChoices.add(criteria._name + " Différence");
+        }
+        
+        jcbRank1.setModel(new DefaultComboBoxModel(rankChoices));
+        jcbRank2.setModel(new DefaultComboBoxModel(rankChoices));
+        jcbRank3.setModel(new DefaultComboBoxModel(rankChoices));
+        jcbRank4.setModel(new DefaultComboBoxModel(rankChoices));
+        jcbRank5.setModel(new DefaultComboBoxModel(rankChoices));
+        
+        jcbRank1.removeActionListener(jcbRank1.getActionListeners()[0]);
+        jcbRank2.removeActionListener(jcbRank2.getActionListeners()[0]);
+        jcbRank3.removeActionListener(jcbRank3.getActionListeners()[0]);
+        jcbRank4.removeActionListener(jcbRank4.getActionListeners()[0]);
+        jcbRank5.removeActionListener(jcbRank5.getActionListeners()[0]);
+        
+        jcbRank1.setSelectedIndex(_tournament.getParams()._ranking1);
+        jcbRank2.setSelectedIndex(_tournament.getParams()._ranking2);
+        jcbRank3.setSelectedIndex(_tournament.getParams()._ranking3);
+        jcbRank4.setSelectedIndex(_tournament.getParams()._ranking4);
+        jcbRank5.setSelectedIndex(_tournament.getParams()._ranking5);
+        
+        
+        
+        jcbRank1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank1ActionPerformed(evt);
+            }
+        });
+        
+        jcbRank2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank2ActionPerformed(evt);
+            }
+        });
+        
+        jcbRank3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank3ActionPerformed(evt);
+            }
+        });
+        
+        jcbRank4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank4ActionPerformed(evt);
+            }
+        });
+        
+        jcbRank5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank5ActionPerformed(evt);
+            }
+        });
+        
+    }
+    
+    protected void updateRankTeamParameters() {
+        
+        boolean teamMatches = _tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1);
+        
+        jtffDrawTeam.setValue(new Integer(_tournament.getParams()._draw_points_team));
+        jtffLostTeam.setValue(new Integer(_tournament.getParams()._lost_points_team));
+        
+        jtffVictoryTeam.setValue(new Integer(_tournament.getParams()._victory_points_team));
+        
+        jrbCoachPoints.setEnabled(teamMatches);
+        jrbTeamVictory.setEnabled(teamMatches);
+        
+        jtffTeamVictoryBonus.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+        
+        jtffTeamDrawBonus.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+        jlbVictoryPoints.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+        jlbVictoryPoints1.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
+        
+        jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jtffLostTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        
+        jtffVictoryTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        
+        
+        jLabel23.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jLabel24.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jLabel25.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jLabel26.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jLabel27.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jLabel28.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jLabel29.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jLabel30.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        
+        jrbCoachPoints.setSelected(!_tournament.getParams()._team_victory_only);
+        jrbTeamVictory.setSelected(_tournament.getParams()._team_victory_only);
+        jtffTeamVictoryBonus.setValue(_tournament.getParams()._team_victory_points);
+        jtffTeamDrawBonus.setValue(_tournament.getParams()._team_draw_points);
+        
+        Vector<String> rankChoices = new Vector<String>();
+        rankChoices.add("Aucun");
+        rankChoices.add("Points");
+        rankChoices.add("Points Adversaires");
+        rankChoices.add("V/N/D");
+        for (int i = 0; i < Tournament.getTournament().getParams()._criterias.size(); i++) {
+            Criteria criteria = Tournament.getTournament().getParams()._criterias.get(i);
+            rankChoices.add(criteria._name + " Joueur");
+            rankChoices.add(criteria._name + " Adversaire");
+            rankChoices.add(criteria._name + " Différence");
+        }
+        
+        
+        jcbRank1Team.setModel(new DefaultComboBoxModel(rankChoices));
+        jcbRank2Team.setModel(new DefaultComboBoxModel(rankChoices));
+        jcbRank3Team.setModel(new DefaultComboBoxModel(rankChoices));
+        jcbRank4Team.setModel(new DefaultComboBoxModel(rankChoices));
+        jcbRank5Team.setModel(new DefaultComboBoxModel(rankChoices));
+        
+        jcbRank1Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jcbRank2Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jcbRank3Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jcbRank4Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        jcbRank5Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
+        
+        jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
+        jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
+        jcbRank3Team.removeActionListener(jcbRank3Team.getActionListeners()[0]);
+        jcbRank4Team.removeActionListener(jcbRank4Team.getActionListeners()[0]);
+        jcbRank5Team.removeActionListener(jcbRank5Team.getActionListeners()[0]);
+        
+        jcbRank1Team.setSelectedIndex(_tournament.getParams()._ranking1_team);
+        jcbRank2Team.setSelectedIndex(_tournament.getParams()._ranking2_team);
+        jcbRank3Team.setSelectedIndex(_tournament.getParams()._ranking3_team);
+        jcbRank4Team.setSelectedIndex(_tournament.getParams()._ranking4_team);
+        jcbRank5Team.setSelectedIndex(_tournament.getParams()._ranking5_team);
+                
+        jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank1TeamActionPerformed(evt);
+            }
+        });
+        
+        jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank2TeamActionPerformed(evt);
+            }
+        });
+        
+        jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank3TeamActionPerformed(evt);
+            }
+        });
+        
+        jcbRank4Team.addActionListener(
+                new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jcbRank4TeamActionPerformed(evt);
+                    }
+                });
+        
+        jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRank5TeamActionPerformed(evt);
+            }
+        });
+    }
+    
+    protected void updateClans(boolean bTourStarted) {
         jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
         jcxActivatesClans.setEnabled(!bTourStarted && !_tournament.getParams()._teamTournament);
-
+        
+        boolean clansEnable = (_tournament.getParams()._enableClans) && (!_tournament.getParams()._teamTournament);
+        jlbActivateClans.setEnabled(!_tournament.getParams()._teamTournament);
+        jlbAvoidClansMembersMatch.setEnabled(clansEnable);
+        jlbClansMembersNUmbers.setEnabled(clansEnable);
+        jlbTeamMatesNumber.setEnabled(clansEnable);
+        
+        jspTeamMembers.setEnabled(clansEnable);
+        jcxAvoidFirstMatch.setEnabled(clansEnable);
+        jcxAvoidMatch.setEnabled(clansEnable);
+        
+        jbtAddClan.setEnabled(clansEnable && !bTourStarted);
+        jbtRemoveClan.setEnabled(clansEnable && !bTourStarted);
+        jbtEditClan.setEnabled(clansEnable && !bTourStarted);
+        jlsClans.setEnabled(clansEnable && !bTourStarted);
+        
+        jcxActivatesClans.setSelected(clansEnable);
+        jcxAvoidFirstMatch.setSelected(_tournament.getParams()._avoidClansFirstMatch);
+        jcxAvoidMatch.setSelected(_tournament.getParams()._avoidClansMatch);
+        jspTeamMembers.setValue(_tournament.getParams()._teamMatesNumber);
+        
+        int selectedClan = jlsClans.getSelectedIndex();
+        DefaultListModel coachListModel = new DefaultListModel();
+        if (selectedClan >= 0) {
+            
+            String clanName = _tournament.getClans().get(selectedClan)._name;
+            for (int i = 0; i < _tournament.getCoachs().size(); i++) {
+                if (clanName.equals(_tournament.getCoachs().get(i)._clan._name)) {
+                    coachListModel.addElement(_tournament.getCoachs().get(i)._name);
+                }
+            }
+        }
+        jlsCoachList.setModel(coachListModel);
+        
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < _tournament.getClans().size(); i++) {
+            listModel.addElement(_tournament.getClans().get(i)._name);
+        }
+        
+        jlsClans.setModel(listModel);
+    }
+    
+    protected void updateTables(boolean bTourStarted) {
+        
+        jbtAdd.setEnabled(!bTourStarted);
+        jbtRemove.setEnabled(!bTourStarted);
+        
+        jbtAddTeam.setEnabled(!bTourStarted);
+        jbtRemoveTeam.setEnabled(!bTourStarted);
+        
         if (_tournament.getParams()._teamTournament) {
             jpnTeamTour.setVisible(true);
             jpnCoachButtons.setVisible(false);
@@ -140,260 +385,50 @@ public class MainFrame extends javax.swing.JFrame {
             jpnTeamTour.setVisible(false);
             jpnCoachButtons.setVisible(true);
         }
-
-        jtpOptions.setEnabledAt(2, _tournament.getParams()._teamTournament);
-        jtpOptions.setEnabledAt(3, !_tournament.getParams()._teamTournament);
-
-        boolean teamMatches = _tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1);
-        jrbCoachPoints.setEnabled(teamMatches);
-        jrbTeamVictory.setEnabled(teamMatches);
-
-        jtffTeamVictory.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-
-        jtffTeamDraw.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-        jlbVictoryPoints.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-        jlbVictoryPoints1.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-
-        jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jtffLostTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-
-        jtffVictoryTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-
-
-        Vector<String> rankChoices = new Vector<String>();
-        rankChoices.add("Aucun");
-        rankChoices.add("Points");
-        rankChoices.add("Points Adversaires");
-        rankChoices.add("V/N/D");
-        for (int i = 0; i < Tournament.getTournament().getParams()._criterias.size(); i++) {
-            Criteria criteria = Tournament.getTournament().getParams()._criterias.get(i);
-            rankChoices.add(criteria._name + " Joueur");
-            rankChoices.add(criteria._name + " Adversaire");
-            rankChoices.add(criteria._name + " Différence");
-        }
-
-        jcbRank1.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank2.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank3.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank4.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank5.setModel(new DefaultComboBoxModel(rankChoices));
-
-        jcbRank1Team.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank2Team.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank3Team.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank4Team.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank5Team.setModel(new DefaultComboBoxModel(rankChoices));
-
-        jcbRank1Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jcbRank2Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jcbRank3Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jcbRank4Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jcbRank5Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-
-        jLabel23.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel24.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel25.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel26.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel27.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel28.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel29.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel30.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-
-        jrbCoachPoints.setSelected(!_tournament.getParams()._team_victory_only);
-        jrbTeamVictory.setSelected(_tournament.getParams()._team_victory_only);
-        jtffTeamVictory.setValue(_tournament.getParams()._team_victory_points);
-        jtffTeamDraw.setValue(_tournament.getParams()._team_draw_points);
-
-        jtfOrgas.setText(_tournament.getParams()._tournament_orga);
-        jtfTournamentName.setText(_tournament.getParams()._tournament_name);
-
-        jtffDraw.setValue(new Integer(_tournament.getParams()._draw_points));
-        jtffLargeVictory.setValue(new Integer(_tournament.getParams()._large_victory_points));
-        jtffLittleLost.setValue(new Integer(_tournament.getParams()._little_lost_points));
-        jtffLargeVictoryGap.setValue(new Integer(_tournament.getParams()._large_victory_gap));
-        jtffLittleLostGap.setValue(new Integer(_tournament.getParams()._little_lost_gap));
-        jtffLost.setValue(new Integer(_tournament.getParams()._lost_points));
-
-        jtffVictory.setValue(new Integer(_tournament.getParams()._victory_points));
-
-        jtffDrawTeam.setValue(new Integer(_tournament.getParams()._draw_points_team));
-        jtffLostTeam.setValue(new Integer(_tournament.getParams()._lost_points_team));
-
-        jtffVictoryTeam.setValue(new Integer(_tournament.getParams()._victory_points_team));
-
-
-        jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
-        jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
-        jcbRank3Team.removeActionListener(jcbRank3Team.getActionListeners()[0]);
-        jcbRank4Team.removeActionListener(jcbRank4Team.getActionListeners()[0]);
-        jcbRank5Team.removeActionListener(jcbRank5Team.getActionListeners()[0]);
-
-        jcbRank1Team.setSelectedIndex(_tournament.getParams()._ranking1_team);
-        jcbRank2Team.setSelectedIndex(_tournament.getParams()._ranking2_team);
-        jcbRank3Team.setSelectedIndex(_tournament.getParams()._ranking3_team);
-        jcbRank4Team.setSelectedIndex(_tournament.getParams()._ranking4_team);
-        jcbRank5Team.setSelectedIndex(_tournament.getParams()._ranking5_team);
-
-        jcbRank1.removeActionListener(jcbRank1.getActionListeners()[0]);
-        jcbRank2.removeActionListener(jcbRank2.getActionListeners()[0]);
-        jcbRank3.removeActionListener(jcbRank3.getActionListeners()[0]);
-        jcbRank4.removeActionListener(jcbRank4.getActionListeners()[0]);
-        jcbRank5.removeActionListener(jcbRank5.getActionListeners()[0]);
-
-        jcbRank1.setSelectedIndex(_tournament.getParams()._ranking1);
-        jcbRank2.setSelectedIndex(_tournament.getParams()._ranking2);
-        jcbRank3.setSelectedIndex(_tournament.getParams()._ranking3);
-        jcbRank4.setSelectedIndex(_tournament.getParams()._ranking4);
-        jcbRank5.setSelectedIndex(_tournament.getParams()._ranking5);
-        jtbCriteria.setModel(new mjtCriterias(_tournament));
-
-        jcbRank1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank1ActionPerformed(evt);
-            }
-        });
-
-        jcbRank2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank2ActionPerformed(evt);
-            }
-        });
-
-        jcbRank3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank3ActionPerformed(evt);
-            }
-        });
-
-        jcbRank4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank4ActionPerformed(evt);
-            }
-        });
-
-        jcbRank5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank5ActionPerformed(evt);
-            }
-        });
-
-        jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank1TeamActionPerformed(evt);
-            }
-        });
-
-        jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank2TeamActionPerformed(evt);
-            }
-        });
-
-        jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank3TeamActionPerformed(evt);
-            }
-        });
-
-        jcbRank4Team.addActionListener(
-                new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jcbRank4TeamActionPerformed(evt);
-                    }
-                });
-
-        jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbRank5TeamActionPerformed(evt);
-            }
-        });
-
-        jxdDate.setDate(_tournament.getParams()._date);
-        jtfPlace.setText(_tournament.getParams()._place);
-
+        
         mjtCoaches coachModel = new mjtCoaches(_tournament.getCoachs());
         jtbCoachs.setModel(coachModel);
         setColumnSize(jtbCoachs);
-
+        
         jtbCoachs.setDefaultRenderer(String.class, coachModel);
         jtbCoachs.setDefaultRenderer(Integer.class, coachModel);
-
+        
         mjtTeams teamModel = new mjtTeams(_tournament.getTeams());
         jtbTeam.setModel(teamModel);
         setColumnSize(jtbTeam);
         jtbTeam.setDefaultRenderer(String.class, teamModel);
         jtbTeam.setDefaultRenderer(Integer.class, teamModel);
-
+    }
+    
+    public void update() {
+        
+        boolean bTourStarted = _tournament.getRounds().size() > 0;
+        
+        updateCriterias(bTourStarted);        
+        updateClans(bTourStarted);
+        updateGroup(bTourStarted);
+        updateRankIndivParameters();    
+        updateTables(bTourStarted);
+        
+        
+        jmiEditTeam.setEnabled(_tournament.getParams()._game == RosterType.C_BLOOD_BOWL);
+                
+        jtpOptions.setEnabledAt(2, _tournament.getParams()._teamTournament);
+        jtpOptions.setEnabledAt(3, !_tournament.getParams()._teamTournament);   
+        
+        jtfOrgas.setText(_tournament.getParams()._tournament_orga);
+        jtfTournamentName.setText(_tournament.getParams()._tournament_name);
+        
+        jxdDate.setDate(_tournament.getParams()._date);
+        jtfPlace.setText(_tournament.getParams()._place);
+        
         for (int i = 0; i < jtpMain.getComponentCount(); i++) {
             Object o = jtpMain.getComponentAt(i);
             if (o instanceof JPNRound) {
                 ((JPNRound) o).update();
             }
         }
-
-
-        boolean clansEnable = (_tournament.getParams()._enableClans) && (!_tournament.getParams()._teamTournament);
-        jlbActivateClans.setEnabled(!_tournament.getParams()._teamTournament);
-        jlbAvoidClansMembersMatch.setEnabled(clansEnable);
-        jlbClansMembersNUmbers.setEnabled(clansEnable);
-        jlbTeamMatesNumber.setEnabled(clansEnable);
-
-        jspTeamMembers.setEnabled(clansEnable);
-        jcxAvoidFirstMatch.setEnabled(clansEnable);
-        jcxAvoidMatch.setEnabled(clansEnable);
-
-        jbtAddClan.setEnabled(clansEnable && !bTourStarted);
-        jbtRemoveClan.setEnabled(clansEnable && !bTourStarted);
-        jbtEditClan.setEnabled(clansEnable && !bTourStarted);
-        jlsClans.setEnabled(clansEnable && !bTourStarted);
-
-        jcxActivatesClans.setSelected(clansEnable);
-        jcxAvoidFirstMatch.setSelected(_tournament.getParams()._avoidClansFirstMatch);
-        jcxAvoidMatch.setSelected(_tournament.getParams()._avoidClansMatch);
-        jspTeamMembers.setValue(_tournament.getParams()._teamMatesNumber);
-
-        int selectedClan = jlsClans.getSelectedIndex();
-        DefaultListModel coachListModel = new DefaultListModel();
-        if (selectedClan >= 0) {
-
-            String clanName = _tournament.getClans().get(selectedClan)._name;
-            for (int i = 0; i < _tournament.getCoachs().size(); i++) {
-                if (clanName.equals(_tournament.getCoachs().get(i)._clan._name)) {
-                    coachListModel.addElement(_tournament.getCoachs().get(i)._name);
-                }
-            }
-        }
-        jlsCoachList.setModel(coachListModel);
-
-        DefaultListModel listModel = new DefaultListModel();
-        for (int i = 0; i < _tournament.getClans().size(); i++) {
-            listModel.addElement(_tournament.getClans().get(i)._name);
-        }
-
-        jlsClans.setModel(listModel);
-
-        DefaultListModel groupModel = new DefaultListModel();
-        DefaultComboBoxModel groupsLeftModel = new DefaultComboBoxModel();
-        DefaultComboBoxModel groupsRightModel = new DefaultComboBoxModel();
-        for (int i = 0; i < _tournament.getGroups().size(); i++) {
-            groupModel.addElement(_tournament.getGroups().get(i)._name);
-            groupsLeftModel.addElement(_tournament.getGroups().get(i)._name);
-            groupsRightModel.addElement(_tournament.getGroups().get(i)._name);
-        }
-        jlsGroups.setModel(groupModel);
-        jcbGroupLeft.setModel(groupsLeftModel);
-        jcbGroupRight.setModel(groupsRightModel);
-
-        if (_tournament.getGroups().size() > 0) {
-            jcbGroupLeft.setSelectedIndex(0);
-            if (_tournament.getGroups().size() > 1) {
-                jcbGroupRight.setSelectedIndex(1);
-            } else {
-                jcbGroupRight.setSelectedIndex(0);
-            }
-        }
-
+        
     }
 
     /**
@@ -472,9 +507,9 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jcbRank5Team = new javax.swing.JComboBox();
         jlbVictoryPoints = new javax.swing.JLabel();
-        jtffTeamVictory = new javax.swing.JFormattedTextField();
+        jtffTeamVictoryBonus = new javax.swing.JFormattedTextField();
         jlbVictoryPoints1 = new javax.swing.JLabel();
-        jtffTeamDraw = new javax.swing.JFormattedTextField();
+        jtffTeamDrawBonus = new javax.swing.JFormattedTextField();
         jPanel11 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jlbActivateClans = new javax.swing.JLabel();
@@ -603,12 +638,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel21.setText(bundle.getString("PlaceKey")); // NOI18N
         jPanel5.add(jLabel21);
-
-        jtfPlace.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtfPlaceKeyPressed(evt);
-            }
-        });
         jPanel5.add(jtfPlace);
 
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -947,26 +976,26 @@ public class MainFrame extends javax.swing.JFrame {
         jlbVictoryPoints.setToolTipText("");
         jPanel10.add(jlbVictoryPoints);
 
-        jtffTeamVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffTeamVictory.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtffTeamVictoryBonus.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffTeamVictoryBonus.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffTeamVictoryFocusLost(evt);
+                jtffTeamVictoryBonusFocusLost(evt);
             }
         });
-        jPanel10.add(jtffTeamVictory);
+        jPanel10.add(jtffTeamVictoryBonus);
 
         jlbVictoryPoints1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbVictoryPoints1.setText(bundle.getString("TeamDrawBonus")); // NOI18N
         jlbVictoryPoints1.setToolTipText("");
         jPanel10.add(jlbVictoryPoints1);
 
-        jtffTeamDraw.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jtffTeamDraw.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtffTeamDrawBonus.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffTeamDrawBonus.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtffTeamDrawFocusLost(evt);
+                jtffTeamDrawBonusFocusLost(evt);
             }
         });
-        jPanel10.add(jtffTeamDraw);
+        jPanel10.add(jtffTeamDrawBonus);
 
         jtpOptions.addTab(bundle.getString("ByTeamKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), jPanel10); // NOI18N
 
@@ -1478,16 +1507,16 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
-
+        
         if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (_tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1) && _tournament.getTeams().size() % 2 > 0) {
                 JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OddTeamNumber"));
             } else {
-                String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Random"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RegisteringOrder"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Manual")};
+                String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Random"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RegisteringOrder"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Manual"),java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RoundRobin")};
                 int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseFirstDraw"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FirstRound"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
-
+                
                 _tournament.generateFirstRound(choice);
-
+                
                 for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
                     Component obj = jtpMain.getComponentAt(i);
                     if (obj instanceof JPNRound) {
@@ -1500,57 +1529,57 @@ public class MainFrame extends javax.swing.JFrame {
                 }
                 jtpMain.setSelectedIndex(_tournament.getRounds().size());
                 update();
-
+                
             }
-
+            
         }
 }//GEN-LAST:event_jbtFirstRoundActionPerformed
-
+    
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
-
+        
         if (jtbCoachs.getSelectedRow() >= 0) {
             jdgCoach w = new jdgCoach(this, true, _tournament.getCoachs().get(jtbCoachs.getSelectedRow()));
             w.setVisible(true);
             update();
         }
 }//GEN-LAST:event_jbtModifyActionPerformed
-
+    
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
         _tournament.getCoachs().remove(jtbCoachs.getSelectedRow());
         update();
 }//GEN-LAST:event_jbtRemoveActionPerformed
-
+    
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
         jdgCoach w = new jdgCoach(this, true);
         w.setVisible(true);
         update();
 }//GEN-LAST:event_jbtAddActionPerformed
-
+    
     private void jcbRank5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5ActionPerformed
         _tournament.getParams()._ranking5 = jcbRank5.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank5ActionPerformed
-
+    
     private void jcbRank4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4ActionPerformed
         _tournament.getParams()._ranking4 = jcbRank4.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank4ActionPerformed
-
+    
     private void jcbRank3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3ActionPerformed
         _tournament.getParams()._ranking3 = jcbRank3.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank3ActionPerformed
-
+    
     private void jcbRank2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2ActionPerformed
         _tournament.getParams()._ranking2 = jcbRank2.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank2ActionPerformed
-
+    
     private void jcbRank1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1ActionPerformed
         _tournament.getParams()._ranking1 = jcbRank1.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank1ActionPerformed
-
+    
     private void jtffLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostFocusLost
         try {
             jtffLost.commitEdit();
@@ -1561,7 +1590,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         update();
 }//GEN-LAST:event_jtffLostFocusLost
-
+    
     private void jtffLittleLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostFocusLost
         try {
             jtffLittleLost.commitEdit();
@@ -1572,7 +1601,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         update();
 }//GEN-LAST:event_jtffLittleLostFocusLost
-
+    
     private void jtffDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawFocusLost
         try {
             jtffDraw.commitEdit();
@@ -1583,7 +1612,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         update();
 }//GEN-LAST:event_jtffDrawFocusLost
-
+    
     private void jtffVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryFocusLost
         try {
             jtffVictory.commitEdit();
@@ -1594,9 +1623,9 @@ public class MainFrame extends javax.swing.JFrame {
         }
         update();
 }//GEN-LAST:event_jtffVictoryFocusLost
-
+    
     private void jtffLargeVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryFocusLost
-
+        
         try {
             jtffLargeVictory.commitEdit();
             int points = ((Long) jtffLargeVictory.getValue()).intValue();
@@ -1606,15 +1635,15 @@ public class MainFrame extends javax.swing.JFrame {
         }
         update();
 }//GEN-LAST:event_jtffLargeVictoryFocusLost
-
+    
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
         _tournament.getParams()._tournament_orga = jtfOrgas.getText();
 }//GEN-LAST:event_jtfOrgasKeyPressed
-
+    
     private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
         _tournament.getParams()._tournament_name = jtfTournamentName.getText();
 }//GEN-LAST:event_jtfTournamentNameKeyPressed
-
+    
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
         JFileChooser jfc = new JFileChooser();
         FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
@@ -1626,7 +1655,7 @@ public class MainFrame extends javax.swing.JFrame {
             if (i > 0 && i < url2.length() - 1) {
                 ext = url2.substring(i + 1).toLowerCase();
             }
-
+            
             if (!ext.equals("xml")) {
                 url2 = url2 + ".xml";
             }
@@ -1634,7 +1663,7 @@ public class MainFrame extends javax.swing.JFrame {
             Tournament.getTournament().saveXML(_file);
         }
     }//GEN-LAST:event_jmiSaveAsActionPerformed
-
+    
     private void jmiSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveActionPerformed
         if (_file != null) {
             Tournament.getTournament().saveXML(_file);
@@ -1642,7 +1671,7 @@ public class MainFrame extends javax.swing.JFrame {
             jmiSaveAsActionPerformed(evt);
         }
     }//GEN-LAST:event_jmiSaveActionPerformed
-
+    
     private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
         JFileChooser jfc = new JFileChooser();
         FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
@@ -1657,7 +1686,7 @@ public class MainFrame extends javax.swing.JFrame {
                 if (obj instanceof JPNRound) {
                     jtpMain.remove(obj);
                 }
-
+                
             }
             for (int i = 0; i
                     < _tournament.getRounds().size(); i++) {
@@ -1665,15 +1694,15 @@ public class MainFrame extends javax.swing.JFrame {
 //                jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
                 jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
             }
-
+            
             update();
-
+            
         }
     }//GEN-LAST:event_jmiChargerActionPerformed
-
+    
     private void jmiNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNouveauActionPerformed
-
-
+        
+        
         for (int i = jtpMain.getTabCount() - 1; i
                 >= 0; i--) {
             Component obj = jtpMain.getComponentAt(i);
@@ -1682,7 +1711,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
         _tournament = Tournament.resetTournament();
-
+        
         Vector<String> Games = new Vector<String>();
         Games.add("Blood Bowl");
         Games.add("DreadBall");
@@ -1691,7 +1720,7 @@ public class MainFrame extends javax.swing.JFrame {
             RosterType.initCollection(RosterType.C_BLOOD_BOWL);
             lrb.getLRB();
             Tournament.getTournament().getParams()._game = RosterType.C_BLOOD_BOWL;
-
+            
         } else {
             RosterType.initCollection(RosterType.C_DREAD_BALL);
             Tournament.getTournament().getParams()._game = RosterType.C_DREAD_BALL;
@@ -1699,22 +1728,22 @@ public class MainFrame extends javax.swing.JFrame {
             jmiExportFbb.setEnabled(false);
             jcxAllowSpecialSkill.setEnabled(false);
         }
-
+        
         _tournament = Tournament.getTournament();
         _tournament.getGroups().clear();
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
         Group group = new Group(bundle.getString("NoneKey"));
         _tournament.getGroups().add(group);
-
+        
         for (int i = 0; i < RosterType.RostersNames.size(); i++) {
             group._rosters.add(new RosterType(RosterType.RostersNames.get(i)));
         }
-
+        
         Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Single"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam")};
         int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TournamentType"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewTournament"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
-
+        
         Tournament.getTournament().getParams()._teamTournament = (res == 1);
         if (res == 1) {
             jdgSelectNumber jdg = new jdgSelectNumber(this, true, _tournament);
@@ -1731,11 +1760,11 @@ public class MainFrame extends javax.swing.JFrame {
                 Tournament.getTournament().getParams()._teamIndivPairing = res;
             }
         }
-
-
+        
+        
         update();
     }//GEN-LAST:event_jmiNouveauActionPerformed
-
+    
     private void jmiExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportActionPerformed
         JFileChooser jfc = new JFileChooser();
         FileFilter filter1 = new ExtensionFileFilter("NAF XML file", new String[]{"XML", "xml"});
@@ -1744,25 +1773,25 @@ public class MainFrame extends javax.swing.JFrame {
             Tournament.getTournament().exportResults(jfc.getSelectedFile());
         }
     }//GEN-LAST:event_jmiExportActionPerformed
-
+    
     private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jmiExitActionPerformed
-
+    
     private void jmiRevisionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRevisionsActionPerformed
         jdgRevisions jdg = new jdgRevisions(this, true);
         jdg.setVisible(true);
         jdg =
                 null;
 }//GEN-LAST:event_jmiRevisionsActionPerformed
-
+    
     private void jmiAideEnLigneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAideEnLigneActionPerformed
         jdgOnlineHelp jdg = new jdgOnlineHelp(this, false);
         jdg.setVisible(true);
         jdg =
                 null;
     }//GEN-LAST:event_jmiAideEnLigneActionPerformed
-
+    
     private void jtffLargeVictoryGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryGapFocusLost
         try {
             jtffLargeVictoryGap.commitEdit();
@@ -1771,10 +1800,10 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffLargeVictoryGap.setValue(jtffLargeVictoryGap.getValue());
         }
-
+        
         update();
     }//GEN-LAST:event_jtffLargeVictoryGapFocusLost
-
+    
     private void jtffLittleLostGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostGapFocusLost
         try {
             jtffLittleLostGap.commitEdit();
@@ -1783,37 +1812,18 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (ParseException e) {
             jtffLittleLostGap.setValue(jtffLittleLostGap.getValue());
         }
-
+        
         update();
     }//GEN-LAST:event_jtffLittleLostGapFocusLost
-
-    private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfPlaceKeyPressed
-
+        
     private void jbtAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddTeamActionPerformed
-        /*String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TeamName"));
-         Team team = new Team();
-         team._name = name;
-         Coach lastCoach = null;
-         while (team._coachs.size() < _tournament.getParams()._teamMatesNumber) {
-         jdgCoach jdg = new jdgCoach(this, true);
-         jdg.setVisible(true);
-         Coach c = _tournament.getCoachs().lastElement();
-         if (c != lastCoach) {
-         c._teamMates = team;
-         team._coachs.add(c);
-         lastCoach = c;
-         }
-         }
-         _tournament.getTeams().add(team);*/
-
+        
         jdgTeam jdg = new jdgTeam(this, true);
         jdg.setVisible(true);
-
+        
         update();
     }//GEN-LAST:event_jbtAddTeamActionPerformed
-
+    
     private void jbtRemoveTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveTeamActionPerformed
         Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
         for (int i = 0; i < t._coachs.size(); i++) {
@@ -1823,7 +1833,7 @@ public class MainFrame extends javax.swing.JFrame {
         _tournament.getTeams().remove(t);
         update();
     }//GEN-LAST:event_jbtRemoveTeamActionPerformed
-
+    
     private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
         if (_tournament.getTeams().size() > jtbTeam.getSelectedRow()) {
             Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
@@ -1837,28 +1847,28 @@ public class MainFrame extends javax.swing.JFrame {
             update();
         }
     }//GEN-LAST:event_jbtModifyTeamActionPerformed
-
-    private void jtffTeamVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamVictoryFocusLost
+    
+    private void jtffTeamVictoryBonusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamVictoryBonusFocusLost
         try {
-            jtffTeamVictory.commitEdit();
-            int points = ((Long) jtffTeamVictory.getValue()).intValue();
+            jtffTeamVictoryBonus.commitEdit();
+            int points = ((Long) jtffTeamVictoryBonus.getValue()).intValue();
             _tournament.getParams()._team_victory_points = points;
         } catch (ParseException e) {
-            jtffTeamVictory.setValue(jtffTeamVictory.getValue());
+            jtffTeamVictoryBonus.setValue(jtffTeamVictoryBonus.getValue());
         }
         update();
-    }//GEN-LAST:event_jtffTeamVictoryFocusLost
-
+    }//GEN-LAST:event_jtffTeamVictoryBonusFocusLost
+    
     private void jrbTeamVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTeamVictoryActionPerformed
         _tournament.getParams()._team_victory_only = jrbTeamVictory.isSelected();
         update();
     }//GEN-LAST:event_jrbTeamVictoryActionPerformed
-
+    
     private void jrbCoachPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCoachPointsActionPerformed
         _tournament.getParams()._team_victory_only = !jrbCoachPoints.isSelected();
         update();
     }//GEN-LAST:event_jrbCoachPointsActionPerformed
-
+    
     private void jtffVictoryTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryTeamFocusLost
         try {
             jtffVictoryTeam.commitEdit();
@@ -1869,7 +1879,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         update();
     }//GEN-LAST:event_jtffVictoryTeamFocusLost
-
+    
     private void jtffDrawTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawTeamFocusLost
         try {
             jtffDrawTeam.commitEdit();
@@ -1880,7 +1890,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         update();
     }//GEN-LAST:event_jtffDrawTeamFocusLost
-
+    
     private void jtffLostTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostTeamFocusLost
         try {
             jtffLostTeam.commitEdit();
@@ -1891,61 +1901,61 @@ public class MainFrame extends javax.swing.JFrame {
         }
         update();
     }//GEN-LAST:event_jtffLostTeamFocusLost
-
+    
     private void jcbRank1TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1TeamActionPerformed
         _tournament.getParams()._ranking1_team = jcbRank1Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank1TeamActionPerformed
-
+    
     private void jcbRank2TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2TeamActionPerformed
         _tournament.getParams()._ranking2_team = jcbRank2Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank2TeamActionPerformed
-
+    
     private void jcbRank3TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3TeamActionPerformed
         _tournament.getParams()._ranking3_team = jcbRank3Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank3TeamActionPerformed
-
+    
     private void jcbRank4TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4TeamActionPerformed
         _tournament.getParams()._ranking4_team = jcbRank4Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank4TeamActionPerformed
-
+    
     private void jcbRank5TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5TeamActionPerformed
         _tournament.getParams()._ranking5_team = jcbRank5Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank5TeamActionPerformed
-
+    
     private void jcxActivatesClansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxActivatesClansActionPerformed
         boolean clansEnable = jcxActivatesClans.isSelected();
-
+        
         jlbAvoidClansMembersMatch.setEnabled(clansEnable);
         jlbClansMembersNUmbers.setEnabled(clansEnable);
         jlbTeamMatesNumber.setEnabled(clansEnable);
-
+        
         jspTeamMembers.setEnabled(clansEnable);
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
-
+        
         jbtAddClan.setEnabled(clansEnable);
         jbtRemoveClan.setEnabled(clansEnable);
         jbtEditClan.setEnabled(clansEnable);
         jlsClans.setEnabled(clansEnable);
-
+        
         _tournament.getParams()._enableClans = clansEnable;
-
+        
         update();
     }//GEN-LAST:event_jcxActivatesClansActionPerformed
-
+    
     private void jspTeamMembersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspTeamMembersStateChanged
         _tournament.getParams()._teamMatesNumber = (Integer) jspTeamMembers.getValue();
     }//GEN-LAST:event_jspTeamMembersStateChanged
-
+    
     private void jcxAvoidFirstMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidFirstMatchActionPerformed
         _tournament.getParams()._avoidClansFirstMatch = jcxAvoidFirstMatch.isSelected();
     }//GEN-LAST:event_jcxAvoidFirstMatchActionPerformed
-
+    
     private void jcxAvoidMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidMatchActionPerformed
         _tournament.getParams()._avoidClansMatch = jcxAvoidMatch.isSelected();
     }//GEN-LAST:event_jcxAvoidMatchActionPerformed
@@ -1956,7 +1966,7 @@ public class MainFrame extends javax.swing.JFrame {
      * @param evt not used
      */
     private void jbtAddClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddClanActionPerformed
-
+        
         String enterClanName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterClanNameKey");
         String clanName = JOptionPane.showInputDialog(this, enterClanName);
         if (clanName != null) {
@@ -1989,17 +1999,17 @@ public class MainFrame extends javax.swing.JFrame {
      */
     private void jbtRemoveClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveClanActionPerformed
         int index = jlsClans.getSelectedIndex();
-
+        
         if (index > 0) {
             _tournament.getClans().remove(index);
         }
         update();
     }//GEN-LAST:event_jbtRemoveClanActionPerformed
-
+    
     private void jlsClansMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlsClansMouseClicked
         update();
     }//GEN-LAST:event_jlsClansMouseClicked
-
+    
     private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
         if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < _tournament.getParams()._criterias.size())) {
             Criteria crit = _tournament.getParams()._criterias.get(jtbCriteria.getSelectedRow());
@@ -2014,7 +2024,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         repaint();
     }//GEN-LAST:event_jbtRemoveCriteriaActionPerformed
-
+    
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
         int nb = Tournament.getTournament().getParams()._criterias.size();
         Criteria c = new Criteria("Critère " + Integer.toString(nb));
@@ -2026,12 +2036,12 @@ public class MainFrame extends javax.swing.JFrame {
                 m._values.put(c, new Value(c));
             }
         }
-
+        
         update();
     }//GEN-LAST:event_jbtAddCriteriaActionPerformed
-
+    
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-
+        
         if (JOptionPane.showConfirmDialog(this, "Voulez vous sauvgarder ?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (_file.equals("")) {
                 jmiSaveAsActionPerformed(null);
@@ -2040,7 +2050,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formWindowClosed
-
+    
     private void jbtAddGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddGroupActionPerformed
         String newGroup = JOptionPane.showInputDialog("Entrez le nom du nouveau groupe");
         if (newGroup != null) {
@@ -2048,12 +2058,12 @@ public class MainFrame extends javax.swing.JFrame {
             update();
         }
     }//GEN-LAST:event_jbtAddGroupActionPerformed
-
+    
     private void jbtRenameGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRenameGroupActionPerformed
-
+        
         if (jlsGroups.getSelectedIndex() >= 0) {
             String currentName = _tournament.getGroups().get(jlsGroups.getSelectedIndex())._name;
-
+            
             String newGroup = JOptionPane.showInputDialog("Entrez le nouveau nom du groupe", currentName);
             if (newGroup != null) {
                 _tournament.getGroups().get(jlsGroups.getSelectedIndex())._name = newGroup;
@@ -2061,7 +2071,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jbtRenameGroupActionPerformed
-
+    
     private void jbtRemoveGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveGroupActionPerformed
         if (jlsGroups.getSelectedIndex() > 0) {
             Vector<RosterType> rosters = _tournament.getGroups().get(jlsGroups.getSelectedIndex())._rosters;
@@ -2072,7 +2082,7 @@ public class MainFrame extends javax.swing.JFrame {
             update();
         }
     }//GEN-LAST:event_jbtRemoveGroupActionPerformed
-
+    
     private void jcbGroupLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupLeftActionPerformed
         DefaultListModel listModel = new DefaultListModel();
         Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
@@ -2081,7 +2091,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         jlsLeft.setModel(listModel);
     }//GEN-LAST:event_jcbGroupLeftActionPerformed
-
+    
     private void jcbGroupRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupRightActionPerformed
         DefaultListModel listModel = new DefaultListModel();
         Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
@@ -2090,22 +2100,22 @@ public class MainFrame extends javax.swing.JFrame {
         }
         jlsRight.setModel(listModel);
     }//GEN-LAST:event_jcbGroupRightActionPerformed
-
+    
     private void jbtGroupToRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGroupToRightActionPerformed
-
+        
         if (jlsLeft.getSelectedIndex() > -1) {
             int index = jlsLeft.getSelectedIndex();
             RosterType roster = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.get(index);
             _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.remove(roster);
             _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.add(roster);
-
+            
             Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
             DefaultListModel listModelLeft = new DefaultListModel();
             for (int i = 0; i < rosters.size(); i++) {
                 listModelLeft.addElement(rosters.get(i)._name);
             }
             jlsLeft.setModel(listModelLeft);
-
+            
             DefaultListModel listModelRight = new DefaultListModel();
             rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
             for (int i = 0; i < rosters.size(); i++) {
@@ -2114,21 +2124,21 @@ public class MainFrame extends javax.swing.JFrame {
             jlsRight.setModel(listModelRight);
         }
     }//GEN-LAST:event_jbtGroupToRightActionPerformed
-
+    
     private void jbtGrouToLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGrouToLeftActionPerformed
         if (jlsRight.getSelectedIndex() > -1) {
             int index = jlsRight.getSelectedIndex();
             RosterType roster = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.get(index);
             _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.remove(roster);
             _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.add(roster);
-
+            
             Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
             DefaultListModel listModelRight = new DefaultListModel();
             for (int i = 0; i < rosters.size(); i++) {
                 listModelRight.addElement(rosters.get(i)._name);
             }
             jlsRight.setModel(listModelRight);
-
+            
             DefaultListModel listModelLeft = new DefaultListModel();
             rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
             for (int i = 0; i < rosters.size(); i++) {
@@ -2137,20 +2147,20 @@ public class MainFrame extends javax.swing.JFrame {
             jlsLeft.setModel(listModelLeft);
         }
     }//GEN-LAST:event_jbtGrouToLeftActionPerformed
-
+    
     private void jmiAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAboutActionPerformed
         jdgAbout jdg = new jdgAbout(this, true);
         jdg.setVisible(true);
         jdg =
                 null;
 }//GEN-LAST:event_jmiAboutActionPerformed
-
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (JOptionPane.showConfirmDialog(this, "Voulez vous sauvgarder ?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (_file == null) {
                 jmiSaveAsActionPerformed(null);
             } else {
-
+                
                 if (_file.equals("")) {
                     jmiSaveAsActionPerformed(null);
                 } else {
@@ -2159,27 +2169,27 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formWindowClosing
-
+    
     private void jmiEditTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditTeamActionPerformed
         JdgRoster jdg = new JdgRoster(this, true);
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditTeamActionPerformed
-
+    
     private void jcxAllowSpecialSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAllowSpecialSkillActionPerformed
         lrb.getLRB()._allowSpecialSkills = jcxAllowSpecialSkill.getState();
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
-
-    private void jtffTeamDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamDrawFocusLost
+    
+    private void jtffTeamDrawBonusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamDrawBonusFocusLost
         try {
-            jtffTeamDraw.commitEdit();
-            int points = ((Long) jtffTeamDraw.getValue()).intValue();
+            jtffTeamDrawBonus.commitEdit();
+            int points = ((Long) jtffTeamDrawBonus.getValue()).intValue();
             _tournament.getParams()._team_draw_points = points;
         } catch (ParseException e) {
-            jtffTeamDraw.setValue(jtffTeamDraw.getValue());
+            jtffTeamDrawBonus.setValue(jtffTeamDrawBonus.getValue());
         }
         update();
-    }//GEN-LAST:event_jtffTeamDrawFocusLost
-
+    }//GEN-LAST:event_jtffTeamDrawBonusFocusLost
+    
     private void jmiExportFbbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbbActionPerformed
         JFileChooser jfc = new JFileChooser();
         FileFilter filter1 = new ExtensionFileFilter("FBB csv file", new String[]{"CSV", "csv"});
@@ -2188,7 +2198,7 @@ public class MainFrame extends javax.swing.JFrame {
             Tournament.getTournament().exportFBB(jfc.getSelectedFile());
         }
     }//GEN-LAST:event_jmiExportFbbActionPerformed
-
+    
     private void jmiExportFbb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbb1ActionPerformed
         JFileChooser jfc = new JFileChooser();
         FileFilter filter1 = new ExtensionFileFilter("FBB xml file", new String[]{"FBB_XML", "fbb_xml"});
@@ -2197,14 +2207,12 @@ public class MainFrame extends javax.swing.JFrame {
             File f = jfc.getSelectedFile();
             if (f.getName().endsWith(".fbb_xml")) {
                 Tournament.getTournament().exportFullFBB(f);
-            }
-            else
-            {
-                Tournament.getTournament().exportFullFBB(new File(f.getAbsolutePath()+".fbb_xml"));
+            } else {
+                Tournament.getTournament().exportFullFBB(new File(f.getAbsolutePath() + ".fbb_xml"));
             }
         }
     }//GEN-LAST:event_jmiExportFbb1ActionPerformed
-
+    
     public void setColumnSize(JTable t) {
         FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
@@ -2217,36 +2225,36 @@ public class MainFrame extends javax.swing.JFrame {
                 if (value instanceof String) {
                     tmp = (String) value;
                 }
-
+                
                 if (value instanceof Integer) {
                     tmp = "" + (Integer) value;
                 }
-
+                
                 int taille = fm.stringWidth(tmp);
                 if (taille > max) {
                     max = taille;
                 }
-
+                
             }
             String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
             int taille = fm.stringWidth(nom);
             if (taille > max) {
                 max = taille;
             }
-
+            
             t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
         }
-
+        
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
+                
                 JFrame.setDefaultLookAndFeelDecorated(true);
                 try {
                     SubstanceLookAndFeel lf = new SubstanceMistSilverLookAndFeel();
@@ -2254,18 +2262,18 @@ public class MainFrame extends javax.swing.JFrame {
                 } catch (Exception e) {
                     System.out.println(e.getLocalizedMessage());
                 }
-
+                
                 MainFrame.getMainFrame().setVisible(true);
             }
         });
     }
     protected static MainFrame _singleton;
-
+    
     public static MainFrame getMainFrame() {
         if (_singleton == null) {
             _singleton = new MainFrame();
         }
-
+        
         return _singleton;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2414,8 +2422,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jtffLittleLostGap;
     private javax.swing.JFormattedTextField jtffLost;
     private javax.swing.JFormattedTextField jtffLostTeam;
-    private javax.swing.JFormattedTextField jtffTeamDraw;
-    private javax.swing.JFormattedTextField jtffTeamVictory;
+    private javax.swing.JFormattedTextField jtffTeamDrawBonus;
+    private javax.swing.JFormattedTextField jtffTeamVictoryBonus;
     private javax.swing.JFormattedTextField jtffVictory;
     private javax.swing.JFormattedTextField jtffVictoryTeam;
     public javax.swing.JTabbedPane jtpMain;

@@ -78,8 +78,6 @@ public class JPNRound extends javax.swing.JPanel {
                 _jpnClanRound = new JPNClanRound(r, t);
                 jtpGlobal.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByClan"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")), _jpnClanRound);
             }
-
-
         }
         if (_tournament.getGroups().size() > 1) {
             for (int i = 0; i < _tournament.getGroups().size(); i++) {
@@ -109,6 +107,8 @@ public class JPNRound extends javax.swing.JPanel {
                     locked = true;
                 }
             }
+            if (_tournament._roundrobin)
+                locked=false;
 
             if (_jpnTeamRound != null) {
                 _jpnTeamRound.update();
