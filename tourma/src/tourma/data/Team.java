@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -15,10 +16,17 @@ import org.jdom.Element;
  */
 public class Team implements Comparable, XMLExport {
 
+    public static Team NullTeam = new Team("None");
     public Vector<Coach> _coachs;
     public String _name;
+    public static HashMap<String, Team> _map = new HashMap<String, Team>();
 
     public Team() {
+        _coachs = new Vector();
+    }
+
+    public Team(String name) {
+        _name = name;
         _coachs = new Vector();
     }
 
@@ -42,14 +50,22 @@ public class Team implements Comparable, XMLExport {
     }
 
     public Vector<Coach> getActivePlayers() {
-        Vector<Coach> v = new Vector<Coach>();
-
-        for (int i = 0; i < _coachs.size(); i++) {
-            if (_coachs.get(i)._active) {
-                v.add(_coachs.get(i));
+        if (this == NullTeam) {
+            _coachs = new Vector<Coach>();
+            for (int i = 0; i < Tournament.getTournament().getParams()._teamMatesNumber; i++) {
+                _coachs.add(Coach.NullCoach);
             }
+            return _coachs;
+        } else {
+            Vector<Coach> v = new Vector<Coach>();
+
+            for (int i = 0; i < _coachs.size(); i++) {
+                if (_coachs.get(i)._active) {
+                    v.add(_coachs.get(i));
+                }
+            }
+            return v;
         }
-        return v;
     }
 
     public Element getXMLElement() {
@@ -69,6 +85,7 @@ public class Team implements Comparable, XMLExport {
         Iterator m = coachs2.iterator();
         this._coachs.clear();
 
+        Team._map.put(_name, this);
         while (m.hasNext()) {
             Element coach = (Element) m.next();
             Coach c = Coach._map.get(coach.getAttribute("Name").getValue());

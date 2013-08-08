@@ -265,8 +265,9 @@ public class JPNTeamRound extends javax.swing.JPanel {
             _jtbTeamMatch.setDefaultRenderer(String.class, model);
             _jtbTeamMatch.setDefaultRenderer(Integer.class, model);
             setColumnSize(_jtbTeamMatch);
-
         }
+        
+        jtbRankingTeam.setRowHeight(25);
 
     }
 

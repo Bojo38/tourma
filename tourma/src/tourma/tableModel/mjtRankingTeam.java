@@ -14,6 +14,7 @@ import tourma.data.Coach;
 import java.util.Collections;
 import java.util.Vector;
 import tourma.data.Criteria;
+import tourma.data.Pool;
 import tourma.data.Team;
 
 /**
@@ -419,6 +420,43 @@ public class mjtRankingTeam extends mjtRanking {
          }
 
          Collections.sort(_datas);*/
+        
+        
+        Tournament tour = Tournament.getTournament();
+
+        // On ajuste le tri par poule si nécessaire pour que
+        // l'écart minimum entre 2 membres de la même poule
+        // soit le nombre de joueurs de la poule
+        if ((tour.getPools().size() > 0) && (!tour.getRounds().get(_round)._cup)) {
+            if (_objects.size() > tour.getPools().get(0)._teams.size()) {
+                int nbPool = tour.getPools().size();
+                Pool p = null;
+                Vector<mjtRankingTeam> pRank = new Vector<mjtRankingTeam>();
+                for (int j = 0; j < nbPool; j++) {
+                    p = tour.getPools().get(j);
+                    mjtRankingTeam mjtr = new mjtRankingTeam(_teamVictory, _round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, p._teams, _round_only);
+                    pRank.add(mjtr);
+                }
+
+
+                Vector datas = new Vector<ObjectRanking>();
+
+                for (int i = 0; i < tour.getPools().get(0)._teams.size(); i++) {
+                    Vector<Team> rank = new Vector<Team>();
+                    for (int j = 0; j < nbPool; j++) {
+                        ObjectRanking obj = (ObjectRanking) pRank.get(j)._datas.get(i);
+                        rank.add((Team) obj.getObject());
+                    }
+                    mjtRankingTeam mjtr = new mjtRankingTeam(_teamVictory,_round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, rank,  _round_only);
+
+                    for (int j = 0; j < mjtr._datas.size(); j++) {
+                        datas.add(mjtr._datas.get(j));
+                    }
+                }
+
+                _datas = datas;
+            }
+        }
     }
 
     public int getColumnCount() {

@@ -12,6 +12,7 @@ import tourma.data.Coach;
 import java.util.Collections;
 import java.util.Vector;
 import tourma.data.Criteria;
+import tourma.data.Pool;
 import tourma.data.Tournament;
 
 /**
@@ -29,6 +30,8 @@ public class mjtRankingIndiv extends mjtRanking {
         _teamTournament = tournament;
         _round_only = round_only;
         sortDatas();
+
+
     }
 
     protected void sortDatas() {
@@ -117,6 +120,55 @@ public class mjtRankingIndiv extends mjtRanking {
         }
 
         Collections.sort(_datas);
+
+        Tournament tour = Tournament.getTournament();
+
+        // On ajuste le tri par poule si nécessaire pour que
+        // l'écart minimum entre 2 membres de la même poule
+        // soit le nombre de joueurs de la poule
+        if ((tour.getPools().size() > 0) && (!tour.getRounds().get(_round)._cup)&&(!_teamTournament)) {
+            if (_objects.size() > tour.getPools().get(0)._coachs.size()) {
+                int nbPool = tour.getPools().size();
+                Pool p = null;
+                Vector<mjtRankingIndiv> pRank = new Vector<mjtRankingIndiv>();
+                for (int j = 0; j < nbPool; j++) {
+                    p = tour.getPools().get(j);
+                    mjtRankingIndiv mjtr = new mjtRankingIndiv(_round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, p._coachs, _teamTournament, _round_only);
+                    pRank.add(mjtr);
+                }
+
+
+                Vector datas = new Vector<ObjectRanking>();
+
+                for (int i = 0; i < tour.getPools().get(0)._coachs.size(); i++) {
+                    Vector<Coach> rank = new Vector<Coach>();
+                    for (int j = 0; j < nbPool; j++) {
+                        ObjectRanking obj = (ObjectRanking) pRank.get(j)._datas.get(i);
+                        rank.add((Coach) obj.getObject());
+                    }
+                    mjtRankingIndiv mjtr = new mjtRankingIndiv(_round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, rank, _teamTournament, _round_only);
+
+                    for (int j = 0; j < mjtr._datas.size(); j++) {
+                        datas.add(mjtr._datas.get(j));
+                    }
+                }
+
+                Vector<Coach> rank = new Vector<Coach>();
+                for (int i = 0; i < tour.getCoachs().size(); i++) {
+
+                    if (!tour.getCoachs().get(i)._active) {
+                        rank.add(tour.getCoachs().get(i));
+                    }
+                }
+                mjtRankingIndiv mjtr = new mjtRankingIndiv(_round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, rank, _teamTournament, _round_only);
+
+                for (int j = 0; j < mjtr._datas.size(); j++) {
+                    datas.add(mjtr._datas.get(j));
+                }
+
+                _datas = datas;
+            }
+        }
     }
 
     /*protected int getValues(Coach c, int ranking_type, int round) {

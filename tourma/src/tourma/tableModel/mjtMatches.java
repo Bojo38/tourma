@@ -216,6 +216,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                 }
             }
+            m.resetWL();
         }
         fireTableDataChanged();
     }
@@ -265,6 +266,8 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
 
         Color bkg = new Color(255, 255, 255);
         Color frg = new Color(0, 0, 0);
+        
+        
         if (isSelected) {
             bkg = new Color(200, 200, 200);
         } else {
@@ -326,9 +329,9 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         break;
                     default:
                         if (column % 2 > 0) {
-                            frg = new Color(200, 50, 50);
+                            frg = new Color(150, 50, 50);
                         } else {
-                            frg = new Color(50, 50, 200);
+                            frg = new Color(50, 50, 150);
                         }
                 }
             } else {
@@ -364,9 +367,9 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
 
                     default:
                         if (column % 2 > 0) {
-                            frg = new Color(200, 50, 50);
+                            frg = new Color(150, 50, 50);
                         } else {
-                            frg = new Color(50, 50, 200);
+                            frg = new Color(50, 50, 150);
                         }
                 }
             }

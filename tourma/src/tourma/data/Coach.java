@@ -23,6 +23,7 @@ import tourma.MainFrame;
  */
 public class Coach implements Comparable, XMLExport {
 
+    public static Coach NullCoach=new Coach("None");
     public static HashMap<String,Coach> _map=new HashMap<String,Coach>();
     /**
      * Clan
@@ -41,6 +42,15 @@ public class Coach implements Comparable, XMLExport {
     public Coach() {
         _matchs = new Vector<Match>();
         _active = true;
+    }
+    
+     public Coach(String name) {
+        _matchs = new Vector<Match>();
+        _active = false;
+        _name=name;
+        _team="None";
+        _roster=new RosterType("None");
+        _teamMates=Team.NullTeam;
     }
 
     public int compareTo(Object obj) {

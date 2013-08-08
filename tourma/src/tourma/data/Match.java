@@ -7,6 +7,7 @@ package tourma.data;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -22,6 +23,8 @@ public class Match implements XMLExport {
     public Coach _coach1;
     public Coach _coach2;
     public HashMap<Criteria, Value> _values;
+    protected Coach _winner = null;
+    protected Coach _looser = null;
 
     public Match() {
         _values = new HashMap<Criteria, Value>();
@@ -105,6 +108,137 @@ public class Match implements XMLExport {
             }
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
+        }
+    }
+
+    public Coach getWinner() {
+        if (_winner == null) {
+            if (_coach1 == Coach.NullCoach) {
+                _winner = _coach2;
+                _looser = _coach1;
+                return _winner;
+            }
+            if (_coach2 == Coach.NullCoach) {
+                _winner = _coach1;
+                _looser = _coach2;
+                return _winner;
+            }
+
+            Vector<Criteria> crits = Tournament.getTournament().getParams()._criterias;
+            for (int i = 0; i < crits.size(); i++) {
+                if (_values.get(crits.get(i))._value1 > _values.get(crits.get(i))._value2) {
+                    _winner = _coach1;
+                    _looser = _coach2;
+                    return _winner;
+                }
+                if (_values.get(crits.get(i))._value1 < _values.get(crits.get(i))._value2) {
+                    _winner = _coach2;
+                    _looser = _coach1;
+                    return _winner;
+                }
+            }
+
+            int r = (int) Math.random();
+            if (r % 2 == 0) {
+                _winner = _coach2;
+                _looser = _coach1;
+            } else {
+                _winner = _coach2;
+                _looser = _coach1;
+            }
+        }
+
+        return _winner;
+
+
+    }
+
+    public Coach getLooser() {
+        if (_looser == null) {
+            if (_coach1 == Coach.NullCoach) {
+                _winner = _coach2;
+                _looser = _coach1;
+                return _looser;
+            }
+            if (_coach2 == Coach.NullCoach) {
+                _winner = _coach1;
+                _looser = _coach2;
+                return _looser;
+            }
+            Vector<Criteria> crits = Tournament.getTournament().getParams()._criterias;
+            for (int i = 0; i < crits.size(); i++) {
+                if (_values.get(crits.get(i))._value1 < _values.get(crits.get(i))._value2) {
+                    _winner = _coach1;
+                    _looser = _coach2;
+                    return _looser;
+                }
+                if (_values.get(crits.get(i))._value1 > _values.get(crits.get(i))._value2) {
+                    _winner = _coach2;
+                    _looser = _coach1;
+                    return _looser;
+                }
+            }
+
+            int r = (int) Math.random();
+            if (r % 2 == 0) {
+                _winner = _coach2;
+                _looser = _coach1;
+            } else {
+                _winner = _coach2;
+                _looser = _coach1;
+            }
+        }
+
+        return _looser;
+    }
+
+    public void resetWL() {
+        _winner = null;
+        _looser = null;
+    }
+
+    public static Team getTeamMatchWinner(int teamMatesNumber, int matchIndex, Vector<Match> matchs) {
+        Criteria td = Tournament.getTournament().getParams()._criterias.get(0);
+        Match m = matchs.get(matchIndex * teamMatesNumber);
+        Team team1 = m._coach1._teamMates;
+        Team team2 = m._coach2._teamMates;
+
+        int nbVictory = 0;
+        int nbLost = 0;
+        int nbDraw = 0;
+        for (int j = 0; j < teamMatesNumber; j++) {
+            m = matchs.get(matchIndex * teamMatesNumber + j);
+            if (m._values.get(td)._value1 > m._values.get(td)._value2) {
+                nbVictory++;
+            } else {
+                if (m._values.get(td)._value1 < m._values.get(td)._value2) {
+                    nbLost++;
+                } else {
+                    nbDraw++;
+                }
+            }
+        }
+
+        if (team1 == Team.NullTeam) {
+            return team2;
+        } else {
+            if (team2 == Team.NullTeam) {
+                return team1;
+            } else {
+                if (nbVictory > nbLost) {
+                    return team1;
+                } else {
+                    if (nbVictory < nbLost) {
+                        return team2;
+                    } else {
+                        if (((int) Math.random()) % 2 == 0) {
+                            return team1;
+                        } else {
+                            return team2;
+                        }
+                    }
+                }
+            }
         }
     }
 }

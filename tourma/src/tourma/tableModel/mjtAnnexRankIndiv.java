@@ -30,7 +30,7 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
     protected void sortDatas() {
         _datas.clear();
         _datas = new Vector<ObjectAnnexRanking>();
-        Vector<Coach> coaches = Tournament.getTournament().getCoachs();
+        Vector<Coach> coaches = (Vector<Coach>)_objects;
         for (int k = 0; k < coaches.size(); k++) {
             Coach c = coaches.get(k);
             int value = 0;

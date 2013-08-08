@@ -58,29 +58,6 @@ public class JPNClanRound extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpnClan = new javax.swing.JPanel();
-        jSplitPane2 = new javax.swing.JSplitPane();
-        jPanel7 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jtbMostTdClan = new javax.swing.JTable();
-        jScrollPane11 = new javax.swing.JScrollPane();
-        jtbMostSorClan = new javax.swing.JTable();
-        jScrollPane12 = new javax.swing.JScrollPane();
-        jtbMostFoulClan = new javax.swing.JTable();
-        jScrollPane16 = new javax.swing.JScrollPane();
-        jtbMostPasClan = new javax.swing.JTable();
-        jScrollPane18 = new javax.swing.JScrollPane();
-        jtbMostIntClan = new javax.swing.JTable();
-        jScrollPane13 = new javax.swing.JScrollPane();
-        jtbMostTdNegClan = new javax.swing.JTable();
-        jScrollPane14 = new javax.swing.JScrollPane();
-        jtbMostSorNegClan = new javax.swing.JTable();
-        jScrollPane15 = new javax.swing.JScrollPane();
-        jtbMostFoulNegClan = new javax.swing.JTable();
-        jScrollPane17 = new javax.swing.JScrollPane();
-        jtbMostPasNegClan = new javax.swing.JTable();
-        jScrollPane19 = new javax.swing.JScrollPane();
-        jtbMostIntNegClan = new javax.swing.JTable();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -93,194 +70,11 @@ public class JPNClanRound extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jpnClan.setLayout(new java.awt.BorderLayout());
-
-        jSplitPane2.setDividerLocation(200);
-        jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-
-        jPanel7.setLayout(new java.awt.GridLayout(2, 5));
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TouchdownForKey"))); // NOI18N
-
-        jtbMostTdClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane7.setViewportView(jtbMostTdClan);
-
-        jPanel7.add(jScrollPane7);
-
-        jScrollPane11.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CasualtiesKey"))); // NOI18N
-
-        jtbMostSorClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane11.setViewportView(jtbMostSorClan);
-
-        jPanel7.add(jScrollPane11);
-
-        jScrollPane12.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FoulsForKey"))); // NOI18N
-
-        jtbMostFoulClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane12.setViewportView(jtbMostFoulClan);
-
-        jPanel7.add(jScrollPane12);
-
-        jScrollPane16.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PassesForKey"))); // NOI18N
-
-        jtbMostPasClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane16.setViewportView(jtbMostPasClan);
-
-        jPanel7.add(jScrollPane16);
-
-        jScrollPane18.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("BestInterceptorKey"))); // NOI18N
-
-        jtbMostIntClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane18.setViewportView(jtbMostIntClan);
-
-        jPanel7.add(jScrollPane18);
-
-        jScrollPane13.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TouchdownAgainstKey"))); // NOI18N
-
-        jtbMostTdNegClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane13.setViewportView(jtbMostTdNegClan);
-
-        jPanel7.add(jScrollPane13);
-
-        jScrollPane14.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CasualtiesAgainstKey"))); // NOI18N
-
-        jtbMostSorNegClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane14.setViewportView(jtbMostSorNegClan);
-
-        jPanel7.add(jScrollPane14);
-
-        jScrollPane15.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FoulsAgainstKey"))); // NOI18N
-
-        jtbMostFoulNegClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane15.setViewportView(jtbMostFoulNegClan);
-
-        jPanel7.add(jScrollPane15);
-
-        jScrollPane17.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PassesAgainstKey"))); // NOI18N
-
-        jtbMostPasNegClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane17.setViewportView(jtbMostPasNegClan);
-
-        jPanel7.add(jScrollPane17);
-
-        jScrollPane19.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("InterceptionsAgainstKey"))); // NOI18N
-
-        jtbMostIntNegClan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane19.setViewportView(jtbMostIntNegClan);
-
-        jPanel7.add(jScrollPane19);
-
-        jSplitPane2.setTopComponent(jPanel7);
-
-        jpnClan.add(jSplitPane2, java.awt.BorderLayout.CENTER);
-
-        add(jpnClan, java.awt.BorderLayout.CENTER);
-
         jSplitPane1.setDividerLocation(600);
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GeneralRankingKey"))); // NOI18N
         jScrollPane3.setPreferredSize(new java.awt.Dimension(466, 300));
 
@@ -372,33 +166,10 @@ public class JPNClanRound extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane11;
-    private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JScrollPane jScrollPane13;
-    private javax.swing.JScrollPane jScrollPane14;
-    private javax.swing.JScrollPane jScrollPane15;
-    private javax.swing.JScrollPane jScrollPane16;
-    private javax.swing.JScrollPane jScrollPane17;
-    private javax.swing.JScrollPane jScrollPane18;
-    private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JButton jbtGGlobalClan;
     private javax.swing.JButton jbtGeneralClan;
-    private javax.swing.JPanel jpnClan;
-    private javax.swing.JTable jtbMostFoulClan;
-    private javax.swing.JTable jtbMostFoulNegClan;
-    private javax.swing.JTable jtbMostIntClan;
-    private javax.swing.JTable jtbMostIntNegClan;
-    private javax.swing.JTable jtbMostPasClan;
-    private javax.swing.JTable jtbMostPasNegClan;
-    private javax.swing.JTable jtbMostSorClan;
-    private javax.swing.JTable jtbMostSorNegClan;
-    private javax.swing.JTable jtbMostTdClan;
-    private javax.swing.JTable jtbMostTdNegClan;
     private javax.swing.JTable jtbRankingClan;
     private javax.swing.JTabbedPane jtpAnnexRank;
     // End of variables declaration//GEN-END:variables
@@ -423,6 +194,7 @@ public class JPNClanRound extends javax.swing.JPanel {
         for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
             ((JPNAnnexRanking) jtpAnnexRank.getComponent(i)).update();
         }
+        jtbRankingClan.setRowHeight(25);
     }
 
     public void setColumnSize(JTable t) {

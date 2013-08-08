@@ -36,13 +36,16 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import tourma.data.Criteria;
 import tourma.data.Group;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Parameters;
+import tourma.data.Pool;
 import tourma.data.Team;
 import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.tableModel.mjtRankingTeam;
@@ -88,6 +91,15 @@ public class JPNRound extends javax.swing.JPanel {
                 }
             }
         }
+
+        if (_tournament.getPools().size() >= 1) {
+            for (int i = 0; i < _tournament.getPools().size(); i++) {
+                Pool p = _tournament.getPools().get(i);
+                JPNPoolRound jpnPool = new JPNPoolRound(r, t, p);
+                jtpGlobal.addTab("Poule: " + p._name, new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Pool.png")), jpnPool);
+            }
+        }
+
         for (int i = 0; i < _tournament.getParams()._criterias.size(); i++) {
             Criteria criteria = _tournament.getParams()._criterias.get(i);
             JPNAnnexRanking jpn = new JPNAnnexRanking(criteria._name, criteria, _tournament, _round, false, false);
@@ -107,8 +119,9 @@ public class JPNRound extends javax.swing.JPanel {
                     locked = true;
                 }
             }
-            if (_tournament._roundrobin)
-                locked=false;
+            if (_tournament._roundrobin) {
+                locked = false;
+            }
 
             if (_jpnTeamRound != null) {
                 _jpnTeamRound.update();
@@ -123,7 +136,13 @@ public class JPNRound extends javax.swing.JPanel {
             jtbMatches.setModel(model);
             jtbMatches.setDefaultRenderer(String.class, model);
             jtbMatches.setDefaultRenderer(Integer.class, model);
+            jtbMatches.setRowHeight(25);
 
+            jtbRankingIndiv.setRowHeight(25);
+
+            jbtNextRound.setEnabled(!_round._cup);
+            jbtNextRoundQuickSwiss.setEnabled(!_round._cup);
+            jbtNextRoundRandom.setEnabled(!_round._cup);
 
             /*        jtbMatches.setDefaultEditor(Integer.class, model);*/
             setColumnSize(jtbMatches);
@@ -164,10 +183,18 @@ public class JPNRound extends javax.swing.JPanel {
                     if (panel instanceof JPNClanRound) {
                         ((JPNClanRound) panel)._round_only = _round_only;
                         ((JPNClanRound) panel).update();
+                    } else {
+                        if (panel instanceof JPNPoolRound) {
+                            ((JPNPoolRound) panel)._round_only = _round_only;
+                            ((JPNPoolRound) panel).update();
+                        } else {
+                            if (panel instanceof JPNCup) {
+                                ((JPNCup) panel).update();
+                            }
+                        }
                     }
                 }
             }
-
         }
     }
 
@@ -188,6 +215,7 @@ public class JPNRound extends javax.swing.JPanel {
         jbtNextRound = new javax.swing.JButton();
         jbtNextRoundRandom = new javax.swing.JButton();
         jbtNextRoundQuickSwiss = new javax.swing.JButton();
+        jbtNextRoundFinalTab = new javax.swing.JButton();
         jbtShowMatches = new javax.swing.JButton();
         jbtShowResults = new javax.swing.JButton();
         jbtDeleteRound = new javax.swing.JButton();
@@ -249,7 +277,6 @@ public class JPNRound extends javax.swing.JPanel {
         jbtNextRoundRandom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         jbtNextRoundRandom.setText(bundle.getString("GenerateNextRoundKeyRandom")); // NOI18N
         jbtNextRoundRandom.setToolTipText("Cette méthode permet de générer une ronde totalement aléatoire. Cependant, au plus le nombre de ronde se rapprocher de la limite (nombre de joueurs-1) au plus le logiciel aura du mal à déterminer un tirage aléatoire satisfaisant.\n"); // NOI18N
-        jbtNextRoundRandom.setActionCommand("Générer ronde Aléatoire");
         jbtNextRoundRandom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextRoundRandomActionPerformed(evt);
@@ -260,13 +287,22 @@ public class JPNRound extends javax.swing.JPanel {
         jbtNextRoundQuickSwiss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         jbtNextRoundQuickSwiss.setText(bundle.getString("GenerateNextRoundKeyQuick")); // NOI18N
         jbtNextRoundQuickSwiss.setToolTipText("Une ronde suisse accelerée fait se partage le classement en 4: Q1, Q2 Q3 et Q4. Q1 rencontre Q2 et Q3 rencontre Q4.\nCette méthode permet de créer plus rapidement un groupe de vainqueurs possible. Sur un tournoi en 5 ou  6 ronde avec plus de 32 joueurs, cette méthode peut être utilisée lors des rondes 2 (et 3 sur plus de 64 joueurs).\n"); // NOI18N
-        jbtNextRoundQuickSwiss.setActionCommand("Générer ronde Suisse Accelerée");
         jbtNextRoundQuickSwiss.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextRoundQuickSwissActionPerformed(evt);
             }
         });
         jPanel3.add(jbtNextRoundQuickSwiss);
+
+        jbtNextRoundFinalTab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
+        jbtNextRoundFinalTab.setText(bundle.getString("GenerateCup")); // NOI18N
+        jbtNextRoundFinalTab.setToolTipText("Le tableau final se déroule comme une coupe."); // NOI18N
+        jbtNextRoundFinalTab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtNextRoundFinalTabActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtNextRoundFinalTab);
 
         jbtShowMatches.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtShowMatches.setText(bundle.getString("ShowMatchsKey")); // NOI18N
@@ -417,12 +453,10 @@ public class JPNRound extends javax.swing.JPanel {
         }
     }
 
-    private Round IndivAffectation(Vector<Match> matchs, Vector<ObjectRanking> datas, boolean team) {
-        Round r = new Round();
+    private Round IndivAffectation(Vector<Coach> coachs, Vector<Match> matchs, Vector<ObjectRanking> datas, boolean team, Round r) {
         Calendar cal = Calendar.getInstance();
         r.setHeure(cal.getTime());
         // Résolution des doublons
-        Vector<Coach> coachs = _tournament.getCoachs();
 
         // Build ranking without inactive coachs
         Vector<ObjectRanking> datas_tmp = new Vector<ObjectRanking>(datas);
@@ -578,15 +612,13 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
         return r;
-
     }
 
-    private Round IndivQuickSwissAffectation(Vector<Match> matchs, Vector<ObjectRanking> datas, boolean team) {
-        Round r = new Round();
+    private Round IndivQuickSwissAffectation(Vector<Coach> coachs, Vector<Match> matchs, Vector<ObjectRanking> datas, boolean team, Round r) {
+
         Calendar cal = Calendar.getInstance();
         r.setHeure(cal.getTime());
         // Résolution des doublons
-        Vector<Coach> coachs = _tournament.getCoachs();
 
         // Build ranking without inactive coachs
         Vector<ObjectRanking> datas_tmp = new Vector<ObjectRanking>(datas);
@@ -831,12 +863,10 @@ public class JPNRound extends javax.swing.JPanel {
 
     }
 
-    private Round IndivRandomAffectation(Vector<Match> matchs, boolean team) {
-        Round r = new Round();
+    private Round IndivRandomAffectation(Vector<Coach> coachs, Vector<Match> matchs, boolean team, Round r) {
         Calendar cal = Calendar.getInstance();
         r.setHeure(cal.getTime());
         // Résolution des doublons
-        Vector<Coach> coachs = _tournament.getCoachs();
         Vector<Coach> shuffle = new Vector<Coach>(coachs);
 
         boolean bOK = false;
@@ -947,12 +977,11 @@ public class JPNRound extends javax.swing.JPanel {
         return result;
     }
 
-    private Round TeamAffectation(Vector<Match> matchs, Vector<ObjectRanking> datas, boolean free_pairing, Vector<Round> rounds) {
-        Round r = new Round();
+    private Round TeamAffectation(Vector<Team> teams, Vector<Match> matchs, Vector<ObjectRanking> datas, boolean free_pairing, Vector<Round> rounds, Round r) {
         Calendar cal = Calendar.getInstance();
         r.setHeure(cal.getTime());
         // Résolution des doublons
-        if (_tournament.getTeams().size() - 1 <= _tournament.getRounds().size()) {
+        if (teams.size() - 1 <= _tournament.getRounds().size()) {
             // Affectation des matchs
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NotEnoughRoundToAvoidSameMatch"));
             for (int i = 0; i < datas.size() / 2; i++) {
@@ -1097,8 +1126,7 @@ public class JPNRound extends javax.swing.JPanel {
         return r;
     }
 
-    private Round TeamQuickSwissAffectation(Vector<Match> matchs, Vector<ObjectRanking> datas, boolean free_pairing, Vector<Round> rounds) {
-        Round r = new Round();
+    private Round TeamQuickSwissAffectation(Vector<Team> teams, Vector<Match> matchs, Vector<ObjectRanking> datas, boolean free_pairing, Vector<Round> rounds, Round r) {
         Calendar cal = Calendar.getInstance();
         r.setHeure(cal.getTime());
 
@@ -1138,7 +1166,7 @@ public class JPNRound extends javax.swing.JPanel {
         }
 
         // Résolution des doublons
-        if (_tournament.getTeams().size() - 1 <= _tournament.getRounds().size()) {
+        if (teams.size() - 1 <= _tournament.getRounds().size()) {
 
             // Affectation des matchs
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NotEnoughRoundToAvoidSameMatch"));
@@ -1330,17 +1358,15 @@ public class JPNRound extends javax.swing.JPanel {
         return r;
     }
 
-    private Round TeamRandomAffectation(Vector<Match> matchs, boolean random, boolean free_pairing, Vector<Round> rounds) {
-        Round r = new Round();
+    private Round TeamRandomAffectation(Vector<Team> teams, Vector<Match> matchs, boolean random, boolean free_pairing, Vector<Round> rounds, Round r) {
         Calendar cal = Calendar.getInstance();
         r.setHeure(cal.getTime());
-        Vector<Team> datas = new Vector<Team>(_tournament.getTeams());
+        Vector<Team> datas = new Vector<Team>(teams);
 
         boolean bOK = false;
         int count = 0;
         while (!bOK) {
             count++;
-            r.getMatchs().clear();
             Collections.shuffle(datas);
 
             // Résolution des doublons
@@ -1499,100 +1525,46 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
 
-        if ((_tournament.getParams()._teamTournament) && (_tournament.getParams()._teamPairing != 0)) {
-            mjtRankingTeam ranking = null;
 
-            if (_tournament.getParams()._team_victory_only) {
-                ranking = new mjtRankingTeam(true, _roundNumber,
-                        _tournament.getParams()._ranking1_team,
-                        _tournament.getParams()._ranking2_team,
-                        _tournament.getParams()._ranking3_team,
-                        _tournament.getParams()._ranking4_team,
-                        _tournament.getParams()._ranking5_team,
-                        _tournament.getTeams(), _round_only);
+
+        Round r = new Round();
+        if (_tournament.getPools().size() == 0) {
+            datas = getSortedRankingData();
+            if (_tournament.getParams()._teamTournament) {
+                if (_tournament.getParams()._teamPairing == 0) {
+                    IndivAffectation(_tournament.getCoachs(), matchs, datas, true, r);
+                } else {
+                    TeamAffectation(_tournament.getTeams(), matchs, datas, _tournament.getParams()._teamIndivPairing == 1, v, r);
+                }
             } else {
-                ranking = new mjtRankingTeam(false, _roundNumber,
-                        _tournament.getParams()._ranking1,
-                        _tournament.getParams()._ranking2,
-                        _tournament.getParams()._ranking3,
-                        _tournament.getParams()._ranking4,
-                        _tournament.getParams()._ranking5,
-                        _tournament.getTeams(), _round_only);
-            }
-            // Ranking class
-            datas = ranking.getSortedDatas();
-        } else {
-
-            mjtRankingIndiv ranking = new mjtRankingIndiv(_roundNumber,
-                    _tournament.getParams()._ranking1,
-                    _tournament.getParams()._ranking2,
-                    _tournament.getParams()._ranking3,
-                    _tournament.getParams()._ranking4,
-                    _tournament.getParams()._ranking5,
-                    _tournament.getCoachs(), false, _round_only);
-
-            // Ranking class
-            datas = ranking.getSortedDatas();
-        }
-
-        Round r;
-        if (_tournament.getParams()._teamTournament) {
-            if (_tournament.getParams()._teamPairing == 0) {
-                r = IndivAffectation(matchs, datas, true);
-            } else {
-                r = TeamAffectation(matchs, datas, _tournament.getParams()._teamIndivPairing == 1, v);
+                if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                    JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    IndivAffectation(_tournament.getCoachs(), matchs, datas, false, r);
+                }
             }
         } else {
-            if (_tournament.GetActiveCoachNumber() % 2 > 0) {
-                JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                r = IndivAffectation(matchs, datas, false);
+            for (int i = 0; i < _tournament.getPools().size(); i++) {
+                datas = getSortedRankingData(_tournament.getPools().get(i));
+                if (_tournament.getParams()._teamTournament) {
+                    if (_tournament.getParams()._teamPairing == 0) {
+                        IndivAffectation(_tournament.getPools().get(i)._coachs, matchs, datas, true, r);
+                    } else {
+                        TeamAffectation(_tournament.getPools().get(i)._teams, matchs, datas, _tournament.getParams()._teamIndivPairing == 1, v, r);
+                    }
+                } else {
+                    if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                        JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    } else {
+                        IndivAffectation(_tournament.getPools().get(i)._coachs, matchs, datas, false, r);
+                    }
+                }
             }
         }
 
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_tournament.getRounds().get(i).getHeure().after(_round.getHeure())) {
-                _tournament.getRounds().remove(i);
-                i--;
-            }
-        }
-
-        _tournament.getRounds().add(r);
-
-        // Add Matchs to Coach internal reference list
-        for (int i = 0; i < r.getMatchs().size(); i++) {
-            Match m = r.getMatchs().get(i);
-            m._coach1._matchs.add(m);
-            m._coach2._matchs.add(m);
-        }
-
-        for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1;
-                i >= 0; i--) {
-            Component obj = MainFrame.getMainFrame().jtpMain.getComponentAt(i);
-            if (obj instanceof JPNRound) {
-                MainFrame.getMainFrame().jtpMain.remove(obj);
-            }
-        }
-
-        for (int i = 0;
-                i < _tournament.getRounds().size();
-                i++) {
-            JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-//            MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
-            MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-        }
-        MainFrame.getMainFrame().jtpMain.setSelectedIndex(_tournament.getRounds().size());
-
-        String filename = Tournament.getTournament().getParams()._tournament_name;
-        filename = filename + "." + Tournament.getTournament().getRounds().size();
-        Date date = new Date();
-        filename = filename + "." + Long.toString(date.getTime()) + ".xml";
-
-        File file = new File(filename);
-        Tournament.getTournament().saveXML(file);
-
-        update();
+        finalGenerationStep(r);
     }//GEN-LAST:event_jbtNextRoundActionPerformed
 
     private void jbtShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowMatchesActionPerformed
@@ -1786,64 +1758,44 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
 
-        Round r;
-        if (_tournament.getParams()._teamTournament) {
-            if (_tournament.getParams()._teamPairing == 0) {
-                r = IndivRandomAffectation(matchs, true);
+        Round r = new Round();
+        r.getMatchs().removeAllElements();
+        if (_tournament.getPools().size() == 0) {
+            if (_tournament.getParams()._teamTournament) {
+                if (_tournament.getParams()._teamPairing == 0) {
+                    IndivRandomAffectation(_tournament.getCoachs(), matchs, true, r);
+                } else {
+                    TeamRandomAffectation(_tournament.getTeams(), matchs, true, _tournament.getParams()._teamIndivPairing == 1, v, r);
+                }
             } else {
-                r = TeamRandomAffectation(matchs, true, _tournament.getParams()._teamIndivPairing == 1, v);
+                if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                    JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    IndivRandomAffectation(_tournament.getCoachs(), matchs, false, r);
+                }
             }
         } else {
-            if (_tournament.GetActiveCoachNumber() % 2 > 0) {
-                JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                r = IndivRandomAffectation(matchs, false);
+            for (int i = 0; i < _tournament.getPools().size(); i++) {
+                if (_tournament.getParams()._teamTournament) {
+                    if (_tournament.getParams()._teamPairing == 0) {
+                        IndivRandomAffectation(_tournament.getPools().get(i)._coachs, matchs, true, r);
+                    } else {
+                        TeamRandomAffectation(_tournament.getPools().get(i)._teams, matchs, true, _tournament.getParams()._teamIndivPairing == 1, v, r);
+                    }
+                } else {
+                    if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                        JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    } else {
+                        IndivRandomAffectation(_tournament.getPools().get(i)._coachs, matchs, false, r);
+                    }
+                }
             }
         }
 
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            if (_tournament.getRounds().get(i).getHeure().after(_round.getHeure())) {
-                _tournament.getRounds().remove(i);
-                i--;
-            }
-        }
 
-        _tournament.getRounds().add(r);
-
-        // Add Matchs to Coach internal reference list
-        for (int i = 0; i < r.getMatchs().size(); i++) {
-            Match m = r.getMatchs().get(i);
-            m._coach1._matchs.add(m);
-            m._coach2._matchs.add(m);
-        }
-
-        for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1;
-                i >= 0; i--) {
-            Component obj = MainFrame.getMainFrame().jtpMain.getComponentAt(i);
-            if (obj instanceof JPNRound) {
-                MainFrame.getMainFrame().jtpMain.remove(obj);
-            }
-        }
-
-        for (int i = 0;
-                i < _tournament.getRounds().size();
-                i++) {
-            JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-//            MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
-            MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-        }
-        MainFrame.getMainFrame().jtpMain.setSelectedIndex(_tournament.getRounds().size());
-
-        String filename = Tournament.getTournament().getParams()._tournament_name;
-        filename = filename + "." + Tournament.getTournament().getRounds().size();
-        Date date = new Date();
-        filename = filename + "." + Long.toString(date.getTime()) + ".xml";
-
-        File file = new File(filename);
-        Tournament.getTournament().saveXML(file);
-
-        update();
+        finalGenerationStep(r);
     }//GEN-LAST:event_jbtNextRoundRandomActionPerformed
 
     private void jbtNextRoundQuickSwissActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextRoundQuickSwissActionPerformed
@@ -1866,6 +1818,50 @@ public class JPNRound extends javax.swing.JPanel {
             }
         }
 
+        Round r = new Round();
+        if (_tournament.getPools().size() == 0) {
+
+            datas = getSortedRankingData();
+            if (_tournament.getParams()._teamTournament) {
+                if (_tournament.getParams()._teamPairing == 0) {
+                    IndivQuickSwissAffectation(_tournament.getCoachs(), matchs, datas, true, r);
+                } else {
+                    TeamQuickSwissAffectation(_tournament.getTeams(), matchs, datas, _tournament.getParams()._teamIndivPairing == 1, v, r);
+                }
+            } else {
+                if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                    JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    IndivQuickSwissAffectation(_tournament.getCoachs(), matchs, datas, false, r);
+                }
+            }
+        } else {
+            for (int i = 0; i < _tournament.getPools().size(); i++) {
+                datas = getSortedRankingData(_tournament.getPools().get(i));
+                if (_tournament.getParams()._teamTournament) {
+                    if (_tournament.getParams()._teamPairing == 0) {
+                        IndivQuickSwissAffectation(_tournament.getPools().get(i)._coachs, matchs, datas, true, r);
+                    } else {
+                        TeamQuickSwissAffectation(_tournament.getPools().get(i)._teams, matchs, datas, _tournament.getParams()._teamIndivPairing == 1, v, r);
+                    }
+                } else {
+                    if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                        JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    } else {
+                        IndivQuickSwissAffectation(_tournament.getPools().get(i)._coachs, matchs, datas, false, r);
+                    }
+                }
+            }
+        }
+
+        finalGenerationStep(r);
+
+    }//GEN-LAST:event_jbtNextRoundQuickSwissActionPerformed
+
+    private Vector<ObjectRanking> getSortedRankingData() {
+        Vector<ObjectRanking> datas = null;
         if ((_tournament.getParams()._teamTournament) && (_tournament.getParams()._teamPairing != 0)) {
             mjtRankingTeam ranking = null;
 
@@ -1901,23 +1897,52 @@ public class JPNRound extends javax.swing.JPanel {
             // Ranking class
             datas = ranking.getSortedDatas();
         }
+        return datas;
+    }
 
-        Round r;
-        if (_tournament.getParams()._teamTournament) {
-            if (_tournament.getParams()._teamPairing == 0) {
-                r = IndivAffectation(matchs, datas, true);
+    private Vector<ObjectRanking> getSortedRankingData(Pool p) {
+        Vector<ObjectRanking> datas = null;
+
+        if ((_tournament.getParams()._teamTournament) && (_tournament.getParams()._teamPairing != 0)) {
+            mjtRankingTeam ranking = null;
+
+            if (_tournament.getParams()._team_victory_only) {
+                ranking = new mjtRankingTeam(true, _roundNumber,
+                        _tournament.getParams()._ranking1_team,
+                        _tournament.getParams()._ranking2_team,
+                        _tournament.getParams()._ranking3_team,
+                        _tournament.getParams()._ranking4_team,
+                        _tournament.getParams()._ranking5_team,
+                        p._teams,
+                        _round_only);
             } else {
-                r = TeamQuickSwissAffectation(matchs, datas, _tournament.getParams()._teamIndivPairing == 1, v);
+                ranking = new mjtRankingTeam(false, _roundNumber,
+                        _tournament.getParams()._ranking1,
+                        _tournament.getParams()._ranking2,
+                        _tournament.getParams()._ranking3,
+                        _tournament.getParams()._ranking4,
+                        _tournament.getParams()._ranking5,
+                        p._teams, _round_only);
             }
+            // Ranking class
+            datas = ranking.getSortedDatas();
         } else {
-            if (_tournament.GetActiveCoachNumber() % 2 > 0) {
-                JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                r = IndivQuickSwissAffectation(matchs, datas, false);
-            }
-        }
 
+            mjtRankingIndiv ranking = new mjtRankingIndiv(_roundNumber,
+                    _tournament.getParams()._ranking1,
+                    _tournament.getParams()._ranking2,
+                    _tournament.getParams()._ranking3,
+                    _tournament.getParams()._ranking4,
+                    _tournament.getParams()._ranking5,
+                    p._coachs, false, _round_only);
+
+            // Ranking class
+            datas = ranking.getSortedDatas();
+        }
+        return datas;
+    }
+
+    protected void finalGenerationStep(Round r) {
         for (int i = 0; i < _tournament.getRounds().size(); i++) {
             if (_tournament.getRounds().get(i).getHeure().after(_round.getHeure())) {
                 _tournament.getRounds().remove(i);
@@ -1940,14 +1965,25 @@ public class JPNRound extends javax.swing.JPanel {
             if (obj instanceof JPNRound) {
                 MainFrame.getMainFrame().jtpMain.remove(obj);
             }
+            if (obj instanceof JPNCup) {
+                MainFrame.getMainFrame().jtpMain.remove(obj);
+            }
         }
 
-        for (int i = 0;
-                i < _tournament.getRounds().size();
-                i++) {
+        boolean cup = false;
+
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
             JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
+            if (_tournament.getRounds().get(i)._cup) {
+                cup = true;
+            }
 //            MainFrame.getMainFrame().jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
             MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+        }
+
+        if (cup) {
+            JPNCup jpncup = new JPNCup();
+            MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cup"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")), jpncup);
         }
         MainFrame.getMainFrame().jtpMain.setSelectedIndex(_tournament.getRounds().size());
 
@@ -1960,8 +1996,737 @@ public class JPNRound extends javax.swing.JPanel {
         Tournament.getTournament().saveXML(file);
 
         update();
+    }
 
-    }//GEN-LAST:event_jbtNextRoundQuickSwissActionPerformed
+    protected void IndivCupAffectation(Round r, boolean third_place) {
+        int nb_match = 0;
+
+        Vector<Match> matchs = new Vector<Match>(_round.getMatchs());
+
+        nb_match = (int) Math.pow(2, _round._cup_max_tour - _round._cup_tour - 1);
+
+        /* if ((_round._cup_max_tour == _round._cup_tour) && (_round._looser_cup)) {
+         nb_match = 2;
+         }*/
+
+        // Récupérer les gagnants/perdants
+        Vector<Coach> _winners = new Vector<Coach>();
+        Vector<Coach> _loosers = new Vector<Coach>();
+
+        if (nb_match == 0) {
+            if (_round._cup_tour == _round._cup_max_tour + 1) {
+                _loosers.add(matchs.get(0).getWinner());
+            } else {
+                _winners.add(matchs.get(0).getWinner());
+                _loosers.add(matchs.get(1).getWinner());
+            }
+        }
+
+        for (int i = 0; i < nb_match; i++) {
+            _winners.add(matchs.get(i).getWinner());
+            _loosers.add(matchs.get(i).getLooser());
+        }
+
+        if (nb_match > 0) {
+            int option = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Voulez vous mélanger le(s) tableau(x) ?", "Coupe", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                Collections.shuffle(_winners);
+                Collections.shuffle(_loosers);
+            }
+        }
+
+        for (int i = 0; i < (_winners.size() + 1) / 2; i++) {
+            Match m = new Match();
+            m._coach1 = _winners.get(2 * i);
+            if ((2 * i + 1) >= _winners.size()) {
+                m._coach2 = Coach.NullCoach;
+            } else {
+                m._coach2 = _winners.get(2 * i + 1);
+            }
+            r.getMatchs().add(m);
+        }
+
+
+        if (third_place) {
+            if (_loosers.size() == 2) {
+                for (int i = 0; i < (_loosers.size() + 1) / 2; i++) {
+                    Match m = new Match();
+                    m._coach1 = _loosers.get(2 * i);
+                    if ((2 * i + 1) >= _loosers.size()) {
+                        m._coach2 = Coach.NullCoach;
+                    } else {
+                        m._coach2 = _loosers.get(2 * i + 1);
+                    }
+                    r.getMatchs().add(m);
+                }
+            }
+        }
+
+        if (_round._looser_cup) {
+
+            int nb_remaining_match = 0;
+            if (_round._cup_tour > 0) {
+                nb_remaining_match = nb_match;
+            }
+
+            if (nb_match == 1) {
+                Match m = new Match();
+                m._coach1 = _loosers.get(0);
+                _loosers.remove(0);
+                m._coach2 = Coach.NullCoach;
+                r.getMatchs().add(m);
+                nb_remaining_match = 2;
+            }
+            if (nb_match == 0) {
+                nb_remaining_match = 1;
+                if (_round._cup_tour == _round._cup_max_tour + 1) {
+                    nb_match = 1;
+                } else {
+                    nb_match = 2;
+                }
+            }
+
+            for (int i = nb_match; (i < nb_match + nb_remaining_match) && (i < matchs.size()); i++) {
+                _loosers.add(matchs.get(i).getWinner());
+            }
+
+            for (int i = 0; i < _loosers.size() / 2; i++) {
+                Match m = new Match();
+                m._coach1 = _loosers.get(i);
+                m._coach2 = _loosers.get(_loosers.size() / 2 + i);
+                r.getMatchs().add(m);
+            }
+        }
+    }
+
+    protected void IndivCupAffectation(Round r, Vector<ObjectRanking> datas, boolean teamTour, int nbPlayers) {
+
+        int nb_match = nbPlayers / 2;
+
+        Vector<Coach> coachs = new Vector<Coach>();
+        for (int i = 0; i < nbPlayers; i++) {
+            Coach c;
+            if (i < datas.size()) {
+                c = ((Coach) ((ObjectRanking) datas.get(i)).getObject());
+            } else {
+                c = Coach.NullCoach;
+            }
+            coachs.add(c);
+        }
+
+
+        for (int i = 0; i < nb_match / 2; i++) {
+            Match m = new Match();
+
+            m._coach1 = coachs.get(2 * i);
+            m._coach2 = coachs.get(nbPlayers - 2 * i - 1);
+            r.getMatchs().add(m);
+        }
+        for (int i = 0; i < nb_match / 2; i++) {
+            Match m = new Match();
+
+            m._coach1 = coachs.get(2 * i + 1);
+            m._coach2 = coachs.get(nbPlayers - 2 * i - 2);
+            r.getMatchs().add(m);
+        }
+    }
+
+    protected void TeamCupAffectation(Round r, Vector<ObjectRanking> datas, int nbTeams) {
+
+        int nb_match = nbTeams / 2;
+
+        Vector<Team> teams = new Vector<Team>();
+        Vector<Team> teams1 = new Vector<Team>();
+        Vector<Team> teams2 = new Vector<Team>();
+
+        for (int i = 0; i < nbTeams; i++) {
+            Team t;
+            if (i < datas.size()) {
+                t = ((Team) ((ObjectRanking) datas.get(i)).getObject());
+            } else {
+                t = Team.NullTeam;
+            }
+            teams.add(t);
+        }
+
+
+        for (int i = 0; i < nb_match / 2; i++) {
+            teams1.add(teams.get(2 * i));
+            teams2.add(teams.get(nbTeams - 2 * i - 1));
+        }
+        for (int i = 0; i < nb_match / 2; i++) {
+            teams1.add(teams.get(2 * i + 1));
+            teams2.add(teams.get(nbTeams - 2 * i - 2));
+        }
+
+        Tournament.getTournament().TeamIndivPairing(teams1, teams2, r, JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Affectation des joueurs aléatoite (sinon, l'order d'inscription sera utilisée) ?", "Affecation des joueurs", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+    }
+
+    protected void affectTeamCoachs(Team team1, Team team2, Round r) {
+        Vector<Round> vs = new Vector<Round>();
+        for (int i = 0; i < _tournament.getRounds().size(); i++) {
+            if (_tournament.getRounds().get(i).getHeure().before(_round.getHeure())) {
+                vs.add(_tournament.getRounds().get(i));
+            }
+        }
+        vs.add(_round);
+
+        Vector<Match> ms = new Vector<Match>();
+        for (int j = 0; j < vs.size(); j++) {
+            for (int k = 0; k < vs.get(j).getMatchs().size(); k++) {
+                ms.add(vs.get(j).getMatchs().get(k));
+            }
+        }
+
+        for (int j = 0; j < _tournament.getParams()._teamMatesNumber; j++) {
+
+            if (_tournament.getParams()._teamIndivPairing == 0) {
+                Vector<ObjectRanking> coachs1 = subRanking(team1._coachs, ms, vs);
+                Vector<ObjectRanking> coachs2 = subRanking(team2._coachs, ms, vs);
+                for (int k = 0; k < coachs1.size(); k++) {
+                    Match m = new Match();
+                    m._coach1 = (Coach) coachs1.get(k).getObject();
+                    m._coach2 = (Coach) coachs2.get(k).getObject();
+                    r.getMatchs().add(m);
+                }
+            } else {
+                if (_tournament.getParams()._teamIndivPairing == 1) {
+                    jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
+                    jdg.setVisible(true);
+                } else {
+                    for (int k = 0; k < _tournament.getParams()._teamMatesNumber; k++) {
+                        Vector<Coach> shuffle2 = new Vector<Coach>(team2.getActivePlayers());
+                        Collections.shuffle(shuffle2);
+                        Match m = new Match();
+                        m._coach1 = team1.getActivePlayers().get(k);
+                        m._coach2 = shuffle2.get(k);
+                        r.getMatchs().add(m);
+                    }
+                }
+            }
+        }
+    }
+
+    protected void TeamCupAffectation(Round r, boolean third_place) {
+        int nb_match = 0;
+
+
+        Vector<Match> matchs = new Vector<Match>(_round.getMatchs());
+        nb_match = (int) Math.pow(2, _round._cup_max_tour - _round._cup_tour - 1);
+        //nb_match = nb_match;
+
+        // Récupérer les gagnants/perdants
+        Vector<Team> _winners = new Vector<Team>();
+        Vector<Team> _loosers = new Vector<Team>();
+
+
+        Criteria td = _tournament.getParams()._criterias.get(0);
+        for (int i = 0; i < nb_match; i++) {
+
+            Team t = Match.getTeamMatchWinner(_tournament.getParams()._teamMatesNumber, i, matchs);
+
+            Match m = matchs.get(i * _tournament.getParams()._teamMatesNumber);
+            Team team1 = m._coach1._teamMates;
+            Team team2 = m._coach2._teamMates;
+
+            if (team1 == t) {
+                _winners.add(team1);
+                _loosers.add(team2);
+            } else {
+                _winners.add(team2);
+                _loosers.add(team1);
+            }
+        }
+
+        if (nb_match == 0) {
+            if (_round._cup_tour == _round._cup_max_tour + 1) {
+                _loosers.add(Match.getTeamMatchWinner(_tournament.getParams()._teamMatesNumber, 0, matchs));
+            } else {
+                _winners.add(Match.getTeamMatchWinner(_tournament.getParams()._teamMatesNumber, 0, matchs));
+                _loosers.add(Match.getTeamMatchWinner(_tournament.getParams()._teamMatesNumber, 1, matchs));
+            }
+        }
+
+        int option = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Voulez vous mélanger le(s) tableau(x) ?", "Coupe", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            Collections.shuffle(_winners);
+            Collections.shuffle(_loosers);
+        }
+
+
+
+        for (int i = 0; i < (_winners.size() + 1) / 2; i++) {
+            Team team1 = _winners.get(2 * i);
+            Team team2;
+            if ((2 * i + 1) >= _winners.size()) {
+                team2 = Team.NullTeam;
+            } else {
+                team2 = _winners.get(2 * i + 1);
+            }
+            affectTeamCoachs(team1, team2, r);
+        }
+
+        if (third_place) {
+            if (_loosers.size() == 2) {
+                for (int i = 0; i < (_loosers.size() + 1) / 2; i++) {
+
+
+                    for (int j = 0; j < _tournament.getParams()._teamMatesNumber; j++) {
+                        if ((2 * i + 1) >= _loosers.size()) {
+                            affectTeamCoachs(_loosers.get(2 * i), Team.NullTeam, r);
+                        } else {
+                            affectTeamCoachs(_loosers.get(2 * i), _loosers.get(2 * i + 1), r);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (_round._looser_cup) {
+
+            int nb_remaining_match = 0;
+            if (_round._cup_tour > 0) {
+                nb_remaining_match = nb_match;
+            }
+
+            if (nb_match == 1) {
+                Team t = _loosers.get(0);
+                affectTeamCoachs(t, Team.NullTeam, r);
+                _loosers.remove(0);
+                nb_remaining_match = 2;
+            }
+            if (nb_match == 0) {
+                nb_remaining_match = 1;
+                if (_round._cup_tour == _round._cup_max_tour + 1) {
+                    nb_match = 1;
+                } else {
+                    nb_match = 2;
+                }
+            }
+
+            for (int i = nb_match; (i < nb_match + nb_remaining_match) && (i < matchs.size()); i++) {
+                _loosers.add(Match.getTeamMatchWinner(_tournament.getParams()._teamMatesNumber, i, matchs));
+            }
+
+            for (int i = 0; i < _loosers.size() / 2; i++) {
+                if ((2 * i + 1) >= _loosers.size()) {
+                    affectTeamCoachs(_loosers.get(i), Team.NullTeam, r);
+                } else {
+                    affectTeamCoachs(_loosers.get(i + _loosers.size() / 2), Team.NullTeam, r);
+                }
+            }
+        }
+    }
+
+    private void jbtNextRoundFinalTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextRoundFinalTabActionPerformed
+        Round r = new Round();
+        Calendar cal = Calendar.getInstance();
+        r.setHeure(cal.getTime());
+        if (_round._cup) {
+            if (((_round._cup_tour == _round._cup_max_tour - 1) && (!_round._looser_cup))
+                    || (_round._cup_tour == _round._cup_max_tour + 2)) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Tour final atteint", "Coupe", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            boolean _third_place = false;
+            if ((_round._cup_tour == _round._cup_max_tour - 2) && (!_round._looser_cup)) {
+                _third_place = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Voulez vous générer le match pour la 3e place ?", "Coupe", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            }
+
+            if (_tournament.getParams()._teamTournament) {
+                if (_tournament.getParams()._teamPairing == 0) {
+                    IndivCupAffectation(r, _third_place);
+                } else {
+                    TeamCupAffectation(r, _third_place);
+                }
+            } else {
+                if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                    JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    IndivCupAffectation(r, _third_place);
+                }
+            }
+
+            r._cup = true;
+            r._cup_max_tour = _round._cup_max_tour;
+            r._cup_tour = _round._cup_tour + 1;
+            r._looser_cup = _round._looser_cup;
+        } else {
+            int cup_max_tour = 0;
+            int nb_tmp = 1;
+            r._looser_cup = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Sagit-il d'un tournoi à double élimination ?", "Coupe", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            if (_tournament.getParams()._teamTournament) {
+                if (_tournament.getParams()._teamPairing == 0) {
+                    while (nb_tmp < _tournament.GetActiveCoachNumber()) {
+                        nb_tmp = nb_tmp * 2;
+                        cup_max_tour++;
+                    }
+                } else {
+                    while (nb_tmp < _tournament.getTeams().size()) {
+                        nb_tmp = nb_tmp * 2;
+                        cup_max_tour++;
+                    }
+                }
+            } else {
+                if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                    JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    while (nb_tmp < _tournament.GetActiveCoachNumber()) {
+                        nb_tmp = nb_tmp * 2;
+                        cup_max_tour++;
+                    }
+                }
+            }
+
+            JPanel message = new JPanel();
+            message.setLayout(new BorderLayout());
+
+            JLabel jlb = new JLabel("Nombre de tours: ");
+            // generate cup for the first round
+            JSpinner jspNbTeams = new JSpinner();
+            SpinnerNumberModel model = new SpinnerNumberModel(1, 1, cup_max_tour, 1);
+            jspNbTeams.setModel(model);
+
+            message.add(jlb, BorderLayout.NORTH);
+            message.add(jspNbTeams, BorderLayout.CENTER);
+
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), message, "Coupe", JOptionPane.QUESTION_MESSAGE);
+
+            cup_max_tour = (Integer) model.getValue();
+            int nb = (int) Math.pow(2, cup_max_tour);
+
+            Vector<ObjectRanking> datas;
+            datas = getSortedRankingData();
+            if (_tournament.getParams()._teamTournament) {
+                if (_tournament.getParams()._teamPairing == 0) {
+                    IndivCupAffectation(r, datas, true, nb);
+                } else {
+                    TeamCupAffectation(r, datas, nb);
+                }
+            } else {
+                if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                    JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else {
+                    IndivCupAffectation(r, datas, false, nb);
+                }
+            }
+            r._cup = true;
+            r._cup_max_tour = cup_max_tour;
+            r._cup_tour = 0;
+        }
+
+        if (r.getMatchs().size() < _tournament.GetActiveCoachNumber() / 2) {
+            int res = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Affecter une ronde aux joueurs restants ?", "Coupe", JOptionPane.YES_NO_OPTION);
+            if (res == JOptionPane.YES_OPTION) {
+
+                Vector<ObjectRanking> datas = new Vector<ObjectRanking>(getSortedRankingData());
+                Vector<Coach> coachs;
+                Vector<Team> teams;
+                Round r2 = new Round();
+
+                if (_tournament.getParams()._teamTournament) {
+                    if (_tournament.getParams()._teamPairing == 0) {
+
+                        coachs = new Vector<Coach>(_tournament.GetActiveCoaches());
+                        // First, remove coachs
+                        for (int i = 0; i < r.getMatchs().size(); i++) {
+                            Match m = r.getMatchs().get(i);
+                            if (coachs.contains(m._coach1)) {
+                                coachs.remove(m._coach1);
+                            }
+                            if (coachs.contains(m._coach2)) {
+                                coachs.remove(m._coach2);
+                            }
+                        }
+                        // Second remove bad datas
+                        for (int i = 0; i < datas.size(); i++) {
+                            Coach c = (Coach) ((ObjectRanking) datas.get(i)).getObject();
+                            for (int j = 0; j < r.getMatchs().size(); j++) {
+                                Match m = r.getMatchs().get(j);
+                                if ((c == m._coach1) || (c == m._coach2)) {
+                                    datas.remove(i);
+                                    i--;
+                                }
+                            }
+                        }
+
+                    } else {
+                        teams = new Vector<Team>(_tournament.getTeams());
+                        // First, remove coachs
+                        for (int i = 0; i < r.getMatchs().size(); i++) {
+                            Match m = r.getMatchs().get(i);
+                            if (teams.contains(m._coach1._teamMates)) {
+                                teams.remove(m._coach1._teamMates);
+                            }
+                            if (teams.contains(m._coach2._teamMates)) {
+                                teams.remove(m._coach2._teamMates);
+                            }
+                        }
+                        // Second remove bad datas
+                        for (int i = 0; i < datas.size(); i++) {
+                            Team t = (Team) ((ObjectRanking) datas.get(i)).getObject();
+                            for (int j = 0; j < r.getMatchs().size(); j++) {
+                                Match m = r.getMatchs().get(j);
+                                if ((t == m._coach1._teamMates) || (t == m._coach2._teamMates)) {
+                                    datas.remove(i);
+                                    i--;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                        JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    } else {
+                        coachs = new Vector<Coach>(_tournament.GetActiveCoaches());
+                        // First, remove coachs
+                        for (int i = 0; i < r.getMatchs().size(); i++) {
+                            Match m = r.getMatchs().get(i);
+                            if (coachs.contains(m._coach1)) {
+                                coachs.remove(m._coach1);
+                            }
+                            if (coachs.contains(m._coach2)) {
+                                coachs.remove(m._coach2);
+                            }
+                        }
+                        // Second remove bad datas
+                        for (int i = 0; i < datas.size(); i++) {
+                            Coach c = (Coach) ((ObjectRanking) datas.get(i)).getObject();
+                            for (int j = 0; j < r.getMatchs().size(); j++) {
+                                Match m = r.getMatchs().get(j);
+                                if ((c == m._coach1) || (c == m._coach2)) {
+                                    datas.remove(i);
+                                    i--;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Vector<Round> v = new Vector<Round>();
+                for (int i = 0; i < _tournament.getRounds().size(); i++) {
+                    if (_tournament.getRounds().get(i).getHeure().before(_round.getHeure())) {
+                        v.add(_tournament.getRounds().get(i));
+                    }
+                }
+                v.add(_round);
+
+                Vector<Match> matchs = new Vector<Match>();
+                for (int j = 0; j < v.size(); j++) {
+                    for (int k = 0; k < v.get(j).getMatchs().size(); k++) {
+                        matchs.add(v.get(j).getMatchs().get(k));
+                    }
+                }
+
+                res = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Utiliser une ronde suisse (aléatoire sinon)? ", "Coupe", JOptionPane.YES_NO_OPTION);
+                if (res == JOptionPane.YES_OPTION) {
+
+                    if (_tournament.getParams()._teamTournament) {
+                        if (_tournament.getParams()._teamPairing == 0) {
+                            IndivAffectation(_tournament.getCoachs(), matchs, datas, true, r2);
+                        } else {
+                            TeamAffectation(_tournament.getTeams(), matchs, datas, _tournament.getParams()._teamIndivPairing == 1, v, r2);
+                        }
+                    } else {
+                        if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                            JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                            return;
+                        } else {
+                            IndivAffectation(_tournament.getCoachs(), matchs, datas, false, r2);
+                        }
+                    }
+                } else {
+                    if (_tournament.getParams()._teamTournament) {
+                        if (_tournament.getParams()._teamPairing == 0) {
+                            IndivRandomAffectation(_tournament.getCoachs(), matchs, true, r2);
+                        } else {
+                            TeamRandomAffectation(_tournament.getTeams(), matchs, true, _tournament.getParams()._teamIndivPairing == 1, v, r2);
+                        }
+                    } else {
+                        if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+                            JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs actif impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+                            return;
+                        } else {
+                            IndivRandomAffectation(_tournament.getCoachs(), matchs, false, r);
+                        }
+                    }
+                }
+
+                // Merge the generated rounds
+                for (int i = 0; i < r2.getMatchs().size(); i++) {
+                    r.getMatchs().add(r2.getMatchs().get(i));
+                }
+            }
+        }
+
+        finalGenerationStep(r);
+
+
+        /*    Vector<Integer> Options = new Vector<Integer>();
+         Round r;
+         int nbElements = 0;
+         int nbMax = 0;
+         int maxnumber = 0;
+         int result = 0;
+
+         Vector<ObjectRanking> datas_swiss;
+
+         if (_round._final_tab) {
+         if (_roundNumber == 1) {
+         return;
+         } else {
+         r = new Round();
+         Calendar cal = Calendar.getInstance();
+         r.setHeure(cal.getTime());
+         r._max_tab = _round._max_tab;
+
+         int nbMatchs = (int) Math.pow(2, _round._max_tab);
+
+
+         if ((_tournament.getParams()._teamTournament) && (_tournament.getParams()._teamPairing != 0)) {
+         nbElements = _tournament.getTeams().size();
+         nbMax = _tournament.getTeams().size();
+         while (nbElements > 1) {
+         maxnumber++;
+         nbElements = nbElements / 2;
+         Options.add(maxnumber);
+         }
+         int index = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), "Nombre de tours", "Tableau final", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Options.toArray(), Options.get(0));
+         result = Options.get(index);
+         double puiss = (double) result;
+         nbElements = (int) (Math.round(Math.pow(2.0, puiss)));
+         } else {
+         // Winner against winners
+         for (int i = 0; i < nbMatchs / 2; i++) {
+         Coach c1 = _round.getMatchs().get(2 * i).getWinner();
+         Coach c2 = _round.getMatchs().get(2 * i + 1).getWinner();
+         Match m = new Match();
+         m._coach1 = c1;
+         m._coach2 = c2;
+         r.getMatchs().add(m);
+
+         }
+         // Looser against loosers
+         for (int i = 0; i < nbMatchs / 2; i++) {
+         Coach c1 = _round.getMatchs().get(2 * i).getLooser();
+         Coach c2 = _round.getMatchs().get(2 * i + 1).getLooser();
+         Match m = new Match();
+         m._coach1 = c1;
+         m._coach2 = c2;
+         r.getMatchs().add(m);
+         }
+
+         Vector<ObjectRanking> datas=getSortedRankingData();
+         Vector<ObjectRanking> data_swiss=getSortedRankingData();
+         for (int i=0; i<datas.size(); i++)
+         {
+         ObjectRanking obj=datas.get(i);
+         Object o=obj.getObject();
+         if (o instanceof Coach )
+         {
+         for (int j=0; j<nbMatchs; j++)
+         {
+         if ((_round.getMatchs().get(j)._coach1 == (Coach)o)||
+         (_round.getMatchs().get(j)._coach1 == (Coach)o))
+         {
+         data_swiss.remove(obj);
+         }
+         }
+         }
+         }
+         }
+
+         // Récupérer la liste des coachs restants et construire une ronde suisse
+         }
+         } else {
+         if ((_tournament.getParams()._teamTournament) && (_tournament.getParams()._teamPairing != 0)) {
+         nbElements = _tournament.getTeams().size();
+         nbMax = _tournament.getTeams().size();
+         while (nbElements > 1) {
+         maxnumber++;
+         nbElements = nbElements / 2;
+         Options.add(maxnumber);
+         }
+         int index = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), "Nombre de tours", "Tableau final", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Options.toArray(), Options.get(0));
+         result = Options.get(index);
+         double puiss = (double) result;
+         nbElements = (int) (Math.round(Math.pow(2.0, puiss)));
+         } else {
+         nbElements = _tournament.GetActiveCoachNumber();
+         nbMax = _tournament.GetActiveCoachNumber();
+         while (nbElements > 1) {
+         maxnumber++;
+         nbElements = nbElements / 2;
+         Options.add(maxnumber);
+         }
+         int index = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), "Nombre de tours", "Tableau final", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Options.toArray(), Options.get(0));
+         result = Options.get(index);
+         double puiss = result;
+         nbElements = (int) (Math.round(Math.pow(2.0, puiss)));
+         }
+
+         Vector<ObjectRanking> datas=getSortedRankingData();            
+         datas_swiss = new Vector<ObjectRanking>();
+
+         if (nbElements < nbMax) {
+         if (JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Compléter les autres en ronde suisse ?", "Tableau Final", JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+         while (datas.size() > nbElements) {
+         datas_swiss.add(datas.get(nbElements));
+         datas.remove(nbElements);
+         }
+         }
+
+         }
+         }
+
+         // finish with the swiss
+         if (datas_swiss.size() > 0) {
+
+         Vector<Round> v = new Vector<Round>();
+         for (int i = 0; i < _tournament.getRounds().size(); i++) {
+         if (_tournament.getRounds().get(i).getHeure().before(_round.getHeure())) {
+         v.add(_tournament.getRounds().get(i));
+         }
+         }
+         v.add(_round);
+
+         Vector<Match> matchs = new Vector<Match>();
+         for (int j = 0; j < v.size(); j++) {
+         for (int k = 0; k < v.get(j).getMatchs().size(); k++) {
+         matchs.add(v.get(j).getMatchs().get(k));
+         }
+         }
+
+         if (_tournament.getParams()._teamTournament) {
+         if (_tournament.getParams()._teamPairing == 0) {
+         r = IndivAffectation(matchs, datas_swiss, true);
+         } else {
+         r = TeamAffectation(matchs, datas_swiss, _tournament.getParams()._teamIndivPairing == 1, v);
+         }
+         } else {
+         if (_tournament.GetActiveCoachNumber() % 2 > 0) {
+         JOptionPane.showMessageDialog(_jpnTeamRound, "Nombre de coachs restants impair", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
+         return;
+         } else {
+         r = IndivAffectation(matchs, datas_swiss, false);
+         }
+         }
+         }
+         r._final_tab = true;
+         r._tour_tab = result;
+         r._max_tab = result;
+
+         _tournament.getRounds().add(r);*/
+
+
+
+    }//GEN-LAST:event_jbtNextRoundFinalTabActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -1978,6 +2743,7 @@ public class JPNRound extends javax.swing.JPanel {
     private javax.swing.JButton jbtGeneralIndiv;
     private javax.swing.JButton jbtGlobal;
     private javax.swing.JButton jbtNextRound;
+    private javax.swing.JButton jbtNextRoundFinalTab;
     private javax.swing.JButton jbtNextRoundQuickSwiss;
     private javax.swing.JButton jbtNextRoundRandom;
     private javax.swing.JButton jbtShowMatches;

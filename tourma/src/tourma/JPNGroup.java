@@ -111,6 +111,7 @@ public class JPNGroup extends javax.swing.JPanel {
         jtbGroup.setDefaultRenderer(String.class, tableModel);
         jtbGroup.setDefaultRenderer(Integer.class, tableModel);
 
+        jtbGroup.setRowHeight(25);
         setColumnSize(jtbGroup);
     }
 
