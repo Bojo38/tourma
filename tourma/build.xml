@@ -77,7 +77,6 @@
         
     </target>
 
-
  <target name="yguard">
       <taskdef name="yguard"
       classname="com.yworks.yguard.YGuardTask"

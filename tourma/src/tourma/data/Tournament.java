@@ -1130,9 +1130,9 @@ public class Tournament {
             _teams.add(t);
         }
 
-        /* */
+        /* Pools */
         List pools=racine.getChildren("Pool");
-        Iterator p = teams.iterator();
+        Iterator p = pools.iterator();
         _pools.clear();
         while (p.hasNext()) {
             Element pool = (Element) p.next();

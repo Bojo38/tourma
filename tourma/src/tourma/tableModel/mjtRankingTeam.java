@@ -250,15 +250,15 @@ public class mjtRankingTeam extends mjtRanking {
                     break;
                 case Parameters.C_RANKING_OPP_POINTS:
                     Coach c = t._coachs.get(0);
-                    
-                    int i = 0;
-            if (_round_only) {
-                i = _round;
-            }
 
-            while (i <= _round) {
-                    
-                    //for (int i = 0; i <= _round; i++) {
+                    int i = 0;
+                    if (_round_only) {
+                        i = _round;
+                    }
+
+                    while (i <= _round) {
+
+                        //for (int i = 0; i <= _round; i++) {
                         if (c._matchs.size() > i) {
                             Match m = c._matchs.get(i);
                             if (m._coach1 == c) {
@@ -420,8 +420,8 @@ public class mjtRankingTeam extends mjtRanking {
          }
 
          Collections.sort(_datas);*/
-        
-        
+
+
         Tournament tour = Tournament.getTournament();
 
         // On ajuste le tri par poule si nécessaire pour que
@@ -447,7 +447,7 @@ public class mjtRankingTeam extends mjtRanking {
                         ObjectRanking obj = (ObjectRanking) pRank.get(j)._datas.get(i);
                         rank.add((Team) obj.getObject());
                     }
-                    mjtRankingTeam mjtr = new mjtRankingTeam(_teamVictory,_round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, rank,  _round_only);
+                    mjtRankingTeam mjtr = new mjtRankingTeam(_teamVictory, _round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, rank, _round_only);
 
                     for (int j = 0; j < mjtr._datas.size(); j++) {
                         datas.add(mjtr._datas.get(j));
@@ -577,32 +577,32 @@ public class mjtRankingTeam extends mjtRanking {
         return value;
     }
 
-  /*  public static int getOppTeamPoints(Team t, Vector<Match> v, Vector<Round> vr) {
-        int value = 0;
-        Team opponent = null;
+    /*  public static int getOppTeamPoints(Team t, Vector<Match> v, Vector<Round> vr) {
+     int value = 0;
+     Team opponent = null;
 
-        if (v.size() > 0) {
-            if (v.get(0)._coach1._teamMates == t) {
-                opponent = v.get(0)._coach2._teamMates;
-            } else {
-                opponent = v.get(0)._coach1._teamMates;
-            }
+     if (v.size() > 0) {
+     if (v.get(0)._coach1._teamMates == t) {
+     opponent = v.get(0)._coach2._teamMates;
+     } else {
+     opponent = v.get(0)._coach1._teamMates;
+     }
             
-            for (int i = 0; i < vr.size(); i++) {
-                Round r = vr.get(i);
-                Vector<Match> v2 = r.getMatchs();
-                Vector<Match> v_opp = new Vector<Match>();
-                for (int j = 0; j < v2.size(); j++) {
-                    Match m = v2.get(j);
-                    if ((m._coach1._teamMates == opponent) || (m._coach2._teamMates == opponent)) {
-                        v_opp.add(m);
-                    }
-                }
-                value += getTeamPoints(t, v_opp);
-            }
-        }
-        return value;
-    }*/
+     for (int i = 0; i < vr.size(); i++) {
+     Round r = vr.get(i);
+     Vector<Match> v2 = r.getMatchs();
+     Vector<Match> v_opp = new Vector<Match>();
+     for (int j = 0; j < v2.size(); j++) {
+     Match m = v2.get(j);
+     if ((m._coach1._teamMates == opponent) || (m._coach2._teamMates == opponent)) {
+     v_opp.add(m);
+     }
+     }
+     value += getTeamPoints(t, v_opp);
+     }
+     }
+     return value;
+     }*/
 
     /*public static int getValue(Team t, Vector<Match> v, int valueType, Vector<Round> rounds) {
      int value = 0;
@@ -654,22 +654,24 @@ public class mjtRankingTeam extends mjtRanking {
      }*/
     public Object getValueAt(int row, int col) {
 
-        ObjectRanking obj = (ObjectRanking) _datas.get(row);
-        switch (col) {
-            case 0:
-                return row + 1;
-            case 1:
-                return ((Team) obj.getObject())._name;
-            case 2:
-                return obj.getValue1();
-            case 3:
-                return obj.getValue2();
-            case 4:
-                return obj.getValue3();
-            case 5:
-                return obj.getValue4();
-            case 6:
-                return obj.getValue5();
+        if (_datas.size() > row) {
+            ObjectRanking obj = (ObjectRanking) _datas.get(row);
+            switch (col) {
+                case 0:
+                    return row + 1;
+                case 1:
+                    return ((Team) obj.getObject())._name;
+                case 2:
+                    return obj.getValue1();
+                case 3:
+                    return obj.getValue2();
+                case 4:
+                    return obj.getValue3();
+                case 5:
+                    return obj.getValue4();
+                case 6:
+                    return obj.getValue5();
+            }
         }
         return "";
     }
