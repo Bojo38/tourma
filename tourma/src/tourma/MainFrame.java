@@ -10,6 +10,7 @@
  */
 package tourma;
 
+import java.awt.BorderLayout;
 import tourma.utility.ExtensionFileFilter;
 import tourma.tableModel.mjtCoaches;
 import tourma.tableModel.mjtTeams;
@@ -21,13 +22,15 @@ import java.awt.FontMetrics;
 import java.awt.Toolkit;
 import java.io.File;
 import java.text.ParseException;
-import java.util.Locale;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import tourma.views.system.jdgOnlineHelp;
@@ -45,403 +48,382 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Value;
 import tourma.tableModel.mjtCriterias;
+import tourma.utils.Generation;
+import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
 public class MainFrame extends javax.swing.JFrame {
-    
-    Tournament _tournament;
-    File _file = null;
+
+    Tournament mTournament;
+    File mFile = null;
+    JPNParamGroup mJpnGroup;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
-        Locale l = Locale.getDefault();
-        
-        _tournament = Tournament.getTournament();
+
+        mTournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
-        
-        Vector<String> StartOptions = new Vector<String>();
-        StartOptions.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGame"));
-        StartOptions.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
-        int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewGameOrOpen"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Open"));
-        
+
+        final ArrayList<String> StartOptions = new ArrayList<String>();
+        StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGame"));
+        StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
+        final int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
+
         if (res == 0) {
             jmiNouveauActionPerformed(null);
         } else {
-            JFileChooser jfc = new JFileChooser();
-            FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
+            final JFileChooser jfc = new JFileChooser();
+            final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
-                _file =
+                mFile =
                         jfc.getSelectedFile();
                 for (int i = jtpMain.getTabCount() - 1; i
                         >= 0; i--) {
-                    Component obj = jtpMain.getComponentAt(i);
+                    final Component obj = jtpMain.getComponentAt(i);
                     if (obj instanceof JPNRound) {
                         jtpMain.remove(obj);
                     }
-                    
+
                 }
-                boolean cup=false;
+                boolean cup = false;
                 for (int i = 0; i
-                        < _tournament.getRounds().size(); i++) {
-                    JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                    jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-                    if (_tournament.getRounds().get(i)._cup)
-                    {
-                        cup=true;
+                        < mTournament.getRounds().size(); i++) {
+                    final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
+                    jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                    if (mTournament.getRounds().get(i).mCup) {
+                        cup = true;
                     }
                 }
-                if (cup)
-                {
-                    JPNCup jpncup=new JPNCup();
-                    jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")),jpncup);
+                if (cup) {
+                    final JPNCup jpncup = new JPNCup();
+                    jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")), jpncup);
                 }
             }
         }
-        
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+
+        mJpnGroup = new JPNParamGroup();
+        jtpOptions.addTab(
+                bundle.getString("Group"),
+                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), 
+                mJpnGroup);
+
         update();
     }
-    
-    protected void updateCriterias(boolean bTourStarted) {
 
-        jtbCriteria.setModel(new mjtCriterias(_tournament));
+    protected void updateCriterias(final boolean bTourStarted) {
+
+        jtbCriteria.setModel(new mjtCriterias(mTournament));
         jbtAddCriteria.setEnabled(!bTourStarted);
         jbtRemoveCriteria.setEnabled(!bTourStarted);
     }
-    
-    protected void updateGroup(boolean bTourStarted) {
-        jbtAddGroup.setEnabled(!bTourStarted);
-        jbtRemoveGroup.setEnabled(!bTourStarted);
-        jbtRenameGroup.setEnabled(!bTourStarted);
-        jbtGrouToLeft.setEnabled(!bTourStarted);
-        jbtGroupToRight.setEnabled(!bTourStarted);
-        
-        DefaultListModel groupModel = new DefaultListModel();
-        DefaultComboBoxModel groupsLeftModel = new DefaultComboBoxModel();
-        DefaultComboBoxModel groupsRightModel = new DefaultComboBoxModel();
-        for (int i = 0; i < _tournament.getGroups().size(); i++) {
-            groupModel.addElement(_tournament.getGroups().get(i)._name);
-            groupsLeftModel.addElement(_tournament.getGroups().get(i)._name);
-            groupsRightModel.addElement(_tournament.getGroups().get(i)._name);
-        }
-        jlsGroups.setModel(groupModel);
-        jcbGroupLeft.setModel(groupsLeftModel);
-        jcbGroupRight.setModel(groupsRightModel);
-        
-        if (_tournament.getGroups().size() > 0) {
-            jcbGroupLeft.setSelectedIndex(0);
-            if (_tournament.getGroups().size() > 1) {
-                jcbGroupRight.setSelectedIndex(1);
-            } else {
-                jcbGroupRight.setSelectedIndex(0);
-            }
-        }
-    }
-    
+
     protected void updateRankIndivParameters() {
 
-        jtffDraw.setValue(new Integer(_tournament.getParams()._draw_points));
-        jtffLargeVictory.setValue(new Integer(_tournament.getParams()._large_victory_points));
-        jtffLittleLost.setValue(new Integer(_tournament.getParams()._little_lost_points));
-        jtffLargeVictoryGap.setValue(new Integer(_tournament.getParams()._large_victory_gap));
-        jtffLittleLostGap.setValue(new Integer(_tournament.getParams()._little_lost_gap));
-        jtffLost.setValue(new Integer(_tournament.getParams()._lost_points));
-        
-        jtffVictory.setValue(new Integer(_tournament.getParams()._victory_points));
-        
-        Vector<String> rankChoices = new Vector<String>();
-        rankChoices.add("Aucun");
-        rankChoices.add("Points");
+        jtffDraw.setValue(mTournament.getParams().mPointsIndivDraw);
+        jtffLargeVictory.setValue(mTournament.getParams().mPointsIndivLargeVictory);
+        jtffLittleLost.setValue(mTournament.getParams().mPointsIndivLittleLost);
+        jtffLargeVictoryGap.setValue(mTournament.getParams().mGapLargeVictory);
+        jtffLittleLostGap.setValue(mTournament.getParams().mGapLittleLost);
+        jtffLost.setValue(mTournament.getParams().mPointsIndivLost);
+
+        jtffVictory.setValue(mTournament.getParams().mPointsIndivVictory);
+
+        final ArrayList<String> rankChoices = new ArrayList<String>();
+        rankChoices.add(StringConstants.CS_NONE);
+        rankChoices.add(StringConstants.CS_POINTS);
         rankChoices.add("Points Adversaires");
         rankChoices.add("V/N/D");
-        for (int i = 0; i < Tournament.getTournament().getParams()._criterias.size(); i++) {
-            Criteria criteria = Tournament.getTournament().getParams()._criterias.get(i);
-            rankChoices.add(criteria._name + " Joueur");
-            rankChoices.add(criteria._name + " Adversaire");
-            rankChoices.add(criteria._name + " Différence");
+        for (int i = 0; i < Tournament.getTournament().getParams().mCriterias.size(); i++) {
+            final Criteria criteria = Tournament.getTournament().getParams().mCriterias.get(i);
+            rankChoices.add(criteria.mName + " Joueur");
+            rankChoices.add(criteria.mName + " Adversaire");
+            rankChoices.add(criteria.mName + " Différence");
         }
-        
-        jcbRank1.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank2.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank3.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank4.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank5.setModel(new DefaultComboBoxModel(rankChoices));
-        
+
+        jcbRank1.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+        jcbRank2.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+        jcbRank3.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+        jcbRank4.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+        jcbRank5.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+
         jcbRank1.removeActionListener(jcbRank1.getActionListeners()[0]);
         jcbRank2.removeActionListener(jcbRank2.getActionListeners()[0]);
         jcbRank3.removeActionListener(jcbRank3.getActionListeners()[0]);
         jcbRank4.removeActionListener(jcbRank4.getActionListeners()[0]);
         jcbRank5.removeActionListener(jcbRank5.getActionListeners()[0]);
-        
-        jcbRank1.setSelectedIndex(_tournament.getParams()._ranking1);
-        jcbRank2.setSelectedIndex(_tournament.getParams()._ranking2);
-        jcbRank3.setSelectedIndex(_tournament.getParams()._ranking3);
-        jcbRank4.setSelectedIndex(_tournament.getParams()._ranking4);
-        jcbRank5.setSelectedIndex(_tournament.getParams()._ranking5);
-        
-        
-        
+
+        jcbRank1.setSelectedIndex(mTournament.getParams().mRankingIndiv1);
+        jcbRank2.setSelectedIndex(mTournament.getParams().mRankingIndiv2);
+        jcbRank3.setSelectedIndex(mTournament.getParams().mRankingIndiv3);
+        jcbRank4.setSelectedIndex(mTournament.getParams().mRankingIndiv4);
+        jcbRank5.setSelectedIndex(mTournament.getParams().mRankingIndiv5);
+
+
+
         jcbRank1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank1ActionPerformed(evt);
             }
         });
-        
+
         jcbRank2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank2ActionPerformed(evt);
             }
         });
-        
+
         jcbRank3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank3ActionPerformed(evt);
             }
         });
-        
+
         jcbRank4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank4ActionPerformed(evt);
             }
         });
-        
+
         jcbRank5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank5ActionPerformed(evt);
             }
         });
-        
+
     }
-    
+
     protected void updateRankTeamParameters() {
-        
-        boolean teamMatches = _tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1);
-        
-        jtffDrawTeam.setValue(new Integer(_tournament.getParams()._draw_points_team));
-        jtffLostTeam.setValue(new Integer(_tournament.getParams()._lost_points_team));
-        
-        jtffVictoryTeam.setValue(new Integer(_tournament.getParams()._victory_points_team));
-        
+
+        final boolean teamMatches = mTournament.getParams().mTeamTournament && (mTournament.getParams().mTeamPairing == 1);
+
+        jtffDrawTeam.setValue(mTournament.getParams().mPointsTeamDraw);
+        jtffLostTeam.setValue(mTournament.getParams().mPointsTeamLost);
+
+        jtffVictoryTeam.setValue(mTournament.getParams().mPointsTeamVictory);
+
         jrbCoachPoints.setEnabled(teamMatches);
         jrbTeamVictory.setEnabled(teamMatches);
-        
-        jtffTeamVictoryBonus.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-        
-        jtffTeamDrawBonus.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-        jlbVictoryPoints.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-        jlbVictoryPoints1.setEnabled(teamMatches && (!_tournament.getParams()._team_victory_only));
-        
-        jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jtffLostTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        
-        jtffVictoryTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jtffDrawTeam.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        
-        
-        jLabel23.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel24.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel25.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel26.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel27.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel28.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel29.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jLabel30.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        
-        jrbCoachPoints.setSelected(!_tournament.getParams()._team_victory_only);
-        jrbTeamVictory.setSelected(_tournament.getParams()._team_victory_only);
-        jtffTeamVictoryBonus.setValue(_tournament.getParams()._team_victory_points);
-        jtffTeamDrawBonus.setValue(_tournament.getParams()._team_draw_points);
-        
-        Vector<String> rankChoices = new Vector<String>();
-        rankChoices.add("Aucun");
-        rankChoices.add("Points");
+
+        jtffTeamVictoryBonus.setEnabled(teamMatches && (!mTournament.getParams().mTeamVictoryOnly));
+
+        jtffTeamDrawBonus.setEnabled(teamMatches && (!mTournament.getParams().mTeamVictoryOnly));
+        jlbVictoryPoints.setEnabled(teamMatches && (!mTournament.getParams().mTeamVictoryOnly));
+        jlbVictoryPoints1.setEnabled(teamMatches && (!mTournament.getParams().mTeamVictoryOnly));
+
+        jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jtffLostTeam.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+
+        jtffVictoryTeam.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+
+
+        jLabel23.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jLabel24.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jLabel25.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jLabel26.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jLabel27.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jLabel28.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jLabel29.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jLabel30.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+
+        jrbCoachPoints.setSelected(!mTournament.getParams().mTeamVictoryOnly);
+        jrbTeamVictory.setSelected(mTournament.getParams().mTeamVictoryOnly);
+        jtffTeamVictoryBonus.setValue(mTournament.getParams().mPointsTeamVictoryBonus);
+        jtffTeamDrawBonus.setValue(mTournament.getParams().mPointsTeamDrawBonus);
+
+        final ArrayList<String> rankChoices = new ArrayList<String>();
+        rankChoices.add(StringConstants.CS_NONE);
+        rankChoices.add(StringConstants.CS_POINTS);
         rankChoices.add("Points Adversaires");
         rankChoices.add("V/N/D");
-        for (int i = 0; i < Tournament.getTournament().getParams()._criterias.size(); i++) {
-            Criteria criteria = Tournament.getTournament().getParams()._criterias.get(i);
-            rankChoices.add(criteria._name + " Joueur");
-            rankChoices.add(criteria._name + " Adversaire");
-            rankChoices.add(criteria._name + " Différence");
+        for (int i = 0; i < Tournament.getTournament().getParams().mCriterias.size(); i++) {
+            final Criteria criteria = Tournament.getTournament().getParams().mCriterias.get(i);
+            rankChoices.add(criteria.mName + " Joueur");
+            rankChoices.add(criteria.mName + " Adversaire");
+            rankChoices.add(criteria.mName + " Différence");
         }
-        
-        
-        jcbRank1Team.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank2Team.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank3Team.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank4Team.setModel(new DefaultComboBoxModel(rankChoices));
-        jcbRank5Team.setModel(new DefaultComboBoxModel(rankChoices));
-        
-        jcbRank1Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jcbRank2Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jcbRank3Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jcbRank4Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        jcbRank5Team.setEnabled(teamMatches && (_tournament.getParams()._team_victory_only));
-        
+
+
+        jcbRank1Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+        jcbRank2Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+        jcbRank3Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+        jcbRank4Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+        jcbRank5Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+
+        jcbRank1Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jcbRank2Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jcbRank3Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jcbRank4Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jcbRank5Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+
         jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
         jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
         jcbRank3Team.removeActionListener(jcbRank3Team.getActionListeners()[0]);
         jcbRank4Team.removeActionListener(jcbRank4Team.getActionListeners()[0]);
         jcbRank5Team.removeActionListener(jcbRank5Team.getActionListeners()[0]);
-        
-        jcbRank1Team.setSelectedIndex(_tournament.getParams()._ranking1_team);
-        jcbRank2Team.setSelectedIndex(_tournament.getParams()._ranking2_team);
-        jcbRank3Team.setSelectedIndex(_tournament.getParams()._ranking3_team);
-        jcbRank4Team.setSelectedIndex(_tournament.getParams()._ranking4_team);
-        jcbRank5Team.setSelectedIndex(_tournament.getParams()._ranking5_team);
-                
+
+        jcbRank1Team.setSelectedIndex(mTournament.getParams().mRankingTeam1);
+        jcbRank2Team.setSelectedIndex(mTournament.getParams().mRankingTeam2);
+        jcbRank3Team.setSelectedIndex(mTournament.getParams().mRankingTeam3);
+        jcbRank4Team.setSelectedIndex(mTournament.getParams().mRankingTeam4);
+        jcbRank5Team.setSelectedIndex(mTournament.getParams().mRankingTeam5);
+
         jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank1TeamActionPerformed(evt);
             }
         });
-        
+
         jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank2TeamActionPerformed(evt);
             }
         });
-        
+
         jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank3TeamActionPerformed(evt);
             }
         });
-        
+
         jcbRank4Team.addActionListener(
                 new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    public void actionPerformed(final java.awt.event.ActionEvent evt) {
                         jcbRank4TeamActionPerformed(evt);
                     }
                 });
-        
+
         jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank5TeamActionPerformed(evt);
             }
         });
     }
-    
-    protected void updateClans(boolean bTourStarted) {
-        jcxActivatesClans.setSelected(!bTourStarted && !_tournament.getParams()._teamTournament);
-        jcxActivatesClans.setEnabled(!bTourStarted && !_tournament.getParams()._teamTournament);
-        
-        boolean clansEnable = (_tournament.getParams()._enableClans) && (!_tournament.getParams()._teamTournament);
-        jlbActivateClans.setEnabled(!_tournament.getParams()._teamTournament);
+
+    protected void updateClans(final boolean bTourStarted) {
+        jcxActivatesClans.setSelected(!bTourStarted && !mTournament.getParams().mTeamTournament);
+        jcxActivatesClans.setEnabled(!bTourStarted && !mTournament.getParams().mTeamTournament);
+
+        final boolean clansEnable = (mTournament.getParams().mEnableClans) && (!mTournament.getParams().mTeamTournament);
+        jlbActivateClans.setEnabled(!mTournament.getParams().mTeamTournament);
         jlbAvoidClansMembersMatch.setEnabled(clansEnable);
         jlbClansMembersNUmbers.setEnabled(clansEnable);
         jlbTeamMatesNumber.setEnabled(clansEnable);
-        
+
         jspTeamMembers.setEnabled(clansEnable);
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
-        
+
         jbtAddClan.setEnabled(clansEnable && !bTourStarted);
         jbtRemoveClan.setEnabled(clansEnable && !bTourStarted);
         jbtEditClan.setEnabled(clansEnable && !bTourStarted);
         jlsClans.setEnabled(clansEnable && !bTourStarted);
-        
+
         jcxActivatesClans.setSelected(clansEnable);
-        jcxAvoidFirstMatch.setSelected(_tournament.getParams()._avoidClansFirstMatch);
-        jcxAvoidMatch.setSelected(_tournament.getParams()._avoidClansMatch);
-        jspTeamMembers.setValue(_tournament.getParams()._teamMatesNumber);
-        
-        int selectedClan = jlsClans.getSelectedIndex();
-        DefaultListModel coachListModel = new DefaultListModel();
+        jcxAvoidFirstMatch.setSelected(mTournament.getParams().mAvoidClansFirstMatch);
+        jcxAvoidMatch.setSelected(mTournament.getParams().mAvoidClansMatch);
+        jspTeamMembers.setValue(mTournament.getParams().mTeamMatesNumber);
+
+        final int selectedClan = jlsClans.getSelectedIndex();
+        final DefaultListModel coachListModel = new DefaultListModel();
         if (selectedClan >= 0) {
-            
-            String clanName = _tournament.getClans().get(selectedClan)._name;
-            for (int i = 0; i < _tournament.getCoachs().size(); i++) {
-                if (clanName.equals(_tournament.getCoachs().get(i)._clan._name)) {
-                    coachListModel.addElement(_tournament.getCoachs().get(i)._name);
+
+            final String clanName = mTournament.getClans().get(selectedClan).mName;
+            for (int i = 0; i < mTournament.getCoachs().size(); i++) {
+                if (clanName.equals(mTournament.getCoachs().get(i).mClan.mName)) {
+                    coachListModel.addElement(mTournament.getCoachs().get(i).mName);
                 }
             }
         }
         jlsCoachList.setModel(coachListModel);
-        
-        DefaultListModel listModel = new DefaultListModel();
-        for (int i = 0; i < _tournament.getClans().size(); i++) {
-            listModel.addElement(_tournament.getClans().get(i)._name);
+
+        final DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < mTournament.getClans().size(); i++) {
+            listModel.addElement(mTournament.getClans().get(i).mName);
         }
-        
+
         jlsClans.setModel(listModel);
     }
-    
-    protected void updateTables(boolean bTourStarted) {
-        
+
+    protected void updateTables(final boolean bTourStarted) {
+
         jbtAdd.setEnabled(!bTourStarted);
         jbtRemove.setEnabled(!bTourStarted);
-        
+
         jbtAddTeam.setEnabled(!bTourStarted);
         jbtRemoveTeam.setEnabled(!bTourStarted);
-        
-        if (_tournament.getParams()._teamTournament) {
+
+        if (mTournament.getParams().mTeamTournament) {
             jpnTeamTour.setVisible(true);
             jpnCoachButtons.setVisible(false);
             String text = "";
-            if (_tournament.getParams()._teamPairing == 0) {
-                text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Single");
+            if (mTournament.getParams().mTeamPairing == 0) {
+                text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single");
             } else {
-                text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam");
+                text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam");
             }
-            jlbDetails.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MembersNumber") + ": " + _tournament.getParams()._teamMatesNumber + " " + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pairing") + " " + text);
+            jlbDetails.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("MembersNumber") + ": " + mTournament.getParams().mTeamMatesNumber + " " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Pairing") + " " + text);
         } else {
             jpnTeamTour.setVisible(false);
             jpnCoachButtons.setVisible(true);
         }
-        
-        mjtCoaches coachModel = new mjtCoaches(_tournament.getCoachs());
+
+        final mjtCoaches coachModel = new mjtCoaches(mTournament.getCoachs());
         jtbCoachs.setModel(coachModel);
         setColumnSize(jtbCoachs);
-        
+
         jtbCoachs.setDefaultRenderer(String.class, coachModel);
         jtbCoachs.setDefaultRenderer(Integer.class, coachModel);
-        
-        mjtTeams teamModel = new mjtTeams(_tournament.getTeams());
+
+        final mjtTeams teamModel = new mjtTeams(mTournament.getTeams());
         jtbTeam.setModel(teamModel);
         setColumnSize(jtbTeam);
         jtbTeam.setDefaultRenderer(String.class, teamModel);
         jtbTeam.setDefaultRenderer(Integer.class, teamModel);
     }
-    
+
     public void update() {
-        
-        boolean bTourStarted = _tournament.getRounds().size() > 0;
-        
-        updateCriterias(bTourStarted);        
+
+        final boolean bTourStarted = mTournament.getRounds().size() > 0;
+
+        updateCriterias(bTourStarted);
         updateClans(bTourStarted);
-        updateGroup(bTourStarted);
-        updateRankIndivParameters();    
+        updateRankIndivParameters();
         updateTables(bTourStarted);
-        
-        
-        jmiEditTeam.setEnabled(_tournament.getParams()._game == RosterType.C_BLOOD_BOWL);
-                
-        jtpOptions.setEnabledAt(2, _tournament.getParams()._teamTournament);
-        jtpOptions.setEnabledAt(3, !_tournament.getParams()._teamTournament);   
-        
-        jtfOrgas.setText(_tournament.getParams()._tournament_orga);
-        jtfTournamentName.setText(_tournament.getParams()._tournament_name);
-        
-        jxdDate.setDate(_tournament.getParams()._date);
-        jtfPlace.setText(_tournament.getParams()._place);
-        
+
+        mJpnGroup.update();
+
+        jmiEditTeam.setEnabled(mTournament.getParams().mGame == RosterType.C_BLOOD_BOWL);
+
+        jtpOptions.setEnabledAt(2, mTournament.getParams().mTeamTournament);
+        jtpOptions.setEnabledAt(3, !mTournament.getParams().mTeamTournament);
+
+        jtfOrgas.setText(mTournament.getParams().mTournamentOrga);
+        jtfTournamentName.setText(mTournament.getParams().mTournamentName);
+
+        jxdDate.setDate(mTournament.getParams().mDate);
+        jtfPlace.setText(mTournament.getParams().mPlace);
+
         for (int i = 0; i < jtpMain.getComponentCount(); i++) {
-            Object o = jtpMain.getComponentAt(i);
+            final Object o = jtpMain.getComponentAt(i);
             if (o instanceof JPNRound) {
                 ((JPNRound) o).update();
             }
-             if (o instanceof JPNCup) {
+            if (o instanceof JPNCup) {
                 ((JPNCup) o).update();
             }
         }
-        
+
     }
 
     /**
@@ -449,12 +431,10 @@ public class MainFrame extends javax.swing.JFrame {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "PMD"})
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        Language = new javax.swing.ButtonGroup();
         jtpMain = new javax.swing.JTabbedPane();
         jpnParameters = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -542,29 +522,6 @@ public class MainFrame extends javax.swing.JFrame {
         jlsClans = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
         jlsCoachList = new javax.swing.JList();
-        jPanel17 = new javax.swing.JPanel();
-        jPanel18 = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jlsGroups = new javax.swing.JList();
-        jPanel19 = new javax.swing.JPanel();
-        jbtAddGroup = new javax.swing.JButton();
-        jbtRemoveGroup = new javax.swing.JButton();
-        jbtRenameGroup = new javax.swing.JButton();
-        jPanel20 = new javax.swing.JPanel();
-        jPanel21 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jlsLeft = new javax.swing.JList();
-        jcbGroupLeft = new javax.swing.JComboBox();
-        jPanel22 = new javax.swing.JPanel();
-        jPanel24 = new javax.swing.JPanel();
-        jbtGroupToRight = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jbtGrouToLeft = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel23 = new javax.swing.JPanel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        jlsRight = new javax.swing.JList();
-        jcbGroupRight = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jpnCoachButtons = new javax.swing.JPanel();
@@ -865,7 +822,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel10.setLayout(new java.awt.GridLayout(11, 2));
 
-        buttonGroup1.add(jrbTeamVictory);
         jrbTeamVictory.setText(bundle.getString("UseTeamVictory")); // NOI18N
         jrbTeamVictory.setHideActionText(true);
         jrbTeamVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -877,7 +833,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel10.add(jrbTeamVictory);
 
-        buttonGroup1.add(jrbCoachPoints);
         jrbCoachPoints.setText(bundle.getString("UseCoachsPointsSum")); // NOI18N
         jrbCoachPoints.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1138,126 +1093,6 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel11.add(jPanel14, java.awt.BorderLayout.CENTER);
 
         jtpOptions.addTab(bundle.getString("ClanKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")), jPanel11); // NOI18N
-
-        jPanel17.setLayout(new java.awt.BorderLayout());
-
-        jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste de groupes"));
-        jPanel18.setLayout(new java.awt.BorderLayout(1, 1));
-
-        jlsGroups.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jlsGroups.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane6.setViewportView(jlsGroups);
-
-        jPanel18.add(jScrollPane6, java.awt.BorderLayout.CENTER);
-
-        jPanel19.setLayout(new java.awt.GridLayout(3, 1, 1, 1));
-
-        jbtAddGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAddGroup.setText("Ajouter");
-        jbtAddGroup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAddGroupActionPerformed(evt);
-            }
-        });
-        jPanel19.add(jbtAddGroup);
-
-        jbtRemoveGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemoveGroup.setText("Retirer");
-        jbtRemoveGroup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRemoveGroupActionPerformed(evt);
-            }
-        });
-        jPanel19.add(jbtRemoveGroup);
-
-        jbtRenameGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
-        jbtRenameGroup.setText("Renommer");
-        jbtRenameGroup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRenameGroupActionPerformed(evt);
-            }
-        });
-        jPanel19.add(jbtRenameGroup);
-
-        jPanel18.add(jPanel19, java.awt.BorderLayout.LINE_END);
-
-        jPanel17.add(jPanel18, java.awt.BorderLayout.PAGE_START);
-
-        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("Edition des groupes"));
-        jPanel20.setLayout(new java.awt.GridLayout(1, 3, 2, 0));
-
-        jPanel21.setLayout(new java.awt.BorderLayout(2, 2));
-
-        jlsLeft.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane7.setViewportView(jlsLeft);
-
-        jPanel21.add(jScrollPane7, java.awt.BorderLayout.CENTER);
-
-        jcbGroupLeft.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jcbGroupLeft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbGroupLeftActionPerformed(evt);
-            }
-        });
-        jPanel21.add(jcbGroupLeft, java.awt.BorderLayout.PAGE_START);
-
-        jPanel20.add(jPanel21);
-
-        jPanel22.setLayout(new java.awt.GridLayout(5, 1));
-        jPanel22.add(jPanel24);
-
-        jbtGroupToRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
-        jbtGroupToRight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGroupToRightActionPerformed(evt);
-            }
-        });
-        jPanel22.add(jbtGroupToRight);
-        jPanel22.add(jLabel8);
-
-        jbtGrouToLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
-        jbtGrouToLeft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGrouToLeftActionPerformed(evt);
-            }
-        });
-        jPanel22.add(jbtGrouToLeft);
-        jPanel22.add(jLabel9);
-
-        jPanel20.add(jPanel22);
-
-        jPanel23.setLayout(new java.awt.BorderLayout(2, 2));
-
-        jlsRight.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane8.setViewportView(jlsRight);
-
-        jPanel23.add(jScrollPane8, java.awt.BorderLayout.CENTER);
-
-        jcbGroupRight.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jcbGroupRight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbGroupRightActionPerformed(evt);
-            }
-        });
-        jPanel23.add(jcbGroupRight, java.awt.BorderLayout.PAGE_START);
-
-        jPanel20.add(jPanel23);
-
-        jPanel17.add(jPanel20, java.awt.BorderLayout.CENTER);
-
-        jtpOptions.addTab("Groupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), jPanel17); // NOI18N
 
         jPanel9.add(jtpOptions, java.awt.BorderLayout.CENTER);
 
@@ -1525,470 +1360,516 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtFirstRoundActionPerformed
-        
-        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (_tournament.getParams()._teamTournament && (_tournament.getParams()._teamPairing == 1) && _tournament.getTeams().size() % 2 > 0) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OddTeamNumber"));
+
+        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (mTournament.getParams().mTeamTournament && (mTournament.getParams().mTeamPairing == 1) && mTournament.getTeams().size() % 2 > 0) {
+                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OddTeamNumber"));
             } else {
-                String[] options = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Random"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RegisteringOrder"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Manual"),java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RoundRobin"),java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"),java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cup")};
-                int choice = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseFirstDraw"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FirstRound"), JOptionPane.YES_NO_OPTION, WIDTH, null, options, 0);
-                
-                _tournament.generateFirstRound(choice);
-                
+
+                final ArrayList<String> labels = new ArrayList<String>();
+                final ArrayList<Integer> Options = new ArrayList<Integer>();
+
+                /**
+                 * Random possible ?
+                 */
+                labels.add("Aléatoire");
+                Options.add(Generation.GEN_RANDOM);
+
+                /**
+                 * Coupe
+                 */
+                labels.add("Coupe");
+                Options.add(Generation.GEN_CUP);
+
+                /**
+                 * Ordre
+                 */
+                labels.add("Order d'inscription");
+                Options.add(Generation.GEN_ORDER);
+
+                /**
+                 * Round Robin
+                 */
+                labels.add("Round Robin");
+                Options.add(Generation.GEN_RROBIN);
+
+                /**
+                 * manuel
+                 */
+                labels.add("Choix Manuel");
+                Options.add(Generation.GEN_MANUAL);
+
+                /**
+                 * Poules
+                 */
+                labels.add("Poules");
+                Options.add(Generation.GEN_POOL);
+
+
+                final JPanel jpn = new JPanel(new BorderLayout());
+                final JComboBox jcb = new JComboBox(labels.toArray());
+                jpn.add(jcb, BorderLayout.CENTER);
+                final JLabel jlb = new JLabel("Choisissez la méthode de génération: ");
+                jpn.add(jlb, BorderLayout.NORTH);
+
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, "Génération", JOptionPane.QUESTION_MESSAGE);
+                final int index = jcb.getSelectedIndex();
+
+                Generation.generateFirstRound(Options.get(index));
+
                 for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
-                    Component obj = jtpMain.getComponentAt(i);
+                    final Component obj = jtpMain.getComponentAt(i);
                     if (obj instanceof JPNRound) {
                         jtpMain.remove(obj);
                     }
                 }
-                boolean cup=false;
-                for (int i = 0; i < _tournament.getRounds().size(); i++) {
-                    JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-                    if ( _tournament.getRounds().get(i)._cup)
-                    {
-                        cup=true;
+                boolean cup = false;
+                for (int i = 0; i < mTournament.getRounds().size(); i++) {
+                    final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
+                    if (mTournament.getRounds().get(i).mCup) {
+                        cup = true;
                     }
-                    jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                    jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
                 }
-                
-                if (cup)
-                {
-                    JPNCup jpncup=new JPNCup();
-                    jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")),jpncup);
+
+                if (cup) {
+                    final JPNCup jpncup = new JPNCup();
+                    jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")), jpncup);
                 }
-                
-                jtpMain.setSelectedIndex(_tournament.getRounds().size());
+
+                jtpMain.setSelectedIndex(mTournament.getRounds().size());
                 update();
-                
+
             }
-            
+
         }
 }//GEN-LAST:event_jbtFirstRoundActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
-        
+
         if (jtbCoachs.getSelectedRow() >= 0) {
-            jdgCoach w = new jdgCoach(this, true, _tournament.getCoachs().get(jtbCoachs.getSelectedRow()));
+            final jdgCoach w = new jdgCoach(this, true, mTournament.getCoachs().get(jtbCoachs.getSelectedRow()));
             w.setVisible(true);
             update();
         }
 }//GEN-LAST:event_jbtModifyActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        _tournament.getCoachs().remove(jtbCoachs.getSelectedRow());
+        mTournament.getCoachs().remove(jtbCoachs.getSelectedRow());
         update();
 }//GEN-LAST:event_jbtRemoveActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
-        jdgCoach w = new jdgCoach(this, true);
+        final jdgCoach w = new jdgCoach(this, true);
         w.setVisible(true);
         update();
 }//GEN-LAST:event_jbtAddActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5ActionPerformed
-        _tournament.getParams()._ranking5 = jcbRank5.getSelectedIndex();
+        mTournament.getParams().mRankingIndiv5 = jcbRank5.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank5ActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4ActionPerformed
-        _tournament.getParams()._ranking4 = jcbRank4.getSelectedIndex();
+        mTournament.getParams().mRankingIndiv4 = jcbRank4.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank4ActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3ActionPerformed
-        _tournament.getParams()._ranking3 = jcbRank3.getSelectedIndex();
+        mTournament.getParams().mRankingIndiv3 = jcbRank3.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank3ActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2ActionPerformed
-        _tournament.getParams()._ranking2 = jcbRank2.getSelectedIndex();
+        mTournament.getParams().mRankingIndiv2 = jcbRank2.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank2ActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1ActionPerformed
-        _tournament.getParams()._ranking1 = jcbRank1.getSelectedIndex();
+        mTournament.getParams().mRankingIndiv1 = jcbRank1.getSelectedIndex();
         update();
 }//GEN-LAST:event_jcbRank1ActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostFocusLost
         try {
             jtffLost.commitEdit();
-            int points = ((Long) jtffLost.getValue()).intValue();
-            _tournament.getParams()._lost_points = points;
+            final int points = ((Long) jtffLost.getValue()).intValue();
+            mTournament.getParams().mPointsIndivLost = points;
         } catch (ParseException e) {
             jtffLost.setValue(jtffLost.getValue());
         }
         update();
 }//GEN-LAST:event_jtffLostFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffLittleLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostFocusLost
         try {
             jtffLittleLost.commitEdit();
-            int points = ((Long) jtffLittleLost.getValue()).intValue();
-            _tournament.getParams()._little_lost_points = points;
+            final int points = ((Long) jtffLittleLost.getValue()).intValue();
+            mTournament.getParams().mPointsIndivLittleLost = points;
         } catch (ParseException e) {
             jtffLittleLost.setValue(jtffLittleLost.getValue());
         }
         update();
 }//GEN-LAST:event_jtffLittleLostFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawFocusLost
         try {
             jtffDraw.commitEdit();
-            int points = ((Long) jtffDraw.getValue()).intValue();
-            _tournament.getParams()._draw_points = points;
+            final int points = ((Long) jtffDraw.getValue()).intValue();
+            mTournament.getParams().mPointsIndivDraw = points;
         } catch (ParseException e) {
             jtffDraw.setValue(jtffDraw.getValue());
         }
         update();
 }//GEN-LAST:event_jtffDrawFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryFocusLost
         try {
             jtffVictory.commitEdit();
-            int points = ((Long) jtffVictory.getValue()).intValue();
-            _tournament.getParams()._victory_points = points;
+            final int points = ((Long) jtffVictory.getValue()).intValue();
+            mTournament.getParams().mPointsIndivVictory = points;
         } catch (ParseException e) {
             jtffVictory.setValue(jtffVictory.getValue());
         }
         update();
 }//GEN-LAST:event_jtffVictoryFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffLargeVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryFocusLost
-        
+
         try {
             jtffLargeVictory.commitEdit();
-            int points = ((Long) jtffLargeVictory.getValue()).intValue();
-            _tournament.getParams()._large_victory_points = points;
+            final int points = ((Long) jtffLargeVictory.getValue()).intValue();
+            mTournament.getParams().mPointsIndivLargeVictory = points;
         } catch (ParseException e) {
             jtffLargeVictory.setValue(jtffLargeVictory.getValue());
         }
         update();
 }//GEN-LAST:event_jtffLargeVictoryFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
-        _tournament.getParams()._tournament_orga = jtfOrgas.getText();
+        mTournament.getParams().mTournamentOrga = jtfOrgas.getText();
 }//GEN-LAST:event_jtfOrgasKeyPressed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
-        _tournament.getParams()._tournament_name = jtfTournamentName.getText();
+        mTournament.getParams().mTournamentName = jtfTournamentName.getText();
 }//GEN-LAST:event_jtfTournamentNameKeyPressed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            String url2 = jfc.getSelectedFile().getAbsolutePath();
+            StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
             String ext = "";
-            int i = url2.lastIndexOf('.');
+            final int i = url2.toString().lastIndexOf('.');
             if (i > 0 && i < url2.length() - 1) {
                 ext = url2.substring(i + 1).toLowerCase();
             }
-            
-            if (!ext.equals("xml")) {
-                url2 = url2 + ".xml";
+
+            if (!ext.equals(StringConstants.CS_xml)) {
+                url2 = url2.append(".xml");
             }
-            _file = new File(url2);
-            Tournament.getTournament().saveXML(_file);
+            mFile = new File(url2.toString());
+            Tournament.getTournament().saveXML(mFile);
         }
     }//GEN-LAST:event_jmiSaveAsActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveActionPerformed
-        if (_file != null) {
-            Tournament.getTournament().saveXML(_file);
+        if (mFile != null) {
+            Tournament.getTournament().saveXML(mFile);
         } else {
             jmiSaveAsActionPerformed(evt);
         }
     }//GEN-LAST:event_jmiSaveActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TourMaXMLFile"), new String[]{"XML", "xml"});
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
         jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
-            _file =
+            mFile =
                     jfc.getSelectedFile();
             for (int i = jtpMain.getTabCount() - 1; i
                     >= 0; i--) {
-                Component obj = jtpMain.getComponentAt(i);
+                final Component obj = jtpMain.getComponentAt(i);
                 if (obj instanceof JPNRound) {
                     jtpMain.remove(obj);
                 }
-                
+
             }
             for (int i = 0; i
-                    < _tournament.getRounds().size(); i++) {
-                JPNRound jpnr = new JPNRound(i, _tournament.getRounds().get(i), _tournament);
-//                jtpMain.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE ") + (i + 1), jpnr);
-                jtpMain.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                    < mTournament.getRounds().size(); i++) {
+                final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
+//                jtpMain.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RONDE ") + (i + 1), jpnr);
+                jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
             }
-            
+
             update();
-            
+
         }
     }//GEN-LAST:event_jmiChargerActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNouveauActionPerformed
-        
-        
+
+
         for (int i = jtpMain.getTabCount() - 1; i
                 >= 0; i--) {
-            Component obj = jtpMain.getComponentAt(i);
+            final Component obj = jtpMain.getComponentAt(i);
             if (obj instanceof JPNRound) {
                 jtpMain.remove(obj);
             }
         }
-        _tournament = Tournament.resetTournament();
-        
-        Vector<String> Games = new Vector<String>();
+        mTournament = Tournament.resetTournament();
+
+        final ArrayList<String> Games = new ArrayList<String>();
         Games.add("Blood Bowl");
         Games.add("DreadBall");
-        int res2 = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseGame"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, Games.toArray(), "Blood Bowl");
+        final int res2 = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChooseGame"), "", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, Games.toArray(), "Blood Bowl");
         if (res2 == 0) {
             RosterType.initCollection(RosterType.C_BLOOD_BOWL);
             lrb.getLRB();
-            Tournament.getTournament().getParams()._game = RosterType.C_BLOOD_BOWL;
-            
+            Tournament.getTournament().getParams().mGame = RosterType.C_BLOOD_BOWL;
+
         } else {
             RosterType.initCollection(RosterType.C_DREAD_BALL);
-            Tournament.getTournament().getParams()._game = RosterType.C_DREAD_BALL;
+            Tournament.getTournament().getParams().mGame = RosterType.C_DREAD_BALL;
             jmiExport.setEnabled(false);
             jmiExportFbb.setEnabled(false);
             jcxAllowSpecialSkill.setEnabled(false);
         }
-        
-        _tournament = Tournament.getTournament();
-        _tournament.getGroups().clear();
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
-        Group group = new Group(bundle.getString("NoneKey"));
-        _tournament.getGroups().add(group);
-        
-        for (int i = 0; i < RosterType.RostersNames.size(); i++) {
-            group._rosters.add(new RosterType(RosterType.RostersNames.get(i)));
+
+        mTournament = Tournament.getTournament();
+        mTournament.getGroups().clear();
+        final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
+        final Group group = new Group(bundle.getString("NoneKey"));
+        mTournament.getGroups().add(group);
+
+        for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
+            group.mRosters.add(new RosterType(RosterType.mRostersNames.get(i)));
         }
-        
-        Object options[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Single"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ByTeam")};
-        int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TournamentType"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NewTournament"),
+
+        final Object options[] = {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam")};
+        int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TournamentType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewTournament"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
-        
-        Tournament.getTournament().getParams()._teamTournament = (res == 1);
+
+        Tournament.getTournament().getParams().mTeamTournament = (res == 1);
         if (res == 1) {
-            jdgSelectNumber jdg = new jdgSelectNumber(this, true, _tournament);
+            final jdgSelectNumber jdg = new jdgSelectNumber(this, true, mTournament);
             jdg.setVisible(true);
-            res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PairingType"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pairing"),
+            res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("PairingType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Pairing"),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                     null, options, options[0]);
-            Tournament.getTournament().getParams()._teamPairing = res;
+            Tournament.getTournament().getParams().mTeamPairing = res;
             if (res == 1) {
-                Object options2[] = {java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AccordingToRanking"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Free")};
-                res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IndividualPairingType"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IndividualPairing"),
+                final Object options2[] = {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AccordingToRanking"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Free")};
+                res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("IndividualPairingType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("IndividualPairing"),
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options2, options2[0]);
-                Tournament.getTournament().getParams()._teamIndivPairing = res;
+                Tournament.getTournament().getParams().mTeamIndivPairing = res;
             }
         }
-        
-        
+
+
         update();
     }//GEN-LAST:event_jmiNouveauActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter("NAF XML file", new String[]{"XML", "xml"});
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("NAF XML file", new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().exportResults(jfc.getSelectedFile());
         }
     }//GEN-LAST:event_jmiExportActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jmiExitActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiRevisionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRevisionsActionPerformed
         jdgRevisions jdg = new jdgRevisions(this, true);
         jdg.setVisible(true);
         jdg =
                 null;
 }//GEN-LAST:event_jmiRevisionsActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiAideEnLigneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAideEnLigneActionPerformed
         jdgOnlineHelp jdg = new jdgOnlineHelp(this, false);
         jdg.setVisible(true);
         jdg =
                 null;
     }//GEN-LAST:event_jmiAideEnLigneActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffLargeVictoryGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryGapFocusLost
         try {
             jtffLargeVictoryGap.commitEdit();
-            int points = ((Long) jtffLargeVictoryGap.getValue()).intValue();
-            _tournament.getParams()._large_victory_gap = points;
+            final int points = ((Long) jtffLargeVictoryGap.getValue()).intValue();
+            mTournament.getParams().mGapLargeVictory = points;
         } catch (ParseException e) {
             jtffLargeVictoryGap.setValue(jtffLargeVictoryGap.getValue());
         }
-        
+
         update();
     }//GEN-LAST:event_jtffLargeVictoryGapFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffLittleLostGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostGapFocusLost
         try {
             jtffLittleLostGap.commitEdit();
-            int points = ((Long) jtffLittleLostGap.getValue()).intValue();
-            _tournament.getParams()._little_lost_gap = points;
+            final int points = ((Long) jtffLittleLostGap.getValue()).intValue();
+            mTournament.getParams().mGapLittleLost = points;
         } catch (ParseException e) {
             jtffLittleLostGap.setValue(jtffLittleLostGap.getValue());
         }
-        
+
         update();
     }//GEN-LAST:event_jtffLittleLostGapFocusLost
-        
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddTeamActionPerformed
-        
-        jdgTeam jdg = new jdgTeam(this, true);
+
+        final jdgTeam jdg = new jdgTeam(this, true);
         jdg.setVisible(true);
-        
+
         update();
     }//GEN-LAST:event_jbtAddTeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveTeamActionPerformed
-        Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
-        for (int i = 0; i < t._coachs.size(); i++) {
-            _tournament.getCoachs().remove(t._coachs.get(i));
+        final Team t = mTournament.getTeams().get(jtbTeam.getSelectedRow());
+        for (int i = 0; i < t.mCoachs.size(); i++) {
+            mTournament.getCoachs().remove(t.mCoachs.get(i));
         }
-        t._coachs.clear();
-        _tournament.getTeams().remove(t);
+        t.mCoachs.clear();
+        mTournament.getTeams().remove(t);
         update();
     }//GEN-LAST:event_jbtRemoveTeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
-        if (_tournament.getTeams().size() > jtbTeam.getSelectedRow()) {
-            Team t = _tournament.getTeams().get(jtbTeam.getSelectedRow());
+        if (mTournament.getTeams().size() > jtbTeam.getSelectedRow()) {
+            final Team t = mTournament.getTeams().get(jtbTeam.getSelectedRow());
             if (jtbTeam.getSelectedColumn() == 1) {
-                String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterTeamName"), t._name);
-                t._name = name;
+                final String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterTeamName"), t.mName);
+                t.mName = name;
             } else if (jtbTeam.getSelectedColumn() > 1) {
-                jdgCoach jdg = new jdgCoach(this, true, t._coachs.get(jtbTeam.getSelectedColumn() - 2));
+                final jdgCoach jdg = new jdgCoach(this, true, t.mCoachs.get(jtbTeam.getSelectedColumn() - 2));
                 jdg.setVisible(true);
             }
             update();
         }
     }//GEN-LAST:event_jbtModifyTeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffTeamVictoryBonusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamVictoryBonusFocusLost
         try {
             jtffTeamVictoryBonus.commitEdit();
-            int points = ((Long) jtffTeamVictoryBonus.getValue()).intValue();
-            _tournament.getParams()._team_victory_points = points;
+            final int points = ((Long) jtffTeamVictoryBonus.getValue()).intValue();
+            mTournament.getParams().mPointsTeamVictoryBonus = points;
         } catch (ParseException e) {
             jtffTeamVictoryBonus.setValue(jtffTeamVictoryBonus.getValue());
         }
         update();
     }//GEN-LAST:event_jtffTeamVictoryBonusFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jrbTeamVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTeamVictoryActionPerformed
-        _tournament.getParams()._team_victory_only = jrbTeamVictory.isSelected();
+        mTournament.getParams().mTeamVictoryOnly = jrbTeamVictory.isSelected();
         update();
     }//GEN-LAST:event_jrbTeamVictoryActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jrbCoachPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCoachPointsActionPerformed
-        _tournament.getParams()._team_victory_only = !jrbCoachPoints.isSelected();
+        mTournament.getParams().mTeamVictoryOnly = !jrbCoachPoints.isSelected();
         update();
     }//GEN-LAST:event_jrbCoachPointsActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffVictoryTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryTeamFocusLost
         try {
             jtffVictoryTeam.commitEdit();
-            int points = ((Long) jtffVictoryTeam.getValue()).intValue();
-            _tournament.getParams()._victory_points_team = points;
+            final int points = ((Long) jtffVictoryTeam.getValue()).intValue();
+            mTournament.getParams().mPointsTeamVictory = points;
         } catch (ParseException e) {
             jtffVictoryTeam.setValue(jtffVictoryTeam.getValue());
         }
         update();
     }//GEN-LAST:event_jtffVictoryTeamFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffDrawTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawTeamFocusLost
         try {
             jtffDrawTeam.commitEdit();
-            int points = ((Long) jtffDrawTeam.getValue()).intValue();
-            _tournament.getParams()._draw_points_team = points;
+            final int points = ((Long) jtffDrawTeam.getValue()).intValue();
+            mTournament.getParams().mPointsTeamDraw = points;
         } catch (ParseException e) {
             jtffDrawTeam.setValue(jtffDrawTeam.getValue());
         }
         update();
     }//GEN-LAST:event_jtffDrawTeamFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffLostTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostTeamFocusLost
         try {
             jtffLostTeam.commitEdit();
-            int points = ((Long) jtffLostTeam.getValue()).intValue();
-            _tournament.getParams()._lost_points_team = points;
+            final int points = ((Long) jtffLostTeam.getValue()).intValue();
+            mTournament.getParams().mPointsTeamLost = points;
         } catch (ParseException e) {
             jtffLostTeam.setValue(jtffLostTeam.getValue());
         }
         update();
     }//GEN-LAST:event_jtffLostTeamFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank1TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1TeamActionPerformed
-        _tournament.getParams()._ranking1_team = jcbRank1Team.getSelectedIndex();
+        mTournament.getParams().mRankingTeam1 = jcbRank1Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank1TeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank2TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2TeamActionPerformed
-        _tournament.getParams()._ranking2_team = jcbRank2Team.getSelectedIndex();
+        mTournament.getParams().mRankingTeam2 = jcbRank2Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank2TeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank3TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3TeamActionPerformed
-        _tournament.getParams()._ranking3_team = jcbRank3Team.getSelectedIndex();
+        mTournament.getParams().mRankingTeam3 = jcbRank3Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank3TeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank4TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4TeamActionPerformed
-        _tournament.getParams()._ranking4_team = jcbRank4Team.getSelectedIndex();
+        mTournament.getParams().mRankingTeam4 = jcbRank4Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank4TeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank5TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5TeamActionPerformed
-        _tournament.getParams()._ranking5_team = jcbRank5Team.getSelectedIndex();
+        mTournament.getParams().mRankingTeam5 = jcbRank5Team.getSelectedIndex();
         update();
     }//GEN-LAST:event_jcbRank5TeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxActivatesClansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxActivatesClansActionPerformed
-        boolean clansEnable = jcxActivatesClans.isSelected();
-        
+        final boolean clansEnable = jcxActivatesClans.isSelected();
+
         jlbAvoidClansMembersMatch.setEnabled(clansEnable);
         jlbClansMembersNUmbers.setEnabled(clansEnable);
         jlbTeamMatesNumber.setEnabled(clansEnable);
-        
+
         jspTeamMembers.setEnabled(clansEnable);
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
-        
+
         jbtAddClan.setEnabled(clansEnable);
         jbtRemoveClan.setEnabled(clansEnable);
         jbtEditClan.setEnabled(clansEnable);
         jlsClans.setEnabled(clansEnable);
-        
-        _tournament.getParams()._enableClans = clansEnable;
-        
+
+        mTournament.getParams().mEnableClans = clansEnable;
+
         update();
     }//GEN-LAST:event_jcxActivatesClansActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jspTeamMembersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspTeamMembersStateChanged
-        _tournament.getParams()._teamMatesNumber = (Integer) jspTeamMembers.getValue();
+        mTournament.getParams().mTeamMatesNumber = (Integer) jspTeamMembers.getValue();
     }//GEN-LAST:event_jspTeamMembersStateChanged
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAvoidFirstMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidFirstMatchActionPerformed
-        _tournament.getParams()._avoidClansFirstMatch = jcxAvoidFirstMatch.isSelected();
+        mTournament.getParams().mAvoidClansFirstMatch = jcxAvoidFirstMatch.isSelected();
     }//GEN-LAST:event_jcxAvoidFirstMatchActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAvoidMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidMatchActionPerformed
-        _tournament.getParams()._avoidClansMatch = jcxAvoidMatch.isSelected();
+        mTournament.getParams().mAvoidClansMatch = jcxAvoidMatch.isSelected();
     }//GEN-LAST:event_jcxAvoidMatchActionPerformed
 
     /**
@@ -1996,13 +1877,14 @@ public class MainFrame extends javax.swing.JFrame {
      *
      * @param evt not used
      */
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddClanActionPerformed
-        
-        String enterClanName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterClanNameKey");
-        String clanName = JOptionPane.showInputDialog(this, enterClanName);
+
+        final String enterClanName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterClanNameKey");
+        final String clanName = JOptionPane.showInputDialog(this, enterClanName);
         if (clanName != null) {
             if (!clanName.equals("")) {
-                _tournament.getClans().addElement(new Clan(clanName));
+                mTournament.getClans().add(new Clan(clanName));
             }
         }
         update();
@@ -2013,12 +1895,13 @@ public class MainFrame extends javax.swing.JFrame {
      *
      * @param evt not used
      */
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtEditClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditClanActionPerformed
-        String enterClanName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EnterClanNameKey");
-        String clanName = (String) jlsClans.getSelectedValue();
-        String newClanName = JOptionPane.showInputDialog(this, enterClanName, clanName);
+        final String enterClanName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterClanNameKey");
+        final String clanName = (String) jlsClans.getSelectedValue();
+        final String newClanName = JOptionPane.showInputDialog(this, enterClanName, clanName);
         if (!clanName.equals("")) {
-            _tournament.getClans().get(jlsClans.getSelectedIndex())._name = newClanName;
+            mTournament.getClans().get(jlsClans.getSelectedIndex()).mName = newClanName;
         }
         update();
     }//GEN-LAST:event_jbtEditClanActionPerformed
@@ -2028,171 +1911,76 @@ public class MainFrame extends javax.swing.JFrame {
      *
      * @param evt Not used
      */
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveClanActionPerformed
-        int index = jlsClans.getSelectedIndex();
-        
+        final int index = jlsClans.getSelectedIndex();
+
         if (index > 0) {
-            _tournament.getClans().remove(index);
+            mTournament.getClans().remove(index);
         }
         update();
     }//GEN-LAST:event_jbtRemoveClanActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jlsClansMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlsClansMouseClicked
         update();
     }//GEN-LAST:event_jlsClansMouseClicked
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
-        if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < _tournament.getParams()._criterias.size())) {
-            Criteria crit = _tournament.getParams()._criterias.get(jtbCriteria.getSelectedRow());
-            for (int i = 0; i < _tournament.getRounds().size(); i++) {
-                Round r = _tournament.getRounds().get(i);
+        if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < mTournament.getParams().mCriterias.size())) {
+            final Criteria crit = mTournament.getParams().mCriterias.get(jtbCriteria.getSelectedRow());
+            for (int i = 0; i < mTournament.getRounds().size(); i++) {
+                final Round r = mTournament.getRounds().get(i);
                 for (int j = 0; j < r.getMatchs().size(); j++) {
-                    Match m = r.getMatchs().get(j);
-                    m._values.remove(crit);
+                    final Match m = r.getMatchs().get(j);
+                    m.mValues.remove(crit);
                 }
             }
-            _tournament.getParams()._criterias.remove(jtbCriteria.getSelectedRow());
+            mTournament.getParams().mCriterias.remove(jtbCriteria.getSelectedRow());
         }
         repaint();
     }//GEN-LAST:event_jbtRemoveCriteriaActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
-        int nb = Tournament.getTournament().getParams()._criterias.size();
-        Criteria c = new Criteria("Critère " + Integer.toString(nb));
-        Tournament.getTournament().getParams()._criterias.add(c);
-        for (int i = 0; i < _tournament.getRounds().size(); i++) {
-            Round r = _tournament.getRounds().get(i);
+        final int nb = Tournament.getTournament().getParams().mCriterias.size();
+        final Criteria c = new Criteria("Critère " + Integer.toString(nb));
+        Tournament.getTournament().getParams().mCriterias.add(c);
+        for (int i = 0; i < mTournament.getRounds().size(); i++) {
+            final Round r = mTournament.getRounds().get(i);
             for (int j = 0; j < r.getMatchs().size(); j++) {
-                Match m = r.getMatchs().get(j);
-                m._values.put(c, new Value(c));
+                final Match m = r.getMatchs().get(j);
+                m.mValues.put(c, new Value(c));
             }
         }
-        
+
         update();
     }//GEN-LAST:event_jbtAddCriteriaActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        
+
         if (JOptionPane.showConfirmDialog(this, "Voulez vous sauvgarder ?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (_file.equals("")) {
+            if (mFile.equals("")) {
                 jmiSaveAsActionPerformed(null);
             } else {
                 jmiSaveActionPerformed(null);
             }
         }
     }//GEN-LAST:event_formWindowClosed
-    
-    private void jbtAddGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddGroupActionPerformed
-        String newGroup = JOptionPane.showInputDialog("Entrez le nom du nouveau groupe");
-        if (newGroup != null) {
-            _tournament.getGroups().add(new Group(newGroup));
-            update();
-        }
-    }//GEN-LAST:event_jbtAddGroupActionPerformed
-    
-    private void jbtRenameGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRenameGroupActionPerformed
-        
-        if (jlsGroups.getSelectedIndex() >= 0) {
-            String currentName = _tournament.getGroups().get(jlsGroups.getSelectedIndex())._name;
-            
-            String newGroup = JOptionPane.showInputDialog("Entrez le nouveau nom du groupe", currentName);
-            if (newGroup != null) {
-                _tournament.getGroups().get(jlsGroups.getSelectedIndex())._name = newGroup;
-                update();
-            }
-        }
-    }//GEN-LAST:event_jbtRenameGroupActionPerformed
-    
-    private void jbtRemoveGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveGroupActionPerformed
-        if (jlsGroups.getSelectedIndex() > 0) {
-            Vector<RosterType> rosters = _tournament.getGroups().get(jlsGroups.getSelectedIndex())._rosters;
-            for (int i = 0; i < rosters.size(); i++) {
-                _tournament.getGroups().get(0)._rosters.add(rosters.get(i));
-            }
-            _tournament.getGroups().remove(jlsGroups.getSelectedIndex());
-            update();
-        }
-    }//GEN-LAST:event_jbtRemoveGroupActionPerformed
-    
-    private void jcbGroupLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupLeftActionPerformed
-        DefaultListModel listModel = new DefaultListModel();
-        Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
-        for (int i = 0; i < rosters.size(); i++) {
-            listModel.addElement(rosters.get(i)._name);
-        }
-        jlsLeft.setModel(listModel);
-    }//GEN-LAST:event_jcbGroupLeftActionPerformed
-    
-    private void jcbGroupRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupRightActionPerformed
-        DefaultListModel listModel = new DefaultListModel();
-        Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
-        for (int i = 0; i < rosters.size(); i++) {
-            listModel.addElement(rosters.get(i)._name);
-        }
-        jlsRight.setModel(listModel);
-    }//GEN-LAST:event_jcbGroupRightActionPerformed
-    
-    private void jbtGroupToRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGroupToRightActionPerformed
-        
-        if (jlsLeft.getSelectedIndex() > -1) {
-            int index = jlsLeft.getSelectedIndex();
-            RosterType roster = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.get(index);
-            _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.remove(roster);
-            _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.add(roster);
-            
-            Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
-            DefaultListModel listModelLeft = new DefaultListModel();
-            for (int i = 0; i < rosters.size(); i++) {
-                listModelLeft.addElement(rosters.get(i)._name);
-            }
-            jlsLeft.setModel(listModelLeft);
-            
-            DefaultListModel listModelRight = new DefaultListModel();
-            rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
-            for (int i = 0; i < rosters.size(); i++) {
-                listModelRight.addElement(rosters.get(i)._name);
-            }
-            jlsRight.setModel(listModelRight);
-        }
-    }//GEN-LAST:event_jbtGroupToRightActionPerformed
-    
-    private void jbtGrouToLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGrouToLeftActionPerformed
-        if (jlsRight.getSelectedIndex() > -1) {
-            int index = jlsRight.getSelectedIndex();
-            RosterType roster = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.get(index);
-            _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters.remove(roster);
-            _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters.add(roster);
-            
-            Vector<RosterType> rosters = _tournament.getGroups().get(jcbGroupRight.getSelectedIndex())._rosters;
-            DefaultListModel listModelRight = new DefaultListModel();
-            for (int i = 0; i < rosters.size(); i++) {
-                listModelRight.addElement(rosters.get(i)._name);
-            }
-            jlsRight.setModel(listModelRight);
-            
-            DefaultListModel listModelLeft = new DefaultListModel();
-            rosters = _tournament.getGroups().get(jcbGroupLeft.getSelectedIndex())._rosters;
-            for (int i = 0; i < rosters.size(); i++) {
-                listModelLeft.addElement(rosters.get(i)._name);
-            }
-            jlsLeft.setModel(listModelLeft);
-        }
-    }//GEN-LAST:event_jbtGrouToLeftActionPerformed
-    
+
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAboutActionPerformed
         jdgAbout jdg = new jdgAbout(this, true);
         jdg.setVisible(true);
         jdg =
                 null;
 }//GEN-LAST:event_jmiAboutActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (JOptionPane.showConfirmDialog(this, "Voulez vous sauvgarder ?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (_file == null) {
+            if (mFile == null) {
                 jmiSaveAsActionPerformed(null);
             } else {
-                
-                if (_file.equals("")) {
+
+                if (mFile.equals("")) {
                     jmiSaveAsActionPerformed(null);
                 } else {
                     jmiSaveActionPerformed(null);
@@ -2200,42 +1988,42 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formWindowClosing
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiEditTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditTeamActionPerformed
-        JdgRoster jdg = new JdgRoster(this, true);
+        final JdgRoster jdg = new JdgRoster(this, true);
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditTeamActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAllowSpecialSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAllowSpecialSkillActionPerformed
         lrb.getLRB()._allowSpecialSkills = jcxAllowSpecialSkill.getState();
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffTeamDrawBonusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamDrawBonusFocusLost
         try {
             jtffTeamDrawBonus.commitEdit();
-            int points = ((Long) jtffTeamDrawBonus.getValue()).intValue();
-            _tournament.getParams()._team_draw_points = points;
+            final int points = ((Long) jtffTeamDrawBonus.getValue()).intValue();
+            mTournament.getParams().mPointsTeamDrawBonus = points;
         } catch (ParseException e) {
             jtffTeamDrawBonus.setValue(jtffTeamDrawBonus.getValue());
         }
         update();
     }//GEN-LAST:event_jtffTeamDrawBonusFocusLost
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbbActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter("FBB csv file", new String[]{"CSV", "csv"});
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("FBB csv file", new String[]{"CSV", "csv"});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().exportFBB(jfc.getSelectedFile());
         }
     }//GEN-LAST:event_jmiExportFbbActionPerformed
-    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbb1ActionPerformed
-        JFileChooser jfc = new JFileChooser();
-        FileFilter filter1 = new ExtensionFileFilter("FBB xml file", new String[]{"FBB_XML", "fbb_xml"});
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("FBB xml file", new String[]{"FBB_XML", "fbb_xml"});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File f = jfc.getSelectedFile();
+            final File f = jfc.getSelectedFile();
             if (f.getName().endsWith(".fbb_xml")) {
                 Tournament.getTournament().exportFullFBB(f);
             } else {
@@ -2243,81 +2031,78 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jmiExportFbb1ActionPerformed
-
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtpMainStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtpMainStateChanged
-        Object obj=jtpMain.getSelectedComponent();
-        if( obj instanceof JPNCup)
-        {
-            ((JPNCup)obj).update();
+        final Object obj = jtpMain.getSelectedComponent();
+        if (obj instanceof JPNCup) {
+            ((JPNCup) obj).update();
         }
     }//GEN-LAST:event_jtpMainStateChanged
-    
-    public void setColumnSize(JTable t) {
-        FontMetrics fm = t.getFontMetrics(t.getFont());
+
+    public void setColumnSize(final JTable t) {
+        final FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i
                 < t.getColumnCount(); i++) {
             int max = 0;
             for (int j = 0; j
                     < t.getRowCount(); j++) {
-                Object value = t.getValueAt(j, i);
+                final Object value = t.getValueAt(j, i);
                 String tmp = "";
                 if (value instanceof String) {
                     tmp = (String) value;
                 }
-                
+
                 if (value instanceof Integer) {
-                    tmp = "" + (Integer) value;
+                    tmp = ((Integer) value).toString();
                 }
-                
-                int taille = fm.stringWidth(tmp);
+
+                final int taille = fm.stringWidth(tmp);
                 if (taille > max) {
                     max = taille;
                 }
-                
+
             }
-            String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
-            int taille = fm.stringWidth(nom);
+            final String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
+            final int taille = fm.stringWidth(nom);
             if (taille > max) {
                 max = taille;
             }
-            
+
             t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
         }
-        
+
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        
+    public static void main(final String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
                 JFrame.setDefaultLookAndFeelDecorated(true);
                 try {
-                    SubstanceLookAndFeel lf = new SubstanceMistSilverLookAndFeel();
+                    final SubstanceLookAndFeel lf = new SubstanceMistSilverLookAndFeel();
                     UIManager.setLookAndFeel(lf);
                 } catch (Exception e) {
                     System.out.println(e.getLocalizedMessage());
                 }
-                
+
                 MainFrame.getMainFrame().setVisible(true);
             }
         });
     }
-    protected static MainFrame _singleton;
-    
+    protected static MainFrame mSingleton;
+
     public static MainFrame getMainFrame() {
-        if (_singleton == null) {
-            _singleton = new MainFrame();
+        if (mSingleton == null) {
+            mSingleton = new MainFrame();
         }
-        
-        return _singleton;
+
+        return mSingleton;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup Language;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -2342,8 +2127,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -2353,15 +2136,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel23;
-    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -2374,9 +2149,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -2384,22 +2156,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddClan;
     private javax.swing.JButton jbtAddCriteria;
-    private javax.swing.JButton jbtAddGroup;
     private javax.swing.JButton jbtAddTeam;
     private javax.swing.JButton jbtEditClan;
     private javax.swing.JButton jbtFirstRound;
-    private javax.swing.JButton jbtGrouToLeft;
-    private javax.swing.JButton jbtGroupToRight;
     private javax.swing.JButton jbtModify;
     private javax.swing.JButton jbtModifyTeam;
     private javax.swing.JButton jbtRemove;
     private javax.swing.JButton jbtRemoveClan;
     private javax.swing.JButton jbtRemoveCriteria;
-    private javax.swing.JButton jbtRemoveGroup;
     private javax.swing.JButton jbtRemoveTeam;
-    private javax.swing.JButton jbtRenameGroup;
-    private javax.swing.JComboBox jcbGroupLeft;
-    private javax.swing.JComboBox jcbGroupRight;
     private javax.swing.JComboBox jcbRank1;
     private javax.swing.JComboBox jcbRank1Team;
     private javax.swing.JComboBox jcbRank2;
@@ -2423,9 +2188,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jlbVictoryPoints1;
     private javax.swing.JList jlsClans;
     private javax.swing.JList jlsCoachList;
-    private javax.swing.JList jlsGroups;
-    private javax.swing.JList jlsLeft;
-    private javax.swing.JList jlsRight;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
     private javax.swing.JMenuItem jmiCharger;

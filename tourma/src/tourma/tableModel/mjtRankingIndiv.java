@@ -5,15 +5,15 @@
 package tourma.tableModel;
 
 import tourma.data.ObjectRanking;
-import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Match;
 import tourma.data.Coach;
 import java.util.Collections;
-import java.util.Vector;
+import java.util.ArrayList;
 import tourma.data.Criteria;
 import tourma.data.Pool;
 import tourma.data.Tournament;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -21,152 +21,152 @@ import tourma.data.Tournament;
  */
 public class mjtRankingIndiv extends mjtRanking {
 
-    boolean _teamTournament;
-    boolean _positive;
-    boolean _round_only;
+    boolean mTeamTournament;
+    boolean mPositive;
+    boolean mRoundOnly;
 
-    public mjtRankingIndiv(int round, int ranking_type1, int ranking_type2, int ranking_type3, int ranking_type4, int ranking_type5, Vector<Coach> coachs, boolean tournament, boolean round_only) {
+    public mjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList<Coach> coachs, final boolean tournament, final boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs);
-        _teamTournament = tournament;
-        _round_only = round_only;
+        mTeamTournament = tournament;
+        mRoundOnly = round_only;
         sortDatas();
 
 
     }
 
     protected void sortDatas() {
-        _datas.clear();
-        _datas = new Vector<ObjectRanking>();
+        mDatas.clear();
+        mDatas = new ArrayList<ObjectRanking>();
 
-        Vector<Round> rounds = new Vector<Round>();
+        final ArrayList<Round> rounds = new ArrayList<Round>();
 
-        if (_round_only) {
-            rounds.add(Tournament.getTournament().getRounds().get(_round));
+        if (mRoundOnly) {
+            rounds.add(Tournament.getTournament().getRounds().get(mRound));
         } else {
-            for (int l = 0; (l <= _round); l++) {
+            for (int l = 0; (l <= mRound); l++) {
                 rounds.add(Tournament.getTournament().getRounds().get(l));
             }
         }
 
-        for (int i = 0; i < _objects.size(); i++) {
-            Coach c = (Coach) _objects.get(i);
+        for (int i = 0; i < mObjects.size(); i++) {
+            final Coach c = (Coach) mObjects.get(i);
             int value1 = 0;
             int value2 = 0;
             int value3 = 0;
             int value4 = 0;
             int value5 = 0;
 
-            for (int j = 0; j <= c._matchs.size() - 1; j++) {
+            for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
 
-                Match m = c._matchs.get(j);
+                final Match m = c.mMatchs.get(j);
                 boolean bFound = false;
                 for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
-                    Round r = rounds.get(l);
+                    final Round r = rounds.get(l);
                     if (r.getMatchs().contains(m)) {
                         bFound = true;
                     }
                 }
                 // test if match is in round
                 if (bFound) {
-                    Criteria c1 = getCriteriaByValue(_ranking_type1);
-                    int subType1 = getSubtypeByValue(_ranking_type1);
+                    final Criteria c1 = getCriteriaByValue(mRankingType1);
+                    final int subType1 = getSubtypeByValue(mRankingType1);
                     if (c1 == null) {
-                        value1 += getValue(c, m, _ranking_type1);
+                        value1 += getValue(c, m, mRankingType1);
                     } else {
                         value1 += getValue(c, m, c1, subType1);
                     }
 
-                    Criteria c2 = getCriteriaByValue(_ranking_type2);
-                    int subType2 = getSubtypeByValue(_ranking_type2);
+                    final Criteria c2 = getCriteriaByValue(mRankingType2);
+                    final int subType2 = getSubtypeByValue(mRankingType2);
                     if (c2 == null) {
-                        value2 += getValue(c, m, _ranking_type2);
+                        value2 += getValue(c, m, mRankingType2);
                     } else {
                         value2 += getValue(c, m, c1, subType2);
                     }
 
-                    Criteria c3 = getCriteriaByValue(_ranking_type3);
-                    int subType3 = getSubtypeByValue(_ranking_type3);
+                    final Criteria c3 = getCriteriaByValue(mRankingType3);
+                    final int subType3 = getSubtypeByValue(mRankingType3);
                     if (c3 == null) {
-                        value3 += getValue(c, m, _ranking_type3);
+                        value3 += getValue(c, m, mRankingType3);
                     } else {
                         value3 += getValue(c, m, c3, subType3);
                     }
 
-                    Criteria c4 = getCriteriaByValue(_ranking_type4);
-                    int subType4 = getSubtypeByValue(_ranking_type4);
+                    final Criteria c4 = getCriteriaByValue(mRankingType4);
+                    final int subType4 = getSubtypeByValue(mRankingType4);
                     if (c4 == null) {
-                        value4 += getValue(c, m, _ranking_type4);
+                        value4 += getValue(c, m, mRankingType4);
                     } else {
                         value4 += getValue(c, m, c4, subType4);
                     }
 
-                    Criteria c5 = getCriteriaByValue(_ranking_type5);
-                    int subType5 = getSubtypeByValue(_ranking_type5);
+                    final Criteria c5 = getCriteriaByValue(mRankingType5);
+                    final int subType5 = getSubtypeByValue(mRankingType5);
                     if (c5 == null) {
-                        value5 += getValue(c, m, _ranking_type5);
+                        value5 += getValue(c, m, mRankingType5);
                     } else {
                         value5 += getValue(c, m, c5, subType5);
                     }
 
 
-                    /*value1 = getValue(c, matchs, _ranking_type1, _rounds);
-                     value2 = getValue(c, matchs, _ranking_type2, _rounds);
-                     value3 = getValue(c, matchs, _ranking_type3, _rounds);
-                     value4 = getValue(c, matchs, _ranking_type4, _rounds);
-                     value5 = getValue(c, matchs, _ranking_type5, _rounds);*/
+                    /*value1 = getValue(c, matchs, mRankingType1, _rounds);
+                     value2 = getValue(c, matchs, mRankingType2, _rounds);
+                     value3 = getValue(c, matchs, mRankingType3, _rounds);
+                     value4 = getValue(c, matchs, mRankingType4, _rounds);
+                     value5 = getValue(c, matchs, mRankingType5, _rounds);*/
                 }
             }
-            _datas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
+            mDatas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
         }
 
-        Collections.sort(_datas);
+        Collections.sort(mDatas);
 
-        Tournament tour = Tournament.getTournament();
+        final Tournament tour = Tournament.getTournament();
 
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
-        if ((tour.getPools().size() > 0) && (!tour.getRounds().get(_round)._cup)&&(!_teamTournament)) {
-            if (_objects.size() > tour.getPools().get(0)._coachs.size()) {
-                int nbPool = tour.getPools().size();
+        if ((tour.getPools().size() > 0) && (!tour.getRounds().isEmpty()) && (!tour.getRounds().get(mRound).mCup) && (!mTeamTournament)) {
+            if (mObjects.size() > tour.getPools().get(0).mCoachs.size()) {
+                final int nbPool = tour.getPools().size();
                 Pool p = null;
-                Vector<mjtRankingIndiv> pRank = new Vector<mjtRankingIndiv>();
+                final ArrayList<mjtRankingIndiv> pRank = new ArrayList<mjtRankingIndiv>();
                 for (int j = 0; j < nbPool; j++) {
                     p = tour.getPools().get(j);
-                    mjtRankingIndiv mjtr = new mjtRankingIndiv(_round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, p._coachs, _teamTournament, _round_only);
+                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mCoachs, mTeamTournament, mRoundOnly);
                     pRank.add(mjtr);
                 }
 
 
-                Vector datas = new Vector<ObjectRanking>();
+                final ArrayList datas = new ArrayList<ObjectRanking>();
 
-                for (int i = 0; i < tour.getPools().get(0)._coachs.size(); i++) {
-                    Vector<Coach> rank = new Vector<Coach>();
+                for (int i = 0; i < tour.getPools().get(0).mCoachs.size(); i++) {
+                    final ArrayList<Coach> rank = new ArrayList<Coach>();
                     for (int j = 0; j < nbPool; j++) {
-                        ObjectRanking obj = (ObjectRanking) pRank.get(j)._datas.get(i);
+                        final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
                         rank.add((Coach) obj.getObject());
                     }
-                    mjtRankingIndiv mjtr = new mjtRankingIndiv(_round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, rank, _teamTournament, _round_only);
+                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly);
 
-                    for (int j = 0; j < mjtr._datas.size(); j++) {
-                        datas.add(mjtr._datas.get(j));
+                    for (int j = 0; j < mjtr.mDatas.size(); j++) {
+                        datas.add(mjtr.mDatas.get(j));
                     }
                 }
 
-                Vector<Coach> rank = new Vector<Coach>();
+                final ArrayList<Coach> rank = new ArrayList<Coach>();
                 for (int i = 0; i < tour.getCoachs().size(); i++) {
 
-                    if (!tour.getCoachs().get(i)._active) {
+                    if (!tour.getCoachs().get(i).mActive) {
                         rank.add(tour.getCoachs().get(i));
                     }
                 }
-                mjtRankingIndiv mjtr = new mjtRankingIndiv(_round, _ranking_type1, _ranking_type2, _ranking_type3, _ranking_type4, _ranking_type5, rank, _teamTournament, _round_only);
+                final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly);
 
-                for (int j = 0; j < mjtr._datas.size(); j++) {
-                    datas.add(mjtr._datas.get(j));
+                for (int j = 0; j < mjtr.mDatas.size(); j++) {
+                    datas.add(mjtr.mDatas.get(j));
                 }
 
-                _datas = datas;
+                mDatas = datas;
             }
         }
     }
@@ -177,95 +177,131 @@ public class mjtRankingIndiv extends mjtRanking {
      Criteria criteria=getCriteriaByValue(ranking_type);
      if (criteria!=null)
      {
-     getValue(c, c._matchs.get(round), ranking_type, round);
+     getValue(c, c.mMatchs.get(round), ranking_type, round);
      }
      else
      {
-     getValue(c, c._matchs.get(round), criteria, _positive);
+     getValue(c, c.mMatchs.get(round), criteria, mPositive);
      }
 
      return value;
      }*/
     public int getColumnCount() {
-        if (_teamTournament) {
-            return 10;
+        int result = 9;
+        if (mTeamTournament) {
+            result = 10;
         }
-        return 9;
+        return result;
     }
 
     @Override
-    public String getColumnName(int col) {
+    public String getColumnName(final int col) {
 
+        String result = "";
         int cl = col;
-        if (_teamTournament) {
+        if (mTeamTournament) {
             if (col > 1) {
                 cl = col - 1;
             }
             if (col == 1) {
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
             }
         }
 
         switch (cl) {
             case 0:
-                return "#";
+                result = "#";
+                break;
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team");
+                if (mTeamTournament) {
+                    if (col != 1) {
+                        result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
+                    }
+                } else {
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
+                }
+                break;
             case 2:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH);
+                break;
             case 3:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Roster");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Roster");
+                break;
             case 4:
-                return getRankingString(_ranking_type1);
+                result = getRankingString(mRankingType1);
+                break;
             case 5:
-                return getRankingString(_ranking_type2);
+                result = getRankingString(mRankingType2);
+                break;
             case 6:
-                return getRankingString(_ranking_type3);
+                result = getRankingString(mRankingType3);
+                break;
             case 7:
-                return getRankingString(_ranking_type4);
+                result = getRankingString(mRankingType4);
+                break;
             case 8:
-                return getRankingString(_ranking_type5);
+                result = getRankingString(mRankingType5);
+                break;
+            default:
         }
-        return "";
+        return result;
     }
 
-    public Object getValueAt(int row, int col) {
+    public Object getValueAt(final int row, final int col) {
 
-        ObjectRanking obj = (ObjectRanking) _datas.get(row);
+        final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
+
+        Object object = "";
 
         int cl = col;
-        if (_teamTournament) {
+        if (mTeamTournament) {
             if (col > 1) {
                 cl = col - 1;
             }
             if (col == 1) {
-                return ((Coach) obj.getObject())._teamMates._name;
+                object = ((Coach) obj.getObject()).mTeamMates.mName;
             }
         }
 
         switch (cl) {
             case 0:
-                return row + 1;
+                object = row + 1;
+                break;
             case 1:
-                return ((Coach) obj.getObject())._team;
+                if (mTeamTournament) {
+                    if (col != 1) {
+                        object = ((Coach) obj.getObject()).mTeam;
+                    }
+                } else {
+                    object = ((Coach) obj.getObject()).mTeam;
+                }
+                break;
             case 2:
-                return ((Coach) obj.getObject())._name;
+                object = ((Coach) obj.getObject()).mName;
+                break;
             case 3:
-                return ((Coach) obj.getObject())._roster._name;
+                object = ((Coach) obj.getObject()).mRoster.mName;
+                break;
             case 4:
-                return obj.getValue1();
+                object = obj.getValue1();
+                break;
             case 5:
-                return obj.getValue2();
+                object = obj.getValue2();
+                break;
             case 6:
-                return obj.getValue3();
+                object = obj.getValue3();
+                break;
             case 7:
-                return obj.getValue4();
+                object = obj.getValue4();
+                break;
             case 8:
-                return obj.getValue5();
+                object = obj.getValue5();
+                break;
+            default:
         }
 
 
 
-        return "";
+        return object;
     }
 }

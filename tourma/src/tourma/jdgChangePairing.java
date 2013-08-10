@@ -16,15 +16,14 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
-import javax.swing.JCheckBox;
+import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 import tourma.data.Coach;
 import tourma.data.Match;
 import tourma.data.Round;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -32,46 +31,49 @@ import tourma.data.Round;
  */
 public class jdgChangePairing extends JDialog implements ActionListener {
 
-    Round _round;
-    Vector<JComboBox> _playersSelected;
-    Vector<Coach> _players;
-    Vector<Coach> _playersTmp;
+    Round mRound;
+    ArrayList<JComboBox> mPlayersSelected;
+    ArrayList<Coach> mPlayers;
+    ArrayList<Coach> mPlayersTmp;
 
-    /** Creates new form jdgChangePairing */
-    public jdgChangePairing(java.awt.Frame parent, boolean modal, Round round) {
+    /**
+     * Creates new form jdgChangePairing
+     */
+    public jdgChangePairing(final java.awt.Frame parent, final boolean modal, final Round round) {
         super(parent, modal);
         initComponents();
 
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gs = ge.getDefaultScreenDevice();
-        DisplayMode dmode = gs.getDisplayMode();
+        final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        final GraphicsDevice gs = ge.getDefaultScreenDevice();
+        final DisplayMode dmode = gs.getDisplayMode();
 
         this.setSize(640, 480);
 
         if (dmode != null) {
-            int screenWidth = dmode.getWidth();
-            int screenHeight = dmode.getHeight();
+            final int screenWidth = dmode.getWidth();
+            final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
 
-        _round = round;
-        _playersSelected = new Vector<JComboBox>();
-        _players = new Vector<Coach>();
+        mRound = round;
+        mPlayersSelected = new ArrayList<JComboBox>();
+        mPlayers = new ArrayList<Coach>();
 
-        for (int i = 0; i < _round.getMatchs().size(); i++) {
-            Match m = _round.getMatchs().get(i);
-            _players.add(m._coach1);
-            _players.add(m._coach2);
+        for (int i = 0; i < mRound.getMatchs().size(); i++) {
+            final Match m = mRound.getMatchs().get(i);
+            mPlayers.add(m.mCoach1);
+            mPlayers.add(m.mCoach2);
         }
 
-        _playersTmp = _players;
+        mPlayersTmp = mPlayers;
 
-        GridLayout lay = new GridLayout(_round.getMatchs().size(), 2);
+        final GridLayout lay = new GridLayout(mRound.getMatchs().size(), 2);
         jpnMatchs.setLayout(lay);
 
         update();
     }
 
+    @SuppressWarnings({"PMD.MethodArgumentCouldBeFinal", "PMD.LocalVariableCouldBeFinal"})
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -122,56 +124,50 @@ public class jdgChangePairing extends JDialog implements ActionListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
-        this.setVisible(false);
+    this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
-
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        int result = JOptionPane.showConfirmDialog(this, "Voulez vous confirmeer le nouvel appariement ?", "Confirmer", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
+    final int result = JOptionPane.showConfirmDialog(this, "Voulez vous confirmeer le nouvel appariement ?", "Confirmer", JOptionPane.YES_NO_OPTION);
+    if (result == JOptionPane.YES_OPTION) {
 
-            for (int i = 0; i < _round.getMatchs().size(); i++) {
-                Match m = _round.getMatchs().get(i);
-                m._coach1 = _playersTmp.get(2 * i);
-                m._coach2 = _playersTmp.get(2 * i + 1);
+        for (int i = 0; i < mRound.getMatchs().size(); i++) {
+            final Match m = mRound.getMatchs().get(i);
+            m.mCoach1 = mPlayersTmp.get(2 * i);
+            m.mCoach2 = mPlayersTmp.get(2 * i + 1);
 
-                m._coach1._matchs.remove(m._coach1._matchs.lastElement());
-                m._coach2._matchs.remove(m._coach2._matchs.lastElement());
-                m._coach1._matchs.add(m);
-                m._coach2._matchs.add(m);
-            }
-
-            this.setVisible(false);
+            m.mCoach1.mMatchs.remove(m.mCoach1.mMatchs.get(m.mCoach1.mMatchs.size() - 1));
+            m.mCoach2.mMatchs.remove(m.mCoach2.mMatchs.get(m.mCoach2.mMatchs.size() - 1));
+            m.mCoach1.mMatchs.add(m);
+            m.mCoach2.mMatchs.add(m);
         }
+
+        this.setVisible(false);
+    }
     }//GEN-LAST:event_jbtOKActionPerformed
 
-    public void actionPerformed(ActionEvent e) {
-        JComboBox jcb = (JComboBox) e.getSource();
-        int index = 0;
+    public void actionPerformed(final ActionEvent e) {
+       final  JComboBox jcb = (JComboBox) e.getSource();
+        
         Coach oldCoach = null;
         Coach newCoach = null;
-        Coach tmpCoach = null;
 
-        newCoach = _playersTmp.get(jcb.getSelectedIndex());
-        for (int i = 0; i < _playersSelected.size(); i++) {
-            if (_playersSelected.get(i) == jcb) {
-                index = i;
-                oldCoach = _playersTmp.get(i);
+        newCoach = mPlayersTmp.get(jcb.getSelectedIndex());
+        for (int i = 0; i < mPlayersSelected.size(); i++) {
+            if (mPlayersSelected.get(i) == jcb) {
+                oldCoach = mPlayersTmp.get(i);
             }
         }
 
-        /*_playersSelected.get(jcb.getSelectedIndex()).removeActionListener(this);
-        _playersSelected.get(jcb.getSelectedIndex()).setSelectedIndex(index);
-        _playersSelected.get(jcb.getSelectedIndex()).addActionListener(this);*/
-
-        for (int i = 0; i < _playersTmp.size(); i++) {
-            if (_playersTmp.get(i) == newCoach) {
-                _playersTmp.set(i, oldCoach);
+        for (int i = 0; i < mPlayersTmp.size(); i++) {
+            if (mPlayersTmp.get(i) == newCoach) {
+                mPlayersTmp.set(i, oldCoach);
             } else {
-                if (_playersTmp.get(i) == oldCoach) {
-                    _playersTmp.set(i, newCoach);
+                if (mPlayersTmp.get(i) == oldCoach) {
+                    mPlayersTmp.set(i, newCoach);
                 }
             }
         }
@@ -189,25 +185,25 @@ public class jdgChangePairing extends JDialog implements ActionListener {
 
     public void update() {
 
-        Vector<String> playersNames = new Vector<String>();
-        for (int i = 0; i < _playersTmp.size(); i++) {
-            playersNames.add(_playersTmp.get(i)._name + " - " + _playersTmp.get(i)._team + " (" + _playersTmp.get(i)._roster._name + ")");
+        final ArrayList<String> playersNames = new ArrayList<String>();
+        for (int i = 0; i < mPlayersTmp.size(); i++) {
+            playersNames.add(mPlayersTmp.get(i).mName + " - " + mPlayersTmp.get(i).mTeam + " (" + mPlayersTmp.get(i).mRoster.mName + ")");
         }
 
-        _playersSelected.removeAllElements();
+        mPlayersSelected.clear();
 
-        for (int i = 0; i < _players.size(); i++) {
-            JComboBox jcb = new JComboBox(playersNames);
+        for (int i = 0; i < mPlayers.size(); i++) {
+            final JComboBox jcb = new JComboBox(playersNames.toArray());
             jcb.setSelectedIndex(i);
             jcb.addActionListener(this);
-            _playersSelected.add(jcb);
+            mPlayersSelected.add(jcb);
         }
 
         jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder("Matchs"));
 
         jpnMatchs.removeAll();
-        for (int i = 0; i < _playersSelected.size(); i++) {
-            jpnMatchs.add(_playersSelected.get(i));
+        for (int i = 0; i < mPlayersSelected.size(); i++) {
+            jpnMatchs.add(mPlayersSelected.get(i));
         }
 
         jsp.setViewportView(jpnMatchs);

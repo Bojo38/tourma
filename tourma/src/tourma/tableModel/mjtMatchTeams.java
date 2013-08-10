@@ -6,7 +6,7 @@ package tourma.tableModel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -16,6 +16,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -23,12 +24,12 @@ import tourma.data.Value;
  */
 public class mjtMatchTeams extends AbstractTableModel implements TableCellRenderer {
 
-    Vector<Team> _teams;
-    Round _round;
+    ArrayList<Team> mTeams;
+    Round mRound;
 
-    public mjtMatchTeams(Vector<Team> teams, Round round) {
-        _teams = teams;
-        _round = round;
+    public mjtMatchTeams(final ArrayList<Team> teams, final Round round) {
+        mTeams = teams;
+        mRound = round;
     }
 
     public int getColumnCount() {
@@ -36,45 +37,54 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
     }
 
     public int getRowCount() {
-        return _teams.size() / 2;
+        return mTeams.size() / 2;
     }
 
-    public String getColumnName(int col) {
+    public String getColumnName(final int col) {
+        String res = "";
         switch (col) {
             case 0:
-                return "#";
+                res = "#";
+                break;
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan1");
+                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan1");
+                break;
             case 2:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V1");
+                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("V1");
+                break;
             case 3:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N");
+                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("N");
+                break;
             case 4:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V2");
+                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("V2");
+                break;
             case 5:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan2");
+                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan2");
+                break;
+            default:
         }
-        return "";
+        return res;
     }
 
-    public Object getValueAt(int row, int col) {
-        if (_teams.size() > 0) {
-            Team t = _teams.get(row * 2);
+    public Object getValueAt(final int row, final int col) {
+        Object obj = "";
+        if (mTeams.size() > 0) {
+            final Team t = mTeams.get(row * 2);
             Team team1 = t;
             Team team2 = t;
-            Vector<Match> matchs = new Vector<Match>();
-            for (int i = 0; i < _round.getMatchs().size(); i++) {
-                Match m = _round.getMatchs().get(i);
-                if (m._coach1._teamMates == t) {
+            final ArrayList<Match> matchs = new ArrayList<Match>();
+            for (int i = 0; i < mRound.getMatchs().size(); i++) {
+                final Match m = mRound.getMatchs().get(i);
+                if (m.mCoach1.mTeamMates == t) {
                     matchs.add(m);
                     team1 = t;
-                    team2 = m._coach2._teamMates;
+                    team2 = m.mCoach2.mTeamMates;
 
                 }
-                if (m._coach2._teamMates == t) {
+                if (m.mCoach2.mTeamMates == t) {
                     matchs.add(m);
                     team1 = t;
-                    team2 = m._coach1._teamMates;
+                    team2 = m.mCoach1.mTeamMates;
                 }
             }
             int nbVictory = 0;
@@ -82,25 +92,25 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
             int nbDraw = 0;
 
             for (int i = 0; i < matchs.size(); i++) {
-                Match m = matchs.get(i);
-                if (m._coach1._teamMates == t) {
-                    Value val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                    if (val._value1 > val._value2) {
+                final Match m = matchs.get(i);
+                if (m.mCoach1.mTeamMates == t) {
+                    final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                    if (val.mValue1 > val.mValue2) {
                         nbVictory++;
                     } else {
-                        if (val._value1 < val._value2) {
+                        if (val.mValue1 < val.mValue2) {
                             nbLost++;
                         } else {
                             nbDraw++;
                         }
                     }
                 }
-                if (m._coach2._teamMates == t) {
-                     Value val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                    if (val._value1 < val._value2) {
+                if (m.mCoach2.mTeamMates == t) {
+                    final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                    if (val.mValue1 < val.mValue2) {
                         nbVictory++;
                     } else {
-                        if (val._value1 > val._value2) {
+                        if (val.mValue1 > val.mValue2) {
                             nbLost++;
                         } else {
                             nbDraw++;
@@ -111,23 +121,30 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
 
             switch (col) {
                 case 0:
-                    return row + 1;
+                    obj = row + 1;
+                    break;
                 case 1:
-                    return team1._name;
+                    obj = team1.mName;
+                    break;
                 case 2:
-                    return nbVictory;
+                    obj = nbVictory;
+                    break;
                 case 3:
-                    return nbDraw;
+                    obj = nbDraw;
+                    break;
                 case 4:
-                    return nbLost;
+                    obj = nbLost;
+                    break;
                 case 5:
-                    return team2._name;
+                    obj = team2.mName;
+                    break;
+                default:
             }
         }
-        return "";
+        return obj;
     }
 
-    public Class getColumnClass(int c) {
+    public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
 
@@ -135,15 +152,15 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
      * Don't need to implement this method unless your table's
      * editable.
      */
-    public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(final int row,final  int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
     public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        JTextField jlb = new JTextField();
+            final JTable table, final Object value,final  boolean isSelected,final  boolean hasFocus,final  int row, final int column) {
+        final JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
         if (value instanceof String) {

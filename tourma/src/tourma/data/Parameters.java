@@ -6,14 +6,16 @@ package tourma.data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
 import tourma.MainFrame;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -21,53 +23,53 @@ import tourma.MainFrame;
  */
 public class Parameters implements XMLExport {
 
-    public int _game = RosterType.C_BLOOD_BOWL;
-    public int _victory_points = 1000;
-    public int _large_victory_points = 1100;
-    public int _draw_points = 400;
-    public int _little_lost_points = 100;
-    public int _lost_points = 0;
-    public int _team_victory_points = 0;
-    public int _team_draw_points = 0;
-    public boolean _team_victory_only = false;
-    public int _large_victory_gap = 3;
-    public int _little_lost_gap = 1;
-    public boolean _substitutes = false;
-    public Vector<Criteria> _criterias;
-    public String _tournament_name;
-    public String _tournament_orga;
-    public String _place;
-    public Date _date = new Date();
-    public int _ranking1 = 1;
-    public int _ranking2 = 2;
-    public int _ranking3 = 3;
-    public int _ranking4 = 4;
-    public int _ranking5 = 5;
-    public boolean _teamTournament = false;
+    public int mGame = RosterType.C_BLOOD_BOWL;
+    public int mPointsIndivVictory = 1000;
+    public int mPointsIndivLargeVictory = 1100;
+    public int mPointsIndivDraw = 400;
+    public int mPointsIndivLittleLost = 100;
+    public int mPointsIndivLost = 0;
+    public boolean mTeamVictoryOnly = false;
+    public int mGapLargeVictory = 3;
+    public int mGapLittleLost = 1;
+    public boolean mSubstitutes = false;
+    public ArrayList<Criteria> mCriterias;
+    public String mTournamentName;
+    public String mTournamentOrga;
+    public String mPlace;
+    public Date mDate = new Date();
+    public int mRankingIndiv1 = 1;
+    public int mRankingIndiv2 = 2;
+    public int mRankingIndiv3 = 3;
+    public int mRankingIndiv4 = 4;
+    public int mRankingIndiv5 = 5;
+    public boolean mTeamTournament = false;
     /* Pairing: 0: Individuel
      1: ByTeam
      */
-    public int _teamPairing = 0;
+    public int mTeamPairing = 0;
     /* IndivPairing:
      0: Classement
      1: Libre
      2: Aléatoire
      */
-    public int _teamIndivPairing = 0;
-    public int _teamMatesNumber = 1;
-    public int _victory_points_team = 1000;
-    public int _draw_points_team = 400;
-    public int _lost_points_team = 0;
-    public int _ranking1_team = 1;
-    public int _ranking2_team = 2;
-    public int _ranking3_team = 3;
-    public int _ranking4_team = 4;
-    public int _ranking5_team = 5;
+    public int mTeamIndivPairing = 0;
+    public int mTeamMatesNumber = 1;
+    public int mPointsTeamVictory = 1000;
+    public int mPointsTeamDraw = 400;
+    public int mPointsTeamLost = 0;
+    public int mRankingTeam1 = 1;
+    public int mRankingTeam2 = 2;
+    public int mRankingTeam3 = 3;
+    public int mRankingTeam4 = 4;
+    public int mRankingTeam5 = 5;
+    public int mPointsTeamVictoryBonus = 0;
+    public int mPointsTeamDrawBonus = 0;
     /**
      * *********************
      * Roster group management *********************
      */
-    public boolean _groupsEnable = false;
+    public boolean mGroupsEnable = false;
     /**
      * *********************
      * Clan management *********************
@@ -75,19 +77,19 @@ public class Parameters implements XMLExport {
     /**
      * Activate clan management
      */
-    public boolean _enableClans = false;
+    public boolean mEnableClans = false;
     /**
      * Avoid match between members of a clan
      */
-    public boolean _avoidClansFirstMatch = true;
+    public boolean mAvoidClansFirstMatch = true;
     /**
      * Avoid match between members of the same clan
      */
-    public boolean _avoidClansMatch = false;
+    public boolean mAvoidClansMatch = false;
     /**
      * Number of player of one clan used for clan ranking
      */
-    public int _teamMatesClansNumber = 3;
+    public int mTeamMatesClansNumber = 3;
     public static final int C_RANKING_SUBTYPE_POSITIVE = 0;
     public static final int C_RANKING_SUBTYPE_NEGATIVE = 1;
     public static final int C_RANKING_SUBTYPE_DIFFERENCE = 2;
@@ -109,168 +111,168 @@ public class Parameters implements XMLExport {
      public static final int C_RANKING_DIFF_PAS = 12;
      public static final int C_RANKING_DIFF_INT = 13;*/
     public Parameters() {
-        _tournament_name = "";
-        _tournament_orga = "";
-        _criterias = new Vector<Criteria>();
+        mTournamentName = "";
+        mTournamentOrga = "";
+        mCriterias = new ArrayList<Criteria>();
 
-        Criteria c = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Touchdowns"));
-        c._pointsFor = 2;
-        _criterias.add(c);
-        c = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Injuries"));
-        c._pointsFor = 1;
-        _criterias.add(c);
+        Criteria c = new Criteria(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Touchdowns"));
+        c.mPointsFor = 2;
+        mCriterias.add(c);
+        c = new Criteria(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Injuries"));
+        c.mPointsFor = 1;
+        mCriterias.add(c);
     }
 
     public Element getXMLElement() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Element params = new Element("Parameters");
-        params.setAttribute("Organizer", this._tournament_orga);
-        params.setAttribute("Name", this._tournament_name);
-        params.setAttribute("Date", format.format(this._date));
-        params.setAttribute("Place", this._tournament_name);
+        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.getDefault());
+        final Element params = new Element("Parameters");
+        params.setAttribute("Organizer", this.mTournamentOrga);
+        params.setAttribute("Name", this.mTournamentName);
+        params.setAttribute("Date", format.format(this.mDate));
+        params.setAttribute("Place", this.mTournamentName);
 
-        for (int i = 0; i < this._criterias.size(); i++) {
-            Element crit = _criterias.get(i).getXMLElement();
+        for (int i = 0; i < this.mCriterias.size(); i++) {
+           final Element crit = mCriterias.get(i).getXMLElement();
             params.addContent(crit);
         }
 
-        params.setAttribute("Victory", Integer.toString(this._victory_points));
-        params.setAttribute("Large_Victory", Integer.toString(this._large_victory_points));
-        params.setAttribute("Draw", Integer.toString(this._draw_points));
-        params.setAttribute("Lost", Integer.toString(this._lost_points));
-        params.setAttribute("Little_Lost", Integer.toString(this._little_lost_points));
+        params.setAttribute("Victory", Integer.toString(this.mPointsIndivVictory));
+        params.setAttribute("Large_Victory", Integer.toString(this.mPointsIndivLargeVictory));
+        params.setAttribute("Draw", Integer.toString(this.mPointsIndivDraw));
+        params.setAttribute("Lost", Integer.toString(this.mPointsIndivLost));
+        params.setAttribute("Little_Lost", Integer.toString(this.mPointsIndivLittleLost));
 
-        params.setAttribute("Victory_Team", Integer.toString(this._victory_points_team));
-        params.setAttribute("Draw_Team", Integer.toString(this._draw_points_team));
-        params.setAttribute("Lost_Team", Integer.toString(this._lost_points_team));
+        params.setAttribute("Victory_Team", Integer.toString(this.mPointsTeamVictory));
+        params.setAttribute("Draw_Team", Integer.toString(this.mPointsTeamDraw));
+        params.setAttribute("Lost_Team", Integer.toString(this.mPointsTeamLost));
 
-        params.setAttribute("Large_Victory_Gap", Integer.toString(this._large_victory_gap));
-        params.setAttribute("Little_Lost_Gap", Integer.toString(this._little_lost_gap));
+        params.setAttribute("Large_Victory_Gap", Integer.toString(this.mGapLargeVictory));
+        params.setAttribute("Little_Lost_Gap", Integer.toString(this.mGapLittleLost));
 
-        params.setAttribute("Rank1", Integer.toString(this._ranking1));
-        params.setAttribute("Rank2", Integer.toString(this._ranking2));
-        params.setAttribute("Rank3", Integer.toString(this._ranking3));
-        params.setAttribute("Rank4", Integer.toString(this._ranking4));
-        params.setAttribute("Rank5", Integer.toString(this._ranking5));
+        params.setAttribute("Rank1", Integer.toString(this.mRankingIndiv1));
+        params.setAttribute("Rank2", Integer.toString(this.mRankingIndiv2));
+        params.setAttribute("Rank3", Integer.toString(this.mRankingIndiv3));
+        params.setAttribute("Rank4", Integer.toString(this.mRankingIndiv4));
+        params.setAttribute("Rank5", Integer.toString(this.mRankingIndiv5));
 
-        params.setAttribute("Rank1_Team", Integer.toString(this._ranking1_team));
-        params.setAttribute("Rank2_Team", Integer.toString(this._ranking2_team));
-        params.setAttribute("Rank3_Team", Integer.toString(this._ranking3_team));
-        params.setAttribute("Rank4_Team", Integer.toString(this._ranking4_team));
-        params.setAttribute("Rank5_Team", Integer.toString(this._ranking5_team));
+        params.setAttribute("Rank1_Team", Integer.toString(this.mRankingTeam1));
+        params.setAttribute("Rank2_Team", Integer.toString(this.mRankingTeam2));
+        params.setAttribute("Rank3_Team", Integer.toString(this.mRankingTeam3));
+        params.setAttribute("Rank4_Team", Integer.toString(this.mRankingTeam4));
+        params.setAttribute("Rank5_Team", Integer.toString(this.mRankingTeam5));
 
-        params.setAttribute("ByTeam", Boolean.toString(this._teamTournament));
-        params.setAttribute("TeamMates", Integer.toString(this._teamMatesNumber));
-        params.setAttribute("TeamPairing", Integer.toString(this._teamPairing));
-        params.setAttribute("TeamIndivPairing", Integer.toString(this._teamIndivPairing));
+        params.setAttribute("ByTeam", Boolean.toString(this.mTeamTournament));
+        params.setAttribute("TeamMates", Integer.toString(this.mTeamMatesNumber));
+        params.setAttribute("TeamPairing", Integer.toString(this.mTeamPairing));
+        params.setAttribute("TeamIndivPairing", Integer.toString(this.mTeamIndivPairing));
 
-        params.setAttribute("TeamVictoryPoints", Integer.toString(this._team_victory_points));
-        params.setAttribute("TeamDrawPoints", Integer.toString(this._team_draw_points));
-        params.setAttribute("TeamVictoryOnly", Boolean.toString(this._team_victory_only));
+        params.setAttribute("TeamVictoryPoints", Integer.toString(this.mPointsTeamVictoryBonus));
+        params.setAttribute("TeamDrawPoints", Integer.toString(this.mPointsTeamDrawBonus));
+        params.setAttribute("TeamVictoryOnly", Boolean.toString(this.mTeamVictoryOnly));
 
-        params.setAttribute("GroupEnable", Boolean.toString(this._groupsEnable));
-        params.setAttribute("Substitutes", Boolean.toString(this._substitutes));
-        params.setAttribute("GameType", Integer.toString(this._game));
+        params.setAttribute("GroupEnable", Boolean.toString(this.mGroupsEnable));
+        params.setAttribute("Substitutes", Boolean.toString(this.mSubstitutes));
+        params.setAttribute("GameType", Integer.toString(this.mGame));
 
-        params.setAttribute("ActvateClans", Boolean.toString(this._enableClans));
-        params.setAttribute("AvoidFirstMatch", Boolean.toString(this._avoidClansFirstMatch));
-        params.setAttribute("AvoidMatch", Boolean.toString(this._avoidClansMatch));
-        params.setAttribute("ClanTeammatesNumber", Integer.toString(this._teamMatesClansNumber));
+        params.setAttribute("ActvateClans", Boolean.toString(this.mEnableClans));
+        params.setAttribute("AvoidFirstMatch", Boolean.toString(this.mAvoidClansFirstMatch));
+        params.setAttribute("AvoidMatch", Boolean.toString(this.mAvoidClansMatch));
+        params.setAttribute("ClanTeammatesNumber", Integer.toString(this.mTeamMatesClansNumber));
 
         return params;
     }
 
-    public void setXMLElement(Element params) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    public void setXMLElement(final Element params) {
+        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
 
         try {
-            this._tournament_orga = params.getAttribute("Organizer").getValue();
-            this._tournament_name = params.getAttribute("Name").getValue();
+            this.mTournamentOrga = params.getAttribute("Organizer").getValue();
+            this.mTournamentName = params.getAttribute("Name").getValue();
 
-            this._victory_points = params.getAttribute("Victory").getIntValue();
-            this._large_victory_points = params.getAttribute("Large_Victory").getIntValue();
-            this._draw_points = params.getAttribute("Draw").getIntValue();
-            this._lost_points = params.getAttribute("Lost").getIntValue();
-            this._little_lost_points = params.getAttribute("Little_Lost").getIntValue();
-            this._ranking1 = params.getAttribute("Rank1").getIntValue();
-            this._ranking2 = params.getAttribute("Rank2").getIntValue();
-            this._ranking3 = params.getAttribute("Rank3").getIntValue();
-            this._ranking4 = params.getAttribute("Rank4").getIntValue();
-            this._ranking5 = params.getAttribute("Rank5").getIntValue();
+            this.mPointsIndivVictory = params.getAttribute("Victory").getIntValue();
+            this.mPointsIndivLargeVictory = params.getAttribute("Large_Victory").getIntValue();
+            this.mPointsIndivDraw = params.getAttribute("Draw").getIntValue();
+            this.mPointsIndivLost = params.getAttribute("Lost").getIntValue();
+            this.mPointsIndivLittleLost = params.getAttribute("Little_Lost").getIntValue();
+            this.mRankingIndiv1 = params.getAttribute("Rank1").getIntValue();
+            this.mRankingIndiv2 = params.getAttribute("Rank2").getIntValue();
+            this.mRankingIndiv3 = params.getAttribute("Rank3").getIntValue();
+            this.mRankingIndiv4 = params.getAttribute("Rank4").getIntValue();
+            this.mRankingIndiv5 = params.getAttribute("Rank5").getIntValue();
 
             try {
-                this._large_victory_gap = params.getAttribute("Large_Victory_Gap").getIntValue();
-                this._little_lost_gap = params.getAttribute("Little_Lost_Gap").getIntValue();
-                this._place = params.getAttribute("Place").getValue();
-                this._teamTournament = params.getAttribute("ByTeam").getBooleanValue();
-                this._teamMatesNumber = params.getAttribute("TeamMates").getIntValue();
-                this._teamPairing = params.getAttribute("TeamPairing").getIntValue();
-                this._teamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
-                this._team_victory_points = params.getAttribute("TeamVictoryPoints").getIntValue();
-                this._teamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
-                this._team_victory_only = params.getAttribute("TeamVictoryOnly").getBooleanValue();
+                this.mGapLargeVictory = params.getAttribute("Large_Victory_Gap").getIntValue();
+                this.mGapLittleLost = params.getAttribute("Little_Lost_Gap").getIntValue();
+                this.mPlace = params.getAttribute("Place").getValue();
+                this.mTeamTournament = params.getAttribute("ByTeam").getBooleanValue();
+                this.mTeamMatesNumber = params.getAttribute("TeamMates").getIntValue();
+                this.mTeamPairing = params.getAttribute("TeamPairing").getIntValue();
+                this.mTeamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
+                this.mPointsTeamVictoryBonus = params.getAttribute("TeamVictoryPoints").getIntValue();
+                this.mTeamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
+                this.mTeamVictoryOnly = params.getAttribute("TeamVictoryOnly").getBooleanValue();
                 try {
-                    this._team_draw_points = params.getAttribute("TeamDrawPoints").getIntValue();
+                    this.mPointsTeamDrawBonus = params.getAttribute("TeamDrawPoints").getIntValue();
                 } catch (Exception e) {
-                    this._team_draw_points = 0;
+                    this.mPointsTeamDrawBonus = 0;
                 }
 
                 try {
-                    this._date = format.parse(params.getAttribute("Date").getValue());
+                    this.mDate = format.parse(params.getAttribute("Date").getValue());
                 } catch (ParseException pe) {
                 }
 
                 try {
-                    this._game = params.getAttribute("GameType").getIntValue();
+                    this.mGame = params.getAttribute("GameType").getIntValue();
                 } catch (Exception pe) {
-                    this._game = 1;
+                    this.mGame = 1;
                 }
 
-                this._groupsEnable = params.getAttribute("GroupEnable").getBooleanValue();
+                this.mGroupsEnable = params.getAttribute("GroupEnable").getBooleanValue();
 
             } catch (NullPointerException ne) {
-                this._large_victory_gap = 3;
-                this._little_lost_gap = 1;
-                this._place = "";
-                this._teamTournament = false;
-                this._teamMatesNumber = 6;
-                this._teamPairing = 1;
-                this._teamIndivPairing = 0;
+                this.mGapLargeVictory = 3;
+                this.mGapLittleLost = 1;
+                this.mPlace = "";
+                this.mTeamTournament = false;
+                this.mTeamMatesNumber = 6;
+                this.mTeamPairing = 1;
+                this.mTeamIndivPairing = 0;
             }
             try {
-                this._victory_points_team = params.getAttribute("Victory_Team").getIntValue();
-                this._draw_points_team = params.getAttribute("Draw_Team").getIntValue();
-                this._lost_points_team = params.getAttribute("Lost_Team").getIntValue();
-                this._ranking1_team = params.getAttribute("Rank1_Team").getIntValue();
-                this._ranking2_team = params.getAttribute("Rank2_Team").getIntValue();
-                this._ranking3_team = params.getAttribute("Rank3_Team").getIntValue();
-                this._ranking4_team = params.getAttribute("Rank4_Team").getIntValue();
-                this._ranking5_team = params.getAttribute("Rank5_Team").getIntValue();
+                this.mPointsTeamVictory = params.getAttribute("Victory_Team").getIntValue();
+                this.mPointsTeamDraw = params.getAttribute("Draw_Team").getIntValue();
+                this.mPointsTeamLost = params.getAttribute("Lost_Team").getIntValue();
+                this.mRankingTeam1 = params.getAttribute("Rank1_Team").getIntValue();
+                this.mRankingTeam2 = params.getAttribute("Rank2_Team").getIntValue();
+                this.mRankingTeam3 = params.getAttribute("Rank3_Team").getIntValue();
+                this.mRankingTeam4 = params.getAttribute("Rank4_Team").getIntValue();
+                this.mRankingTeam5 = params.getAttribute("Rank5_Team").getIntValue();
             } catch (NullPointerException ne2) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ne2.getLocalizedMessage());
             }
 
             try {
-                this._enableClans = params.getAttribute("ActvateClans").getBooleanValue();
-                this._avoidClansFirstMatch = params.getAttribute("AvoidFirstMatch").getBooleanValue();
-                this._avoidClansMatch = params.getAttribute("AvoidMatch").getBooleanValue();
-                this._teamMatesClansNumber = params.getAttribute("ClanTeammatesNumber").getIntValue();
-                this._substitutes = params.getAttribute("Substitutes").getBooleanValue();
+                this.mEnableClans = params.getAttribute("ActvateClans").getBooleanValue();
+                this.mAvoidClansFirstMatch = params.getAttribute("AvoidFirstMatch").getBooleanValue();
+                this.mAvoidClansMatch = params.getAttribute("AvoidMatch").getBooleanValue();
+                this.mTeamMatesClansNumber = params.getAttribute("ClanTeammatesNumber").getIntValue();
+                this.mSubstitutes = params.getAttribute("Substitutes").getBooleanValue();
 
             } catch (NullPointerException ne3) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ne3.getLocalizedMessage());
             }
 
-            List criterias = params.getChildren("Criteria");
-            Iterator cr = criterias.iterator();
+            final List criterias = params.getChildren("Criteria");
+            final Iterator cr = criterias.iterator();
 
-            this._criterias.removeAllElements();
+            this.mCriterias.clear();
 
             while (cr.hasNext()) {
-                Element criteria = (Element) cr.next();
-                Criteria crit = new Criteria(criteria.getAttributeValue("Name"));
+                final Element criteria = (Element) cr.next();
+                final Criteria crit = new Criteria(criteria.getAttributeValue("Name"));
                 crit.setXMLElement(criteria);
-                this._criterias.add(crit);
+                this.mCriterias.add(crit);
             }
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());

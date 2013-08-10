@@ -4,9 +4,8 @@
  */
 package tourma.data;
 
-import java.util.Vector;
-import javax.swing.JOptionPane;
-import tourma.MainFrame;
+import java.util.ArrayList;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -22,61 +21,61 @@ public class RosterType {
      "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique",
      "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire"
      };*/
-    public static Vector<String> RostersNames = new Vector<String>();
-    public static Vector<RosterType> RosterTypes = new Vector<RosterType>();
-    public String _name = "";
+    public static ArrayList<String> mRostersNames = new ArrayList<String>();
+    public static ArrayList<RosterType> mRosterTypes = new ArrayList<RosterType>();
+    public String mName = "";
 
     public static void initCollection() {
-        RostersNames.clear();
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AmazonKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UnderworldKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChaosKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ElfKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WoodElfKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DarkElfKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GoblinKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HalflingKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HighElfKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LizardmenKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HumanKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KhemriKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KhorneKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UndeadKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DwarfKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChaosDwarfKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NecromanticKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NorseKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NurgleKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OgreKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OrcKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChaosPactKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SkavenKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SlannKey"));
-        RostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VampireKey"));
+        mRostersNames.clear();
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AmazonKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UnderworldKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChaosKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ElfKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("WoodElfKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("DarkElfKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("GoblinKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("HalflingKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("HighElfKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("LizardmenKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("HumanKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("KhemriKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("KhorneKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UndeadKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("DwarfKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChaosDwarfKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NecromanticKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NorseKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NurgleKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OgreKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OrcKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChaosPactKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("SkavenKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("SlannKey"));
+        mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("VampireKey"));
     }
 
-    public static void initCollection(int game) {
+    public static void initCollection(final int game) {
         
-        RostersNames.clear();
+        mRostersNames.clear();
         
         switch (game) {
             case C_BLOOD_BOWL:
                 initCollection();
                 break;
             case C_DREAD_BALL:
-                RostersNames.clear();
-                RostersNames.add("Corporation");
-                RostersNames.add("Orx");
-                RostersNames.add("Ver-myns");
-                RostersNames.add("Forge Fathers");
-                RostersNames.add("Judwans");
-                RostersNames.add("Z'Zors");
-                RostersNames.add("Robots");
-                RostersNames.add("Females Corporation");
-                RostersNames.add("Zees");
-                RostersNames.add("Asterians");
-                RostersNames.add("Nameless");
-                RostersNames.add("Taratons");
+                mRostersNames.clear();
+                mRostersNames.add("Corporation");
+                mRostersNames.add("Orx");
+                mRostersNames.add("Ver-myns");
+                mRostersNames.add("Forge Fathers");
+                mRostersNames.add("Judwans");
+                mRostersNames.add("Z'Zors");
+                mRostersNames.add("Robots");
+                mRostersNames.add("Females Corporation");
+                mRostersNames.add("Zees");
+                mRostersNames.add("Asterians");
+                mRostersNames.add("Nameless");
+                mRostersNames.add("Taratons");
                 break;
             default:
                 initCollection();
@@ -84,11 +83,11 @@ public class RosterType {
         }
     }
 
-    public RosterType(int i) {
-        _name = RostersNames.get(i);
+    public RosterType(final int i) {
+        mName = mRostersNames.get(i);
     }
 
-    public RosterType(String name) {
-        _name = name;
+    public RosterType(final String name) {
+        mName = name;
     }
 }

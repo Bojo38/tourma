@@ -12,5 +12,5 @@ import org.jdom.Element;
  */
 public interface XMLExport {
     public Element getXMLElement();
-    public void setXMLElement(Element e);
+    public void setXMLElement(final Element e);
 }

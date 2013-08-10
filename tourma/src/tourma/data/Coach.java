@@ -4,10 +4,11 @@
  */
 package tourma.data;
 
+import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -15,6 +16,7 @@ import teamma.data.Player;
 import teamma.data.StarPlayer;
 import teamma.data.lrb;
 import tourma.MainFrame;
+import tourma.utility.StringConstants;
 
 /**
  * This class contains data relative to coach
@@ -22,68 +24,69 @@ import tourma.MainFrame;
  * @author Frederic Berger
  */
 public class Coach implements Comparable, XMLExport {
-
-    public static Coach NullCoach=new Coach("None");
-    public static HashMap<String,Coach> _map=new HashMap<String,Coach>();
+    
+    public static Coach sNullCoach = new Coach("None");
+    public static HashMap<String, Coach> sCoachMap = new HashMap<String, Coach>();
     /**
      * Clan
      */
-    public Clan _clan;
-    public String _name;
-    public String _team;
-    public RosterType _roster;
-    public int _naf;
-    public int _rank;
-    public boolean _active = true;
-    public Team _teamMates = null;
-    public Vector<Match> _matchs;
-    public teamma.data.Roster _composition;
+    public Clan mClan;
+    public String mName;
+    public String mTeam;
+    public RosterType mRoster;
+    public int mNaf;
+    public int mRank;
+    public boolean mActive = true;
+    public Team mTeamMates = null;
+    public ArrayList<Match> mMatchs;
+    public teamma.data.Roster mComposition;
 
     public Coach() {
-        _matchs = new Vector<Match>();
-        _active = true;
-    }
-    
-     public Coach(String name) {
-        _matchs = new Vector<Match>();
-        _active = false;
-        _name=name;
-        _team="None";
-        _roster=new RosterType("None");
-        _teamMates=Team.NullTeam;
+        mMatchs = new ArrayList<Match>();
+        mActive = true;
     }
 
-    public int compareTo(Object obj) {
+    public Coach(final String name) {
+        mMatchs = new ArrayList<Match>();
+        mActive = false;
+        mName = name;
+        mTeam = "None";
+        mRoster = new RosterType("None");
+        mTeamMates = Team.sNullTeam;
+    }
+
+    public int compareTo(final Object obj) {
+        int result = -1;
+
         if (obj instanceof Coach) {
-            return _name.compareTo(((Coach) obj)._name);
-        } else {
-            return -1;
+            result = mName.compareTo(((Coach) obj).mName);
         }
+        return result;
     }
 
     public Element getXMLElement() {
 
-        Element coach = new Element("Coach");
-        coach.setAttribute("Name", this._name);
-        coach.setAttribute("Team", this._team);
-        coach.setAttribute("Roster", this._roster._name);
-        coach.setAttribute("NAF", Integer.toString(this._naf));
-        coach.setAttribute("Rank", Integer.toString(this._rank));
-        coach.setAttribute("Clan", this._clan._name);
-        coach.setAttribute("Active", Boolean.toString(this._active));
+        final Element coach = new Element(StringConstants.CS_COACH);
+        coach.setAttribute(StringConstants.CS_NAME, this.mName);
+        coach.setAttribute("Team", this.mTeam);
+        coach.setAttribute(StringConstants.CS_ROSTER, this.mRoster.mName);
+        coach.setAttribute("NAF", Integer.toString(this.mNaf));
+        coach.setAttribute("Rank", Integer.toString(this.mRank));
+        coach.setAttribute("Clan", this.mClan.mName);
+        coach.setAttribute("Active", Boolean.toString(this.mActive));
 
-        if (this._composition != null) {
-            Element compo = new Element("Composition");
-            teamma.data.Roster roster = this._composition;
+        if (this.mComposition != null) {
+            final Element compo = new Element("Composition");
+            final teamma.data.Roster roster = this.mComposition;
 
-            compo.setAttribute("Roster", roster._roster._name);
+            compo.setAttribute(StringConstants.CS_ROSTER, roster._roster._name);
             compo.setAttribute("Apothecary", Boolean.toString(roster._apothecary));
             compo.setAttribute("Assistants", Integer.toString(roster._assistants));
             compo.setAttribute("Cheerleaders", Integer.toString(roster._cheerleaders));
             compo.setAttribute("FanFactor", Integer.toString(roster._fanfactor));
             compo.setAttribute("Rerolls", Integer.toString(roster._rerolls));
 
-            Element inducements = new Element("Inducements");
+            final Element inducements = new Element("Inducements");
             inducements.setAttribute("Chef", Boolean.toString(roster._chef));
             inducements.setAttribute("Igor", Boolean.toString(roster._igor));
             inducements.setAttribute("Wizard", Boolean.toString(roster._wizard));
@@ -93,24 +96,25 @@ public class Coach implements Comparable, XMLExport {
             inducements.setAttribute("ExtraRerolls", Integer.toString(roster._extrarerolls));
             inducements.setAttribute("LocalApothecary", Integer.toString(roster._localapothecary));
 
+            
             for (int j = 0; j < roster._champions.size(); j++) {
-                Element st = new Element("StarPlayer");
-                st.setAttribute("Name", roster._champions.get(j)._name);
+                final Element st = new Element("StarPlayer");
+                st.setAttribute(StringConstants.CS_NAME, roster._champions.get(j)._name);
                 inducements.addContent(st);
             }
 
             compo.addContent(inducements);
 
             for (int j = 0; j < roster._players.size(); j++) {
-                Element p = new Element("Player");
-                teamma.data.Player pl = roster._players.get(j);
-                p.setAttribute("Name", pl._name);
+                final Element p = new Element("Player");
+                final teamma.data.Player pl = roster._players.get(j);
+                p.setAttribute(StringConstants.CS_NAME, pl._name);
                 p.setAttribute("Position", pl._playertype._position);
 
                 for (int k = 0; k < pl._skills.size(); k++) {
-                    Element s = new Element("Skill");
-                    teamma.data.Skill sk = pl._skills.get(k);
-                    s.setAttribute("Name", sk._name);
+                    final Element s = new Element("Skill");
+                    final teamma.data.Skill sk = pl._skills.get(k);
+                    s.setAttribute(StringConstants.CS_NAME, sk._name);
                     p.addContent(s);
                 }
                 compo.addContent(p);
@@ -122,79 +126,80 @@ public class Coach implements Comparable, XMLExport {
         return coach;
     }
 
-    public void setXMLElement(Element coach) {
+    public void setXMLElement(final Element coach) {
         try {
-            this._name = coach.getAttributeValue("Name");
-            this._team = coach.getAttributeValue("Team");
-            this._roster = new RosterType(coach.getAttributeValue("Roster"));
-            this._naf = coach.getAttribute("NAF").getIntValue();
-            this._rank = coach.getAttribute("Rank").getIntValue();
-            this._clan = Clan._clanMap.get(coach.getAttributeValue("Clan"));
-            Coach._map.put(_name, this);
-            
+            this.mName = coach.getAttributeValue(StringConstants.CS_NAME);
+            this.mTeam = coach.getAttributeValue("Team");
+            this.mRoster = new RosterType(coach.getAttributeValue(StringConstants.CS_ROSTER));
+            this.mNaf = coach.getAttribute("NAF").getIntValue();
+            this.mRank = coach.getAttribute("Rank").getIntValue();
+            this.mClan = Clan.sClanMap.get(coach.getAttributeValue("Clan"));
+            Coach.sCoachMap.put(mName, this);
+
             try {
-                this._active = coach.getAttribute("Active").getBooleanValue();
+                this.mActive = coach.getAttribute("Active").getBooleanValue();
             } catch (NullPointerException npe) {
+                // Do nothing
             }
 
-            if (this._clan == null) {
+            if (this.mClan == null) {
                 if (Tournament.getTournament().getClans().size() == 0) {
-                    java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+                    final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
                     Tournament.getTournament().getClans().add(new Clan(bundle.getString("NoneKey")));
 
                 }
-                this._clan = Tournament.getTournament().getClans().get(0);
+                this.mClan = Tournament.getTournament().getClans().get(0);
             }
 
-            Element compo = coach.getChild("Composition");
+            final Element compo = coach.getChild("Composition");
             if (compo != null) {
-                this._composition = new teamma.data.Roster();
-                this._composition._roster = teamma.data.lrb.getLRB().getRosterType(compo.getAttributeValue("Roster"));
-                this._composition._apothecary = Boolean.parseBoolean(compo.getAttributeValue("Apothecary"));
-                this._composition._assistants = Integer.parseInt(compo.getAttributeValue("Assistants"));
-                this._composition._cheerleaders = Integer.parseInt(compo.getAttributeValue("Cheerleaders"));
-                this._composition._fanfactor = Integer.parseInt(compo.getAttributeValue("FanFactor"));
-                this._composition._rerolls = Integer.parseInt(compo.getAttributeValue("Rerolls"));
+                this.mComposition = new teamma.data.Roster();
+                this.mComposition._roster = teamma.data.lrb.getLRB().getRosterType(compo.getAttributeValue(StringConstants.CS_ROSTER));
+                this.mComposition._apothecary = Boolean.parseBoolean(compo.getAttributeValue("Apothecary"));
+                this.mComposition._assistants = Integer.parseInt(compo.getAttributeValue("Assistants"));
+                this.mComposition._cheerleaders = Integer.parseInt(compo.getAttributeValue("Cheerleaders"));
+                this.mComposition._fanfactor = Integer.parseInt(compo.getAttributeValue("FanFactor"));
+                this.mComposition._rerolls = Integer.parseInt(compo.getAttributeValue("Rerolls"));
 
-                Element inducements = compo.getChild("Inducements");
+                final Element inducements = compo.getChild("Inducements");
                 if (inducements != null) {
-                    this._composition._bloodweiserbabes = Integer.parseInt(inducements.getAttributeValue("Babes"));
-                    this._composition._cards = Integer.parseInt(inducements.getAttributeValue("Cards"));
-                    this._composition._chef = Boolean.parseBoolean(inducements.getAttributeValue("Chef"));
-                    this._composition._corruptions = Integer.parseInt(inducements.getAttributeValue("Bribe"));
-                    this._composition._extrarerolls = Integer.parseInt(inducements.getAttributeValue("ExtraRerolls"));
-                    this._composition._igor = Boolean.parseBoolean(inducements.getAttributeValue("Igor"));
-                    this._composition._localapothecary = Integer.parseInt(inducements.getAttributeValue("LocalApothecary"));
-                    this._composition._wizard = Boolean.parseBoolean(inducements.getAttributeValue("Wizard"));
+                    this.mComposition._bloodweiserbabes = Integer.parseInt(inducements.getAttributeValue("Babes"));
+                    this.mComposition._cards = Integer.parseInt(inducements.getAttributeValue("Cards"));
+                    this.mComposition._chef = Boolean.parseBoolean(inducements.getAttributeValue("Chef"));
+                    this.mComposition._corruptions = Integer.parseInt(inducements.getAttributeValue("Bribe"));
+                    this.mComposition._extrarerolls = Integer.parseInt(inducements.getAttributeValue("ExtraRerolls"));
+                    this.mComposition._igor = Boolean.parseBoolean(inducements.getAttributeValue("Igor"));
+                    this.mComposition._localapothecary = Integer.parseInt(inducements.getAttributeValue("LocalApothecary"));
+                    this.mComposition._wizard = Boolean.parseBoolean(inducements.getAttributeValue("Wizard"));
 
-                    List stars = inducements.getChildren("StarPlayers");
-                    Iterator s = stars.iterator();
+                    final  List stars = inducements.getChildren("StarPlayers");
+                    final Iterator s = stars.iterator();
                     while (s.hasNext()) {
-                        Element star = (Element) s.next();
-                        StarPlayer t = lrb.getLRB().getStarPlayer(star.getAttributeValue("Name"));
-                        this._composition._champions.add(t);
+                        final Element star = (Element) s.next();
+                        final StarPlayer t = lrb.getLRB().getStarPlayer(star.getAttributeValue(StringConstants.CS_NAME));
+                        this.mComposition._champions.add(t);
                     }
                 }
 
-                List players = compo.getChildren("Player");
-                Iterator ip = players.iterator();
+                final List players = compo.getChildren("Player");
+                final Iterator ip = players.iterator();
                 while (ip.hasNext()) {
-                    Element p = (Element) ip.next();
+                    final Element p = (Element) ip.next();
 
-                    teamma.data.Player pl = new Player(this._composition._roster.getPlayerType(p.getAttributeValue("Position")));
-                    pl._name = p.getAttributeValue("Name");
+                    final teamma.data.Player pl = new Player(this.mComposition._roster.getPlayerType(p.getAttributeValue("Position")));
+                    pl._name = p.getAttributeValue(StringConstants.CS_NAME);
 
-                    List skills = compo.getChildren("Skill");
-                    Iterator is = skills.iterator();
+                    final List skills = compo.getChildren("Skill");
+                    final Iterator is = skills.iterator();
                     while (is.hasNext()) {
-                        Element s = (Element) is.next();
+                        final Element s = (Element) is.next();
 
-                        teamma.data.Skill sl = lrb.getLRB().getSkill(s.getAttributeValue("Name"));
+                        final teamma.data.Skill sl = lrb.getLRB().getSkill(s.getAttributeValue(StringConstants.CS_NAME));
                         pl._skills.add(sl);
                     }
 
-                    this._composition._players.add(pl);
-                    this._rank =this._composition.getValue(false) / 10000;
+                    this.mComposition._players.add(pl);
+                    this.mRank = this.mComposition.getValue(false) / 10000;
                 }
             }
         } catch (DataConversionException dce) {

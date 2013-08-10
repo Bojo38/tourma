@@ -6,16 +6,14 @@ package tourma.data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import tourma.data.Match;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
-import javax.swing.JOptionPane;
-import org.jdom.Attribute;
-import org.jdom.DataConversionException;
+import java.util.Locale;
 import org.jdom.Element;
-import tourma.MainFrame;
+import tourma.utility.StringConstants;
+
 
 
 /**
@@ -24,79 +22,80 @@ import tourma.MainFrame;
  */
 public class Round implements XMLExport {
 
-    Vector<Match> _matchs;
-    Date _heure;
+    protected ArrayList<Match> mMatchs;
+    protected Date mHour;
     
-    public boolean _cup=false;
-    public int _cup_tour=0;
-    public int _cup_max_tour=0;
-    public boolean _looser_cup=false;
+    public boolean mCup=false;
+    public int mCupTour=0;
+    public int mCupMaxTour=0;
+    public boolean mLooserCup=false;
     
     public Round() {
-        _matchs = new Vector<Match>();
+        mMatchs = new ArrayList<Match>();
     }
 
-    public Vector<Match> getMatchs() {
-        return _matchs;
+    public ArrayList<Match> getMatchs() {
+        return mMatchs;
     }
 
-    public Date getHeure() {
-        return _heure;
+    public void setHour(final Date heure)
+    {
+        mHour=heure;
     }
-
-    public void setHeure(Date heure) {
-        _heure = heure;
+    
+    public Date getHour() {
+        return mHour;
     }
 
     public Element getXMLElement() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Element round = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round"));
-        round.setAttribute("Date", format.format(this._heure));
+        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.getDefault());
+        final Element round = new Element(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round"));
+        round.setAttribute("Date", format.format(this.mHour));
         
-        round.setAttribute("LooserCup", Boolean.toString(_looser_cup));
-        round.setAttribute("Cup", Boolean.toString(_cup));
-        round.setAttribute("Tour", Integer.toString(_cup_tour));
-        round.setAttribute("maxTour", Integer.toString(_cup_max_tour));
+        round.setAttribute("LooserCup", Boolean.toString(mLooserCup));
+        round.setAttribute("Cup", Boolean.toString(mCup));
+        round.setAttribute("Tour", Integer.toString(mCupTour));
+        round.setAttribute("maxTour", Integer.toString(mCupMaxTour));
         
 
-        for (int j = 0; j < this._matchs.size(); j++) {
-            Element match = _matchs.get(j).getXMLElement();
+        for (int j = 0; j < this.mMatchs.size(); j++) {
+            final Element match = mMatchs.get(j).getXMLElement();
             round.addContent(match);
         }   
 
         return round;
     }
 
-    public void setXMLElement(Element round) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    public void setXMLElement(final Element round) {
+        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.getDefault());
 
-        String date = round.getAttributeValue("Date");
+        final String date = round.getAttributeValue("Date");
         try {
-            this._heure = format.parse(date);
+            this.mHour = format.parse(date);
 
         } catch (ParseException e) {
         }
         
         try {
-             _looser_cup=Boolean.parseBoolean(round.getAttributeValue("LooserCup"));
-             _cup=Boolean.parseBoolean(round.getAttributeValue("Cup"));
-              _cup_tour=Integer.parseInt(round.getAttributeValue("Tour"));
-             _cup_max_tour=Integer.parseInt(round.getAttributeValue("maxTour"));
+             mLooserCup=Boolean.parseBoolean(round.getAttributeValue("LooserCup"));
+             mCup=Boolean.parseBoolean(round.getAttributeValue("Cup"));
+              mCupTour=Integer.parseInt(round.getAttributeValue("Tour"));
+             mCupMaxTour=Integer.parseInt(round.getAttributeValue("maxTour"));
         }
         catch(Exception e)
         {
             
         }
 
-        List matchs = round.getChildren("Match");
-        Iterator k = matchs.iterator();
-        this._matchs.clear();
+        final List matchs = round.getChildren("Match");
+        final Iterator k = matchs.iterator();
+        this.mMatchs.clear();
 
         while (k.hasNext()) {
-            Element match = (Element) k.next();
-            Match m = new Match();
+            final Element match = (Element) k.next();
+            final Match m = new Match();
             m.setXMLElement(match);
-            this._matchs.add(m);
+            this.mMatchs.add(m);
         }
     }
 }

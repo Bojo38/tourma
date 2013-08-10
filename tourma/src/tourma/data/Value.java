@@ -13,19 +13,19 @@ public class Value {
     /**
      * Name of the criteria
      */
-    public Criteria _criteria;
+    public Criteria mCriteria;
     /**
      * Value for the coach 1
      */
-    public int _value1;
+    public int mValue1;
     /**
      * Value for the coach 2
      */
-    public int _value2;
+    public int mValue2;
 
-    public Value(Criteria criteria)
+    public Value(final Criteria criteria)
     {
-        _criteria=criteria;
+        mCriteria=criteria;
     }
 
 }

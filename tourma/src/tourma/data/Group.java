@@ -4,10 +4,11 @@
  */
 package tourma.data;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import org.jdom.Element;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -15,34 +16,34 @@ import org.jdom.Element;
  */
 public class Group implements XMLExport {
 
-    public String _name = "";
-    public Vector<RosterType> _rosters;
+    public String mName = "";
+    public ArrayList<RosterType> mRosters;
 
-    public Group(String name) {
-        _name = name;
-        _rosters = new Vector<RosterType>();
+    public Group(final String name) {
+        mName = name;
+        mRosters = new ArrayList<RosterType>();
     }
 
     public Element getXMLElement() {
-        Element group = new Element("Group");
-        group.setAttribute("Name", this._name);
-        for (int j = 0; j < this._rosters.size(); j++) {
-            Element roster = new Element("Roster");
-            roster.setAttribute("Name", this._rosters.get(j)._name);
+        final Element group = new Element("Group");
+        group.setAttribute(StringConstants.CS_NAME, this.mName);
+        for (int j = 0; j < this.mRosters.size(); j++) {
+            final Element roster = new Element(StringConstants.CS_ROSTER);
+            roster.setAttribute(StringConstants.CS_NAME, this.mRosters.get(j).mName);
             group.addContent(roster);
         }
         return group;
     }
 
-    public void setXMLElement(Element group) {
-        _name = group.getAttributeValue("Name");
+    public void setXMLElement(final Element group) {
+        mName = group.getAttributeValue(StringConstants.CS_NAME);
 
-        List rosters = group.getChildren("Roster");
-        Iterator ro = rosters.iterator();
+        final List rosters = group.getChildren(StringConstants.CS_ROSTER);
+        final Iterator ro = rosters.iterator();
         while (ro.hasNext()) {
-            Element roster = (Element) ro.next();
-            RosterType rost = new RosterType(roster.getAttributeValue("Name"));
-            this._rosters.add(rost);
+            final Element roster = (Element) ro.next();
+            final RosterType rost = new RosterType(roster.getAttributeValue(StringConstants.CS_NAME));
+            this.mRosters.add(rost);
         }
     }
 }

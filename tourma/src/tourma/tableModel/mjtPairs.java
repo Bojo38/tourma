@@ -4,16 +4,15 @@
  */
 package tourma.tableModel;
 
-import tourma.data.Match;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Team;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -21,14 +20,14 @@ import tourma.data.Team;
  */
 public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
 
-    Vector<Team> _teams1;
-    Vector<Team> _teams2;
-    Vector<Boolean> _done;
+    ArrayList<Team> mTeams1;
+    ArrayList<Team> mTeams2;
+    ArrayList<Boolean> mDone;
 
-    public mjtPairs(Vector<Team> teams1, Vector<Team> teams2, Vector<Boolean> done) {
-        _teams1 = teams1;
-        _teams2 = teams2;
-        _done = done;
+    public mjtPairs(final ArrayList<Team> teams1, final ArrayList<Team> teams2, final ArrayList<Boolean> done) {
+        mTeams1 = teams1;
+        mTeams2 = teams2;
+        mDone = done;
     }
 
     public int getColumnCount() {
@@ -36,42 +35,51 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
     }
 
     public int getRowCount() {
-        return _teams1.size();
+        return mTeams1.size();
     }
 
-    public String getColumnName(int col) {
-
+    public String getColumnName(final int col) {
+        String result = "";
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Table");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Table");
+                break;
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan1");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan1");
+                break;
             case 2:
-                return "";
+                result = "";
+                break;
             case 3:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan2");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan2");
+                break;
+            default:
         }
-        return "";
+        return result;
     }
 
-    public Object getValueAt(int row, int col) {
-
+    public Object getValueAt(final int row, final int col) {
+        Object val = "";
         switch (col) {
             case 0:
-                return row + 1;
+                val = row + 1;
+                break;
             case 1:
-                return _teams1.get(row)._name;
+                val = mTeams1.get(row).mName;
+                break;
             case 2:
-                return "VS";
+                val = "VS";
+                break;
             case 3:
-                return _teams2.get(row)._name;
+                val = mTeams2.get(row).mName;
+                break;
+            default:
         }
-        return "";
+        return val;
     }
 
     @Override
-    public Class getColumnClass(
-            int c) {
+    public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
 
@@ -80,27 +88,27 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
      * editable.
      */
     @Override
-    public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
     public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        JTextField jlb = new JTextField();
+            final JTable table,final  Object value,final  boolean isSelected, final boolean hasFocus,final  int row,final  int column) {
+       final  JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
         if (value instanceof String) {
             jlb.setText((String) value);
         }
         if (value instanceof Integer) {
-            jlb.setText(""+((Integer) value));
+            jlb.setText(((Integer) value).toString());
         }
 
         Color bkg = new Color(255, 255, 255);
-        Color frg = new Color(0, 0, 0);
-        if (_done.get(row).booleanValue()) {
+        final Color frg = new Color(0, 0, 0);
+        if (mDone.get(row).booleanValue()) {
             bkg = new Color(190, 190, 190);
         }
 

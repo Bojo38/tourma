@@ -8,7 +8,7 @@ import tourma.data.Match;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -16,6 +16,7 @@ import javax.swing.table.TableCellRenderer;
 import tourma.data.Criteria;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -23,196 +24,226 @@ import tourma.data.Value;
  */
 public class mjtMatches extends AbstractTableModel implements TableCellRenderer {
 
-    Vector<Match> _matchs;
-    boolean _locked;
-    boolean _teamTournament;
-    boolean _full;
+    ArrayList<Match> mMatchs;
+    boolean mLocked;
+    boolean mTeamTournament;
+    boolean mFull;
 
-    public mjtMatches(Vector<Match> matchs, boolean locked, boolean teamTournament, boolean full) {
-        _matchs = matchs;
-        _locked = locked;
-        _teamTournament = teamTournament;
-        _full = full;
+    public mjtMatches(final ArrayList<Match> matchs, final boolean locked, final boolean teamTournament, final boolean full) {
+        mMatchs = matchs;
+        mLocked = locked;
+        mTeamTournament = teamTournament;
+        mFull = full;
     }
 
     public int getColumnCount() {
-        if (_teamTournament) {
-            return Tournament.getTournament().getParams()._criterias.size() * 2 + 5;
+        int res;
+        if (mTeamTournament) {
+            res = Tournament.getTournament().getParams().mCriterias.size() * 2 + 5;
         } else {
-            return Tournament.getTournament().getParams()._criterias.size() * 2 + 3;
+            res = Tournament.getTournament().getParams().mCriterias.size() * 2 + 3;
         }
+        return res;
     }
 
     public int getRowCount() {
-        return _matchs.size();
+        return mMatchs.size();
     }
 
-    public String getColumnName(int col) {
+    public String getColumnName(final int col) {
 
-        if (_teamTournament) {
+        String result = "";
+        if (mTeamTournament) {
             switch (col) {
                 case 0:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Table");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Table");
+                    break;
                 case 1:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team1");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team1");
+                    break;
                 case 2:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach1");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach1");
+                    break;
                 case 3:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Score1");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Score1");
+                    break;
                 case 4:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Score2");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Score2");
+                    break;
                 case 5:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach2");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach2");
+                    break;
                 case 6:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team2");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team2");
+                    break;
                 default:
-                    Criteria crit = Tournament.getTournament().getParams()._criterias.get((col - 5) / 2);
-                    int ind = (col - 5) % 2;
+                    final Criteria crit = Tournament.getTournament().getParams().mCriterias.get((col - 5) / 2);
+                    final int ind = (col - 5) % 2;
                     if (ind == 0) {
-                        return crit._name + " 1";
+                        result = crit.mName + " 1";
                     } else {
-                        return crit._name + " 2";
+                        result = crit.mName + " 2";
                     }
             }
         } else {
             switch (col) {
                 case 0:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Table");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Table");
+                    break;
                 case 1:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach1");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach1");
+                    break;
                 case 2:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Score1");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Score1");
+                    break;
                 case 3:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Score2");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Score2");
+                    break;
                 case 4:
-                    return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach2");
+                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach2");
+                    break;
                 default:
-                    Criteria crit = Tournament.getTournament().getParams()._criterias.get((col - 3) / 2);
+                    final Criteria crit = Tournament.getTournament().getParams().mCriterias.get((col - 3) / 2);
                     if ((col - 3) % 2 > 0) {
-                        return crit._name + " 2";
+                        result = crit.mName + " 2";
                     } else {
-                        return crit._name + " 1";
+                        result = crit.mName + " 1";
                     }
             }
         }
+        return result;
     }
 
-    public Object getValueAt(int row, int col) {
-        Match m = _matchs.get(row);
+    public Object getValueAt(final int row, final int col) {
+        Object obj = "";
+        final Match m = mMatchs.get(row);
         Value val;
         int index;
-        if (_teamTournament) {
+        if (mTeamTournament) {
             switch (col) {
                 case 0:
-                    return row + 1;
+                    obj = row + 1;
+                    break;
                 case 1:
-                    return m._coach1._teamMates._name;
+                    obj = m.mCoach1.mTeamMates.mName;
+                    break;
                 case 2:
-                    return m._coach1._name + " - " + m._coach1._team + " (" + m._coach1._roster._name + ")";
+                    obj = m.mCoach1.mName + StringConstants.CS_THICK + m.mCoach1.mTeam + " (" + m.mCoach1.mRoster.mName + ")";
+                    break;
                 case 3:
-                    val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                    if (val._value1 >= 0) {
-                        return val._value1;
+                    val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                    if (val.mValue1 >= 0) {
+                        obj = val.mValue1;
                     } else {
-                        return "";
+                        obj = "";
                     }
+                    break;
                 case 4:
-                    val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                    if (val._value2 >= 0) {
-                        return val._value2;
+                    val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                    if (val.mValue2 >= 0) {
+                        obj = val.mValue2;
                     } else {
-                        return "";
+                        obj = "";
                     }
+                    break;
                 case 5:
-                    return m._coach2._name + " - " + m._coach2._team + " (" + m._coach2._roster._name + ")";
+                    obj = m.mCoach2.mName + StringConstants.CS_THICK + m.mCoach2.mTeam + " (" + m.mCoach2.mRoster.mName + ")";
+                    break;
                 case 6:
-                    return m._coach2._teamMates._name;
+                    obj = m.mCoach2.mTeamMates.mName;
+                    break;
                 default:
-                    index=(col - 5) / 2;
-                    Criteria crit=Tournament.getTournament().getParams()._criterias.get(index);
-                    val = m._values.get(crit);
+                    index = (col - 5) / 2;
+                    final Criteria crit = Tournament.getTournament().getParams().mCriterias.get(index);
+                    val = m.mValues.get(crit);
                     if ((col - 5) % 2 == 0) {
-                        return val._value1;
+                        obj = val.mValue1;
                     } else {
-                        return val._value2;
+                        obj = val.mValue2;
                     }
             }
         } else {
             switch (col) {
                 case 0:
-                    return row + 1;
+                    obj = row + 1;
+                    break;
                 case 1:
-                    return m._coach1._name + " - " + m._coach1._team + " (" + m._coach1._roster._name + ") ";
+                    obj = m.mCoach1.mName + StringConstants.CS_THICK + m.mCoach1.mTeam + " (" + m.mCoach1.mRoster.mName + ") ";
+                    break;
                 case 2:
-                    val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                    if (val._value1 >= 0) {
-                        return val._value1;
+                    val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                    if (val.mValue1 >= 0) {
+                        obj = val.mValue1;
                     } else {
-                        return "";
+                        obj = "";
                     }
+                    break;
                 case 3:
-                    val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                    if (val._value2 >= 0) {
-                        return val._value2;
+                    val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                    if (val.mValue2 >= 0) {
+                        obj = val.mValue2;
                     } else {
-                        return "";
+                        obj = "";
                     }
+                    break;
                 case 4:
-                    return m._coach2._name + " - " + m._coach2._team + " (" + m._coach2._roster._name + ") ";
+                    obj = m.mCoach2.mName + StringConstants.CS_THICK + m.mCoach2.mTeam + " (" + m.mCoach2.mRoster.mName + ") ";
+                    break;
                 default:
-                    index=(col - 3) / 2;
-                    Criteria crit=Tournament.getTournament().getParams()._criterias.get(index);
-                    val = m._values.get(crit);
+                    index = (col - 3) / 2;
+                    final Criteria crit = Tournament.getTournament().getParams().mCriterias.get(index);
+                    val = m.mValues.get(crit);
                     if ((col - 3) % 2 == 0) {
-                        return val._value1;
+                        obj = val.mValue1;
                     } else {
-                        return val._value2;
+                        obj = val.mValue2;
                     }
             }
         }
+        return obj;
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public void setValueAt(final Object value, final int row, final int col) {
         if (value != null) {
             Value val;
-            Match m = _matchs.get(row);
-            if (_teamTournament) {
+            final Match m = mMatchs.get(row);
+            if (mTeamTournament) {
                 switch (col) {
                     case 3:
-                        val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                        val._value1 = (Integer.valueOf(value.toString()));
+                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                        val.mValue1 = Integer.valueOf(value.toString());
                         break;
                     case 4:
-                        val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                        val._value2 = (Integer.valueOf(value.toString()));
+                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                        val.mValue2 = Integer.valueOf(value.toString());
                         break;
                     default:
-                        int index = (col - 5) / 2;
-                        val = m._values.get(Tournament.getTournament().getParams()._criterias.get(index));
-                        if ((col-5) % 2 == 0) {
-                            val._value1 = (Integer.valueOf(value.toString()));
+                        final int index = (col - 5) / 2;
+                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(index));
+                        if ((col - 5) % 2 == 0) {
+                            val.mValue1 = Integer.valueOf(value.toString());
                         } else {
-                            val._value2 = (Integer.valueOf(value.toString()));
+                            val.mValue2 = Integer.valueOf(value.toString());
                         }
                 }
             } else {
                 switch (col) {
                     case 2:
-                        val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                        val._value1 = (Integer.valueOf(value.toString()));
+                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                        val.mValue1 = Integer.valueOf(value.toString());
                         break;
                     case 3:
-                        val = m._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-                        val._value2 = (Integer.valueOf(value.toString()));
+                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+                        val.mValue2 = Integer.valueOf(value.toString());
                         break;
                     default:
-                        int index = (col - 3) / 2;
-                        val = m._values.get(Tournament.getTournament().getParams()._criterias.get(index));
-                        if ((col -3) % 2 == 0) {
-                            val._value1 = (Integer.valueOf(value.toString()));
+                        final int index = (col - 3) / 2;
+                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(index));
+                        if ((col - 3) % 2 == 0) {
+                            val.mValue1 = Integer.valueOf(value.toString());
                         } else {
-                            val._value2 = (Integer.valueOf(value.toString()));
+                            val.mValue2 = Integer.valueOf(value.toString());
                         }
                 }
             }
@@ -222,8 +253,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
     }
 
     @Override
-    public Class getColumnClass(
-            int c) {
+    public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
 
@@ -232,28 +262,30 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
      * editable.
      */
     @Override
-    public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        if (_locked) {
-            return false;
+
+        boolean result = true;
+        if (mLocked) {
+            result = false;
         } else {
-            if (_teamTournament) {
+            if (mTeamTournament) {
                 if ((col == 1) || (col == 2) || (col == 5) || (col == 6)) {
-                    return false;
+                    result = false;
                 }
             } else {
                 if ((col == 1) || (col == 4)) {
-                    return false;
+                    result = false;
                 }
             }
         }
-        return true;
+        return result;
     }
 
     public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        JTextField jlb = new JTextField();
+            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        final JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
         if (value instanceof String) {
@@ -266,24 +298,24 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
 
         Color bkg = new Color(255, 255, 255);
         Color frg = new Color(0, 0, 0);
-        
-        
+
+
         if (isSelected) {
             bkg = new Color(200, 200, 200);
         } else {
             Value val;
-            val = _matchs.get(row)._values.get(Tournament.getTournament().getParams()._criterias.get(0));
-            if (_teamTournament) {
+            val = mMatchs.get(row).mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+            if (mTeamTournament) {
 
                 switch (column) {
                     case 1:
                         bkg = new Color(200, 50, 50);
                         frg = new Color(255, 255, 255);
-                        if (val._value1 > val._value2) {
+                        if (val.mValue1 > val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
-                        if (val._value1 == val._value2) {
+                        if (val.mValue1 == val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
 
@@ -291,11 +323,11 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     case 2:
                         bkg = new Color(200, 50, 50);
                         frg = new Color(255, 255, 255);
-                        if (val._value1 > val._value2) {
+                        if (val.mValue1 > val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
-                        if (val._value1 == val._value2) {
+                        if (val.mValue1 == val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         break;
@@ -308,10 +340,10 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     case 5:
                         bkg = new Color(50, 50, 250);
                         frg = new Color(255, 255, 255);
-                        if (val._value1 < val._value2) {
+                        if (val.mValue1 < val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
-                        if (val._value1 == val._value2) {
+                        if (val.mValue1 == val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         break;
@@ -319,11 +351,11 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         bkg = new Color(50, 50, 250);
                         frg = new Color(255, 255, 255);
 
-                        if (val._value1 < val._value2) {
+                        if (val.mValue1 < val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
-                        if (val._value1 == val._value2) {
+                        if (val.mValue1 == val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         break;
@@ -339,11 +371,11 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     case 1:
                         bkg = new Color(200, 50, 50);
                         frg = new Color(255, 255, 255);
-                        if (val._value1 > val._value2) {
+                        if (val.mValue1 > val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
-                        if (val._value1 == val._value2) {
+                        if (val.mValue1 == val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         break;
@@ -356,10 +388,10 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     case 4:
                         bkg = new Color(50, 50, 250);
                         frg = new Color(255, 255, 255);
-                        if (val._value1 < val._value2) {
+                        if (val.mValue1 < val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
-                        if (val._value1 == val._value2) {
+                        if (val.mValue1 == val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
 

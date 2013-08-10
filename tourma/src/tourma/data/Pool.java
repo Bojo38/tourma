@@ -4,10 +4,11 @@
  */
 package tourma.data;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import org.jdom.Element;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -15,45 +16,45 @@ import org.jdom.Element;
  */
 public class Pool implements XMLExport {
 
-    public Vector<Coach> _coachs = new Vector<Coach>();
-    public Vector<Team> _teams = new Vector<Team>();
-    public String _name = "";
+    public ArrayList<Coach> mCoachs = new ArrayList<Coach>();
+    public ArrayList<Team> mTeams = new ArrayList<Team>();
+    public String mName = "";
 
     public Element getXMLElement() {
-        Element pool = new Element("Pool");
-        pool.setAttribute("Name", this._name);
-        for (int j = 0; j < this._coachs.size(); j++) {
-            Element coach = new Element("Coach");
-            coach.setAttribute("Name", this._coachs.get(j)._name);
+        final Element pool = new Element("Pool");
+        pool.setAttribute(StringConstants.CS_NAME, this.mName);
+        for (int j = 0; j < this.mCoachs.size(); j++) {
+            final Element coach = new Element(StringConstants.CS_COACH);
+            coach.setAttribute(StringConstants.CS_NAME, this.mCoachs.get(j).mName);
             pool.addContent(coach);
         }
-        for (int j = 0; j < this._teams.size(); j++) {
-            Element team = new Element("Team");
-            team.setAttribute("Name", this._teams.get(j)._name);
+        for (int j = 0; j < this.mTeams.size(); j++) {
+            final Element team = new Element("Team");
+            team.setAttribute(StringConstants.CS_NAME, this.mTeams.get(j).mName);
             pool.addContent(team);
         }
         return pool;
     }
 
-    public void setXMLElement(Element pool) {
-       _name = pool.getAttributeValue("Name");
+    public void setXMLElement(final Element pool) {
+       mName = pool.getAttributeValue(StringConstants.CS_NAME);
         
-       _coachs.removeAllElements();
-        List coachs = pool.getChildren("Coach");
+       mCoachs.clear();
+        final List coachs = pool.getChildren(StringConstants.CS_COACH);
         Iterator ro = coachs.iterator();
         while (ro.hasNext()) {
-            Element coach = (Element) ro.next();
-            String name=coach.getAttributeValue("Name");
-            this._coachs.add(Coach._map.get(name));
+            final Element coach = (Element) ro.next();
+            final String name=coach.getAttributeValue(StringConstants.CS_NAME);
+            this.mCoachs.add(Coach.sCoachMap.get(name));
         }
         
-        _teams.removeAllElements();
-        List teams = pool.getChildren("Team");
+        mTeams.clear();
+        final List teams = pool.getChildren("Team");
         ro = teams.iterator();
         while (ro.hasNext()) {
-            Element team = (Element) ro.next();
-            String name=team.getAttributeValue("Name");
-            this._teams.add(Team._map.get(name));
+            final Element team = (Element) ro.next();
+            final String name=team.getAttributeValue(StringConstants.CS_NAME);
+            this.mTeams.add(Team.sTeamMap.get(name));
         }
     }
 }

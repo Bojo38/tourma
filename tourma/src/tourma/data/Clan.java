@@ -14,42 +14,42 @@ import org.jdom.Element;
  */
 public class Clan implements Comparable, XMLExport {
 
-    public static HashMap<String, Clan> _clanMap = new HashMap();
+    public static HashMap<String, Clan> sClanMap = new HashMap();
     /**
      * Name of the clan
      */
-    public String _name;
+    public String mName;
 
     /**
      * Constructor by name
      *
      * @param name Name of the clan
      */
-    public Clan(String name) {
-        _name = name;
+    public Clan(final String name) {
+        mName = name;
     }
 
-    public int compareTo(Object obj) {
+    public int compareTo(final Object obj) {
+        int result=-1;
         if (obj instanceof Coach) {
-            return _name.compareTo(((Clan) obj)._name);
-        } else {
-            return -1;
-        }
+            result=mName.compareTo(((Clan) obj).mName);
+        } 
+        return result;
     }
 
     public Element getXMLElement() {
-        Element clan = new Element("Clan");
-        clan.setAttribute("Name", _name);
+        final Element clan = new Element("Clan");
+        clan.setAttribute("Name", mName);
         return clan;
     }
 
-    public void setXMLElement(Element e) {
-        this._name=e.getAttributeValue("Name");
-        if (_clanMap!=null)
+    public void setXMLElement(final Element e) {
+        this.mName=e.getAttributeValue("Name");
+        if (sClanMap!=null)
         {
-            _clanMap.put(_name, this);
-        }
-            
-        
+            sClanMap.put(mName, this);
+        }        
     }
+    
+    
 }

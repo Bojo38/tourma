@@ -20,87 +20,101 @@ import tourma.data.Tournament;
  */
 public class mjtCriterias extends AbstractTableModel implements TableCellRenderer {
 
-    Tournament _tour;
-    Parameters _params;
+    Tournament mTour;
+    Parameters mParams;
 
-    public mjtCriterias(Tournament tour) {
-        _params = tour.getParams();
-        _tour = tour;
+    public mjtCriterias(final Tournament tour) {
+        mParams = tour.getParams();
+        mTour = tour;
     }
 
     public int getColumnCount() {
-        if (_params._teamTournament) {
-            return 5;
-        } else {
-            return 3;
+        int result = 3;
+        if (mParams.mTeamTournament) {
+            result = 5;
         }
+        return result;
     }
 
     public int getRowCount() {
-        return _params._criterias.size();
+        return mParams.mCriterias.size();
     }
 
-    public String getColumnName(int col) {
+    public String getColumnName(final int col) {
+        String result = "";
         switch (col) {
             case 0:
-                return "Nom Critère";
+                result = "Nom Critère";
+                break;
             case 1:
-                return "Points +";
+                result = "Points +";
+                break;
             case 2:
-                return "Points -";
+                result = "Points -";
+                break;
             case 3:
-                return "Points Equipe +";
+                result = "Points Equipe +";
+                break;
             case 4:
-                return "Points Equipe -";
+                result = "Points Equipe -";
+                break;
+            default:
         }
-        return "";
+        return result;
     }
 
-    public Object getValueAt(int row, int col) {
+    public Object getValueAt(final int row, final int col) {
 
+        Object result = "";
         switch (col) {
             case 0:
-                return _params._criterias.get(row)._name;
+                result = mParams.mCriterias.get(row).mName;
+                break;
             case 1:
-                return _params._criterias.get(row)._pointsFor;
+                result = mParams.mCriterias.get(row).mPointsFor;
+                break;
             case 2:
-                return _params._criterias.get(row)._pointsAgainst;
+                result = mParams.mCriterias.get(row).mPointsAgainst;
+                break;
             case 3:
-                return _params._criterias.get(row)._pointsTeamFor;
+                result = mParams.mCriterias.get(row).mPointsTeamFor;
+                break;
             case 4:
-                return _params._criterias.get(row)._pointsTeamAgainst;
+                result = mParams.mCriterias.get(row).mPointsTeamAgainst;
+                break;
+            default:
         }
-        return "";
+        return result;
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public void setValueAt(final Object value, final int row, final int col) {
         if (value != null) {
-            Criteria c = _params._criterias.get(row);
+            final Criteria c = mParams.mCriterias.get(row);
             switch (col) {
                 case 0:
-                    c._name = value.toString();
+                    c.mName = value.toString();
                     break;
                 case 1:
-                    c._pointsFor = (Integer.valueOf(value.toString()));
+                    c.mPointsFor = Integer.valueOf(value.toString());
                     break;
                 case 2:
-                    c._pointsAgainst = (Integer.valueOf(value.toString()));
+                    c.mPointsAgainst = Integer.valueOf(value.toString());
                     break;
                 case 3:
-                    c._pointsTeamFor = (Integer.valueOf(value.toString()));
+                    c.mPointsTeamFor = Integer.valueOf(value.toString());
                     break;
                 case 4:
-                    c._pointsTeamAgainst = (Integer.valueOf(value.toString()));
+                    c.mPointsTeamAgainst = Integer.valueOf(value.toString());
                     break;
+                default:
             }
 
         }
     }
 
     @Override
-    public Class getColumnClass(
-            int c) {
+    public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
     /*
@@ -109,19 +123,15 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
      */
 
     @Override
-    public boolean isCellEditable(
-            int row, int col) {
-        if (_tour.getRounds().size() > 0) {
-            return false;
-        }
+    public boolean isCellEditable(final int row, final int col) {
+
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        return true;
+        return mTour.getRounds().size() <= 0;
     }
 
-    public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        JTextField jlb = new JTextField();
+    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        final JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
         if (value instanceof String) {
@@ -133,7 +143,7 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
         }
 
         Color bkg = new Color(255, 255, 255);
-        Color frg = new Color(0, 0, 0);
+        final Color frg = new Color(0, 0, 0);
         if (isSelected) {
             bkg = new Color(200, 200, 200);
         }

@@ -7,12 +7,13 @@ package tourma.tableModel;
 import java.awt.Component;
 import java.awt.Font;
 import tourma.data.Coach;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Tournament;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -20,77 +21,90 @@ import tourma.data.Tournament;
  */
 public class mjtCoaches extends AbstractTableModel implements TableCellRenderer {
 
-    Vector<Coach> _coachs;
+    ArrayList<Coach> mCoachs;
 
-    public mjtCoaches(Vector<Coach> coachs) {
-        _coachs = coachs;
+    public mjtCoaches(final ArrayList<Coach> coachs) {
+        mCoachs = coachs;
     }
 
     public int getColumnCount() {
 
-        if (Tournament.getTournament().getParams()._enableClans) {
-            return 8;
-        } else {
-            return 7;
+        int result = 7;
+        if (Tournament.getTournament().getParams().mEnableClans) {
+            result = 8;
         }
+        return result;
     }
 
     public int getRowCount() {
-        return _coachs.size();
+        return mCoachs.size();
     }
 
-    public String getColumnName(int col) {
+    public String getColumnName(final int col) {
+        String val="";
         switch (col) {
             case 0:
-                return "#";
+                 val= "#";
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach");
+                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH);
             case 2:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team");
+                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
             case 3:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Roster");
+                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Roster");
             case 4:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF");
+                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NAF");
             case 5:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Ranking");
+                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ranking");
             case 7:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ClanKey");
+                val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
             case 6:
-                return "";
+                val= "";
+                break;
+            default:
         }
-        return "";
+        return val;
     }
 
-    public Object getValueAt(int row, int col) {
-        if (_coachs.size() > 0) {
-            Coach c = _coachs.get(row);
+    public Object getValueAt(final int row,final int col) {
+        Object val="";
+        if (mCoachs.size() > 0) {
+            final Coach c = mCoachs.get(row);
             switch (col) {
                 case 0:
-                    return row + 1;
+                    val= row + 1;
+                    break;
                 case 1:
-                    return c._name;
+                    val= c.mName;
+                    break;
                 case 2:
-                    return c._team;
+                    val= c.mTeam;
+                    break;
                 case 3:
-                    return c._roster._name;
+                    val= c.mRoster.mName;
+                    break;
                 case 4:
-                    return c._naf;
+                    val= c.mNaf;
+                    break;
                 case 5:
-                    return c._rank;
+                    val= c.mRank;
+                    break;
                 case 7:
-                    return c._clan._name;
+                    val= c.mClan.mName;
+                    break;
                 case 6:
-                    if (c._active) {
-                        return "Actif";
+                    if (c.mActive) {
+                        val= "Actif";
                     } else {
-                        return "Inactif";
+                        val= "Inactif";
                     }
+                    break;
+                default:
             }
         }
-        return "";
+        return val;
     }
 
-    public Class getColumnClass(int c) {
+    public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
 
@@ -98,20 +112,17 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
      * Don't need to implement this method unless your table's
      * editable.
      */
-    public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(final int row,final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        if (col > 0) {
-            return true;
-        }
-
-        return false;
+ 
+        return col > 0;
     }
 
     public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            final JTable table, final Object value,final  boolean isSelected,final  boolean hasFocus, final int row,final  int column) {
 
-        JTextField jlb = new JTextField();
+        final JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
         if (value instanceof String) {
@@ -122,8 +133,8 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
             jlb.setText(Integer.toString((Integer) value));
         }
 
-        Coach c = _coachs.get(row);
-        if (!c._active) {
+        final Coach c = mCoachs.get(row);
+        if (!c.mActive) {
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
         }
         jlb.setHorizontalAlignment(JTextField.CENTER);

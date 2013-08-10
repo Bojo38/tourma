@@ -4,11 +4,12 @@
  */
 package tourma.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import org.jdom.Element;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -16,81 +17,78 @@ import org.jdom.Element;
  */
 public class Team implements Comparable, XMLExport {
 
-    public static Team NullTeam = new Team("None");
-    public Vector<Coach> _coachs;
-    public String _name;
-    public static HashMap<String, Team> _map = new HashMap<String, Team>();
+    public static Team sNullTeam = new Team("None");
+    public ArrayList<Coach> mCoachs;
+    public String mName;
+    public static HashMap<String, Team> sTeamMap = new HashMap<String, Team>();
 
     public Team() {
-        _coachs = new Vector();
+        mCoachs = new ArrayList<Coach>();
     }
 
-    public Team(String name) {
-        _name = name;
-        _coachs = new Vector();
+    public Team(final String name) {
+        mName = name;
+        mCoachs = new ArrayList<Coach>();
     }
 
-    public int compareTo(Object obj) {
+    public int compareTo(final Object obj) {
+        int result = -1;
         if (obj instanceof Coach) {
-            return _name.compareTo(((Coach) obj)._name);
-        } else {
-            return -1;
+            result = mName.compareTo(((Coach) obj).mName);
         }
+        return result;
     }
 
     public int getActivePlayerNumber() {
         int nb = 0;
 
-        for (int i = 0; i < _coachs.size(); i++) {
-            if (_coachs.get(i)._active) {
+        for (int i = 0; i < mCoachs.size(); i++) {
+            if (mCoachs.get(i).mActive) {
                 nb++;
             }
         }
         return nb;
     }
 
-    public Vector<Coach> getActivePlayers() {
-        if (this == NullTeam) {
-            _coachs = new Vector<Coach>();
-            for (int i = 0; i < Tournament.getTournament().getParams()._teamMatesNumber; i++) {
-                _coachs.add(Coach.NullCoach);
+    public ArrayList<Coach> getActivePlayers() {
+        final ArrayList<Coach> v = new ArrayList<Coach>();
+        if (this == sNullTeam) {
+            for (int i = 0; i < Tournament.getTournament().getParams().mTeamMatesNumber; i++) {
+                v.add(Coach.sNullCoach);
             }
-            return _coachs;
         } else {
-            Vector<Coach> v = new Vector<Coach>();
-
-            for (int i = 0; i < _coachs.size(); i++) {
-                if (_coachs.get(i)._active) {
-                    v.add(_coachs.get(i));
+            for (int i = 0; i < mCoachs.size(); i++) {
+                if (mCoachs.get(i).mActive) {
+                    v.add(mCoachs.get(i));
                 }
             }
-            return v;
         }
+        return v;
     }
 
     public Element getXMLElement() {
-        Element team = new Element("Team");
-        team.setAttribute("Name", this._name);
-        for (int j = 0; j < this._coachs.size(); j++) {
-            Element coach = new Element("Coach");
-            coach.setAttribute("Name", this._coachs.get(j)._name);
+        final Element team = new Element("Team");
+        team.setAttribute(StringConstants.CS_NAME, this.mName);
+        for (int j = 0; j < this.mCoachs.size(); j++) {
+            final Element coach = new Element(StringConstants.CS_COACH);
+            coach.setAttribute(StringConstants.CS_NAME, this.mCoachs.get(j).mName);
             team.addContent(coach);
         }
         return team;
     }
 
-    public void setXMLElement(Element team) {
-        this._name = team.getAttributeValue("Name");
-        List coachs2 = team.getChildren("Coach");
-        Iterator m = coachs2.iterator();
-        this._coachs.clear();
+    public void setXMLElement(final Element team) {
+        this.mName = team.getAttributeValue(StringConstants.CS_NAME);
+        final List coachs2 = team.getChildren(StringConstants.CS_COACH);
+        final Iterator m = coachs2.iterator();
+        this.mCoachs.clear();
 
-        Team._map.put(_name, this);
+        Team.sTeamMap.put(mName, this);
         while (m.hasNext()) {
-            Element coach = (Element) m.next();
-            Coach c = Coach._map.get(coach.getAttribute("Name").getValue());
-            c._teamMates = this;
-            this._coachs.add(c);
+            final Element coach = (Element) m.next();
+            final Coach c = Coach.sCoachMap.get(coach.getAttribute(StringConstants.CS_NAME).getValue());
+            c.mTeamMates = this;
+            this.mCoachs.add(c);
         }
     }
 }

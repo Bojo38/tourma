@@ -7,12 +7,13 @@ package tourma.tableModel;
 import java.awt.Component;
 import java.awt.Font;
 import tourma.data.Coach;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Team;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -20,54 +21,61 @@ import tourma.data.Team;
  */
 public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
 
-    Vector<Team> _teams;
+    ArrayList<Team> mTeams;
 
-    public mjtTeams(Vector<Team> teams) {
-        _teams = teams;
+    public mjtTeams(final ArrayList<Team> teams) {
+        mTeams = teams;
     }
 
     public int getColumnCount() {
 
         int nbCol = 2;
-        for (int i = 0; i < _teams.size(); i++) {
-            nbCol = Math.max(nbCol, _teams.get(i)._coachs.size() + 2);
+        for (int i = 0; i < mTeams.size(); i++) {
+            nbCol = Math.max(nbCol, mTeams.get(i).mCoachs.size() + 2);
         }
         return nbCol;
     }
 
     public int getRowCount() {
-        return _teams.size();
+        return mTeams.size();
     }
 
-    public String getColumnName(int col) {
+    public String getColumnName(final int col) {
+        String val;
         switch (col) {
             case 0:
-                return "#";
+                val = "#";
+                break;
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Name");
+                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name");
+                break;
+            default:
+                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH) + (col - 1);
         }
-        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach") + (col - 1);
+        return val;
     }
 
-    public Object getValueAt(int row, int col) {
-        if (_teams.size() > 0) {
-            Team t = _teams.get(row);
+    public Object getValueAt(final int row,final int col) {
+        Object object="";
+        if (mTeams.size() > 0) {
+           final Team t = mTeams.get(row);
             switch (col) {
                 case 0:
-                    return row + 1;
+                    object= row + 1;
+                    break;
                 case 1:
-                    return t._name;
+                    object= t.mName;
+                    break;
+                default:
             }
-            if (t._coachs.size() > (col - 2)) {
-                return t._coachs.get(col - 2)._name;
-            } else {
-                return "";
-            }
+            if (t.mCoachs.size() > (col - 2)) {
+                object= t.mCoachs.get(col - 2).mName;
+            } 
         }
-        return "";
+        return object;
     }
 
-    public Class getColumnClass(int c) {
+    public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
 
@@ -75,16 +83,16 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
      * Don't need to implement this method unless your table's
      * editable.
      */
-    public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
     public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row,final  int column) {
 
-        JTextField jlb = new JTextField();
+        final JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
         if (value instanceof String) {
@@ -95,11 +103,11 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
             jlb.setText(Integer.toString((Integer) value));
         }
 
-        Team t = _teams.get(row);
-        if (t._coachs.size() > column - 2) {
+        final Team t = mTeams.get(row);
+        if (t.mCoachs.size() > column - 2) {
             if (column >= 2) {
-                Coach c = t._coachs.get(column - 2);
-                if (!c._active) {
+               final  Coach c = t.mCoachs.get(column - 2);
+                if (!c.mActive) {
                     jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                 }
             }

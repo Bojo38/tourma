@@ -4,7 +4,7 @@
  */
 package tourma.data;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import tourma.tableModel.mjtRanking;
@@ -15,32 +15,33 @@ import tourma.tableModel.mjtRanking;
  */
 public class Ranking implements XMLExport {
 
-    public mjtRanking _rank;
-    public String _name;
-    public String _type;
-    public String _valueType;
+    public mjtRanking mRank;
+    public String mName;
+    public String mType;
+    public String mValueType;
 
-    public Ranking(String name, String type, String valueType, mjtRanking rank) {
-        _rank = rank;
-        _name = name;
-        _type = type;
-        _valueType = valueType;
+    public Ranking(final String name, final String type, final String valueType,final  mjtRanking rank) {
+        mRank = rank;
+        mName = name;
+        mType = type;
+        mValueType = valueType;
     }
 
     public Element getXMLElement() {
-        Element rank = new Element("Ranking");
-        rank.setAttribute(new Attribute("name", _name));
-        rank.setAttribute(new Attribute("type", _type));
-        rank.setAttribute(new Attribute("order", _valueType));
-        Vector<ObjectRanking> datas = _rank.getSortedDatas();
+        final Element rank = new Element("Ranking");
+        rank.setAttribute(new Attribute("name", mName));
+        rank.setAttribute(new Attribute("type", mType));
+        rank.setAttribute(new Attribute("order", mValueType));
+        final ArrayList<ObjectRanking> datas = mRank.getSortedDatas();
         for (int k = 0; k < datas.size(); k++) {
-            Element ic = datas.get(k).getXMLElement();
+            final Element ic = datas.get(k).getXMLElement();
             ic.setAttribute(new Attribute("pos", Integer.toString(k + 1)));
             rank.addContent(ic);
         }
         return rank;
     }
 
-    public void setXMLElement(Element e) {
+    public void setXMLElement(final Element e) {
+        //  Declared only for interface
     }
 }

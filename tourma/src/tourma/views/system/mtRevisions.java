@@ -5,11 +5,12 @@
 package tourma.views.system;
 
 import java.awt.Component;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -17,12 +18,12 @@ import javax.swing.table.TableCellRenderer;
  */
 public class mtRevisions extends AbstractTableModel implements TableCellRenderer {
 
-    Vector _versions;
-    Vector _descriptions;
+    ArrayList mVersions;
+    ArrayList mDescriptions;
 
-    public mtRevisions(Vector versions, Vector descriptions) {
-        _versions=versions;
-        _descriptions=descriptions;
+    public mtRevisions(final ArrayList versions, final ArrayList descriptions) {
+        mVersions = versions;
+        mDescriptions = descriptions;
     }
 
     public int getColumnCount() {
@@ -30,33 +31,38 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
     }
 
     public int getRowCount() {
-        return _versions.size();
+        return mVersions.size();
     }
 
-    public String getColumnName(int col) {
+    public String getColumnName(final int col) {
+        String result = "";
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Version");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Version");
+                break;
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Description");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Description");
+                break;
+            default:
         }
-        return "";
+        return result;
     }
 
-    public Object getValueAt(int row, int col) {
-        String tmp="";
+    public Object getValueAt(final int row,final int col) {
+        String tmp = "";
         switch (col) {
             case 0:
-                tmp=(String)(_versions.get(row));
+                tmp = (String) (mVersions.get(row));
                 break;
             case 1:
-                tmp=(String)(_descriptions.get(row));
+                tmp = (String) (mDescriptions.get(row));
                 break;
+            default:
         }
-            return tmp;
+        return tmp;
     }
 
-    public Class getColumnClass(int c) {
+    public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
 
@@ -64,13 +70,13 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
      * Don't need to implement this method unless your table's
      * editable.
      */
-    public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(final JTable table, final Object value,final  boolean isSelected,final  boolean hasFocus, final int row, final int column) {
         return new JLabel((String) value);
     }
 }

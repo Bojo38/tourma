@@ -13,16 +13,15 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
-import tourma.data.Tournament;
 import tourma.data.Coach;
-import javax.swing.JOptionPane;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.tableModel.mjtMatches;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -30,50 +29,52 @@ import tourma.tableModel.mjtMatches;
  */
 public class jdgPairing extends javax.swing.JDialog {
 
-    Team _team1;
-    Team _team2;
-    Round _round;
-    Vector<String> _items1;
-    Vector<String> _items2;
-    Hashtable<String, Coach> _coachs;
-    Vector<Match> _matchs;
+    Team mTeam1;
+    Team mTeam2;
+    Round mRound;
+    ArrayList<String> mItems1;
+    ArrayList<String> mItems2;
+    HashMap<String, Coach> mCoachs;
+    ArrayList<Match> mMatchs;
 
-    /** Creates new form jdgCoach */
-    public jdgPairing(java.awt.Frame parent, boolean modal, Team team1, Team team2, Round round) {
+    /**
+     * Creates new form jdgCoach
+     */
+    public jdgPairing(final java.awt.Frame parent,final  boolean modal,final  Team team1,final  Team team2, final Round round) {
         super(parent, modal);
         initComponents();
 
-         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gs = ge.getDefaultScreenDevice();
-        DisplayMode dmode = gs.getDisplayMode();
+        final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        final GraphicsDevice gs = ge.getDefaultScreenDevice();
+        final DisplayMode dmode = gs.getDisplayMode();
         if (dmode != null) {
-            int screenWidth = dmode.getWidth();
-            int screenHeight = dmode.getHeight();
+            final int screenWidth = dmode.getWidth();
+           final  int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
 
-        _team1 = team1;
-        _team2 = team2;
-        _coachs = new Hashtable<String, Coach>();
+        mTeam1 = team1;
+        mTeam2 = team2;
+        mCoachs = new HashMap<String, Coach>();
 
-        this.setTitle(team1._name+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS ")+team2._name);
+        this.setTitle(team1.mName + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(" VS ") + team2.mName);
 
-        _round = round;
-        _matchs = new Vector<Match>();
+        mRound = round;
+        mMatchs = new ArrayList<Match>();
 
-        _items1 = new Vector();
-        for (int i = 0; i < _team1._coachs.size(); i++) {
-            Coach c = _team1._coachs.get(i);
-            _items1.add(c._name + " - " + c._team + " - " + c._roster._name);
-            _coachs.put(c._name + " - " + c._team + " - " + c._roster._name, c);
+        mItems1 = new ArrayList();
+        for (int i = 0; i < mTeam1.mCoachs.size(); i++) {
+           final  Coach c = mTeam1.mCoachs.get(i);
+            mItems1.add(c.mName + StringConstants.CS_THICK + c.mTeam + StringConstants.CS_THICK + c.mRoster.mName);
+            mCoachs.put(c.mName + StringConstants.CS_THICK + c.mTeam + StringConstants.CS_THICK + c.mRoster.mName, c);
         }
 
 
-        _items2 = new Vector();
-        for (int i = 0; i < _team1._coachs.size(); i++) {
-            Coach c = _team2._coachs.get(i);
-            _items2.add(c._name + " - " + c._team + " - " + c._roster._name);
-            _coachs.put(c._name + " - " + c._team + " - " + c._roster._name, c);
+        mItems2 = new ArrayList();
+        for (int i = 0; i < mTeam1.mCoachs.size(); i++) {
+            final Coach c = mTeam2.mCoachs.get(i);
+            mItems2.add(c.mName + StringConstants.CS_THICK + c.mTeam + StringConstants.CS_THICK + c.mRoster.mName);
+            mCoachs.put(c.mName + StringConstants.CS_THICK + c.mTeam + StringConstants.CS_THICK + c.mRoster.mName, c);
         }
 
         update();
@@ -81,23 +82,23 @@ public class jdgPairing extends javax.swing.JDialog {
     }
 
     private void update() {
-        jcbTeam1.setModel(new DefaultComboBoxModel(_items1));
-        jcbTeam2.setModel(new DefaultComboBoxModel(_items2));
+        jcbTeam1.setModel(new DefaultComboBoxModel(mItems1.toArray()));
+        jcbTeam2.setModel(new DefaultComboBoxModel(mItems2.toArray()));
 
-        mjtMatches model = new mjtMatches(_matchs, true, true, false);
+       final  mjtMatches model = new mjtMatches(mMatchs, true, true, false);
         jtbMatches.setModel(model);
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
 
-        jbtOK.setEnabled(_matchs.size() == _team1._coachs.size());
+        jbtOK.setEnabled(mMatchs.size() == mTeam1.mCoachs.size());
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "PMD"})
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -147,7 +148,7 @@ public class jdgPairing extends javax.swing.JDialog {
         jPanel3.add(jcbTeam1, java.awt.BorderLayout.WEST);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
         jLabel1.setText(bundle.getString("vs")); // NOI18N
         jPanel3.add(jLabel1, java.awt.BorderLayout.CENTER);
 
@@ -178,35 +179,35 @@ public class jdgPairing extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+@SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        for (int i = 0; i < _matchs.size(); i++) {
-            _round.getMatchs().add(_matchs.get(i));
+        for (int i = 0; i < mMatchs.size(); i++) {
+            mRound.getMatchs().add(mMatchs.get(i));
         }
         this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
-
+@SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
-        if (_items1.size() > 0) {
-            Match m = new Match();
-            m._coach1 = _coachs.get((String) jcbTeam1.getSelectedItem());
-            m._coach2 = _coachs.get((String) jcbTeam2.getSelectedItem());
-            _matchs.add(m);
-            _items1.remove(jcbTeam1.getSelectedIndex());
-            _items2.remove(jcbTeam2.getSelectedIndex());
+        if (mItems1.size() > 0) {
+            final Match m = new Match();
+            m.mCoach1 = mCoachs.get((String) jcbTeam1.getSelectedItem());
+            m.mCoach2 = mCoachs.get((String) jcbTeam2.getSelectedItem());
+            mMatchs.add(m);
+            mItems1.remove(jcbTeam1.getSelectedIndex());
+            mItems2.remove(jcbTeam2.getSelectedIndex());
         }
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
-
+@SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
 
         if (jtbMatches.getSelectedRow() >= 0) {
-            Match m = _matchs.get(jtbMatches.getSelectedRow());
-            _items1.add(m._coach1._name + " - " + m._coach1._team + " - " + m._coach1._roster._name);
-            _items2.add(m._coach2._name + " - " + m._coach2._team + " - " + m._coach2._roster._name);
-            _matchs.remove(jtbMatches.getSelectedRow());
+            final Match m = mMatchs.get(jtbMatches.getSelectedRow());
+            mItems1.add(m.mCoach1.mName + StringConstants.CS_THICK + m.mCoach1.mTeam + StringConstants.CS_THICK + m.mCoach1.mRoster.mName);
+            mItems2.add(m.mCoach2.mName + StringConstants.CS_THICK + m.mCoach2.mTeam + StringConstants.CS_THICK + m.mCoach2.mRoster.mName);
+            mMatchs.remove(jtbMatches.getSelectedRow());
         }
         update();
     }//GEN-LAST:event_jbtRemoveActionPerformed
