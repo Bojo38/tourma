@@ -6,7 +6,7 @@ package teamma.tableModel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JTable;
@@ -16,6 +16,7 @@ import teamma.data.Player;
 import teamma.data.Skill;
 import teamma.data.SkillType;
 import teamma.data.lrb;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -23,9 +24,9 @@ import teamma.data.lrb;
  */
 public class mjtTeamPlayers extends AbstractTableModel implements TableCellRenderer {
 
-    Vector<Player> _players;
+    ArrayList<Player> _players;
 
-    public mjtTeamPlayers(Vector<Player> players) {
+    public mjtTeamPlayers(ArrayList<Player> players) {
         _players = players;
 
     }
@@ -43,27 +44,27 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
             case 0:
                 return "#";
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Name");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name");
             case 2:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Position");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Position");
             case 3:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("M");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("M");
             case 4:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("S");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("S");
             case 5:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Ag");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ag");
             case 6:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Ar");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ar");
             case 7:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Skills");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Skills");
             case 8:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SR");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("SR");
             case 9:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DR");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("DR");
             case 10:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Base Cost");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Base Cost");
             case 11:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cost");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Cost");
         }
         return "";
     }
@@ -94,7 +95,7 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                      * Build Skill string in HTML Begin by player type then
                      * additional
                      */
-                    Vector<String> skills = new Vector<String>();
+                    ArrayList<String> skills = new ArrayList<String>();
                     for (i = 0; i < player._playertype._skills.size(); i++) {
                         Skill s = player._playertype._skills.get(i);
 
@@ -108,9 +109,9 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     }
 
                     for (i = 0; i < skills.size(); i++) {
-                        tmpstring = tmpstring + skills.get(i);
+                        tmpstring += skills.get(i);
                         if (i != skills.size() - 1) {
-                            tmpstring = tmpstring + ", ";
+                            tmpstring += ", ";
                         }
                     }
                     return (tmpstring);
@@ -121,7 +122,7 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     String sr = "";
                     for (i = 0; i < player._playertype._single.size(); i++) {
                         SkillType st = player._playertype._single.get(i);
-                        sr = sr + st._accronym;
+                        sr += st._accronym;
                     }
                     return sr;
                 case 9:
@@ -131,7 +132,7 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     String dr = "";
                     for (i = 0; i < player._playertype._double.size(); i++) {
                         SkillType st = player._playertype._double.get(i);
-                        dr = dr + st._accronym;
+                        dr += st._accronym;
                     }
                     return dr;
                 case 10:
@@ -153,7 +154,7 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                          */
                         for (j = 0; j < player._playertype._single.size(); j++) {
                             if (st.equals(player._playertype._single.get(j))) {
-                                skillCost = skillCost + 20000;
+                                skillCost += 20000;
                             }
                         }
                         /**
@@ -161,7 +162,7 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                          */
                         for (j = 0; j < player._playertype._double.size(); j++) {
                             if (st.equals(player._playertype._double.get(j))) {
-                                skillCost = skillCost + 30000;
+                                skillCost += 30000;
                             }
                         }
                         
@@ -172,19 +173,19 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                             Skill s=player._skills.get(i);
                             if (s._name.equals("+1 Movement"))
                             {
-                                skillCost = skillCost + 30000;
+                                skillCost += 30000;
                             }
                             if (s._name.equals("+1 Armor"))
                             {
-                                skillCost = skillCost + 30000;
+                                skillCost += 30000;
                             }
                             if (s._name.equals("+1 Agility"))
                             {
-                                skillCost = skillCost + 40000;
+                                skillCost += 40000;
                             }
                             if (s._name.equals("+1 Strength"))
                             {
-                                skillCost = skillCost + 50000;
+                                skillCost += 50000;
                             }
                         }
                     }

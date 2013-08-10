@@ -55,22 +55,26 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
         return val;
     }
 
-    public Object getValueAt(final int row,final int col) {
-        Object object="";
+    public Object getValueAt(final int row, final int col) {
+        Object object = "";
         if (mTeams.size() > 0) {
-           final Team t = mTeams.get(row);
+            final Team t = mTeams.get(row);
             switch (col) {
                 case 0:
-                    object= row + 1;
+                    object = row + 1;
                     break;
                 case 1:
-                    object= t.mName;
+                    object = t.mName;
                     break;
                 default:
             }
-            if (t.mCoachs.size() > (col - 2)) {
-                object= t.mCoachs.get(col - 2).mName;
-            } 
+            if (t.mCoachs.size() > 0) {
+                if (t.mCoachs.size() > (col - 2)) {
+                    if (col >= 2) {
+                        object = t.mCoachs.get(col - 2).mName;
+                    }
+                }
+            }
         }
         return object;
     }
@@ -90,7 +94,7 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
     }
 
     public Component getTableCellRendererComponent(
-            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row,final  int column) {
+            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
 
         final JTextField jlb = new JTextField();
 
@@ -106,7 +110,7 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
         final Team t = mTeams.get(row);
         if (t.mCoachs.size() > column - 2) {
             if (column >= 2) {
-               final  Coach c = t.mCoachs.get(column - 2);
+                final Coach c = t.mCoachs.get(column - 2);
                 if (!c.mActive) {
                     jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                 }

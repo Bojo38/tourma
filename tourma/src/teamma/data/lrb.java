@@ -9,12 +9,13 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import tourma.MainFrame;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -22,17 +23,17 @@ import tourma.MainFrame;
  */
 public class lrb {
 
-    public Vector<RosterType> _rosterTypes = null;
-    public Vector<StarPlayer> _starPlayers = null;
-    public Vector<SkillType> _skillTypes = null;
+    public ArrayList<RosterType> _rosterTypes = null;
+    public ArrayList<StarPlayer> _starPlayers = null;
+    public ArrayList<SkillType> _skillTypes = null;
     private static lrb _singleton = null;
     public String _name;
     public boolean _allowSpecialSkills=false;
 
     private lrb() {
-        _rosterTypes = new Vector<RosterType>();
-        _starPlayers = new Vector<StarPlayer>();
-        _skillTypes = new Vector<SkillType>();
+        _rosterTypes = new ArrayList<RosterType>();
+        _starPlayers = new ArrayList<StarPlayer>();
+        _skillTypes = new ArrayList<SkillType>();
 
         URL url = getClass().getResource("/teamma/rules/rules.xml");
         loadLRB(getClass().getResourceAsStream("/teamma/rules/rules.xml"));
@@ -69,7 +70,7 @@ public class lrb {
             Element e_teams = racine.getChild("teams");
             List l_teams = e_teams.getChildren("team");
             Iterator cr = l_teams.iterator();
-            _rosterTypes.removeAllElements();
+            _rosterTypes.clear();
 
             while (cr.hasNext()) {
                 Element e_team = (Element) cr.next();
@@ -102,7 +103,7 @@ public class lrb {
 
             List l_categories = racine.getChildren("category");
             Iterator cr = l_categories.iterator();
-            _skillTypes.removeAllElements();
+            _skillTypes.clear();
 
             while (cr.hasNext()) {
                 Element e_skillType = (Element) cr.next();
@@ -144,7 +145,7 @@ public class lrb {
             Element racine = document.getRootElement();
 
             Element e_name = racine.getChild("name");
-            RosterType rt = new RosterType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString( e_name.getValue()));
+            RosterType rt = new RosterType(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString( e_name.getValue()));
             rt._image=image;
             Element e_reroll_cost = racine.getChild("reroll");
             rt._reroll_cost = Integer.parseInt(e_reroll_cost.getValue());
@@ -164,7 +165,7 @@ public class lrb {
             Element e_playerType = racine.getChild("playertypes");
             List l_players = e_playerType.getChildren("playerType");
             Iterator cr = l_players.iterator();
-            rt._player_types.removeAllElements();
+            rt._player_types.clear();
 
             while (cr.hasNext()) {
                 Element e_player = (Element) cr.next();
@@ -239,7 +240,7 @@ public class lrb {
             org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
-            _starPlayers.removeAllElements();
+            _starPlayers.clear();
 
             List stars = racine.getChildren("starplayer");
             Iterator j = stars.iterator();
@@ -272,7 +273,7 @@ public class lrb {
                 i = rosterlist.iterator();
                 while (i.hasNext()) {
                     Element e_team = (Element) i.next();
-                    RosterType rt = getRosterType( java.util.ResourceBundle.getBundle("tourma/languages/language").getString(e_team.getValue()));
+                    RosterType rt = getRosterType( java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(e_team.getValue()));
                     if (rt == null) {
                         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "RosterType not found: " + e_team.getValue() + " for player " + sp._name);
                     } else {
@@ -341,10 +342,10 @@ public class lrb {
         return null;
     }
     
-    public Vector<String> getRosterTypeListAsString()
+    public ArrayList<String> getRosterTypeListAsString()
     {
         int i;
-        Vector<String> res=new Vector<String>();
+        ArrayList<String> res=new ArrayList<String>();
         for (i=0; i<_rosterTypes.size(); i++)
         {
             res.add(_rosterTypes.get(i)._name);

@@ -29,6 +29,7 @@ import tourma.tableModel.mjtRankingTeam;
 import tourma.views.report.jdgGlobal;
 import tourma.views.report.jdgRanking;
 import tourma.utility.StringConstants;
+import tourma.utils.TableFormat;
 
 /**
  *
@@ -223,14 +224,14 @@ public class JPNPoolRound extends javax.swing.JPanel {
             jtbRankingPool.setDefaultRenderer(String.class, mRankingTeam);
             jtbRankingPool.setDefaultRenderer(Integer.class, mRankingTeam);
 
-            setColumnSize(jtbRankingPool);
+            TableFormat.setColumnSize(jtbRankingPool);
         } else {
             mjtRankingIndiv mRankingIndiv = null;
             mRankingIndiv = new mjtRankingIndiv(r_index, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mPool.mCoachs, mTournament.getParams().mTeamTournament, mRoundOnly);
             jtbRankingPool.setModel(mRankingIndiv);
             jtbRankingPool.setDefaultRenderer(String.class, mRankingIndiv);
             jtbRankingPool.setDefaultRenderer(Integer.class, mRankingIndiv);
-            setColumnSize(jtbRankingPool);
+            TableFormat.setColumnSize(jtbRankingPool);
         }
 
         for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
@@ -240,30 +241,5 @@ public class JPNPoolRound extends javax.swing.JPanel {
         jtbRankingPool.setRowHeight(25);
     }
 
-    public void setColumnSize(final JTable t) {
-        final FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0; i < t.getColumnCount(); i++) {
-            int max = 0;
-            for (int j = 0; j < t.getRowCount(); j++) {
-                final Object value = t.getValueAt(j, i);
-                String tmp = "";
-                if (value instanceof String) {
-                    tmp = (String) value;
-                }
-                if (value instanceof Integer) {
-                    tmp = ((Integer) value).toString();
-                }
-                final int taille = fm.stringWidth(tmp);
-                if (taille > max) {
-                    max = taille;
-                }
-            }
-            final String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
-            final int taille = fm.stringWidth(nom);
-            if (taille > max) {
-                max = taille;
-            }
-            t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
-        }
-    }
+   
 }

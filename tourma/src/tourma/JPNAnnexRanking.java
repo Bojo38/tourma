@@ -25,6 +25,7 @@ import tourma.tableModel.mjtAnnexRankClan;
 import tourma.tableModel.mjtAnnexRankTeam;
 import tourma.views.report.jdgRanking;
 import tourma.utility.StringConstants;
+import tourma.utils.TableFormat;
 
 /**
  *
@@ -263,32 +264,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
     private javax.swing.JTable jtbPositive;
     // End of variables declaration//GEN-END:variables
 
-    public void setColumnSize(final JTable t) {
-        final FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0; i < t.getColumnCount(); i++) {
-            int max = 0;
-            for (int j = 0; j < t.getRowCount(); j++) {
-                final Object value = t.getValueAt(j, i);
-                String tmp = "";
-                if (value instanceof String) {
-                    tmp = (String) value;
-                }
-                if (value instanceof Integer) {
-                    tmp = ((Integer) value).toString();
-                }
-                final int taille = fm.stringWidth(tmp);
-                if (taille > max) {
-                    max = taille;
-                }
-            }
-            final String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
-            final int taille = fm.stringWidth(nom);
-            if (taille > max) {
-                max = taille;
-            }
-            t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
-        }
-    }
+   
 
     public void update() {
 
@@ -335,8 +311,8 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
             jtbPositive.setDefaultRenderer(String.class, modelPos);
             jtbPositive.setDefaultRenderer(Integer.class, modelPos);
 
-            setColumnSize(jtbPositive);
-            setColumnSize(jtbNegative);
+            TableFormat.setColumnSize(jtbPositive);
+            TableFormat.setColumnSize(jtbNegative);
 
             jtbPositive.setRowHeight(25);
             jtbNegative.setRowHeight(25);

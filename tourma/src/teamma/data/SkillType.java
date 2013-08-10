@@ -4,7 +4,7 @@
  */
 package teamma.data;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,11 +14,11 @@ public class SkillType {
 
     public String _name;
     public String _accronym;
-    public Vector<Skill> _skills;
+    public ArrayList<Skill> _skills;
     public boolean _special;
 
     public SkillType(String name,String accronym) {
-        _skills = new Vector<Skill>();
+        _skills = new ArrayList<Skill>();
         _name = name;
         _accronym=accronym;
     }

@@ -4,7 +4,7 @@
  */
 package teamma.data;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Roster {
     /**
      * Standard creation team
      */
-    public Vector<Player> _players;
+    public ArrayList<Player> _players;
     public int _rerolls;
     public boolean _apothecary;
     public int _fanfactor;
@@ -39,11 +39,11 @@ public class Roster {
     /*
      * No mercenary ?
      */
-    public Vector<StarPlayer> _champions;
+    public ArrayList<StarPlayer> _champions;
 
     public Roster() {
-        _players = new Vector<Player>();
-        _champions = new Vector<StarPlayer>();
+        _players = new ArrayList<Player>();
+        _champions = new ArrayList<StarPlayer>();
     }
 
     public int getValue(boolean bWithSkill) {

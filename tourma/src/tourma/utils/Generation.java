@@ -78,13 +78,13 @@ public class Generation {
     }
 
     public static void generateFirstRound(int choice) {
-        Tournament tour = Tournament.getTournament();
-        Parameters params = tour.getParams();
-        ArrayList<Coach> coachs = tour.getCoachs();
-        ArrayList<Round> rounds = tour.getRounds();
+        final Tournament tour = Tournament.getTournament();
+        final Parameters params = tour.getParams();
+        final ArrayList<Coach> coachs = tour.getCoachs();
+        final ArrayList<Round> rounds = tour.getRounds();
         rounds.clear();
 
-        ArrayList<Team> vteams = tour.getTeams();
+        final ArrayList<Team> vteams = tour.getTeams();
         tour.mRoundRobin = false;
 
         if (params.mTeamTournament) {
@@ -98,7 +98,7 @@ public class Generation {
                 }
             }
         } else {
-            int nb_coach = tour.GetActiveCoachNumber();
+            final int nb_coach = tour.GetActiveCoachNumber();
             if (nb_coach % 2 > 0) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Nombre impair de coach actifs", "Erreur de génération", JOptionPane.WARNING_MESSAGE);
             }
@@ -158,13 +158,13 @@ public class Generation {
         if (rounds.size() > 0) {
             for (int k = 0; k < rounds.size(); k++) {
                 for (int i = 0; i < rounds.get(k).getMatchs().size(); i++) {
-                    Match m = rounds.get(k).getMatchs().get(i);
+                    final Match m = rounds.get(k).getMatchs().get(i);
                     m.mCoach1.mMatchs.add(m);
                     m.mCoach2.mMatchs.add(m);
 
                     for (int j = 0; j < params.mCriterias.size(); j++) {
-                        Criteria criteria = params.mCriterias.get(j);
-                        Value val = new Value(criteria);
+                        final Criteria criteria = params.mCriterias.get(j);
+                        final Value val = new Value(criteria);
                         if (j == 0) {
                             val.mValue1 = -1;
                             val.mValue2 = -1;
@@ -177,17 +177,17 @@ public class Generation {
 
         String filename = Tournament.getTournament().getParams().mTournamentName;
         filename = filename + "." + Tournament.getTournament().getRounds().size();
-        Date date = new Date();
+        final Date date = new Date();
         filename = filename + "." + Long.toString(date.getTime()) + ".xml";
-        File file = new File(filename);
+        final File file = new File(filename);
 
         Tournament.getTournament().saveXML(file, false);
     }
 
-    protected static void generateFirstRoundPool(boolean byTeam) {
+    protected static void generateFirstRoundPool(final boolean byTeam) {
         
-        Tournament tour = Tournament.getTournament();
-        ArrayList<Round> rounds = tour.getRounds();
+       final  Tournament tour = Tournament.getTournament();
+       final  ArrayList<Round> rounds = tour.getRounds();
         
         if (byTeam)
         {
@@ -561,7 +561,7 @@ public class Generation {
         int nb_tmp = 1;
         int nbrounds = 0;
         while (nb_tmp < nb_coachs) {
-            nb_tmp = nb_tmp * 2;
+            nb_tmp *= 2;
             nbrounds++;
         }
 
@@ -815,7 +815,7 @@ public class Generation {
         int nb_tmp = 1;
         int nbrounds = 0;
         while (nb_tmp < nb_teams) {
-            nb_tmp = nb_tmp * 2;
+            nb_tmp *= 2;
             nbrounds++;
         }
 
@@ -1343,7 +1343,7 @@ public class Generation {
         }
         int half_size = size / 2;
         if (half_size % 2 == 1) {
-            half_size = half_size - 1;
+            half_size -= 1;
         }
         idx1 = 0;
         idx2 = half_size / 2;
@@ -1976,7 +1976,7 @@ public class Generation {
         }
         int half_size = size / 2;
         if (half_size % 2 == 1) {
-            half_size = half_size - 1;
+            half_size -= 1;
         }
         idx1 = 0;
         idx2 = half_size / 2;
@@ -2327,12 +2327,12 @@ public class Generation {
             if (tour.getParams().mTeamTournament) {
                 if (tour.getParams().mTeamPairing == 0) {
                     while (nb_tmp < tour.GetActiveCoachNumber()) {
-                        nb_tmp = nb_tmp * 2;
+                        nb_tmp *= 2;
                         cup_max_tour++;
                     }
                 } else {
                     while (nb_tmp < tour.getTeams().size()) {
-                        nb_tmp = nb_tmp * 2;
+                        nb_tmp *= 2;
                         cup_max_tour++;
                     }
                 }
@@ -2342,7 +2342,7 @@ public class Generation {
                     return null;
                 } else {
                     while (nb_tmp < tour.GetActiveCoachNumber()) {
-                        nb_tmp = nb_tmp * 2;
+                        nb_tmp *= 2;
                         cup_max_tour++;
                     }
                 }

@@ -24,6 +24,7 @@ import tourma.tableModel.mjtRankingClan;
 import tourma.views.report.jdgGlobal;
 import tourma.views.report.jdgRanking;
 import tourma.utility.StringConstants;
+import tourma.utils.TableFormat;
 
 /**
  *
@@ -193,7 +194,7 @@ public class JPNClanRound extends javax.swing.JPanel {
         jtbRankingClan.setModel(mRankingClan);
         jtbRankingClan.setDefaultRenderer(String.class, mRankingClan);
         jtbRankingClan.setDefaultRenderer(Integer.class, mRankingClan);
-        setColumnSize(jtbRankingClan);
+        TableFormat.setColumnSize(jtbRankingClan);
 
         for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
             ((JPNAnnexRanking) jtpAnnexRank.getComponent(i)).update();
@@ -201,30 +202,5 @@ public class JPNClanRound extends javax.swing.JPanel {
         jtbRankingClan.setRowHeight(25);
     }
 
-    public void setColumnSize(final JTable t) {
-        final FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0; i < t.getColumnCount(); i++) {
-            int max = 0;
-            for (int j = 0; j < t.getRowCount(); j++) {
-               final Object value = t.getValueAt(j, i);
-                String tmp = "";
-                if (value instanceof String) {
-                    tmp = (String) value;
-                }
-                if (value instanceof Integer) {
-                    tmp = ((Integer) value).toString();
-                }
-                final int taille = fm.stringWidth(tmp);
-                if (taille > max) {
-                    max = taille;
-                }
-            }
-            final String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
-            final int taille = fm.stringWidth(nom);
-            if (taille > max) {
-                max = taille;
-            }
-            t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
-        }
-    }
+    
 }

@@ -23,7 +23,6 @@ import javax.swing.JOptionPane;
 import tourma.data.Coach;
 import tourma.data.Match;
 import tourma.data.Round;
-import tourma.utility.StringConstants;
 
 /**
  *

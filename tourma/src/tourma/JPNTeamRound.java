@@ -29,6 +29,7 @@ import tourma.views.report.jdgGlobal;
 import tourma.views.report.jdgRanking;
 import tourma.views.report.jdgRound;
 import tourma.utility.StringConstants;
+import tourma.utils.TableFormat;
 
 /**
  *
@@ -249,7 +250,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jtbRankingTeam.setDefaultRenderer(String.class, mRankingTeam);
         jtbRankingTeam.setDefaultRenderer(Integer.class, mRankingTeam);
 
-        setColumnSize(jtbRankingTeam);
+        TableFormat.setColumnSize(jtbRankingTeam);
 
         if (mJtbTeamMatch != null) {
             final ArrayList<Team> teams = new ArrayList<Team>();
@@ -268,37 +269,12 @@ public class JPNTeamRound extends javax.swing.JPanel {
             mJtbTeamMatch.setModel(model);
             mJtbTeamMatch.setDefaultRenderer(String.class, model);
             mJtbTeamMatch.setDefaultRenderer(Integer.class, model);
-            setColumnSize(mJtbTeamMatch);
+            TableFormat.setColumnSize(mJtbTeamMatch);
         }
 
         jtbRankingTeam.setRowHeight(25);
 
     }
 
-    public void setColumnSize(final JTable t) {
-        final FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0; i < t.getColumnCount(); i++) {
-            int max = 0;
-            for (int j = 0; j < t.getRowCount(); j++) {
-                final Object value = t.getValueAt(j, i);
-                String tmp = "";
-                if (value instanceof String) {
-                    tmp = (String) value;
-                }
-                if (value instanceof Integer) {
-                    tmp = ((Integer) value).toString();
-                }
-                final int taille = fm.stringWidth(tmp);
-                if (taille > max) {
-                    max = taille;
-                }
-            }
-            final String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
-            final int taille = fm.stringWidth(nom);
-            if (taille > max) {
-                max = taille;
-            }
-            t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
-        }
-    }
+    
 }

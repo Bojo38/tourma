@@ -4,7 +4,7 @@
  */
 package teamma.data;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,12 +14,12 @@ public class Player {
 
     public PlayerType _playertype;
     public String _name;
-    public Vector<Skill> _skills;
+    public ArrayList<Skill> _skills;
 
     public Player(PlayerType pt)
     {
         _playertype=pt;
-        _skills=new Vector<Skill>();
+        _skills=new ArrayList<Skill>();
         _name="";
     }
     

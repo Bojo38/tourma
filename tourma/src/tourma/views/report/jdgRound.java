@@ -67,7 +67,7 @@ public class jdgRound extends javax.swing.JDialog {
         mResult = result;
         mTeam = team;
 
-        this.setTitle(tour.getParams().mTournamentName + " -" +" - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ + roundNumber);
+        this.setTitle(tour.getParams().mTournamentName + " -" +StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ + roundNumber);
         try {
             jepHTML.setContentType("html");
 
@@ -93,7 +93,7 @@ public class jdgRound extends javax.swing.JDialog {
         mRoundNumber = roundNumber;
         mTour = tour;
 
-        this.setTitle(tour.getParams().mTournamentName + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ + roundNumber);
+        this.setTitle(tour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ + roundNumber);
         try {
             jepHTML.setContentType("html");
             File f;
@@ -231,7 +231,7 @@ public class jdgRound extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate("round.html");
 
             final Map root = new HashMap();
-            root.put("nom", mTour.getParams().mTournamentName + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ + mRoundNumber);
+            root.put("nom", mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ + mRoundNumber);
             root.put("table", mRound.getMatchs().size());
 
             final ArrayList<Match> matches = mRound.getMatchs();
@@ -259,7 +259,7 @@ public class jdgRound extends javax.swing.JDialog {
                 }
                 else
                 {
-                       m.put("coach1", match.mCoach1.mTeamMates.mName+" - "+ match.mCoach1.mName);
+                       m.put("coach1", match.mCoach1.mTeamMates.mName+StringConstants.CS_THICK+ match.mCoach1.mName);
                 }
                 if (mResult) {
                     m.put("score1", match.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0)).mValue1);
@@ -291,7 +291,7 @@ public class jdgRound extends javax.swing.JDialog {
                 }
                 else
                 {
-                       m.put("coach2", match.mCoach2.mTeamMates.mName+" - "+ match.mCoach2.mName);
+                       m.put("coach2", match.mCoach2.mTeamMates.mName+StringConstants.CS_THICK+ match.mCoach2.mName);
                 }
                 //m.put("coach2", match.mCoach2.mName);
                 parMatches.add(m);
@@ -339,7 +339,7 @@ public class jdgRound extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate("team_round.html");
 
            final  Map root = new HashMap();
-            root.put("nom", mTour.getParams().mTournamentName + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ + mRoundNumber);
+            root.put("nom", mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ + mRoundNumber);
             root.put("tables", mRound.getMatchs().size());
 
             if (mResult) {

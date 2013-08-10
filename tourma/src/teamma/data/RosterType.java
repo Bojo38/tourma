@@ -4,7 +4,7 @@
  */
 package teamma.data;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,14 +30,14 @@ public class RosterType {
     public int _chef_cost;
     public boolean _igor;
     public String _image;
-    public Vector<PlayerType> _player_types;
-    public Vector<StarPlayer> _available_starplayers;
+    public ArrayList<PlayerType> _player_types;
+    public ArrayList<StarPlayer> _available_starplayers;
     
     public RosterType(String name)
     {
         _name=name;
-        _player_types=new  Vector<PlayerType>();
-        _available_starplayers=new Vector<StarPlayer>();
+        _player_types=new  ArrayList<PlayerType>();
+        _available_starplayers=new ArrayList<StarPlayer>();
     }
     
     public PlayerType getPlayerType(String name) {

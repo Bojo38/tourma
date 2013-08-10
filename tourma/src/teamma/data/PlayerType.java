@@ -4,7 +4,7 @@
  */
 package teamma.data;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,15 +18,15 @@ public class PlayerType {
     public int _agility;
     public int _armor;
     public int _cost;
-    public Vector<Skill> _skills;
-    public Vector<SkillType> _single;
-    public Vector<SkillType> _double;
+    public ArrayList<Skill> _skills;
+    public ArrayList<SkillType> _single;
+    public ArrayList<SkillType> _double;
     
     public PlayerType (String position){
         _position=position;
-        _skills=new Vector<Skill>();
-        _single=new Vector<SkillType>();
-        _double=new Vector<SkillType>();
+        _skills=new ArrayList<Skill>();
+        _single=new ArrayList<SkillType>();
+        _double=new ArrayList<SkillType>();
     }
     
     

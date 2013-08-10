@@ -9,6 +9,7 @@ import tourma.data.Tournament;
 import tourma.tableModel.mjtRankingIndiv;
 import tourma.views.report.jdgRanking;
 import tourma.utility.StringConstants;
+import tourma.utils.TableFormat;
 
 /*
  * To change this template, choose Tools | Templates
@@ -111,35 +112,10 @@ public class JPNGroup extends javax.swing.JPanel {
         jtbGroup.setDefaultRenderer(Integer.class, tableModel);
 
         jtbGroup.setRowHeight(25);
-        setColumnSize(jtbGroup);
+        TableFormat.setColumnSize(jtbGroup);
     }
 
-    public void setColumnSize(final JTable t) {
-        final FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0; i < t.getColumnCount(); i++) {
-            int max = 0;
-            for (int j = 0; j < t.getRowCount(); j++) {
-                final Object value = t.getValueAt(j, i);
-                String tmp = "";
-                if (value instanceof String) {
-                    tmp = (String) value;
-                }
-                if (value instanceof Integer) {
-                    tmp = ((Integer) value).toString();
-                }
-                final int taille = fm.stringWidth(tmp);
-                if (taille > max) {
-                    max = taille;
-                }
-            }
-            final String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
-            final int taille = fm.stringWidth(nom);
-            if (taille > max) {
-                max = taille;
-            }
-            t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
-        }
-    }
+    
 
      @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralClanActionPerformed

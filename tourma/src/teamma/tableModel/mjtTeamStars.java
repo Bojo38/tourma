@@ -6,13 +6,14 @@ package teamma.tableModel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.JEditorPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import teamma.data.Skill;
 import teamma.data.StarPlayer;
+import tourma.utility.StringConstants;
 
 
 /**
@@ -21,9 +22,9 @@ import teamma.data.StarPlayer;
  */
 public class mjtTeamStars extends AbstractTableModel implements TableCellRenderer {
 
-    Vector<StarPlayer> _stars;
+    ArrayList<StarPlayer> _stars;
 
-    public mjtTeamStars(Vector<StarPlayer> players) {
+    public mjtTeamStars(ArrayList<StarPlayer> players) {
         _stars = players;
 
     }
@@ -39,21 +40,21 @@ public class mjtTeamStars extends AbstractTableModel implements TableCellRendere
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Name");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name");
             case 1:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Position");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Position");
             case 2:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("M");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("M");
             case 3:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("S");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("S");
             case 4:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Ag");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ag");
             case 5:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Ar");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ar");
             case 6:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Skills");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Skills");
             case 7:
-                return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cost");
+                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Cost");
         }
         return "";
     }
@@ -82,7 +83,7 @@ public class mjtTeamStars extends AbstractTableModel implements TableCellRendere
                      * Build Skill string in HTML Begin by player type then
                      * additional
                      */
-                    Vector<String> skills = new Vector<String>();
+                    ArrayList<String> skills = new ArrayList<String>();
                     for (i = 0; i < player._skills.size(); i++) {
                         Skill s = player._skills.get(i);
 
@@ -90,9 +91,9 @@ public class mjtTeamStars extends AbstractTableModel implements TableCellRendere
                     }
 
                     for (i = 0; i < skills.size(); i++) {
-                        tmpstring = tmpstring + skills.get(i);
+                        tmpstring += skills.get(i);
                         if (i != skills.size() - 1) {
-                            tmpstring = tmpstring + ", ";
+                            tmpstring += ", ";
                         }
                     }
                     return (tmpstring);
