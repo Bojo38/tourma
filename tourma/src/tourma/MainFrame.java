@@ -20,17 +20,25 @@ import java.awt.Component;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.TreeSelectionEvent;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import teamma.data.lrb;
 import teamma.views.JdgRoster;
 import tourma.data.Group;
+import tourma.data.Parameters;
 import tourma.data.RosterType;
+import tourma.data.Round;
 import tourma.utils.Generation;
 import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
@@ -43,12 +51,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     Tournament mTournament;
     File mFile = null;
-    JPNParamGroup mJpnGroup;
-     JPNParamClan mJpnClan;
-     JPNParamTeam mJpnTeam;
-     JPNParamCriterias mJpnCriterias;
-     JPNParamIndiv mJpnIndiv;
-     JPNTeams jpnTeamTour;
 
     /**
      * Creates new form MainFrame
@@ -74,132 +76,49 @@ public class MainFrame extends javax.swing.JFrame {
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
                 mFile =
                         jfc.getSelectedFile();
-                for (int i = jtpMain.getTabCount() - 1; i
-                        >= 0; i--) {
-                    final Component obj = jtpMain.getComponentAt(i);
-                    if (obj instanceof JPNRound) {
-                        jtpMain.remove(obj);
-                    }
+                /*for (int i = jtpMain.getTabCount() - 1; i
+                 >= 0; i--) {
+                 final Component obj = jtpMain.getComponentAt(i);
+                 if (obj instanceof JPNRound) {
+                 jtpMain.remove(obj);
+                 }
 
-                }
-                boolean cup = false;
-                for (int i = 0; i
-                        < mTournament.getRounds().size(); i++) {
-                    final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
-                    jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-                    if (mTournament.getRounds().get(i).mCup) {
-                        cup = true;
-                    }
-                }
-                if (cup) {
-                    final JPNCup jpncup = new JPNCup();
-                    jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")), jpncup);
-                }
+                 }
+                 boolean cup = false;
+                 for (int i = 0; i
+                 < mTournament.getRounds().size(); i++) {
+                 final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
+                 jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                 if (mTournament.getRounds().get(i).mCup) {
+                 cup = true;
+                 }
+                 }
+                 if (cup) {
+                 final JPNCup jpncup = new JPNCup();
+                 jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")), jpncup);
+                 }*/
             }
         }
-
-        final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-
-        mJpnIndiv=new JPNParamIndiv();
-        mJpnCriterias=new JPNParamCriterias();
-        mJpnTeam=new JPNParamTeam();
-        mJpnGroup = new JPNParamGroup();
-        mJpnClan = new JPNParamClan();
-        jtpOptions.addTab(
-                bundle.getString("Individual"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User.png")), 
-                mJpnIndiv);
-        jtpOptions.addTab(
-                bundle.getString("Criterias"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")), 
-                mJpnCriterias);
-        jtpOptions.addTab(
-                bundle.getString("ByTeamKey"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")), 
-                mJpnTeam);
-        jtpOptions.addTab(
-                bundle.getString("Clan"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")), 
-                mJpnClan);
-        jtpOptions.addTab(
-                bundle.getString("Group"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")), 
-                mJpnGroup);
-        
-        
-        jpnTeamTour=new JPNTeams();
-        jpnParticipant.add(jpnTeamTour,BorderLayout.NORTH);
 
         update();
     }
 
-
-
-   
-
-     
-
-    protected void updateTables(final boolean bTourStarted) {
-
-        jbtAdd.setEnabled(!bTourStarted);
-        jbtRemove.setEnabled(!bTourStarted);
-
-       
-
-        final mjtCoaches coachModel = new mjtCoaches(mTournament.getCoachs());
-        jtbCoachs.setModel(coachModel);
-        TableFormat.setColumnSize(jtbCoachs);
-
-        jtbCoachs.setDefaultRenderer(String.class, coachModel);
-        jtbCoachs.setDefaultRenderer(Integer.class, coachModel);
-
-    }
-
     public void update() {
 
-        final boolean bTourStarted = mTournament.getRounds().size() > 0;
-
-        updateTables(bTourStarted);
-
-         if (mTournament.getParams().mTeamTournament) {
-             jpnTeamTour.update();
-            jpnTeamTour.setVisible(true);
-            jpnCoachButtons.setVisible(false);
-        } else {
-            jpnTeamTour.setVisible(false);
-            jpnCoachButtons.setVisible(true);
-        }
-        
-        
-        mJpnIndiv.update();
-        mJpnCriterias.update();
-        mJpnTeam.update();
-        mJpnClan.update();
-        mJpnGroup.update();
-
+        //final boolean bTourStarted = mTournament.getRounds().size() > 0;
         jmiEditTeam.setEnabled(mTournament.getParams().mGame == RosterType.C_BLOOD_BOWL);
-
-        jtpOptions.setEnabledAt(2, mTournament.getParams().mTeamTournament);
-        jtpOptions.setEnabledAt(3, !mTournament.getParams().mTeamTournament);
-
-        jtfOrgas.setText(mTournament.getParams().mTournamentOrga);
-        jtfTournamentName.setText(mTournament.getParams().mTournamentName);
-
-        jxdDate.setDate(mTournament.getParams().mDate);
-        jtfPlace.setText(mTournament.getParams().mPlace);
-
-        for (int i = 0; i < jtpMain.getComponentCount(); i++) {
-            final Object o = jtpMain.getComponentAt(i);
-            if (o instanceof JPNRound) {
-                ((JPNRound) o).update();
-            }
-            if (o instanceof JPNCup) {
-                ((JPNCup) o).update();
-            }
-        }
-
+        final mainTreeModel dtm = new mainTreeModel();
+        jtrPanels.setCellRenderer(dtm);
+        jtrPanels.setModel(dtm);   
+        this.revalidate();
+        this.repaint();
     }
 
+    public void updateTree()
+    {
+        jtrPanels.setSelectionPath(new TreePath(((mainTreeModel)jtrPanels.getModel()).mParams));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -209,28 +128,9 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtpMain = new javax.swing.JTabbedPane();
-        jpnParameters = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jtfTournamentName = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jtfOrgas = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        jtfPlace = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
-        jxdDate = new org.jdesktop.swingx.JXDatePicker();
-        jPanel9 = new javax.swing.JPanel();
-        jtpOptions = new javax.swing.JTabbedPane();
-        jpnParticipant = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jpnCoachButtons = new javax.swing.JPanel();
-        jbtAdd = new javax.swing.JButton();
-        jbtRemove = new javax.swing.JButton();
-        jbtModify = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtbCoachs = new javax.swing.JTable();
+        jtrPanels = new javax.swing.JTree();
+        jpnContent = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmnFile = new javax.swing.JMenu();
         jmiNouveau = new javax.swing.JMenuItem();
@@ -268,119 +168,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jtpMain.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jtpMainStateChanged(evt);
+        jtrPanels.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jtrPanelsValueChanged(evt);
             }
         });
+        jScrollPane1.setViewportView(jtrPanels);
 
-        jpnParameters.setLayout(new java.awt.GridLayout(1, 2));
-
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TournamentKey"))); // NOI18N
-        jPanel5.setLayout(new java.awt.GridLayout(4, 2));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText(bundle.getString("TournamentNameKey")); // NOI18N
-        jPanel5.add(jLabel1);
-
-        jtfTournamentName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtfTournamentNameKeyPressed(evt);
-            }
-        });
-        jPanel5.add(jtfTournamentName);
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel2.setText(bundle.getString("OrganizerKey")); // NOI18N
-        jPanel5.add(jLabel2);
-
-        jtfOrgas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtfOrgasKeyPressed(evt);
-            }
-        });
-        jPanel5.add(jtfOrgas);
-
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel21.setText(bundle.getString("PlaceKey")); // NOI18N
-        jPanel5.add(jLabel21);
-        jPanel5.add(jtfPlace);
-
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel22.setText(bundle.getString("DateKey")); // NOI18N
-        jPanel5.add(jLabel22);
-        jPanel5.add(jxdDate);
-
-        jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
-
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("RankingParametersKey"))); // NOI18N
-        jPanel9.setLayout(new java.awt.BorderLayout());
-        jPanel9.add(jtpOptions, java.awt.BorderLayout.CENTER);
-
-        jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
-
-        jpnParameters.add(jPanel1);
-
-        jpnParticipant.setLayout(new java.awt.BorderLayout());
-
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Coachs"));
-        jPanel7.setPreferredSize(new java.awt.Dimension(450, 240));
-        jPanel7.setLayout(new java.awt.BorderLayout());
-
-        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAdd.setText(bundle.getString("Add")); // NOI18N
-        jbtAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAddActionPerformed(evt);
-            }
-        });
-        jpnCoachButtons.add(jbtAdd);
-
-        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemove.setText(bundle.getString("Remove")); // NOI18N
-        jbtRemove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRemoveActionPerformed(evt);
-            }
-        });
-        jpnCoachButtons.add(jbtRemove);
-
-        jbtModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
-        jbtModify.setText(bundle.getString("Modify")); // NOI18N
-        jbtModify.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtModifyActionPerformed(evt);
-            }
-        });
-        jpnCoachButtons.add(jbtModify);
-
-        jPanel7.add(jpnCoachButtons, java.awt.BorderLayout.PAGE_START);
-
-        jtbCoachs.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtbCoachs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jtbCoachs);
-
-        jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jpnParticipant.add(jPanel7, java.awt.BorderLayout.CENTER);
-
-        jpnParameters.add(jpnParticipant);
-
-        jtpMain.addTab(bundle.getString("TournamentParameterKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")), jpnParameters); // NOI18N
-
-        getContentPane().add(jtpMain, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jScrollPane1, java.awt.BorderLayout.LINE_START);
+        getContentPane().add(jpnContent, java.awt.BorderLayout.CENTER);
 
         jmnFile.setText(bundle.getString("FileKey")); // NOI18N
 
@@ -529,35 +325,6 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
-
-        if (jtbCoachs.getSelectedRow() >= 0) {
-            final jdgCoach w = new jdgCoach(this, true, mTournament.getCoachs().get(jtbCoachs.getSelectedRow()));
-            w.setVisible(true);
-            update();
-        }
-}//GEN-LAST:event_jbtModifyActionPerformed
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        mTournament.getCoachs().remove(jtbCoachs.getSelectedRow());
-        update();
-}//GEN-LAST:event_jbtRemoveActionPerformed
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
-        final jdgCoach w = new jdgCoach(this, true);
-        w.setVisible(true);
-        update();
-}//GEN-LAST:event_jbtAddActionPerformed
-
-   @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
-        mTournament.getParams().mTournamentOrga = jtfOrgas.getText();
-}//GEN-LAST:event_jtfOrgasKeyPressed
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
-        mTournament.getParams().mTournamentName = jtfTournamentName.getText();
-}//GEN-LAST:event_jtfTournamentNameKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
         final JFileChooser jfc = new JFileChooser();
@@ -595,20 +362,20 @@ public class MainFrame extends javax.swing.JFrame {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
             mFile =
                     jfc.getSelectedFile();
-            for (int i = jtpMain.getTabCount() - 1; i
-                    >= 0; i--) {
-                final Component obj = jtpMain.getComponentAt(i);
-                if (obj instanceof JPNRound) {
-                    jtpMain.remove(obj);
-                }
+            /*            for (int i = jtpMain.getTabCount() - 1; i
+             >= 0; i--) {
+             final Component obj = jtpMain.getComponentAt(i);
+             if (obj instanceof JPNRound) {
+             jtpMain.remove(obj);
+             }
 
-            }
-            for (int i = 0; i
-                    < mTournament.getRounds().size(); i++) {
-                final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
-//                jtpMain.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RONDE ") + (i + 1), jpnr);
-                jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-            }
+             }
+             for (int i = 0; i
+             < mTournament.getRounds().size(); i++) {
+             final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
+             //                jtpMain.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RONDE ") + (i + 1), jpnr);
+             jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+             }*/
 
             update();
 
@@ -618,13 +385,13 @@ public class MainFrame extends javax.swing.JFrame {
     private void jmiNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNouveauActionPerformed
 
 
-        for (int i = jtpMain.getTabCount() - 1; i
-                >= 0; i--) {
-            final Component obj = jtpMain.getComponentAt(i);
-            if (obj instanceof JPNRound) {
-                jtpMain.remove(obj);
-            }
-        }
+        /*for (int i = jtpMain.getTabCount() - 1; i
+         >= 0; i--) {
+         final Component obj = jtpMain.getComponentAt(i);
+         if (obj instanceof JPNRound) {
+         jtpMain.remove(obj);
+         }
+         }*/
         mTournament = Tournament.resetTournament();
 
         final ArrayList<String> Games = new ArrayList<String>();
@@ -707,7 +474,7 @@ public class MainFrame extends javax.swing.JFrame {
                 null;
     }//GEN-LAST:event_jmiAideEnLigneActionPerformed
 
-   @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
 
         if (JOptionPane.showConfirmDialog(this, "Voulez vous sauvgarder ?", "Exit", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -751,7 +518,7 @@ public class MainFrame extends javax.swing.JFrame {
         lrb.getLRB()._allowSpecialSkills = jcxAllowSpecialSkill.getState();
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
 
-   @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbbActionPerformed
         final JFileChooser jfc = new JFileChooser();
         final FileFilter filter1 = new ExtensionFileFilter("FBB csv file", new String[]{"CSV", "csv"});
@@ -774,16 +541,10 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jmiExportFbb1ActionPerformed
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jtpMainStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtpMainStateChanged
-        final Object obj = jtpMain.getSelectedComponent();
-        if (obj instanceof JPNCup) {
-            ((JPNCup) obj).update();
-        }
-    }//GEN-LAST:event_jtpMainStateChanged
- @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiGenerateFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateFirstRoundActionPerformed
-       if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (mTournament.getParams().mTeamTournament && (mTournament.getParams().mTeamPairing == 1) && mTournament.getTeams().size() % 2 > 0) {
                 JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OddTeamNumber"));
             } else {
@@ -839,36 +600,76 @@ public class MainFrame extends javax.swing.JFrame {
 
                 Generation.generateFirstRound(Options.get(index));
 
-                for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
-                    final Component obj = jtpMain.getComponentAt(i);
-                    if (obj instanceof JPNRound) {
-                        jtpMain.remove(obj);
-                    }
-                }
-                boolean cup = false;
-                for (int i = 0; i < mTournament.getRounds().size(); i++) {
-                    final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
-                    if (mTournament.getRounds().get(i).mCup) {
-                        cup = true;
-                    }
-                    jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-                }
+                /*                for (int i = jtpMain.getTabCount() - 1; i >= 0; i--) {
+                 final Component obj = jtpMain.getComponentAt(i);
+                 if (obj instanceof JPNRound) {
+                 jtpMain.remove(obj);
+                 }
+                 }
+                 boolean cup = false;
+                 for (int i = 0; i < mTournament.getRounds().size(); i++) {
+                 final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
+                 if (mTournament.getRounds().get(i).mCup) {
+                 cup = true;
+                 }
+                 jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
+                 }
 
-                if (cup) {
-                    final JPNCup jpncup = new JPNCup();
-                    jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")), jpncup);
-                }
+                 if (cup) {
+                 final JPNCup jpncup = new JPNCup();
+                 jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")), jpncup);
+                 }
 
-                jtpMain.setSelectedIndex(mTournament.getRounds().size());
+                 jtpMain.setSelectedIndex(mTournament.getRounds().size());*/
                 update();
 
             }
 
         }
     }//GEN-LAST:event_jmiGenerateFirstRoundActionPerformed
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    private void jtrPanelsValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jtrPanelsValueChanged
 
-   
+        final TreePath path = evt.getNewLeadSelectionPath();
+        if (path != null) {
 
+            final DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+            if (node != null) {
+                final Object object = node.getUserObject();
+                if (object instanceof Parameters) {
+                    this.remove(jpnContent);
+                    jpnContent = new JPNParameters();
+                    this.add(jpnContent, BorderLayout.CENTER);
+                    ((JPNParameters) jpnContent).update();
+                    this.revalidate();
+                }
+                if (object instanceof Round) {
+                    for (int i = 0; i < mTournament.getRounds().size(); i++) {
+                        if (mTournament.getRounds().get(i).equals(object)) {
+                            this.remove(jpnContent);
+                            jpnContent = new JPNRound(i, (Round) object, mTournament);
+                            this.add(jpnContent, BorderLayout.CENTER);
+                            ((JPNRound) jpnContent).update();
+                            this.revalidate();
+                            break;
+                        }
+                    }
+                }
+
+                if (object.equals("Cup")) {
+                    this.remove(jpnContent);
+                    jpnContent = new JPNCup();
+                    this.add(jpnContent, BorderLayout.CENTER);
+                    ((JPNCup) jpnContent).update();
+                    this.revalidate();
+                }
+
+            }
+            
+            repaint();
+        }
+
+    }//GEN-LAST:event_jtrPanelsValueChanged
     /**
      * @param args the command line arguments
      */
@@ -890,23 +691,12 @@ public class MainFrame extends javax.swing.JFrame {
         return mSingleton;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator5;
-    private javax.swing.JButton jbtAdd;
-    private javax.swing.JButton jbtModify;
-    private javax.swing.JButton jbtRemove;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
@@ -925,15 +715,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jmnHelp;
     private javax.swing.JMenu jmnParameters;
     private javax.swing.JMenu jmnRounds;
-    private javax.swing.JPanel jpnCoachButtons;
-    private javax.swing.JPanel jpnParameters;
-    private javax.swing.JPanel jpnParticipant;
-    private javax.swing.JTable jtbCoachs;
-    private javax.swing.JTextField jtfOrgas;
-    private javax.swing.JTextField jtfPlace;
-    private javax.swing.JTextField jtfTournamentName;
-    public javax.swing.JTabbedPane jtpMain;
-    private javax.swing.JTabbedPane jtpOptions;
-    private org.jdesktop.swingx.JXDatePicker jxdDate;
+    private javax.swing.JPanel jpnContent;
+    private javax.swing.JTree jtrPanels;
     // End of variables declaration//GEN-END:variables
 }

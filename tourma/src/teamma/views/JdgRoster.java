@@ -58,6 +58,7 @@ public class JdgRoster extends javax.swing.JDialog {
         }
         else
         {
+            _coach=new Coach();
             _coach.mComposition = new Roster();
         }
          _data=_coach.mComposition;
@@ -93,21 +94,49 @@ public class JdgRoster extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpnTitle = new javax.swing.JPanel();
-        jlbTeamName = new javax.swing.JLabel();
-        jlbRosterType = new javax.swing.JLabel();
-        jlbCoachName = new javax.swing.JLabel();
-        jpnCenter = new javax.swing.JPanel();
-        jxtpCenter = new org.jdesktop.swingx.JXTitledPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jbtAdd = new javax.swing.JButton();
-        jbtRemove = new javax.swing.JButton();
-        jbtAddSkill = new javax.swing.JButton();
-        jbtRemoveSkill = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtbPlayers = new javax.swing.JTable();
-        jpnCenterSouth = new javax.swing.JPanel();
-        jXTaskPane2 = new org.jdesktop.swingx.JXTaskPane();
+        jtpGoods = new javax.swing.JTabbedPane();
+        jPanel14 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jslAssists = new javax.swing.JSlider();
+        jlbNbAssists = new javax.swing.JLabel();
+        jlbNbAssists1 = new javax.swing.JLabel();
+        jlbPriceAssist = new javax.swing.JLabel();
+        jlbNbAssists3 = new javax.swing.JLabel();
+        jlbCostAssists = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jslCheerleaders = new javax.swing.JSlider();
+        jlbNbCherrleaders = new javax.swing.JLabel();
+        jlbNbAssists2 = new javax.swing.JLabel();
+        jlbPriceCheerleaders = new javax.swing.JLabel();
+        jlbNbAssists4 = new javax.swing.JLabel();
+        jlbCostCheerleaders = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jslFanFactor = new javax.swing.JSlider();
+        jlbNbFanFactor = new javax.swing.JLabel();
+        jlbNbAssists5 = new javax.swing.JLabel();
+        jlbPriceFanFactor = new javax.swing.JLabel();
+        jlbNbAssists6 = new javax.swing.JLabel();
+        jlbCostFanFactor = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jslReroll = new javax.swing.JSlider();
+        jlbNbReroll = new javax.swing.JLabel();
+        jlbNbAssists8 = new javax.swing.JLabel();
+        jlbPriceReroll = new javax.swing.JLabel();
+        jlbNbAssists9 = new javax.swing.JLabel();
+        jlbCostReroll = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        jlbApothecary = new javax.swing.JLabel();
+        jslApothecary = new javax.swing.JSlider();
+        jlbNbApothecary = new javax.swing.JLabel();
+        jlbX10 = new javax.swing.JLabel();
+        jlbPriceApothecary = new javax.swing.JLabel();
+        jlbX20 = new javax.swing.JLabel();
+        jlbCostApothecary = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -162,62 +191,16 @@ public class JdgRoster extends javax.swing.JDialog {
         jlbPriceBabes = new javax.swing.JLabel();
         jlbX13 = new javax.swing.JLabel();
         jlbCostBabes = new javax.swing.JLabel();
-        jXTaskPane1 = new org.jdesktop.swingx.JXTaskPane();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbStars = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jbtAddStar = new javax.swing.JButton();
         jbtRemoveStar = new javax.swing.JButton();
-        jpnSouth = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jbtOK = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
+        jPanel22 = new javax.swing.JPanel();
         jlbIcon = new javax.swing.JButton();
         jbtSelectCoach = new javax.swing.JButton();
-        jlbGoods = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jslAssists = new javax.swing.JSlider();
-        jlbNbAssists = new javax.swing.JLabel();
-        jlbNbAssists1 = new javax.swing.JLabel();
-        jlbPriceAssist = new javax.swing.JLabel();
-        jlbNbAssists3 = new javax.swing.JLabel();
-        jlbCostAssists = new javax.swing.JLabel();
-        jPanel15 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jslCheerleaders = new javax.swing.JSlider();
-        jlbNbCherrleaders = new javax.swing.JLabel();
-        jlbNbAssists2 = new javax.swing.JLabel();
-        jlbPriceCheerleaders = new javax.swing.JLabel();
-        jlbNbAssists4 = new javax.swing.JLabel();
-        jlbCostCheerleaders = new javax.swing.JLabel();
-        jPanel16 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jslFanFactor = new javax.swing.JSlider();
-        jlbNbFanFactor = new javax.swing.JLabel();
-        jlbNbAssists5 = new javax.swing.JLabel();
-        jlbPriceFanFactor = new javax.swing.JLabel();
-        jlbNbAssists6 = new javax.swing.JLabel();
-        jlbCostFanFactor = new javax.swing.JLabel();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jslReroll = new javax.swing.JSlider();
-        jlbNbReroll = new javax.swing.JLabel();
-        jlbNbAssists8 = new javax.swing.JLabel();
-        jlbPriceReroll = new javax.swing.JLabel();
-        jlbNbAssists9 = new javax.swing.JLabel();
-        jlbCostReroll = new javax.swing.JLabel();
-        jPanel18 = new javax.swing.JPanel();
-        jlbApothecary = new javax.swing.JLabel();
-        jslApothecary = new javax.swing.JSlider();
-        jlbNbApothecary = new javax.swing.JLabel();
-        jlbX10 = new javax.swing.JLabel();
-        jlbPriceApothecary = new javax.swing.JLabel();
-        jlbX20 = new javax.swing.JLabel();
-        jlbCostApothecary = new javax.swing.JLabel();
-        jPanel19 = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
         jcbWithSkills = new javax.swing.JCheckBox();
         jLabel17 = new javax.swing.JLabel();
@@ -227,134 +210,263 @@ public class JdgRoster extends javax.swing.JDialog {
         jLabel15 = new javax.swing.JLabel();
         jlbRanking = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jpnCenter = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jbtAdd = new javax.swing.JButton();
+        jbtRemove = new javax.swing.JButton();
+        jbtAddSkill = new javax.swing.JButton();
+        jbtRemoveSkill = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtbPlayers = new javax.swing.JTable();
+        jpnTitle = new javax.swing.JPanel();
+        jlbTeamName = new javax.swing.JLabel();
+        jlbRosterType = new javax.swing.JLabel();
+        jlbCoachName = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jbtOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 724));
 
-        jpnTitle.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jpnTitle.setLayout(new java.awt.GridLayout(1, 3, 5, 5));
+        jPanel14.setMinimumSize(new java.awt.Dimension(400, 260));
+        jPanel14.setPreferredSize(new java.awt.Dimension(300, 150));
 
-        jlbTeamName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jlbTeamName.setText("TeamName");
-        jpnTitle.add(jlbTeamName);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel1.setText("Assistants :");
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel3.add(jLabel1);
 
-        jlbRosterType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jlbRosterType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbRosterType.setText("Roster: Unknown");
-        jlbRosterType.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlbRosterTypeMouseClicked(evt);
+        jslAssists.setMajorTickSpacing(5);
+        jslAssists.setMaximum(10);
+        jslAssists.setMinorTickSpacing(1);
+        jslAssists.setPaintTicks(true);
+        jslAssists.setSnapToTicks(true);
+        jslAssists.setValue(0);
+        jslAssists.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslAssists.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslAssistsStateChanged(evt);
             }
         });
-        jpnTitle.add(jlbRosterType);
+        jPanel3.add(jslAssists);
 
-        jlbCoachName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jlbCoachName.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbCoachName.setText("Coach: Unknown");
-        jpnTitle.add(jlbCoachName);
+        jlbNbAssists.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists.setText("0");
+        jlbNbAssists.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel3.add(jlbNbAssists);
 
-        getContentPane().add(jpnTitle, java.awt.BorderLayout.NORTH);
+        jlbNbAssists1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists1.setText("X");
+        jlbNbAssists1.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel3.add(jlbNbAssists1);
 
-        jpnCenter.setMinimumSize(new java.awt.Dimension(640, 200));
-        jpnCenter.setPreferredSize(new java.awt.Dimension(320, 430));
-        jpnCenter.setLayout(new java.awt.BorderLayout());
+        jlbPriceAssist.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceAssist.setText("10 000");
+        jlbPriceAssist.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel3.add(jlbPriceAssist);
 
-        jxtpCenter.setTitle("Players");
-        jxtpCenter.setName("Players"); // NOI18N
-        jxtpCenter.setPreferredSize(new java.awt.Dimension(800, 400));
-        jxtpCenter.getContentContainer().setLayout(new java.awt.BorderLayout());
+        jlbNbAssists3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists3.setText("=");
+        jlbNbAssists3.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel3.add(jlbNbAssists3);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(100, 100));
-        jPanel2.setLayout(new org.jdesktop.swingx.VerticalLayout());
+        jlbCostAssists.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostAssists.setText("0");
+        jlbCostAssists.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel3.add(jlbCostAssists);
 
-        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jPanel14.add(jPanel3);
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel8.setText("Pom Pom girls :");
+        jLabel8.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel15.add(jLabel8);
+
+        jslCheerleaders.setMajorTickSpacing(5);
+        jslCheerleaders.setMaximum(10);
+        jslCheerleaders.setMinorTickSpacing(1);
+        jslCheerleaders.setPaintTicks(true);
+        jslCheerleaders.setSnapToTicks(true);
+        jslCheerleaders.setValue(0);
+        jslCheerleaders.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslCheerleaders.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslCheerleadersStateChanged(evt);
+            }
+        });
+        jPanel15.add(jslCheerleaders);
+
+        jlbNbCherrleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbCherrleaders.setText("0");
+        jlbNbCherrleaders.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel15.add(jlbNbCherrleaders);
+
+        jlbNbAssists2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists2.setText("X");
+        jlbNbAssists2.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel15.add(jlbNbAssists2);
+
+        jlbPriceCheerleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceCheerleaders.setText("10 000");
+        jlbPriceCheerleaders.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel15.add(jlbPriceCheerleaders);
+
+        jlbNbAssists4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists4.setText("=");
+        jlbNbAssists4.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel15.add(jlbNbAssists4);
+
+        jlbCostCheerleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostCheerleaders.setText("0");
+        jlbCostCheerleaders.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel15.add(jlbCostCheerleaders);
+
+        jPanel14.add(jPanel15);
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel9.setText("Popularité :");
+        jLabel9.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel16.add(jLabel9);
+
+        jslFanFactor.setMajorTickSpacing(5);
+        jslFanFactor.setMaximum(18);
+        jslFanFactor.setMinorTickSpacing(1);
+        jslFanFactor.setPaintTicks(true);
+        jslFanFactor.setSnapToTicks(true);
+        jslFanFactor.setValue(0);
+        jslFanFactor.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslFanFactor.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslFanFactorStateChanged(evt);
+            }
+        });
+        jPanel16.add(jslFanFactor);
+
+        jlbNbFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbFanFactor.setText("0");
+        jlbNbFanFactor.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel16.add(jlbNbFanFactor);
+
+        jlbNbAssists5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists5.setText("X");
+        jlbNbAssists5.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel16.add(jlbNbAssists5);
+
+        jlbPriceFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceFanFactor.setText("10 000");
+        jlbPriceFanFactor.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel16.add(jlbPriceFanFactor);
+
+        jlbNbAssists6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists6.setText("=");
+        jlbNbAssists6.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel16.add(jlbNbAssists6);
+
+        jlbCostFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostFanFactor.setText("0");
+        jlbCostFanFactor.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel16.add(jlbCostFanFactor);
+
+        jPanel14.add(jPanel16);
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel10.setText("Relances :");
+        jLabel10.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel17.add(jLabel10);
+
+        jslReroll.setMajorTickSpacing(5);
+        jslReroll.setMaximum(8);
+        jslReroll.setMinorTickSpacing(1);
+        jslReroll.setPaintTicks(true);
+        jslReroll.setSnapToTicks(true);
+        jslReroll.setValue(0);
+        jslReroll.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslReroll.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslRerollStateChanged(evt);
+            }
+        });
+        jPanel17.add(jslReroll);
+
+        jlbNbReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbReroll.setText("0");
+        jlbNbReroll.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel17.add(jlbNbReroll);
+
+        jlbNbAssists8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists8.setText("X");
+        jlbNbAssists8.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel17.add(jlbNbAssists8);
+
+        jlbPriceReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceReroll.setText("10 000");
+        jlbPriceReroll.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel17.add(jlbPriceReroll);
+
+        jlbNbAssists9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbAssists9.setText("=");
+        jlbNbAssists9.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel17.add(jlbNbAssists9);
+
+        jlbCostReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostReroll.setText("0");
+        jlbCostReroll.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel17.add(jlbCostReroll);
+
+        jPanel14.add(jPanel17);
+
+        jlbApothecary.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbApothecary.setText("Apothecary :");
+        jlbApothecary.setPreferredSize(new java.awt.Dimension(100, 30));
+        jPanel18.add(jlbApothecary);
+
+        jslApothecary.setMajorTickSpacing(1);
+        jslApothecary.setMaximum(1);
+        jslApothecary.setMinorTickSpacing(1);
+        jslApothecary.setPaintTicks(true);
+        jslApothecary.setSnapToTicks(true);
+        jslApothecary.setValue(0);
+        jslApothecary.setPreferredSize(new java.awt.Dimension(80, 30));
+        jslApothecary.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslApothecaryStateChanged(evt);
+            }
+        });
+        jPanel18.add(jslApothecary);
+
+        jlbNbApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbApothecary.setText("0");
+        jlbNbApothecary.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel18.add(jlbNbApothecary);
+
+        jlbX10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX10.setText("X");
+        jlbX10.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel18.add(jlbX10);
+
+        jlbPriceApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceApothecary.setText("50 000");
+        jlbPriceApothecary.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel18.add(jlbPriceApothecary);
+
+        jlbX20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX20.setText("=");
+        jlbX20.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel18.add(jlbX20);
+
+        jlbCostApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostApothecary.setText("0");
+        jlbCostApothecary.setPreferredSize(new java.awt.Dimension(60, 30));
+        jPanel18.add(jlbCostApothecary);
+
+        jPanel14.add(jPanel18);
+        jPanel14.add(jPanel19);
+
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jbtAdd.setText(bundle.getString("Player")); // NOI18N
-        jbtAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtAdd.setPreferredSize(new java.awt.Dimension(100, 60));
-        jbtAdd.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jbtAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jbtAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAddActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jbtAdd);
-
-        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemove.setText(bundle.getString("Player")); // NOI18N
-        jbtRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtRemove.setPreferredSize(new java.awt.Dimension(100, 60));
-        jbtRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jbtRemove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRemoveActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jbtRemove);
-
-        jbtAddSkill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAddSkill.setText(bundle.getString("Skill")); // NOI18N
-        jbtAddSkill.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtAddSkill.setPreferredSize(new java.awt.Dimension(100, 60));
-        jbtAddSkill.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jbtAddSkill.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jbtAddSkill.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAddSkillActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jbtAddSkill);
-
-        jbtRemoveSkill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemoveSkill.setText(bundle.getString("Skill")); // NOI18N
-        jbtRemoveSkill.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtRemoveSkill.setPreferredSize(new java.awt.Dimension(100, 60));
-        jbtRemoveSkill.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jbtRemoveSkill.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRemoveSkillActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jbtRemoveSkill);
-
-        jxtpCenter.getContentContainer().add(jPanel2, java.awt.BorderLayout.WEST);
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 100));
-
-        jtbPlayers.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtbPlayers.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jtbPlayers.setPreferredSize(null);
-        jtbPlayers.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtbPlayersMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jtbPlayers);
-
-        jxtpCenter.getContentContainer().add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jpnCenter.add(jxtpCenter, java.awt.BorderLayout.CENTER);
-
-        jpnCenterSouth.setLayout(new org.jdesktop.swingx.VerticalLayout());
-
-        jXTaskPane2.setCollapsed(true);
-        jXTaskPane2.setTitle("Primes de match");
-        jXTaskPane2.getContentPane().setLayout(new java.awt.BorderLayout());
+        jtpGoods.addTab(bundle.getString("TeamGoods"), jPanel14); // NOI18N
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
         jPanel8.setPreferredSize(new java.awt.Dimension(200, 250));
-        jPanel8.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Extra Reroll");
@@ -682,13 +794,7 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jPanel8.add(jPanel21);
 
-        jXTaskPane2.getContentPane().add(jPanel8, java.awt.BorderLayout.CENTER);
-
-        jpnCenterSouth.add(jXTaskPane2);
-
-        jXTaskPane1.setCollapsed(true);
-        jXTaskPane1.setTitle("Star Players");
-        jXTaskPane1.getContentPane().setLayout(new java.awt.BorderLayout());
+        jtpGoods.addTab(bundle.getString("Inducements"), jPanel8); // NOI18N
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 150));
@@ -716,7 +822,6 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jPanel5.setMinimumSize(new java.awt.Dimension(120, 100));
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 160));
-        jPanel5.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         jbtAddStar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         jbtAddStar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -742,31 +847,9 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.WEST);
 
-        jXTaskPane1.getContentPane().add(jPanel4, java.awt.BorderLayout.PAGE_START);
+        jtpGoods.addTab(bundle.getString("Mercenaires et Champions"), jPanel4); // NOI18N
 
-        jpnCenterSouth.add(jXTaskPane1);
-
-        jpnCenter.add(jpnCenterSouth, java.awt.BorderLayout.SOUTH);
-
-        getContentPane().add(jpnCenter, java.awt.BorderLayout.CENTER);
-
-        jpnSouth.setPreferredSize(new java.awt.Dimension(640, 260));
-        jpnSouth.setLayout(new java.awt.BorderLayout());
-
-        jPanel6.setPreferredSize(new java.awt.Dimension(640, 50));
-
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        jbtOK.setText("OK");
-        jbtOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtOKActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jbtOK);
-
-        jpnSouth.add(jPanel6, java.awt.BorderLayout.SOUTH);
-
-        jPanel7.setLayout(new org.jdesktop.swingx.VerticalLayout());
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
         jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/what.png"))); // NOI18N
         jlbIcon.addActionListener(new java.awt.event.ActionListener() {
@@ -774,7 +857,7 @@ public class JdgRoster extends javax.swing.JDialog {
                 jlbIconActionPerformed(evt);
             }
         });
-        jPanel7.add(jlbIcon);
+        jPanel22.add(jlbIcon);
 
         jbtSelectCoach.setText("Associer un coach");
         jbtSelectCoach.addActionListener(new java.awt.event.ActionListener() {
@@ -782,255 +865,9 @@ public class JdgRoster extends javax.swing.JDialog {
                 jbtSelectCoachActionPerformed(evt);
             }
         });
-        jPanel7.add(jbtSelectCoach);
+        jPanel22.add(jbtSelectCoach);
 
-        jpnSouth.add(jPanel7, java.awt.BorderLayout.WEST);
-
-        jlbGoods.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jlbGoods.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbGoods.setText(bundle.getString("Biens d'équipe")); // NOI18N
-        jlbGoods.setFocusable(false);
-        jlbGoods.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jpnSouth.add(jlbGoods, java.awt.BorderLayout.NORTH);
-
-        jPanel14.setMinimumSize(new java.awt.Dimension(400, 260));
-        jPanel14.setPreferredSize(new java.awt.Dimension(300, 150));
-        jPanel14.setLayout(new org.jdesktop.swingx.VerticalLayout());
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Assistants :");
-        jLabel1.setPreferredSize(new java.awt.Dimension(100, 30));
-        jPanel3.add(jLabel1);
-
-        jslAssists.setMajorTickSpacing(5);
-        jslAssists.setMaximum(10);
-        jslAssists.setMinorTickSpacing(1);
-        jslAssists.setPaintTicks(true);
-        jslAssists.setSnapToTicks(true);
-        jslAssists.setValue(0);
-        jslAssists.setPreferredSize(new java.awt.Dimension(80, 30));
-        jslAssists.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jslAssistsStateChanged(evt);
-            }
-        });
-        jPanel3.add(jslAssists);
-
-        jlbNbAssists.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists.setText("0");
-        jlbNbAssists.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel3.add(jlbNbAssists);
-
-        jlbNbAssists1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists1.setText("X");
-        jlbNbAssists1.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel3.add(jlbNbAssists1);
-
-        jlbPriceAssist.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbPriceAssist.setText("10 000");
-        jlbPriceAssist.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel3.add(jlbPriceAssist);
-
-        jlbNbAssists3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists3.setText("=");
-        jlbNbAssists3.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel3.add(jlbNbAssists3);
-
-        jlbCostAssists.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbCostAssists.setText("0");
-        jlbCostAssists.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel3.add(jlbCostAssists);
-
-        jPanel14.add(jPanel3);
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel8.setText("Pom Pom girls :");
-        jLabel8.setPreferredSize(new java.awt.Dimension(100, 30));
-        jPanel15.add(jLabel8);
-
-        jslCheerleaders.setMajorTickSpacing(5);
-        jslCheerleaders.setMaximum(10);
-        jslCheerleaders.setMinorTickSpacing(1);
-        jslCheerleaders.setPaintTicks(true);
-        jslCheerleaders.setSnapToTicks(true);
-        jslCheerleaders.setValue(0);
-        jslCheerleaders.setPreferredSize(new java.awt.Dimension(80, 30));
-        jslCheerleaders.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jslCheerleadersStateChanged(evt);
-            }
-        });
-        jPanel15.add(jslCheerleaders);
-
-        jlbNbCherrleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbCherrleaders.setText("0");
-        jlbNbCherrleaders.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel15.add(jlbNbCherrleaders);
-
-        jlbNbAssists2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists2.setText("X");
-        jlbNbAssists2.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel15.add(jlbNbAssists2);
-
-        jlbPriceCheerleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbPriceCheerleaders.setText("10 000");
-        jlbPriceCheerleaders.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel15.add(jlbPriceCheerleaders);
-
-        jlbNbAssists4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists4.setText("=");
-        jlbNbAssists4.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel15.add(jlbNbAssists4);
-
-        jlbCostCheerleaders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbCostCheerleaders.setText("0");
-        jlbCostCheerleaders.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel15.add(jlbCostCheerleaders);
-
-        jPanel14.add(jPanel15);
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel9.setText("Popularité :");
-        jLabel9.setPreferredSize(new java.awt.Dimension(100, 30));
-        jPanel16.add(jLabel9);
-
-        jslFanFactor.setMajorTickSpacing(5);
-        jslFanFactor.setMaximum(18);
-        jslFanFactor.setMinorTickSpacing(1);
-        jslFanFactor.setPaintTicks(true);
-        jslFanFactor.setSnapToTicks(true);
-        jslFanFactor.setValue(0);
-        jslFanFactor.setPreferredSize(new java.awt.Dimension(80, 30));
-        jslFanFactor.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jslFanFactorStateChanged(evt);
-            }
-        });
-        jPanel16.add(jslFanFactor);
-
-        jlbNbFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbFanFactor.setText("0");
-        jlbNbFanFactor.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel16.add(jlbNbFanFactor);
-
-        jlbNbAssists5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists5.setText("X");
-        jlbNbAssists5.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel16.add(jlbNbAssists5);
-
-        jlbPriceFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbPriceFanFactor.setText("10 000");
-        jlbPriceFanFactor.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel16.add(jlbPriceFanFactor);
-
-        jlbNbAssists6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists6.setText("=");
-        jlbNbAssists6.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel16.add(jlbNbAssists6);
-
-        jlbCostFanFactor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbCostFanFactor.setText("0");
-        jlbCostFanFactor.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel16.add(jlbCostFanFactor);
-
-        jPanel14.add(jPanel16);
-
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel10.setText("Relances :");
-        jLabel10.setPreferredSize(new java.awt.Dimension(100, 30));
-        jPanel17.add(jLabel10);
-
-        jslReroll.setMajorTickSpacing(5);
-        jslReroll.setMaximum(8);
-        jslReroll.setMinorTickSpacing(1);
-        jslReroll.setPaintTicks(true);
-        jslReroll.setSnapToTicks(true);
-        jslReroll.setValue(0);
-        jslReroll.setPreferredSize(new java.awt.Dimension(80, 30));
-        jslReroll.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jslRerollStateChanged(evt);
-            }
-        });
-        jPanel17.add(jslReroll);
-
-        jlbNbReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbReroll.setText("0");
-        jlbNbReroll.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel17.add(jlbNbReroll);
-
-        jlbNbAssists8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists8.setText("X");
-        jlbNbAssists8.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel17.add(jlbNbAssists8);
-
-        jlbPriceReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbPriceReroll.setText("10 000");
-        jlbPriceReroll.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel17.add(jlbPriceReroll);
-
-        jlbNbAssists9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbAssists9.setText("=");
-        jlbNbAssists9.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel17.add(jlbNbAssists9);
-
-        jlbCostReroll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbCostReroll.setText("0");
-        jlbCostReroll.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel17.add(jlbCostReroll);
-
-        jPanel14.add(jPanel17);
-
-        jlbApothecary.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbApothecary.setText("Apothecary :");
-        jlbApothecary.setPreferredSize(new java.awt.Dimension(100, 30));
-        jPanel18.add(jlbApothecary);
-
-        jslApothecary.setMajorTickSpacing(1);
-        jslApothecary.setMaximum(1);
-        jslApothecary.setMinorTickSpacing(1);
-        jslApothecary.setPaintTicks(true);
-        jslApothecary.setSnapToTicks(true);
-        jslApothecary.setValue(0);
-        jslApothecary.setPreferredSize(new java.awt.Dimension(80, 30));
-        jslApothecary.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jslApothecaryStateChanged(evt);
-            }
-        });
-        jPanel18.add(jslApothecary);
-
-        jlbNbApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbNbApothecary.setText("0");
-        jlbNbApothecary.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel18.add(jlbNbApothecary);
-
-        jlbX10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbX10.setText("X");
-        jlbX10.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel18.add(jlbX10);
-
-        jlbPriceApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbPriceApothecary.setText("50 000");
-        jlbPriceApothecary.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel18.add(jlbPriceApothecary);
-
-        jlbX20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbX20.setText("=");
-        jlbX20.setPreferredSize(new java.awt.Dimension(20, 30));
-        jPanel18.add(jlbX20);
-
-        jlbCostApothecary.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbCostApothecary.setText("0");
-        jlbCostApothecary.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel18.add(jlbCostApothecary);
-
-        jPanel14.add(jPanel18);
-        jPanel14.add(jPanel19);
-
-        jpnSouth.add(jPanel14, java.awt.BorderLayout.CENTER);
-
-        jPanel20.setLayout(new org.jdesktop.swingx.VerticalLayout());
+        jPanel7.add(jPanel22, java.awt.BorderLayout.CENTER);
 
         jcbWithSkills.setText("Inclure les compétences");
         jcbWithSkills.addActionListener(new java.awt.event.ActionListener() {
@@ -1067,103 +904,136 @@ public class JdgRoster extends javax.swing.JDialog {
         jLabel18.setText(" ");
         jPanel20.add(jLabel18);
 
-        jpnSouth.add(jPanel20, java.awt.BorderLayout.EAST);
+        jPanel7.add(jPanel20, java.awt.BorderLayout.SOUTH);
 
-        getContentPane().add(jpnSouth, java.awt.BorderLayout.SOUTH);
+        jtpGoods.addTab("Coach", jPanel7);
+
+        getContentPane().add(jtpGoods, java.awt.BorderLayout.CENTER);
+
+        jpnCenter.setMinimumSize(new java.awt.Dimension(640, 200));
+        jpnCenter.setPreferredSize(new java.awt.Dimension(320, 430));
+        jpnCenter.setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.setText(bundle.getString("Player")); // NOI18N
+        jbtAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtAdd.setPreferredSize(new java.awt.Dimension(100, 60));
+        jbtAdd.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jbtAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtAdd);
+
+        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemove.setText(bundle.getString("Player")); // NOI18N
+        jbtRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtRemove.setPreferredSize(new java.awt.Dimension(100, 60));
+        jbtRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtRemove);
+
+        jbtAddSkill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddSkill.setText(bundle.getString("Skill")); // NOI18N
+        jbtAddSkill.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtAddSkill.setPreferredSize(new java.awt.Dimension(100, 60));
+        jbtAddSkill.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jbtAddSkill.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtAddSkill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddSkillActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtAddSkill);
+
+        jbtRemoveSkill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveSkill.setText(bundle.getString("Skill")); // NOI18N
+        jbtRemoveSkill.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtRemoveSkill.setPreferredSize(new java.awt.Dimension(100, 60));
+        jbtRemoveSkill.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jbtRemoveSkill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveSkillActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtRemoveSkill);
+
+        jpnCenter.add(jPanel2, java.awt.BorderLayout.WEST);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 100));
+
+        jtbPlayers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbPlayers.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jtbPlayers.setPreferredSize(null);
+        jtbPlayers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbPlayersMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtbPlayers);
+
+        jpnCenter.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jpnTitle.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jpnTitle.setLayout(new java.awt.GridLayout(1, 3, 5, 5));
+
+        jlbTeamName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlbTeamName.setText("TeamName");
+        jpnTitle.add(jlbTeamName);
+
+        jlbRosterType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbRosterType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbRosterType.setText("Roster: Unknown");
+        jlbRosterType.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbRosterTypeMouseClicked(evt);
+            }
+        });
+        jpnTitle.add(jlbRosterType);
+
+        jlbCoachName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlbCoachName.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbCoachName.setText("Coach: Unknown");
+        jpnTitle.add(jlbCoachName);
+
+        jpnCenter.add(jpnTitle, java.awt.BorderLayout.NORTH);
+
+        getContentPane().add(jpnCenter, java.awt.BorderLayout.NORTH);
+
+        jPanel6.setPreferredSize(new java.awt.Dimension(640, 50));
+
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
+        jbtOK.setText("OK");
+        jbtOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtOKActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jbtOK);
+
+        getContentPane().add(jPanel6, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
-        if (_data._roster == null) {
-            JOptionPane.showMessageDialog(this, "Roster type not selected, please click on roster");
-        } else {
-            int i;
-            /**
-             * Build Avilable Positions
-             */
-            ArrayList<String> positions = new ArrayList<String>();
-            for (i = 0; i < _data._roster._player_types.size(); i++) {
-                PlayerType pt = _data._roster._player_types.get(i);
-                /*
-                 * Count the number of player possible
-                 */
-                int limit = pt._limit;
-                int j;
-                for (j = 0; j < _data._players.size(); j++) {
-                    if (_data._players.get(j)._playertype == pt) {
-                        limit--;
-                    }
-                }
-                if (limit > 0) {
-                    positions.add(pt._position);
-                }
-            }
-            
-            String input = (String) JOptionPane.showInputDialog(this,
-                    "Choisissez le type de joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
-                    null, positions.toArray(), "Amazons");
-            PlayerType pt = _data._roster.getPlayerType(input);
-            Player p = new Player(pt);
-            
-            _data._players.add(p);
-        }
-        
-        
-        update();
-    }//GEN-LAST:event_jbtAddActionPerformed
-    
-    private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        /* Get Selected line */
-        int selectedLine = jtbPlayers.getSelectedRow();
-        if (selectedLine > -1) {
-            _data._players.remove(selectedLine);
-            update();
-        }
-        
-    }//GEN-LAST:event_jbtRemoveActionPerformed
-    
-    private void jbtAddStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStarActionPerformed
-        if (_data._roster == null) {
-            JOptionPane.showMessageDialog(this, "Roster type not selected, please click on roster");
-        } else {
-            int i, j;
-            /**
-             * Build Avilable Positions
-             */
-            ArrayList<String> names = new ArrayList<String>();
-            for (i = 0; i < _data._roster._available_starplayers.size(); i++) {
-                StarPlayer sp = _data._roster._available_starplayers.get(i);
-                boolean found = false;
-                for (j = 0; j < _data._champions.size(); j++) {
-                    if (_data._champions.get(j)._name.equals(sp._name)) {
-                        found = true;
-                    }
-                }
-                if (!found) {
-                    names.add(sp._name);
-                }
                 
-            }
-            
-            
-            String input = (String) JOptionPane.showInputDialog(this,
-                    "Choisissez le joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
-                    null, names.toArray(), "");
-            StarPlayer sp = _data._roster.getStarPlayer(input);
-            _data._champions.add(sp);
-        }
-        update();
-    }//GEN-LAST:event_jbtAddStarActionPerformed
-    
-    private void jbtRemoveStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveStarActionPerformed
-        int i = jtbStars.getSelectedRow();
-        if (i > -1) {
-            _data._champions.remove(i);
-        }
-        update();
-    }//GEN-LAST:event_jbtRemoveStarActionPerformed
-    
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
         
         ArrayList<String> rosterlist = lrb.getLRB().getRosterTypeListAsString();
@@ -1188,89 +1058,7 @@ public class JdgRoster extends javax.swing.JDialog {
         update();
         
     }//GEN-LAST:event_jlbRosterTypeMouseClicked
-    
-    private void jbtRemoveSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveSkillActionPerformed
-        int index = jtbPlayers.getSelectedRow();
-        if (index > -1) {
-            ArrayList<String> skills = new ArrayList<String>();
-            Player p = _data._players.get(index);
-            if (p._skills.size() > 0) {
-                int i;
-                for (i = 0; i < p._skills.size(); i++) {
-                    Skill s = p._skills.get(i);
-                    skills.add(s._name);
-                }
-                
-                Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(), "Select skill to remove", "Skill", JOptionPane.INFORMATION_MESSAGE, null, skills.toArray(), null);
-                if (choice != null) {
-                    
-                    for (i = 0; i < p._skills.size(); i++) {
-                        if (p._skills.get(i)._name.equals(choice)) {
-                            p._skills.remove(i);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        update();
-    }//GEN-LAST:event_jbtRemoveSkillActionPerformed
-    
-    private void jbtAddSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddSkillActionPerformed
-        int index = jtbPlayers.getSelectedRow();
-        if (index > -1) {
-            JdgSelectSkill jdg = new JdgSelectSkill(MainFrame.getMainFrame(), true, _data._players.get(index));
-            jdg.setVisible(true);
-        }
-        update();
-    }//GEN-LAST:event_jbtAddSkillActionPerformed
-    
-    private void jtbPlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbPlayersMouseClicked
-        jbtAddSkill.setEnabled(jtbPlayers.getSelectedRow() > -1);
-        boolean removable = false;
-        int i = jtbPlayers.getSelectedRow();
-        if (jtbPlayers.getSelectedRow() > -1) {
-            if (_data._players.get(jtbPlayers.getSelectedRow())._skills.size() > 0) {
-                removable = true;
-            }
-        }
-        jbtRemoveSkill.setEnabled(removable);
-    }//GEN-LAST:event_jtbPlayersMouseClicked
-    
-    private void jslExtraRerollStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslExtraRerollStateChanged
-        _data._extrarerolls = jslExtraReroll.getValue();
-        update();
-    }//GEN-LAST:event_jslExtraRerollStateChanged
-    
-    private void jslBribeTheRefStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslBribeTheRefStateChanged
-        _data._corruptions = jslBribeTheRef.getValue();
-        update();
-    }//GEN-LAST:event_jslBribeTheRefStateChanged
-    
-    private void jslLocalApothecaryStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslLocalApothecaryStateChanged
-        _data._localapothecary = jslLocalApothecary.getValue();
-        update();
-    }//GEN-LAST:event_jslLocalApothecaryStateChanged
-    
-    private void jslWizardStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslWizardStateChanged
-        _data._wizard = jslWizard.getValue() == 1;
-        update();
-    }//GEN-LAST:event_jslWizardStateChanged
-    
-    private void jslIgorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslIgorStateChanged
-        _data._igor = jslIgor.getValue() == 1;
-        update();
-    }//GEN-LAST:event_jslIgorStateChanged
-    
-    private void jslCardBudgetStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslCardBudgetStateChanged
-        _data._cards = jslCardBudget.getValue();
-        update();
-    }//GEN-LAST:event_jslCardBudgetStateChanged
-    
-    private void jtbStarsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbStarsMouseClicked
-        jbtRemoveStar.setEnabled(jtbStars.getSelectedRow() > -1);
-    }//GEN-LAST:event_jtbStarsMouseClicked
-    
+                                            
     private void jslAssistsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslAssistsStateChanged
         _data._assistants = jslAssists.getValue();
         update();
@@ -1299,11 +1087,6 @@ public class JdgRoster extends javax.swing.JDialog {
     private void jcbWithSkillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbWithSkillsActionPerformed
         update();
     }//GEN-LAST:event_jcbWithSkillsActionPerformed
-
-    private void jslBabesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslBabesStateChanged
-        _data._bloodweiserbabes = jslBabes.getValue();
-        update();
-    }//GEN-LAST:event_jslBabesStateChanged
 
     private void jbtSelectCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelectCoachActionPerformed
        int i;
@@ -1337,6 +1120,181 @@ public class JdgRoster extends javax.swing.JDialog {
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jbtOKActionPerformed
+
+    private void jtbPlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbPlayersMouseClicked
+        jbtAddSkill.setEnabled(jtbPlayers.getSelectedRow() > -1);
+        boolean removable = false;
+        int i = jtbPlayers.getSelectedRow();
+        if (jtbPlayers.getSelectedRow() > -1) {
+            if (_data._players.get(jtbPlayers.getSelectedRow())._skills.size() > 0) {
+                removable = true;
+            }
+        }
+        jbtRemoveSkill.setEnabled(removable);
+    }//GEN-LAST:event_jtbPlayersMouseClicked
+
+    private void jbtRemoveSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveSkillActionPerformed
+        int index = jtbPlayers.getSelectedRow();
+        if (index > -1) {
+            ArrayList<String> skills = new ArrayList<String>();
+            Player p = _data._players.get(index);
+            if (p._skills.size() > 0) {
+                int i;
+                for (i = 0; i < p._skills.size(); i++) {
+                    Skill s = p._skills.get(i);
+                    skills.add(s._name);
+                }
+
+                Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(), "Select skill to remove", "Skill", JOptionPane.INFORMATION_MESSAGE, null, skills.toArray(), null);
+                if (choice != null) {
+
+                    for (i = 0; i < p._skills.size(); i++) {
+                        if (p._skills.get(i)._name.equals(choice)) {
+                            p._skills.remove(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        update();
+    }//GEN-LAST:event_jbtRemoveSkillActionPerformed
+
+    private void jbtAddSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddSkillActionPerformed
+        int index = jtbPlayers.getSelectedRow();
+        if (index > -1) {
+            JdgSelectSkill jdg = new JdgSelectSkill(MainFrame.getMainFrame(), true, _data._players.get(index));
+            jdg.setVisible(true);
+        }
+        update();
+    }//GEN-LAST:event_jbtAddSkillActionPerformed
+
+    private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
+        /* Get Selected line */
+        int selectedLine = jtbPlayers.getSelectedRow();
+        if (selectedLine > -1) {
+            _data._players.remove(selectedLine);
+            update();
+        }
+
+    }//GEN-LAST:event_jbtRemoveActionPerformed
+
+    private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
+        if (_data._roster == null) {
+            JOptionPane.showMessageDialog(this, "Roster type not selected, please click on roster");
+        } else {
+            int i;
+            /**
+            * Build Avilable Positions
+            */
+            ArrayList<String> positions = new ArrayList<String>();
+            for (i = 0; i < _data._roster._player_types.size(); i++) {
+                PlayerType pt = _data._roster._player_types.get(i);
+                /*
+                * Count the number of player possible
+                */
+                int limit = pt._limit;
+                int j;
+                for (j = 0; j < _data._players.size(); j++) {
+                    if (_data._players.get(j)._playertype == pt) {
+                        limit--;
+                    }
+                }
+                if (limit > 0) {
+                    positions.add(pt._position);
+                }
+            }
+
+            String input = (String) JOptionPane.showInputDialog(this,
+                "Choisissez le type de joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
+                null, positions.toArray(), "Amazons");
+            PlayerType pt = _data._roster.getPlayerType(input);
+            Player p = new Player(pt);
+
+            _data._players.add(p);
+        }
+
+        update();
+    }//GEN-LAST:event_jbtAddActionPerformed
+
+    private void jslBabesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslBabesStateChanged
+        _data._bloodweiserbabes = jslBabes.getValue();
+        update();
+    }//GEN-LAST:event_jslBabesStateChanged
+
+    private void jslCardBudgetStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslCardBudgetStateChanged
+        _data._cards = jslCardBudget.getValue();
+        update();
+    }//GEN-LAST:event_jslCardBudgetStateChanged
+
+    private void jslIgorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslIgorStateChanged
+        _data._igor = jslIgor.getValue() == 1;
+        update();
+    }//GEN-LAST:event_jslIgorStateChanged
+
+    private void jslWizardStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslWizardStateChanged
+        _data._wizard = jslWizard.getValue() == 1;
+        update();
+    }//GEN-LAST:event_jslWizardStateChanged
+
+    private void jslLocalApothecaryStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslLocalApothecaryStateChanged
+        _data._localapothecary = jslLocalApothecary.getValue();
+        update();
+    }//GEN-LAST:event_jslLocalApothecaryStateChanged
+
+    private void jslBribeTheRefStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslBribeTheRefStateChanged
+        _data._corruptions = jslBribeTheRef.getValue();
+        update();
+    }//GEN-LAST:event_jslBribeTheRefStateChanged
+
+    private void jslExtraRerollStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslExtraRerollStateChanged
+        _data._extrarerolls = jslExtraReroll.getValue();
+        update();
+    }//GEN-LAST:event_jslExtraRerollStateChanged
+
+    private void jbtRemoveStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveStarActionPerformed
+        int i = jtbStars.getSelectedRow();
+        if (i > -1) {
+            _data._champions.remove(i);
+        }
+        update();
+    }//GEN-LAST:event_jbtRemoveStarActionPerformed
+
+    private void jbtAddStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddStarActionPerformed
+        if (_data._roster == null) {
+            JOptionPane.showMessageDialog(this, "Roster type not selected, please click on roster");
+        } else {
+            int i, j;
+            /**
+            * Build Avilable Positions
+            */
+            ArrayList<String> names = new ArrayList<String>();
+            for (i = 0; i < _data._roster._available_starplayers.size(); i++) {
+                StarPlayer sp = _data._roster._available_starplayers.get(i);
+                boolean found = false;
+                for (j = 0; j < _data._champions.size(); j++) {
+                    if (_data._champions.get(j)._name.equals(sp._name)) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    names.add(sp._name);
+                }
+
+            }
+
+            String input = (String) JOptionPane.showInputDialog(this,
+                "Choisissez le joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
+                null, names.toArray(), "");
+            StarPlayer sp = _data._roster.getStarPlayer(input);
+            _data._champions.add(sp);
+        }
+        update();
+    }//GEN-LAST:event_jbtAddStarActionPerformed
+
+    private void jtbStarsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbStarsMouseClicked
+        jbtRemoveStar.setEnabled(jtbStars.getSelectedRow() > -1);
+    }//GEN-LAST:event_jtbStarsMouseClicked
     
     private void update() {
         if (_data._roster != null) {
@@ -1593,6 +1551,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1602,8 +1561,6 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private org.jdesktop.swingx.JXTaskPane jXTaskPane1;
-    private org.jdesktop.swingx.JXTaskPane jXTaskPane2;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddSkill;
     private javax.swing.JButton jbtAddStar;
@@ -1628,7 +1585,6 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbCostLocalApothecary;
     private javax.swing.JLabel jlbCostReroll;
     private javax.swing.JLabel jlbCostWizard;
-    private javax.swing.JLabel jlbGoods;
     private javax.swing.JButton jlbIcon;
     private javax.swing.JLabel jlbNbApothecary;
     private javax.swing.JLabel jlbNbAssists;
@@ -1680,8 +1636,6 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbX8;
     private javax.swing.JLabel jlbX9;
     private javax.swing.JPanel jpnCenter;
-    private javax.swing.JPanel jpnCenterSouth;
-    private javax.swing.JPanel jpnSouth;
     private javax.swing.JPanel jpnTitle;
     private javax.swing.JSlider jslApothecary;
     private javax.swing.JSlider jslAssists;
@@ -1697,6 +1651,6 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JSlider jslWizard;
     private javax.swing.JTable jtbPlayers;
     private javax.swing.JTable jtbStars;
-    private org.jdesktop.swingx.JXTitledPanel jxtpCenter;
+    private javax.swing.JTabbedPane jtpGoods;
     // End of variables declaration//GEN-END:variables
 }

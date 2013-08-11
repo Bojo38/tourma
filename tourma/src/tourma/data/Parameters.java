@@ -124,7 +124,7 @@ public class Parameters implements XMLExport {
     }
 
     public Element getXMLElement() {
-        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         final Element params = new Element("Parameters");
         params.setAttribute("Organizer", this.mTournamentOrga);
         params.setAttribute("Name", this.mTournamentName);
@@ -132,7 +132,7 @@ public class Parameters implements XMLExport {
         params.setAttribute("Place", this.mTournamentName);
 
         for (int i = 0; i < this.mCriterias.size(); i++) {
-           final Element crit = mCriterias.get(i).getXMLElement();
+            final Element crit = mCriterias.get(i).getXMLElement();
             params.addContent(crit);
         }
 
@@ -277,5 +277,9 @@ public class Parameters implements XMLExport {
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
+    }
+
+    public String toString() {
+        return "Paramètres";
     }
 }

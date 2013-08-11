@@ -4,6 +4,7 @@
  */
 package tourma.tableModel;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import tourma.data.Coach;
@@ -138,6 +139,15 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
         }
         jlb.setHorizontalAlignment(JTextField.CENTER);
+        
+         if (isSelected)
+        {
+            jlb.setBackground(Color.LIGHT_GRAY);
+        }
+        else
+        {
+            jlb.setBackground(Color.WHITE);
+        }
         return jlb;
     }
 }

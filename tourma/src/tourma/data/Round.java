@@ -34,6 +34,12 @@ public class Round implements XMLExport {
         mMatchs = new ArrayList<Match>();
     }
 
+    public String toString()
+    {
+        final int index=Tournament.getTournament().getRounds().indexOf(this);
+        return "Round "+(index+1);
+    }
+    
     public ArrayList<Match> getMatchs() {
         return mMatchs;
     }

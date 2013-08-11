@@ -2174,7 +2174,7 @@ public class Generation {
             m.mCoach1.mMatchs.add(m);
             m.mCoach2.mMatchs.add(m);
         }
-        for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1; i >= 0; i--) {
+        /*for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1; i >= 0; i--) {
             Component obj = MainFrame.getMainFrame().jtpMain.getComponentAt(i);
             if (obj instanceof JPNRound) {
                 MainFrame.getMainFrame().jtpMain.remove(obj);
@@ -2196,7 +2196,8 @@ public class Generation {
             MainFrame.getMainFrame().jtpMain.addTab(ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Cup"), new ImageIcon(MainFrame.getMainFrame().getClass().getResource("/tourma/images/Star.png")), jpncup);
         }
 
-        MainFrame.getMainFrame().jtpMain.setSelectedIndex(tour.getRounds().size());
+        MainFrame.getMainFrame().jtpMain.setSelectedIndex(tour.getRounds().size());*/
+        MainFrame.getMainFrame().update();
         String filename = Tournament.getTournament().getParams().mTournamentName;
         filename = filename + "." + Tournament.getTournament().getRounds().size();
         Date date = new Date();

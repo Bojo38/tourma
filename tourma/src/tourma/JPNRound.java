@@ -37,6 +37,7 @@ import tourma.data.Pool;
 import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
+import tourma.utils.TableFormat;
 import tourma.views.report.jdgGlobal;
 
 /**
@@ -131,7 +132,7 @@ public class JPNRound extends javax.swing.JPanel {
             jbtNextRound.setEnabled((!mTournament.mRoundRobin) || (mTournament.mRoundRobin && (mRoundNumber == mTournament.getRounds().size() - 1)));
 
             /*        jtbMatches.setDefaultEditor(Integer.class, model);*/
-            setColumnSize(jtbMatches);
+            TableFormat.setColumnSize(jtbMatches);
             final ArrayList<Round> v = new ArrayList<Round>();
             for (int i = 0; i < mTournament.getRounds().size(); i++) {
                 if (mTournament.getRounds().get(i).getHour().before(mRound.getHour())) {
@@ -150,10 +151,9 @@ public class JPNRound extends javax.swing.JPanel {
                     ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).mRoundOnly = mRoundOnly;
                     ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
                 }
-                setColumnSize(jtbRankingIndiv);
+                TableFormat.setColumnSize(jtbRankingIndiv);
             }
         }
-
 
         for (int i = 0; i < jtpGlobal.getTabCount(); i++) {
             Object panel = jtpGlobal.getTabComponentAt(i);
@@ -182,6 +182,8 @@ public class JPNRound extends javax.swing.JPanel {
                 }
             }
         }
+        
+        repaint();
     }
 
     /**
@@ -377,32 +379,7 @@ public class JPNRound extends javax.swing.JPanel {
         add(jtpGlobal, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setColumnSize(final JTable t) {
-        final FontMetrics fm = t.getFontMetrics(t.getFont());
-        for (int i = 0; i < t.getColumnCount(); i++) {
-            int max = 0;
-            for (int j = 0; j < t.getRowCount(); j++) {
-                final Object value = t.getValueAt(j, i);
-                String tmp = "";
-                if (value instanceof String) {
-                    tmp = (String) value;
-                }
-                if (value instanceof Integer) {
-                    tmp = ((Integer) value).toString();
-                }
-                final int taille = fm.stringWidth(tmp);
-                if (taille > max) {
-                    max = taille;
-                }
-            }
-            final String nom = (String) t.getColumnModel().getColumn(i).getIdentifier();
-            final int taille = fm.stringWidth(nom);
-            if (taille > max) {
-                max = taille;
-            }
-            t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
-        }
-    }
+    
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextRoundActionPerformed
@@ -453,6 +430,8 @@ public class JPNRound extends javax.swing.JPanel {
 
         Generation.NextRound(mRound, Options.get(index), mRoundNumber);
         update();
+        MainFrame.getMainFrame().update();
+        MainFrame.getMainFrame().updateTree();
     }//GEN-LAST:event_jbtNextRoundActionPerformed
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -496,15 +475,16 @@ public class JPNRound extends javax.swing.JPanel {
 
     if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ConfirmEraseCurrentRound"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EraseRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
+
         // Remove mRound
-        mTournament.getRounds().remove(mRound);
+       /* mTournament.getRounds().remove(mRound);
         for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1; i
                 >= 0; i--) {
             final Component obj = MainFrame.getMainFrame().jtpMain.getComponentAt(i);
             if (obj instanceof JPNRound) {
                 MainFrame.getMainFrame().jtpMain.remove(obj);
             }
-        }
+        }*/
 
         // Remove matchs from coach reference list
         for (int i = 0; i < mRound.getMatchs().size(); i++) {
@@ -515,13 +495,14 @@ public class JPNRound extends javax.swing.JPanel {
 
         mTournament.getRounds().remove(mRound);
 
-        for (int i = 0; i
+       /* for (int i = 0; i
                 < mTournament.getRounds().size(); i++) {
             final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
             MainFrame.getMainFrame().jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-        }
+        }*/
 
         MainFrame.getMainFrame().update();
+        MainFrame.getMainFrame().updateTree();
     }
     }//GEN-LAST:event_jbtDeleteRoundActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
