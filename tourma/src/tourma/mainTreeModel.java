@@ -5,6 +5,7 @@
 package tourma;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTree;
@@ -127,7 +128,14 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
     }
 
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-        JLabel jlb = new JLabel(value.toString());
+        final JLabel jlb = new JLabel(value.toString());
+        if (selected)
+        {
+            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+            jlb.setSize(jlb.getWidth()+100,jlb.getHeight());
+            jlb.revalidate();
+        }
+        
         if (value == mParams) {
             jlb.setIcon(Icons.getParams());
         }
@@ -139,6 +147,9 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         if (value==mCup) {
             jlb.setIcon(Icons.getStar());
         }
+        
+        
+        
         return jlb;
     }
 }

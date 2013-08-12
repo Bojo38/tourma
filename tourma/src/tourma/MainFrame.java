@@ -26,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.event.TreeSelectionEvent;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
@@ -110,8 +111,10 @@ public class MainFrame extends javax.swing.JFrame {
         final mainTreeModel dtm = new mainTreeModel();
         jtrPanels.setCellRenderer(dtm);
         jtrPanels.setModel(dtm);   
+        jtrPanels.setSize(100, this.getHeight());
         this.revalidate();
         this.repaint();
+        
     }
 
     public void updateTree()
@@ -128,6 +131,7 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jspSplit = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtrPanels = new javax.swing.JTree();
         jpnContent = new javax.swing.JPanel();
@@ -175,8 +179,10 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtrPanels);
 
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.LINE_START);
-        getContentPane().add(jpnContent, java.awt.BorderLayout.CENTER);
+        jspSplit.setLeftComponent(jScrollPane1);
+        jspSplit.setRightComponent(jpnContent);
+
+        getContentPane().add(jspSplit, java.awt.BorderLayout.CENTER);
 
         jmnFile.setText(bundle.getString("FileKey")); // NOI18N
 
@@ -637,19 +643,23 @@ public class MainFrame extends javax.swing.JFrame {
             if (node != null) {
                 final Object object = node.getUserObject();
                 if (object instanceof Parameters) {
-                    this.remove(jpnContent);
+                    jspSplit.remove(jpnContent);
                     jpnContent = new JPNParameters();
-                    this.add(jpnContent, BorderLayout.CENTER);
+                    jspSplit.add(jpnContent, JSplitPane.RIGHT);
                     ((JPNParameters) jpnContent).update();
+                    jspSplit.setDividerLocation(200);
+                    //System.gc();
                     this.revalidate();
                 }
                 if (object instanceof Round) {
                     for (int i = 0; i < mTournament.getRounds().size(); i++) {
                         if (mTournament.getRounds().get(i).equals(object)) {
-                            this.remove(jpnContent);
+                            jspSplit.remove(jpnContent);
                             jpnContent = new JPNRound(i, (Round) object, mTournament);
-                            this.add(jpnContent, BorderLayout.CENTER);
+                            jspSplit.add(jpnContent, JSplitPane.RIGHT);
                             ((JPNRound) jpnContent).update();
+                             jspSplit.setDividerLocation(200);
+                            //System.gc();
                             this.revalidate();
                             break;
                         }
@@ -657,10 +667,12 @@ public class MainFrame extends javax.swing.JFrame {
                 }
 
                 if (object.equals("Cup")) {
-                    this.remove(jpnContent);
+                    jspSplit.remove(jpnContent);
                     jpnContent = new JPNCup();
-                    this.add(jpnContent, BorderLayout.CENTER);
+                    jspSplit.add(jpnContent, JSplitPane.RIGHT);
                     ((JPNCup) jpnContent).update();
+                     jspSplit.setDividerLocation(200);
+                    //System.gc();
                     this.revalidate();
                 }
 
@@ -716,6 +728,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jmnParameters;
     private javax.swing.JMenu jmnRounds;
     private javax.swing.JPanel jpnContent;
+    private javax.swing.JSplitPane jspSplit;
     private javax.swing.JTree jtrPanels;
     // End of variables declaration//GEN-END:variables
 }

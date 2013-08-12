@@ -107,12 +107,17 @@
                     </#if>
                     </#if>
                     <tr>
-                        <td class="tab_pos" style="font-size:16px;">${match.numero}</td>
-                        <td class="${style1}" style="font-size:16px;">${match.team1} </td>
-                        <td class="${style1}" style="font-size:14px;">${match.v1}</td>
-                        <td class="${style1}" style="font-size:14px;">${match.n}</td>
-                        <td class="${style2}" style="font-size:14px;">${match.v2}</td>
-                        <td class="${style2}" style="font-size:16px;">${match.team2}</td>
+                        <#if (match.numero%2 == 1) >
+                    <#assign backgroud="background-color:#ffffff;">
+                    <#else>
+                    <#assign backgroud="background-color:#eeeeee;">
+                    </#if>
+                        <td class="tab_pos" style="font-size:16px;${backgroud}">${match.numero}</td>
+                        <td class="${style1}" style="font-size:16px;${backgroud}">${match.team1} </td>
+                        <td class="${style1}" style="font-size:14px;${backgroud}">${match.v1}</td>
+                        <td class="${style1}" style="font-size:14px;${backgroud}">${match.n}</td>
+                        <td class="${style2}" style="font-size:14px;${backgroud}">${match.v2}</td>
+                        <td class="${style2}" style="font-size:16px;${backgroud}">${match.team2}</td>
                     </tr>
                 </#list>
 

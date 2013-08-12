@@ -124,7 +124,12 @@ text-align:center;
                     <#if col_index== 0>
                     <td  class="tab_pos${suffix}">${col}</td>
                     <#else>
-                    <td class="tab_result${suffix}">${col}</td>
+                    <#if (line_index%2 == 1) >
+                    <#assign bg="background-color:#ffffff;">
+                    <#else>
+                    <#assign bg="background-color:#eeeeee;">
+                    </#if>
+                    <td class="tab_result${suffix}" style="${bg}">${col}</td>
                     </#if>
                     </#list>
                 </tr>

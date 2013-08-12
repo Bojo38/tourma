@@ -120,11 +120,17 @@
                     <#assign suffix="">
                     </#if>
 
+                    <#if (line_index%2 == 1) >
+                    <#assign bg="background-color:#ffffff;">
+                    <#else>
+                    <#assign bg="background-color:#eeeeee;">
+                    </#if>
+                    
                     <#list line.cols as col>
                     <#if col_index== 0>
-                    <td  class="tab_pos${suffix}">${col}</td>
-                    <#else>
-                    <td class="tab_result${suffix}">${col}</td>
+                    <td  class="tab_pos${suffix}" style="${bg}">${col}</td>
+                    <#else>                    
+                    <td class="tab_result${suffix}" style="${bg}">${col}</td>
                     </#if>
                     </#list>
                 </tr>
