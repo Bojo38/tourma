@@ -45,7 +45,7 @@ KILLS
 
   <xs:complexType name="coachesType">
     <xs:sequence>
-      <xs:element name=StringConstants.CS_COACH type="naf:coachRecordType" maxOccurs="unbounded" minOccurs="1"/>
+      <xs:element name="coach" type="naf:coachRecordType" maxOccurs="unbounded" minOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
 

@@ -10,7 +10,7 @@
 
 <nafReport  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xmlns='http://www.bloodbowl.net'
-   xsi:schemaLocation='http://www.bloodbowl.net ../../../test/naf.xsd'>
+   xsi:schemaLocation='./naf.xsd'>
     <organiser></organiser>
     <coaches>
         <coach>
@@ -33,13 +33,13 @@
         <timeStamp></timeStamp>
         <playerRecord>
             <name></name>
-            <number></number>
-            <teamRating></teamRating>
-            <touchDowns></touchDowns>
-            <badlyHurt></badlyHurt>
-            <seriouslyInjured></seriouslyInjured>
-            <dead></dead>
-            <winnings></winnings>
+            <number>1</number>
+            <teamRating>100</teamRating>
+            <touchDowns>1</touchDowns>
+            <badlyHurt>0</badlyHurt>
+            <seriouslyInjured>0</seriouslyInjured>
+            <dead>0</dead>
+            <winnings>0</winnings>
         </playerRecord>
         <playerRecord>
             <name></name>

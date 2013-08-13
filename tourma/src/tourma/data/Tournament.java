@@ -573,7 +573,7 @@ public class Tournament {
             final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
 
             writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            writer.println("<nafReport xmlns='http://www.bloodbowl.net' xsi:schemaLocation='http://www.bloodbowl.net ../../../test/naf.xsd'>");
+            writer.println("<nafReport xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.bloodbowl.net' xsi:schemaLocation='http://www.bloodbowl.net/naf.xsd'>");
             writer.println("<organiser>" + mParams.mTournamentOrga + "</organiser>");
             writer.println("<coaches>");
             for (int i = 0; i < mCoachs.size(); i++) {
@@ -603,9 +603,9 @@ public class Tournament {
                         writer.println("<teamRating>" + p.mRank + "</teamRating>");
                         writer.println("<touchDowns>" + m.mValues.get(critTd).mValue1 + "</touchDowns>");
                         writer.println("<badlyHurt>" + m.mValues.get(critInj).mValue1 + "</badlyHurt>");
-                        writer.println("<seriouslyInjured></seriouslyInjured>");
-                        writer.println("<dead></dead>");
-                        writer.println("<winnings></winnings>");
+                        writer.println("<seriouslyInjured>0</seriouslyInjured>");
+                        writer.println("<dead>0</dead>");
+                        writer.println("<winnings>0</winnings>");
                         writer.println("</playerRecord>");
                         p = m.mCoach2;
                         writer.println("<playerRecord>");
@@ -614,11 +614,11 @@ public class Tournament {
                         writer.println("<teamRating>" + p.mRank + "</teamRating>");
                         writer.println("<touchDowns>" + m.mValues.get(critTd).mValue2 + "</touchDowns>");
                         writer.println("<badlyHurt>" + m.mValues.get(critInj).mValue2 + "</badlyHurt>");
-                        writer.println("<seriouslyInjured></seriouslyInjured>");
-                        writer.println("<dead></dead>");
-                        writer.println("<winnings></winnings>");
+                        writer.println("<seriouslyInjured>0</seriouslyInjured>");
+                        writer.println("<dead>0</dead>");
+                        writer.println("<winnings>0</winnings>");
                         writer.println("</playerRecord>");
-                        writer.println("<gate></gate>");
+                        writer.println("<gate>2</gate>");
                         writer.println("</game>");
                     }
                 }
