@@ -59,15 +59,26 @@ public class JPNCup extends javax.swing.JPanel {
     public void update() {
         final ArrayList<Round> rounds_with_cup = new ArrayList<Round>();
         final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
+        boolean bLooserCup=false;
         for (int i = 0; i < rounds.size(); i++) {
             if (rounds.get(i).mCup) {
                 rounds_with_cup.add(rounds.get(i));
+                if (rounds.get(i).mLooserCup)
+                {
+                    bLooserCup=true;
+                }
             }
         }
 
         jpnCup.removeAll();
-        jpnCup.setSize(rounds_with_cup.size() * 200, (int) Math.pow(2, rounds_with_cup.size()) * 150);
-
+        final int max_width=rounds_with_cup.size() * 200;
+        int max_heigth=(int) Math.pow(2, rounds_with_cup.size()) * 150;
+        if (bLooserCup)
+        {
+            max_heigth+=max_heigth/2;
+        }
+        jpnCup.setSize(max_width,max_heigth );
+        
 
         final int max_nb_match = (int) Math.pow(2, rounds_with_cup.get(0).mCupMaxTour - 1);
         final int base_high = 60;
@@ -140,7 +151,12 @@ public class JPNCup extends javax.swing.JPanel {
                 if (r.mCupTour > 0) {
                     nb_looseMatch = nb_looseMatch / 2 + nb_match;
 
-                    for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j  * Tournament.getTournament().getParams().mTeamMatesNumber< r.getMatchs().size()); j++) {
+                    int factor=1;
+                    if ((Tournament.getTournament().getParams().mTeamTournament)&&(Tournament.getTournament().getParams().mTeamPairing==1))
+                    {
+                       factor= Tournament.getTournament().getParams().mTeamMatesNumber;
+                    }
+                    for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j  * factor< r.getMatchs().size()); j++) {
                         Match m;
                         if ((tour.getParams().mTeamTournament)
                                 && (tour.getParams().mTeamIndivPairing == 0)) {
@@ -183,6 +199,6 @@ public class JPNCup extends javax.swing.JPanel {
                     }
                 }
             }
-        }
+        }        
     }
 }

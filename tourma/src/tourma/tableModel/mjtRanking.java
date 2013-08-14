@@ -124,7 +124,8 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
 
     public static int getPointsByCoach(final Coach c, final Match m) {
         int value = 0;
-        final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+        Criteria td=Tournament.getTournament().getParams().mCriterias.get(0);
+        final Value val = m.mValues.get(td);
         if (m.mCoach1 == c) {
             if (val.mValue1 >= 0) {
                 if (val.mValue1 >= val.mValue2 + Tournament.getTournament().getParams().mGapLargeVictory) {

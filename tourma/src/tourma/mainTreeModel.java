@@ -29,6 +29,7 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
     DefaultMutableTreeNode mRoot;
     public DefaultMutableTreeNode mParams;
     DefaultMutableTreeNode mCup;
+    public DefaultMutableTreeNode mStats;
     ArrayList<DefaultMutableTreeNode> mRounds;
 
     mainTreeModel() {
@@ -43,10 +44,14 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
 
         mRoot = new DefaultMutableTreeNode(name, true);
         mParams = new DefaultMutableTreeNode("Paramètres");
+        mStats = new DefaultMutableTreeNode("Statistiques");
 
         mRoot.add(mParams);
         mParams.setUserObject(mTournament.getParams());
 
+        mRoot.add(mStats);
+        mStats.setUserObject("Statistics");
+        
         boolean cup = false;
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             final Round r = mTournament.getRounds().get(i);
@@ -146,6 +151,10 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         }
         if (value==mCup) {
             jlb.setIcon(Icons.getStar());
+        }
+        
+        if (value==mStats) {
+            jlb.setIcon(Icons.getStats());
         }
         
         

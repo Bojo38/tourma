@@ -24,14 +24,14 @@ public class mjtRankingIndiv extends mjtRanking {
     boolean mTeamTournament;
     boolean mPositive;
     boolean mRoundOnly;
+    boolean mForPool;
 
-    public mjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList<Coach> coachs, final boolean tournament, final boolean round_only) {
+    public mjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList<Coach> coachs, final boolean tournament, final boolean round_only, boolean forPool) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs);
         mTeamTournament = tournament;
         mRoundOnly = round_only;
+        mForPool = forPool;
         sortDatas();
-
-
     }
 
     protected void sortDatas() {
@@ -126,14 +126,14 @@ public class mjtRankingIndiv extends mjtRanking {
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
-        if ((tour.getPools().size() > 0) && (!tour.getRounds().isEmpty()) && (!tour.getRounds().get(mRound).mCup) && (!mTeamTournament)) {
+        if (mForPool) {
             if (mObjects.size() > tour.getPools().get(0).mCoachs.size()) {
                 final int nbPool = tour.getPools().size();
                 Pool p = null;
                 final ArrayList<mjtRankingIndiv> pRank = new ArrayList<mjtRankingIndiv>();
                 for (int j = 0; j < nbPool; j++) {
                     p = tour.getPools().get(j);
-                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mCoachs, mTeamTournament, mRoundOnly);
+                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mCoachs, mTeamTournament, mRoundOnly,false);
                     pRank.add(mjtr);
                 }
 
@@ -146,7 +146,7 @@ public class mjtRankingIndiv extends mjtRanking {
                         final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
                         rank.add((Coach) obj.getObject());
                     }
-                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly);
+                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly,false);
 
                     for (int j = 0; j < mjtr.mDatas.size(); j++) {
                         datas.add(mjtr.mDatas.get(j));
@@ -160,7 +160,7 @@ public class mjtRankingIndiv extends mjtRanking {
                         rank.add(tour.getCoachs().get(i));
                     }
                 }
-                final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly);
+                final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly,false);
 
                 for (int j = 0; j < mjtr.mDatas.size(); j++) {
                     datas.add(mjtr.mDatas.get(j));

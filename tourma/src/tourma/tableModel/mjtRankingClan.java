@@ -65,7 +65,7 @@ public class mjtRankingClan extends mjtRanking {
                         j= mRound;
                     }
                     
-                    while (j <= Math.min(c.mMatchs.size(),mRound)) {
+                    while (j <= Math.min(c.mMatchs.size()-1,mRound)) {
                     //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
                         final Match m = c.mMatchs.get(j);
 

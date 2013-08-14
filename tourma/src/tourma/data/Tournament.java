@@ -228,7 +228,8 @@ public class Tournament {
 
                 // Build list of rankings
                 final ArrayList<Ranking> rankings = new ArrayList<Ranking>();
-                rankings.add(new Ranking("Individual", "general", "", new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getCoachs(), false, false)));
+                final boolean forPool=(getPools().size()>0)&&(!getRounds().get(i).mCup);
+                rankings.add(new Ranking("Individual", "general", "", new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getCoachs(), false, false,forPool)));
                 if (this.getParams().mTeamTournament) {
                     rankings.add(new Ranking(StringConstants.CS_TEAM, "general", "", new mjtRankingTeam(this.getParams().mTeamVictoryOnly, i, this.getParams().mRankingTeam1, this.getParams().mRankingTeam2, this.getParams().mRankingTeam3, this.getParams().mRankingTeam4, this.getParams().mRankingTeam5, this.getTeams(), false)));
                 }
@@ -249,7 +250,7 @@ public class Tournament {
                                 }
                             }
                         }
-                        rankings.add(new Ranking("Group", g.mName, "", new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, ArrayList, false, false)));
+                        rankings.add(new Ranking("Group", g.mName, "", new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, ArrayList, false, false,false)));
                     }
                 }
                 // Annex ranking
@@ -407,13 +408,14 @@ public class Tournament {
             a.append(";\n");
         }
 
+        final boolean forPool=(getPools().size()>0)&&(!getRounds().get(round).mCup);
         final mjtRankingIndiv ri = new mjtRankingIndiv(round,
                 mParams.mRankingIndiv1,
                 mParams.mRankingIndiv2,
                 mParams.mRankingIndiv3,
                 mParams.mRankingIndiv4,
                 mParams.mRankingIndiv5,
-                mCoachs, false, false);
+                mCoachs, false, false,forPool);
         for (int i = 0; i < ri.getRowCount(); i++) {
             final String coach = (String) ri.getValueAt(i, 2);
             a.append(Integer.toString(i + 1));
@@ -1010,6 +1012,7 @@ public class Tournament {
         final Iterator i = coachs.iterator();
         mCoachs.clear();
         Coach.sCoachMap = new HashMap();
+        Coach.sCoachMap.put("None", Coach.sNullCoach);
 
         while (i.hasNext()) {
             final Element coach = (Element) i.next();
@@ -1022,6 +1025,7 @@ public class Tournament {
         /* Teams */
         final List teams = racine.getChildren(StringConstants.CS_TEAM);
         Team.sTeamMap = new HashMap();
+        Team.sTeamMap.put("None",Team.sNullTeam);
         final Iterator l = teams.iterator();
         mTeams.clear();
         while (l.hasNext()) {

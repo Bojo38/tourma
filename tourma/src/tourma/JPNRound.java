@@ -142,7 +142,8 @@ public class JPNRound extends javax.swing.JPanel {
             v.add(mRound);
 
             if (mRoundNumber < mTournament.getRounds().size()) {
-                final mjtRankingIndiv mRanking = new mjtRankingIndiv(mRoundNumber, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getCoachs(), mTournament.getParams().mTeamTournament, mRoundOnly);
+                        final boolean forPool=(mTournament.getPools().size()>0)&&(!mRound.mCup);
+                final mjtRankingIndiv mRanking = new mjtRankingIndiv(mRoundNumber, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getCoachs(), mTournament.getParams().mTeamTournament, mRoundOnly,forPool);
                 jtbRankingIndiv.setModel(mRanking);
                 jtbRankingIndiv.setDefaultRenderer(String.class, mRanking);
                 jtbRankingIndiv.setDefaultRenderer(Integer.class, mRanking);
@@ -463,7 +464,8 @@ public class JPNRound extends javax.swing.JPanel {
     private void jbtGeneralIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralIndivActionPerformed
     for (int i = 0; i < mTournament.getRounds().size(); i++) {
         if (mRound == mTournament.getRounds().get(i)) {
-            final mjtRankingIndiv model = new mjtRankingIndiv(mRoundNumber, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getCoachs(), mTournament.getParams().mTeamTournament, mRoundOnly);
+            final boolean forPool=(mTournament.getPools().size()>0)&&(!mRound.mCup);
+            final mjtRankingIndiv model = new mjtRankingIndiv(mRoundNumber, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getCoachs(), mTournament.getParams().mTeamTournament, mRoundOnly,forPool);
             final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, "General par Coach", i + 1, mTournament, model, 0);
             jdg.setVisible(true);
             break;
@@ -513,7 +515,8 @@ public class JPNRound extends javax.swing.JPanel {
     private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
     for (int i = 0; i < mTournament.getRounds().size(); i++) {
         if (mRound == mTournament.getRounds().get(i)) {
-            final mjtRankingIndiv model = new mjtRankingIndiv(mRoundNumber, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getCoachs(), mTournament.getParams().mTeamTournament, mRoundOnly);
+            final boolean forPool=(mTournament.getPools().size()>0)&&(!mRound.mCup);
+            final mjtRankingIndiv model = new mjtRankingIndiv(mRoundNumber, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getCoachs(), mTournament.getParams().mTeamTournament, mRoundOnly,forPool);
             final HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<Criteria, mjtAnnexRank>();
             final HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<Criteria, mjtAnnexRank>();
             for (int j = 0; j < mTournament.getParams().mCriterias.size(); j++) {

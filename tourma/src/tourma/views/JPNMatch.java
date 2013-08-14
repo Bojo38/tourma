@@ -24,6 +24,12 @@ public class JPNMatch extends javax.swing.JPanel {
         jlbPlayer1.setText(m.mCoach1.mName);
         jlbPlayer2.setText(m.mCoach2.mName);
 
+        jlbPlayer1.setBackground(m.mCoach1.mColor);
+        jlbPlayer2.setBackground(m.mCoach2.mColor);
+        
+        jPanel2.setBackground(m.mCoach1.mColor);
+        jPanel4.setBackground(m.mCoach2.mColor);
+        
         final Value v=m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
         if ((v.mValue1 == -1)||(v.mValue2 == -1)) {
             jlbScore1.setText("");
@@ -35,10 +41,10 @@ public class JPNMatch extends javax.swing.JPanel {
 
         if (!winner)
         {
-            jPanel1.setBackground(Color.GRAY);
-            jPanel2.setBackground(Color.GRAY);
-            jPanel4.setBackground(Color.GRAY);
-            this.setBackground(Color.GRAY);
+            jPanel1.setBackground(Color.LIGHT_GRAY);
+            //jPanel2.setBackground(Color.LIGHT_GRAY);
+            //jPanel4.setBackground(Color.LIGHT_GRAY);
+            this.setBackground(Color.LIGHT_GRAY);
         }
     }
 
@@ -64,7 +70,7 @@ public class JPNMatch extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         setMaximumSize(new java.awt.Dimension(100, 50));
         setMinimumSize(new java.awt.Dimension(100, 50));
         setPreferredSize(new java.awt.Dimension(150, 50));

@@ -395,7 +395,7 @@ CREATE TABLE "StarSkill"(
 );
 CREATE INDEX "StarSkill.fk_StarSkill_StarPlayer1_idx" ON "StarSkill"("StarPlayer_idStarPlayer");
 CREATE INDEX "StarSkill.fk_StarSkill_Skill1_idx" ON "StarSkill"("Skill_idSkill");
-CREATE TABLE "Coach"(
+CREATE TABLE StringConstants.CS_COACH(
   "idCoach" INTEGER PRIMARY KEY NOT NULL,
   "Name" TEXT,
   "Clan_idClan" INTEGER NOT NULL,
@@ -409,15 +409,15 @@ CREATE TABLE "Coach"(
     FOREIGN KEY("Roster_idRoster")
     REFERENCES "Roster"("idRoster")
 );
-CREATE INDEX "Coach.fk_Coach_Clan1_idx" ON "Coach"("Clan_idClan");
-CREATE INDEX "Coach.fk_Coach_Roster1_idx" ON "Coach"("Roster_idRoster");
+CREATE INDEX "Coach.fk_Coach_Clan1_idx" ON StringConstants.CS_COACH("Clan_idClan");
+CREATE INDEX "Coach.fk_Coach_Roster1_idx" ON StringConstants.CS_COACH("Roster_idRoster");
 CREATE TABLE "Team"(
   "idTeam" INTEGER PRIMARY KEY NOT NULL,
   "Name" TEXT,
   "Coach_idCoach" INTEGER NOT NULL,
   CONSTRAINT "fk_Team_Coach1"
     FOREIGN KEY("Coach_idCoach")
-    REFERENCES "Coach"("idCoach")
+    REFERENCES StringConstants.CS_COACH("idCoach")
 );
 CREATE INDEX "Team.fk_Team_Coach1_idx" ON "Team"("Coach_idCoach");
 CREATE TABLE "Match"(
@@ -429,10 +429,10 @@ CREATE TABLE "Match"(
   "Roster_idRoster1" INTEGER NOT NULL,
   CONSTRAINT "fk_Match_Coach1"
     FOREIGN KEY("Coach_idCoach2")
-    REFERENCES "Coach"("idCoach"),
+    REFERENCES StringConstants.CS_COACH("idCoach"),
   CONSTRAINT "fk_Match_Coach2"
     FOREIGN KEY("Coach_idCoach1")
-    REFERENCES "Coach"("idCoach"),
+    REFERENCES StringConstants.CS_COACH("idCoach"),
   CONSTRAINT "fk_Match_Round1"
     FOREIGN KEY("Round_idRound")
     REFERENCES "Round"("idRound"),
@@ -471,7 +471,7 @@ CREATE TABLE "AnnexIndivRank"(
   "AnnexRanking_idAnnexTeamRanking" INTEGER NOT NULL,
   CONSTRAINT "fk_AnnexIndivRank_Coach1"
     FOREIGN KEY("Coach_idCoach")
-    REFERENCES "Coach"("idCoach"),
+    REFERENCES StringConstants.CS_COACH("idCoach"),
   CONSTRAINT "fk_AnnexIndivRank_AnnexRanking1"
     FOREIGN KEY("AnnexRanking_idAnnexTeamRanking")
     REFERENCES "AnnexRanking"("idAnnexTeamRanking")
@@ -525,7 +525,7 @@ CREATE TABLE "MainIndivRank"(
     REFERENCES "MainRanking"("idMainRanking"),
   CONSTRAINT "fk_MainIndivRank_Coach1"
     FOREIGN KEY("Coach_idCoach")
-    REFERENCES "Coach"("idCoach")
+    REFERENCES StringConstants.CS_COACH("idCoach")
 );
 CREATE INDEX "MainIndivRank.fk_MainIndivRank_MainRanking1_idx" ON "MainIndivRank"("MainRanking_idMainRanking");
 CREATE INDEX "MainIndivRank.fk_MainIndivRank_Coach1_idx" ON "MainIndivRank"("Coach_idCoach");
@@ -544,7 +544,7 @@ CREATE TABLE "MainGroupRank"(
     REFERENCES "MainRanking"("idMainRanking"),
   CONSTRAINT "fk_MainGroupRank_Coach1"
     FOREIGN KEY("Coach_idCoach")
-    REFERENCES "Coach"("idCoach"),
+    REFERENCES StringConstants.CS_COACH("idCoach"),
   CONSTRAINT "fk_MainGroupRank_Group1"
     FOREIGN KEY("Group_idGroup")
     REFERENCES "Group"("idGroup")

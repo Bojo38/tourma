@@ -211,7 +211,7 @@ public class Generation {
     
     protected static void IndivCreatePools() {
 
-        JPanel message = new JPanel();
+        final JPanel message = new JPanel();
         message.setLayout(new BorderLayout());
 
         Tournament tour = Tournament.getTournament();
@@ -2619,14 +2619,14 @@ public class Generation {
             // Ranking class
             datas = ranking.getSortedDatas();
         } else {
-
+            final boolean forPool=(tour.getPools().size()>0)&&(!tour.getRounds().get(roundnumber).mCup);
             mjtRankingIndiv ranking = new mjtRankingIndiv(roundnumber,
                     tour.getParams().mRankingIndiv1,
                     tour.getParams().mRankingIndiv2,
                     tour.getParams().mRankingIndiv3,
                     tour.getParams().mRankingIndiv4,
                     tour.getParams().mRankingIndiv5,
-                    tour.getCoachs(), false, false);
+                    tour.getCoachs(), false, false,forPool);
 
             // Ranking class
             datas = ranking.getSortedDatas();
@@ -2661,14 +2661,14 @@ public class Generation {
             // Ranking class
             datas = ranking.getSortedDatas();
         } else {
-
+            final boolean forPool=(tour.getPools().size()>0)&&(!tour.getRounds().get(roundnumber).mCup);
             mjtRankingIndiv ranking = new mjtRankingIndiv(roundnumber,
                     tour.getParams().mRankingIndiv1,
                     tour.getParams().mRankingIndiv2,
                     tour.getParams().mRankingIndiv3,
                     tour.getParams().mRankingIndiv4,
                     tour.getParams().mRankingIndiv5,
-                    p.mCoachs, false, false);
+                    p.mCoachs, false, false,forPool);
 
             // Ranking class
             datas = ranking.getSortedDatas();

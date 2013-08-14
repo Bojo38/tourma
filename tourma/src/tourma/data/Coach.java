@@ -4,11 +4,13 @@
  */
 package tourma.data;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -24,7 +26,7 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class Coach implements Comparable, XMLExport {
-    
+
     public static Coach sNullCoach = new Coach("None");
     public static HashMap<String, Coach> sCoachMap = new HashMap<String, Coach>();
     /**
@@ -40,10 +42,30 @@ public class Coach implements Comparable, XMLExport {
     public Team mTeamMates = null;
     public ArrayList<Match> mMatchs;
     public teamma.data.Roster mComposition;
+    public Color mColor;
+
+    protected Color generateRandomColor(Color mix) {
+        Random random = new Random();
+        int red = random.nextInt(256);
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
+
+        // mix the color
+        if (mix != null) {
+            red = (red + mix.getRed()) / 2;
+            green = (green + mix.getGreen()) / 2;
+            blue = (blue + mix.getBlue()) / 2;
+        }
+
+        Color color = new Color(red, green, blue);
+        return color;
+    }
 
     public Coach() {
         mMatchs = new ArrayList<Match>();
         mActive = true;
+        mColor = generateRandomColor(Color.WHITE);
+
     }
 
     public Coach(final String name) {
@@ -53,6 +75,11 @@ public class Coach implements Comparable, XMLExport {
         mTeam = "None";
         mRoster = new RosterType("None");
         mTeamMates = Team.sNullTeam;
+        if (mName.equals("None")) {
+            mColor = Color.GRAY;
+        } else {
+            mColor = generateRandomColor(Color.WHITE);
+        }
     }
 
     public int compareTo(final Object obj) {
@@ -96,7 +123,7 @@ public class Coach implements Comparable, XMLExport {
             inducements.setAttribute("ExtraRerolls", Integer.toString(roster._extrarerolls));
             inducements.setAttribute("LocalApothecary", Integer.toString(roster._localapothecary));
 
-            
+
             for (int j = 0; j < roster._champions.size(); j++) {
                 final Element st = new Element("StarPlayer");
                 st.setAttribute(StringConstants.CS_NAME, roster._champions.get(j)._name);
@@ -172,7 +199,7 @@ public class Coach implements Comparable, XMLExport {
                     this.mComposition._localapothecary = Integer.parseInt(inducements.getAttributeValue("LocalApothecary"));
                     this.mComposition._wizard = Boolean.parseBoolean(inducements.getAttributeValue("Wizard"));
 
-                    final  List stars = inducements.getChildren("StarPlayers");
+                    final List stars = inducements.getChildren("StarPlayers");
                     final Iterator s = stars.iterator();
                     while (s.hasNext()) {
                         final Element star = (Element) s.next();

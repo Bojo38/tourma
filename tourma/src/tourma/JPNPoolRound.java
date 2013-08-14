@@ -227,7 +227,7 @@ public class JPNPoolRound extends javax.swing.JPanel {
             TableFormat.setColumnSize(jtbRankingPool);
         } else {
             mjtRankingIndiv mRankingIndiv = null;
-            mRankingIndiv = new mjtRankingIndiv(r_index, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mPool.mCoachs, mTournament.getParams().mTeamTournament, mRoundOnly);
+            mRankingIndiv = new mjtRankingIndiv(r_index, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mPool.mCoachs, mTournament.getParams().mTeamTournament, mRoundOnly,false);
             jtbRankingPool.setModel(mRankingIndiv);
             jtbRankingPool.setDefaultRenderer(String.class, mRankingIndiv);
             jtbRankingPool.setDefaultRenderer(Integer.class, mRankingIndiv);

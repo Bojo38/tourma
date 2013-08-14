@@ -14,6 +14,7 @@ public class Icons {
     protected static ImageIcon sDICES=null;
     protected static ImageIcon sPARAMS=null;
     protected static ImageIcon sSTAR=null;
+    protected static ImageIcon sSTAT=null;
     
     public static ImageIcon getDices()
     {
@@ -40,5 +41,14 @@ public class Icons {
             sSTAR=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Star.png"));
         }
         return sSTAR;
+    }
+      
+       public static ImageIcon getStats()
+    {
+        if (sSTAT==null)
+        {
+            sSTAT=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Statis.png"));
+        }
+        return sSTAT;
     }
 }

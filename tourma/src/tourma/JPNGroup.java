@@ -106,7 +106,7 @@ public class JPNGroup extends javax.swing.JPanel {
                 mTournament.getParams().mRankingIndiv3,
                 mTournament.getParams().mRankingIndiv4,
                 mTournament.getParams().mRankingIndiv5,
-                ArrayList, mTournament.getParams().mTeamTournament,mRoundOnly);
+                ArrayList, mTournament.getParams().mTeamTournament,mRoundOnly,false);
         jtbGroup.setModel(tableModel);
         jtbGroup.setDefaultRenderer(String.class, tableModel);
         jtbGroup.setDefaultRenderer(Integer.class, tableModel);

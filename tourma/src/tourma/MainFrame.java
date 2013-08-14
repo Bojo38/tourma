@@ -675,6 +675,16 @@ public class MainFrame extends javax.swing.JFrame {
                     //System.gc();
                     this.revalidate();
                 }
+                
+                 if (object.equals("Statistics")) {
+                    jspSplit.remove(jpnContent);
+                    jpnContent = new JPNStatistics();
+                    jspSplit.add(jpnContent, JSplitPane.RIGHT);
+                    ((JPNStatistics) jpnContent).update();
+                     jspSplit.setDividerLocation(200);
+                    //System.gc();
+                    this.revalidate();
+                }
 
             }
             
