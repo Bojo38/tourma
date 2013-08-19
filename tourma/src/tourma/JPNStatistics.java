@@ -49,13 +49,112 @@ public class JPNStatistics extends javax.swing.JPanel {
 
         addRosterPie();
         addWinLoss();
+        addCounterPerRoster();
+    }
+
+    protected void addCounterPerRoster() {
+        for (int i = 0; i < mTournament.getParams().mCriterias.size(); i++) {
+            Criteria crit = mTournament.getParams().mCriterias.get(i);
+            final HashMap<String, Double> plus = new HashMap<String, Double>();
+            final HashMap<String, Double> minus = new HashMap<String, Double>();
+
+            for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
+                plus.put(RosterType.mRostersNames.get(j), 0.0);
+                minus.put(RosterType.mRostersNames.get(j), 0.0);
+
+            }
+
+            for (int j = 0; j < mTournament.getRounds().size(); j++) {
+                final Round r = mTournament.getRounds().get(j);
+                for (int k = 0; k < r.getMatchs().size(); k++) {
+                    final Match m = r.getMatchs().get(k);
+                    if ((m.mCoach1 != Coach.sNullCoach) && (m.mCoach2 != Coach.sNullCoach)) {
+                        final Value values = m.mValues.get(crit);
+
+                        double pt = plus.get(m.mCoach1.mRoster.mName).doubleValue();
+                        double mt = minus.get(m.mCoach1.mRoster.mName).doubleValue();
+                        pt += values.mValue1;
+                        mt -= values.mValue2;
+
+                        plus.put(m.mCoach1.mRoster.mName, pt);
+                        minus.put(m.mCoach1.mRoster.mName, mt);
+                        
+                        pt = plus.get(m.mCoach2.mRoster.mName).doubleValue();
+                        mt = minus.get(m.mCoach2.mRoster.mName).doubleValue();
+                        pt += values.mValue2;
+                        mt -= values.mValue1;
+                        
+                        plus.put(m.mCoach2.mRoster.mName, pt);
+                        minus.put(m.mCoach2.mRoster.mName, mt);
+                    }
+                }
+            }
+
+            
+             for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
+                 
+                 int nb=0;
+                 String name=RosterType.mRostersNames.get(j);
+                for (int k=0; k<mTournament.getCoachs().size(); k++)
+                {
+                    if (mTournament.getCoachs().get(k).mRoster.mName.equals(name))
+                    {
+                        nb++;
+                    }
+                }
+
+                if (nb!=0)
+                {
+                 double tmp= plus.get(name).doubleValue();
+                 plus.put(name,tmp/nb);
+                 
+                 tmp= minus.get(name).doubleValue();
+                 minus.put(name,tmp/nb);
+                }
+                        
+            }
+            
+            final DefaultCategoryDataset datas = new DefaultCategoryDataset();
+
+            for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
+                final String name = RosterType.mRostersNames.get(j);
+                final double pt = plus.get(name);
+                final double mt = minus.get(name);
+                if ((pt != 0) || (mt != 0) ) {
+                    datas.addValue(pt, "Réalisés", name);
+                    datas.addValue( mt, "Subis", name);
+                }
+            }
+
+            final JFreeChart chart = ChartFactory.createStackedBarChart("Value par Roster", "Roster", "Number", datas, PlotOrientation.HORIZONTAL, true, true, false);
+
+            final CategoryPlot plot = chart.getCategoryPlot();
+            final BarRenderer br = (BarRenderer) plot.getRenderer();
+            br.setBaseItemLabelsVisible(true, true);
+            br.setSeriesPaint(0, new Color(0, 184, 0));
+            br.setSeriesPaint(1, new Color(184, 0, 184));
+            br.setBarPainter(new StandardBarPainter());
+
+
+            final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
+            barrenderer.setDrawBarOutline(false);
+            barrenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+            barrenderer.setBaseItemLabelsVisible(true);
+            barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+            barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+            barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
+                    "{0}/{1}: {2}", NumberFormat.getInstance()));
+
+            final ChartPanel chartPanel = new ChartPanel(chart);
+            jtpStatistics.addTab(crit.mName, chartPanel);
+        }
     }
 
     protected void addWinLoss() {
 
-        HashMap<String, Integer> victories = new HashMap<String, Integer>();
-        HashMap<String, Integer> draw = new HashMap<String, Integer>();
-        HashMap<String, Integer> loss = new HashMap<String, Integer>();
+        final HashMap<String, Integer> victories = new HashMap<String, Integer>();
+        final HashMap<String, Integer> draw = new HashMap<String, Integer>();
+        final HashMap<String, Integer> loss = new HashMap<String, Integer>();
 
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
             victories.put(RosterType.mRostersNames.get(i), 0);
@@ -64,13 +163,13 @@ public class JPNStatistics extends javax.swing.JPanel {
         }
 
 
-        Criteria Td = mTournament.getParams().mCriterias.get(0);
+        final Criteria Td = mTournament.getParams().mCriterias.get(0);
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             final Round r = mTournament.getRounds().get(i);
             for (int j = 0; j < r.getMatchs().size(); j++) {
                 final Match m = r.getMatchs().get(j);
                 if ((m.mCoach1 != Coach.sNullCoach) && (m.mCoach2 != Coach.sNullCoach)) {
-                    Value values = m.mValues.get(Td);
+                    final Value values = m.mValues.get(Td);
                     if (values.mValue1 > values.mValue2) {
                         int v = victories.get(m.mCoach1.mRoster.mName).intValue();
                         int l = loss.get(m.mCoach2.mRoster.mName).intValue();
@@ -101,14 +200,14 @@ public class JPNStatistics extends javax.swing.JPanel {
                 }
             }
         }
-        DefaultCategoryDataset datas = new DefaultCategoryDataset();
+        final DefaultCategoryDataset datas = new DefaultCategoryDataset();
 
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
 
-            String name = RosterType.mRostersNames.get(i);
-            int v = victories.get(name);
-            int d = draw.get(name);
-            int l = loss.get(name);
+            final String name = RosterType.mRostersNames.get(i);
+            final int v = victories.get(name);
+            final int d = draw.get(name);
+            final int l = loss.get(name);
             if ((v != 0) || (d != 0) || (l != 0)) {
                 datas.addValue((Number) v, "Victoires", name);
                 datas.addValue((Number) d, "Nuls", name);
@@ -116,34 +215,34 @@ public class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        JFreeChart chart = ChartFactory.createStackedBarChart("Resultats par Roster", "Roster", "Number", datas, PlotOrientation.VERTICAL, true, true, false);
+        final JFreeChart chart = ChartFactory.createStackedBarChart("Resultats par Roster", "Roster", "Number", datas, PlotOrientation.VERTICAL, true, true, false);
 
-        CategoryPlot plot = chart.getCategoryPlot();
-        BarRenderer br=(BarRenderer)plot.getRenderer();
-        br.setBaseItemLabelsVisible(true,true);
+        final CategoryPlot plot = chart.getCategoryPlot();
+        final BarRenderer br = (BarRenderer) plot.getRenderer();
+        br.setBaseItemLabelsVisible(true, true);
         br.setSeriesPaint(0, new Color(0, 184, 0));
         br.setSeriesPaint(1, new Color(0, 0, 184));
         br.setSeriesPaint(2, new Color(184, 0, 0));
         br.setBarPainter(new StandardBarPainter());
 
-        
-        BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
-    barrenderer.setDrawBarOutline(false);
-    barrenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-    barrenderer.setBaseItemLabelsVisible(true);
-    barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
-    barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
-    barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-            "{0}/{1}: {2}", NumberFormat.getInstance()));
-        
-        ChartPanel chartPanel = new ChartPanel(chart);
+
+        final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
+        barrenderer.setDrawBarOutline(false);
+        barrenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        barrenderer.setBaseItemLabelsVisible(true);
+        barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+        barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+        barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
+                "{0}/{1}: {2}", NumberFormat.getInstance()));
+
+        final ChartPanel chartPanel = new ChartPanel(chart);
         jtpStatistics.addTab("Resultats", chartPanel);
 
     }
 
     protected void addRosterPie() {
 
-        DefaultPieDataset datas = new DefaultPieDataset();
+        final DefaultPieDataset datas = new DefaultPieDataset();
 
 
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
@@ -151,10 +250,10 @@ public class JPNStatistics extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < mTournament.getCoachs().size(); i++) {
-            Coach c = mTournament.getCoachs().get(i);
+            final Coach c = mTournament.getCoachs().get(i);
             if (c != Coach.sNullCoach) {
-                String rName = c.mRoster.mName;
-                Number value = datas.getValue(rName);
+                final String rName = c.mRoster.mName;
+                final Number value = datas.getValue(rName);
                 int v = 0;
                 if (value != null) {
                     v = value.intValue();
@@ -166,24 +265,24 @@ public class JPNStatistics extends javax.swing.JPanel {
 
 
         for (int i = 0; i < datas.getItemCount(); i++) {
-            Number value = datas.getValue(i);
+            final Number value = datas.getValue(i);
             if (value.intValue() == 0) {
                 datas.remove(datas.getKey(i));
                 i--;
             }
         }
 
-        JFreeChart chart = ChartFactory.createPieChart("Rosters", datas, true, true, false);
+        final JFreeChart chart = ChartFactory.createPieChart("Rosters", datas, true, true, false);
 
-        PiePlot plot = (PiePlot) chart.getPlot();
-        StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator("{0}: {1} ({2})");
+        final PiePlot plot = (PiePlot) chart.getPlot();
+        final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator("{0}: {1} ({2})");
         plot.setLegendLabelGenerator(label);
         plot.setLabelGenerator(label);
         plot.setStartAngle(290);
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.5f);
 
-        ChartPanel chartPanel = new ChartPanel(chart);
+        final ChartPanel chartPanel = new ChartPanel(chart);
         jtpStatistics.addTab("Rosters", chartPanel);
     }
 

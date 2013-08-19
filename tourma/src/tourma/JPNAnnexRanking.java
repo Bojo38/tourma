@@ -10,9 +10,7 @@
  */
 package tourma;
 
-import java.awt.FontMetrics;
 import java.util.ArrayList;
-import javax.swing.JTable;
 import tourma.data.Coach;
 import tourma.data.Team;
 import tourma.data.Criteria;

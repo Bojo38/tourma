@@ -13,7 +13,6 @@ package tourma;
 import tourma.tableModel.mjtRankingTeam;
 import tourma.tableModel.mjtAnnexRankTeam;
 import tourma.tableModel.mjtAnnexRank;
-import java.awt.FontMetrics;
 import java.util.HashMap;
 import java.util.ArrayList;
 import javax.swing.JTable;

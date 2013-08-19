@@ -12,7 +12,6 @@ package tourma;
 
 import java.awt.BorderLayout;
 import tourma.utility.ExtensionFileFilter;
-import tourma.tableModel.mjtCoaches;
 import tourma.views.system.jdgRevisions;
 import tourma.views.system.jdgAbout;
 import tourma.data.Tournament;
@@ -20,19 +19,15 @@ import java.awt.Component;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.event.TreeSelectionEvent;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import teamma.data.lrb;
 import teamma.views.JdgRoster;
@@ -42,7 +37,6 @@ import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.utils.Generation;
 import tourma.utility.StringConstants;
-import tourma.utils.TableFormat;
 
 /**
  *
