@@ -247,7 +247,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel5.setText(bundle.getString("Ranking")); // NOI18N
         jPanel1.add(jLabel5);
 
-        jtfRank.setText("110");
+        jtfRank.setText(bundle.getString("110")); // NOI18N
         jPanel1.add(jtfRank);
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -257,7 +257,7 @@ public class jdgCoach extends javax.swing.JDialog {
 
         jPanel1.add(jcbClan);
 
-        jbtEditRoster.setText("Editer Roster");
+        jbtEditRoster.setText(bundle.getString("EDITER ROSTER")); // NOI18N
         jbtEditRoster.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtEditRosterActionPerformed(evt);
@@ -272,7 +272,7 @@ public class jdgCoach extends javax.swing.JDialog {
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        jbtOK.setText("OK");
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -311,7 +311,7 @@ public class jdgCoach extends javax.swing.JDialog {
         for (int i = 0; i < Tournament.getTournament().getCoachs().size(); i++) {
             final Coach tmp = Tournament.getTournament().getCoachs().get(i);
             if ((tmp.mName.equals(jtfNom.getText())) && (!tmp.equals(c))) {
-                JOptionPane.showMessageDialog(this, "Un autre coach a déjà le même nom");
+                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UN AUTRE COACH A DÉJÀ LE MÊME NOM"));
                 error = true;
                 break;
             }
@@ -333,15 +333,15 @@ public class jdgCoach extends javax.swing.JDialog {
             c.mRank = 110;
         }
 
-        if (c.mName.equals("")) {
+        if (c.mName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NameIsEmpty"));
             error = true;
         }
-        if (c.mTeam.equals("")) {
+        if (c.mTeam.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TeamIsEmpty"));
             error = true;
         }
-        if (c.mRoster.mName.equals("")) {
+        if (c.mRoster.mName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RosterIsEmpty"));
             error = true;
         }

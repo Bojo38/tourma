@@ -41,13 +41,13 @@ public class ObjectAnnexRanking extends ObjectRanking {
     public Element getXMLElement() {
         final Element ic = super.getXMLElement();
 
-        ic.setAttribute(new Attribute("value", Integer.toString(mValue)));
+        ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"), Integer.toString(mValue)));
 
-        ic.removeAttribute("rank1");
-        ic.removeAttribute("rank2");
-        ic.removeAttribute("rank3");
-        ic.removeAttribute("rank4");
-        ic.removeAttribute("rank5");
+        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK1"));
+        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK2"));
+        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK3"));
+        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK4"));
+        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK5"));
         return ic;
     }
 

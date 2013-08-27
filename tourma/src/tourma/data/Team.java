@@ -17,7 +17,7 @@ import tourma.utility.StringConstants;
  */
 public class Team implements Comparable, XMLExport {
 
-    public static Team sNullTeam = new Team("None");
+    public static Team sNullTeam = new Team(StringConstants.CS_NONE);
     public ArrayList<Coach> mCoachs;
     public String mName;
     public static HashMap<String, Team> sTeamMap = new HashMap<String, Team>();
@@ -67,7 +67,7 @@ public class Team implements Comparable, XMLExport {
     }
 
     public Element getXMLElement() {
-        final Element team = new Element("Team");
+        final Element team = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
         team.setAttribute(StringConstants.CS_NAME, this.mName);
         for (int j = 0; j < this.mCoachs.size(); j++) {
             final Element coach = new Element(StringConstants.CS_COACH);

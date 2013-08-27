@@ -82,43 +82,43 @@ public class ObjectRanking implements Comparable, XMLExport {
 
     
     public Element getXMLElement() {
-        final Element ic = new Element("Position");
+        final Element ic = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"));
         //ic.setAttribute(new Attribute("pos", Integer.toString(index)));
 
         if (mObject instanceof Coach) {
             final Coach c = (Coach) mObject;
             ic.setAttribute(new Attribute(StringConstants.CS_COACH, c.mName));
-            ic.setAttribute(new Attribute("team", c.mTeam));
-            ic.setAttribute(new Attribute("clan", c.mClan.mName));
-            ic.setAttribute(new Attribute("roster", c.mRoster.mName));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"), c.mTeam));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), c.mClan.mName));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), c.mRoster.mName));
         }
 
         if (mObject instanceof Team) {
             final Team t = (Team) mObject;
-            ic.setAttribute(new Attribute("name", t.mName));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), t.mName));
             for (int k = 0; k < t.mCoachs.size(); k++) {
-                final Element c = new Element("member");
-                c.setAttribute("name", t.mCoachs.get(k).mName);
+                final Element c = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
+                c.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), t.mCoachs.get(k).mName);
                 ic.addContent(c);
             }
         }
 
         if (mObject instanceof Clan) {
             final Clan t = (Clan) mObject;
-            ic.setAttribute(new Attribute("clan", t.mName));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), t.mName));
             for (int k = 0; k < Tournament.getTournament().getCoachs().size(); k++) {
                 if (Tournament.getTournament().getCoachs().get(k).mClan == t) {
-                    final Element m = new Element("member");
-                    m.setAttribute("name", Tournament.getTournament().getCoachs().get(k).mName);
+                    final Element m = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
+                    m.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), Tournament.getTournament().getCoachs().get(k).mName);
                     ic.addContent(m);
                 }
             }
         }
-        ic.setAttribute(new Attribute("rank1", Integer.toString(mValue1)));
-        ic.setAttribute(new Attribute("rank2", Integer.toString(mValue2)));
-        ic.setAttribute(new Attribute("rank3", Integer.toString(mValue3)));
-        ic.setAttribute(new Attribute("rank4", Integer.toString(mValue4)));
-        ic.setAttribute(new Attribute("rank5", Integer.toString(mValue5)));
+        ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK1"), Integer.toString(mValue1)));
+        ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK2"), Integer.toString(mValue2)));
+        ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK3"), Integer.toString(mValue3)));
+        ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK4"), Integer.toString(mValue4)));
+        ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK5"), Integer.toString(mValue5)));
 
         return ic;
     }

@@ -83,7 +83,8 @@ public class jdgChangePairing extends JDialog implements ActionListener {
         jpnMatchs = new javax.swing.JPanel();
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        jbtOK.setText("OK");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -92,7 +93,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
         jPanel1.add(jbtOK);
 
         jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
-        jbtCancel.setText("Annuler");
+        jbtCancel.setText(bundle.getString("ANNULER")); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtCancelActionPerformed(evt);
@@ -130,7 +131,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-    final int result = JOptionPane.showConfirmDialog(this, "Voulez vous confirmeer le nouvel appariement ?", "Confirmer", JOptionPane.YES_NO_OPTION);
+    final int result = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS CONFIRMEER LE NOUVEL APPARIEMENT ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CONFIRMER"), JOptionPane.YES_NO_OPTION);
     if (result == JOptionPane.YES_OPTION) {
 
         for (int i = 0; i < mRound.getMatchs().size(); i++) {
@@ -186,7 +187,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
 
         final ArrayList<String> playersNames = new ArrayList<String>();
         for (int i = 0; i < mPlayersTmp.size(); i++) {
-            playersNames.add(mPlayersTmp.get(i).mName + " - " + mPlayersTmp.get(i).mTeam + " (" + mPlayersTmp.get(i).mRoster.mName + ")");
+            playersNames.add(mPlayersTmp.get(i).mName + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - {0} ({1})"), new Object[] {mPlayersTmp.get(i).mTeam, mPlayersTmp.get(i).mRoster.mName}));
         }
 
         mPlayersSelected.clear();
@@ -198,7 +199,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
             mPlayersSelected.add(jcb);
         }
 
-        jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder("Matchs"));
+        jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCHS")));
 
         jpnMatchs.removeAll();
         for (int i = 0; i < mPlayersSelected.size(); i++) {

@@ -37,7 +37,7 @@ public class JPNParamGroup extends javax.swing.JPanel {
     @SuppressWarnings({"unchecked", "PMD"})
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        
+
         jPanel18 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jlsGroups = new javax.swing.JList();
@@ -79,7 +79,8 @@ public class JPNParamGroup extends javax.swing.JPanel {
         jPanel19.setLayout(new java.awt.GridLayout(3, 1, 1, 1));
 
         jbtAddGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAddGroup.setText("Ajouter");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtAddGroup.setText(bundle.getString("AJOUTER")); // NOI18N
         jbtAddGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddGroupActionPerformed(evt);
@@ -88,7 +89,7 @@ public class JPNParamGroup extends javax.swing.JPanel {
         jPanel19.add(jbtAddGroup);
 
         jbtRemoveGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemoveGroup.setText("Retirer");
+        jbtRemoveGroup.setText(bundle.getString("RETIRER")); // NOI18N
         jbtRemoveGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRemoveGroupActionPerformed(evt);
@@ -97,7 +98,7 @@ public class JPNParamGroup extends javax.swing.JPanel {
         jPanel19.add(jbtRemoveGroup);
 
         jbtRenameGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
-        jbtRenameGroup.setText("Renommer");
+        jbtRenameGroup.setText(bundle.getString("RENOMMER")); // NOI18N
         jbtRenameGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRenameGroupActionPerformed(evt);
@@ -182,7 +183,7 @@ public class JPNParamGroup extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddGroupActionPerformed
-        final String newGroup = JOptionPane.showInputDialog("Entrez le nom du nouveau groupe");
+        final String newGroup = JOptionPane.showInputDialog(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOM DU NOUVEAU GROUPE"));
         if (newGroup != null) {
             mTournament.getGroups().add(new Group(newGroup));
             update();
@@ -205,7 +206,7 @@ public class JPNParamGroup extends javax.swing.JPanel {
         if (jlsGroups.getSelectedIndex() >= 0) {
             final String currentName = mTournament.getGroups().get(jlsGroups.getSelectedIndex()).mName;
 
-            final String newGroup = JOptionPane.showInputDialog("Entrez le nouveau nom du groupe", currentName);
+            final String newGroup = JOptionPane.showInputDialog(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOUVEAU NOM DU GROUPE"), currentName);
             if (newGroup != null) {
                 mTournament.getGroups().get(jlsGroups.getSelectedIndex()).mName = newGroup;
                 update();

@@ -124,10 +124,10 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
 
     @Override
     public String getColumnName(final int col) {
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                result = "#";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
                 result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
@@ -140,12 +140,12 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
                 break;
             case 4:
                 if (mSubtype == 0) {
-                    result = mCriteria.mName + " Coach";
+                    result = mCriteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" COACH");
                 } else {
                     if (mSubtype == 1) {
-                        result = mCriteria.mName + " Adversaire";
+                        result = mCriteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE");
                     } else {
-                        result = mCriteria.mName + " Difference";
+                        result = mCriteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFERENCE");
                     }
                 }
                 break;
@@ -157,7 +157,7 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
     @Override
     public Object getValueAt(final int row,final int col) {
 
-        Object val="";
+        Object val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
         switch (col) {
             case 0:

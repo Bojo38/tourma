@@ -52,7 +52,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
 
     public String getColumnName(final int col) {
 
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mTeamTournament) {
             switch (col) {
                 case 0:
@@ -80,9 +80,9 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     final Criteria crit = Tournament.getTournament().getParams().mCriterias.get((col - 5) / 2);
                     final int ind = (col - 5) % 2;
                     if (ind == 0) {
-                        result = crit.mName + " 1";
+                        result = crit.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1");
                     } else {
-                        result = crit.mName + " 2";
+                        result = crit.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2");
                     }
             }
         } else {
@@ -105,9 +105,9 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 default:
                     final Criteria crit = Tournament.getTournament().getParams().mCriterias.get((col - 3) / 2);
                     if ((col - 3) % 2 > 0) {
-                        result = crit.mName + " 2";
+                        result = crit.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2");
                     } else {
-                        result = crit.mName + " 1";
+                        result = crit.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1");
                     }
             }
         }
@@ -115,7 +115,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
     }
 
     public Object getValueAt(final int row, final int col) {
-        Object obj = "";
+        Object obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         final Match m = mMatchs.get(row);
         Value val;
         int index;
@@ -128,14 +128,14 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     obj = m.mCoach1.mTeamMates.mName;
                     break;
                 case 2:
-                    obj = m.mCoach1.mName + StringConstants.CS_THICK + m.mCoach1.mTeam + " (" + m.mCoach1.mRoster.mName + ")";
+                    obj = m.mCoach1.mName + StringConstants.CS_THICK + m.mCoach1.mTeam + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ({0})"), new Object[] {m.mCoach1.mRoster.mName});
                     break;
                 case 3:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
                     if (val.mValue1 >= 0) {
                         obj = val.mValue1;
                     } else {
-                        obj = "";
+                        obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     }
                     break;
                 case 4:
@@ -143,11 +143,11 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     if (val.mValue2 >= 0) {
                         obj = val.mValue2;
                     } else {
-                        obj = "";
+                        obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     }
                     break;
                 case 5:
-                    obj = m.mCoach2.mName + StringConstants.CS_THICK + m.mCoach2.mTeam + " (" + m.mCoach2.mRoster.mName + ")";
+                    obj = m.mCoach2.mName + StringConstants.CS_THICK + m.mCoach2.mTeam + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ({0})"), new Object[] {m.mCoach2.mRoster.mName});
                     break;
                 case 6:
                     obj = m.mCoach2.mTeamMates.mName;
@@ -168,14 +168,14 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     obj = row + 1;
                     break;
                 case 1:
-                    obj = m.mCoach1.mName + StringConstants.CS_THICK + m.mCoach1.mTeam + " (" + m.mCoach1.mRoster.mName + ") ";
+                    obj = m.mCoach1.mName + StringConstants.CS_THICK + m.mCoach1.mTeam + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ({0}) "), new Object[] {m.mCoach1.mRoster.mName});
                     break;
                 case 2:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
                     if (val.mValue1 >= 0) {
                         obj = val.mValue1;
                     } else {
-                        obj = "";
+                        obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     }
                     break;
                 case 3:
@@ -183,11 +183,11 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     if (val.mValue2 >= 0) {
                         obj = val.mValue2;
                     } else {
-                        obj = "";
+                        obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     }
                     break;
                 case 4:
-                    obj = m.mCoach2.mName + StringConstants.CS_THICK + m.mCoach2.mTeam + " (" + m.mCoach2.mRoster.mName + ") ";
+                    obj = m.mCoach2.mName + StringConstants.CS_THICK + m.mCoach2.mTeam + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ({0}) "), new Object[] {m.mCoach2.mRoster.mName});
                     break;
                 default:
                     index = (col - 3) / 2;
@@ -284,7 +284,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
     }
 
     public Component getTableCellRendererComponent(
-            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
 
         jlb.setEditable(false);

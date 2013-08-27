@@ -121,12 +121,12 @@ public class JPNStatistics extends javax.swing.JPanel {
                 final double pt = plus.get(name);
                 final double mt = minus.get(name);
                 if ((pt != 0) || (mt != 0) ) {
-                    datas.addValue(pt, "Réalisés", name);
-                    datas.addValue( mt, "Subis", name);
+                    datas.addValue(pt, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RÉALISÉS"), name);
+                    datas.addValue( mt, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBIS"), name);
                 }
             }
 
-            final JFreeChart chart = ChartFactory.createStackedBarChart("Value par Roster", "Roster", "Number", datas, PlotOrientation.HORIZONTAL, true, true, false);
+            final JFreeChart chart = ChartFactory.createStackedBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE PAR ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMBER"), datas, PlotOrientation.HORIZONTAL, true, true, false);
 
             final CategoryPlot plot = chart.getCategoryPlot();
             final BarRenderer br = (BarRenderer) plot.getRenderer();
@@ -143,7 +143,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
             barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
             barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-                    "{0}/{1}: {2}", NumberFormat.getInstance()));
+                    java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}/{1}: {2}"), NumberFormat.getInstance()));
 
             final ChartPanel chartPanel = new ChartPanel(chart);
             jtpStatistics.addTab(crit.mName, chartPanel);
@@ -209,13 +209,13 @@ public class JPNStatistics extends javax.swing.JPanel {
             final int d = draw.get(name);
             final int l = loss.get(name);
             if ((v != 0) || (d != 0) || (l != 0)) {
-                datas.addValue((Number) v, "Victoires", name);
-                datas.addValue((Number) d, "Nuls", name);
-                datas.addValue((Number) l, "Défaites", name);
+                datas.addValue((Number) v, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTOIRES"), name);
+                datas.addValue((Number) d, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NULS"), name);
+                datas.addValue((Number) l, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DÉFAITES"), name);
             }
         }
 
-        final JFreeChart chart = ChartFactory.createStackedBarChart("Resultats par Roster", "Roster", "Number", datas, PlotOrientation.VERTICAL, true, true, false);
+        final JFreeChart chart = ChartFactory.createStackedBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULTATS PAR ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMBER"), datas, PlotOrientation.VERTICAL, true, true, false);
 
         final CategoryPlot plot = chart.getCategoryPlot();
         final BarRenderer br = (BarRenderer) plot.getRenderer();
@@ -233,10 +233,10 @@ public class JPNStatistics extends javax.swing.JPanel {
         barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-                "{0}/{1}: {2}", NumberFormat.getInstance()));
+                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}/{1}: {2}"), NumberFormat.getInstance()));
 
         final ChartPanel chartPanel = new ChartPanel(chart);
-        jtpStatistics.addTab("Resultats", chartPanel);
+        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULTATS"), chartPanel);
 
     }
 
@@ -272,10 +272,10 @@ public class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        final JFreeChart chart = ChartFactory.createPieChart("Rosters", datas, true, true, false);
+        final JFreeChart chart = ChartFactory.createPieChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTERS"), datas, true, true, false);
 
         final PiePlot plot = (PiePlot) chart.getPlot();
-        final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator("{0}: {1} ({2})");
+        final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}: {1} ({2})"));
         plot.setLegendLabelGenerator(label);
         plot.setLabelGenerator(label);
         plot.setStartAngle(290);
@@ -283,7 +283,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         plot.setForegroundAlpha(0.5f);
 
         final ChartPanel chartPanel = new ChartPanel(chart);
-        jtpStatistics.addTab("Rosters", chartPanel);
+        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTERS"), chartPanel);
     }
 
     public void update() {

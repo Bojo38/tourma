@@ -124,7 +124,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
 
     public static int getPointsByCoach(final Coach c, final Match m) {
         int value = 0;
-        Criteria td=Tournament.getTournament().getParams().mCriterias.get(0);
+        final Criteria td=Tournament.getTournament().getParams().mCriterias.get(0);
         final Value val = m.mValues.get(td);
         if (m.mCoach1 == c) {
             if (val.mValue1 >= 0) {
@@ -369,7 +369,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
     }
 
     public static String getRankingString(final int rankingType) {
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         final Criteria c = mjtRanking.getCriteriaByValue(rankingType);
         if (c == null) {
             switch (rankingType) {
@@ -391,13 +391,13 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
             final int subRanking = mjtRanking.getSubtypeByValue(rankingType);
             switch (subRanking) {
                 case Parameters.C_RANKING_SUBTYPE_POSITIVE:
-                    result = c.mName + " Coach";
+                    result = c.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" COACH");
                     break;
                 case Parameters.C_RANKING_SUBTYPE_NEGATIVE:
-                    result = c.mName + " Adversaire";
+                    result = c.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE");
                     break;
                 case Parameters.C_RANKING_SUBTYPE_DIFFERENCE:
-                    result = c.mName + " Difference";
+                    result = c.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFERENCE");
                     break;
                 default:
             }

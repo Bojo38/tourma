@@ -39,7 +39,7 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
     }
 
     public String getColumnName(final int col) {
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
                 result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Table");
@@ -48,7 +48,7 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
                 result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan1");
                 break;
             case 2:
-                result = "";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                 break;
             case 3:
                 result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan2");
@@ -59,7 +59,7 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
     }
 
     public Object getValueAt(final int row, final int col) {
-        Object val = "";
+        Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
                 val = row + 1;
@@ -68,7 +68,7 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
                 val = mTeams1.get(row).mName;
                 break;
             case 2:
-                val = "VS";
+                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VS");
                 break;
             case 3:
                 val = mTeams2.get(row).mName;

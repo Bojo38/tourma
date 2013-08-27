@@ -551,7 +551,7 @@ public class mjtRankingTeam extends mjtRanking {
      return value;
      }*/
     public Object getValueAt(final int row, final int col) {
-        Object object = "";
+        Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mDatas.size() > row) {
             final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
             switch (col) {

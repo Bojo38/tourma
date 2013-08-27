@@ -171,15 +171,15 @@ public class Tournament {
      return mGroups;
      }*/
     public void saveXML(final java.io.File file, final boolean withRanking) {
-        final Element document = new Element("Tournament");
+        final Element document = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURNAMENT"));
 
-        document.setAttribute("Version", "3");
-        document.setAttribute("RoundRobin", Boolean.toString(mRoundRobin));
+        document.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("3"));
+        document.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUNDROBIN"), Boolean.toString(mRoundRobin));
 
         // Tounament data
         for (int i = 0; i
                 < RosterType.mRostersNames.size(); i++) {
-            final Element ros = new Element("Roster");
+            final Element ros = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"));
             ros.setAttribute(StringConstants.CS_NAME, RosterType.mRostersNames.get(i));
             document.addContent(ros);
         }
@@ -229,12 +229,12 @@ public class Tournament {
                 // Build list of rankings
                 final ArrayList<Ranking> rankings = new ArrayList<Ranking>();
                 final boolean forPool=(getPools().size()>0)&&(!getRounds().get(i).mCup);
-                rankings.add(new Ranking("Individual", "general", "", new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getCoachs(), false, false,forPool)));
+                rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getCoachs(), false, false,forPool)));
                 if (this.getParams().mTeamTournament) {
-                    rankings.add(new Ranking(StringConstants.CS_TEAM, "general", "", new mjtRankingTeam(this.getParams().mTeamVictoryOnly, i, this.getParams().mRankingTeam1, this.getParams().mRankingTeam2, this.getParams().mRankingTeam3, this.getParams().mRankingTeam4, this.getParams().mRankingTeam5, this.getTeams(), false)));
+                    rankings.add(new Ranking(StringConstants.CS_TEAM, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingTeam(this.getParams().mTeamVictoryOnly, i, this.getParams().mRankingTeam1, this.getParams().mRankingTeam2, this.getParams().mRankingTeam3, this.getParams().mRankingTeam4, this.getParams().mRankingTeam5, this.getTeams(), false)));
                 }
                 if (mParams.mEnableClans) {
-                    rankings.add(new Ranking(StringConstants.CS_CLAN, "general", "", new mjtRankingClan(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getDisplayClans(), false)));
+                    rankings.add(new Ranking(StringConstants.CS_CLAN, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingClan(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getDisplayClans(), false)));
 
                 }
                 if (mParams.mGroupsEnable) {
@@ -250,23 +250,23 @@ public class Tournament {
                                 }
                             }
                         }
-                        rankings.add(new Ranking("Group", g.mName, "", new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, ArrayList, false, false,false)));
+                        rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"), g.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, ArrayList, false, false,false)));
                     }
                 }
                 // Annex ranking
                 for (int j = 0; j < mParams.mCriterias.size(); j++) {
                     final Criteria criteria = mParams.mCriterias.get(j);
-                    rankings.add(new Ranking("Individual", criteria.mName, "positive", new mjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getCoachs(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, mParams.mTeamTournament, false)));
-                    rankings.add(new Ranking("Individual", criteria.mName, "negative", new mjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getCoachs(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, mParams.mTeamTournament, false)));
+                    rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new mjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getCoachs(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, mParams.mTeamTournament, false)));
+                    rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new mjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getCoachs(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, mParams.mTeamTournament, false)));
 
                     if (mParams.mTeamTournament) {
-                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.mName, "positive", new mjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getTeams(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
-                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.mName, "negativs", new mjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getTeams(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
+                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new mjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getTeams(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
+                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVS"), new mjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getTeams(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
                     }
 
                     if (mParams.mEnableClans) {
-                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.mName, "positive", new mjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getClans(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
-                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.mName, "negative", new mjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getClans(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
+                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new mjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getClans(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
+                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new mjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getClans(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
                     }
                 }
 
@@ -295,78 +295,78 @@ public class Tournament {
     }
 
     private String getRosterTranslation(final String source) {
-        String result = "Unknown";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNKNOWN");
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AmazonKey"))) {
-            result = "Amazons";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AMAZONS");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UnderworldKey"))) {
-            result = "Underworld";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNDERWORLD");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChaosKey"))) {
-            result = "Chaos";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ElfKey"))) {
-            result = "Elves";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELVES");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("WoodElfKey"))) {
-            result = "Wood Elves";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WOOD ELVES");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("DarkElfKey"))) {
-            result = "Dark Elves";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DARK ELVES");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("GoblinKey"))) {
-            result = "Goblins";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GOBLINS");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("HalflingKey"))) {
-            result = "Halflings";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HALFLINGS");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("HighElfKey"))) {
-            result = "High Elves";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HIGH ELVES");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("LizardmenKey"))) {
-            result = "Lizardmen";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LIZARDMEN");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("HumanKey"))) {
-            result = "Humans";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HUMANS");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("KhemriKey"))) {
-            result = "Khemri";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("KHEMRI");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UndeadKey"))) {
-            result = "Undead";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNDEAD");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("DwarfKey"))) {
-            result = "Dwarves";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DWARVES");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChaosDwarfKey"))) {
-            result = "Chaos Dwarves";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS DWARVES");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NecromanticKey"))) {
-            result = "Necromantic";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NECROMANTIC");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NorseKey"))) {
-            result = "Norse";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NORSE");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NurgleKey"))) {
-            result = "Nurgle's Rotters";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NURGLE'S ROTTERS");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OgreKey"))) {
-            result = "Ogres";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OGRES");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OrcKey"))) {
-            result = "Orc";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORC");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChaosPactKey"))) {
-            result = "Chaos Pact";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHAOS PACT");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("SkavenKey"))) {
-            result = "Skaven";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKAVEN");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("SlannKey"))) {
-            result = "Slann";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SLANN");
         }
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("VampireKey"))) {
-            result = "Vampires";
+            result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VAMPIRES");
         }
         return result;
     }
@@ -499,7 +499,7 @@ public class Tournament {
             final RenderedImage im = generateRankingQRCode(mRounds.size());
 
             try {
-                ImageIO.write(im, "png", new File(file.getAbsoluteFile() + ".png"));
+                ImageIO.write(im, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PNG"), new File(file.getAbsoluteFile() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".PNG")));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
             }
@@ -556,7 +556,7 @@ public class Tournament {
     }
 
     public void exportResults(final java.io.File file) {
-        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:MM:SS", Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
         Criteria critTd = null;
         Criteria critInj = null;
@@ -574,20 +574,20 @@ public class Tournament {
         try {
             final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
 
-            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            writer.println("<nafReport xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.bloodbowl.net' xsi:schemaLocation='http://www.bloodbowl.net/naf.xsd'>");
-            writer.println("<organiser>" + mParams.mTournamentOrga + "</organiser>");
-            writer.println("<coaches>");
+            writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<?XML VERSION=\"1.0\" ENCODING=\"UTF-8\"?>"));
+            writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NAFREPORT XMLNS:XSI='HTTP://WWW.W3.ORG/2001/XMLSCHEMA-INSTANCE' XMLNS='HTTP://WWW.BLOODBOWL.NET' XSI:SCHEMALOCATION='HTTP://WWW.BLOODBOWL.NET/NAF.XSD'>"));
+            writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<ORGANISER>{0}</ORGANISER>"), new Object[] {mParams.mTournamentOrga}));
+            writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<COACHES>"));
             for (int i = 0; i < mCoachs.size(); i++) {
                 if (mCoachs.get(i).mNaf > 0) {
-                    writer.println("<coach>");
-                    writer.println("<name>" + mCoachs.get(i).mName + "</name>");
-                    writer.println("<number>" + mCoachs.get(i).mNaf + "</number>");
-                    writer.println("<team>" + getRosterTranslation(mCoachs.get(i).mRoster.mName) + "</team>");
-                    writer.println("</coach>");
+                    writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<COACH>"));
+                    writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NAME>{0}</NAME>"), new Object[] {mCoachs.get(i).mName}));
+                    writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NUMBER>{0}</NUMBER>"), new Object[] {mCoachs.get(i).mNaf}));
+                    writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TEAM>{0}</TEAM>"), new Object[] {getRosterTranslation(mCoachs.get(i).mRoster.mName)}));
+                    writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("</COACH>"));
                 }
             }
-            writer.println("</coaches>");
+            writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("</COACHES>"));
 
             for (int i = 0; i
                     < mRounds.size(); i++) {
@@ -595,37 +595,37 @@ public class Tournament {
                         < mRounds.get(i).mMatchs.size(); j++) {
                     if ((mRounds.get(i).mMatchs.get(j).mCoach1.mNaf > 0)
                             && (mRounds.get(i).mMatchs.get(j).mCoach2.mNaf > 0)) {
-                        writer.println("<game>");
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<GAME>"));
                         final Match m = mRounds.get(i).mMatchs.get(j);
-                        writer.println("<timeStamp>" + format.format(mRounds.get(i).mHour) + "</timeStamp>");
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TIMESTAMP>{0}</TIMESTAMP>"), new Object[] {format.format(mRounds.get(i).mHour)}));
                         Coach p = m.mCoach1;
-                        writer.println("<playerRecord>");
-                        writer.println("<name>" + p.mName + "</name>");
-                        writer.println("<number>" + p.mNaf + "</number>");
-                        writer.println("<teamRating>" + p.mRank + "</teamRating>");
-                        writer.println("<touchDowns>" + m.mValues.get(critTd).mValue1 + "</touchDowns>");
-                        writer.println("<badlyHurt>" + m.mValues.get(critInj).mValue1 + "</badlyHurt>");
-                        writer.println("<seriouslyInjured>0</seriouslyInjured>");
-                        writer.println("<dead>0</dead>");
-                        writer.println("<winnings>0</winnings>");
-                        writer.println("</playerRecord>");
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<PLAYERRECORD>"));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NAME>{0}</NAME>"), new Object[] {p.mName}));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NUMBER>{0}</NUMBER>"), new Object[] {p.mNaf}));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TEAMRATING>{0}</TEAMRATING>"), new Object[] {p.mRank}));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[] {m.mValues.get(critTd).mValue1}));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<BADLYHURT>{0}</BADLYHURT>"), new Object[] {m.mValues.get(critInj).mValue1}));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<SERIOUSLYINJURED>0</SERIOUSLYINJURED>"));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<DEAD>0</DEAD>"));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<WINNINGS>0</WINNINGS>"));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("</PLAYERRECORD>"));
                         p = m.mCoach2;
-                        writer.println("<playerRecord>");
-                        writer.println("<name>" + p.mName + "</name>");
-                        writer.println("<number>" + p.mNaf + "</number>");
-                        writer.println("<teamRating>" + p.mRank + "</teamRating>");
-                        writer.println("<touchDowns>" + m.mValues.get(critTd).mValue2 + "</touchDowns>");
-                        writer.println("<badlyHurt>" + m.mValues.get(critInj).mValue2 + "</badlyHurt>");
-                        writer.println("<seriouslyInjured>0</seriouslyInjured>");
-                        writer.println("<dead>0</dead>");
-                        writer.println("<winnings>0</winnings>");
-                        writer.println("</playerRecord>");
-                        writer.println("<gate>2</gate>");
-                        writer.println("</game>");
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<PLAYERRECORD>"));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NAME>{0}</NAME>"), new Object[] {p.mName}));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NUMBER>{0}</NUMBER>"), new Object[] {p.mNaf}));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TEAMRATING>{0}</TEAMRATING>"), new Object[] {p.mRank}));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[] {m.mValues.get(critTd).mValue2}));
+                        writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<BADLYHURT>{0}</BADLYHURT>"), new Object[] {m.mValues.get(critInj).mValue2}));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<SERIOUSLYINJURED>0</SERIOUSLYINJURED>"));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<DEAD>0</DEAD>"));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<WINNINGS>0</WINNINGS>"));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("</PLAYERRECORD>"));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<GATE>2</GATE>"));
+                        writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("</GAME>"));
                     }
                 }
             }
-            writer.println("</nafReport>");
+            writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("</NAFREPORT>"));
             writer.close();
 
         } catch (IOException e) {
@@ -636,35 +636,35 @@ public class Tournament {
     }
 
     protected void LoadXMLv2(final Element Root) {
-        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         /* Utilisateur */
-        final Element params = Root.getChild("Parameters");
-        final Criteria c1 = new Criteria("Touchdowns");
-        final Criteria c2 = new Criteria("Sorties");
-        final Criteria c3 = new Criteria("Fouls");
-        final Criteria c4 = new Criteria("Passes");
-        final Criteria c5 = new Criteria("Interceptions");
+        final Element params = Root.getChild(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PARAMETERS"));
+        final Criteria c1 = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUCHDOWNS"));
+        final Criteria c2 = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SORTIES"));
+        final Criteria c3 = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOULS"));
+        final Criteria c4 = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PASSES"));
+        final Criteria c5 = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INTERCEPTIONS"));
 
         try {
             if (params != null) {
-                mParams.mTournamentOrga = params.getAttribute("Organizer").getValue();
+                mParams.mTournamentOrga = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORGANIZER")).getValue();
                 mParams.mTournamentName = params.getAttribute(StringConstants.CS_NAME).getValue();
 
                 mParams.mCriterias.clear();
-                c1.mPointsFor = params.getAttribute("Bonus_Pos_Td").getIntValue();
-                c1.mPointsAgainst = params.getAttribute("Bonus_Neg_Td").getIntValue();
-                c2.mPointsFor = params.getAttribute("Bonus_Pos_Sor").getIntValue();
-                c2.mPointsAgainst = params.getAttribute("Bonus_Neg_Sor").getIntValue();
-                c3.mPointsFor = params.getAttribute("Bonus_Pos_Foul").getIntValue();
-                c3.mPointsAgainst = params.getAttribute("Bonus_Neg_Foul").getIntValue();
+                c1.mPointsFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_TD")).getIntValue();
+                c1.mPointsAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_TD")).getIntValue();
+                c2.mPointsFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_SOR")).getIntValue();
+                c2.mPointsAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_SOR")).getIntValue();
+                c3.mPointsFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_FOUL")).getIntValue();
+                c3.mPointsAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_FOUL")).getIntValue();
 
 
                 try {
-                    c4.mPointsFor = params.getAttribute("Bonus_Pos_Pas").getIntValue();
-                    c4.mPointsAgainst = params.getAttribute("Bonus_Neg_Pas").getIntValue();
+                    c4.mPointsFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_PAS")).getIntValue();
+                    c4.mPointsAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_PAS")).getIntValue();
 
-                    c5.mPointsFor = params.getAttribute("Bonus_Pos_Int").getIntValue();
-                    c5.mPointsAgainst = params.getAttribute("Bonus_Neg_Int").getIntValue();
+                    c5.mPointsFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_INT")).getIntValue();
+                    c5.mPointsAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_INT")).getIntValue();
 
 
                 } catch (NullPointerException npe) {
@@ -677,39 +677,39 @@ public class Tournament {
                 mParams.mCriterias.add(c4);
                 mParams.mCriterias.add(c5);
 
-                mParams.mPointsIndivVictory = params.getAttribute("Victory").getIntValue();
-                mParams.mPointsIndivLargeVictory = params.getAttribute("Large_Victory").getIntValue();
-                mParams.mPointsIndivDraw = params.getAttribute("Draw").getIntValue();
-                mParams.mPointsIndivLost = params.getAttribute("Lost").getIntValue();
-                mParams.mPointsIndivLittleLost = params.getAttribute("Little_Lost").getIntValue();
-                mParams.mRankingIndiv1 = params.getAttribute("Rank1").getIntValue();
-                mParams.mRankingIndiv2 = params.getAttribute("Rank2").getIntValue();
-                mParams.mRankingIndiv3 = params.getAttribute("Rank3").getIntValue();
-                mParams.mRankingIndiv4 = params.getAttribute("Rank4").getIntValue();
-                mParams.mRankingIndiv5 = params.getAttribute("Rank5").getIntValue();
+                mParams.mPointsIndivVictory = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTORY")).getIntValue();
+                mParams.mPointsIndivLargeVictory = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LARGE_VICTORY")).getIntValue();
+                mParams.mPointsIndivDraw = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DRAW")).getIntValue();
+                mParams.mPointsIndivLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOST")).getIntValue();
+                mParams.mPointsIndivLittleLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LITTLE_LOST")).getIntValue();
+                mParams.mRankingIndiv1 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK1")).getIntValue();
+                mParams.mRankingIndiv2 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK2")).getIntValue();
+                mParams.mRankingIndiv3 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK3")).getIntValue();
+                mParams.mRankingIndiv4 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK4")).getIntValue();
+                mParams.mRankingIndiv5 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK5")).getIntValue();
 
 
 
 
 
                 try {
-                    mParams.mGapLargeVictory = params.getAttribute("Large_Victory_Gap").getIntValue();
-                    mParams.mGapLittleLost = params.getAttribute("Little_Lost_Gap").getIntValue();
-                    mParams.mPlace = params.getAttribute("Place").getValue();
-                    mParams.mTeamTournament = params.getAttribute("ByTeam").getBooleanValue();
-                    mParams.mTeamMatesNumber = params.getAttribute("TeamMates").getIntValue();
-                    mParams.mTeamPairing = params.getAttribute("TeamPairing").getIntValue();
-                    mParams.mTeamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
-                    mParams.mPointsTeamVictoryBonus = params.getAttribute("TeamVictoryPoints").getIntValue();
-                    mParams.mTeamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
-                    mParams.mTeamVictoryOnly = params.getAttribute("TeamVictoryOnly").getBooleanValue();
+                    mParams.mGapLargeVictory = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LARGE_VICTORY_GAP")).getIntValue();
+                    mParams.mGapLittleLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LITTLE_LOST_GAP")).getIntValue();
+                    mParams.mPlace = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PLACE")).getValue();
+                    mParams.mTeamTournament = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BYTEAM")).getBooleanValue();
+                    mParams.mTeamMatesNumber = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMMATES")).getIntValue();
+                    mParams.mTeamPairing = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMPAIRING")).getIntValue();
+                    mParams.mTeamIndivPairing = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMINDIVPAIRING")).getIntValue();
+                    mParams.mPointsTeamVictoryBonus = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMVICTORYPOINTS")).getIntValue();
+                    mParams.mTeamIndivPairing = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMINDIVPAIRING")).getIntValue();
+                    mParams.mTeamVictoryOnly = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMVICTORYONLY")).getBooleanValue();
 
 
 
 
 
                     try {
-                        mParams.mDate = format.parse(params.getAttribute("Date").getValue());
+                        mParams.mDate = format.parse(params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE")).getValue());
 
 
 
@@ -720,7 +720,7 @@ public class Tournament {
                 } catch (NullPointerException ne) {
                     mParams.mGapLargeVictory = 3;
                     mParams.mGapLittleLost = 1;
-                    mParams.mPlace = "";
+                    mParams.mPlace = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     mParams.mTeamTournament = false;
                     mParams.mTeamMatesNumber = 6;
                     mParams.mTeamPairing = 1;
@@ -732,23 +732,23 @@ public class Tournament {
                 }
                 try {
 
-                    c1.mPointsTeamFor = params.getAttribute("Bonus_Pos_Td_Team").getIntValue();
-                    c1.mPointsTeamAgainst = params.getAttribute("Bonus_Neg_Td_Team").getIntValue();
-                    c2.mPointsTeamFor = params.getAttribute("Bonus_Pos_Sor_Team").getIntValue();
-                    c2.mPointsTeamAgainst = params.getAttribute("Bonus_Neg_Sor_Team").getIntValue();
-                    c3.mPointsTeamFor = params.getAttribute("Bonus_Pos_Foul_Team").getIntValue();
-                    c3.mPointsTeamAgainst = params.getAttribute("Bonus_Neg_Foul_Team").getIntValue();
+                    c1.mPointsTeamFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_TD_TEAM")).getIntValue();
+                    c1.mPointsTeamAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_TD_TEAM")).getIntValue();
+                    c2.mPointsTeamFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_SOR_TEAM")).getIntValue();
+                    c2.mPointsTeamAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_SOR_TEAM")).getIntValue();
+                    c3.mPointsTeamFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_FOUL_TEAM")).getIntValue();
+                    c3.mPointsTeamAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_FOUL_TEAM")).getIntValue();
 
 
 
 
 
                     try {
-                        c4.mPointsTeamFor = params.getAttribute("Bonus_Pos_Pas_Team").getIntValue();
-                        c4.mPointsTeamAgainst = params.getAttribute("Bonus_Neg_Pas_Team").getIntValue();
+                        c4.mPointsTeamFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_PAS_TEAM")).getIntValue();
+                        c4.mPointsTeamAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_PAS_TEAM")).getIntValue();
 
-                        c5.mPointsTeamFor = params.getAttribute("Bonus_Pos_Int_Team").getIntValue();
-                        c5.mPointsTeamAgainst = params.getAttribute("Bonus_Neg_Int_Team").getIntValue();
+                        c5.mPointsTeamFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_INT_TEAM")).getIntValue();
+                        c5.mPointsTeamAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_INT_TEAM")).getIntValue();
 
 
 
@@ -757,14 +757,14 @@ public class Tournament {
                     } catch (NullPointerException npe) {
                     }
 
-                    mParams.mPointsTeamVictory = params.getAttribute("Victory_Team").getIntValue();
-                    mParams.mPointsTeamDraw = params.getAttribute("Draw_Team").getIntValue();
-                    mParams.mPointsTeamLost = params.getAttribute("Lost_Team").getIntValue();
-                    mParams.mRankingTeam1 = params.getAttribute("Rank1_Team").getIntValue();
-                    mParams.mRankingTeam2 = params.getAttribute("Rank2_Team").getIntValue();
-                    mParams.mRankingTeam3 = params.getAttribute("Rank3_Team").getIntValue();
-                    mParams.mRankingTeam4 = params.getAttribute("Rank4_Team").getIntValue();
-                    mParams.mRankingTeam5 = params.getAttribute("Rank5_Team").getIntValue();
+                    mParams.mPointsTeamVictory = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTORY_TEAM")).getIntValue();
+                    mParams.mPointsTeamDraw = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DRAW_TEAM")).getIntValue();
+                    mParams.mPointsTeamLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOST_TEAM")).getIntValue();
+                    mParams.mRankingTeam1 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK1_TEAM")).getIntValue();
+                    mParams.mRankingTeam2 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK2_TEAM")).getIntValue();
+                    mParams.mRankingTeam3 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK3_TEAM")).getIntValue();
+                    mParams.mRankingTeam4 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK4_TEAM")).getIntValue();
+                    mParams.mRankingTeam5 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK5_TEAM")).getIntValue();
 
 
 
@@ -772,10 +772,10 @@ public class Tournament {
                 } catch (NullPointerException ne2) {
                 }
                 try {
-                    mParams.mEnableClans = params.getAttribute("ActvateClans").getBooleanValue();
-                    mParams.mAvoidClansFirstMatch = params.getAttribute("AvoidFirstMatch").getBooleanValue();
-                    mParams.mAvoidClansMatch = params.getAttribute("AvoidMatch").getBooleanValue();
-                    mParams.mTeamMatesClansNumber = params.getAttribute("ClanTeammatesNumber").getIntValue();
+                    mParams.mEnableClans = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTVATECLANS")).getBooleanValue();
+                    mParams.mAvoidClansFirstMatch = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AVOIDFIRSTMATCH")).getBooleanValue();
+                    mParams.mAvoidClansMatch = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AVOIDMATCH")).getBooleanValue();
+                    mParams.mTeamMatesClansNumber = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLANTEAMMATESNUMBER")).getIntValue();
 
 
 
@@ -809,9 +809,9 @@ public class Tournament {
                 final Coach c = new Coach();
                 c.mName = coach.getAttributeValue(StringConstants.CS_NAME);
                 c.mTeam = coach.getAttributeValue(StringConstants.CS_TEAM);
-                c.mRoster = new RosterType(coach.getAttributeValue("Roster"));
-                c.mNaf = coach.getAttribute("NAF").getIntValue();
-                c.mRank = coach.getAttribute("Rank").getIntValue();
+                c.mRoster = new RosterType(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER")));
+                c.mNaf = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue();
+                c.mRank = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue();
                 c.mClan = Clan.sClanMap.get(coach.getAttributeValue(StringConstants.CS_CLAN));
 
                 if (c.mClan == null) {
@@ -862,19 +862,19 @@ public class Tournament {
             while (j.hasNext()) {
                 final Element round = (Element) j.next();
                 final Round r = new Round();
-                final String date = round.getAttributeValue("Date");
+                final String date = round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"));
                 try {
                     r.mHour = format.parse(date);
                 } catch (ParseException e) {
                 }
-                final List matchs = round.getChildren("Match");
+                final List matchs = round.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
                 final Iterator k = matchs.iterator();
                 r.mMatchs.clear();
                 while (k.hasNext()) {
                     final Element match = (Element) k.next();
-                    final Match m = new Match();
-                    final String coach1 = match.getAttribute("Coach1").getValue();
-                    final String coach2 = match.getAttribute("Coach2").getValue();
+                    final Match m = new Match(r);
+                    final String coach1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1")).getValue();
+                    final String coach2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2")).getValue();
                     m.mCoach1 = map.get(coach1);
                     m.mCoach2 = map.get(coach2);
                     for (int cpt = 0; cpt
@@ -893,29 +893,29 @@ public class Tournament {
                         }
                     }
                     final Value v1 = new Value(c1);
-                    v1.mValue1 = match.getAttribute("Td1").getIntValue();
-                    v1.mValue2 = match.getAttribute("Td2").getIntValue();
+                    v1.mValue1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TD1")).getIntValue();
+                    v1.mValue2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TD2")).getIntValue();
                     m.mValues.put(c1, v1);
 
                     final Value v2 = new Value(c2);
-                    v2.mValue1 = match.getAttribute("Sor1").getIntValue();
-                    v2.mValue2 = match.getAttribute("Sor2").getIntValue();
+                    v2.mValue1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SOR1")).getIntValue();
+                    v2.mValue2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SOR2")).getIntValue();
                     m.mValues.put(c2, v2);
 
                     final Value v3 = new Value(c3);
-                    v3.mValue1 = match.getAttribute("Foul1").getIntValue();
-                    v3.mValue2 = match.getAttribute("Foul2").getIntValue();
+                    v3.mValue1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL1")).getIntValue();
+                    v3.mValue2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUL2")).getIntValue();
                     m.mValues.put(c3, v3);
 
                     final Value v4 = new Value(c4);
                     final Value v5 = new Value(c5);
 
                     try {
-                        v4.mValue1 = match.getAttribute("Pas1").getIntValue();
-                        v4.mValue2 = match.getAttribute("Pas2").getIntValue();
+                        v4.mValue1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS1")).getIntValue();
+                        v4.mValue2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PAS2")).getIntValue();
 
-                        v5.mValue1 = match.getAttribute("Int1").getIntValue();
-                        v5.mValue2 = match.getAttribute("Int2").getIntValue();
+                        v5.mValue1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT1")).getIntValue();
+                        v5.mValue2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT2")).getIntValue();
 
 
                     } catch (NullPointerException npe) {
@@ -950,13 +950,13 @@ public class Tournament {
 
     protected void LoadXMLv3(final Element racine) {
         try {
-            mRoundRobin = Boolean.parseBoolean(racine.getAttributeValue("RoundRobin"));
+            mRoundRobin = Boolean.parseBoolean(racine.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUNDROBIN")));
         } catch (Exception e) {
             mRoundRobin = false;
         }
 
         try {
-            final List ros = racine.getChildren("Roster");
+            final List ros = racine.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"));
             if (ros != null) {
                 if (ros.size() > 0) {
                     RosterType.mRostersNames = new ArrayList<String>();
@@ -976,12 +976,12 @@ public class Tournament {
         }
 
         /* Parameters */
-        final Element params = racine.getChild("Parameters");
+        final Element params = racine.getChild(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PARAMETERS"));
         mParams.setXMLElement(params);
 
         /* Groups */
         try {
-            final List groups = racine.getChildren("Group");
+            final List groups = racine.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"));
             final Iterator gr = groups.iterator();
             mGroups.clear();
 
@@ -1012,7 +1012,7 @@ public class Tournament {
         final Iterator i = coachs.iterator();
         mCoachs.clear();
         Coach.sCoachMap = new HashMap();
-        Coach.sCoachMap.put("None", Coach.sNullCoach);
+        Coach.sCoachMap.put(StringConstants.CS_NONE, Coach.sNullCoach);
 
         while (i.hasNext()) {
             final Element coach = (Element) i.next();
@@ -1025,7 +1025,7 @@ public class Tournament {
         /* Teams */
         final List teams = racine.getChildren(StringConstants.CS_TEAM);
         Team.sTeamMap = new HashMap();
-        Team.sTeamMap.put("None",Team.sNullTeam);
+        Team.sTeamMap.put(StringConstants.CS_NONE,Team.sNullTeam);
         final Iterator l = teams.iterator();
         mTeams.clear();
         while (l.hasNext()) {
@@ -1036,7 +1036,7 @@ public class Tournament {
         }
 
         /* Pools */
-        final List pools = racine.getChildren("Pool");
+        final List pools = racine.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POOL"));
         final Iterator p = pools.iterator();
         mPools.clear();
         while (p.hasNext()) {
@@ -1067,7 +1067,7 @@ public class Tournament {
             final Element racine = document.getRootElement();
 
             try {
-                final String version = racine.getAttributeValue("Version");
+                final String version = racine.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION"));
                 if (Integer.parseInt(version) == 3) {
                     LoadXMLv3(racine);
 

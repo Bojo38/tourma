@@ -305,10 +305,10 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
 
     @Override
     public String getColumnName(final int col) {
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                result = "#";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
                 result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
@@ -326,7 +326,7 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
     public Object getValueAt(final int row, final int col) {
 
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
                 result = Integer.toString(row + 1);

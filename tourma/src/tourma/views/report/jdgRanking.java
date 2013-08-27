@@ -74,9 +74,11 @@ public class jdgRanking extends javax.swing.JDialog {
         mTour = tour;
         //_rankType = RankType;
         mType = type;
-        this.setTitle(tour.getParams().mTournamentName + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + +roundNumber);
+        this.setTitle(
+                tour.getParams().mTournamentName +
+                " - "+ java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") +" "+ roundNumber);
         try {
-            jepHTML.setContentType("html");
+            jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
             mFilename = CreateReport();
             jepHTML.setPage(mFilename.toURI().toURL());
         } catch (IOException e) {
@@ -198,25 +200,26 @@ public class jdgRanking extends javax.swing.JDialog {
         try {
 
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("/tourma/views/report").toURI();
-            if (uri.toString().contains(".jar!")) {
+            final URI uri = getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/VIEWS/REPORT")).toURI();
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
 
-                cfg.setClassForTemplateLoading(getClass(), "");
+                cfg.setClassForTemplateLoading(getClass(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""));
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
             cfg.setObjectWrapper(new DefaultObjectWrapper());
-            final Template temp = cfg.getTemplate("rank.html");
+            final Template temp = cfg.getTemplate(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK.HTML"));
 
             final Map root = new HashMap();
-            root.put("nom", mTour.getParams().mTournamentName + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + +mRoundNumber);
-            root.put("title", mTitle);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), 
+                    mTour.getParams().mTournamentName + " - "+java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ mRoundNumber);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), mTitle);
 
             final ArrayList titles = new ArrayList();
             for (int i = 0; i < mRanking.getColumnCount(); i++) {
                 titles.add(mRanking.getColumnName(i));
             }
-            root.put("titles", titles);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLES"), titles);
 
             final ArrayList lines = new ArrayList();
             for (int i = 0; i < mRanking.getRowCount(); i++) {
@@ -225,16 +228,18 @@ public class jdgRanking extends javax.swing.JDialog {
                 for (int j = 0; j < mRanking.getColumnCount(); j++) {
                     cols.add(mRanking.getValueAt(i, j));
                 }
-                line.put("cols", cols);
+                line.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COLS"), cols);
                 lines.add(line);
             }
-            root.put("lines", lines);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LINES"), lines);
 
 
-            final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy",Locale.getDefault());
-            final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
-            root.put("dateGeneration", formatShort.format(new Date()));
-            address = File.createTempFile("result" + format.format(new Date()), ".tmp");
+            final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EEEEEEE DD MMMMMMMMMMM YYYY"),Locale.getDefault());
+            final SimpleDateFormat formatShort = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY"),Locale.getDefault());
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATEGENERATION"), formatShort.format(new Date()));
+            address = File.createTempFile(
+                    java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULT{0}"),
+                    format.format(new Date())), ".tmp");
             address.deleteOnExit();
             final Writer out = new FileWriter(address);
             temp.process(root, out);

@@ -41,18 +41,18 @@ public class jdgAbout extends javax.swing.JDialog {
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
 
-        jlbNom.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name")+": "+Version.getSingleton().getProperty("long_name"));
-        jlbDate.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Date")+": "+Version.getSingleton().getProperty("date"));
-        jlbVersion.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Version")+": "+Version.getSingleton().getProperty("version"));
+        jlbNom.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(": ")+Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LONG_NAME")));
+        jlbDate.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Date")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(": ")+Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE")));
+        jlbVersion.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Version")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(": ")+Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION")));
 
-        jlbFreeMarker.setText(Version.getSingleton().getProperty("freemarker"));
-        jlbFreeMarkerC.setText(Version.getSingleton().getProperty("freemarker_copyright"));
-        jlbJCommon.setText(Version.getSingleton().getProperty("jcommon"));
-        jlbJCommonC.setText(Version.getSingleton().getProperty("jcommon_copyright"));
-        jlbJDom.setText(Version.getSingleton().getProperty("jdom"));
-        jlbJDomC.setText(Version.getSingleton().getProperty("jdom_copyright"));
-        jlbSubstance.setText(Version.getSingleton().getProperty("substance"));
-        jlbSubstanceC.setText(Version.getSingleton().getProperty("substance_copyright"));
+        jlbFreeMarker.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREEMARKER")));
+        jlbFreeMarkerC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREEMARKER_COPYRIGHT")));
+        jlbJCommon.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("JCOMMON")));
+        jlbJCommonC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("JCOMMON_COPYRIGHT")));
+        jlbJDom.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("JDOM")));
+        jlbJDomC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("JDOM_COPYRIGHT")));
+        jlbSubstance.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBSTANCE")));
+        jlbSubstanceC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBSTANCE_COPYRIGHT")));
     }
 
     /** This method is called from within the constructor to
@@ -82,10 +82,10 @@ public class jdgAbout extends javax.swing.JDialog {
         jlbDate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         setTitle(bundle.getString("A PROPOS DE")); // NOI18N
-        setResizable(false);
         setUndecorated(true);
+        setResizable(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         jButton1.setText(bundle.getString("OK")); // NOI18N
@@ -107,7 +107,7 @@ public class jdgAbout extends javax.swing.JDialog {
 
         jlbFreeMarkerC.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jlbFreeMarkerC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbFreeMarkerC.setText("FREEMARKER COPYRIGHT");
+        jlbFreeMarkerC.setText(bundle.getString("FREEMARKER COPYRIGHT")); // NOI18N
         jPanel2.add(jlbFreeMarkerC);
 
         jlbJDom.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -151,7 +151,7 @@ public class jdgAbout extends javax.swing.JDialog {
         jlbNom.setText(bundle.getString("Name")); // NOI18N
         jPanel4.add(jlbNom);
 
-        jlbVersion.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jlbVersion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlbVersion.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbVersion.setText(bundle.getString("Version")); // NOI18N
         jPanel4.add(jlbVersion);

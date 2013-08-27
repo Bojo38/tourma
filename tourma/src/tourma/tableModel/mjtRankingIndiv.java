@@ -26,7 +26,7 @@ public class mjtRankingIndiv extends mjtRanking {
     boolean mRoundOnly;
     boolean mForPool;
 
-    public mjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList<Coach> coachs, final boolean tournament, final boolean round_only, boolean forPool) {
+    public mjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList<Coach> coachs, final boolean tournament, final boolean round_only, final boolean forPool) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs);
         mTeamTournament = tournament;
         mRoundOnly = round_only;
@@ -197,7 +197,7 @@ public class mjtRankingIndiv extends mjtRanking {
     @Override
     public String getColumnName(final int col) {
 
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         int cl = col;
         if (mTeamTournament) {
             if (col > 1) {
@@ -210,7 +210,7 @@ public class mjtRankingIndiv extends mjtRanking {
 
         switch (cl) {
             case 0:
-                result = "#";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
                 if (mTeamTournament) {
@@ -251,7 +251,7 @@ public class mjtRankingIndiv extends mjtRanking {
 
         final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
 
-        Object object = "";
+        Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
         int cl = col;
         if (mTeamTournament) {

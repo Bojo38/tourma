@@ -28,14 +28,14 @@ public class Ranking implements XMLExport {
     }
 
     public Element getXMLElement() {
-        final Element rank = new Element("Ranking");
-        rank.setAttribute(new Attribute("name", mName));
-        rank.setAttribute(new Attribute("type", mType));
-        rank.setAttribute(new Attribute("order", mValueType));
+        final Element rank = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANKING"));
+        rank.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), mName));
+        rank.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TYPE"), mType));
+        rank.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORDER"), mValueType));
         final ArrayList<ObjectRanking> datas = mRank.getSortedDatas();
         for (int k = 0; k < datas.size(); k++) {
             final Element ic = datas.get(k).getXMLElement();
-            ic.setAttribute(new Attribute("pos", Integer.toString(k + 1)));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POS"), Integer.toString(k + 1)));
             rank.addContent(ic);
         }
         return rank;

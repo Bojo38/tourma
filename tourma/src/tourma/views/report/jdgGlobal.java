@@ -74,9 +74,11 @@ public class jdgGlobal extends javax.swing.JDialog {
         mAnnexForRankings = annexForRankings;
         mAnnexAgainstRankings = annexAgainstRankings;
 
-        this.setTitle(tour.getParams().mTournamentName + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + roundNumber);
+        this.setTitle(
+                tour.getParams().mTournamentName + 
+                " - "+java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" " +roundNumber);
         try {
-            jepHTML.setContentType("html");
+            jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
             mFilename = CreateReport();
             jepHTML.setPage(mFilename.toURI().toURL());
         } catch (IOException e) {
@@ -196,18 +198,18 @@ public class jdgGlobal extends javax.swing.JDialog {
 
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("/tourma/views/report").toURI();
-            if (uri.toString().contains(".jar!")) {
+            final URI uri = getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/VIEWS/REPORT")).toURI();
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
                 /*String tmp = uri.toString();
                  tmp = tmp.substring(10, tmp.indexOf(".jar!") - 4);
                  //tmp=tmp+"";
                  cfg.setDirectoryForTemplateLoading(new File(tmp));*/
-                cfg.setClassForTemplateLoading(getClass(), "");
+                cfg.setClassForTemplateLoading(getClass(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""));
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
             cfg.setObjectWrapper(new DefaultObjectWrapper());
-            final Template temp = cfg.getTemplate("global.html");
+            final Template temp = cfg.getTemplate(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GLOBAL.HTML"));
 
 
             final ArrayList<Round> rounds = new ArrayList();
@@ -216,26 +218,29 @@ public class jdgGlobal extends javax.swing.JDialog {
             }
 
             final Map root = new HashMap();
-            root.put("nom", mTour.getParams().mTournamentName + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + mRoundNumber);
-            String name = "Classements";
+            root.put(
+                    java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"),
+                    mTour.getParams().mTournamentName + 
+                    " - "+java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ mRoundNumber);
+            String name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENTS");
             if (mClan) {
-                name = " par clan";
+                name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" PAR CLAN");
             } else {
                 if (mTeam) {
-                    name = " par &eacute;quipe";
+                    name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" PAR &EACUTE;QUIPE");
                 } else {
-                    name = " par coach";
+                    name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" PAR COACH");
                 }
             }
 
-            root.put("title", name);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLE"), name);
 
 
             final ArrayList titles = new ArrayList();
             for (int i = 0; i < mRanking.getColumnCount(); i++) {
                 titles.add(mRanking.getColumnName(i));
             }
-            root.put("titles", titles);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITLES"), titles);
 
             final ArrayList lines = new ArrayList();
             for (int i = 0; i < mRanking.getRowCount(); i++) {
@@ -244,37 +249,38 @@ public class jdgGlobal extends javax.swing.JDialog {
                 for (int j = 0; j < mRanking.getColumnCount(); j++) {
                     cols.add(mRanking.getValueAt(i, j));
                 }
-                line.put("cols", cols);
+                line.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COLS"), cols);
                 lines.add(line);
             }
-            root.put("lines", lines);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LINES"), lines);
 
-            root.put("titreMoreFor", "Le plus r&eacute;alis&eacute;");
-            root.put("titreLessFor", "Le moins r&eacute;alis&eacute;");
-            root.put("titreMoreAgainst", "Le plus subi");
-            root.put("titreLessAgainst", "Le moins subi");
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITREMOREFOR"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE PLUS R&EACUTE;ALIS&EACUTE;"));
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITRELESSFOR"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE MOINS R&EACUTE;ALIS&EACUTE;"));
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITREMOREAGAINST"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE PLUS SUBI"));
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITRELESSAGAINST"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE MOINS SUBI"));
 
             final ArrayList criterias = new ArrayList();
             for (int i = 0; i < mTour.getParams().mCriterias.size(); i++) {
                 final HashMap criteria = new HashMap();
                 final Criteria c = mTour.getParams().mCriterias.get(i);
-                criteria.put("name", c.mName);
+                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), c.mName);
 
                 final mjtAnnexRank annexFor = mAnnexForRankings.get(c);
                 final mjtAnnexRank annexAgainst = mAnnexAgainstRankings.get(c);
-                criteria.put("MoreFor", annexFor.getValueAt(0, 1));
-                criteria.put("LessFor", annexFor.getValueAt(annexFor.getRowCount() - 1, 1));
-                criteria.put("MoreAgainst", annexAgainst.getValueAt(0, 1));
-                criteria.put("LessAgainst", annexAgainst.getValueAt(annexAgainst.getRowCount() - 1, 1));
+                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MOREFOR"), annexFor.getValueAt(0, 1));
+                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LESSFOR"), annexFor.getValueAt(annexFor.getRowCount() - 1, 1));
+                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MOREAGAINST"), annexAgainst.getValueAt(0, 1));
+                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LESSAGAINST"), annexAgainst.getValueAt(annexAgainst.getRowCount() - 1, 1));
 
                 criterias.add(criteria);
             }
-            root.put("criterias", criterias);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITERIAS"), criterias);
 
-            final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
-            final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            root.put("dateGeneration", formatShort.format(new Date()));
-            address = File.createTempFile("result" + format.format(new Date()), ".tmp");
+            final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EEEEEEE DD MMMMMMMMMMM YYYY"), Locale.getDefault());
+            final SimpleDateFormat formatShort = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY"), Locale.getDefault());
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATEGENERATION"), formatShort.format(new Date()));
+            address = File.createTempFile(
+                    java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULT{0}"), format.format(new Date())), ".tmp");
             address.deleteOnExit();
             final Writer out = new FileWriter(address);
             temp.process(root, out);

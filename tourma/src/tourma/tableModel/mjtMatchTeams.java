@@ -41,10 +41,10 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
     }
 
     public String getColumnName(final int col) {
-        String res = "";
+        String res = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                res = "#";
+                res = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
                 res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan1");
@@ -67,7 +67,7 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
     }
 
     public Object getValueAt(final int row, final int col) {
-        Object obj = "";
+        Object obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mTeams.size() > 0) {
             final Team t = mTeams.get(row * 2);
             Team team1 = t;

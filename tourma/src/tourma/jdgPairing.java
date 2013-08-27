@@ -57,7 +57,7 @@ public class jdgPairing extends javax.swing.JDialog {
         mTeam2 = team2;
         mCoachs = new HashMap<String, Coach>();
 
-        this.setTitle(team1.mName + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(" VS ") + team2.mName);
+        this.setTitle(team1.mName + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS {0}"), team2.mName)));
 
         mRound = round;
         mMatchs = new ArrayList<Match>();
@@ -132,7 +132,8 @@ public class jdgPairing extends javax.swing.JDialog {
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        jbtOK.setText("OK");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -148,7 +149,6 @@ public class jdgPairing extends javax.swing.JDialog {
         jPanel3.add(jcbTeam1, java.awt.BorderLayout.WEST);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
         jLabel1.setText(bundle.getString("vs")); // NOI18N
         jPanel3.add(jLabel1, java.awt.BorderLayout.CENTER);
 
@@ -191,7 +191,7 @@ public class jdgPairing extends javax.swing.JDialog {
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
         if (mItems1.size() > 0) {
-            final Match m = new Match();
+            final Match m = new Match(mRound);
             m.mCoach1 = mCoachs.get((String) jcbTeam1.getSelectedItem());
             m.mCoach2 = mCoachs.get((String) jcbTeam2.getSelectedItem());
             mMatchs.add(m);

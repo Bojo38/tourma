@@ -48,15 +48,15 @@ public class jdgRevisions extends javax.swing.JDialog {
         final ArrayList descriptions = new ArrayList();
 
         int n = 1;
-        String tmpV = Version.getSingleton().getProperty(Integer.toString(n) + "-V");
-        String tmpD = Version.getSingleton().getProperty(Integer.toString(n) + "-D");
+        String tmpV = Version.getSingleton().getProperty(Integer.toString(n) + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("-V"));
+        String tmpD = Version.getSingleton().getProperty(Integer.toString(n) + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("-D"));
 
         while (tmpV != null) {
             versions.add(tmpV);
             descriptions.add(tmpD);
             n++;
-            tmpV = Version.getSingleton().getProperty(Integer.toString(n) + "-V");
-            tmpD = Version.getSingleton().getProperty(Integer.toString(n) + "-D");
+            tmpV = Version.getSingleton().getProperty(Integer.toString(n) + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("-V"));
+            tmpD = Version.getSingleton().getProperty(Integer.toString(n) + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("-D"));
         }
 
         final mtRevisions model = new mtRevisions(versions, descriptions);

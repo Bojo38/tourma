@@ -117,7 +117,7 @@ public class JPNGroup extends javax.swing.JPanel {
 
      @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralClanActionPerformed
-        final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, "General par Groupe", mRoundNumber, mTournament, (mjtRankingIndiv) jtbGroup.getModel(), 0);
+        final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR GROUPE"), mRoundNumber, mTournament, (mjtRankingIndiv) jtbGroup.getModel(), 0);
         jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralClanActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -126,13 +126,16 @@ public class JPNTeams extends javax.swing.JPanel {
         jbtRemoveTeam.setEnabled(!bTourStarted);
 
         if (mTournament.getParams().mTeamTournament) {
-            String text = "";
+            String text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
             if (mTournament.getParams().mTeamPairing == 0) {
                 text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single");
             } else {
                 text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam");
             }
-            jlbDetails.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("MembersNumber") + ": " + mTournament.getParams().mTeamMatesNumber + " " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Pairing") + " " + text);
+            jlbDetails.setText(
+                    java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("MEMBERSNUMBER")
+                    + ": " + mTournament.getParams().mTeamMatesNumber
+                    + "("+text+")");
         } 
 
         final mjtTeams teamModel = new mjtTeams(mTournament.getTeams());

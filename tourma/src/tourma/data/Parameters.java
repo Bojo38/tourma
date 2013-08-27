@@ -11,7 +11,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
 import tourma.MainFrame;
@@ -44,6 +46,7 @@ public class Parameters implements XMLExport {
     public int mRankingIndiv4 = 4;
     public int mRankingIndiv5 = 5;
     public boolean mTeamTournament = false;
+    public boolean mMultiRoster=false;
     /* Pairing: 0: Individuel
      1: ByTeam
      */
@@ -110,167 +113,182 @@ public class Parameters implements XMLExport {
      public static final int C_RANKING_INT = 11;
      public static final int C_RANKING_DIFF_PAS = 12;
      public static final int C_RANKING_DIFF_INT = 13;*/
+    
+   protected final static ResourceBundle sbundle= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
+    
     public Parameters() {
-        mTournamentName = "";
-        mTournamentOrga = "";
+        mTournamentName = sbundle.getString("");
+        mTournamentOrga = sbundle.getString("");
         mCriterias = new ArrayList<Criteria>();
 
-        Criteria c = new Criteria(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Touchdowns"));
+        Criteria c = new Criteria(sbundle.getString("Touchdowns"));
         c.mPointsFor = 2;
         mCriterias.add(c);
-        c = new Criteria(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Injuries"));
+        c = new Criteria(sbundle.getString("Injuries"));
         c.mPointsFor = 1;
         mCriterias.add(c);
     }
 
     public Element getXMLElement() {
-        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-        final Element params = new Element("Parameters");
-        params.setAttribute("Organizer", this.mTournamentOrga);
-        params.setAttribute("Name", this.mTournamentName);
-        params.setAttribute("Date", format.format(this.mDate));
-        params.setAttribute("Place", this.mTournamentName);
+        final SimpleDateFormat format = new SimpleDateFormat(sbundle.getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final Element params = new Element(sbundle.getString("PARAMETERS"));
+        params.setAttribute(sbundle.getString("ORGANIZER"), this.mTournamentOrga);
+        params.setAttribute(sbundle.getString("NAME"), this.mTournamentName);
+        params.setAttribute(sbundle.getString("DATE"), format.format(this.mDate));
+        params.setAttribute(sbundle.getString("PLACE"), this.mTournamentName);
 
         for (int i = 0; i < this.mCriterias.size(); i++) {
             final Element crit = mCriterias.get(i).getXMLElement();
             params.addContent(crit);
         }
 
-        params.setAttribute("Victory", Integer.toString(this.mPointsIndivVictory));
-        params.setAttribute("Large_Victory", Integer.toString(this.mPointsIndivLargeVictory));
-        params.setAttribute("Draw", Integer.toString(this.mPointsIndivDraw));
-        params.setAttribute("Lost", Integer.toString(this.mPointsIndivLost));
-        params.setAttribute("Little_Lost", Integer.toString(this.mPointsIndivLittleLost));
+        params.setAttribute(sbundle.getString("VICTORY"), Integer.toString(this.mPointsIndivVictory));
+        params.setAttribute(sbundle.getString("LARGE_VICTORY"), Integer.toString(this.mPointsIndivLargeVictory));
+        params.setAttribute(sbundle.getString("DRAW"), Integer.toString(this.mPointsIndivDraw));
+        params.setAttribute(sbundle.getString("LOST"), Integer.toString(this.mPointsIndivLost));
+        params.setAttribute(sbundle.getString("LITTLE_LOST"), Integer.toString(this.mPointsIndivLittleLost));
 
-        params.setAttribute("Victory_Team", Integer.toString(this.mPointsTeamVictory));
-        params.setAttribute("Draw_Team", Integer.toString(this.mPointsTeamDraw));
-        params.setAttribute("Lost_Team", Integer.toString(this.mPointsTeamLost));
+        params.setAttribute(sbundle.getString("VICTORY_TEAM"), Integer.toString(this.mPointsTeamVictory));
+        params.setAttribute(sbundle.getString("DRAW_TEAM"), Integer.toString(this.mPointsTeamDraw));
+        params.setAttribute(sbundle.getString("LOST_TEAM"), Integer.toString(this.mPointsTeamLost));
 
-        params.setAttribute("Large_Victory_Gap", Integer.toString(this.mGapLargeVictory));
-        params.setAttribute("Little_Lost_Gap", Integer.toString(this.mGapLittleLost));
+        params.setAttribute(sbundle.getString("LARGE_VICTORY_GAP"), Integer.toString(this.mGapLargeVictory));
+        params.setAttribute(sbundle.getString("LITTLE_LOST_GAP"), Integer.toString(this.mGapLittleLost));
 
-        params.setAttribute("Rank1", Integer.toString(this.mRankingIndiv1));
-        params.setAttribute("Rank2", Integer.toString(this.mRankingIndiv2));
-        params.setAttribute("Rank3", Integer.toString(this.mRankingIndiv3));
-        params.setAttribute("Rank4", Integer.toString(this.mRankingIndiv4));
-        params.setAttribute("Rank5", Integer.toString(this.mRankingIndiv5));
+        params.setAttribute(sbundle.getString("RANK1"), Integer.toString(this.mRankingIndiv1));
+        params.setAttribute(sbundle.getString("RANK2"), Integer.toString(this.mRankingIndiv2));
+        params.setAttribute(sbundle.getString("RANK3"), Integer.toString(this.mRankingIndiv3));
+        params.setAttribute(sbundle.getString("RANK4"), Integer.toString(this.mRankingIndiv4));
+        params.setAttribute(sbundle.getString("RANK5"), Integer.toString(this.mRankingIndiv5));
 
-        params.setAttribute("Rank1_Team", Integer.toString(this.mRankingTeam1));
-        params.setAttribute("Rank2_Team", Integer.toString(this.mRankingTeam2));
-        params.setAttribute("Rank3_Team", Integer.toString(this.mRankingTeam3));
-        params.setAttribute("Rank4_Team", Integer.toString(this.mRankingTeam4));
-        params.setAttribute("Rank5_Team", Integer.toString(this.mRankingTeam5));
+        params.setAttribute(sbundle.getString("RANK1_TEAM"), Integer.toString(this.mRankingTeam1));
+        params.setAttribute(sbundle.getString("RANK2_TEAM"), Integer.toString(this.mRankingTeam2));
+        params.setAttribute(sbundle.getString("RANK3_TEAM"), Integer.toString(this.mRankingTeam3));
+        params.setAttribute(sbundle.getString("RANK4_TEAM"), Integer.toString(this.mRankingTeam4));
+        params.setAttribute(sbundle.getString("RANK5_TEAM"), Integer.toString(this.mRankingTeam5));
 
-        params.setAttribute("ByTeam", Boolean.toString(this.mTeamTournament));
-        params.setAttribute("TeamMates", Integer.toString(this.mTeamMatesNumber));
-        params.setAttribute("TeamPairing", Integer.toString(this.mTeamPairing));
-        params.setAttribute("TeamIndivPairing", Integer.toString(this.mTeamIndivPairing));
+        params.setAttribute(sbundle.getString("BYTEAM"), Boolean.toString(this.mTeamTournament));
+        params.setAttribute(sbundle.getString("TEAMMATES"), Integer.toString(this.mTeamMatesNumber));
+        params.setAttribute(sbundle.getString("TEAMPAIRING"), Integer.toString(this.mTeamPairing));
+        params.setAttribute(sbundle.getString("TEAMINDIVPAIRING"), Integer.toString(this.mTeamIndivPairing));
 
-        params.setAttribute("TeamVictoryPoints", Integer.toString(this.mPointsTeamVictoryBonus));
-        params.setAttribute("TeamDrawPoints", Integer.toString(this.mPointsTeamDrawBonus));
-        params.setAttribute("TeamVictoryOnly", Boolean.toString(this.mTeamVictoryOnly));
+        params.setAttribute(sbundle.getString("TEAMVICTORYPOINTS"), Integer.toString(this.mPointsTeamVictoryBonus));
+        params.setAttribute(sbundle.getString("TEAMDRAWPOINTS"), Integer.toString(this.mPointsTeamDrawBonus));
+        params.setAttribute(sbundle.getString("TEAMVICTORYONLY"), Boolean.toString(this.mTeamVictoryOnly));
 
-        params.setAttribute("GroupEnable", Boolean.toString(this.mGroupsEnable));
-        params.setAttribute("Substitutes", Boolean.toString(this.mSubstitutes));
-        params.setAttribute("GameType", Integer.toString(this.mGame));
+        params.setAttribute(sbundle.getString("GROUPENABLE"), Boolean.toString(this.mGroupsEnable));
+        params.setAttribute(sbundle.getString("SUBSTITUTES"), Boolean.toString(this.mSubstitutes));
+        params.setAttribute(sbundle.getString("GAMETYPE"), Integer.toString(this.mGame));
 
-        params.setAttribute("ActvateClans", Boolean.toString(this.mEnableClans));
-        params.setAttribute("AvoidFirstMatch", Boolean.toString(this.mAvoidClansFirstMatch));
-        params.setAttribute("AvoidMatch", Boolean.toString(this.mAvoidClansMatch));
-        params.setAttribute("ClanTeammatesNumber", Integer.toString(this.mTeamMatesClansNumber));
+        params.setAttribute(sbundle.getString("ACTVATECLANS"), Boolean.toString(this.mEnableClans));
+        params.setAttribute(sbundle.getString("AVOIDFIRSTMATCH"), Boolean.toString(this.mAvoidClansFirstMatch));
+        params.setAttribute(sbundle.getString("AVOIDMATCH"), Boolean.toString(this.mAvoidClansMatch));
+        params.setAttribute(sbundle.getString("CLANTEAMMATESNUMBER"), Integer.toString(this.mTeamMatesClansNumber));
+        
+        params.setAttribute(sbundle.getString("CLANTEAMMATESNUMBER"), Integer.toString(this.mTeamMatesClansNumber));
 
+        params.setAttribute(sbundle.getString("MULTIROSTER"),Boolean.toString(this.mMultiRoster));
+        
         return params;
     }
 
     public void setXMLElement(final Element params) {
-        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(sbundle.getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
+        
+        
         try {
-            this.mTournamentOrga = params.getAttribute("Organizer").getValue();
-            this.mTournamentName = params.getAttribute("Name").getValue();
+            this.mTournamentOrga = params.getAttribute(sbundle.getString("ORGANIZER")).getValue();
+            this.mTournamentName = params.getAttribute(sbundle.getString("NAME")).getValue();
 
-            this.mPointsIndivVictory = params.getAttribute("Victory").getIntValue();
-            this.mPointsIndivLargeVictory = params.getAttribute("Large_Victory").getIntValue();
-            this.mPointsIndivDraw = params.getAttribute("Draw").getIntValue();
-            this.mPointsIndivLost = params.getAttribute("Lost").getIntValue();
-            this.mPointsIndivLittleLost = params.getAttribute("Little_Lost").getIntValue();
-            this.mRankingIndiv1 = params.getAttribute("Rank1").getIntValue();
-            this.mRankingIndiv2 = params.getAttribute("Rank2").getIntValue();
-            this.mRankingIndiv3 = params.getAttribute("Rank3").getIntValue();
-            this.mRankingIndiv4 = params.getAttribute("Rank4").getIntValue();
-            this.mRankingIndiv5 = params.getAttribute("Rank5").getIntValue();
+            this.mPointsIndivVictory = params.getAttribute(sbundle.getString("VICTORY")).getIntValue();
+            this.mPointsIndivLargeVictory = params.getAttribute(sbundle.getString("LARGE_VICTORY")).getIntValue();
+            this.mPointsIndivDraw = params.getAttribute(sbundle.getString("DRAW")).getIntValue();
+            this.mPointsIndivLost = params.getAttribute(sbundle.getString("LOST")).getIntValue();
+            this.mPointsIndivLittleLost = params.getAttribute(sbundle.getString("LITTLE_LOST")).getIntValue();
+            
+            String rank1s=sbundle.getString("RANK1");
+            Attribute rank1a=params.getAttribute(rank1s);
+            int rank1v=rank1a.getIntValue();
+            
+            this.mRankingIndiv1 = params.getAttribute(sbundle.getString("RANK1")).getIntValue();
+            this.mRankingIndiv2 = params.getAttribute(sbundle.getString("RANK2")).getIntValue();
+            this.mRankingIndiv3 = params.getAttribute(sbundle.getString("RANK3")).getIntValue();
+            this.mRankingIndiv4 = params.getAttribute(sbundle.getString("RANK4")).getIntValue();
+            this.mRankingIndiv5 = params.getAttribute(sbundle.getString("RANK5")).getIntValue();
 
             try {
-                this.mGapLargeVictory = params.getAttribute("Large_Victory_Gap").getIntValue();
-                this.mGapLittleLost = params.getAttribute("Little_Lost_Gap").getIntValue();
-                this.mPlace = params.getAttribute("Place").getValue();
-                this.mTeamTournament = params.getAttribute("ByTeam").getBooleanValue();
-                this.mTeamMatesNumber = params.getAttribute("TeamMates").getIntValue();
-                this.mTeamPairing = params.getAttribute("TeamPairing").getIntValue();
-                this.mTeamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
-                this.mPointsTeamVictoryBonus = params.getAttribute("TeamVictoryPoints").getIntValue();
-                this.mTeamIndivPairing = params.getAttribute("TeamIndivPairing").getIntValue();
-                this.mTeamVictoryOnly = params.getAttribute("TeamVictoryOnly").getBooleanValue();
+                this.mGapLargeVictory = params.getAttribute(sbundle.getString("LARGE_VICTORY_GAP")).getIntValue();
+                this.mGapLittleLost = params.getAttribute(sbundle.getString("LITTLE_LOST_GAP")).getIntValue();
+                this.mPlace = params.getAttribute(sbundle.getString("PLACE")).getValue();
+                this.mTeamTournament = params.getAttribute(sbundle.getString("BYTEAM")).getBooleanValue();
+                this.mTeamMatesNumber = params.getAttribute(sbundle.getString("TEAMMATES")).getIntValue();
+                this.mTeamPairing = params.getAttribute(sbundle.getString("TEAMPAIRING")).getIntValue();
+                this.mTeamIndivPairing = params.getAttribute(sbundle.getString("TEAMINDIVPAIRING")).getIntValue();
+                this.mPointsTeamVictoryBonus = params.getAttribute(sbundle.getString("TEAMVICTORYPOINTS")).getIntValue();
+                this.mTeamIndivPairing = params.getAttribute(sbundle.getString("TEAMINDIVPAIRING")).getIntValue();
+                this.mTeamVictoryOnly = params.getAttribute(sbundle.getString("TEAMVICTORYONLY")).getBooleanValue();
                 try {
-                    this.mPointsTeamDrawBonus = params.getAttribute("TeamDrawPoints").getIntValue();
+                    this.mPointsTeamDrawBonus = params.getAttribute(sbundle.getString("TEAMDRAWPOINTS")).getIntValue();
                 } catch (Exception e) {
                     this.mPointsTeamDrawBonus = 0;
                 }
 
                 try {
-                    this.mDate = format.parse(params.getAttribute("Date").getValue());
+                    this.mDate = format.parse(params.getAttribute(sbundle.getString("DATE")).getValue());
                 } catch (ParseException pe) {
                 }
 
                 try {
-                    this.mGame = params.getAttribute("GameType").getIntValue();
+                    this.mGame = params.getAttribute(sbundle.getString("GAMETYPE")).getIntValue();
                 } catch (Exception pe) {
                     this.mGame = 1;
                 }
 
-                this.mGroupsEnable = params.getAttribute("GroupEnable").getBooleanValue();
+                this.mGroupsEnable = params.getAttribute(sbundle.getString("GROUPENABLE")).getBooleanValue();
 
             } catch (NullPointerException ne) {
                 this.mGapLargeVictory = 3;
                 this.mGapLittleLost = 1;
-                this.mPlace = "";
+                this.mPlace = sbundle.getString("");
                 this.mTeamTournament = false;
                 this.mTeamMatesNumber = 6;
                 this.mTeamPairing = 1;
                 this.mTeamIndivPairing = 0;
             }
             try {
-                this.mPointsTeamVictory = params.getAttribute("Victory_Team").getIntValue();
-                this.mPointsTeamDraw = params.getAttribute("Draw_Team").getIntValue();
-                this.mPointsTeamLost = params.getAttribute("Lost_Team").getIntValue();
-                this.mRankingTeam1 = params.getAttribute("Rank1_Team").getIntValue();
-                this.mRankingTeam2 = params.getAttribute("Rank2_Team").getIntValue();
-                this.mRankingTeam3 = params.getAttribute("Rank3_Team").getIntValue();
-                this.mRankingTeam4 = params.getAttribute("Rank4_Team").getIntValue();
-                this.mRankingTeam5 = params.getAttribute("Rank5_Team").getIntValue();
+                this.mPointsTeamVictory = params.getAttribute(sbundle.getString("VICTORY_TEAM")).getIntValue();
+                this.mPointsTeamDraw = params.getAttribute(sbundle.getString("DRAW_TEAM")).getIntValue();
+                this.mPointsTeamLost = params.getAttribute(sbundle.getString("LOST_TEAM")).getIntValue();
+                this.mRankingTeam1 = params.getAttribute(sbundle.getString("RANK1_TEAM")).getIntValue();
+                this.mRankingTeam2 = params.getAttribute(sbundle.getString("RANK2_TEAM")).getIntValue();
+                this.mRankingTeam3 = params.getAttribute(sbundle.getString("RANK3_TEAM")).getIntValue();
+                this.mRankingTeam4 = params.getAttribute(sbundle.getString("RANK4_TEAM")).getIntValue();
+                this.mRankingTeam5 = params.getAttribute(sbundle.getString("RANK5_TEAM")).getIntValue();
             } catch (NullPointerException ne2) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ne2.getLocalizedMessage());
             }
 
             try {
-                this.mEnableClans = params.getAttribute("ActvateClans").getBooleanValue();
-                this.mAvoidClansFirstMatch = params.getAttribute("AvoidFirstMatch").getBooleanValue();
-                this.mAvoidClansMatch = params.getAttribute("AvoidMatch").getBooleanValue();
-                this.mTeamMatesClansNumber = params.getAttribute("ClanTeammatesNumber").getIntValue();
-                this.mSubstitutes = params.getAttribute("Substitutes").getBooleanValue();
+                this.mEnableClans = params.getAttribute(sbundle.getString("ACTVATECLANS")).getBooleanValue();
+                this.mAvoidClansFirstMatch = params.getAttribute(sbundle.getString("AVOIDFIRSTMATCH")).getBooleanValue();
+                this.mAvoidClansMatch = params.getAttribute(sbundle.getString("AVOIDMATCH")).getBooleanValue();
+                this.mTeamMatesClansNumber = params.getAttribute(sbundle.getString("CLANTEAMMATESNUMBER")).getIntValue();
+                this.mSubstitutes = params.getAttribute(sbundle.getString("SUBSTITUTES")).getBooleanValue();
+                this.mMultiRoster = params.getAttribute(sbundle.getString("MULTIROSTER")).getBooleanValue();
 
             } catch (NullPointerException ne3) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ne3.getLocalizedMessage());
             }
 
-            final List criterias = params.getChildren("Criteria");
+            final List criterias = params.getChildren(sbundle.getString("CRITERIA"));
             final Iterator cr = criterias.iterator();
 
             this.mCriterias.clear();
 
             while (cr.hasNext()) {
                 final Element criteria = (Element) cr.next();
-                final Criteria crit = new Criteria(criteria.getAttributeValue("Name"));
+                final Criteria crit = new Criteria(criteria.getAttributeValue(sbundle.getString("NAME")));
                 crit.setXMLElement(criteria);
                 this.mCriterias.add(crit);
             }
@@ -280,6 +298,6 @@ public class Parameters implements XMLExport {
     }
 
     public String toString() {
-        return "Paramètres";
+        return sbundle.getString("PARAMÈTRES");
     }
 }

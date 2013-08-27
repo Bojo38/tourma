@@ -32,8 +32,8 @@ public class JPNMatch extends javax.swing.JPanel {
         
         final Value v=m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
         if ((v.mValue1 == -1)||(v.mValue2 == -1)) {
-            jlbScore1.setText("");
-            jlbScore2.setText("");
+            jlbScore1.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""));
+            jlbScore2.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""));
         } else {
             jlbScore1.setText(Integer.toString(v.mValue1));
             jlbScore2.setText(Integer.toString(v.mValue2));
@@ -89,7 +89,8 @@ public class JPNMatch extends javax.swing.JPanel {
 
         jlbPlayer1.setBackground(new java.awt.Color(255, 255, 255));
         jlbPlayer1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbPlayer1.setText("Player 1");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jlbPlayer1.setText(bundle.getString("PLAYER 1")); // NOI18N
         jlbPlayer1.setMaximumSize(new java.awt.Dimension(135, 25));
         jlbPlayer1.setMinimumSize(new java.awt.Dimension(135, 25));
         jlbPlayer1.setPreferredSize(new java.awt.Dimension(135, 25));
@@ -97,7 +98,7 @@ public class JPNMatch extends javax.swing.JPanel {
 
         jlbScore1.setBackground(new java.awt.Color(255, 255, 255));
         jlbScore1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbScore1.setText("0");
+        jlbScore1.setText(bundle.getString("0")); // NOI18N
         jlbScore1.setMaximumSize(new java.awt.Dimension(15, 25));
         jlbScore1.setMinimumSize(new java.awt.Dimension(15, 25));
         jlbScore1.setPreferredSize(new java.awt.Dimension(15, 25));
@@ -119,7 +120,7 @@ public class JPNMatch extends javax.swing.JPanel {
 
         jlbPlayer2.setBackground(new java.awt.Color(255, 255, 255));
         jlbPlayer2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbPlayer2.setText("Player 2");
+        jlbPlayer2.setText(bundle.getString("PLAYER 2")); // NOI18N
         jlbPlayer2.setMaximumSize(new java.awt.Dimension(135, 25));
         jlbPlayer2.setMinimumSize(new java.awt.Dimension(135, 25));
         jlbPlayer2.setPreferredSize(new java.awt.Dimension(135, 25));
@@ -127,7 +128,7 @@ public class JPNMatch extends javax.swing.JPanel {
 
         jlbScore2.setBackground(new java.awt.Color(255, 255, 255));
         jlbScore2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbScore2.setText("0");
+        jlbScore2.setText(bundle.getString("0")); // NOI18N
         jlbScore2.setMaximumSize(new java.awt.Dimension(15, 25));
         jlbScore2.setMinimumSize(new java.awt.Dimension(15, 25));
         jlbScore2.setPreferredSize(new java.awt.Dimension(15, 25));
@@ -144,12 +145,12 @@ public class JPNMatch extends javax.swing.JPanel {
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("#");
+        jLabel3.setText(bundle.getString("#")); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(10, 50));
         jLabel3.setMinimumSize(new java.awt.Dimension(10, 50));
         jLabel3.setPreferredSize(new java.awt.Dimension(10, 50));
         add(jLabel3, java.awt.BorderLayout.WEST);
-        jLabel3.getAccessibleContext().setAccessibleName("jlbId");
+        jLabel3.getAccessibleContext().setAccessibleName(bundle.getString("JLBID")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel3;

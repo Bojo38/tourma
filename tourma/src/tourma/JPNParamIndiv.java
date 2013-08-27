@@ -156,7 +156,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         add(jtffLost);
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel14.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 1:");
+        jLabel14.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1:"));
         add(jLabel14);
 
         jcbRank1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -168,7 +168,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         add(jcbRank1);
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel15.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 2:");
+        jLabel15.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2:"));
         add(jLabel15);
 
         jcbRank2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -180,7 +180,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         add(jcbRank2);
 
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel16.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 3:");
+        jLabel16.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 3:"));
         add(jLabel16);
 
         jcbRank3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -192,7 +192,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         add(jcbRank3);
 
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel17.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 4:");
+        jLabel17.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 4:"));
         add(jLabel17);
 
         jcbRank4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -204,7 +204,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         add(jcbRank4);
 
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel18.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 5:");
+        jLabel18.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 5:"));
         add(jLabel18);
 
         jcbRank5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite", "Passes", "Interceptions", "Différence de passes", "Différence d'interceptions" }));
@@ -334,13 +334,13 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         final ArrayList<String> rankChoices = new ArrayList<String>();
         rankChoices.add(StringConstants.CS_NONE);
         rankChoices.add(StringConstants.CS_POINTS);
-        rankChoices.add("Points Adversaires");
-        rankChoices.add("V/N/D");
+        rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS ADVERSAIRES"));
+        rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D"));
         for (int i = 0; i < Tournament.getTournament().getParams().mCriterias.size(); i++) {
             final Criteria criteria = Tournament.getTournament().getParams().mCriterias.get(i);
-            rankChoices.add(criteria.mName + " Joueur");
-            rankChoices.add(criteria.mName + " Adversaire");
-            rankChoices.add(criteria.mName + " Différence");
+            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" JOUEUR"));
+            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE"));
+            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFÉRENCE"));
         }
 
         jcbRank1.setModel(new DefaultComboBoxModel(rankChoices.toArray()));

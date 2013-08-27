@@ -214,7 +214,7 @@ public class JPNParamClan extends javax.swing.JPanel {
     final String enterClanName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterClanNameKey");
     final String clanName = JOptionPane.showInputDialog(this, enterClanName);
     if (clanName != null) {
-        if (!clanName.equals("")) {
+        if (!clanName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
             mTournament.getClans().add(new Clan(clanName));
         }
     }
@@ -225,7 +225,7 @@ public class JPNParamClan extends javax.swing.JPanel {
     final String enterClanName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterClanNameKey");
     final String clanName = (String) jlsClans.getSelectedValue();
     final String newClanName = JOptionPane.showInputDialog(this, enterClanName, clanName);
-    if (!clanName.equals("")) {
+    if (!clanName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
         mTournament.getClans().get(jlsClans.getSelectedIndex()).mName = newClanName;
     }
     update();

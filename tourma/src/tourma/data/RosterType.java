@@ -23,7 +23,7 @@ public class RosterType {
      };*/
     public static ArrayList<String> mRostersNames = new ArrayList<String>();
     public static ArrayList<RosterType> mRosterTypes = new ArrayList<RosterType>();
-    public String mName = "";
+    public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
     public static void initCollection() {
         mRostersNames.clear();
@@ -64,18 +64,18 @@ public class RosterType {
                 break;
             case C_DREAD_BALL:
                 mRostersNames.clear();
-                mRostersNames.add("Corporation");
-                mRostersNames.add("Orx");
-                mRostersNames.add("Ver-myns");
-                mRostersNames.add("Forge Fathers");
-                mRostersNames.add("Judwans");
-                mRostersNames.add("Z'Zors");
-                mRostersNames.add("Robots");
-                mRostersNames.add("Females Corporation");
-                mRostersNames.add("Zees");
-                mRostersNames.add("Asterians");
-                mRostersNames.add("Nameless");
-                mRostersNames.add("Taratons");
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CORPORATION"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORX"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VER-MYNS"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FORGE FATHERS"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("JUDWANS"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Z'ZORS"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROBOTS"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FEMALES CORPORATION"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ZEES"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ASTERIANS"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAMELESS"));
+                mRostersNames.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TARATONS"));
                 break;
             default:
                 initCollection();

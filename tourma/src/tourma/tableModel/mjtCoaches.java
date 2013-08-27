@@ -42,10 +42,10 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
     }
 
     public String getColumnName(final int col) {
-        String val="";
+        String val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                 val= "#";
+                 val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
             case 1:
                  val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH);
             case 2:
@@ -59,7 +59,7 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
             case 7:
                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
             case 6:
-                val= "";
+                val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                 break;
             default:
         }
@@ -67,7 +67,7 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
     }
 
     public Object getValueAt(final int row,final int col) {
-        Object val="";
+        Object val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mCoachs.size() > 0) {
             final Coach c = mCoachs.get(row);
             switch (col) {
@@ -94,9 +94,9 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 6:
                     if (c.mActive) {
-                        val= "Actif";
+                        val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIF");
                     } else {
-                        val= "Inactif";
+                        val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INACTIF");
                     }
                     break;
                 default:

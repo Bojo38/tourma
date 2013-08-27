@@ -41,22 +41,22 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
     }
 
     public String getColumnName(final int col) {
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                result = "Nom Critère";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM CRITÈRE");
                 break;
             case 1:
-                result = "Points +";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS +");
                 break;
             case 2:
-                result = "Points -";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS -");
                 break;
             case 3:
-                result = "Points Equipe +";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS EQUIPE +");
                 break;
             case 4:
-                result = "Points Equipe -";
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS EQUIPE -");
                 break;
             default:
         }
@@ -65,7 +65,7 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
 
     public Object getValueAt(final int row, final int col) {
 
-        Object result = "";
+        Object result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
                 result = mParams.mCriterias.get(row).mName;

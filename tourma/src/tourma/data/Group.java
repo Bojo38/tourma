@@ -16,7 +16,7 @@ import tourma.utility.StringConstants;
  */
 public class Group implements XMLExport {
 
-    public String mName = "";
+    public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
     public ArrayList<RosterType> mRosters;
 
     public Group(final String name) {
@@ -25,7 +25,7 @@ public class Group implements XMLExport {
     }
 
     public Element getXMLElement() {
-        final Element group = new Element("Group");
+        final Element group = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"));
         group.setAttribute(StringConstants.CS_NAME, this.mName);
         for (int j = 0; j < this.mRosters.size(); j++) {
             final Element roster = new Element(StringConstants.CS_ROSTER);

@@ -21,11 +21,17 @@ public class Match implements XMLExport {
 
     public Coach mCoach1;
     public Coach mCoach2;
+    
+    public RosterType mRoster1;
+    public RosterType mRoster2;
+    
+    public Round mRound;
+    
     public HashMap<Criteria, Value> mValues;
     protected Coach mWinner = null;
     protected Coach mLooser = null;
 
-    public Match() {
+    public Match(Round round) {
         mValues = new HashMap<Criteria, Value>();
 
         final int size = Tournament.getTournament().mParams.mCriterias.size();
@@ -41,19 +47,21 @@ public class Match implements XMLExport {
             }
             mValues.put(crit, val);
         }
+        
+        mRound =round;
     }
 
     public Element getXMLElement() {
-        final Element match = new Element("Match");
-        match.setAttribute("Coach1", this.mCoach1.mName);
-        match.setAttribute("Coach2", this.mCoach2.mName);
+        final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
+        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1"), this.mCoach1.mName);
+        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2"), this.mCoach2.mName);
 
         for (int k = 0; k < Tournament.getTournament().getParams().mCriterias.size(); k++) {
             final Value val = this.mValues.get(Tournament.getTournament().getParams().mCriterias.get(k));
-            final Element value = new Element("Value");
-            value.setAttribute("Name", val.mCriteria.mName);
-            value.setAttribute("Value1", Integer.toString(val.mValue1));
-            value.setAttribute("Value2", Integer.toString(val.mValue2));
+            final Element value = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"));
+            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), val.mCriteria.mName);
+            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1"), Integer.toString(val.mValue1));
+            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2"), Integer.toString(val.mValue2));
             match.addContent(value);
         }
         return match;
@@ -61,15 +69,15 @@ public class Match implements XMLExport {
 
     public void setXMLElement(final Element match) {
         try {
-            final String c1 = match.getAttribute("Coach1").getValue();
-            final String c2 = match.getAttribute("Coach2").getValue();
+            final String c1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1")).getValue();
+            final String c2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2")).getValue();
             this.mCoach1 = Coach.sCoachMap.get(c1);
             this.mCoach2 = Coach.sCoachMap.get(c2);
 
             this.mCoach1.mMatchs.add(this);
             this.mCoach2.mMatchs.add(this);
 
-            final List values = match.getChildren("Value");
+            final List values = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"));
             final Iterator v = values.iterator();
 
             while (v.hasNext()) {
@@ -78,15 +86,15 @@ public class Match implements XMLExport {
 
                 for (int cpt = 0; cpt < Tournament.getTournament().getParams().mCriterias.size(); cpt++) {
                     final Criteria criteria = Tournament.getTournament().getParams().mCriterias.get(cpt);
-                    final String tmp = val.getAttribute("Name").getValue();
+                    final String tmp = val.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME")).getValue();
 
                     if (criteria.mName.equals(tmp)) {
                         crit = criteria;
                     }
                 }
                 final Value value = new Value(crit);
-                value.mValue1 = val.getAttribute("Value1").getIntValue();
-                value.mValue2 = val.getAttribute("Value2").getIntValue();
+                value.mValue1 = val.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1")).getIntValue();
+                value.mValue2 = val.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2")).getIntValue();
                 this.mValues.put(crit, value);
 
             }

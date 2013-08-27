@@ -37,7 +37,7 @@ public class Round implements XMLExport {
     public String toString()
     {
         final int index=Tournament.getTournament().getRounds().indexOf(this);
-        return "Round "+(index+1);
+        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ")+(index+1);
     }
     
     public ArrayList<Match> getMatchs() {
@@ -54,14 +54,14 @@ public class Round implements XMLExport {
     }
 
     public Element getXMLElement() {
-        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"),Locale.getDefault());
         final Element round = new Element(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round"));
-        round.setAttribute("Date", format.format(this.mHour));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"), format.format(this.mHour));
         
-        round.setAttribute("LooserCup", Boolean.toString(mLooserCup));
-        round.setAttribute("Cup", Boolean.toString(mCup));
-        round.setAttribute("Tour", Integer.toString(mCupTour));
-        round.setAttribute("maxTour", Integer.toString(mCupMaxTour));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOOSERCUP"), Boolean.toString(mLooserCup));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"), Boolean.toString(mCup));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"), Integer.toString(mCupTour));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"), Integer.toString(mCupMaxTour));
         
 
         for (int j = 0; j < this.mMatchs.size(); j++) {
@@ -73,9 +73,9 @@ public class Round implements XMLExport {
     }
 
     public void setXMLElement(final Element round) {
-        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"),Locale.getDefault());
 
-        final String date = round.getAttributeValue("Date");
+        final String date = round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"));
         try {
             this.mHour = format.parse(date);
 
@@ -83,23 +83,23 @@ public class Round implements XMLExport {
         }
         
         try {
-             mLooserCup=Boolean.parseBoolean(round.getAttributeValue("LooserCup"));
-             mCup=Boolean.parseBoolean(round.getAttributeValue("Cup"));
-              mCupTour=Integer.parseInt(round.getAttributeValue("Tour"));
-             mCupMaxTour=Integer.parseInt(round.getAttributeValue("maxTour"));
+             mLooserCup=Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOOSERCUP")));
+             mCup=Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP")));
+              mCupTour=Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR")));
+             mCupMaxTour=Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR")));
         }
         catch(Exception e)
         {
             
         }
 
-        final List matchs = round.getChildren("Match");
+        final List matchs = round.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
         final Iterator k = matchs.iterator();
         this.mMatchs.clear();
 
         while (k.hasNext()) {
             final Element match = (Element) k.next();
-            final Match m = new Match();
+            final Match m = new Match(this);
             m.setXMLElement(match);
             this.mMatchs.add(m);
         }

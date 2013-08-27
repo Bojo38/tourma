@@ -11,6 +11,7 @@
 package tourma;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import tourma.data.Coach;
 import tourma.data.Team;
 import tourma.data.Criteria;
@@ -30,6 +31,7 @@ import tourma.utils.TableFormat;
  * @author Administrateur
  */
 public class JPNAnnexRanking extends javax.swing.JPanel {
+    private static final ResourceBundle language = ResourceBundle.getBundle("tourma/languages/language");
 
     String mName = "";
     Criteria mCriteria = null;
@@ -66,15 +68,15 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
         }
 
         if (clan) {
-            jbtPositive.setText(name + "(Clan)");
-            jbtNegative.setText(name + "(Adversaires)");
+            jbtPositive.setText(name + language.getString("(CLAN)"));
+            jbtNegative.setText(name + language.getString("(ADVERSAIRES)"));
         } else {
             if (team) {
-                jbtPositive.setText(name + "(Equipe)");
-                jbtNegative.setText(name + "(Adversaires)");
+                jbtPositive.setText(name + language.getString("(EQUIPE)"));
+                jbtNegative.setText(name + language.getString("(ADVERSAIRES)"));
             } else {
-                jbtPositive.setText(name + "(Coach)");
-                jbtNegative.setText(name + "(Adversaires)");
+                jbtPositive.setText(name + language.getString("(COACH)"));
+                jbtNegative.setText(name + language.getString("(ADVERSAIRES)"));
             }
         }
 
@@ -102,7 +104,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jbtNegative = new javax.swing.JButton();
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText(language.getString("JLABEL1")); // NOI18N
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Annex Ranking"));
         setLayout(new java.awt.GridLayout(2, 1, 1, 1));
@@ -125,7 +127,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jbtPositive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtPositive.setText(bundle.getString("Positive")); // NOI18N
         jbtPositive.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,12 +194,12 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
                  }
                  final StringBuffer a = new StringBuffer(mCriteria.mName);
                  if (mClan) {
-                     a.append(" par le clan");
+                     a.append(language.getString(" PAR LE CLAN"));
                  } else {
                      if (mTeam) {
-                         a.append(" par l'équipe");
+                         a.append(language.getString(" PAR L'ÉQUIPE"));
                      } else {
-                         a.append(" par le coach");
+                         a.append(language.getString(" PAR LE COACH"));
                      }
                  }
                  final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
@@ -234,12 +236,12 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
 
                  final StringBuffer a = new StringBuffer(mCriteria.mName);
                  if (mClan) {
-                     a.append(" contre le clan");
+                     a.append(language.getString(" CONTRE LE CLAN"));
                  } else {
                      if (mTeam) {
-                         a.append(" contre l'équipe");
+                         a.append(language.getString(" CONTRE L'ÉQUIPE"));
                      } else {
-                         a.append(" contre le coach");
+                         a.append(language.getString(" CONTRE LE COACH"));
                      }
                  }
                  final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);

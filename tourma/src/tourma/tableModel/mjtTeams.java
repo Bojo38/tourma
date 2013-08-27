@@ -45,7 +45,7 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
         String val;
         switch (col) {
             case 0:
-                val = "#";
+                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
                 val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name");
@@ -57,7 +57,7 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
     }
 
     public Object getValueAt(final int row, final int col) {
-        Object object = "";
+        Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mTeams.size() > 0) {
             final Team t = mTeams.get(row);
             switch (col) {

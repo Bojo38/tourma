@@ -37,37 +37,39 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         mTournament = Tournament.getTournament();
         mRounds = new ArrayList<DefaultMutableTreeNode>();
 
-        String name = "Tournoi";
-        if (!mTournament.getParams().mTournamentName.equals("")) {
+        String name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURNOI");
+        if (!mTournament.getParams().mTournamentName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
             name = mTournament.getParams().mTournamentName;
         }
 
         mRoot = new DefaultMutableTreeNode(name, true);
-        mParams = new DefaultMutableTreeNode("Paramètres");
-        mStats = new DefaultMutableTreeNode("Statistiques");
+        mParams = new DefaultMutableTreeNode(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PARAMÈTRES"));
+        mStats = new DefaultMutableTreeNode(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STATISTIQUES"));
 
         mRoot.add(mParams);
         mParams.setUserObject(mTournament.getParams());
 
         mRoot.add(mStats);
-        mStats.setUserObject("Statistics");
-        
+        mStats.setUserObject(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STATISTICS"));
+
         boolean cup = false;
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             final Round r = mTournament.getRounds().get(i);
             if (r.mCup) {
                 cup = true;
             }
-            final DefaultMutableTreeNode node = new DefaultMutableTreeNode("Ronde " + (i + 1));
+            final String tmp= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE {0}");
+            final DefaultMutableTreeNode node = new DefaultMutableTreeNode(
+                    java.text.MessageFormat.format(tmp,  i+1));
             mRoot.add(node);
             node.setUserObject(r);
             mRounds.add(node);
         }
 
         if (cup) {
-            mCup = new DefaultMutableTreeNode("Coupe");
+            mCup = new DefaultMutableTreeNode(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COUPE"));
             mRoot.add(mCup);
-            mCup.setUserObject("Cup");
+            mCup.setUserObject(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"));
         }
 
 
@@ -106,11 +108,11 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         return isLeaf;
     }
 
-    public void valueForPathChanged(TreePath path, Object newValue) {
+    public void valueForPathChanged(final TreePath path, Object newValue) {
         // Nothing to do
     }
 
-    public int getIndexOfChild(Object parent, Object child) {
+    public int getIndexOfChild(final Object parent, final Object child) {
         int index = -1;
         if (parent.equals(mRoot)) {
             for (int i = 0; i < mRoot.getChildCount(); i++) {
@@ -132,15 +134,14 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         mListeners.remove(l);
     }
 
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+    public Component getTreeCellRendererComponent(final JTree tree, final Object value, final boolean selected, final boolean expanded, final boolean leaf, final int row, final boolean hasFocus) {
         final JLabel jlb = new JLabel(value.toString());
-        if (selected)
-        {
+        if (selected) {
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
-            jlb.setSize(jlb.getWidth()+100,jlb.getHeight());
+            jlb.setSize(jlb.getWidth() + 100, jlb.getHeight());
             jlb.revalidate();
         }
-        
+
         if (value == mParams) {
             jlb.setIcon(Icons.getParams());
         }
@@ -149,16 +150,16 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
                 jlb.setIcon(Icons.getDices());
             }
         }
-        if (value==mCup) {
+        if (value == mCup) {
             jlb.setIcon(Icons.getStar());
         }
-        
-        if (value==mStats) {
+
+        if (value == mStats) {
             jlb.setIcon(Icons.getStats());
         }
-        
-        
-        
+
+
+
         return jlb;
     }
 }

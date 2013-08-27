@@ -38,13 +38,13 @@ public class Clan implements Comparable, XMLExport {
     }
 
     public Element getXMLElement() {
-        final Element clan = new Element("Clan");
-        clan.setAttribute("Name", mName);
+        final Element clan = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"));
+        clan.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), mName);
         return clan;
     }
 
     public void setXMLElement(final Element e) {
-        this.mName=e.getAttributeValue("Name");
+        this.mName=e.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
         if (sClanMap!=null)
         {
             sClanMap.put(mName, this);

@@ -121,8 +121,8 @@ public class JPNParamTeam extends javax.swing.JPanel {
         add(jtffLostTeam);
 
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel26.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 1:");
-        jLabel26.setToolTipText("");
+        jLabel26.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1:"));
+        jLabel26.setToolTipText(bundle.getString("")); // NOI18N
         add(jLabel26);
 
         jcbRank1Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -134,8 +134,8 @@ public class JPNParamTeam extends javax.swing.JPanel {
         add(jcbRank1Team);
 
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel27.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 2:");
-        jLabel27.setToolTipText("");
+        jLabel27.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2:"));
+        jLabel27.setToolTipText(bundle.getString("")); // NOI18N
         add(jLabel27);
 
         jcbRank2Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -147,8 +147,8 @@ public class JPNParamTeam extends javax.swing.JPanel {
         add(jcbRank2Team);
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel28.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 3:");
-        jLabel28.setToolTipText("");
+        jLabel28.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 3:"));
+        jLabel28.setToolTipText(bundle.getString("")); // NOI18N
         add(jLabel28);
 
         jcbRank3Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -160,8 +160,8 @@ public class JPNParamTeam extends javax.swing.JPanel {
         add(jcbRank3Team);
 
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel29.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 4:");
-        jLabel29.setToolTipText("");
+        jLabel29.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 4:"));
+        jLabel29.setToolTipText(bundle.getString("")); // NOI18N
         add(jLabel29);
 
         jcbRank4Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -173,8 +173,8 @@ public class JPNParamTeam extends javax.swing.JPanel {
         add(jcbRank4Team);
 
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel30.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+" 5:");
-        jLabel30.setToolTipText("");
+        jLabel30.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 5:"));
+        jLabel30.setToolTipText(bundle.getString("")); // NOI18N
         add(jLabel30);
 
         jcbRank5Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -187,7 +187,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jlbVictoryPoints.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbVictoryPoints.setText(bundle.getString("TeamVictoryBonus")); // NOI18N
-        jlbVictoryPoints.setToolTipText("");
+        jlbVictoryPoints.setToolTipText(bundle.getString("")); // NOI18N
         add(jlbVictoryPoints);
 
         jtffTeamVictoryBonus.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -200,7 +200,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jlbVictoryPoints1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbVictoryPoints1.setText(bundle.getString("TeamDrawBonus")); // NOI18N
-        jlbVictoryPoints1.setToolTipText("");
+        jlbVictoryPoints1.setToolTipText(bundle.getString("")); // NOI18N
         add(jlbVictoryPoints1);
 
         jtffTeamDrawBonus.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -344,13 +344,13 @@ public class JPNParamTeam extends javax.swing.JPanel {
         final ArrayList<String> rankChoices = new ArrayList<String>();
         rankChoices.add(StringConstants.CS_NONE);
         rankChoices.add(StringConstants.CS_POINTS);
-        rankChoices.add("Points Adversaires");
-        rankChoices.add("V/N/D");
+        rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS ADVERSAIRES"));
+        rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D"));
         for (int i = 0; i < Tournament.getTournament().getParams().mCriterias.size(); i++) {
             final Criteria criteria = Tournament.getTournament().getParams().mCriterias.get(i);
-            rankChoices.add(criteria.mName + " Joueur");
-            rankChoices.add(criteria.mName + " Adversaire");
-            rankChoices.add(criteria.mName + " Différence");
+            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" JOUEUR"));
+            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE"));
+            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFÉRENCE"));
         }
 
 

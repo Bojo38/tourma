@@ -145,7 +145,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jcxAllowSpecialSkill">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Autoriser les comp&#xe9;tences sp&#xe9;ciales"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="tourma/languages/language.properties" key="AUTORISER LES COMP&#xc9;TENCES SP&#xc9;CIALES" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcxAllowSpecialSkillActionPerformed"/>
@@ -177,7 +179,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jmnHelp">
           <Properties>
-            <Property name="text" type="java.lang.String" value="?"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="tourma/languages/language.properties" key="?" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiAbout">
@@ -223,7 +227,7 @@
       <ResourceString bundle="tourma/languages/language.properties" key="SoftwareTitle" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
     </Property>
     <Property name="iconImage" type="java.awt.Image" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-      <Connection code="(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource(&quot;images/icone.png&quot;)))" type="code"/>
+      <Connection code="(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource(java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;IMAGES/ICONE.PNG&quot;))))" type="code"/>
     </Property>
   </Properties>
   <SyntheticProperties>

@@ -53,7 +53,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
             final JScrollPane jsp = new JScrollPane();
             mJtbTeamMatch = new JTable();
             jsp.setViewportView(mJtbTeamMatch);
-            jtpTeams.add("Matchs", jsp);
+            jtpTeams.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCHS"), jsp);
             /*jpnTeam.add(jsp, BorderLayout.EAST);*/
             jbtShowMatchTeam.setVisible(true);
         } else {
@@ -98,7 +98,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
 
         jpnTeam.setLayout(new java.awt.BorderLayout());
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GeneralRankingKey"))); // NOI18N
         jScrollPane3.setPreferredSize(new java.awt.Dimension(466, 300));
 
@@ -116,7 +116,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
         jtbRankingTeam.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jtbRankingTeam);
 
-        jtpTeams.addTab("Classement", jScrollPane3);
+        jtpTeams.addTab(bundle.getString("CLASSEMENT"), jScrollPane3); // NOI18N
 
         jpnTeam.add(jtpTeams, java.awt.BorderLayout.CENTER);
 
@@ -164,7 +164,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
      for (int i = 0; i < mTournament.getRounds().size(); i++) {
          if (mRound == mTournament.getRounds().get(i)) {
              final mjtRankingTeam model = new mjtRankingTeam(mTournament.getParams().mTeamVictoryOnly, i, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getTeams(), mRoundOnly);
-             final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, "General par Equipe", i + 1, mTournament, model, 0);
+             final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR EQUIPE"), i + 1, mTournament, model, 0);
              jdg.setVisible(true);
              break;
          }

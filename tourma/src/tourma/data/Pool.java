@@ -18,10 +18,10 @@ public class Pool implements XMLExport {
 
     public ArrayList<Coach> mCoachs = new ArrayList<Coach>();
     public ArrayList<Team> mTeams = new ArrayList<Team>();
-    public String mName = "";
+    public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
     public Element getXMLElement() {
-        final Element pool = new Element("Pool");
+        final Element pool = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POOL"));
         pool.setAttribute(StringConstants.CS_NAME, this.mName);
         for (int j = 0; j < this.mCoachs.size(); j++) {
             final Element coach = new Element(StringConstants.CS_COACH);
@@ -29,7 +29,7 @@ public class Pool implements XMLExport {
             pool.addContent(coach);
         }
         for (int j = 0; j < this.mTeams.size(); j++) {
-            final Element team = new Element("Team");
+            final Element team = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
             team.setAttribute(StringConstants.CS_NAME, this.mTeams.get(j).mName);
             pool.addContent(team);
         }
@@ -49,7 +49,7 @@ public class Pool implements XMLExport {
         }
         
         mTeams.clear();
-        final List teams = pool.getChildren("Team");
+        final List teams = pool.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
         ro = teams.iterator();
         while (ro.hasNext()) {
             final Element team = (Element) ro.next();

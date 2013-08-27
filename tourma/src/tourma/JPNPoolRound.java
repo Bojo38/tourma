@@ -11,7 +11,6 @@
 package tourma;
 
 import tourma.tableModel.mjtAnnexRank;
-import java.awt.FontMetrics;
 import java.util.HashMap;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -153,7 +152,7 @@ public class JPNPoolRound extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             if (mRound == mTournament.getRounds().get(i)) {
                 final mjtRankingClan model = new mjtRankingClan(i, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getDisplayClans(), mRoundOnly);
-                final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, "General par Clan", i + 1, mTournament, model, 0);
+                final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CLAN"), i + 1, mTournament, model, 0);
                 jdg.setVisible(true);
                 break;
             }

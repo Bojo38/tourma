@@ -269,10 +269,10 @@ public class mjtRankingClan extends mjtRanking {
     }
 
     public String getColumnName(final int col) {
-        String result="";
+        String result=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                result= "#";
+                result= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
                 result= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
@@ -391,7 +391,7 @@ public class mjtRankingClan extends mjtRanking {
 
     }*/
     public Object getValueAt(final int row,final int col) {
-        Object object="";
+        Object object=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
         switch (col) {
             case 0:

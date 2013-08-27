@@ -129,7 +129,7 @@ public class JPNCup extends javax.swing.JPanel {
                             } 
                         }
                     }
-                    m = new Match();
+                    m = new Match(r);
                     m.mCoach1 = c1;
                     m.mCoach2 = c2;
                     final Value val = new Value(td);
@@ -179,7 +179,7 @@ public class JPNCup extends javax.swing.JPanel {
                                     } 
                                 }
                             }
-                            m = new Match();
+                            m = new Match(r);
                             m.mCoach1 = c1;
                             m.mCoach2 = c2;
                             final Value val = new Value(td);

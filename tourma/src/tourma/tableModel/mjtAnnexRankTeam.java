@@ -122,22 +122,22 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
 
     @Override
     public String getColumnName(final int col) {
-        String val="";
+        String val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                val= "#";
+                val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
                 break;
             case 2:
                 if (mSubtype == 0) {
-                    val= mCriteria.mName + " " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH);
+                    val= mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[] {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH)});
                 } else {
                     if (mSubtype == 1) {
-                        val= mCriteria.mName + " " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opponent");
+                        val= mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[] {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opponent")});
                     } else {
-                        val= mCriteria.mName + " " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Difference");
+                        val= mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[] {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Difference")});
                     }
                 }
             default:
@@ -148,7 +148,7 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
     @Override
     public Object getValueAt(final int row, final int col) {
 
-        Object val = "";
+        Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
 
         switch (col) {

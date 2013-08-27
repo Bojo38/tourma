@@ -35,7 +35,7 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
     }
 
     public String getColumnName(final int col) {
-        String result = "";
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
                 result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Version");
@@ -49,7 +49,7 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
     }
 
     public Object getValueAt(final int row,final int col) {
-        String tmp = "";
+        String tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
                 tmp = (String) (mVersions.get(row));

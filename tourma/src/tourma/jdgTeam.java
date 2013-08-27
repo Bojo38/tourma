@@ -96,7 +96,7 @@ public class jdgTeam extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.GridLayout(1, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jLabel1.setText(bundle.getString("TeamNameKey")); // NOI18N
         jPanel1.add(jLabel1);
         jPanel1.add(jtfNom);
@@ -104,7 +104,7 @@ public class jdgTeam extends javax.swing.JDialog {
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        jbtOK.setText("OK");
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -183,8 +183,8 @@ public class jdgTeam extends javax.swing.JDialog {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-    if (jtfNom.getText().equals("")) {
-        JOptionPane.showMessageDialog(this, "Nom de l'équipe vide");
+    if (jtfNom.getText().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+        JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM DE L'ÉQUIPE VIDE"));
     } else {
         mTeam.mName = jtfNom.getText();
 

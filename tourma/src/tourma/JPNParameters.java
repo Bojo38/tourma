@@ -42,23 +42,23 @@ public class JPNParameters extends javax.swing.JPanel {
 
         jtpOptions.addTab(
                 bundle.getString("Individual"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User.png")),
+                new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/USER.PNG"))),
                 mJpnIndiv);
         jtpOptions.addTab(
                 bundle.getString("Criterias"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")),
+                new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/TOOLS.PNG"))),
                 mJpnCriterias);
         jtpOptions.addTab(
                 bundle.getString("ByTeamKey"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")),
+                new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/TEAM.PNG"))),
                 mJpnTeam);
         jtpOptions.addTab(
                 bundle.getString("Clan"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")),
+                new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/CLAN.PNG"))),
                 mJpnClan);
         jtpOptions.addTab(
                 bundle.getString("Group"),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")),
+                new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/GROUP.PNG"))),
                 mJpnGroup);
 
 
@@ -253,26 +253,26 @@ public class JPNParameters extends javax.swing.JPanel {
 
         add(jpnParticipant);
     }// </editor-fold>//GEN-END:initComponents
-
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
         mTournament.getParams().mTournamentName = jtfTournamentName.getText();
     }//GEN-LAST:event_jtfTournamentNameKeyPressed
-
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
         mTournament.getParams().mTournamentOrga = jtfOrgas.getText();
     }//GEN-LAST:event_jtfOrgasKeyPressed
-
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
         final jdgCoach w = new jdgCoach(MainFrame.getMainFrame(), true);
         w.setVisible(true);
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
-
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
         mTournament.getCoachs().remove(jtbCoachs.getSelectedRow());
         update();
     }//GEN-LAST:event_jbtRemoveActionPerformed
-
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
 
         if (jtbCoachs.getSelectedRow() >= 0) {
