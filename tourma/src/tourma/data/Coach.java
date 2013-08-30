@@ -43,6 +43,9 @@ public class Coach implements Comparable, XMLExport {
     public ArrayList<Match> mMatchs;
     public teamma.data.Roster mComposition;
     public Color mColor;
+    public double mNafRank=150.0;
+    
+    public int mHandicap=0;
 
     protected Color generateRandomColor(final Color mix) {
         final Random random = new Random();
@@ -83,9 +86,10 @@ public class Coach implements Comparable, XMLExport {
 
     public int compareTo(final Object obj) {
         int result = -1;
-
+        
         if (obj instanceof Coach) {
-            result = mName.compareTo(((Coach) obj).mName);
+            result=((Double)mNafRank).compareTo(((Coach) obj).mNafRank);            
+            //result = mName.compareTo(((Coach) obj).mName);
         }
         return result;
     }
@@ -101,6 +105,8 @@ public class Coach implements Comparable, XMLExport {
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), this.mClan.mName);
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE"), Boolean.toString(this.mActive));
 
+        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP"), Integer.toString(this.mHandicap));
+        
         if (this.mComposition != null) {
             final Element compo = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
             final teamma.data.Roster roster = this.mComposition;
@@ -145,9 +151,7 @@ public class Coach implements Comparable, XMLExport {
                 }
                 compo.addContent(p);
             }
-
             coach.addContent(compo);
-
         }
         return coach;
     }
@@ -164,6 +168,7 @@ public class Coach implements Comparable, XMLExport {
 
             try {
                 this.mActive = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE")).getBooleanValue();
+                this.mHandicap = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP")).getIntValue();
             } catch (NullPointerException npe) {
                 // Do nothing
             }

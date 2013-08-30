@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
 import tourma.MainFrame;
@@ -21,12 +22,9 @@ public class Match implements XMLExport {
 
     public Coach mCoach1;
     public Coach mCoach2;
-    
     public RosterType mRoster1;
     public RosterType mRoster2;
-    
     public Round mRound;
-    
     public HashMap<Criteria, Value> mValues;
     protected Coach mWinner = null;
     protected Coach mLooser = null;
@@ -47,8 +45,8 @@ public class Match implements XMLExport {
             }
             mValues.put(crit, val);
         }
-        
-        mRound =round;
+
+        mRound = round;
     }
 
     public Element getXMLElement() {
@@ -62,8 +60,21 @@ public class Match implements XMLExport {
             value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), val.mCriteria.mName);
             value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1"), Integer.toString(val.mValue1));
             value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2"), Integer.toString(val.mValue2));
+
+            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1"), Integer.toString(val.mValue1));
+            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2"), Integer.toString(val.mValue2));
             match.addContent(value);
         }
+
+        if (this.mRoster1 != null) {
+            String key1 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
+            match.setAttribute(key1, this.mRoster1.mName);
+        }
+        if (this.mRoster2 != null) {
+            String key2 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER2");
+            match.setAttribute(key2, this.mRoster2.mName);
+        }
+
         return match;
     }
 
@@ -98,6 +109,20 @@ public class Match implements XMLExport {
                 this.mValues.put(crit, value);
 
             }
+
+
+
+            String key1 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
+            Attribute att1 = match.getAttribute(key1);
+            if (att1 != null) {
+                this.mRoster1 = new RosterType(att1.getValue());
+            }
+            String key2 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
+            Attribute att2 = match.getAttribute(key2);
+            if (att2 != null) {
+                this.mRoster2 = new RosterType(att2.getValue());
+            }
+
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
@@ -191,14 +216,14 @@ public class Match implements XMLExport {
         mLooser = null;
     }
 
-    public static Team getTeamMatchWinner(final int teamMatesNumber, final int matchIndex,final ArrayList<Match> matchs) {
+    public static Team getTeamMatchWinner(final int teamMatesNumber, final int matchIndex, final ArrayList<Match> matchs) {
         final Criteria td = Tournament.getTournament().getParams().mCriterias.get(0);
         Match m = matchs.get(matchIndex * teamMatesNumber);
         final Team team1 = m.mCoach1.mTeamMates;
         final Team team2 = m.mCoach2.mTeamMates;
 
-        Team winner=null;
-        
+        Team winner = null;
+
         int nbVictory = 0;
         int nbLost = 0;
 
@@ -214,21 +239,21 @@ public class Match implements XMLExport {
         }
 
         if (team1 == Team.sNullTeam) {
-            winner= team2;
+            winner = team2;
         } else {
             if (team2 == Team.sNullTeam) {
-                winner= team1;
+                winner = team1;
             } else {
                 if (nbVictory > nbLost) {
-                    winner= team1;
+                    winner = team1;
                 } else {
                     if (nbVictory < nbLost) {
-                        winner= team2;
+                        winner = team2;
                     } else {
                         if (((int) Math.random()) % 2 == 0) {
-                            winner= team1;
+                            winner = team1;
                         } else {
-                            winner= team2;
+                            winner = team2;
                         }
                     }
                 }

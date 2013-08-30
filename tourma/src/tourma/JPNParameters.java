@@ -104,6 +104,7 @@ public class JPNParameters extends javax.swing.JPanel {
         mJpnClan.update();
         mJpnGroup.update();
 
+        jtpOptions.setEnabledAt(4,!mTournament.getParams().mMultiRoster);
 
         jtpOptions.setEnabledAt(2, mTournament.getParams().mTeamTournament);
         jtpOptions.setEnabledAt(3, !mTournament.getParams().mTeamTournament);

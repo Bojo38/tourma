@@ -206,11 +206,7 @@ public class Parameters implements XMLExport {
             this.mPointsIndivDraw = params.getAttribute(sbundle.getString("DRAW")).getIntValue();
             this.mPointsIndivLost = params.getAttribute(sbundle.getString("LOST")).getIntValue();
             this.mPointsIndivLittleLost = params.getAttribute(sbundle.getString("LITTLE_LOST")).getIntValue();
-            
-            String rank1s=sbundle.getString("RANK1");
-            Attribute rank1a=params.getAttribute(rank1s);
-            int rank1v=rank1a.getIntValue();
-            
+                        
             this.mRankingIndiv1 = params.getAttribute(sbundle.getString("RANK1")).getIntValue();
             this.mRankingIndiv2 = params.getAttribute(sbundle.getString("RANK2")).getIntValue();
             this.mRankingIndiv3 = params.getAttribute(sbundle.getString("RANK3")).getIntValue();
@@ -266,7 +262,7 @@ public class Parameters implements XMLExport {
                 this.mRankingTeam4 = params.getAttribute(sbundle.getString("RANK4_TEAM")).getIntValue();
                 this.mRankingTeam5 = params.getAttribute(sbundle.getString("RANK5_TEAM")).getIntValue();
             } catch (NullPointerException ne2) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ne2.getLocalizedMessage());
+                JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
             }
 
             try {
@@ -278,7 +274,7 @@ public class Parameters implements XMLExport {
                 this.mMultiRoster = params.getAttribute(sbundle.getString("MULTIROSTER")).getBooleanValue();
 
             } catch (NullPointerException ne3) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ne3.getLocalizedMessage());
+                JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());
             }
 
             final List criterias = params.getChildren(sbundle.getString("CRITERIA"));
@@ -293,7 +289,7 @@ public class Parameters implements XMLExport {
                 this.mCriterias.add(crit);
             }
         } catch (DataConversionException dce) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
         }
     }
 

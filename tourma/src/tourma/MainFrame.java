@@ -24,18 +24,21 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.ProgressMonitor;
 import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import teamma.data.lrb;
 import teamma.views.JdgRoster;
+import tourma.data.Coach;
 import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.utils.Generation;
 import tourma.utility.StringConstants;
+import tourma.utils.NAF;
 
 /**
  *
@@ -103,18 +106,17 @@ public class MainFrame extends javax.swing.JFrame {
         jmiEditTeam.setEnabled(mTournament.getParams().mGame == RosterType.C_BLOOD_BOWL);
         final mainTreeModel dtm = new mainTreeModel();
         jtrPanels.setCellRenderer(dtm);
-        jtrPanels.setModel(dtm);   
+        jtrPanels.setModel(dtm);
         jtrPanels.setSize(100, this.getHeight());
         this.revalidate();
         this.repaint();
-        
+
     }
 
-    public void updateTree()
-    {
-        jtrPanels.setSelectionPath(new TreePath(((mainTreeModel)jtrPanels.getModel()).mParams));
+    public void updateTree() {
+        jtrPanels.setSelectionPath(new TreePath(((mainTreeModel) jtrPanels.getModel()).mParams));
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,6 +146,8 @@ public class MainFrame extends javax.swing.JFrame {
         jmiEditTeam = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jcxAllowSpecialSkill = new javax.swing.JCheckBoxMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jmiNafLoad = new javax.swing.JMenuItem();
         jmnRounds = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jmnHelp = new javax.swing.JMenu();
@@ -274,6 +278,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnParameters.add(jcxAllowSpecialSkill);
+        jmnParameters.add(jSeparator4);
+
+        jmiNafLoad.setText("Mettre à jour les informations NAF des coachs");
+        jmiNafLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiNafLoadActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiNafLoad);
 
         jMenuBar1.add(jmnParameters);
 
@@ -419,8 +432,8 @@ public class MainFrame extends javax.swing.JFrame {
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
             group.mRosters.add(new RosterType(RosterType.mRostersNames.get(i)));
         }
-        
-        int multi=JOptionPane.showConfirmDialog(this, "S'agit-il d'un tournoi multi roster ?","MultiRoster",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+
+        int multi = JOptionPane.showConfirmDialog(this, "S'agit-il d'un tournoi multi roster ?", "MultiRoster", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         final Object options[] = {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam")};
         int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TournamentType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewTournament"),
@@ -589,6 +602,12 @@ public class MainFrame extends javax.swing.JFrame {
                 labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POULES"));
                 Options.add(Generation.GEN_POOL);
 
+                /**
+                 * Naf Ranking
+                 */
+                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF_RANK"));
+                Options.add(Generation.GEN_NAF);
+
 
                 final JPanel jpn = new JPanel(new BorderLayout());
                 final JComboBox jcb = new JComboBox(labels.toArray());
@@ -653,7 +672,7 @@ public class MainFrame extends javax.swing.JFrame {
                             jpnContent = new JPNRound(i, (Round) object, mTournament);
                             jspSplit.add(jpnContent, JSplitPane.RIGHT);
                             ((JPNRound) jpnContent).update();
-                             jspSplit.setDividerLocation(200);
+                            jspSplit.setDividerLocation(200);
                             //System.gc();
                             this.revalidate();
                             break;
@@ -666,27 +685,45 @@ public class MainFrame extends javax.swing.JFrame {
                     jpnContent = new JPNCup();
                     jspSplit.add(jpnContent, JSplitPane.RIGHT);
                     ((JPNCup) jpnContent).update();
-                     jspSplit.setDividerLocation(200);
+                    jspSplit.setDividerLocation(200);
                     //System.gc();
                     this.revalidate();
                 }
-                
-                 if (object.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STATISTICS"))) {
+
+                if (object.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STATISTICS"))) {
                     jspSplit.remove(jpnContent);
                     jpnContent = new JPNStatistics();
                     jspSplit.add(jpnContent, JSplitPane.RIGHT);
                     ((JPNStatistics) jpnContent).update();
-                     jspSplit.setDividerLocation(200);
+                    jspSplit.setDividerLocation(200);
                     //System.gc();
                     this.revalidate();
                 }
 
             }
-            
+
             repaint();
         }
 
     }//GEN-LAST:event_jtrPanelsValueChanged
+
+    private void jmiNafLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNafLoadActionPerformed
+        
+        ArrayList<Coach> alc = Tournament.getTournament().getCoachs();
+        
+        ProgressMonitor progressMonitor = new ProgressMonitor(this,
+                                      "Download from NAF",
+                                      "Downloading", 0, alc.size());
+         progressMonitor.setProgress(0);
+        for (int i = 0; i < alc.size(); i++) {
+            Coach c = alc.get(i);
+            progressMonitor.setNote("Download: "+c.mName);            
+            c.mNafRank = NAF.GetRanking(c.mName, c);
+            progressMonitor.setProgress(i+1);
+        }
+        progressMonitor.close();
+        update();
+    }//GEN-LAST:event_jmiNafLoadActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -713,6 +750,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JMenuItem jmiAbout;
@@ -724,6 +762,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiExportFbb;
     private javax.swing.JMenuItem jmiExportFbb1;
     private javax.swing.JMenuItem jmiGenerateFirstRound;
+    private javax.swing.JMenuItem jmiNafLoad;
     private javax.swing.JMenuItem jmiNouveau;
     private javax.swing.JMenuItem jmiRevisions;
     private javax.swing.JMenuItem jmiSave;

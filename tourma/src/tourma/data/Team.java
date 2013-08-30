@@ -33,8 +33,23 @@ public class Team implements Comparable, XMLExport {
 
     public int compareTo(final Object obj) {
         int result = -1;
-        if (obj instanceof Coach) {
-            result = mName.compareTo(((Coach) obj).mName);
+        if (obj instanceof Team) {
+            
+            double rank=0;
+            for (int i=0; i<this.mCoachs.size(); i++)
+            {
+                rank+=mCoachs.get(i).mNafRank;
+            }
+            rank=rank/mCoachs.size();
+            
+             double rankobj=0;
+            for (int i=0; i<((Team)obj).mCoachs.size(); i++)
+            {
+                rankobj+=((Team)obj).mCoachs.get(i).mNafRank;
+            }
+            rankobj=rankobj/((Team)obj).mCoachs.size();
+            
+            result=((Double)rank).compareTo(rankobj); 
         }
         return result;
     }

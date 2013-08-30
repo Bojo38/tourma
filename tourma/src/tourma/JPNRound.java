@@ -23,6 +23,7 @@ import tourma.data.Coach;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +32,7 @@ import tourma.data.Criteria;
 import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.Pool;
+import tourma.data.RosterType;
 import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
@@ -244,6 +246,11 @@ public class JPNRound extends javax.swing.JPanel {
         jtbMatches.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jtbMatches.setColumnSelectionAllowed(true);
         jtbMatches.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jtbMatches.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbMatchesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtbMatches);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -449,15 +456,15 @@ public class JPNRound extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtShowMatchesActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtShowResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowResultsActionPerformed
-    for (int i = 0; i
-            < mTournament.getRounds().size(); i++) {
-        if (mRound == mTournament.getRounds().get(i)) {
-            final jdgRound jdg = new jdgRound(MainFrame.getMainFrame(), true, mRound, i + 1, mTournament, true, false);
-            jdg.setVisible(true);
-            break;
+        for (int i = 0; i
+                < mTournament.getRounds().size(); i++) {
+            if (mRound == mTournament.getRounds().get(i)) {
+                final jdgRound jdg = new jdgRound(MainFrame.getMainFrame(), true, mRound, i + 1, mTournament, true, false);
+                jdg.setVisible(true);
+                break;
 
+            }
         }
-    }
     }//GEN-LAST:event_jbtShowResultsActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralIndivActionPerformed
@@ -612,6 +619,48 @@ public class JPNRound extends javax.swing.JPanel {
 
         update();
     }//GEN-LAST:event_jtbRoundSumActionPerformed
+
+    private void jtbMatchesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbMatchesMouseClicked
+        if (evt.getClickCount() == 2) {
+            if (mTournament.getParams().mMultiRoster) {
+                int col = jtbMatches.getSelectedColumn();
+                if (mTournament.getParams().mTeamTournament) {
+                    col--;
+                }
+                if ((col == 1) || (col == 4)) {
+                    Match match = mRound.getMatchs().get(jtbMatches.getSelectedRow());
+                    Coach coach;
+                    if (col == 1) {
+                        coach = match.mCoach1;
+                    } else {
+                        coach = match.mCoach2;
+                    }
+                    JComboBox jcbRoster = new JComboBox();
+                    jcbRoster.setModel(new DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
+
+                    jcbRoster.setSelectedItem(coach.mRoster.mName);
+                    JPanel jpn = new JPanel();
+                    jpn.setLayout(new BorderLayout());
+
+                    JLabel jlb = new JLabel("Choisissez un roster pour " + coach.mName);
+
+                    jpn.add(jlb, BorderLayout.NORTH);
+                    jpn.add(jcbRoster, BorderLayout.CENTER);
+
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, "Roster", JOptionPane.QUESTION_MESSAGE);
+
+                    int index = jcbRoster.getSelectedIndex();
+                    if (col == 1) {
+                        match.mRoster1 = RosterType.mRosterTypes.get(index);
+                    } else {
+                        match.mRoster2 = RosterType.mRosterTypes.get(index);
+                    }
+
+                    update();
+                }
+            }
+        }
+    }//GEN-LAST:event_jtbMatchesMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;

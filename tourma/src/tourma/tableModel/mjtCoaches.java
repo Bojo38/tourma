@@ -30,9 +30,9 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
 
     public int getColumnCount() {
 
-        int result = 7;
+        int result = 8;
         if (Tournament.getTournament().getParams().mEnableClans) {
-            result = 8;
+            result = 9;
         }
         return result;
     }
@@ -42,61 +42,66 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
     }
 
     public String getColumnName(final int col) {
-        String val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                 val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
             case 1:
-                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH);
+                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH);
             case 2:
-                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
+                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
             case 3:
-                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Roster");
+                val = "Roster";
             case 4:
-                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NAF");
+                val = "NAF";
             case 5:
-                 val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ranking");
-            case 7:
-                val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
+                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ranking");
+            case 8:
+                val ="Clan";
             case 6:
-                val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+                val = "";
                 break;
+            case 7:
+                val = "Classement";
             default:
         }
         return val;
     }
 
-    public Object getValueAt(final int row,final int col) {
-        Object val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+    public Object getValueAt(final int row, final int col) {
+        Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mCoachs.size() > 0) {
             final Coach c = mCoachs.get(row);
             switch (col) {
                 case 0:
-                    val= row + 1;
+                    val = row + 1;
                     break;
                 case 1:
-                    val= c.mName;
+                    val = c.mName;
                     break;
                 case 2:
-                    val= c.mTeam;
+                    val = c.mTeam;
                     break;
                 case 3:
-                    val= c.mRoster.mName;
+                    val = c.mRoster.mName;
                     break;
                 case 4:
-                    val= c.mNaf;
+                    val = c.mNaf;
                     break;
                 case 5:
-                    val= c.mRank;
+                    val = c.mRank;
                     break;
                 case 7:
-                    val= c.mClan.mName;
+                    val = Double.toString(c.mNafRank);
+                    break;
+                case 8:
+                    val = c.mClan.mName;
                     break;
                 case 6:
                     if (c.mActive) {
-                        val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIF");
+                        val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIF");
                     } else {
-                        val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INACTIF");
+                        val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INACTIF");
                     }
                     break;
                 default:
@@ -113,15 +118,15 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
      * Don't need to implement this method unless your table's
      * editable.
      */
-    public boolean isCellEditable(final int row,final int col) {
+    public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
- 
+
         return col > 0;
     }
 
     public Component getTableCellRendererComponent(
-            final JTable table, final Object value,final  boolean isSelected,final  boolean hasFocus, final int row,final  int column) {
+            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
 
         final JTextField jlb = new JTextField();
 
@@ -139,13 +144,10 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
         }
         jlb.setHorizontalAlignment(JTextField.CENTER);
-        
-         if (isSelected)
-        {
+
+        if (isSelected) {
             jlb.setBackground(Color.LIGHT_GRAY);
-        }
-        else
-        {
+        } else {
             jlb.setBackground(Color.WHITE);
         }
         return jlb;
