@@ -406,24 +406,37 @@ public class MainFrame extends javax.swing.JFrame {
          }*/
         mTournament = Tournament.resetTournament();
 
-        final ArrayList<String> Games = new ArrayList<String>();
-        Games.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BLOOD BOWL"));
-        Games.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DREADBALL"));
-        final int res2 = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChooseGame"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, Games.toArray(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BLOOD BOWL"));
-        if (res2 == 0) {
-            RosterType.initCollection(RosterType.C_BLOOD_BOWL);
-            lrb.getLRB();
-            Tournament.getTournament().getParams().mGame = RosterType.C_BLOOD_BOWL;
+        JdgParameters jdgParams = new JdgParameters(this, true);
+        jdgParams.setVisible(true);
 
-        } else {
+        /*final ArrayList<String> Games = new ArrayList<String>();
+         Games.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BLOOD BOWL"));
+         Games.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DREADBALL"));
+         final int res2 = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ChooseGame"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, Games.toArray(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BLOOD BOWL"));
+         if (res2 == 0) {
+         RosterType.initCollection(RosterType.C_BLOOD_BOWL);
+         lrb.getLRB();
+         Tournament.getTournament().getParams().mGame = RosterType.C_BLOOD_BOWL;
+
+         } else {
+         RosterType.initCollection(RosterType.C_DREAD_BALL);
+         Tournament.getTournament().getParams().mGame = RosterType.C_DREAD_BALL;
+         jmiExport.setEnabled(false);
+         jmiExportFbb.setEnabled(false);
+         jcxAllowSpecialSkill.setEnabled(false);
+         }*/
+
+        mTournament = Tournament.getTournament();
+        if (mTournament.getParams().mGame == RosterType.C_DREAD_BALL) {
             RosterType.initCollection(RosterType.C_DREAD_BALL);
-            Tournament.getTournament().getParams().mGame = RosterType.C_DREAD_BALL;
             jmiExport.setEnabled(false);
             jmiExportFbb.setEnabled(false);
             jcxAllowSpecialSkill.setEnabled(false);
+        } else {
+            RosterType.initCollection(RosterType.C_BLOOD_BOWL);
+            lrb.getLRB();
         }
 
-        mTournament = Tournament.getTournament();
         mTournament.getGroups().clear();
         final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
         final Group group = new Group(bundle.getString("NoneKey"));
@@ -433,7 +446,7 @@ public class MainFrame extends javax.swing.JFrame {
             group.mRosters.add(new RosterType(RosterType.mRostersNames.get(i)));
         }
 
-        int multi = JOptionPane.showConfirmDialog(this, "S'agit-il d'un tournoi multi roster ?", "MultiRoster", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        /*int multi = JOptionPane.showConfirmDialog(this, "S'agit-il d'un tournoi multi roster ?", "MultiRoster", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         final Object options[] = {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam")};
         int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TournamentType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewTournament"),
@@ -455,7 +468,7 @@ public class MainFrame extends javax.swing.JFrame {
                         null, options2, options2[0]);
                 Tournament.getTournament().getParams().mTeamIndivPairing = res;
             }
-        }
+        }*/
 
 
         update();
@@ -708,18 +721,18 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jtrPanelsValueChanged
 
     private void jmiNafLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNafLoadActionPerformed
-        
+
         ArrayList<Coach> alc = Tournament.getTournament().getCoachs();
-        
+
         ProgressMonitor progressMonitor = new ProgressMonitor(this,
-                                      "Download from NAF",
-                                      "Downloading", 0, alc.size());
-         progressMonitor.setProgress(0);
+                "Download from NAF",
+                "Downloading", 0, alc.size());
+        progressMonitor.setProgress(0);
         for (int i = 0; i < alc.size(); i++) {
             Coach c = alc.get(i);
-            progressMonitor.setNote("Download: "+c.mName);            
+            progressMonitor.setNote("Download: " + c.mName);
             c.mNafRank = NAF.GetRanking(c.mName, c);
-            progressMonitor.setProgress(i+1);
+            progressMonitor.setProgress(i + 1);
         }
         progressMonitor.close();
         update();

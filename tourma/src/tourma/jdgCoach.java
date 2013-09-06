@@ -85,7 +85,9 @@ public class jdgCoach extends javax.swing.JDialog {
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jLabel4.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
-jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
+        jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
+
+        jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
     }
     Team mTeam = null;
 
@@ -125,8 +127,9 @@ jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
         jLabel4.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
+
+        jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
     }
-    
 
     /**
      * Creates new form jdgCoach form an existing coach
@@ -248,7 +251,7 @@ jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
         jLabel3.setText(bundle.getString("RaceRosterKey")); // NOI18N
         jPanel1.add(jLabel3);
 
-        jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Amazone", "Bas Fonds", "Chaos", "Elfe", "Elfe sylvain", "Elfe noir", "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri", "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique", "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire" }));
+        jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Amazone", "Bas-Fonds", "Chaos", "Elfe", "Elfe Sylvain", "Elfe Noir", "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri", "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique", "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire" }));
         jcbRoster.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRosterActionPerformed(evt);
@@ -450,8 +453,8 @@ jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
     }//GEN-LAST:event_jcbRosterActionPerformed
 
     private void jbtDownloadFromNafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDownloadFromNafActionPerformed
-       
-        double rank=NAF.GetRanking(jtfNom.getText(), mCoach);
+
+        double rank = NAF.GetRanking(jtfNom.getText(), mCoach);
         jtfNAF.setText(Integer.toString(mCoach.mNaf));
         jlbNafRanking.setText(Double.toString(rank));
     }//GEN-LAST:event_jbtDownloadFromNafActionPerformed

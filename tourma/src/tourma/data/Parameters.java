@@ -50,11 +50,12 @@ public class Parameters implements XMLExport {
     /* Pairing: 0: Individuel
      1: ByTeam
      */
-    public int mTeamPairing = 0;
+    public int mTeamPairing = 1;
     /* IndivPairing:
      0: Classement
      1: Libre
      2: Aléatoire
+     3: Naf
      */
     public int mTeamIndivPairing = 0;
     public int mTeamMatesNumber = 1;

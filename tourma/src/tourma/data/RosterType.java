@@ -16,7 +16,7 @@ public class RosterType {
     public static final int C_BLOOD_BOWL = 1;
     public static final int C_DREAD_BALL = 2;
     /*public static String[] p_Rosters={
-     "Amazone", "Bas Fonds", "Chaos", "Elfe", "Elfe sylvain", "Elfe noir",
+     "Amazone", "Bas-Fonds", "Chaos", "Elfe", "Elfe Sylvain", "Elfe Noir",
      "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri",
      "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique",
      "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire"

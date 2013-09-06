@@ -173,6 +173,11 @@ public class JPNParameters extends javax.swing.JPanel {
         jLabel2.setText(bundle.getString("OrganizerKey")); // NOI18N
         jPanel5.add(jLabel2);
 
+        jtfOrgas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfOrgasActionPerformed(evt);
+            }
+        });
         jtfOrgas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtfOrgasKeyPressed(evt);
@@ -282,6 +287,11 @@ public class JPNParameters extends javax.swing.JPanel {
             update();
         }
     }//GEN-LAST:event_jbtModifyActionPerformed
+
+    private void jtfOrgasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOrgasActionPerformed
+        mTournament.getParams().mTournamentOrga = jtfOrgas.getText();
+    }//GEN-LAST:event_jtfOrgasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser jDate;
     private javax.swing.JLabel jLabel1;

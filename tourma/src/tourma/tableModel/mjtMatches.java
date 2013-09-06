@@ -330,8 +330,8 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
 
                 switch (column) {
                     case 1:
-                        bkg = new Color(200, 50, 50);
-                        frg = new Color(255, 255, 255);
+                        bkg = new Color(200, 150, 150);
+                        //frg = new Color(255, 255, 255);
                         if (val.mValue1 > val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
@@ -342,8 +342,8 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
 
                         break;
                     case 2:
-                        bkg = new Color(200, 50, 50);
-                        frg = new Color(255, 255, 255);
+                        bkg = new Color(200, 150, 150);
+                        //frg = new Color(255, 255, 255);
                         if (val.mValue1 > val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
@@ -359,8 +359,8 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         bkg = new Color(200, 200, 250);
                         break;
                     case 5:
-                        bkg = new Color(50, 50, 250);
-                        frg = new Color(255, 255, 255);
+                        bkg = new Color(150, 150, 250);
+                        //frg = new Color(255, 255, 255);
                         if (val.mValue1 < val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
@@ -369,8 +369,8 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                         break;
                     case 6:
-                        bkg = new Color(50, 50, 250);
-                        frg = new Color(255, 255, 255);
+                        bkg = new Color(150, 150, 250);
+                       // frg = new Color(255, 255, 255);
 
                         if (val.mValue1 < val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
@@ -390,8 +390,8 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
             } else {
                 switch (column) {
                     case 1:
-                        bkg = new Color(200, 50, 50);
-                        frg = new Color(255, 255, 255);
+                        bkg = new Color(200, 150, 150);
+                        //frg = new Color(255, 255, 255);
                         if (val.mValue1 > val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
@@ -407,8 +407,8 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         bkg = new Color(200, 200, 250);
                         break;
                     case 4:
-                        bkg = new Color(50, 50, 250);
-                        frg = new Color(255, 255, 255);
+                        bkg = new Color(150, 150, 250);
+                        //frg = new Color(255, 255, 255);
                         if (val.mValue1 < val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }

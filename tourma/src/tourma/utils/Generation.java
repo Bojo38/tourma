@@ -1322,7 +1322,51 @@ public class Generation {
          ms.add(vs.get(j).getMatchs().get(k));
          }
          }*/
-        for (int j = 0; j < tour.getParams().mTeamMatesNumber; j++) {
+        
+                        switch (tour.getParams().mTeamIndivPairing) {
+                    // Ranking
+                    case 0:
+                        final ArrayList<ObjectRanking> coachs1 = subRanking(team1.mCoachs, vs);
+                        final ArrayList<ObjectRanking> coachs2 = subRanking(team2.mCoachs, vs);
+                        for (int k = 0; k < coachs1.size(); k++) {
+                            final Match m = new Match(r);
+                            m.mCoach1 = (Coach) coachs1.get(k).getObject();
+                            m.mCoach2 = (Coach) coachs2.get(k).getObject();
+                            r.getMatchs().add(m);
+                        }
+                        break;
+                    // Manual
+                    case 1:
+                        final jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
+                        jdg.setVisible(true);
+                        break;
+                    // Random
+                    case 2:
+                        for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
+                            final ArrayList<Coach> shuffle2 = new ArrayList<Coach>(team2.getActivePlayers());
+                            Collections.shuffle(shuffle2);
+                            final Match m = new Match(r);
+                            m.mCoach1 = team1.getActivePlayers().get(k);
+                            m.mCoach2 = shuffle2.get(k);
+                            r.getMatchs().add(m);
+                        }
+                        break;
+                        // NAF
+                         case 3:
+                        for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
+                            final ArrayList<Coach> sort1 = new ArrayList<Coach>(team1.getActivePlayers());
+                            final ArrayList<Coach> sort2 = new ArrayList<Coach>(team2.getActivePlayers());
+                            Collections.sort(sort1);
+                            Collections.sort(sort2);
+                            final Match m = new Match(r);
+                            m.mCoach1 = sort1.get(k);
+                            m.mCoach2 = sort2.get(k);
+                            r.getMatchs().add(m);
+                        }
+                        break;
+                }
+        
+        /*for (int j = 0; j < tour.getParams().mTeamMatesNumber; j++) {
             if (tour.getParams().mTeamIndivPairing == 0) {
                 final ArrayList<ObjectRanking> coachs1 = subRanking(team1.mCoachs, vs);
                 final ArrayList<ObjectRanking> coachs2 = subRanking(team2.mCoachs, vs);
@@ -1347,7 +1391,7 @@ public class Generation {
                     }
                 }
             }
-        }
+        }*/
     }
 
     protected static Round IndivQSwiss(final ArrayList<Coach> coachs, final ArrayList<Match> matchs, final ArrayList<ObjectRanking> datas, final boolean team, Round r) {

@@ -26,6 +26,7 @@ import org.jfree.ui.TextAnchor;
 import org.jfree.util.Rotation;
 import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Group;
 import tourma.data.Match;
 import tourma.data.RosterType;
 import tourma.data.Round;
@@ -48,6 +49,9 @@ public class JPNStatistics extends javax.swing.JPanel {
         initComponents();
 
         addRosterPie();
+        if (mTournament.getGroups().size() > 1) {
+            addGroupPie();
+        }
         addWinLoss();
         addCounterPerRoster();
     }
@@ -78,51 +82,48 @@ public class JPNStatistics extends javax.swing.JPanel {
 
                         plus.put(m.mCoach1.mRoster.mName, pt);
                         minus.put(m.mCoach1.mRoster.mName, mt);
-                        
+
                         pt = plus.get(m.mCoach2.mRoster.mName).doubleValue();
                         mt = minus.get(m.mCoach2.mRoster.mName).doubleValue();
                         pt += values.mValue2;
                         mt -= values.mValue1;
-                        
+
                         plus.put(m.mCoach2.mRoster.mName, pt);
                         minus.put(m.mCoach2.mRoster.mName, mt);
                     }
                 }
             }
 
-            
-             for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
-                 
-                 int nb=0;
-                 String name=RosterType.mRostersNames.get(j);
-                for (int k=0; k<mTournament.getCoachs().size(); k++)
-                {
-                    if (mTournament.getCoachs().get(k).mRoster.mName.equals(name))
-                    {
+
+            for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
+
+                int nb = 0;
+                String name = RosterType.mRostersNames.get(j);
+                for (int k = 0; k < mTournament.getCoachs().size(); k++) {
+                    if (mTournament.getCoachs().get(k).mRoster.mName.equals(name)) {
                         nb++;
                     }
                 }
 
-                if (nb!=0)
-                {
-                 double tmp= plus.get(name).doubleValue();
-                 plus.put(name,tmp/nb);
-                 
-                 tmp= minus.get(name).doubleValue();
-                 minus.put(name,tmp/nb);
+                if (nb != 0) {
+                    double tmp = plus.get(name).doubleValue();
+                    plus.put(name, tmp / nb);
+
+                    tmp = minus.get(name).doubleValue();
+                    minus.put(name, tmp / nb);
                 }
-                        
+
             }
-            
+
             final DefaultCategoryDataset datas = new DefaultCategoryDataset();
 
             for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
                 final String name = RosterType.mRostersNames.get(j);
                 final double pt = plus.get(name);
                 final double mt = minus.get(name);
-                if ((pt != 0) || (mt != 0) ) {
+                if ((pt != 0) || (mt != 0)) {
                     datas.addValue(pt, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RÉALISÉS"), name);
-                    datas.addValue( mt, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBIS"), name);
+                    datas.addValue(mt, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBIS"), name);
                 }
             }
 
@@ -284,6 +285,53 @@ public class JPNStatistics extends javax.swing.JPanel {
 
         final ChartPanel chartPanel = new ChartPanel(chart);
         jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTERS"), chartPanel);
+    }
+
+    protected void addGroupPie() {
+
+        final DefaultPieDataset datas = new DefaultPieDataset();
+
+        for (int i = 0; i < mTournament.getGroups().size(); i++) {
+            int value = 0;
+            Group g = mTournament.getGroups().get(i);
+            for (int j = 0; j < mTournament.getCoachs().size(); j++) {
+                final Coach c = mTournament.getCoachs().get(i);
+                if (c != Coach.sNullCoach) {
+                    for (int k = 0; k < g.mRosters.size(); k++) {
+                        if (g.mRosters.get(k).mName.equals(c.mRoster.mName)) {
+                            value++;
+                        }
+                    }
+
+                }
+
+            }
+            if (value > 0) {
+                datas.setValue(mTournament.getGroups().get(i).mName, value);
+            }
+        }
+
+
+        for (int i = 0; i < datas.getItemCount(); i++) {
+            final Number value = datas.getValue(i);
+            if (value.intValue() == 0) {
+                datas.remove(datas.getKey(i));
+                i--;
+            }
+        }
+
+        final JFreeChart chart = ChartFactory.createPieChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUPS"), datas, true, true, false);
+
+        final PiePlot plot = (PiePlot) chart.getPlot();
+        final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}: {1} ({2})"));
+        plot.setLegendLabelGenerator(label);
+        plot.setLabelGenerator(label);
+        plot.setStartAngle(290);
+        plot.setDirection(Rotation.CLOCKWISE);
+        plot.setForegroundAlpha(0.5f);
+
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUPS"), chartPanel);
     }
 
     public void update() {
