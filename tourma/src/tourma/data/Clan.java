@@ -5,7 +5,7 @@
 package tourma.data;
 
 import java.util.HashMap;
-import org.jdom.Element;
+import org.jdom2.Element;
 
 /**
  * This class contains data relative to a clan
@@ -44,7 +44,7 @@ public class Clan implements Comparable, XMLExport {
     }
 
     public void setXMLElement(final Element e) {
-        this.mName=e.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
+        this.mName=e.getAttributeValue("Name");
         if (sClanMap!=null)
         {
             sClanMap.put(mName, this);

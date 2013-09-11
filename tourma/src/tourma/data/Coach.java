@@ -12,8 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JOptionPane;
-import org.jdom.DataConversionException;
-import org.jdom.Element;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
 import teamma.data.Player;
 import teamma.data.StarPlayer;
 import teamma.data.lrb;
@@ -43,9 +43,8 @@ public class Coach implements Comparable, XMLExport {
     public ArrayList<Match> mMatchs;
     public teamma.data.Roster mComposition;
     public Color mColor;
-    public double mNafRank=150.0;
-    
-    public int mHandicap=0;
+    public double mNafRank = 150.0;
+    public int mHandicap = 0;
 
     protected Color generateRandomColor(final Color mix) {
         final Random random = new Random();
@@ -86,10 +85,12 @@ public class Coach implements Comparable, XMLExport {
 
     public int compareTo(final Object obj) {
         int result = -1;
-        
+
         if (obj instanceof Coach) {
-            result=((Double)mNafRank).compareTo(((Coach) obj).mNafRank);            
-            //result = mName.compareTo(((Coach) obj).mName);
+            result = ((Double) mNafRank).compareTo(((Coach) obj).mNafRank);
+            if (result == 0) {
+                result = mName.compareTo(((Coach) obj).mName);
+            }
         }
         return result;
     }
@@ -106,7 +107,7 @@ public class Coach implements Comparable, XMLExport {
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE"), Boolean.toString(this.mActive));
 
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP"), Integer.toString(this.mHandicap));
-        
+
         if (this.mComposition != null) {
             final Element compo = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
             final teamma.data.Roster roster = this.mComposition;
@@ -160,7 +161,8 @@ public class Coach implements Comparable, XMLExport {
         try {
             this.mName = coach.getAttributeValue(StringConstants.CS_NAME);
             this.mTeam = coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
-            this.mRoster = new RosterType(coach.getAttributeValue(StringConstants.CS_ROSTER));
+            String rosterName=RosterType.getRosterName(coach.getAttributeValue(StringConstants.CS_ROSTER));
+            this.mRoster = new RosterType(rosterName);
             this.mNaf = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue();
             this.mRank = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue();
             this.mClan = Clan.sClanMap.get(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN")));

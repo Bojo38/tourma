@@ -11,9 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import tourma.MainFrame;
 import tourma.utility.StringConstants;
 
@@ -49,7 +49,7 @@ public class lrb {
     private void loadLRB(InputStream file) {
         try {
             SAXBuilder sxb = new SAXBuilder();
-            org.jdom.Document document = sxb.build(file);
+            org.jdom2.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
             /*
@@ -98,7 +98,7 @@ public class lrb {
     private void loadSkills(InputStream file) {
         try {
             SAXBuilder sxb = new SAXBuilder();
-            org.jdom.Document document = sxb.build(file);
+            org.jdom2.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
             List l_categories = racine.getChildren("category");
@@ -141,7 +141,7 @@ public class lrb {
     private void loadTeam(InputStream file,String image) {
         try {
             SAXBuilder sxb = new SAXBuilder();
-            org.jdom.Document document = sxb.build(file);
+            org.jdom2.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
             Element e_name = racine.getChild("name");
@@ -237,7 +237,7 @@ public class lrb {
     private void loadStarPlayers(InputStream file) {
         try {
             SAXBuilder sxb = new SAXBuilder();
-            org.jdom.Document document = sxb.build(file);
+            org.jdom2.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
             _starPlayers.clear();

@@ -4,6 +4,9 @@
  */
 package tourma;
 
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import tourma.data.Parameters;
 import tourma.data.RosterType;
@@ -25,6 +28,21 @@ public class JdgParameters extends javax.swing.JDialog {
     public JdgParameters(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+
+        final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        final GraphicsDevice gs = ge.getDefaultScreenDevice();
+        final DisplayMode dmode = gs.getDisplayMode();
+
+        this.setSize(640, 480);
+
+        if (dmode != null) {
+            final int screenWidth = dmode.getWidth();
+            final int screenHeight = dmode.getHeight();
+            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        }
+
+
         mParams = Tournament.getTournament().getParams();
 
         // Load current parameters
@@ -70,7 +88,7 @@ public class JdgParameters extends javax.swing.JDialog {
 
         jspCoachNumber.setValue(mParams.mTeamMatesNumber);
         jckSubstitutes.setEnabled(mParams.mSubstitutes);
-        
+
         update();
     }
 
@@ -367,7 +385,7 @@ public class JdgParameters extends javax.swing.JDialog {
     }//GEN-LAST:event_jrbIndivPairingByRankingActionPerformed
 
     private void jrbIndivPairingRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndivPairingRandomActionPerformed
-            if (jrbIndivPairingByRanking.isSelected()) {
+        if (jrbIndivPairingByRanking.isSelected()) {
             mParams.mTeamIndivPairing = 0;
         } else {
             if (jrbIndivPairingManual.isSelected()) {
@@ -386,7 +404,7 @@ public class JdgParameters extends javax.swing.JDialog {
     }//GEN-LAST:event_jrbIndivPairingRandomActionPerformed
 
     private void jrbIndivPairingManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndivPairingManualActionPerformed
-                if (jrbIndivPairingByRanking.isSelected()) {
+        if (jrbIndivPairingByRanking.isSelected()) {
             mParams.mTeamIndivPairing = 0;
         } else {
             if (jrbIndivPairingManual.isSelected()) {
@@ -405,7 +423,7 @@ public class JdgParameters extends javax.swing.JDialog {
     }//GEN-LAST:event_jrbIndivPairingManualActionPerformed
 
     private void jrbIndivPairingNafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndivPairingNafActionPerformed
-                if (jrbIndivPairingByRanking.isSelected()) {
+        if (jrbIndivPairingByRanking.isSelected()) {
             mParams.mTeamIndivPairing = 0;
         } else {
             if (jrbIndivPairingManual.isSelected()) {
@@ -422,48 +440,6 @@ public class JdgParameters extends javax.swing.JDialog {
         }
         update();
     }//GEN-LAST:event_jrbIndivPairingNafActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introdujpnByTeamJava SE 6) is not available, stay wijpnByTeamdefault look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JdgParameters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JdgParameters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JdgParameters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JdgParameters.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JdgParameters dialog = new JdgParameters(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgGame;
     private javax.swing.ButtonGroup btgIndivTeamPairing;

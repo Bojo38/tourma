@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import tourma.utility.StringConstants;
 
 /**
@@ -52,7 +53,7 @@ public class RosterType {
         mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("SkavenKey"));
         mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("SlannKey"));
         mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("VampireKey"));
-        
+
         mRosterTypes.clear();
         mRosterTypes.add(new RosterType(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AmazonKey")));
         mRosterTypes.add(new RosterType(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UnderworldKey")));
@@ -82,9 +83,9 @@ public class RosterType {
     }
 
     public static void initCollection(final int game) {
-        
+
         mRostersNames.clear();
-        
+
         switch (game) {
             case C_BLOOD_BOWL:
                 initCollection();
@@ -116,5 +117,110 @@ public class RosterType {
 
     public RosterType(final String name) {
         mName = name;
+    }
+
+    public static String getRosterName(String name) {
+        ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
+        String result = name;
+        // Patching roster name for older versions
+        // Amazone, 
+        // Bas-Fonds, 
+        // Chaos, 
+        // Elfe, 
+        // Elfe sylvain, 
+        // Elfe noir, 
+        // Gobelin, 
+        // Halfling,
+        // Haut Elfe, 
+        // Homme lézard, 
+        // Humain, 
+        // Khemri, 
+        // Mort-Vivant, 
+        // Nain, 
+        // Nain du chaos,
+        // Necromantique, 
+        // Nordique,
+        // Nurgle,
+        // Ogre, 
+        // Orque, 
+        // Pacte Chaotique, 
+        // Skaven,
+        // Slann, 
+        // Vampire
+        switch (name) {
+            case "Amazone":
+                result = bundle.getString("AmazonKey");
+                break;
+            case "Bas-Fonds":
+                result = bundle.getString("UnderworldKey");
+                break;
+            case "Chaos":
+                result = bundle.getString("ChaosKey");
+                break;
+            case "Elfe":
+                result = bundle.getString("ElfKey");
+                break;
+            case "Elfe sylvain":
+                result = bundle.getString("WoodElfKey");
+                break;
+            case "Elfe noir":
+                result = bundle.getString("DarkElfKey");
+                break;
+            case "Gobelin":
+                result = bundle.getString("GoblinKey");
+                break;
+            case "Halfling":
+                result = bundle.getString("HalflingKey");
+                break;
+            case "Haut Elfe":
+                result = bundle.getString("HighElfKey");
+                break;
+            case "Homme lézard":
+                result = bundle.getString("LizardmenKey");
+                break;
+            case "Humain":
+                result = bundle.getString("HumanKey");
+                break;
+            case "Khemri":
+                result = bundle.getString("KhemriKey");
+                break;
+            case "Mort-Vivant":
+                result = bundle.getString("UndeadKey");
+                break;
+            case "Nain":
+                result = bundle.getString("DwarfKey");
+                break;
+            case "Nain du chaos":
+                result = bundle.getString("ChaosDwarfKey");
+                break;
+            case "Necromantique":
+                result = bundle.getString("NecromanticKey");
+                break;
+            case "Nordique":
+                result = bundle.getString("NorseKey");
+                break;
+            case "Nurgle":
+                result = bundle.getString("NurgleKey");
+                break;
+            case "Ogre":
+                result = bundle.getString("OgreKey");
+                break;
+            case "Orque":
+                result = bundle.getString("OrcKey");
+                break;
+            case "Pacte Chaotique":
+                result = bundle.getString("ChaosPactKey");
+                break;
+            case "Skaven":
+                result = bundle.getString("SkavenKey");
+                break;
+            case "Slann":
+                result = bundle.getString("SlannKey");
+                break;
+            case "Vampire":
+                result = bundle.getString("VampireKey");
+                break;
+        }
+        return result;
     }
 }

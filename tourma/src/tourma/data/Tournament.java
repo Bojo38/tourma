@@ -28,12 +28,16 @@ import java.util.List;
 import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import org.jdom.DataConversionException;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.apache.xerces.parsers.SAXParser;
+import org.jdom2.DataConversionException;
+import org.jdom2.DefaultJDOMFactory;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.input.sax.DefaultSAXHandlerFactory;
+import org.jdom2.input.sax.XMLReaderSAX2Factory;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import tourma.tableModel.mjtAnnexRankClan;
 import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.tableModel.mjtAnnexRankTeam;
@@ -1073,7 +1077,7 @@ public class Tournament {
         final SAXBuilder sxb = new SAXBuilder();
 
         try {
-            final org.jdom.Document document = sxb.build(file);
+            final org.jdom2.Document document = sxb.build(file);
             final Element racine = document.getRootElement();
 
             try {

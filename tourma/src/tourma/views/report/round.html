@@ -92,7 +92,7 @@
                     </#list>
                 </tr>
                 <#list matches as match>
-                <#if (result == 0)>
+                <#if (match.score1 == match.score2)>
                 <#assign style1="draw">
                 <#assign style2="draw">
                 <#else>

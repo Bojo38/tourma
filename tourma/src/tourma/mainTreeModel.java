@@ -16,7 +16,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import tourma.data.Round;
 import tourma.data.Tournament;
-import tourma.images.Icons;
+import tourma.utils.Icons;
 
 /**
  *

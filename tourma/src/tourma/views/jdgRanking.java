@@ -8,7 +8,7 @@
  *
  * Created on 28 juin 2010, 10:52:47
  */
-package tourma.views.report;
+package tourma.views;
 
 import tourma.tableModel.mjtRanking;
 import tourma.*;
@@ -108,7 +108,7 @@ public class jdgRanking extends javax.swing.JDialog {
         setName("Ranking"); // NOI18N
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

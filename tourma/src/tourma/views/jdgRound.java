@@ -8,7 +8,7 @@
  *
  * Created on 28 juin 2010, 10:52:47
  */
-package tourma.views.report;
+package tourma.views;
 
 import tourma.*;
 import tourma.data.Round;
@@ -128,7 +128,7 @@ public class jdgRound extends javax.swing.JDialog {
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,7 +217,7 @@ public class jdgRound extends javax.swing.JDialog {
 
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("tourma/view/report").toURI();
+            final URI uri = getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/VIEWS/REPORT")).toURI();
             if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
                 /*String tmp = uri.toString();
                 tmp = tmp.substring(10, tmp.indexOf(".jar!") - 4);
@@ -253,51 +253,51 @@ public class jdgRound extends javax.swing.JDialog {
                final  Match match = matches.get(i);
 
                 final HashMap m = new HashMap();
-                m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMERO"), i + 1);
+                m.put("numero", i + 1);
                 if (!mTour.getParams().mTeamTournament) {
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1"), match.mCoach1.mName);
+                    m.put("coach1", match.mCoach1.mName);
                 }
                 else
                 {
-                       m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1"), match.mCoach1.mTeamMates.mName+StringConstants.CS_THICK+ match.mCoach1.mName);
+                       m.put("coach1", match.mCoach1.mTeamMates.mName+StringConstants.CS_THICK+ match.mCoach1.mName);
                 }
                 if (mResult) {
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE1"), match.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0)).mValue1);
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE2"), match.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0)).mValue2);
+                    m.put("score1", match.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0)).mValue1);
+                    m.put("score2", match.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0)).mValue2);
 
                     final ArrayList values = new ArrayList();
                     for (int j = 1; j < criterias.size(); j++) {
                         final HashMap value = new HashMap();
-                        value.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1"), match.mValues.get(criterias.get(j)).mValue1);
-                        value.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2"), match.mValues.get(criterias.get(j)).mValue2);
+                        value.put("value1", match.mValues.get(criterias.get(j)).mValue1);
+                        value.put("value2", match.mValues.get(criterias.get(j)).mValue2);
                         values.add(value);
                     }
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUES"), values);
+                    m.put("values", values);
 
                 } else {
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE1"), StringConstants.CS_HTML_EMPTY);
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SCORE2"), StringConstants.CS_HTML_EMPTY);
+                    m.put("score1", StringConstants.CS_HTML_EMPTY);
+                    m.put("score2", StringConstants.CS_HTML_EMPTY);
                     final ArrayList values = new ArrayList();
                     for (int j = 1; j < criterias.size(); j++) {
                         final HashMap value = new HashMap();
-                        value.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1"), StringConstants.CS_HTML_EMPTY);
-                        value.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2"), StringConstants.CS_HTML_EMPTY);
+                        value.put("value1", StringConstants.CS_HTML_EMPTY);
+                        value.put("value2", StringConstants.CS_HTML_EMPTY);
                         values.add(value);
                     }
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUES"), values);
+                    m.put("values", values);
                 }
                 if (!mTour.getParams().mTeamTournament) {
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2"), match.mCoach2.mName);
+                    m.put("coach2", match.mCoach2.mName);
                 }
                 else
                 {
-                       m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2"), match.mCoach2.mTeamMates.mName+StringConstants.CS_THICK+ match.mCoach2.mName);
+                       m.put("coach2", match.mCoach2.mTeamMates.mName+StringConstants.CS_THICK+ match.mCoach2.mName);
                 }
                 //m.put("coach2", match.mCoach2.mName);
                 parMatches.add(m);
             }
 
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCHES"), parMatches);
+            root.put("matches", parMatches);
 
             final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EEEEEEE DD MMMMMMMMMMM YYYY"),Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY"),Locale.getDefault());
@@ -323,7 +323,7 @@ public class jdgRound extends javax.swing.JDialog {
 
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("tourma/view/report").toURI();
+            final URI uri = getClass().getResource("tourma/views/report").toURI();
             if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
                 /* JOptionPane.showMessageDialog(this,"Dans un jar: "+uri.toString());
                 String tmp=uri.toString();
@@ -406,7 +406,7 @@ public class jdgRound extends javax.swing.JDialog {
 
         try {
            final  Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("tourma/view/report").toURI();
+            final URI uri = getClass().getResource("tourma/views/report").toURI();
             if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
                 /* JOptionPane.showMessageDialog(this,"Dans un jar: "+uri.toString());
                 String tmp=uri.toString();

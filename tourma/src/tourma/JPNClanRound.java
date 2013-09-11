@@ -20,8 +20,8 @@ import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.tableModel.mjtAnnexRankClan;
 import tourma.tableModel.mjtRankingClan;
-import tourma.views.report.jdgGlobal;
-import tourma.views.report.jdgRanking;
+import tourma.views.jdgGlobal;
+import tourma.views.jdgRanking;
 import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
 

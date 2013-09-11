@@ -295,7 +295,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             int value = 0;
             Group g = mTournament.getGroups().get(i);
             for (int j = 0; j < mTournament.getCoachs().size(); j++) {
-                final Coach c = mTournament.getCoachs().get(i);
+                final Coach c = mTournament.getCoachs().get(j);
                 if (c != Coach.sNullCoach) {
                     for (int k = 0; k < g.mRosters.size(); k++) {
                         if (g.mRosters.get(k).mName.equals(c.mRoster.mName)) {

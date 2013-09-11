@@ -188,6 +188,12 @@ public class JPNParameters extends javax.swing.JPanel {
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel21.setText(bundle.getString("PlaceKey")); // NOI18N
         jPanel5.add(jLabel21);
+
+        jtfPlace.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfPlaceKeyPressed(evt);
+            }
+        });
         jPanel5.add(jtfPlace);
 
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -261,11 +267,11 @@ public class JPNParameters extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
-        mTournament.getParams().mTournamentName = jtfTournamentName.getText();
+        mTournament.getParams().mTournamentName = jtfTournamentName.getText()+evt.getKeyChar();
     }//GEN-LAST:event_jtfTournamentNameKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
-        mTournament.getParams().mTournamentOrga = jtfOrgas.getText();
+        mTournament.getParams().mTournamentOrga = jtfOrgas.getText()+evt.getKeyChar();
     }//GEN-LAST:event_jtfOrgasKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
@@ -291,6 +297,10 @@ public class JPNParameters extends javax.swing.JPanel {
     private void jtfOrgasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOrgasActionPerformed
         mTournament.getParams().mTournamentOrga = jtfOrgas.getText();
     }//GEN-LAST:event_jtfOrgasActionPerformed
+
+    private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
+        mTournament.getParams().mPlace=jtfPlace.getText()+evt.getKeyChar();
+    }//GEN-LAST:event_jtfPlaceKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser jDate;

@@ -8,7 +8,7 @@
  *
  * Created on 28 juin 2010, 10:52:47
  */
-package tourma.views.report;
+package tourma.views;
 
 import tourma.tableModel.mjtRanking;
 import tourma.*;
@@ -108,7 +108,7 @@ public class jdgGlobal extends javax.swing.JDialog {
         setName("Ranking"); // NOI18N
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,7 +263,7 @@ public class jdgGlobal extends javax.swing.JDialog {
             for (int i = 0; i < mTour.getParams().mCriterias.size(); i++) {
                 final HashMap criteria = new HashMap();
                 final Criteria c = mTour.getParams().mCriterias.get(i);
-                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), c.mName);
+                criteria.put("name", c.mName);
 
                 final mjtAnnexRank annexFor = mAnnexForRankings.get(c);
                 final mjtAnnexRank annexAgainst = mAnnexAgainstRankings.get(c);

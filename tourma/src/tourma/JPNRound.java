@@ -14,8 +14,8 @@ import java.awt.BorderLayout;
 import tourma.tableModel.mjtAnnexRank;
 import tourma.tableModel.mjtRankingIndiv;
 import tourma.tableModel.mjtMatches;
-import tourma.views.report.jdgRound;
-import tourma.views.report.jdgRanking;
+import tourma.views.jdgRound;
+import tourma.views.jdgRanking;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Match;
@@ -37,7 +37,7 @@ import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
 import tourma.utils.TableFormat;
-import tourma.views.report.jdgGlobal;
+import tourma.views.jdgGlobal;
 
 /**
  *
@@ -330,7 +330,7 @@ public class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jtbRoundSum);
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+        jPanel1.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
         jtpGlobal.addTab(bundle.getString("MatchsKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png")), jPanel1); // NOI18N
 

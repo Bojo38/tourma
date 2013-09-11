@@ -13,8 +13,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 import tourma.data.Coach;
 import tourma.data.Tournament;
 
@@ -58,7 +58,7 @@ public class NAF {
 
                     try {
                         StringReader Sreader = new StringReader(buffer);
-                        final org.jdom.Document document = sxb.build(Sreader);
+                        final org.jdom2.Document document = sxb.build(Sreader);
                         final Element racine = document.getRootElement();
 
                         List trs = racine.getChildren("tr");

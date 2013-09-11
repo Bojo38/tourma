@@ -110,6 +110,8 @@ public class MainFrame extends javax.swing.JFrame {
         jtrPanels.setSize(100, this.getHeight());
         this.revalidate();
         this.repaint();
+        
+        
 
     }
 
@@ -150,6 +152,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmiNafLoad = new javax.swing.JMenuItem();
         jmnRounds = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -300,6 +303,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnRounds.add(jmiGenerateFirstRound);
+        jmnRounds.add(jSeparator6);
 
         jMenuBar1.add(jmnRounds);
 
@@ -448,27 +452,27 @@ public class MainFrame extends javax.swing.JFrame {
 
         /*int multi = JOptionPane.showConfirmDialog(this, "S'agit-il d'un tournoi multi roster ?", "MultiRoster", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        final Object options[] = {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam")};
-        int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TournamentType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewTournament"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options, options[0]);
+         final Object options[] = {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam")};
+         int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TournamentType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewTournament"),
+         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+         null, options, options[0]);
 
-        Tournament.getTournament().getParams().mTeamTournament = (res == 1);
-        if (res == 1) {
-            final jdgSelectNumber jdg = new jdgSelectNumber(this, true, mTournament);
-            jdg.setVisible(true);
-            res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("PairingType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Pairing"),
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, options, options[0]);
-            Tournament.getTournament().getParams().mTeamPairing = res;
-            if (res == 1) {
-                final Object options2[] = {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AccordingToRanking"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Free")};
-                res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("IndividualPairingType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("IndividualPairing"),
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, options2, options2[0]);
-                Tournament.getTournament().getParams().mTeamIndivPairing = res;
-            }
-        }*/
+         Tournament.getTournament().getParams().mTeamTournament = (res == 1);
+         if (res == 1) {
+         final jdgSelectNumber jdg = new jdgSelectNumber(this, true, mTournament);
+         jdg.setVisible(true);
+         res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("PairingType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Pairing"),
+         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+         null, options, options[0]);
+         Tournament.getTournament().getParams().mTeamPairing = res;
+         if (res == 1) {
+         final Object options2[] = {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AccordingToRanking"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Free")};
+         res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("IndividualPairingType"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("IndividualPairing"),
+         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+         null, options2, options2[0]);
+         Tournament.getTournament().getParams().mTeamIndivPairing = res;
+         }
+         }*/
 
 
         update();
@@ -484,7 +488,18 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiExportActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExitActionPerformed
-        System.exit(0);
+        int res = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS SAUVGARDER ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXIT"), JOptionPane.YES_NO_CANCEL_OPTION);
+        if (res == JOptionPane.CANCEL_OPTION) {
+        } else {
+            if (res == JOptionPane.YES_OPTION) {
+                if (mFile.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+                    jmiSaveAsActionPerformed(null);
+                } else {
+                    jmiSaveActionPerformed(null);
+                }
+            }
+            System.exit(0);
+        }
     }//GEN-LAST:event_jmiExitActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiRevisionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRevisionsActionPerformed
@@ -662,7 +677,6 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiGenerateFirstRoundActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtrPanelsValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jtrPanelsValueChanged
-
         final TreePath path = evt.getNewLeadSelectionPath();
         if (path != null) {
 
@@ -690,7 +704,7 @@ public class MainFrame extends javax.swing.JFrame {
                             this.revalidate();
                             break;
                         }
-                    }
+                    }                    
                 }
 
                 if (object.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"))) {
@@ -763,8 +777,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
