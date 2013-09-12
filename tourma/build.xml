@@ -77,46 +77,86 @@
         
     </target>
 
- <target name="yguard">
-      <taskdef name="yguard"
-      classname="com.yworks.yguard.YGuardTask"
-      classpath="tools/yguard.jar"/>
-       <yguard>
 
-    <!--<inoutpair in="dist/TourMa.jar" out="dist/TourMa_obf.jar"/>-->
-    <inoutpair in="store/TourMa.jar" out="store/TourMa_obf.jar"/>
 
-    <!--<externalclasses>
-      <pathelement location="dist/lib/freemarker.jar"/>
-      <pathelement location="dist/lib/jdom.jar"/>
-      <pathelement location="dist/lib/substance.jar"/>
-      <pathelement location="dist/lib/swingx-0.9.5-2.jar"/>
-    </externalclasses>-->
+    <target name="yguard">
+        <taskdef name="yguard"
+                 classname="com.yworks.yguard.YGuardTask"
+                 classpath="tools/yguard.jar"/>
+        <yguard>
 
-    <!--<externalclasses>
-      <pathelement location="deps/jython-2.2.jar"/>
-      <pathelement location="deps/j2ee-1.4.jar"/>
-      <pathelement location="deps/dom4j-1.4.jar"/>
-      <pathelement location="deps/jaxen-1.0-FCS.jar"/>
-      <pathelement location="deps/ant-1.6.5.jar"/>      
-    </externalclasses>-->
+            <!--<inoutpair in="dist/TourMa.jar" out="dist/TourMa_obf.jar"/>-->
+            <inoutpair in="store/TourMa.jar" out="store/TourMa_obf.jar"/>
 
-    <shrink logfile="shrinklog.xml">
-      <!--<property name="error-checking" value="pedantic"/>-->
-      <keep>
-        <method name="void main(java.lang.String[])" class="tourma.MainFrame" />
-        <class classes="public"/>
-      </keep>
-    </shrink>
+            <externalclasses>
+                <pathelement location="deps/jython-2.2.jar"/>
+                <pathelement location="deps/j2ee-1.4.jar"/>
+                <pathelement location="deps/dom4j-1.4.jar"/>
+                <pathelement location="deps/jaxen-1.0-FCS.jar"/>
+                <pathelement location="deps/ant-1.6.5.jar"/>  
+                <pathelement location="deps/javarebel-sdk-2.0.2.jar"/>
+            </externalclasses>
 
-    <rename mainclass="tourma.MainFrame" logfile="renamelog.xml">
-      <!--<property name="error-checking" value="pedantic"/>-->
-      <keep>
-        <class classes="public"/>
-      </keep>
-    </rename>
+            <shrink logfile="shrinklog.xml" createStubs="false">
+                <!--<property name="error-checking" value="pedantic"/>-->
+                <keep>
+                    <method name="void main(java.lang.String[])" class="tourma.MainFrame" />
+                    <!--<field name="*" class="javax.xml.parsers.SAXParser"/>
+                    <field name="*" class="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+                    <method name="*init*" class="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
+                    <class name="org.apache.xerces.jaxp.SAXParserFactoryImpl" />-->
+                    <!--<class classes="public"/>-->
+                    <class  classes="public" methods="public">
+                        <patternset>
+                            <!--<include name="javax.*"/>-->
+                            <include name="org.apache.xerces.impl.*"/>
+                            <include name="org.apache.xerces.jaxp.*"/>
+                            <include name="org.apache.xerces.parsers.*"/>
+                            <include name="org.jfree.chart.resources.*"/>
+                            <include name="org.jfree.resources.*"/>
+                        </patternset>
+                    </class>
+                </keep>
+            </shrink>
 
-  </yguard>
+            <rename mainclass="tourma.MainFrame" logfile="renamelog.xml" replaceClassNameStrings="true">
+                <property name="error-checking" value="pedantic"/> 
+                <property name="naming-scheme" value="small" />  
+                <keep>
+                    <class classes="public" methods="public" fields="public" >                    
+                        <patternset>
+                            <include name="org.jfree.chart.resources.*"/>
+                            <include name="tourma.views.report.*"/>
+                        </patternset>
+                    </class>
+                </keep>
+                <adjust replacePath="false">
+                    <include name="tourma/images/*"/>
+                    <include name="teamma/images/*"/>
+                    <include name="com/toedter/calendar/images/*"/>
+                    <include name="org/jfree/chart/*"/>
+                    <include name="org/jfree/chart/editor/*"/>
+                    <include name="org/jfree/chart/plot/*"/>
+                    <include name="org/jfree/chart/resources/*"/>                    
+                    <include name="com/toedter/components/images/*"/>
+                    <include name="tourma/languages/*"/>
+                    <include name="tourma/views/report/*"/>
+                    <include name="tourma/*"/>
+                    <include name="org/jfree/chart/resources/*"/>
+                    <include name="org/jfree/resources/*"/>
+                </adjust>
+                <adjust replaceName="false">
+                    <include name="**/*.properties"/>
+                    <include name="**/*.html"/>
+                    <include name="tourma/views/report/jdgRanking*"/>
+                    <include name="tourma/views/report/jdgGlobal*"/>
+                    <include name="tourma/views/report/jdgRound*"/>
+                    <include name="**/JFreeChartResources*"/>
+                    <include name="**/JCommonResources*"/>
+                </adjust>           
+            </rename>
+
+        </yguard>
     </target>
 
     <target name="package-for-store" depends="jar">
@@ -148,7 +188,7 @@
 
         <zip destfile="${store.jar}">
             <zipfileset src="${store.dir}/temp_final.jar"
-            excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
+                        excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
         </zip>
 
         <delete file="${store.dir}/temp_final.jar"/>
