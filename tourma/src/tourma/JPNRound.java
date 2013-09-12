@@ -14,8 +14,8 @@ import java.awt.BorderLayout;
 import tourma.tableModel.mjtAnnexRank;
 import tourma.tableModel.mjtRankingIndiv;
 import tourma.tableModel.mjtMatches;
-import tourma.views.jdgRound;
-import tourma.views.jdgRanking;
+import tourma.views.report.jdgRound;
+import tourma.views.report.jdgRanking;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Match;
@@ -37,7 +37,7 @@ import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
 import tourma.utils.TableFormat;
-import tourma.views.jdgGlobal;
+import tourma.views.report.jdgGlobal;
 
 /**
  *

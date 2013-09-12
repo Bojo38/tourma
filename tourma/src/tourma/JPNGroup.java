@@ -5,7 +5,7 @@ import tourma.data.Coach;
 import tourma.data.Group;
 import tourma.data.Tournament;
 import tourma.tableModel.mjtRankingIndiv;
-import tourma.views.jdgRanking;
+import tourma.views.report.jdgRanking;
 import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
 

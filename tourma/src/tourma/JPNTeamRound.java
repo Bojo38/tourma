@@ -24,9 +24,9 @@ import tourma.data.Match;
 import tourma.data.Parameters;
 import tourma.data.Team;
 import tourma.tableModel.mjtMatchTeams;
-import tourma.views.jdgGlobal;
-import tourma.views.jdgRanking;
-import tourma.views.jdgRound;
+import tourma.views.report.jdgGlobal;
+import tourma.views.report.jdgRanking;
+import tourma.views.report.jdgRound;
 import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
 

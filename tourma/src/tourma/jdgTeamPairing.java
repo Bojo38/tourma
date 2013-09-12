@@ -18,7 +18,7 @@ import tourma.data.Tournament;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.tableModel.mjtPairs;
-import tourma.views.jdgRound;
+import tourma.views.report.jdgRound;
 import tourma.utility.StringConstants;
 
 /**

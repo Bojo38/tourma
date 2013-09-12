@@ -8,7 +8,7 @@
  *
  * Created on 28 juin 2010, 10:52:47
  */
-package tourma.views;
+package tourma.views.report;
 
 import tourma.*;
 import tourma.data.Round;
@@ -217,13 +217,13 @@ public class jdgRound extends javax.swing.JDialog {
 
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/VIEWS/REPORT")).toURI();
-            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
+            final URI uri = getClass().getResource("/tourma/views/report").toURI();
+            if (uri.toString().contains(".jar!")) {
                 /*String tmp = uri.toString();
                 tmp = tmp.substring(10, tmp.indexOf(".jar!") - 4);
                 //tmp=tmp+"";
                 cfg.setDirectoryForTemplateLoading(new File(tmp));*/
-                cfg.setClassForTemplateLoading(getClass(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""));
+                cfg.setClassForTemplateLoading(getClass(), "");
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }

@@ -8,7 +8,7 @@
  *
  * Created on 28 juin 2010, 10:52:47
  */
-package tourma.views;
+package tourma.views.report;
 
 import tourma.tableModel.mjtRanking;
 import tourma.*;
