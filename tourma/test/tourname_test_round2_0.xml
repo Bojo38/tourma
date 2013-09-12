@@ -58,11 +58,11 @@
   <Clan Name="Aucun" />
   <Group Name="Aucun">
     <Roster Name="Amazone" />
-    <Roster Name="Bas Fonds" />
+    <Roster Name="Bas-Fonds" />
     <Roster Name="Chaos" />
     <Roster Name="Elfe" />
-    <Roster Name="Elfe sylvain" />
-    <Roster Name="Elfe noir" />
+    <Roster Name="Elfe Sylvain" />
+    <Roster Name="Elfe Noir" />
     <Roster Name="Gobelin" />
     <Roster Name="Halfling" />
     <Roster Name="Haut Elfe" />
@@ -83,11 +83,11 @@
     <Roster Name="Vampire" />
   </Group>
   <Coach Name="A" Team="A" Roster="Amazone" NAF="0" Rank="110" Clan="Aucun" Active="true" />
-  <Coach Name="B" Team="B" Roster="Bas Fonds" NAF="0" Rank="110" Clan="Aucun" Active="true" />
+  <Coach Name="B" Team="B" Roster="Bas-Fonds" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="C" Team="C" Roster="Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="D" Team="D" Roster="Elfe" NAF="0" Rank="110" Clan="Aucun" Active="true" />
-  <Coach Name="E" Team="E" Roster="Elfe sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" />
-  <Coach Name="F" Team="F" Roster="Elfe noir" NAF="0" Rank="110" Clan="Aucun" Active="true" />
+  <Coach Name="E" Team="E" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" />
+  <Coach Name="F" Team="F" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="G" Team="G" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="H" Team="H" Roster="Halfling" NAF="0" Rank="110" Clan="Aucun" Active="true" />
   <Coach Name="I" Team="I" Roster="Haut Elfe" NAF="0" Rank="110" Clan="Aucun" Active="true" />

@@ -10,23 +10,23 @@
   <Clan Name="Aucun" />
   <Group Name="Aucun">
     <Roster Name="Amazone" />
-    <Roster Name="Bas Fonds" />
+    <Roster Name="Bas-Fonds" />
     <Roster Name="Chaos" />
     <Roster Name="Elfe" />
-    <Roster Name="Elfe sylvain" />
-    <Roster Name="Elfe noir" />
+    <Roster Name="Elfe Sylvain" />
+    <Roster Name="Elfe Noir" />
     <Roster Name="Gobelin" />
     <Roster Name="Halfling" />
     <Roster Name="Haut Elfe" />
-    <Roster Name="Homme lézard" />
+    <Roster Name="Homme Lézard" />
     <Roster Name="Humain" />
     <Roster Name="Khemri" />
     <Roster Name="Mort-Vivant" />
     <Roster Name="Nain" />
-    <Roster Name="Nain du chaos" />
-    <Roster Name="Necromantique" />
-    <Roster Name="Nordique" />
-    <Roster Name="Nurgle" />
+    <Roster Name="Nain du Chaos" />
+    <Roster Name="Necromantiques" />
+    <Roster Name="Nordiquess" />
+    <Roster Name="Pourris de Nurgle" />
     <Roster Name="Ogre" />
     <Roster Name="Orque" />
     <Roster Name="Pacte Chaotique" />
@@ -35,23 +35,23 @@
     <Roster Name="Vampire" />
   </Group>
   <Coach Name="A" Team="A" Roster="Amazone" NAF="0" Rank="110" Clan="Aucun" />
-  <Coach Name="B" Team="B" Roster="Bas Fonds" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="B" Team="B" Roster="Bas-Fonds" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="C" Team="C" Roster="Chaos" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="D" Team="D" Roster="Elfe" NAF="0" Rank="110" Clan="Aucun" />
-  <Coach Name="E" Team="E" Roster="Elfe sylvain" NAF="0" Rank="110" Clan="Aucun" />
-  <Coach Name="F" Team="F" Roster="Elfe noir" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="E" Team="E" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="F" Team="F" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="G" Team="G" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="H" Team="H" Roster="Halfling" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="I" Team="I" Roster="Haut Elfe" NAF="0" Rank="110" Clan="Aucun" />
-  <Coach Name="J" Team="J" Roster="Homme lézard" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="J" Team="J" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="K" Team="K" Roster="Humain" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="L" Team="L" Roster="Khemri" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="M" Team="M" Roster="Mort-Vivant" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="N" Team="N" Roster="Nain" NAF="0" Rank="110" Clan="Aucun" />
-  <Coach Name="O" Team="O" Roster="Nain du chaos" NAF="0" Rank="110" Clan="Aucun" />
-  <Coach Name="P" Team="P" Roster="Nordique" NAF="0" Rank="110" Clan="Aucun" />
-  <Coach Name="Q" Team="Q" Roster="Necromantique" NAF="0" Rank="110" Clan="Aucun" />
-  <Coach Name="R" Team="R" Roster="Nurgle" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="O" Team="O" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="P" Team="P" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Q" Team="Q" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="R" Team="R" Roster="Pourris de Nurgle" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="S" Team="S" Roster="Ogre" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="T" Team="T" Roster="Orque" NAF="0" Rank="110" Clan="Aucun" />
   <Coach Name="U" Team="U" Roster="Pacte Chaotique" NAF="0" Rank="110" Clan="Aucun" />
