@@ -7,12 +7,12 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import tourma.data.Coach;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.data.Coach;
 import tourma.data.Team;
 import tourma.utility.StringConstants;
 
@@ -28,6 +28,7 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
         mTeams = teams;
     }
 
+    @Override
     public int getColumnCount() {
 
         int nbCol = 2;
@@ -37,10 +38,12 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
         return nbCol;
     }
 
+    @Override
     public int getRowCount() {
         return mTeams.size();
     }
 
+    @Override
     public String getColumnName(final int col) {
         String val;
         switch (col) {
@@ -56,6 +59,7 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
         return val;
     }
 
+    @Override
     public Object getValueAt(final int row, final int col) {
         Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mTeams.size() > 0) {
@@ -80,20 +84,28 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
         return object;
     }
 
+    @Override
     public Class getColumnClass(final int c) {
-        return getValueAt(0, c).getClass();
+        Object obj = getValueAt(0, c);
+        Class res = null;
+        if (obj != null) {
+            res = obj.getClass();
+        }
+        return res;
     }
 
     /*
      * Don't need to implement this method unless your table's
      * editable.
      */
+    @Override
     public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
+    @Override
     public Component getTableCellRendererComponent(
             final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
 
@@ -118,13 +130,10 @@ public class mjtTeams extends AbstractTableModel implements TableCellRenderer {
             }
         }
         jlb.setHorizontalAlignment(JTextField.CENTER);
-        
-        if (isSelected)
-        {
+
+        if (isSelected) {
             jlb.setBackground(Color.LIGHT_GRAY);
-        }
-        else
-        {
+        } else {
             jlb.setBackground(Color.WHITE);
         }
         return jlb;

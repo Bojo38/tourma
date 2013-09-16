@@ -13,10 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
-import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import tourma.MainFrame;
 import tourma.utility.StringConstants;
 
 /**
@@ -120,7 +118,7 @@ public class Parameters implements XMLExport {
     public Parameters() {
         mTournamentName = sbundle.getString("");
         mTournamentOrga = sbundle.getString("");
-        mCriterias = new ArrayList<Criteria>();
+        mCriterias = new ArrayList<>();
 
         Criteria c = new Criteria(sbundle.getString("Touchdowns"));
         c.mPointsFor = 2;
@@ -130,6 +128,7 @@ public class Parameters implements XMLExport {
         mCriterias.add(c);
     }
 
+    @Override
     public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(sbundle.getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element params = new Element(sbundle.getString("PARAMETERS"));
@@ -193,6 +192,7 @@ public class Parameters implements XMLExport {
         return params;
     }
 
+    @Override
     public void setXMLElement(final Element params) {
         final SimpleDateFormat format = new SimpleDateFormat(sbundle.getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
@@ -294,6 +294,7 @@ public class Parameters implements XMLExport {
         }
     }
 
+    @Override
     public String toString() {
         return sbundle.getString("PARAMÈTRES");
     }

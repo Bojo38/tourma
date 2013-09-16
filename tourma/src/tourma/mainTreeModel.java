@@ -33,9 +33,9 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
     ArrayList<DefaultMutableTreeNode> mRounds;
 
     mainTreeModel() {
-        mListeners = new ArrayList<TreeModelListener>();
+        mListeners = new ArrayList<>();
         mTournament = Tournament.getTournament();
-        mRounds = new ArrayList<DefaultMutableTreeNode>();
+        mRounds = new ArrayList<>();
 
         String name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURNOI");
         if (!mTournament.getParams().mTournamentName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
@@ -75,10 +75,12 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
 
     }
 
+    @Override
     public Object getRoot() {
         return mRoot;
     }
 
+    @Override
     public Object getChild(final Object parent, final int index) {
         Object o = null;
         if (parent.equals(mRoot)) {
@@ -87,6 +89,7 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         return o;
     }
 
+    @Override
     public int getChildCount(final Object parent) {
         int count = 0;
         if (parent.equals(mRoot)) {
@@ -95,6 +98,7 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         return count;
     }
 
+    @Override
     public boolean isLeaf(final Object node) {
         boolean isLeaf = false;
         if (node.equals(mRoot)) {
@@ -108,10 +112,12 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         return isLeaf;
     }
 
+    @Override
     public void valueForPathChanged(final TreePath path, Object newValue) {
         // Nothing to do
     }
 
+    @Override
     public int getIndexOfChild(final Object parent, final Object child) {
         int index = -1;
         if (parent.equals(mRoot)) {
@@ -126,14 +132,17 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
         return index;
     }
 
+    @Override
     public void addTreeModelListener(final TreeModelListener l) {
         mListeners.add(l);
     }
 
+    @Override
     public void removeTreeModelListener(final TreeModelListener l) {
         mListeners.remove(l);
     }
 
+    @Override
     public Component getTreeCellRendererComponent(final JTree tree, final Object value, final boolean selected, final boolean expanded, final boolean leaf, final int row, final boolean hasFocus) {
         final JLabel jlb = new JLabel(value.toString());
         if (selected) {

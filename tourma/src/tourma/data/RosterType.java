@@ -22,8 +22,8 @@ public class RosterType {
      "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique",
      "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire"
      };*/
-    public static ArrayList<String> mRostersNames = new ArrayList<String>();
-    public static ArrayList<RosterType> mRosterTypes = new ArrayList<RosterType>();
+    public static ArrayList<String> mRostersNames = new ArrayList<>();
+    public static ArrayList<RosterType> mRosterTypes = new ArrayList<>();
     public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
     public static void initCollection() {

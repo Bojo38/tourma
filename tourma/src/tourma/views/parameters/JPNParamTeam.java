@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma;
+package tourma.views.parameters;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -122,7 +122,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel26.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1:"));
-        jLabel26.setToolTipText(bundle.getString("")); // NOI18N
+        jLabel26.setToolTipText("null");
         add(jLabel26);
 
         jcbRank1Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -135,7 +135,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel27.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2:"));
-        jLabel27.setToolTipText(bundle.getString("")); // NOI18N
+        jLabel27.setToolTipText("null");
         add(jLabel27);
 
         jcbRank2Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -148,7 +148,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel28.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 3:"));
-        jLabel28.setToolTipText(bundle.getString("")); // NOI18N
+        jLabel28.setToolTipText("null");
         add(jLabel28);
 
         jcbRank3Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -161,7 +161,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel29.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 4:"));
-        jLabel29.setToolTipText(bundle.getString("")); // NOI18N
+        jLabel29.setToolTipText("null");
         add(jLabel29);
 
         jcbRank4Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -174,7 +174,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel30.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RankingCriteria")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 5:"));
-        jLabel30.setToolTipText(bundle.getString("")); // NOI18N
+        jLabel30.setToolTipText("null");
         add(jLabel30);
 
         jcbRank5Team.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucun", "Points", "Points adversaires", "Touchdowns", "Sorties", "Aggressions", "Différence de touchdowns", "Différence de sorties", "Différence d'aggression", "Victoire-Nul-Défaite" }));
@@ -187,7 +187,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jlbVictoryPoints.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbVictoryPoints.setText(bundle.getString("TeamVictoryBonus")); // NOI18N
-        jlbVictoryPoints.setToolTipText(bundle.getString("")); // NOI18N
+        jlbVictoryPoints.setToolTipText("null");
         add(jlbVictoryPoints);
 
         jtffTeamVictoryBonus.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -200,7 +200,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jlbVictoryPoints1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbVictoryPoints1.setText(bundle.getString("TeamDrawBonus")); // NOI18N
-        jlbVictoryPoints1.setToolTipText(bundle.getString("")); // NOI18N
+        jlbVictoryPoints1.setToolTipText("null");
         add(jlbVictoryPoints1);
 
         jtffTeamDrawBonus.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -341,7 +341,7 @@ public class JPNParamTeam extends javax.swing.JPanel {
         jtffTeamVictoryBonus.setValue(mTournament.getParams().mPointsTeamVictoryBonus);
         jtffTeamDrawBonus.setValue(mTournament.getParams().mPointsTeamDrawBonus);
 
-        final ArrayList<String> rankChoices = new ArrayList<String>();
+        final ArrayList<String> rankChoices = new ArrayList<>();
         rankChoices.add(StringConstants.CS_NONE);
         rankChoices.add(StringConstants.CS_POINTS);
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS ADVERSAIRES"));
@@ -379,18 +379,21 @@ public class JPNParamTeam extends javax.swing.JPanel {
         jcbRank5Team.setSelectedIndex(mTournament.getParams().mRankingTeam5);
 
         jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank1TeamActionPerformed(evt);
             }
         });
 
         jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank2TeamActionPerformed(evt);
             }
         });
 
         jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank3TeamActionPerformed(evt);
             }
@@ -398,12 +401,14 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
         jcbRank4Team.addActionListener(
                 new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(final java.awt.event.ActionEvent evt) {
                         jcbRank4TeamActionPerformed(evt);
                     }
                 });
 
         jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank5TeamActionPerformed(evt);
             }

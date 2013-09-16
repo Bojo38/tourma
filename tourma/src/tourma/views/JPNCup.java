@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma;
+package tourma.views;
 
 import java.util.ArrayList;
 import tourma.data.Coach;
@@ -11,7 +11,7 @@ import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
-import tourma.views.JPNMatch;
+import tourma.views.round.JPNMatch;
 
 /**
  *
@@ -57,7 +57,7 @@ public class JPNCup extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void update() {
-        final ArrayList<Round> rounds_with_cup = new ArrayList<Round>();
+        final ArrayList<Round> rounds_with_cup = new ArrayList<>();
         final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
         boolean bLooserCup=false;
         for (int i = 0; i < rounds.size(); i++) {
@@ -87,7 +87,7 @@ public class JPNCup extends javax.swing.JPanel {
 
         int gap = 0;
         int nb_looseMatch = 0;
-        int last_offset = 0;
+        int last_offset;
         int offset = 0;
         for (int i = 0; i < rounds_with_cup.size(); i++) {
             final Round r = rounds_with_cup.get(i);

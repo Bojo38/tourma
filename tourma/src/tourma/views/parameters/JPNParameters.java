@@ -1,8 +1,10 @@
-package tourma;
+package tourma.views.parameters;
 
 
 import java.awt.BorderLayout;
+import tourma.MainFrame;
 import tourma.data.Tournament;
+import tourma.jdgCoach;
 import tourma.tableModel.mjtCoaches;
 import tourma.utils.TableFormat;
 

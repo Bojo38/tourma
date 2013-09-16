@@ -55,8 +55,8 @@ public class jdgChangePairing extends JDialog implements ActionListener {
         }
 
         mRound = round;
-        mPlayersSelected = new ArrayList<JComboBox>();
-        mPlayers = new ArrayList<Coach>();
+        mPlayersSelected = new ArrayList<>();
+        mPlayers = new ArrayList<>();
 
         for (int i = 0; i < mRound.getMatchs().size(); i++) {
             final Match m = mRound.getMatchs().get(i);
@@ -149,11 +149,12 @@ public class jdgChangePairing extends JDialog implements ActionListener {
     }
     }//GEN-LAST:event_jbtOKActionPerformed
 
+    @Override
     public void actionPerformed(final ActionEvent e) {
        final  JComboBox jcb = (JComboBox) e.getSource();
         
         Coach oldCoach = null;
-        Coach newCoach = null;
+        Coach newCoach;
 
         newCoach = mPlayersTmp.get(jcb.getSelectedIndex());
         for (int i = 0; i < mPlayersSelected.size(); i++) {
@@ -185,7 +186,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
 
     public void update() {
 
-        final ArrayList<String> playersNames = new ArrayList<String>();
+        final ArrayList<String> playersNames = new ArrayList<>();
         for (int i = 0; i < mPlayersTmp.size(); i++) {
             playersNames.add(mPlayersTmp.get(i).mName + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - {0} ({1})"), new Object[] {mPlayersTmp.get(i).mTeam, mPlayersTmp.get(i).mRoster.mName}));
         }

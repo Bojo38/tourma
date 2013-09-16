@@ -21,9 +21,10 @@ public class Group implements XMLExport {
 
     public Group(final String name) {
         mName = name;
-        mRosters = new ArrayList<RosterType>();
+        mRosters = new ArrayList<>();
     }
 
+    @Override
     public Element getXMLElement() {
         final Element group = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"));
         group.setAttribute(StringConstants.CS_NAME, this.mName);
@@ -35,6 +36,7 @@ public class Group implements XMLExport {
         return group;
     }
 
+    @Override
     public void setXMLElement(final Element group) {
         mName = group.getAttributeValue(StringConstants.CS_NAME);
 

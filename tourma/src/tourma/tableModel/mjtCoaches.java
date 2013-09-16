@@ -7,12 +7,13 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import tourma.data.Coach;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.data.Coach;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
 
@@ -28,6 +29,7 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
         mCoachs = coachs;
     }
 
+    @Override
     public int getColumnCount() {
 
         int result = 8;
@@ -37,37 +39,49 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
         return result;
     }
 
+    @Override
     public int getRowCount() {
         return mCoachs.size();
     }
 
+    @Override
     public String getColumnName(final int col) {
-        String val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String val = "";
+        ResourceBundle bundle=java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
         switch (col) {
             case 0:
-                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                val = "#";
+                break;
             case 1:
-                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH);
+                val = bundle.getString("Coach");
+                break;
             case 2:
-                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
+                val = bundle.getString("Team");
+                break;
             case 3:
                 val = "Roster";
+                break;
             case 4:
                 val = "NAF";
+                break;
             case 5:
-                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ranking");
+                val = bundle.getString("Ranking");
+                break;
             case 8:
                 val ="Clan";
+                break;
             case 6:
                 val = "";
                 break;
             case 7:
                 val = "Classement";
+                break;
             default:
         }
         return val;
     }
 
+    @Override
     public Object getValueAt(final int row, final int col) {
         Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mCoachs.size() > 0) {
@@ -110,6 +124,7 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
         return val;
     }
 
+    @Override
     public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
@@ -118,6 +133,7 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
      * Don't need to implement this method unless your table's
      * editable.
      */
+    @Override
     public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
@@ -125,6 +141,7 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
         return col > 0;
     }
 
+    @Override
     public Component getTableCellRendererComponent(
             final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
 

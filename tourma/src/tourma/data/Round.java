@@ -31,9 +31,10 @@ public class Round implements XMLExport {
     public boolean mLooserCup=false;
     
     public Round() {
-        mMatchs = new ArrayList<Match>();
+        mMatchs = new ArrayList<>();
     }
 
+    @Override
     public String toString()
     {
         final int index=Tournament.getTournament().getRounds().indexOf(this);
@@ -53,6 +54,7 @@ public class Round implements XMLExport {
         return mHour;
     }
 
+    @Override
     public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"),Locale.getDefault());
         final Element round = new Element(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROUND"));
@@ -72,6 +74,7 @@ public class Round implements XMLExport {
         return round;
     }
 
+    @Override
     public void setXMLElement(final Element round) {
         final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"),Locale.getDefault());
 

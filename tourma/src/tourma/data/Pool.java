@@ -16,10 +16,11 @@ import tourma.utility.StringConstants;
  */
 public class Pool implements XMLExport {
 
-    public ArrayList<Coach> mCoachs = new ArrayList<Coach>();
-    public ArrayList<Team> mTeams = new ArrayList<Team>();
+    public ArrayList<Coach> mCoachs = new ArrayList<>();
+    public ArrayList<Team> mTeams = new ArrayList<>();
     public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
+    @Override
     public Element getXMLElement() {
         final Element pool = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POOL"));
         pool.setAttribute(StringConstants.CS_NAME, this.mName);
@@ -36,6 +37,7 @@ public class Pool implements XMLExport {
         return pool;
     }
 
+    @Override
     public void setXMLElement(final Element pool) {
        mName = pool.getAttributeValue(StringConstants.CS_NAME);
         

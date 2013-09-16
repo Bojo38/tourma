@@ -10,14 +10,10 @@
  */
 package tourma.views.report;
 
-import tourma.tableModel.mjtRanking;
-import tourma.*;
-import tourma.data.Tournament;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-
 import java.awt.Dimension;
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -29,13 +25,16 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import tourma.*;
+import tourma.data.Tournament;
+import tourma.tableModel.mjtRanking;
 import tourma.utility.StringConstants;
 
 /**
@@ -166,15 +165,14 @@ public class jdgRanking extends javax.swing.JDialog {
             final File export = jfc.getSelectedFile();
 
             try {
-                final FileReader in = new FileReader(mFilename);
-                final FileWriter out = new FileWriter(export);
-                int c;
-
-                while ((c = in.read()) != -1) {
-                    out.write(c);
+                final FileWriter out;
+                try (FileReader in = new FileReader(mFilename)) {
+                    out = new FileWriter(export);
+                    int c;
+                    while ((c = in.read()) != -1) {
+                        out.write(c);
+                    }
                 }
-
-                in.close();
                 out.close();
             } catch (FileNotFoundException fnf) {
                 JOptionPane.showMessageDialog(this, fnf.getLocalizedMessage());
@@ -245,11 +243,7 @@ public class jdgRanking extends javax.swing.JDialog {
             temp.process(root, out);
             out.flush();
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (TemplateException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (URISyntaxException e) {
+        } catch (IOException | TemplateException | URISyntaxException e) {
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
         }
         return address;

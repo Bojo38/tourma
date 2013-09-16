@@ -10,11 +10,11 @@
  */
 package tourma;
 
+import tourma.views.JPNCup;
+import tourma.views.parameters.JPNParameters;
+import tourma.views.round.JPNStatistics;
+import tourma.views.round.JPNRound;
 import java.awt.BorderLayout;
-import tourma.utility.ExtensionFileFilter;
-import tourma.views.system.jdgRevisions;
-import tourma.views.system.jdgAbout;
-import tourma.data.Tournament;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
@@ -25,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.ProgressMonitor;
-import tourma.views.system.jdgOnlineHelp;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -36,9 +35,14 @@ import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.RosterType;
 import tourma.data.Round;
-import tourma.utils.Generation;
+import tourma.data.Tournament;
+import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
+import tourma.utils.Generation;
 import tourma.utils.NAF;
+import tourma.views.system.jdgAbout;
+import tourma.views.system.jdgOnlineHelp;
+import tourma.views.system.jdgRevisions;
 
 /**
  *
@@ -58,10 +62,10 @@ public class MainFrame extends javax.swing.JFrame {
         this.setSize(800, 600);
         initComponents();
 
-        final ArrayList<String> StartOptions = new ArrayList<String>();
+        final ArrayList<String> StartOptions = new ArrayList<>();
         StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGame"));
         StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
-        final int res = JOptionPane.showOptionDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
+        final int res = JOptionPane.showOptionDialog(null, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
 
         if (res == 0) {
             jmiNouveauActionPerformed(null);
@@ -69,7 +73,7 @@ public class MainFrame extends javax.swing.JFrame {
             final JFileChooser jfc = new JFileChooser();
             final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
             jfc.setFileFilter(filter1);
-            if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
                 mFile =
                         jfc.getSelectedFile();
@@ -492,7 +496,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (res == JOptionPane.CANCEL_OPTION) {
         } else {
             if (res == JOptionPane.YES_OPTION) {
-                if (mFile.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+                if (mFile.getName().equals("")) {
                     jmiSaveAsActionPerformed(null);
                 } else {
                     jmiSaveActionPerformed(null);
@@ -505,22 +509,18 @@ public class MainFrame extends javax.swing.JFrame {
     private void jmiRevisionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRevisionsActionPerformed
         jdgRevisions jdg = new jdgRevisions(this, true);
         jdg.setVisible(true);
-        jdg =
-                null;
 }//GEN-LAST:event_jmiRevisionsActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiAideEnLigneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAideEnLigneActionPerformed
         jdgOnlineHelp jdg = new jdgOnlineHelp(this, false);
         jdg.setVisible(true);
-        jdg =
-                null;
     }//GEN-LAST:event_jmiAideEnLigneActionPerformed
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
 
         if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS SAUVGARDER ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXIT"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (mFile.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+            if (mFile.getName().equals("")) {
                 jmiSaveAsActionPerformed(null);
             } else {
                 jmiSaveActionPerformed(null);
@@ -532,8 +532,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void jmiAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAboutActionPerformed
         jdgAbout jdg = new jdgAbout(this, true);
         jdg.setVisible(true);
-        jdg =
-                null;
 }//GEN-LAST:event_jmiAboutActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -542,7 +540,7 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiSaveAsActionPerformed(null);
             } else {
 
-                if (mFile.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+                if (mFile.getName().equals("")) {
                     jmiSaveAsActionPerformed(null);
                 } else {
                     jmiSaveActionPerformed(null);
@@ -591,8 +589,8 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OddTeamNumber"));
             } else {
 
-                final ArrayList<String> labels = new ArrayList<String>();
-                final ArrayList<Integer> Options = new ArrayList<Integer>();
+                final ArrayList<String> labels = new ArrayList<>();
+                final ArrayList<Integer> Options = new ArrayList<>();
 
                 /**
                  * Random possible ?
@@ -757,6 +755,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static void main(final String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 MainFrame.getMainFrame().setVisible(true);
             }

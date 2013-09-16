@@ -39,10 +39,12 @@ public class ExtensionFileFilter extends FileFilter {
         }
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public boolean accept(final File file) {
         boolean result = false;
         if (file.isDirectory()) {

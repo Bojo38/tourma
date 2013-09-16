@@ -4,14 +4,14 @@
  */
 package tourma.tableModel;
 
-import tourma.data.ObjectRanking;
-import tourma.data.Round;
-import tourma.data.Match;
-import tourma.data.Coach;
-import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Collections;
+import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Match;
+import tourma.data.ObjectRanking;
 import tourma.data.Pool;
+import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
 
@@ -34,11 +34,12 @@ public class mjtRankingIndiv extends mjtRanking {
         sortDatas();
     }
 
+    @Override
     protected void sortDatas() {
         mDatas.clear();
-        mDatas = new ArrayList<ObjectRanking>();
+        mDatas = new ArrayList<>();
 
-        final ArrayList<Round> rounds = new ArrayList<Round>();
+        final ArrayList<Round> rounds = new ArrayList<>();
 
         if (mRoundOnly) {
             rounds.add(Tournament.getTournament().getRounds().get(mRound));
@@ -126,41 +127,41 @@ public class mjtRankingIndiv extends mjtRanking {
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
-        if (mForPool) {
+        if ((mForPool)&&(!tour.getParams().mTeamTournament)) {
             if (mObjects.size() > tour.getPools().get(0).mCoachs.size()) {
                 final int nbPool = tour.getPools().size();
                 Pool p = null;
                 final ArrayList<mjtRankingIndiv> pRank = new ArrayList<mjtRankingIndiv>();
                 for (int j = 0; j < nbPool; j++) {
                     p = tour.getPools().get(j);
-                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mCoachs, mTeamTournament, mRoundOnly,false);
+                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mCoachs, mTeamTournament, mRoundOnly, false);
                     pRank.add(mjtr);
                 }
 
 
-                final ArrayList datas = new ArrayList<ObjectRanking>();
+                final ArrayList datas = new ArrayList<>();
 
                 for (int i = 0; i < tour.getPools().get(0).mCoachs.size(); i++) {
-                    final ArrayList<Coach> rank = new ArrayList<Coach>();
+                    final ArrayList<Coach> rank = new ArrayList<>();
                     for (int j = 0; j < nbPool; j++) {
                         final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
                         rank.add((Coach) obj.getObject());
                     }
-                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly,false);
+                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
 
                     for (int j = 0; j < mjtr.mDatas.size(); j++) {
                         datas.add(mjtr.mDatas.get(j));
                     }
                 }
 
-                final ArrayList<Coach> rank = new ArrayList<Coach>();
+                final ArrayList<Coach> rank = new ArrayList<>();
                 for (int i = 0; i < tour.getCoachs().size(); i++) {
 
                     if (!tour.getCoachs().get(i).mActive) {
                         rank.add(tour.getCoachs().get(i));
                     }
                 }
-                final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly,false);
+                final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
 
                 for (int j = 0; j < mjtr.mDatas.size(); j++) {
                     datas.add(mjtr.mDatas.get(j));
@@ -186,6 +187,7 @@ public class mjtRankingIndiv extends mjtRanking {
 
      return value;
      }*/
+    @Override
     public int getColumnCount() {
         int result = 9;
         if (mTeamTournament) {
@@ -247,61 +249,58 @@ public class mjtRankingIndiv extends mjtRanking {
         return result;
     }
 
+    @Override
     public Object getValueAt(final int row, final int col) {
-
-        final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
-
-        Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
-
-        int cl = col;
-        if (mTeamTournament) {
-            if (col > 1) {
-                cl = col - 1;
+        Object object = "";
+        if (mDatas.size() > row) {
+            final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
+            int cl = col;
+            if (mTeamTournament) {
+                if (col > 1) {
+                    cl = col - 1;
+                }
+                if (col == 1) {
+                    object = ((Coach) obj.getObject()).mTeamMates.mName;
+                }
             }
-            if (col == 1) {
-                object = ((Coach) obj.getObject()).mTeamMates.mName;
-            }
-        }
 
-        switch (cl) {
-            case 0:
-                object = row + 1;
-                break;
-            case 1:
-                if (mTeamTournament) {
-                    if (col != 1) {
+            switch (cl) {
+                case 0:
+                    object = row + 1;
+                    break;
+                case 1:
+                    if (mTeamTournament) {
+                        if (col != 1) {
+                            object = ((Coach) obj.getObject()).mTeam;
+                        }
+                    } else {
                         object = ((Coach) obj.getObject()).mTeam;
                     }
-                } else {
-                    object = ((Coach) obj.getObject()).mTeam;
-                }
-                break;
-            case 2:
-                object = ((Coach) obj.getObject()).mName;
-                break;
-            case 3:
-                object = ((Coach) obj.getObject()).mRoster.mName;
-                break;
-            case 4:
-                object = obj.getValue1();
-                break;
-            case 5:
-                object = obj.getValue2();
-                break;
-            case 6:
-                object = obj.getValue3();
-                break;
-            case 7:
-                object = obj.getValue4();
-                break;
-            case 8:
-                object = obj.getValue5();
-                break;
-            default:
+                    break;
+                case 2:
+                    object = ((Coach) obj.getObject()).mName;
+                    break;
+                case 3:
+                    object = ((Coach) obj.getObject()).mRoster.mName;
+                    break;
+                case 4:
+                    object = obj.getValue1();
+                    break;
+                case 5:
+                    object = obj.getValue2();
+                    break;
+                case 6:
+                    object = obj.getValue3();
+                    break;
+                case 7:
+                    object = obj.getValue4();
+                    break;
+                case 8:
+                    object = obj.getValue5();
+                    break;
+                default:
+            }
         }
-
-
-
         return object;
     }
 }

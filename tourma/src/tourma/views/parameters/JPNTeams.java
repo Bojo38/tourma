@@ -2,15 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma;
+package tourma.views.parameters;
 
-import javax.swing.JOptionPane;
+import tourma.MainFrame;
 import tourma.data.Tournament;
-
 import tourma.tableModel.mjtTeams;
 import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
 import tourma.data.Team;
+import tourma.jdgCoach;
+import tourma.jdgTeam;
 
 /**
  *
@@ -126,7 +127,7 @@ public class JPNTeams extends javax.swing.JPanel {
         jbtRemoveTeam.setEnabled(!bTourStarted);
 
         if (mTournament.getParams().mTeamTournament) {
-            String text = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+            String text;
             if (mTournament.getParams().mTeamPairing == 0) {
                 text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single");
             } else {
@@ -149,8 +150,10 @@ public class JPNTeams extends javax.swing.JPanel {
         if (mTournament.getTeams().size() > jtbTeam.getSelectedRow()) {
             final Team t = mTournament.getTeams().get(jtbTeam.getSelectedRow());
             if (jtbTeam.getSelectedColumn() == 1) {
-                final String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterTeamName"), t.mName);
-                t.mName = name;
+                final jdgTeam jdg=new jdgTeam(MainFrame.getMainFrame(),true,t);
+                jdg.setVisible(true);
+                //final String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterTeamName"), t.mName);
+                //t.mName = name;
             } else if (jtbTeam.getSelectedColumn() > 1) {
                 final jdgCoach jdg = new jdgCoach(MainFrame.getMainFrame(), true, t.mCoachs.get(jtbTeam.getSelectedColumn() - 2));
                 jdg.setVisible(true);

@@ -16,7 +16,7 @@ import tourma.data.Criteria;
  *
  * @author Frederic Berger
  */
-abstract public class mjtAnnexRank extends mjtRanking {
+public abstract class mjtAnnexRank extends mjtRanking {
 
     //int _ranking_type;
     /*public static final int C_MOST_TD_POS = 0;
@@ -42,6 +42,10 @@ abstract public class mjtAnnexRank extends mjtRanking {
         sortDatas();
     }
 
+    /**
+     * this function sort the data relative to current object.
+     */
+    @Override
     abstract protected void sortDatas();
 
     @Override

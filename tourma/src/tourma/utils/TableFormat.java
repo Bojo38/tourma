@@ -21,7 +21,7 @@ public class TableFormat {
             for (int j = 0; j
                     < t.getRowCount(); j++) {
                 final Object value = t.getValueAt(j, i);
-                String tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+                String tmp = "";
                 if (value instanceof String) {
                     tmp = (String) value;
                 }

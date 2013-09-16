@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma;
+package tourma.views.round;
 
 import java.awt.Color;
 import java.text.NumberFormat;
@@ -59,8 +59,8 @@ public class JPNStatistics extends javax.swing.JPanel {
     protected void addCounterPerRoster() {
         for (int i = 0; i < mTournament.getParams().mCriterias.size(); i++) {
             Criteria crit = mTournament.getParams().mCriterias.get(i);
-            final HashMap<String, Double> plus = new HashMap<String, Double>();
-            final HashMap<String, Double> minus = new HashMap<String, Double>();
+            final HashMap<String, Double> plus = new HashMap<>();
+            final HashMap<String, Double> minus = new HashMap<>();
 
             for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
                 plus.put(RosterType.mRostersNames.get(j), 0.0);
@@ -151,11 +151,14 @@ public class JPNStatistics extends javax.swing.JPanel {
         }
     }
 
+    /**
+     *
+     */
     protected void addWinLoss() {
 
-        final HashMap<String, Integer> victories = new HashMap<String, Integer>();
-        final HashMap<String, Integer> draw = new HashMap<String, Integer>();
-        final HashMap<String, Integer> loss = new HashMap<String, Integer>();
+        final HashMap<String, Integer> victories = new HashMap<>();
+        final HashMap<String, Integer> draw = new HashMap<>();
+        final HashMap<String, Integer> loss = new HashMap<>();
 
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
             victories.put(RosterType.mRostersNames.get(i), 0);

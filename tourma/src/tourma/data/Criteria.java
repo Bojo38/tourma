@@ -44,6 +44,7 @@ public class Criteria implements XMLExport {
         mPointsTeamAgainst = 0;
     }
 
+    @Override
     public Element getXMLElement() {
         final Element crit = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITERIA"));
         crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), this.mName);
@@ -54,6 +55,7 @@ public class Criteria implements XMLExport {
         return crit;
     }
 
+    @Override
     public void setXMLElement(final Element criteria) {
         try {
             this.mName = criteria.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));

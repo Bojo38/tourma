@@ -8,27 +8,27 @@
  *
  * Created on 20 juil. 2010, 10:47:49
  */
-package tourma;
+package tourma.views.round;
 
-import tourma.tableModel.mjtRankingTeam;
-import tourma.tableModel.mjtAnnexRankTeam;
-import tourma.tableModel.mjtAnnexRank;
-import java.util.HashMap;
 import java.util.ArrayList;
-import javax.swing.JTable;
-import tourma.data.Round;
-import tourma.data.Tournament;
+import java.util.HashMap;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import tourma.MainFrame;
 import tourma.data.Criteria;
 import tourma.data.Match;
 import tourma.data.Parameters;
+import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.Tournament;
+import tourma.tableModel.mjtAnnexRank;
+import tourma.tableModel.mjtAnnexRankTeam;
 import tourma.tableModel.mjtMatchTeams;
+import tourma.tableModel.mjtRankingTeam;
+import tourma.utils.TableFormat;
 import tourma.views.report.jdgGlobal;
 import tourma.views.report.jdgRanking;
 import tourma.views.report.jdgRound;
-import tourma.utility.StringConstants;
-import tourma.utils.TableFormat;
 
 /**
  *
@@ -186,8 +186,8 @@ public class JPNTeamRound extends javax.swing.JPanel {
          for (int i = 0; i < mTournament.getRounds().size(); i++) {
              if (mRound == mTournament.getRounds().get(i)) {
                  final mjtRankingTeam model = new mjtRankingTeam(mTournament.getParams().mTeamVictoryOnly, i, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getTeams(), mRoundOnly);
-                 final HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<Criteria, mjtAnnexRank>();
-                 final HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<Criteria, mjtAnnexRank>();
+                 final HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<>();
+                 final HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<>();
                  for (int j = 0; j < mTournament.getParams().mCriterias.size(); j++) {
                      final Criteria crit = mTournament.getParams().mCriterias.get(j);
                      mjtAnnexRank annex = new mjtAnnexRankTeam(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
@@ -225,7 +225,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
 
     public void update() {
 
-        final ArrayList<Round> v = new ArrayList<Round>();
+        final ArrayList<Round> v = new ArrayList<>();
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             if (mTournament.getRounds().get(i).getHour().before(mRound.getHour())) {
                 v.add(mTournament.getRounds().get(i));
@@ -239,7 +239,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
             jpn.update();
         }
 
-        mjtRankingTeam mRankingTeam = null;
+        mjtRankingTeam mRankingTeam;
         if (mTournament.getParams().mTeamVictoryOnly) {
             mRankingTeam = new mjtRankingTeam(true, v.size() - 1, mTournament.getParams().mRankingTeam1, mTournament.getParams().mRankingTeam2, mTournament.getParams().mRankingTeam3, mTournament.getParams().mRankingTeam4, mTournament.getParams().mRankingTeam5, mTournament.getTeams(), mRoundOnly);
         } else {
@@ -252,7 +252,7 @@ public class JPNTeamRound extends javax.swing.JPanel {
         TableFormat.setColumnSize(jtbRankingTeam);
 
         if (mJtbTeamMatch != null) {
-            final ArrayList<Team> teams = new ArrayList<Team>();
+            final ArrayList<Team> teams = new ArrayList<>();
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
                 final Match m = mRound.getMatchs().get(i);
                 final Team team1 = m.mCoach1.mTeamMates;

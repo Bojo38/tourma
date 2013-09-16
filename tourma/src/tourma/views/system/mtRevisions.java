@@ -26,14 +26,17 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
         mDescriptions = descriptions;
     }
 
+    @Override
     public int getColumnCount() {
         return 2;
     }
 
+    @Override
     public int getRowCount() {
         return mVersions.size();
     }
 
+    @Override
     public String getColumnName(final int col) {
         String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
@@ -48,6 +51,7 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
         return result;
     }
 
+    @Override
     public Object getValueAt(final int row,final int col) {
         String tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
@@ -62,6 +66,7 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
         return tmp;
     }
 
+    @Override
     public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
@@ -70,12 +75,14 @@ public class mtRevisions extends AbstractTableModel implements TableCellRenderer
      * Don't need to implement this method unless your table's
      * editable.
      */
+    @Override
     public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
+    @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value,final  boolean isSelected,final  boolean hasFocus, final int row, final int column) {
         return new JLabel((String) value);
     }

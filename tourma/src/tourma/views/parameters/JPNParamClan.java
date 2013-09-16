@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma;
+package tourma.views.parameters;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;

@@ -4,17 +4,17 @@
  */
 package tourma.tableModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import tourma.data.Coach;
+import tourma.data.Criteria;
+import tourma.data.Match;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
-import tourma.data.Value;
-import tourma.data.Tournament;
-import tourma.data.Match;
-import tourma.data.Coach;
-import java.util.Collections;
-import java.util.ArrayList;
-import tourma.data.Criteria;
 import tourma.data.Pool;
 import tourma.data.Team;
+import tourma.data.Tournament;
+import tourma.data.Value;
 import tourma.utility.StringConstants;
 
 /**
@@ -293,10 +293,11 @@ public class mjtRankingTeam extends mjtRanking {
         return value;
     }
 
+    @Override
     protected void sortDatas() {
 
         mDatas.clear();
-        mDatas = new ArrayList<ObjectRanking>();
+        mDatas = new ArrayList<>();
         for (int i = 0; i < mObjects.size(); i++) {
             final Team t = (Team) mObjects.get(i);
             final int value1 = getValue(t, mRankingType1, mRound);
@@ -319,19 +320,18 @@ public class mjtRankingTeam extends mjtRanking {
         if ((tour.getPools().size() > 0) && (tour.getRounds().size() > 0) && (!tour.getRounds().get(mRound).mCup)) {
             if (mObjects.size() > tour.getPools().get(0).mTeams.size()) {
                 final int nbPool = tour.getPools().size();
-                Pool p = null;
-                final ArrayList<mjtRankingTeam> pRank = new ArrayList<mjtRankingTeam>();
+                Pool p;
+                final ArrayList<mjtRankingTeam> pRank = new ArrayList<>();
                 for (int j = 0; j < nbPool; j++) {
                     p = tour.getPools().get(j);
                     final mjtRankingTeam mjtr = new mjtRankingTeam(mTeamVictory, mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mTeams, mRoundOnly);
                     pRank.add(mjtr);
                 }
 
-
-                final ArrayList datas = new ArrayList<ObjectRanking>();
+                final ArrayList datas = new ArrayList<>();
 
                 for (int i = 0; i < tour.getPools().get(0).mTeams.size(); i++) {
-                    final ArrayList<Team> rank = new ArrayList<Team>();
+                    final ArrayList<Team> rank = new ArrayList<>();
                     for (int j = 0; j < nbPool; j++) {
                         final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
                         rank.add((Team) obj.getObject());
@@ -348,10 +348,12 @@ public class mjtRankingTeam extends mjtRanking {
         }
     }
 
+    @Override
     public int getColumnCount() {
         return 7;
     }
 
+    @Override
     public String getColumnName(final int col) {
         String val = "";
         switch (col) {
@@ -440,7 +442,7 @@ public class mjtRankingTeam extends mjtRanking {
                 for (int j = 0; j < Tournament.getTournament().getParams().mCriterias.size(); j++) {
 
                     final Criteria cri = Tournament.getTournament().getParams().mCriterias.get(j);
-                    final Value va = m.mValues.get(cri.mName);
+                    final Value va = m.mValues.get(cri);
                     value += va.mValue1 + cri.mPointsFor;
                     value += va.mValue2 + cri.mPointsAgainst;
                 }
@@ -456,7 +458,7 @@ public class mjtRankingTeam extends mjtRanking {
                 }
                 for (int j = 0; j < Tournament.getTournament().getParams().mCriterias.size(); j++) {
                     final Criteria cri = Tournament.getTournament().getParams().mCriterias.get(j);
-                    final Value va = m.mValues.get(cri.mName);
+                    final Value va = m.mValues.get(cri);
                     value += va.mValue2 + cri.mPointsFor;
                     value += va.mValue1 + cri.mPointsAgainst;
                 }
@@ -550,6 +552,7 @@ public class mjtRankingTeam extends mjtRanking {
      }
      return value;
      }*/
+    @Override
     public Object getValueAt(final int row, final int col) {
         Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mDatas.size() > row) {

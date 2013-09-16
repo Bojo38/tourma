@@ -1,13 +1,14 @@
-package tourma;
+package tourma.views.round;
 
 import java.util.ArrayList;
+import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
 import tourma.data.Tournament;
 import tourma.tableModel.mjtRankingIndiv;
-import tourma.views.report.jdgRanking;
 import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
+import tourma.views.report.jdgRanking;
 
 /*
  * To change this template, choose Tools | Templates
@@ -73,7 +74,7 @@ public class JPNGroup extends javax.swing.JPanel {
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jbtGeneralClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtGeneralClan.setText(bundle.getString("GeneralRankingKey")); // NOI18N
         jbtGeneralClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,7 +87,7 @@ public class JPNGroup extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public void update() {
-        final ArrayList<Coach> ArrayList = new ArrayList<Coach>();
+        final ArrayList<Coach> ArrayList = new ArrayList<>();
 
         for (int i = 0; i < mTournament.getCoachs().size(); i++) {
             final Coach c = mTournament.getCoachs().get(i);

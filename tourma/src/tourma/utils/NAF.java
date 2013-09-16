@@ -5,6 +5,7 @@
 package tourma.utils;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import tourma.data.Coach;
 import tourma.data.Tournament;
@@ -29,91 +31,89 @@ public class NAF {
         try {
             URL url = new URL("http://member.thenaf.net/index.php?module=NAF&type=coachpage&coach=" + Name);
             InputStream is = url.openConnection().getInputStream();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                ArrayList<String> rosters = new ArrayList<>();
+                ArrayList<Double> ranks = new ArrayList<>();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-            ArrayList<String> rosters = new ArrayList<String>();
-            ArrayList<Double> ranks = new ArrayList<Double>();
-
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("pn-maincontent")) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains("pn-maincontent")) {
 
 
-                    int pos = line.indexOf("<table bgcolor=\"#858390\" cellpadding=\"2\" cellspacing=\"1\" border=\"0\"><tr><th bgcolor=\"#D9D8D0\" colspan=\"7\">Rankings</th></tr>");
-                    String buffer = line.substring(pos);
-                    pos = buffer.indexOf("</table>");
-                    buffer = buffer.substring(0, pos + 8);
+                        int pos = line.indexOf("<table bgcolor=\"#858390\" cellpadding=\"2\" cellspacing=\"1\" border=\"0\"><tr><th bgcolor=\"#D9D8D0\" colspan=\"7\">Rankings</th></tr>");
+                        String buffer = line.substring(pos);
+                        pos = buffer.indexOf("</table>");
+                        buffer = buffer.substring(0, pos + 8);
 
 
-                    System.out.println(buffer);
-                    final SAXBuilder sxb = new SAXBuilder();
+                        System.out.println(buffer);
+                        final SAXBuilder sxb = new SAXBuilder();
 
-                    pos = buffer.indexOf("coach=");
-                    String subBuff = buffer.substring(pos + 6);
-                    pos = subBuff.indexOf("&amp;");
-                    subBuff = subBuff.substring(0, pos);
+                        pos = buffer.indexOf("coach=");
+                        String subBuff = buffer.substring(pos + 6);
+                        pos = subBuff.indexOf("&amp;");
+                        subBuff = subBuff.substring(0, pos);
 
-                    coach.mNaf = Integer.parseInt(subBuff);
+                        coach.mNaf = Integer.parseInt(subBuff);
 
-                    try {
-                        StringReader Sreader = new StringReader(buffer);
-                        final org.jdom2.Document document = sxb.build(Sreader);
-                        final Element racine = document.getRootElement();
+                        try {
+                            StringReader Sreader = new StringReader(buffer);
+                            final org.jdom2.Document document = sxb.build(Sreader);
+                            final Element racine = document.getRootElement();
 
-                        List trs = racine.getChildren("tr");
-                        final Iterator i = trs.iterator();
-                        String roster = "";
-                        double rank = 150;
+                            List trs = racine.getChildren("tr");
+                            final Iterator i = trs.iterator();
+                            String roster = "";
+                            double rank = 150;
 
-                        while (i.hasNext()) {
-                            final Element tr = (Element) i.next();
-                            List tds = tr.getChildren("td");
-                            final Iterator j = tds.iterator();
-                            int index = 0;
+                            while (i.hasNext()) {
+                                final Element tr = (Element) i.next();
+                                List tds = tr.getChildren("td");
+                                final Iterator j = tds.iterator();
+                                int index = 0;
 
 
-                            while (j.hasNext()) {
-                                final Element td = (Element) j.next();
-                                if (index == 0) {
-                                    // Roster
-                                    Element a = td.getChild("a");
-                                    roster = a.getText();
-                                    rosters.add(roster);
-                                } else {
-                                    if (index == 1) {
+                                while (j.hasNext()) {
+                                    final Element td = (Element) j.next();
+                                    if (index == 0) {
                                         // Roster
-                                        rank = Double.parseDouble(td.getText());
-                                        ranks.add(new Double(rank));
+                                        Element a = td.getChild("a");
+                                        roster = a.getText();
+                                        rosters.add(roster);
                                     } else {
-                                        break;
+                                        if (index == 1) {
+                                            // Roster
+                                            rank = Double.parseDouble(td.getText());
+                                            ranks.add(new Double(rank));
+                                        } else {
+                                            break;
+                                        }
                                     }
+                                    index++;
                                 }
-                                index++;
-                            }
 
-                            if (roster.equals(Tournament.getRosterTranslation(Name))) {
-                                naf = rank;
-                                coach.mNafRank = naf;
-                                break;
+                                if (roster.equals(Tournament.getRosterTranslation(Name))) {
+                                    naf = rank;
+                                    coach.mNafRank = naf;
+                                    break;
+                                }
                             }
+                        } catch (JDOMException | IOException | NumberFormatException e) {
                         }
-                    } catch (Exception e) {
+                    }
+                }
+
+                for (int i = 0; i < rosters.size(); i++) {
+                    Name = Tournament.getRosterTranslation(coach.mRoster.mName);
+                    String name2=rosters.get(i);
+                    if (name2.equals(Name)) {
+                        naf = ranks.get(i);
+                        coach.mNafRank = naf;
+                        break;
                     }
                 }
             }
-
-            for (int i = 0; i < rosters.size(); i++) {
-                Name = Tournament.getRosterTranslation(coach.mRoster.mName);
-                String name2=rosters.get(i);
-                if (name2.equals(Name)) {
-                    naf = ranks.get(i);
-                    coach.mNafRank = naf;
-                    break;
-                }
-            }
-            reader.close();
-        } catch (Exception exc) {
+        } catch (IOException | NumberFormatException exc) {
             if (exc instanceof MalformedURLException) {
             }
         }

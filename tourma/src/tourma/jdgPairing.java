@@ -55,12 +55,12 @@ public class jdgPairing extends javax.swing.JDialog {
 
         mTeam1 = team1;
         mTeam2 = team2;
-        mCoachs = new HashMap<String, Coach>();
+        mCoachs = new HashMap<>();
 
         this.setTitle(team1.mName + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS {0}"), team2.mName)));
 
         mRound = round;
-        mMatchs = new ArrayList<Match>();
+        mMatchs = new ArrayList<>();
 
         mItems1 = new ArrayList();
         for (int i = 0; i < mTeam1.mCoachs.size(); i++) {

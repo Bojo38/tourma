@@ -30,14 +30,17 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
         mDone = done;
     }
 
+    @Override
     public int getColumnCount() {
         return 4;
     }
 
+    @Override
     public int getRowCount() {
         return mTeams1.size();
     }
 
+    @Override
     public String getColumnName(final int col) {
         String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
@@ -58,6 +61,7 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
         return result;
     }
 
+    @Override
     public Object getValueAt(final int row, final int col) {
         Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
@@ -94,6 +98,7 @@ public class mjtPairs extends AbstractTableModel implements TableCellRenderer {
         return false;
     }
 
+    @Override
     public Component getTableCellRendererComponent(
             final JTable table,final  Object value,final  boolean isSelected, final boolean hasFocus,final  int row,final  int column) {
        final  JTextField jlb = new JTextField();

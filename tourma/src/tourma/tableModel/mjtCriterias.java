@@ -28,6 +28,7 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
         mTour = tour;
     }
 
+    @Override
     public int getColumnCount() {
         int result = 3;
         if (mParams.mTeamTournament) {
@@ -36,10 +37,12 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
         return result;
     }
 
+    @Override
     public int getRowCount() {
         return mParams.mCriterias.size();
     }
 
+    @Override
     public String getColumnName(final int col) {
         String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
@@ -63,6 +66,7 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
         return result;
     }
 
+    @Override
     public Object getValueAt(final int row, final int col) {
 
         Object result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
@@ -130,6 +134,7 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
         return mTour.getRounds().size() <= 0;
     }
 
+    @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
 

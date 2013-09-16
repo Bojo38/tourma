@@ -4,14 +4,14 @@
  */
 package tourma.tableModel;
 
-import tourma.data.Round;
-import tourma.data.Match;
-import tourma.data.Coach;
-import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Collections;
 import tourma.data.Clan;
+import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Match;
 import tourma.data.ObjectAnnexRanking;
+import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
 
@@ -37,20 +37,21 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
         mRoundOnly = round_only;
     }
 
+    @Override
     protected void sortDatas() {
 
         mDatas.clear();
-        mDatas = new ArrayList<ObjectAnnexRanking>();
+        mDatas = new ArrayList<>();
         final ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
         final ArrayList<Clan> clans = (ArrayList<Clan>) mObjects;
 
         for (int i = 0; i < clans.size(); i++) {
-            final ArrayList<Integer> Vvalue = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue1 = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue2 = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue3 = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue4 = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue5 = new ArrayList<Integer>();
+            final ArrayList<Integer> Vvalue = new ArrayList<>();
+            final ArrayList<Integer> Vvalue1 = new ArrayList<>();
+            final ArrayList<Integer> Vvalue2 = new ArrayList<>();
+            final ArrayList<Integer> Vvalue3 = new ArrayList<>();
+            final ArrayList<Integer> Vvalue4 = new ArrayList<>();
+            final ArrayList<Integer> Vvalue5 = new ArrayList<>();
 
             int cvalue = 0;
             int cvalue1 = 0;

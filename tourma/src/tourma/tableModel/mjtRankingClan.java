@@ -4,13 +4,13 @@
  */
 package tourma.tableModel;
 
-import tourma.data.ObjectRanking;
-import tourma.data.Match;
-import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Collections;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Match;
+import tourma.data.ObjectRanking;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
 
@@ -28,19 +28,20 @@ public class mjtRankingClan extends mjtRanking {
         sortDatas();
     }
 
+    @Override
     protected void sortDatas() {
 
         mDatas.clear();
-        mDatas = new ArrayList<ObjectRanking>();
+        mDatas = new ArrayList<>();
         final ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
         final ArrayList<Clan> clans = (ArrayList<Clan>) mObjects;
 
         for (int i = 0; i < clans.size(); i++) {
-            final ArrayList<Integer> Vvalue1 = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue2 = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue3 = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue4 = new ArrayList<Integer>();
-            final ArrayList<Integer> Vvalue5 = new ArrayList<Integer>();
+            final ArrayList<Integer> Vvalue1 = new ArrayList<>();
+            final ArrayList<Integer> Vvalue2 = new ArrayList<>();
+            final ArrayList<Integer> Vvalue3 = new ArrayList<>();
+            final ArrayList<Integer> Vvalue4 = new ArrayList<>();
+            final ArrayList<Integer> Vvalue5 = new ArrayList<>();
 
             int cvalue1 = 0;
             int cvalue2 = 0;
@@ -262,12 +263,14 @@ public class mjtRankingClan extends mjtRanking {
         Collections.sort(mDatas);
     }
 
+    @Override
     public int getColumnCount() {
         return 7;
 
 
     }
 
+    @Override
     public String getColumnName(final int col) {
         String result=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
@@ -390,6 +393,7 @@ public class mjtRankingClan extends mjtRanking {
 
 
     }*/
+    @Override
     public Object getValueAt(final int row,final int col) {
         Object object=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         final ObjectRanking obj = (ObjectRanking) mDatas.get(row);

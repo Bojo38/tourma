@@ -20,17 +20,18 @@ public class Team implements Comparable, XMLExport {
     public static Team sNullTeam = new Team(StringConstants.CS_NONE);
     public ArrayList<Coach> mCoachs;
     public String mName;
-    public static HashMap<String, Team> sTeamMap = new HashMap<String, Team>();
+    public static HashMap<String, Team> sTeamMap = new HashMap<>();
 
     public Team() {
-        mCoachs = new ArrayList<Coach>();
+        mCoachs = new ArrayList<>();
     }
 
     public Team(final String name) {
         mName = name;
-        mCoachs = new ArrayList<Coach>();
+        mCoachs = new ArrayList<>();
     }
 
+    @Override
     public int compareTo(final Object obj) {
         int result = -1;
         if (obj instanceof Team) {
@@ -66,7 +67,7 @@ public class Team implements Comparable, XMLExport {
     }
 
     public ArrayList<Coach> getActivePlayers() {
-        final ArrayList<Coach> v = new ArrayList<Coach>();
+        final ArrayList<Coach> v = new ArrayList<>();
         if (this == sNullTeam) {
             for (int i = 0; i < Tournament.getTournament().getParams().mTeamMatesNumber; i++) {
                 v.add(Coach.sNullCoach);
@@ -81,6 +82,7 @@ public class Team implements Comparable, XMLExport {
         return v;
     }
 
+    @Override
     public Element getXMLElement() {
         final Element team = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
         team.setAttribute(StringConstants.CS_NAME, this.mName);
@@ -92,6 +94,7 @@ public class Team implements Comparable, XMLExport {
         return team;
     }
 
+    @Override
     public void setXMLElement(final Element team) {
         this.mName = team.getAttributeValue(StringConstants.CS_NAME);
         final List coachs2 = team.getChildren(StringConstants.CS_COACH);

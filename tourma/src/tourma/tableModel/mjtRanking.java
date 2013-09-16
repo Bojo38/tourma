@@ -4,12 +4,6 @@
  */
 package tourma.tableModel;
 
-import tourma.data.ObjectRanking;
-import tourma.data.Parameters;
-import tourma.data.Tournament;
-import tourma.data.Match;
-import tourma.data.Coach;
-import tourma.data.Value;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -18,7 +12,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Match;
+import tourma.data.ObjectRanking;
+import tourma.data.Parameters;
+import tourma.data.Tournament;
+import tourma.data.Value;
 import tourma.utility.StringConstants;
 
 /**
@@ -34,7 +34,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
     int mRankingType3;
     int mRankingType4;
     int mRankingType5;
-    ArrayList mDatas = new ArrayList<ObjectRanking>();
+    ArrayList mDatas = new ArrayList<>();
 
     public ArrayList<ObjectRanking> getSortedDatas() {
         return mDatas;
@@ -53,13 +53,16 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
 
     abstract protected void sortDatas();
 
+    @Override
     abstract public int getColumnCount();
 
     @Override
     abstract public String getColumnName(int col);
 
+    @Override
     abstract public Object getValueAt(int row, int col);
 
+    @Override
     public int getRowCount() {
         return mObjects.size();
     }
@@ -274,6 +277,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         return false;
     }
 
+    @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
         jlb.setEditable(false);

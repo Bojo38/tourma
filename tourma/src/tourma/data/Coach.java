@@ -6,7 +6,6 @@ package tourma.data;
 
 import java.awt.Color;
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -25,10 +24,10 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Coach implements Comparable, XMLExport {
+public final class Coach implements Comparable, XMLExport {
 
     public static Coach sNullCoach = new Coach(StringConstants.CS_NONE);
-    public static HashMap<String, Coach> sCoachMap = new HashMap<String, Coach>();
+    public static HashMap<String, Coach> sCoachMap = new HashMap<>();
     /**
      * Clan
      */
@@ -63,14 +62,14 @@ public class Coach implements Comparable, XMLExport {
     }
 
     public Coach() {
-        mMatchs = new ArrayList<Match>();
+        mMatchs = new ArrayList<>();
         mActive = true;
         mColor = generateRandomColor(Color.WHITE);
 
     }
 
     public Coach(final String name) {
-        mMatchs = new ArrayList<Match>();
+        mMatchs = new ArrayList<>();
         mActive = false;
         mName = name;
         mTeam = StringConstants.CS_NONE;
@@ -83,6 +82,7 @@ public class Coach implements Comparable, XMLExport {
         }
     }
 
+    @Override
     public int compareTo(final Object obj) {
         int result = -1;
 
@@ -95,6 +95,7 @@ public class Coach implements Comparable, XMLExport {
         return result;
     }
 
+    @Override
     public Element getXMLElement() {
 
         final Element coach = new Element(StringConstants.CS_COACH);
@@ -157,6 +158,7 @@ public class Coach implements Comparable, XMLExport {
         return coach;
     }
 
+    @Override
     public void setXMLElement(final Element coach) {
         try {
             this.mName = coach.getAttributeValue(StringConstants.CS_NAME);
@@ -176,7 +178,7 @@ public class Coach implements Comparable, XMLExport {
             }
 
             if (this.mClan == null) {
-                if (Tournament.getTournament().getClans().size() == 0) {
+                if (Tournament.getTournament().getClans().isEmpty()) {
                     final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
                     Tournament.getTournament().getClans().add(new Clan(bundle.getString("NoneKey")));
 

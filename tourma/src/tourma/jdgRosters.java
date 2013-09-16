@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.RosterType;
-import tourma.utility.StringConstants;
 
 /**
  *
@@ -152,7 +151,7 @@ public class jdgRosters extends javax.swing.JDialog {
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        final ArrayList<String> rosters = new ArrayList<String>();
+        final ArrayList<String> rosters = new ArrayList<>();
 
         for (int i = 0; i < mModel.getSize(); i++) {
             rosters.add((String) mModel.get(i));

@@ -27,6 +27,7 @@ public class Ranking implements XMLExport {
         mValueType = valueType;
     }
 
+    @Override
     public Element getXMLElement() {
         final Element rank = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANKING"));
         rank.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), mName));
@@ -41,6 +42,7 @@ public class Ranking implements XMLExport {
         return rank;
     }
 
+    @Override
     public void setXMLElement(final Element e) {
         //  Declared only for interface
     }

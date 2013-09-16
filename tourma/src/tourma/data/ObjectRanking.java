@@ -54,6 +54,7 @@ public class ObjectRanking implements Comparable, XMLExport {
         mValue5 = value5;
     }
 
+    @Override
     public int compareTo(final Object o) {
         int value = -65535;
         if (o instanceof ObjectRanking) {
@@ -81,6 +82,7 @@ public class ObjectRanking implements Comparable, XMLExport {
     }
 
     
+    @Override
     public Element getXMLElement() {
         final Element ic = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"));
         //ic.setAttribute(new Attribute("pos", Integer.toString(index)));

@@ -20,7 +20,6 @@ public class Version {
         mData = new Properties();
         try {
             mData.load(getClass().getResourceAsStream(java.util.ResourceBundle.getBundle("tourma/version").getString("/TOURMA/VERSION.PROPERTIES")));
-            return;
         } catch (Exception e) {
         }
     }

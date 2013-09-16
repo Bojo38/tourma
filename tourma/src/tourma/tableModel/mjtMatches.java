@@ -4,7 +4,6 @@
  */
 package tourma.tableModel;
 
-import tourma.data.Match;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -14,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Criteria;
+import tourma.data.Match;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.utility.StringConstants;
@@ -36,6 +36,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
         mFull = full;
     }
 
+    @Override
     public int getColumnCount() {
         int res;
         if (mTeamTournament) {
@@ -46,13 +47,15 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
         return res;
     }
 
+    @Override
     public int getRowCount() {
         return mMatchs.size();
     }
 
+    @Override
     public String getColumnName(final int col) {
 
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result;
         if (mTeamTournament) {
             switch (col) {
                 case 0:
@@ -114,8 +117,9 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
         return result;
     }
 
+    @Override
     public Object getValueAt(final int row, final int col) {
-        Object obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object obj;
         final Match m = mMatchs.get(row);
         Value val;
         int index;
@@ -304,6 +308,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
         return result;
     }
 
+    @Override
     public Component getTableCellRendererComponent(
             final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
@@ -370,7 +375,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                         break;
                     case 6:
                         bkg = new Color(150, 150, 250);
-                       // frg = new Color(255, 255, 255);
+                        // frg = new Color(255, 255, 255);
 
                         if (val.mValue1 < val.mValue2) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));

@@ -32,14 +32,17 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
         mRound = round;
     }
 
+    @Override
     public int getColumnCount() {
         return 6;
     }
 
+    @Override
     public int getRowCount() {
         return mTeams.size() / 2;
     }
 
+    @Override
     public String getColumnName(final int col) {
         String res = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
@@ -66,13 +69,14 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
         return res;
     }
 
+    @Override
     public Object getValueAt(final int row, final int col) {
         Object obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mTeams.size() > 0) {
             final Team t = mTeams.get(row * 2);
             Team team1 = t;
             Team team2 = t;
-            final ArrayList<Match> matchs = new ArrayList<Match>();
+            final ArrayList<Match> matchs = new ArrayList<>();
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
                 final Match m = mRound.getMatchs().get(i);
                 if (m.mCoach1.mTeamMates == t) {
@@ -144,6 +148,7 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
         return obj;
     }
 
+    @Override
     public Class getColumnClass(final int c) {
         return getValueAt(0, c).getClass();
     }
@@ -152,12 +157,14 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
      * Don't need to implement this method unless your table's
      * editable.
      */
+    @Override
     public boolean isCellEditable(final int row,final  int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
+    @Override
     public Component getTableCellRendererComponent(
             final JTable table, final Object value,final  boolean isSelected,final  boolean hasFocus,final  int row, final int column) {
         final JTextField jlb = new JTextField();

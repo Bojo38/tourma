@@ -4,13 +4,13 @@
  */
 package tourma.tableModel;
 
-import tourma.data.Round;
-import tourma.data.Match;
-import tourma.data.Coach;
-import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Collections;
+import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Match;
 import tourma.data.ObjectAnnexRanking;
+import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
@@ -28,10 +28,11 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
         mRoundOnly = round_only;
     }
 
+    @Override
     protected void sortDatas() {
         mDatas.clear();
 
-        mDatas = new ArrayList<ObjectAnnexRanking>();
+        mDatas = new ArrayList<>();
         for (int i = 0; i < mObjects.size(); i++) {
             final Team t = (Team) mObjects.get(i);
             int value = 0;

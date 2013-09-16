@@ -29,6 +29,7 @@ public class Clan implements Comparable, XMLExport {
         mName = name;
     }
 
+    @Override
     public int compareTo(final Object obj) {
         int result=-1;
         if (obj instanceof Coach) {
@@ -37,12 +38,14 @@ public class Clan implements Comparable, XMLExport {
         return result;
     }
 
+    @Override
     public Element getXMLElement() {
         final Element clan = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"));
         clan.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), mName);
         return clan;
     }
 
+    @Override
     public void setXMLElement(final Element e) {
         this.mName=e.getAttributeValue("Name");
         if (sClanMap!=null)

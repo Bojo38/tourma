@@ -10,14 +10,13 @@
  */
 package tourma.views.system;
 
-import tourma.utility.Version;
-import tourma.*;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import javax.swing.ListSelectionModel;
 import tourma.utility.StringConstants;
+import tourma.utility.Version;
 
 /**
  *

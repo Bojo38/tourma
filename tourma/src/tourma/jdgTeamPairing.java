@@ -14,12 +14,12 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
-import tourma.data.Tournament;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.Tournament;
 import tourma.tableModel.mjtPairs;
-import tourma.views.report.jdgRound;
 import tourma.utility.StringConstants;
+import tourma.views.report.jdgRound;
 
 /**
  *
@@ -52,7 +52,7 @@ public class jdgTeamPairing extends javax.swing.JDialog {
         mTeams2 = teams2;
         mRound = round;
 
-        mPairsDone = new ArrayList<Boolean>();
+        mPairsDone = new ArrayList<>();
         for (int i = 0; i < mTeams1.size(); i++) {
             mPairsDone.add(false);
         }

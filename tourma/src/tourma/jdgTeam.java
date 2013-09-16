@@ -13,11 +13,10 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import tourma.data.Tournament;
 import javax.swing.JOptionPane;
 import tourma.data.Team;
+import tourma.data.Tournament;
 import tourma.tableModel.mjtCoaches;
-import tourma.utility.StringConstants;
 
 /**
  *
@@ -236,6 +235,8 @@ public class jdgTeam extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     protected void update() {
+        
+        jtfNom.setText(mTeam.mName);
         jtbCoachs.setModel(new mjtCoaches(mTeam.mCoachs));
 
         if (mTeam.mCoachs.size() < mTour.getParams().mTeamMatesNumber) {

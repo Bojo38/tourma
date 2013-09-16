@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma;
+package tourma.views.parameters;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -331,7 +331,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
 
         jtffVictory.setValue(mTournament.getParams().mPointsIndivVictory);
 
-        final ArrayList<String> rankChoices = new ArrayList<String>();
+        final ArrayList<String> rankChoices = new ArrayList<>();
         rankChoices.add(StringConstants.CS_NONE);
         rankChoices.add(StringConstants.CS_POINTS);
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS ADVERSAIRES"));
@@ -364,30 +364,35 @@ public class JPNParamIndiv extends javax.swing.JPanel {
 
 
         jcbRank1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank1ActionPerformed(evt);
             }
         });
 
         jcbRank2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank2ActionPerformed(evt);
             }
         });
 
         jcbRank3.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank3ActionPerformed(evt);
             }
         });
 
         jcbRank4.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank4ActionPerformed(evt);
             }
         });
 
         jcbRank5.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jcbRank5ActionPerformed(evt);
             }

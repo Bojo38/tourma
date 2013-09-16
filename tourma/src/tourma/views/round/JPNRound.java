@@ -8,36 +8,39 @@
  *
  * Created on 11 mai 2010, 14:13:53
  */
-package tourma;
+package tourma.views.round;
 
 import java.awt.BorderLayout;
-import tourma.tableModel.mjtAnnexRank;
-import tourma.tableModel.mjtRankingIndiv;
-import tourma.tableModel.mjtMatches;
-import tourma.views.report.jdgRound;
-import tourma.views.report.jdgRanking;
-import tourma.data.Round;
-import tourma.data.Tournament;
-import tourma.data.Match;
-import tourma.data.Coach;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import tourma.views.JPNCup;
+import tourma.MainFrame;
+import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.Group;
+import tourma.data.Match;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.RosterType;
+import tourma.data.Round;
+import tourma.data.Tournament;
+import tourma.jdgChangePairing;
+import tourma.tableModel.mjtAnnexRank;
 import tourma.tableModel.mjtAnnexRankIndiv;
+import tourma.tableModel.mjtMatches;
+import tourma.tableModel.mjtRankingIndiv;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
 import tourma.utils.TableFormat;
 import tourma.views.report.jdgGlobal;
+import tourma.views.report.jdgRanking;
+import tourma.views.report.jdgRound;
 
 /**
  *
@@ -136,13 +139,13 @@ public class JPNRound extends javax.swing.JPanel {
 
             /*        jtbMatches.setDefaultEditor(Integer.class, model);*/
             TableFormat.setColumnSize(jtbMatches);
-            final ArrayList<Round> v = new ArrayList<Round>();
+            /*final ArrayList<Round> v = new ArrayList<>();
             for (int i = 0; i < mTournament.getRounds().size(); i++) {
                 if (mTournament.getRounds().get(i).getHour().before(mRound.getHour())) {
                     v.add(mTournament.getRounds().get(i));
                 }
             }
-            v.add(mRound);
+            v.add(mRound);*/
 
             if (mRoundNumber < mTournament.getRounds().size()) {
                 final boolean forPool = (mTournament.getPools().size() > 0) && (!mRound.mCup);
@@ -160,7 +163,7 @@ public class JPNRound extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < jtpGlobal.getTabCount(); i++) {
-            Object panel = jtpGlobal.getTabComponentAt(i);
+            Object panel;
             panel = jtpGlobal.getComponent(i);
             if (panel instanceof JPNGroup) {
                 ((JPNGroup) panel).mRoundOnly = mRoundOnly;
@@ -391,8 +394,8 @@ public class JPNRound extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextRoundActionPerformed
 
-        final ArrayList<String> labels = new ArrayList<String>();
-        final ArrayList<Integer> Options = new ArrayList<Integer>();
+        final ArrayList<String> labels = new ArrayList<>();
+        final ArrayList<Integer> Options = new ArrayList<>();
 
         /**
          * Swiss possible ?
@@ -523,8 +526,8 @@ public class JPNRound extends javax.swing.JPanel {
             if (mRound == mTournament.getRounds().get(i)) {
                 final boolean forPool = (mTournament.getPools().size() > 0) && (!mRound.mCup);
                 final mjtRankingIndiv model = new mjtRankingIndiv(mRoundNumber, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getCoachs(), mTournament.getParams().mTeamTournament, mRoundOnly, forPool);
-                final HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<Criteria, mjtAnnexRank>();
-                final HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<Criteria, mjtAnnexRank>();
+                final HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<>();
+                final HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<>();
                 for (int j = 0; j < mTournament.getParams().mCriterias.size(); j++) {
                     final Criteria crit = mTournament.getParams().mCriterias.get(j);
                     mjtAnnexRank annex = new mjtAnnexRankIndiv(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
@@ -556,11 +559,11 @@ public class JPNRound extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddMatchActionPerformed
 
-        final ArrayList<Coach> Coachs1 = new ArrayList<Coach>();
-        final ArrayList<Coach> Coachs2 = new ArrayList<Coach>();
+        final ArrayList<Coach> Coachs1 = new ArrayList<>();
+        final ArrayList<Coach> Coachs2 = new ArrayList<>();
 
-        final JComboBox<String> jcb1 = new JComboBox<String>();
-        final JComboBox<String> jcb2 = new JComboBox<String>();
+        final JComboBox<String> jcb1 = new JComboBox<>();
+        final JComboBox<String> jcb2 = new JComboBox<>();
 
         for (int i = 0; i < mTournament.GetActiveCoaches().size(); i++) {
             final Coach c = mTournament.GetActiveCoaches().get(i);

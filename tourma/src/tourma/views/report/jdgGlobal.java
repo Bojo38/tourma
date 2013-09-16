@@ -10,15 +10,10 @@
  */
 package tourma.views.report;
 
-import tourma.tableModel.mjtRanking;
-import tourma.*;
-import tourma.data.Round;
-import tourma.data.Tournament;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-
 import java.awt.Dimension;
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -30,15 +25,19 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import tourma.*;
 import tourma.data.Criteria;
+import tourma.data.Round;
+import tourma.data.Tournament;
 import tourma.tableModel.mjtAnnexRank;
+import tourma.tableModel.mjtRanking;
 import tourma.utility.StringConstants;
 
 /**
@@ -166,15 +165,14 @@ public class jdgGlobal extends javax.swing.JDialog {
              final File export = jfc.getSelectedFile();
 
              try {
-                 final FileReader in = new FileReader(mFilename);
-                 final FileWriter out = new FileWriter(export);
-                 int c;
-
-                 while ((c = in.read()) != -1) {
-                     out.write(c);
+                 final FileWriter out;
+                 try (FileReader in = new FileReader(mFilename)) {
+                     out = new FileWriter(export);
+                     int c;
+                     while ((c = in.read()) != -1) {
+                         out.write(c);
+                     }
                  }
-
-                 in.close();
                  out.close();
              } catch (FileNotFoundException fnf) {
                  JOptionPane.showMessageDialog(this, fnf.getLocalizedMessage());
@@ -212,7 +210,8 @@ public class jdgGlobal extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GLOBAL.HTML"));
 
 
-            final ArrayList<Round> rounds = new ArrayList();
+            final ArrayList<Round> rounds;
+            rounds = new ArrayList<>();
             for (int i = 0; i < mTour.getRounds().size() && i < mRoundNumber; i++) {
                 rounds.add(mTour.getRounds().get(i));
             }
@@ -222,7 +221,7 @@ public class jdgGlobal extends javax.swing.JDialog {
                     java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"),
                     mTour.getParams().mTournamentName + 
                     " - "+java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round")+" "+ mRoundNumber);
-            String name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENTS");
+            String name;
             if (mClan) {
                 name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" PAR CLAN");
             } else {
@@ -286,11 +285,7 @@ public class jdgGlobal extends javax.swing.JDialog {
             temp.process(root, out);
             out.flush();
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (TemplateException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (URISyntaxException e) {
+        } catch (IOException | TemplateException | URISyntaxException e) {
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
         }
 

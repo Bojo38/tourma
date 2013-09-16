@@ -8,23 +8,23 @@
  *
  * Created on 13 mai 2011, 21:52:44
  */
-package tourma;
+package tourma.views.round;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import tourma.MainFrame;
 import tourma.data.Coach;
-import tourma.data.Team;
 import tourma.data.Criteria;
 import tourma.data.Parameters;
 import tourma.data.Round;
+import tourma.data.Team;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.tableModel.mjtAnnexRank;
 import tourma.tableModel.mjtAnnexRankClan;
+import tourma.tableModel.mjtAnnexRankIndiv;
 import tourma.tableModel.mjtAnnexRankTeam;
-import tourma.views.report.jdgRanking;
-import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
+import tourma.views.report.jdgRanking;
 
 /**
  *
@@ -269,7 +269,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
     public void update() {
 
         if (mRound != null) {
-            final ArrayList<Round> v = new ArrayList<Round>();
+            final ArrayList<Round> v = new ArrayList<>();
             for (int i = 0; i < mTour.getRounds().size(); i++) {
                 if (mTour.getRounds().get(i).getHour().before(mRound.getHour())) {
                     v.add(mTour.getRounds().get(i));
@@ -277,8 +277,8 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
             }
             v.add(mRound);
 
-            mjtAnnexRank modelPos = null;
-            mjtAnnexRank modelNeg = null;
+            mjtAnnexRank modelPos ;
+            mjtAnnexRank modelNeg ;
 
             if (mClan) {
                 modelPos =

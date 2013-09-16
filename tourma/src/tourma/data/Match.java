@@ -30,7 +30,7 @@ public class Match implements XMLExport {
     protected Coach mLooser = null;
 
     public Match(Round round) {
-        mValues = new HashMap<Criteria, Value>();
+        mValues = new HashMap<>();
 
         final int size = Tournament.getTournament().mParams.mCriterias.size();
         for (int i = 0; i < size; i++) {
@@ -49,6 +49,7 @@ public class Match implements XMLExport {
         mRound = round;
     }
 
+    @Override
     public Element getXMLElement() {
         final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
         match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1"), this.mCoach1.mName);
@@ -78,6 +79,7 @@ public class Match implements XMLExport {
         return match;
     }
 
+    @Override
     public void setXMLElement(final Element match) {
         try {
             final String c1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1")).getValue();
@@ -222,7 +224,7 @@ public class Match implements XMLExport {
         final Team team1 = m.mCoach1.mTeamMates;
         final Team team2 = m.mCoach2.mTeamMates;
 
-        Team winner = null;
+        Team winner;
 
         int nbVictory = 0;
         int nbLost = 0;
