@@ -9,7 +9,7 @@ import java.util.Collections;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -72,7 +72,7 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
                     int value5 = 0;
                     for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
 
-                        final Match m = c.mMatchs.get(j);
+                        final CoachMatch m =(CoachMatch) c.mMatchs.get(j);
                         boolean bFound = false;
 
                         int l = 0;
@@ -207,7 +207,7 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
          for (int k = 0; k < coaches.size(); k++) {
          Coach c = coaches.get(k);
 
-         Match m = c.mMatchs.get(mRound);
+         CoachMatch m = c.mMatchs.get(mRound);
 
          Round round = Tournament.getTournament().getRounds().get(mRound);
 

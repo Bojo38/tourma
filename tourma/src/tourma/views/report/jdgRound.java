@@ -33,8 +33,9 @@ import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import tourma.*;
+import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
@@ -232,7 +233,7 @@ public class jdgRound extends javax.swing.JDialog {
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" {0}"), mRoundNumber));
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE"), mRound.getMatchs().size());
 
-            final ArrayList<Match> matches = mRound.getMatchs();
+            final ArrayList<CoachMatch> matches = mRound.getMatchs();
             final ArrayList parMatches = new ArrayList();
             if (mResult) {
                 root.put(StringConstants.CS_RESULT, 1);
@@ -248,16 +249,16 @@ public class jdgRound extends javax.swing.JDialog {
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITERIAS"), crits);
 
             for (int i = 0; i < matches.size(); i++) {
-               final  Match match = matches.get(i);
+               final  CoachMatch match = matches.get(i);
 
                 final HashMap m = new HashMap();
                 m.put("numero", i + 1);
                 if (!mTour.getParams().mTeamTournament) {
-                    m.put("coach1", match.mCoach1.mName);
+                    m.put("coach1", match.mCompetitor1.mName);
                 }
                 else
                 {
-                       m.put("coach1", match.mCoach1.mTeamMates.mName+StringConstants.CS_THICK+ match.mCoach1.mName);
+                       m.put("coach1", ((Coach)match.mCompetitor1).mTeamMates.mName+StringConstants.CS_THICK+ match.mCompetitor1.mName);
                 }
                 if (mResult) {
                     m.put("score1", match.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0)).mValue1);
@@ -285,13 +286,13 @@ public class jdgRound extends javax.swing.JDialog {
                     m.put("values", values);
                 }
                 if (!mTour.getParams().mTeamTournament) {
-                    m.put("coach2", match.mCoach2.mName);
+                    m.put("coach2", match.mCompetitor2.mName);
                 }
                 else
                 {
-                       m.put("coach2", match.mCoach2.mTeamMates.mName+StringConstants.CS_THICK+ match.mCoach2.mName);
+                       m.put("coach2", ((Coach)match.mCompetitor2).mTeamMates.mName+StringConstants.CS_THICK+ match.mCompetitor2.mName);
                 }
-                //m.put("coach2", match.mCoach2.mName);
+                //m.put("coach2", match.mCompetitor2.mName);
                 parMatches.add(m);
             }
 
@@ -344,9 +345,9 @@ public class jdgRound extends javax.swing.JDialog {
 
             final ArrayList<Team> teams = new ArrayList<>();
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final Match m = mRound.getMatchs().get(i);
-                final Team team1 = m.mCoach1.mTeamMates;
-               final  Team team2 = m.mCoach2.mTeamMates;
+                final CoachMatch m = mRound.getMatchs().get(i);
+                final Team team1 = ((Coach)m.mCompetitor1).mTeamMates;
+               final  Team team2 = ((Coach)m.mCompetitor2).mTeamMates;
                 if (!teams.contains(team1)) {
                     teams.add(team1);
                 }

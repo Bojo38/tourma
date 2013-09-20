@@ -50,7 +50,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
         this(name, criteria, tour, round, clan, team, tour.getCoachs(), tour.getTeams());
     }
 
-    public JPNAnnexRanking(final String name, final Criteria criteria, final Tournament tour, final Round round, final boolean clan, final boolean team, final ArrayList<Coach> v, final ArrayList<Team> t) {
+    public JPNAnnexRanking(final String name, final Criteria criteria, final Tournament tour, final Round round, final boolean clan, final boolean team, final ArrayList v, final ArrayList t) {
         initComponents();
         mName = name;
         mCriteria = criteria;

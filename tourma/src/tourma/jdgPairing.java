@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Coach;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.tableModel.mjtMatches;
@@ -35,7 +35,7 @@ public class jdgPairing extends javax.swing.JDialog {
     ArrayList<String> mItems1;
     ArrayList<String> mItems2;
     HashMap<String, Coach> mCoachs;
-    ArrayList<Match> mMatchs;
+    ArrayList<CoachMatch> mMatchs;
 
     /**
      * Creates new form jdgCoach
@@ -191,9 +191,9 @@ public class jdgPairing extends javax.swing.JDialog {
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
         if (mItems1.size() > 0) {
-            final Match m = new Match(mRound);
-            m.mCoach1 = mCoachs.get((String) jcbTeam1.getSelectedItem());
-            m.mCoach2 = mCoachs.get((String) jcbTeam2.getSelectedItem());
+            final CoachMatch m = new CoachMatch(mRound);
+            m.mCompetitor1 = mCoachs.get((String) jcbTeam1.getSelectedItem());
+            m.mCompetitor2 = mCoachs.get((String) jcbTeam2.getSelectedItem());
             mMatchs.add(m);
             mItems1.remove(jcbTeam1.getSelectedIndex());
             mItems2.remove(jcbTeam2.getSelectedIndex());
@@ -204,9 +204,9 @@ public class jdgPairing extends javax.swing.JDialog {
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
 
         if (jtbMatches.getSelectedRow() >= 0) {
-            final Match m = mMatchs.get(jtbMatches.getSelectedRow());
-            mItems1.add(m.mCoach1.mName + StringConstants.CS_THICK + m.mCoach1.mTeam + StringConstants.CS_THICK + m.mCoach1.mRoster.mName);
-            mItems2.add(m.mCoach2.mName + StringConstants.CS_THICK + m.mCoach2.mTeam + StringConstants.CS_THICK + m.mCoach2.mRoster.mName);
+            final CoachMatch m = mMatchs.get(jtbMatches.getSelectedRow());
+            mItems1.add(m.mCompetitor1.mName + StringConstants.CS_THICK + ((Coach)m.mCompetitor1).mTeam + StringConstants.CS_THICK +((Coach) m.mCompetitor1).mRoster.mName);
+            mItems2.add(m.mCompetitor2.mName + StringConstants.CS_THICK + ((Coach)m.mCompetitor2).mTeam + StringConstants.CS_THICK + ((Coach)m.mCompetitor2).mRoster.mName);
             mMatchs.remove(jtbMatches.getSelectedRow());
         }
         update();

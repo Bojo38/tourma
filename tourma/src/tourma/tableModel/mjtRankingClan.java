@@ -9,7 +9,7 @@ import java.util.Collections;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.ObjectRanking;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
@@ -68,7 +68,7 @@ public class mjtRankingClan extends mjtRanking {
                     
                     while (j <= Math.min(c.mMatchs.size()-1,mRound)) {
                     //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
-                        final Match m = c.mMatchs.get(j);
+                        final CoachMatch m = (CoachMatch)c.mMatchs.get(j);
 
                         final Criteria c1 = getCriteriaByValue(mRankingType1);
                         final int subType1 = getSubtypeByValue(mRankingType1);
@@ -173,7 +173,7 @@ public class mjtRankingClan extends mjtRanking {
         for (int k = 0; k < coaches.size(); k++) {
         Coach c = coaches.get(k);
 
-        Match m = c.mMatchs.get(mRound);
+        CoachMatch m = c.mMatchs.get(mRound);
 
         Round round = Tournament.getTournament().getRounds().get(mRound);
 

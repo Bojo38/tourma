@@ -5,52 +5,71 @@
 package tourma.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdom2.Element;
+import tourma.MainFrame;
+import tourma.jdgPairing;
 import tourma.utility.StringConstants;
+import tourma.utils.Generation;
 
 /**
  *
  * @author Frederic Berger
  */
-public class Team implements Comparable, XMLExport {
+public class Team extends Competitor implements XMLExport {
 
-    public static Team sNullTeam = new Team(StringConstants.CS_NONE);
+    protected static Team sNullTeam;
     public ArrayList<Coach> mCoachs;
-    public String mName;
     public static HashMap<String, Team> sTeamMap = new HashMap<>();
 
     public Team() {
+        super();
         mCoachs = new ArrayList<>();
     }
 
     public Team(final String name) {
-        mName = name;
+        super(name);
         mCoachs = new ArrayList<>();
+
+    }
+
+    public static Team getNullTeam() {
+        if (sNullTeam == null) {
+            sNullTeam = new Team(StringConstants.CS_NONE);
+            int nbTeamMates = Tournament.getTournament().getParams().mTeamMatesNumber;
+
+            for (int i = 0; i < nbTeamMates; i++) {
+                sNullTeam.mCoachs.add(Coach.getNullCoach());
+                if (Coach.getNullCoach().mTeamMates == null) {
+                    Coach.getNullCoach().mTeamMates = sNullTeam;
+                }
+            }
+        }
+        return sNullTeam;
     }
 
     @Override
     public int compareTo(final Object obj) {
         int result = -1;
         if (obj instanceof Team) {
-            
-            double rank=0;
-            for (int i=0; i<this.mCoachs.size(); i++)
-            {
-                rank+=mCoachs.get(i).mNafRank;
+
+            double rank = 0;
+            for (int i = 0; i < this.mCoachs.size(); i++) {
+                rank += mCoachs.get(i).mNafRank;
             }
-            rank=rank/mCoachs.size();
-            
-             double rankobj=0;
-            for (int i=0; i<((Team)obj).mCoachs.size(); i++)
-            {
-                rankobj+=((Team)obj).mCoachs.get(i).mNafRank;
+            rank = rank / mCoachs.size();
+
+            double rankobj = 0;
+            for (int i = 0; i < ((Team) obj).mCoachs.size(); i++) {
+                rankobj += ((Team) obj).mCoachs.get(i).mNafRank;
             }
-            rankobj=rankobj/((Team)obj).mCoachs.size();
-            
-            result=((Double)rank).compareTo(rankobj); 
+            rankobj = rankobj / ((Team) obj).mCoachs.size();
+
+            result = ((Double) rank).compareTo(rankobj);
         }
         return result;
     }
@@ -107,6 +126,185 @@ public class Team implements Comparable, XMLExport {
             final Coach c = Coach.sCoachMap.get(coach.getAttribute(StringConstants.CS_NAME).getValue());
             c.mTeamMates = this;
             this.mCoachs.add(c);
+        }
+    }
+
+    @Override
+    public void AddMatch(Competitor opponent, Round r) {
+        Tournament tour = Tournament.getTournament();
+
+        final ArrayList<Round> vs = new ArrayList<>();
+        for (int i = 0; i < tour.getRounds().size(); i++) {
+            if (tour.getRounds().get(i).getHour().before(r.getHour())) {
+                vs.add(tour.getRounds().get(i));
+            }
+        }
+        vs.add(r);
+
+        if (vs.size() == 1) {
+            // First Round
+        }
+
+        Team team1 = this;
+        Team team2 = (Team) opponent;
+        switch (tour.getParams().mTeamIndivPairing) {
+            // Ranking
+            case 0:
+                if (vs.size() == 1) {
+                    final boolean random = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AFFECTATION ALÉATOITE (SINON, L'ORDER D'INSCRIPTION SERA UTILISÉE) ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERATION"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+                    final ArrayList<Coach> shuffle2 = new ArrayList<>(team2.getActivePlayers());
+                    if (random) {
+                        Collections.shuffle(shuffle2);
+                    }
+                    for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
+                        team1.getActivePlayers().get(k).AddMatch(shuffle2.get(k), r);
+                    }
+                } else {
+                    final ArrayList<ObjectRanking> coachs1 = Generation.subRanking(team1.mCoachs, vs);
+                    final ArrayList<ObjectRanking> coachs2 = Generation.subRanking(team2.mCoachs, vs);
+                    for (int k = 0; k < coachs1.size(); k++) {
+                        ((Coach) coachs1.get(k).getObject()).AddMatch((Coach) coachs2.get(k).getObject(), r);
+                    }
+                }
+                break;
+            // Manual
+            case 1:
+                final jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
+                jdg.setVisible(true);
+                break;
+            // GenRandom
+            case 2:
+                final ArrayList<Coach> shuffle2 = new ArrayList<>(team2.getActivePlayers());
+                Collections.shuffle(shuffle2);
+                for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
+                    team1.getActivePlayers().get(k).AddMatch(shuffle2.get(k), r);
+                }
+                break;
+            // NAF
+            case 3:
+                final ArrayList<Coach> sort1 = new ArrayList<>(team1.getActivePlayers());
+                final ArrayList<Coach> sort2 = new ArrayList<>(team2.getActivePlayers());
+                Collections.sort(sort1);
+                Collections.sort(sort2);
+
+                for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
+                    sort1.get(k).AddMatch(sort2.get(k), r);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public boolean havePlayed(Competitor opponent) {
+        boolean have_played = false;
+        for (int j = 0; j < mCoachs.size(); j++) {
+            ArrayList<Match> matchs = mCoachs.get(j).mMatchs;
+            for (int k = 0; k < ((Team) opponent).mCoachs.size(); k++) {
+                for (int i = 0; i < matchs.size(); i++) {
+                    Coach c = ((Team) opponent).mCoachs.get(k);
+                    if ((matchs.get(i).mCompetitor1 == c) || (matchs.get(i).mCompetitor2 == c)) {
+                        have_played = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return have_played;
+    }
+
+    @Override
+    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents) {
+        return new ArrayList<>(opponents);
+    }
+
+    @Override
+    public String getDecoratedName() {
+        return mName;
+    }
+
+    public void AddMatchRoundRobin(Competitor c, Round r) {
+        final boolean complete = (JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL (INCLUANT TOUS LES JOUEURS)?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+        if (!complete) {
+            AddMatch(c, r);
+        } else {
+            Tournament tour = Tournament.getTournament();
+            Parameters params = tour.getParams();
+            for (int n = 0; n < params.mTeamMatesNumber; n++) {
+
+                final ArrayList<Coach> t1players = this.getActivePlayers();
+                final ArrayList<Coach> t2players = ((Team) c).getActivePlayers();
+
+                // Arrange player list using ribbon method
+                for (int p = 0; p < n; p++) {
+                    final Coach c_tmp = t2players.get(0);
+                    t2players.remove(0);
+                    t2players.add(c_tmp);
+                }
+
+                for (int l = 0; l < t1players.size(); l++) {
+
+                    final Coach c1 = t1players.get(l);
+                    final Coach c2 = t2players.get(l);
+
+                    c1.AddMatch(c2, r);
+                }
+            }
+        }
+    }
+
+    public void RoundCheck(Round round) {
+
+        Tournament tour = Tournament.getTournament();
+        ArrayList<CoachMatch> matchs = round.getMatchs();
+        /*ArrayList<Team> teams1 = new ArrayList<>();
+         ArrayList<Team> teams2 = new ArrayList<>();
+        
+         // Build Teams
+         for (int i = 0; i < matchs.size(); i+=tour.getParams().mTeamMatesNumber) {
+         teams1.add(matchs.get(i).mCompetitor1.mTeamMates);
+         teams2.add(matchs.get(i).mCompetitor2.mTeamMates);
+         }*/
+
+        for (int i = matchs.size() - 1; i > 0; i -= tour.getParams().mTeamMatesNumber) {
+
+            final Team t1 = ((Coach)matchs.get(i).mCompetitor1).mTeamMates;
+            final Team t2 = ((Coach)matchs.get(i).mCompetitor2).mTeamMates;
+            boolean have_played = t1.havePlayed(t2);
+
+            if (have_played) {
+                for (int k = i - tour.getParams().mTeamMatesNumber; k >= 0; k -= tour.getParams().mTeamMatesNumber) {
+
+                    Team t1_tmp = ((Coach)matchs.get(k).mCompetitor1).mTeamMates;
+                    Team t2_tmp = ((Coach)matchs.get(k).mCompetitor2).mTeamMates;
+
+                    have_played = t1.havePlayed(t2_tmp);
+
+                    boolean canMatch = !have_played;
+
+                    if (canMatch) {
+                        for (int j = 0; j < tour.getParams().mTeamMatesNumber; j++) {
+                            Coach c2_tmp = (Coach)matchs.get(k - j).mCompetitor2;
+                            Coach c2 = (Coach)matchs.get(i - j).mCompetitor2;
+                            matchs.get(i - j).mCompetitor2 = c2_tmp;
+                            matchs.get(k - j).mCompetitor2 = c2;
+                        }
+                        break;
+                    } else {
+                        have_played = t1.havePlayed(t1_tmp);
+
+                        canMatch = !have_played;
+                        if (canMatch) {
+                            for (int j = 0; j < tour.getParams().mTeamMatesNumber; j++) {
+                                Coach c1_tmp = (Coach)matchs.get(k - j).mCompetitor1;
+                                Coach c2 = (Coach)matchs.get(i - j).mCompetitor2;
+                                matchs.get(i - j).mCompetitor2 = c1_tmp;
+                                matchs.get(k - j).mCompetitor1 = c2;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

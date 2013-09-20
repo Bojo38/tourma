@@ -12,8 +12,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.utility.StringConstants;
@@ -24,12 +25,12 @@ import tourma.utility.StringConstants;
  */
 public class mjtMatches extends AbstractTableModel implements TableCellRenderer {
 
-    ArrayList<Match> mMatchs;
+    ArrayList<CoachMatch> mMatchs;
     boolean mLocked;
     boolean mTeamTournament;
     boolean mFull;
 
-    public mjtMatches(final ArrayList<Match> matchs, final boolean locked, final boolean teamTournament, final boolean full) {
+    public mjtMatches(final ArrayList<CoachMatch> matchs, final boolean locked, final boolean teamTournament, final boolean full) {
         mMatchs = matchs;
         mLocked = locked;
         mTeamTournament = teamTournament;
@@ -120,7 +121,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
     @Override
     public Object getValueAt(final int row, final int col) {
         Object obj;
-        final Match m = mMatchs.get(row);
+        final CoachMatch m = mMatchs.get(row);
         Value val;
         int index;
         String rosterName;
@@ -130,15 +131,15 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     obj = row + 1;
                     break;
                 case 1:
-                    obj = m.mCoach1.mTeamMates.mName;
+                    obj = ((Coach)m.mCompetitor1).mTeamMates.mName;
                     break;
                 case 2:
                     if (m.mRoster1 == null) {
-                        rosterName = m.mCoach1.mRoster.mName;
+                        rosterName = ((Coach)m.mCompetitor1).mRoster.mName;
                     } else {
                         rosterName = m.mRoster1.mName;
                     }
-                    obj = m.mCoach1.mName + StringConstants.CS_THICK + rosterName;
+                    obj = m.mCompetitor1.mName + StringConstants.CS_THICK + rosterName;
                     break;
                 case 3:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
@@ -158,14 +159,14 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 5:
                     if (m.mRoster2 == null) {
-                        rosterName = m.mCoach2.mRoster.mName;
+                        rosterName = ((Coach)m.mCompetitor2).mRoster.mName;
                     } else {
                         rosterName = m.mRoster2.mName;
                     }
-                    obj = m.mCoach2.mName + StringConstants.CS_THICK + rosterName;
+                    obj = m.mCompetitor2.mName + StringConstants.CS_THICK + rosterName;
                     break;
                 case 6:
-                    obj = m.mCoach2.mTeamMates.mName;
+                    obj = ((Coach)m.mCompetitor2).mTeamMates.mName;
                     break;
                 default:
                     index = (col - 5) / 2;
@@ -184,11 +185,11 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 1:
                     if (m.mRoster1 == null) {
-                        rosterName = m.mCoach1.mRoster.mName;
+                        rosterName = ((Coach)m.mCompetitor1).mRoster.mName;
                     } else {
                         rosterName = m.mRoster1.mName;
                     }
-                    obj = m.mCoach1.mName + StringConstants.CS_THICK + rosterName;
+                    obj = m.mCompetitor1.mName + StringConstants.CS_THICK + rosterName;
                     break;
                 case 2:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
@@ -208,11 +209,11 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 4:
                     if (m.mRoster2 == null) {
-                        rosterName = m.mCoach2.mRoster.mName;
+                        rosterName = ((Coach)m.mCompetitor2).mRoster.mName;
                     } else {
                         rosterName = m.mRoster2.mName;
                     }
-                    obj = m.mCoach2.mName + StringConstants.CS_THICK + rosterName;
+                    obj = m.mCompetitor2.mName + StringConstants.CS_THICK + rosterName;
                     break;
                 default:
                     index = (col - 3) / 2;
@@ -232,7 +233,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
     public void setValueAt(final Object value, final int row, final int col) {
         if (value != null) {
             Value val;
-            final Match m = mMatchs.get(row);
+            final CoachMatch m = mMatchs.get(row);
             if (mTeamTournament) {
                 switch (col) {
                     case 3:

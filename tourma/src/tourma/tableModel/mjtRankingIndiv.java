@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.ObjectRanking;
 import tourma.data.Pool;
 import tourma.data.Round;
@@ -26,7 +26,7 @@ public class mjtRankingIndiv extends mjtRanking {
     boolean mRoundOnly;
     boolean mForPool;
 
-    public mjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList<Coach> coachs, final boolean tournament, final boolean round_only, final boolean forPool) {
+    public mjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs);
         mTeamTournament = tournament;
         mRoundOnly = round_only;
@@ -59,7 +59,7 @@ public class mjtRankingIndiv extends mjtRanking {
 
             for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
 
-                final Match m = c.mMatchs.get(j);
+                final CoachMatch m = (CoachMatch)c.mMatchs.get(j);
                 boolean bFound = false;
                 for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
                     final Round r = rounds.get(l);
@@ -128,20 +128,20 @@ public class mjtRankingIndiv extends mjtRanking {
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
         if ((mForPool)&&(!tour.getParams().mTeamTournament)) {
-            if (mObjects.size() > tour.getPools().get(0).mCoachs.size()) {
+            if (mObjects.size() > tour.getPools().get(0).mCompetitors.size()) {
                 final int nbPool = tour.getPools().size();
                 Pool p = null;
                 final ArrayList<mjtRankingIndiv> pRank = new ArrayList<mjtRankingIndiv>();
                 for (int j = 0; j < nbPool; j++) {
                     p = tour.getPools().get(j);
-                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mCoachs, mTeamTournament, mRoundOnly, false);
+                    final mjtRankingIndiv mjtr = new mjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mCompetitors, mTeamTournament, mRoundOnly, false);
                     pRank.add(mjtr);
                 }
 
 
                 final ArrayList datas = new ArrayList<>();
 
-                for (int i = 0; i < tour.getPools().get(0).mCoachs.size(); i++) {
+                for (int i = 0; i < tour.getPools().get(0).mCompetitors.size(); i++) {
                     final ArrayList<Coach> rank = new ArrayList<>();
                     for (int j = 0; j < nbPool; j++) {
                         final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);

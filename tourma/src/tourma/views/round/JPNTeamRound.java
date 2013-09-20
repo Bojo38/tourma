@@ -15,8 +15,9 @@ import java.util.HashMap;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import tourma.MainFrame;
+import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -254,9 +255,9 @@ public class JPNTeamRound extends javax.swing.JPanel {
         if (mJtbTeamMatch != null) {
             final ArrayList<Team> teams = new ArrayList<>();
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final Match m = mRound.getMatchs().get(i);
-                final Team team1 = m.mCoach1.mTeamMates;
-                final Team team2 = m.mCoach2.mTeamMates;
+                final CoachMatch m = mRound.getMatchs().get(i);
+                final Team team1 = ((Coach)m.mCompetitor1).mTeamMates;
+                final Team team2 = ((Coach)m.mCompetitor2).mTeamMates;
                 if (!teams.contains(team1)) {
                     teams.add(team1);
                 }

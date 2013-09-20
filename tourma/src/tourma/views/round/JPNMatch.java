@@ -5,7 +5,7 @@
 package tourma.views.round;
 
 import java.awt.Color;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
 
@@ -18,17 +18,17 @@ public class JPNMatch extends javax.swing.JPanel {
     /**
      * Creates new form JPNMatch
      */
-    public JPNMatch(final Match m,final boolean winner) {
+    public JPNMatch(final CoachMatch m,final boolean winner) {
         initComponents();
 
-        jlbPlayer1.setText(m.mCoach1.mName);
-        jlbPlayer2.setText(m.mCoach2.mName);
+        jlbPlayer1.setText(m.mCompetitor1.mName);
+        jlbPlayer2.setText(m.mCompetitor2.mName);
 
-        jlbPlayer1.setBackground(m.mCoach1.mColor);
-        jlbPlayer2.setBackground(m.mCoach2.mColor);
+        jlbPlayer1.setBackground(m.mCompetitor1.mColor);
+        jlbPlayer2.setBackground(m.mCompetitor2.mColor);
         
-        jPanel2.setBackground(m.mCoach1.mColor);
-        jPanel4.setBackground(m.mCoach2.mColor);
+        jPanel2.setBackground(m.mCompetitor1.mColor);
+        jPanel4.setBackground(m.mCompetitor2.mColor);
         
         final Value v=m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
         if ((v.mValue1 == -1)||(v.mValue2 == -1)) {

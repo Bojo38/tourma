@@ -14,7 +14,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
+import tourma.data.Competitor;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Tournament;
@@ -67,35 +68,35 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         return mObjects.size();
     }
 
-    public static int getOppPointsByCoach(final Coach c, final Match m) {
+    public static int getOppPointsByCoach(final Coach c, final CoachMatch m) {
 
         int index = 0;
-        Match tmp_m = c.mMatchs.get(index);
+        CoachMatch tmp_m = (CoachMatch)c.mMatchs.get(index);
         while (tmp_m != m) {
             index++;
-            tmp_m = c.mMatchs.get(index);
+            tmp_m = (CoachMatch)c.mMatchs.get(index);
         }
 
         int value = 0;
-        Coach opponent;
-        if (m.mCoach1 == c) {
-            opponent = m.mCoach2;
+        Competitor opponent;
+        if (m.mCompetitor1 == c) {
+            opponent = m.mCompetitor2;
         } else {
-            opponent = m.mCoach1;
+            opponent = m.mCompetitor1;
         }
 
-        for (int i = 0; i < opponent.mMatchs.size(); i++) {
-            value += getPointsByCoach(opponent, opponent.mMatchs.get(i));
+        for (int i = 0; i < ((Coach)opponent).mMatchs.size(); i++) {
+            value += getPointsByCoach((Coach)opponent, (CoachMatch)((Coach)opponent).mMatchs.get(i));
         }
 
         return value;
     }
 
-    public static int getVNDByCoach(final Coach c, final Match m) {
+    public static int getVNDByCoach(final Coach c, final CoachMatch m) {
         int value = 0;
         final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
         if (val.mValue1 >= 0) {
-            if (m.mCoach1 == c) {
+            if (m.mCompetitor1 == c) {
                 if (val.mValue1 > val.mValue2) {
                     value += 1000000;
                 } else {
@@ -108,7 +109,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
                     }
                 }
             }
-            if (m.mCoach2 == c) {
+            if (m.mCompetitor2 == c) {
                 if (val.mValue2 > val.mValue1) {
                     value += 1000000;
                 } else {
@@ -125,11 +126,11 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         return value;
     }
 
-    public static int getPointsByCoach(final Coach c, final Match m) {
+    public static int getPointsByCoach(final Coach c, final CoachMatch m) {
         int value = c.mHandicap;
         final Criteria td=Tournament.getTournament().getParams().mCriterias.get(0);
         final Value val = m.mValues.get(td);
-        if (m.mCoach1 == c) {
+        if (m.mCompetitor1 == c) {
             if (val.mValue1 >= 0) {
                 if (val.mValue1 >= val.mValue2 + Tournament.getTournament().getParams().mGapLargeVictory) {
                     value += Tournament.getTournament().getParams().mPointsIndivLargeVictory;
@@ -158,7 +159,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
 
             }
         }
-        if (m.mCoach2 == c) {
+        if (m.mCompetitor2 == c) {
             if (val.mValue1 >= 0) {
                 if (val.mValue2 >= val.mValue1 + Tournament.getTournament().getParams().mGapLargeVictory) {
                     value += Tournament.getTournament().getParams().mPointsIndivLargeVictory;
@@ -189,23 +190,23 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
         return value;
     }
 
-    public static int getValue(final Coach c, final Match m, final Criteria criteria, final int sub_type) {
+    public static int getValue(final Coach c, final CoachMatch m, final Criteria criteria, final int sub_type) {
         int value = 0;
         if (sub_type == Parameters.C_RANKING_SUBTYPE_POSITIVE) {
-            if (c == m.mCoach1) {
+            if (c == m.mCompetitor1) {
                 value += Math.max(m.mValues.get(criteria).mValue1, 0);
             } else {
                 value += Math.max(m.mValues.get(criteria).mValue2, 0);
             }
         } else {
             if (sub_type == Parameters.C_RANKING_SUBTYPE_NEGATIVE) {
-                if (c == m.mCoach1) {
+                if (c == m.mCompetitor1) {
                     value += Math.max(m.mValues.get(criteria).mValue2, 0);
                 } else {
                     value += Math.max(m.mValues.get(criteria).mValue1, 0);
                 }
             } else {
-                if (c == m.mCoach1) {
+                if (c == m.mCompetitor1) {
                     value += m.mValues.get(criteria).mValue1 - m.mValues.get(criteria).mValue2;
                 } else {
                     value += m.mValues.get(criteria).mValue2 - m.mValues.get(criteria).mValue1;
@@ -238,7 +239,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
     /**
      * Find value for criteria and the current match
      */
-    public static int getValue(final Coach c, final Match m, final int valueType) {
+    public static int getValue(final Coach c, final CoachMatch m, final int valueType) {
         int value = 0;
 
         switch (valueType) {

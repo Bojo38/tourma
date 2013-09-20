@@ -11,9 +11,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.Coach;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.utility.StringConstants;
@@ -76,19 +77,19 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
             final Team t = mTeams.get(row * 2);
             Team team1 = t;
             Team team2 = t;
-            final ArrayList<Match> matchs = new ArrayList<>();
+            final ArrayList<CoachMatch> matchs = new ArrayList<>();
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final Match m = mRound.getMatchs().get(i);
-                if (m.mCoach1.mTeamMates == t) {
+                final CoachMatch m = mRound.getMatchs().get(i);
+                if (((Coach)m.mCompetitor1).mTeamMates == t) {
                     matchs.add(m);
                     team1 = t;
-                    team2 = m.mCoach2.mTeamMates;
+                    team2 = ((Coach)m.mCompetitor2).mTeamMates;
 
                 }
-                if (m.mCoach2.mTeamMates == t) {
+                if (((Coach)m.mCompetitor2).mTeamMates == t) {
                     matchs.add(m);
                     team1 = t;
-                    team2 = m.mCoach1.mTeamMates;
+                    team2 = ((Coach)m.mCompetitor1).mTeamMates;
                 }
             }
             int nbVictory = 0;
@@ -96,8 +97,8 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
             int nbDraw = 0;
 
             for (int i = 0; i < matchs.size(); i++) {
-                final Match m = matchs.get(i);
-                if (m.mCoach1.mTeamMates == t) {
+                final CoachMatch m = matchs.get(i);
+                if (((Coach)m.mCompetitor1).mTeamMates == t) {
                     final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
                     if (val.mValue1 > val.mValue2) {
                         nbVictory++;
@@ -109,7 +110,7 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
                         }
                     }
                 }
-                if (m.mCoach2.mTeamMates == t) {
+                if (((Coach)m.mCompetitor2).mTeamMates == t) {
                     final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
                     if (val.mValue1 < val.mValue2) {
                         nbVictory++;

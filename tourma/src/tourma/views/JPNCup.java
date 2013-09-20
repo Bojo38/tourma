@@ -7,7 +7,7 @@ package tourma.views;
 import java.util.ArrayList;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
@@ -106,14 +106,14 @@ public class JPNCup extends javax.swing.JPanel {
 
            final  Tournament tour = Tournament.getTournament();
             for (int j = 0; j < nb_match; j++) {
-                Match m;
+                CoachMatch m;
                 if ((tour.getParams().mTeamTournament)
                         && (tour.getParams().mTeamIndivPairing == 0)) {
                     m = r.getMatchs().get(j * Tournament.getTournament().getParams().mTeamMatesNumber);
                    final Coach c1 = new Coach();
                    final Coach c2 = new Coach();
-                    c1.mName = m.mCoach1.mTeamMates.mName;
-                    c2.mName = m.mCoach2.mTeamMates.mName;
+                    c1.mName = ((Coach)m.mCompetitor1).mTeamMates.mName;
+                    c2.mName = ((Coach)m.mCompetitor2).mTeamMates.mName;
 
                    final Criteria td = tour.getParams().mCriterias.get(0);
                     int nbVictory = 0;
@@ -129,9 +129,9 @@ public class JPNCup extends javax.swing.JPanel {
                             } 
                         }
                     }
-                    m = new Match(r);
-                    m.mCoach1 = c1;
-                    m.mCoach2 = c2;
+                    m = new CoachMatch(r);
+                    m.mCompetitor1 = c1;
+                    m.mCompetitor2 = c2;
                     final Value val = new Value(td);
                     val.mValue1 = nbVictory;
                     val.mValue2 = nbLost;
@@ -157,14 +157,14 @@ public class JPNCup extends javax.swing.JPanel {
                        factor= Tournament.getTournament().getParams().mTeamMatesNumber;
                     }
                     for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j  * factor< r.getMatchs().size()); j++) {
-                        Match m;
+                        CoachMatch m;
                         if ((tour.getParams().mTeamTournament)
                                 && (tour.getParams().mTeamIndivPairing == 0)) {
                             m = r.getMatchs().get(j * Tournament.getTournament().getParams().mTeamMatesNumber);
                             final Coach c1 = new Coach();
                             final Coach c2 = new Coach();
-                            c1.mName = m.mCoach1.mTeamMates.mName;
-                            c2.mName = m.mCoach2.mTeamMates.mName;
+                            c1.mName = ((Coach)m.mCompetitor1).mTeamMates.mName;
+                            c2.mName = ((Coach)m.mCompetitor2).mTeamMates.mName;
 
                             final Criteria td = tour.getParams().mCriterias.get(0);
                             int nbVictory = 0;
@@ -179,9 +179,9 @@ public class JPNCup extends javax.swing.JPanel {
                                     } 
                                 }
                             }
-                            m = new Match(r);
-                            m.mCoach1 = c1;
-                            m.mCoach2 = c2;
+                            m = new CoachMatch(r);
+                            m.mCompetitor1 = c1;
+                            m.mCompetitor2 = c2;
                             final Value val = new Value(td);
                             val.mValue1 = nbVictory;
                             val.mValue2 = nbLost;

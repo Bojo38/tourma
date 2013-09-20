@@ -593,7 +593,7 @@ public class MainFrame extends javax.swing.JFrame {
                 final ArrayList<Integer> Options = new ArrayList<>();
 
                 /**
-                 * Random possible ?
+                 * GenRandom possible ?
                  */
                 labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
                 Options.add(Generation.GEN_RANDOM);

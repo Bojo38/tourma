@@ -24,62 +24,49 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public final class Coach implements Comparable, XMLExport {
+public final class Coach extends Competitor implements XMLExport {
 
-    public static Coach sNullCoach = new Coach(StringConstants.CS_NONE);
+    protected static Coach sNullCoach = null;
     public static HashMap<String, Coach> sCoachMap = new HashMap<>();
     /**
      * Clan
      */
     public Clan mClan;
-    public String mName;
     public String mTeam;
     public RosterType mRoster;
     public int mNaf;
     public int mRank;
     public boolean mActive = true;
     public Team mTeamMates = null;
-    public ArrayList<Match> mMatchs;
+    
     public teamma.data.Roster mComposition;
-    public Color mColor;
+    
     public double mNafRank = 150.0;
     public int mHandicap = 0;
 
-    protected Color generateRandomColor(final Color mix) {
-        final Random random = new Random();
-        int red = random.nextInt(256);
-        int green = random.nextInt(256);
-        int blue = random.nextInt(256);
-
-        // mix the color
-        if (mix != null) {
-            red = (red + mix.getRed()) / 2;
-            green = (green + mix.getGreen()) / 2;
-            blue = (blue + mix.getBlue()) / 2;
-        }
-
-        return new Color(red, green, blue);
-    }
+    
 
     public Coach() {
-        mMatchs = new ArrayList<>();
+        super();
         mActive = true;
-        mColor = generateRandomColor(Color.WHITE);
-
-    }
+            }
 
     public Coach(final String name) {
-        mMatchs = new ArrayList<>();
-        mActive = false;
-        mName = name;
+        super(name);
+        mActive = false;        
         mTeam = StringConstants.CS_NONE;
         mRoster = new RosterType(StringConstants.CS_NONE);
-        mTeamMates = Team.sNullTeam;
-        if (mName.equals(StringConstants.CS_NONE)) {
-            mColor = Color.GRAY;
-        } else {
-            mColor = generateRandomColor(Color.WHITE);
+        mTeamMates = null;
+    }
+
+    public static Coach getNullCoach() {
+        if (sNullCoach == null) {
+            sNullCoach = new Coach(StringConstants.CS_NONE);
         }
+        if ((Team.getNullTeam() != null) && ((sNullCoach.mTeam == null))) {
+            sNullCoach.mTeamMates = Team.getNullTeam();
+        }
+        return sNullCoach;
     }
 
     @Override
@@ -163,7 +150,7 @@ public final class Coach implements Comparable, XMLExport {
         try {
             this.mName = coach.getAttributeValue(StringConstants.CS_NAME);
             this.mTeam = coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
-            String rosterName=RosterType.getRosterName(coach.getAttributeValue(StringConstants.CS_ROSTER));
+            String rosterName = RosterType.getRosterName(coach.getAttributeValue(StringConstants.CS_ROSTER));
             this.mRoster = new RosterType(rosterName);
             this.mNaf = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue();
             this.mRank = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue();
@@ -239,6 +226,161 @@ public final class Coach implements Comparable, XMLExport {
             }
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void AddMatch(Competitor opponent, Round r) {
+        CoachMatch m = new CoachMatch(r);
+        m.mCompetitor1 = this;
+        m.mCompetitor2 = opponent;
+        r.mMatchs.add(m);
+    }
+
+    public boolean havePlayed(Competitor opponent) {
+        boolean have_played = false;
+        for (int i = 0; i < mMatchs.size(); i++) {
+            if ((mMatchs.get(i).mCompetitor1 == opponent) || (mMatchs.get(i).mCompetitor2 == opponent)) {
+                have_played = true;
+                break;
+            }
+        }
+        return have_played;
+    }
+
+    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents) {
+        Tournament tour = Tournament.getTournament();
+        ArrayList<Clan> clans = tour.getClans();
+        Parameters params = tour.getParams();
+        ArrayList<Competitor> possible = new ArrayList<Competitor>(opponents);
+        if (this.mClan != clans.get(0)) {
+            if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch) || (params.mAvoidClansMatch))) {
+                for (int i = 0; i
+                        < possible.size(); i++) {
+                    if (((Coach) possible.get(i)).mClan.mName.equals(this.mClan.mName)) {
+                        possible.remove(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        if ((params.mTeamTournament) && (params.mTeamPairing == 0)) {
+            for (int i = 0; i
+                    < possible.size(); i++) {
+                if (((Coach) possible.get(i)).mTeamMates.getActivePlayers().contains(this)) {
+                    possible.remove(i);
+                    i--;
+                }
+            }
+        }
+
+
+        for (int i = 0; i
+                < possible.size(); i++) {
+            if (possible.get(i).havePlayed(this)) {
+                possible.remove(i);
+                i--;
+            }
+        }
+
+
+        if (possible.isEmpty()) {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
+            possible = new ArrayList<Competitor>(opponents);
+        }
+        return possible;
+    }
+
+    public String getDecoratedName() {
+        String tmp = mName;
+        Tournament tour = Tournament.getTournament();
+        ArrayList<Clan> clans = tour.getClans();
+        Parameters params = tour.getParams();
+        if (params.mEnableClans) {
+            tmp = mName + " / " + mClan.mName;
+        }
+        if (params.mTeamTournament) {
+            tmp = mName + " / " + mTeamMates.mName;
+        }
+        return tmp;
+    }
+
+    @Override
+    public void AddMatchRoundRobin(Competitor c, Round r) {
+        AddMatch(c, r);
+    }
+
+    /**
+     * This method arrange matchs to avoid double meet
+     *
+     * @param r
+     */
+    @Override
+    public void RoundCheck(Round round) {
+
+        Tournament tour = Tournament.getTournament();
+        ArrayList<CoachMatch> matchs = round.getMatchs();
+
+        for (int i = matchs.size() - 1; i > 0; i--) {
+
+            final Coach c1 = (Coach)matchs.get(i).mCompetitor1;
+            final Coach c2 = (Coach)matchs.get(i).mCompetitor2;
+            boolean have_played = c1.havePlayed(c2);
+
+            if (have_played) {
+                for (int k = i - 1; k >= 0; k--) {
+
+                    Coach c1_tmp = (Coach)matchs.get(k).mCompetitor1;
+                    Coach c2_tmp = (Coach)matchs.get(k).mCompetitor2;
+
+                    have_played = c1.havePlayed(c2_tmp);
+
+                    boolean canMatch = !have_played;
+                    if ((tour.getParams().mEnableClans) && (tour.getParams().mAvoidClansMatch)) {
+                        if (!c2_tmp.mClan.mName.equals(StringConstants.CS_NONE)) {
+                            if (c1.mClan == c2_tmp.mClan) {
+                                canMatch = false;
+                            }
+                        }
+                    }
+                    if ((tour.getParams().mTeamTournament) && (tour.getParams().mTeamIndivPairing == 0)) {
+                        if (c2_tmp.mTeamMates != Team.getNullTeam()) {
+                            if (c1.mTeamMates == c2_tmp.mTeamMates) {
+                                canMatch = false;
+                            }
+                        }
+                    }
+                    if (canMatch) {
+                        matchs.get(i).mCompetitor2 = c2_tmp;
+                        matchs.get(k).mCompetitor2 = c2;
+                        break;
+                    } else {
+                        have_played = c1.havePlayed(c1_tmp);
+
+                        canMatch = !have_played;
+                        if ((tour.getParams().mEnableClans) && (tour.getParams().mAvoidClansMatch)) {
+                            if (!c1_tmp.mClan.mName.equals(StringConstants.CS_NONE)) {
+                                if (c1_tmp.mClan == c1_tmp.mClan) {
+                                    canMatch = false;
+                                }
+                            }
+                        }
+                        if ((tour.getParams().mTeamTournament) && (tour.getParams().mTeamIndivPairing == 0)) {
+                            if (c1_tmp.mTeamMates != Team.getNullTeam()) {
+                                if (c1.mTeamMates == c1_tmp.mTeamMates) {
+                                    canMatch = false;
+                                }
+                            }
+                        }
+                        if (canMatch) {
+                            matchs.get(i).mCompetitor2 = c1_tmp;
+                            matchs.get(k).mCompetitor1 = c2;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

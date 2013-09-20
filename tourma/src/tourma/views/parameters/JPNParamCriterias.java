@@ -5,7 +5,7 @@
 package tourma.views.parameters;
 
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
@@ -88,7 +88,7 @@ public class JPNParamCriterias extends javax.swing.JPanel {
     for (int i = 0; i < mTournament.getRounds().size(); i++) {
         final Round r = mTournament.getRounds().get(i);
         for (int j = 0; j < r.getMatchs().size(); j++) {
-            final Match m = r.getMatchs().get(j);
+            final CoachMatch m = r.getMatchs().get(j);
             m.mValues.put(c, new Value(c));
         }
     }
@@ -102,7 +102,7 @@ public class JPNParamCriterias extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             final Round r = mTournament.getRounds().get(i);
             for (int j = 0; j < r.getMatchs().size(); j++) {
-                final Match m = r.getMatchs().get(j);
+                final CoachMatch m = r.getMatchs().get(j);
                 m.mValues.remove(crit);
             }
         }

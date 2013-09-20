@@ -14,6 +14,7 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
+import tourma.data.Coach;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
@@ -183,8 +184,8 @@ public class jdgTeamPairing extends javax.swing.JDialog {
             final Team t1 = mTeams1.get(jtPairs.getSelectedRow());
             int i = 0;
             while (i < mRound.getMatchs().size()) {
-                if ((mRound.getMatchs().get(i).mCoach1.mTeamMates == t1)
-                        || (mRound.getMatchs().get(i).mCoach2.mTeamMates == t1)) {
+                if ((((Coach)mRound.getMatchs().get(i).mCompetitor1).mTeamMates == t1)
+                        || (((Coach)mRound.getMatchs().get(i).mCompetitor2).mTeamMates == t1)) {
                     mRound.getMatchs().remove(i);
                     i = 0;
                 } else {

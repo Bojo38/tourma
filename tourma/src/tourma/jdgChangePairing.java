@@ -21,7 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import tourma.data.Coach;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Round;
 
 /**
@@ -59,9 +59,9 @@ public class jdgChangePairing extends JDialog implements ActionListener {
         mPlayers = new ArrayList<>();
 
         for (int i = 0; i < mRound.getMatchs().size(); i++) {
-            final Match m = mRound.getMatchs().get(i);
-            mPlayers.add(m.mCoach1);
-            mPlayers.add(m.mCoach2);
+            final CoachMatch m = mRound.getMatchs().get(i);
+            mPlayers.add((Coach)m.mCompetitor1);
+            mPlayers.add((Coach)m.mCompetitor2);
         }
 
         mPlayersTmp = mPlayers;
@@ -135,14 +135,14 @@ public class jdgChangePairing extends JDialog implements ActionListener {
     if (result == JOptionPane.YES_OPTION) {
 
         for (int i = 0; i < mRound.getMatchs().size(); i++) {
-            final Match m = mRound.getMatchs().get(i);
-            m.mCoach1 = mPlayersTmp.get(2 * i);
-            m.mCoach2 = mPlayersTmp.get(2 * i + 1);
+            final CoachMatch m = mRound.getMatchs().get(i);
+            m.mCompetitor1 = mPlayersTmp.get(2 * i);
+            m.mCompetitor2 = mPlayersTmp.get(2 * i + 1);
 
-            m.mCoach1.mMatchs.remove(m.mCoach1.mMatchs.get(m.mCoach1.mMatchs.size() - 1));
-            m.mCoach2.mMatchs.remove(m.mCoach2.mMatchs.get(m.mCoach2.mMatchs.size() - 1));
-            m.mCoach1.mMatchs.add(m);
-            m.mCoach2.mMatchs.add(m);
+            ((Coach)m.mCompetitor1).mMatchs.remove(((Coach)m.mCompetitor1).mMatchs.get(((Coach)m.mCompetitor1).mMatchs.size() - 1));
+            ((Coach)m.mCompetitor2).mMatchs.remove(((Coach)m.mCompetitor2).mMatchs.get(((Coach)m.mCompetitor2).mMatchs.size() - 1));
+            ((Coach)m.mCompetitor1).mMatchs.add(m);
+            ((Coach)m.mCompetitor2).mMatchs.add(m);
         }
 
         this.setVisible(false);

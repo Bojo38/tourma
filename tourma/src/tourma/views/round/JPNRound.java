@@ -24,7 +24,7 @@ import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.Group;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.RosterType;
@@ -414,7 +414,7 @@ public class JPNRound extends javax.swing.JPanel {
         }
 
         /**
-         * Random possible ?
+         * GenRandom possible ?
          */
         if ((!mRound.mCup) && (!mTournament.mRoundRobin)) {
             labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
@@ -499,9 +499,9 @@ public class JPNRound extends javax.swing.JPanel {
 
             // Remove matchs from coach reference list
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final Match m = mRound.getMatchs().get(i);
-                m.mCoach1.mMatchs.remove(m);
-                m.mCoach2.mMatchs.remove(m);
+                final CoachMatch m = mRound.getMatchs().get(i);
+                ((Coach)m.mCompetitor1).mMatchs.remove(m);
+                ((Coach)m.mCompetitor2).mMatchs.remove(m);
             }
 
             mTournament.getRounds().remove(mRound);
@@ -589,13 +589,13 @@ public class JPNRound extends javax.swing.JPanel {
 
             if (ret == JOptionPane.OK_OPTION) {
                 if (jcb1.getSelectedIndex() != jcb2.getSelectedIndex()) {
-                    final Match m = new Match(mRound);
-                    m.mCoach1 = Coachs1.get(jcb1.getSelectedIndex());
-                    m.mCoach2 = Coachs2.get(jcb2.getSelectedIndex());
+                    final CoachMatch m = new CoachMatch(mRound);
+                    m.mCompetitor1 = Coachs1.get(jcb1.getSelectedIndex());
+                    m.mCompetitor2 = Coachs2.get(jcb2.getSelectedIndex());
 
                     mRound.getMatchs().add(m);
-                    m.mCoach1.mMatchs.add(m);
-                    m.mCoach2.mMatchs.add(m);
+                   ((Coach) m.mCompetitor1).mMatchs.add(m);
+                    ((Coach)m.mCompetitor2).mMatchs.add(m);
                     ValidMatch = true;
                 } else {
                     JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH IMPOSSIBLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERREUR"), JOptionPane.ERROR_MESSAGE);
@@ -631,12 +631,12 @@ public class JPNRound extends javax.swing.JPanel {
                     col--;
                 }
                 if ((col == 1) || (col == 4)) {
-                    Match match = mRound.getMatchs().get(jtbMatches.getSelectedRow());
+                    CoachMatch match = mRound.getMatchs().get(jtbMatches.getSelectedRow());
                     Coach coach;
                     if (col == 1) {
-                        coach = match.mCoach1;
+                        coach = (Coach)match.mCompetitor1;
                     } else {
-                        coach = match.mCoach2;
+                        coach = (Coach)match.mCompetitor2;
                     }
                     JComboBox jcbRoster = new JComboBox();
                     jcbRoster.setModel(new DefaultComboBoxModel(RosterType.mRostersNames.toArray()));

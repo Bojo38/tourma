@@ -592,12 +592,12 @@ public class Tournament {
                         < mRounds.size(); i++) {
                     for (int j = 0; j
                             < mRounds.get(i).mMatchs.size(); j++) {
-                        if ((mRounds.get(i).mMatchs.get(j).mCoach1.mNaf > 0)
-                                && (mRounds.get(i).mMatchs.get(j).mCoach2.mNaf > 0)) {
+                        if ((((Coach)mRounds.get(i).mMatchs.get(j).mCompetitor1).mNaf > 0)
+                                && (((Coach)mRounds.get(i).mMatchs.get(j).mCompetitor2).mNaf > 0)) {
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<GAME>"));
-                            final Match m = mRounds.get(i).mMatchs.get(j);
+                            final CoachMatch m = mRounds.get(i).mMatchs.get(j);
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TIMESTAMP>{0}</TIMESTAMP>"), new Object[] {format.format(mRounds.get(i).mHour)}));
-                            Coach p = m.mCoach1;
+                            Coach p = (Coach)m.mCompetitor1;
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<PLAYERRECORD>"));
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NAME>{0}</NAME>"), new Object[] {p.mName}));
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NUMBER>{0}</NUMBER>"), new Object[] {p.mNaf}));
@@ -612,7 +612,7 @@ public class Tournament {
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<DEAD>0</DEAD>"));
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<WINNINGS>0</WINNINGS>"));
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("</PLAYERRECORD>"));
-                            p = m.mCoach2;
+                            p = (Coach)m.mCompetitor2;
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<PLAYERRECORD>"));
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NAME>{0}</NAME>"), new Object[] {p.mName}));
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NUMBER>{0}</NUMBER>"), new Object[] {p.mNaf}));
@@ -879,22 +879,22 @@ public class Tournament {
                 r.mMatchs.clear();
                 while (k.hasNext()) {
                     final Element match = (Element) k.next();
-                    final Match m = new Match(r);
+                    final CoachMatch m = new CoachMatch(r);
                     final String coach1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1")).getValue();
                     final String coach2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2")).getValue();
-                    m.mCoach1 = map.get(coach1);
-                    m.mCoach2 = map.get(coach2);
+                    m.mCompetitor1 = map.get(coach1);
+                    m.mCompetitor2 = map.get(coach2);
                     for (int cpt = 0; cpt
                             < mCoachs.size(); cpt++) {
                         if (c1.mName.equals(mCoachs.get(cpt).mName)) {
-                            m.mCoach1 = mCoachs.get(cpt);
+                            m.mCompetitor1 = (Coach)mCoachs.get(cpt);
                             break;
                         }
                     }
                     for (int cpt = 0; cpt
                             < mCoachs.size(); cpt++) {
                         if (c2.mName.equals(mCoachs.get(cpt).mName)) {
-                            m.mCoach2 = mCoachs.get(cpt);
+                            m.mCompetitor2 = (Coach)mCoachs.get(cpt);
                             break;
 
                         }
@@ -930,8 +930,8 @@ public class Tournament {
                     m.mValues.put(c4, v4);
                     m.mValues.put(c5, v5);
 
-                    m.mCoach1.mMatchs.add(m);
-                    m.mCoach2.mMatchs.add(m);
+                    ((Coach)m.mCompetitor1).mMatchs.add(m);
+                    ((Coach)m.mCompetitor2).mMatchs.add(m);
 
                     r.mMatchs.add(m);
 

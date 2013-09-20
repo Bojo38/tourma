@@ -16,24 +16,25 @@ import tourma.utility.StringConstants;
  */
 public class Pool implements XMLExport {
 
-    public ArrayList<Coach> mCoachs = new ArrayList<>();
-    public ArrayList<Team> mTeams = new ArrayList<>();
-    public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+    //public ArrayList<Coach> mCoachs = new ArrayList<>();
+    //public ArrayList<Team> mTeams = new ArrayList<>();
+    public ArrayList<Competitor> mCompetitors=new ArrayList<>();
+    public String mName = "";
 
     @Override
     public Element getXMLElement() {
         final Element pool = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POOL"));
         pool.setAttribute(StringConstants.CS_NAME, this.mName);
-        for (int j = 0; j < this.mCoachs.size(); j++) {
+        for (int j = 0; j < this.mCompetitors.size(); j++) {
             final Element coach = new Element(StringConstants.CS_COACH);
-            coach.setAttribute(StringConstants.CS_NAME, this.mCoachs.get(j).mName);
+            coach.setAttribute(StringConstants.CS_NAME, this.mCompetitors.get(j).getName());
             pool.addContent(coach);
         }
-        for (int j = 0; j < this.mTeams.size(); j++) {
+        /*for (int j = 0; j < this.mTeams.size(); j++) {
             final Element team = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
             team.setAttribute(StringConstants.CS_NAME, this.mTeams.get(j).mName);
             pool.addContent(team);
-        }
+        }*/
         return pool;
     }
 
@@ -41,22 +42,27 @@ public class Pool implements XMLExport {
     public void setXMLElement(final Element pool) {
        mName = pool.getAttributeValue(StringConstants.CS_NAME);
         
-       mCoachs.clear();
+       mCompetitors.clear();
         final List coachs = pool.getChildren(StringConstants.CS_COACH);
         Iterator ro = coachs.iterator();
         while (ro.hasNext()) {
-            final Element coach = (Element) ro.next();
-            final String name=coach.getAttributeValue(StringConstants.CS_NAME);
-            this.mCoachs.add(Coach.sCoachMap.get(name));
+            final Element competitor = (Element) ro.next();
+            final String name=competitor.getAttributeValue(StringConstants.CS_NAME);
+            Competitor c=Coach.sCoachMap.get(name);
+            if (c==null)
+            {
+                c=Team.sTeamMap.get(name);
+            }
+            this.mCompetitors.add(c);
         }
         
-        mTeams.clear();
+        /*mTeams.clear();
         final List teams = pool.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
         ro = teams.iterator();
         while (ro.hasNext()) {
             final Element team = (Element) ro.next();
             final String name=team.getAttributeValue(StringConstants.CS_NAME);
             this.mTeams.add(Team.sTeamMap.get(name));
-        }
+        }*/
     }
 }

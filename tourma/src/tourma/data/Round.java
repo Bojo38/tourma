@@ -22,7 +22,7 @@ import tourma.utility.StringConstants;
  */
 public class Round implements XMLExport {
 
-    protected ArrayList<Match> mMatchs;
+    protected ArrayList<CoachMatch> mMatchs;
     protected Date mHour;
     
     public boolean mCup=false;
@@ -41,7 +41,7 @@ public class Round implements XMLExport {
         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ")+(index+1);
     }
     
-    public ArrayList<Match> getMatchs() {
+    public ArrayList<CoachMatch> getMatchs() {
         return mMatchs;
     }
 
@@ -102,7 +102,7 @@ public class Round implements XMLExport {
 
         while (k.hasNext()) {
             final Element match = (Element) k.next();
-            final Match m = new Match(this);
+            final CoachMatch m = new CoachMatch(this);
             m.setXMLElement(match);
             this.mMatchs.add(m);
         }

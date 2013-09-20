@@ -27,7 +27,7 @@ import org.jfree.util.Rotation;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.Group;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -71,25 +71,25 @@ public class JPNStatistics extends javax.swing.JPanel {
             for (int j = 0; j < mTournament.getRounds().size(); j++) {
                 final Round r = mTournament.getRounds().get(j);
                 for (int k = 0; k < r.getMatchs().size(); k++) {
-                    final Match m = r.getMatchs().get(k);
-                    if ((m.mCoach1 != Coach.sNullCoach) && (m.mCoach2 != Coach.sNullCoach)) {
+                    final CoachMatch m = r.getMatchs().get(k);
+                    if ((m.mCompetitor1 != Coach.getNullCoach()) && (m.mCompetitor2 != Coach.getNullCoach())) {
                         final Value values = m.mValues.get(crit);
 
-                        double pt = plus.get(m.mCoach1.mRoster.mName).doubleValue();
-                        double mt = minus.get(m.mCoach1.mRoster.mName).doubleValue();
+                        double pt = plus.get(((Coach)m.mCompetitor1).mRoster.mName).doubleValue();
+                        double mt = minus.get(((Coach)m.mCompetitor1).mRoster.mName).doubleValue();
                         pt += values.mValue1;
                         mt -= values.mValue2;
 
-                        plus.put(m.mCoach1.mRoster.mName, pt);
-                        minus.put(m.mCoach1.mRoster.mName, mt);
+                        plus.put(((Coach)m.mCompetitor1).mRoster.mName, pt);
+                        minus.put(((Coach)m.mCompetitor1).mRoster.mName, mt);
 
-                        pt = plus.get(m.mCoach2.mRoster.mName).doubleValue();
-                        mt = minus.get(m.mCoach2.mRoster.mName).doubleValue();
+                        pt = plus.get(((Coach)m.mCompetitor2).mRoster.mName).doubleValue();
+                        mt = minus.get(((Coach)m.mCompetitor2).mRoster.mName).doubleValue();
                         pt += values.mValue2;
                         mt -= values.mValue1;
 
-                        plus.put(m.mCoach2.mRoster.mName, pt);
-                        minus.put(m.mCoach2.mRoster.mName, mt);
+                        plus.put(((Coach)m.mCompetitor2).mRoster.mName, pt);
+                        minus.put(((Coach)m.mCompetitor2).mRoster.mName, mt);
                     }
                 }
             }
@@ -171,35 +171,35 @@ public class JPNStatistics extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             final Round r = mTournament.getRounds().get(i);
             for (int j = 0; j < r.getMatchs().size(); j++) {
-                final Match m = r.getMatchs().get(j);
-                if ((m.mCoach1 != Coach.sNullCoach) && (m.mCoach2 != Coach.sNullCoach)) {
+                final CoachMatch m = r.getMatchs().get(j);
+                if ((m.mCompetitor1 != Coach.getNullCoach()) && (m.mCompetitor2 != Coach.getNullCoach())) {
                     final Value values = m.mValues.get(Td);
                     if (values.mValue1 > values.mValue2) {
-                        int v = victories.get(m.mCoach1.mRoster.mName).intValue();
-                        int l = loss.get(m.mCoach2.mRoster.mName).intValue();
+                        int v = victories.get(((Coach)m.mCompetitor1).mRoster.mName).intValue();
+                        int l = loss.get(((Coach)m.mCompetitor2).mRoster.mName).intValue();
                         v++;
                         l++;
 
-                        victories.put(m.mCoach1.mRoster.mName, v);
-                        loss.put(m.mCoach2.mRoster.mName, l);
+                        victories.put(((Coach)m.mCompetitor1).mRoster.mName, v);
+                        loss.put(((Coach)m.mCompetitor2).mRoster.mName, l);
                     }
                     if (values.mValue1 < values.mValue2) {
-                        int v = victories.get(m.mCoach2.mRoster.mName).intValue();
-                        int l = loss.get(m.mCoach1.mRoster.mName).intValue();
+                        int v = victories.get(((Coach)m.mCompetitor2).mRoster.mName).intValue();
+                        int l = loss.get(((Coach)m.mCompetitor1).mRoster.mName).intValue();
                         v++;
                         l++;
 
-                        victories.put(m.mCoach2.mRoster.mName, v);
-                        loss.put(m.mCoach1.mRoster.mName, l);
+                        victories.put(((Coach)m.mCompetitor2).mRoster.mName, v);
+                        loss.put(((Coach)m.mCompetitor1).mRoster.mName, l);
                     }
                     if (values.mValue1 == values.mValue2) {
-                        int d = draw.get(m.mCoach2.mRoster.mName).intValue();
+                        int d = draw.get(((Coach)m.mCompetitor2).mRoster.mName).intValue();
                         d++;
-                        draw.put(m.mCoach2.mRoster.mName, d);
+                        draw.put(((Coach)m.mCompetitor2).mRoster.mName, d);
 
-                        d = draw.get(m.mCoach1.mRoster.mName).intValue();
+                        d = draw.get(((Coach)m.mCompetitor1).mRoster.mName).intValue();
                         d++;
-                        draw.put(m.mCoach1.mRoster.mName, d);
+                        draw.put(((Coach)m.mCompetitor1).mRoster.mName, d);
                     }
                 }
             }
@@ -255,7 +255,7 @@ public class JPNStatistics extends javax.swing.JPanel {
 
         for (int i = 0; i < mTournament.getCoachs().size(); i++) {
             final Coach c = mTournament.getCoachs().get(i);
-            if (c != Coach.sNullCoach) {
+            if (c != Coach.getNullCoach()) {
                 final String rName = c.mRoster.mName;
                 final Number value = datas.getValue(rName);
                 int v = 0;
@@ -299,7 +299,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             Group g = mTournament.getGroups().get(i);
             for (int j = 0; j < mTournament.getCoachs().size(); j++) {
                 final Coach c = mTournament.getCoachs().get(j);
-                if (c != Coach.sNullCoach) {
+                if (c != Coach.getNullCoach()) {
                     for (int k = 0; k < g.mRosters.size(); k++) {
                         if (g.mRosters.get(k).mName.equals(c.mRoster.mName)) {
                             value++;

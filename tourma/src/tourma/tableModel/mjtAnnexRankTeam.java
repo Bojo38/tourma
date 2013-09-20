@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Match;
+import tourma.data.CoachMatch;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -45,7 +45,7 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                 final Coach c = t.mCoachs.get(k);
                 for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
 
-                    final Match m = c.mMatchs.get(j);
+                    final CoachMatch m = (CoachMatch)c.mMatchs.get(j);
                     boolean bFound = false;
 
                     int l = 0;
