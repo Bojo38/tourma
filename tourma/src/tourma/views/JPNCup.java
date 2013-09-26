@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
+import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
@@ -59,26 +60,24 @@ public class JPNCup extends javax.swing.JPanel {
     public void update() {
         final ArrayList<Round> rounds_with_cup = new ArrayList<>();
         final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
-        boolean bLooserCup=false;
+        boolean bLooserCup = false;
         for (int i = 0; i < rounds.size(); i++) {
             if (rounds.get(i).mCup) {
                 rounds_with_cup.add(rounds.get(i));
-                if (rounds.get(i).mLooserCup)
-                {
-                    bLooserCup=true;
+                if (rounds.get(i).mLooserCup) {
+                    bLooserCup = true;
                 }
             }
         }
 
         jpnCup.removeAll();
-        final int max_width=rounds_with_cup.size() * 200;
-        int max_heigth=(int) Math.pow(2, rounds_with_cup.size()) * 150;
-        if (bLooserCup)
-        {
-            max_heigth+=max_heigth/2;
+        final int max_width = rounds_with_cup.size() * 200;
+        int max_heigth = (int) Math.pow(2, rounds_with_cup.size()) * 150;
+        if (bLooserCup) {
+            max_heigth += max_heigth / 2;
         }
-        jpnCup.setSize(max_width,max_heigth );
-        
+        jpnCup.setSize(max_width, max_heigth);
+
 
         final int max_nb_match = (int) Math.pow(2, rounds_with_cup.get(0).mCupMaxTour - 1);
         final int base_high = 60;
@@ -104,42 +103,11 @@ public class JPNCup extends javax.swing.JPanel {
             final int h = 50;
             int x = i * 200 + 5;
 
-           final  Tournament tour = Tournament.getTournament();
+            final Tournament tour = Tournament.getTournament();
             for (int j = 0; j < nb_match; j++) {
-                CoachMatch m;
-                if ((tour.getParams().mTeamTournament)
-                        && (tour.getParams().mTeamIndivPairing == 0)) {
-                    m = r.getMatchs().get(j * Tournament.getTournament().getParams().mTeamMatesNumber);
-                   final Coach c1 = new Coach();
-                   final Coach c2 = new Coach();
-                    c1.mName = ((Coach)m.mCompetitor1).mTeamMates.mName;
-                    c2.mName = ((Coach)m.mCompetitor2).mTeamMates.mName;
+                Match m;
+                m = r.getMatchs().get(j);
 
-                   final Criteria td = tour.getParams().mCriterias.get(0);
-                    int nbVictory = 0;
-                    int nbLost = 0;
-                    
-                    for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-                        m = r.getMatchs().get(j * tour.getParams().mTeamMatesNumber + k);
-                        if (m.mValues.get(td).mValue1 > m.mValues.get(td).mValue2) {
-                            nbVictory++;
-                        } else {
-                            if (m.mValues.get(td).mValue1 < m.mValues.get(td).mValue2) {
-                                nbLost++;
-                            } 
-                        }
-                    }
-                    m = new CoachMatch(r);
-                    m.mCompetitor1 = c1;
-                    m.mCompetitor2 = c2;
-                    final Value val = new Value(td);
-                    val.mValue1 = nbVictory;
-                    val.mValue2 = nbLost;
-                    m.mValues.put(td, val);
-
-                } else {
-                    m = r.getMatchs().get(j);
-                }
                 final JPNMatch match = new JPNMatch(m, true);
                 match.setSize(175, 50);
                 //int y = j * gap + offset * 75 / 2 + 5;                
@@ -151,45 +119,12 @@ public class JPNCup extends javax.swing.JPanel {
                 if (r.mCupTour > 0) {
                     nb_looseMatch = nb_looseMatch / 2 + nb_match;
 
-                    int factor=1;
-                    if ((Tournament.getTournament().getParams().mTeamTournament)&&(Tournament.getTournament().getParams().mTeamPairing==1))
-                    {
-                       factor= Tournament.getTournament().getParams().mTeamMatesNumber;
-                    }
-                    for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j  * factor< r.getMatchs().size()); j++) {
-                        CoachMatch m;
-                        if ((tour.getParams().mTeamTournament)
-                                && (tour.getParams().mTeamIndivPairing == 0)) {
-                            m = r.getMatchs().get(j * Tournament.getTournament().getParams().mTeamMatesNumber);
-                            final Coach c1 = new Coach();
-                            final Coach c2 = new Coach();
-                            c1.mName = ((Coach)m.mCompetitor1).mTeamMates.mName;
-                            c2.mName = ((Coach)m.mCompetitor2).mTeamMates.mName;
+                    int factor = 1;
+                    for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j < r.getMatchs().size()); j++) {
+                        Match m;
 
-                            final Criteria td = tour.getParams().mCriterias.get(0);
-                            int nbVictory = 0;
-                            int nbLost = 0;
-                            for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-                                m = r.getMatchs().get(j * tour.getParams().mTeamMatesNumber + k);
-                                if (m.mValues.get(td).mValue1 > m.mValues.get(td).mValue2) {
-                                    nbVictory++;
-                                } else {
-                                    if (m.mValues.get(td).mValue1 < m.mValues.get(td).mValue2) {
-                                        nbLost++;
-                                    } 
-                                }
-                            }
-                            m = new CoachMatch(r);
-                            m.mCompetitor1 = c1;
-                            m.mCompetitor2 = c2;
-                            final Value val = new Value(td);
-                            val.mValue1 = nbVictory;
-                            val.mValue2 = nbLost;
-                            m.mValues.put(td, val);
+                        m = r.getMatchs().get(j);
 
-                        } else {
-                            m = r.getMatchs().get(j);
-                        }
 
                         final JPNMatch match = new JPNMatch(m, false);
                         match.setSize(175, 50);
@@ -199,6 +134,6 @@ public class JPNCup extends javax.swing.JPanel {
                     }
                 }
             }
-        }        
+        }
     }
 }

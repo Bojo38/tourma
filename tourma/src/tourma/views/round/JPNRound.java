@@ -127,7 +127,7 @@ public class JPNRound extends javax.swing.JPanel {
 
             jbtDeleteRound.setEnabled(!locked);
 
-            final mjtMatches model = new mjtMatches(mRound.getMatchs(), locked, mTournament.getParams().mTeamTournament, true);
+            final mjtMatches model = new mjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().mTeamTournament, true);
             jtbMatches.setModel(model);
             jtbMatches.setDefaultRenderer(String.class, model);
             jtbMatches.setDefaultRenderer(Integer.class, model);
@@ -499,7 +499,7 @@ public class JPNRound extends javax.swing.JPanel {
 
             // Remove matchs from coach reference list
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final CoachMatch m = mRound.getMatchs().get(i);
+                final CoachMatch m = mRound.getCoachMatchs().get(i);
                 ((Coach)m.mCompetitor1).mMatchs.remove(m);
                 ((Coach)m.mCompetitor2).mMatchs.remove(m);
             }
@@ -631,7 +631,7 @@ public class JPNRound extends javax.swing.JPanel {
                     col--;
                 }
                 if ((col == 1) || (col == 4)) {
-                    CoachMatch match = mRound.getMatchs().get(jtbMatches.getSelectedRow());
+                    CoachMatch match = mRound.getCoachMatchs().get(jtbMatches.getSelectedRow());
                     Coach coach;
                     if (col == 1) {
                         coach = (Coach)match.mCompetitor1;

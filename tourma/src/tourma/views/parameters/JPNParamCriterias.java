@@ -87,8 +87,8 @@ public class JPNParamCriterias extends javax.swing.JPanel {
     Tournament.getTournament().getParams().mCriterias.add(c);
     for (int i = 0; i < mTournament.getRounds().size(); i++) {
         final Round r = mTournament.getRounds().get(i);
-        for (int j = 0; j < r.getMatchs().size(); j++) {
-            final CoachMatch m = r.getMatchs().get(j);
+        for (int j = 0; j < r.getCoachMatchs().size(); j++) {
+            final CoachMatch m = r.getCoachMatchs().get(j);
             m.mValues.put(c, new Value(c));
         }
     }
@@ -101,8 +101,8 @@ public class JPNParamCriterias extends javax.swing.JPanel {
         final Criteria crit = mTournament.getParams().mCriterias.get(jtbCriteria.getSelectedRow());
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             final Round r = mTournament.getRounds().get(i);
-            for (int j = 0; j < r.getMatchs().size(); j++) {
-                final CoachMatch m = r.getMatchs().get(j);
+            for (int j = 0; j < r.getCoachMatchs().size(); j++) {
+                final CoachMatch m = r.getCoachMatchs().get(j);
                 m.mValues.remove(crit);
             }
         }

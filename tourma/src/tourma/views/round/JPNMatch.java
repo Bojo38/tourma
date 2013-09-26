@@ -6,8 +6,11 @@ package tourma.views.round;
 
 import java.awt.Color;
 import tourma.data.CoachMatch;
+import tourma.data.Match;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.data.Team;
 
 /**
  *
@@ -18,7 +21,7 @@ public class JPNMatch extends javax.swing.JPanel {
     /**
      * Creates new form JPNMatch
      */
-    public JPNMatch(final CoachMatch m,final boolean winner) {
+    public JPNMatch(final Match m, final boolean winner) {
         initComponents();
 
         jlbPlayer1.setText(m.mCompetitor1.mName);
@@ -26,21 +29,37 @@ public class JPNMatch extends javax.swing.JPanel {
 
         jlbPlayer1.setBackground(m.mCompetitor1.mColor);
         jlbPlayer2.setBackground(m.mCompetitor2.mColor);
-        
+
         jPanel2.setBackground(m.mCompetitor1.mColor);
         jPanel4.setBackground(m.mCompetitor2.mColor);
-        
-        final Value v=m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-        if ((v.mValue1 == -1)||(v.mValue2 == -1)) {
-            jlbScore1.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""));
-            jlbScore2.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""));
-        } else {
-            jlbScore1.setText(Integer.toString(v.mValue1));
-            jlbScore2.setText(Integer.toString(v.mValue2));
-        }        
 
-        if (!winner)
-        {
+        if (m instanceof CoachMatch) {
+
+            final Value v = ((CoachMatch)m).mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+            if ((v.mValue1 == -1) || (v.mValue2 == -1)) {
+                jlbScore1.setText("");
+                jlbScore2.setText("");
+            } else {
+                jlbScore1.setText(Integer.toString(v.mValue1));
+                jlbScore2.setText(Integer.toString(v.mValue2));
+            }
+        }
+        
+        if (m instanceof TeamMatch) {
+            int nbVictories=((TeamMatch)m).getVictories((Team)m.mCompetitor1);
+            int nbDraw=((TeamMatch)m).getVictories((Team)m.mCompetitor1);
+            int nbLoss=((TeamMatch)m).getVictories((Team)m.mCompetitor1);
+            
+            if (nbVictories+nbLoss+nbDraw!=Tournament.getTournament().getParams().mTeamMatesNumber) {
+                jlbScore1.setText("");
+                jlbScore2.setText("");
+            } else {
+                jlbScore1.setText(Integer.toString(nbVictories));
+                jlbScore2.setText(Integer.toString(nbLoss));
+            }
+        }
+
+        if (!winner) {
             jPanel1.setBackground(Color.LIGHT_GRAY);
             //jPanel2.setBackground(Color.LIGHT_GRAY);
             //jPanel4.setBackground(Color.LIGHT_GRAY);

@@ -166,4 +166,158 @@ public class TeamMatch extends Match {
      }
      return winner;
      }*/
+    @Override
+    public Element getXMLElement() {
+        final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
+        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM1"), this.mCompetitor1.mName);
+        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM2"), this.mCompetitor1.mName);
+
+        for (int k = 0; k < mMatchs.size(); k++) {
+            Element subMatch = mMatchs.get(k).getXMLElement();
+            match.addContent(subMatch);
+        }
+        return match;
+    }
+
+    @Override
+    public void setXMLElement(final Element match) {
+
+        final String c1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM11")).getValue();
+        final String c2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM2")).getValue();
+        this.mCompetitor1 = Team.sTeamMap.get(c1);
+        this.mCompetitor2 = Team.sTeamMap.get(c2);
+
+        final List values = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
+        final Iterator v = values.iterator();
+
+        while (v.hasNext()) {
+            CoachMatch m = new CoachMatch(mRound);
+            final Element val = (Element) v.next();
+            m.setXMLElement(val);
+
+            mMatchs.add(m);
+        }
+    }
+
+    public int getVictories(Team t1) {
+        Tournament tour = Tournament.getTournament();
+        final Team team1 = (Team) t1;
+        Team team2;
+
+        int nbVictories = 0;
+
+        if (t1 == mCompetitor1) {
+            team2 = (Team) mCompetitor2;
+        } else {
+            if (t1 == mCompetitor2) {
+                team2 = (Team) mCompetitor1;
+            } else {
+                team2 = null;
+            }
+        }
+
+        if (team2 != null) {
+            int nbVictory = 0;
+            int nbLost = 0;
+
+            Criteria td = tour.getParams().mCriterias.get(0);
+            for (int j = 0; j < mMatchs.size(); j++) {
+                CoachMatch m = mMatchs.get(j);
+                if (m.mValues.get(td).mValue1 > m.mValues.get(td).mValue2) {
+                    nbVictory++;
+                } else {
+                    if (m.mValues.get(td).mValue1 < m.mValues.get(td).mValue2) {
+                        nbLost++;
+                    }
+                }
+            }
+            
+            if (team2==t1)
+            {
+                nbVictories=nbLost;
+            }
+            else
+            {
+                nbVictories=nbVictory;
+            }            
+        }
+        return nbVictories;
+    }
+
+    public int getLoss(Team t1) {
+        Tournament tour = Tournament.getTournament();
+        final Team team1 = (Team) t1;
+        Team team2;
+
+        int nbLoose = 0;
+
+        if (t1 == mCompetitor1) {
+            team2 = (Team) mCompetitor2;
+        } else {
+            if (t1 == mCompetitor2) {
+                team2 = (Team) mCompetitor1;
+            } else {
+                team2 = null;
+            }
+        }
+
+        if (team2 != null) {
+            int nbVictory = 0;
+            int nbLost = 0;
+
+            Criteria td = tour.getParams().mCriterias.get(0);
+            for (int j = 0; j < mMatchs.size(); j++) {
+                CoachMatch m = mMatchs.get(j);
+                if (m.mValues.get(td).mValue1 > m.mValues.get(td).mValue2) {
+                    nbVictory++;
+                } else {
+                    if (m.mValues.get(td).mValue1 < m.mValues.get(td).mValue2) {
+                        nbLost++;
+                    }
+                }
+            }
+            
+            if (team2==t1)
+            {
+                nbLoose=nbVictory;
+            }
+            else
+            {
+                nbLoose=nbLost;
+            }            
+        }
+        return nbLoose;
+    }
+
+    public int getDraw(Team t1) {
+        Tournament tour = Tournament.getTournament();
+        final Team team1 = (Team) t1;
+        Team team2;
+
+        int nbDraw = 0;
+
+        if (t1 == mCompetitor1) {
+            team2 = (Team) mCompetitor2;
+        } else {
+            if (t1 == mCompetitor2) {
+                team2 = (Team) mCompetitor1;
+            } else {
+                team2 = null;
+            }
+        }
+
+        if (team2 != null) {
+            int nbVictory = 0;
+            int nbLost = 0;
+
+            Criteria td = tour.getParams().mCriterias.get(0);
+            for (int j = 0; j < mMatchs.size(); j++) {
+                CoachMatch m = mMatchs.get(j);
+                if ((m.mValues.get(td).mValue1 == m.mValues.get(td).mValue2) &&(m.mValues.get(td).mValue2!=-1)){
+                    nbDraw++;
+                } 
+            }                                    
+        }
+        return nbDraw;
+    }
 }

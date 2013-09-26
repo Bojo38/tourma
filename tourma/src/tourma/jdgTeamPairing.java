@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import tourma.data.Coach;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.tableModel.mjtPairs;
 import tourma.utility.StringConstants;
@@ -169,7 +170,7 @@ public class jdgTeamPairing extends javax.swing.JDialog {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelectActionPerformed
         if (jtPairs.getSelectedRow() >= 0) {
-            final jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, mTeams1.get(jtPairs.getSelectedRow()), mTeams2.get(jtPairs.getSelectedRow()), mRound);
+            final jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, mTeams1.get(jtPairs.getSelectedRow()), mTeams2.get(jtPairs.getSelectedRow()), mRound,((TeamMatch)mRound.getMatchs().get(jtPairs.getSelectedRow())).mMatchs);
             jdg.setVisible(true);
             mPairsDone.add(jtPairs.getSelectedRow(),true);
         }

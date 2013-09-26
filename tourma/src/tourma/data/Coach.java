@@ -236,6 +236,13 @@ public final class Coach extends Competitor implements XMLExport {
         m.mCompetitor2 = opponent;
         r.mMatchs.add(m);
     }
+    
+    public CoachMatch CreateMatch(Competitor opponent,Round r) {
+        CoachMatch m = new CoachMatch(r);
+        m.mCompetitor1 = this;
+        m.mCompetitor2 = opponent;
+        return m;
+    }
 
     public boolean havePlayed(Competitor opponent) {
         boolean have_played = false;
@@ -320,7 +327,7 @@ public final class Coach extends Competitor implements XMLExport {
     public void RoundCheck(Round round) {
 
         Tournament tour = Tournament.getTournament();
-        ArrayList<CoachMatch> matchs = round.getMatchs();
+        ArrayList<Match> matchs = round.getMatchs();
 
         for (int i = matchs.size() - 1; i > 0; i--) {
 

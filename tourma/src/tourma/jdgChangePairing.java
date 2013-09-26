@@ -59,7 +59,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
         mPlayers = new ArrayList<>();
 
         for (int i = 0; i < mRound.getMatchs().size(); i++) {
-            final CoachMatch m = mRound.getMatchs().get(i);
+            final CoachMatch m = mRound.getCoachMatchs().get(i);
             mPlayers.add((Coach)m.mCompetitor1);
             mPlayers.add((Coach)m.mCompetitor2);
         }
@@ -135,7 +135,7 @@ public class jdgChangePairing extends JDialog implements ActionListener {
     if (result == JOptionPane.YES_OPTION) {
 
         for (int i = 0; i < mRound.getMatchs().size(); i++) {
-            final CoachMatch m = mRound.getMatchs().get(i);
+            final CoachMatch m = mRound.getCoachMatchs().get(i);
             m.mCompetitor1 = mPlayersTmp.get(2 * i);
             m.mCompetitor2 = mPlayersTmp.get(2 * i + 1);
 

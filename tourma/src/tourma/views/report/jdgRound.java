@@ -233,7 +233,7 @@ public class jdgRound extends javax.swing.JDialog {
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" {0}"), mRoundNumber));
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE"), mRound.getMatchs().size());
 
-            final ArrayList<CoachMatch> matches = mRound.getMatchs();
+            final ArrayList<CoachMatch> matches = mRound.getCoachMatchs();
             final ArrayList parMatches = new ArrayList();
             if (mResult) {
                 root.put(StringConstants.CS_RESULT, 1);
@@ -345,7 +345,7 @@ public class jdgRound extends javax.swing.JDialog {
 
             final ArrayList<Team> teams = new ArrayList<>();
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final CoachMatch m = mRound.getMatchs().get(i);
+                final CoachMatch m = mRound.getCoachMatchs().get(i);
                 final Team team1 = ((Coach)m.mCompetitor1).mTeamMates;
                final  Team team2 = ((Coach)m.mCompetitor2).mTeamMates;
                 if (!teams.contains(team1)) {

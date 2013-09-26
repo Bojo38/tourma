@@ -18,7 +18,7 @@ import tourma.MainFrame;
  *
  * @author WFMJ7631
  */
-public abstract class Match {
+public abstract class Match implements XMLExport {
     public Competitor mCompetitor1;
     public Competitor mCompetitor2;
     

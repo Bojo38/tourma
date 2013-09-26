@@ -595,7 +595,7 @@ public class Tournament {
                         if ((((Coach)mRounds.get(i).mMatchs.get(j).mCompetitor1).mNaf > 0)
                                 && (((Coach)mRounds.get(i).mMatchs.get(j).mCompetitor2).mNaf > 0)) {
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<GAME>"));
-                            final CoachMatch m = mRounds.get(i).mMatchs.get(j);
+                            final CoachMatch m = mRounds.get(i).getCoachMatchs().get(j);
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TIMESTAMP>{0}</TIMESTAMP>"), new Object[] {format.format(mRounds.get(i).mHour)}));
                             Coach p = (Coach)m.mCompetitor1;
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<PLAYERRECORD>"));

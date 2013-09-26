@@ -147,29 +147,35 @@ public class Team extends Competitor implements XMLExport {
 
         Team team1 = this;
         Team team2 = (Team) opponent;
+
+        TeamMatch m = new TeamMatch(r);
+        m.mCompetitor1 = team1;
+        m.mCompetitor2 = team2;
+        r.mMatchs.add(m);
+
         switch (tour.getParams().mTeamIndivPairing) {
             // Ranking
             case 0:
                 if (vs.size() == 1) {
-                    final boolean random = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AFFECTATION ALÉATOITE (SINON, L'ORDER D'INSCRIPTION SERA UTILISÉE) ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERATION"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+                    //final boolean random = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AFFECTATION ALÉATOITE (SINON, L'ORDER D'INSCRIPTION SERA UTILISÉE) ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERATION"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
                     final ArrayList<Coach> shuffle2 = new ArrayList<>(team2.getActivePlayers());
-                    if (random) {
+                    //if (random) {
                         Collections.shuffle(shuffle2);
-                    }
+                    //}
                     for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-                        team1.getActivePlayers().get(k).AddMatch(shuffle2.get(k), r);
+                        m.mMatchs.add(team1.getActivePlayers().get(k).CreateMatch(shuffle2.get(k), r));
                     }
                 } else {
                     final ArrayList<ObjectRanking> coachs1 = Generation.subRanking(team1.mCoachs, vs);
                     final ArrayList<ObjectRanking> coachs2 = Generation.subRanking(team2.mCoachs, vs);
                     for (int k = 0; k < coachs1.size(); k++) {
-                        ((Coach) coachs1.get(k).getObject()).AddMatch((Coach) coachs2.get(k).getObject(), r);
+                        m.mMatchs.add(((Coach) coachs1.get(k).getObject()).CreateMatch((Coach) coachs2.get(k).getObject(), r));
                     }
                 }
                 break;
             // Manual
             case 1:
-                final jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
+                final jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r, m.mMatchs);
                 jdg.setVisible(true);
                 break;
             // GenRandom
@@ -177,7 +183,7 @@ public class Team extends Competitor implements XMLExport {
                 final ArrayList<Coach> shuffle2 = new ArrayList<>(team2.getActivePlayers());
                 Collections.shuffle(shuffle2);
                 for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-                    team1.getActivePlayers().get(k).AddMatch(shuffle2.get(k), r);
+                    m.mMatchs.add(team1.getActivePlayers().get(k).CreateMatch(shuffle2.get(k), r));
                 }
                 break;
             // NAF
@@ -188,7 +194,7 @@ public class Team extends Competitor implements XMLExport {
                 Collections.sort(sort2);
 
                 for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-                    sort1.get(k).AddMatch(sort2.get(k), r);
+                    m.mMatchs.add(sort1.get(k).CreateMatch(sort2.get(k), r));
                 }
                 break;
         }
@@ -255,7 +261,7 @@ public class Team extends Competitor implements XMLExport {
     public void RoundCheck(Round round) {
 
         Tournament tour = Tournament.getTournament();
-        ArrayList<CoachMatch> matchs = round.getMatchs();
+        ArrayList<Match> matchs = round.getMatchs();
         /*ArrayList<Team> teams1 = new ArrayList<>();
          ArrayList<Team> teams2 = new ArrayList<>();
         
@@ -265,28 +271,35 @@ public class Team extends Competitor implements XMLExport {
          teams2.add(matchs.get(i).mCompetitor2.mTeamMates);
          }*/
 
-        for (int i = matchs.size() - 1; i > 0; i -= tour.getParams().mTeamMatesNumber) {
+        for (int i = matchs.size() - 1; i > 0; i--) {
 
-            final Team t1 = ((Coach)matchs.get(i).mCompetitor1).mTeamMates;
-            final Team t2 = ((Coach)matchs.get(i).mCompetitor2).mTeamMates;
+            final Team t1 = (Team) matchs.get(i).mCompetitor1;
+            final Team t2 = (Team) matchs.get(i).mCompetitor2;
             boolean have_played = t1.havePlayed(t2);
 
             if (have_played) {
-                for (int k = i - tour.getParams().mTeamMatesNumber; k >= 0; k -= tour.getParams().mTeamMatesNumber) {
+                for (int k = i - 1; k >= 0; k--) {
 
-                    Team t1_tmp = ((Coach)matchs.get(k).mCompetitor1).mTeamMates;
-                    Team t2_tmp = ((Coach)matchs.get(k).mCompetitor2).mTeamMates;
+                    Team t1_tmp = (Team) matchs.get(k).mCompetitor1;
+                    Team t2_tmp = (Team) matchs.get(k).mCompetitor2;
 
                     have_played = t1.havePlayed(t2_tmp);
 
                     boolean canMatch = !have_played;
 
                     if (canMatch) {
+                        //Switch Team
+                        matchs.get(i).mCompetitor2 = t2_tmp;
+                        matchs.get(k).mCompetitor2 = t2;
+
+                        // Switch coachs into matchs 
                         for (int j = 0; j < tour.getParams().mTeamMatesNumber; j++) {
-                            Coach c2_tmp = (Coach)matchs.get(k - j).mCompetitor2;
-                            Coach c2 = (Coach)matchs.get(i - j).mCompetitor2;
-                            matchs.get(i - j).mCompetitor2 = c2_tmp;
-                            matchs.get(k - j).mCompetitor2 = c2;
+                            Match m = ((TeamMatch) matchs.get(i)).mMatchs.get(j);
+                            Match m_tmp = ((TeamMatch) matchs.get(k)).mMatchs.get(j);
+                            Coach c2_tmp = (Coach) m_tmp.mCompetitor2;
+                            Coach c2 = (Coach) m.mCompetitor2;
+                            m.mCompetitor2 = c2_tmp;
+                            m_tmp.mCompetitor2 = c2;
                         }
                         break;
                     } else {
@@ -294,11 +307,18 @@ public class Team extends Competitor implements XMLExport {
 
                         canMatch = !have_played;
                         if (canMatch) {
+                            //Switch Team
+                            matchs.get(i).mCompetitor2 = t1_tmp;
+                            matchs.get(k).mCompetitor2 = t2;
+
+                            // Switch coachs into matchs 
                             for (int j = 0; j < tour.getParams().mTeamMatesNumber; j++) {
-                                Coach c1_tmp = (Coach)matchs.get(k - j).mCompetitor1;
-                                Coach c2 = (Coach)matchs.get(i - j).mCompetitor2;
-                                matchs.get(i - j).mCompetitor2 = c1_tmp;
-                                matchs.get(k - j).mCompetitor1 = c2;
+                                Match m = ((TeamMatch) matchs.get(i)).mMatchs.get(j);
+                                Match m_tmp = ((TeamMatch) matchs.get(k)).mMatchs.get(j);
+                                Coach c1_tmp = (Coach) m_tmp.mCompetitor2;
+                                Coach c2 = (Coach) m.mCompetitor2;
+                                m.mCompetitor2 = c1_tmp;
+                                m_tmp.mCompetitor1 = c2;
                             }
                             break;
                         }

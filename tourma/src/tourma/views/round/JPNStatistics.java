@@ -71,7 +71,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             for (int j = 0; j < mTournament.getRounds().size(); j++) {
                 final Round r = mTournament.getRounds().get(j);
                 for (int k = 0; k < r.getMatchs().size(); k++) {
-                    final CoachMatch m = r.getMatchs().get(k);
+                    final CoachMatch m = r.getCoachMatchs().get(k);
                     if ((m.mCompetitor1 != Coach.getNullCoach()) && (m.mCompetitor2 != Coach.getNullCoach())) {
                         final Value values = m.mValues.get(crit);
 
@@ -171,7 +171,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             final Round r = mTournament.getRounds().get(i);
             for (int j = 0; j < r.getMatchs().size(); j++) {
-                final CoachMatch m = r.getMatchs().get(j);
+                final CoachMatch m = r.getCoachMatchs().get(j);
                 if ((m.mCompetitor1 != Coach.getNullCoach()) && (m.mCompetitor2 != Coach.getNullCoach())) {
                     final Value values = m.mValues.get(Td);
                     if (values.mValue1 > values.mValue2) {

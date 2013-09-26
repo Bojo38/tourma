@@ -17,11 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import tourma.MainFrame;
-import tourma.data.Clan;
 import tourma.data.Coach;
+import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
-import tourma.data.CoachMatch;
+import tourma.data.Match;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Pool;
@@ -29,8 +29,6 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.data.Value;
-import tourma.jdgPairing;
-import tourma.jdgTeamPairing;
 import tourma.tableModel.mjtRankingIndiv;
 import tourma.tableModel.mjtRankingTeam;
 import tourma.utility.StringConstants;
@@ -151,8 +149,8 @@ public class Generation {
 
         if (rounds.size() > 0) {
             for (int k = 0; k < rounds.size(); k++) {
-                for (int i = 0; i < rounds.get(k).getMatchs().size(); i++) {
-                    final CoachMatch m = rounds.get(k).getMatchs().get(i);
+                for (int i = 0; i < rounds.get(k).getCoachMatchs().size(); i++) {
+                    final CoachMatch m = rounds.get(k).getCoachMatchs().get(i);
                     m.mCompetitor1.mMatchs.add(m);
                     m.mCompetitor2.mMatchs.add(m);
 
@@ -2258,7 +2256,7 @@ public class Generation {
      return r;
      }*/
     protected static void GenCup(final Round round, final Round r, final boolean third_place) {
-        final ArrayList<CoachMatch> matchs = new ArrayList<>(round.getMatchs());
+        final ArrayList<Match> matchs = new ArrayList<>(round.getMatchs());
         int nb_match = (int) Math.pow(2, round.mCupMaxTour - round.mCupTour - 1);
 
         final ArrayList<Competitor> _winners = new ArrayList<>();
@@ -2646,7 +2644,7 @@ public class Generation {
         }
         tour.getRounds().add(r);
         for (int i = 0; i < r.getMatchs().size(); i++) {
-            final CoachMatch m = r.getMatchs().get(i);
+            final CoachMatch m = r.getCoachMatchs().get(i);
             m.mCompetitor1.mMatchs.add(m);
             m.mCompetitor2.mMatchs.add(m);
         }
@@ -2883,7 +2881,7 @@ public class Generation {
                             coachs = new ArrayList<>(tour.GetActiveCoaches());
                             // First, remove coachs
                             for (int i = 0; i < r.getMatchs().size(); i++) {
-                                final CoachMatch m = r.getMatchs().get(i);
+                                final CoachMatch m = r.getCoachMatchs().get(i);
                                 if (coachs.contains(m.mCompetitor1)) {
                                     coachs.remove(m.mCompetitor1);
                                 }
@@ -2895,7 +2893,7 @@ public class Generation {
                             for (int i = 0; i < datas.size(); i++) {
                                 final Coach c = (Coach) ((ObjectRanking) datas.get(i)).getObject();
                                 for (int j = 0; j < r.getMatchs().size(); j++) {
-                                    final CoachMatch m = r.getMatchs().get(j);
+                                    final CoachMatch m = r.getCoachMatchs().get(j);
                                     if ((c == m.mCompetitor1) || (c == m.mCompetitor2)) {
                                         datas.remove(i);
                                         i--;
@@ -2907,7 +2905,7 @@ public class Generation {
                             teams = new ArrayList<>(tour.getTeams());
                             // First, remove coachs
                             for (int i = 0; i < r.getMatchs().size(); i++) {
-                                final CoachMatch m = r.getMatchs().get(i);
+                                final CoachMatch m = r.getCoachMatchs().get(i);
                                 if (teams.contains(((Coach) m.mCompetitor1).mTeamMates)) {
                                     teams.remove(((Coach) m.mCompetitor1).mTeamMates);
                                 }
@@ -2919,7 +2917,7 @@ public class Generation {
                             for (int i = 0; i < datas.size(); i++) {
                                 final Team t = (Team) ((ObjectRanking) datas.get(i)).getObject();
                                 for (int j = 0; j < r.getMatchs().size(); j++) {
-                                    final CoachMatch m = r.getMatchs().get(j);
+                                    final CoachMatch m = r.getCoachMatchs().get(j);
                                     if ((t == ((Coach) m.mCompetitor1).mTeamMates) || (t == ((Coach) m.mCompetitor2).mTeamMates)) {
                                         datas.remove(i);
                                         i--;
@@ -2936,7 +2934,7 @@ public class Generation {
                             coachs = new ArrayList<>(tour.GetActiveCoaches());
                             // First, remove coachs
                             for (int i = 0; i < r.getMatchs().size(); i++) {
-                                final CoachMatch m = r.getMatchs().get(i);
+                                final CoachMatch m = r.getCoachMatchs().get(i);
                                 if (coachs.contains(m.mCompetitor1)) {
                                     coachs.remove(m.mCompetitor1);
                                 }
@@ -2948,7 +2946,7 @@ public class Generation {
                             for (int i = 0; i < datas.size(); i++) {
                                 final Coach c = (Coach) ((ObjectRanking) datas.get(i)).getObject();
                                 for (int j = 0; j < r.getMatchs().size(); j++) {
-                                    final CoachMatch m = r.getMatchs().get(j);
+                                    final CoachMatch m = r.getCoachMatchs().get(j);
                                     if ((c == m.mCompetitor1) || (c == m.mCompetitor2)) {
                                         datas.remove(i);
                                         i--;
@@ -3023,7 +3021,7 @@ public class Generation {
 
             for (int j = 0; j < v.size(); j++) {
                 for (int k = 0; k < v.get(j).getMatchs().size(); k++) {
-                    matchs.add(v.get(j).getMatchs().get(k));
+                    matchs.add(v.get(j).getCoachMatchs().get(k));
                 }
             }
         }

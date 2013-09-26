@@ -18,9 +18,11 @@ import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
+import tourma.data.Match;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.tableModel.mjtAnnexRank;
 import tourma.tableModel.mjtAnnexRankTeam;
@@ -255,9 +257,9 @@ public class JPNTeamRound extends javax.swing.JPanel {
         if (mJtbTeamMatch != null) {
             final ArrayList<Team> teams = new ArrayList<>();
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final CoachMatch m = mRound.getMatchs().get(i);
-                final Team team1 = ((Coach)m.mCompetitor1).mTeamMates;
-                final Team team2 = ((Coach)m.mCompetitor2).mTeamMates;
+                final Match m = mRound.getMatchs().get(i);
+                final Team team1 = (Team)m.mCompetitor1;
+                final Team team2 = (Team)m.mCompetitor2;
                 if (!teams.contains(team1)) {
                     teams.add(team1);
                 }

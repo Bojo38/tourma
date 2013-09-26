@@ -18,7 +18,7 @@ import tourma.MainFrame;
  *
  * @author Frederic Berger
  */
-public class CoachMatch extends Match implements XMLExport {
+public class CoachMatch extends Match  {
 
    
     public RosterType mRoster1;

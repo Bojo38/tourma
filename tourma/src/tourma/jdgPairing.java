@@ -20,6 +20,7 @@ import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.tableModel.mjtMatches;
 import tourma.utility.StringConstants;
 
@@ -36,11 +37,11 @@ public class jdgPairing extends javax.swing.JDialog {
     ArrayList<String> mItems2;
     HashMap<String, Coach> mCoachs;
     ArrayList<CoachMatch> mMatchs;
-
+    ArrayList<CoachMatch> mCMatchs;
     /**
      * Creates new form jdgCoach
      */
-    public jdgPairing(final java.awt.Frame parent,final  boolean modal,final  Team team1,final  Team team2, final Round round) {
+    public jdgPairing(final java.awt.Frame parent,final  boolean modal,final  Team team1,final  Team team2, final Round round,final ArrayList<CoachMatch> CMatchs) {
         super(parent, modal);
         initComponents();
 
@@ -61,7 +62,7 @@ public class jdgPairing extends javax.swing.JDialog {
 
         mRound = round;
         mMatchs = new ArrayList<>();
-
+        mCMatchs=CMatchs;
         mItems1 = new ArrayList();
         for (int i = 0; i < mTeam1.mCoachs.size(); i++) {
            final  Coach c = mTeam1.mCoachs.get(i);
@@ -183,7 +184,7 @@ public class jdgPairing extends javax.swing.JDialog {
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
         for (int i = 0; i < mMatchs.size(); i++) {
-            mRound.getMatchs().add(mMatchs.get(i));
+            mCMatchs.add(mMatchs.get(i));
         }
         this.setVisible(false);
 

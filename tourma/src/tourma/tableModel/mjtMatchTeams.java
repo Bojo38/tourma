@@ -15,6 +15,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Coach;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.utility.StringConstants;
@@ -77,52 +78,14 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
             final Team t = mTeams.get(row * 2);
             Team team1 = t;
             Team team2 = t;
-            final ArrayList<CoachMatch> matchs = new ArrayList<>();
-            for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final CoachMatch m = mRound.getMatchs().get(i);
-                if (((Coach)m.mCompetitor1).mTeamMates == t) {
-                    matchs.add(m);
-                    team1 = t;
-                    team2 = ((Coach)m.mCompetitor2).mTeamMates;
 
-                }
-                if (((Coach)m.mCompetitor2).mTeamMates == t) {
-                    matchs.add(m);
-                    team1 = t;
-                    team2 = ((Coach)m.mCompetitor1).mTeamMates;
-                }
-            }
-            int nbVictory = 0;
-            int nbLost = 0;
-            int nbDraw = 0;
+            final TeamMatch m = (TeamMatch) mRound.getMatchs().get(row);
+            team1 = (Team) m.mCompetitor1;
+            team2 = (Team) m.mCompetitor2;
 
-            for (int i = 0; i < matchs.size(); i++) {
-                final CoachMatch m = matchs.get(i);
-                if (((Coach)m.mCompetitor1).mTeamMates == t) {
-                    final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue1 > val.mValue2) {
-                        nbVictory++;
-                    } else {
-                        if (val.mValue1 < val.mValue2) {
-                            nbLost++;
-                        } else {
-                            nbDraw++;
-                        }
-                    }
-                }
-                if (((Coach)m.mCompetitor2).mTeamMates == t) {
-                    final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue1 < val.mValue2) {
-                        nbVictory++;
-                    } else {
-                        if (val.mValue1 > val.mValue2) {
-                            nbLost++;
-                        } else {
-                            nbDraw++;
-                        }
-                    }
-                }
-            }
+            int nbVictory = m.getVictories(team1);
+            int nbLost = m.getLoss(team1);
+            int nbDraw = m.getDraw(team1);
 
             switch (col) {
                 case 0:
@@ -159,7 +122,7 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
      * editable.
      */
     @Override
-    public boolean isCellEditable(final int row,final  int col) {
+    public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
@@ -167,7 +130,7 @@ public class mjtMatchTeams extends AbstractTableModel implements TableCellRender
 
     @Override
     public Component getTableCellRendererComponent(
-            final JTable table, final Object value,final  boolean isSelected,final  boolean hasFocus,final  int row, final int column) {
+            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
