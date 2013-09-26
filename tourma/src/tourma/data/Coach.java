@@ -293,7 +293,10 @@ public final class Coach extends Competitor implements XMLExport {
 
 
         if (possible.isEmpty()) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
+            if (params.mEnableClans)
+            {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
+            }
             possible = new ArrayList<Competitor>(opponents);
         }
         return possible;

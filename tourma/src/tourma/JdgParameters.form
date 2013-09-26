@@ -127,7 +127,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                     <Property name="columns" type="int" value="1"/>
-                    <Property name="rows" type="int" value="3"/>
+                    <Property name="rows" type="int" value="2"/>
                   </Layout>
                   <SubComponents>
                     <Component class="javax.swing.JRadioButton" name="jrbIndividualTeamPairing">
@@ -146,7 +146,6 @@
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="btgTeamPairing"/>
                         </Property>
-                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Appariement en Equipe"/>
                       </Properties>
                       <Events>
@@ -205,6 +204,35 @@
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel3">
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jpnMisc">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Divers"/>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                      <BorderConstraints direction="South"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                    <Property name="columns" type="int" value="1"/>
+                    <Property name="rows" type="int" value="1"/>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JCheckBox" name="jcxMultipleRoster">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Utiliser plusieurs rosters"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcxMultipleRosterActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

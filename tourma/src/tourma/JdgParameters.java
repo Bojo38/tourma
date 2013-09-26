@@ -121,6 +121,8 @@ public class JdgParameters extends javax.swing.JDialog {
         jspCoachNumber = new javax.swing.JSpinner();
         jckSubstitutes = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
+        jpnMisc = new javax.swing.JPanel();
+        jcxMultipleRoster = new javax.swing.JCheckBox();
         jpnIndivTeamRanking = new javax.swing.JPanel();
         jrbIndivPairingByRanking = new javax.swing.JRadioButton();
         jrbIndivPairingRandom = new javax.swing.JRadioButton();
@@ -168,7 +170,7 @@ public class JdgParameters extends javax.swing.JDialog {
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jpnPairing.setBorder(javax.swing.BorderFactory.createTitledBorder("Appariement"));
-        jpnPairing.setLayout(new java.awt.GridLayout(3, 1));
+        jpnPairing.setLayout(new java.awt.GridLayout(2, 1));
 
         btgTeamPairing.add(jrbIndividualTeamPairing);
         jrbIndividualTeamPairing.setText("Appariement Individuel");
@@ -180,7 +182,6 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnPairing.add(jrbIndividualTeamPairing);
 
         btgTeamPairing.add(jrbTeamPairing);
-        jrbTeamPairing.setSelected(true);
         jrbTeamPairing.setText("Appariement en Equipe");
         jrbTeamPairing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +219,19 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnNbCoachs.add(jLabel3);
 
         jPanel3.add(jpnNbCoachs, java.awt.BorderLayout.NORTH);
+
+        jpnMisc.setBorder(javax.swing.BorderFactory.createTitledBorder("Divers"));
+        jpnMisc.setLayout(new java.awt.GridLayout(1, 1));
+
+        jcxMultipleRoster.setText("Utiliser plusieurs rosters");
+        jcxMultipleRoster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxMultipleRosterActionPerformed(evt);
+            }
+        });
+        jpnMisc.add(jcxMultipleRoster);
+
+        jPanel3.add(jpnMisc, java.awt.BorderLayout.SOUTH);
 
         jpnByTeam.add(jPanel3);
 
@@ -440,6 +454,11 @@ public class JdgParameters extends javax.swing.JDialog {
         }
         update();
     }//GEN-LAST:event_jrbIndivPairingNafActionPerformed
+
+    private void jcxMultipleRosterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxMultipleRosterActionPerformed
+        mParams.mMultiRoster=jcxMultipleRoster.isSelected();
+    }//GEN-LAST:event_jcxMultipleRosterActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgGame;
     private javax.swing.ButtonGroup btgIndivTeamPairing;
@@ -452,10 +471,12 @@ public class JdgParameters extends javax.swing.JDialog {
     private javax.swing.JButton jbtOK;
     private javax.swing.JCheckBox jcbMultiroster;
     private javax.swing.JCheckBox jckSubstitutes;
+    private javax.swing.JCheckBox jcxMultipleRoster;
     private javax.swing.JLabel jlbNbCoachs;
     private javax.swing.JPanel jpnByTeam;
     private javax.swing.JPanel jpnGame;
     private javax.swing.JPanel jpnIndivTeamRanking;
+    private javax.swing.JPanel jpnMisc;
     private javax.swing.JPanel jpnNbCoachs;
     private javax.swing.JPanel jpnOK;
     private javax.swing.JPanel jpnPairing;

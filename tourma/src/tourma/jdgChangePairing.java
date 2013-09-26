@@ -22,7 +22,11 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
+import tourma.data.Competitor;
+import tourma.data.Match;
 import tourma.data.Round;
+import tourma.data.Team;
+import tourma.data.TeamMatch;
 
 /**
  *
@@ -32,8 +36,8 @@ public class jdgChangePairing extends JDialog implements ActionListener {
 
     Round mRound;
     ArrayList<JComboBox> mPlayersSelected;
-    ArrayList<Coach> mPlayers;
-    ArrayList<Coach> mPlayersTmp;
+    ArrayList<Competitor> mPlayers;
+    ArrayList<Competitor> mPlayersTmp;
 
     /**
      * Creates new form jdgChangePairing
@@ -59,9 +63,9 @@ public class jdgChangePairing extends JDialog implements ActionListener {
         mPlayers = new ArrayList<>();
 
         for (int i = 0; i < mRound.getMatchs().size(); i++) {
-            final CoachMatch m = mRound.getCoachMatchs().get(i);
-            mPlayers.add((Coach)m.mCompetitor1);
-            mPlayers.add((Coach)m.mCompetitor2);
+            final Match m = mRound.getMatchs().get(i);
+            mPlayers.add(m.mCompetitor1);
+            mPlayers.add(m.mCompetitor2);
         }
 
         mPlayersTmp = mPlayers;
@@ -124,37 +128,78 @@ public class jdgChangePairing extends JDialog implements ActionListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
-    this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-    final int result = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS CONFIRMEER LE NOUVEL APPARIEMENT ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CONFIRMER"), JOptionPane.YES_NO_OPTION);
-    if (result == JOptionPane.YES_OPTION) {
+        final int result = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS CONFIRMEER LE NOUVEL APPARIEMENT ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CONFIRMER"), JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
 
-        for (int i = 0; i < mRound.getMatchs().size(); i++) {
-            final CoachMatch m = mRound.getCoachMatchs().get(i);
-            m.mCompetitor1 = mPlayersTmp.get(2 * i);
-            m.mCompetitor2 = mPlayersTmp.get(2 * i + 1);
+            for (int i = 0; i < mRound.getMatchs().size(); i++) {
+                Match m = mRound.getMatchs().get(i);                
 
-            ((Coach)m.mCompetitor1).mMatchs.remove(((Coach)m.mCompetitor1).mMatchs.get(((Coach)m.mCompetitor1).mMatchs.size() - 1));
-            ((Coach)m.mCompetitor2).mMatchs.remove(((Coach)m.mCompetitor2).mMatchs.get(((Coach)m.mCompetitor2).mMatchs.size() - 1));
-            ((Coach)m.mCompetitor1).mMatchs.add(m);
-            ((Coach)m.mCompetitor2).mMatchs.add(m);
+                if (m instanceof TeamMatch)
+                {
+                    Team t1=(Team)mPlayersTmp.get(2 * i);
+                    Team t2=(Team)mPlayersTmp.get(2 * i+1);
+                    if ((m.mCompetitor1!=t1)||
+                            (m.mCompetitor2!=t2))
+                    {                        
+                        // Remove matchs from coachs
+                        for (int j=0; j<((TeamMatch)m).mMatchs.size(); j++)
+                        {
+                            CoachMatch cm=((TeamMatch)m).mMatchs.get(j);
+                            for (int k=0; k<((Team)m.mCompetitor1).mCoachs.size(); k++)
+                            {
+                                Coach c=((Team)m.mCompetitor1).mCoachs.get(k);
+                                c.mMatchs.remove(cm);
+                            }
+                            
+                            for (int k=0; k<((Team)m.mCompetitor2).mCoachs.size(); k++)
+                            {
+                                Coach c=((Team)m.mCompetitor2).mCoachs.get(k);
+                                c.mMatchs.remove(cm);
+                            }
+                        }
+                        
+                        ((TeamMatch)m).mMatchs.clear();
+                        jdgPairing jdg=new jdgPairing(MainFrame.getMainFrame(), true, 
+                                t1,t2, mRound, ((TeamMatch)m).mMatchs);
+                        jdg.setVisible(true);
+                        
+                        for (int j=0; j<((TeamMatch)m).mMatchs.size(); j++)
+                        {
+                            CoachMatch cm=((TeamMatch)m).mMatchs.get(j);
+                            cm.mCompetitor1.mMatchs.add(cm);
+                            cm.mCompetitor2.mMatchs.add(cm);                            
+                        }
+                    }
+                }
+                                
+                m.mCompetitor1 = mPlayersTmp.get(2 * i);
+                m.mCompetitor2 = mPlayersTmp.get(2 * i + 1);
+                
+                m.mCompetitor1.mMatchs.remove(m.mCompetitor1.mMatchs.get( m.mCompetitor1.mMatchs.size() - 1));
+                m.mCompetitor2.mMatchs.remove(m.mCompetitor2.mMatchs.get(m.mCompetitor2.mMatchs.size() - 1));
+                
+                m.mCompetitor1.mMatchs.add(m);
+                m.mCompetitor2.mMatchs.add(m);
+            
         }
 
         this.setVisible(false);
     }
     }//GEN-LAST:event_jbtOKActionPerformed
+@Override
+        public void actionPerformed(final ActionEvent e) {
+        final JComboBox jcb = (JComboBox) e.getSource();
 
-    @Override
-    public void actionPerformed(final ActionEvent e) {
-       final  JComboBox jcb = (JComboBox) e.getSource();
-        
-        Coach oldCoach = null;
-        Coach newCoach;
+        Competitor oldCoach = null;
+        Competitor newCoach;
 
         newCoach = mPlayersTmp.get(jcb.getSelectedIndex());
         for (int i = 0; i < mPlayersSelected.size(); i++) {
@@ -188,7 +233,9 @@ public class jdgChangePairing extends JDialog implements ActionListener {
 
         final ArrayList<String> playersNames = new ArrayList<>();
         for (int i = 0; i < mPlayersTmp.size(); i++) {
-            playersNames.add(mPlayersTmp.get(i).mName + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - {0} ({1})"), new Object[] {mPlayersTmp.get(i).mTeam, mPlayersTmp.get(i).mRoster.mName}));
+
+            String name = mPlayersTmp.get(i).getDecoratedName();
+            playersNames.add(name);
         }
 
         mPlayersSelected.clear();

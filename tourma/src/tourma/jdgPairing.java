@@ -14,6 +14,8 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Coach;
@@ -58,7 +60,7 @@ public class jdgPairing extends javax.swing.JDialog {
         mTeam2 = team2;
         mCoachs = new HashMap<>();
 
-        this.setTitle(team1.mName + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS {0}"), team2.mName)));
+        this.setTitle(team1.mName + " VS "+ team2.mName);
 
         mRound = round;
         mMatchs = new ArrayList<>();
@@ -114,6 +116,7 @@ public class jdgPairing extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jbtAdd = new javax.swing.JButton();
         jbtRemove = new javax.swing.JButton();
+        jbtRandom = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -174,6 +177,15 @@ public class jdgPairing extends javax.swing.JDialog {
         });
         jPanel4.add(jbtRemove);
 
+        jbtRandom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png"))); // NOI18N
+        jbtRandom.setText(bundle.getString("Random")); // NOI18N
+        jbtRandom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRandomActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jbtRandom);
+
         jPanel3.add(jPanel4, java.awt.BorderLayout.SOUTH);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.NORTH);
@@ -212,6 +224,23 @@ public class jdgPairing extends javax.swing.JDialog {
         }
         update();
     }//GEN-LAST:event_jbtRemoveActionPerformed
+
+    private void jbtRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRandomActionPerformed
+        
+        Collections.shuffle(mItems1);
+        Collections.shuffle(mItems2);
+                        
+        while ((mItems1.size() > 0)&&(mItems2.size() > 0)) {
+            final CoachMatch m = new CoachMatch(mRound);
+            m.mCompetitor1 = mCoachs.get(mItems1.get(0));
+            m.mCompetitor2 = mCoachs.get(mItems2.get(0));
+            mMatchs.add(m);
+            mItems1.remove(0);
+            mItems2.remove(0);
+        }
+        update();
+    }//GEN-LAST:event_jbtRandomActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
@@ -220,6 +249,7 @@ public class jdgPairing extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtOK;
+    private javax.swing.JButton jbtRandom;
     private javax.swing.JButton jbtRemove;
     private javax.swing.JComboBox jcbTeam1;
     private javax.swing.JComboBox jcbTeam2;
