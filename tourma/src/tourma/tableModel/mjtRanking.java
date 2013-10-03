@@ -65,7 +65,7 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
 
     @Override
     public int getRowCount() {
-        return mObjects.size();
+        return mDatas.size();
     }
 
     public static int getOppPointsByCoach(final Coach c, final CoachMatch m) {
@@ -127,7 +127,11 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
     }
 
     public static int getPointsByCoach(final Coach c, final CoachMatch m) {
-        int value = c.mHandicap;
+                int value=0;
+        if (c.mMatchs.indexOf(m)==0)
+        {
+            value+=c.mHandicap;
+        }
         final Criteria td=Tournament.getTournament().getParams().mCriterias.get(0);
         final Value val = m.mValues.get(td);
         if (m.mCompetitor1 == c) {

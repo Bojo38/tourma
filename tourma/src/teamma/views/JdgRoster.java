@@ -22,6 +22,7 @@ import teamma.data.RosterType;
 import teamma.data.StarPlayer;
 import teamma.tableModel.mjtTeamPlayers;
 import teamma.tableModel.mjtTeamStars;
+import teamma.views.report.JdgPrintableRoster;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Tournament;
@@ -191,6 +192,14 @@ public class JdgRoster extends javax.swing.JDialog {
         jlbPriceBabes = new javax.swing.JLabel();
         jlbX13 = new javax.swing.JLabel();
         jlbCostBabes = new javax.swing.JLabel();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jslChef = new javax.swing.JSlider();
+        jlbNbChef = new javax.swing.JLabel();
+        jlbX14 = new javax.swing.JLabel();
+        jlbPriceChef = new javax.swing.JLabel();
+        jlbX15 = new javax.swing.JLabel();
+        jlbCostChef = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbStars = new javax.swing.JTable();
@@ -224,6 +233,7 @@ public class JdgRoster extends javax.swing.JDialog {
         jlbCoachName = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
+        jbtHTML = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 724));
@@ -794,6 +804,54 @@ public class JdgRoster extends javax.swing.JDialog {
 
         jPanel8.add(jPanel21);
 
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel11.setText("Halfling Chef");
+        jLabel11.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel23.add(jLabel11);
+
+        jslChef.setMajorTickSpacing(1);
+        jslChef.setMaximum(1);
+        jslChef.setPaintTicks(true);
+        jslChef.setSnapToTicks(true);
+        jslChef.setValue(0);
+        jslChef.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslChef.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslChef.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslChef.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslChefStateChanged(evt);
+            }
+        });
+        jPanel23.add(jslChef);
+
+        jlbNbChef.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbChef.setLabelFor(jslWizard);
+        jlbNbChef.setText("0");
+        jlbNbChef.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel23.add(jlbNbChef);
+
+        jlbX14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX14.setText("x");
+        jlbX14.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel23.add(jlbX14);
+
+        jlbPriceChef.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceChef.setText("0");
+        jlbPriceChef.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel23.add(jlbPriceChef);
+
+        jlbX15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX15.setText("=");
+        jlbX15.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel23.add(jlbX15);
+
+        jlbCostChef.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostChef.setText("0");
+        jlbCostChef.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel23.add(jlbCostChef);
+
+        jPanel8.add(jPanel23);
+
         jtpGoods.addTab(bundle.getString("Inducements"), jPanel8); // NOI18N
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
@@ -1029,6 +1087,15 @@ public class JdgRoster extends javax.swing.JDialog {
         });
         jPanel6.add(jbtOK);
 
+        jbtHTML.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtHTML.setText("HTML");
+        jbtHTML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtHTMLActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jbtHTML);
+
         getContentPane().add(jPanel6, java.awt.BorderLayout.SOUTH);
 
         pack();
@@ -1142,14 +1209,14 @@ public class JdgRoster extends javax.swing.JDialog {
                 int i;
                 for (i = 0; i < p._skills.size(); i++) {
                     Skill s = p._skills.get(i);
-                    skills.add(s._name);
+                    skills.add(s.mName);
                 }
 
                 Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(), "Select skill to remove", "Skill", JOptionPane.INFORMATION_MESSAGE, null, skills.toArray(), null);
                 if (choice != null) {
 
                     for (i = 0; i < p._skills.size(); i++) {
-                        if (p._skills.get(i)._name.equals(choice)) {
+                        if (p._skills.get(i).mName.equals(choice)) {
                             p._skills.remove(i);
                             break;
                         }
@@ -1295,6 +1362,16 @@ public class JdgRoster extends javax.swing.JDialog {
     private void jtbStarsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbStarsMouseClicked
         jbtRemoveStar.setEnabled(jtbStars.getSelectedRow() > -1);
     }//GEN-LAST:event_jtbStarsMouseClicked
+
+    private void jbtHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtHTMLActionPerformed
+        JdgPrintableRoster jdg=new JdgPrintableRoster(MainFrame.getMainFrame(), true, this._data,jcbWithSkills.isSelected());
+        jdg.setVisible(true);
+    }//GEN-LAST:event_jbtHTMLActionPerformed
+
+    private void jslChefStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslChefStateChanged
+        _data._chef = jslChef.getValue() == 1;
+        update();
+    }//GEN-LAST:event_jslChefStateChanged
     
     private void update() {
         if (_data._roster != null) {
@@ -1338,6 +1415,7 @@ public class JdgRoster extends javax.swing.JDialog {
         
         if (_data._roster != null) {
             jlbPriceBribeTheRef.setText(Integer.toString(_data._roster._bribe_cost));
+            jlbPriceChef.setText(Integer.toString(_data._roster._chef_cost));
         }
         
         jtbPlayers.setModel(playersModel);
@@ -1435,7 +1513,20 @@ public class JdgRoster extends javax.swing.JDialog {
         jlbPriceBabes.setText(Integer.toString(RosterType._babe_cost));
         jlbNbBribeTheRef.setText(Integer.toString(_data._bloodweiserbabes));
         jlbCostBabes.setText(Integer.toString(_data._bloodweiserbabes * RosterType._babe_cost));
-        
+    
+        if (_data._chef)
+        {
+            jlbNbChef.setText("1");
+            if (_data._roster!=null)
+            {
+            jlbCostChef.setText(Integer.toString(_data._roster._chef_cost));
+            }
+        }
+        else
+        {
+            jlbNbChef.setText("0");
+            jlbCostChef.setText("");
+        }
         
         if (_data._wizard) {
             jlbNbWizard.setText("1");
@@ -1524,6 +1615,7 @@ public class JdgRoster extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -1552,6 +1644,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1564,6 +1657,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddSkill;
     private javax.swing.JButton jbtAddStar;
+    private javax.swing.JButton jbtHTML;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtRemove;
     private javax.swing.JButton jbtRemoveSkill;
@@ -1579,6 +1673,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbCostBribeTheRef;
     private javax.swing.JLabel jlbCostCard;
     private javax.swing.JLabel jlbCostCheerleaders;
+    private javax.swing.JLabel jlbCostChef;
     private javax.swing.JLabel jlbCostExtraReroll;
     private javax.swing.JLabel jlbCostFanFactor;
     private javax.swing.JLabel jlbCostIgor;
@@ -1598,6 +1693,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbNbAssists9;
     private javax.swing.JLabel jlbNbBabes;
     private javax.swing.JLabel jlbNbBribeTheRef;
+    private javax.swing.JLabel jlbNbChef;
     private javax.swing.JLabel jlbNbCherrleaders;
     private javax.swing.JLabel jlbNbExtraReroll;
     private javax.swing.JLabel jlbNbFanFactor;
@@ -1610,6 +1706,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbPriceBabes;
     private javax.swing.JLabel jlbPriceBribeTheRef;
     private javax.swing.JLabel jlbPriceCheerleaders;
+    private javax.swing.JLabel jlbPriceChef;
     private javax.swing.JLabel jlbPriceExtraReroll;
     private javax.swing.JLabel jlbPriceFanFactor;
     private javax.swing.JLabel jlbPriceIgor;
@@ -1626,6 +1723,8 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbX11;
     private javax.swing.JLabel jlbX12;
     private javax.swing.JLabel jlbX13;
+    private javax.swing.JLabel jlbX14;
+    private javax.swing.JLabel jlbX15;
     private javax.swing.JLabel jlbX2;
     private javax.swing.JLabel jlbX20;
     private javax.swing.JLabel jlbX3;
@@ -1643,6 +1742,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JSlider jslBribeTheRef;
     private javax.swing.JSlider jslCardBudget;
     private javax.swing.JSlider jslCheerleaders;
+    private javax.swing.JSlider jslChef;
     private javax.swing.JSlider jslExtraReroll;
     private javax.swing.JSlider jslFanFactor;
     private javax.swing.JSlider jslIgor;

@@ -12,20 +12,25 @@ import java.awt.Color;
  */
 public class Skill {
 
-    public static final int _single_cost=20000;
-    public static final int _double_cost=30000;
-    public static final int _strenght_cost=50000;
-    public static final int _agility_cost=40000;
-    public static final int _armor_cost=30000;
-    public static final int _movement_cost=30000;
+    public static final int C_SINGLE_COST=20000;
+    public static final int C_DOUBLE_COST=30000;
+    public static final int C_STRENGHT_COST=50000;
+    public static final int C_AGILITY_COST=40000;
+    public static final int C_ARMOR_COST=30000;
+    public static final int C_MOVEMENT_COST=30000;
     
-    public String _name;
-    public SkillType _category;
-    public Color _color;
+    public String mName;
+    public SkillType mCategory;
+    public Color mColor;
 
-    public Skill(String name, SkillType category) {
-        _name = name;
-        _category = category;
-        _color=Color.BLACK;
+    /**
+     *
+     * @param name
+     * @param category
+     */
+    public Skill(final String name, final SkillType category) {
+        mName = name;
+        mCategory = category;
+        mColor=Color.BLACK;
     }
 }

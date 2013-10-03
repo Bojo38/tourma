@@ -297,7 +297,7 @@ public class lrb {
             SkillType st = _skillTypes.get(i);
             for (j = 0; j < st._skills.size(); j++) {
                 Skill s = st._skills.get(j);
-                if (name.equals(s._name)) {
+                if (name.equals(s.mName)) {
                     return s;
                 }
             }

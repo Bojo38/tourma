@@ -27,12 +27,12 @@ public class Player {
         int i;
         int value = _playertype._movement;
         for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i)._name.equals("+1 Movement")) {
+            if (_skills.get(i).mName.equals("+1 Movement")) {
                 value++;
             }
         }
         for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i)._name.equals("-1 Movement")) {
+            if (_skills.get(i).mName.equals("-1 Movement")) {
                 value--;
             }
         }
@@ -43,12 +43,12 @@ public class Player {
         int i;
         int value = _playertype._strength;
         for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i)._name.equals("+1 Strength")) {
+            if (_skills.get(i).mName.equals("+1 Strength")) {
                 value++;
             }
         }
         for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i)._name.equals("-1 Strength")) {
+            if (_skills.get(i).mName.equals("-1 Strength")) {
                 value--;
             }
         }
@@ -59,12 +59,12 @@ public class Player {
         int i;
         int value = _playertype._agility;
         for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i)._name.equals("+1 Agility")) {
+            if (_skills.get(i).mName.equals("+1 Agility")) {
                 value++;
             }
         }
         for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i)._name.equals("-1 Agility")) {
+            if (_skills.get(i).mName.equals("-1 Agility")) {
                 value--;
             }
         }
@@ -75,12 +75,12 @@ public class Player {
         int i;
         int value = _playertype._armor;
         for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i)._name.equals("+1 Armor")) {
+            if (_skills.get(i).mName.equals("+1 Armor")) {
                 value++;
             }
         }
         for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i)._name.equals("-1 Armor")) {
+            if (_skills.get(i).mName.equals("-1 Armor")) {
                 value--;
             }
         }
@@ -96,24 +96,24 @@ public class Player {
             for (int i=0 ;i<_skills.size(); i++)
             {
                 Skill s=_skills.get(i);
-                cost+=_playertype._single.contains(s._category)?Skill._single_cost:0;
-                cost+=_playertype._double.contains(s._category)?Skill._double_cost:0;
+                cost+=_playertype._single.contains(s.mCategory)?Skill.C_SINGLE_COST:0;
+                cost+=_playertype._double.contains(s.mCategory)?Skill.C_DOUBLE_COST:0;
                 
-                if (s._name.equals("+1 Strength"))
+                if (s.mName.equals("+1 Strength"))
                 {
-                    cost+=Skill._strenght_cost;
+                    cost+=Skill.C_STRENGHT_COST;
                 }
-                if (s._name.equals("+1 Movement"))
+                if (s.mName.equals("+1 Movement"))
                 {
-                    cost+=Skill._movement_cost;
+                    cost+=Skill.C_MOVEMENT_COST;
                 }
-                if (s._name.equals("+1 Armor"))
+                if (s.mName.equals("+1 Armor"))
                 {
-                    cost+=Skill._armor_cost;
+                    cost+=Skill.C_ARMOR_COST;
                 }
-                if (s._name.equals("+1 Agility"))
+                if (s.mName.equals("+1 Agility"))
                 {
-                    cost+=Skill._agility_cost;
+                    cost+=Skill.C_AGILITY_COST;
                 }
                 /**
                  * TODO: Detects the cost of the skill

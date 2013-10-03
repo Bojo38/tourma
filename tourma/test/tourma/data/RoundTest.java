@@ -120,4 +120,18 @@ public class RoundTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getCoachMatchs method, of class Round.
+     */
+    @Test
+    public void testGetCoachMatchs() {
+        System.out.println("getCoachMatchs");
+        Round instance = new Round();
+        ArrayList expResult = null;
+        ArrayList result = instance.getCoachMatchs();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

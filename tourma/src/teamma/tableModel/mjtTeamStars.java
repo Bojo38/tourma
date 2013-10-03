@@ -87,7 +87,7 @@ public class mjtTeamStars extends AbstractTableModel implements TableCellRendere
                     for (i = 0; i < player._skills.size(); i++) {
                         Skill s = player._skills.get(i);
 
-                        skills.add("<FONT color=\"000000\">" + s._name + "</FONT>");
+                        skills.add("<FONT color=\"000000\">" + s.mName + "</FONT>");
                     }
 
                     for (i = 0; i < skills.size(); i++) {

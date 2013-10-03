@@ -6,6 +6,7 @@ package tourma.views.round;
 
 import java.awt.Color;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -75,21 +76,37 @@ public class JPNStatistics extends javax.swing.JPanel {
                     if ((m.mCompetitor1 != Coach.getNullCoach()) && (m.mCompetitor2 != Coach.getNullCoach())) {
                         final Value values = m.mValues.get(crit);
 
-                        double pt = plus.get(((Coach)m.mCompetitor1).mRoster.mName).doubleValue();
-                        double mt = minus.get(((Coach)m.mCompetitor1).mRoster.mName).doubleValue();
+                        String name1;
+                        String name2;
+                        if (m.mRoster1 == null) {
+                            name1 = ((Coach) m.mCompetitor1).mRoster.mName;
+                        } else {
+                            name1 = m.mRoster1.mName;
+                        }
+
+                        if (m.mRoster2 == null) {
+                            name2 = ((Coach) m.mCompetitor1).mRoster.mName;
+                        } else {
+                            name2 = m.mRoster2.mName;
+                        }
+
+                        double pt = plus.get(name1).doubleValue();
+                        double mt = minus.get(name1).doubleValue();
                         pt += values.mValue1;
                         mt -= values.mValue2;
 
-                        plus.put(((Coach)m.mCompetitor1).mRoster.mName, pt);
-                        minus.put(((Coach)m.mCompetitor1).mRoster.mName, mt);
 
-                        pt = plus.get(((Coach)m.mCompetitor2).mRoster.mName).doubleValue();
-                        mt = minus.get(((Coach)m.mCompetitor2).mRoster.mName).doubleValue();
+
+                        plus.put(name1, pt);
+                        minus.put(name1, mt);
+
+                        pt = plus.get(name2).doubleValue();
+                        mt = minus.get(name2).doubleValue();
                         pt += values.mValue2;
                         mt -= values.mValue1;
 
-                        plus.put(((Coach)m.mCompetitor2).mRoster.mName, pt);
-                        minus.put(((Coach)m.mCompetitor2).mRoster.mName, mt);
+                        plus.put(name2, pt);
+                        minus.put(name2, mt);
                     }
                 }
             }
@@ -174,32 +191,47 @@ public class JPNStatistics extends javax.swing.JPanel {
                 final CoachMatch m = r.getCoachMatchs().get(j);
                 if ((m.mCompetitor1 != Coach.getNullCoach()) && (m.mCompetitor2 != Coach.getNullCoach())) {
                     final Value values = m.mValues.get(Td);
+
+                    String name1;
+                    String name2;
+                    if (m.mRoster1 == null) {
+                        name1 = ((Coach) m.mCompetitor1).mRoster.mName;
+                    } else {
+                        name1 = m.mRoster1.mName;
+                    }
+
+                    if (m.mRoster2 == null) {
+                        name2 = ((Coach) m.mCompetitor1).mRoster.mName;
+                    } else {
+                        name2 = m.mRoster2.mName;
+                    }
+
                     if (values.mValue1 > values.mValue2) {
-                        int v = victories.get(((Coach)m.mCompetitor1).mRoster.mName).intValue();
-                        int l = loss.get(((Coach)m.mCompetitor2).mRoster.mName).intValue();
+                        int v = victories.get(name1).intValue();
+                        int l = loss.get(name2).intValue();
                         v++;
                         l++;
 
-                        victories.put(((Coach)m.mCompetitor1).mRoster.mName, v);
-                        loss.put(((Coach)m.mCompetitor2).mRoster.mName, l);
+                        victories.put(name1, v);
+                        loss.put(name2, l);
                     }
                     if (values.mValue1 < values.mValue2) {
-                        int v = victories.get(((Coach)m.mCompetitor2).mRoster.mName).intValue();
-                        int l = loss.get(((Coach)m.mCompetitor1).mRoster.mName).intValue();
+                        int v = victories.get(name2).intValue();
+                        int l = loss.get(name1).intValue();
                         v++;
                         l++;
 
-                        victories.put(((Coach)m.mCompetitor2).mRoster.mName, v);
-                        loss.put(((Coach)m.mCompetitor1).mRoster.mName, l);
+                        victories.put(name2, v);
+                        loss.put(name1, l);
                     }
                     if (values.mValue1 == values.mValue2) {
-                        int d = draw.get(((Coach)m.mCompetitor2).mRoster.mName).intValue();
+                        int d = draw.get(name2).intValue();
                         d++;
-                        draw.put(((Coach)m.mCompetitor2).mRoster.mName, d);
+                        draw.put(name2, d);
 
-                        d = draw.get(((Coach)m.mCompetitor1).mRoster.mName).intValue();
+                        d = draw.get(name1).intValue();
                         d++;
-                        draw.put(((Coach)m.mCompetitor1).mRoster.mName, d);
+                        draw.put(name1, d);
                     }
                 }
             }
@@ -232,8 +264,11 @@ public class JPNStatistics extends javax.swing.JPanel {
 
         final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
         barrenderer.setDrawBarOutline(false);
-        barrenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        StandardCategoryItemLabelGenerator std=new StandardCategoryItemLabelGenerator();
+        
+        barrenderer.setBaseItemLabelGenerator(std);        
         barrenderer.setBaseItemLabelsVisible(true);
+        
         barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
@@ -256,14 +291,35 @@ public class JPNStatistics extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getCoachs().size(); i++) {
             final Coach c = mTournament.getCoachs().get(i);
             if (c != Coach.getNullCoach()) {
-                final String rName = c.mRoster.mName;
-                final Number value = datas.getValue(rName);
-                int v = 0;
-                if (value != null) {
-                    v = value.intValue();
+
+                ArrayList<String> names = new ArrayList<String>();
+                for (int j = 0; j < c.mMatchs.size(); j++) {
+                    CoachMatch m = (CoachMatch) c.mMatchs.get(j);
+                    RosterType r;
+                    if (c == m.mCompetitor1) {
+                        r = m.mRoster1;
+                    } else {
+                        r = m.mRoster2;
+                    }
+                    if (r == null) {
+                        r = c.mRoster;
+                    }
+
+                    if (!names.contains(r.mName)) {
+                        names.add(r.mName);
+                    }
                 }
-                v++;
-                datas.setValue(rName, v);
+
+                for (int j = 0; j < names.size(); j++) {
+                    final String rName = names.get(j);
+                    final Number value = datas.getValue(rName);
+                    int v = 0;
+                    if (value != null) {
+                        v = value.intValue();
+                    }
+                    v++;
+                    datas.setValue(rName, v);
+                }
             }
         }
 

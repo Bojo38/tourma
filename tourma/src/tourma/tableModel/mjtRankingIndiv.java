@@ -51,73 +51,74 @@ public class mjtRankingIndiv extends mjtRanking {
 
         for (int i = 0; i < mObjects.size(); i++) {
             final Coach c = (Coach) mObjects.get(i);
-            int value1 = 0;
-            int value2 = 0;
-            int value3 = 0;
-            int value4 = 0;
-            int value5 = 0;
+            if (c.mMatchs.size() > 0) {
+                int value1 = 0;
+                int value2 = 0;
+                int value3 = 0;
+                int value4 = 0;
+                int value5 = 0;
 
-            for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
+                for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
 
-                final CoachMatch m = (CoachMatch)c.mMatchs.get(j);
-                boolean bFound = false;
-                for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
-                    final Round r = rounds.get(l);
-                    if (r.getMatchs().contains(m)) {
-                        bFound = true;
+                    final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
+                    boolean bFound = false;
+                    for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
+                        final Round r = rounds.get(l);
+                        if (r.getCoachMatchs().contains(m)) {
+                            bFound = true;
+                        }
+                    }
+                    // test if match is in round
+                    if (bFound) {
+                        final Criteria c1 = getCriteriaByValue(mRankingType1);
+                        final int subType1 = getSubtypeByValue(mRankingType1);
+                        if (c1 == null) {
+                            value1 += getValue(c, m, mRankingType1);
+                        } else {
+                            value1 += getValue(c, m, c1, subType1);
+                        }
+
+                        final Criteria c2 = getCriteriaByValue(mRankingType2);
+                        final int subType2 = getSubtypeByValue(mRankingType2);
+                        if (c2 == null) {
+                            value2 += getValue(c, m, mRankingType2);
+                        } else {
+                            value2 += getValue(c, m, c1, subType2);
+                        }
+
+                        final Criteria c3 = getCriteriaByValue(mRankingType3);
+                        final int subType3 = getSubtypeByValue(mRankingType3);
+                        if (c3 == null) {
+                            value3 += getValue(c, m, mRankingType3);
+                        } else {
+                            value3 += getValue(c, m, c3, subType3);
+                        }
+
+                        final Criteria c4 = getCriteriaByValue(mRankingType4);
+                        final int subType4 = getSubtypeByValue(mRankingType4);
+                        if (c4 == null) {
+                            value4 += getValue(c, m, mRankingType4);
+                        } else {
+                            value4 += getValue(c, m, c4, subType4);
+                        }
+
+                        final Criteria c5 = getCriteriaByValue(mRankingType5);
+                        final int subType5 = getSubtypeByValue(mRankingType5);
+                        if (c5 == null) {
+                            value5 += getValue(c, m, mRankingType5);
+                        } else {
+                            value5 += getValue(c, m, c5, subType5);
+                        }
+
+                        /*value1 = getValue(c, matchs, mRankingType1, _rounds);
+                         value2 = getValue(c, matchs, mRankingType2, _rounds);
+                         value3 = getValue(c, matchs, mRankingType3, _rounds);
+                         value4 = getValue(c, matchs, mRankingType4, _rounds);
+                         value5 = getValue(c, matchs, mRankingType5, _rounds);*/
                     }
                 }
-                // test if match is in round
-                if (bFound) {
-                    final Criteria c1 = getCriteriaByValue(mRankingType1);
-                    final int subType1 = getSubtypeByValue(mRankingType1);
-                    if (c1 == null) {
-                        value1 += getValue(c, m, mRankingType1);
-                    } else {
-                        value1 += getValue(c, m, c1, subType1);
-                    }
-
-                    final Criteria c2 = getCriteriaByValue(mRankingType2);
-                    final int subType2 = getSubtypeByValue(mRankingType2);
-                    if (c2 == null) {
-                        value2 += getValue(c, m, mRankingType2);
-                    } else {
-                        value2 += getValue(c, m, c1, subType2);
-                    }
-
-                    final Criteria c3 = getCriteriaByValue(mRankingType3);
-                    final int subType3 = getSubtypeByValue(mRankingType3);
-                    if (c3 == null) {
-                        value3 += getValue(c, m, mRankingType3);
-                    } else {
-                        value3 += getValue(c, m, c3, subType3);
-                    }
-
-                    final Criteria c4 = getCriteriaByValue(mRankingType4);
-                    final int subType4 = getSubtypeByValue(mRankingType4);
-                    if (c4 == null) {
-                        value4 += getValue(c, m, mRankingType4);
-                    } else {
-                        value4 += getValue(c, m, c4, subType4);
-                    }
-
-                    final Criteria c5 = getCriteriaByValue(mRankingType5);
-                    final int subType5 = getSubtypeByValue(mRankingType5);
-                    if (c5 == null) {
-                        value5 += getValue(c, m, mRankingType5);
-                    } else {
-                        value5 += getValue(c, m, c5, subType5);
-                    }
-
-
-                    /*value1 = getValue(c, matchs, mRankingType1, _rounds);
-                     value2 = getValue(c, matchs, mRankingType2, _rounds);
-                     value3 = getValue(c, matchs, mRankingType3, _rounds);
-                     value4 = getValue(c, matchs, mRankingType4, _rounds);
-                     value5 = getValue(c, matchs, mRankingType5, _rounds);*/
-                }
+                mDatas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
             }
-            mDatas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
         }
 
         Collections.sort(mDatas);
@@ -127,7 +128,7 @@ public class mjtRankingIndiv extends mjtRanking {
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
-        if ((mForPool)&&(!tour.getParams().mTeamTournament)) {
+        if ((mForPool) && (!tour.getParams().mTeamTournament)) {
             if (mObjects.size() > tour.getPools().get(0).mCompetitors.size()) {
                 final int nbPool = tour.getPools().size();
                 Pool p = null;

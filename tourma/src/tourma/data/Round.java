@@ -117,7 +117,7 @@ public class Round implements XMLExport {
             final Element match = (Element) k.next();
             Match m;
             if ((Tournament.getTournament().getParams().mTeamTournament)&&
-                    (Tournament.getTournament().getParams().mTeamIndivPairing==1))
+                    (Tournament.getTournament().getParams().mTeamPairing==1))
             {
                 m=new TeamMatch(this);
             }

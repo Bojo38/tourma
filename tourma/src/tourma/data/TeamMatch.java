@@ -182,7 +182,7 @@ public class TeamMatch extends Match {
     @Override
     public void setXMLElement(final Element match) {
 
-        final String c1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM11")).getValue();
+        final String c1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM1")).getValue();
         final String c2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM2")).getValue();
         this.mCompetitor1 = Team.sTeamMap.get(c1);
         this.mCompetitor2 = Team.sTeamMap.get(c2);

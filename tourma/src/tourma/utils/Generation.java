@@ -2281,7 +2281,7 @@ public class Generation {
 
 
         Competitor nullElt;
-        if ((Tournament.getTournament().getParams().mTeamTournament) && (Tournament.getTournament().getParams().mTeamIndivPairing == 1)) {
+        if ((Tournament.getTournament().getParams().mTeamTournament) && (Tournament.getTournament().getParams().mTeamPairing == 1)) {
             nullElt = Team.getNullTeam();
         } else {
             nullElt = Coach.getNullCoach();

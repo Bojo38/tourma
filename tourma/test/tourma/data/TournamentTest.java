@@ -279,14 +279,14 @@ public class TournamentTest {
     }
 
     /**
-     * Test of exportResults method, of class Tournament.
+     * Test of exportNAF method, of class Tournament.
      */
     @Test
     public void testExportResults() {
         System.out.println("exportResults");
         File file = null;
         Tournament instance = null;
-        instance.exportResults(file);
+        instance.exportNAF(file);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -376,5 +376,18 @@ public class TournamentTest {
         assertTrue(t.getPools().size()==9);
         
         
+    }
+
+    /**
+     * Test of exportNAF method, of class Tournament.
+     */
+    @Test
+    public void testExportNAF() {
+        System.out.println("exportNAF");
+        File file = null;
+        Tournament instance = null;
+        instance.exportNAF(file);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

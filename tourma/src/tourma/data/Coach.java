@@ -135,7 +135,7 @@ public final class Coach extends Competitor implements XMLExport {
                 for (int k = 0; k < pl._skills.size(); k++) {
                     final Element s = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKILL"));
                     final teamma.data.Skill sk = pl._skills.get(k);
-                    s.setAttribute(StringConstants.CS_NAME, sk._name);
+                    s.setAttribute(StringConstants.CS_NAME, sk.mName);
                     p.addContent(s);
                 }
                 compo.addContent(p);
@@ -354,7 +354,7 @@ public final class Coach extends Competitor implements XMLExport {
                             }
                         }
                     }
-                    if ((tour.getParams().mTeamTournament) && (tour.getParams().mTeamIndivPairing == 0)) {
+                    if ((tour.getParams().mTeamTournament) && (tour.getParams().mTeamPairing == 0)) {
                         if (c2_tmp.mTeamMates != Team.getNullTeam()) {
                             if (c1.mTeamMates == c2_tmp.mTeamMates) {
                                 canMatch = false;
@@ -376,7 +376,7 @@ public final class Coach extends Competitor implements XMLExport {
                                 }
                             }
                         }
-                        if ((tour.getParams().mTeamTournament) && (tour.getParams().mTeamIndivPairing == 0)) {
+                        if ((tour.getParams().mTeamTournament) && (tour.getParams().mTeamPairing == 0)) {
                             if (c1_tmp.mTeamMates != Team.getNullTeam()) {
                                 if (c1.mTeamMates == c1_tmp.mTeamMates) {
                                     canMatch = false;

@@ -131,15 +131,19 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     obj = row + 1;
                     break;
                 case 1:
-                    obj = ((Coach)m.mCompetitor1).mTeamMates.mName;
+                    obj = ((Coach) m.mCompetitor1).mTeamMates.mName;
                     break;
                 case 2:
                     if (m.mRoster1 == null) {
-                        rosterName = ((Coach)m.mCompetitor1).mRoster.mName;
+                        rosterName = ((Coach) m.mCompetitor1).mRoster.mName;
                     } else {
                         rosterName = m.mRoster1.mName;
                     }
-                    obj = m.mCompetitor1.mName + StringConstants.CS_THICK + rosterName;
+                    if (m.mSubstitute1 != null) {
+                        obj = m.mCompetitor1.mName + "/" + m.mSubstitute1.mSubstitute.mName + StringConstants.CS_THICK + rosterName;
+                    } else {
+                        obj = m.mCompetitor1.mName + StringConstants.CS_THICK + rosterName;
+                    }
                     break;
                 case 3:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
@@ -159,14 +163,18 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 5:
                     if (m.mRoster2 == null) {
-                        rosterName = ((Coach)m.mCompetitor2).mRoster.mName;
+                        rosterName = ((Coach) m.mCompetitor2).mRoster.mName;
                     } else {
                         rosterName = m.mRoster2.mName;
                     }
-                    obj = m.mCompetitor2.mName + StringConstants.CS_THICK + rosterName;
+                    if (m.mSubstitute2 != null) {
+                        obj = m.mCompetitor2.mName + "/" + m.mSubstitute2.mSubstitute.mName + StringConstants.CS_THICK + rosterName;
+                    } else {
+                        obj = m.mCompetitor2.mName + StringConstants.CS_THICK + rosterName;
+                    }
                     break;
                 case 6:
-                    obj = ((Coach)m.mCompetitor2).mTeamMates.mName;
+                    obj = ((Coach) m.mCompetitor2).mTeamMates.mName;
                     break;
                 default:
                     index = (col - 5) / 2;
@@ -185,11 +193,15 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 1:
                     if (m.mRoster1 == null) {
-                        rosterName = ((Coach)m.mCompetitor1).mRoster.mName;
+                        rosterName = ((Coach) m.mCompetitor1).mRoster.mName;
                     } else {
                         rosterName = m.mRoster1.mName;
                     }
-                    obj = m.mCompetitor1.mName + StringConstants.CS_THICK + rosterName;
+                    if (m.mSubstitute1 != null) {
+                        obj = m.mCompetitor1.mName + "/" + m.mSubstitute1.mSubstitute.mName + StringConstants.CS_THICK + rosterName;
+                    } else {
+                        obj = m.mCompetitor1.mName + StringConstants.CS_THICK + rosterName;
+                    }
                     break;
                 case 2:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
@@ -209,11 +221,15 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 4:
                     if (m.mRoster2 == null) {
-                        rosterName = ((Coach)m.mCompetitor2).mRoster.mName;
+                        rosterName = ((Coach) m.mCompetitor2).mRoster.mName;
                     } else {
                         rosterName = m.mRoster2.mName;
                     }
-                    obj = m.mCompetitor2.mName + StringConstants.CS_THICK + rosterName;
+                    if (m.mSubstitute2 != null) {
+                        obj = m.mCompetitor2.mName + "/" + m.mSubstitute2.mSubstitute.mName + StringConstants.CS_THICK + rosterName;
+                    } else {
+                        obj = m.mCompetitor2.mName + StringConstants.CS_THICK + rosterName;
+                    }
                     break;
                 default:
                     index = (col - 3) / 2;

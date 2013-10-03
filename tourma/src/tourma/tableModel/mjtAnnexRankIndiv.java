@@ -36,83 +36,85 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
         final ArrayList<Coach> coaches = (ArrayList<Coach>) mObjects;
         for (int k = 0; k < coaches.size(); k++) {
             final Coach c = coaches.get(k);
-            int value = 0;
-            int value1 = 0;
-            int value2 = 0;
-            int value3 = 0;
-            int value4 = 0;
-            int value5 = 0;
+            if (c.mMatchs.size() > 0) {
+                int value = 0;
+                int value1 = 0;
+                int value2 = 0;
+                int value3 = 0;
+                int value4 = 0;
+                int value5 = 0;
 
-            final ArrayList<Round> rounds = new ArrayList<>();
+                final ArrayList<Round> rounds = new ArrayList<>();
 
-            if (mRoundOnly) {
-                rounds.add(Tournament.getTournament().getRounds().get(mRound));
-            } else {
-                for (int l = 0; (l <= mRound); l++) {
-                    rounds.add(Tournament.getTournament().getRounds().get(l));
+                if (mRoundOnly) {
+                    rounds.add(Tournament.getTournament().getRounds().get(mRound));
+                } else {
+                    for (int l = 0; (l <= mRound); l++) {
+                        rounds.add(Tournament.getTournament().getRounds().get(l));
+                    }
                 }
+
+
+                for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
+
+                    final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
+                    boolean bFound = false;
+                    for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
+                        final Round r = Tournament.getTournament().getRounds().get(i);
+                        if (r.getMatchs().contains(m)) {
+                            bFound = true;
+                        }
+                    }
+                    // test if match is in round
+                    if (bFound) {
+
+
+                        value += getValue(c, m, mCriteria, mSubtype);
+
+                        final Criteria c1 = getCriteriaByValue(mRankingType1);
+                        final int subType1 = getSubtypeByValue(mRankingType1);
+                        if (c1 == null) {
+                            value1 += getValue(c, m, mRankingType1);
+                        } else {
+                            value1 += getValue(c, m, c1, subType1);
+                        }
+
+                        final Criteria c2 = getCriteriaByValue(mRankingType2);
+                        final int subType2 = getSubtypeByValue(mRankingType2);
+                        if (c2 == null) {
+                            value2 += getValue(c, m, mRankingType2);
+                        } else {
+                            value2 += getValue(c, m, c2, subType2);
+                        }
+
+                        final Criteria c3 = getCriteriaByValue(mRankingType3);
+                        final int subType3 = getSubtypeByValue(mRankingType3);
+                        if (c3 == null) {
+                            value3 += getValue(c, m, mRankingType3);
+                        } else {
+                            value3 += getValue(c, m, c3, subType3);
+                        }
+
+                        final Criteria c4 = getCriteriaByValue(mRankingType4);
+                        final int subType4 = getSubtypeByValue(mRankingType4);
+                        if (c4 == null) {
+                            value4 += getValue(c, m, mRankingType4);
+                        } else {
+                            value4 += getValue(c, m, c4, subType4);
+                        }
+
+                        final Criteria c5 = getCriteriaByValue(mRankingType5);
+                        final int subType5 = getSubtypeByValue(mRankingType5);
+                        if (c5 == null) {
+                            value5 += getValue(c, m, mRankingType5);
+                        } else {
+                            value5 += getValue(c, m, c5, subType5);
+
+                        }
+                    }
+                }
+                mDatas.add(new ObjectAnnexRanking(c, value, value1, value2, value3, value4, value5));
             }
-
-
-            for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
-
-                final CoachMatch m = (CoachMatch)c.mMatchs.get(j);
-                boolean bFound = false;
-                for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
-                    final Round r = Tournament.getTournament().getRounds().get(i);
-                    if (r.getMatchs().contains(m)) {
-                        bFound = true;
-                    }
-                }
-                // test if match is in round
-                if (bFound) {
-
-
-                    value += getValue(c, m, mCriteria, mSubtype);
-
-                    final Criteria c1 = getCriteriaByValue(mRankingType1);
-                    final int subType1 = getSubtypeByValue(mRankingType1);
-                    if (c1 == null) {
-                        value1 += getValue(c, m, mRankingType1);
-                    } else {
-                        value1 += getValue(c, m, c1, subType1);
-                    }
-
-                    final Criteria c2 = getCriteriaByValue(mRankingType2);
-                    final int subType2 = getSubtypeByValue(mRankingType2);
-                    if (c2 == null) {
-                        value2 += getValue(c, m, mRankingType2);
-                    } else {
-                        value2 += getValue(c, m, c2, subType2);
-                    }
-
-                    final Criteria c3 = getCriteriaByValue(mRankingType3);
-                    final int subType3 = getSubtypeByValue(mRankingType3);
-                    if (c3 == null) {
-                        value3 += getValue(c, m, mRankingType3);
-                    } else {
-                        value3 += getValue(c, m, c3, subType3);
-                    }
-
-                    final Criteria c4 = getCriteriaByValue(mRankingType4);
-                    final int subType4 = getSubtypeByValue(mRankingType4);
-                    if (c4 == null) {
-                        value4 += getValue(c, m, mRankingType4);
-                    } else {
-                        value4 += getValue(c, m, c4, subType4);
-                    }
-
-                    final Criteria c5 = getCriteriaByValue(mRankingType5);
-                    final int subType5 = getSubtypeByValue(mRankingType5);
-                    if (c5 == null) {
-                        value5 += getValue(c, m, mRankingType5);
-                    } else {
-                        value5 += getValue(c, m, c5, subType5);
-
-                    }
-                }
-            }
-            mDatas.add(new ObjectAnnexRanking(c, value, value1, value2, value3, value4, value5));
         }
 
         Collections.sort(mDatas);
@@ -156,25 +158,25 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
     }
 
     @Override
-    public Object getValueAt(final int row,final int col) {
+    public Object getValueAt(final int row, final int col) {
 
-        Object val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
         switch (col) {
             case 0:
-                val=row + 1;
+                val = row + 1;
                 break;
             case 1:
-                val= ((Coach) obj.getObject()).mTeam;
+                val = ((Coach) obj.getObject()).mTeam;
                 break;
             case 2:
-                val= ((Coach) obj.getObject()).mName;
+                val = ((Coach) obj.getObject()).mName;
                 break;
             case 3:
-                val =((Coach) obj.getObject()).mRoster.mName;
+                val = ((Coach) obj.getObject()).mRoster.mName;
                 break;
             case 4:
-                val=obj.getValue();
+                val = obj.getValue();
                 break;
             default:
         }

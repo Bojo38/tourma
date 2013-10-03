@@ -53,9 +53,9 @@ public abstract class mjtAnnexRank extends mjtRanking {
 
     @Override
     public int getRowCount() {
-        int result = Math.min(3, mObjects.size());
+        int result = Math.min(3, mDatas.size());
         if (mFullRanking) {
-            result = mObjects.size();
+            result = mDatas.size();
         }
         return result;
     }

@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -91,5 +92,119 @@ public class CoachTest {
         Element coach = null;
         Coach instance = new Coach();
         instance.setXMLElement(coach);
+    }
+
+    /**
+     * Test of getNullCoach method, of class Coach.
+     */
+    @Test
+    public void testGetNullCoach() {
+        System.out.println("getNullCoach");
+        Coach expResult = null;
+        Coach result = Coach.getNullCoach();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of AddMatch method, of class Coach.
+     */
+    @Test
+    public void testAddMatch() {
+        System.out.println("AddMatch");
+        Competitor opponent = null;
+        Round r = null;
+        Coach instance = new Coach();
+        instance.AddMatch(opponent, r);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of CreateMatch method, of class Coach.
+     */
+    @Test
+    public void testCreateMatch() {
+        System.out.println("CreateMatch");
+        Competitor opponent = null;
+        Round r = null;
+        Coach instance = new Coach();
+        CoachMatch expResult = null;
+        CoachMatch result = instance.CreateMatch(opponent, r);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of havePlayed method, of class Coach.
+     */
+    @Test
+    public void testHavePlayed() {
+        System.out.println("havePlayed");
+        Competitor opponent = null;
+        Coach instance = new Coach();
+        boolean expResult = false;
+        boolean result = instance.havePlayed(opponent);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPossibleOpponents method, of class Coach.
+     */
+    @Test
+    public void testGetPossibleOpponents() {
+        System.out.println("getPossibleOpponents");
+        ArrayList<Competitor> opponents = null;
+        Coach instance = new Coach();
+        ArrayList expResult = null;
+        ArrayList result = instance.getPossibleOpponents(opponents);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getDecoratedName method, of class Coach.
+     */
+    @Test
+    public void testGetDecoratedName() {
+        System.out.println("getDecoratedName");
+        Coach instance = new Coach();
+        String expResult = "";
+        String result = instance.getDecoratedName();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of AddMatchRoundRobin method, of class Coach.
+     */
+    @Test
+    public void testAddMatchRoundRobin() {
+        System.out.println("AddMatchRoundRobin");
+        Competitor c = null;
+        Round r = null;
+        Coach instance = new Coach();
+        instance.AddMatchRoundRobin(c, r);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of RoundCheck method, of class Coach.
+     */
+    @Test
+    public void testRoundCheck() {
+        System.out.println("RoundCheck");
+        Round round = null;
+        Coach instance = new Coach();
+        instance.RoundCheck(round);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

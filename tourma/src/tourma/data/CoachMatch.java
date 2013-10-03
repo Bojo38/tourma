@@ -25,6 +25,9 @@ public class CoachMatch extends Match  {
     public RosterType mRoster2;
     public HashMap<Criteria, Value> mValues;
 
+    public Substitute mSubstitute1;
+    public Substitute mSubstitute2;
+    
     public CoachMatch(Round round) {
         super(round);
         mValues = new HashMap<>();
@@ -50,7 +53,7 @@ public class CoachMatch extends Match  {
     public Element getXMLElement() {
         final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
         match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1"), this.mCompetitor1.mName);
-        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2"), this.mCompetitor1.mName);
+        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2"), this.mCompetitor2.mName);
 
         for (int k = 0; k < Tournament.getTournament().getParams().mCriterias.size(); k++) {
             final Value val = this.mValues.get(Tournament.getTournament().getParams().mCriterias.get(k));
@@ -73,6 +76,14 @@ public class CoachMatch extends Match  {
             match.setAttribute(key2, this.mRoster2.mName);
         }
 
+        if (mSubstitute1!=null)
+        {
+            match.addContent(mSubstitute1.getXMLElement());
+        }
+        if (mSubstitute2!=null)
+        {
+            match.addContent(mSubstitute2.getXMLElement());
+        }
         return match;
     }
 
@@ -110,16 +121,32 @@ public class CoachMatch extends Match  {
             }
 
 
-
             String key1 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
             Attribute att1 = match.getAttribute(key1);
             if (att1 != null) {
                 this.mRoster1 = new RosterType(att1.getValue());
             }
-            String key2 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
+            String key2 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER2");
             Attribute att2 = match.getAttribute(key2);
             if (att2 != null) {
                 this.mRoster2 = new RosterType(att2.getValue());
+            }
+            
+            final List subs = match.getChildren("Subtitution");
+            final Iterator it = subs.iterator();
+            while (it.hasNext()) {
+                final Element sub = (Element) it.next();
+                Substitute s=new Substitute();
+                s.setXMLElement(sub);
+                s.mMatch=this;
+                if (s.mTitular==mCompetitor1)
+                {
+                    this.mSubstitute1=s;
+                }
+                if (s.mTitular==mCompetitor2)
+                {
+                    this.mSubstitute2=s;
+                }
             }
 
         } catch (DataConversionException dce) {

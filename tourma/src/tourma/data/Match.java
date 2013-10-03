@@ -4,16 +4,6 @@
  */
 package tourma.data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import javax.swing.JOptionPane;
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;
-import tourma.MainFrame;
-
 /**
  *
  * @author WFMJ7631
@@ -27,7 +17,7 @@ public abstract class Match implements XMLExport {
     protected Competitor mWinner = null;
     protected Competitor mLooser = null;
 
-    public Match(Round round) {
+    public Match(final Round round) {
         mRound = round;
     }
    

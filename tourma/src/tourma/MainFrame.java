@@ -31,10 +31,12 @@ import javax.swing.tree.TreePath;
 import teamma.data.lrb;
 import teamma.views.JdgRoster;
 import tourma.data.Coach;
+import tourma.data.CoachMatch;
 import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.RosterType;
 import tourma.data.Round;
+import tourma.data.Substitute;
 import tourma.data.Tournament;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
@@ -71,7 +73,7 @@ public class MainFrame extends javax.swing.JFrame {
             jmiNouveauActionPerformed(null);
         } else {
             final JFileChooser jfc = new JFileChooser();
-            final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
+            final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
@@ -105,18 +107,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public void update() {
-
         //final boolean bTourStarted = mTournament.getRounds().size() > 0;
         jmiEditTeam.setEnabled(mTournament.getParams().mGame == RosterType.C_BLOOD_BOWL);
+        jmiSubstitutePlayer.setEnabled(mTournament.getRounds().size()>0);
         final mainTreeModel dtm = new mainTreeModel();
         jtrPanels.setCellRenderer(dtm);
         jtrPanels.setModel(dtm);
         jtrPanels.setSize(100, this.getHeight());
         this.revalidate();
         this.repaint();
-        
-        
-
     }
 
     public void updateTree() {
@@ -157,6 +156,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmnRounds = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jmiSubstitutePlayer = new javax.swing.JMenuItem();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -309,6 +309,15 @@ public class MainFrame extends javax.swing.JFrame {
         jmnRounds.add(jmiGenerateFirstRound);
         jmnRounds.add(jSeparator6);
 
+        jmiSubstitutePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png"))); // NOI18N
+        jmiSubstitutePlayer.setText(bundle.getString("MakeSubstitution")); // NOI18N
+        jmiSubstitutePlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSubstitutePlayerActionPerformed(evt);
+            }
+        });
+        jmnRounds.add(jmiSubstitutePlayer);
+
         jMenuBar1.add(jmnRounds);
 
         jmnHelp.setText(bundle.getString("?")); // NOI18N
@@ -348,7 +357,7 @@ public class MainFrame extends javax.swing.JFrame {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
+        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
@@ -358,7 +367,7 @@ public class MainFrame extends javax.swing.JFrame {
                 ext = url2.substring(i + 1).toLowerCase();
             }
 
-            if (!ext.equals(StringConstants.CS_xml)) {
+            if (!ext.equals(StringConstants.CS_MINXML)) {
                 url2 = url2.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".XML"));
             }
             mFile = new File(url2.toString());
@@ -376,7 +385,7 @@ public class MainFrame extends javax.swing.JFrame {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
+        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
         jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
@@ -396,7 +405,7 @@ public class MainFrame extends javax.swing.JFrame {
              //                jtpMain.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RONDE ") + (i + 1), jpnr);
              jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
              }*/
-
+            updateTree();
             update();
 
         }
@@ -484,10 +493,10 @@ public class MainFrame extends javax.swing.JFrame {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF XML FILE"), new String[]{StringConstants.CS_XML, StringConstants.CS_xml});
+        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF XML FILE"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            Tournament.getTournament().exportResults(jfc.getSelectedFile());
+            Tournament.getTournament().exportNAF(jfc.getSelectedFile());
         }
     }//GEN-LAST:event_jmiExportActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -667,6 +676,7 @@ public class MainFrame extends javax.swing.JFrame {
                  }
 
                  jtpMain.setSelectedIndex(mTournament.getRounds().size());*/
+                updateTree();
                 update();
 
             }
@@ -702,7 +712,7 @@ public class MainFrame extends javax.swing.JFrame {
                             this.revalidate();
                             break;
                         }
-                    }                    
+                    }
                 }
 
                 if (object.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"))) {
@@ -749,6 +759,112 @@ public class MainFrame extends javax.swing.JFrame {
         progressMonitor.close();
         update();
     }//GEN-LAST:event_jmiNafLoadActionPerformed
+
+    private void jmiSubstitutePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSubstitutePlayerActionPerformed
+        // Select Player to subtitute
+        ArrayList<Coach> list = new ArrayList<>(Tournament.getTournament().getCoachs());
+        for (int i = 0; i < Tournament.getTournament().getCoachs().size(); i++) {
+            if (!Tournament.getTournament().getCoachs().get(i).mActive) {
+                list.remove(i);
+            }
+        }
+        JComboBox jcb = new JComboBox(list.toArray());
+        JLabel jlb = new JLabel("Quel coach se fait remplacer ?");
+        JPanel jpn = new JPanel(new BorderLayout());
+        jpn.add(jlb, BorderLayout.NORTH);
+        jpn.add(jcb, BorderLayout.CENTER);
+        int ret = JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_CANCEL_OPTION);
+        if (ret == JOptionPane.OK_OPTION) {
+            Coach c=(Coach)jcb.getSelectedItem();
+            ArrayList<String> matchs_descr=new ArrayList<>();
+            
+            // Select Match
+            for (int i=0; i<c.mMatchs.size(); i++)
+            {
+                CoachMatch m=    (CoachMatch)c.mMatchs.get(i);
+                String tmp="Ronde "+((Tournament.getTournament().getRounds().indexOf(m.mRound))+1);                
+                tmp=tmp+ " / "+m.mCompetitor1.getDecoratedName()+" VS "+m.mCompetitor2.getDecoratedName();
+                matchs_descr.add(tmp);
+            }
+            jpn.remove(jcb);
+            jcb = new JComboBox(matchs_descr.toArray());
+            jpn.add(jcb, BorderLayout.CENTER);
+            jlb.setText("Quel match ?");
+            JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_OPTION);
+            CoachMatch m=(CoachMatch)c.mMatchs.get(jcb.getSelectedIndex());
+            
+            // Select subtitute
+            ArrayList<Coach> availableCoachs=new ArrayList<>();
+            ArrayList<String> availableCoachsName=new ArrayList<>();
+            for (int i=0; i<Tournament.getTournament().getCoachs().size(); i++)
+            {
+                Coach sub=Tournament.getTournament().getCoachs().get(i);
+                if (!sub.mActive)
+                {
+                    availableCoachs.add(sub);
+                }
+            }
+            availableCoachs.add(Coach.getNullCoach());
+            for (int i=0; i< availableCoachs.size(); i++)
+            {
+                availableCoachsName.add(availableCoachs.get(i).getDecoratedName());
+            }
+            
+            availableCoachsName.add("Nouveau ...");
+            jpn.remove(jcb);
+            jcb=new JComboBox(availableCoachsName.toArray());
+            jpn.add(jcb, BorderLayout.CENTER);
+            jlb.setText("Choisissez un remplaçant");
+            JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_OPTION);
+            
+            // Create Substitution
+            
+            // If None
+            if (jcb.getSelectedIndex()==availableCoachs.size()-1)
+            {
+                if (m.mCompetitor1==c)
+                {
+                    m.mSubstitute1=null;
+                }
+                if (m.mCompetitor2==c)
+                {
+                    m.mSubstitute2=null;
+                }
+            }
+            else
+            {
+                Coach sub;
+                // New
+                if (jcb.getSelectedIndex()==availableCoachs.size())
+                {
+                    sub=new Coach();
+                    sub.mRoster=RosterType.mRosterTypes.get(0);                    
+                    jdgCoach jdg=new jdgCoach(this, true,sub);                    
+                    jdg.setVisible(true);
+                    Tournament.getTournament().getCoachs().add(sub);
+                    sub.mActive=false;
+                }
+                else
+                {
+                    sub=availableCoachs.get(jcb.getSelectedIndex());
+                }
+                
+                Substitute s=new Substitute();
+                s.mMatch=m;
+                s.mSubstitute=sub;
+                s.mTitular=c;
+                
+                if (m.mCompetitor1==c)
+                {
+                    m.mSubstitute1=s;
+                }
+                if (m.mCompetitor2==c)
+                {
+                    m.mSubstitute2=s;
+                }
+            }                      
+        }
+    }//GEN-LAST:event_jmiSubstitutePlayerActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -778,7 +894,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAideEnLigne;
@@ -794,6 +910,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiRevisions;
     private javax.swing.JMenuItem jmiSave;
     private javax.swing.JMenuItem jmiSaveAs;
+	private javax.swing.JMenuItem jmiSubstitutePlayer;
     private javax.swing.JMenu jmnFile;
     private javax.swing.JMenu jmnHelp;
     private javax.swing.JMenu jmnParameters;

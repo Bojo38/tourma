@@ -4,7 +4,6 @@
  */
 package tourma.data;
 
-import java.util.ArrayList;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -39,85 +38,67 @@ public class MatchTest {
     }
 
     /**
-     * Test of getXMLElement method, of class CoachMatch.
-     */
-    @Test
-    public void testGetXMLElement() {
-        System.out.println("getXMLElement");
-        CoachMatch instance = null;
-        Element expResult = null;
-        Element result = instance.getXMLElement();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setXMLElement method, of class CoachMatch.
-     */
-    @Test
-    public void testSetXMLElement() {
-        System.out.println("setXMLElement");
-        Element match = null;
-        CoachMatch instance = null;
-        instance.setXMLElement(match);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getWinner method, of class CoachMatch.
+     * Test of getWinner method, of class Match.
      */
     @Test
     public void testGetWinner() {
         System.out.println("getWinner");
-        CoachMatch instance = null;
-        Coach expResult = null;
-        Coach result = instance.getWinner();
+        Match instance = null;
+        Competitor expResult = null;
+        Competitor result = instance.getWinner();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getLooser method, of class CoachMatch.
+     * Test of getLooser method, of class Match.
      */
     @Test
     public void testGetLooser() {
         System.out.println("getLooser");
-        CoachMatch instance = null;
-        Coach expResult = null;
-        Coach result = instance.getLooser();
+        Match instance = null;
+        Competitor expResult = null;
+        Competitor result = instance.getLooser();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of resetWL method, of class CoachMatch.
+     * Test of resetWL method, of class Match.
      */
     @Test
     public void testResetWL() {
         System.out.println("resetWL");
-        CoachMatch instance = null;
+        Match instance = null;
         instance.resetWL();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of getTeamMatchWinner method, of class CoachMatch.
-     */
-    @Test
-    public void testGetTeamMatchWinner() {
-        System.out.println("getTeamMatchWinner");
-        int teamMatesNumber = 0;
-        int matchIndex = 0;
-        ArrayList<CoachMatch> matchs = null;
-        Team expResult = null;
-        Team result = CoachMatch.getTeamMatchWinner(teamMatesNumber, matchIndex, matchs);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public class MatchImpl extends Match {
+
+        public MatchImpl() {
+            super(null);
+        }
+
+        public Competitor getWinner() {
+            return null;
+        }
+
+        public Competitor getLooser() {
+            return null;
+        }
+
+        @Override
+        public Element getXMLElement() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void setXMLElement(Element e) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 }

@@ -58,4 +58,29 @@ public class RosterTypeTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of initCollection method, of class RosterType.
+     */
+    @Test
+    public void testInitCollection_0args() {
+        System.out.println("initCollection");
+        RosterType.initCollection();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRosterName method, of class RosterType.
+     */
+    @Test
+    public void testGetRosterName() {
+        System.out.println("getRosterName");
+        String name = "";
+        String expResult = "";
+        String result = RosterType.getRosterName(name);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

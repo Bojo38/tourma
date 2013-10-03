@@ -99,13 +99,13 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     for (i = 0; i < player._playertype._skills.size(); i++) {
                         Skill s = player._playertype._skills.get(i);
 
-                        skills.add("<FONT color=\"000000\">" + s._name + "</FONT>");
+                        skills.add("<FONT color=\"000000\">" + s.mName + "</FONT>");
                     }
                     for (i = 0; i < player._skills.size(); i++) {
                         Skill s = player._skills.get(i);
-                            //int rgb=s._color.getRGB();
-                              int rgb=s._color.getRed()*65536+s._color.getGreen()*256+s._color.getBlue();
-                            skills.add("<FONT color=\""+Integer.toHexString(rgb) +"\"><I>" + s._name + "</I></FONT>");
+                            //int rgb=s.mColor.getRGB();
+                              int rgb=s.mColor.getRed()*65536+s.mColor.getGreen()*256+s.mColor.getBlue();
+                            skills.add("<FONT color=\""+Integer.toHexString(rgb) +"\"><I>" + s.mName + "</I></FONT>");
                     }
 
                     for (i = 0; i < skills.size(); i++) {
@@ -147,7 +147,7 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     int skillCost = 0;
                     for (i = 0; i < player._skills.size(); i++) {
                         int j;
-                        SkillType st = player._skills.get(i)._category;
+                        SkillType st = player._skills.get(i).mCategory;
 
                         /**
                          * If Single Roll, add 20000
@@ -171,19 +171,19 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                          */
                         if (st.equals(lrb.getLRB().getSkillType("Characteristics"))) {
                             Skill s=player._skills.get(i);
-                            if (s._name.equals("+1 Movement"))
+                            if (s.mName.equals("+1 Movement"))
                             {
                                 skillCost += 30000;
                             }
-                            if (s._name.equals("+1 Armor"))
+                            if (s.mName.equals("+1 Armor"))
                             {
                                 skillCost += 30000;
                             }
-                            if (s._name.equals("+1 Agility"))
+                            if (s.mName.equals("+1 Agility"))
                             {
                                 skillCost += 40000;
                             }
-                            if (s._name.equals("+1 Strength"))
+                            if (s.mName.equals("+1 Strength"))
                             {
                                 skillCost += 50000;
                             }

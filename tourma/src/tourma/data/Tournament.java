@@ -555,7 +555,7 @@ public class Tournament {
         }
     }
 
-    public void exportResults(final java.io.File file) {
+    public void exportNAF(final java.io.File file) {
         final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
         Criteria critTd = null;

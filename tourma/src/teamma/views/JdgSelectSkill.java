@@ -55,7 +55,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             ArrayList<String> sa = new ArrayList<String>();
             sa.add("");
             for (j = 0; j < st._skills.size(); j++) {
-                sa.add(st._skills.get(j)._name);
+                sa.add(st._skills.get(j).mName);
             }
             JComboBox jcb = new JComboBox(sa.toArray());
             _jcbs.add(jcb);
@@ -210,8 +210,8 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         
         if (s!=null)
         {
-            Skill s2=new Skill(s._name,s._category);
-            s2._color=_color;
+            Skill s2=new Skill(s.mName,s.mCategory);
+            s2.mColor=_color;
             _player._skills.add(s2);
             this.setVisible(false);
         }

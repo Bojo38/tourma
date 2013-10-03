@@ -115,6 +115,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
 
+        
         jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
     }
 
@@ -286,7 +287,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jlbHandicap.setText(bundle.getString("HANDICAP")); // NOI18N
         jPanel1.add(jlbHandicap);
 
-        jtfHandicap.setText(bundle.getString("110")); // NOI18N
+        jtfHandicap.setText(bundle.getString("0")); // NOI18N
         jPanel1.add(jtfHandicap);
 
         jbtDownloadFromNaf.setText(bundle.getString("DOWNLOAD FROM NAF")); // NOI18N
