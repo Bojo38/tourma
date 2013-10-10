@@ -141,6 +141,7 @@
                     <include name="com/toedter/components/images/*"/>
                     <include name="tourma/languages/*"/>
                     <include name="tourma/views/report/*"/>
+                    <include name="teamma/views/report/*"/>
                     <include name="tourma/*"/>
                     <include name="org/jfree/chart/resources/*"/>
                     <include name="org/jfree/resources/*"/>
@@ -148,6 +149,7 @@
                 <adjust replaceName="false">
                     <include name="**/*.properties"/>
                     <include name="**/*.html"/>
+                    <include name="teamma/views/report/jdgPrintableRoster*"/>
                     <include name="tourma/views/report/jdgRanking*"/>
                     <include name="tourma/views/report/jdgGlobal*"/>
                     <include name="tourma/views/report/jdgRound*"/>

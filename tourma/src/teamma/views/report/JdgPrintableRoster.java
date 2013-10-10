@@ -15,6 +15,7 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -53,16 +54,18 @@ import tourma.utility.StringConstants;
 public class JdgPrintableRoster extends javax.swing.JDialog {
 
     Roster mRoster;
+    Coach mCoach;
     File mFilename = null;
     boolean mWithSkill = false;
 
     /**
      * Creates new form jdgRoundReport
      */
-    public JdgPrintableRoster(final java.awt.Frame parent, final boolean modal, final Roster roster, final boolean withSkill) {
+    public JdgPrintableRoster(final java.awt.Frame parent, final boolean modal, final Roster roster, final Coach coach, boolean withSkill) {
         super(parent, modal);
         initComponents();
         mRoster = roster;
+        mCoach=coach;
         mWithSkill = withSkill;
         try {
             jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
@@ -196,6 +199,22 @@ public class JdgPrintableRoster extends javax.swing.JDialog {
 
             final Map root = new HashMap();
 
+            if (mCoach!=null)
+            {
+                if (mCoach.mTeam!=null)
+                {
+                    root.put("title", mCoach.mTeam);
+                }
+                else
+                {
+                    root.put("title", mCoach.mName);
+                }
+            }
+            else
+            {
+                root.put("title", "?");
+            }
+            
 
             ArrayList players = new ArrayList();
 
@@ -215,7 +234,12 @@ public class JdgPrintableRoster extends javax.swing.JDialog {
                     skills.add(p._playertype._skills.get(j).mName);
                 }
                 for (int j = 0; j < p._skills.size(); j++) {
-                    skills.add(p._skills.get(j).mName);
+                    String ctmp="rgb(";
+                    Color c=p._skills.get(j).mColor;
+                    ctmp=ctmp+c.getRed()+",";
+                    ctmp=ctmp+c.getGreen()+",";
+                    ctmp=ctmp+c.getBlue()+")";
+                    skills.add("<div style=\"color:"+ctmp+";\">"+p._skills.get(j).mName+"</div>");
                 }
                 player.put("skills", skills);
                 player.put("cost", p.getValue(mWithSkill));
@@ -238,7 +262,7 @@ public class JdgPrintableRoster extends javax.swing.JDialog {
             for (int i = 0; i < this.mRoster._champions.size(); i++) {
                 StarPlayer p = mRoster._champions.get(i);
                 final HashMap player = new HashMap();
-                player.put("numero", players.size());
+                player.put("numero", players.size()+1);
                 player.put("name", p._name);
                 player.put("position", p._position);
                 player.put("movement", p._movement);
@@ -267,7 +291,14 @@ public class JdgPrintableRoster extends javax.swing.JDialog {
             root.put("players", players);
 
             root.put("teamname", "&nbsp;");
-            root.put("apothecary", Boolean.toString(mRoster._apothecary));
+            if (mRoster._apothecary)
+            {
+                root.put("apothecary", 1);
+            }
+            else
+            {
+                root.put("apothecary", 0);
+            }
             root.put("apo_price", RosterType._apothecary_cost);
             if (mRoster._apothecary) {
                 root.put("apo_cost", RosterType._apothecary_cost);
@@ -326,6 +357,7 @@ public class JdgPrintableRoster extends javax.swing.JDialog {
             root.put("cards",  mRoster._cards);
 
             root.put("total",mRoster.getValue(mWithSkill));
+            root.put("rank",mRoster.getValue(mWithSkill)/10000);
             
             /*root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" {0}"), mRoundNumber));
              root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE"), mRound.getMatchs().size());

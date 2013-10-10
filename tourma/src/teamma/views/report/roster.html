@@ -8,66 +8,12 @@
                 font-size: 28px;
             }
 
-            div#soustitre {
-                text-align: center;
-                font-size: 20px;
-            }
-
-            td
-            {
-                font-size:12px;
-            }
-            td.tab_titre {
+            td {
                 padding: 7px 10px;
                 border-style: solid;
                 border-width: 1px 1px 0px 0px;
-                border-color: #d9d9d9;
-                background-color: #444444;
-                color: #cccccc;
                 text-align:center;
                 font-size:14px;
-            }
-
-            td.tab_pos {
-                padding: 7px 10px;
-                border-style: solid;
-                border-width: 1px 1px 0px 0px;
-                border-color: #444444;
-                background-color: #cccccc;
-                color: #444444;
-                text-align:center;
-            }
-
-            td.winner {
-                padding: 7px 10px;
-                border-style: solid;
-                border-width: 1px 1px 0px 0px ;
-                border-color: rgb(68,68,68) rgb(68,68,68);
-                background-color: #eeeeee;
-                color: rgb(0,0,88);
-                font-weight: 700;
-                text-align:center;
-            }
-
-            td.looser {
-                padding: 7px 10px;
-                border-style: solid;
-                border-width: 1px 1px 0px 0px ;
-                border-color:  #444444;
-                background-color: #eeeeee;
-                color: #880000;
-                text-align:center;
-            }
-
-            td.draw {
-                padding: 7px 10px;
-                border-style: solid;
-                border-width: 1px 1px 0px 0px ;
-                border-color:  #444444;
-                background-color: #eeeeee;
-                color: #444444;
-                font-style: italic;
-                text-align:center;
             }
         </style>
         <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
@@ -79,10 +25,10 @@
         <div id="titre">Roster</div>
         <br>
         <table
-            style="border-width:0px; width: 100%; text-align: left; margin-left: auto; margin-right: auto;text-align:center;"
-            border="1" cellpadding="0" cellspacing="0">
+            style="border-width:1px; width: 100%; text-align: center; margin-left: auto; margin-right: auto;"
+            cellpadding="0" cellspacing="0">
             <tbody>
-                <tr>
+                <tr style="text-align:center;">
                     <td >#</td>
                     <td >Name</td>
                     <td >Position</td>
@@ -90,18 +36,20 @@
                     <td >S</td>
                     <td >Ag</td>
                     <td >Ar</td>
-                    <td >Skills</td>
+                    <td colspan="3">Skills</td>
                     <td >Cost</td>
                     <td >SR</td>
                     <td >DR</td>
                 </tr>
+                <#assign odd=0>
                 <#list players as player>
+                <#assign odd=player.numero>
                 <#if (player.numero%2 == 1) >
-                <#assign backgroud="background-color:#ffffff;">
+                <#assign backgroud="background-color:#ffffff">
                 <#else>
-                <#assign backgroud="background-color:#eeeeee;">
+                <#assign backgroud="background-color:#eeeeee">
                 </#if>
-                <tr style="font-size:14px;${backgroud};text-align:center;">                   
+                <tr style="font-size:14px;text-align:center;${backgroud};">                   
                     <td>${player.numero}</td>
                     <td >${player.name} </td>
                     <td >${player.position}</td>
@@ -109,162 +57,258 @@
                     <td >${player.strength}</td>
                     <td >${player.agility}</td>
                     <td >${player.armor}</td>
-                    <td >
+                    <td colspan="3">
                         <#list player.skills as skill>
                         ${skill} 
                         </#list>
                     </td>
                     <td>${player.cost}</td>
-                    <td> <#list player.single as s>
-                        ${s}  
-                        </#list>
-                    </td>
-                    <td> <#list player.double as d>
-                        ${d}  
-                        </#list>
-                    </td>
+                    <td><#list player.single as s>${s}</#list></td>
+                    <td><#list player.double as d>${d}</#list></td>
                 </tr>
                 </#list>
-                <tr>
-                    <td colspan="2">
+                
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
+                    <td colspan="2" style="text-align:right;">
                         Team Name
                     </td>
-                    <td colspan="5">${teamname}</td>
-                    <td>Apothecary ${apothecary} x </td>
-                    <td>${apo_price}</td>
-                    <td colspan="2">${apo_cost}</td>
+                    <td colspan="5" style="text-align:center;">${teamname}</td>
+                    <td style="text-align:right;">Apothecary </td>
+                    <td style="text-align:center;">${apothecary} </td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${apo_price}</td>
+                    <td colspan="2" style="text-align:center;">${apo_cost}</td>
                 </tr>
-                <tr>
-                    <td colspan="2">
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
+                    <td colspan="2" style="text-align:right;">
                         Coach Name
                     </td>
-                    <td colspan="5">${coachname}</td>
-                    <td>assists ${assists} x </td>
-                    <td>${ass_price}</td>
-                    <td colspan="2">${ass_cost}</td>
+                    <td colspan="5" style="text-align:center;">${coachname}</td>
+                    <td style="text-align:right;">Assists</td>
+                    <td style="text-align:center;">${assists}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${ass_price}</td>
+                    <td colspan="2" style="text-align:center;">${ass_cost}</td>
                 </tr>
-                <tr>
-                    <td colspan="2">
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
+                    <td colspan="2" style="text-align:right;">
                         Race
                     </td>
-                    <td colspan="5">${race}</td>
-                    <td>Cheerleaders ${cheer} x </td>
-                    <td>${cheer_price}</td>
-                    <td colspan="2">${cheer_cost}</td>
+                    <td colspan="5" style="text-align:center;">${race}</td>
+                    <td style="text-align:right;">Cheerleaders </td>
+                    <td style="text-align:center;">${cheer}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${cheer_price}</td>
+                    <td colspan="2" style="text-align:center;">${cheer_cost}</td>
                 </tr>
                 
-                <tr>
-                    <td colspan="7">
-                        &nbsp;
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
+                    <td colspan="2" style="text-align:right;">
+                        Rank
                     </td>
-
-                    <td>Fan factor ${pop} x </td>
-                    <td>${pop_price}</td>
-                    <td colspan="2">${pop_cost}</td>
+                    <td colspan="5" style="text-align:center;">${rank}</td>
+                    
+                    <td style="text-align:right;">Fan factor</td>
+                    <td style="text-align:center;">${pop}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${pop_price}</td>
+                    <td colspan="2" style="text-align:center;">${pop_cost}</td>
                 </tr>
 
                 <#if (extra > 0) >
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td>Extra Reroll ${extra} x </td>
-                    <td>${extra_price}</td>
-                    <td colspan="2">${extra_cost}</td>
+                    <td style="text-align:right;">Extra Reroll</td>
+                    <td style="text-align:center;">${extra}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${extra_price}</td>
+                    <td colspan="2" style="text-align:center;">${extra_cost}</td>
                 </tr>
                 </#if>
                 
                 <#if (local > 0) >
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td>Local Apothecary ${local} x </td>
-                    <td>${local_price}</td>
-                    <td colspan="2">${local_cost}</td>
+                    <td style="text-align:right;">Local Apothecary </td>
+                    <td style="text-align:center;">${local}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${local_price}</td>
+                    <td colspan="2" style="text-align:center;">${local_cost}</td>
                 </tr>
                 </#if>
                 
                 <#if (igor > 0) >
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td>Igor ${igor} x </td>
-                    <td>${igor_price}</td>
-                    <td colspan="2">${igor_cost}</td>
+                    <td style="text-align:right;">Igor </td>
+                    <td style="text-align:center;">${igor}</td>
+                    <td style="text-align:center;">X</td>
+                    <td  style="text-align:center;">${igor_price}</td>
+                    <td colspan="2" style="text-align:center;">${igor_cost}</td>
                 </tr>
                 </#if>
 
                 <#if (bribe > 0) >
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td>Bribe the Ref ${bribe} x </td>
-                    <td>${bribe_price}</td>
-                    <td colspan="2">${bribe_cost}</td>
+                    <td style="text-align:right;">Bribe the Ref </td>
+                    <td style="text-align:center;">${bribe}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${bribe_price}</td>
+                    <td colspan="2" style="text-align:center;">${bribe_cost}</td>
                 </tr>
                 </#if>
                 
                 <#if (wizard > 0) >
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td>Wizard ${wizard} x </td>
-                    <td>${wizard_price}</td>
-                    <td colspan="2">${wizard_cost}</td>
+                    <td  style="text-align:right;">Wizard </td>
+                    <td style="text-align:center;">${wizard} </td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${wizard_price}</td>
+                    <td colspan="2" style="text-align:center;">${wizard_cost}</td>
                 </tr>
                 </#if>
                 
                 <#if (babes > 0) >
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td>Bloodweiser bables ${babes} x </td>
-                    <td>${babes_price}</td>
-                    <td colspan="2">${babes_cost}</td>
+                    <td style="text-align:right;">Bloodweiser bables </td>
+                    <td style="text-align:center;">${babes}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${babes_price}</td>
+                    <td colspan="2" style="text-align:center;">${babes_cost}</td>
                 </tr>
                 </#if>
                 
                 <#if (chef > 0) >
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td>Halfling Chef ${chef} x </td>
-                    <td>${chef_price}</td>
-                    <td colspan="2">${chef_cost}</td>
+                    <td style="text-align:right;">Halfling Chef</td>
+                    <td style="text-align:center;">${chef}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${chef_price}</td>
+                    <td colspan="2" style="text-align:center;">${chef_cost}</td>
                 </tr>
                 </#if>
                 
                 <#if (cards > 0) >
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td colspan="2">Cards </td>
-                    <td colspan="2">${cards}</td>
+                    <td style="text-align:right;">Cards </td>
+                    <td colspan="3"> &nbsp;</td>
+                    <td colspan="2" style="text-align:center;">${cards}</td>
                 </tr>
                 </#if>
                 
-                <tr>
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
                     <td colspan="7">
                         &nbsp;
                     </td>
 
-                    <td colspan="2">Total </td>
-                    <td colspan="2">${total}</td>
+                    <td colspan="4" style="text-align:right;font-size:20px;">Total </td>
+                    <td colspan="2" style="text-align:center;font-size:20px;">${total}</td>
                 </tr>
             </tbody>
         </table>

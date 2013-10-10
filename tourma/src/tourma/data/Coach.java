@@ -38,22 +38,18 @@ public final class Coach extends Competitor implements XMLExport {
     public int mRank;
     public boolean mActive = true;
     public Team mTeamMates = null;
-    
     public teamma.data.Roster mComposition;
-    
     public double mNafRank = 150.0;
     public int mHandicap = 0;
-
-    
 
     public Coach() {
         super();
         mActive = true;
-            }
+    }
 
     public Coach(final String name) {
         super(name);
-        mActive = false;        
+        mActive = false;
         mTeam = StringConstants.CS_NONE;
         mRoster = new RosterType(StringConstants.CS_NONE);
         mTeamMates = null;
@@ -97,49 +93,8 @@ public final class Coach extends Competitor implements XMLExport {
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP"), Integer.toString(this.mHandicap));
 
         if (this.mComposition != null) {
-            final Element compo = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
-            final teamma.data.Roster roster = this.mComposition;
+            final Element compo = this.mComposition.getXMLElement();
 
-            compo.setAttribute(StringConstants.CS_ROSTER, roster._roster._name);
-            compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APOTHECARY"), Boolean.toString(roster._apothecary));
-            compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ASSISTANTS"), Integer.toString(roster._assistants));
-            compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHEERLEADERS"), Integer.toString(roster._cheerleaders));
-            compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FANFACTOR"), Integer.toString(roster._fanfactor));
-            compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("REROLLS"), Integer.toString(roster._rerolls));
-
-            final Element inducements = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDUCEMENTS"));
-            inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHEF"), Boolean.toString(roster._chef));
-            inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IGOR"), Boolean.toString(roster._igor));
-            inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WIZARD"), Boolean.toString(roster._wizard));
-            inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BABES"), Integer.toString(roster._bloodweiserbabes));
-            inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CARDS"), Integer.toString(roster._cards));
-            inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BRIBE"), Integer.toString(roster._corruptions));
-            inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXTRAREROLLS"), Integer.toString(roster._extrarerolls));
-            inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOCALAPOTHECARY"), Integer.toString(roster._localapothecary));
-
-
-            for (int j = 0; j < roster._champions.size(); j++) {
-                final Element st = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STARPLAYER"));
-                st.setAttribute(StringConstants.CS_NAME, roster._champions.get(j)._name);
-                inducements.addContent(st);
-            }
-
-            compo.addContent(inducements);
-
-            for (int j = 0; j < roster._players.size(); j++) {
-                final Element p = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PLAYER"));
-                final teamma.data.Player pl = roster._players.get(j);
-                p.setAttribute(StringConstants.CS_NAME, pl._name);
-                p.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"), pl._playertype._position);
-
-                for (int k = 0; k < pl._skills.size(); k++) {
-                    final Element s = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKILL"));
-                    final teamma.data.Skill sk = pl._skills.get(k);
-                    s.setAttribute(StringConstants.CS_NAME, sk.mName);
-                    p.addContent(s);
-                }
-                compo.addContent(p);
-            }
             coach.addContent(compo);
         }
         return coach;
@@ -176,53 +131,8 @@ public final class Coach extends Competitor implements XMLExport {
             final Element compo = coach.getChild(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
             if (compo != null) {
                 this.mComposition = new teamma.data.Roster();
-                this.mComposition._roster = teamma.data.lrb.getLRB().getRosterType(compo.getAttributeValue(StringConstants.CS_ROSTER));
-                this.mComposition._apothecary = Boolean.parseBoolean(compo.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APOTHECARY")));
-                this.mComposition._assistants = Integer.parseInt(compo.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ASSISTANTS")));
-                this.mComposition._cheerleaders = Integer.parseInt(compo.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHEERLEADERS")));
-                this.mComposition._fanfactor = Integer.parseInt(compo.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FANFACTOR")));
-                this.mComposition._rerolls = Integer.parseInt(compo.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("REROLLS")));
-
-                final Element inducements = compo.getChild(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDUCEMENTS"));
-                if (inducements != null) {
-                    this.mComposition._bloodweiserbabes = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BABES")));
-                    this.mComposition._cards = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CARDS")));
-                    this.mComposition._chef = Boolean.parseBoolean(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHEF")));
-                    this.mComposition._corruptions = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BRIBE")));
-                    this.mComposition._extrarerolls = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXTRAREROLLS")));
-                    this.mComposition._igor = Boolean.parseBoolean(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IGOR")));
-                    this.mComposition._localapothecary = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOCALAPOTHECARY")));
-                    this.mComposition._wizard = Boolean.parseBoolean(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WIZARD")));
-
-                    final List stars = inducements.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STARPLAYERS"));
-                    final Iterator s = stars.iterator();
-                    while (s.hasNext()) {
-                        final Element star = (Element) s.next();
-                        final StarPlayer t = lrb.getLRB().getStarPlayer(star.getAttributeValue(StringConstants.CS_NAME));
-                        this.mComposition._champions.add(t);
-                    }
-                }
-
-                final List players = compo.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PLAYER"));
-                final Iterator ip = players.iterator();
-                while (ip.hasNext()) {
-                    final Element p = (Element) ip.next();
-
-                    final teamma.data.Player pl = new Player(this.mComposition._roster.getPlayerType(p.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"))));
-                    pl._name = p.getAttributeValue(StringConstants.CS_NAME);
-
-                    final List skills = compo.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKILL"));
-                    final Iterator is = skills.iterator();
-                    while (is.hasNext()) {
-                        final Element s = (Element) is.next();
-
-                        final teamma.data.Skill sl = lrb.getLRB().getSkill(s.getAttributeValue(StringConstants.CS_NAME));
-                        pl._skills.add(sl);
-                    }
-
-                    this.mComposition._players.add(pl);
-                    this.mRank = this.mComposition.getValue(false) / 10000;
-                }
+                this.mComposition.setXMLElement(compo);
+                this.mRank = this.mComposition.getValue(false) / 10000;
             }
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
@@ -236,8 +146,8 @@ public final class Coach extends Competitor implements XMLExport {
         m.mCompetitor2 = opponent;
         r.mMatchs.add(m);
     }
-    
-    public CoachMatch CreateMatch(Competitor opponent,Round r) {
+
+    public CoachMatch CreateMatch(Competitor opponent, Round r) {
         CoachMatch m = new CoachMatch(r);
         m.mCompetitor1 = this;
         m.mCompetitor2 = opponent;
@@ -293,8 +203,7 @@ public final class Coach extends Competitor implements XMLExport {
 
 
         if (possible.isEmpty()) {
-            if (params.mEnableClans)
-            {
+            if (params.mEnableClans) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
             }
             possible = new ArrayList<Competitor>(opponents);
@@ -334,15 +243,15 @@ public final class Coach extends Competitor implements XMLExport {
 
         for (int i = matchs.size() - 1; i > 0; i--) {
 
-            final Coach c1 = (Coach)matchs.get(i).mCompetitor1;
-            final Coach c2 = (Coach)matchs.get(i).mCompetitor2;
+            final Coach c1 = (Coach) matchs.get(i).mCompetitor1;
+            final Coach c2 = (Coach) matchs.get(i).mCompetitor2;
             boolean have_played = c1.havePlayed(c2);
 
             if (have_played) {
                 for (int k = i - 1; k >= 0; k--) {
 
-                    Coach c1_tmp = (Coach)matchs.get(k).mCompetitor1;
-                    Coach c2_tmp = (Coach)matchs.get(k).mCompetitor2;
+                    Coach c1_tmp = (Coach) matchs.get(k).mCompetitor1;
+                    Coach c2_tmp = (Coach) matchs.get(k).mCompetitor2;
 
                     have_played = c1.havePlayed(c2_tmp);
 

@@ -594,10 +594,19 @@ public class Tournament {
                             < mRounds.get(i).mMatchs.size(); j++) {
                         if ((((Coach)mRounds.get(i).mMatchs.get(j).mCompetitor1).mNaf > 0)
                                 && (((Coach)mRounds.get(i).mMatchs.get(j).mCompetitor2).mNaf > 0)) {
+                            
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<GAME>"));
                             final CoachMatch m = mRounds.get(i).getCoachMatchs().get(j);
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<TIMESTAMP>{0}</TIMESTAMP>"), new Object[] {format.format(mRounds.get(i).mHour)}));
-                            Coach p = (Coach)m.mCompetitor1;
+                            Coach p;
+                            if (m.mSubstitute1==null)
+                            {
+                                p = (Coach)m.mCompetitor1;
+                            }
+                            else
+                            {
+                                p = (Coach)m.mSubstitute1.mSubstitute;
+                            }
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<PLAYERRECORD>"));
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NAME>{0}</NAME>"), new Object[] {p.mName}));
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NUMBER>{0}</NUMBER>"), new Object[] {p.mNaf}));
@@ -612,7 +621,16 @@ public class Tournament {
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<DEAD>0</DEAD>"));
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<WINNINGS>0</WINNINGS>"));
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("</PLAYERRECORD>"));
-                            p = (Coach)m.mCompetitor2;
+                            
+                            if (m.mSubstitute2==null)
+                            {
+                                p = (Coach)m.mCompetitor2;
+                            }
+                            else
+                            {
+                                p = (Coach)m.mSubstitute2.mSubstitute;
+                            }
+                            
                             writer.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<PLAYERRECORD>"));
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NAME>{0}</NAME>"), new Object[] {p.mName}));
                             writer.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("<NUMBER>{0}</NUMBER>"), new Object[] {p.mNaf}));

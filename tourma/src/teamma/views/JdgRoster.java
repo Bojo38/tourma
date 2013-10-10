@@ -10,9 +10,20 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import teamma.data.Player;
 import teamma.data.PlayerType;
 import teamma.data.Roster;
@@ -26,61 +37,57 @@ import teamma.views.report.JdgPrintableRoster;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Tournament;
+import tourma.utility.ExtensionFileFilter;
+import tourma.utility.StringConstants;
 
 /**
  *
  * @author WFMJ7631
  */
 public class JdgRoster extends javax.swing.JDialog {
-    
+
     Roster _data = null;
-    Coach _coach=null;
+    Coach _coach = null;
 
     /**
      * Creates new form JdgRoster
      */
     public JdgRoster(java.awt.Frame parent, boolean modal) {
-        this(parent,null,modal);       
+        this(parent, null, modal);
     }
-    
-     public JdgRoster(java.awt.Frame parent, Coach coach, boolean modal) {
+
+    public JdgRoster(java.awt.Frame parent, Coach coach, boolean modal) {
         super(parent, modal);
-        _coach=coach;
-        if (_coach!=null)
-        {
-          if (_coach.mComposition!=null)
-          {
-              _data=_coach.mComposition;
-          }
-          else
-          {
-              _coach.mComposition = new Roster();
-          }
-        }
-        else
-        {
-            _coach=new Coach();
+        _coach = coach;
+        if (_coach != null) {
+            if (_coach.mComposition != null) {
+                _data = _coach.mComposition;
+            } else {
+                _coach.mComposition = new Roster();
+            }
+        } else {
+            _coach = new Coach();
             _coach.mComposition = new Roster();
         }
-         _data=_coach.mComposition;
+        _data = _coach.mComposition;
         initComponents();
-        
-        
+
+
         this.setPreferredSize(new Dimension(1024, 768));
         pack();
-        
+
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
         DisplayMode dmode = gs.getDisplayMode();
-        
+
         this.setSize(1024, 768);
-        
+
         if (dmode != null) {
             int screenWidth = dmode.getWidth();
             int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
-        
+
         update();
         jbtAddSkill.setEnabled(false);
         jbtRemoveSkill.setEnabled(false);
@@ -234,6 +241,8 @@ public class JdgRoster extends javax.swing.JDialog {
         jPanel6 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtHTML = new javax.swing.JButton();
+        jbtExport = new javax.swing.JButton();
+        jbtImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 724));
@@ -1096,21 +1105,38 @@ public class JdgRoster extends javax.swing.JDialog {
         });
         jPanel6.add(jbtHTML);
 
+        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtExport.setText("Export");
+        jbtExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExportActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jbtExport);
+
+        jbtImport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtImport.setText("Import");
+        jbtImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtImportActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jbtImport);
+
         getContentPane().add(jPanel6, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-                
+
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
-        
+
         ArrayList<String> rosterlist = lrb.getLRB().getRosterTypeListAsString();
         String input = (String) JOptionPane.showInputDialog(this,
                 "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
                 null, rosterlist.toArray(), "Amazons");
         RosterType rt = lrb.getLRB().getRosterType(input);
-        if (_coach!=null)
-        {
-            _coach.mRoster=new tourma.data.RosterType(input);
+        if (_coach != null) {
+            _coach.mRoster = new tourma.data.RosterType(input);
         }
         if (rt != null) {
             if (_data._roster != rt) {
@@ -1120,32 +1146,32 @@ public class JdgRoster extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
         }
-        
+
         jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + rt._image))); // NOI18N
         update();
-        
+
     }//GEN-LAST:event_jlbRosterTypeMouseClicked
-                                            
+
     private void jslAssistsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslAssistsStateChanged
         _data._assistants = jslAssists.getValue();
         update();
     }//GEN-LAST:event_jslAssistsStateChanged
-    
+
     private void jslCheerleadersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslCheerleadersStateChanged
         _data._cheerleaders = jslCheerleaders.getValue();
         update();
     }//GEN-LAST:event_jslCheerleadersStateChanged
-    
+
     private void jslFanFactorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslFanFactorStateChanged
         _data._fanfactor = jslFanFactor.getValue();
         update();
     }//GEN-LAST:event_jslFanFactorStateChanged
-    
+
     private void jslRerollStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslRerollStateChanged
         _data._rerolls = jslReroll.getValue();
         update();
     }//GEN-LAST:event_jslRerollStateChanged
-    
+
     private void jslApothecaryStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslApothecaryStateChanged
         _data._apothecary = (jslApothecary.getValue() == 1);
         update();
@@ -1156,32 +1182,31 @@ public class JdgRoster extends javax.swing.JDialog {
     }//GEN-LAST:event_jcbWithSkillsActionPerformed
 
     private void jbtSelectCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelectCoachActionPerformed
-       int i;
-            /**
-             * Build Avilable Positions
-             */
-            ArrayList<String> coachs_name = new ArrayList<String>();
-            ArrayList<Coach> coaches=Tournament.getTournament().getCoachs();
-            for (i = 0; i < coaches.size(); i++) {
-                Coach c = coaches.get(i);
-                coachs_name.add(c.mName);
-            }
-            
-            String input = (String) JOptionPane.showInputDialog(this,
-                    "Choisissez le coach", "Choix du coach", JOptionPane.INFORMATION_MESSAGE,
-                    null, coachs_name.toArray(), coachs_name.get(0));
-            if (!input.equals(""))
-            {
-                Coach c = Tournament.getTournament().getCoach(input);
-                c.mComposition=_data;
-                _coach=c;
-                _coach.mRank=_data.getValue(false)/10000;
-            }
+        int i;
+        /**
+         * Build Avilable Positions
+         */
+        ArrayList<String> coachs_name = new ArrayList<String>();
+        ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
+        for (i = 0; i < coaches.size(); i++) {
+            Coach c = coaches.get(i);
+            coachs_name.add(c.mName);
+        }
+
+        String input = (String) JOptionPane.showInputDialog(this,
+                "Choisissez le coach", "Choix du coach", JOptionPane.INFORMATION_MESSAGE,
+                null, coachs_name.toArray(), coachs_name.get(0));
+        if (!input.equals("")) {
+            Coach c = Tournament.getTournament().getCoach(input);
+            c.mComposition = _data;
+            _coach = c;
+            _coach.mRank = _data.getValue(false) / 10000;
+        }
 
     }//GEN-LAST:event_jbtSelectCoachActionPerformed
 
     private void jlbIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlbIconActionPerformed
-       jlbRosterTypeMouseClicked(null);
+        jlbRosterTypeMouseClicked(null);
     }//GEN-LAST:event_jlbIconActionPerformed
 
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
@@ -1252,14 +1277,14 @@ public class JdgRoster extends javax.swing.JDialog {
         } else {
             int i;
             /**
-            * Build Avilable Positions
-            */
+             * Build Avilable Positions
+             */
             ArrayList<String> positions = new ArrayList<String>();
             for (i = 0; i < _data._roster._player_types.size(); i++) {
                 PlayerType pt = _data._roster._player_types.get(i);
                 /*
-                * Count the number of player possible
-                */
+                 * Count the number of player possible
+                 */
                 int limit = pt._limit;
                 int j;
                 for (j = 0; j < _data._players.size(); j++) {
@@ -1273,8 +1298,8 @@ public class JdgRoster extends javax.swing.JDialog {
             }
 
             String input = (String) JOptionPane.showInputDialog(this,
-                "Choisissez le type de joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
-                null, positions.toArray(), "Amazons");
+                    "Choisissez le type de joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
+                    null, positions.toArray(), "Amazons");
             PlayerType pt = _data._roster.getPlayerType(input);
             Player p = new Player(pt);
 
@@ -1333,8 +1358,8 @@ public class JdgRoster extends javax.swing.JDialog {
         } else {
             int i, j;
             /**
-            * Build Avilable Positions
-            */
+             * Build Avilable Positions
+             */
             ArrayList<String> names = new ArrayList<String>();
             for (i = 0; i < _data._roster._available_starplayers.size(); i++) {
                 StarPlayer sp = _data._roster._available_starplayers.get(i);
@@ -1351,8 +1376,8 @@ public class JdgRoster extends javax.swing.JDialog {
             }
 
             String input = (String) JOptionPane.showInputDialog(this,
-                "Choisissez le joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
-                null, names.toArray(), "");
+                    "Choisissez le joueur", "Choix du joueur", JOptionPane.INFORMATION_MESSAGE,
+                    null, names.toArray(), "");
             StarPlayer sp = _data._roster.getStarPlayer(input);
             _data._champions.add(sp);
         }
@@ -1364,7 +1389,7 @@ public class JdgRoster extends javax.swing.JDialog {
     }//GEN-LAST:event_jtbStarsMouseClicked
 
     private void jbtHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtHTMLActionPerformed
-        JdgPrintableRoster jdg=new JdgPrintableRoster(MainFrame.getMainFrame(), true, this._data,jcbWithSkills.isSelected());
+        JdgPrintableRoster jdg = new JdgPrintableRoster(MainFrame.getMainFrame(), true, this._data, this._coach, jcbWithSkills.isSelected());
         jdg.setVisible(true);
     }//GEN-LAST:event_jbtHTMLActionPerformed
 
@@ -1372,38 +1397,89 @@ public class JdgRoster extends javax.swing.JDialog {
         _data._chef = jslChef.getValue() == 1;
         update();
     }//GEN-LAST:event_jslChefStateChanged
-    
+
+    private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
+        jfc.setFileFilter(filter1);
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
+            String ext = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+            int i = url2.toString().lastIndexOf('.');
+            if (i > 0 && i < url2.length() - 1) {
+                ext = url2.substring(i + 1).toLowerCase();
+            }
+
+            if (!ext.equals(StringConstants.CS_MINXML)) {
+                url2 = url2.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".XML"));
+            }
+
+            Element document = _data.getXMLElement();
+
+            try {
+                final XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+                final FileOutputStream os;
+                os = new FileOutputStream(new File(url2.toString()));
+                sortie.output(document, os);
+                os.close();
+
+
+            } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jbtExportActionPerformed
+
+    private void jbtImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtImportActionPerformed
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
+        jfc.setFileFilter(filter1);
+        if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            final SAXBuilder sxb = new SAXBuilder();
+
+            try {
+                final org.jdom2.Document document = sxb.build(jfc.getSelectedFile());
+                final Element racine = document.getRootElement();
+                _data = new Roster();
+                _data.setXMLElement(racine);
+            } catch (JDOMException e) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+            }
+        }
+        update();
+    }//GEN-LAST:event_jbtImportActionPerformed
+
     private void update() {
         if (_data._roster != null) {
             jlbRosterType.setText("Roster: " + _data._roster._name);
         } else {
             jlbRosterType.setText("Roster: Unknown");
         }
-        
-        if (_coach==null)
-        {
+
+        if (_coach == null) {
             jbtSelectCoach.setText("Associer un coach");
-        }
-        else
-        {
+        } else {
             jbtSelectCoach.setText(_coach.mName);
-            jlbCoachName.setText("Coach: "+_coach.mName);
-            if (_coach.mRoster!=null)
-            {
-                _data._roster=lrb.getLRB().getRosterType(_coach.mRoster.mName);
-                if (_data._roster!=null)
-                {
+            jlbCoachName.setText("Coach: " + _coach.mName);
+            if (_coach.mRoster != null) {
+                _data._roster = lrb.getLRB().getRosterType(_coach.mRoster.mName);
+                if (_data._roster != null) {
                     jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data._roster._image)));
                 }
                 jlbTeamName.setText(_coach.mTeam);
-                jlbRosterType.setText("Roster: "+_data._roster._name);
+                jlbRosterType.setText("Roster: " + _data._roster._name);
             }
-            _coach.mComposition=_data;
-            _coach.mRank=_data.getValue(false)/10000;
+            _coach.mComposition = _data;
+            _coach.mRank = _data.getValue(false) / 10000;
         }
-        
-        jbtSelectCoach.setEnabled(Tournament.getTournament().GetActiveCoachNumber()>0);
-        
+
+        jbtSelectCoach.setEnabled(Tournament.getTournament().GetActiveCoachNumber() > 0);
+
         jbtAdd.setEnabled(_data._champions.size() + _data._players.size() < 16);
         jbtRemove.setEnabled(_data._players.size() > 0);
 
@@ -1411,13 +1487,13 @@ public class JdgRoster extends javax.swing.JDialog {
          * Players
          */
         mjtTeamPlayers playersModel = new mjtTeamPlayers(_data._players);
-        
-        
+
+
         if (_data._roster != null) {
             jlbPriceBribeTheRef.setText(Integer.toString(_data._roster._bribe_cost));
             jlbPriceChef.setText(Integer.toString(_data._roster._chef_cost));
         }
-        
+
         jtbPlayers.setModel(playersModel);
         jtbPlayers.getColumnModel().getColumn(0).setMinWidth(5);
         jtbPlayers.getColumnModel().getColumn(1).setMinWidth(80);
@@ -1445,7 +1521,7 @@ public class JdgRoster extends javax.swing.JDialog {
         jtbStars.getColumnModel().getColumn(5).setMinWidth(5);
         jtbStars.getColumnModel().getColumn(6).setMinWidth(500);
         jtbStars.getColumnModel().getColumn(7).setMinWidth(10);
-        
+
         jtbPlayers.getColumnModel().getColumn(7).addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("width")) {
@@ -1463,28 +1539,27 @@ public class JdgRoster extends javax.swing.JDialog {
         jtbPlayers.setDefaultRenderer(String.class, playersModel);
         jtbStars.setDefaultRenderer(Integer.class, starsModel);
         jtbStars.setDefaultRenderer(String.class, starsModel);
-        
+
         jlbNbAssists.setText(Integer.toString(_data._assistants));
         jlbCostAssists.setText(Integer.toString(_data._assistants * RosterType._assistant_cost));
         jlbPriceAssist.setText(Integer.toString(RosterType._assistant_cost));
-        
+
         jlbNbReroll.setText(Integer.toString(_data._rerolls));
-        jlbCostReroll.setText(Integer.toString(_data._rerolls * (_data._roster!=null?_data._roster._reroll_cost:0)));
-        jlbPriceReroll.setText(Integer.toString((_data._roster!=null?_data._roster._reroll_cost:0)));
-        
+        jlbCostReroll.setText(Integer.toString(_data._rerolls * (_data._roster != null ? _data._roster._reroll_cost : 0)));
+        jlbPriceReroll.setText(Integer.toString((_data._roster != null ? _data._roster._reroll_cost : 0)));
+
         jlbNbCherrleaders.setText(Integer.toString(_data._cheerleaders));
         jlbCostCheerleaders.setText(Integer.toString(_data._cheerleaders * RosterType._cheerleader_cost));
         jlbPriceCheerleaders.setText(Integer.toString(RosterType._cheerleader_cost));
-        
+
         jlbNbFanFactor.setText(Integer.toString(_data._fanfactor));
         jlbCostFanFactor.setText(Integer.toString(_data._fanfactor * RosterType._fan_factor_cost));
         jlbPriceFanFactor.setText(Integer.toString(RosterType._fan_factor_cost));
-        
-        if (_data._roster!=null)
-        {
-        jlbCostApothecary.setEnabled(_data._roster._apothecary);
-        jslApothecary.setEnabled(_data._roster._apothecary);
-        jlbPriceApothecary.setEnabled(_data._roster._apothecary);
+
+        if (_data._roster != null) {
+            jlbCostApothecary.setEnabled(_data._roster._apothecary);
+            jslApothecary.setEnabled(_data._roster._apothecary);
+            jlbPriceApothecary.setEnabled(_data._roster._apothecary);
             jlbApothecary.setEnabled(_data._roster._apothecary);
             jlbX10.setEnabled(_data._roster._apothecary);
             jlbX20.setEnabled(_data._roster._apothecary);
@@ -1509,25 +1584,21 @@ public class JdgRoster extends javax.swing.JDialog {
         jlbPriceExtraReroll.setText(Integer.toString(RosterType._extra_reroll_cost));
         jlbNbExtraReroll.setText(Integer.toString(_data._extrarerolls));
         jlbCostExtraReroll.setText(Integer.toString(_data._extrarerolls * RosterType._extra_reroll_cost));
-        
+
         jlbPriceBabes.setText(Integer.toString(RosterType._babe_cost));
         jlbNbBribeTheRef.setText(Integer.toString(_data._bloodweiserbabes));
         jlbCostBabes.setText(Integer.toString(_data._bloodweiserbabes * RosterType._babe_cost));
-    
-        if (_data._chef)
-        {
+
+        if (_data._chef) {
             jlbNbChef.setText("1");
-            if (_data._roster!=null)
-            {
-            jlbCostChef.setText(Integer.toString(_data._roster._chef_cost));
+            if (_data._roster != null) {
+                jlbCostChef.setText(Integer.toString(_data._roster._chef_cost));
             }
-        }
-        else
-        {
+        } else {
             jlbNbChef.setText("0");
             jlbCostChef.setText("");
         }
-        
+
         if (_data._wizard) {
             jlbNbWizard.setText("1");
             jlbCostWizard.setText(Integer.toString(RosterType._wizard_cost));
@@ -1536,26 +1607,26 @@ public class JdgRoster extends javax.swing.JDialog {
             jlbCostWizard.setText("0");
         }
         jlbPriceWizard.setText(Integer.toString(RosterType._wizard_cost));
-        
+
         jlbNbBribeTheRef.setText(Integer.toString(_data._corruptions));
         if (_data._roster != null) {
             jlbCostBribeTheRef.setText(Integer.toString(_data._corruptions * _data._roster._bribe_cost));
         }
-        
+
         boolean canHaveApo = false;
         if (_data._roster != null) {
             if (_data._roster._apothecary) {
                 canHaveApo = true;
             }
         }
-        
+
         jlbCostLocalApothecary.setEnabled(canHaveApo);
         jslLocalApothecary.setEnabled(canHaveApo);
         jlbCostLocalApothecary.setEnabled(canHaveApo);
         jlbPriceLocalApothecary.setEnabled(canHaveApo);
         jlbNbLocalApothecary.setEnabled(canHaveApo);
         jlbX4.setEnabled(canHaveApo);
-        
+
         if (!canHaveApo) {
             _data._localapothecary = 0;
             jlbCostLocalApothecary.setText("0");
@@ -1567,21 +1638,21 @@ public class JdgRoster extends javax.swing.JDialog {
             jlbCostLocalApothecary.setText(Integer.toString(_data._localapothecary * RosterType._local_apo_cost));
             jlbPriceLocalApothecary.setText(Integer.toString(RosterType._local_apo_cost));
         }
-        
+
         boolean canIgor = false;
         if (_data._roster != null) {
             if (_data._roster._igor) {
                 canIgor = true;
             }
         }
-        
+
         jlbCostIgor.setEnabled(canIgor);
         jslIgor.setEnabled(canIgor);
         jlbCostIgor.setEnabled(canIgor);
         jlbPriceIgor.setEnabled(canIgor);
         jlbNbIgor.setEnabled(canIgor);
         jlbX6.setEnabled(canIgor);
-        
+
         if (!canIgor) {
             _data._igor = false;
             jlbCostIgor.setText("0");
@@ -1589,28 +1660,28 @@ public class JdgRoster extends javax.swing.JDialog {
             jlbNbIgor.setText("0");
             jslIgor.setValue(0);
         } else {
-            
+
             jlbNbIgor.setText(Integer.toString(jslIgor.getValue()));
             jlbCostIgor.setText(Integer.toString(jslIgor.getValue() * RosterType._igor_cost));
             jlbPriceIgor.setText(Integer.toString(RosterType._igor_cost));
         }
-        
+
         jlbCostCard.setText(Integer.toString(_data._cards));
 //        jlbCardBudget.setText(Integer.toString(_data._cards));
         if (_data._roster != null) {
             jlbCostBribeTheRef.setText(Integer.toString(_data._corruptions * _data._roster._bribe_cost));
         }
-        
+
         jbtAddStar.setEnabled(_data._champions.size() < 2);
         jbtRemoveStar.setEnabled(jtbStars.getSelectedRow() > -1);
 
-        
+
         /**
          * Ranking
          */
-        int cost=_data.getValue(jcbWithSkills.isSelected());
+        int cost = _data.getValue(jcbWithSkills.isSelected());
         jlbTotalCost.setText(Integer.toString(cost));
-        jlbRanking.setText(Integer.toString(cost/10000));
+        jlbRanking.setText(Integer.toString(cost / 10000));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -1657,7 +1728,9 @@ public class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtAddSkill;
     private javax.swing.JButton jbtAddStar;
+    private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtHTML;
+    private javax.swing.JButton jbtImport;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtRemove;
     private javax.swing.JButton jbtRemoveSkill;
