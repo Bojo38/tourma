@@ -58,16 +58,11 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public MainFrame(int res) {
 
         mTournament = Tournament.getTournament();
         this.setSize(800, 600);
         initComponents();
-
-        final ArrayList<String> StartOptions = new ArrayList<>();
-        StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGame"));
-        StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
-        final int res = JOptionPane.showOptionDialog(null, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
 
         if (res == 0) {
             jmiNouveauActionPerformed(null);
@@ -77,29 +72,6 @@ public class MainFrame extends javax.swing.JFrame {
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
-                mFile =
-                        jfc.getSelectedFile();
-                /*for (int i = jtpMain.getTabCount() - 1; i
-                 >= 0; i--) {
-                 final Component obj = jtpMain.getComponentAt(i);
-                 if (obj instanceof JPNRound) {
-                 jtpMain.remove(obj);
-                 }
-
-                 }
-                 boolean cup = false;
-                 for (int i = 0; i
-                 < mTournament.getRounds().size(); i++) {
-                 final JPNRound jpnr = new JPNRound(i, mTournament.getRounds().get(i), mTournament);
-                 jtpMain.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + (i + 1), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png")), jpnr);
-                 if (mTournament.getRounds().get(i).mCup) {
-                 cup = true;
-                 }
-                 }
-                 if (cup) {
-                 final JPNCup jpncup = new JPNCup();
-                 jtpMain.addTab("Coupe", new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Star.png")), jpncup);
-                 }*/
             }
         }
 
@@ -109,7 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
     public void update() {
         //final boolean bTourStarted = mTournament.getRounds().size() > 0;
         jmiEditTeam.setEnabled(mTournament.getParams().mGame == RosterType.C_BLOOD_BOWL);
-        jmiSubstitutePlayer.setEnabled(mTournament.getRounds().size()>0);
+        jmiSubstitutePlayer.setEnabled(mTournament.getRounds().size() > 0);
         final mainTreeModel dtm = new mainTreeModel();
         jtrPanels.setCellRenderer(dtm);
         jtrPanels.setModel(dtm);
@@ -775,15 +747,14 @@ public class MainFrame extends javax.swing.JFrame {
         jpn.add(jcb, BorderLayout.CENTER);
         int ret = JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_CANCEL_OPTION);
         if (ret == JOptionPane.OK_OPTION) {
-            Coach c=(Coach)jcb.getSelectedItem();
-            ArrayList<String> matchs_descr=new ArrayList<>();
-            
+            Coach c = (Coach) jcb.getSelectedItem();
+            ArrayList<String> matchs_descr = new ArrayList<>();
+
             // Select Match
-            for (int i=0; i<c.mMatchs.size(); i++)
-            {
-                CoachMatch m=    (CoachMatch)c.mMatchs.get(i);
-                String tmp="Ronde "+((Tournament.getTournament().getRounds().indexOf(m.mRound))+1);                
-                tmp=tmp+ " / "+m.mCompetitor1.getDecoratedName()+" VS "+m.mCompetitor2.getDecoratedName();
+            for (int i = 0; i < c.mMatchs.size(); i++) {
+                CoachMatch m = (CoachMatch) c.mMatchs.get(i);
+                String tmp = "Ronde " + ((Tournament.getTournament().getRounds().indexOf(m.mRound)) + 1);
+                tmp = tmp + " / " + m.mCompetitor1.getDecoratedName() + " VS " + m.mCompetitor2.getDecoratedName();
                 matchs_descr.add(tmp);
             }
             jpn.remove(jcb);
@@ -791,78 +762,65 @@ public class MainFrame extends javax.swing.JFrame {
             jpn.add(jcb, BorderLayout.CENTER);
             jlb.setText("Quel match ?");
             JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_OPTION);
-            CoachMatch m=(CoachMatch)c.mMatchs.get(jcb.getSelectedIndex());
-            
+            CoachMatch m = (CoachMatch) c.mMatchs.get(jcb.getSelectedIndex());
+
             // Select subtitute
-            ArrayList<Coach> availableCoachs=new ArrayList<>();
-            ArrayList<String> availableCoachsName=new ArrayList<>();
-            for (int i=0; i<Tournament.getTournament().getCoachs().size(); i++)
-            {
-                Coach sub=Tournament.getTournament().getCoachs().get(i);
-                if (!sub.mActive)
-                {
+            ArrayList<Coach> availableCoachs = new ArrayList<>();
+            ArrayList<String> availableCoachsName = new ArrayList<>();
+            for (int i = 0; i < Tournament.getTournament().getCoachs().size(); i++) {
+                Coach sub = Tournament.getTournament().getCoachs().get(i);
+                if (!sub.mActive) {
                     availableCoachs.add(sub);
                 }
             }
             availableCoachs.add(Coach.getNullCoach());
-            for (int i=0; i< availableCoachs.size(); i++)
-            {
+            for (int i = 0; i < availableCoachs.size(); i++) {
                 availableCoachsName.add(availableCoachs.get(i).getDecoratedName());
             }
-            
+
             availableCoachsName.add("Nouveau ...");
             jpn.remove(jcb);
-            jcb=new JComboBox(availableCoachsName.toArray());
+            jcb = new JComboBox(availableCoachsName.toArray());
             jpn.add(jcb, BorderLayout.CENTER);
             jlb.setText("Choisissez un remplaçant");
             JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_OPTION);
-            
+
             // Create Substitution
-            
+
             // If None
-            if (jcb.getSelectedIndex()==availableCoachs.size()-1)
-            {
-                if (m.mCompetitor1==c)
-                {
-                    m.mSubstitute1=null;
+            if (jcb.getSelectedIndex() == availableCoachs.size() - 1) {
+                if (m.mCompetitor1 == c) {
+                    m.mSubstitute1 = null;
                 }
-                if (m.mCompetitor2==c)
-                {
-                    m.mSubstitute2=null;
+                if (m.mCompetitor2 == c) {
+                    m.mSubstitute2 = null;
                 }
-            }
-            else
-            {
+            } else {
                 Coach sub;
                 // New
-                if (jcb.getSelectedIndex()==availableCoachs.size())
-                {
-                    sub=new Coach();
-                    sub.mRoster=RosterType.mRosterTypes.get(0);                    
-                    jdgCoach jdg=new jdgCoach(this, true,sub);                    
+                if (jcb.getSelectedIndex() == availableCoachs.size()) {
+                    sub = new Coach();
+                    sub.mRoster = RosterType.mRosterTypes.get(0);
+                    jdgCoach jdg = new jdgCoach(this, true, sub);
                     jdg.setVisible(true);
                     Tournament.getTournament().getCoachs().add(sub);
-                    sub.mActive=false;
+                    sub.mActive = false;
+                } else {
+                    sub = availableCoachs.get(jcb.getSelectedIndex());
                 }
-                else
-                {
-                    sub=availableCoachs.get(jcb.getSelectedIndex());
+
+                Substitute s = new Substitute();
+                s.mMatch = m;
+                s.mSubstitute = sub;
+                s.mTitular = c;
+
+                if (m.mCompetitor1 == c) {
+                    m.mSubstitute1 = s;
                 }
-                
-                Substitute s=new Substitute();
-                s.mMatch=m;
-                s.mSubstitute=sub;
-                s.mTitular=c;
-                
-                if (m.mCompetitor1==c)
-                {
-                    m.mSubstitute1=s;
+                if (m.mCompetitor2 == c) {
+                    m.mSubstitute2 = s;
                 }
-                if (m.mCompetitor2==c)
-                {
-                    m.mSubstitute2=s;
-                }
-            }                      
+            }
         }
     }//GEN-LAST:event_jmiSubstitutePlayerActionPerformed
     /**
@@ -873,7 +831,25 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainFrame.getMainFrame().setVisible(true);
+
+                final ArrayList<String> StartOptions = new ArrayList<>();
+                StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGame"));
+                StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
+                StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UseRosterEditor"));
+                final int res = JOptionPane.showOptionDialog(null, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
+
+                if ((res==0)||(res==1))
+                {
+                MainFrame window=MainFrame.getMainFrame(res);                
+                window.setVisible(true);
+                }
+                
+                if (res==2)
+                {
+                    teamma.views.JdgRoster jdg=new JdgRoster(null,true);
+                    jdg.setVisible(true);
+                    System.exit(0);
+                }
             }
         });
     }
@@ -881,7 +857,15 @@ public class MainFrame extends javax.swing.JFrame {
 
     public static MainFrame getMainFrame() {
         if (mSingleton == null) {
-            mSingleton = new MainFrame();
+            mSingleton = new MainFrame(0);
+        }
+
+        return mSingleton;
+    }
+    
+    public static MainFrame getMainFrame(int res) {
+        if (mSingleton == null) {
+            mSingleton = new MainFrame(res);
         }
 
         return mSingleton;

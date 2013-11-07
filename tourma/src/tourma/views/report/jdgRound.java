@@ -253,8 +253,27 @@ public class jdgRound extends javax.swing.JDialog {
 
                 final HashMap m = new HashMap();
                 m.put("numero", i + 1);
+                
+                if (match.mRoster1==null)
+                {
+                    m.put("roster1", ((Coach)match.mCompetitor1).mRoster.mName);
+                }
+                else
+                {
+                    m.put("roster1", match.mRoster1.mName);
+                }
+                
+                if (match.mRoster2==null)
+                {
+                    m.put("roster2", ((Coach)match.mCompetitor2).mRoster.mName);
+                }
+                else
+                {
+                    m.put("roster2", match.mRoster2.mName);
+                }
+                
                 if (!mTour.getParams().mTeamTournament) {
-                    m.put("coach1", match.mCompetitor1.mName);
+                    m.put("coach1", match.mCompetitor1.mName);                    
                 }
                 else
                 {

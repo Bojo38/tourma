@@ -53,23 +53,23 @@ public class JdgRoster extends javax.swing.JDialog {
      * Creates new form JdgRoster
      */
     public JdgRoster(java.awt.Frame parent, boolean modal) {
-        this(parent, null, modal);
+        this(parent, null, null,modal);
     }
 
-    public JdgRoster(java.awt.Frame parent, Coach coach, boolean modal) {
+    public JdgRoster(java.awt.Frame parent, Coach coach, Roster roster,boolean modal) {
         super(parent, modal);
         _coach = coach;
-        if (_coach != null) {
-            if (_coach.mComposition != null) {
-                _data = _coach.mComposition;
+        if (_coach!=null)
+        {
+        if (roster != null) {
+                _data = roster;
             } else {
-                _coach.mComposition = new Roster();
+               _data = new Roster();
             }
         } else {
             _coach = new Coach();
-            _coach.mComposition = new Roster();
+            _data = new Roster();
         }
-        _data = _coach.mComposition;
         initComponents();
 
 
@@ -1131,7 +1131,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
 
         ArrayList<String> rosterlist = lrb.getLRB().getRosterTypeListAsString();
-        String input = (String) JOptionPane.showInputDialog(this,
+        String input = (String) JOptionPane.showInputDialog(null,
                 "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
                 null, rosterlist.toArray(), "Amazons");
         RosterType rt = lrb.getLRB().getRosterType(input);
@@ -1198,7 +1198,7 @@ public class JdgRoster extends javax.swing.JDialog {
                 null, coachs_name.toArray(), coachs_name.get(0));
         if (!input.equals("")) {
             Coach c = Tournament.getTournament().getCoach(input);
-            c.mComposition = _data;
+            c.mCompositions.add(_data);
             _coach = c;
             _coach.mRank = _data.getValue(false) / 10000;
         }
@@ -1237,7 +1237,7 @@ public class JdgRoster extends javax.swing.JDialog {
                     skills.add(s.mName);
                 }
 
-                Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(), "Select skill to remove", "Skill", JOptionPane.INFORMATION_MESSAGE, null, skills.toArray(), null);
+                Object choice = JOptionPane.showInputDialog(null, "Select skill to remove", "Skill", JOptionPane.INFORMATION_MESSAGE, null, skills.toArray(), null);
                 if (choice != null) {
 
                     for (i = 0; i < p._skills.size(); i++) {
@@ -1255,7 +1255,7 @@ public class JdgRoster extends javax.swing.JDialog {
     private void jbtAddSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddSkillActionPerformed
         int index = jtbPlayers.getSelectedRow();
         if (index > -1) {
-            JdgSelectSkill jdg = new JdgSelectSkill(MainFrame.getMainFrame(), true, _data._players.get(index));
+            JdgSelectSkill jdg = new JdgSelectSkill(null, true, _data._players.get(index));
             jdg.setVisible(true);
         }
         update();
@@ -1389,7 +1389,7 @@ public class JdgRoster extends javax.swing.JDialog {
     }//GEN-LAST:event_jtbStarsMouseClicked
 
     private void jbtHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtHTMLActionPerformed
-        JdgPrintableRoster jdg = new JdgPrintableRoster(MainFrame.getMainFrame(), true, this._data, this._coach, jcbWithSkills.isSelected());
+        JdgPrintableRoster jdg = new JdgPrintableRoster(null, true, this._data, this._coach, jcbWithSkills.isSelected());
         jdg.setVisible(true);
     }//GEN-LAST:event_jbtHTMLActionPerformed
 
@@ -1425,9 +1425,9 @@ public class JdgRoster extends javax.swing.JDialog {
 
 
             } catch (FileNotFoundException e) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage());
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }
     }//GEN-LAST:event_jbtExportActionPerformed
@@ -1445,10 +1445,10 @@ public class JdgRoster extends javax.swing.JDialog {
                 _data = new Roster();
                 _data.setXMLElement(racine);
             } catch (JDOMException e) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
+                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
 
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }
         update();
@@ -1467,14 +1467,17 @@ public class JdgRoster extends javax.swing.JDialog {
             jbtSelectCoach.setText(_coach.mName);
             jlbCoachName.setText("Coach: " + _coach.mName);
             if (_coach.mRoster != null) {
-                _data._roster = lrb.getLRB().getRosterType(_coach.mRoster.mName);
+                if (_data._roster==null)
+                {
+                    _data._roster = lrb.getLRB().getRosterType(_coach.mRoster.mName);
+                }
                 if (_data._roster != null) {
                     jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data._roster._image)));
                 }
                 jlbTeamName.setText(_coach.mTeam);
                 jlbRosterType.setText("Roster: " + _data._roster._name);
             }
-            _coach.mComposition = _data;
+            //_coach.mCompositions.add(_data);
             _coach.mRank = _data.getValue(false) / 10000;
         }
 

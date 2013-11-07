@@ -38,19 +38,22 @@ public final class Coach extends Competitor implements XMLExport {
     public int mRank;
     public boolean mActive = true;
     public Team mTeamMates = null;
-    public teamma.data.Roster mComposition;
+    //public teamma.data.Roster mComposition;
+    public ArrayList<teamma.data.Roster> mCompositions;
     public double mNafRank = 150.0;
     public int mHandicap = 0;
 
     public Coach() {
         super();
         mActive = true;
+        mCompositions=new ArrayList<>();
     }
 
     public Coach(final String name) {
         super(name);
         mActive = false;
         mTeam = StringConstants.CS_NONE;
+        mCompositions=new ArrayList<>();
         mRoster = new RosterType(StringConstants.CS_NONE);
         mTeamMates = null;
     }
@@ -92,9 +95,9 @@ public final class Coach extends Competitor implements XMLExport {
 
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP"), Integer.toString(this.mHandicap));
 
-        if (this.mComposition != null) {
-            final Element compo = this.mComposition.getXMLElement();
-
+        for (int i=0; i<mCompositions.size(); i++)
+        {
+            final Element compo = this.mCompositions.get(i).getXMLElement();
             coach.addContent(compo);
         }
         return coach;
@@ -128,12 +131,16 @@ public final class Coach extends Competitor implements XMLExport {
                 this.mClan = Tournament.getTournament().getClans().get(0);
             }
 
-            final Element compo = coach.getChild(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
-            if (compo != null) {
-                this.mComposition = new teamma.data.Roster();
-                this.mComposition.setXMLElement(compo);
-                this.mRank = this.mComposition.getValue(false) / 10000;
-            }
+            final List compos=coach.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
+            final Iterator itC=compos.iterator();
+            while (itC.hasNext())
+            {
+                Element compo=(Element)itC.next();
+                teamma.data.Roster c=new teamma.data.Roster();
+                c.setXMLElement(compo);
+                this.mCompositions.add(c);
+            }            
+            
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }

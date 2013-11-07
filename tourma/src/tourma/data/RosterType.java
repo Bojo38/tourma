@@ -6,13 +6,14 @@ package tourma.data;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
 /**
  *
  * @author Administrateur
  */
-public class RosterType {
+public class RosterType implements XMLExport{
 
     public static final int C_BLOOD_BOWL = 1;
     public static final int C_DREAD_BALL = 2;
@@ -222,5 +223,17 @@ public class RosterType {
                 break;
         }
         return result;
+    }
+
+    @Override
+    public Element getXMLElement() {
+        final Element elt = new Element("Roster");
+        elt.setAttribute("Name",this.mName);
+        return elt;        
+    }
+
+    @Override
+    public void setXMLElement(Element e) {
+            this.mName = e.getAttributeValue(StringConstants.CS_NAME);
     }
 }

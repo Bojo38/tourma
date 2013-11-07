@@ -114,10 +114,10 @@
                     <#assign backgroud="background-color:#eeeeee;">
                     </#if>
                     <td class="tab_pos" style="font-size:16px;${backgroud}">${match.numero}</td>
-                    <td class="${style1}" style="font-size:16px;${backgroud}">${match.coach1} </td>
+                    <td class="${style1}" style="font-size:16px;${backgroud}">${match.coach1} (${match.roster1}) </td>
                     <td class="${style1}" style="font-size:14px;${backgroud}">${match.score1}</td>
                     <td class="${style2}" style="font-size:14px;${backgroud}">${match.score2}</td>
-                    <td class="${style2}" style="font-size:16px;${backgroud}">${match.coach2}</td>
+                    <td class="${style2}" style="font-size:16px;${backgroud}">${match.coach2} (${match.roster2})</td>
                     <#list match.values as value>
                     <td class="${style1}" style="font-size:14px;${backgroud}">${value.value1}</td>
                     <td class="${style2}" style="font-size:14px;${backgroud}">${value.value2}</td>

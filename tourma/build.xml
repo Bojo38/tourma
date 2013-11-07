@@ -133,6 +133,7 @@
                 <adjust replacePath="false">
                     <include name="tourma/images/*"/>
                     <include name="teamma/images/*"/>
+                    <include name="teamma/rules/*"/>
                     <include name="com/toedter/calendar/images/*"/>
                     <include name="org/jfree/chart/*"/>
                     <include name="org/jfree/chart/editor/*"/>
@@ -149,6 +150,7 @@
                 <adjust replaceName="false">
                     <include name="**/*.properties"/>
                     <include name="**/*.html"/>
+                    <include name="**/*.xml"/>
                     <include name="teamma/views/report/jdgPrintableRoster*"/>
                     <include name="tourma/views/report/jdgRanking*"/>
                     <include name="tourma/views/report/jdgGlobal*"/>

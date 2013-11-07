@@ -13,7 +13,9 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import teamma.views.JdgRoster;
 import tourma.data.Clan;
@@ -70,6 +72,11 @@ public class jdgCoach extends javax.swing.JDialog {
             jcbClan.setEnabled(Tournament.getTournament().getParams().mEnableClans);
         }
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        jbtAdd.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        jpnBtns.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        jlsCompositions.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        updatelist();
+
         jLabel4.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
@@ -115,7 +122,11 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
 
-        
+        jbtAdd.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        jpnBtns.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        jlsCompositions.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        updatelist();
+
         jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
     }
 
@@ -175,6 +186,13 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel4.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
+
+        jbtAdd.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        jpnBtns.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        jlsCompositions.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
+        updatelist();
+
+
     }
 
     /**
@@ -199,7 +217,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfRank = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jcbClan = new javax.swing.JComboBox();
-        jbtEditRoster = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         jckActive = new javax.swing.JCheckBox();
         jlbHandicap = new javax.swing.JLabel();
         jtfHandicap = new javax.swing.JTextField();
@@ -208,6 +226,13 @@ public class jdgCoach extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtCancel = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jpnBtns = new javax.swing.JPanel();
+        jbtAdd = new javax.swing.JButton();
+        jbtDel = new javax.swing.JButton();
+        jbtEditRoster = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jlsCompositions = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -239,7 +264,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel3.setText(bundle.getString("RaceRosterKey")); // NOI18N
         jPanel1.add(jLabel3);
 
-        jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Amazone", "Bas-Fonds", "Chaos", "Elfe", "Elfe Sylvain", "Elfe Noir", "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri", "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique", "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire" }));
+        jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Amazone", "Bas-Fonds", "Chaos", "Elfe", "Elfe sylvain", "Elfe noir", "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri", "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique", "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire" }));
         jcbRoster.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbRosterActionPerformed(evt);
@@ -270,14 +295,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel6.getAccessibleContext().setAccessibleName(bundle.getString("ClanKey")); // NOI18N
 
         jPanel1.add(jcbClan);
-
-        jbtEditRoster.setText(bundle.getString("EDITER ROSTER")); // NOI18N
-        jbtEditRoster.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtEditRosterActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jbtEditRoster);
+        jPanel1.add(jLabel7);
 
         jckActive.setSelected(true);
         jckActive.setText(bundle.getString("Active")); // NOI18N
@@ -287,7 +305,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jlbHandicap.setText(bundle.getString("HANDICAP")); // NOI18N
         jPanel1.add(jlbHandicap);
 
-        jtfHandicap.setText(bundle.getString("0")); // NOI18N
+        jtfHandicap.setText(bundle.getString("110")); // NOI18N
         jPanel1.add(jtfHandicap);
 
         jbtDownloadFromNaf.setText(bundle.getString("DOWNLOAD FROM NAF")); // NOI18N
@@ -302,7 +320,7 @@ public class jdgCoach extends javax.swing.JDialog {
         jlbNafRanking.setText("150");
         jPanel1.add(jlbNafRanking);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
@@ -323,6 +341,47 @@ public class jdgCoach extends javax.swing.JDialog {
         jPanel2.add(jbtCancel);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
+
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jpnBtns.setBorder(javax.swing.BorderFactory.createTitledBorder("Rosters"));
+
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddActionPerformed(evt);
+            }
+        });
+        jpnBtns.add(jbtAdd);
+
+        jbtDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtDelActionPerformed(evt);
+            }
+        });
+        jpnBtns.add(jbtDel);
+
+        jbtEditRoster.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Open.png"))); // NOI18N
+        jbtEditRoster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtEditRosterActionPerformed(evt);
+            }
+        });
+        jpnBtns.add(jbtEditRoster);
+
+        jPanel3.add(jpnBtns, java.awt.BorderLayout.NORTH);
+
+        jlsCompositions.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jlsCompositions);
+
+        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -412,15 +471,19 @@ public class jdgCoach extends javax.swing.JDialog {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtEditRosterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditRosterActionPerformed
 
-        final teamma.views.JdgRoster window = new JdgRoster(MainFrame.getMainFrame(), mCoach, true);
-        window.setVisible(true);
+        if (jlsCompositions.getSelectedIndex() >= 0) {
 
-        if (mCoach.mComposition != null) {
-            mCoach.mRoster = new RosterType(mCoach.mComposition._roster._name);
-            mCoach.mRank = mCoach.mComposition.getValue(false) / 10000;
-            jtfRank.setText(Integer.toString(mCoach.mRank));
+            final teamma.views.JdgRoster window = new JdgRoster(MainFrame.getMainFrame(), mCoach, mCoach.mCompositions.get(jlsCompositions.getSelectedIndex()), true);
+            window.setVisible(true);
+
+            /*if (mCoach.mComposition != null) {
+             mCoach.mRoster = new RosterType(mCoach.mComposition._roster._name);
+             mCoach.mRank = mCoach.mComposition.getValue(false) / 10000;
+             jtfRank.setText(Integer.toString(mCoach.mRank));
+             }
+             jcbRoster.setSelectedItem(mCoach.mRoster.mName);*/
+            updatelist();
         }
-        jcbRoster.setSelectedItem(mCoach.mRoster.mName);
 
     }//GEN-LAST:event_jbtEditRosterActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -446,6 +509,39 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfNAF.setText(Integer.toString(mCoach.mNaf));
         jlbNafRanking.setText(Double.toString(rank));
     }//GEN-LAST:event_jbtDownloadFromNafActionPerformed
+
+    protected void updatelist() {
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < mCoach.mCompositions.size(); i++) {
+            model.addElement(mCoach.mCompositions.get(i)._roster._name);
+        }
+        jlsCompositions.setModel(model);
+    }
+
+    private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
+
+        String input = (String) JOptionPane.showInputDialog(this,
+                "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
+                null, RosterType.mRostersNames.toArray(), "Amazons");
+        teamma.data.RosterType rt = teamma.data.lrb.getLRB().getRosterType(input);
+        if (rt != null) {
+            teamma.data.Roster compo = new teamma.data.Roster();
+            compo._roster = rt;
+            mCoach.mCompositions.add(compo);
+            updatelist();
+        } else {
+            JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
+        }
+    }//GEN-LAST:event_jbtAddActionPerformed
+
+    private void jbtDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDelActionPerformed
+        // Get Selection
+        if (jlsCompositions.getSelectedIndex() >= 0) {
+            int index = jlsCompositions.getSelectedIndex();
+            mCoach.mCompositions.remove(index);
+            updatelist();
+        }
+    }//GEN-LAST:event_jbtDelActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -453,9 +549,14 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtCancel;
+    private javax.swing.JButton jbtDel;
     private javax.swing.JButton jbtDownloadFromNaf;
     private javax.swing.JButton jbtEditRoster;
     private javax.swing.JButton jbtOK;
@@ -464,6 +565,8 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JCheckBox jckActive;
     private javax.swing.JLabel jlbHandicap;
     private javax.swing.JLabel jlbNafRanking;
+    private javax.swing.JList jlsCompositions;
+    private javax.swing.JPanel jpnBtns;
     private javax.swing.JTextField jtfEquipe;
     private javax.swing.JTextField jtfHandicap;
     private javax.swing.JTextField jtfNAF;

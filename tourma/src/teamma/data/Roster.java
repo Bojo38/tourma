@@ -4,6 +4,7 @@
  */
 package teamma.data;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -131,6 +132,7 @@ public class Roster implements XMLExport {
                 final Element s = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKILL"));
                 final teamma.data.Skill sk = pl._skills.get(k);
                 s.setAttribute(StringConstants.CS_NAME, sk.mName);
+                s.setAttribute("Color",Integer.toString(sk.mColor.getRGB()));
                 p.addContent(s);
             }
             compo.addContent(p);
@@ -177,12 +179,13 @@ public class Roster implements XMLExport {
             final teamma.data.Player pl = new Player(this._roster.getPlayerType(p.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"))));
             pl._name = p.getAttributeValue(StringConstants.CS_NAME);
 
-            final List skills = e.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKILL"));
+            final List skills = p.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKILL"));
             final Iterator is = skills.iterator();
             while (is.hasNext()) {
                 final Element s = (Element) is.next();
 
                 final teamma.data.Skill sl = lrb.getLRB().getSkill(s.getAttributeValue(StringConstants.CS_NAME));
+                sl.mColor= Color.decode(s.getAttributeValue("Color"));
                 pl._skills.add(sl);
             }
 
