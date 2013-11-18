@@ -18,6 +18,7 @@ public class StringConstants {
     public static final String CS_ROUND =java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROUND");
     public static final String CS_RESULT =java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RESULT");
     public static final String CS_CUP =java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("COUPE");
+    public static final String CS_CATEGORY="Category";
     public static final String CS_THICK=" - ";
     public static final String CS_HTML_EMPTY="&nbsp;";
     

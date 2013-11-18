@@ -18,6 +18,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import teamma.views.JdgRoster;
+import tourma.data.Category;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.RosterType;
@@ -31,7 +32,7 @@ import tourma.utils.NAF;
  * @author Frederic Berger
  */
 public class jdgCoach extends javax.swing.JDialog {
-
+    
     boolean mTeamTournament;
     Coach mCoach;
     boolean mNew = false;
@@ -44,11 +45,11 @@ public class jdgCoach extends javax.swing.JDialog {
         mCoach = new Coach();
         mNew = true;
         initComponents();
-
+        
         mTeamTournament = Tournament.getTournament().getParams().mTeamTournament;
-
+        
         jcbRoster.setModel(new DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
-
+        
         if (!mTeamTournament) {
             final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
             for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
@@ -56,7 +57,13 @@ public class jdgCoach extends javax.swing.JDialog {
             }
             jcbClan.setModel(clanListModel);
         }
-
+        final DefaultComboBoxModel categoryListModel = new DefaultComboBoxModel();
+        for (int i = 0; i < Tournament.getTournament().getCategories().size(); i++) {
+            categoryListModel.addElement(Tournament.getTournament().getCategories().get(i).mName);
+        }
+        jcbCategory.setModel(categoryListModel);
+        
+        
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
@@ -65,26 +72,30 @@ public class jdgCoach extends javax.swing.JDialog {
             final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
-
-        if (mTeamTournament) {
+        
+        if ((mTeamTournament) && (Tournament.getTournament().getClans().size() > 1)) {
             jcbClan.setEnabled(false);
         } else {
             jcbClan.setEnabled(Tournament.getTournament().getParams().mEnableClans);
         }
+        
+        
+        jcbCategory.setEnabled(Tournament.getTournament().getCategories().size() > 1);
+        
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jbtAdd.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jpnBtns.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlsCompositions.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         updatelist();
-
+        
         jLabel4.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
-
+        
         jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
     }
     Team mTeam = null;
-
+    
     public jdgCoach(final java.awt.Frame parent, final boolean modal, final Team team) {
         super(parent, modal);
         mCoach = new Coach();
@@ -92,9 +103,9 @@ public class jdgCoach extends javax.swing.JDialog {
         mNew = true;
         mTeam = team;
         mTeamTournament = Tournament.getTournament().getParams().mTeamTournament;
-
+        
         jcbRoster.setModel(new DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
-
+        
         if (!mTeamTournament) {
             final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
             for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
@@ -102,7 +113,13 @@ public class jdgCoach extends javax.swing.JDialog {
             }
             jcbClan.setModel(clanListModel);
         }
-
+        
+        final DefaultComboBoxModel categoryListModel = new DefaultComboBoxModel();
+        for (int i = 0; i < Tournament.getTournament().getCategories().size(); i++) {
+            categoryListModel.addElement(Tournament.getTournament().getCategories().get(i).mName);
+        }
+        jcbCategory.setModel(categoryListModel);
+        
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
@@ -111,22 +128,27 @@ public class jdgCoach extends javax.swing.JDialog {
             final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
-
-        if (mTeamTournament) {
+        
+        if ((mTeamTournament) && (Tournament.getTournament().getClans().size() > 1)) {
             jcbClan.setEnabled(false);
         } else {
             jcbClan.setEnabled(Tournament.getTournament().getParams().mEnableClans);
         }
+        
+        
+        jcbCategory.setEnabled(Tournament.getTournament().getCategories().size() > 1);
+        
+        
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jLabel4.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
-
+        
         jbtAdd.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jpnBtns.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlsCompositions.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         updatelist();
-
+        
         jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
     }
 
@@ -137,7 +159,7 @@ public class jdgCoach extends javax.swing.JDialog {
         super(parent, modal);
         mCoach = new Coach();
         initComponents();
-
+        
         jcbRoster.setModel(new DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
         mCoach = coach;
         if (!mTeamTournament) {
@@ -147,7 +169,14 @@ public class jdgCoach extends javax.swing.JDialog {
             }
             jcbClan.setModel(clanListModel);
         }
-
+        
+        final DefaultComboBoxModel categoryListModel = new DefaultComboBoxModel();
+        for (int i = 0; i < Tournament.getTournament().getCategories().size(); i++) {
+            categoryListModel.addElement(Tournament.getTournament().getCategories().get(i).mName);
+        }
+        jcbCategory.setModel(categoryListModel);
+        
+        
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
@@ -156,43 +185,51 @@ public class jdgCoach extends javax.swing.JDialog {
             final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
-
-
+        
+        
         jtfEquipe.setText(mCoach.mTeam);
         jtfNAF.setText(Integer.toString(mCoach.mNaf));
         jtfNom.setText(mCoach.mName);
         jcbRoster.setSelectedItem(mCoach.mRoster.mName);
-
+        
         jckActive.setSelected(mCoach.mActive);
-
+        
         jtfHandicap.setText(Integer.toString(mCoach.mHandicap));
-
+        
         if (!mTeamTournament) {
-            if (mTeamTournament) {
-                jcbClan.setEnabled(false);
-            } else {
-                if (Tournament.getTournament().getParams().mEnableClans) {
-                    jcbClan.setEnabled(true);
-                    jcbClan.setSelectedItem(mCoach.mClan.mName);
-                }
+            if ((Tournament.getTournament().getParams().mEnableClans) && (Tournament.getTournament().getClans().size() > 1)) {
+                jcbClan.setEnabled(true);
+                jcbClan.setSelectedItem(mCoach.mClan.mName);
             }
         }
+        if (Tournament.getTournament().getCategories().size() > 1) {
+            jcbCategory.setEnabled(true);
+            if (mCoach.mCategory!=null)
+            {
+            jcbCategory.setSelectedItem(mCoach.mCategory.mName);
+            }
+            else
+            {
+                jcbCategory.setSelectedIndex(0);
+            }
+        }                
+        
         jcbRoster.setSelectedItem(mCoach.mRoster.mName);
         if (mCoach.mClan != null) {
             jcbClan.setSelectedItem(mCoach.mClan.mName);
         }
-
+        
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jLabel4.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
-
+        
         jbtAdd.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jpnBtns.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         jlsCompositions.setEnabled(Tournament.getTournament().getParams().mGame == RosterType.C_BLOOD_BOWL);
         updatelist();
-
-
+        
+        
     }
 
     /**
@@ -217,6 +254,8 @@ public class jdgCoach extends javax.swing.JDialog {
         jtfRank = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jcbClan = new javax.swing.JComboBox();
+        jLabel8 = new javax.swing.JLabel();
+        jcbCategory = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jckActive = new javax.swing.JCheckBox();
         jlbHandicap = new javax.swing.JLabel();
@@ -236,7 +275,7 @@ public class jdgCoach extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(9, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(10, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
@@ -295,6 +334,12 @@ public class jdgCoach extends javax.swing.JDialog {
         jLabel6.getAccessibleContext().setAccessibleName(bundle.getString("ClanKey")); // NOI18N
 
         jPanel1.add(jcbClan);
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel8.setText(bundle.getString("CategoryKey:")); // NOI18N
+        jPanel1.add(jLabel8);
+
+        jPanel1.add(jcbCategory);
         jPanel1.add(jLabel7);
 
         jckActive.setSelected(true);
@@ -399,7 +444,7 @@ public class jdgCoach extends javax.swing.JDialog {
         } else {
             c = mCoach;
         }
-
+        
         for (int i = 0; i < Tournament.getTournament().getCoachs().size(); i++) {
             final Coach tmp = Tournament.getTournament().getCoachs().get(i);
             if ((tmp.mName.equals(jtfNom.getText())) && (!tmp.equals(c))) {
@@ -408,8 +453,8 @@ public class jdgCoach extends javax.swing.JDialog {
                 break;
             }
         }
-
-
+        
+        
         c.mName = jtfNom.getText();
         c.mRoster = new RosterType(jcbRoster.getSelectedIndex());
         c.mTeam = jtfEquipe.getText();
@@ -424,13 +469,13 @@ public class jdgCoach extends javax.swing.JDialog {
         } catch (NumberFormatException e) {
             c.mRank = 110;
         }
-
+        
         try {
             c.mHandicap = Integer.parseInt(jtfHandicap.getText());
         } catch (NumberFormatException e) {
             c.mHandicap = 0;
         }
-
+        
         if (c.mName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NameIsEmpty"));
             error = true;
@@ -443,7 +488,7 @@ public class jdgCoach extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RosterIsEmpty"));
             error = true;
         }
-
+        
         if (!mTeamTournament) {
             if (jcbClan.getSelectedIndex() > 0) {
                 c.mClan = (Clan) Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
@@ -453,7 +498,13 @@ public class jdgCoach extends javax.swing.JDialog {
         } else {
             c.mClan = Tournament.getTournament().getClans().get(0);
         }
-
+        
+        if (jcbCategory.getSelectedIndex() > 0) {
+                c.mCategory = (Category) Tournament.getTournament().getCategories().get(jcbCategory.getSelectedIndex());
+            } else {
+                c.mCategory = (Category) Tournament.getTournament().getCategories().get(0);
+            }
+        
         if (!error) {
             if (mNew) {
                 if (mTeam != null) {
@@ -463,16 +514,16 @@ public class jdgCoach extends javax.swing.JDialog {
                 Tournament.getTournament().getCoachs().add(c);
             }
         }
-
-
+        
+        
         this.setVisible(false);
-
+        
     }//GEN-LAST:event_jbtOKActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtEditRosterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditRosterActionPerformed
-
+        
         if (jlsCompositions.getSelectedIndex() >= 0) {
-
+            
             final teamma.views.JdgRoster window = new JdgRoster(MainFrame.getMainFrame(), mCoach, mCoach.mCompositions.get(jlsCompositions.getSelectedIndex()), true);
             window.setVisible(true);
 
@@ -484,7 +535,7 @@ public class jdgCoach extends javax.swing.JDialog {
              jcbRoster.setSelectedItem(mCoach.mRoster.mName);*/
             updatelist();
         }
-
+        
     }//GEN-LAST:event_jbtEditRosterActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfNomPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jtfNomPropertyChange
@@ -502,14 +553,14 @@ public class jdgCoach extends javax.swing.JDialog {
     private void jcbRosterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRosterActionPerformed
         mCoach.mRoster = new RosterType(jcbRoster.getSelectedIndex());
     }//GEN-LAST:event_jcbRosterActionPerformed
-
+    
     private void jbtDownloadFromNafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDownloadFromNafActionPerformed
-
+        
         double rank = NAF.GetRanking(jtfNom.getText(), mCoach);
         jtfNAF.setText(Integer.toString(mCoach.mNaf));
         jlbNafRanking.setText(Double.toString(rank));
     }//GEN-LAST:event_jbtDownloadFromNafActionPerformed
-
+    
     protected void updatelist() {
         DefaultListModel model = new DefaultListModel();
         for (int i = 0; i < mCoach.mCompositions.size(); i++) {
@@ -517,9 +568,9 @@ public class jdgCoach extends javax.swing.JDialog {
         }
         jlsCompositions.setModel(model);
     }
-
+    
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
-
+        
         String input = (String) JOptionPane.showInputDialog(this,
                 "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.mRostersNames.toArray(), "Amazons");
@@ -533,7 +584,7 @@ public class jdgCoach extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
         }
     }//GEN-LAST:event_jbtAddActionPerformed
-
+    
     private void jbtDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDelActionPerformed
         // Get Selection
         if (jlsCompositions.getSelectedIndex() >= 0) {
@@ -550,6 +601,7 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -560,6 +612,7 @@ public class jdgCoach extends javax.swing.JDialog {
     private javax.swing.JButton jbtDownloadFromNaf;
     private javax.swing.JButton jbtEditRoster;
     private javax.swing.JButton jbtOK;
+    private javax.swing.JComboBox jcbCategory;
     private javax.swing.JComboBox jcbClan;
     private javax.swing.JComboBox jcbRoster;
     private javax.swing.JCheckBox jckActive;

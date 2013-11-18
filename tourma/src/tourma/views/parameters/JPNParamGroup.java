@@ -218,7 +218,11 @@ public class JPNParamGroup extends javax.swing.JPanel {
         final DefaultListModel listModel = new DefaultListModel();
         final ArrayList<RosterType> rosters = mTournament.getGroups().get(jcbGroupLeft.getSelectedIndex()).mRosters;
         for (int i = 0; i < rosters.size(); i++) {
-            listModel.addElement(rosters.get(i).mName);
+            RosterType r=rosters.get(i);
+            if (r!=null)
+            {
+                listModel.addElement(r.mName);
+            }
         }
         jlsLeft.setModel(listModel);
     }//GEN-LAST:event_jcbGroupLeftActionPerformed

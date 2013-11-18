@@ -49,6 +49,7 @@ public class Generation {
     public static final int GEN_MANUAL = 6;
     public static final int GEN_POOL = 7;
     public static final int GEN_NAF = 8;
+    public static final int GEN_FREE = 9;
 
     public static void NextRound(final Round round, final int choice, final int roundnumber) {
 
@@ -67,12 +68,25 @@ public class Generation {
             case GEN_RANDOM:
                 r = NextRoundRandom(round);
                 break;
+            case GEN_FREE:
+                r = NextRoundFree();
+                break;
             default:
         }
 
         if (r != null) {
             finalGenerationStep(round, r);
         }
+    }
+
+    public static void generateFirstRoundFree() {
+        final Round r = new Round();
+        final Calendar cal = Calendar.getInstance();
+        r.setHour(cal.getTime());
+        final Tournament tour = Tournament.getTournament();
+        final ArrayList<Round> rounds = tour.getRounds();
+        rounds.clear();
+        rounds.add(r);
     }
 
     public static void generateFirstRound(final int choice) {
@@ -144,6 +158,9 @@ public class Generation {
             case GEN_NAF:
                 generateFirstRoundOrder(competitors, false, true);
                 break;
+            case GEN_FREE:
+                generateFirstRoundFree();
+                break;
             default:
                 break;
         }
@@ -158,9 +175,8 @@ public class Generation {
                     m.mCompetitor2.mMatchs.add(m);
 
                     if (m instanceof TeamMatch) {
-                        for (int j=0; j<((TeamMatch)m).mMatchs.size(); j++)
-                        {
-                            CoachMatch cm=((TeamMatch)m).mMatchs.get(j);
+                        for (int j = 0; j < ((TeamMatch) m).mMatchs.size(); j++) {
+                            CoachMatch cm = ((TeamMatch) m).mMatchs.get(j);
                             cm.mCompetitor1.mMatchs.add(cm);
                             cm.mCompetitor2.mMatchs.add(cm);
                         }
@@ -3169,6 +3185,13 @@ public class Generation {
             datas = ranking.getSortedDatas();
         }
         return datas;
+    }
+
+    protected static Round NextRoundFree() {
+        final Round r = new Round();
+        final Calendar cal = Calendar.getInstance();
+        r.setHour(cal.getTime());
+        return r;
     }
 
     protected static Round NextRoundRandom(final Round round) {

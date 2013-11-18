@@ -40,9 +40,9 @@ public class Parameters implements XMLExport {
     public Date mDate = new Date();
     public int mRankingIndiv1 = 1;
     public int mRankingIndiv2 = 2;
-    public int mRankingIndiv3 = 3;
-    public int mRankingIndiv4 = 4;
-    public int mRankingIndiv5 = 5;
+    public int mRankingIndiv3 = 0;
+    public int mRankingIndiv4 = 0;
+    public int mRankingIndiv5 = 0;
     public boolean mTeamTournament = false;
     public boolean mMultiRoster=false;
     /* Pairing: 0: Individuel
@@ -62,9 +62,9 @@ public class Parameters implements XMLExport {
     public int mPointsTeamLost = 0;
     public int mRankingTeam1 = 1;
     public int mRankingTeam2 = 2;
-    public int mRankingTeam3 = 3;
-    public int mRankingTeam4 = 4;
-    public int mRankingTeam5 = 5;
+    public int mRankingTeam3 = 0;
+    public int mRankingTeam4 = 0;
+    public int mRankingTeam5 = 0;
     public int mPointsTeamVictoryBonus = 0;
     public int mPointsTeamDrawBonus = 0;
     /**

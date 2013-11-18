@@ -311,70 +311,40 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
             jlb.setBackground(new Color(200, 50, 50));
             jlb.setForeground(new Color(255, 255, 255));
-
-
-
-
         }
 
         if (row == 1) {
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
             jlb.setBackground(new Color(200, 100, 100));
             jlb.setForeground(new Color(0, 0, 0));
-
-
-
-
         }
 
         if (row == 2) {
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
             jlb.setBackground(new Color(200, 150, 150));
             jlb.setForeground(new Color(0, 0, 0));
-
-
-
-
         }
 
-        if (row == mObjects.size() - 1) {
+        if ((row == mObjects.size() - 1)&&(mObjects.size()>3)) {
             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
             jlb.setBackground(new Color(50, 50, 200));
             jlb.setForeground(new Color(255, 255, 255));
-
-
-
-
         }
 
-        if (row == mObjects.size() - 2) {
+        if ((row == mObjects.size() - 2)&&(mObjects.size()>4)) {
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
             jlb.setBackground(new Color(100, 100, 200));
             jlb.setForeground(new Color(0, 0, 0));
-
-
-
-
         }
 
-        if (row == mObjects.size() - 3) {
+        if ((row == mObjects.size() - 3)&&(mObjects.size()>5)) {
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
             jlb.setBackground(new Color(150, 150, 200));
             jlb.setForeground(new Color(0, 0, 0));
-
-
-
-
         }
 
         jlb.setHorizontalAlignment(JTextField.CENTER);
-
-
-
-
         return jlb;
-
-
     }
 
     public static String getRankingString(final int rankingType) {

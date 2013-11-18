@@ -1136,7 +1136,7 @@ public class JdgRoster extends javax.swing.JDialog {
                 null, rosterlist.toArray(), "Amazons");
         RosterType rt = lrb.getLRB().getRosterType(input);
         if (_coach != null) {
-            _coach.mRoster = new tourma.data.RosterType(input);
+            _coach.mRoster = tourma.data.RosterType.mRosterTypes.get(input);
         }
         if (rt != null) {
             if (_data._roster != rt) {

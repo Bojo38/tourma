@@ -10,6 +10,7 @@ import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
 import tourma.data.ObjectRanking;
+import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -191,8 +192,24 @@ public class mjtRankingIndiv extends mjtRanking {
     @Override
     public int getColumnCount() {
         int result = 9;
+        Parameters params = Tournament.getTournament().getParams();
+        if (params.mRankingIndiv5 == 0) {
+            result--;
+            if (params.mRankingIndiv4 == 0) {
+                result--;
+                if (params.mRankingIndiv3 == 0) {
+                    result--;
+                    if (params.mRankingIndiv2 == 0) {
+                        result--;
+                        if (params.mRankingIndiv1 == 0) {
+                            result--;
+                        }
+                    }
+                }
+            }
+        }
         if (mTeamTournament) {
-            result = 10;
+            result++;
         }
         return result;
     }
@@ -282,7 +299,7 @@ public class mjtRankingIndiv extends mjtRanking {
                     object = ((Coach) obj.getObject()).mName;
                     break;
                 case 3:
-                    object = ((Coach) obj.getObject()).mRoster.mName;
+                    object = ((Coach) obj.getObject()).getStringRoster();
                     break;
                 case 4:
                     object = obj.getValue1();

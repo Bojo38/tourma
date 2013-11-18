@@ -36,6 +36,7 @@ import tourma.*;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
+import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
@@ -337,7 +338,7 @@ public class jdgRound extends javax.swing.JDialog {
 
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("tourma/views/report").toURI();
+            final URI uri = getClass().getResource("/tourma/views/report").toURI();
             if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
                 /* JOptionPane.showMessageDialog(this,"Dans un jar: "+uri.toString());
                 String tmp=uri.toString();
@@ -350,7 +351,7 @@ public class jdgRound extends javax.swing.JDialog {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
             cfg.setObjectWrapper(new DefaultObjectWrapper());
-            final Template temp = cfg.getTemplate("team_round.tml");
+            final Template temp = cfg.getTemplate("team_round.html");
 
            final  Map root = new HashMap();
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" {0}"), mRoundNumber));
@@ -364,9 +365,9 @@ public class jdgRound extends javax.swing.JDialog {
 
             final ArrayList<Team> teams = new ArrayList<>();
             for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final CoachMatch m = mRound.getCoachMatchs().get(i);
-                final Team team1 = ((Coach)m.mCompetitor1).mTeamMates;
-               final  Team team2 = ((Coach)m.mCompetitor2).mTeamMates;
+                final Match m = mRound.getMatchs().get(i);
+                final Team team1 =  (Team)m.mCompetitor1;
+               final  Team team2 = (Team)m.mCompetitor2;
                 if (!teams.contains(team1)) {
                     teams.add(team1);
                 }
@@ -379,16 +380,16 @@ public class jdgRound extends javax.swing.JDialog {
             for (int i = 0; i < model.getRowCount(); i++) {
 
                 final HashMap m = new HashMap();
-                m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMERO"), model.getValueAt(i, 0));
+                m.put("numero", model.getValueAt(i, 0));
                 m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM1"), model.getValueAt(i, 1));
                 if (mResult) {
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V1"), model.getValueAt(i, 2));
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N"), model.getValueAt(i, 3));
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V2"), model.getValueAt(i, 4));
+                    m.put("v1", model.getValueAt(i, 2));
+                    m.put("n", model.getValueAt(i, 3));
+                    m.put("v2", model.getValueAt(i, 4));
                 } else {
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V1"), StringConstants.CS_HTML_EMPTY);
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N"), StringConstants.CS_HTML_EMPTY);
-                    m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V2"), StringConstants.CS_HTML_EMPTY);
+                    m.put("v1", StringConstants.CS_HTML_EMPTY);
+                    m.put("n", StringConstants.CS_HTML_EMPTY);
+                    m.put("v2", StringConstants.CS_HTML_EMPTY);
                 }
                 m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM2"), model.getValueAt(i, 5));
                 parMatches.add(m);

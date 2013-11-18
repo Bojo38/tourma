@@ -12,7 +12,7 @@ package tourma;
 
 import tourma.views.JPNCup;
 import tourma.views.parameters.JPNParameters;
-import tourma.views.round.JPNStatistics;
+import tourma.views.JPNStatistics;
 import tourma.views.round.JPNRound;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
@@ -33,10 +33,13 @@ import teamma.views.JdgRoster;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Group;
+import tourma.data.Match;
 import tourma.data.Parameters;
 import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Substitute;
+import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
@@ -86,6 +89,31 @@ public class MainFrame extends javax.swing.JFrame {
         jtrPanels.setCellRenderer(dtm);
         jtrPanels.setModel(dtm);
         jtrPanels.setSize(100, this.getHeight());
+
+        if (jpnContent instanceof JPNRound) {
+            Round r = ((JPNRound) jpnContent).getRound();
+            if (mTournament.getRounds().indexOf(r) == mTournament.getRounds().size() - 1) {
+                jmiDelRound.setEnabled(true);
+                jmiGenerateNextRound.setEnabled(true);
+                jmiChangePairing.setEnabled(true);
+                jmiAddFreeMatch.setEnabled(true);
+                jmiDelFreeMatch.setEnabled(true);
+            } else {
+                jmiDelRound.setEnabled(false);
+                jmiGenerateNextRound.setEnabled(false);
+                jmiChangePairing.setEnabled(false);
+                jmiAddFreeMatch.setEnabled(false);
+                jmiDelFreeMatch.setEnabled(false);
+            }
+            jckmiRoundOnly.setEnabled(true);
+        } else {
+            jckmiRoundOnly.setEnabled(false);
+            jmiDelRound.setEnabled(false);
+            jmiGenerateNextRound.setEnabled(false);
+            jmiChangePairing.setEnabled(false);
+            jmiAddFreeMatch.setEnabled(false);
+            jmiDelFreeMatch.setEnabled(false);
+        }
         this.revalidate();
         this.repaint();
     }
@@ -119,16 +147,28 @@ public class MainFrame extends javax.swing.JFrame {
         jmiExportFbb1 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         jmiExit = new javax.swing.JMenuItem();
-        jmnParameters = new javax.swing.JMenu();
+        jmnTools = new javax.swing.JMenu();
         jmiEditTeam = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jcxAllowSpecialSkill = new javax.swing.JCheckBoxMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jmiNafLoad = new javax.swing.JMenuItem();
-        jmnRounds = new javax.swing.JMenu();
+        jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jmiSubstitutePlayer = new javax.swing.JMenuItem();
+        jmiAddCoach = new javax.swing.JMenuItem();
+        jmnRound = new javax.swing.JMenu();
+        jmiGenerateNextRound = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        jmiDelRound = new javax.swing.JMenuItem();
+        jSeparator8 = new javax.swing.JPopupMenu.Separator();
+        jmiChangePairing = new javax.swing.JMenuItem();
+        jSeparator9 = new javax.swing.JPopupMenu.Separator();
+        jckmiRoundOnly = new javax.swing.JCheckBoxMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        jmiAddFreeMatch = new javax.swing.JMenuItem();
+        jmiDelFreeMatch = new javax.swing.JMenuItem();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -238,7 +278,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jmnFile);
 
-        jmnParameters.setText(bundle.getString("Parametres")); // NOI18N
+        jmnTools.setText(bundle.getString("Tools")); // NOI18N
 
         jmiEditTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
         jmiEditTeam.setText(bundle.getString("ChangeRosters")); // NOI18N
@@ -247,8 +287,8 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiEditTeamActionPerformed(evt);
             }
         });
-        jmnParameters.add(jmiEditTeam);
-        jmnParameters.add(jSeparator5);
+        jmnTools.add(jmiEditTeam);
+        jmnTools.add(jSeparator5);
 
         jcxAllowSpecialSkill.setText(bundle.getString("AUTORISER LES COMPÉTENCES SPÉCIALES")); // NOI18N
         jcxAllowSpecialSkill.addActionListener(new java.awt.event.ActionListener() {
@@ -256,8 +296,8 @@ public class MainFrame extends javax.swing.JFrame {
                 jcxAllowSpecialSkillActionPerformed(evt);
             }
         });
-        jmnParameters.add(jcxAllowSpecialSkill);
-        jmnParameters.add(jSeparator4);
+        jmnTools.add(jcxAllowSpecialSkill);
+        jmnTools.add(jSeparator4);
 
         jmiNafLoad.setText("Mettre à jour les informations NAF des coachs");
         jmiNafLoad.addActionListener(new java.awt.event.ActionListener() {
@@ -265,11 +305,11 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiNafLoadActionPerformed(evt);
             }
         });
-        jmnParameters.add(jmiNafLoad);
+        jmnTools.add(jmiNafLoad);
 
-        jMenuBar1.add(jmnParameters);
+        jMenuBar1.add(jmnTools);
 
-        jmnRounds.setText(bundle.getString("Rounds")); // NOI18N
+        jmnParameters.setText(bundle.getString("Parameters")); // NOI18N
 
         jmiGenerateFirstRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
         jmiGenerateFirstRound.setText(bundle.getString("GenerateFirstRound")); // NOI18N
@@ -278,8 +318,8 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiGenerateFirstRoundActionPerformed(evt);
             }
         });
-        jmnRounds.add(jmiGenerateFirstRound);
-        jmnRounds.add(jSeparator6);
+        jmnParameters.add(jmiGenerateFirstRound);
+        jmnParameters.add(jSeparator6);
 
         jmiSubstitutePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png"))); // NOI18N
         jmiSubstitutePlayer.setText(bundle.getString("MakeSubstitution")); // NOI18N
@@ -288,9 +328,85 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiSubstitutePlayerActionPerformed(evt);
             }
         });
-        jmnRounds.add(jmiSubstitutePlayer);
+        jmnParameters.add(jmiSubstitutePlayer);
 
-        jMenuBar1.add(jmnRounds);
+        jmiAddCoach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png"))); // NOI18N
+        jmiAddCoach.setText(bundle.getString("AddCoach")); // NOI18N
+        jmiAddCoach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAddCoachActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiAddCoach);
+
+        jMenuBar1.add(jmnParameters);
+
+        jmnRound.setText(bundle.getString("CurrentRound")); // NOI18N
+
+        jmiGenerateNextRound.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        jmiGenerateNextRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
+        jmiGenerateNextRound.setText(bundle.getString("GenerateNextRoundKey")); // NOI18N
+        jmiGenerateNextRound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiGenerateNextRoundActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiGenerateNextRound);
+        jmnRound.add(jSeparator7);
+
+        jmiDelRound.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        jmiDelRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
+        jmiDelRound.setText(bundle.getString("DeleteCurrentRoundKey")); // NOI18N
+        jmiDelRound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiDelRoundActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiDelRound);
+        jmnRound.add(jSeparator8);
+
+        jmiChangePairing.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        jmiChangePairing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jmiChangePairing.setText(bundle.getString("ChangePairing")); // NOI18N
+        jmiChangePairing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiChangePairingActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiChangePairing);
+        jmnRound.add(jSeparator9);
+
+        jckmiRoundOnly.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jckmiRoundOnly.setText(bundle.getString("RoundOnlyRanking")); // NOI18N
+        jckmiRoundOnly.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jckmiRoundOnlyActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jckmiRoundOnly);
+        jmnRound.add(jSeparator10);
+
+        jmiAddFreeMatch.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ADD, java.awt.event.InputEvent.CTRL_MASK));
+        jmiAddFreeMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jmiAddFreeMatch.setText(bundle.getString("AddMatch")); // NOI18N
+        jmiAddFreeMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAddFreeMatchActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiAddFreeMatch);
+
+        jmiDelFreeMatch.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SUBTRACT, java.awt.event.InputEvent.CTRL_MASK));
+        jmiDelFreeMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jmiDelFreeMatch.setText(bundle.getString("DelMatch")); // NOI18N
+        jmiDelFreeMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiDelFreeMatchActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiDelFreeMatch);
+
+        jMenuBar1.add(jmnRound);
 
         jmnHelp.setText(bundle.getString("?")); // NOI18N
 
@@ -432,7 +548,7 @@ public class MainFrame extends javax.swing.JFrame {
         mTournament.getGroups().add(group);
 
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
-            group.mRosters.add(new RosterType(RosterType.mRostersNames.get(i)));
+            group.mRosters.add(RosterType.mRosterTypes.get(RosterType.mRostersNames.get(i)));
         }
 
         /*int multi = JOptionPane.showConfirmDialog(this, "S'agit-il d'un tournoi multi roster ?", "MultiRoster", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -615,6 +731,12 @@ public class MainFrame extends javax.swing.JFrame {
                 labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF_RANK"));
                 Options.add(Generation.GEN_NAF);
 
+                /**
+                 * Naf Ranking
+                 */
+                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
+                Options.add(Generation.GEN_FREE);
+
 
                 final JPanel jpn = new JPanel(new BorderLayout());
                 final JComboBox jcb = new JComboBox(labels.toArray());
@@ -680,6 +802,7 @@ public class MainFrame extends javax.swing.JFrame {
                             jspSplit.add(jpnContent, JSplitPane.RIGHT);
                             ((JPNRound) jpnContent).update();
                             jspSplit.setDividerLocation(200);
+                            ((JPNRound)jpnContent).setRoundOnly(jckmiRoundOnly.isSelected());
                             //System.gc();
                             this.revalidate();
                             break;
@@ -707,6 +830,31 @@ public class MainFrame extends javax.swing.JFrame {
                     this.revalidate();
                 }
 
+            }
+
+            if (jpnContent instanceof JPNRound) {
+                Round r = ((JPNRound) jpnContent).getRound();
+                if (mTournament.getRounds().indexOf(r) == mTournament.getRounds().size() - 1) {
+                    jmiDelRound.setEnabled(true);
+                    jmiGenerateNextRound.setEnabled(true);
+                    jmiChangePairing.setEnabled(true);
+                    jmiAddFreeMatch.setEnabled(true);
+                jmiDelFreeMatch.setEnabled(true);
+                } else {
+                    jmiDelRound.setEnabled(false);
+                    jmiGenerateNextRound.setEnabled(false);
+                    jmiChangePairing.setEnabled(false);
+                    jmiAddFreeMatch.setEnabled(false);
+                jmiDelFreeMatch.setEnabled(false);
+                }
+                jckmiRoundOnly.setEnabled(true);
+            } else {
+                jckmiRoundOnly.setEnabled(false);
+                jmiDelRound.setEnabled(false);
+                jmiGenerateNextRound.setEnabled(false);
+                jmiChangePairing.setEnabled(false);
+                jmiAddFreeMatch.setEnabled(false);
+                jmiDelFreeMatch.setEnabled(false);
             }
 
             repaint();
@@ -823,6 +971,261 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jmiSubstitutePlayerActionPerformed
+
+    private void jmiAddCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddCoachActionPerformed
+        final jdgCoach w = new jdgCoach(MainFrame.getMainFrame(), true);
+        w.setVisible(true);
+        update();
+    }//GEN-LAST:event_jmiAddCoachActionPerformed
+
+    private void jmiDelRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelRoundActionPerformed
+        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ConfirmEraseCurrentRound"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EraseRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+
+            // Remove mRound
+            Round round = ((JPNRound) jpnContent).getRound();
+
+            // Remove matchs from coach reference list
+            ArrayList<CoachMatch> cms = round.getCoachMatchs();
+            for (int i = 0; i < cms.size(); i++) {
+                final CoachMatch m = cms.get(i);
+                ((Coach) m.mCompetitor1).mMatchs.remove(m);
+                ((Coach) m.mCompetitor2).mMatchs.remove(m);
+            }
+
+            // remove matchs from competitors
+            for (int i = 0; i < round.getMatchs().size(); i++) {
+                final Match m = round.getMatchs().get(i);
+                m.mCompetitor1.mMatchs.remove(m);
+                m.mCompetitor2.mMatchs.remove(m);
+            }
+
+            mTournament.getRounds().remove(round);
+
+            update();
+            updateTree();
+        }
+    }//GEN-LAST:event_jmiDelRoundActionPerformed
+
+    private void jmiGenerateNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateNextRoundActionPerformed
+        
+        final ArrayList<String> labels = new ArrayList<>();
+        final ArrayList<Integer> Options = new ArrayList<>();
+
+        Round round=((JPNRound)jpnContent).getRound();
+        int round_number=mTournament.getRounds().indexOf(round);
+        /**
+         * Swiss possible ?
+         */
+        if ((!round.mCup) && (!mTournament.mRoundRobin)) {
+            labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE SUISSE"));
+            Options.add(Generation.GEN_SWISS);
+        }
+
+        /**
+         * QSwiss possible ?
+         */
+        if ((!round.mCup) && (!mTournament.mRoundRobin)) {
+            labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE SUISSE ACCELERÉE"));
+            Options.add(Generation.GEN_QSWISS);
+        }
+
+        /**
+         * GenRandom possible ?
+         */
+        if ((!round.mCup) && (!mTournament.mRoundRobin)) {
+            labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
+            Options.add(Generation.GEN_RANDOM);
+        }
+
+        /**
+         * Coupe
+         */
+        labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COUPE"));
+        Options.add(Generation.GEN_CUP);
+
+        /**
+         *
+         * Libre
+         */
+        if ((!round.mCup) && (!mTournament.mRoundRobin)) {
+            labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
+            Options.add(Generation.GEN_FREE);
+        }
+
+
+        final JPanel jpn = new JPanel(new BorderLayout());
+        final JComboBox jcb = new JComboBox(labels.toArray());
+        jpn.add(jcb, BorderLayout.CENTER);
+        final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
+        jpn.add(jlb, BorderLayout.NORTH);
+
+        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
+
+        final int index = jcb.getSelectedIndex();
+
+
+        Generation.NextRound(round, Options.get(index), round_number);
+        ((JPNRound)jpnContent).update();
+        update();
+        updateTree();
+    }//GEN-LAST:event_jmiGenerateNextRoundActionPerformed
+
+    private void jmiChangePairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChangePairingActionPerformed
+        
+        final jdgChangePairing jdg = new jdgChangePairing(MainFrame.getMainFrame(), true, ((JPNRound)jpnContent).getRound());
+        jdg.setVisible(true);
+        ((JPNRound)jpnContent).update();
+        update();
+    }//GEN-LAST:event_jmiChangePairingActionPerformed
+
+    private void jckmiRoundOnlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jckmiRoundOnlyActionPerformed
+        ((JPNRound)jpnContent).setRoundOnly(jckmiRoundOnly.isSelected()); 
+        ((JPNRound)jpnContent).update();
+    }//GEN-LAST:event_jckmiRoundOnlyActionPerformed
+
+    private void jmiAddFreeMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddFreeMatchActionPerformed
+        
+        Round round=((JPNRound)jpnContent).getRound();
+        if (Tournament.getTournament().getParams().mTeamTournament) {
+
+            final ArrayList<Team> teams1 = new ArrayList<>();
+            final ArrayList<Team> teams2 = new ArrayList<>();
+
+            final JComboBox<String> jcb1 = new JComboBox<>();
+            final JComboBox<String> jcb2 = new JComboBox<>();
+
+            for (int i = 0; i < mTournament.getTeams().size(); i++) {
+                final Team c = mTournament.getTeams().get(i);
+                teams1.add(c);
+                teams2.add(c);
+                jcb1.addItem(c.mName);
+                jcb2.addItem(c.mName);
+            }
+
+            boolean ValidMatch = false;
+
+            while (!ValidMatch) {
+                jcb1.setSelectedIndex(0);
+                jcb2.setSelectedIndex(1);
+
+
+                final JPanel jpnQuestion = new JPanel(new BorderLayout(0, 0));
+                jpnQuestion.add(jcb1, BorderLayout.WEST);
+                jpnQuestion.add(jcb2, BorderLayout.EAST);
+                final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS "));
+                jpnQuestion.add(jlb, BorderLayout.CENTER);
+
+                final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH LIBRE"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+                if (ret == JOptionPane.OK_OPTION) {
+                    if (jcb1.getSelectedIndex() != jcb2.getSelectedIndex()) {
+                        TeamMatch m = new TeamMatch(round);
+                        m.mCompetitor1 = teams1.get(jcb1.getSelectedIndex());
+                        m.mCompetitor2 = teams2.get(jcb2.getSelectedIndex());
+                        jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, teams1.get(jcb1.getSelectedIndex()), teams2.get(jcb2.getSelectedIndex()), round, m.mMatchs);
+                        jdg.setVisible(true);
+                        round.getMatchs().add(m);
+
+                        for (int i = 0; i < m.mMatchs.size(); i++) {
+                            CoachMatch c = m.mMatchs.get(i);
+                            c.mCompetitor1.mMatchs.add(c);
+                            c.mCompetitor2.mMatchs.add(c);
+                        }
+
+                        ValidMatch = true;
+                    } else {
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH IMPOSSIBLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERREUR"), JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    ValidMatch = true;
+                }
+            }
+        } else {
+            final ArrayList<Coach> Coachs1 = new ArrayList<>();
+            final ArrayList<Coach> Coachs2 = new ArrayList<>();
+
+            final JComboBox<String> jcb1 = new JComboBox<>();
+            final JComboBox<String> jcb2 = new JComboBox<>();
+
+            for (int i = 0; i < mTournament.GetActiveCoaches().size(); i++) {
+                final Coach c = mTournament.GetActiveCoaches().get(i);
+                Coachs1.add(c);
+                Coachs2.add(c);
+                jcb1.addItem(c.mName);
+                jcb2.addItem(c.mName);
+            }
+
+            boolean ValidMatch = false;
+
+            while (!ValidMatch) {
+                jcb1.setSelectedIndex(0);
+                jcb2.setSelectedIndex(1);
+
+                final JPanel jpnQuestion = new JPanel(new BorderLayout(0, 0));
+                jpnQuestion.add(jcb1, BorderLayout.WEST);
+                jpnQuestion.add(jcb2, BorderLayout.EAST);
+                final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS "));
+                jpnQuestion.add(jlb, BorderLayout.CENTER);
+
+                final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH LIBRE"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+                if (ret == JOptionPane.OK_OPTION) {
+                    if (jcb1.getSelectedIndex() != jcb2.getSelectedIndex()) {
+                        final CoachMatch m = new CoachMatch(round);
+                        m.mCompetitor1 = Coachs1.get(jcb1.getSelectedIndex());
+                        m.mCompetitor2 = Coachs2.get(jcb2.getSelectedIndex());
+
+                        round.getMatchs().add(m);
+                        ((Coach) m.mCompetitor1).mMatchs.add(m);
+                        ((Coach) m.mCompetitor2).mMatchs.add(m);
+                        ValidMatch = true;
+                    } else {
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH IMPOSSIBLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERREUR"), JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    ValidMatch = true;
+                }
+            }
+        }
+
+
+        ((JPNRound)jpnContent).update();
+    }//GEN-LAST:event_jmiAddFreeMatchActionPerformed
+
+    private void jmiDelFreeMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelFreeMatchActionPerformed
+        
+        int row=((JPNRound)jpnContent).getMatchTableSelectedRow();
+        if (row >= 0) {
+            Round round=((JPNRound)jpnContent).getRound();
+            if (Tournament.getTournament().getParams().mTeamTournament) {
+                CoachMatch c = round.getCoachMatchs().get(row);
+                // Fint TeamMatch corresponding to CoachMatch
+                for (int j = 0; j < round.getMatchs().size(); j++) {
+                    TeamMatch t = ((TeamMatch) round.getMatchs().get(j));
+                    for (int i = 0; i < t.mMatchs.size(); i++) {
+                        if (t.mMatchs.contains(c)) {
+                            for (int k = 0; k < t.mMatchs.size(); k++) {
+                                CoachMatch cm = t.mMatchs.get(k);
+                                cm.mCompetitor1.mMatchs.remove(cm);
+                                cm.mCompetitor2.mMatchs.remove(cm);
+                            }
+                            t.mCompetitor1.mMatchs.remove(t);
+                            t.mCompetitor2.mMatchs.remove(t);
+                            round.getMatchs().remove(t);
+                            j = round.getMatchs().size();
+                            i = t.mMatchs.size();
+                        }
+                    }
+                }
+            } else {
+                CoachMatch c = (CoachMatch) round.getMatchs().get(row);
+                c.mCompetitor1.mMatchs.remove(c);
+                c.mCompetitor2.mMatchs.remove(c);
+                round.getMatchs().remove(c);
+            }
+            ((JPNRound)jpnContent).update();
+        }
+    }//GEN-LAST:event_jmiDelFreeMatchActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -838,15 +1241,13 @@ public class MainFrame extends javax.swing.JFrame {
                 StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UseRosterEditor"));
                 final int res = JOptionPane.showOptionDialog(null, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
 
-                if ((res==0)||(res==1))
-                {
-                MainFrame window=MainFrame.getMainFrame(res);                
-                window.setVisible(true);
+                if ((res == 0) || (res == 1)) {
+                    MainFrame window = MainFrame.getMainFrame(res);
+                    window.setVisible(true);
                 }
-                
-                if (res==2)
-                {
-                    teamma.views.JdgRoster jdg=new JdgRoster(null,true);
+
+                if (res == 2) {
+                    teamma.views.JdgRoster jdg = new JdgRoster(null, true);
                     jdg.setVisible(true);
                     System.exit(0);
                 }
@@ -862,7 +1263,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         return mSingleton;
     }
-    
+
     public static MainFrame getMainFrame(int res) {
         if (mSingleton == null) {
             mSingleton = new MainFrame(res);
@@ -874,31 +1275,43 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JMenuItem jmiAbout;
+    private javax.swing.JMenuItem jmiAddCoach;
+    private javax.swing.JMenuItem jmiAddFreeMatch;
     private javax.swing.JMenuItem jmiAideEnLigne;
+    private javax.swing.JMenuItem jmiChangePairing;
     private javax.swing.JMenuItem jmiCharger;
+    private javax.swing.JMenuItem jmiDelFreeMatch;
+    private javax.swing.JMenuItem jmiDelRound;
     private javax.swing.JMenuItem jmiEditTeam;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
     private javax.swing.JMenuItem jmiExportFbb;
     private javax.swing.JMenuItem jmiExportFbb1;
     private javax.swing.JMenuItem jmiGenerateFirstRound;
+    private javax.swing.JMenuItem jmiGenerateNextRound;
     private javax.swing.JMenuItem jmiNafLoad;
     private javax.swing.JMenuItem jmiNouveau;
     private javax.swing.JMenuItem jmiRevisions;
     private javax.swing.JMenuItem jmiSave;
     private javax.swing.JMenuItem jmiSaveAs;
-	private javax.swing.JMenuItem jmiSubstitutePlayer;
+    private javax.swing.JMenuItem jmiSubstitutePlayer;
     private javax.swing.JMenu jmnFile;
     private javax.swing.JMenu jmnHelp;
     private javax.swing.JMenu jmnParameters;
-    private javax.swing.JMenu jmnRounds;
+    private javax.swing.JMenu jmnRound;
+    private javax.swing.JMenu jmnTools;
     private javax.swing.JPanel jpnContent;
     private javax.swing.JSplitPane jspSplit;
     private javax.swing.JTree jtrPanels;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma.views.round;
+package tourma.views;
 
 import java.awt.Color;
 import java.text.NumberFormat;
@@ -62,10 +62,12 @@ public class JPNStatistics extends javax.swing.JPanel {
             Criteria crit = mTournament.getParams().mCriterias.get(i);
             final HashMap<String, Double> plus = new HashMap<>();
             final HashMap<String, Double> minus = new HashMap<>();
+            final HashMap<String, Double> total = new HashMap<>();
 
             for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
                 plus.put(RosterType.mRostersNames.get(j), 0.0);
                 minus.put(RosterType.mRostersNames.get(j), 0.0);
+                total.put(RosterType.mRostersNames.get(j), 0.0);
 
             }
 
@@ -85,51 +87,35 @@ public class JPNStatistics extends javax.swing.JPanel {
                         }
 
                         if (m.mRoster2 == null) {
-                            name2 = ((Coach) m.mCompetitor1).mRoster.mName;
+                            name2 = ((Coach) m.mCompetitor2).mRoster.mName;
                         } else {
                             name2 = m.mRoster2.mName;
                         }
 
                         double pt = plus.get(name1).doubleValue();
+                        double tot = total.get(name1).doubleValue();
                         double mt = minus.get(name1).doubleValue();
                         pt += values.mValue1;
                         mt -= values.mValue2;
-
+                        tot +=1.0;
 
 
                         plus.put(name1, pt);
                         minus.put(name1, mt);
+                        total.put(name1,tot);
 
                         pt = plus.get(name2).doubleValue();
                         mt = minus.get(name2).doubleValue();
+                        tot = total.get(name2).doubleValue();
                         pt += values.mValue2;
                         mt -= values.mValue1;
+                        tot +=1.0;
 
                         plus.put(name2, pt);
                         minus.put(name2, mt);
+                        total.put(name2,tot);
                     }
                 }
-            }
-
-
-            for (int j = 0; j < RosterType.mRostersNames.size(); j++) {
-
-                int nb = 0;
-                String name = RosterType.mRostersNames.get(j);
-                for (int k = 0; k < mTournament.getCoachs().size(); k++) {
-                    if (mTournament.getCoachs().get(k).mRoster.mName.equals(name)) {
-                        nb++;
-                    }
-                }
-
-                if (nb != 0) {
-                    double tmp = plus.get(name).doubleValue();
-                    plus.put(name, tmp / nb);
-
-                    tmp = minus.get(name).doubleValue();
-                    minus.put(name, tmp / nb);
-                }
-
             }
 
             final DefaultCategoryDataset datas = new DefaultCategoryDataset();
@@ -138,9 +124,10 @@ public class JPNStatistics extends javax.swing.JPanel {
                 final String name = RosterType.mRostersNames.get(j);
                 final double pt = plus.get(name);
                 final double mt = minus.get(name);
-                if ((pt != 0) || (mt != 0)) {
-                    datas.addValue(pt, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RÉALISÉS"), name);
-                    datas.addValue(mt, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBIS"), name);
+                final double tot=total.get(name);
+                if (((pt != 0) || (mt != 0))&&(tot!=0)) {
+                    datas.addValue(pt/tot, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RÉALISÉS"), name);
+                    datas.addValue(mt/tot, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBIS"), name);
                 }
             }
 
@@ -173,14 +160,16 @@ public class JPNStatistics extends javax.swing.JPanel {
      */
     protected void addWinLoss() {
 
-        final HashMap<String, Integer> victories = new HashMap<>();
-        final HashMap<String, Integer> draw = new HashMap<>();
-        final HashMap<String, Integer> loss = new HashMap<>();
+        final HashMap<String, Double> victories = new HashMap<>();
+        final HashMap<String, Double> draw = new HashMap<>();
+        final HashMap<String, Double> loss = new HashMap<>();
+        final HashMap<String, Double> total = new HashMap<>();
 
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
-            victories.put(RosterType.mRostersNames.get(i), 0);
-            draw.put(RosterType.mRostersNames.get(i), 0);
-            loss.put(RosterType.mRostersNames.get(i), 0);
+            victories.put(RosterType.mRostersNames.get(i), 0.0);
+            draw.put(RosterType.mRostersNames.get(i), 0.0);
+            loss.put(RosterType.mRostersNames.get(i), 0.0);
+            total.put(RosterType.mRostersNames.get(i), 0.0);
         }
 
 
@@ -201,23 +190,28 @@ public class JPNStatistics extends javax.swing.JPanel {
                     }
 
                     if (m.mRoster2 == null) {
-                        name2 = ((Coach) m.mCompetitor1).mRoster.mName;
+                        name2 = ((Coach) m.mCompetitor2).mRoster.mName;
                     } else {
                         name2 = m.mRoster2.mName;
                     }
 
+                    double t = total.get(name2).intValue();
+                    t+=1.0;
+                    total.put(name2,t);
+                    t = total.get(name1).intValue();
+                    t+=1.0;
+                    total.put(name1,t);
                     if (values.mValue1 > values.mValue2) {
-                        int v = victories.get(name1).intValue();
-                        int l = loss.get(name2).intValue();
+                        double v = victories.get(name1).doubleValue();
+                        double l = loss.get(name2).doubleValue();                        
                         v++;
                         l++;
-
                         victories.put(name1, v);
                         loss.put(name2, l);
                     }
                     if (values.mValue1 < values.mValue2) {
-                        int v = victories.get(name2).intValue();
-                        int l = loss.get(name1).intValue();
+                        double v = victories.get(name2).doubleValue();
+                        double l = loss.get(name1).doubleValue();
                         v++;
                         l++;
 
@@ -225,11 +219,11 @@ public class JPNStatistics extends javax.swing.JPanel {
                         loss.put(name1, l);
                     }
                     if (values.mValue1 == values.mValue2) {
-                        int d = draw.get(name2).intValue();
+                        double d = draw.get(name2).doubleValue();
                         d++;
                         draw.put(name2, d);
 
-                        d = draw.get(name1).intValue();
+                        d = draw.get(name1).doubleValue();
                         d++;
                         draw.put(name1, d);
                     }
@@ -241,13 +235,14 @@ public class JPNStatistics extends javax.swing.JPanel {
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
 
             final String name = RosterType.mRostersNames.get(i);
-            final int v = victories.get(name);
-            final int d = draw.get(name);
-            final int l = loss.get(name);
-            if ((v != 0) || (d != 0) || (l != 0)) {
-                datas.addValue((Number) v, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTOIRES"), name);
-                datas.addValue((Number) d, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NULS"), name);
-                datas.addValue((Number) l, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DÉFAITES"), name);
+            final double v = victories.get(name);
+            final double d = draw.get(name);
+            final double l = loss.get(name);
+            final double t = total.get(name);
+            if (((v != 0) || (d != 0) || (l != 0))&&(t!=0.0)) {
+                datas.addValue((Double) v/t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTOIRES"), name);
+                datas.addValue((Double) d/t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NULS"), name);
+                datas.addValue((Double) l/t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DÉFAITES"), name);
             }
         }
 
@@ -264,11 +259,11 @@ public class JPNStatistics extends javax.swing.JPanel {
 
         final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
         barrenderer.setDrawBarOutline(false);
-        StandardCategoryItemLabelGenerator std=new StandardCategoryItemLabelGenerator();
-        
-        barrenderer.setBaseItemLabelGenerator(std);        
+        StandardCategoryItemLabelGenerator std = new StandardCategoryItemLabelGenerator();
+
+        barrenderer.setBaseItemLabelGenerator(std);
         barrenderer.setBaseItemLabelsVisible(true);
-        
+
         barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
@@ -283,7 +278,6 @@ public class JPNStatistics extends javax.swing.JPanel {
 
         final DefaultPieDataset datas = new DefaultPieDataset();
 
-
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
             datas.setValue(RosterType.mRostersNames.get(i), 0);
         }
@@ -291,7 +285,6 @@ public class JPNStatistics extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getCoachs().size(); i++) {
             final Coach c = mTournament.getCoachs().get(i);
             if (c != Coach.getNullCoach()) {
-
                 ArrayList<String> names = new ArrayList<String>();
                 for (int j = 0; j < c.mMatchs.size(); j++) {
                     CoachMatch m = (CoachMatch) c.mMatchs.get(j);
@@ -329,6 +322,15 @@ public class JPNStatistics extends javax.swing.JPanel {
             if (value.intValue() == 0) {
                 datas.remove(datas.getKey(i));
                 i--;
+            }
+            else
+            {
+                if (!Tournament.getTournament().getParams().mMultiRoster)
+                {
+                    double d=value.doubleValue();
+                    d=d/Tournament.getTournament().getRounds().size();
+                    datas.setValue(datas.getKey(i), d);
+                }
             }
         }
 

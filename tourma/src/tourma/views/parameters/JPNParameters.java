@@ -20,6 +20,7 @@ public class JPNParameters extends javax.swing.JPanel {
 
       Tournament mTournament;
     JPNParamGroup mJpnGroup;
+    JPNParamCategories mJpnCategories;
     JPNParamClan mJpnClan;
     JPNParamTeam mJpnTeam;
     JPNParamCriterias mJpnCriterias;
@@ -39,6 +40,7 @@ public class JPNParameters extends javax.swing.JPanel {
         mJpnTeam = new JPNParamTeam();
         mJpnGroup = new JPNParamGroup();
         mJpnClan = new JPNParamClan();
+        mJpnCategories = new JPNParamCategories();
 
         final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
 
@@ -62,6 +64,10 @@ public class JPNParameters extends javax.swing.JPanel {
                 bundle.getString("Group"),
                 new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/GROUP.PNG"))),
                 mJpnGroup);
+                jtpOptions.addTab(
+                bundle.getString("Category"),
+                new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/GROUP2.PNG"))),
+                mJpnCategories);
 
 
         jpnTeamTour = new JPNTeams();
@@ -105,6 +111,7 @@ public class JPNParameters extends javax.swing.JPanel {
         mJpnTeam.update();
         mJpnClan.update();
         mJpnGroup.update();
+        mJpnCategories.update();
 
         jtpOptions.setEnabledAt(4,!mTournament.getParams().mMultiRoster);
 
@@ -246,7 +253,7 @@ public class JPNParameters extends javax.swing.JPanel {
         });
         jpnCoachButtons.add(jbtModify);
 
-        jPanel7.add(jpnCoachButtons, java.awt.BorderLayout.PAGE_START);
+        jPanel7.add(jpnCoachButtons, java.awt.BorderLayout.NORTH);
 
         jtbCoachs.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

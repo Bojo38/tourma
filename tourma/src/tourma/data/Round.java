@@ -44,18 +44,20 @@ public class Round implements XMLExport {
     public ArrayList<CoachMatch> getCoachMatchs() {
         ArrayList<CoachMatch> tmp;
         tmp = new ArrayList<>();
-        if (mMatchs.get(0) instanceof CoachMatch) {
-            for (int i = 0; i < mMatchs.size(); i++) {
-                CoachMatch m;
-                m = (CoachMatch) mMatchs.get(i);
-                tmp.add(m);
-            }
-        } else {
-            for (int i = 0; i < mMatchs.size(); i++) {
-                TeamMatch m;
-                m = (TeamMatch) mMatchs.get(i);
-                for (int j = 0; j < m.mMatchs.size(); j++) {
-                    tmp.add(m.mMatchs.get(j));
+        if (mMatchs.size() > 0) {
+            if (mMatchs.get(0) instanceof CoachMatch) {
+                for (int i = 0; i < mMatchs.size(); i++) {
+                    CoachMatch m;
+                    m = (CoachMatch) mMatchs.get(i);
+                    tmp.add(m);
+                }
+            } else {
+                for (int i = 0; i < mMatchs.size(); i++) {
+                    TeamMatch m;
+                    m = (TeamMatch) mMatchs.get(i);
+                    for (int j = 0; j < m.mMatchs.size(); j++) {
+                        tmp.add(m.mMatchs.get(j));
+                    }
                 }
             }
         }
@@ -116,13 +118,10 @@ public class Round implements XMLExport {
         while (k.hasNext()) {
             final Element match = (Element) k.next();
             Match m;
-            if ((Tournament.getTournament().getParams().mTeamTournament)&&
-                    (Tournament.getTournament().getParams().mTeamPairing==1))
-            {
-                m=new TeamMatch(this);
-            }
-            else
-            {
+            if ((Tournament.getTournament().getParams().mTeamTournament)
+                    && (Tournament.getTournament().getParams().mTeamPairing == 1)) {
+                m = new TeamMatch(this);
+            } else {
                 m = new CoachMatch(this);
             }
             m.setXMLElement(match);

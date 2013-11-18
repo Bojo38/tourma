@@ -91,7 +91,7 @@
                     <td class="tab_titre">Equipe 2</td>
                 </tr>
                 <#list matches as match>
-                 <#if (result == 0)>
+                <#if (match.v1 == match.v2)>
                 <#assign style1="draw">
                 <#assign style2="draw">
                 <#else>
@@ -105,7 +105,7 @@
                         <#assign style1="draw">
                         <#assign style2="draw">
                     </#if>
-                    </#if>
+                   </#if>
                     <tr>
                         <#if (match.numero%2 == 1) >
                     <#assign backgroud="background-color:#ffffff;">

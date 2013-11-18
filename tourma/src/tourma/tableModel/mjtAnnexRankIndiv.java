@@ -122,6 +122,7 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
 
     @Override
     public int getColumnCount() {
+        
         return 5;
     }
 
@@ -173,7 +174,7 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
                 val = ((Coach) obj.getObject()).mName;
                 break;
             case 3:
-                val = ((Coach) obj.getObject()).mRoster.mName;
+                val = ((Coach) obj.getObject()).getStringRoster();
                 break;
             case 4:
                 val = obj.getValue();

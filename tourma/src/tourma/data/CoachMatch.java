@@ -117,19 +117,17 @@ public class CoachMatch extends Match  {
                 value.mValue1 = val.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1")).getIntValue();
                 value.mValue2 = val.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2")).getIntValue();
                 this.mValues.put(crit, value);
-
             }
-
 
             String key1 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
             Attribute att1 = match.getAttribute(key1);
             if (att1 != null) {
-                this.mRoster1 = new RosterType(att1.getValue());
+                this.mRoster1 =  RosterType.mRosterTypes.get(att1.getValue());
             }
             String key2 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER2");
             Attribute att2 = match.getAttribute(key2);
             if (att2 != null) {
-                this.mRoster2 = new RosterType(att2.getValue());
+                this.mRoster2 = RosterType.mRosterTypes.get(att2.getValue());
             }
             
             final List subs = match.getChildren("Subtitution");

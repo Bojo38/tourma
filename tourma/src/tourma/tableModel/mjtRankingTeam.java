@@ -53,7 +53,7 @@ public class mjtRankingTeam extends mjtRanking {
             for (int j = 0; j < t.mCoachs.size(); j++) {
                 final Coach c = t.mCoachs.get(j);
                 if (c.mMatchs.size() > i) {
-                    final CoachMatch m = (CoachMatch)c.mMatchs.get(i);
+                    final CoachMatch m = (CoachMatch) c.mMatchs.get(i);
                     final Criteria crit = Tournament.getTournament().getParams().mCriterias.get(0);
                     final Value val = m.mValues.get(crit);
                     if (m.mCompetitor1 == c) {
@@ -126,7 +126,7 @@ public class mjtRankingTeam extends mjtRanking {
             for (int j = 0; j < t.mCoachs.size(); j++) {
                 final Coach c = t.mCoachs.get(j);
                 if (c.mMatchs.size() > i) {
-                    final CoachMatch m = (CoachMatch)c.mMatchs.get(i);
+                    final CoachMatch m = (CoachMatch) c.mMatchs.get(i);
                     final Criteria crit = Tournament.getTournament().getParams().mCriterias.get(0);
                     final Value val = m.mValues.get(crit);
                     if (m.mCompetitor1 == c) {
@@ -180,11 +180,11 @@ public class mjtRankingTeam extends mjtRanking {
 
             while (i <= mRound) {
                 //for (int i = 0; i <= mRound; i++) {
-                final CoachMatch m = (CoachMatch)c.mMatchs.get(i);
+                final CoachMatch m = (CoachMatch) c.mMatchs.get(i);
                 if (m.mCompetitor1 == c) {
-                    value += getPointsByTeam(((Coach)m.mCompetitor2).mTeamMates);
+                    value += getPointsByTeam(((Coach) m.mCompetitor2).mTeamMates);
                 } else {
-                    value += getPointsByTeam(((Coach)m.mCompetitor1).mTeamMates);
+                    value += getPointsByTeam(((Coach) m.mCompetitor1).mTeamMates);
                 }
                 i++;
             }
@@ -217,7 +217,7 @@ public class mjtRankingTeam extends mjtRanking {
             for (int i = 0; i < t.mCoachs.size(); i++) {
                 final Coach c = t.mCoachs.get(i);
                 for (int j = 0; j < c.mMatchs.size(); j++) {
-                    final CoachMatch m = (CoachMatch)c.mMatchs.get(j);
+                    final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
                     switch (rankingType) {
                         case Parameters.C_RANKING_POINTS:
                             value += getPointsByCoach(c, m);
@@ -252,13 +252,13 @@ public class mjtRankingTeam extends mjtRanking {
 
                             //for (int i = 0; i <= mRound; i++) {
                             if (c.mMatchs.size() > i) {
-                                final CoachMatch m = (CoachMatch)c.mMatchs.get(i);
+                                final CoachMatch m = (CoachMatch) c.mMatchs.get(i);
                                 if (m.mCompetitor1 == c) {
-                                    value += (getVNDByTeam(((Coach)m.mCompetitor2).mTeamMates) / 1000000) * Tournament.getTournament().getParams().mPointsTeamVictoryBonus;
-                                    value += ((getVNDByTeam(((Coach)m.mCompetitor2).mTeamMates) % 1000000) / 1000) * Tournament.getTournament().getParams().mPointsTeamDrawBonus;
+                                    value += (getVNDByTeam(((Coach) m.mCompetitor2).mTeamMates) / 1000000) * Tournament.getTournament().getParams().mPointsTeamVictoryBonus;
+                                    value += ((getVNDByTeam(((Coach) m.mCompetitor2).mTeamMates) % 1000000) / 1000) * Tournament.getTournament().getParams().mPointsTeamDrawBonus;
                                 } else {
-                                    value += (getVNDByTeam(((Coach)m.mCompetitor1).mTeamMates) / 1000000) * Tournament.getTournament().getParams().mPointsTeamVictoryBonus;
-                                    value += ((getVNDByTeam(((Coach)m.mCompetitor1).mTeamMates) % 1000000) / 1000) * Tournament.getTournament().getParams().mPointsTeamDrawBonus;
+                                    value += (getVNDByTeam(((Coach) m.mCompetitor1).mTeamMates) / 1000000) * Tournament.getTournament().getParams().mPointsTeamVictoryBonus;
+                                    value += ((getVNDByTeam(((Coach) m.mCompetitor1).mTeamMates) % 1000000) / 1000) * Tournament.getTournament().getParams().mPointsTeamDrawBonus;
                                 }
                             }
                             i++;
@@ -276,7 +276,7 @@ public class mjtRankingTeam extends mjtRanking {
         for (int i = 0; i < t.mCoachs.size(); i++) {
             final Coach c = t.mCoachs.get(i);
             for (int j = 0; j < c.mMatchs.size(); j++) {
-                value += getValue(c, (CoachMatch)c.mMatchs.get(j), crit, subtype);
+                value += getValue(c, (CoachMatch) c.mMatchs.get(j), crit, subtype);
             }
         }
         return value;
@@ -351,7 +351,42 @@ public class mjtRankingTeam extends mjtRanking {
 
     @Override
     public int getColumnCount() {
-        return 7;
+        int result = 7;
+        Parameters params = Tournament.getTournament().getParams();
+        if (params.mTeamVictoryOnly) {
+            if (params.mRankingTeam5 == 0) {
+                result--;
+                if (params.mRankingTeam4 == 0) {
+                    result--;
+                    if (params.mRankingTeam3 == 0) {
+                        result--;
+                        if (params.mRankingTeam2 == 0) {
+                            result--;
+                            if (params.mRankingTeam1 == 0) {
+                                result--;
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if (params.mRankingIndiv5 == 0) {
+                result--;
+                if (params.mRankingIndiv4 == 0) {
+                    result--;
+                    if (params.mRankingIndiv3 == 0) {
+                        result--;
+                        if (params.mRankingIndiv2 == 0) {
+                            result--;
+                            if (params.mRankingIndiv1 == 0) {
+                                result--;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     @Override
@@ -392,7 +427,7 @@ public class mjtRankingTeam extends mjtRanking {
         for (int i = 0; i < v.size(); i++) {
             final CoachMatch m = v.get(i);
             final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-            if (((Coach)m.mCompetitor1).mTeamMates == t) {
+            if (((Coach) m.mCompetitor1).mTeamMates == t) {
                 if (val.mValue1 > val.mValue2) {
                     nbVictory++;
                 } else {
@@ -401,7 +436,7 @@ public class mjtRankingTeam extends mjtRanking {
                     }
                 }
             }
-            if (((Coach)m.mCompetitor2).mTeamMates == t) {
+            if (((Coach) m.mCompetitor2).mTeamMates == t) {
                 if (val.mValue1 < val.mValue2) {
                     nbVictory++;
                 } else {
@@ -431,7 +466,7 @@ public class mjtRankingTeam extends mjtRanking {
         for (int i = 0; i < v.size(); i++) {
             final CoachMatch m = v.get(i);
             final Value val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-            if (((Coach)m.mCompetitor1).mTeamMates == t) {
+            if (((Coach) m.mCompetitor1).mTeamMates == t) {
                 if (val.mValue1 > val.mValue2) {
                     nbVictory++;
                 } else {
@@ -449,7 +484,7 @@ public class mjtRankingTeam extends mjtRanking {
                 }
 
             }
-            if (((Coach)m.mCompetitor2).mTeamMates == t) {
+            if (((Coach) m.mCompetitor2).mTeamMates == t) {
                 if (val.mValue1 < val.mValue2) {
                     nbVictory++;
                 } else {

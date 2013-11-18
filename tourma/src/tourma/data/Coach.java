@@ -32,6 +32,7 @@ public final class Coach extends Competitor implements XMLExport {
      * Clan
      */
     public Clan mClan;
+    public Category mCategory;
     public String mTeam;
     public RosterType mRoster;
     public int mNaf;
@@ -46,14 +47,14 @@ public final class Coach extends Competitor implements XMLExport {
     public Coach() {
         super();
         mActive = true;
-        mCompositions=new ArrayList<>();
+        mCompositions = new ArrayList<>();
     }
 
     public Coach(final String name) {
         super(name);
         mActive = false;
         mTeam = StringConstants.CS_NONE;
-        mCompositions=new ArrayList<>();
+        mCompositions = new ArrayList<>();
         mRoster = new RosterType(StringConstants.CS_NONE);
         mTeamMates = null;
     }
@@ -91,16 +92,63 @@ public final class Coach extends Competitor implements XMLExport {
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF"), Integer.toString(this.mNaf));
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK"), Integer.toString(this.mRank));
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), this.mClan.mName);
+        if (this.mCategory != null) {
+            coach.setAttribute(StringConstants.CS_CATEGORY, this.mCategory.mName);
+        } else {
+            coach.setAttribute(StringConstants.CS_CATEGORY, StringConstants.CS_NONE);
+        }
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE"), Boolean.toString(this.mActive));
 
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP"), Integer.toString(this.mHandicap));
 
-        for (int i=0; i<mCompositions.size(); i++)
-        {
+        for (int i = 0; i < mCompositions.size(); i++) {
             final Element compo = this.mCompositions.get(i).getXMLElement();
             coach.addContent(compo);
         }
         return coach;
+    }
+
+    public String getStringRoster() {
+        if (this.mMatchs.size() == 0) {
+            return mRoster.mName;
+        }
+        ArrayList<RosterType> rosters = new ArrayList<>();
+        for (int i = 0; i < mMatchs.size(); i++) {
+            Match m = mMatchs.get(i);
+            if (this == m.mCompetitor1) {
+                if (((CoachMatch) m).mRoster1 != null) {
+                    if (!rosters.contains(((CoachMatch) m).mRoster1)) {
+                        rosters.add(((CoachMatch) m).mRoster1);
+                    }
+                } else {
+                    if (!rosters.contains(this.mRoster)) {
+                        rosters.add(this.mRoster);
+                    }
+                }
+            }
+
+            if (this == m.mCompetitor2) {
+                if (((CoachMatch) m).mRoster2 != null) {
+                    if (!rosters.contains(((CoachMatch) m).mRoster2)) {
+                        rosters.add(((CoachMatch) m).mRoster2);
+                    }
+                } else {
+                    if (!rosters.contains(this.mRoster)) {
+                        rosters.add(this.mRoster);
+                    }
+                }
+            }
+        }
+
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < rosters.size(); i++) {
+            if (i > 0) {
+                buf.append(" / ");
+            }
+            buf.append(rosters.get(i).mName);
+        }
+
+        return buf.toString();
     }
 
     @Override
@@ -109,10 +157,15 @@ public final class Coach extends Competitor implements XMLExport {
             this.mName = coach.getAttributeValue(StringConstants.CS_NAME);
             this.mTeam = coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
             String rosterName = RosterType.getRosterName(coach.getAttributeValue(StringConstants.CS_ROSTER));
-            this.mRoster = new RosterType(rosterName);
+            this.mRoster = RosterType.mRosterTypes.get(rosterName);
             this.mNaf = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue();
             this.mRank = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue();
             this.mClan = Clan.sClanMap.get(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN")));
+            if (coach.getAttributeValue(StringConstants.CS_CATEGORY) != null) {
+                this.mCategory = Category.sCategoryMap.get(coach.getAttributeValue(StringConstants.CS_CATEGORY));
+            } else {
+                this.mCategory = Category.sCategoryMap.get(coach.getAttributeValue(StringConstants.CS_NONE));
+            }
             Coach.sCoachMap.put(mName, this);
 
             try {
@@ -131,16 +184,15 @@ public final class Coach extends Competitor implements XMLExport {
                 this.mClan = Tournament.getTournament().getClans().get(0);
             }
 
-            final List compos=coach.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
-            final Iterator itC=compos.iterator();
-            while (itC.hasNext())
-            {
-                Element compo=(Element)itC.next();
-                teamma.data.Roster c=new teamma.data.Roster();
+            final List compos = coach.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
+            final Iterator itC = compos.iterator();
+            while (itC.hasNext()) {
+                Element compo = (Element) itC.next();
+                teamma.data.Roster c = new teamma.data.Roster();
                 c.setXMLElement(compo);
                 this.mCompositions.add(c);
-            }            
-            
+            }
+
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
