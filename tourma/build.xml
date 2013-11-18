@@ -127,6 +127,7 @@
                         <patternset>
                             <include name="org.jfree.chart.resources.*"/>
                             <include name="tourma.views.report.*"/>
+                            <include name="teamma.views.report.*"/>
                         </patternset>
                     </class>
                 </keep>
