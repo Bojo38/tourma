@@ -30,6 +30,7 @@ public class Parameters implements XMLExport {
     public int mPointsIndivLittleLost = 100;
     public int mPointsIndivLost = 0;
     public boolean mTeamVictoryOnly = false;
+    public boolean mPortugal=false;
     public int mGapLargeVictory = 3;
     public int mGapLittleLost = 1;
     public boolean mSubstitutes = false;
@@ -147,6 +148,7 @@ public class Parameters implements XMLExport {
         params.setAttribute(sbundle.getString("DRAW"), Integer.toString(this.mPointsIndivDraw));
         params.setAttribute(sbundle.getString("LOST"), Integer.toString(this.mPointsIndivLost));
         params.setAttribute(sbundle.getString("LITTLE_LOST"), Integer.toString(this.mPointsIndivLittleLost));
+        params.setAttribute("Portugal", Boolean.toString(this.mPortugal));
 
         params.setAttribute(sbundle.getString("VICTORY_TEAM"), Integer.toString(this.mPointsTeamVictory));
         params.setAttribute(sbundle.getString("DRAW_TEAM"), Integer.toString(this.mPointsTeamDraw));
@@ -273,6 +275,7 @@ public class Parameters implements XMLExport {
                 this.mTeamMatesClansNumber = params.getAttribute(sbundle.getString("CLANTEAMMATESNUMBER")).getIntValue();
                 this.mSubstitutes = params.getAttribute(sbundle.getString("SUBSTITUTES")).getBooleanValue();
                 this.mMultiRoster = params.getAttribute(sbundle.getString("MULTIROSTER")).getBooleanValue();
+                this.mMultiRoster = params.getAttribute("Portugal").getBooleanValue();
 
             } catch (NullPointerException ne3) {
                 JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());

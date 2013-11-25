@@ -147,7 +147,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 3:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue1 >= 0) {
+                    if (val.mValue1 != -1) {
                         obj = val.mValue1;
                     } else {
                         obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
@@ -155,7 +155,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 4:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue2 >= 0) {
+                    if (val.mValue2 !=-1) {
                         obj = val.mValue2;
                     } else {
                         obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
@@ -205,7 +205,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 2:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue1 >= 0) {
+                    if (val.mValue1 !=-1) {
                         obj = val.mValue1;
                     } else {
                         obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
@@ -213,7 +213,7 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 3:
                     val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue2 >= 0) {
+                    if (val.mValue2 !=-1) {
                         obj = val.mValue2;
                     } else {
                         obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");

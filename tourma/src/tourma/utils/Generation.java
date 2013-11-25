@@ -51,6 +51,35 @@ public class Generation {
     public static final int GEN_NAF = 8;
     public static final int GEN_FREE = 9;
 
+    protected static String[] mPortugueses={"yanno",
+        "obelix","oon","fredriech","pershum",
+        "buldogr","simon_mlf","haktar"};
+    
+    protected static void applyPortugal(final Round round)
+    {
+        if (Tournament.getTournament().getParams().mPortugal)
+        {
+            Criteria td=Tournament.getTournament().getParams().mCriterias.get(0);
+            ArrayList<CoachMatch> acm=round.getCoachMatchs();
+            for (int i=0; i<acm.size(); i++)
+            {
+                CoachMatch cm=acm.get(i);
+                for (int j=0;j<mPortugueses.length; j++ )
+                {
+                    if (mPortugueses[j].toLowerCase().equals(((Coach)cm.mCompetitor1).mName.toLowerCase()))
+                    {
+                        cm.mValues.get(td).mValue1=-2;
+                    }
+                    if (mPortugueses[j].toLowerCase().equals(((Coach)cm.mCompetitor2).mName.toLowerCase()))
+                    {
+                        cm.mValues.get(td).mValue2=-2;
+                    }
+                }
+                
+            }
+        }
+    }
+    
     public static void NextRound(final Round round, final int choice, final int roundnumber) {
 
         Round r = null;
@@ -182,6 +211,7 @@ public class Generation {
                         }
                     }
                 }
+                applyPortugal(r);
                 /*                
                  for (int i = 0; i < rounds.get(k).getCoachMatchs().size(); i++) {
                  final CoachMatch m = rounds.get(k).getCoachMatchs().get(i);
@@ -2688,6 +2718,9 @@ public class Generation {
             m.mCompetitor1.mMatchs.add(m);
             m.mCompetitor2.mMatchs.add(m);
         }
+        
+        applyPortugal(r);
+        
         /*for (int i = MainFrame.getMainFrame().jtpMain.getTabCount() - 1; i >= 0; i--) {
          Component obj = MainFrame.getMainFrame().jtpMain.getComponentAt(i);
          if (obj instanceof JPNRound) {

@@ -114,6 +114,7 @@ public class MainFrame extends javax.swing.JFrame {
             jmiAddFreeMatch.setEnabled(false);
             jmiDelFreeMatch.setEnabled(false);
         }
+        jcxPatchPortugal.setSelected(mTournament.getParams().mPortugal);
         this.revalidate();
         this.repaint();
     }
@@ -153,6 +154,8 @@ public class MainFrame extends javax.swing.JFrame {
         jcxAllowSpecialSkill = new javax.swing.JCheckBoxMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jmiNafLoad = new javax.swing.JMenuItem();
+        jSeparator11 = new javax.swing.JPopupMenu.Separator();
+        jcxPatchPortugal = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
@@ -306,6 +309,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnTools.add(jmiNafLoad);
+        jmnTools.add(jSeparator11);
+
+        jcxPatchPortugal.setText(bundle.getString("PortugalPatch")); // NOI18N
+        jcxPatchPortugal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxPatchPortugalActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxPatchPortugal);
 
         jMenuBar1.add(jmnTools);
 
@@ -1226,6 +1238,10 @@ public class MainFrame extends javax.swing.JFrame {
             ((JPNRound)jpnContent).update();
         }
     }//GEN-LAST:event_jmiDelFreeMatchActionPerformed
+
+    private void jcxPatchPortugalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxPatchPortugalActionPerformed
+         mTournament.getParams().mPortugal=jcxPatchPortugal.isSelected();
+    }//GEN-LAST:event_jcxPatchPortugalActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1276,6 +1292,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1286,6 +1303,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
+    private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAddCoach;
     private javax.swing.JMenuItem jmiAddFreeMatch;

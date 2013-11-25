@@ -55,6 +55,8 @@ public class JPNStatistics extends javax.swing.JPanel {
         }
         addWinLoss();
         addCounterPerRoster();
+        addPointsAverage();
+                addPositions();
     }
 
     protected void addCounterPerRoster() {
@@ -399,6 +401,31 @@ public class JPNStatistics extends javax.swing.JPanel {
         //
     }
 
+    
+    protected void addPointsAverage() {
+
+        final HashMap<String, Double> avg = new HashMap<>();
+
+        for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
+            avg.put(RosterType.mRostersNames.get(i), 0.0);
+        }
+
+        // Récupération du classement
+        // Calcul des moyennes
+        // Affichage du graphique
+        
+    }
+    
+    protected void addPositions()
+    {
+        // creation et partage du panel
+        // creation de la list de checkbox
+        // creation des callbacks
+        // creation des listes de données
+        // update positions
+        // création des graphiques
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
