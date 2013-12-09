@@ -4,13 +4,25 @@
  */
 package tourma.views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
@@ -19,12 +31,17 @@ import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.TextAnchor;
 import org.jfree.util.Rotation;
+import org.jfree.util.SortOrder;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.Group;
@@ -33,6 +50,8 @@ import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.tableModel.mjtRanking;
+import tourma.tableModel.mjtRankingIndiv;
 
 /**
  *
@@ -41,7 +60,10 @@ import tourma.data.Value;
 public class JPNStatistics extends javax.swing.JPanel {
 
     Tournament mTournament;
-
+    ArrayList<HashMap<String,Integer>> mHpositions=new ArrayList<>();
+    ChartPanel cpPositions=null;
+    JPanel jpnPositions=new JPanel(new BorderLayout());
+    JList jlsPositions    =null;
     /**
      * Creates new form JPNStatistics
      */
@@ -56,7 +78,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         addWinLoss();
         addCounterPerRoster();
         addPointsAverage();
-                addPositions();
+        addPositions();
     }
 
     protected void addCounterPerRoster() {
@@ -99,23 +121,23 @@ public class JPNStatistics extends javax.swing.JPanel {
                         double mt = minus.get(name1).doubleValue();
                         pt += values.mValue1;
                         mt -= values.mValue2;
-                        tot +=1.0;
+                        tot += 1.0;
 
 
                         plus.put(name1, pt);
                         minus.put(name1, mt);
-                        total.put(name1,tot);
+                        total.put(name1, tot);
 
                         pt = plus.get(name2).doubleValue();
                         mt = minus.get(name2).doubleValue();
                         tot = total.get(name2).doubleValue();
                         pt += values.mValue2;
                         mt -= values.mValue1;
-                        tot +=1.0;
+                        tot += 1.0;
 
                         plus.put(name2, pt);
                         minus.put(name2, mt);
-                        total.put(name2,tot);
+                        total.put(name2, tot);
                     }
                 }
             }
@@ -126,10 +148,10 @@ public class JPNStatistics extends javax.swing.JPanel {
                 final String name = RosterType.mRostersNames.get(j);
                 final double pt = plus.get(name);
                 final double mt = minus.get(name);
-                final double tot=total.get(name);
-                if (((pt != 0) || (mt != 0))&&(tot!=0)) {
-                    datas.addValue(pt/tot, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RÉALISÉS"), name);
-                    datas.addValue(mt/tot, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBIS"), name);
+                final double tot = total.get(name);
+                if (((pt != 0) || (mt != 0)) && (tot != 0)) {
+                    datas.addValue(pt / tot, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RÉALISÉS"), name);
+                    datas.addValue(mt / tot, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBIS"), name);
                 }
             }
 
@@ -198,14 +220,14 @@ public class JPNStatistics extends javax.swing.JPanel {
                     }
 
                     double t = total.get(name2).intValue();
-                    t+=1.0;
-                    total.put(name2,t);
+                    t += 1.0;
+                    total.put(name2, t);
                     t = total.get(name1).intValue();
-                    t+=1.0;
-                    total.put(name1,t);
+                    t += 1.0;
+                    total.put(name1, t);
                     if (values.mValue1 > values.mValue2) {
                         double v = victories.get(name1).doubleValue();
-                        double l = loss.get(name2).doubleValue();                        
+                        double l = loss.get(name2).doubleValue();
                         v++;
                         l++;
                         victories.put(name1, v);
@@ -241,10 +263,10 @@ public class JPNStatistics extends javax.swing.JPanel {
             final double d = draw.get(name);
             final double l = loss.get(name);
             final double t = total.get(name);
-            if (((v != 0) || (d != 0) || (l != 0))&&(t!=0.0)) {
-                datas.addValue((Double) v/t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTOIRES"), name);
-                datas.addValue((Double) d/t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NULS"), name);
-                datas.addValue((Double) l/t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DÉFAITES"), name);
+            if (((v != 0) || (d != 0) || (l != 0)) && (t != 0.0)) {
+                datas.addValue((Double) v / t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTOIRES"), name);
+                datas.addValue((Double) d / t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NULS"), name);
+                datas.addValue((Double) l / t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DÉFAITES"), name);
             }
         }
 
@@ -324,13 +346,10 @@ public class JPNStatistics extends javax.swing.JPanel {
             if (value.intValue() == 0) {
                 datas.remove(datas.getKey(i));
                 i--;
-            }
-            else
-            {
-                if (!Tournament.getTournament().getParams().mMultiRoster)
-                {
-                    double d=value.doubleValue();
-                    d=d/Tournament.getTournament().getRounds().size();
+            } else {
+                if (!Tournament.getTournament().getParams().mMultiRoster) {
+                    double d = value.doubleValue();
+                    d = d / Tournament.getTournament().getRounds().size();
                     datas.setValue(datas.getKey(i), d);
                 }
             }
@@ -361,8 +380,10 @@ public class JPNStatistics extends javax.swing.JPanel {
                 final Coach c = mTournament.getCoachs().get(j);
                 if (c != Coach.getNullCoach()) {
                     for (int k = 0; k < g.mRosters.size(); k++) {
-                        if (g.mRosters.get(k).mName.equals(c.mRoster.mName)) {
-                            value++;
+                        if (c.mRoster != null) {
+                            if (g.mRosters.get(k).mName.equals(c.mRoster.mName)) {
+                                value++;
+                            }
                         }
                     }
 
@@ -401,29 +422,197 @@ public class JPNStatistics extends javax.swing.JPanel {
         //
     }
 
-    
     protected void addPointsAverage() {
 
         final HashMap<String, Double> avg = new HashMap<>();
+        final HashMap<String, Double> avg_opp = new HashMap<>();
+        final HashMap<String, Double> count = new HashMap<>();
 
         for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
             avg.put(RosterType.mRostersNames.get(i), 0.0);
+            avg_opp.put(RosterType.mRostersNames.get(i), 0.0);
+            count.put(RosterType.mRostersNames.get(i), 0.0);
         }
 
-        // Récupération du classement
-        // Calcul des moyennes
+        // Récupération des matchs
+        for (int i = 0; i < mTournament.getRounds().size(); i++) {
+            ArrayList<CoachMatch> acm = mTournament.getRounds().get(i).getCoachMatchs();
+            for (int j = 0; j < acm.size(); j++) {
+                CoachMatch cm = acm.get(j);
+                double p1 = mjtRanking.getPointsByCoach((Coach) cm.mCompetitor1, cm);
+                double p2 = mjtRanking.getPointsByCoach((Coach) cm.mCompetitor2, cm);
+
+                double avg_value = avg.get(((Coach) cm.mCompetitor1).mRoster.mName);
+                double avg_opp_value = avg_opp.get(((Coach) cm.mCompetitor1).mRoster.mName);
+                double count_value = count.get(((Coach) cm.mCompetitor1).mRoster.mName);
+
+                avg_value = (avg_value * count_value + p1) / (count_value + 1.0);
+                avg_opp_value = (avg_opp_value * count_value + p2) / (count_value + 1.0);
+                count_value = count_value + 1;
+
+                avg.put(((Coach) cm.mCompetitor1).mRoster.mName, avg_value);
+                avg_opp.put(((Coach) cm.mCompetitor1).mRoster.mName, avg_opp_value);
+                count.put(((Coach) cm.mCompetitor1).mRoster.mName, count_value);
+
+                avg_value = avg.get(((Coach) cm.mCompetitor2).mRoster.mName);
+                avg_opp_value = avg_opp.get(((Coach) cm.mCompetitor2).mRoster.mName);
+                count_value = count.get(((Coach) cm.mCompetitor2).mRoster.mName);
+
+                avg_value = (avg_value * count_value + p2) / (count_value + 1.0);
+                avg_opp_value = (avg_opp_value * count_value + p1) / (count_value + 1.0);
+                count_value = count_value + 1;
+
+                avg.put(((Coach) cm.mCompetitor2).mRoster.mName, avg_value);
+                avg_opp.put(((Coach) cm.mCompetitor2).mRoster.mName, avg_opp_value);
+                count.put(((Coach) cm.mCompetitor2).mRoster.mName, count_value);
+            }
+        }
+
         // Affichage du graphique
+        final DefaultCategoryDataset datas = new DefaultCategoryDataset();
+
+        for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
+
+            final String name = RosterType.mRostersNames.get(i);
+            final double avg_value = avg.get(name);
+            final double avg_opp_value = avg_opp.get(name);
+            if ((avg_value != 0) && (avg_opp_value != 0)) {
+                datas.addValue(avg_value, "Points", name);
+                datas.addValue(avg_opp_value, "Points adversaires", name);
+            }
+        }
+
+        final JFreeChart chart = ChartFactory.createStackedBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULTATS PAR ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMBER"), datas, PlotOrientation.VERTICAL, true, true, false);
+
+        final CategoryPlot plot = chart.getCategoryPlot();
+        final BarRenderer br = (BarRenderer) plot.getRenderer();
+        br.setBaseItemLabelsVisible(true, true);
+        br.setSeriesPaint(0, new Color(0, 184, 0));
+        br.setSeriesPaint(1, new Color(0, 0, 184));
+        br.setBarPainter(new StandardBarPainter());
+
+
+        final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
+        barrenderer.setDrawBarOutline(false);
+        StandardCategoryItemLabelGenerator std = new StandardCategoryItemLabelGenerator();
+
+        barrenderer.setBaseItemLabelGenerator(std);
+        barrenderer.setBaseItemLabelsVisible(true);
+
+        barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+        barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+        barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
+                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}/{1}: {2}"), NumberFormat.getInstance()));
+
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS"), chartPanel);
+
+    }
+
+    protected void addPositions() {
+        // creation et partage du panel
+       
+                // creation de la list de checkbox
+        ArrayList<Coach> coach=mTournament.getCoachs();
+        DefaultListModel model=new DefaultListModel();
+        for (int i=0; i<coach.size(); i++)
+        {
+            model.addElement(coach.get(i).mName);
+        }
+        jlsPositions=new JList(model);
+       jlsPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jpnPositions.add(jlsPositions,BorderLayout.WEST);
+
+        // creation des callbacks
+        jlsPositions.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                updatePositions();
+            }
+        });
+        
+        // creation des listes de données
+        int column_name=1;
+        if (mTournament.getParams().mTeamTournament)
+        {
+            column_name=2;
+        }
+        for (int i=0; i<mTournament.getRounds().size(); i++)
+        {
+            Round r=mTournament.getRounds().get(i);
+            mjtRankingIndiv ranking=new mjtRankingIndiv(i, 
+                    mTournament.getParams().mRankingIndiv1,
+                    mTournament.getParams().mRankingIndiv2,
+                    mTournament.getParams().mRankingIndiv3, 
+                    mTournament.getParams().mRankingIndiv4,
+                    mTournament.getParams().mRankingIndiv5,
+                    coach, 
+                    mTournament.getParams().mTeamTournament,
+                    false, 
+                    false);
+            
+            ArrayList<String> coach_names=new ArrayList<>();
+            int count=ranking.getRowCount();
+            for (int j=0; j<count; j++)
+            {
+                coach_names.add((String)ranking.getValueAt(j, column_name));
+            }
+            HashMap<String,Integer> hm=new HashMap<>();
+            for (int j=0; j<coach.size(); j++)
+            {
+                Coach c=coach.get(j);                
+                hm.put(c.mName,coach_names.indexOf(c.mName));
+                
+            }
+            mHpositions.add(hm);
+        }
+        
+        // update positions
+        updatePositions();
+        
+        jtpStatistics.addTab("Positions", jpnPositions);
         
     }
-    
-    protected void addPositions()
+
+    protected void updatePositions()
     {
-        // creation et partage du panel
-        // creation de la list de checkbox
-        // creation des callbacks
-        // creation des listes de données
-        // update positions
-        // création des graphiques
+        if (cpPositions!=null)
+        {
+            jpnPositions.remove(cpPositions);
+        }
+        
+        final XYSeriesCollection datas = new XYSeriesCollection();
+        
+        List values=jlsPositions.getSelectedValuesList();
+        for (int i=0; i<values.size(); i++)
+        {            
+            String selection=(String)values.get(i);
+            XYSeries serie=new XYSeries(selection);
+            for (int j=0; j<this.mHpositions.size(); j++)
+            {
+                HashMap<String,Integer> hm=mHpositions.get(j);
+                int value=hm.get(selection);
+                serie.add(j+1,value+1);
+            }
+            datas.addSeries(serie);
+        }
+        
+        JFreeChart chart=ChartFactory.createXYLineChart("Positions", "Round", "Position", datas, PlotOrientation.VERTICAL, true, true, true);
+        XYPlot plot= chart.getXYPlot();
+         XYLineAndShapeRenderer renderer=new XYLineAndShapeRenderer(true,true);
+         plot.setRenderer(renderer);
+        NumberAxis axis=(NumberAxis)plot.getRangeAxis();
+        //axis.setRange(1,mHpositions.size());
+        axis.setInverted(true);
+        axis.setTickUnit(new NumberTickUnit(1));
+        axis=(NumberAxis)plot.getDomainAxis();
+        axis.setTickUnit(new NumberTickUnit(1));
+              
+        cpPositions=new ChartPanel(chart);
+        
+        jpnPositions.add(cpPositions,BorderLayout.CENTER);
+        repaint();
     }
     
     /**
