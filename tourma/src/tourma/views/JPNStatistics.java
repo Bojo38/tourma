@@ -14,6 +14,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -43,6 +44,7 @@ import org.jfree.ui.TextAnchor;
 import org.jfree.util.Rotation;
 import org.jfree.util.SortOrder;
 import tourma.data.Coach;
+import tourma.data.Team;
 import tourma.data.Criteria;
 import tourma.data.Group;
 import tourma.data.CoachMatch;
@@ -52,6 +54,7 @@ import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.tableModel.mjtRanking;
 import tourma.tableModel.mjtRankingIndiv;
+import tourma.tableModel.mjtRankingTeam;
 
 /**
  *
@@ -61,9 +64,13 @@ public class JPNStatistics extends javax.swing.JPanel {
 
     Tournament mTournament;
     ArrayList<HashMap<String,Integer>> mHpositions=new ArrayList<>();
+    ArrayList<HashMap<String,Integer>> mHTeampositions=new ArrayList<>();
     ChartPanel cpPositions=null;
+    ChartPanel cpTeamPositions=null;
     JPanel jpnPositions=new JPanel(new BorderLayout());
+    JPanel jpnTeamPositions=new JPanel(new BorderLayout());
     JList jlsPositions    =null;
+    JList jlsTeamPositions    =null;
     /**
      * Creates new form JPNStatistics
      */
@@ -75,6 +82,11 @@ public class JPNStatistics extends javax.swing.JPanel {
         if (mTournament.getGroups().size() > 1) {
             addGroupPie();
         }
+        if (mTournament.getParams().mTeamTournament)
+        {
+            addTeamPositions();
+        }
+        
         addWinLoss();
         addCounterPerRoster();
         addPointsAverage();
@@ -519,9 +531,12 @@ public class JPNStatistics extends javax.swing.JPanel {
         {
             model.addElement(coach.get(i).mName);
         }
+        JScrollPane jsp=new JScrollPane();
         jlsPositions=new JList(model);
        jlsPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        jpnPositions.add(jlsPositions,BorderLayout.WEST);
+       jsp.getViewport().add(jlsPositions);
+       
+        jpnPositions.add(jsp,BorderLayout.WEST);
 
         // creation des callbacks
         jlsPositions.addListSelectionListener(new ListSelectionListener() {
@@ -574,6 +589,73 @@ public class JPNStatistics extends javax.swing.JPanel {
         jtpStatistics.addTab("Positions", jpnPositions);
         
     }
+    
+    
+    protected void addTeamPositions() {
+        // creation et partage du panel
+       
+                // creation de la list de checkbox
+        ArrayList<Team> team=mTournament.getTeams();
+        DefaultListModel model=new DefaultListModel();
+        for (int i=0; i<team.size(); i++)
+        {
+            model.addElement(team.get(i).mName);
+        }
+        JScrollPane jsp=new JScrollPane();
+        jlsTeamPositions=new JList(model);
+       jlsTeamPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+       jsp.getViewport().add(jlsTeamPositions);
+       
+        jpnTeamPositions.add(jsp,BorderLayout.WEST);
+
+        // creation des callbacks
+        jlsTeamPositions.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                updateTeamPositions();
+            }
+        });
+        
+        // creation des listes de données
+        int column_name=1;
+        if (mTournament.getParams().mTeamTournament)
+        for (int i=0; i<mTournament.getRounds().size(); i++)
+        {
+            Round r=mTournament.getRounds().get(i);
+            mjtRankingTeam ranking=new mjtRankingTeam(
+                    mTournament.getParams().mTeamVictoryOnly,
+                    i, 
+                    mTournament.getParams().mRankingTeam1,
+                    mTournament.getParams().mRankingTeam2,
+                    mTournament.getParams().mRankingTeam3, 
+                    mTournament.getParams().mRankingTeam4,
+                    mTournament.getParams().mRankingTeam5,
+                    mTournament.getTeams(),  
+                    false);
+            
+            ArrayList<String> team_names=new ArrayList<>();
+            int count=ranking.getRowCount();
+            for (int j=0; j<count; j++)
+            {
+                team_names.add((String)ranking.getValueAt(j, column_name));
+            }
+            HashMap<String,Integer> hm=new HashMap<>();
+            for (int j=0; j<team.size(); j++)
+            {
+                Team c=team.get(j);                
+                hm.put(c.mName,team_names.indexOf(c.mName));
+                
+            }
+            mHTeampositions.add(hm);
+        }
+        
+        // update positions
+        updateTeamPositions();
+        
+        jtpStatistics.addTab("Team Positions", jpnTeamPositions);
+        
+    }
 
     protected void updatePositions()
     {
@@ -612,6 +694,46 @@ public class JPNStatistics extends javax.swing.JPanel {
         cpPositions=new ChartPanel(chart);
         
         jpnPositions.add(cpPositions,BorderLayout.CENTER);
+        repaint();
+    }
+    
+    protected void updateTeamPositions()
+    {
+        if (cpTeamPositions!=null)
+        {
+            jpnTeamPositions.remove(cpTeamPositions);
+        }
+        
+        final XYSeriesCollection datas = new XYSeriesCollection();
+        
+        List values=jlsTeamPositions.getSelectedValuesList();
+        for (int i=0; i<values.size(); i++)
+        {            
+            String selection=(String)values.get(i);
+            XYSeries serie=new XYSeries(selection);
+            for (int j=0; j<this.mHTeampositions.size(); j++)
+            {
+                HashMap<String,Integer> hm=mHTeampositions.get(j);
+                int value=hm.get(selection);
+                serie.add(j+1,value+1);
+            }
+            datas.addSeries(serie);
+        }
+        
+        JFreeChart chart=ChartFactory.createXYLineChart("Positions", "Round", "Position", datas, PlotOrientation.VERTICAL, true, true, true);
+        XYPlot plot= chart.getXYPlot();
+         XYLineAndShapeRenderer renderer=new XYLineAndShapeRenderer(true,true);
+         plot.setRenderer(renderer);
+        NumberAxis axis=(NumberAxis)plot.getRangeAxis();
+        //axis.setRange(1,mHpositions.size());
+        axis.setInverted(true);
+        axis.setTickUnit(new NumberTickUnit(1));
+        axis=(NumberAxis)plot.getDomainAxis();
+        axis.setTickUnit(new NumberTickUnit(1));
+              
+        cpTeamPositions=new ChartPanel(chart);
+        
+        jpnTeamPositions.add(cpTeamPositions,BorderLayout.CENTER);
         repaint();
     }
     
