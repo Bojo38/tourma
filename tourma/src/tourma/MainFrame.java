@@ -749,6 +749,16 @@ public class MainFrame extends javax.swing.JFrame {
                 labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
                 Options.add(Generation.GEN_FREE);
 
+                if (Tournament.getTournament().getParams().mTeamTournament) {
+                    if (Tournament.getTournament().getParams().mTeamPairing == 0) {
+                        /**
+                         * Balanced Options
+                         */
+                        labels.add("Aléatoire et équilibrage");
+                        Options.add(Generation.GEN_BALANCED);
+                    }
+                }
+
 
                 final JPanel jpn = new JPanel(new BorderLayout());
                 final JComboBox jcb = new JComboBox(labels.toArray());
@@ -814,7 +824,7 @@ public class MainFrame extends javax.swing.JFrame {
                             jspSplit.add(jpnContent, JSplitPane.RIGHT);
                             ((JPNRound) jpnContent).update();
                             jspSplit.setDividerLocation(200);
-                            ((JPNRound)jpnContent).setRoundOnly(jckmiRoundOnly.isSelected());
+                            ((JPNRound) jpnContent).setRoundOnly(jckmiRoundOnly.isSelected());
                             //System.gc();
                             this.revalidate();
                             break;
@@ -851,13 +861,13 @@ public class MainFrame extends javax.swing.JFrame {
                     jmiGenerateNextRound.setEnabled(true);
                     jmiChangePairing.setEnabled(true);
                     jmiAddFreeMatch.setEnabled(true);
-                jmiDelFreeMatch.setEnabled(true);
+                    jmiDelFreeMatch.setEnabled(true);
                 } else {
                     jmiDelRound.setEnabled(false);
                     jmiGenerateNextRound.setEnabled(false);
                     jmiChangePairing.setEnabled(false);
                     jmiAddFreeMatch.setEnabled(false);
-                jmiDelFreeMatch.setEnabled(false);
+                    jmiDelFreeMatch.setEnabled(false);
                 }
                 jckmiRoundOnly.setEnabled(true);
             } else {
@@ -1020,12 +1030,12 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiDelRoundActionPerformed
 
     private void jmiGenerateNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateNextRoundActionPerformed
-        
+
         final ArrayList<String> labels = new ArrayList<>();
         final ArrayList<Integer> Options = new ArrayList<>();
 
-        Round round=((JPNRound)jpnContent).getRound();
-        int round_number=mTournament.getRounds().indexOf(round);
+        Round round = ((JPNRound) jpnContent).getRound();
+        int round_number = mTournament.getRounds().indexOf(round);
         /**
          * Swiss possible ?
          */
@@ -1078,27 +1088,27 @@ public class MainFrame extends javax.swing.JFrame {
 
 
         Generation.NextRound(round, Options.get(index), round_number);
-        ((JPNRound)jpnContent).update();
+        ((JPNRound) jpnContent).update();
         update();
         updateTree();
     }//GEN-LAST:event_jmiGenerateNextRoundActionPerformed
 
     private void jmiChangePairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChangePairingActionPerformed
-        
-        final jdgChangePairing jdg = new jdgChangePairing(MainFrame.getMainFrame(), true, ((JPNRound)jpnContent).getRound());
+
+        final jdgChangePairing jdg = new jdgChangePairing(MainFrame.getMainFrame(), true, ((JPNRound) jpnContent).getRound());
         jdg.setVisible(true);
-        ((JPNRound)jpnContent).update();
+        ((JPNRound) jpnContent).update();
         update();
     }//GEN-LAST:event_jmiChangePairingActionPerformed
 
     private void jckmiRoundOnlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jckmiRoundOnlyActionPerformed
-        ((JPNRound)jpnContent).setRoundOnly(jckmiRoundOnly.isSelected()); 
-        ((JPNRound)jpnContent).update();
+        ((JPNRound) jpnContent).setRoundOnly(jckmiRoundOnly.isSelected());
+        ((JPNRound) jpnContent).update();
     }//GEN-LAST:event_jckmiRoundOnlyActionPerformed
 
     private void jmiAddFreeMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddFreeMatchActionPerformed
-        
-        Round round=((JPNRound)jpnContent).getRound();
+
+        Round round = ((JPNRound) jpnContent).getRound();
         if (Tournament.getTournament().getParams().mTeamTournament) {
 
             final ArrayList<Team> teams1 = new ArrayList<>();
@@ -1201,14 +1211,14 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
 
-        ((JPNRound)jpnContent).update();
+        ((JPNRound) jpnContent).update();
     }//GEN-LAST:event_jmiAddFreeMatchActionPerformed
 
     private void jmiDelFreeMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelFreeMatchActionPerformed
-        
-        int row=((JPNRound)jpnContent).getMatchTableSelectedRow();
+
+        int row = ((JPNRound) jpnContent).getMatchTableSelectedRow();
         if (row >= 0) {
-            Round round=((JPNRound)jpnContent).getRound();
+            Round round = ((JPNRound) jpnContent).getRound();
             if (Tournament.getTournament().getParams().mTeamTournament) {
                 CoachMatch c = round.getCoachMatchs().get(row);
                 // Fint TeamMatch corresponding to CoachMatch
@@ -1235,12 +1245,12 @@ public class MainFrame extends javax.swing.JFrame {
                 c.mCompetitor2.mMatchs.remove(c);
                 round.getMatchs().remove(c);
             }
-            ((JPNRound)jpnContent).update();
+            ((JPNRound) jpnContent).update();
         }
     }//GEN-LAST:event_jmiDelFreeMatchActionPerformed
 
     private void jcxPatchPortugalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxPatchPortugalActionPerformed
-         mTournament.getParams().mPortugal=jcxPatchPortugal.isSelected();
+        mTournament.getParams().mPortugal = jcxPatchPortugal.isSelected();
     }//GEN-LAST:event_jcxPatchPortugalActionPerformed
     /**
      * @param args the command line arguments

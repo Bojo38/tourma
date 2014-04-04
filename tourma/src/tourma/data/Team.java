@@ -160,7 +160,7 @@ public class Team extends Competitor implements XMLExport {
                     //final boolean random = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AFFECTATION ALÉATOITE (SINON, L'ORDER D'INSCRIPTION SERA UTILISÉE) ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERATION"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
                     final ArrayList<Coach> shuffle2 = new ArrayList<>(team2.getActivePlayers());
                     //if (random) {
-                        Collections.shuffle(shuffle2);
+                    Collections.shuffle(shuffle2);
                     //}
                     for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
                         m.mMatchs.add(team1.getActivePlayers().get(k).CreateMatch(shuffle2.get(k), r));
@@ -219,7 +219,7 @@ public class Team extends Competitor implements XMLExport {
     }
 
     @Override
-    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents) {
+    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
         return new ArrayList<>(opponents);
     }
 
@@ -326,5 +326,72 @@ public class Team extends Competitor implements XMLExport {
                 }
             }
         }
+    }
+
+    @Override
+    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current) {
+
+        HashMap<Team, Integer> map = new HashMap<>();
+
+        // Build opponents map
+        for (int i = 0; i < teams.size(); i++) {
+            Team t = teams.get(i);
+            if (!t.mName.equals(this.mName)) {
+                map.put(t, 0);
+            }
+        }
+
+        // compute the number of matches between the coach team and the other teams
+        // Compute the number of match per opponent
+        for (int i = 0; i < mCoachs.size(); i++) {
+            Coach coach = mCoachs.get(i);
+            for (int j = 0; j < coach.mMatchs.size(); j++) {
+                CoachMatch m = (CoachMatch) coach.mMatchs.get(j);
+                Coach opp;
+                if (coach.mName.equals(m.mCompetitor1.mName)) {
+                    opp = (Coach) m.mCompetitor2;
+                } else {
+                    opp = (Coach) m.mCompetitor1;
+                }
+
+                try {
+                    int nb = map.get(opp.mTeamMates);
+                    nb = nb + 1;
+                    map.put(opp.mTeamMates, nb);
+                } catch (NullPointerException npe) {
+                    System.out.println("Impossible to manage " + mName + " vs " + opp.mTeamMates.mName);
+                }
+            }
+        }
+
+
+        /// Add current Round
+        if (current != null) {
+            for (int i = 0; i < mCoachs.size(); i++) {
+                Coach coach = mCoachs.get(i);
+                for (int j = 0; j < current.mMatchs.size(); j++) {
+                    CoachMatch m = (CoachMatch) current.mMatchs.get(j);
+                    Coach opp = null;
+                    if (coach.mName.equals(m.mCompetitor1.mName)) {
+                        opp = (Coach) m.mCompetitor2;
+                    }
+                    if (coach.mName.equals(m.mCompetitor2.mName)) {
+                        opp = (Coach) m.mCompetitor1;
+                    }
+
+                    if (opp != null) {
+                        try {
+                            int nb = map.get(opp.mTeamMates);
+                            nb = nb + 1;
+                            map.put(opp.mTeamMates, nb);
+                        } catch (NullPointerException npe) {
+                            System.out.println("Impossible to manage " + mName + " vs " + opp.mTeamMates.mName);
+                        }
+                    }
+                }
+            }
+        }
+
+        return map;
     }
 }

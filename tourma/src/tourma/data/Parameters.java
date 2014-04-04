@@ -58,6 +58,10 @@ public class Parameters implements XMLExport {
      */
     public int mTeamIndivPairing = 0;
     public int mTeamMatesNumber = 1;
+    
+    public boolean mIndivPairingTeamBalanced=false;
+    public boolean mIndivPairingIndivBalanced=false;
+    
     public int mPointsTeamVictory = 1000;
     public int mPointsTeamDraw = 400;
     public int mPointsTeamLost = 0;
@@ -191,6 +195,9 @@ public class Parameters implements XMLExport {
 
         params.setAttribute(sbundle.getString("MULTIROSTER"),Boolean.toString(this.mMultiRoster));
         
+        params.setAttribute(sbundle.getString("INDIVBALANCED"),Boolean.toString(this.mIndivPairingIndivBalanced));
+        params.setAttribute(sbundle.getString("TEAMBALANCED"),Boolean.toString(this.mIndivPairingTeamBalanced));
+        
         return params;
     }
 
@@ -279,6 +286,13 @@ public class Parameters implements XMLExport {
 
             } catch (NullPointerException ne3) {
                 JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());
+            }
+             try {
+                this.mIndivPairingIndivBalanced = params.getAttribute(sbundle.getString("INDIVBALANCED")).getBooleanValue();
+                this.mIndivPairingTeamBalanced = params.getAttribute(sbundle.getString("TEAMBALANCED")).getBooleanValue();
+
+            } catch (NullPointerException ne4) {
+                JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
             }
 
             final List criterias = params.getChildren(sbundle.getString("CRITERIA"));

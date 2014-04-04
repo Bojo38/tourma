@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
@@ -63,14 +64,23 @@ import tourma.tableModel.mjtRankingTeam;
 public class JPNStatistics extends javax.swing.JPanel {
 
     Tournament mTournament;
-    ArrayList<HashMap<String,Integer>> mHpositions=new ArrayList<>();
-    ArrayList<HashMap<String,Integer>> mHTeampositions=new ArrayList<>();
-    ChartPanel cpPositions=null;
-    ChartPanel cpTeamPositions=null;
-    JPanel jpnPositions=new JPanel(new BorderLayout());
-    JPanel jpnTeamPositions=new JPanel(new BorderLayout());
-    JList jlsPositions    =null;
-    JList jlsTeamPositions    =null;
+    ArrayList<HashMap<String, Integer>> mHpositions = new ArrayList<>();
+    ArrayList<HashMap<String, Integer>> mHTeampositions = new ArrayList<>();
+    ChartPanel cpPositions = null;
+    ChartPanel cpTeamPositions = null;   
+    ChartPanel cpBalancedTeam = null;
+    ChartPanel cpBalancedIndiv = null;
+    JPanel jpnPositions = new JPanel(new BorderLayout());
+    JPanel jpnTeamPositions = new JPanel(new BorderLayout());
+    JList jlsPositions = null;
+    JList jlsTeamPositions = null;
+    JPanel jpnBalancedTeam = new JPanel(new BorderLayout());
+    JList jlsBalancedTeam = null;
+    ArrayList<HashMap<String, Integer>> mHTeamBalanced = new ArrayList<>();
+    JPanel jpnBalancedIndiv = new JPanel(new BorderLayout());
+    JList jlsBalancedIndiv = null;
+    ArrayList<HashMap<String, Integer>> mHIndivBalanced = new ArrayList<>();
+
     /**
      * Creates new form JPNStatistics
      */
@@ -82,15 +92,134 @@ public class JPNStatistics extends javax.swing.JPanel {
         if (mTournament.getGroups().size() > 1) {
             addGroupPie();
         }
-        if (mTournament.getParams().mTeamTournament)
-        {
+        if (mTournament.getParams().mTeamTournament) {
             addTeamPositions();
+            if (mTournament.getParams().mTeamPairing == 0) {
+                addTeamBalanced();
+                addIndivBalanced();
+            }
         }
-        
+
         addWinLoss();
         addCounterPerRoster();
         addPointsAverage();
         addPositions();
+    }
+
+    protected void addTeamBalanced() {
+
+        ArrayList<Team> teams = mTournament.getTeams();
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < teams.size(); i++) {
+            model.addElement(teams.get(i).mName);
+        }
+        JScrollPane jspBalancedTeam = new JScrollPane();
+        jlsBalancedTeam = new JList(model);
+        jlsBalancedTeam.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jspBalancedTeam.getViewport().add(jlsBalancedTeam);
+
+        jpnBalancedTeam.add(jspBalancedTeam, BorderLayout.WEST);
+
+        // creation des callbacks
+        jlsBalancedTeam.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                updateBalancedTeam();
+            }
+        });
+
+        // creation des listes de données
+        for (int i = 0; i < mTournament.getTeams().size(); i++) {
+            Team t = mTournament.getTeams().get(i);
+
+            HashMap<String, Integer> hm = new HashMap<>();
+            for (int j = 0; j < mTournament.getTeams().size(); j++) {
+                Team opp = mTournament.getTeams().get(j);
+                hm.put(opp.mName, 0);
+            }
+
+            for (int j = 0; j < t.mCoachs.size(); j++) {
+                Coach c = t.mCoachs.get(j);
+                for (int k = 0; k < c.mMatchs.size(); k++) {
+                    CoachMatch m = (CoachMatch) c.mMatchs.get(k);
+                    Coach opp = null;
+                    if (m.mCompetitor1 == c) {
+                        opp = (Coach) m.mCompetitor2;
+                    } else {
+                        opp = (Coach) m.mCompetitor1;
+                    }
+                    Team other = opp.mTeamMates;
+                    int nb = hm.get(other.mName);
+                    nb = nb + 1;
+                    hm.put(other.mName, nb);
+                }
+            }
+            mHTeamBalanced.add(hm);
+        }
+
+        // update positions
+        updateBalancedTeam();
+
+        jtpStatistics.addTab("Opponent by Team", jpnBalancedTeam);
+
+    }
+
+    protected void addIndivBalanced() {
+
+        ArrayList<Coach> coachs = mTournament.getCoachs();
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < coachs.size(); i++) {
+            model.addElement(coachs.get(i).mName);
+        }
+
+        JScrollPane jspBalancedIndiv = new JScrollPane();
+        jlsBalancedIndiv = new JList(model);
+        jlsBalancedIndiv.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jspBalancedIndiv.getViewport().add(jlsBalancedIndiv);
+
+        jpnBalancedIndiv.add(jspBalancedIndiv, BorderLayout.WEST);
+
+        // creation des callbacks
+        jlsBalancedIndiv.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                updateBalancedIndiv();
+            }
+        });
+
+        // creation des listes de données
+        for (int i = 0; i < mTournament.getCoachs().size(); i++) {
+            Coach c = mTournament.getCoachs().get(i);
+
+            HashMap<String, Integer> hm = new HashMap<>();
+            for (int j = 0; j < mTournament.getTeams().size(); j++) {
+                Team opp = mTournament.getTeams().get(j);
+                hm.put(opp.mName, 0);
+            }
+
+
+            for (int k = 0; k < c.mMatchs.size(); k++) {
+                CoachMatch m = (CoachMatch) c.mMatchs.get(k);
+                Coach opp = null;
+                if (m.mCompetitor1 == c) {
+                    opp = (Coach) m.mCompetitor2;
+                } else {
+                    opp = (Coach) m.mCompetitor1;
+                }
+                Team other = opp.mTeamMates;
+                int nb = hm.get(other.mName);
+                nb = nb + 1;
+                hm.put(other.mName, nb);
+            }
+
+            mHIndivBalanced.add(hm);
+        }
+
+        // update positions
+        updateBalancedIndiv();
+
+        jtpStatistics.addTab("Oppositions par joueur", jpnBalancedIndiv);
+
     }
 
     protected void addCounterPerRoster() {
@@ -523,220 +652,304 @@ public class JPNStatistics extends javax.swing.JPanel {
 
     protected void addPositions() {
         // creation et partage du panel
-       
-                // creation de la list de checkbox
-        ArrayList<Coach> coach=mTournament.getCoachs();
-        DefaultListModel model=new DefaultListModel();
-        for (int i=0; i<coach.size(); i++)
-        {
+
+        // creation de la list de checkbox
+        ArrayList<Coach> coach = mTournament.getCoachs();
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < coach.size(); i++) {
             model.addElement(coach.get(i).mName);
         }
-        JScrollPane jsp=new JScrollPane();
-        jlsPositions=new JList(model);
-       jlsPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-       jsp.getViewport().add(jlsPositions);
-       
-        jpnPositions.add(jsp,BorderLayout.WEST);
+        JScrollPane jsp = new JScrollPane();
+        jlsPositions = new JList(model);
+        jlsPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jsp.getViewport().add(jlsPositions);
+
+        jpnPositions.add(jsp, BorderLayout.WEST);
 
         // creation des callbacks
         jlsPositions.addListSelectionListener(new ListSelectionListener() {
-
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 updatePositions();
             }
         });
-        
+
         // creation des listes de données
-        int column_name=1;
-        if (mTournament.getParams().mTeamTournament)
-        {
-            column_name=2;
+        int column_name = 1;
+        if (mTournament.getParams().mTeamTournament) {
+            column_name = 2;
         }
-        for (int i=0; i<mTournament.getRounds().size(); i++)
-        {
-            Round r=mTournament.getRounds().get(i);
-            mjtRankingIndiv ranking=new mjtRankingIndiv(i, 
+        for (int i = 0; i < mTournament.getRounds().size(); i++) {
+            Round r = mTournament.getRounds().get(i);
+            mjtRankingIndiv ranking = new mjtRankingIndiv(i,
                     mTournament.getParams().mRankingIndiv1,
                     mTournament.getParams().mRankingIndiv2,
-                    mTournament.getParams().mRankingIndiv3, 
+                    mTournament.getParams().mRankingIndiv3,
                     mTournament.getParams().mRankingIndiv4,
                     mTournament.getParams().mRankingIndiv5,
-                    coach, 
+                    coach,
                     mTournament.getParams().mTeamTournament,
-                    false, 
+                    false,
                     false);
-            
-            ArrayList<String> coach_names=new ArrayList<>();
-            int count=ranking.getRowCount();
-            for (int j=0; j<count; j++)
-            {
-                coach_names.add((String)ranking.getValueAt(j, column_name));
+
+            ArrayList<String> coach_names = new ArrayList<>();
+            int count = ranking.getRowCount();
+            for (int j = 0; j < count; j++) {
+                coach_names.add((String) ranking.getValueAt(j, column_name));
             }
-            HashMap<String,Integer> hm=new HashMap<>();
-            for (int j=0; j<coach.size(); j++)
-            {
-                Coach c=coach.get(j);                
-                hm.put(c.mName,coach_names.indexOf(c.mName));
-                
+            HashMap<String, Integer> hm = new HashMap<>();
+            for (int j = 0; j < coach.size(); j++) {
+                Coach c = coach.get(j);
+                hm.put(c.mName, coach_names.indexOf(c.mName));
+
             }
             mHpositions.add(hm);
         }
-        
+
         // update positions
         updatePositions();
-        
+
         jtpStatistics.addTab("Positions", jpnPositions);
-        
+
     }
-    
-    
+
     protected void addTeamPositions() {
         // creation et partage du panel
-       
-                // creation de la list de checkbox
-        ArrayList<Team> team=mTournament.getTeams();
-        DefaultListModel model=new DefaultListModel();
-        for (int i=0; i<team.size(); i++)
-        {
+
+        // creation de la list de checkbox
+        ArrayList<Team> team = mTournament.getTeams();
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < team.size(); i++) {
             model.addElement(team.get(i).mName);
         }
-        JScrollPane jsp=new JScrollPane();
-        jlsTeamPositions=new JList(model);
-       jlsTeamPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-       jsp.getViewport().add(jlsTeamPositions);
-       
-        jpnTeamPositions.add(jsp,BorderLayout.WEST);
+        JScrollPane jsp = new JScrollPane();
+        jlsTeamPositions = new JList(model);
+        jlsTeamPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jsp.getViewport().add(jlsTeamPositions);
+
+        jpnTeamPositions.add(jsp, BorderLayout.WEST);
 
         // creation des callbacks
         jlsTeamPositions.addListSelectionListener(new ListSelectionListener() {
-
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 updateTeamPositions();
             }
         });
-        
+
         // creation des listes de données
-        int column_name=1;
-        if (mTournament.getParams().mTeamTournament)
-        for (int i=0; i<mTournament.getRounds().size(); i++)
-        {
-            Round r=mTournament.getRounds().get(i);
-            mjtRankingTeam ranking=new mjtRankingTeam(
-                    mTournament.getParams().mTeamVictoryOnly,
-                    i, 
-                    mTournament.getParams().mRankingTeam1,
-                    mTournament.getParams().mRankingTeam2,
-                    mTournament.getParams().mRankingTeam3, 
-                    mTournament.getParams().mRankingTeam4,
-                    mTournament.getParams().mRankingTeam5,
-                    mTournament.getTeams(),  
-                    false);
-            
-            ArrayList<String> team_names=new ArrayList<>();
-            int count=ranking.getRowCount();
-            for (int j=0; j<count; j++)
-            {
-                team_names.add((String)ranking.getValueAt(j, column_name));
+        int column_name = 1;
+        if (mTournament.getParams().mTeamTournament) {
+            for (int i = 0; i < mTournament.getRounds().size(); i++) {
+                Round r = mTournament.getRounds().get(i);
+                mjtRankingTeam ranking = new mjtRankingTeam(
+                        mTournament.getParams().mTeamVictoryOnly,
+                        i,
+                        mTournament.getParams().mRankingTeam1,
+                        mTournament.getParams().mRankingTeam2,
+                        mTournament.getParams().mRankingTeam3,
+                        mTournament.getParams().mRankingTeam4,
+                        mTournament.getParams().mRankingTeam5,
+                        mTournament.getTeams(),
+                        false);
+
+                ArrayList<String> team_names = new ArrayList<>();
+                int count = ranking.getRowCount();
+                for (int j = 0; j < count; j++) {
+                    team_names.add((String) ranking.getValueAt(j, column_name));
+                }
+                HashMap<String, Integer> hm = new HashMap<>();
+                for (int j = 0; j < team.size(); j++) {
+                    Team c = team.get(j);
+                    hm.put(c.mName, team_names.indexOf(c.mName));
+
+                }
+                mHTeampositions.add(hm);
             }
-            HashMap<String,Integer> hm=new HashMap<>();
-            for (int j=0; j<team.size(); j++)
-            {
-                Team c=team.get(j);                
-                hm.put(c.mName,team_names.indexOf(c.mName));
-                
-            }
-            mHTeampositions.add(hm);
         }
-        
+
         // update positions
         updateTeamPositions();
-        
+
         jtpStatistics.addTab("Team Positions", jpnTeamPositions);
-        
+
     }
 
-    protected void updatePositions()
-    {
-        if (cpPositions!=null)
-        {
+    protected void updatePositions() {
+        if (cpPositions != null) {
             jpnPositions.remove(cpPositions);
         }
-        
+
         final XYSeriesCollection datas = new XYSeriesCollection();
-        
-        List values=jlsPositions.getSelectedValuesList();
-        for (int i=0; i<values.size(); i++)
-        {            
-            String selection=(String)values.get(i);
-            XYSeries serie=new XYSeries(selection);
-            for (int j=0; j<this.mHpositions.size(); j++)
-            {
-                HashMap<String,Integer> hm=mHpositions.get(j);
-                int value=hm.get(selection);
-                serie.add(j+1,value+1);
+
+        List values = jlsPositions.getSelectedValuesList();
+        for (int i = 0; i < values.size(); i++) {
+            String selection = (String) values.get(i);
+            XYSeries serie = new XYSeries(selection);
+            for (int j = 0; j < this.mHpositions.size(); j++) {
+                HashMap<String, Integer> hm = mHpositions.get(j);
+                int value = hm.get(selection);
+                serie.add(j + 1, value + 1);
             }
             datas.addSeries(serie);
         }
-        
-        JFreeChart chart=ChartFactory.createXYLineChart("Positions", "Round", "Position", datas, PlotOrientation.VERTICAL, true, true, true);
-        XYPlot plot= chart.getXYPlot();
-         XYLineAndShapeRenderer renderer=new XYLineAndShapeRenderer(true,true);
-         plot.setRenderer(renderer);
-        NumberAxis axis=(NumberAxis)plot.getRangeAxis();
+
+        JFreeChart chart = ChartFactory.createXYLineChart("Positions", "Round", "Position", datas, PlotOrientation.VERTICAL, true, true, true);
+        XYPlot plot = chart.getXYPlot();
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, true);
+        plot.setRenderer(renderer);
+        NumberAxis axis = (NumberAxis) plot.getRangeAxis();
         //axis.setRange(1,mHpositions.size());
         axis.setInverted(true);
         axis.setTickUnit(new NumberTickUnit(1));
-        axis=(NumberAxis)plot.getDomainAxis();
+        axis = (NumberAxis) plot.getDomainAxis();
         axis.setTickUnit(new NumberTickUnit(1));
-              
-        cpPositions=new ChartPanel(chart);
-        
-        jpnPositions.add(cpPositions,BorderLayout.CENTER);
+
+        cpPositions = new ChartPanel(chart);
+
+        jpnPositions.add(cpPositions, BorderLayout.CENTER);
+        repaint();
+    }
+
+    protected void updateBalancedTeam() {
+        if (cpBalancedTeam != null) {
+            jpnBalancedTeam.remove(cpBalancedTeam);
+        }
+
+        final DefaultCategoryDataset datas = new DefaultCategoryDataset();
+
+
+        int[] indices = jlsBalancedTeam.getSelectedIndices();
+        for (int i = 0; i < indices.length; i++) {
+            for (int j = 0; j < mHTeamBalanced.size(); j++) {
+                if (indices[i] == j) {
+                    Iterator it = mHTeamBalanced.get(j).keySet().iterator();
+                    int minimum = 65535;
+                    while (it.hasNext()) {
+                        String en = (String) it.next();
+                        int nb = mHTeamBalanced.get(j).get(en);
+                        datas.addValue(nb, jlsBalancedTeam.getSelectedValuesList().get(i).toString(), en);
+                    }
+                }
+            }
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart("Adversaires par équipe", "Adversaires", "Nombre de matchs", datas, PlotOrientation.VERTICAL, true, true, true);
+
+        final CategoryPlot plot = chart.getCategoryPlot();
+
+        final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
+        barrenderer.setDrawBarOutline(false);
+        StandardCategoryItemLabelGenerator std = new StandardCategoryItemLabelGenerator();
+
+        barrenderer.setBaseItemLabelGenerator(std);
+        barrenderer.setBaseItemLabelsVisible(true);
+
+        barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+        barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+        barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
+                "Matchs {1} vs {0}: {2}", NumberFormat.getInstance()));
+
+        plot.setRenderer(barrenderer);
+        NumberAxis axis = (NumberAxis) plot.getRangeAxis();
+        //axis.setRange(1,mHpositions.size());
+        axis.setInverted(true);
+        axis.setTickUnit(new NumberTickUnit(1));
+
+
+        cpBalancedTeam = new ChartPanel(chart);
+        jpnBalancedTeam.add(cpBalancedTeam, BorderLayout.CENTER);
         repaint();
     }
     
-    protected void updateTeamPositions()
-    {
-        if (cpTeamPositions!=null)
-        {
+    
+    protected void updateBalancedIndiv() {
+        if (cpBalancedIndiv != null) {
+            jpnBalancedIndiv.remove(cpBalancedIndiv);
+        }
+
+        final DefaultCategoryDataset datas = new DefaultCategoryDataset();
+
+
+        int[] indices = jlsBalancedIndiv.getSelectedIndices();
+        for (int i = 0; i < indices.length; i++) {
+            for (int j = 0; j < mHIndivBalanced.size(); j++) {
+                if (indices[i] == j) {
+                    Iterator it = mHIndivBalanced.get(j).keySet().iterator();
+                    int minimum = 65535;
+                    while (it.hasNext()) {
+                        String en = (String) it.next();
+                        int nb = mHIndivBalanced.get(j).get(en);
+                        datas.addValue(nb, en,jlsBalancedIndiv.getSelectedValuesList().get(i).toString());
+                    }
+                }
+            }
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart("Adversaires par équipe", "Adversaires", "Nombre de matchs", datas, PlotOrientation.VERTICAL, true, true, true);
+
+        final CategoryPlot plot = chart.getCategoryPlot();
+
+        final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
+        barrenderer.setDrawBarOutline(false);
+        StandardCategoryItemLabelGenerator std = new StandardCategoryItemLabelGenerator();
+
+        barrenderer.setBaseItemLabelGenerator(std);
+        barrenderer.setBaseItemLabelsVisible(true);
+
+        barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+        barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+        barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
+                "Matchs {1} vs {0}: {2}", NumberFormat.getInstance()));
+
+        plot.setRenderer(barrenderer);
+        NumberAxis axis = (NumberAxis) plot.getRangeAxis();
+        //axis.setRange(1,mHpositions.size());
+        axis.setInverted(true);
+        axis.setTickUnit(new NumberTickUnit(1));
+
+
+        cpBalancedIndiv = new ChartPanel(chart);
+        jpnBalancedIndiv.add(cpBalancedIndiv, BorderLayout.CENTER);
+        repaint();
+    }
+
+    protected void updateTeamPositions() {
+        if (cpTeamPositions != null) {
             jpnTeamPositions.remove(cpTeamPositions);
         }
-        
+
         final XYSeriesCollection datas = new XYSeriesCollection();
-        
-        List values=jlsTeamPositions.getSelectedValuesList();
-        for (int i=0; i<values.size(); i++)
-        {            
-            String selection=(String)values.get(i);
-            XYSeries serie=new XYSeries(selection);
-            for (int j=0; j<this.mHTeampositions.size(); j++)
-            {
-                HashMap<String,Integer> hm=mHTeampositions.get(j);
-                int value=hm.get(selection);
-                serie.add(j+1,value+1);
+
+        List values = jlsTeamPositions.getSelectedValuesList();
+        for (int i = 0; i < values.size(); i++) {
+            String selection = (String) values.get(i);
+            XYSeries serie = new XYSeries(selection);
+            for (int j = 0; j < this.mHTeampositions.size(); j++) {
+                HashMap<String, Integer> hm = mHTeampositions.get(j);
+                int value = hm.get(selection);
+                serie.add(j + 1, value + 1);
             }
             datas.addSeries(serie);
         }
-        
-        JFreeChart chart=ChartFactory.createXYLineChart("Positions", "Round", "Position", datas, PlotOrientation.VERTICAL, true, true, true);
-        XYPlot plot= chart.getXYPlot();
-         XYLineAndShapeRenderer renderer=new XYLineAndShapeRenderer(true,true);
-         plot.setRenderer(renderer);
-        NumberAxis axis=(NumberAxis)plot.getRangeAxis();
+
+        JFreeChart chart = ChartFactory.createXYLineChart("Positions", "Round", "Position", datas, PlotOrientation.VERTICAL, true, true, true);
+        XYPlot plot = chart.getXYPlot();
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, true);
+        plot.setRenderer(renderer);
+        NumberAxis axis = (NumberAxis) plot.getRangeAxis();
         //axis.setRange(1,mHpositions.size());
         axis.setInverted(true);
         axis.setTickUnit(new NumberTickUnit(1));
-        axis=(NumberAxis)plot.getDomainAxis();
+        axis = (NumberAxis) plot.getDomainAxis();
         axis.setTickUnit(new NumberTickUnit(1));
-              
-        cpTeamPositions=new ChartPanel(chart);
-        
-        jpnTeamPositions.add(cpTeamPositions,BorderLayout.CENTER);
+
+        cpTeamPositions = new ChartPanel(chart);
+
+        jpnTeamPositions.add(cpTeamPositions, BorderLayout.CENTER);
         repaint();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

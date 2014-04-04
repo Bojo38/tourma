@@ -6,6 +6,7 @@ package tourma.data;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import tourma.utility.StringConstants;
 
@@ -60,12 +61,13 @@ public abstract class Competitor implements Comparable {
 
     public abstract boolean havePlayed(Competitor opponent);
 
-    public abstract ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents);
+    public abstract ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r);
 
     public abstract String getDecoratedName();
 
     public abstract void RoundCheck(Round r);
 
+    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams,Round current);    
     @Override
     public String toString() {
         return getName();

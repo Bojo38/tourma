@@ -119,7 +119,7 @@ public class CompetitorTest {
         ArrayList<Competitor> opponents = null;
         Competitor instance = new CompetitorImpl();
         ArrayList expResult = null;
-        ArrayList result = instance.getPossibleOpponents(opponents);
+        ArrayList result = instance.getPossibleOpponents(opponents,new Round());
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -178,7 +178,7 @@ public class CompetitorTest {
             return false;
         }
 
-        public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents) {
+        public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents,Round r) {
             return null;
         }
 
