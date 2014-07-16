@@ -10,13 +10,29 @@
  */
 package tourma;
 
+import java.awt.BorderLayout;
 import java.awt.DisplayMode;
+import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.tableModel.mjtCoaches;
+import tourma.utility.ExtensionFileFilter;
 
 /**
  *
@@ -43,6 +59,16 @@ public class jdgTeam extends javax.swing.JDialog {
             final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
+        if (mTeam.picture == null) {
+            try {
+                mTeam.picture = ImageIO.read(getClass().getResource("/tourma/images/flags/france.png"));
+            } catch (IOException ex) {
+                Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.picture),80,80));
+
+
         update();
     }
 
@@ -64,6 +90,14 @@ public class jdgTeam extends javax.swing.JDialog {
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
 
+        if (mTeam.picture == null) {
+            try {
+                mTeam.picture = ImageIO.read(getClass().getResource("/tourma/images/flags/france.png"));
+            } catch (IOException ex) {
+                Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.picture),80,80));
         update();
     }
 
@@ -89,6 +123,7 @@ public class jdgTeam extends javax.swing.JDialog {
         jbtModify = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCoachs = new javax.swing.JTable();
+        jbtAvatar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -173,51 +208,123 @@ public class jdgTeam extends javax.swing.JDialog {
 
         getContentPane().add(jPanel7, java.awt.BorderLayout.CENTER);
 
+        jbtAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/flags/France.png"))); // NOI18N
+        jbtAvatar.setMnemonic('A');
+        jbtAvatar.setPreferredSize(new java.awt.Dimension(80, 80));
+        jbtAvatar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAvatarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jbtAvatar, java.awt.BorderLayout.WEST);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
-    this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-    if (jtfNom.getText().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-        JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM DE L'ÉQUIPE VIDE"));
-    } else {
-        mTeam.mName = jtfNom.getText();
+        if (jtfNom.getText().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM DE L'ÉQUIPE VIDE"));
+        } else {
+            mTeam.mName = jtfNom.getText();
 
-        if (!mTour.getTeams().contains(mTeam)) {
-            mTour.getTeams().add(mTeam);
+            if (!mTour.getTeams().contains(mTeam)) {
+                mTour.getTeams().add(mTeam);
+            }
+            this.setVisible(false);
         }
-        this.setVisible(false);
-    }
 
     }//GEN-LAST:event_jbtOKActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
 
-    final jdgCoach w = new jdgCoach(MainFrame.getMainFrame(), true, mTeam);
-    w.setVisible(true);
+        final jdgCoach w = new jdgCoach(MainFrame.getMainFrame(), true, mTeam);
+        w.setVisible(true);
 
-    update();
+        update();
 }//GEN-LAST:event_jbtAddActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-    mTour.getCoachs().remove(mTeam.mCoachs.get(jtbCoachs.getSelectedRow()));
-    mTeam.mCoachs.remove(jtbCoachs.getSelectedRow());
+        mTour.getCoachs().remove(mTeam.mCoachs.get(jtbCoachs.getSelectedRow()));
+        mTeam.mCoachs.remove(jtbCoachs.getSelectedRow());
 
-    update();
+        update();
 }//GEN-LAST:event_jbtRemoveActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
 
-    if (jtbCoachs.getSelectedRow() >= 0) {
-        final jdgCoach w = new jdgCoach(MainFrame.getMainFrame(), true, mTeam.mCoachs.get(jtbCoachs.getSelectedRow()));
-        w.setVisible(true);
-        update();
-    }
+        if (jtbCoachs.getSelectedRow() >= 0) {
+            final jdgCoach w = new jdgCoach(MainFrame.getMainFrame(), true, mTeam.mCoachs.get(jtbCoachs.getSelectedRow()));
+            w.setVisible(true);
+            update();
+        }
 }//GEN-LAST:event_jbtModifyActionPerformed
+
+        private ImageIcon resize(ImageIcon image, int heigth, int width) {
+        Image img = image.getImage();
+        Image newimg = img.getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(newimg);
+    }
+    
+    private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
+        File folder;
+        folder = new File(getClass().getResource("/tourma/images/flags").getFile());
+        File[] listOfFiles = folder.listFiles();
+
+        Object[] objects = new Object[listOfFiles.length + 1];
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                String path = listOfFiles[i].getAbsolutePath();
+                ImageIcon icon = new ImageIcon(path);
+                objects[i] = resize(icon,80,80);
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Directory " + listOfFiles[i].getName());
+            }
+        }
+
+        ImageIcon empty = new ImageIcon();
+        objects[listOfFiles.length] = empty;
+
+        JComboBox combo = new JComboBox(objects);
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel l = new JLabel("Sélectionnez une image");
+        panel.add(l, BorderLayout.NORTH);
+        panel.add(combo, BorderLayout.CENTER);
+
+        combo.setSelectedItem(empty);
+
+        JOptionPane.showConfirmDialog(null, panel, null, JOptionPane.YES_OPTION);
+
+        if (combo.getSelectedItem() == empty) {
+            final JFileChooser jfc = new JFileChooser();
+            final FileFilter filter1 = new ExtensionFileFilter("image", new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+            jfc.setFileFilter(filter1);
+            if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
+                icon = resize(icon,80,80);
+                this.mTeam.picture = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+                Graphics g = this.mTeam.picture.createGraphics();
+                // paint the Icon to the BufferedImage.
+                icon.paintIcon(null, g, 0, 0);
+                g.dispose();
+            }
+        } else {
+            ImageIcon icon = (ImageIcon) combo.getSelectedItem();
+            this.mTeam.picture = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics g = this.mTeam.picture.createGraphics();
+            // paint the Icon to the BufferedImage.
+            icon.paintIcon(null, g, 0, 0);
+            g.dispose();
+        }
+
+        jbtAvatar.setIcon(new ImageIcon(mTeam.picture));
+    }//GEN-LAST:event_jbtAvatarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -225,6 +332,7 @@ public class jdgTeam extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtAdd;
+    private javax.swing.JButton jbtAvatar;
     private javax.swing.JButton jbtCancel;
     private javax.swing.JButton jbtModify;
     private javax.swing.JButton jbtOK;
@@ -235,7 +343,7 @@ public class jdgTeam extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     protected void update() {
-        
+
         jtfNom.setText(mTeam.mName);
         jtbCoachs.setModel(new mjtCoaches(mTeam.mCoachs));
 

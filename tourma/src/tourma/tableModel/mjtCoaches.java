@@ -97,7 +97,14 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
                     val = c.mTeam;
                     break;
                 case 3:
+                    if (c.mRoster!=null)
+                    {
                     val = c.mRoster.mName;
+                    }
+                    else
+                    {
+                        val="unknown";
+                    }
                     break;
                 case 4:
                     val = c.mNaf;

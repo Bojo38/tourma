@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import tourma.data.RosterType;
 import tourma.data.Group;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
@@ -218,9 +219,8 @@ public class JPNParamGroup extends javax.swing.JPanel {
         final DefaultListModel listModel = new DefaultListModel();
         final ArrayList<RosterType> rosters = mTournament.getGroups().get(jcbGroupLeft.getSelectedIndex()).mRosters;
         for (int i = 0; i < rosters.size(); i++) {
-            RosterType r=rosters.get(i);
-            if (r!=null)
-            {
+            RosterType r = rosters.get(i);
+            if (r != null) {
                 listModel.addElement(r.mName);
             }
         }
@@ -278,7 +278,10 @@ public class JPNParamGroup extends javax.swing.JPanel {
         final DefaultListModel listModel = new DefaultListModel();
         final ArrayList<RosterType> rosters = mTournament.getGroups().get(jcbGroupRight.getSelectedIndex()).mRosters;
         for (int i = 0; i < rosters.size(); i++) {
-            listModel.addElement(rosters.get(i).mName);
+            RosterType r = rosters.get(i);
+            if (r != null) {
+                listModel.addElement(r.mName);
+            }
         }
         jlsRight.setModel(listModel);
     }//GEN-LAST:event_jcbGroupRightActionPerformed

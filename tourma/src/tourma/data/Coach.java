@@ -5,6 +5,9 @@
 package tourma.data;
 
 import java.awt.Color;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,7 +15,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import javax.xml.bind.DatatypeConverter;
+import org.jdom2.Content;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import teamma.data.Player;
@@ -107,6 +113,22 @@ public final class Coach extends Competitor implements XMLExport {
             final Element compo = this.mCompositions.get(i).getXMLElement();
             coach.addContent(compo);
         }
+
+        Element image = new Element("Picture");
+
+        if (picture != null) {
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(picture, "png", baos);
+                baos.flush();
+                String encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                baos.close(); // should be inside a finally block
+                image.addContent(encodedImage);
+                coach.addContent(image);
+            } catch (IOException e) {
+            }
+        }
+
         return coach;
     }
 
@@ -158,8 +180,10 @@ public final class Coach extends Competitor implements XMLExport {
         try {
             this.mName = coach.getAttributeValue(StringConstants.CS_NAME);
             this.mTeam = coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
-            String rosterName = RosterType.getRosterName(coach.getAttributeValue(StringConstants.CS_ROSTER));
+            String rName = coach.getAttributeValue(StringConstants.CS_ROSTER);
+            String rosterName = RosterType.getRosterName(rName);
             this.mRoster = RosterType.mRosterTypes.get(rosterName);
+
             this.mNaf = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue();
             this.mRank = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue();
             this.mClan = Clan.sClanMap.get(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN")));
@@ -198,6 +222,17 @@ public final class Coach extends Competitor implements XMLExport {
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
+
+
+            try {
+                Element image = coach.getChild("Picture");
+                String encodedImage = image.getText();
+                byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+                picture = ImageIO.read(new ByteArrayInputStream(bytes));
+            } catch (IOException e) {
+            } catch (Exception e1) {
+            }
+        
     }
 
     @Override
@@ -1047,7 +1082,7 @@ public final class Coach extends Competitor implements XMLExport {
             }
             System.out.println("Remaining tries: " + balancingTries);
 
-            boolean balanced=true;
+            boolean balanced = true;
             for (int i = matchs.size() - 1; i > 0; i--) {
 
                 Match current = matchs.get(i);
@@ -1085,8 +1120,8 @@ public final class Coach extends Competitor implements XMLExport {
 
                         if (canMatch) {
                             matchs.get(i).mCompetitor2 = c2_tmp;
-                            matchs.get(k).mCompetitor2 = c2;                           
-                            
+                            matchs.get(k).mCompetitor2 = c2;
+
                             System.out.println(c1.mName + " vs " + c2.mName + " becomes " + c1.mName + " vs " + c2_tmp.mName);
                             System.out.println("And " + c1_tmp.mName + " vs " + c2_tmp.mName + " becomes " + c1_tmp.mName + " vs " + c2.mName);
 
@@ -1126,30 +1161,29 @@ public final class Coach extends Competitor implements XMLExport {
                     }
                 }
             }
-            
-            
+
+
             if ((tour.getParams().mTeamTournament)
-                        && (tour.getParams().mTeamPairing == 0)) {
-                Match cm=matchs.get(0);
-                    if ((tour.getParams().mIndivPairingTeamBalanced) || (tour.getParams().mIndivPairingIndivBalanced)) {
-                        Coach c1=(Coach)cm.mCompetitor1;
-                        Coach c2=(Coach)cm.mCompetitor2;
-                        balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
-                        if (!balanced) {
-                            System.out.println(c1.mName + " is not balanced");
-                            totallyBalanced = false;
-                        }
+                    && (tour.getParams().mTeamPairing == 0)) {
+                Match cm = matchs.get(0);
+                if ((tour.getParams().mIndivPairingTeamBalanced) || (tour.getParams().mIndivPairingIndivBalanced)) {
+                    Coach c1 = (Coach) cm.mCompetitor1;
+                    Coach c2 = (Coach) cm.mCompetitor2;
+                    balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
+                    if (!balanced) {
+                        System.out.println(c1.mName + " is not balanced");
+                        totallyBalanced = false;
                     }
                 }
-            
+            }
+
             if ((!totallyBalanced)
                     && (balancingTries == 0)) {
-                int answer=JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Le calcul de la ronde n'a pas abouti à un résultat satisfaisant\n"
+                int answer = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Le calcul de la ronde n'a pas abouti à un résultat satisfaisant\n"
                         + "Le calcul de ce type de ronde nécessite énromément de puissance\n"
-                        + "de calcul. Voulez-vous continuer ?","Ronde non satisfaisante",JOptionPane.YES_NO_OPTION);
-                if (answer==JOptionPane.YES_OPTION)
-                {
-                    balancingTries=10000;
+                        + "de calcul. Voulez-vous continuer ?", "Ronde non satisfaisante", JOptionPane.YES_NO_OPTION);
+                if (answer == JOptionPane.YES_OPTION) {
+                    balancingTries = 10000;
                 }
             }
         }

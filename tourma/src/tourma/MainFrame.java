@@ -98,12 +98,27 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiChangePairing.setEnabled(true);
                 jmiAddFreeMatch.setEnabled(true);
                 jmiDelFreeMatch.setEnabled(true);
+                if (((JPNRound) jpnContent).getMatchTableSelectedRow() >= 0) {
+                    jmiCancelConceedMatch.setEnabled(true);
+                    jmiCancelMatchRefuse.setEnabled(true);
+                    jmiConceedMatch.setEnabled(true);
+                    jmiRefuseMatch.setEnabled(true);
+                } else {
+                    jmiCancelConceedMatch.setEnabled(false);
+                    jmiCancelMatchRefuse.setEnabled(false);
+                    jmiConceedMatch.setEnabled(false);
+                    jmiRefuseMatch.setEnabled(false);
+                }
             } else {
                 jmiDelRound.setEnabled(false);
                 jmiGenerateNextRound.setEnabled(false);
                 jmiChangePairing.setEnabled(false);
                 jmiAddFreeMatch.setEnabled(false);
                 jmiDelFreeMatch.setEnabled(false);
+                jmiCancelConceedMatch.setEnabled(false);
+                jmiCancelMatchRefuse.setEnabled(false);
+                jmiConceedMatch.setEnabled(false);
+                jmiRefuseMatch.setEnabled(false);
             }
             jckmiRoundOnly.setEnabled(true);
         } else {
@@ -113,6 +128,10 @@ public class MainFrame extends javax.swing.JFrame {
             jmiChangePairing.setEnabled(false);
             jmiAddFreeMatch.setEnabled(false);
             jmiDelFreeMatch.setEnabled(false);
+            jmiCancelConceedMatch.setEnabled(false);
+            jmiCancelMatchRefuse.setEnabled(false);
+            jmiConceedMatch.setEnabled(false);
+            jmiRefuseMatch.setEnabled(false);
         }
         jcxPatchPortugal.setSelected(mTournament.getParams().mPortugal);
         this.revalidate();
@@ -156,6 +175,9 @@ public class MainFrame extends javax.swing.JFrame {
         jmiNafLoad = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         jcxPatchPortugal = new javax.swing.JCheckBoxMenuItem();
+        jSeparator13 = new javax.swing.JPopupMenu.Separator();
+        jcxUseColor = new javax.swing.JCheckBoxMenuItem();
+        jcxUseImage = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
@@ -172,6 +194,11 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         jmiAddFreeMatch = new javax.swing.JMenuItem();
         jmiDelFreeMatch = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JPopupMenu.Separator();
+        jmiConceedMatch = new javax.swing.JMenuItem();
+        jmiCancelConceedMatch = new javax.swing.JMenuItem();
+        jmiRefuseMatch = new javax.swing.JMenuItem();
+        jmiCancelMatchRefuse = new javax.swing.JMenuItem();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -183,11 +210,11 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle(bundle.getString("SoftwareTitle")); // NOI18N
         setIconImage((Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IMAGES/ICONE.PNG")))));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -252,7 +279,8 @@ public class MainFrame extends javax.swing.JFrame {
         jmnFile.add(jmiExport);
 
         jmiExportFbb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
-        jmiExportFbb.setText(bundle.getString("ExportFBBResultKey")); // NOI18N
+        jmiExportFbb.setActionCommand(bundle.getString("FBBExport")); // NOI18N
+        jmiExportFbb.setLabel(bundle.getString("FBBExport")); // NOI18N
         jmiExportFbb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiExportFbbActionPerformed(evt);
@@ -262,6 +290,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jmiExportFbb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
         jmiExportFbb1.setText(bundle.getString("ExportFBBResultKey")); // NOI18N
+        jmiExportFbb1.setLabel(bundle.getString("FBBFullExport")); // NOI18N
         jmiExportFbb1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiExportFbb1ActionPerformed(evt);
@@ -318,6 +347,25 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnTools.add(jcxPatchPortugal);
+        jmnTools.add(jSeparator13);
+
+        jcxUseColor.setSelected(true);
+        jcxUseColor.setText(bundle.getString("UseColor")); // NOI18N
+        jcxUseColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxUseColorActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxUseColor);
+
+        jcxUseImage.setSelected(true);
+        jcxUseImage.setText(bundle.getString("UseImage")); // NOI18N
+        jcxUseImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxUseImageActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxUseImage);
 
         jMenuBar1.add(jmnTools);
 
@@ -417,6 +465,39 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnRound.add(jmiDelFreeMatch);
+        jmnRound.add(jSeparator12);
+
+        jmiConceedMatch.setText(bundle.getString("MatchConceed")); // NOI18N
+        jmiConceedMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiConceedMatchActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiConceedMatch);
+
+        jmiCancelConceedMatch.setText(bundle.getString("AnnulerMatchConceed")); // NOI18N
+        jmiCancelConceedMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCancelConceedMatchActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiCancelConceedMatch);
+
+        jmiRefuseMatch.setText(bundle.getString("MatchRefused")); // NOI18N
+        jmiRefuseMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiRefuseMatchActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiRefuseMatch);
+
+        jmiCancelMatchRefuse.setText(bundle.getString("CancelMatchRefuse")); // NOI18N
+        jmiCancelMatchRefuse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCancelMatchRefuseActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiCancelMatchRefuse);
 
         jMenuBar1.add(jmnRound);
 
@@ -1252,6 +1333,100 @@ public class MainFrame extends javax.swing.JFrame {
     private void jcxPatchPortugalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxPatchPortugalActionPerformed
         mTournament.getParams().mPortugal = jcxPatchPortugal.isSelected();
     }//GEN-LAST:event_jcxPatchPortugalActionPerformed
+
+    private void jmiConceedMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConceedMatchActionPerformed
+        try {
+            int nbMatch = ((JPNRound) jpnContent).getMatchTableSelectedRow();
+            CoachMatch m = ((JPNRound) jpnContent).getRound().getCoachMatchs().get(nbMatch);
+            if (m.concedeedBy1 || m.concedeedBy2 || m.refusedBy1 || m.refusedBy2) {
+                JOptionPane.showMessageDialog(null, "Error", "Match déjà concedé ou refusé", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Object[] options = new Object[3];
+                options[0] = m.mCompetitor1;
+                options[1] = m.mCompetitor2;
+                options[2] = "Annuler";
+
+                Object option = JOptionPane.showInputDialog(null, "Concéder un match", "Qui concède le match ?", JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+
+                if (option.equals(m.mCompetitor1)) {
+                    m.concedeedBy1 = true;
+                    m.concedeedBy2 = false;
+                }
+                if (option.equals(m.mCompetitor2)) {
+                    m.concedeedBy2 = true;
+                    m.concedeedBy1 = false;
+                }
+                update();
+                ((JPNRound) jpnContent).update();
+            }
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_jmiConceedMatchActionPerformed
+
+    private void jmiCancelConceedMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCancelConceedMatchActionPerformed
+        try {
+            int nbMatch = ((JPNRound) jpnContent).getMatchTableSelectedRow();
+            CoachMatch m = ((JPNRound) jpnContent).getRound().getCoachMatchs().get(nbMatch);
+            m.concedeedBy1 = false;
+            m.concedeedBy2 = false;
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jmiCancelConceedMatchActionPerformed
+
+    private void jmiRefuseMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRefuseMatchActionPerformed
+        try {
+            int nbMatch = ((JPNRound) jpnContent).getMatchTableSelectedRow();
+            CoachMatch m = ((JPNRound) jpnContent).getRound().getCoachMatchs().get(nbMatch);
+            if (m.concedeedBy1 || m.concedeedBy2 || m.refusedBy1 || m.refusedBy2) {
+                JOptionPane.showMessageDialog(null, "Error", "Match déjà concedé ou refusé", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Object[] options = new Object[3];
+                options[0] = m.mCompetitor1;
+                options[1] = m.mCompetitor2;
+                options[2] = "Annuler";
+
+                Object option = JOptionPane.showInputDialog(null, "Refuser un match", "Qui refuse le match ?", JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+
+                if (option.equals(m.mCompetitor1)) {
+                    m.refusedBy1 = true;
+                    m.refusedBy2 = false;
+                }
+                if (option.equals(m.mCompetitor2)) {
+                    m.refusedBy2 = true;
+                    m.refusedBy1 = false;
+                }
+                update();
+                ((JPNRound) jpnContent).update();
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jmiRefuseMatchActionPerformed
+
+    private void jmiCancelMatchRefuseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCancelMatchRefuseActionPerformed
+        try {
+            int nbMatch = ((JPNRound) jpnContent).getMatchTableSelectedRow();
+            CoachMatch m = ((JPNRound) jpnContent).getRound().getCoachMatchs().get(nbMatch);
+            m.refusedBy1 = false;
+            m.refusedBy2 = false;
+        } catch (Exception e) {
+        }// TODO add your handling code here:
+    }//GEN-LAST:event_jmiCancelMatchRefuseActionPerformed
+
+    private void jcxUseColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxUseColorActionPerformed
+        Tournament.getTournament().getParams().useColor=jcxUseColor.isSelected();
+        if (jpnContent instanceof JPNRound) {
+            ((JPNRound) jpnContent).update();
+        }
+    }//GEN-LAST:event_jcxUseColorActionPerformed
+
+    private void jcxUseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxUseImageActionPerformed
+        Tournament.getTournament().getParams().useImage=jcxUseImage.isSelected();
+        if (jpnContent instanceof JPNRound) {
+            ((JPNRound) jpnContent).update();
+        }
+    }//GEN-LAST:event_jcxUseImageActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -1303,6 +1478,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
+    private javax.swing.JPopupMenu.Separator jSeparator13;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1314,12 +1491,17 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
+    private javax.swing.JCheckBoxMenuItem jcxUseColor;
+    private javax.swing.JCheckBoxMenuItem jcxUseImage;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAddCoach;
     private javax.swing.JMenuItem jmiAddFreeMatch;
     private javax.swing.JMenuItem jmiAideEnLigne;
+    private javax.swing.JMenuItem jmiCancelConceedMatch;
+    private javax.swing.JMenuItem jmiCancelMatchRefuse;
     private javax.swing.JMenuItem jmiChangePairing;
     private javax.swing.JMenuItem jmiCharger;
+    private javax.swing.JMenuItem jmiConceedMatch;
     private javax.swing.JMenuItem jmiDelFreeMatch;
     private javax.swing.JMenuItem jmiDelRound;
     private javax.swing.JMenuItem jmiEditTeam;
@@ -1331,6 +1513,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiGenerateNextRound;
     private javax.swing.JMenuItem jmiNafLoad;
     private javax.swing.JMenuItem jmiNouveau;
+    private javax.swing.JMenuItem jmiRefuseMatch;
     private javax.swing.JMenuItem jmiRevisions;
     private javax.swing.JMenuItem jmiSave;
     private javax.swing.JMenuItem jmiSaveAs;

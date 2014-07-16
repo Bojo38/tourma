@@ -488,7 +488,7 @@ public class Tournament {
             final int size = qrcode.getMatrix().getWidth() * magnify;
 
             //Make the BufferedImage that are to hold the QRCode 
-            final BufferedImage im = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+            final BufferedImage im = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
             im.createGraphics();
             final Graphics2D g = (Graphics2D) im.getGraphics();
             g.setColor(Color.WHITE);
@@ -735,6 +735,7 @@ public class Tournament {
                 mParams.mPointsIndivLargeVictory = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LARGE_VICTORY")).getIntValue();
                 mParams.mPointsIndivDraw = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DRAW")).getIntValue();
                 mParams.mPointsIndivLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOST")).getIntValue();
+                               
                 mParams.mPointsIndivLittleLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LITTLE_LOST")).getIntValue();
                 mParams.mRankingIndiv1 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK1")).getIntValue();
                 mParams.mRankingIndiv2 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK2")).getIntValue();
@@ -1018,8 +1019,10 @@ public class Tournament {
                     final Iterator it_ros = ros.iterator();
                     while (it_ros.hasNext()) {
                         final Element r = (Element) it_ros.next();
-                        RosterType.mRostersNames.add(r.getAttributeValue(StringConstants.CS_NAME));
-                        RosterType.mRosterTypes.put(r.getAttributeValue(StringConstants.CS_NAME), new RosterType(r.getAttributeValue(StringConstants.CS_NAME)));
+                        String name=r.getAttributeValue(StringConstants.CS_NAME);
+                        name=RosterType.getRosterName(name);
+                        RosterType.mRostersNames.add(name);
+                        RosterType.mRosterTypes.put(name, new RosterType(name));
                     }
                 } else {
                     RosterType.initCollection();

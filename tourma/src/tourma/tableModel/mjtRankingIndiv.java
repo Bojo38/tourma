@@ -4,8 +4,13 @@
  */
 package tourma.tableModel;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
@@ -15,6 +20,7 @@ import tourma.data.Pool;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
+import tourma.utils.ImageTreatment;
 
 /**
  *
@@ -74,7 +80,7 @@ public class mjtRankingIndiv extends mjtRanking {
                         final Criteria c1 = getCriteriaByValue(mRankingType1);
                         final int subType1 = getSubtypeByValue(mRankingType1);
                         if (c1 == null) {
-                            value1 += getValue(c, m, mRankingType1);
+                            value1 = getValue(c, m, mRankingType1, value1);
                         } else {
                             value1 += getValue(c, m, c1, subType1);
                         }
@@ -82,7 +88,7 @@ public class mjtRankingIndiv extends mjtRanking {
                         final Criteria c2 = getCriteriaByValue(mRankingType2);
                         final int subType2 = getSubtypeByValue(mRankingType2);
                         if (c2 == null) {
-                            value2 += getValue(c, m, mRankingType2);
+                            value2 = getValue(c, m, mRankingType2, value2);
                         } else {
                             value2 += getValue(c, m, c1, subType2);
                         }
@@ -90,7 +96,7 @@ public class mjtRankingIndiv extends mjtRanking {
                         final Criteria c3 = getCriteriaByValue(mRankingType3);
                         final int subType3 = getSubtypeByValue(mRankingType3);
                         if (c3 == null) {
-                            value3 += getValue(c, m, mRankingType3);
+                            value3 = getValue(c, m, mRankingType3, value3);
                         } else {
                             value3 += getValue(c, m, c3, subType3);
                         }
@@ -98,7 +104,7 @@ public class mjtRankingIndiv extends mjtRanking {
                         final Criteria c4 = getCriteriaByValue(mRankingType4);
                         final int subType4 = getSubtypeByValue(mRankingType4);
                         if (c4 == null) {
-                            value4 += getValue(c, m, mRankingType4);
+                            value4 = getValue(c, m, mRankingType4, value4);
                         } else {
                             value4 += getValue(c, m, c4, subType4);
                         }
@@ -106,7 +112,7 @@ public class mjtRankingIndiv extends mjtRanking {
                         final Criteria c5 = getCriteriaByValue(mRankingType5);
                         final int subType5 = getSubtypeByValue(mRankingType5);
                         if (c5 == null) {
-                            value5 += getValue(c, m, mRankingType5);
+                            value5 = getValue(c, m, mRankingType5, value5);
                         } else {
                             value5 += getValue(c, m, c5, subType5);
                         }
@@ -224,7 +230,7 @@ public class mjtRankingIndiv extends mjtRanking {
                 cl = col - 1;
             }
             if (col == 1) {
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
             }
         }
 
@@ -320,5 +326,28 @@ public class mjtRankingIndiv extends mjtRanking {
             }
         }
         return object;
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        JTextField jtf = (JTextField) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        if (Tournament.getTournament().getParams().useImage)
+        {
+        if ((column == 1) && mTeamTournament) {
+            Coach c = (Coach)mObjects.get(row);
+            if (c.mTeamMates.picture != null) {
+                JLabel obj = new JLabel();
+                ImageIcon icon = ImageTreatment.resize(new ImageIcon(c.mTeamMates.picture), 30, 30);
+                obj.setIcon(icon);
+                obj.setText((String) value);
+                obj.setOpaque(true);
+                obj.setBackground(jtf.getBackground());
+                obj.setForeground(jtf.getForeground());
+                return obj;
+            }
+        }
+        }
+        return jtf;
     }
 }

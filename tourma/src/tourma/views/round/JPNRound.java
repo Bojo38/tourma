@@ -152,9 +152,9 @@ public class JPNRound extends javax.swing.JPanel {
             jtbMatches.setModel(model);
             jtbMatches.setDefaultRenderer(String.class, model);
             jtbMatches.setDefaultRenderer(Integer.class, model);
-            jtbMatches.setRowHeight(25);
+            jtbMatches.setRowHeight(30);
 
-            jtbRankingIndiv.setRowHeight(25);
+            jtbRankingIndiv.setRowHeight(30);
 
             //jbtNextRound.setEnabled((!mTournament.mRoundRobin) || (mTournament.mRoundRobin && (mRoundNumber == mTournament.getRounds().size() - 1)));
 
@@ -395,7 +395,7 @@ public class JPNRound extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtpGlobalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtpGlobalStateChanged
-       update();
+        update();
     }//GEN-LAST:event_jtpGlobalStateChanged
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
@@ -476,6 +476,7 @@ public class JPNRound extends javax.swing.JPanel {
                 }
             }
         }
+        MainFrame.getMainFrame().update();
     }//GEN-LAST:event_jtbMatchesMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

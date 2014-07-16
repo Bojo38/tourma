@@ -4,12 +4,17 @@
  */
 package tourma.data;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import javax.xml.bind.DatatypeConverter;
 import org.jdom2.Element;
 import tourma.MainFrame;
 import tourma.jdgPairing;
@@ -110,6 +115,17 @@ public class Team extends Competitor implements XMLExport {
             coach.setAttribute(StringConstants.CS_NAME, this.mCoachs.get(j).mName);
             team.addContent(coach);
         }
+        try {
+            Element image = new Element("Picture");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(picture, "png", baos);
+            baos.flush();
+            String encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+            baos.close(); // should be inside a finally block
+            image.addContent(encodedImage);
+            team.addContent(image);
+        } catch (IOException e) {
+        }
         return team;
     }
 
@@ -126,6 +142,15 @@ public class Team extends Competitor implements XMLExport {
             final Coach c = Coach.sCoachMap.get(coach.getAttribute(StringConstants.CS_NAME).getValue());
             c.mTeamMates = this;
             this.mCoachs.add(c);
+        }
+
+        try {
+            Element image = team.getChild("Picture");
+            String encodedImage = image.getText();
+            byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+            picture = ImageIO.read(new ByteArrayInputStream(bytes));
+        } catch (IOException e) {
+        } catch (Exception e1) {
         }
     }
 

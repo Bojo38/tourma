@@ -11,6 +11,7 @@ import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
 import tourma.data.ObjectRanking;
+import tourma.data.Parameters;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
 
@@ -20,11 +21,11 @@ import tourma.utility.StringConstants;
  */
 public class mjtRankingClan extends mjtRanking {
 
-    boolean mRoundOnly=false;
-    
-    public mjtRankingClan(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3,final  int ranking_type4,final  int ranking_type5, final ArrayList<Clan> clans, final boolean round_only) {
+    boolean mRoundOnly = false;
+
+    public mjtRankingClan(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList<Clan> clans, final boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, clans);
-        mRoundOnly=round_only;
+        mRoundOnly = round_only;
         sortDatas();
     }
 
@@ -58,22 +59,21 @@ public class mjtRankingClan extends mjtRanking {
                     int value3 = 0;
                     int value4 = 0;
                     int value5 = 0;
-                    
-                    int j=0;
-                    
-                    if (mRoundOnly)
-                    {
-                        j= mRound;
+
+                    int j = 0;
+
+                    if (mRoundOnly) {
+                        j = mRound;
                     }
-                    
-                    while (j <= Math.min(c.mMatchs.size()-1,mRound)) {
-                    //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
-                        final CoachMatch m = (CoachMatch)c.mMatchs.get(j);
+
+                    while (j <= Math.min(c.mMatchs.size() - 1, mRound)) {
+                        //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
+                        final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
 
                         final Criteria c1 = getCriteriaByValue(mRankingType1);
                         final int subType1 = getSubtypeByValue(mRankingType1);
                         if (c1 == null) {
-                            value1 += getValue(c, m, mRankingType1);
+                            value1 = getValue(c, m, mRankingType1, value1);
                         } else {
                             value1 += getValue(c, m, c1, subType1);
                         }
@@ -81,7 +81,7 @@ public class mjtRankingClan extends mjtRanking {
                         final Criteria c2 = getCriteriaByValue(mRankingType2);
                         final int subType2 = getSubtypeByValue(mRankingType2);
                         if (c2 == null) {
-                            value2 += getValue(c, m, mRankingType2);
+                            value2 = getValue(c, m, mRankingType2, value2);
                         } else {
                             value2 += getValue(c, m, c2, subType2);
                         }
@@ -89,7 +89,7 @@ public class mjtRankingClan extends mjtRanking {
                         final Criteria c3 = getCriteriaByValue(mRankingType3);
                         final int subType3 = getSubtypeByValue(mRankingType3);
                         if (c3 == null) {
-                            value3 += getValue(c, m, mRankingType3);
+                            value3 = getValue(c, m, mRankingType3, value3);
                         } else {
                             value3 += getValue(c, m, c3, subType3);
                         }
@@ -97,7 +97,7 @@ public class mjtRankingClan extends mjtRanking {
                         final Criteria c4 = getCriteriaByValue(mRankingType4);
                         final int subType4 = getSubtypeByValue(mRankingType4);
                         if (c4 == null) {
-                            value4 += getValue(c, m, mRankingType4);
+                            value4 = getValue(c, m, mRankingType4, value4);
                         } else {
                             value4 += getValue(c, m, c4, subType4);
                         }
@@ -105,7 +105,7 @@ public class mjtRankingClan extends mjtRanking {
                         final Criteria c5 = getCriteriaByValue(mRankingType5);
                         final int subType5 = getSubtypeByValue(mRankingType5);
                         if (c5 == null) {
-                            value5 += getValue(c, m, mRankingType5);
+                            value5 = getValue(c, m, mRankingType5, value5);
                         } else {
                             value5 += getValue(c, m, c5, subType5);
                         }
@@ -148,116 +148,116 @@ public class mjtRankingClan extends mjtRanking {
         }
 
         /*mDatas.clear();
-        mDatas = new ArrayList<ObjectRanking>();
-        for (int i = 0; i < mObjects.size(); i++) {
-        Clan cl = (Clan) mObjects.get(i);
+         mDatas = new ArrayList<ObjectRanking>();
+         for (int i = 0; i < mObjects.size(); i++) {
+         Clan cl = (Clan) mObjects.get(i);
 
-        ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
+         ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
 
-        //Loop on first round for unique coach instance
+         //Loop on first round for unique coach instance
 
-        HashMap<Coach, Integer> values1Map = new HashMap<Coach, Integer>();
-        HashMap<Coach, Integer> values2Map = new HashMap<Coach, Integer>();
-        HashMap<Coach, Integer> values3Map = new HashMap<Coach, Integer>();
-        HashMap<Coach, Integer> values4Map = new HashMap<Coach, Integer>();
-        HashMap<Coach, Integer> values5Map = new HashMap<Coach, Integer>();
+         HashMap<Coach, Integer> values1Map = new HashMap<Coach, Integer>();
+         HashMap<Coach, Integer> values2Map = new HashMap<Coach, Integer>();
+         HashMap<Coach, Integer> values3Map = new HashMap<Coach, Integer>();
+         HashMap<Coach, Integer> values4Map = new HashMap<Coach, Integer>();
+         HashMap<Coach, Integer> values5Map = new HashMap<Coach, Integer>();
 
-        for (int k = 0; k < coaches.size(); k++) {
-        values1Map.put(coaches.get(k), 0);
-        values2Map.put(coaches.get(k), 0);
-        values3Map.put(coaches.get(k), 0);
-        values4Map.put(coaches.get(k), 0);
-        values5Map.put(coaches.get(k), 0);
-        }
+         for (int k = 0; k < coaches.size(); k++) {
+         values1Map.put(coaches.get(k), 0);
+         values2Map.put(coaches.get(k), 0);
+         values3Map.put(coaches.get(k), 0);
+         values4Map.put(coaches.get(k), 0);
+         values5Map.put(coaches.get(k), 0);
+         }
 
-        for (int k = 0; k < coaches.size(); k++) {
-        Coach c = coaches.get(k);
+         for (int k = 0; k < coaches.size(); k++) {
+         Coach c = coaches.get(k);
 
-        CoachMatch m = c.mMatchs.get(mRound);
+         CoachMatch m = c.mMatchs.get(mRound);
 
-        Round round = Tournament.getTournament().getRounds().get(mRound);
+         Round round = Tournament.getTournament().getRounds().get(mRound);
 
-        Criteria c1 = getCriteriaByValue(mRankingType1);
-        int subType1 = getSubtypeByValue(mRankingType1);
-        if (c1 == null) {
-        values1Map.put(c, values1Map.get(c) + getValue(c, m, mRankingType1, round));
-        } else {
-        values1Map.put(c, values1Map.get(c) + getValue(c, m, c1, subType1));
-        }
+         Criteria c1 = getCriteriaByValue(mRankingType1);
+         int subType1 = getSubtypeByValue(mRankingType1);
+         if (c1 == null) {
+         values1Map.put(c, values1Map.get(c) + getValue(c, m, mRankingType1, round));
+         } else {
+         values1Map.put(c, values1Map.get(c) + getValue(c, m, c1, subType1));
+         }
 
-        Criteria c2 = getCriteriaByValue(mRankingType2);
-        int subType2 = getSubtypeByValue(mRankingType2);
-        if (c2 == null) {
-        values2Map.put(c, values2Map.get(c) + getValue(c, m, mRankingType2, round));
-        } else {
-        values2Map.put(c, values2Map.get(c) + getValue(c, m, c2, subType2));
-        }
+         Criteria c2 = getCriteriaByValue(mRankingType2);
+         int subType2 = getSubtypeByValue(mRankingType2);
+         if (c2 == null) {
+         values2Map.put(c, values2Map.get(c) + getValue(c, m, mRankingType2, round));
+         } else {
+         values2Map.put(c, values2Map.get(c) + getValue(c, m, c2, subType2));
+         }
 
-        Criteria c3 = getCriteriaByValue(mRankingType3);
-        int subType3 = getSubtypeByValue(mRankingType3);
-        if (c3 == null) {
-        values3Map.put(c, values3Map.get(c) + getValue(c, m, mRankingType3, round));
-        } else {
-        values3Map.put(c, values3Map.get(c) + getValue(c, m, c3, subType3));
-        }
+         Criteria c3 = getCriteriaByValue(mRankingType3);
+         int subType3 = getSubtypeByValue(mRankingType3);
+         if (c3 == null) {
+         values3Map.put(c, values3Map.get(c) + getValue(c, m, mRankingType3, round));
+         } else {
+         values3Map.put(c, values3Map.get(c) + getValue(c, m, c3, subType3));
+         }
 
-        Criteria c4 = getCriteriaByValue(mRankingType4);
-        int subType4 = getSubtypeByValue(mRankingType4);
-        if (c4 == null) {
-        values4Map.put(c, values4Map.get(c) + getValue(c, m, mRankingType4, round));
-        } else {
-        values4Map.put(c, values4Map.get(c) + getValue(c, m, c4, subType4));
-        }
+         Criteria c4 = getCriteriaByValue(mRankingType4);
+         int subType4 = getSubtypeByValue(mRankingType4);
+         if (c4 == null) {
+         values4Map.put(c, values4Map.get(c) + getValue(c, m, mRankingType4, round));
+         } else {
+         values4Map.put(c, values4Map.get(c) + getValue(c, m, c4, subType4));
+         }
 
-        Criteria c5 = getCriteriaByValue(mRankingType5);
-        int subType5 = getSubtypeByValue(mRankingType5);
-        if (c5 == null) {
-        values5Map.put(c, values5Map.get(c) + getValue(c, m, mRankingType5, round));
-        } else {
-        values5Map.put(c, values5Map.get(c) + getValue(c, m, c5, subType5));
-        }
-        }
-        int value = 0;
-        int value1 = 0;
-        int value2 = 0;
-        int value3 = 0;
-        int value4 = 0;
-        int value5 = 0;
+         Criteria c5 = getCriteriaByValue(mRankingType5);
+         int subType5 = getSubtypeByValue(mRankingType5);
+         if (c5 == null) {
+         values5Map.put(c, values5Map.get(c) + getValue(c, m, mRankingType5, round));
+         } else {
+         values5Map.put(c, values5Map.get(c) + getValue(c, m, c5, subType5));
+         }
+         }
+         int value = 0;
+         int value1 = 0;
+         int value2 = 0;
+         int value3 = 0;
+         int value4 = 0;
+         int value5 = 0;
 
-        ArrayList<Integer> Values = new ArrayList<Integer>();
-        ArrayList<Integer> Values1 = new ArrayList<Integer>();
-        ArrayList<Integer> Values2 = new ArrayList<Integer>();
-        ArrayList<Integer> Values3 = new ArrayList<Integer>();
-        ArrayList<Integer> Values4 = new ArrayList<Integer>();
-        ArrayList<Integer> Values5 = new ArrayList<Integer>();
+         ArrayList<Integer> Values = new ArrayList<Integer>();
+         ArrayList<Integer> Values1 = new ArrayList<Integer>();
+         ArrayList<Integer> Values2 = new ArrayList<Integer>();
+         ArrayList<Integer> Values3 = new ArrayList<Integer>();
+         ArrayList<Integer> Values4 = new ArrayList<Integer>();
+         ArrayList<Integer> Values5 = new ArrayList<Integer>();
 
-        for (int k = 0; k < coaches.size(); k++) {
-        Values.add(valuesMap.get(coaches.get(k)));
-        Values1.add(values1Map.get(coaches.get(k)));
-        Values2.add(values2Map.get(coaches.get(k)));
-        Values3.add(values3Map.get(coaches.get(k)));
-        Values4.add(values4Map.get(coaches.get(k)));
-        Values5.add(values5Map.get(coaches.get(k)));
-        }
+         for (int k = 0; k < coaches.size(); k++) {
+         Values.add(valuesMap.get(coaches.get(k)));
+         Values1.add(values1Map.get(coaches.get(k)));
+         Values2.add(values2Map.get(coaches.get(k)));
+         Values3.add(values3Map.get(coaches.get(k)));
+         Values4.add(values4Map.get(coaches.get(k)));
+         Values5.add(values5Map.get(coaches.get(k)));
+         }
 
-        Collections.sort(Values, Collections.reverseOrder());
-        Collections.sort(Values1, Collections.reverseOrder());
-        Collections.sort(Values2, Collections.reverseOrder());
-        Collections.sort(Values3, Collections.reverseOrder());
-        Collections.sort(Values4, Collections.reverseOrder());
-        Collections.sort(Values5, Collections.reverseOrder());
+         Collections.sort(Values, Collections.reverseOrder());
+         Collections.sort(Values1, Collections.reverseOrder());
+         Collections.sort(Values2, Collections.reverseOrder());
+         Collections.sort(Values3, Collections.reverseOrder());
+         Collections.sort(Values4, Collections.reverseOrder());
+         Collections.sort(Values5, Collections.reverseOrder());
 
-        for (int k = 0; k < Math.min(Tournament.getTournament().getParams().mTeamMatesClansNumber, coaches.size()); k++) {
-        value += Values.get(k);
-        value1 += Values1.get(k);
-        value2 += Values2.get(k);
-        value3 += Values3.get(k);
-        value4 += Values4.get(k);
-        value5 += Values5.get(k);
-        }
+         for (int k = 0; k < Math.min(Tournament.getTournament().getParams().mTeamMatesClansNumber, coaches.size()); k++) {
+         value += Values.get(k);
+         value1 += Values1.get(k);
+         value2 += Values2.get(k);
+         value3 += Values3.get(k);
+         value4 += Values4.get(k);
+         value5 += Values5.get(k);
+         }
 
-        mDatas.add(new ObjectRanking(cl, value1, value2, value3, value4, value5));
-        }
+         mDatas.add(new ObjectRanking(cl, value1, value2, value3, value4, value5));
+         }
          */
 
         Collections.sort(mDatas);
@@ -265,35 +265,51 @@ public class mjtRankingClan extends mjtRanking {
 
     @Override
     public int getColumnCount() {
-        return 7;
-
+        int result = 7;
+        Parameters params = Tournament.getTournament().getParams();
+        if (params.mRankingIndiv5 == 0) {
+            result--;
+            if (params.mRankingIndiv4 == 0) {
+                result--;
+                if (params.mRankingIndiv3 == 0) {
+                    result--;
+                    if (params.mRankingIndiv2 == 0) {
+                        result--;
+                        if (params.mRankingIndiv1 == 0) {
+                            result--;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
 
     }
 
     @Override
     public String getColumnName(final int col) {
-        String result=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                result= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
-                result= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
+                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
                 break;
             case 2:
-                result= getRankingString(mRankingType1);
+                result = getRankingString(mRankingType1);
                 break;
             case 3:
-                result= getRankingString(mRankingType2);
+                result = getRankingString(mRankingType2);
                 break;
             case 4:
-                result= getRankingString(mRankingType3);
+                result = getRankingString(mRankingType3);
                 break;
             case 5:
-                result= getRankingString(mRankingType4);
+                result = getRankingString(mRankingType4);
                 break;
             case 6:
-                result= getRankingString(mRankingType5);
+                result = getRankingString(mRankingType5);
                 break;
             default:
         }
@@ -304,120 +320,120 @@ public class mjtRankingClan extends mjtRanking {
 
     /*public static int getValue(Clan c, ArrayList<Match> v, int valueType, ArrayList<Round> rounds) {
 
-    ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
+     ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
 
 
-    HashMap<Coach, Integer> valuesMap = new HashMap<Coach, Integer>();
-
-
-
-    switch (valueType) {
-    case Parameters.C_RANKING_POINTS:
-    for (int i = 0; i
-    < coaches.size(); i++) {
-    for (int j = 0; j
-    < v.size(); j++) {
-    valuesMap.put(coaches.get(i), valuesMap.get(coaches.get(i)) + getPointsByCoach(coaches.get(i), v.get(j)));
-
-
-    }
-    }
-    break;
+     HashMap<Coach, Integer> valuesMap = new HashMap<Coach, Integer>();
 
 
 
-    case Parameters.C_RANKING_NONE:
-    for (int i = 0; i
-    < coaches.size(); i++) {
-    valuesMap.put(coaches.get(i), 0);
+     switch (valueType) {
+     case Parameters.C_RANKING_POINTS:
+     for (int i = 0; i
+     < coaches.size(); i++) {
+     for (int j = 0; j
+     < v.size(); j++) {
+     valuesMap.put(coaches.get(i), valuesMap.get(coaches.get(i)) + getPointsByCoach(coaches.get(i), v.get(j)));
 
 
-    }
-    break;
-
-
-    case Parameters.C_RANKING_OPP_POINTS:
-    for (int i = 0; i
-    < coaches.size(); i++) {
-    for (int j = 0; j
-    < v.size(); j++) {
-    valuesMap.put(coaches.get(i), valuesMap.get(coaches.get(i)) + getOppPointsByCoach(coaches.get(i), rounds));
-
-
-    }
-    }
-    break;
+     }
+     }
+     break;
 
 
 
-    case Parameters.C_RANKING_VND:
-    for (int i = 0; i
-    < coaches.size(); i++) {
-    for (int j = 0; j
-    < v.size(); j++) {
-    valuesMap.put(coaches.get(i), valuesMap.get(coaches.get(i)) + getVNDByCoach(coaches.get(i), v.get(j)));
+     case Parameters.C_RANKING_NONE:
+     for (int i = 0; i
+     < coaches.size(); i++) {
+     valuesMap.put(coaches.get(i), 0);
 
 
-    }
-    }
-
-    break;
+     }
+     break;
 
 
-    }
-
-    ArrayList<Integer> Values = new ArrayList<Integer>();
-
-
-    for (int i = 0; i
-    < coaches.size(); i++) {
-    Values.add(valuesMap.get(coaches.get(i)));
+     case Parameters.C_RANKING_OPP_POINTS:
+     for (int i = 0; i
+     < coaches.size(); i++) {
+     for (int j = 0; j
+     < v.size(); j++) {
+     valuesMap.put(coaches.get(i), valuesMap.get(coaches.get(i)) + getOppPointsByCoach(coaches.get(i), rounds));
 
 
-    }
-
-    int value = 0;
-
-
-    int maximum = 0;
-    Collections.sort(Values, Collections.reverseOrder());
+     }
+     }
+     break;
 
 
-    for (int i = 0; i
-    < Math.min(Tournament.getTournament().getParams().mTeamMatesClansNumber, coaches.size()); i++) {
-    value += Values.get(i);
+
+     case Parameters.C_RANKING_VND:
+     for (int i = 0; i
+     < coaches.size(); i++) {
+     for (int j = 0; j
+     < v.size(); j++) {
+     valuesMap.put(coaches.get(i), valuesMap.get(coaches.get(i)) + getVNDByCoach(coaches.get(i), v.get(j)));
 
 
-    }
-    return value;
+     }
+     }
+
+     break;
 
 
-    }*/
+     }
+
+     ArrayList<Integer> Values = new ArrayList<Integer>();
+
+
+     for (int i = 0; i
+     < coaches.size(); i++) {
+     Values.add(valuesMap.get(coaches.get(i)));
+
+
+     }
+
+     int value = 0;
+
+
+     int maximum = 0;
+     Collections.sort(Values, Collections.reverseOrder());
+
+
+     for (int i = 0; i
+     < Math.min(Tournament.getTournament().getParams().mTeamMatesClansNumber, coaches.size()); i++) {
+     value += Values.get(i);
+
+
+     }
+     return value;
+
+
+     }*/
     @Override
-    public Object getValueAt(final int row,final int col) {
-        Object object=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+    public Object getValueAt(final int row, final int col) {
+        Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
         switch (col) {
             case 0:
-                object= row + 1;
+                object = row + 1;
                 break;
             case 1:
-                object= ((Clan) obj.getObject()).mName;
+                object = ((Clan) obj.getObject()).mName;
                 break;
             case 2:
-                object= obj.getValue1();
+                object = obj.getValue1();
                 break;
             case 3:
-                object= obj.getValue2();
+                object = obj.getValue2();
                 break;
             case 4:
-                object= obj.getValue3();
+                object = obj.getValue3();
                 break;
             case 5:
-                object= obj.getValue4();
+                object = obj.getValue4();
                 break;
             case 6:
-                object= obj.getValue5();
+                object = obj.getValue5();
                 break;
             default:
         }

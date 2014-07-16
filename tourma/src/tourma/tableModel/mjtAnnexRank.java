@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import tourma.data.Criteria;
+import tourma.data.Tournament;
 
 /**
  *
@@ -67,11 +68,13 @@ public abstract class mjtAnnexRank extends mjtRanking {
     abstract public Object getValueAt(int row, int col);
 
     @Override
-    public Component getTableCellRendererComponent(final JTable table, final Object value,  final boolean  isSelected,final  boolean  hasFocus, final int row, final int column) {
+    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
         jlb.setEditable(false);
         jlb.setBackground(new Color(255, 255, 255));
         jlb.setForeground(new Color(0, 0, 0));
+
+        boolean useColor = Tournament.getTournament().getParams().useColor;
 
         if (value instanceof String) {
             jlb.setText((String) value);
@@ -80,29 +83,43 @@ public abstract class mjtAnnexRank extends mjtRanking {
             jlb.setText(Integer.toString((Integer) value));
         }
 
+        if (!useColor) {
+            if (row % 2 == 1) {
+                jlb.setBackground(new Color(220, 220, 220));
+            }
+        }
+
         if (mSubtype == 0) {
             if (row == 0) {
                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                jlb.setBackground(new Color(200, 50, 50));
-                jlb.setForeground(new Color(255, 255, 255));
+                if (useColor) {
+                    jlb.setBackground(new Color(200, 50, 50));
+                    jlb.setForeground(new Color(255, 255, 255));
+                }
             }
         }
 
         if (mSubtype == 2) {
             if (row == 0) {
                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                jlb.setBackground(new Color(50, 200, 50));
-                jlb.setForeground(new Color(255, 255, 255));
+                if (useColor) {
+                    jlb.setBackground(new Color(50, 200, 50));
+                    jlb.setForeground(new Color(255, 255, 255));
+                }
             }
         }
 
         if (mSubtype == 1) {
             if (row == 0) {
                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                jlb.setBackground(new Color(50, 50, 200));
-                jlb.setForeground(new Color(255, 255, 255));
+                if (useColor) {
+                    jlb.setBackground(new Color(50, 50, 200));
+                    jlb.setForeground(new Color(255, 255, 255));
+                }
             }
         }
+        
+        
 
         jlb.setHorizontalAlignment(JTextField.CENTER);
         return jlb;

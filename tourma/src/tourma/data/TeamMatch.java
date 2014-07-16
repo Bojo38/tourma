@@ -170,7 +170,7 @@ public class TeamMatch extends Match {
     public Element getXMLElement() {
         final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
         match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM1"), this.mCompetitor1.mName);
-        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM2"), this.mCompetitor1.mName);
+        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM2"), this.mCompetitor2.mName);
 
         for (int k = 0; k < mMatchs.size(); k++) {
             Element subMatch = mMatchs.get(k).getXMLElement();

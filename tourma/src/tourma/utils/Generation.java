@@ -3104,11 +3104,11 @@ public class Generation {
             for (int k = 0; k < c.mMatchs.size(); k++) {
                 final CoachMatch m = (CoachMatch) c.mMatchs.get(k);
                 if (rounds.contains(m.mRound)) {
-                    value1 += mjtRankingIndiv.getValue(c, m, params.mRankingIndiv1);
-                    value2 += mjtRankingIndiv.getValue(c, m, params.mRankingIndiv2);
-                    value3 += mjtRankingIndiv.getValue(c, m, params.mRankingIndiv3);
-                    value4 += mjtRankingIndiv.getValue(c, m, params.mRankingIndiv4);
-                    value5 += mjtRankingIndiv.getValue(c, m, params.mRankingIndiv5);
+                    value1 = mjtRankingIndiv.getValue(c, m, params.mRankingIndiv1,value1);
+                    value2 = mjtRankingIndiv.getValue(c, m, params.mRankingIndiv2,value2);
+                    value3 = mjtRankingIndiv.getValue(c, m, params.mRankingIndiv3,value3);
+                    value4 = mjtRankingIndiv.getValue(c, m, params.mRankingIndiv4,value4);
+                    value5 = mjtRankingIndiv.getValue(c, m, params.mRankingIndiv5,value5);
                 }
             }
             final ObjectRanking obj = new ObjectRanking(c, value1, value2, value3, value4, value5);

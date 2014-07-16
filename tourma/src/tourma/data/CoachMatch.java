@@ -18,16 +18,18 @@ import tourma.MainFrame;
  *
  * @author Frederic Berger
  */
-public class CoachMatch extends Match  {
+public class CoachMatch extends Match {
 
-   
     public RosterType mRoster1;
     public RosterType mRoster2;
     public HashMap<Criteria, Value> mValues;
-
     public Substitute mSubstitute1;
     public Substitute mSubstitute2;
-    
+    public boolean refusedBy1 = false;
+    public boolean refusedBy2 = false;
+    public boolean concedeedBy1 = false;
+    public boolean concedeedBy2 = false;
+
     public CoachMatch(Round round) {
         super(round);
         mValues = new HashMap<>();
@@ -55,6 +57,11 @@ public class CoachMatch extends Match  {
         match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1"), this.mCompetitor1.mName);
         match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2"), this.mCompetitor2.mName);
 
+        match.setAttribute("RefusedBy1", Boolean.toString(refusedBy1));
+        match.setAttribute("RefusedBy2", Boolean.toString(refusedBy2));
+        match.setAttribute("ConcedeedBy1", Boolean.toString(concedeedBy1));
+        match.setAttribute("ConcedeedBy2", Boolean.toString(concedeedBy2));
+
         for (int k = 0; k < Tournament.getTournament().getParams().mCriterias.size(); k++) {
             final Value val = this.mValues.get(Tournament.getTournament().getParams().mCriterias.get(k));
             final Element value = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"));
@@ -76,12 +83,10 @@ public class CoachMatch extends Match  {
             match.setAttribute(key2, this.mRoster2.mName);
         }
 
-        if (mSubstitute1!=null)
-        {
+        if (mSubstitute1 != null) {
             match.addContent(mSubstitute1.getXMLElement());
         }
-        if (mSubstitute2!=null)
-        {
+        if (mSubstitute2 != null) {
             match.addContent(mSubstitute2.getXMLElement());
         }
         return match;
@@ -95,8 +100,16 @@ public class CoachMatch extends Match  {
             this.mCompetitor1 = Coach.sCoachMap.get(c1);
             this.mCompetitor2 = Coach.sCoachMap.get(c2);
 
-            ((Coach)mCompetitor1).mMatchs.add(this);
-            ((Coach)mCompetitor2).mMatchs.add(this);
+            try {
+                refusedBy1 = match.getAttribute("RefusedBy1").getBooleanValue();
+                refusedBy2 = match.getAttribute("RefusedBy2").getBooleanValue();
+                concedeedBy1 = match.getAttribute("ConcedeedBy1").getBooleanValue();
+                concedeedBy2 = match.getAttribute("ConcedeedBy2").getBooleanValue();
+            } catch (Exception e) {
+            }
+
+            ((Coach) mCompetitor1).mMatchs.add(this);
+            ((Coach) mCompetitor2).mMatchs.add(this);
 
             final List values = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"));
             final Iterator v = values.iterator();
@@ -122,28 +135,26 @@ public class CoachMatch extends Match  {
             String key1 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
             Attribute att1 = match.getAttribute(key1);
             if (att1 != null) {
-                this.mRoster1 =  RosterType.mRosterTypes.get(att1.getValue());
+                this.mRoster1 = RosterType.mRosterTypes.get(att1.getValue());
             }
             String key2 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER2");
             Attribute att2 = match.getAttribute(key2);
             if (att2 != null) {
                 this.mRoster2 = RosterType.mRosterTypes.get(att2.getValue());
             }
-            
+
             final List subs = match.getChildren("Subtitution");
             final Iterator it = subs.iterator();
             while (it.hasNext()) {
                 final Element sub = (Element) it.next();
-                Substitute s=new Substitute();
+                Substitute s = new Substitute();
                 s.setXMLElement(sub);
-                s.mMatch=this;
-                if (s.mTitular==mCompetitor1)
-                {
-                    this.mSubstitute1=s;
+                s.mMatch = this;
+                if (s.mTitular == mCompetitor1) {
+                    this.mSubstitute1 = s;
                 }
-                if (s.mTitular==mCompetitor2)
-                {
-                    this.mSubstitute2=s;
+                if (s.mTitular == mCompetitor2) {
+                    this.mSubstitute2 = s;
                 }
             }
 
@@ -240,49 +251,49 @@ public class CoachMatch extends Match  {
         mLooser = null;
     }
 
-   /* public static Team getTeamMatchWinner(final int teamMatesNumber, final int matchIndex, final ArrayList<CoachMatch> matchs) {
-        final Criteria td = Tournament.getTournament().getParams().mCriterias.get(0);
-        CoachMatch m = matchs.get(matchIndex * teamMatesNumber);
-        final Team team1 = m.mCoach1.mTeamMates;
-        final Team team2 = m.mCoach2.mTeamMates;
+    /* public static Team getTeamMatchWinner(final int teamMatesNumber, final int matchIndex, final ArrayList<CoachMatch> matchs) {
+     final Criteria td = Tournament.getTournament().getParams().mCriterias.get(0);
+     CoachMatch m = matchs.get(matchIndex * teamMatesNumber);
+     final Team team1 = m.mCoach1.mTeamMates;
+     final Team team2 = m.mCoach2.mTeamMates;
 
-        Team winner;
+     Team winner;
 
-        int nbVictory = 0;
-        int nbLost = 0;
+     int nbVictory = 0;
+     int nbLost = 0;
 
-        for (int j = 0; j < teamMatesNumber; j++) {
-            m = matchs.get(matchIndex * teamMatesNumber + j);
-            if (m.mValues.get(td).mValue1 > m.mValues.get(td).mValue2) {
-                nbVictory++;
-            } else {
-                if (m.mValues.get(td).mValue1 < m.mValues.get(td).mValue2) {
-                    nbLost++;
-                }
-            }
-        }
+     for (int j = 0; j < teamMatesNumber; j++) {
+     m = matchs.get(matchIndex * teamMatesNumber + j);
+     if (m.mValues.get(td).mValue1 > m.mValues.get(td).mValue2) {
+     nbVictory++;
+     } else {
+     if (m.mValues.get(td).mValue1 < m.mValues.get(td).mValue2) {
+     nbLost++;
+     }
+     }
+     }
 
-        if (team1 == Team.sNullTeam) {
-            winner = team2;
-        } else {
-            if (team2 == Team.sNullTeam) {
-                winner = team1;
-            } else {
-                if (nbVictory > nbLost) {
-                    winner = team1;
-                } else {
-                    if (nbVictory < nbLost) {
-                        winner = team2;
-                    } else {
-                        if (((int) Math.random()) % 2 == 0) {
-                            winner = team1;
-                        } else {
-                            winner = team2;
-                        }
-                    }
-                }
-            }
-        }
-        return winner;
-    }*/
+     if (team1 == Team.sNullTeam) {
+     winner = team2;
+     } else {
+     if (team2 == Team.sNullTeam) {
+     winner = team1;
+     } else {
+     if (nbVictory > nbLost) {
+     winner = team1;
+     } else {
+     if (nbVictory < nbLost) {
+     winner = team2;
+     } else {
+     if (((int) Math.random()) % 2 == 0) {
+     winner = team1;
+     } else {
+     winner = team2;
+     }
+     }
+     }
+     }
+     }
+     return winner;
+     }*/
 }

@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -19,6 +20,7 @@ public abstract class Competitor implements Comparable {
     public String mName;
     public Color mColor;
     public ArrayList<Match> mMatchs;
+    public BufferedImage picture=null;
 
     protected Color generateRandomColor(final Color mix) {
         final Random random = new Random();

@@ -93,12 +93,12 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
                         // test if match is in round
                         if (bFound) {
 
-                            value += getValue(c, m, mCriteria, mSubtype);
+                            value = getValue(c, m, mCriteria, mSubtype);
 
                             final Criteria c1 = getCriteriaByValue(mRankingType1);
                             final int subType1 = getSubtypeByValue(mRankingType1);
                             if (c1 == null) {
-                                value1 += getValue(c, m, mRankingType1);
+                                value1 = getValue(c, m, mRankingType1,value1);
                             } else {
                                 value1 += getValue(c, m, c1, subType1);
                             }
@@ -106,7 +106,7 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
                             final Criteria c2 = getCriteriaByValue(mRankingType2);
                             final int subType2 = getSubtypeByValue(mRankingType2);
                             if (c2 == null) {
-                                value2 += getValue(c, m, mRankingType2);
+                                value2 = getValue(c, m, mRankingType2,value2);
                             } else {
                                 value2 += getValue(c, m, c2, subType2);
                             }
@@ -114,7 +114,7 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
                             final Criteria c3 = getCriteriaByValue(mRankingType3);
                             final int subType3 = getSubtypeByValue(mRankingType3);
                             if (c3 == null) {
-                                value3 += getValue(c, m, mRankingType3);
+                                value3 = getValue(c, m, mRankingType3,value3);
                             } else {
                                 value3 += getValue(c, m, c3, subType3);
                             }
@@ -122,7 +122,7 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
                             final Criteria c4 = getCriteriaByValue(mRankingType4);
                             final int subType4 = getSubtypeByValue(mRankingType4);
                             if (c4 == null) {
-                                value4 += getValue(c, m, mRankingType4);
+                                value4 = getValue(c, m, mRankingType4,value4);
                             } else {
                                 value4 += getValue(c, m, c4, subType4);
                             }
@@ -130,7 +130,7 @@ public class mjtAnnexRankClan extends mjtAnnexRank {
                             final Criteria c5 = getCriteriaByValue(mRankingType5);
                             final int subType5 = getSubtypeByValue(mRankingType5);
                             if (c5 == null) {
-                                value5 += getValue(c, m, mRankingType5);
+                                value5 = getValue(c, m, mRankingType5,value2);
                             } else {
                                 value5 += getValue(c, m, c5, subType5);
                             }

@@ -44,7 +44,9 @@ public class Group implements XMLExport {
         final Iterator ro = rosters.iterator();
         while (ro.hasNext()) {
             final Element roster = (Element) ro.next();
-            final RosterType rost = RosterType.mRosterTypes.get(roster.getAttributeValue(StringConstants.CS_NAME));
+             String name=roster.getAttributeValue(StringConstants.CS_NAME);
+                        name=RosterType.getRosterName(name);
+            final RosterType rost = RosterType.mRosterTypes.get(name);
             this.mRosters.add(rost);
         }
     }

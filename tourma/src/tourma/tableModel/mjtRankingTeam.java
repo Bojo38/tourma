@@ -4,18 +4,31 @@
  */
 package tourma.tableModel;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Pool;
+import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import static tourma.tableModel.mjtRanking.C_ELO_K;
+import static tourma.tableModel.mjtRanking.C_STARTING_RANK;
+import static tourma.tableModel.mjtRanking.getCoachNbMatchs;
+import static tourma.tableModel.mjtRanking.getELOByCoach;
+import static tourma.tableModel.mjtRanking.getVNDByCoach;
 import tourma.utility.StringConstants;
+import tourma.utils.ImageTreatment;
 
 /**
  *
@@ -31,6 +44,11 @@ public class mjtRankingTeam extends mjtRanking {
         mTeamVictory = teamVictory;
         mRoundOnly = round_only;
         sortDatas();
+    }
+
+    int getTeamNbMatch(final Team T) {
+        int index = mRound;
+        return index + 1;
     }
 
     int getPointsByTeam(final Team t) {
@@ -102,6 +120,78 @@ public class mjtRankingTeam extends mjtRanking {
         value += countTeamLoss * Tournament.getTournament().getParams().mPointsTeamLost;
         value += countTeamDraw * Tournament.getTournament().getParams().mPointsTeamDraw;
 
+
+        return value;
+    }
+
+    int getELOByTeam(final Team t, int roundIndex) {
+        int value = 0;
+
+        TeamMatch tm = (TeamMatch) t.mMatchs.get(roundIndex);
+
+        int nbVic = tm.getVictories(t);
+        int nbLoss = tm.getVictories(t);
+        int nbDraw = tm.getVictories(t);
+
+        int lastTeamRank = C_STARTING_RANK;
+        int lastOppRank = C_STARTING_RANK;
+
+        Team opp = null;
+        if (tm.mCompetitor1 == t) {
+            opp = (Team) tm.mCompetitor2;
+
+        }
+        if (tm.mCompetitor2 == t) {
+            opp = (Team) tm.mCompetitor1;
+        }
+        if (roundIndex >= 0) {
+            // Find Previous Match for current player
+
+            if (roundIndex > 0) {
+                lastTeamRank = getELOByTeam(t, roundIndex - 1);
+            }
+
+            // Find Previous Match for oponnent player
+            if (roundIndex > 0) {
+                lastOppRank = getELOByTeam(opp, roundIndex - 1);
+            }
+        }
+
+        double EA = 1 / (1 + Math.pow(10.0, (lastOppRank - lastTeamRank) / 400));
+        double EB = 1 / (1 + Math.pow(10.0, (lastTeamRank - lastOppRank) / 400));
+
+        // Compute real score
+
+        // Victory is 1000
+        // All bonuses to 1
+        double SA = 0;
+        if (nbVic > nbDraw) {
+            SA = 1000;
+        }
+        if (nbVic < nbDraw) {
+            SA = 0;
+        }
+        if (nbVic == nbDraw) {
+            SA = 500;
+        }
+
+        // Add/Remove Bonuses
+        for (int i = 0; i < Tournament.getTournament().getParams().mCriterias.size(); i++) {
+            Criteria crit = Tournament.getTournament().getParams().mCriterias.get(i);
+            for (int j = 0; j < tm.mMatchs.size(); j++) {
+                CoachMatch m = tm.mMatchs.get(j);
+                Value val = m.mValues.get(crit);
+                if (tm.mCompetitor1 == t) {
+                    SA += val.mValue1;
+                    SA -= val.mValue2;
+                }
+                if (tm.mCompetitor2 == t) {
+                    SA -= val.mValue1;
+                    SA += val.mValue2;
+                }
+            }
+        }
+        value = Math.round((float) (lastTeamRank + C_ELO_K * (SA - EA)));
 
         return value;
     }
@@ -192,6 +282,32 @@ public class mjtRankingTeam extends mjtRanking {
         return value;
     }
 
+    int getOppELOByTeam(final Team t, int roundIndex) {
+
+        int value = 0;
+        final Coach c = t.mCoachs.get(0);
+        //ArrayList<Team> opponents = new ArrayList<Team>();
+        if (mRound <= c.mMatchs.size()) {
+
+            int i = 0;
+            if (mRoundOnly) {
+                i = mRound;
+            }
+
+            while (i <= mRound) {
+                //for (int i = 0; i <= mRound; i++) {
+                final CoachMatch m = (CoachMatch) c.mMatchs.get(i);
+                if (m.mCompetitor1 == c) {
+                    value += getELOByTeam(((Coach) m.mCompetitor2).mTeamMates, roundIndex);
+                } else {
+                    value += getELOByTeam(((Coach) m.mCompetitor1).mTeamMates, roundIndex);
+                }
+                i++;
+            }
+        }
+        return value;
+    }
+
     int getValue(final Team t, final int rankingType) {
         int value = 0;
 
@@ -200,16 +316,25 @@ public class mjtRankingTeam extends mjtRanking {
         if (mTeamVictory) {
             switch (rankingType) {
                 case Parameters.C_RANKING_POINTS:
-                    value += getPointsByTeam(t);
+                    value = getPointsByTeam(t);
                     break;
                 case Parameters.C_RANKING_NONE:
                     value = 0;
                     break;
                 case Parameters.C_RANKING_OPP_POINTS:
-                    value += getOppPointsByTeam(t);
+                    value = getOppPointsByTeam(t);
                     break;
                 case Parameters.C_RANKING_VND:
-                    value += getVNDByTeam(t);
+                    value = getVNDByTeam(t);
+                    break;
+                case Parameters.C_RANKING_ELO:
+                    value = getELOByTeam(t, mRound);
+                    break;
+                case Parameters.C_RANKING_ELO_OPP:
+                    value = getOppELOByTeam(t, mRound);
+                    break;
+                case Parameters.C_RANKING_NB_MATCHS:
+                    value = getTeamNbMatch(t);
                     break;
                 default:
             }
@@ -230,6 +355,15 @@ public class mjtRankingTeam extends mjtRanking {
                             break;
                         case Parameters.C_RANKING_VND:
                             value += getVNDByCoach(c, m);
+                            break;
+                        case Parameters.C_RANKING_ELO:
+                            value += getELOByCoach(c, m);
+                            break;
+                        case Parameters.C_RANKING_ELO_OPP:
+                            value += getOppELOByCoach(c, m);
+                            break;
+                        case Parameters.C_RANKING_NB_MATCHS:
+                            value += getCoachNbMatchs(c, m);
                             break;
                         default:
                     }
@@ -619,5 +753,27 @@ public class mjtRankingTeam extends mjtRanking {
             }
         }
         return object;
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        JTextField jtf = (JTextField) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        if (Tournament.getTournament().getParams().useImage) {
+            if (column == 1) {
+                Team t = (Team) mObjects.get(row);
+                if (t.picture != null) {
+                    JLabel obj = new JLabel();
+                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.picture), 30, 30);
+                    obj.setIcon(icon);
+                    obj.setText((String) value);
+                    obj.setOpaque(true);
+                    obj.setBackground(jtf.getBackground());
+                    obj.setForeground(jtf.getForeground());
+                    return obj;
+                }
+            }
+        }
+        return jtf;
     }
 }
