@@ -171,7 +171,7 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
                 val = ((Coach) obj.getObject()).mTeam;
                 break;
             case 2:
-                val = ((Coach) obj.getObject()).mName;
+                val = ((Coach) obj.getObject()).getDecoratedName();
                 break;
             case 3:
                 val = ((Coach) obj.getObject()).getStringRoster();

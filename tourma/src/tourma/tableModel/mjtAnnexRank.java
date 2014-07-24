@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import tourma.data.Criteria;
@@ -69,8 +70,8 @@ public abstract class mjtAnnexRank extends mjtRanking {
 
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        final JTextField jlb = new JTextField();
-        jlb.setEditable(false);
+        final JLabel jlb = new JLabel();
+        jlb.setOpaque(true);
         jlb.setBackground(new Color(255, 255, 255));
         jlb.setForeground(new Color(0, 0, 0));
 

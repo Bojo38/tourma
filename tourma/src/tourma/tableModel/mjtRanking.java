@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -418,8 +419,9 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
 
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        final JTextField jlb = new JTextField();
-        jlb.setEditable(false);
+        final JLabel jlb = new JLabel();
+        //jlb.setEditable(false);
+        jlb.setOpaque(true);
         jlb.setBackground(new Color(255, 255, 255));
         jlb.setForeground(new Color(0, 0, 0));
         boolean useColor = Tournament.getTournament().getParams().useColor;

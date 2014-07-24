@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
@@ -757,23 +758,19 @@ public class mjtRankingTeam extends mjtRanking {
 
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        JTextField jtf = (JTextField) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+        
+        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if (Tournament.getTournament().getParams().useImage) {
             if (column == 1) {
                 Team t = (Team) mObjects.get(row);
                 if (t.picture != null) {
-                    JLabel obj = new JLabel();
                     ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.picture), 30, 30);
                     obj.setIcon(icon);
-                    obj.setText((String) value);
-                    obj.setOpaque(true);
-                    obj.setBackground(jtf.getBackground());
-                    obj.setForeground(jtf.getForeground());
+                    obj.setHorizontalAlignment(JLabel.CENTER);                    
                     return obj;
                 }
             }
         }
-        return jtf;
+        return obj;
     }
 }

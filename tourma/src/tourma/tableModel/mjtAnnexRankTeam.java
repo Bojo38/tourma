@@ -4,8 +4,14 @@
  */
 package tourma.tableModel;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
@@ -14,6 +20,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
+import tourma.utils.ImageTreatment;
 
 /**
  *
@@ -165,5 +172,24 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
             default:
         }
         return val;
+    }
+    
+    @Override
+    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        JLabel obj=(JLabel)super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        
+        if (Tournament.getTournament().getParams().useImage)
+        {
+            if (column==1)
+            {
+                Team t = (Team) mObjects.get(row);
+                if (t.picture != null) {
+                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.picture), 30, 30);
+                    obj.setIcon(icon);
+                }
+            }
+        }
+        
+        return obj;
     }
 }

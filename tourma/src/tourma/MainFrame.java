@@ -17,7 +17,10 @@ import tourma.views.round.JPNRound;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -98,6 +101,7 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiChangePairing.setEnabled(true);
                 jmiAddFreeMatch.setEnabled(true);
                 jmiDelFreeMatch.setEnabled(true);
+                jmiFullScreen.setEnabled(true);
                 if (((JPNRound) jpnContent).getMatchTableSelectedRow() >= 0) {
                     jmiCancelConceedMatch.setEnabled(true);
                     jmiCancelMatchRefuse.setEnabled(true);
@@ -119,7 +123,9 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiCancelMatchRefuse.setEnabled(false);
                 jmiConceedMatch.setEnabled(false);
                 jmiRefuseMatch.setEnabled(false);
+                
             }
+            jmiFullScreen.setEnabled(true);
             jckmiRoundOnly.setEnabled(true);
         } else {
             jckmiRoundOnly.setEnabled(false);
@@ -132,6 +138,7 @@ public class MainFrame extends javax.swing.JFrame {
             jmiCancelMatchRefuse.setEnabled(false);
             jmiConceedMatch.setEnabled(false);
             jmiRefuseMatch.setEnabled(false);
+            jmiFullScreen.setEnabled(false);
         }
         jcxPatchPortugal.setSelected(mTournament.getParams().mPortugal);
         this.revalidate();
@@ -195,6 +202,8 @@ public class MainFrame extends javax.swing.JFrame {
         jmiAddFreeMatch = new javax.swing.JMenuItem();
         jmiDelFreeMatch = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
+        jmiFullScreen = new javax.swing.JMenuItem();
+        jSeparator14 = new javax.swing.JPopupMenu.Separator();
         jmiConceedMatch = new javax.swing.JMenuItem();
         jmiCancelConceedMatch = new javax.swing.JMenuItem();
         jmiRefuseMatch = new javax.swing.JMenuItem();
@@ -466,6 +475,16 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jmnRound.add(jmiDelFreeMatch);
         jmnRound.add(jSeparator12);
+
+        jmiFullScreen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK));
+        jmiFullScreen.setText(bundle.getString("FullScreenMatch")); // NOI18N
+        jmiFullScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreen);
+        jmnRound.add(jSeparator14);
 
         jmiConceedMatch.setText(bundle.getString("MatchConceed")); // NOI18N
         jmiConceedMatch.addActionListener(new java.awt.event.ActionListener() {
@@ -950,6 +969,7 @@ public class MainFrame extends javax.swing.JFrame {
                     jmiAddFreeMatch.setEnabled(false);
                     jmiDelFreeMatch.setEnabled(false);
                 }
+                jmiFullScreen.setEnabled(true);
                 jckmiRoundOnly.setEnabled(true);
             } else {
                 jckmiRoundOnly.setEnabled(false);
@@ -958,6 +978,7 @@ public class MainFrame extends javax.swing.JFrame {
                 jmiChangePairing.setEnabled(false);
                 jmiAddFreeMatch.setEnabled(false);
                 jmiDelFreeMatch.setEnabled(false);
+                jmiFullScreen.setEnabled(false);
             }
 
             repaint();
@@ -1425,7 +1446,22 @@ public class MainFrame extends javax.swing.JFrame {
         if (jpnContent instanceof JPNRound) {
             ((JPNRound) jpnContent).update();
         }
+         if (jpnContent instanceof JPNParameters) {
+            ((JPNParameters) jpnContent).update();
+        }
     }//GEN-LAST:event_jcxUseImageActionPerformed
+
+    private void jmiFullScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenActionPerformed
+        FullScreen fs;
+        try {
+            fs = new FullScreen(((JPNRound) jpnContent).getRound());
+                    fs.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+    }//GEN-LAST:event_jmiFullScreenActionPerformed
     
     /**
      * @param args the command line arguments
@@ -1480,6 +1516,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator13;
+    private javax.swing.JPopupMenu.Separator jSeparator14;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1509,6 +1546,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiExport;
     private javax.swing.JMenuItem jmiExportFbb;
     private javax.swing.JMenuItem jmiExportFbb1;
+    private javax.swing.JMenuItem jmiFullScreen;
     private javax.swing.JMenuItem jmiGenerateFirstRound;
     private javax.swing.JMenuItem jmiGenerateNextRound;
     private javax.swing.JMenuItem jmiNafLoad;
