@@ -11,16 +11,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
-import tourma.data.Coach;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
-import tourma.data.Value;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 

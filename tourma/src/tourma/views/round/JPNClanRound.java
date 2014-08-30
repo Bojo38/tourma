@@ -128,44 +128,56 @@ public class JPNClanRound extends javax.swing.JPanel {
 
         add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
- @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralClanActionPerformed
-        for (int i = 0; i < mTournament.getRounds().size(); i++) {
-            if (mRound == mTournament.getRounds().get(i)) {
-                final mjtRankingClan model = new mjtRankingClan(i, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getDisplayClans(), mRoundOnly);
-                final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CLAN"), i + 1, mTournament, model, 0);
-                jdg.setVisible(true);
-                break;
-            }
-        }
+     for (int i = 0; i < mTournament.getRounds().size(); i++) {
+         if (mRound == mTournament.getRounds().get(i)) {
+             mjtRankingClan model;
+             if ((mTournament.getParams().mTeamTournament) && ((mTournament.getParams().mTeamVictoryOnly))) {
+                 model = new mjtRankingClan(i,
+                         mTournament.getParams().mRankingTeam1,
+                         mTournament.getParams().mRankingTeam2,
+                         mTournament.getParams().mRankingTeam3,
+                         mTournament.getParams().mRankingTeam4,
+                         mTournament.getParams().mRankingTeam5,
+                         mTournament.getDisplayClans(), mRoundOnly);
+             } else {
+                 model = new mjtRankingClan(i, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getDisplayClans(), mRoundOnly);
+             }
+             final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CLAN"), i + 1, mTournament, model, 0);
+             jdg.setVisible(true);
+             break;
+         }
+     }
 }//GEN-LAST:event_jbtGeneralClanActionPerformed
- @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGGlobalClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGGlobalClanActionPerformed
-        for (int i = 0; i < mTournament.getRounds().size(); i++) {
-            if (mRound == mTournament.getRounds().get(i)) {
-                final mjtRankingClan model = new mjtRankingClan(i, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getDisplayClans(), mRoundOnly);
-                final HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<>();
-                final HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<>();
-                for (int j = 0; j < mTournament.getParams().mCriterias.size(); j++) {
-                    final Criteria crit = mTournament.getParams().mCriterias.get(j);
-                    mjtAnnexRank annex = new mjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            mTournament.getDisplayClans(), true,
-                            mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2,
-                            mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4,
-                            mTournament.getParams().mRankingIndiv5, mRoundOnly);
-                    annexForRankings.put(crit, annex);
-                    annex = new mjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            mTournament.getDisplayClans(), true,
-                            mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2,
-                            mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4,
-                            mTournament.getParams().mRankingIndiv5, mRoundOnly);
-                    annexAgainstRankings.put(crit, annex);
-                }
-                final jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, i + 1, mTournament, model, annexForRankings, annexAgainstRankings, false, false);
-                jdg.setVisible(true);
-                break;
-            }
-        }
+     for (int i = 0; i < mTournament.getRounds().size(); i++) {
+         if (mRound == mTournament.getRounds().get(i)) {
+             final mjtRankingClan model = new mjtRankingClan(i, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getDisplayClans(), mRoundOnly);
+             final HashMap<Criteria, mjtAnnexRank> annexForRankings = new HashMap<>();
+             final HashMap<Criteria, mjtAnnexRank> annexAgainstRankings = new HashMap<>();
+             for (int j = 0; j < mTournament.getParams().mCriterias.size(); j++) {
+                 final Criteria crit = mTournament.getParams().mCriterias.get(j);
+                 mjtAnnexRank annex = new mjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                         mTournament.getDisplayClans(), true,
+                         mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2,
+                         mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4,
+                         mTournament.getParams().mRankingIndiv5, mRoundOnly);
+                 annexForRankings.put(crit, annex);
+                 annex = new mjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                         mTournament.getDisplayClans(), true,
+                         mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2,
+                         mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4,
+                         mTournament.getParams().mRankingIndiv5, mRoundOnly);
+                 annexAgainstRankings.put(crit, annex);
+             }
+             final jdgGlobal jdg = new jdgGlobal(MainFrame.getMainFrame(), true, i + 1, mTournament, model, annexForRankings, annexAgainstRankings, false, false);
+             jdg.setVisible(true);
+             break;
+         }
+     }
     }//GEN-LAST:event_jbtGGlobalClanActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -190,7 +202,23 @@ public class JPNClanRound extends javax.swing.JPanel {
         v.add(mRound);
 
         mjtRankingClan mRankingClan;
-        mRankingClan = new mjtRankingClan(v.size() - 1, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mTournament.getDisplayClans(), mRoundOnly);
+        if ((mTournament.getParams().mTeamTournament) && ((mTournament.getParams().mTeamVictoryOnly))) {
+            mRankingClan = new mjtRankingClan(v.size() - 1, 
+                    mTournament.getParams().mRankingTeam1, 
+                    mTournament.getParams().mRankingTeam2, 
+                    mTournament.getParams().mRankingTeam3, 
+                    mTournament.getParams().mRankingTeam4, 
+                    mTournament.getParams().mRankingTeam5, 
+                    mTournament.getDisplayClans(), mRoundOnly);
+        } else {
+            mRankingClan = new mjtRankingClan(v.size() - 1,
+                    mTournament.getParams().mRankingIndiv1,
+                    mTournament.getParams().mRankingIndiv2,
+                    mTournament.getParams().mRankingIndiv3,
+                    mTournament.getParams().mRankingIndiv4,
+                    mTournament.getParams().mRankingIndiv5,
+                    mTournament.getDisplayClans(), mRoundOnly);
+        }
         jtbRankingClan.setModel(mRankingClan);
         jtbRankingClan.setDefaultRenderer(String.class, mRankingClan);
         jtbRankingClan.setDefaultRenderer(Integer.class, mRankingClan);
@@ -201,6 +229,4 @@ public class JPNClanRound extends javax.swing.JPanel {
         }
         jtbRankingClan.setRowHeight(25);
     }
-
-    
 }

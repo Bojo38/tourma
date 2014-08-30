@@ -745,11 +745,6 @@ public class JPNStatistics extends javax.swing.JPanel {
                 mjtRankingTeam ranking = new mjtRankingTeam(
                         mTournament.getParams().mTeamVictoryOnly,
                         i,
-                        mTournament.getParams().mRankingTeam1,
-                        mTournament.getParams().mRankingTeam2,
-                        mTournament.getParams().mRankingTeam3,
-                        mTournament.getParams().mRankingTeam4,
-                        mTournament.getParams().mRankingTeam5,
                         mTournament.getTeams(),
                         false);
 

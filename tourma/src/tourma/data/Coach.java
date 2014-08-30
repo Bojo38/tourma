@@ -37,10 +37,6 @@ public final class Coach extends Competitor implements XMLExport {
 
     protected static Coach sNullCoach = null;
     public static HashMap<String, Coach> sCoachMap = new HashMap<>();
-    /**
-     * Clan
-     */
-    public Clan mClan;
     public Category mCategory;
     public String mTeam;
     public RosterType mRoster;
@@ -77,6 +73,8 @@ public final class Coach extends Competitor implements XMLExport {
         return sNullCoach;
     }
 
+    
+    
     @Override
     public int compareTo(final Object obj) {
         int result = -1;
@@ -461,8 +459,11 @@ public final class Coach extends Competitor implements XMLExport {
         Parameters params = tour.getParams();
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
 
+        
+        
         if (this.mClan != clans.get(0)) {
-            if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch) || (params.mAvoidClansMatch))) {
+            
+            if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch && tour.getRounds().indexOf(r)==0) || (params.mAvoidClansMatch))) {
                 for (int i = 0; i
                         < possible.size(); i++) {
                     if (((Coach) possible.get(i)).mClan.mName.equals(this.mClan.mName)) {

@@ -110,6 +110,11 @@ public class Team extends Competitor implements XMLExport {
     public Element getXMLElement() {
         final Element team = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
         team.setAttribute(StringConstants.CS_NAME, this.mName);
+
+        if (this.mClan != null) {
+            team.setAttribute(StringConstants.CS_CLAN, this.mClan.getName());
+        }
+
         for (int j = 0; j < this.mCoachs.size(); j++) {
             final Element coach = new Element(StringConstants.CS_COACH);
             coach.setAttribute(StringConstants.CS_NAME, this.mCoachs.get(j).mName);
@@ -125,6 +130,7 @@ public class Team extends Competitor implements XMLExport {
             image.addContent(encodedImage);
             team.addContent(image);
         } catch (IOException e) {
+        } catch (Exception e) {
         }
         return team;
     }
@@ -152,6 +158,12 @@ public class Team extends Competitor implements XMLExport {
         } catch (IOException e) {
         } catch (Exception e1) {
         }
+
+        try {
+            String ClanName = team.getAttributeValue(StringConstants.CS_CLAN);
+            this.mClan = Clan.sClanMap.get(ClanName);
+        } catch (Exception e1) {
+        }
     }
 
     @Override
@@ -177,6 +189,10 @@ public class Team extends Competitor implements XMLExport {
         m.mCompetitor1 = team1;
         m.mCompetitor2 = team2;
         r.mMatchs.add(m);
+
+        this.mMatchs.add(m);
+        opponent.mMatchs.add(m);
+
 
         switch (tour.getParams().mTeamIndivPairing) {
             // Ranking
@@ -245,7 +261,43 @@ public class Team extends Competitor implements XMLExport {
 
     @Override
     public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
-        return new ArrayList<>(opponents);
+
+        Tournament tour = Tournament.getTournament();
+        Parameters params = tour.getParams();
+        ArrayList<Clan> clans = tour.getClans();
+
+        ArrayList<Competitor> possible = new ArrayList<>(opponents);
+
+
+        if (this.mClan != null) {
+            if (this.mClan != clans.get(0)) {
+                if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch && tour.getRounds().size() == 0) || (params.mAvoidClansMatch))) {
+                    for (int i = 0; i
+                            < possible.size(); i++) {
+                        if (((Team) possible.get(i)).mClan.mName.equals(this.mClan.mName)) {
+                            possible.remove(i);
+                            i--;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < possible.size(); i++) {
+            if (((Team) possible.get(i)).havePlayed(this)) {
+                possible.remove(i);
+                i--;
+            }
+        }
+
+        if (possible.isEmpty()) {
+            if (params.mEnableClans) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
+            }
+            possible = new ArrayList<>(opponents);
+        }
+        return possible;
+
     }
 
     @Override
@@ -283,24 +335,35 @@ public class Team extends Competitor implements XMLExport {
         }
     }
 
+    public boolean canPlay(Team opponent, Round r) {
+        boolean have_played = this.havePlayed(opponent);
+        Parameters params = Tournament.getTournament().getParams();
+
+        boolean same_clan = false;
+        if (params.mEnableClans) {
+            if ((mClan != null) && (opponent.mClan != null)) {
+                if ((params.mAvoidClansFirstMatch && (Tournament.getTournament().getRounds().size() == 0))
+                        || (params.mAvoidClansMatch)) {
+                    if (mClan.equals(opponent.mClan)) {
+                        same_clan = true;
+                    }
+                }
+            }
+        }
+        return !have_played && !same_clan;
+    }
+
     public void RoundCheck(Round round) {
 
         Tournament tour = Tournament.getTournament();
         ArrayList<Match> matchs = round.getMatchs();
-        /*ArrayList<Team> teams1 = new ArrayList<>();
-         ArrayList<Team> teams2 = new ArrayList<>();
-        
-         // Build Teams
-         for (int i = 0; i < matchs.size(); i+=tour.getParams().mTeamMatesNumber) {
-         teams1.add(matchs.get(i).mCompetitor1.mTeamMates);
-         teams2.add(matchs.get(i).mCompetitor2.mTeamMates);
-         }*/
 
         for (int i = matchs.size() - 1; i > 0; i--) {
 
             final Team t1 = (Team) matchs.get(i).mCompetitor1;
             final Team t2 = (Team) matchs.get(i).mCompetitor2;
-            boolean have_played = t1.havePlayed(t2);
+            boolean have_played = !t1.canPlay(t2, round);
+
 
             if (have_played) {
                 for (int k = i - 1; k >= 0; k--) {
@@ -308,7 +371,7 @@ public class Team extends Competitor implements XMLExport {
                     Team t1_tmp = (Team) matchs.get(k).mCompetitor1;
                     Team t2_tmp = (Team) matchs.get(k).mCompetitor2;
 
-                    have_played = t1.havePlayed(t2_tmp);
+                    have_played = !t1.canPlay(t2_tmp, round);
 
                     boolean canMatch = !have_played;
 
@@ -328,7 +391,7 @@ public class Team extends Competitor implements XMLExport {
                         }
                         break;
                     } else {
-                        have_played = t1.havePlayed(t1_tmp);
+                        have_played = !t1.canPlay(t1_tmp, round);
 
                         canMatch = !have_played;
                         if (canMatch) {

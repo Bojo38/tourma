@@ -15,12 +15,16 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public abstract class Competitor implements Comparable {
+public abstract class Competitor implements Comparable,IWithNameAndPicture {
 
     public String mName;
     public Color mColor;
     public ArrayList<Match> mMatchs;
     public BufferedImage picture=null;
+    /**
+     * Clan
+     */
+    public Clan mClan;
 
     protected Color generateRandomColor(final Color mix) {
         final Random random = new Random();
@@ -53,10 +57,7 @@ public abstract class Competitor implements Comparable {
                 mMatchs = new ArrayList<>();
     }
 
-    public String getName() {
-        return mName;
-    }
-
+    
     public abstract void AddMatch(Competitor opponent, Round r);
 
     public abstract void AddMatchRoundRobin(Competitor opponent, Round r);
@@ -73,5 +74,15 @@ public abstract class Competitor implements Comparable {
     @Override
     public String toString() {
         return getName();
+    }
+    
+    @Override
+    public String getName() {
+        return mName;
+    }
+
+    @Override
+    public BufferedImage getPicture() {
+        return picture;
     }
 }

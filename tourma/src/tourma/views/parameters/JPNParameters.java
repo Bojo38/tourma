@@ -80,8 +80,6 @@ public class JPNParameters extends javax.swing.JPanel {
         jbtAdd.setEnabled(!bTourStarted);
         jbtRemove.setEnabled(!bTourStarted);
 
-       
-
         final mjtCoaches coachModel = new mjtCoaches(mTournament.getCoachs());
         jtbCoachs.setModel(coachModel);
         TableFormat.setColumnSize(jtbCoachs);
@@ -114,9 +112,8 @@ public class JPNParameters extends javax.swing.JPanel {
         mJpnCategories.update();
 
         jtpOptions.setEnabledAt(4,!mTournament.getParams().mMultiRoster);
-
         jtpOptions.setEnabledAt(2, mTournament.getParams().mTeamTournament);
-        jtpOptions.setEnabledAt(3, !mTournament.getParams().mTeamTournament);
+//        jtpOptions.setEnabledAt(3, !mTournament.getParams().mTeamTournament);
 
         jtfOrgas.setText(mTournament.getParams().mTournamentOrga);
         jtfTournamentName.setText(mTournament.getParams().mTournamentName);

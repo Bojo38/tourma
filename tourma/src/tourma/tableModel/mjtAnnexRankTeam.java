@@ -28,11 +28,27 @@ import tourma.utils.ImageTreatment;
  */
 public class mjtAnnexRankTeam extends mjtAnnexRank {
 
-    boolean mRoundOnly = false;
-
     public mjtAnnexRankTeam(final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only) {
-        super(round, criteria, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5);
-        mRoundOnly = round_only;
+        super(round, criteria, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+    }
+
+    public mjtAnnexRankTeam(final boolean teamVictory, final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) {
+
+        super(
+                round, criteria, subtype, teams, full, Tournament.getTournament().getParams().mRankingTeam1,
+                Tournament.getTournament().getParams().mRankingTeam2,
+                Tournament.getTournament().getParams().mRankingTeam3,
+                Tournament.getTournament().getParams().mRankingTeam4,
+                Tournament.getTournament().getParams().mRankingTeam5, round_only);
+        if (!teamVictory) {
+            this.mRankingType1 = Tournament.getTournament().getParams().mRankingIndiv1;
+            this.mRankingType2 = Tournament.getTournament().getParams().mRankingIndiv2;
+            this.mRankingType3 = Tournament.getTournament().getParams().mRankingIndiv3;
+            this.mRankingType4 = Tournament.getTournament().getParams().mRankingIndiv4;
+            this.mRankingType5 = Tournament.getTournament().getParams().mRankingIndiv5;
+        }
+        sortDatas();
+
     }
 
     @Override
@@ -48,75 +64,50 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
             int value3 = 0;
             int value4 = 0;
             int value5 = 0;
-            for (int k = 0; k < t.mCoachs.size(); k++) {
-                final Coach c = t.mCoachs.get(k);
-                for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
-
-                    final CoachMatch m = (CoachMatch)c.mMatchs.get(j);
-                    boolean bFound = false;
-
-                    int l = 0;
-                    if (mRoundOnly) {
-                        l = mRound;
-                    }
-
-                    while ((l <= mRound) && (!bFound)) {
-
-                        // for (int l = 0; (l <= mRound) && (!bFound); l++) {
-                        final Round r = Tournament.getTournament().getRounds().get(l);
-                        if (r.getMatchs().contains(m)) {
-                            bFound = true;
-                        }
-                        l++;
-                    }
-                    // test if match is in round
-                    if (bFound) {
 
 
-                        value += getValue(c, m, mCriteria, mSubtype);
+            value += getValue(t, mCriteria, mSubtype);
 
-                        final Criteria c1 = getCriteriaByValue(mRankingType1);
-                        final int subType1 = getSubtypeByValue(mRankingType1);
-                        if (c1 == null) {
-                            value1 = getValue(c, m, mRankingType1,value1);
-                        } else {
-                            value1 += getValue(c, m, c1, subType1);
-                        }
-
-                        final Criteria c2 = getCriteriaByValue(mRankingType2);
-                        final int subType2 = getSubtypeByValue(mRankingType2);
-                        if (c2 == null) {
-                            value2 = getValue(c, m, mRankingType2,value2);
-                        } else {
-                            value2 += getValue(c, m, c2, subType2);
-                        }
-
-                        final Criteria c3 = getCriteriaByValue(mRankingType3);
-                        final int subType3 = getSubtypeByValue(mRankingType3);
-                        if (c3 == null) {
-                            value3 = getValue(c, m, mRankingType3,value3);
-                        } else {
-                            value3 += getValue(c, m, c3, subType3);
-                        }
-
-                        final Criteria c4 = getCriteriaByValue(mRankingType4);
-                        final int subType4 = getSubtypeByValue(mRankingType4);
-                        if (c4 == null) {
-                            value4 = getValue(c, m, mRankingType4,value4);
-                        } else {
-                            value4 += getValue(c, m, c4, subType4);
-                        }
-
-                        final Criteria c5 = getCriteriaByValue(mRankingType5);
-                        final int subType5 = getSubtypeByValue(mRankingType5);
-                        if (c5 == null) {
-                            value5 = getValue(c, m, mRankingType5,value5);
-                        } else {
-                            value5 += getValue(c, m, c5, subType5);
-                        }
-                    }
-                }
+            final Criteria c1 = getCriteriaByValue(mRankingType1);
+            final int subType1 = getSubtypeByValue(mRankingType1);
+            if (c1 == null) {
+                value1 = getValue(t, mRankingType1, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+            } else {
+                value1 += getValue(t, c1, subType1);
             }
+
+            final Criteria c2 = getCriteriaByValue(mRankingType2);
+            final int subType2 = getSubtypeByValue(mRankingType2);
+            if (c2 == null) {
+                value2 = getValue(t, mRankingType2, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+            } else {
+                value2 += getValue(t, c2, subType2);
+            }
+
+            final Criteria c3 = getCriteriaByValue(mRankingType3);
+            final int subType3 = getSubtypeByValue(mRankingType3);
+            if (c3 == null) {
+                value3 = getValue(t, mRankingType3, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+            } else {
+                value3 += getValue(t, c3, subType3);
+            }
+
+            final Criteria c4 = getCriteriaByValue(mRankingType4);
+            final int subType4 = getSubtypeByValue(mRankingType4);
+            if (c4 == null) {
+                value4 = getValue(t, mRankingType4, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+            } else {
+                value4 += getValue(t, c4, subType4);
+            }
+
+            final Criteria c5 = getCriteriaByValue(mRankingType5);
+            final int subType5 = getSubtypeByValue(mRankingType5);
+            if (c5 == null) {
+                value5 = getValue(t, mRankingType5, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+            } else {
+                value5 += getValue(t, c5, subType5);
+            }
+
             mDatas.add(new ObjectAnnexRanking(t, value, value1, value2, value3, value4, value5));
         }
 
@@ -130,22 +121,22 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
 
     @Override
     public String getColumnName(final int col) {
-        String val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                val= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
-                val= java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
+                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
                 break;
             case 2:
                 if (mSubtype == 0) {
-                    val= mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[] {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH)});
+                    val = mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH)});
                 } else {
                     if (mSubtype == 1) {
-                        val= mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[] {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opponent")});
+                        val = mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opponent")});
                     } else {
-                        val= mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[] {java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Difference")});
+                        val = mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Difference")});
                     }
                 }
             default:
@@ -164,24 +155,22 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                 val = row + 1;
                 break;
             case 1:
-                val= ((Team) obj.getObject()).mName;
+                val = ((Team) obj.getObject()).mName;
                 break;
             case 2:
-                val= obj.mValue;
+                val = obj.mValue;
                 break;
             default:
         }
         return val;
     }
-    
+
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        JLabel obj=(JLabel)super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        
-        if (Tournament.getTournament().getParams().useImage)
-        {
-            if (column==1)
-            {
+        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        if (Tournament.getTournament().getParams().useImage) {
+            if (column == 1) {
                 Team t = (Team) mObjects.get(row);
                 if (t.picture != null) {
                     ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.picture), 30, 30);
@@ -189,7 +178,7 @@ public class mjtAnnexRankTeam extends mjtAnnexRank {
                 }
             }
         }
-        
+
         return obj;
     }
 }

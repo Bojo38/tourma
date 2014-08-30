@@ -18,7 +18,7 @@ import org.jdom2.Element;
  *
  * @author Administrateur
  */
-public class Clan implements Comparable, XMLExport {
+public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
 
     public static HashMap<String, Clan> sClanMap = new HashMap();
     /**
@@ -86,6 +86,16 @@ public class Clan implements Comparable, XMLExport {
         {
             
         }
+    }
+
+    @Override
+    public String getName() {
+        return mName;
+    }
+
+    @Override
+    public BufferedImage getPicture() {
+        return picture;
     }
     
     

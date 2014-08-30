@@ -34,6 +34,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import sun.net.www.protocol.mailto.MailToURLConnection;
 import tourma.MainFrame;
 import tourma.tableModel.mjtAnnexRankClan;
 import tourma.tableModel.mjtAnnexRankIndiv;
@@ -115,10 +116,18 @@ public class Tournament {
             counts.put(mClans.get(i), 0);
         }
         final ArrayList<Clan> clans = new ArrayList<>();
-        for (int i = 0; i < mCoachs.size(); i++) {
-            final Coach c = mCoachs.get(i);
-            counts.put(c.mClan, counts.get(c.mClan) + 1);
+        if (getParams().mTeamTournament) {
+            for (int i = 0; i < mTeams.size(); i++) {
+                final Team c = mTeams.get(i);
+                counts.put(c.mClan, counts.get(c.mClan) + 1);
+            }
+        } else {
+            for (int i = 0; i < mCoachs.size(); i++) {
+                final Coach c = mCoachs.get(i);
+                counts.put(c.mClan, counts.get(c.mClan) + 1);
+            }
         }
+
 
         for (int i = 0; i < mClans.size(); i++) {
             if (counts.get(mClans.get(i)) > 0) {
@@ -132,7 +141,6 @@ public class Tournament {
 
     public ArrayList<Category> getDisplayCategories() {
 
-        // Remove clans which do not have members
         final HashMap<Category, Integer> counts = new HashMap();
         for (int i = 0; i < mCategories.size(); i++) {
             counts.put(mCategories.get(i), 0);
@@ -167,10 +175,6 @@ public class Tournament {
 
     public Parameters getParams() {
         return mParams;
-
-
-
-
     }
 
     public ArrayList<Coach> getCoachs() {
@@ -268,7 +272,10 @@ public class Tournament {
                 final boolean forPool = (getPools().size() > 0) && (!getRounds().get(i).mCup);
                 rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getCoachs(), false, false, forPool)));
                 if (this.getParams().mTeamTournament) {
-                    rankings.add(new Ranking(StringConstants.CS_TEAM, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingTeam(this.getParams().mTeamVictoryOnly, i, this.getParams().mRankingTeam1, this.getParams().mRankingTeam2, this.getParams().mRankingTeam3, this.getParams().mRankingTeam4, this.getParams().mRankingTeam5, this.getTeams(), false)));
+                    rankings.add(new Ranking(StringConstants.CS_TEAM, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"),
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""),
+                            new mjtRankingTeam(this.getParams().mTeamVictoryOnly, i,
+                            this.getTeams(), false)));
                 }
                 if (mParams.mEnableClans) {
                     rankings.add(new Ranking(StringConstants.CS_CLAN, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingClan(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getDisplayClans(), false)));
@@ -419,12 +426,7 @@ public class Tournament {
         a.append(";\n");
 
         if (this.mParams.mTeamTournament) {
-            final mjtRankingTeam rt = new mjtRankingTeam(true, round - 1,
-                    mParams.mRankingTeam1,
-                    mParams.mRankingTeam2,
-                    mParams.mRankingTeam3,
-                    mParams.mRankingTeam4,
-                    mParams.mRankingTeam5,
+            final mjtRankingTeam rt = new mjtRankingTeam(getParams().mTeamVictoryOnly, round - 1,
                     mTeams, false);
 
             for (int i = 0; i < rt.getRowCount(); i++) {
@@ -735,7 +737,7 @@ public class Tournament {
                 mParams.mPointsIndivLargeVictory = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LARGE_VICTORY")).getIntValue();
                 mParams.mPointsIndivDraw = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DRAW")).getIntValue();
                 mParams.mPointsIndivLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOST")).getIntValue();
-                               
+
                 mParams.mPointsIndivLittleLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LITTLE_LOST")).getIntValue();
                 mParams.mRankingIndiv1 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK1")).getIntValue();
                 mParams.mRankingIndiv2 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK2")).getIntValue();
@@ -1019,8 +1021,8 @@ public class Tournament {
                     final Iterator it_ros = ros.iterator();
                     while (it_ros.hasNext()) {
                         final Element r = (Element) it_ros.next();
-                        String name=r.getAttributeValue(StringConstants.CS_NAME);
-                        name=RosterType.getRosterName(name);
+                        String name = r.getAttributeValue(StringConstants.CS_NAME);
+                        name = RosterType.getRosterName(name);
                         RosterType.mRostersNames.add(name);
                         RosterType.mRosterTypes.put(name, new RosterType(name));
                     }

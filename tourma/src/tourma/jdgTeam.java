@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -29,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
+import tourma.data.Clan;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.tableModel.mjtCoaches;
@@ -66,7 +68,23 @@ public class jdgTeam extends javax.swing.JDialog {
                 Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.picture),80,80));
+        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.picture), 80, 80));
+
+        final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
+        for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
+            clanListModel.addElement(Tournament.getTournament().getClans().get(i).mName);
+        }
+        jcbClan.setModel(clanListModel);
+
+        if ((Tournament.getTournament().getParams().mEnableClans) && (Tournament.getTournament().getClans().size() > 1)) {
+            jcbClan.setEnabled(true);
+            jLabel2.setEnabled(true);
+        }
+        else
+        {
+            jcbClan.setEnabled(false);
+            jLabel2.setEnabled(false);
+        }
 
 
         update();
@@ -97,7 +115,21 @@ public class jdgTeam extends javax.swing.JDialog {
                 Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.picture),80,80));
+
+        final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
+        for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
+            clanListModel.addElement(Tournament.getTournament().getClans().get(i).mName);
+        }
+        jcbClan.setModel(clanListModel);
+
+        if ((Tournament.getTournament().getParams().mEnableClans) && (Tournament.getTournament().getClans().size() > 1)) {
+            jcbClan.setEnabled(true);
+            if (team.mClan != null) {
+                jcbClan.setSelectedItem(team.mClan.mName);
+            }
+        }
+
+        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.picture), 80, 80));
         update();
     }
 
@@ -113,6 +145,8 @@ public class jdgTeam extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtfNom = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jcbClan = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtCancel = new javax.swing.JButton();
@@ -127,13 +161,19 @@ public class jdgTeam extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jLabel1.setText(bundle.getString("TeamNameKey")); // NOI18N
         jPanel1.add(jLabel1);
         jPanel1.add(jtfNom);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel2.setText(bundle.getString("ClanNameKey")); // NOI18N
+        jPanel1.add(jLabel2);
+
+        jPanel1.add(jcbClan);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -233,6 +273,14 @@ public class jdgTeam extends javax.swing.JDialog {
         } else {
             mTeam.mName = jtfNom.getText();
 
+            if (mTour.getParams().mEnableClans) {
+                if (jcbClan.getSelectedIndex() > 0) {
+                    mTeam.mClan = (Clan) Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
+                } else {
+                    mTeam.mClan = (Clan) Tournament.getTournament().getClans().get(0);
+                }
+            }
+
             if (!mTour.getTeams().contains(mTeam)) {
                 mTour.getTeams().add(mTeam);
             }
@@ -265,12 +313,12 @@ public class jdgTeam extends javax.swing.JDialog {
         }
 }//GEN-LAST:event_jbtModifyActionPerformed
 
-        private ImageIcon resize(ImageIcon image, int heigth, int width) {
+    private ImageIcon resize(ImageIcon image, int heigth, int width) {
         Image img = image.getImage();
         Image newimg = img.getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(newimg);
     }
-    
+
     private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
         File folder;
         folder = new File(getClass().getResource("/tourma/images/flags").getFile());
@@ -282,7 +330,7 @@ public class jdgTeam extends javax.swing.JDialog {
             if (listOfFiles[i].isFile()) {
                 String path = listOfFiles[i].getAbsolutePath();
                 ImageIcon icon = new ImageIcon(path);
-                objects[i] = resize(icon,80,80);
+                objects[i] = resize(icon, 80, 80);
             } else if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
             }
@@ -307,7 +355,7 @@ public class jdgTeam extends javax.swing.JDialog {
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
-                icon = resize(icon,80,80);
+                icon = resize(icon, 80, 80);
                 this.mTeam.picture = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
                 Graphics g = this.mTeam.picture.createGraphics();
                 // paint the Icon to the BufferedImage.
@@ -327,6 +375,7 @@ public class jdgTeam extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtAvatarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel7;
@@ -337,6 +386,7 @@ public class jdgTeam extends javax.swing.JDialog {
     private javax.swing.JButton jbtModify;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtRemove;
+    private javax.swing.JComboBox jcbClan;
     private javax.swing.JPanel jpnCoachButtons;
     private javax.swing.JTable jtbCoachs;
     private javax.swing.JTextField jtfNom;

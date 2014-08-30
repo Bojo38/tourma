@@ -58,7 +58,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         jlbActivateClans = new javax.swing.JLabel();
         jcxActivatesClans = new javax.swing.JCheckBox();
         jlbTeamMatesNumber = new javax.swing.JLabel();
-        jspTeamMembers = new javax.swing.JSpinner();
+        jspClanMembers = new javax.swing.JSpinner();
         jlbClansMembersNUmbers = new javax.swing.JLabel();
         jcxAvoidFirstMatch = new javax.swing.JCheckBox();
         jlbAvoidClansMembersMatch = new javax.swing.JLabel();
@@ -92,17 +92,18 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
 
         jlbTeamMatesNumber.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbTeamMatesNumber.setText(bundle.getString("TeamMatesNumber")); // NOI18N
+        jlbTeamMatesNumber.setToolTipText("");
         jlbTeamMatesNumber.setEnabled(false);
         jPanel12.add(jlbTeamMatesNumber);
 
-        jspTeamMembers.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(3), Integer.valueOf(1), null, Integer.valueOf(1)));
-        jspTeamMembers.setEnabled(false);
-        jspTeamMembers.addChangeListener(new javax.swing.event.ChangeListener() {
+        jspClanMembers.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(3), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jspClanMembers.setEnabled(false);
+        jspClanMembers.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jspTeamMembersStateChanged(evt);
+                jspClanMembersStateChanged(evt);
             }
         });
-        jPanel12.add(jspTeamMembers);
+        jPanel12.add(jspClanMembers);
 
         jlbClansMembersNUmbers.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbClansMembersNUmbers.setText(bundle.getString("AvoidMembersMatchsFirstRoundKey")); // NOI18N
@@ -189,7 +190,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
 
         jPanel14.add(jScrollPane3);
 
-        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CLansCoachsKey"))); // NOI18N
+        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("ClansMembersKey"))); // NOI18N
 
         jlsCoachList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -212,7 +213,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         jlbClansMembersNUmbers.setEnabled(clansEnable);
         jlbTeamMatesNumber.setEnabled(clansEnable);
 
-        jspTeamMembers.setEnabled(clansEnable);
+        jspClanMembers.setEnabled(clansEnable);
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
 
@@ -226,9 +227,9 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         update();
     }//GEN-LAST:event_jcxActivatesClansActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jspTeamMembersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspTeamMembersStateChanged
-        mTournament.getParams().mTeamMatesNumber = (Integer) jspTeamMembers.getValue();
-    }//GEN-LAST:event_jspTeamMembersStateChanged
+    private void jspClanMembersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspClanMembersStateChanged
+        mTournament.getParams().mTeamMatesClansNumber = (Integer) jspClanMembers.getValue();
+    }//GEN-LAST:event_jspClanMembersStateChanged
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAvoidFirstMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidFirstMatchActionPerformed
         mTournament.getParams().mAvoidClansFirstMatch = jcxAvoidFirstMatch.isSelected();
@@ -332,38 +333,49 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         }
     }//GEN-LAST:event_jbtEditClanIconActionPerformed
 
-    private void updateSublist()
-    {
-        
+    private void updateSublist() {
+
         final int selectedClan = jlsClans.getSelectedIndex();
-        final DefaultListModel coachListModel = new DefaultListModel();
+        final DefaultListModel memberListModel = new DefaultListModel();
         if (selectedClan >= 0) {
 
             final String clanName = mTournament.getClans().get(selectedClan).mName;
-            for (int i = 0; i < mTournament.getCoachs().size(); i++) {
-                if (clanName.equals(mTournament.getCoachs().get(i).mClan.mName)) {
-                    coachListModel.addElement(mTournament.getCoachs().get(i).mName);
+            if (mTournament.getParams().mTeamTournament) {
+                for (int i = 0; i < mTournament.getTeams().size(); i++) {
+                    if (mTournament.getTeams().get(i).mClan != null) {
+                        if (clanName.equals(mTournament.getTeams().get(i).mClan.mName)) {
+                            memberListModel.addElement(mTournament.getTeams().get(i).mName);
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < mTournament.getCoachs().size(); i++) {
+                    if (mTournament.getCoachs().get(i).mClan != null) {
+                        if (clanName.equals(mTournament.getCoachs().get(i).mClan.mName)) {
+                            memberListModel.addElement(mTournament.getCoachs().get(i).mName);
+                        }
+                    }
                 }
             }
         }
-        jlsCoachList.setModel(coachListModel);
+        jlsCoachList.setModel(memberListModel);
     }
-    
+
     public void update() {
 
         jbtEditClanIcon.setVisible(mTournament.getParams().useImage);
 
         final boolean bTourStarted = mTournament.getRounds().size() > 0;
-        jcxActivatesClans.setSelected(!bTourStarted && !mTournament.getParams().mTeamTournament);
-        jcxActivatesClans.setEnabled(!bTourStarted && !mTournament.getParams().mTeamTournament);
+        jcxActivatesClans.setSelected(!bTourStarted);
+        jcxActivatesClans.setEnabled(!bTourStarted);
 
-        final boolean clansEnable = (mTournament.getParams().mEnableClans) && (!mTournament.getParams().mTeamTournament);
-        jlbActivateClans.setEnabled(!mTournament.getParams().mTeamTournament);
+        final boolean clansEnable = (mTournament.getParams().mEnableClans);
+        jlbActivateClans.setEnabled(true);
         jlbAvoidClansMembersMatch.setEnabled(clansEnable);
         jlbClansMembersNUmbers.setEnabled(clansEnable);
         jlbTeamMatesNumber.setEnabled(clansEnable);
 
-        jspTeamMembers.setEnabled(clansEnable);
+        jspClanMembers.setEnabled(clansEnable);
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
 
@@ -376,17 +388,17 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         jcxActivatesClans.setSelected(clansEnable);
         jcxAvoidFirstMatch.setSelected(mTournament.getParams().mAvoidClansFirstMatch);
         jcxAvoidMatch.setSelected(mTournament.getParams().mAvoidClansMatch);
-        jspTeamMembers.setValue(mTournament.getParams().mTeamMatesNumber);
+        jspClanMembers.setValue(mTournament.getParams().mTeamMatesClansNumber);
 
-        
-    updateSublist();
+
+        updateSublist();
         final DefaultListModel listModel = new DefaultListModel();
         for (int i = 0; i < mTournament.getClans().size(); i++) {
             JLabel label = new JLabel(mTournament.getClans().get(i).mName);
             listModel.addElement(mTournament.getClans().get(i));
         }
 
-        
+
         jlsClans.setModel(listModel);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -408,7 +420,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
     private javax.swing.JLabel jlbTeamMatesNumber;
     private javax.swing.JList jlsClans;
     private javax.swing.JList jlsCoachList;
-    private javax.swing.JSpinner jspTeamMembers;
+    private javax.swing.JSpinner jspClanMembers;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -417,26 +429,23 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         JLabel label = new JLabel(value.mName);
         if (mTournament.getParams().useImage) {
             if (value.picture != null) {
-                label.setIcon(ImageTreatment.resize(new ImageIcon( value.picture),30,30));
+                label.setIcon(ImageTreatment.resize(new ImageIcon(value.picture), 30, 30));
             }
         }
         label.setSize(100, 30);
         label.setOpaque(true);
-        label.setBorder(new LineBorder(new Color(200,200,200),1));            
-        if (isSelected)
-        {
-            label.setBackground(new Color(200,200,200));
-            
-        }
-        else
-        {
+        label.setBorder(new LineBorder(new Color(200, 200, 200), 1));
+        if (isSelected) {
+            label.setBackground(new Color(200, 200, 200));
+
+        } else {
             label.setBackground(Color.WHITE);
         }
         /*if (hasFocus())
             
-        {
-            label.setBackground(new Color(220,220,200));
-        }*/
+         {
+         label.setBackground(new Color(220,220,200));
+         }*/
 //        list.setSelectedIndex(index);
         return label;
     }

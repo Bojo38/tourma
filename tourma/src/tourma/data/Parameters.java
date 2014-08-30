@@ -60,6 +60,7 @@ public class Parameters implements XMLExport {
      */
     public int mTeamIndivPairing = 0;
     public int mTeamMatesNumber = 1;
+    public int mClansMembersNumber = 1;
     public boolean mIndivPairingTeamBalanced = false;
     public boolean mIndivPairingIndivBalanced = false;
     public int mPointsTeamVictory = 1000;
@@ -111,9 +112,8 @@ public class Parameters implements XMLExport {
     /**
      * Use the color to displlay Match/rank
      */
-    public boolean useColor=true;
-    public boolean useImage=true;
-    
+    public boolean useColor = true;
+    public boolean useImage = true;
     protected final static ResourceBundle sbundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
 
     public Parameters() {
@@ -190,7 +190,6 @@ public class Parameters implements XMLExport {
         params.setAttribute(sbundle.getString("ACTVATECLANS"), Boolean.toString(this.mEnableClans));
         params.setAttribute(sbundle.getString("AVOIDFIRSTMATCH"), Boolean.toString(this.mAvoidClansFirstMatch));
         params.setAttribute(sbundle.getString("AVOIDMATCH"), Boolean.toString(this.mAvoidClansMatch));
-        params.setAttribute(sbundle.getString("CLANTEAMMATESNUMBER"), Integer.toString(this.mTeamMatesClansNumber));
 
         params.setAttribute(sbundle.getString("CLANTEAMMATESNUMBER"), Integer.toString(this.mTeamMatesClansNumber));
 
@@ -199,7 +198,7 @@ public class Parameters implements XMLExport {
         params.setAttribute(sbundle.getString("INDIVBALANCED"), Boolean.toString(this.mIndivPairingIndivBalanced));
         params.setAttribute(sbundle.getString("TEAMBALANCED"), Boolean.toString(this.mIndivPairingTeamBalanced));
 
-        
+
         return params;
     }
 
@@ -235,6 +234,7 @@ public class Parameters implements XMLExport {
                 this.mGapLittleLost = params.getAttribute(sbundle.getString("LITTLE_LOST_GAP")).getIntValue();
                 this.mPlace = params.getAttribute(sbundle.getString("PLACE")).getValue();
                 this.mTeamTournament = params.getAttribute(sbundle.getString("BYTEAM")).getBooleanValue();
+                
                 this.mTeamMatesNumber = params.getAttribute(sbundle.getString("TEAMMATES")).getIntValue();
                 this.mTeamPairing = params.getAttribute(sbundle.getString("TEAMPAIRING")).getIntValue();
                 this.mTeamIndivPairing = params.getAttribute(sbundle.getString("TEAMINDIVPAIRING")).getIntValue();
@@ -286,7 +286,6 @@ public class Parameters implements XMLExport {
                 this.mEnableClans = params.getAttribute(sbundle.getString("ACTVATECLANS")).getBooleanValue();
                 this.mAvoidClansFirstMatch = params.getAttribute(sbundle.getString("AVOIDFIRSTMATCH")).getBooleanValue();
                 this.mAvoidClansMatch = params.getAttribute(sbundle.getString("AVOIDMATCH")).getBooleanValue();
-                this.mTeamMatesClansNumber = params.getAttribute(sbundle.getString("CLANTEAMMATESNUMBER")).getIntValue();
                 this.mSubstitutes = params.getAttribute(sbundle.getString("SUBSTITUTES")).getBooleanValue();
                 this.mMultiRoster = params.getAttribute(sbundle.getString("MULTIROSTER")).getBooleanValue();
                 this.mMultiRoster = params.getAttribute("Portugal").getBooleanValue();
@@ -297,6 +296,8 @@ public class Parameters implements XMLExport {
             try {
                 this.mIndivPairingIndivBalanced = params.getAttribute(sbundle.getString("INDIVBALANCED")).getBooleanValue();
                 this.mIndivPairingTeamBalanced = params.getAttribute(sbundle.getString("TEAMBALANCED")).getBooleanValue();
+                
+                        this.mClansMembersNumber = params.getAttribute(sbundle.getString("CLANTEAMMATESNUMBER")).getIntValue();
 
             } catch (NullPointerException ne4) {
                 //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
@@ -321,5 +322,93 @@ public class Parameters implements XMLExport {
     @Override
     public String toString() {
         return sbundle.getString("PARAMÈTRES");
+    }
+
+    public int getTeamRankingType(int j) {
+        int rank = 0;
+        switch (j) {
+            case 0:
+                rank = mRankingTeam1;
+                break;
+            case 1:
+                rank = mRankingTeam2;
+                break;
+            case 2:
+                rank = mRankingTeam3;
+                break;
+            case 3:
+                rank = mRankingTeam4;
+                break;
+
+            case 4:
+                rank = mRankingTeam5;
+                break;
+
+        }
+        return rank;
+    }
+    
+    public int getIndivRankingType(int j) {
+        int rank = 0;
+        switch (j) {
+            case 0:
+                rank = mRankingIndiv1;
+                break;
+            case 1:
+                rank = mRankingIndiv2;
+                break;
+            case 2:
+                rank = mRankingIndiv3;
+                break;
+            case 3:
+                rank = mRankingIndiv4;
+                break;
+
+            case 4:
+                rank = mRankingIndiv5;
+                break;
+
+        }
+        return rank;
+    }
+
+    public int getIndivRankingNumber() {
+        int nb = 0;
+        if (mRankingIndiv1 != 0) {
+            nb++;
+            if (mRankingIndiv2 != 0) {
+                nb++;
+                if (mRankingIndiv3 != 0) {
+                    nb++;
+                    if (mRankingIndiv4 != 0) {
+                        nb++;
+                        if (mRankingIndiv5 != 0) {
+                            nb++;
+                        }
+                    }
+                }
+            }
+        }
+        return nb;
+    }
+    
+        public int getTeamRankingNumber() {
+        int nb = 0;
+        if (mRankingTeam1 != 0) {
+            nb++;
+            if (mRankingTeam2 != 0) {
+                nb++;
+                if (mRankingTeam3 != 0) {
+                    nb++;
+                    if (mRankingTeam4 != 0) {
+                        nb++;
+                        if (mRankingTeam5 != 0) {
+                            nb++;
+                        }
+                    }
+                }
+            }
+        }
+        return nb;
     }
 }

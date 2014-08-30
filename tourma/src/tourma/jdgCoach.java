@@ -69,13 +69,13 @@ public class jdgCoach extends javax.swing.JDialog {
 
         jcbRoster.setModel(new DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
 
-        if (!mTeamTournament) {
-            final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
-            for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
-                clanListModel.addElement(Tournament.getTournament().getClans().get(i).mName);
-            }
-            jcbClan.setModel(clanListModel);
+
+        final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
+        for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
+            clanListModel.addElement(Tournament.getTournament().getClans().get(i).mName);
         }
+        jcbClan.setModel(clanListModel);
+
         final DefaultComboBoxModel categoryListModel = new DefaultComboBoxModel();
         for (int i = 0; i < Tournament.getTournament().getCategories().size(); i++) {
             categoryListModel.addElement(Tournament.getTournament().getCategories().get(i).mName);
@@ -112,16 +112,16 @@ public class jdgCoach extends javax.swing.JDialog {
         jlbNafRanking.setText(Double.toString(mCoach.mNafRank));
 
         jcbRoster.setModel(new javax.swing.DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
-        
+
         if (mCoach.picture == null) {
             try {
                 mCoach.picture = ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.gif"));
             } catch (IOException ex) {
                 Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }        
-        jbtAvatar.setIcon(ImageTreatment.resize(new ImageIcon(mCoach.picture),80,80));
-        
+        }
+        jbtAvatar.setIcon(ImageTreatment.resize(new ImageIcon(mCoach.picture), 80, 80));
+
     }
     Team mTeam = null;
 
@@ -135,13 +135,11 @@ public class jdgCoach extends javax.swing.JDialog {
 
         jcbRoster.setModel(new DefaultComboBoxModel(RosterType.mRostersNames.toArray()));
 
-        if (!mTeamTournament) {
-            final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
-            for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
-                clanListModel.addElement(Tournament.getTournament().getClans().get(i).mName);
-            }
-            jcbClan.setModel(clanListModel);
+        final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
+        for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
+            clanListModel.addElement(Tournament.getTournament().getClans().get(i).mName);
         }
+        jcbClan.setModel(clanListModel);
 
         final DefaultComboBoxModel categoryListModel = new DefaultComboBoxModel();
         for (int i = 0; i < Tournament.getTournament().getCategories().size(); i++) {
@@ -185,8 +183,8 @@ public class jdgCoach extends javax.swing.JDialog {
             } catch (IOException ex) {
                 Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }        
-        jbtAvatar.setIcon(ImageTreatment.resize(new ImageIcon(mTeam.picture),80,80));
+        }
+        jbtAvatar.setIcon(ImageTreatment.resize(new ImageIcon(mTeam.picture), 80, 80));
     }
 
     /**
@@ -205,16 +203,14 @@ public class jdgCoach extends javax.swing.JDialog {
             } catch (IOException ex) {
                 Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }        
-        jbtAvatar.setIcon(ImageTreatment.resize(new ImageIcon(mCoach.picture),80,80));
-        
-        if (!mTeamTournament) {
-            final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
-            for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
-                clanListModel.addElement(Tournament.getTournament().getClans().get(i).mName);
-            }
-            jcbClan.setModel(clanListModel);
         }
+        jbtAvatar.setIcon(ImageTreatment.resize(new ImageIcon(mCoach.picture), 80, 80));
+
+        final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
+        for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
+            clanListModel.addElement(Tournament.getTournament().getClans().get(i).mName);
+        }
+        jcbClan.setModel(clanListModel);
 
         final DefaultComboBoxModel categoryListModel = new DefaultComboBoxModel();
         for (int i = 0; i < Tournament.getTournament().getCategories().size(); i++) {
@@ -241,12 +237,12 @@ public class jdgCoach extends javax.swing.JDialog {
 
         jtfHandicap.setText(Integer.toString(mCoach.mHandicap));
 
-        if (!mTeamTournament) {
-            if ((Tournament.getTournament().getParams().mEnableClans) && (Tournament.getTournament().getClans().size() > 1)) {
-                jcbClan.setEnabled(true);
-                jcbClan.setSelectedItem(mCoach.mClan.mName);
-            }
+
+        if ((Tournament.getTournament().getParams().mEnableClans) && (Tournament.getTournament().getClans().size() > 1)) {
+            jcbClan.setEnabled(true);
+            jcbClan.setSelectedItem(mCoach.mClan.mName);
         }
+
         if (Tournament.getTournament().getCategories().size() > 1) {
             jcbCategory.setEnabled(true);
             if (mCoach.mCategory != null) {
@@ -278,7 +274,7 @@ public class jdgCoach extends javax.swing.JDialog {
                 Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        jbtAvatar.setIcon(ImageTreatment.resize(new ImageIcon(mCoach.picture),80,80));
+        jbtAvatar.setIcon(ImageTreatment.resize(new ImageIcon(mCoach.picture), 80, 80));
 
     }
 
@@ -536,8 +532,8 @@ public class jdgCoach extends javax.swing.JDialog {
             } catch (NumberFormatException e) {
                 c.mHandicap = 0;
             }
-            c.picture=mCoach.picture;
-                   
+            c.picture = mCoach.picture;
+
         }
 
         if (!error) {
@@ -554,15 +550,13 @@ public class jdgCoach extends javax.swing.JDialog {
                 error = true;
             }
 
-            if (!mTeamTournament) {
-                if (jcbClan.getSelectedIndex() > 0) {
-                    c.mClan = (Clan) Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
-                } else {
-                    c.mClan = (Clan) Tournament.getTournament().getClans().get(0);
-                }
+            if (jcbClan.getSelectedIndex() > 0) {
+                c.mClan = (Clan) Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
             } else {
-                c.mClan = Tournament.getTournament().getClans().get(0);
+                c.mClan = (Clan) Tournament.getTournament().getClans().get(0);
             }
+        } else {
+            c.mClan = Tournament.getTournament().getClans().get(0);
 
             if (jcbCategory.getSelectedIndex() > 0) {
                 c.mCategory = (Category) Tournament.getTournament().getCategories().get(jcbCategory.getSelectedIndex());
@@ -581,7 +575,7 @@ public class jdgCoach extends javax.swing.JDialog {
                     Tournament.getTournament().getCoachs().add(c);
                 }
             }
-            c.picture=mCoach.picture;
+            c.picture = mCoach.picture;
         }
 
 
@@ -665,8 +659,6 @@ public class jdgCoach extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jbtDelActionPerformed
 
-    
-
     private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
         File folder;
         folder = new File(getClass().getResource("/tourma/images/avatar").getFile());
@@ -703,7 +695,7 @@ public class jdgCoach extends javax.swing.JDialog {
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
-                icon=ImageTreatment.resize(icon,80,80);
+                icon = ImageTreatment.resize(icon, 80, 80);
                 this.mCoach.picture = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
                 Graphics g = this.mCoach.picture.createGraphics();
                 // paint the Icon to the BufferedImage.

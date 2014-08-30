@@ -216,11 +216,8 @@ public class JPNPoolRound extends javax.swing.JPanel {
 
         if (mTournament.getParams().mTeamTournament) {
             mjtRankingTeam mRankingTeam;
-            if (mTournament.getParams().mTeamVictoryOnly) {
-                mRankingTeam = new mjtRankingTeam(true, v.size() - 1, mTournament.getParams().mRankingTeam1, mTournament.getParams().mRankingTeam2, mTournament.getParams().mRankingTeam3, mTournament.getParams().mRankingTeam4, mTournament.getParams().mRankingTeam5, mPool.mCompetitors, mRoundOnly);
-            } else {
-                mRankingTeam = new mjtRankingTeam(false, v.size() - 1, mTournament.getParams().mRankingIndiv1, mTournament.getParams().mRankingIndiv2, mTournament.getParams().mRankingIndiv3, mTournament.getParams().mRankingIndiv4, mTournament.getParams().mRankingIndiv5, mPool.mCompetitors, mRoundOnly);
-            }
+            mRankingTeam = new mjtRankingTeam(mTournament.getParams().mTeamVictoryOnly, v.size() - 1,
+                                        mPool.mCompetitors, mRoundOnly);
             jtbRankingPool.setModel(mRankingTeam);
             jtbRankingPool.setDefaultRenderer(String.class, mRankingTeam);
             jtbRankingPool.setDefaultRenderer(Integer.class, mRankingTeam);

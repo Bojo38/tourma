@@ -20,23 +20,13 @@ import tourma.data.Tournament;
  */
 public abstract class mjtAnnexRank extends mjtRanking {
 
-    //int _ranking_type;
-    /*public static final int C_MOST_TD_POS = 0;
-     public static final int C_MOST_TD_NEG = 1;
-     public static final int C_MOST_SOR_POS = 2;
-     public static final int C_MOST_SOR_NEG = 3;
-     public static final int C_MOST_FOUL_POS = 4;
-     public static final int C_MOST_FOUL_NEG = 5;
-     public static final int C_MOST_PAS_POS = 6;
-     public static final int C_MOST_PAS_NEG = 7;
-     public static final int C_MOST_INT_POS = 8;
-     public static final int C_MOST_INT_NEG = 9;*/
+
     boolean mFullRanking;
     Criteria mCriteria;
     int mSubtype;
 
-    public mjtAnnexRank(final int round, final Criteria criteria, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects);
+    public mjtAnnexRank(final int round, final Criteria criteria, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects,round_only);
         mCriteria = criteria;
         mSubtype = subtype;
         //_ranking_type = ranking_type;

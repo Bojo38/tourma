@@ -71,12 +71,12 @@ public class JPNRound extends javax.swing.JPanel {
         if (mTournament.getParams().mTeamTournament) {
             mJpnTeamRound = new JPNTeamRound(r, t);
             jtpGlobal.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam"), new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/TEAM.PNG"))), mJpnTeamRound);
-        } else {
-            if (mTournament.getParams().mEnableClans) {
-                mJpnClanRound = new JPNClanRound(r, t);
-                jtpGlobal.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByClan"), new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/CLAN.PNG"))), mJpnClanRound);
-            }
         }
+        if (mTournament.getParams().mEnableClans) {
+            mJpnClanRound = new JPNClanRound(r, t);
+            jtpGlobal.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByClan"), new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/CLAN.PNG"))), mJpnClanRound);
+        }
+
         if (mTournament.getGroups().size() > 1) {
             for (int i = 0; i < mTournament.getGroups().size(); i++) {
                 final Group g = mTournament.getGroups().get(i);

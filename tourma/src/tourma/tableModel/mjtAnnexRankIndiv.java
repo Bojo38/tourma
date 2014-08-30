@@ -21,12 +21,10 @@ import tourma.utility.StringConstants;
 public class mjtAnnexRankIndiv extends mjtAnnexRank {
 
     boolean mTeamTournament;
-    boolean mRoundOnly = false;
 
     public mjtAnnexRankIndiv(final int round, final Criteria criteria, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
-        super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5);
+        super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5,round_only);
         mTeamTournament = teamTournament;
-        mRoundOnly = round_only;
     }
 
     @Override
@@ -61,14 +59,12 @@ public class mjtAnnexRankIndiv extends mjtAnnexRank {
                     boolean bFound = false;
                     for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
                         final Round r = Tournament.getTournament().getRounds().get(i);
-                        if (r.getMatchs().contains(m)) {
+                        if (r.getCoachMatchs().contains(m)) {
                             bFound = true;
                         }
                     }
                     // test if match is in round
                     if (bFound) {
-
-
                         value += getValue(c, m, mCriteria, mSubtype);
 
                         final Criteria c1 = getCriteriaByValue(mRankingType1);

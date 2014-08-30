@@ -30,13 +30,11 @@ public class mjtRankingIndiv extends mjtRanking {
 
     boolean mTeamTournament;
     boolean mPositive;
-    boolean mRoundOnly;
     boolean mForPool;
 
     public mjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs);
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs,round_only);
         mTeamTournament = tournament;
-        mRoundOnly = round_only;
         mForPool = forPool;
         sortDatas();
     }
