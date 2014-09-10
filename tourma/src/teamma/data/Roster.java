@@ -94,50 +94,51 @@ public class Roster implements XMLExport {
 
     @Override
     public Element getXMLElement() {
-        Element compo = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COMPOSITION"));
 
-        compo.setAttribute(StringConstants.CS_ROSTER, this._roster._name);
-        compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APOTHECARY"), Boolean.toString(this._apothecary));
-        compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ASSISTANTS"), Integer.toString(this._assistants));
-        compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHEERLEADERS"), Integer.toString(this._cheerleaders));
-        compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FANFACTOR"), Integer.toString(this._fanfactor));
-        compo.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("REROLLS"), Integer.toString(this._rerolls));
+        Element compo = new Element("Composition");
+        if (this._roster != null) {
+            compo.setAttribute(StringConstants.CS_ROSTER, this._roster._name);
+            compo.setAttribute("Apothecary", Boolean.toString(this._apothecary));
+            compo.setAttribute("Assistants", Integer.toString(this._assistants));
+            compo.setAttribute("Cheerleaders", Integer.toString(this._cheerleaders));
+            compo.setAttribute("FanFactor", Integer.toString(this._fanfactor));
+            compo.setAttribute("Rerolls", Integer.toString(this._rerolls));
 
-        final Element inducements = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDUCEMENTS"));
-        inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHEF"), Boolean.toString(this._chef));
-        inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IGOR"), Boolean.toString(this._igor));
-        inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WIZARD"), Boolean.toString(this._wizard));
-        inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BABES"), Integer.toString(this._bloodweiserbabes));
-        inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CARDS"), Integer.toString(this._cards));
-        inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BRIBE"), Integer.toString(this._corruptions));
-        inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXTRAREROLLS"), Integer.toString(this._extrarerolls));
-        inducements.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOCALAPOTHECARY"), Integer.toString(this._localapothecary));
+            final Element inducements = new Element("Inducements");
+            inducements.setAttribute("Chef", Boolean.toString(this._chef));
+            inducements.setAttribute("Igor", Boolean.toString(this._igor));
+            inducements.setAttribute("Wizard", Boolean.toString(this._wizard));
+            inducements.setAttribute("Babes", Integer.toString(this._bloodweiserbabes));
+            inducements.setAttribute("Cards", Integer.toString(this._cards));
+            inducements.setAttribute("Bribe", Integer.toString(this._corruptions));
+            inducements.setAttribute("ExtraRerolls", Integer.toString(this._extrarerolls));
+            inducements.setAttribute("LocalApothecary", Integer.toString(this._localapothecary));
 
 
-        for (int j = 0; j < this._champions.size(); j++) {
-            final Element st = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STARPLAYER"));
-            st.setAttribute(StringConstants.CS_NAME, this._champions.get(j)._name);
-            inducements.addContent(st);
-        }
-
-        compo.addContent(inducements);
-
-        for (int j = 0; j < this._players.size(); j++) {
-            final Element p = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PLAYER"));
-            final teamma.data.Player pl = this._players.get(j);
-            p.setAttribute(StringConstants.CS_NAME, pl._name);
-            p.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"), pl._playertype._position);
-
-            for (int k = 0; k < pl._skills.size(); k++) {
-                final Element s = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKILL"));
-                final teamma.data.Skill sk = pl._skills.get(k);
-                s.setAttribute(StringConstants.CS_NAME, sk.mName);
-                s.setAttribute("Color",Integer.toString(sk.mColor.getRGB()));
-                p.addContent(s);
+            for (int j = 0; j < this._champions.size(); j++) {
+                final Element st = new Element("StarPlayer");
+                st.setAttribute(StringConstants.CS_NAME, this._champions.get(j)._name);
+                inducements.addContent(st);
             }
-            compo.addContent(p);
-        }
 
+            compo.addContent(inducements);
+
+            for (int j = 0; j < this._players.size(); j++) {
+                final Element p = new Element("Player");
+                final teamma.data.Player pl = this._players.get(j);
+                p.setAttribute(StringConstants.CS_NAME, pl._name);
+                p.setAttribute("Position", pl._playertype._position);
+
+                for (int k = 0; k < pl._skills.size(); k++) {
+                    final Element s = new Element("Skill");
+                    final teamma.data.Skill sk = pl._skills.get(k);
+                    s.setAttribute(StringConstants.CS_NAME, sk.mName);
+                    s.setAttribute("Color", Integer.toString(sk.mColor.getRGB()));
+                    p.addContent(s);
+                }
+                compo.addContent(p);
+            }
+        }
         return compo;
 
     }
@@ -145,24 +146,24 @@ public class Roster implements XMLExport {
     @Override
     public void setXMLElement(Element e) {
         this._roster = teamma.data.lrb.getLRB().getRosterType(e.getAttributeValue(StringConstants.CS_ROSTER));
-        this._apothecary = Boolean.parseBoolean(e.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("APOTHECARY")));
-        this._assistants = Integer.parseInt(e.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ASSISTANTS")));
-        this._cheerleaders = Integer.parseInt(e.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHEERLEADERS")));
-        this._fanfactor = Integer.parseInt(e.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FANFACTOR")));
-        this._rerolls = Integer.parseInt(e.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("REROLLS")));
+        this._apothecary = Boolean.parseBoolean(e.getAttributeValue("Apothecary"));
+        this._assistants = Integer.parseInt(e.getAttributeValue("Assistants"));
+        this._cheerleaders = Integer.parseInt(e.getAttributeValue("Cheerleaders"));
+        this._fanfactor = Integer.parseInt(e.getAttributeValue("FanFactor"));
+        this._rerolls = Integer.parseInt(e.getAttributeValue("Rerolls"));
 
-        final Element inducements = e.getChild(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDUCEMENTS"));
+        final Element inducements = e.getChild("Inducements");
         if (inducements != null) {
-            this._bloodweiserbabes = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BABES")));
-            this._cards = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CARDS")));
-            this._chef = Boolean.parseBoolean(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHEF")));
-            this._corruptions = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BRIBE")));
-            this._extrarerolls = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXTRAREROLLS")));
-            this._igor = Boolean.parseBoolean(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IGOR")));
-            this._localapothecary = Integer.parseInt(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOCALAPOTHECARY")));
-            this._wizard = Boolean.parseBoolean(inducements.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WIZARD")));
+            this._bloodweiserbabes = Integer.parseInt(inducements.getAttributeValue("Babes"));
+            this._cards = Integer.parseInt(inducements.getAttributeValue("Cards"));
+            this._chef = Boolean.parseBoolean(inducements.getAttributeValue("Chef"));
+            this._corruptions = Integer.parseInt(inducements.getAttributeValue("Bribe"));
+            this._extrarerolls = Integer.parseInt(inducements.getAttributeValue("ExtraRerolls"));
+            this._igor = Boolean.parseBoolean(inducements.getAttributeValue("Igor"));
+            this._localapothecary = Integer.parseInt(inducements.getAttributeValue("LocalApothecary"));
+            this._wizard = Boolean.parseBoolean(inducements.getAttributeValue("Wizard"));
 
-            final List stars = inducements.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STARPLAYERS"));
+            final List stars = inducements.getChildren("StarPlayer");
             final Iterator s = stars.iterator();
             while (s.hasNext()) {
                 final Element star = (Element) s.next();
@@ -171,21 +172,21 @@ public class Roster implements XMLExport {
             }
         }
 
-        final List players = e.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PLAYER"));
+        final List players = e.getChildren("Player");
         final Iterator ip = players.iterator();
         while (ip.hasNext()) {
             final Element p = (Element) ip.next();
 
-            final teamma.data.Player pl = new Player(this._roster.getPlayerType(p.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"))));
+            final teamma.data.Player pl = new Player(this._roster.getPlayerType(p.getAttributeValue("Position")));
             pl._name = p.getAttributeValue(StringConstants.CS_NAME);
 
-            final List skills = p.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SKILL"));
+            final List skills = p.getChildren("Skill");
             final Iterator is = skills.iterator();
             while (is.hasNext()) {
                 final Element s = (Element) is.next();
 
                 final teamma.data.Skill sl = lrb.getLRB().getSkill(s.getAttributeValue(StringConstants.CS_NAME));
-                sl.mColor= Color.decode(s.getAttributeValue("Color"));
+                sl.mColor = Color.decode(s.getAttributeValue("Color"));
                 pl._skills.add(sl);
             }
 

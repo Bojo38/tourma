@@ -160,7 +160,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         // update positions
         updateBalancedTeam();
 
-        jtpStatistics.addTab("Opponent by Team", jpnBalancedTeam);
+        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OPPONENT BY TEAM"), jpnBalancedTeam);
 
     }
 
@@ -218,7 +218,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         // update positions
         updateBalancedIndiv();
 
-        jtpStatistics.addTab("Oppositions par joueur", jpnBalancedIndiv);
+        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OPPOSITIONS PAR JOUEUR"), jpnBalancedIndiv);
 
     }
 
@@ -313,7 +313,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
             barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
             barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-                    java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}/{1}: {2}"), NumberFormat.getInstance()));
+                    "{0}/{1}: {2}", NumberFormat.getInstance()));
 
             final ChartPanel chartPanel = new ChartPanel(chart);
             jtpStatistics.addTab(crit.mName, chartPanel);
@@ -432,7 +432,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}/{1}: {2}"), NumberFormat.getInstance()));
+                "{0}/{1}: {2}", NumberFormat.getInstance()));
 
         final ChartPanel chartPanel = new ChartPanel(chart);
         jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULTATS"), chartPanel);
@@ -499,7 +499,8 @@ public class JPNStatistics extends javax.swing.JPanel {
         final JFreeChart chart = ChartFactory.createPieChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTERS"), datas, true, true, false);
 
         final PiePlot plot = (PiePlot) chart.getPlot();
-        final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}: {1} ({2})"));
+        final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator(
+                "{0}: {1} ({2})");
         plot.setLegendLabelGenerator(label);
         plot.setLabelGenerator(label);
         plot.setStartAngle(290);
@@ -548,7 +549,8 @@ public class JPNStatistics extends javax.swing.JPanel {
         final JFreeChart chart = ChartFactory.createPieChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUPS"), datas, true, true, false);
 
         final PiePlot plot = (PiePlot) chart.getPlot();
-        final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}: {1} ({2})"));
+        final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator(
+                "{0}: {1} ({2})");
         plot.setLegendLabelGenerator(label);
         plot.setLabelGenerator(label);
         plot.setStartAngle(290);
@@ -618,8 +620,8 @@ public class JPNStatistics extends javax.swing.JPanel {
             final double avg_value = avg.get(name);
             final double avg_opp_value = avg_opp.get(name);
             if ((avg_value != 0) && (avg_opp_value != 0)) {
-                datas.addValue(avg_value, "Points", name);
-                datas.addValue(avg_opp_value, "Points adversaires", name);
+                datas.addValue(avg_value, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS"), name);
+                datas.addValue(avg_opp_value, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS ADVERSAIRES"), name);
             }
         }
 
@@ -643,7 +645,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("{0}/{1}: {2}"), NumberFormat.getInstance()));
+                "{0}/{1}: {2}", NumberFormat.getInstance()));
 
         final ChartPanel chartPanel = new ChartPanel(chart);
         jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS"), chartPanel);
@@ -709,7 +711,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         // update positions
         updatePositions();
 
-        jtpStatistics.addTab("Positions", jpnPositions);
+        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIONS"), jpnPositions);
 
     }
 
@@ -766,7 +768,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         // update positions
         updateTeamPositions();
 
-        jtpStatistics.addTab("Team Positions", jpnTeamPositions);
+        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM POSITIONS"), jpnTeamPositions);
 
     }
 
@@ -789,7 +791,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             datas.addSeries(serie);
         }
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Positions", "Round", "Position", datas, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart = ChartFactory.createXYLineChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIONS"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"), datas, PlotOrientation.VERTICAL, true, true, true);
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, true);
         plot.setRenderer(renderer);
@@ -829,7 +831,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        JFreeChart chart = ChartFactory.createBarChart("Adversaires par équipe", "Adversaires", "Nombre de matchs", datas, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart = ChartFactory.createBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ADVERSAIRES PAR ÉQUIPE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ADVERSAIRES"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MATCHS"), datas, PlotOrientation.VERTICAL, true, true, true);
 
         final CategoryPlot plot = chart.getCategoryPlot();
 
@@ -843,7 +845,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-                "Matchs {1} vs {0}: {2}", NumberFormat.getInstance()));
+                "{1} VS {0}: {2}", NumberFormat.getInstance()));
 
         plot.setRenderer(barrenderer);
         NumberAxis axis = (NumberAxis) plot.getRangeAxis();
@@ -881,7 +883,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        JFreeChart chart = ChartFactory.createBarChart("Adversaires par équipe", "Adversaires", "Nombre de matchs", datas, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart = ChartFactory.createBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ADVERSAIRES PAR ÉQUIPE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ADVERSAIRES"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MATCHS"), datas, PlotOrientation.VERTICAL, true, true, true);
 
         final CategoryPlot plot = chart.getCategoryPlot();
 
@@ -895,7 +897,7 @@ public class JPNStatistics extends javax.swing.JPanel {
         barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
         barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-                "Matchs {1} vs {0}: {2}", NumberFormat.getInstance()));
+                "{1} VS {0}: {2}", NumberFormat.getInstance()));
 
         plot.setRenderer(barrenderer);
         NumberAxis axis = (NumberAxis) plot.getRangeAxis();
@@ -928,7 +930,7 @@ public class JPNStatistics extends javax.swing.JPanel {
             datas.addSeries(serie);
         }
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Positions", "Round", "Position", datas, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart = ChartFactory.createXYLineChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIONS"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"), datas, PlotOrientation.VERTICAL, true, true, true);
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, true);
         plot.setRenderer(renderer);

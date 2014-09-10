@@ -83,7 +83,7 @@ public class JPNParamCriterias extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
     final int nb = Tournament.getTournament().getParams().mCriterias.size();
-    final Criteria c = new Criteria(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITÈRE {0}"), Integer.toString(nb)));
+    final Criteria c = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITÈRE")+" "+ Integer.toString(nb));
     Tournament.getTournament().getParams().mCriterias.add(c);
     for (int i = 0; i < mTournament.getRounds().size(); i++) {
         final Round r = mTournament.getRounds().get(i);

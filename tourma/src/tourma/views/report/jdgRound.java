@@ -68,7 +68,11 @@ public class jdgRound extends javax.swing.JDialog {
         mResult = result;
         mTeam = team;
 
-        this.setTitle(tour.getParams().mTournamentName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" -") +StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" {0}"), roundNumber));
+        this.setTitle(tour.getParams().mTournamentName +
+                " -" +StringConstants.CS_THICK + 
+                java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+
+                " "+
+                roundNumber);
         try {
             jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
 
@@ -94,7 +98,7 @@ public class jdgRound extends javax.swing.JDialog {
         mRoundNumber = roundNumber;
         mTour = tour;
 
-        this.setTitle(tour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" {0}"), roundNumber));
+        this.setTitle(tour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+" "+ roundNumber);
         try {
             jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
             File f;
@@ -231,7 +235,7 @@ public class jdgRound extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate("round.html");
 
             final Map root = new HashMap();
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" {0}"), mRoundNumber));
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+" "+ mRoundNumber);
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE"), mRound.getMatchs().size());
 
             final ArrayList<CoachMatch> matches = mRound.getCoachMatchs();
@@ -354,7 +358,7 @@ public class jdgRound extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate("team_round.html");
 
            final  Map root = new HashMap();
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" {0}"), mRoundNumber));
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)+" "+ mRoundNumber);
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLES"), mRound.getMatchs().size());
 
             if (mResult) {
@@ -433,7 +437,9 @@ public class jdgRound extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate("team_round.html");
 
             final Map root = new HashMap();
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" - RONDE {0}"), mRoundNumber));
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"),
+                    mTour.getParams().mTournamentName + " - " +
+                    java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round")+" "+ mRoundNumber);
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLES"), mTour.getTeams().size() / 2);
             root.put(StringConstants.CS_RESULT, 0);
 

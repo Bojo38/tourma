@@ -60,7 +60,7 @@ public class jdgPairing extends javax.swing.JDialog {
         mTeam2 = team2;
         mCoachs = new HashMap<>();
 
-        this.setTitle(team1.mName + " VS "+ team2.mName);
+        this.setTitle(team1.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS ")+ team2.mName);
 
         mRound = round;
         mMatchs = new ArrayList<>();

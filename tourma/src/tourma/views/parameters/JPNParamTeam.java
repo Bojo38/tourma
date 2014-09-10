@@ -398,9 +398,9 @@ public class JPNParamTeam extends javax.swing.JPanel {
         rankChoices.add(StringConstants.CS_POINTS);
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS ADVERSAIRES"));
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V/N/D"));
-        rankChoices.add("ELO");
-        rankChoices.add("ELO Adversaires");
-        rankChoices.add("Nombre de matchs joués");
+        rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO"));
+        rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO ADVERSAIRES"));
+        rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MATCHS JOUÉS"));
         for (int i = 0; i < Tournament.getTournament().getParams().mCriterias.size(); i++) {
             final Criteria criteria = Tournament.getTournament().getParams().mCriterias.get(i);
             rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" JOUEUR"));

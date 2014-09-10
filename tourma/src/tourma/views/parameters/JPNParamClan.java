@@ -297,7 +297,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
 
             JComboBox combo = new JComboBox(objects);
             JPanel panel = new JPanel(new BorderLayout());
-            JLabel l = new JLabel("Sélectionnez une image");
+            JLabel l = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SÉLECTIONNEZ UNE IMAGE"));
             panel.add(l, BorderLayout.NORTH);
             panel.add(combo, BorderLayout.CENTER);
 
@@ -308,7 +308,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
             Clan c = mTournament.getClans().get(jlsClans.getSelectedIndex());
             if (combo.getSelectedItem() == empty) {
                 final JFileChooser jfc = new JFileChooser();
-                final FileFilter filter1 = new ExtensionFileFilter("image", new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+                final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IMAGE"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
                 jfc.setFileFilter(filter1);
                 if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
@@ -365,10 +365,6 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
 
         jbtEditClanIcon.setVisible(mTournament.getParams().useImage);
 
-        final boolean bTourStarted = mTournament.getRounds().size() > 0;
-        jcxActivatesClans.setSelected(!bTourStarted);
-        jcxActivatesClans.setEnabled(!bTourStarted);
-
         final boolean clansEnable = (mTournament.getParams().mEnableClans);
         jlbActivateClans.setEnabled(true);
         jlbAvoidClansMembersMatch.setEnabled(clansEnable);
@@ -379,11 +375,11 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
 
-        jbtAddClan.setEnabled(clansEnable && !bTourStarted);
-        jbtRemoveClan.setEnabled(clansEnable && !bTourStarted);
-        jbtEditClan.setEnabled(clansEnable && !bTourStarted);
-        jbtEditClanIcon.setEnabled(clansEnable && !bTourStarted);
-        jlsClans.setEnabled(clansEnable && !bTourStarted);
+        jbtAddClan.setEnabled(clansEnable );
+        jbtRemoveClan.setEnabled(clansEnable);
+        jbtEditClan.setEnabled(clansEnable );
+        jbtEditClanIcon.setEnabled(clansEnable);
+        jlsClans.setEnabled(clansEnable );
 
         jcxActivatesClans.setSelected(clansEnable);
         jcxAvoidFirstMatch.setSelected(mTournament.getParams().mAvoidClansFirstMatch);

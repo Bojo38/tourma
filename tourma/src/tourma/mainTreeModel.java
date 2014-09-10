@@ -58,9 +58,9 @@ public class mainTreeModel implements TreeModel, TreeCellRenderer {
             if (r.mCup) {
                 cup = true;
             }
-            final String tmp= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE {0}");
+            final String tmp= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round");
             final DefaultMutableTreeNode node = new DefaultMutableTreeNode(
-                    java.text.MessageFormat.format(tmp,  i+1));
+                    tmp+" "+(i+1));
             mRoot.add(node);
             node.setUserObject(r);
             mRounds.add(node);

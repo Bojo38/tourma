@@ -42,6 +42,19 @@ public class Team extends Competitor implements XMLExport {
 
     }
 
+    @Override
+    public String getName() {
+        String text=mName;
+        if (Tournament.getTournament().getParams().mEnableClans)
+        {
+            if (mClan!=null)
+            {
+                text+=" ("+mClan.mName+")";
+            }
+        }
+        return text;
+    }
+    
     public static Team getNullTeam() {
         if (sNullTeam == null) {
             sNullTeam = new Team(StringConstants.CS_NONE);

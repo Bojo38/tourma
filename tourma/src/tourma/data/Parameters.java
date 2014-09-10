@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -113,7 +114,7 @@ public class Parameters implements XMLExport {
      * Use the color to displlay Match/rank
      */
     public boolean useColor = true;
-    public boolean useImage = true;
+    public boolean useImage = false;
     protected final static ResourceBundle sbundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
 
     public Parameters() {
@@ -223,11 +224,13 @@ public class Parameters implements XMLExport {
             }
             this.mPointsIndivLittleLost = params.getAttribute(sbundle.getString("LITTLE_LOST")).getIntValue();
 
-            this.mRankingIndiv1 = params.getAttribute(sbundle.getString("RANK1")).getIntValue();
-            this.mRankingIndiv2 = params.getAttribute(sbundle.getString("RANK2")).getIntValue();
-            this.mRankingIndiv3 = params.getAttribute(sbundle.getString("RANK3")).getIntValue();
-            this.mRankingIndiv4 = params.getAttribute(sbundle.getString("RANK4")).getIntValue();
-            this.mRankingIndiv5 = params.getAttribute(sbundle.getString("RANK5")).getIntValue();
+
+            Attribute r1=params.getAttribute("Rank1");
+            this.mRankingIndiv1 = r1.getIntValue();
+            this.mRankingIndiv2 = params.getAttribute("Rank2").getIntValue();
+            this.mRankingIndiv3 = params.getAttribute("Rank3").getIntValue();
+            this.mRankingIndiv4 = params.getAttribute("Rank4").getIntValue();
+            this.mRankingIndiv5 = params.getAttribute("Rank5").getIntValue();
 
             try {
                 this.mGapLargeVictory = params.getAttribute(sbundle.getString("LARGE_VICTORY_GAP")).getIntValue();

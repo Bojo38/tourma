@@ -113,7 +113,7 @@ public class JPNCategory extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
-         final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CATEGORIE")+ ": " +mCategory.mName, mRoundNumber, mTournament, (mjtRankingIndiv) jtbCategory.getModel(), 0);
+         final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CATEGORIE")+ ": ") +mCategory.mName, mRoundNumber, mTournament, (mjtRankingIndiv) jtbCategory.getModel(), 0);
          jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

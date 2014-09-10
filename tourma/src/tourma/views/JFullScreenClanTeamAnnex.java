@@ -97,10 +97,10 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
                 column++;
 
 
-                JLabel titleCoach = new JLabel("Equipe");
+                JLabel titleCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
                 if (!team)
                 {
-                    titleCoach.setText("Clan");
+                    titleCoach.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
                 }
                 titleCoach.setHorizontalAlignment(JLabel.CENTER);
                 titleCoach.setBackground(Color.BLACK);
@@ -133,10 +133,10 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
 
 
                 
-                JLabel titleCoach2 = new JLabel("Equipe");
+                JLabel titleCoach2 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
                 if (!team)
                 {
-                    titleCoach2.setText("Clan");
+                    titleCoach2.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
                 }
                 titleCoach2.setHorizontalAlignment(JLabel.CENTER);
                 titleCoach2.setBackground(Color.BLACK);

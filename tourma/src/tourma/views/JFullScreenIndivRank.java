@@ -110,7 +110,7 @@ public class JFullScreenIndivRank extends JFullScreen {
             int index = 1;
 
             if (Tournament.getTournament().getParams().mTeamTournament) {
-                JLabel jlbTTeam = new JLabel("Team");
+                JLabel jlbTTeam = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
                 jlbTTeam.setFont(f1);
                 jlbTTeam.setOpaque(true);
                 jlbTTeam.setBackground(Color.BLACK);
@@ -120,7 +120,7 @@ public class JFullScreenIndivRank extends JFullScreen {
                 index += 5;
             }
             if (Tournament.getTournament().getClans().size() > 1) {
-                JLabel jlbTClan = new JLabel("Clan");
+                JLabel jlbTClan = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
                 jlbTClan.setFont(f1);
                 jlbTClan.setOpaque(true);
 
@@ -131,7 +131,7 @@ public class JFullScreenIndivRank extends JFullScreen {
             }
 
 
-            JLabel jlbTCoach = new JLabel("Coach");
+            JLabel jlbTCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach"));
             jlbTCoach.setFont(f1);
             jlbTCoach.setOpaque(true);
             jlbTCoach.setBackground(Color.BLACK);
@@ -139,7 +139,7 @@ public class JFullScreenIndivRank extends JFullScreen {
             jpnContent.add(jlbTCoach, getGridbBagConstraints(index, 0, 1, 5));
             index += 5;
 
-            JLabel jlbTRoster = new JLabel("Roster");
+            JLabel jlbTRoster = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Roster"));
             jlbTRoster.setFont(f1);
             jlbTRoster.setOpaque(true);
             jlbTRoster.setBackground(Color.BLACK);
@@ -147,7 +147,7 @@ public class JFullScreenIndivRank extends JFullScreen {
             jpnContent.add(jlbTRoster, getGridbBagConstraints(index, 0, 1, 3));
             index += 3;
 
-            JLabel jlbTRosterName = new JLabel("Roster Name");
+            JLabel jlbTRosterName = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RosterName"));
             jlbTRosterName.setFont(f1);
             jlbTRosterName.setOpaque(true);
             jlbTRosterName.setBackground(Color.BLACK);

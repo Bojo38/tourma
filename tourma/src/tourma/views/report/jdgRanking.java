@@ -236,8 +236,8 @@ public class jdgRanking extends javax.swing.JDialog {
             final SimpleDateFormat formatShort = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY"),Locale.getDefault());
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATEGENERATION"), formatShort.format(new Date()));
             address = File.createTempFile(
-                    java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULT{0}"),
-                    format.format(new Date())), ".tmp");
+                    java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULT")+" "+
+                    format.format(new Date()), ".tmp");
             address.deleteOnExit();
             final Writer out = new FileWriter(address);
             temp.process(root, out);

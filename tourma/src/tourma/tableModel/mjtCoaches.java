@@ -50,7 +50,7 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
         ResourceBundle bundle=java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
         switch (col) {
             case 0:
-                val = "#";
+                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
                 break;
             case 1:
                 val = bundle.getString("Coach");
@@ -59,22 +59,22 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
                 val = bundle.getString("Team");
                 break;
             case 3:
-                val = "Roster";
+                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
                 break;
             case 4:
-                val = "NAF";
+                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF");
                 break;
             case 5:
                 val = bundle.getString("Ranking");
                 break;
             case 8:
-                val ="Clan";
+                val =java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN");
                 break;
             case 6:
                 val = "";
                 break;
             case 7:
-                val = "Classement";
+                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT");
                 break;
             default:
         }
@@ -103,7 +103,7 @@ public class mjtCoaches extends AbstractTableModel implements TableCellRenderer 
                     }
                     else
                     {
-                        val="unknown";
+                        val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNKNOWN");
                     }
                     break;
                 case 4:

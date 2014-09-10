@@ -142,10 +142,10 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 2: {
                     String tmp = "";
                     if (m.concedeedBy1) {
-                        tmp = "(Conceeded) ";
+                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(CONCEEDED) ");
                     }
                     if (m.refusedBy1) {
-                        tmp = "(Refused) ";
+                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
                     }
 
                     if (m.mRoster1 == null) {
@@ -180,10 +180,10 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 5: {
                     String tmp = "";
                     if (m.concedeedBy2) {
-                        tmp = "(Conceeded) ";
+                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(CONCEEDED) ");
                     }
                     if (m.refusedBy2) {
-                        tmp = "(Refused) ";
+                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
                     }
                     if (m.mRoster2 == null) {
                         rosterName = ((Coach) m.mCompetitor2).mRoster.mName;
@@ -219,10 +219,10 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 1: {
                     String tmp = "";
                     if (m.concedeedBy1) {
-                        tmp = "(Conceeded) ";
+                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(CONCEEDED) ");
                     }
                     if (m.refusedBy1) {
-                        tmp = "(Refused) ";
+                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
                     }
                     if (m.mRoster1 == null) {
                         rosterName = ((Coach) m.mCompetitor1).mRoster.mName;
@@ -256,10 +256,10 @@ public class mjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 4: {
                     String tmp = "";
                     if (m.concedeedBy2) {
-                        tmp = "(Conceeded) ";
+                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(CONCEEDED) ");
                     }
                     if (m.refusedBy2) {
-                        tmp = "(Refused) ";
+                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
                     }
                     if (m.mRoster2 == null) {
                         rosterName = ((Coach) m.mCompetitor2).mRoster.mName;

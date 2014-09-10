@@ -637,7 +637,7 @@ public class jdgCoach extends javax.swing.JDialog {
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
 
         String input = (String) JOptionPane.showInputDialog(this,
-                "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
+                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseRoster"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Roster's Choice"), JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.mRostersNames.toArray(), "Amazons");
         teamma.data.RosterType rt = teamma.data.lrb.getLRB().getRosterType(input);
         if (rt != null) {
@@ -646,7 +646,7 @@ public class jdgCoach extends javax.swing.JDialog {
             mCoach.mCompositions.add(compo);
             updatelist();
         } else {
-            JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RostersChoiceError0")+input);
         }
     }//GEN-LAST:event_jbtAddActionPerformed
 
@@ -672,7 +672,7 @@ public class jdgCoach extends javax.swing.JDialog {
                 ImageIcon icon = new ImageIcon(path);
                 objects[i] = ImageTreatment.resize(icon, 80, 80);
             } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
+                System.out.println(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIRECTORY {0}")+listOfFiles[i].getName());
             }
         }
 
@@ -681,7 +681,7 @@ public class jdgCoach extends javax.swing.JDialog {
 
         JComboBox combo = new JComboBox(objects);
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel l = new JLabel("Sélectionnez une image");
+        JLabel l = new JLabel(("Select picture"));
         panel.add(l, BorderLayout.NORTH);
         panel.add(combo, BorderLayout.CENTER);
 
@@ -691,7 +691,7 @@ public class jdgCoach extends javax.swing.JDialog {
 
         if (combo.getSelectedItem() == empty) {
             final JFileChooser jfc = new JFileChooser();
-            final FileFilter filter1 = new ExtensionFileFilter("image", new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+            final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Picture"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());

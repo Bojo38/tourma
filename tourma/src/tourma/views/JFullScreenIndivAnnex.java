@@ -94,7 +94,7 @@ public class JFullScreenIndivAnnex extends JFullScreen {
                 column++;
 
                 if (Tournament.getTournament().getParams().mTeamTournament) {
-                    JLabel titleTeam = new JLabel("Equipe");
+                    JLabel titleTeam = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
                     titleTeam.setHorizontalAlignment(JLabel.CENTER);
                     titleTeam.setBackground(Color.BLACK);
                     titleTeam.setForeground(Color.WHITE);
@@ -104,7 +104,7 @@ public class JFullScreenIndivAnnex extends JFullScreen {
                 }
 
                 if (Tournament.getTournament().getClans().size() > 1) {
-                    JLabel titleTeam = new JLabel("Clan");
+                    JLabel titleTeam = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
                     titleTeam.setHorizontalAlignment(JLabel.CENTER);
                     titleTeam.setBackground(Color.BLACK);
                     titleTeam.setForeground(Color.WHITE);
@@ -113,7 +113,7 @@ public class JFullScreenIndivAnnex extends JFullScreen {
                     column += 5;
                 }
 
-                JLabel titleCoach = new JLabel("Coach");
+                JLabel titleCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach"));
                 titleCoach.setHorizontalAlignment(JLabel.CENTER);
                 titleCoach.setBackground(Color.BLACK);
                 titleCoach.setForeground(Color.WHITE);
@@ -144,7 +144,7 @@ public class JFullScreenIndivAnnex extends JFullScreen {
                 column++;
 
                 if (Tournament.getTournament().getParams().mTeamTournament) {
-                    JLabel titleTeam2 = new JLabel("Equipe");
+                    JLabel titleTeam2 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
                     titleTeam2.setHorizontalAlignment(JLabel.CENTER);
                     titleTeam2.setBackground(Color.BLACK);
                     titleTeam2.setForeground(Color.WHITE);
@@ -154,7 +154,7 @@ public class JFullScreenIndivAnnex extends JFullScreen {
                 }
 
                 if (Tournament.getTournament().getClans().size() > 1) {
-                    JLabel titleTeam2 = new JLabel("Clan");
+                    JLabel titleTeam2 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
                     titleTeam2.setHorizontalAlignment(JLabel.CENTER);
                     titleTeam2.setBackground(Color.BLACK);
                     titleTeam2.setForeground(Color.WHITE);
@@ -163,7 +163,7 @@ public class JFullScreenIndivAnnex extends JFullScreen {
                     column += 5;
                 }
 
-                JLabel titleCoach2 = new JLabel("Coach");
+                JLabel titleCoach2 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach"));
                 titleCoach2.setHorizontalAlignment(JLabel.CENTER);
                 titleCoach2.setBackground(Color.BLACK);
                 titleCoach2.setForeground(Color.WHITE);

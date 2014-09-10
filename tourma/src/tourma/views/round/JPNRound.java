@@ -83,7 +83,7 @@ public class JPNRound extends javax.swing.JPanel {
                 if (!g.mName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AUCUN"))) {
                     final JPNGroup jpnGroup = new JPNGroup(t, g, mRoundNumber);
                     jtpGlobal.addTab(
-                            java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUPE: {0}"), g.mName),
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Group")+" "+ g.mName,
                             new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")),
                             jpnGroup);
                 }
@@ -96,7 +96,7 @@ public class JPNRound extends javax.swing.JPanel {
                 if (!c.mName.equals(StringConstants.CS_NONE)) {
                     final JPNCategory jpnCategory = new JPNCategory(t, c, mRoundNumber);
                     jtpGlobal.addTab(
-                            java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CATEGORY: {0}"), c.mName),
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Category")+" "+ c.mName,
                             new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group2.png")),
                             jpnCategory);
                 }
@@ -107,7 +107,8 @@ public class JPNRound extends javax.swing.JPanel {
             for (int i = 0; i < mTournament.getPools().size(); i++) {
                 final Pool p = mTournament.getPools().get(i);
                 final JPNPoolRound jpnPool = new JPNPoolRound(r, t, p);
-                jtpGlobal.addTab(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POULE: {0}"), p.mName),
+                jtpGlobal.addTab(
+                        java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool")+" "+ p.mName,
                         new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Pool.png")), jpnPool);
             }
         }
@@ -458,12 +459,12 @@ public class JPNRound extends javax.swing.JPanel {
                     JPanel jpn = new JPanel();
                     jpn.setLayout(new BorderLayout());
 
-                    JLabel jlb = new JLabel("Choisissez un roster pour " + coach.mName);
+                    JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ UN ROSTER POUR ")+coach.mName);
 
                     jpn.add(jlb, BorderLayout.NORTH);
                     jpn.add(jcbRoster, BorderLayout.CENTER);
 
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, "Roster", JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), JOptionPane.QUESTION_MESSAGE);
 
                     int index = jcbRoster.getSelectedIndex();
                     if (col == 1) {

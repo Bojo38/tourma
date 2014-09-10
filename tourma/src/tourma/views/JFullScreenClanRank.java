@@ -69,7 +69,7 @@ public class JFullScreenClanRank extends JFullScreen {
             int index = 1;
 
 
-            JLabel jlbTCoach = new JLabel("Clan");
+            JLabel jlbTCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"));
             jlbTCoach.setFont(f1);
             jlbTCoach.setOpaque(true);
             jlbTCoach.setBackground(Color.BLACK);
@@ -77,7 +77,7 @@ public class JFullScreenClanRank extends JFullScreen {
             jpnContent.add(jlbTCoach, getGridbBagConstraints(index, 0, 1, 5));
             index += 5;
 
-            JLabel jlbTCoachs = new JLabel("Membres");
+            JLabel jlbTCoachs = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Members"));
             jlbTCoachs.setFont(f1);
             jlbTCoachs.setOpaque(true);
             jlbTCoachs.setBackground(Color.BLACK);

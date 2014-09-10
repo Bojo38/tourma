@@ -67,6 +67,7 @@ public class MainFrame extends javax.swing.JFrame {
     Tournament mTournament;
     File mFile = null;
 
+
     /**
      * Creates new form MainFrame
      */
@@ -86,7 +87,7 @@ public class MainFrame extends javax.swing.JFrame {
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
             }
         }
-
+        
         update();
     }
 
@@ -133,7 +134,7 @@ public class MainFrame extends javax.swing.JFrame {
             jmiFullScreenRankTeam.setEnabled(mTournament.getParams().mTeamTournament);
             jmiFullScreenRankClan.setEnabled(mTournament.getClans().size() > 1);
             jmiFullScreenRankAnnexClan.setEnabled(mTournament.getClans().size() > 1);
-            jmiFullScreenRankAnnexClan.setEnabled(mTournament.getClans().size() > 1);
+            jmiFullScreenRankAnnexClan1.setEnabled(mTournament.getClans().size() > 1);
             jmiFullScreenRankAnnexTeam.setEnabled(mTournament.getParams().mTeamTournament);
             jmiFullScreenRankAnnexTeam1.setEnabled(mTournament.getParams().mTeamTournament);
 
@@ -155,7 +156,7 @@ public class MainFrame extends javax.swing.JFrame {
             jmiFullScreenRankAnnexIndiv.setEnabled(false);
             jmiFullScreenRankAnnexIndiv1.setEnabled(false);
             jmiFullScreenRankAnnexClan.setEnabled(false);
-            jmiFullScreenRankAnnexClan.setEnabled(false);
+            jmiFullScreenRankAnnexClan1.setEnabled(false);
             jmiFullScreenRankAnnexTeam.setEnabled(false);
             jmiFullScreenRankAnnexTeam1.setEnabled(false);
         }
@@ -381,7 +382,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmnTools.add(jcxAllowSpecialSkill);
         jmnTools.add(jSeparator4);
 
-        jmiNafLoad.setText("Mettre à jour les informations NAF des coachs");
+        jmiNafLoad.setText(bundle.getString("UpdateCoachNAFDatas")); // NOI18N
         jmiNafLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiNafLoadActionPerformed(evt);
@@ -408,7 +409,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jmnTools.add(jcxUseColor);
 
-        jcxUseImage.setSelected(true);
         jcxUseImage.setText(bundle.getString("UseImage")); // NOI18N
         jcxUseImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -919,7 +919,7 @@ public class MainFrame extends javax.swing.JFrame {
                         /**
                          * Balanced Options
                          */
-                        labels.add("Aléatoire et équilibrage");
+                        labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RandomAndBalancing"));
                         Options.add(Generation.GEN_BALANCED);
                     }
                 }
@@ -1009,12 +1009,12 @@ public class MainFrame extends javax.swing.JFrame {
         ArrayList<Coach> alc = Tournament.getTournament().getCoachs();
 
         ProgressMonitor progressMonitor = new ProgressMonitor(this,
-                "Download from NAF",
-                "Downloading", 0, alc.size());
+                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DownloadFromNAF"),
+                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Downloading"), 0, alc.size());
         progressMonitor.setProgress(0);
         for (int i = 0; i < alc.size(); i++) {
             Coach c = alc.get(i);
-            progressMonitor.setNote("Download: " + c.mName);
+            progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download0")+" "+c.mName);
             c.mNafRank = NAF.GetRanking(c.mName, c);
             progressMonitor.setProgress(i + 1);
         }
@@ -1031,11 +1031,11 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
         JComboBox jcb = new JComboBox(list.toArray());
-        JLabel jlb = new JLabel("Quel coach se fait remplacer ?");
+        JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WhichCoachIsSubstituted"));
         JPanel jpn = new JPanel(new BorderLayout());
         jpn.add(jlb, BorderLayout.NORTH);
         jpn.add(jcb, BorderLayout.CENTER);
-        int ret = JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_CANCEL_OPTION);
+        int ret = JOptionPane.showConfirmDialog(this, jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Substitution"), JOptionPane.OK_CANCEL_OPTION);
         if (ret == JOptionPane.OK_OPTION) {
             Coach c = (Coach) jcb.getSelectedItem();
             ArrayList<String> matchs_descr = new ArrayList<>();
@@ -1043,15 +1043,15 @@ public class MainFrame extends javax.swing.JFrame {
             // Select Match
             for (int i = 0; i < c.mMatchs.size(); i++) {
                 CoachMatch m = (CoachMatch) c.mMatchs.get(i);
-                String tmp = "Ronde " + ((Tournament.getTournament().getRounds().indexOf(m.mRound)) + 1);
+                String tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round01")+" "+Tournament.getTournament().getRounds().indexOf(m.mRound)+"1";
                 tmp = tmp + " / " + m.mCompetitor1.getDecoratedName() + " VS " + m.mCompetitor2.getDecoratedName();
                 matchs_descr.add(tmp);
             }
             jpn.remove(jcb);
             jcb = new JComboBox(matchs_descr.toArray());
             jpn.add(jcb, BorderLayout.CENTER);
-            jlb.setText("Quel match ?");
-            JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_OPTION);
+            jlb.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WhichMatch"));
+            JOptionPane.showConfirmDialog(this, jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Substitution"), JOptionPane.OK_OPTION);
             CoachMatch m = (CoachMatch) c.mMatchs.get(jcb.getSelectedIndex());
 
             // Select subtitute
@@ -1068,12 +1068,12 @@ public class MainFrame extends javax.swing.JFrame {
                 availableCoachsName.add(availableCoachs.get(i).getDecoratedName());
             }
 
-            availableCoachsName.add("Nouveau ...");
+            availableCoachsName.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("New..."));
             jpn.remove(jcb);
             jcb = new JComboBox(availableCoachsName.toArray());
             jpn.add(jcb, BorderLayout.CENTER);
-            jlb.setText("Choisissez un remplaçant");
-            JOptionPane.showConfirmDialog(this, jpn, "Remplacement", JOptionPane.OK_OPTION);
+            jlb.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseASubstitute"));
+            JOptionPane.showConfirmDialog(this, jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Substitution"), JOptionPane.OK_OPTION);
 
             // Create Substitution
 
@@ -1378,14 +1378,14 @@ public class MainFrame extends javax.swing.JFrame {
             int nbMatch = ((JPNRound) jpnContent).getMatchTableSelectedRow();
             CoachMatch m = ((JPNRound) jpnContent).getRound().getCoachMatchs().get(nbMatch);
             if (m.concedeedBy1 || m.concedeedBy2 || m.refusedBy1 || m.refusedBy2) {
-                JOptionPane.showMessageDialog(null, "Error", "Match déjà concedé ou refusé", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Error"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MatchAlreadyConceededOrRefused"), JOptionPane.ERROR_MESSAGE);
             } else {
                 Object[] options = new Object[3];
                 options[0] = m.mCompetitor1;
                 options[1] = m.mCompetitor2;
-                options[2] = "Annuler";
+                options[2] = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cancel");
 
-                Object option = JOptionPane.showInputDialog(null, "Concéder un match", "Qui concède le match ?", JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                Object option = JOptionPane.showInputDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ConceedAMatch"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WhoConceedTheMatch"), JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
 
                 if (option.equals(m.mCompetitor1)) {
                     m.concedeedBy1 = true;
@@ -1418,14 +1418,14 @@ public class MainFrame extends javax.swing.JFrame {
             int nbMatch = ((JPNRound) jpnContent).getMatchTableSelectedRow();
             CoachMatch m = ((JPNRound) jpnContent).getRound().getCoachMatchs().get(nbMatch);
             if (m.concedeedBy1 || m.concedeedBy2 || m.refusedBy1 || m.refusedBy2) {
-                JOptionPane.showMessageDialog(null, "Error", "Match déjà concedé ou refusé", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Error"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MatchAlreadyConceededOrRefused"), JOptionPane.ERROR_MESSAGE);
             } else {
                 Object[] options = new Object[3];
                 options[0] = m.mCompetitor1;
                 options[1] = m.mCompetitor2;
-                options[2] = "Annuler";
+                options[2] = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cancel");
 
-                Object option = JOptionPane.showInputDialog(null, "Refuser un match", "Qui refuse le match ?", JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                Object option = JOptionPane.showInputDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RefuseAMatch"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WhoRefuseMatch"), JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
 
                 if (option.equals(m.mCompetitor1)) {
                     m.refusedBy1 = true;

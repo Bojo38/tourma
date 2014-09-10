@@ -106,7 +106,7 @@ public class mjtCriterias extends AbstractTableModel implements TableCellRendere
                 }
             }
             if (exists) {
-                JOptionPane.showMessageDialog(null, "Error","Le critère existe déjà: " + value.toString(),JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERROR"),java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CriteriaAlreadyExists0")+value.toString(),JOptionPane.ERROR_MESSAGE);
                 
             } else {
 

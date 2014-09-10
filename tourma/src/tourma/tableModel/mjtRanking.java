@@ -894,13 +894,13 @@ abstract public class mjtRanking extends AbstractTableModel implements TableCell
                     result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("V/D/L");
                     break;
                 case Parameters.C_RANKING_ELO:
-                    result = "ELO";
+                    result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO");
                     break;
                 case Parameters.C_RANKING_ELO_OPP:
-                    result = "ELO Adversaires";
+                    result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OpponentsElo");
                     break;
                 case Parameters.C_RANKING_NB_MATCHS:
-                    result = "Nb Matchs";
+                    result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MatchCount");
                     break;
                 default:
             }

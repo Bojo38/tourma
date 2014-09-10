@@ -73,8 +73,6 @@ public final class Coach extends Competitor implements XMLExport {
         return sNullCoach;
     }
 
-    
-    
     @Override
     public int compareTo(final Object obj) {
         int result = -1;
@@ -128,6 +126,13 @@ public final class Coach extends Competitor implements XMLExport {
         }
 
         return coach;
+    }
+
+    @Override
+    public String getName() {
+        String text = mName;
+
+        return text;
     }
 
     public String getStringRoster() {
@@ -222,15 +227,15 @@ public final class Coach extends Competitor implements XMLExport {
         }
 
 
-            try {
-                Element image = coach.getChild("Picture");
-                String encodedImage = image.getText();
-                byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
-                picture = ImageIO.read(new ByteArrayInputStream(bytes));
-            } catch (IOException e) {
-            } catch (Exception e1) {
-            }
-        
+        try {
+            Element image = coach.getChild("Picture");
+            String encodedImage = image.getText();
+            byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+            picture = ImageIO.read(new ByteArrayInputStream(bytes));
+        } catch (IOException e) {
+        } catch (Exception e1) {
+        }
+
     }
 
     @Override
@@ -459,11 +464,11 @@ public final class Coach extends Competitor implements XMLExport {
         Parameters params = tour.getParams();
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
 
-        
-        
+
+
         if (this.mClan != clans.get(0)) {
-            
-            if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch && tour.getRounds().indexOf(r)==0) || (params.mAvoidClansMatch))) {
+
+            if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch && tour.getRounds().indexOf(r) == 0) || (params.mAvoidClansMatch))) {
                 for (int i = 0; i
                         < possible.size(); i++) {
                     if (((Coach) possible.get(i)).mClan.mName.equals(this.mClan.mName)) {

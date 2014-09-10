@@ -68,7 +68,7 @@ public class JFullScreenTeamRank extends JFullScreen {
             int index = 1;
 
 
-            JLabel jlbTCoach = new JLabel("Team");
+            JLabel jlbTCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
             jlbTCoach.setFont(f1);
             jlbTCoach.setOpaque(true);
             jlbTCoach.setBackground(Color.BLACK);

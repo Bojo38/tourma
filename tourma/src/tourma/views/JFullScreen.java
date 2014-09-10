@@ -55,11 +55,9 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         super();
         initComponents();
         this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
-            GridBagLayout gbl = new GridBagLayout();
-            jpnContent.setLayout(gbl);
+        GridBagLayout gbl = new GridBagLayout();
+        jpnContent.setLayout(gbl);
     }
-
-
 
     protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
 
@@ -71,12 +69,14 @@ public abstract class JFullScreen extends javax.swing.JFrame {
                 l.setIcon(new ImageIcon(new BufferedImage(height, height, BufferedImage.TYPE_4BYTE_ABGR)));
             }
         }
-        
+
         //l.setPreferredSize(new Dimension(width, height));
         l.setFont(f);
         l.setOpaque(true);
         l.setBackground(bkg);
-        l.setText(object.getName());
+
+        String text = object.getName();
+        l.setText(text);
         return l;
     }
 
@@ -202,6 +202,4 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     protected javax.swing.JPanel jpnNorth;
     protected javax.swing.JScrollPane jscrp;
     // End of variables declaration//GEN-END:variables
-
-
 }

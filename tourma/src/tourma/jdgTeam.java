@@ -341,7 +341,7 @@ public class jdgTeam extends javax.swing.JDialog {
 
         JComboBox combo = new JComboBox(objects);
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel l = new JLabel("Sélectionnez une image");
+        JLabel l = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SelectPicture"));
         panel.add(l, BorderLayout.NORTH);
         panel.add(combo, BorderLayout.CENTER);
 
@@ -351,7 +351,7 @@ public class jdgTeam extends javax.swing.JDialog {
 
         if (combo.getSelectedItem() == empty) {
             final JFileChooser jfc = new JFileChooser();
-            final FileFilter filter1 = new ExtensionFileFilter("image", new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+            final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Picture"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());

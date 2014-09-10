@@ -134,12 +134,12 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnOK = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
 
-        jcbMultiroster.setText("Multi Roster");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jcbMultiroster.setText(bundle.getString("MULTI ROSTER")); // NOI18N
         jPanel5.add(jcbMultiroster);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jpnGame.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GameKind"))); // NOI18N
 
         btgGame.add(jrbDreadBall);
@@ -173,7 +173,7 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnPairing.setLayout(new java.awt.GridLayout(2, 1));
 
         btgTeamPairing.add(jrbIndividualTeamPairing);
-        jrbIndividualTeamPairing.setText("Appariement Individuel");
+        jrbIndividualTeamPairing.setText(bundle.getString("IndividualPairing")); // NOI18N
         jrbIndividualTeamPairing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbIndividualTeamPairingActionPerformed(evt);
@@ -182,7 +182,7 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnPairing.add(jrbIndividualTeamPairing);
 
         btgTeamPairing.add(jrbTeamPairing);
-        jrbTeamPairing.setText("Appariement en Equipe");
+        jrbTeamPairing.setText(bundle.getString("TeamPairing")); // NOI18N
         jrbTeamPairing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbTeamPairingActionPerformed(evt);
@@ -223,7 +223,7 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnMisc.setBorder(javax.swing.BorderFactory.createTitledBorder("Divers"));
         jpnMisc.setLayout(new java.awt.GridLayout(1, 1));
 
-        jcxMultipleRoster.setText("Utiliser plusieurs rosters");
+        jcxMultipleRoster.setText(bundle.getString("UseSeveralRosters")); // NOI18N
         jcxMultipleRoster.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcxMultipleRosterActionPerformed(evt);
@@ -240,7 +240,7 @@ public class JdgParameters extends javax.swing.JDialog {
 
         btgIndivTeamPairing.add(jrbIndivPairingByRanking);
         jrbIndivPairingByRanking.setSelected(true);
-        jrbIndivPairingByRanking.setText("Classement");
+        jrbIndivPairingByRanking.setText(bundle.getString("Ranking")); // NOI18N
         jrbIndivPairingByRanking.setToolTipText("");
         jrbIndivPairingByRanking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,7 +250,7 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnIndivTeamRanking.add(jrbIndivPairingByRanking);
 
         btgIndivTeamPairing.add(jrbIndivPairingRandom);
-        jrbIndivPairingRandom.setText("Aléatoire");
+        jrbIndivPairingRandom.setText(bundle.getString("Random")); // NOI18N
         jrbIndivPairingRandom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbIndivPairingRandomActionPerformed(evt);
@@ -259,7 +259,7 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnIndivTeamRanking.add(jrbIndivPairingRandom);
 
         btgIndivTeamPairing.add(jrbIndivPairingManual);
-        jrbIndivPairingManual.setText("Manuel");
+        jrbIndivPairingManual.setText(bundle.getString("Manual")); // NOI18N
         jrbIndivPairingManual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbIndivPairingManualActionPerformed(evt);
@@ -268,7 +268,7 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnIndivTeamRanking.add(jrbIndivPairingManual);
 
         btgIndivTeamPairing.add(jrbIndivPairingNaf);
-        jrbIndivPairingNaf.setText("Classement NAF");
+        jrbIndivPairingNaf.setText(bundle.getString("NafRanking")); // NOI18N
         jrbIndivPairingNaf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbIndivPairingNafActionPerformed(evt);
@@ -283,7 +283,7 @@ public class JdgParameters extends javax.swing.JDialog {
         jpnTeam.setBorder(javax.swing.BorderFactory.createTitledBorder("Type de tournoi"));
 
         btgTeam.add(jrbTeam);
-        jrbTeam.setText("Par équipe");
+        jrbTeam.setText(bundle.getString("byTeam")); // NOI18N
         jrbTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbTeamActionPerformed(evt);
@@ -293,7 +293,7 @@ public class JdgParameters extends javax.swing.JDialog {
 
         btgTeam.add(jrbIndividual);
         jrbIndividual.setSelected(true);
-        jrbIndividual.setText("Individuel");
+        jrbIndividual.setText(bundle.getString("Individual")); // NOI18N
         jrbIndividual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbIndividualActionPerformed(evt);
@@ -305,7 +305,7 @@ public class JdgParameters extends javax.swing.JDialog {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        jbtOK.setText("OK");
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);

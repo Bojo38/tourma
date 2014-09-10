@@ -262,7 +262,7 @@ public class jdgGlobal extends javax.swing.JDialog {
             for (int i = 0; i < mTour.getParams().mCriterias.size(); i++) {
                 final HashMap criteria = new HashMap();
                 final Criteria c = mTour.getParams().mCriterias.get(i);
-                criteria.put("name", c.mName);
+                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), c.mName);
 
                 final mjtAnnexRank annexFor = mAnnexForRankings.get(c);
                 final mjtAnnexRank annexAgainst = mAnnexAgainstRankings.get(c);
@@ -279,7 +279,7 @@ public class jdgGlobal extends javax.swing.JDialog {
             final SimpleDateFormat formatShort = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY"), Locale.getDefault());
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATEGENERATION"), formatShort.format(new Date()));
             address = File.createTempFile(
-                    java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULT{0}"), format.format(new Date())), ".tmp");
+                    java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULT")+" "+ format.format(new Date()), ".tmp");
             address.deleteOnExit();
             final Writer out = new FileWriter(address);
             temp.process(root, out);
