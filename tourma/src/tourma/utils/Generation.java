@@ -135,8 +135,7 @@ public class Generation {
             for (int i = 0; i < vteams.size(); i++) {
                 if (vteams.get(i).getActivePlayerNumber() != params.mTeamMatesNumber) {
                     JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
-                            
-                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAUVAIS NOMBRE DE JOUEURS ACTIF POUR L'ÉQUIPE")+" " +vteams.get(i).mName);
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAUVAIS NOMBRE DE JOUEURS ACTIF POUR L'ÉQUIPE") + " " + vteams.get(i).mName);
                     return;
                 }
             }
@@ -315,7 +314,6 @@ public class Generation {
             }
         }
 
-
         final int nbPools = comps.size() / nb;
         for (int i = 0; i < nbPools; i++) {
             final Pool p = new Pool();
@@ -377,7 +375,6 @@ public class Generation {
         rounds.add(r);
     }
 
-    
     /**
      *
      * @param competitors ArrayList including competitors (Coachs or Teams)
@@ -419,7 +416,6 @@ public class Generation {
                             possibilities,
                             possibilities[0]);
                 }
-
 
                 for (int i = 0; i < comps.size(); i++) {
                     Competitor tmpOpp = possible.get(i);
@@ -553,7 +549,6 @@ public class Generation {
         final Calendar cal = Calendar.getInstance();
         r.setHour(cal.getTime());
 
-
         final ArrayList<Competitor> shuffle = new ArrayList<>(competitors);
         if (naf) {
             Collections.sort(shuffle);
@@ -589,7 +584,6 @@ public class Generation {
 
             Competitor s1 = r.get(pos);
             Competitor s2 = r.get(i - 1);
-
 
             if (!(s1.equals(s2))) {
                 swap(pos, i - 1, r);
@@ -742,7 +736,6 @@ public class Generation {
 
         // Pour optimiser le tirage on ordonne de telle façon à ce que les éléments
         // de la même équipe de soient pas cote à cote sur le premier tirage
-
         Collections.shuffle(l);
         for (int i = 0; i < l.size() - 1; i++) {
             Competitor c1 = l.get(i);
@@ -993,7 +986,6 @@ public class Generation {
             }
 
             // Move coaches for round robin / ribbon method
-
             Competitor c_tmp = c2part.get(0);
             c2part.remove(c_tmp);
             c1part.add(1, c_tmp);
@@ -1085,14 +1077,12 @@ public class Generation {
         r.mLooserCup = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SAGIT-IL D'UN TOURNOI À DOUBLE ÉLIMINATION ?"), StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
         // there is nb_tmp/matchs
 
-
         for (int i = 0; i < nb_matchs / 2; i++) {
             comps.get(2 * i).AddMatch(comps.get(nb_tmp - 2 * i - 1), r);
         }
         for (int i = 0; i < nb_matchs / 2; i++) {
             comps.get(2 * i + 1).AddMatch(comps.get(nb_tmp - 2 * i - 2), r);
         }
-
 
         r.mCup = true;
         r.mCupMaxTour = nbrounds;
@@ -1101,7 +1091,6 @@ public class Generation {
         rounds.add(r);
     }
 
-   
     protected static Round GenSwiss(final ArrayList competitors, final ArrayList<ObjectRanking> datas, final Round r) {
 
         final Tournament tour = Tournament.getTournament();
@@ -1110,7 +1099,7 @@ public class Generation {
         final ArrayList<ObjectRanking> datas_tmp = new ArrayList<>(datas);
 
         ArrayList comps = new ArrayList<>(competitors);
-
+        
         if (competitors.get(0) instanceof Coach) {
             for (int i = 0; i < competitors.size(); i++) {
                 final Coach c = (Coach) competitors.get(i);
@@ -1125,6 +1114,18 @@ public class Generation {
             }
         }
 
+        if (comps.size()%2==1)
+        {
+            if(comps.get(0) instanceof Coach)
+            {
+                comps.add(Coach.getNullCoach());
+            }
+            if(comps.get(0) instanceof Team)
+            {
+                comps.add(Team.getNullTeam());
+            }
+        }
+        
         if (comps.size() - 1 <= tour.getRounds().size()) {
             for (int i = 0; i < datas_tmp.size() / 2; i++) {
                 Competitor c1 = (Competitor) datas_tmp.get(2 * i).getObject();
@@ -1144,11 +1145,23 @@ public class Generation {
                 }
 
                 ArrayList<Competitor> possible = c1.getPossibleOpponents(opponents, r);
-                Competitor c2 = possible.get(0);
-                int index = opponents.indexOf(c2);
-                datas2.remove(index);
+                Competitor c2 = null;
+                if (possible.size() != 0) {
+                    c2 = possible.get(0);
+                    int index = opponents.indexOf(c2);
+                    datas2.remove(index);
+                } else {
+                    if (c1 instanceof Team) {
+                        c2 = Team.getNullTeam();
+                    }
+                    if (c1 instanceof Coach) {
+                        c2 = Coach.getNullCoach();
+                    }
 
-                c1.AddMatch(c2, r);
+                }
+                if (c2 != null) {
+                    c1.AddMatch(c2, r);
+                }
 
             }
             ((Competitor) competitors.get(0)).RoundCheck(r);
@@ -1876,7 +1889,6 @@ public class Generation {
         final ArrayList<Competitor> _winners = new ArrayList<>();
         final ArrayList<Competitor> _loosers = new ArrayList<>();
 
-
         Competitor nullElt;
         if ((Tournament.getTournament().getParams().mTeamTournament) && (Tournament.getTournament().getParams().mTeamPairing == 1)) {
             nullElt = Team.getNullTeam();
@@ -1950,6 +1962,27 @@ public class Generation {
             }
             for (int i = nb_match; (i < nb_match + nb_remaining_match) && (i < matchs.size()); i++) {
                 _loosers.add(matchs.get(i).getWinner());
+            }
+
+            /**
+             * Patch For ensure that the winner of the last looser cup match is
+             * pushed into the winners'cup All the coachs presents in winner cup
+             * are removed from the looser cup
+             */
+            for (int i = 0; i < r.getMatchs().size(); i++) {
+                Competitor c1 = r.getMatchs().get(i).mCompetitor1;
+                _loosers.remove(c1);
+                Competitor c2 = r.getMatchs().get(i).mCompetitor2;
+                _loosers.remove(c2);
+            }
+
+            if (_loosers.size() % 2 == 1) {
+                if (_loosers.get(0) instanceof Coach) {
+                    _loosers.add(Coach.getNullCoach());
+                }
+                if (_loosers.get(0) instanceof Team) {
+                    _loosers.add(Team.getNullTeam());
+                }
             }
             for (int i = 0; i < _loosers.size() / 2; i++) {
                 _loosers.get(i).AddMatch(_loosers.get(_loosers.size() / 2 + i), r);
@@ -2263,7 +2296,6 @@ public class Generation {
          m.mCompetitor1.mMatchs.add(m);
          m.mCompetitor2.mMatchs.add(m);
          }*/
-
         for (int i = 0; i < r.getCoachMatchs().size(); i++) {
             final Match m = r.getCoachMatchs().get(i);
             m.mCompetitor1.mMatchs.add(m);
@@ -2528,7 +2560,7 @@ public class Generation {
                         } else {
                             teams = new ArrayList<>(tour.getTeams());
                             // First, remove coachs
-                            for (int i = 0; i < r.getMatchs().size(); i++) {
+                            for (int i = 0; i < r.getCoachMatchs().size(); i++) {
                                 final CoachMatch m = r.getCoachMatchs().get(i);
                                 if (teams.contains(((Coach) m.mCompetitor1).mTeamMates)) {
                                     teams.remove(((Coach) m.mCompetitor1).mTeamMates);
@@ -2540,7 +2572,7 @@ public class Generation {
                             // Second remove bad datas
                             for (int i = 0; i < datas.size(); i++) {
                                 final Team t = (Team) ((ObjectRanking) datas.get(i)).getObject();
-                                for (int j = 0; j < r.getMatchs().size(); j++) {
+                                for (int j = 0; j < r.getCoachMatchs().size(); j++) {
                                     final CoachMatch m = r.getCoachMatchs().get(j);
                                     if ((t == ((Coach) m.mCompetitor1).mTeamMates) || (t == ((Coach) m.mCompetitor2).mTeamMates)) {
                                         datas.remove(i);
@@ -2641,7 +2673,6 @@ public class Generation {
                 }
             }
             v.add(round);
-
 
             for (int j = 0; j < v.size(); j++) {
                 for (int k = 0; k < v.get(j).getMatchs().size(); k++) {
@@ -2753,7 +2784,6 @@ public class Generation {
         /*  final ArrayList<Round> v = new ArrayList<>();
          final ArrayList<Match> matchs = new ArrayList<>();
          buildUntilRound(round, v, matchs);*/
-
         Round r = new Round();
         r.getMatchs().clear();
         if (tour.getPools().isEmpty()) {
@@ -2785,7 +2815,6 @@ public class Generation {
         /*  final ArrayList<Round> v = new ArrayList<>();
          final ArrayList<Match> matchs = new ArrayList<>();
          buildUntilRound(round, v, matchs);*/
-
         Round r = new Round();;
         if (tour.getPools().isEmpty()) {
             if (tour.getParams().mTeamTournament) {

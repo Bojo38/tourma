@@ -5,6 +5,9 @@
 package tourma.views.round;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Match;
 import tourma.data.TeamMatch;
@@ -24,47 +27,98 @@ public class JPNMatch extends javax.swing.JPanel {
     public JPNMatch(final Match m, final boolean winner) {
         initComponents();
 
-        jlbPlayer1.setText(m.mCompetitor1.mName);
-        jlbPlayer2.setText(m.mCompetitor2.mName);
+        if (Tournament.getTournament().getParams().useColor) {
+            jlbPlayer1.setBackground(m.mCompetitor1.mColor);
+            jlbPlayer2.setBackground(m.mCompetitor2.mColor);
 
-        jlbPlayer1.setBackground(m.mCompetitor1.mColor);
-        jlbPlayer2.setBackground(m.mCompetitor2.mColor);
+            jPanel2.setBackground(m.mCompetitor1.mColor);
+            jPanel4.setBackground(m.mCompetitor2.mColor);
+        } else {
+            jlbPlayer1.setBackground(Color.WHITE);
+            jlbPlayer2.setBackground(Color.LIGHT_GRAY);
 
-        jPanel2.setBackground(m.mCompetitor1.mColor);
-        jPanel4.setBackground(m.mCompetitor2.mColor);
+            jPanel2.setBackground(Color.WHITE);
+            jPanel4.setBackground(Color.LIGHT_GRAY);
+        }
 
         if (m instanceof CoachMatch) {
 
-            final Value v = ((CoachMatch)m).mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+            final Value v = ((CoachMatch) m).mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
             if ((v.mValue1 == -1) || (v.mValue2 == -1)) {
                 jlbScore1.setText("");
                 jlbScore2.setText("");
             } else {
+
+                if (m.getWinner() == m.mCompetitor1) {
+                    jlbPlayer1.setFont(jlbPlayer1.getFont().deriveFont(Font.BOLD));
+                    jlbPlayer2.setFont(jlbPlayer2.getFont().deriveFont(Font.PLAIN));
+                }
+
+                if (m.getWinner() == m.mCompetitor2) {
+                    jlbPlayer2.setFont(jlbPlayer1.getFont().deriveFont(Font.BOLD));
+                    jlbPlayer1.setFont(jlbPlayer2.getFont().deriveFont(Font.PLAIN));
+                }
                 jlbScore1.setText(Integer.toString(v.mValue1));
                 jlbScore2.setText(Integer.toString(v.mValue2));
+
             }
         }
-        
+
         if (m instanceof TeamMatch) {
-            int nbVictories=((TeamMatch)m).getVictories((Team)m.mCompetitor1);
-            int nbDraw=((TeamMatch)m).getVictories((Team)m.mCompetitor1);
-            int nbLoss=((TeamMatch)m).getVictories((Team)m.mCompetitor1);
-            
-            if (nbVictories+nbLoss+nbDraw!=Tournament.getTournament().getParams().mTeamMatesNumber) {
+            int nbVictories = ((TeamMatch) m).getVictories((Team) m.mCompetitor1);
+            int nbDraw = ((TeamMatch) m).getDraw((Team) m.mCompetitor1);
+            int nbLoss = ((TeamMatch) m).getVictories((Team) m.mCompetitor2);
+
+            if (nbVictories + nbLoss + nbDraw != Tournament.getTournament().getParams().mTeamMatesNumber) {
                 jlbScore1.setText("");
                 jlbScore2.setText("");
+                jlbTag.setText("#");
             } else {
+                jlbTag.setText("");
+                if (m.getWinner() == m.mCompetitor1) {
+                    Font f = jlbPlayer1.getFont();
+                    Font fb = f.deriveFont(Font.ITALIC | Font.BOLD);
+                    jlbPlayer1.setFont(fb);
+                    jlbPlayer2.setFont(f);
+                    jlbPlayer2.setForeground(Color.DARK_GRAY);
+                    jlbScore1.setFont(fb);
+                    jlbScore2.setFont(f);
+                    jlbScore2.setForeground(Color.DARK_GRAY);
+                }
+
+                if (m.getWinner() == m.mCompetitor2) {
+                    Font f = jlbPlayer2.getFont();
+                    Font fb = f.deriveFont(Font.ITALIC | Font.BOLD);
+                    jlbPlayer2.setFont(fb);
+                    jlbPlayer1.setFont(f);
+                    jlbPlayer1.setForeground(Color.DARK_GRAY);
+                    jlbScore2.setFont(fb);
+                    jlbScore1.setFont(f);
+                    jlbScore1.setForeground(Color.DARK_GRAY);
+                }
+
                 jlbScore1.setText(Integer.toString(nbVictories));
                 jlbScore2.setText(Integer.toString(nbLoss));
+
             }
+        }
+
+        if ((m.mCompetitor1 != Coach.getNullCoach()) && (m.mCompetitor1 != Team.getNullTeam())) {
+            jlbPlayer1.setText(m.mCompetitor1.mName);
+        } else {
+            jlbPlayer1.setText("");
+        }
+        if ((m.mCompetitor2 != Coach.getNullCoach()) && (m.mCompetitor2 != Team.getNullTeam())) {
+            jlbPlayer2.setText(m.mCompetitor2.mName);
+        } else {
+            jlbPlayer2.setText("");
         }
 
         if (!winner) {
             jPanel1.setBackground(Color.LIGHT_GRAY);
-            //jPanel2.setBackground(Color.LIGHT_GRAY);
-            //jPanel4.setBackground(Color.LIGHT_GRAY);
             this.setBackground(Color.LIGHT_GRAY);
         }
+
     }
 
     /**
@@ -86,7 +140,7 @@ public class JPNMatch extends javax.swing.JPanel {
         jlbPlayer2 = new javax.swing.JLabel();
         jlbScore2 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
+        jlbTag = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -162,17 +216,16 @@ public class JPNMatch extends javax.swing.JPanel {
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText(bundle.getString("#")); // NOI18N
-        jLabel3.setMaximumSize(new java.awt.Dimension(10, 50));
-        jLabel3.setMinimumSize(new java.awt.Dimension(10, 50));
-        jLabel3.setPreferredSize(new java.awt.Dimension(10, 50));
-        add(jLabel3, java.awt.BorderLayout.WEST);
-        jLabel3.getAccessibleContext().setAccessibleName(bundle.getString("JLBID")); // NOI18N
+        jlbTag.setBackground(new java.awt.Color(255, 255, 255));
+        jlbTag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTag.setText(bundle.getString("#")); // NOI18N
+        jlbTag.setMaximumSize(new java.awt.Dimension(10, 50));
+        jlbTag.setMinimumSize(new java.awt.Dimension(10, 50));
+        jlbTag.setPreferredSize(new java.awt.Dimension(10, 50));
+        add(jlbTag, java.awt.BorderLayout.WEST);
+        jlbTag.getAccessibleContext().setAccessibleName(bundle.getString("JLBID")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
@@ -183,5 +236,6 @@ public class JPNMatch extends javax.swing.JPanel {
     private javax.swing.JLabel jlbPlayer2;
     private javax.swing.JLabel jlbScore1;
     private javax.swing.JLabel jlbScore2;
+    private javax.swing.JLabel jlbTag;
     // End of variables declaration//GEN-END:variables
 }

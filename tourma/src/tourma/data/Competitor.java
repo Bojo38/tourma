@@ -19,7 +19,7 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
 
     public String mName;
     public Color mColor;
-    public ArrayList<Match> mMatchs;
+    public ArrayList<Match> mMatchs=new ArrayList<>();
     public BufferedImage picture=null;
     /**
      * Clan

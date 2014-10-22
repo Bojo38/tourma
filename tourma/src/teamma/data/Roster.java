@@ -59,10 +59,8 @@ public class Roster implements XMLExport {
          */
         for (int i = 0; i < _players.size(); i++) {
 
-
             cost += _players.get(i).getValue(bWithSkill);
         }
-
 
         /**
          * Add Team Goods
@@ -114,11 +112,15 @@ public class Roster implements XMLExport {
             inducements.setAttribute("ExtraRerolls", Integer.toString(this._extrarerolls));
             inducements.setAttribute("LocalApothecary", Integer.toString(this._localapothecary));
 
-
-            for (int j = 0; j < this._champions.size(); j++) {
-                final Element st = new Element("StarPlayer");
-                st.setAttribute(StringConstants.CS_NAME, this._champions.get(j)._name);
-                inducements.addContent(st);
+            if (this._champions != null) {
+                for (int j = 0; j < this._champions.size(); j++) {
+                    final Element st = new Element("StarPlayer");
+                    if (this._champions.get(j)!=null)
+                    {
+                        st.setAttribute(StringConstants.CS_NAME, this._champions.get(j)._name);
+                    }
+                    inducements.addContent(st);
+                }
             }
 
             compo.addContent(inducements);
@@ -145,7 +147,9 @@ public class Roster implements XMLExport {
 
     @Override
     public void setXMLElement(Element e) {
-        this._roster = teamma.data.lrb.getLRB().getRosterType(e.getAttributeValue(StringConstants.CS_ROSTER));
+        lrb lrb6=lrb.getLRB();
+        String rosterType = e.getAttributeValue(StringConstants.CS_ROSTER);
+        this._roster = lrb6.getRosterType(rosterType);
         this._apothecary = Boolean.parseBoolean(e.getAttributeValue("Apothecary"));
         this._assistants = Integer.parseInt(e.getAttributeValue("Assistants"));
         this._cheerleaders = Integer.parseInt(e.getAttributeValue("Cheerleaders"));
@@ -167,30 +171,33 @@ public class Roster implements XMLExport {
             final Iterator s = stars.iterator();
             while (s.hasNext()) {
                 final Element star = (Element) s.next();
-                final StarPlayer t = lrb.getLRB().getStarPlayer(star.getAttributeValue(StringConstants.CS_NAME));
+                final String spn=star.getAttributeValue(StringConstants.CS_NAME);
+                final StarPlayer t = lrb6.getStarPlayer(spn);
                 this._champions.add(t);
             }
         }
 
         final List players = e.getChildren("Player");
         final Iterator ip = players.iterator();
+
         while (ip.hasNext()) {
             final Element p = (Element) ip.next();
+            if (this._roster != null) {
+                final teamma.data.Player pl = new Player(this._roster.getPlayerType(p.getAttributeValue("Position")));
+                pl._name = p.getAttributeValue(StringConstants.CS_NAME);
 
-            final teamma.data.Player pl = new Player(this._roster.getPlayerType(p.getAttributeValue("Position")));
-            pl._name = p.getAttributeValue(StringConstants.CS_NAME);
+                final List skills = p.getChildren("Skill");
+                final Iterator is = skills.iterator();
+                while (is.hasNext()) {
+                    final Element s = (Element) is.next();
 
-            final List skills = p.getChildren("Skill");
-            final Iterator is = skills.iterator();
-            while (is.hasNext()) {
-                final Element s = (Element) is.next();
+                    final teamma.data.Skill sl = lrb.getLRB().getSkill(s.getAttributeValue(StringConstants.CS_NAME));
+                    sl.mColor = Color.decode(s.getAttributeValue("Color"));
+                    pl._skills.add(sl);
+                }
 
-                final teamma.data.Skill sl = lrb.getLRB().getSkill(s.getAttributeValue(StringConstants.CS_NAME));
-                sl.mColor = Color.decode(s.getAttributeValue("Color"));
-                pl._skills.add(sl);
+                this._players.add(pl);
             }
-
-            this._players.add(pl);
         }
     }
 }

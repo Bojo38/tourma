@@ -199,7 +199,7 @@ public class jdgCoach extends javax.swing.JDialog {
         mCoach = coach;
         if (mCoach.picture == null) {
             try {
-                coach.picture = ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.gif"));
+                coach.picture = ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.png"));
             } catch (IOException ex) {
                 Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -473,7 +473,6 @@ public class jdgCoach extends javax.swing.JDialog {
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.SOUTH);
 
-        jbtAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/avatar/60001.gif"))); // NOI18N
         jbtAvatar.setMnemonic('A');
         jbtAvatar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

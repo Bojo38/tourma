@@ -67,7 +67,7 @@ public class JPNStatistics extends javax.swing.JPanel {
     ArrayList<HashMap<String, Integer>> mHpositions = new ArrayList<>();
     ArrayList<HashMap<String, Integer>> mHTeampositions = new ArrayList<>();
     ChartPanel cpPositions = null;
-    ChartPanel cpTeamPositions = null;   
+    ChartPanel cpTeamPositions = null;
     ChartPanel cpBalancedTeam = null;
     ChartPanel cpBalancedIndiv = null;
     JPanel jpnPositions = new JPanel(new BorderLayout());
@@ -197,7 +197,6 @@ public class JPNStatistics extends javax.swing.JPanel {
                 hm.put(opp.mName, 0);
             }
 
-
             for (int k = 0; k < c.mMatchs.size(); k++) {
                 CoachMatch m = (CoachMatch) c.mMatchs.get(k);
                 Coach opp = null;
@@ -264,7 +263,6 @@ public class JPNStatistics extends javax.swing.JPanel {
                         mt -= values.mValue2;
                         tot += 1.0;
 
-
                         plus.put(name1, pt);
                         minus.put(name1, mt);
                         total.put(name1, tot);
@@ -305,7 +303,6 @@ public class JPNStatistics extends javax.swing.JPanel {
             br.setSeriesPaint(1, new Color(184, 0, 184));
             br.setBarPainter(new StandardBarPainter());
 
-
             final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
             barrenderer.setDrawBarOutline(false);
             barrenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
@@ -336,7 +333,6 @@ public class JPNStatistics extends javax.swing.JPanel {
             loss.put(RosterType.mRostersNames.get(i), 0.0);
             total.put(RosterType.mRostersNames.get(i), 0.0);
         }
-
 
         final Criteria Td = mTournament.getParams().mCriterias.get(0);
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
@@ -421,7 +417,6 @@ public class JPNStatistics extends javax.swing.JPanel {
         br.setSeriesPaint(2, new Color(184, 0, 0));
         br.setBarPainter(new StandardBarPainter());
 
-
         final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
         barrenderer.setDrawBarOutline(false);
         StandardCategoryItemLabelGenerator std = new StandardCategoryItemLabelGenerator();
@@ -481,7 +476,6 @@ public class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-
         for (int i = 0; i < datas.getItemCount(); i++) {
             final Number value = datas.getValue(i);
             if (value.intValue() == 0) {
@@ -537,7 +531,6 @@ public class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-
         for (int i = 0; i < datas.getItemCount(); i++) {
             final Number value = datas.getValue(i);
             if (value.intValue() == 0) {
@@ -582,32 +575,51 @@ public class JPNStatistics extends javax.swing.JPanel {
             ArrayList<CoachMatch> acm = mTournament.getRounds().get(i).getCoachMatchs();
             for (int j = 0; j < acm.size(); j++) {
                 CoachMatch cm = acm.get(j);
-                double p1 = mjtRanking.getPointsByCoach((Coach) cm.mCompetitor1, cm);
-                double p2 = mjtRanking.getPointsByCoach((Coach) cm.mCompetitor2, cm);
 
-                double avg_value = avg.get(((Coach) cm.mCompetitor1).mRoster.mName);
-                double avg_opp_value = avg_opp.get(((Coach) cm.mCompetitor1).mRoster.mName);
-                double count_value = count.get(((Coach) cm.mCompetitor1).mRoster.mName);
+                if ((cm.mCompetitor1 != Coach.getNullCoach()) && (cm.mCompetitor2 != Coach.getNullCoach())) {
 
-                avg_value = (avg_value * count_value + p1) / (count_value + 1.0);
-                avg_opp_value = (avg_opp_value * count_value + p2) / (count_value + 1.0);
-                count_value = count_value + 1;
+                    double p1 = mjtRanking.getPointsByCoach((Coach) cm.mCompetitor1, cm);
+                    double p2 = mjtRanking.getPointsByCoach((Coach) cm.mCompetitor2, cm);
 
-                avg.put(((Coach) cm.mCompetitor1).mRoster.mName, avg_value);
-                avg_opp.put(((Coach) cm.mCompetitor1).mRoster.mName, avg_opp_value);
-                count.put(((Coach) cm.mCompetitor1).mRoster.mName, count_value);
+                    double avg_value = avg.get(((Coach) cm.mCompetitor1).mRoster.mName);
+                    double avg_opp_value = avg_opp.get(((Coach) cm.mCompetitor1).mRoster.mName);
+                    double count_value = count.get(((Coach) cm.mCompetitor1).mRoster.mName);
 
-                avg_value = avg.get(((Coach) cm.mCompetitor2).mRoster.mName);
-                avg_opp_value = avg_opp.get(((Coach) cm.mCompetitor2).mRoster.mName);
-                count_value = count.get(((Coach) cm.mCompetitor2).mRoster.mName);
+                    avg_value = (avg_value * count_value + p1) / (count_value + 1.0);
+                    avg_opp_value = (avg_opp_value * count_value + p2) / (count_value + 1.0);
+                    count_value = count_value + 1;
 
-                avg_value = (avg_value * count_value + p2) / (count_value + 1.0);
-                avg_opp_value = (avg_opp_value * count_value + p1) / (count_value + 1.0);
-                count_value = count_value + 1;
+                    if (((Coach) cm.mCompetitor1) != null) {
+                        if (((Coach) cm.mCompetitor1).mRoster != null) {
+                            avg.put(((Coach) cm.mCompetitor1).mRoster.mName, avg_value);
+                            avg_opp.put(((Coach) cm.mCompetitor1).mRoster.mName, avg_opp_value);
+                            count.put(((Coach) cm.mCompetitor1).mRoster.mName, count_value);
+                        }
+                    }
 
-                avg.put(((Coach) cm.mCompetitor2).mRoster.mName, avg_value);
-                avg_opp.put(((Coach) cm.mCompetitor2).mRoster.mName, avg_opp_value);
-                count.put(((Coach) cm.mCompetitor2).mRoster.mName, count_value);
+                    if (((Coach) cm.mCompetitor2) != null) {
+                        if (((Coach) cm.mCompetitor2).mRoster != null) {
+                            if (((Coach) cm.mCompetitor2).mRoster.mName != null) {
+                                avg_value = avg.get(((Coach) cm.mCompetitor2).mRoster.mName);
+                                avg_opp_value = avg_opp.get(((Coach) cm.mCompetitor2).mRoster.mName);
+                                count_value = count.get(((Coach) cm.mCompetitor2).mRoster.mName);
+                            }
+                        }
+                    }
+
+                    avg_value = (avg_value * count_value + p2) / (count_value + 1.0);
+                    avg_opp_value = (avg_opp_value * count_value + p1) / (count_value + 1.0);
+                    count_value = count_value + 1;
+
+                    if (((Coach) cm.mCompetitor2) != null) {
+                        if (((Coach) cm.mCompetitor2).mRoster != null) {
+                            avg.put(((Coach) cm.mCompetitor2).mRoster.mName, avg_value);
+                            avg_opp.put(((Coach) cm.mCompetitor2).mRoster.mName, avg_opp_value);
+                            count.put(((Coach) cm.mCompetitor2).mRoster.mName, count_value);
+                        }
+                    }
+                }
+
             }
         }
 
@@ -633,7 +645,6 @@ public class JPNStatistics extends javax.swing.JPanel {
         br.setSeriesPaint(0, new Color(0, 184, 0));
         br.setSeriesPaint(1, new Color(0, 0, 184));
         br.setBarPainter(new StandardBarPainter());
-
 
         final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
         barrenderer.setDrawBarOutline(false);
@@ -677,9 +688,9 @@ public class JPNStatistics extends javax.swing.JPanel {
         });
 
         // creation des listes de données
-        int column_name = 1;
+        int column_name = 2;
         if (mTournament.getParams().mTeamTournament) {
-            column_name = 2;
+            column_name = 3;
         }
         for (int i = 0; i < mTournament.getRounds().size(); i++) {
             Round r = mTournament.getRounds().get(i);
@@ -815,7 +826,6 @@ public class JPNStatistics extends javax.swing.JPanel {
 
         final DefaultCategoryDataset datas = new DefaultCategoryDataset();
 
-
         int[] indices = jlsBalancedTeam.getSelectedIndices();
         for (int i = 0; i < indices.length; i++) {
             for (int j = 0; j < mHTeamBalanced.size(); j++) {
@@ -853,20 +863,17 @@ public class JPNStatistics extends javax.swing.JPanel {
         axis.setInverted(true);
         axis.setTickUnit(new NumberTickUnit(1));
 
-
         cpBalancedTeam = new ChartPanel(chart);
         jpnBalancedTeam.add(cpBalancedTeam, BorderLayout.CENTER);
         repaint();
     }
-    
-    
+
     protected void updateBalancedIndiv() {
         if (cpBalancedIndiv != null) {
             jpnBalancedIndiv.remove(cpBalancedIndiv);
         }
 
         final DefaultCategoryDataset datas = new DefaultCategoryDataset();
-
 
         int[] indices = jlsBalancedIndiv.getSelectedIndices();
         for (int i = 0; i < indices.length; i++) {
@@ -877,7 +884,7 @@ public class JPNStatistics extends javax.swing.JPanel {
                     while (it.hasNext()) {
                         String en = (String) it.next();
                         int nb = mHIndivBalanced.get(j).get(en);
-                        datas.addValue(nb, en,jlsBalancedIndiv.getSelectedValuesList().get(i).toString());
+                        datas.addValue(nb, en, jlsBalancedIndiv.getSelectedValuesList().get(i).toString());
                     }
                 }
             }
@@ -904,7 +911,6 @@ public class JPNStatistics extends javax.swing.JPanel {
         //axis.setRange(1,mHpositions.size());
         axis.setInverted(true);
         axis.setTickUnit(new NumberTickUnit(1));
-
 
         cpBalancedIndiv = new ChartPanel(chart);
         jpnBalancedIndiv.add(cpBalancedIndiv, BorderLayout.CENTER);

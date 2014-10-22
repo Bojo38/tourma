@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma.views;
+package tourma.views.fullscreen;
 
 import java.awt.Color;
 import java.awt.Dimension;

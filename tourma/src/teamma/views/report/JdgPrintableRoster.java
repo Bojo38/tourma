@@ -311,15 +311,29 @@ public class JdgPrintableRoster extends javax.swing.JDialog {
             root.put("ass_price", RosterType._assistant_cost);
             root.put("ass_cost", mRoster._assistants*RosterType._assistant_cost);
                        
-            
+            if (mRoster._roster!=null)
+            {
             root.put("race", mRoster._roster._name);
+            }
+            else
+            {
+                root.put("race", "&nbsp;");
+            }
             root.put("cheer", mRoster._cheerleaders);
+            
             root.put("cheer_price", RosterType._cheerleader_cost);
             root.put("cheer_cost", mRoster._cheerleaders*RosterType._cheerleader_cost);
             
             root.put("rank", mRoster.getValue(mWithSkill)/10000);
             root.put("reroll", mRoster._rerolls);
-            root.put("reroll_price", mRoster._roster._reroll_cost);
+            if (mRoster._roster!=null)
+            {
+                root.put("reroll_price", mRoster._roster._reroll_cost);
+            }
+            else
+            {
+                root.put("reroll_price", 0);
+            }
             root.put("reroll_cost", mRoster._rerolls*RosterType._cheerleader_cost);
             
             root.put("pop", mRoster._rerolls);
@@ -339,8 +353,17 @@ public class JdgPrintableRoster extends javax.swing.JDialog {
             root.put("igor_cost", mRoster._igor?RosterType._igor_cost:0);
             
             root.put("bribe",  mRoster._corruptions);
+            if (mRoster._roster!=null)
+            {
             root.put("bribe_price", mRoster._roster._bribe_cost);
             root.put("bribe_cost", mRoster._corruptions* mRoster._roster._bribe_cost);
+            }
+            else
+            {
+                root.put("bribe_price", 0);
+                root.put("bribe_cost", 0);
+            }
+            
             
             root.put("wizard",  mRoster._wizard?1:0);
             root.put("wizard_price", RosterType._wizard_cost);
@@ -351,8 +374,17 @@ public class JdgPrintableRoster extends javax.swing.JDialog {
             root.put("babes_cost", mRoster._bloodweiserbabes* RosterType._babe_cost);
             
             root.put("chef",  mRoster._chef?1:0);
-            root.put("chef_price", mRoster._roster._chef_cost);
-            root.put("chef_cost", mRoster._chef?mRoster._roster._chef_cost:0);
+            if (mRoster._roster!=null)
+            {
+                root.put("chef_price", mRoster._roster._chef_cost);
+                root.put("chef_cost", mRoster._chef?mRoster._roster._chef_cost:0);
+            }
+            else
+            {
+                root.put("chef_price", 0);
+                root.put("chef_cost", 0);
+            }
+            
             
             root.put("cards",  mRoster._cards);
 

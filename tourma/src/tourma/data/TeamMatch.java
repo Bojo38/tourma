@@ -187,6 +187,22 @@ public class TeamMatch extends Match {
         this.mCompetitor1 = Team.sTeamMap.get(c1);
         this.mCompetitor2 = Team.sTeamMap.get(c2);
 
+        if (((Team) mCompetitor1) != null) {
+            if (((Team) mCompetitor1).mMatchs != null) {
+                ((Team) mCompetitor1).mMatchs.add(this);
+            }
+        } else {
+            mCompetitor1 = Team.getNullTeam();
+        }
+
+        if (((Team) mCompetitor2) != null) {
+            if (((Team) mCompetitor2).mMatchs != null) {
+                ((Team) mCompetitor2).mMatchs.add(this);
+            }
+        } else {
+            mCompetitor2 = Team.getNullTeam();
+        }
+
         final List values = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
         final Iterator v = values.iterator();
 
@@ -216,6 +232,13 @@ public class TeamMatch extends Match {
             }
         }
 
+        if (team2 == Team.sNullTeam) {
+            return 8;
+        }
+        if (team1 == Team.sNullTeam) {
+            return 0;
+        }
+
         if (team2 != null) {
             int nbVictory = 0;
             int nbLost = 0;
@@ -231,15 +254,12 @@ public class TeamMatch extends Match {
                     }
                 }
             }
-            
-            if (team2==t1)
-            {
-                nbVictories=nbLost;
+
+            if (this.mCompetitor2 == t1) {
+                nbVictories = nbLost;
+            } else {
+                nbVictories = nbVictory;
             }
-            else
-            {
-                nbVictories=nbVictory;
-            }            
         }
         return nbVictories;
     }
@@ -261,6 +281,23 @@ public class TeamMatch extends Match {
             }
         }
 
+        if (team2 == Team.sNullTeam) {
+            return 0;
+        }
+        if (team1 == Team.sNullTeam) {
+            return 8;
+        }
+
+        if (t1 == mCompetitor1) {
+            team2 = (Team) mCompetitor2;
+        } else {
+            if (t1 == mCompetitor2) {
+                team2 = (Team) mCompetitor1;
+            } else {
+                team2 = null;
+            }
+        }
+
         if (team2 != null) {
             int nbVictory = 0;
             int nbLost = 0;
@@ -276,15 +313,12 @@ public class TeamMatch extends Match {
                     }
                 }
             }
-            
-            if (team2==t1)
-            {
-                nbLoose=nbVictory;
+
+            if (team2 == t1) {
+                nbLoose = nbVictory;
+            } else {
+                nbLoose = nbLost;
             }
-            else
-            {
-                nbLoose=nbLost;
-            }            
         }
         return nbLoose;
     }
@@ -306,6 +340,13 @@ public class TeamMatch extends Match {
             }
         }
 
+        if (team2 == Team.sNullTeam) {
+            return 0;
+        }
+        if (team1 == Team.sNullTeam) {
+            return 0;
+        }
+
         if (team2 != null) {
             int nbVictory = 0;
             int nbLost = 0;
@@ -313,10 +354,10 @@ public class TeamMatch extends Match {
             Criteria td = tour.getParams().mCriterias.get(0);
             for (int j = 0; j < mMatchs.size(); j++) {
                 CoachMatch m = mMatchs.get(j);
-                if ((m.mValues.get(td).mValue1 == m.mValues.get(td).mValue2) &&(m.mValues.get(td).mValue2!=-1)){
+                if ((m.mValues.get(td).mValue1 == m.mValues.get(td).mValue2) && (m.mValues.get(td).mValue2 != -1)) {
                     nbDraw++;
-                } 
-            }                                    
+                }
+            }
         }
         return nbDraw;
     }

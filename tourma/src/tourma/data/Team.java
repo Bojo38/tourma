@@ -66,6 +66,7 @@ public class Team extends Competitor implements XMLExport {
                     Coach.getNullCoach().mTeamMates = sNullTeam;
                 }
             }
+            sNullTeam.mName=StringConstants.CS_NONE;
         }
         return sNullTeam;
     }

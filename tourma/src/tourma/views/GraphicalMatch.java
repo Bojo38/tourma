@@ -7,6 +7,7 @@ package tourma.views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.ImageIcon;
@@ -33,10 +34,11 @@ public class GraphicalMatch extends javax.swing.JPanel {
     public JLabel ClanIcon1=null;
     public JLabel ClanIcon2=null;
     
+    
     /**
      * Creates new form GraphicalMatch
      */
-    public GraphicalMatch(Match m, boolean odd,int width) {
+    public GraphicalMatch(Match m, boolean odd,int width ) {
         initComponents();
         match = m;
         this.setSize(getWidth(), 60);
@@ -114,6 +116,8 @@ public class GraphicalMatch extends javax.swing.JPanel {
         this.setSize(new Dimension(width,computed_height));
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

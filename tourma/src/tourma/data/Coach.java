@@ -66,6 +66,7 @@ public final class Coach extends Competitor implements XMLExport {
     public static Coach getNullCoach() {
         if (sNullCoach == null) {
             sNullCoach = new Coach(StringConstants.CS_NONE);
+            sNullCoach.mTeamMates=Team.getNullTeam();
         }
         if ((Team.getNullTeam() != null) && ((sNullCoach.mTeam == null))) {
             sNullCoach.mTeamMates = Team.getNullTeam();

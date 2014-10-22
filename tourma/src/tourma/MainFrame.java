@@ -10,7 +10,7 @@
  */
 package tourma;
 
-import tourma.views.JFullScreenMatchs;
+import tourma.views.fullscreen.JFullScreenMatchs;
 import tourma.views.JPNCup;
 import tourma.views.parameters.JPNParameters;
 import tourma.views.JPNStatistics;
@@ -49,11 +49,11 @@ import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
 import tourma.utils.NAF;
-import tourma.views.JFullScreenClanRank;
-import tourma.views.JFullScreenIndivAnnex;
-import tourma.views.JFullScreenIndivRank;
-import tourma.views.JFullScreenClanTeamAnnex;
-import tourma.views.JFullScreenTeamRank;
+import tourma.views.fullscreen.JFullScreenClanRank;
+import tourma.views.fullscreen.JFullScreenIndivAnnex;
+import tourma.views.fullscreen.JFullScreenIndivRank;
+import tourma.views.fullscreen.JFullScreenClanTeamAnnex;
+import tourma.views.fullscreen.JFullScreenTeamRank;
 import tourma.views.system.jdgAbout;
 import tourma.views.system.jdgOnlineHelp;
 import tourma.views.system.jdgRevisions;
@@ -62,6 +62,7 @@ import tourma.views.system.jdgRevisions;
  *
  * @author Frederic Berger
  */
+@com.yworks.util.annotation.Obfuscation ( exclude = true, applyToMembers = true )
 public class MainFrame extends javax.swing.JFrame {
 
     Tournament mTournament;
@@ -170,7 +171,7 @@ public class MainFrame extends javax.swing.JFrame {
         jtrPanels.setCellRenderer(dtm);
         jtrPanels.setModel(dtm);
         jtrPanels.setSize(100, this.getHeight());
-
+        jtrPanels.repaint();
         updateMenus();
 
         jcxPatchPortugal.setSelected(mTournament.getParams().mPortugal);
@@ -945,7 +946,17 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiGenerateFirstRoundActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtrPanelsValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jtrPanelsValueChanged
-        final TreePath path = evt.getNewLeadSelectionPath();
+        
+        
+         TreePath path =null;
+        if (evt!=null)
+        {
+            path= evt.getNewLeadSelectionPath();
+        }
+        else
+        {
+            path=jtrPanels.getPathForRow(1);
+        }
         if (path != null) {
 
             final DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
@@ -1576,6 +1587,7 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    @com.yworks.util.annotation.Obfuscation ( exclude = false)
     public static void main(final String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {

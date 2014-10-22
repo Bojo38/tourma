@@ -281,6 +281,8 @@ public class lrb {
                         rt._available_starplayers.add(sp);
                     }
                 }
+                
+                this._starPlayers.add(sp);
 
             }
 

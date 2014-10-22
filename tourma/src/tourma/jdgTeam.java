@@ -108,12 +108,8 @@ public class jdgTeam extends javax.swing.JDialog {
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
         }
 
-        if (mTeam.picture == null) {
-            try {
-                mTeam.picture = ImageIO.read(getClass().getResource("/tourma/images/flags/france.png"));
-            } catch (IOException ex) {
-                Logger.getLogger(jdgCoach.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if (mTeam.picture == null) {            
+                mTeam.picture = new BufferedImage(96, 96, BufferedImage.TYPE_4BYTE_ABGR);            
         }
 
         final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
@@ -248,7 +244,6 @@ public class jdgTeam extends javax.swing.JDialog {
 
         getContentPane().add(jPanel7, java.awt.BorderLayout.CENTER);
 
-        jbtAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/flags/France.png"))); // NOI18N
         jbtAvatar.setMnemonic('A');
         jbtAvatar.setPreferredSize(new java.awt.Dimension(80, 80));
         jbtAvatar.addActionListener(new java.awt.event.ActionListener() {

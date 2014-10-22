@@ -108,29 +108,44 @@ public class JPNCup extends javax.swing.JPanel {
                 Match m;
                 m = r.getMatchs().get(j);
 
+                
                 final JPNMatch match = new JPNMatch(m, true);
                 match.setSize(175, 50);
                 //int y = j * gap + offset * 75 / 2 + 5;                
                 final int y = j * gap + offset;
                 jpnCup.add(match, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, w, h));
+                                                
             }
 
             if (r.mLooserCup) {
                 if (r.mCupTour > 0) {
                     nb_looseMatch = nb_looseMatch / 2 + nb_match;
 
+                    /* Check the maximum round for looser cup */
+                    if (Math.pow(2, i-1)/2==rounds_with_cup.get(0).getMatchs().size())
+                    {
+                        /* We are at maximum looser cup round */
+                        nb_looseMatch=1;
+                    }
+                    if (Math.pow(2, i-1)/2>rounds_with_cup.get(0).getMatchs().size())
+                    {
+                        /* We are at maximum looser cup round */
+                        nb_looseMatch=0;
+                    }
+                    
                     int factor = 1;
                     for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j < r.getMatchs().size()); j++) {
                         Match m;
 
                         m = r.getMatchs().get(j);
 
-
                         final JPNMatch match = new JPNMatch(m, false);
                         match.setSize(175, 50);
                         final int y = (j - nb_match) * last_gap + last_offset + 30 + total_high;
                         x = (i - 1) * 200 + 5;
                         jpnCup.add(match, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, w, h));
+                        
+                        // Draw line between the previous matches end this one
                     }
                 }
             }

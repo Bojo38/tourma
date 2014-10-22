@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma.views;
+package tourma.views.fullscreen;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -33,7 +33,7 @@ public class JFullScreenMatchs extends JFullScreen {
 
     public JFullScreenMatchs(Round r) throws IOException {
         super();
-        
+
         try {
             round = r;
 
@@ -101,14 +101,12 @@ public class JFullScreenMatchs extends JFullScreen {
                     CoachIcon2.setHorizontalAlignment(JLabel.CENTER);
 
                     jpnContent.add(CoachIcon1, getGridbBagConstraints(colIndex, i * (rowspan + 1), rowspan, 1));
-                    jpnContent.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * (rowspan + 1), rowspan , 1));
-
+                    jpnContent.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * (rowspan + 1), rowspan, 1));
 
                     int value1 = cm.mValues.get(td).mValue1;
                     int value2 = cm.mValues.get(td).mValue2;
                     String sV1 = value1 >= 0 ? Integer.toString(value1) : " - ";
                     String sV2 = value2 >= 0 ? Integer.toString(value2) : " - ";
-
 
                     JLabel CoachScore1 = new JLabel();
                     CoachScore1.setSize(computed_width, computed_height);
@@ -133,7 +131,6 @@ public class JFullScreenMatchs extends JFullScreen {
                     jpnContent.add(CoachScore2, getGridbBagConstraints(nbCols - colIndex - 1, (i + 1) * (rowspan + 1) - 1, 1, 1));
 
                     // Score                    
-
                     JLabel score = new JLabel(sV1 + " " + td.mName + " " + sV2);
 
                     score.setHorizontalAlignment(JLabel.CENTER);
@@ -142,7 +139,6 @@ public class JFullScreenMatchs extends JFullScreen {
                     score.setFont(f1);
 
                     jpnContent.add(score, getGridbBagConstraints(colIndex + 1, i * (rowspan + 1), 2, 1));
-
 
                     Font f2 = font.deriveFont(Font.ITALIC, height / 75);
                     for (int j = 1; j < Tournament.getTournament().getParams().mCriterias.size(); j++) {
@@ -182,7 +178,9 @@ public class JFullScreenMatchs extends JFullScreen {
                     jpnContent.add(TeamIcon2, getGridbBagConstraints(nbCols - 1, i * NbLinesPerTeamMatch, NbLinesPerTeamMatch, 1));
 
                     JLabel v = new JLabel("");
-                    v.setIcon(ImageTreatment.resize(new ImageIcon(tm.mCompetitor1.getPicture()), computed_height, computed_height));
+                    if ((tm.mCompetitor1.getPicture() != null) && Tournament.getTournament().getParams().useImage) {
+                        v.setIcon(ImageTreatment.resize(new ImageIcon(tm.mCompetitor1.getPicture()), computed_height, computed_height));
+                    }
                     v.setFont(f1);
                     v.setOpaque(true);
                     v.setBackground(bkg);
@@ -199,7 +197,9 @@ public class JFullScreenMatchs extends JFullScreen {
 
                     JLabel l = new JLabel("");
                     l.setFont(f1);
-                    l.setIcon(ImageTreatment.resize(new ImageIcon(tm.mCompetitor2.getPicture()), computed_height, computed_height));
+                    if ((tm.mCompetitor2.getPicture() != null) && Tournament.getTournament().getParams().useImage) {
+                        l.setIcon(ImageTreatment.resize(new ImageIcon(tm.mCompetitor2.getPicture()), computed_height, computed_height));
+                    }
                     l.setHorizontalTextPosition(JLabel.LEFT);
                     l.setBackground(bkg);
                     l.setOpaque(true);
@@ -218,7 +218,7 @@ public class JFullScreenMatchs extends JFullScreen {
                         JLabel CoachIcon2 = getLabelForObject(cm.mCompetitor2, computed_height, computed_width, getCoachMatchFont(cm, cm.mCompetitor2, f1Winner, f1Looser, f1Draw, f1), cmBkg);
                         CoachIcon1.setHorizontalAlignment(JLabel.CENTER);
                         CoachIcon2.setHorizontalAlignment(JLabel.CENTER);
-                       
+
                         jpnContent.add(CoachIcon1, getGridbBagConstraints(colIndex, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
                         jpnContent.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
 
@@ -249,7 +249,6 @@ public class JFullScreenMatchs extends JFullScreen {
                         jpnContent.add(CoachScore2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + (j + 1) * NbLinesPerCoachMatch, 1, 1));
 
                         // Score                    
-
                         JLabel score = new JLabel(sV1 + " " + td.mName + " " + sV2);
 
                         score.setHorizontalAlignment(JLabel.CENTER);
@@ -299,7 +298,6 @@ public class JFullScreenMatchs extends JFullScreen {
         }
         return f;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -329,9 +329,6 @@
         </Container>
         <Component class="javax.swing.JButton" name="jbtAvatar">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/tourma/images/avatar/60001.gif"/>
-            </Property>
             <Property name="mnemonic" type="int" value="65"/>
           </Properties>
           <Events>

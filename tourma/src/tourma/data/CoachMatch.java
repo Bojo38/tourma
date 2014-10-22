@@ -99,6 +99,14 @@ public class CoachMatch extends Match {
             final String c2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2")).getValue();
             this.mCompetitor1 = Coach.sCoachMap.get(c1);
             this.mCompetitor2 = Coach.sCoachMap.get(c2);
+            if (this.mCompetitor1==null)
+            {
+                this.mCompetitor1=Coach.sNullCoach;
+            }
+            if (this.mCompetitor2==null)
+            {
+                this.mCompetitor2=Coach.sNullCoach;
+            }
 
             try {
                 refusedBy1 = match.getAttribute("RefusedBy1").getBooleanValue();
@@ -108,8 +116,30 @@ public class CoachMatch extends Match {
             } catch (Exception e) {
             }
 
-            ((Coach) mCompetitor1).mMatchs.add(this);
-            ((Coach) mCompetitor2).mMatchs.add(this);
+            if (((Coach) mCompetitor1)!=null)
+            {
+                if (((Coach) mCompetitor1).mMatchs!=null)
+                {
+                ((Coach) mCompetitor1).mMatchs.add(this);
+                }
+            }
+            else
+            {
+                mCompetitor1=Coach.getNullCoach();
+            }
+            
+            if (((Coach) mCompetitor2)!=null)
+            {
+                if (((Coach) mCompetitor2).mMatchs!=null)
+                {
+                ((Coach) mCompetitor2).mMatchs.add(this);
+                }
+            }
+            else
+            {
+                mCompetitor2=Coach.getNullCoach();
+            }
+            
 
             final List values = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"));
             final Iterator v = values.iterator();

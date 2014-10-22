@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tourma.views;
+package tourma.views.fullscreen;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -62,7 +62,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
 
         JLabel l = new JLabel();
-        if (object.getPicture() != null) {
+        if ((object.getPicture() != null)&&(Tournament.getTournament().getParams().useImage)) {
             l.setIcon(ImageTreatment.resize(new ImageIcon(object.getPicture()), height, height));
         } else {
             if (!(object instanceof Coach)) {
