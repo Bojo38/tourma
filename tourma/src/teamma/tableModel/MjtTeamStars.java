@@ -7,36 +7,48 @@ package teamma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import javax.swing.JEditorPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import teamma.data.Roster;
 import teamma.data.Skill;
 import teamma.data.StarPlayer;
 import tourma.utility.StringConstants;
-
 
 /**
  *
  * @author Frederic Berger
  */
-public class mjtTeamStars extends AbstractTableModel implements TableCellRenderer {
+public class MjtTeamStars extends AbstractTableModel implements TableCellRenderer {
+    private static final Logger LOG = Logger.getLogger(MjtTeamStars.class.getName());
 
-    ArrayList<StarPlayer> _stars;
+    /**
+     * 
+     */
+    private final Roster _roster;
 
-    public mjtTeamStars(ArrayList<StarPlayer> players) {
-        _stars = players;
+    /**
+     * 
+     * @param roster
+     */
+    public MjtTeamStars(Roster roster) {
+        _roster = roster;
 
     }
 
+    @Override
     public int getColumnCount() {
         return 8;
     }
 
+    @Override
     public int getRowCount() {
-        return _stars.size();
+        return _roster.getChampionCount();
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case 0:
@@ -59,98 +71,95 @@ public class mjtTeamStars extends AbstractTableModel implements TableCellRendere
         return "";
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         int i;
         int value;
-        String tmpstring = "";
-        if (_stars.size() > 0) {
-            StarPlayer player = _stars.get(row);
+        StringBuilder tmpstring = new StringBuilder(32);
+        if (_roster.getChampionCount() > 0) {
+            StarPlayer player = _roster.getChampion(row);
             switch (col) {
                 case 0:
-                    return (player._name);
+                    return (player.getName());
                 case 1:
-                    return (player._position);
+                    return (player.getPosition());
                 case 2:
-                    return player._movement;
+                    return player.getMovement();
                 case 3:
-                    return player._strength;
+                    return player.getStrength();
                 case 4:
-                    return player._agility;
+                    return player.getAgility();
                 case 5:
-                    return player._armor;
+                    return player.getArmor();
                 case 6:
                     /**
                      * Build Skill string in HTML Begin by player type then
                      * additional
                      */
-                    ArrayList<String> skills = new ArrayList<String>();
-                    for (i = 0; i < player._skills.size(); i++) {
-                        Skill s = player._skills.get(i);
+                    ArrayList<String> skills = new ArrayList<>();
+                    for (i = 0; i < player.getSkillCount(); i++) {
+                        Skill s = player.getSkill(i);
 
-                        skills.add("<FONT color=\"000000\">" + s.mName + "</FONT>");
+                        skills.add("<FONT color=\"000000\">" + s.getmName() + "</FONT>");
                     }
 
                     for (i = 0; i < skills.size(); i++) {
-                        tmpstring += skills.get(i);
+                        tmpstring.append(skills.get(i));
                         if (i != skills.size() - 1) {
-                            tmpstring += ", ";
+                            tmpstring.append(", ");
                         }
                     }
-                    return (tmpstring);
-                 case 7:
+                    return (tmpstring.toString());
+                case 7:
                     /**
                      * Base Cost
                      */
-                    return player._cost;
+                    return player.getCost();
             }
         }
         return "";
     }
 
+    @Override
     public Class getColumnClass(int c) {
         return getValueAt(0, c).getClass();
     }
 
-    /*
+    /**
      * Don't need to implement this method unless your table's
      * editable.
+     * @param row
+     * @param col
+     * @return 
      */
+    @Override
     public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
+    @Override
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
-
-        /*JEditorPane jta = new JEditorPane();
-         jta.setContentType("text/html");
-         jta.setPreferredSize(new Dimension(100,30));*/
 
         JEditorPane jta = new JEditorPane();
         jta.setContentType("text/html");
 
-        if (isSelected)
-        {
+        if (isSelected) {
             jta.setBackground(Color.LIGHT_GRAY);
+        } else {
+                if (row % 2 !=0) {
+                    jta.setBackground(new Color(220, 220, 220));
+                } else {
+                    jta.setBackground(Color.WHITE);
+                }
+            
         }
-        else
-        {
-            if (row % 2==1)
-            {
-                jta.setBackground(new Color(220,220,220));
-            }
-            else
-            {
-                 jta.setBackground(Color.WHITE);
-            }
-        }
-        
+
         jta.setEditable(false);
         if (value instanceof String) {
-            jta.setText("<center>" + (String) value + "</center>");
+            jta.setText("<center>" +  value + "</center>");
         }
 
         if (value instanceof Integer) {
@@ -162,9 +171,27 @@ public class mjtTeamStars extends AbstractTableModel implements TableCellRendere
         int prefH = jta.getPreferredSize().height;
 
         if (table.getRowHeight(row) < prefH) {
-            table.setRowHeight(row,prefH);
+            table.setRowHeight(row, prefH);
         }
 
         return jta;
+    }
+    
+    /**
+     * 
+     * @param stream
+     * @throws java.io.IOException 
+     */
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+/**
+ * 
+ * @param stream
+ * @throws java.io.IOException
+ * @throws ClassNotFoundException 
+ */
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
     }
 }

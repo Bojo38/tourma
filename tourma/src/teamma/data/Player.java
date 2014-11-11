@@ -5,122 +5,226 @@
 package teamma.data;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
- *
+ * 
  * @author WFMJ7631
  */
 public class Player {
+    private static final Logger LOG = Logger.getLogger(Player.class.getName());
 
-    public PlayerType _playertype;
-    public String _name;
-    public ArrayList<Skill> _skills;
+    /**
+     * 
+     */
+    private PlayerType _playertype;
 
+    /**
+     * 
+     */
+    private String _name;
+    /**
+     * 
+     */
+    private final ArrayList<Skill> _skills;
+
+/**
+ * 
+ * @param pt 
+ */
     public Player(PlayerType pt)
     {
         _playertype=pt;
-        _skills=new ArrayList<Skill>();
+        _skills=new ArrayList<>();
         _name="";
     }
     
-    public int getMovement() {
-        int i;
-        int value = _playertype._movement;
-        for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i).mName.equals("+1 Movement")) {
-                value++;
-            }
-        }
-        for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i).mName.equals("-1 Movement")) {
-                value--;
-            }
-        }
-        return value;
+    /**
+     *
+     * @return
+     */
+    public PlayerType getPlayertype() {
+        return _playertype;
     }
 
-    public int getStrength() {
-        int i;
-        int value = _playertype._strength;
-        for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i).mName.equals("+1 Strength")) {
-                value++;
-            }
-        }
-        for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i).mName.equals("-1 Strength")) {
-                value--;
-            }
-        }
-        return value;
+    /**
+     *
+     * @return
+     */
+    public String getName() {
+        return _name;
     }
 
-    public int getAgility() {
-        int i;
-        int value = _playertype._agility;
-        for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i).mName.equals("+1 Agility")) {
-                value++;
-            }
-        }
-        for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i).mName.equals("-1 Agility")) {
-                value--;
-            }
-        }
-        return value;
+    /**
+     *
+     * @param i
+     * @return
+     */
+    public Skill getSkill(int i) {
+        return _skills.get(i);
     }
     
+    /**
+     * 
+     * @return 
+     */
+    public int getSkillCount()
+    {
+        return _skills.size();
+    }
+    
+    /**
+     * 
+     * 
+     * @param i 
+     */
+    public void removeSkill(int i)
+    {
+        _skills.remove(i);
+    }
+    
+    /**
+     *
+     * @param s
+     */
+    public void addSkill(Skill s) {
+        _skills.add(s);
+    }
+    
+    /**
+     * 
+     * @return
+     */
+     public int getMovement() {
+         int i;
+         int value = _playertype.getMovement();
+         for (i = 0; i < _skills.size(); i++) {
+             if (_skills.get(i).getmName().equals("+1 Movement")) {
+                 value++;
+             }
+         }
+         for (i = 0; i < _skills.size(); i++) {
+             if (_skills.get(i).getmName().equals("-1 Movement")) {
+                 value--;
+             }
+         }
+         return value;
+     }
+     
+     /**
+     *
+     * @return
+     */
+     public int getStrength()
+     {
+         int i;
+         int value = _playertype.getStrength();
+         for (i = 0; i < _skills.size(); i++) {
+             if (_skills.get(i).getmName().equals("+1 Strength")) {
+                 value++;
+             }
+         }
+         for (i = 0; i < _skills.size(); i++) {
+             if (_skills.get(i).getmName().equals("-1 Strength")) {
+                 value--;
+             }
+         }
+         return value;
+    }
+    
+    /**
+     *
+     * @return 
+     */
+     public int getAgility() {
+         int i;
+         int value = _playertype.getAgility();
+         for (i = 0; i < _skills.size(); i++) {
+             if (_skills.get(i).getmName().equals("+1 Agility")) {
+                 value++;
+             }
+         }
+         for (i = 0; i < _skills.size(); i++) {
+             if (_skills.get(i).getmName().equals("-1 Agility")) {
+                 value--;
+             }
+         }
+        return value;
+    }
+
+    /**
+     *
+     * @return 
+     */
      public int getArmor() {
-        int i;
-        int value = _playertype._armor;
-        for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i).mName.equals("+1 Armor")) {
-                value++;
-            }
-        }
-        for (i = 0; i < _skills.size(); i++) {
-            if (_skills.get(i).mName.equals("-1 Armor")) {
-                value--;
-            }
+         int i;
+         int value = _playertype.getArmor();
+         for (i = 0; i < _skills.size(); i++) {
+             if (_skills.get(i).getmName().equals("+1 Armor")) {
+                 value++;
+             }
+         }
+         for (i = 0; i < _skills.size(); i++) {
+             if (_skills.get(i).getmName().equals("-1 Armor")) {
+                 value--;
+             }
         }
         return value;
     }
-     
-    public int getValue(boolean bWithSkill)
-    {
-        int cost=_playertype._cost;
-        
-        if (bWithSkill)
-        {
-            for (int i=0 ;i<_skills.size(); i++)
-            {
-                Skill s=_skills.get(i);
-                cost+=_playertype._single.contains(s.mCategory)?Skill.C_SINGLE_COST:0;
-                cost+=_playertype._double.contains(s.mCategory)?Skill.C_DOUBLE_COST:0;
-                
-                if (s.mName.equals("+1 Strength"))
-                {
-                    cost+=Skill.C_STRENGHT_COST;
-                }
-                if (s.mName.equals("+1 Movement"))
-                {
-                    cost+=Skill.C_MOVEMENT_COST;
-                }
-                if (s.mName.equals("+1 Armor"))
-                {
-                    cost+=Skill.C_ARMOR_COST;
-                }
-                if (s.mName.equals("+1 Agility"))
-                {
-                    cost+=Skill.C_AGILITY_COST;
-                }
-                /**
-                 * TODO: Detects the cost of the skill
-                 */
-            }
+
+    /**
+     *
+     * @param bWithSkill 
+     * @return
+     */
+     public int getValue(boolean bWithSkill) {
+         int cost=_playertype.getCost();
+         
+         if (bWithSkill)
+         {
+             for (Skill s : _skills) {
+                 cost+=_playertype.containedBySingle(s.getmCategory())?Skill._C_SINGLE_COST:0;
+                 cost+=_playertype.containedByDouble(s.getmCategory())?Skill._C_DOUBLE_COST:0;
+                 
+                 if (s.getmName().equals("+1 Strength"))
+                 {
+                     cost+=Skill._C_STRENGHT_COST;
+                 }
+                 if (s.getmName().equals("+1 Movement"))
+                 {
+                     cost+=Skill._C_MOVEMENT_COST;
+                 }
+                 if (s.getmName().equals("+1 Armor"))
+                 {
+                     cost+=Skill._C_ARMOR_COST;
+                 }
+                 if (s.getmName().equals("+1 Agility"))
+                 {
+                     cost+=Skill._C_AGILITY_COST;
+                 }
+                 /**
+                  * TODO: Detects the cost of the skill
+                  */
+             }
         }
         
         return cost;
     }
+
+    /**
+     *
+     * @param _playertype
+     */
+     public void setPlayertype(PlayerType _playertype) {
+        this._playertype = _playertype;
+    }
+
+     /**
+      *
+      * @param _name
+     */
+    public void setName(String _name) {
+        this._name = _name;
+    }
+
 }

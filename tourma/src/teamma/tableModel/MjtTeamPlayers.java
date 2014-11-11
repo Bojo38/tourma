@@ -7,38 +7,63 @@ package teamma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
-import javax.swing.JButton;
+import java.util.logging.Logger;
 import javax.swing.JEditorPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import teamma.data.LRB;
 import teamma.data.Player;
+import teamma.data.Roster;
 import teamma.data.Skill;
 import teamma.data.SkillType;
-import teamma.data.lrb;
 import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
-public class mjtTeamPlayers extends AbstractTableModel implements TableCellRenderer {
+public class MjtTeamPlayers extends AbstractTableModel implements TableCellRenderer {
+    private static final Logger LOG = Logger.getLogger(MjtTeamPlayers.class.getName());
 
-    ArrayList<Player> _players;
+    /**
+     *
+     */
+    private final Roster _roster;
 
-    public mjtTeamPlayers(ArrayList<Player> players) {
-        _players = players;
+    /**
+     *
+     * @param roster
+     */
+    public MjtTeamPlayers(Roster roster) {
+        _roster = roster;
 
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public int getColumnCount() {
         return 12;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public int getRowCount() {
-        return _players.size();
+        return _roster.getPlayerCount();
     }
 
+    /**
+     *
+     * @param col
+     * @return
+     */
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case 0:
@@ -69,19 +94,26 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
         return "";
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
+    @Override
     public Object getValueAt(int row, int col) {
         int i;
         int value;
-        String tmpstring = "";
-        if (_players.size() > 0) {
-            Player player = _players.get(row);
+        StringBuilder tmpstring = new StringBuilder(32);
+        if (_roster.getPlayerCount() > 0) {
+            Player player = _roster.getPlayer(row);
             switch (col) {
                 case 0:
                     return row + 1;
                 case 1:
-                    return (player._name);
+                    return (player.getName());
                 case 2:
-                    return (player._playertype._position);
+                    return (player.getPlayertype().getPosition());
                 case 3:
                     return player.getMovement();
                 case 4:
@@ -95,121 +127,137 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
                      * Build Skill string in HTML Begin by player type then
                      * additional
                      */
-                    ArrayList<String> skills = new ArrayList<String>();
-                    for (i = 0; i < player._playertype._skills.size(); i++) {
-                        Skill s = player._playertype._skills.get(i);
-
-                        skills.add("<FONT color=\"000000\">" + s.mName + "</FONT>");
+                    ArrayList<String> skills = new ArrayList<>();
+                    for (i = 0; i < player.getPlayertype().getSkillCount(); i++) {
+                        Skill s = player.getPlayertype().getSkill(i);
+                        skills.add("<FONT color=\"000000\">" + s.getmName() + "</FONT>");
                     }
-                    for (i = 0; i < player._skills.size(); i++) {
-                        Skill s = player._skills.get(i);
-                            //int rgb=s.mColor.getRGB();
-                              int rgb=s.mColor.getRed()*65536+s.mColor.getGreen()*256+s.mColor.getBlue();
-                            skills.add("<FONT color=\""+Integer.toHexString(rgb) +"\"><I>" + s.mName + "</I></FONT>");
+                    for (i = 0; i < player.getSkillCount(); i++) {
+                        Skill s = player.getSkill(i);
+                        //int rgb=s.mColor.getRGB();
+                        int rgb = s.getmColor().getRed() * 65536 + s.getmColor().getGreen() * 256 + s.getmColor().getBlue();
+                        skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + s.getmName() + "</I></FONT>");
                     }
 
                     for (i = 0; i < skills.size(); i++) {
-                        tmpstring += skills.get(i);
+                        tmpstring.append(skills.get(i));
                         if (i != skills.size() - 1) {
-                            tmpstring += ", ";
+                            tmpstring.append(", ");
                         }
                     }
-                    return (tmpstring);
+                    return (tmpstring.toString());
                 case 8:
                     /**
                      * SR
                      */
-                    String sr = "";
-                    for (i = 0; i < player._playertype._single.size(); i++) {
-                        SkillType st = player._playertype._single.get(i);
-                        sr += st._accronym;
+                    StringBuilder sr = new StringBuilder(32);
+                    for (i = 0; i < player.getPlayertype().getSingleCount(); i++) {
+                        SkillType st = player.getPlayertype().getSingle(i);
+                        sr.append(st.getAccronym());
                     }
-                    return sr;
+                    return sr.toString();
                 case 9:
                     /**
                      * DR
                      */
-                    String dr = "";
-                    for (i = 0; i < player._playertype._double.size(); i++) {
-                        SkillType st = player._playertype._double.get(i);
-                        dr += st._accronym;
+                    StringBuilder dr = new StringBuilder(32);
+                    for (i = 0; i < player.getPlayertype().getDoubleCount(); i++) {
+                        SkillType st = player.getPlayertype().getDouble(i);
+                        dr.append(st.getAccronym());
                     }
-                    return dr;
+                    return dr.toString();
                 case 10:
                     /**
                      * Base Cost
                      */
-                    return player._playertype._cost;
+                    return player.getPlayertype().getCost();
                 case 11:
                     /**
                      * Real Cost
                      */
                     int skillCost = 0;
-                    for (i = 0; i < player._skills.size(); i++) {
+                    for (i = 0; i < player.getSkillCount(); i++) {
                         int j;
-                        SkillType st = player._skills.get(i).mCategory;
+                        SkillType st = player.getSkill(i).getmCategory();
 
                         /**
                          * If Single Roll, add 20000
                          */
-                        for (j = 0; j < player._playertype._single.size(); j++) {
-                            if (st.equals(player._playertype._single.get(j))) {
+                        for (j = 0; j < player.getPlayertype().getSingleCount(); j++) {
+                            if (st.equals(player.getPlayertype().getSingle(j))) {
                                 skillCost += 20000;
                             }
                         }
                         /**
                          * If Double Roll, add 30000
                          */
-                        for (j = 0; j < player._playertype._double.size(); j++) {
-                            if (st.equals(player._playertype._double.get(j))) {
+                        for (j = 0; j < player.getPlayertype().getDoubleCount(); j++) {
+                            if (st.equals(player.getPlayertype().getDouble(j))) {
                                 skillCost += 30000;
                             }
                         }
-                        
+
                         /*
                          * If charactristics, it depends.
                          */
-                        if (st.equals(lrb.getLRB().getSkillType("Characteristics"))) {
-                            Skill s=player._skills.get(i);
-                            if (s.mName.equals("+1 Movement"))
-                            {
+                        if (st.equals(LRB.getLRB().getSkillType("Characteristics"))) {
+                            Skill s = player.getSkill(i);
+                            if (s.getmName().equals("+1 Movement")) {
                                 skillCost += 30000;
                             }
-                            if (s.mName.equals("+1 Armor"))
-                            {
+                            if (s.getmName().equals("+1 Armor")) {
                                 skillCost += 30000;
                             }
-                            if (s.mName.equals("+1 Agility"))
-                            {
+                            if (s.getmName().equals("+1 Agility")) {
                                 skillCost += 40000;
                             }
-                            if (s.mName.equals("+1 Strength"))
-                            {
+                            if (s.getmName().equals("+1 Strength")) {
                                 skillCost += 50000;
                             }
                         }
                     }
-                    return skillCost+player._playertype._cost;
+                    return skillCost + player.getPlayertype().getCost();
 
             }
         }
         return "";
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
+    @Override
     public Class getColumnClass(int c) {
         return getValueAt(0, c).getClass();
     }
 
-    /*
-     * Don't need to implement this method unless your table's
-     * editable.
+    /**
+     * Don't need to implement this method unless your table's editable.
+     *
+     * @param row
+     * @param col
+     * @return
      */
+    @Override
     public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         return false;
     }
 
+    /**
+     *
+     * @param table
+     * @param value
+     * @param isSelected
+     * @param hasFocus
+     * @param row
+     * @param column
+     * @return
+     */
+    @Override
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
@@ -217,29 +265,24 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
         /*JEditorPane jta = new JEditorPane();
          jta.setContentType("text/html");
          jta.setPreferredSize(new Dimension(100,30));*/
-
         JEditorPane jta = new JEditorPane();
         jta.setContentType("text/html");
 
-        if (isSelected)
-        {
+        if (isSelected) {
             jta.setBackground(Color.LIGHT_GRAY);
-        }
-        else
-        {
-            if (row % 2==1)
-            {
-                jta.setBackground(new Color(220,220,220));
+        } else {
+
+            if (row % 2 != 0) {
+                jta.setBackground(new Color(220, 220, 220));
+            } else {
+                jta.setBackground(Color.WHITE);
             }
-            else
-            {
-                 jta.setBackground(Color.WHITE);
-            }
+
         }
-        
+
         jta.setEditable(false);
         if (value instanceof String) {
-            jta.setText("<center>" + (String) value + "</center>");
+            jta.setText("<center>" +  value + "</center>");
         }
 
         if (value instanceof Integer) {
@@ -251,9 +294,17 @@ public class mjtTeamPlayers extends AbstractTableModel implements TableCellRende
         int prefH = jta.getPreferredSize().height;
 
         if (table.getRowHeight(row) < prefH) {
-            table.setRowHeight(row,prefH);
+            table.setRowHeight(row, prefH);
         }
 
         return jta;
+    }
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
     }
 }

@@ -5,6 +5,7 @@
 package teamma.data;
 
 import java.awt.Color;
+import java.util.logging.Logger;
 
 /**
  *
@@ -12,16 +13,46 @@ import java.awt.Color;
  */
 public class Skill {
 
-    public static final int C_SINGLE_COST=20000;
-    public static final int C_DOUBLE_COST=30000;
-    public static final int C_STRENGHT_COST=50000;
-    public static final int C_AGILITY_COST=40000;
-    public static final int C_ARMOR_COST=30000;
-    public static final int C_MOVEMENT_COST=30000;
+/**
+ * 
+ */
+    public static final int _C_SINGLE_COST=20000;
+    /**
+     * 
+     */
+    public static final int _C_DOUBLE_COST=30000;
+    /**
+     * 
+     */
+    public static final int _C_STRENGHT_COST=50000;
+    /**
+     * 
+     */
+    public static final int _C_AGILITY_COST=40000;
+    /**
+     * 
+     */
+    public static final int _C_ARMOR_COST=30000;
+    /**
+     * 
+     */
+    public static final int _C_MOVEMENT_COST=30000;
     
-    public String mName;
-    public SkillType mCategory;
-    public Color mColor;
+    
+    private static final Logger LOG = Logger.getLogger(Skill.class.getName());
+    
+    /**
+     * 
+     */
+    private String mName;
+    /**
+     * 
+     */
+    private SkillType mCategory;
+    /**
+     * 
+     */
+    private Color mColor;
 
     /**
      *
@@ -32,5 +63,47 @@ public class Skill {
         mName = name;
         mCategory = category;
         mColor=Color.BLACK;
+    }
+
+    /**
+     * @return the mName
+     */
+    public String getmName() {
+        return mName;
+    }
+
+    /**
+     * @param mName the mName to set
+     */
+    public void setmName(String mName) {
+        this.mName = mName;
+    }
+
+    /**
+     * @return the mCategory
+     */
+    public SkillType getmCategory() {
+        return mCategory;
+    }
+
+    /**
+     * @param mCategory the mCategory to set
+     */
+    public void setmCategory(SkillType mCategory) {
+        this.mCategory = mCategory;
+    }
+
+    /**
+     * @return the mColor
+     */
+    public Color getmColor() {
+        return mColor;
+    }
+
+    /**
+     * @param mColor the mColor to set
+     */
+    public void setmColor(Color mColor) {
+        this.mColor = mColor;
     }
 }

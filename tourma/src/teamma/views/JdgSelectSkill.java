@@ -13,14 +13,14 @@ import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import javax.swing.JColorChooser;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import teamma.data.LRB;
 import teamma.data.Player;
-import teamma.data.SkillType;
 import teamma.data.Skill;
-import teamma.data.lrb;
+import teamma.data.SkillType;
 import tourma.MainFrame;
 
 /**
@@ -29,19 +29,23 @@ import tourma.MainFrame;
  */
 public class JdgSelectSkill extends javax.swing.JDialog {
 
-    Player _player;
-    ArrayList<JComboBox> _jcbs;
-    Color _color=Color.BLACK;
+    private Player _player;
+    private ArrayList<JComboBox> _jcbs;
+    private Color _color = Color.BLACK;
 
     /**
      * Creates new form JdgSelectSkill
+     *
+     * @param parent
+     * @param modal
+     * @param player
      */
     public JdgSelectSkill(java.awt.Frame parent, boolean modal, Player player) {
         super(parent, modal);
         initComponents();
 
-        _jcbs = new ArrayList<JComboBox>();
-        int nbcats = lrb.getLRB()._skillTypes.size();
+        _jcbs = new ArrayList<>();
+        int nbcats = LRB.getLRB().getSkillTypeCount();
         _player = player;
 
         GridLayout layout = new GridLayout(nbcats, 3);
@@ -49,23 +53,23 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         int i;
         int j;
         for (i = 0; i < nbcats; i++) {
-            SkillType st = lrb.getLRB()._skillTypes.get(i);
-            JLabel jlb = new JLabel(st._name);
+            SkillType st = LRB.getLRB().getSkillType(i);
+            JLabel jlb = new JLabel(st.getName());
             jlb.setHorizontalAlignment(JLabel.TRAILING);
-            ArrayList<String> sa = new ArrayList<String>();
+            ArrayList<String> sa = new ArrayList<>();
             sa.add("");
-            for (j = 0; j < st._skills.size(); j++) {
-                sa.add(st._skills.get(j).mName);
+            for (j = 0; j < st.getSkillCount(); j++) {
+                sa.add(st.getSkill(j).getmName());
             }
             JComboBox jcb = new JComboBox(sa.toArray());
             _jcbs.add(jcb);
             jcb.addItemListener(new ItemListener() {
+                @Override
                 public void itemStateChanged(ItemEvent e) {
                     int i;
                     for (i = 0; i < _jcbs.size(); i++) {
-                        JComboBox jcb= _jcbs.get(i);
-                        if (!e.getSource().equals(jcb))
-                        {
+                        JComboBox jcb = _jcbs.get(i);
+                        if (!e.getSource().equals(jcb)) {
                             jcb.setSelectedIndex(0);
                         }
                     }
@@ -76,14 +80,14 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             jpnSkills.add(jcb);
 
             JLabel jlb2 = new JLabel("");
-            boolean enabled = st._special && lrb.getLRB()._allowSpecialSkills;
+            boolean enabled = st.isSpecial() && LRB.getLRB().isAllowSpecialSkills();
 
             /* Get if Single Roll or doubl roll */
-            if (_player._playertype._single.contains(st)) {
+            if (_player.getPlayertype().containedBySingle(st)) {
                 jlb2.setText("Single Roll");
                 enabled = true;
             }
-            if (_player._playertype._double.contains(st)) {
+            if (_player.getPlayertype().containedByDouble(st)) {
                 jlb2.setText("Double Roll");
                 enabled = true;
             }
@@ -103,11 +107,10 @@ public class JdgSelectSkill extends javax.swing.JDialog {
 
         this.setSize(400, 260);
 
-        if (dmode != null) {
-            int screenWidth = dmode.getWidth();
-            int screenHeight = dmode.getHeight();
-            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        }
+        int screenWidth = dmode.getWidth();
+        int screenHeight = dmode.getHeight();
+        this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+
     }
 
     /**
@@ -193,36 +196,31 @@ public class JdgSelectSkill extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtCancelActionPerformed
 
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
-        
-        Skill s=null;
+
+        Skill s = null;
         int i;
         String stringName;
-        for (i=0; i<_jcbs.size(); i++)
-        {
-            JComboBox<String> jcb=_jcbs.get(i);
-            if (jcb.getSelectedIndex()>0)
-            {
-                stringName=(String)jcb.getSelectedItem();
-                s=lrb.getLRB().getSkill(stringName);
+        for (i = 0; i < _jcbs.size(); i++) {
+            JComboBox<String> jcb = _jcbs.get(i);
+            if (jcb.getSelectedIndex() > 0) {
+                stringName = (String) jcb.getSelectedItem();
+                s = LRB.getLRB().getSkill(stringName);
                 break;
             }
         }
-        
-        if (s!=null)
-        {
-            Skill s2=new Skill(s.mName,s.mCategory);
-            s2.mColor=_color;
-            _player._skills.add(s2);
+
+        if (s != null) {
+            Skill s2 = new Skill(s.getmName(), s.getmCategory());
+            s2.setmColor(getColor());
+            getPlayer().addSkill(s2);
             this.setVisible(false);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(),"Error","No skill selected",JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Error", "No skill selected", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbtOKActionPerformed
 
     private void ccColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccColorActionPerformed
-        _color=ccColor.getColor();
+        setColor(ccColor.getColor());
     }//GEN-LAST:event_ccColorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -234,4 +232,41 @@ public class JdgSelectSkill extends javax.swing.JDialog {
     private javax.swing.JButton jbtOK;
     private javax.swing.JPanel jpnSkills;
     // End of variables declaration//GEN-END:variables
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+    private static final Logger LOG = Logger.getLogger(JdgSelectSkill.class.getName());
+
+    /**
+     * @return the _player
+     */
+    public Player getPlayer() {
+        return _player;
+    }
+
+    /**
+     * @param _player the _player to set
+     */
+    public void setPlayer(Player _player) {
+        this._player = _player;
+    }
+
+    /**
+     * @return the _color
+     */
+    public Color getColor() {
+        return _color;
+    }
+
+    /**
+     * @param _color the _color to set
+     */
+    public void setColor(Color _color) {
+        this._color = _color;
+    }
 }
