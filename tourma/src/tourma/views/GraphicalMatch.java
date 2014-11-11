@@ -4,17 +4,13 @@
  */
 package tourma.views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
@@ -31,8 +27,15 @@ public class GraphicalMatch extends javax.swing.JPanel {
 
     Match match;
 
-    public JLabel ClanIcon1=null;
-    public JLabel ClanIcon2=null;
+    /**
+     *
+     */
+    public JLabel clanIcon1=null;
+
+    /**
+     *
+     */
+    public JLabel clanIcon2=null;
     
     
     /**
@@ -70,15 +73,15 @@ public class GraphicalMatch extends javax.swing.JPanel {
                 ClanIcon2.setSize(computed_width, computed_height);
                 ClanIcon2.setLocation(width-computed_width-1, 1);
                 Clan clan1 = ((Coach) (cm.mCompetitor1)).mClan;
-                if (clan1.picture != null) {
-                    ClanIcon1.setIcon(ImageTreatment.resize(new ImageIcon(clan1.picture), computed_height,computed_height));
+                if (clan1.getPicture() != null) {
+                    ClanIcon1.setIcon(ImageTreatment.resize(new ImageIcon(clan1.getPicture()), computed_height,computed_height));
                 }
-                ClanIcon1.setText(clan1.mName);
+                ClanIcon1.setText(clan1.getName());
                 Clan clan2 = ((Coach) (cm.mCompetitor2)).mClan;
-                if (clan2.picture != null) {
-                    ClanIcon2.setIcon(ImageTreatment.resize(new ImageIcon(clan2.picture), computed_height,computed_height));
+                if (clan2.getPicture() != null) {
+                    ClanIcon2.setIcon(ImageTreatment.resize(new ImageIcon(clan2.getPicture()), computed_height,computed_height));
                 }
-                ClanIcon2.setText(clan2.mName);
+                ClanIcon2.setText(clan2.getName());
                 ClanIcon1.setOpaque(true);
                 ClanIcon1.setBackground(bkg);
                 ClanIcon2.setOpaque(true);
@@ -142,4 +145,5 @@ public class GraphicalMatch extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(GraphicalMatch.class.getName());
 }

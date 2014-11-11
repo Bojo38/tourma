@@ -12,6 +12,7 @@ package tourma.views.round;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
@@ -19,12 +20,12 @@ import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtAnnexRank;
-import tourma.tableModel.mjtAnnexRankClan;
-import tourma.tableModel.mjtAnnexRankIndiv;
-import tourma.tableModel.mjtAnnexRankTeam;
+import tourma.tableModel.MjtAnnexRank;
+import tourma.tableModel.MjtAnnexRankClan;
+import tourma.tableModel.MjtAnnexRankIndiv;
+import tourma.tableModel.MjtAnnexRankTeam;
 import tourma.utils.TableFormat;
-import tourma.views.report.jdgRanking;
+import tourma.views.report.JdgRanking;
 
 /**
  *
@@ -39,6 +40,10 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
     Round mRound = null;
     boolean mClan;
     boolean mTeam;
+
+    /**
+     *
+     */
     public boolean mRoundOnly = false;
     ArrayList<Coach> mCoachs = null;
     ArrayList<Team> mTeams = null;
@@ -50,6 +55,17 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
         this(name, criteria, tour, round, clan, team, tour.getCoachs(), tour.getTeams());
     }
 
+    /**
+     *
+     * @param name
+     * @param criteria
+     * @param tour
+     * @param round
+     * @param clan
+     * @param team
+     * @param v
+     * @param t
+     */
     public JPNAnnexRanking(final String name, final Criteria criteria, final Tournament tour, final Round round, final boolean clan, final boolean team, final ArrayList v, final ArrayList t) {
         initComponents();
         mName = name;
@@ -175,21 +191,21 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
     private void jbtPositiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPositiveActionPerformed
          for (int i = 0; i < mTour.getRounds().size(); i++) {
              if (mRound == mTour.getRounds().get(i)) {
-                 mjtAnnexRank model;
+                 MjtAnnexRank model;
                  if (mClan) {
-                     model = new mjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                     model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                              mTour.getDisplayClans(), true, mTour.getParams().mRankingIndiv1,
                              mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
                              mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
                  } else {
                      if (mTeam) {
-                         model = new mjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                         model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                  mTeams, true, mTour.getParams().mRankingIndiv1,
                                  mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
                                  mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
 
                      } else {
-                         model = new mjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
+                         model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
                      }
                  }
                  final StringBuffer a = new StringBuffer(mCriteria.mName);
@@ -202,7 +218,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
                          a.append(language.getString(" PAR LE COACH"));
                      }
                  }
-                 final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
+                 final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
                  jdg.setVisible(true);
                  break;
              }
@@ -213,20 +229,20 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
     private void jbtNegativeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNegativeActionPerformed
          for (int i = 0; i < mTour.getRounds().size(); i++) {
              if (mRound == mTour.getRounds().get(i)) {
-                 mjtAnnexRank model;
+                 MjtAnnexRank model;
                  if (mClan) {
-                     model = new mjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                     model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                              mTour.getDisplayClans(), true, mTour.getParams().mRankingIndiv1,
                              mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
                              mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
                  } else {
                      if (mTeam) {
-                         model = new mjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                         model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                  mTeams, true, mTour.getParams().mRankingIndiv1,
                                  mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
                                  mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
                      } else {
-                         model = new mjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                         model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                  mCoachs, true, mTour.getParams().mRankingIndiv1,
                                  mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
                                  mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5,
@@ -244,7 +260,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
                          a.append(language.getString(" CONTRE LE COACH"));
                      }
                  }
-                 final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
+                 final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
                  jdg.setVisible(true);
                  break;
              }
@@ -264,8 +280,10 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
     private javax.swing.JTable jtbPositive;
     // End of variables declaration//GEN-END:variables
 
-   
 
+     /**
+      * 
+     */
     public void update() {
 
         if (mRound != null) {
@@ -277,29 +295,29 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
             }
             v.add(mRound);
 
-            mjtAnnexRank modelPos ;
-            mjtAnnexRank modelNeg ;
+            MjtAnnexRank modelPos ;
+            MjtAnnexRank modelNeg ;
 
             if (mClan) {
                 modelPos =
-                        new mjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                        new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                         mTour.getDisplayClans(), true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
                 modelNeg =
-                        new mjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                        new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                         mTour.getDisplayClans(), true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
             } else {
                 if (mTeam) {
                     modelPos =
-                            new mjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                            new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                             mTeams, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
                     modelNeg =
-                            new mjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                            new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                             mTeams, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
                 } else {
                     modelPos =
-                            new mjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
+                            new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
                     modelNeg =
-                            new mjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
+                            new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
                 }
             }
             jtbNegative.setModel(modelNeg);
@@ -318,4 +336,5 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
             jtbNegative.setRowHeight(25);
         }
     }
+    private static final Logger LOG = Logger.getLogger(JPNAnnexRanking.class.getName());
 }

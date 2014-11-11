@@ -7,6 +7,7 @@ package tourma.data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -16,7 +17,14 @@ import tourma.utility.StringConstants;
  */
 public class RosterType implements XMLExport{
 
+    /**
+     *
+     */
     public static final int C_BLOOD_BOWL = 1;
+
+    /**
+     *
+     */
     public static final int C_DREAD_BALL = 2;
     /*public static String[] p_Rosters={
      "Amazone", "Bas-Fonds", "Chaos", "Elfe", "Elfe Sylvain", "Elfe Noir",
@@ -24,10 +32,23 @@ public class RosterType implements XMLExport{
      "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique",
      "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire"
      };*/
-    public static ArrayList<String> mRostersNames = new ArrayList<>();
-    public static HashMap<String,RosterType> mRosterTypes = new HashMap<>();
-    public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
+    /**
+     *
+     */
+    
+    public static ArrayList<String> mRostersNames = new ArrayList<>();
+
+    /**
+     *
+     */
+    public static HashMap<String,RosterType> mRosterTypes = new HashMap<>();
+
+    private static final Logger LOG = Logger.getLogger(RosterType.class.getName());
+
+    /**
+     *
+     */
     public static void initCollection() {
         mRostersNames.clear();
         mRostersNames.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AmazonKey"));
@@ -84,6 +105,10 @@ public class RosterType implements XMLExport{
         mRosterTypes.put(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("VampireKey"),new RosterType(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("VampireKey")));
     }
 
+    /**
+     *
+     * @param game
+     */
     public static void initCollection(final int game) {
 
         mRostersNames.clear();
@@ -113,38 +138,35 @@ public class RosterType implements XMLExport{
         }
     }
 
-    public RosterType(final int i) {
-        mName = mRostersNames.get(i);
-    }
-
-    public RosterType(final String name) {
-        mName = name;
-    }
-
+    /**
+     *
+     * @param name
+     * @return
+     */
     public static String getRosterName(String name) {
         ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
         String result = name;
         // Patching roster name for older versions
-        // Amazone, 
-        // Bas-Fonds, 
-        // Chaos, 
-        // Elfe, 
-        // Elfe sylvain, 
-        // Elfe noir, 
+        // Amazone,
+        // Bas-Fonds,
+        // Chaos,
+        // Elfe,
+        // Elfe sylvain,
+        // Elfe noir,
         // Gobelin, 
         // Halfling,
-        // Haut Elfe, 
-        // Homme lézard, 
-        // Humain, 
-        // Khemri, 
-        // Mort-Vivant, 
+        // Haut Elfe,
+        // Homme lézard,
+        // Humain,
+        // Khemri,
+        // Mort-Vivant,
         // Nain, 
         // Nain du chaos,
         // Necromantique, 
         // Nordique,
         // Nurgle,
-        // Ogre, 
-        // Orque, 
+        // Ogre,
+        // Orque,
         // Pacte Chaotique, 
         // Skaven,
         // Slann, 
@@ -225,7 +247,31 @@ public class RosterType implements XMLExport{
         }
         return result;
     }
+    /**
+     *
+     */
+    public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
+    /**
+     *
+     * @param i
+     */
+    public RosterType(final int i) {
+        mName = mRostersNames.get(i);
+    }
+    
+    /**
+     *
+     * @param name
+     */
+    public RosterType(final String name) {
+        mName = name;
+    }
+    
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final Element elt = new Element("Roster");
@@ -233,6 +279,10 @@ public class RosterType implements XMLExport{
         return elt;        
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void setXMLElement(Element e) {
             this.mName = e.getAttributeValue(StringConstants.CS_NAME);

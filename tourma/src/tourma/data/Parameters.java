@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -23,35 +24,188 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class Parameters implements XMLExport {
+    /**
+     *
+     */
+    public static final int C_RANKING_SUBTYPE_POSITIVE = 0;
+    /**
+     *
+     */
+    public static final int C_RANKING_SUBTYPE_NEGATIVE = 1;
+    /**
+     *
+     */
+    public static final int C_RANKING_SUBTYPE_DIFFERENCE = 2;
+    /**
+     *
+     */
+    public static final int C_RANKING_NONE = 0;
+    /**
+     *
+     */
+    public static final int C_RANKING_POINTS = 1;
+    /**
+     *
+     */
+    public static final int C_RANKING_OPP_POINTS = 2;
+    /**
+     *
+     */
+    public static final int C_RANKING_VND = 3;
+    /**
+     *
+     */
+    public static final int C_RANKING_ELO = 4;
+    /**
+     *
+     */
+    public static final int C_RANKING_ELO_OPP = 5;
+    /**
+     *
+     */
+    public static final int C_RANKING_NB_MATCHS = 6;
+    /**
+     *
+     */
+    public static final int C_MAX_RANKING = 6;
+    /**
+     *
+     */
+    protected static final ResourceBundle sbundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
+    private static final Logger LOG = Logger.getLogger(Parameters.class.getName());
 
+    /**
+     *
+     */
     public int mGame = RosterType.C_BLOOD_BOWL;
+
+    /**
+     *
+     */
     public int mPointsIndivVictory = 1000;
+
+    /**
+     *
+     */
     public int mPointsIndivLargeVictory = 1100;
+
+    /**
+     *
+     */
     public int mPointsIndivDraw = 400;
+
+    /**
+     *
+     */
     public int mPointsIndivLittleLost = 100;
+
+    /**
+     *
+     */
     public int mPointsIndivLost = 0;
+
+    /**
+     *
+     */
     public int mPointsRefused = 0;
+
+    /**
+     *
+     */
     public int mPointsConcedeed = 0;
+
+    /**
+     *
+     */
     public boolean mTeamVictoryOnly = false;
+
+    /**
+     *
+     */
     public boolean mPortugal = false;
+
+    /**
+     *
+     */
     public int mGapLargeVictory = 3;
+
+    /**
+     *
+     */
     public int mGapLittleLost = 1;
+
+    /**
+     *
+     */
     public boolean mSubstitutes = false;
+
+    /**
+     *
+     */
     public ArrayList<Criteria> mCriterias;
+
+    /**
+     *
+     */
     public String mTournamentName;
+
+    /**
+     *
+     */
     public String mTournamentOrga;
+
+    /**
+     *
+     */
     public String mPlace;
+
+    /**
+     *
+     */
     public Date mDate = new Date();
+
+    /**
+     *
+     */
     public int mRankingIndiv1 = 1;
+
+    /**
+     *
+     */
     public int mRankingIndiv2 = 2;
+
+    /**
+     *
+     */
     public int mRankingIndiv3 = 0;
+
+    /**
+     *
+     */
     public int mRankingIndiv4 = 0;
+
+    /**
+     *
+     */
     public int mRankingIndiv5 = 0;
+
+    /**
+     *
+     */
     public boolean mTeamTournament = false;
+
+    /**
+     *
+     */
     public boolean mMultiRoster = false;
     /* Pairing: 0: Individuel
      1: ByTeam
      */
+
+    /**
+     *
+     */
+    
     public int mTeamPairing = 1;
     /* IndivPairing:
      0: Classement
@@ -59,20 +213,81 @@ public class Parameters implements XMLExport {
      2: Aléatoire
      3: Naf
      */
+
+    /**
+     *
+     */
+    
     public int mTeamIndivPairing = 0;
+
+    /**
+     *
+     */
     public int mTeamMatesNumber = 1;
+
+    /**
+     *
+     */
     public int mClansMembersNumber = 1;
+
+    /**
+     *
+     */
     public boolean mIndivPairingTeamBalanced = false;
+
+    /**
+     *
+     */
     public boolean mIndivPairingIndivBalanced = false;
+
+    /**
+     *
+     */
     public int mPointsTeamVictory = 1000;
+
+    /**
+     *
+     */
     public int mPointsTeamDraw = 400;
+
+    /**
+     *
+     */
     public int mPointsTeamLost = 0;
+
+    /**
+     *
+     */
     public int mRankingTeam1 = 1;
+
+    /**
+     *
+     */
     public int mRankingTeam2 = 2;
+
+    /**
+     *
+     */
     public int mRankingTeam3 = 0;
+
+    /**
+     *
+     */
     public int mRankingTeam4 = 0;
+
+    /**
+     *
+     */
     public int mRankingTeam5 = 0;
+
+    /**
+     *
+     */
     public int mPointsTeamVictoryBonus = 0;
+
+    /**
+     *
+     */
     public int mPointsTeamDrawBonus = 0;
     /**
      * *********************
@@ -99,24 +314,21 @@ public class Parameters implements XMLExport {
      * Number of player of one clan used for clan ranking
      */
     public int mTeamMatesClansNumber = 3;
-    public static final int C_RANKING_SUBTYPE_POSITIVE = 0;
-    public static final int C_RANKING_SUBTYPE_NEGATIVE = 1;
-    public static final int C_RANKING_SUBTYPE_DIFFERENCE = 2;
-    public static final int C_RANKING_NONE = 0;
-    public static final int C_RANKING_POINTS = 1;
-    public static final int C_RANKING_OPP_POINTS = 2;
-    public static final int C_RANKING_VND = 3;
-    public static final int C_RANKING_ELO = 4;
-    public static final int C_RANKING_ELO_OPP = 5;
-    public static final int C_RANKING_NB_MATCHS = 6;
-    public static final int C_MAX_RANKING = 6;
+
     /**
      * Use the color to displlay Match/rank
      */
     public boolean useColor = true;
-    public boolean useImage = false;
-    protected final static ResourceBundle sbundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
 
+    /**
+     *
+     */
+    public boolean useImage = false;
+
+
+    /**
+     *
+     */
     public Parameters() {
         mTournamentName = sbundle.getString("");
         mTournamentOrga = sbundle.getString("");
@@ -130,6 +342,10 @@ public class Parameters implements XMLExport {
         mCriterias.add(c);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(sbundle.getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
@@ -152,6 +368,7 @@ public class Parameters implements XMLExport {
             params.setAttribute("Refused", Integer.toString(this.mPointsRefused));
             params.setAttribute("Conceeded", Integer.toString(this.mPointsConcedeed));
         } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
         }
         params.setAttribute(sbundle.getString("LITTLE_LOST"), Integer.toString(this.mPointsIndivLittleLost));
         params.setAttribute("Portugal", Boolean.toString(this.mPortugal));
@@ -203,6 +420,10 @@ public class Parameters implements XMLExport {
         return params;
     }
 
+    /**
+     *
+     * @param params
+     */
     @Override
     public void setXMLElement(final Element params) {
         final SimpleDateFormat format = new SimpleDateFormat(sbundle.getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
@@ -221,6 +442,7 @@ public class Parameters implements XMLExport {
                 this.mPointsRefused = params.getAttribute("Refused").getIntValue();
                 this.mPointsConcedeed = params.getAttribute("Concedeed").getIntValue();
             } catch (Exception e) {
+                System.err.println(e.getLocalizedMessage());
             }
             this.mPointsIndivLittleLost = params.getAttribute(sbundle.getString("LITTLE_LOST")).getIntValue();
 
@@ -327,6 +549,11 @@ public class Parameters implements XMLExport {
         return sbundle.getString("PARAMÈTRES");
     }
 
+    /**
+     *
+     * @param j
+     * @return
+     */
     public int getTeamRankingType(int j) {
         int rank = 0;
         switch (j) {
@@ -351,6 +578,11 @@ public class Parameters implements XMLExport {
         return rank;
     }
     
+    /**
+     *
+     * @param j
+     * @return
+     */
     public int getIndivRankingType(int j) {
         int rank = 0;
         switch (j) {
@@ -375,6 +607,10 @@ public class Parameters implements XMLExport {
         return rank;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getIndivRankingNumber() {
         int nb = 0;
         if (mRankingIndiv1 != 0) {
@@ -395,7 +631,11 @@ public class Parameters implements XMLExport {
         return nb;
     }
     
-        public int getTeamRankingNumber() {
+    /**
+     *
+     * @return
+     */
+    public int getTeamRankingNumber() {
         int nb = 0;
         if (mRankingTeam1 != 0) {
             nb++;

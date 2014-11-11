@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -31,7 +32,35 @@ import tourma.utils.ImageTreatment;
  *
  * @author WFMJ7631
  */
-public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer<Clan> {
+public class JPNParamClan extends javax.swing.JPanel {
+
+    private class JLSCellRenderer implements ListCellRenderer<Clan> {
+
+        public JLSCellRenderer() {
+
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends Clan> list, Clan value, int index, boolean isSelected, boolean cellHasFocus) {
+
+            JLabel label = new JLabel(value.getName());
+            if (mTournament.getParams().useImage) {
+                if (value.getName() != null) {
+                    label.setIcon(ImageTreatment.resize(new ImageIcon(value.getName()), 30, 30));
+                }
+            }
+            label.setSize(100, 30);
+            label.setOpaque(true);
+            label.setBorder(new LineBorder(new Color(200, 200, 200), 1));
+            if (isSelected) {
+                label.setBackground(new Color(200, 200, 200));
+
+            } else {
+                label.setBackground(Color.WHITE);
+            }
+            return label;
+        }
+    }
 
     Tournament mTournament;
 
@@ -42,7 +71,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
 
         mTournament = Tournament.getTournament();
         initComponents();
-        jlsClans.setCellRenderer(this);
+        jlsClans.setCellRenderer(new JLSCellRenderer());
     }
 
     /**
@@ -256,7 +285,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         final String clanName = (String) jlsClans.getSelectedValue();
         final String newClanName = JOptionPane.showInputDialog(this, enterClanName, clanName);
         if (!clanName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-            mTournament.getClans().get(jlsClans.getSelectedIndex()).mName = newClanName;
+            mTournament.getClans().get(jlsClans.getSelectedIndex()).setName(newClanName);
         }
         update();
     }//GEN-LAST:event_jbtEditClanActionPerformed
@@ -314,16 +343,16 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
                     ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
                     icon = ImageTreatment.resize(icon, 80, 80);
 
-                    c.picture = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-                    Graphics g = c.picture.createGraphics();
+                    c.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
+                    Graphics g = c.getPicture().createGraphics();
                     // paint the Icon to the BufferedImage.
                     icon.paintIcon(null, g, 0, 0);
                     g.dispose();
                 }
             } else {
                 ImageIcon icon = (ImageIcon) combo.getSelectedItem();
-                c.picture = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-                Graphics g = c.picture.createGraphics();
+                c.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
+                Graphics g = c.getPicture().createGraphics();
                 // paint the Icon to the BufferedImage.
                 icon.paintIcon(null, g, 0, 0);
                 g.dispose();
@@ -339,11 +368,11 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         final DefaultListModel memberListModel = new DefaultListModel();
         if (selectedClan >= 0) {
 
-            final String clanName = mTournament.getClans().get(selectedClan).mName;
+            final String clanName = mTournament.getClans().get(selectedClan).getName();
             if (mTournament.getParams().mTeamTournament) {
                 for (int i = 0; i < mTournament.getTeams().size(); i++) {
                     if (mTournament.getTeams().get(i).mClan != null) {
-                        if (clanName.equals(mTournament.getTeams().get(i).mClan.mName)) {
+                        if (clanName.equals(mTournament.getTeams().get(i).mClan.getName())) {
                             memberListModel.addElement(mTournament.getTeams().get(i).mName);
                         }
                     }
@@ -351,7 +380,7 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
             } else {
                 for (int i = 0; i < mTournament.getCoachs().size(); i++) {
                     if (mTournament.getCoachs().get(i).mClan != null) {
-                        if (clanName.equals(mTournament.getCoachs().get(i).mClan.mName)) {
+                        if (clanName.equals(mTournament.getCoachs().get(i).mClan.getName())) {
                             memberListModel.addElement(mTournament.getCoachs().get(i).mName);
                         }
                     }
@@ -361,6 +390,9 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         jlsCoachList.setModel(memberListModel);
     }
 
+    /**
+     *
+     */
     public void update() {
 
         jbtEditClanIcon.setVisible(mTournament.getParams().useImage);
@@ -375,25 +407,23 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
         jcxAvoidFirstMatch.setEnabled(clansEnable);
         jcxAvoidMatch.setEnabled(clansEnable);
 
-        jbtAddClan.setEnabled(clansEnable );
+        jbtAddClan.setEnabled(clansEnable);
         jbtRemoveClan.setEnabled(clansEnable);
-        jbtEditClan.setEnabled(clansEnable );
+        jbtEditClan.setEnabled(clansEnable);
         jbtEditClanIcon.setEnabled(clansEnable);
-        jlsClans.setEnabled(clansEnable );
+        jlsClans.setEnabled(clansEnable);
 
         jcxActivatesClans.setSelected(clansEnable);
         jcxAvoidFirstMatch.setSelected(mTournament.getParams().mAvoidClansFirstMatch);
         jcxAvoidMatch.setSelected(mTournament.getParams().mAvoidClansMatch);
         jspClanMembers.setValue(mTournament.getParams().mTeamMatesClansNumber);
 
-
         updateSublist();
         final DefaultListModel listModel = new DefaultListModel();
         for (int i = 0; i < mTournament.getClans().size(); i++) {
-            JLabel label = new JLabel(mTournament.getClans().get(i).mName);
+            JLabel label = new JLabel(mTournament.getClans().get(i).getName());
             listModel.addElement(mTournament.getClans().get(i));
         }
-
 
         jlsClans.setModel(listModel);
     }
@@ -418,31 +448,6 @@ public class JPNParamClan extends javax.swing.JPanel implements ListCellRenderer
     private javax.swing.JList jlsCoachList;
     private javax.swing.JSpinner jspClanMembers;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNParamClan.class.getName());
 
-    @Override
-    public Component getListCellRendererComponent(JList<? extends Clan> list, Clan value, int index, boolean isSelected, boolean cellHasFocus) {
-
-        JLabel label = new JLabel(value.mName);
-        if (mTournament.getParams().useImage) {
-            if (value.picture != null) {
-                label.setIcon(ImageTreatment.resize(new ImageIcon(value.picture), 30, 30));
-            }
-        }
-        label.setSize(100, 30);
-        label.setOpaque(true);
-        label.setBorder(new LineBorder(new Color(200, 200, 200), 1));
-        if (isSelected) {
-            label.setBackground(new Color(200, 200, 200));
-
-        } else {
-            label.setBackground(Color.WHITE);
-        }
-        /*if (hasFocus())
-            
-         {
-         label.setBackground(new Color(220,220,200));
-         }*/
-//        list.setSelectedIndex(index);
-        return label;
-    }
 }

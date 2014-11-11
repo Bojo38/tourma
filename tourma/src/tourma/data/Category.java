@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.util.HashMap;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -15,11 +16,52 @@ import tourma.utility.StringConstants;
  */
 public class Category implements Comparable, XMLExport {
 
-    public static HashMap<String, Category> sCategoryMap = new HashMap();
+    /**
+     *
+     */
+    private static HashMap<String, Category> sCategoryMap = new HashMap<>();
+    
+    private static final Logger LOG = Logger.getLogger(Category.class.getName());
+
+    /**
+     * @param s
+     * @param c
+     */
+    /*public static HashMap<String, Category> getsCategoryMap() {
+        return sCategoryMap;
+    }*/
+
+    public static void putCategory(String s, Category c)
+    {
+        sCategoryMap.put(s, c);
+    }
+    
+    /**
+     * Create a new Category Map
+     */
+    public static void newCategoryMap(){
+        sCategoryMap=new HashMap<>();                
+    }
+    /**
+     * 
+     * @param s
+     * @return 
+     */
+    public static Category getCategory(String s)
+    {
+        return sCategoryMap.get(s);
+    }
+    
+    /**
+     * @param asCategoryMap the sCategoryMap to set
+     */
+    /*public static void setsCategoryMap(HashMap<String, Category> asCategoryMap) {
+        sCategoryMap = asCategoryMap;
+    }*/
     /**
      * Name of the clan
      */
-    public String mName;
+    private String mName;
 
     /**
      * Constructor by name
@@ -31,28 +73,80 @@ public class Category implements Comparable, XMLExport {
     }
 
     @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
+    
+    @Override
+    public boolean equals(final Object obj) {
+        
+        boolean result;
+        result = false;
+        if (obj instanceof Category) {
+            Category cat=(Category) obj;
+            result=this.getName().equals(cat.getName());
+        } 
+        return result;
+    }
+    
+    @Override
     public int compareTo(final Object obj) {
-        int result=-1;
-        if (obj instanceof Coach) {
-            result=mName.compareTo(((Category) obj).mName);
+        int result;
+        result = this.getName().compareTo("");
+        if (obj instanceof Category) {
+            Category cat=(Category) obj;
+            result=this.getName().compareTo(cat.getName());
         } 
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final Element clan = new Element(StringConstants.CS_CATEGORY);
-        clan.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), mName);
+        clan.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), getName());
         return clan;
     }
 
+    /**
+     * 
+     * @return 
+     */
+    public boolean isCategoryMapNull()
+    {
+        return sCategoryMap==null;
+    }
+    
+    
+    
+    /**
+     *
+     * @param e
+     */
     @Override
     public void setXMLElement(final Element e) {
-        this.mName=e.getAttributeValue("Name");
-        if (sCategoryMap!=null)
+        this.setmName(e.getAttributeValue("Name"));
+        if (!isCategoryMapNull())
         {
-            sCategoryMap.put(mName, this);
+            putCategory(getName(), this);
         }        
+    }
+
+    /**
+     * @return the mName
+     */
+    public String getName() {
+        return mName;
+    }
+
+    /**
+     * @param mName the mName to set
+     */
+    public void setmName(String mName) {
+        this.mName = mName;
     }
     
     

@@ -6,6 +6,7 @@ package tourma.views.parameters;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Criteria;
 import tourma.data.Tournament;
@@ -351,6 +352,9 @@ public class JPNParamTeam extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jcxIndividualBalanceActionPerformed
 
+    /**
+     *
+     */
     public void update() {
 
         final boolean teamMatches = mTournament.getParams().mTeamTournament && (mTournament.getParams().mTeamPairing == 1);
@@ -501,4 +505,5 @@ public class JPNParamTeam extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jtffTeamVictoryBonus;
     private javax.swing.JFormattedTextField jtffVictoryTeam;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNParamTeam.class.getName());
 }

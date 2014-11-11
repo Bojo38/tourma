@@ -4,19 +4,35 @@
  */
 package tourma.data;
 
+import java.util.logging.Logger;
 import org.jdom2.Element;
-import tourma.utility.StringConstants;
 
 /**
  *
  * @author WFMJ7631
  */
 public class Substitute implements XMLExport {
+    private static final Logger LOG = Logger.getLogger(Substitute.class.getName());
 
+    /**
+     *
+     */
     public CoachMatch mMatch;
+
+    /**
+     *
+     */
     public Coach mSubstitute;
+
+    /**
+     *
+     */
     public Coach mTitular;
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
 
@@ -26,13 +42,17 @@ public class Substitute implements XMLExport {
         return coach;
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void setXMLElement(Element e) {
         if (e != null) {
             String Sub = e.getAttributeValue("Subtitute");
             String Tit = e.getAttributeValue("Titular");
-            mTitular=Coach.sCoachMap.get(Tit);
-            mSubstitute=Coach.sCoachMap.get(Sub);            
+            mTitular=Coach.getCoach(Tit);
+            mSubstitute=Coach.getCoach(Sub);            
         }
     }
 }

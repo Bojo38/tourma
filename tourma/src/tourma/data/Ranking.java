@@ -5,28 +5,56 @@
 package tourma.data;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import tourma.tableModel.mjtRanking;
+import tourma.tableModel.MjtRanking;
 
 /**
  *
  * @author WFMJ7631
  */
 public class Ranking implements XMLExport {
+    private static final Logger LOG = Logger.getLogger(Ranking.class.getName());
 
-    public mjtRanking mRank;
+    /**
+     *
+     */
+    public MjtRanking mRank;
+
+    /**
+     *
+     */
     public String mName;
+
+    /**
+     *
+     */
     public String mType;
+
+    /**
+     *
+     */
     public String mValueType;
 
-    public Ranking(final String name, final String type, final String valueType,final  mjtRanking rank) {
+    /**
+     *
+     * @param name
+     * @param type
+     * @param valueType
+     * @param rank
+     */
+    public Ranking(final String name, final String type, final String valueType,final  MjtRanking rank) {
         mRank = rank;
         mName = name;
         mType = type;
         mValueType = valueType;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final Element rank = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANKING"));
@@ -42,6 +70,10 @@ public class Ranking implements XMLExport {
         return rank;
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void setXMLElement(final Element e) {
         //  Declared only for interface

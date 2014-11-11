@@ -1,14 +1,14 @@
 package tourma.views.round;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Category;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtRankingIndiv;
-import tourma.utility.StringConstants;
+import tourma.tableModel.MjtRankingIndiv;
 import tourma.utils.TableFormat;
-import tourma.views.report.jdgRanking;
+import tourma.views.report.JdgRanking;
 
 /*
  * To change this template, choose Tools | Templates
@@ -29,6 +29,10 @@ public class JPNCategory extends javax.swing.JPanel {
     Tournament mTournament;
     Category mCategory;
     int mRoundNumber;
+
+    /**
+     *
+     */
     public boolean mRoundOnly = false;
 
     /**
@@ -86,17 +90,20 @@ public class JPNCategory extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     */
     public void update() {
         final ArrayList<Coach> ArrayList = new ArrayList<>();
 
         for (int i = 0; i < mTournament.getCoachs().size(); i++) {
             final Coach c = mTournament.getCoachs().get(i);
-            if (mCategory == c.mCategory) {
+            if (mCategory == c.getCategory()) {
                 ArrayList.add(c);
             }
         }
 
-        final mjtRankingIndiv tableModel = new mjtRankingIndiv(mRoundNumber,
+        final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber,
                 mTournament.getParams().mRankingIndiv1,
                 mTournament.getParams().mRankingIndiv2,
                 mTournament.getParams().mRankingIndiv3,
@@ -113,7 +120,7 @@ public class JPNCategory extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
-         final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CATEGORIE")+ ": ") +mCategory.mName, mRoundNumber, mTournament, (mjtRankingIndiv) jtbCategory.getModel(), 0);
+         final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CATEGORIE")+ ": ") +mCategory.getName(), mRoundNumber, mTournament, (MjtRankingIndiv) jtbCategory.getModel(), 0);
          jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -122,4 +129,5 @@ public class JPNCategory extends javax.swing.JPanel {
     private javax.swing.JButton jbtGeneral;
     private javax.swing.JTable jtbCategory;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNCategory.class.getName());
 }

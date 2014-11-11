@@ -4,9 +4,9 @@
  */
 package tourma.views.parameters;
 
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import tourma.data.Category;
 import tourma.data.Category;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
@@ -131,7 +131,7 @@ public class JPNParamCategories extends javax.swing.JPanel {
         final String clanName = (String) jlsCategories.getSelectedValue();
         final String newCategoryName = JOptionPane.showInputDialog(this, enterCategoryName, clanName);
         if (!clanName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-            mTournament.getCategories().get(jlsCategories.getSelectedIndex()).mName = newCategoryName;
+            mTournament.getCategories().get(jlsCategories.getSelectedIndex()).setmName(newCategoryName);
         }
         update();
     }//GEN-LAST:event_jbtEditCategoryActionPerformed
@@ -149,16 +149,19 @@ public class JPNParamCategories extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jlsCategoriesMouseClicked
 
+    /**
+     *
+     */
     public void update() {
 
 
         final int selectedCategory = jlsCategories.getSelectedIndex();
         final DefaultListModel coachListModel = new DefaultListModel();
         if (selectedCategory >= 0) {
-            final String categName = mTournament.getCategories().get(selectedCategory).mName;
+            final String categName = mTournament.getCategories().get(selectedCategory).getName();
             for (int i = 0; i < mTournament.getCoachs().size(); i++) {
-                if (mTournament.getCoachs().get(i).mCategory.mName != null) {
-                    if (categName.equals(mTournament.getCoachs().get(i).mCategory.mName)) {
+                if (mTournament.getCoachs().get(i).getCategory().getName() != null) {
+                    if (categName.equals(mTournament.getCoachs().get(i).getCategory().getName())) {
                         coachListModel.addElement(mTournament.getCoachs().get(i).mName);
                     }
                 }
@@ -168,7 +171,7 @@ public class JPNParamCategories extends javax.swing.JPanel {
 
         final DefaultListModel listModel = new DefaultListModel();
         for (int i = 0; i < mTournament.getCategories().size(); i++) {
-            listModel.addElement(mTournament.getCategories().get(i).mName);
+            listModel.addElement(mTournament.getCategories().get(i).getName());
         }
 
         jlsCategories.setModel(listModel);
@@ -184,4 +187,5 @@ public class JPNParamCategories extends javax.swing.JPanel {
     private javax.swing.JList jlsCategories;
     private javax.swing.JList jlsCoachList;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNParamCategories.class.getName());
 }

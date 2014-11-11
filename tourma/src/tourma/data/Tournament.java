@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import org.jdom2.DataConversionException;
@@ -34,14 +35,13 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-import sun.net.www.protocol.mailto.MailToURLConnection;
 import tourma.MainFrame;
-import tourma.tableModel.mjtAnnexRankClan;
-import tourma.tableModel.mjtAnnexRankIndiv;
-import tourma.tableModel.mjtAnnexRankTeam;
-import tourma.tableModel.mjtRankingClan;
-import tourma.tableModel.mjtRankingIndiv;
-import tourma.tableModel.mjtRankingTeam;
+import tourma.tableModel.MjtAnnexRankClan;
+import tourma.tableModel.MjtAnnexRankIndiv;
+import tourma.tableModel.MjtAnnexRankTeam;
+import tourma.tableModel.MjtRankingClan;
+import tourma.tableModel.MjtRankingIndiv;
+import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.StringConstants;
 
 /**
@@ -49,296 +49,40 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class Tournament {
-
-    protected ArrayList<Round> mRounds;
-    protected ArrayList<Coach> mCoachs;
-    protected ArrayList<Team> mTeams;
-    protected ArrayList<Pool> mPools;
-    protected ArrayList<Category> mCategories;
-    protected Parameters mParams;
+    /**
+     *
+     */
     protected static Tournament mSingleton;
-    public boolean mRoundRobin = false;
+    private static volatile Object myLock = new Object();
+    private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
+
     /**
-     * Clans used in the tournement
+     *
+     * @return
      */
-    protected ArrayList<Clan> mClans;
-    /**
-     * mRostersNames Groups
-     */
-    protected ArrayList<Group> mGroups;
-
-    private Tournament() {
-        mParams = new Parameters();
-        mRounds = new ArrayList<>();
-        mCoachs = new ArrayList<>();
-        mClans = new ArrayList<>();
-        mTeams = new ArrayList();
-        mGroups = new ArrayList<>();
-        mPools = new ArrayList<>();
-        mCategories = new ArrayList<>();
-
-        final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
-        mClans.add(new Clan(bundle.getString("NoneKey")));
-        mCategories.add(new Category(bundle.getString("NoneKey")));
-        final Group group = new Group(bundle.getString("NoneKey"));
-        mGroups.add(group);
-
-        for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
-            group.mRosters.add(RosterType.mRosterTypes.get(RosterType.mRostersNames.get(i)));
-        }
-    }
-
     public static Tournament resetTournament() {
         mSingleton = new Tournament();
         return mSingleton;
     }
 
+    /**
+     *
+     * @return
+     */
     public static Tournament getTournament() {
-        if (mSingleton == null) {
-            mSingleton = new Tournament();
+        synchronized (Tournament.myLock) {
+            if (mSingleton == null) {
+                mSingleton = new Tournament();
+            }
         }
         return mSingleton;
     }
 
-    public ArrayList<Clan> getClans() {
-        return mClans;
-    }
-
-    public ArrayList<Category> getCategories() {
-        return mCategories;
-    }
-
-    public ArrayList<Clan> getDisplayClans() {
-
-        // Remove clans which do not have members
-        final HashMap<Clan, Integer> counts = new HashMap();
-        for (int i = 0; i < mClans.size(); i++) {
-            counts.put(mClans.get(i), 0);
-        }
-        final ArrayList<Clan> clans = new ArrayList<>();
-        if (getParams().mTeamTournament) {
-            for (int i = 0; i < mTeams.size(); i++) {
-                final Team c = mTeams.get(i);
-                counts.put(c.mClan, counts.get(c.mClan) + 1);
-            }
-        } else {
-            for (int i = 0; i < mCoachs.size(); i++) {
-                final Coach c = mCoachs.get(i);
-                counts.put(c.mClan, counts.get(c.mClan) + 1);
-            }
-        }
-
-
-        for (int i = 0; i < mClans.size(); i++) {
-            if (counts.get(mClans.get(i)) > 0) {
-                clans.add(mClans.get(i));
-            }
-
-        }
-
-        return clans;
-    }
-
-    public ArrayList<Category> getDisplayCategories() {
-
-        final HashMap<Category, Integer> counts = new HashMap();
-        for (int i = 0; i < mCategories.size(); i++) {
-            counts.put(mCategories.get(i), 0);
-        }
-        final ArrayList<Category> categories = new ArrayList<>();
-        for (int i = 0; i < mCoachs.size(); i++) {
-            final Coach c = mCoachs.get(i);
-            counts.put(c.mCategory, counts.get(c.mCategory) + 1);
-        }
-
-        for (int i = 0; i < mCategories.size(); i++) {
-            if (counts.get(mCategories.get(i)) > 0) {
-                categories.add(mCategories.get(i));
-            }
-
-        }
-
-        return categories;
-    }
-
-    public Coach getCoach(final String input) {
-        Coach result = null;
-        for (int i = 0; i < mCoachs.size(); i++) {
-            Coach c = mCoachs.get(i);
-            if (c.mName.equals(input)) {
-                result = mCoachs.get(i);
-                break;
-            }
-        }
-        return result;
-    }
-
-    public Parameters getParams() {
-        return mParams;
-    }
-
-    public ArrayList<Coach> getCoachs() {
-        return mCoachs;
-
-
-
-
-    }
-
-    public ArrayList<Group> getGroups() {
-        return mGroups;
-    }
-
-    public ArrayList<Team> getTeams() {
-        return mTeams;
-    }
-
-    public ArrayList<Round> getRounds() {
-        return mRounds;
-    }
-
-    public void saveXML(final java.io.File file) {
-        this.saveXML(file, false);
-    }
-
-    /*    public ArrayList<Group> getGroups() {
-     return mGroups;
-     }*/
-    public void saveXML(final java.io.File file, final boolean withRanking) {
-        final Element document = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURNAMENT"));
-
-        document.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("3"));
-        document.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUNDROBIN"), Boolean.toString(mRoundRobin));
-
-        // Tounament data
-        for (int i = 0; i
-                < RosterType.mRostersNames.size(); i++) {
-            final Element ros = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"));
-            ros.setAttribute(StringConstants.CS_NAME, RosterType.mRostersNames.get(i));
-            document.addContent(ros);
-        }
-
-        // Save parameters
-        final Element params = mParams.getXMLElement();
-        document.addContent(params);
-
-        // Save Clans
-        for (int i = 0; i < mClans.size(); i++) {
-            final Element clan = mClans.get(i).getXMLElement();
-            document.addContent(clan);
-        }
-
-        // Save Categories
-        for (int i = 0; i < mCategories.size(); i++) {
-            final Element category = mCategories.get(i).getXMLElement();
-            document.addContent(category);
-        }
-
-
-        // Save roster groups
-        for (int i = 0; i < mGroups.size(); i++) {
-            final Element group = mGroups.get(i).getXMLElement();
-            document.addContent(group);
-        }
-
-        // Save Pool 
-        for (int i = 0; i < mPools.size(); i++) {
-            final Element pool = mPools.get(i).getXMLElement();
-            document.addContent(pool);
-        }
-
-        // Save coachs
-        for (int i = 0; i < mCoachs.size(); i++) {
-            final Element coach = mCoachs.get(i).getXMLElement();
-            document.addContent(coach);
-        }
-
-        // Save teams
-        for (int i = 0; i
-                < mTeams.size(); i++) {
-            final Element team = mTeams.get(i).getXMLElement();
-            document.addContent(team);
-        }
-
-        // Save rounds
-        for (int i = 0; i < mRounds.size(); i++) {
-
-            final Element round = mRounds.get(i).getXMLElement();
-
-            if (withRanking) {
-
-                // Build list of rankings
-                final ArrayList<Ranking> rankings = new ArrayList<>();
-                final boolean forPool = (getPools().size() > 0) && (!getRounds().get(i).mCup);
-                rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getCoachs(), false, false, forPool)));
-                if (this.getParams().mTeamTournament) {
-                    rankings.add(new Ranking(StringConstants.CS_TEAM, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"),
-                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""),
-                            new mjtRankingTeam(this.getParams().mTeamVictoryOnly, i,
-                            this.getTeams(), false)));
-                }
-                if (mParams.mEnableClans) {
-                    rankings.add(new Ranking(StringConstants.CS_CLAN, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingClan(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getDisplayClans(), false)));
-
-                }
-                if (mParams.mGroupsEnable) {
-                    for (int j = 0; j < mGroups.size(); j++) {
-                        final Group g = mGroups.get(j);
-                        final ArrayList<Coach> ArrayList = new ArrayList<>();
-                        for (int k = 0; k < this.getCoachs().size(); k++) {
-                            final Coach c = this.getCoachs().get(k);
-                            for (int l = 0; l < g.mRosters.size(); l++) {
-                                if (g.mRosters.get(l).mName.equals(c.mRoster.mName)) {
-                                    ArrayList.add(c);
-                                    break;
-                                }
-                            }
-                        }
-                        rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"), g.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new mjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, ArrayList, false, false, false)));
-                    }
-                }
-                // Annex ranking
-                for (int j = 0; j < mParams.mCriterias.size(); j++) {
-                    final Criteria criteria = mParams.mCriterias.get(j);
-                    rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new mjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getCoachs(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, mParams.mTeamTournament, false)));
-                    rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new mjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getCoachs(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, mParams.mTeamTournament, false)));
-
-                    if (mParams.mTeamTournament) {
-                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new mjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getTeams(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
-                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVS"), new mjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getTeams(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
-                    }
-
-                    if (mParams.mEnableClans) {
-                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new mjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getClans(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
-                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new mjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getClans(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
-                    }
-                }
-
-                // Store rankings
-                for (int j = 0; j < rankings.size(); j++) {
-                    final Element rank = rankings.get(j).getXMLElement();
-                    round.addContent(rank);
-                }
-            }
-
-            document.addContent(round);
-        }
-
-        try {
-            final XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-            final FileOutputStream os;
-            os = new FileOutputStream(file);
-            sortie.output(document, os);
-            os.close();
-
-
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
-        }
-    }
-
+    /**
+     *
+     * @param source
+     * @return
+     */
     public static String getRosterTranslation(final String source) {
         String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNKNOWN");
         if (source.equals(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AmazonKey"))) {
@@ -416,6 +160,369 @@ public class Tournament {
         return result;
     }
 
+    /**
+     *
+     */
+    protected ArrayList<Round> mRounds;
+
+    /**
+     *
+     */
+    protected ArrayList<Coach> mCoachs;
+
+    /**
+     *
+     */
+    protected ArrayList<Team> mTeams;
+
+    /**
+     *
+     */
+    protected ArrayList<Pool> mPools;
+
+    /**
+     *
+     */
+    protected ArrayList<Category> mCategories;
+
+    /**
+     *
+     */
+    protected Parameters mParams;
+
+
+    /**
+     *
+     */
+    public boolean mRoundRobin = false;
+    /**
+     * Clans used in the tournement
+     */
+    protected ArrayList<Clan> mClans;
+    /**
+     * mRostersNames Groups
+     */
+    protected ArrayList<Group> mGroups;
+
+    private Tournament() {
+        mParams = new Parameters();
+        mRounds = new ArrayList<>();
+        mCoachs = new ArrayList<>();
+        mClans = new ArrayList<>();
+        mTeams = new ArrayList<>();
+        mGroups = new ArrayList<>();
+        mPools = new ArrayList<>();
+        mCategories = new ArrayList<>();
+
+        final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE); // NOI18N
+        mClans.add(new Clan(bundle.getString("NoneKey")));
+        mCategories.add(new Category(bundle.getString("NoneKey")));
+        final Group group = new Group(bundle.getString("NoneKey"));
+        mGroups.add(group);
+
+        for (int i = 0; i < RosterType.mRostersNames.size(); i++) {
+            group.mRosters.add(RosterType.mRosterTypes.get(RosterType.mRostersNames.get(i)));
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Clan> getClans() {
+        return mClans;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Category> getCategories() {
+        return mCategories;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Clan> getDisplayClans() {
+
+        // Remove clans which do not have members
+        final HashMap<Clan, Integer> counts = new HashMap();
+        for (int i = 0; i < mClans.size(); i++) {
+            counts.put(mClans.get(i), 0);
+        }
+        final ArrayList<Clan> clans = new ArrayList<>();
+        if (getParams().mTeamTournament) {
+            for (int i = 0; i < mTeams.size(); i++) {
+                final Team c = mTeams.get(i);
+                counts.put(c.mClan, counts.get(c.mClan) + 1);
+            }
+        } else {
+            for (int i = 0; i < mCoachs.size(); i++) {
+                final Coach c = mCoachs.get(i);
+                counts.put(c.mClan, counts.get(c.mClan) + 1);
+            }
+        }
+
+        for (int i = 0; i < mClans.size(); i++) {
+            if (counts.get(mClans.get(i)) > 0) {
+                clans.add(mClans.get(i));
+            }
+
+        }
+
+        return clans;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Category> getDisplayCategories() {
+
+        final HashMap<Category, Integer> counts = new HashMap();
+        for (int i = 0; i < mCategories.size(); i++) {
+            counts.put(mCategories.get(i), 0);
+        }
+        final ArrayList<Category> categories = new ArrayList<>();
+        for (int i = 0; i < mCoachs.size(); i++) {
+            final Coach c = mCoachs.get(i);
+            counts.put(c.getCategory(), counts.get(c.getCategory()) + 1);
+        }
+
+        for (int i = 0; i < mCategories.size(); i++) {
+            if (counts.get(mCategories.get(i)) > 0) {
+                categories.add(mCategories.get(i));
+            }
+
+        }
+
+        return categories;
+    }
+
+    /**
+     *
+     * @param input
+     * @return
+     */
+    public Coach getCoach(final String input) {
+        Coach result = null;
+        for (int i = 0; i < mCoachs.size(); i++) {
+            Coach c = mCoachs.get(i);
+            if (c.mName.equals(input)) {
+                result = mCoachs.get(i);
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Parameters getParams() {
+        return mParams;
+    }
+    
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Coach> getCoachs() {
+        return mCoachs;
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Group> getGroups() {
+        return mGroups;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Team> getTeams() {
+        return mTeams;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Round> getRounds() {
+        return mRounds;
+    }
+
+    /**
+     *
+     * @param file
+     */
+    public void saveXML(final java.io.File file) {
+        this.saveXML(file, false);
+    }
+
+    /*    public ArrayList<Group> getGroups() {
+    return mGroups;
+    }*/
+    /**
+     *
+     * @param file
+     * @param withRanking
+     */
+    public void saveXML(final java.io.File file, final boolean withRanking) {
+        final Element document = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURNAMENT"));
+
+        document.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("3"));
+        document.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUNDROBIN"), Boolean.toString(mRoundRobin));
+
+        // Tounament data
+        for (int i = 0; i
+                < RosterType.mRostersNames.size(); i++) {
+            final Element ros = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"));
+            ros.setAttribute(StringConstants.CS_NAME, RosterType.mRostersNames.get(i));
+            document.addContent(ros);
+        }
+
+        // Save parameters
+        final Element params = mParams.getXMLElement();
+        document.addContent(params);
+
+        // Save Clans
+        for (int i = 0; i < mClans.size(); i++) {
+            final Element clan = mClans.get(i).getXMLElement();
+            document.addContent(clan);
+        }
+
+        // Save Categories
+        for (int i = 0; i < mCategories.size(); i++) {
+            final Element category = mCategories.get(i).getXMLElement();
+            document.addContent(category);
+        }
+
+        // Save roster groups
+        for (int i = 0; i < mGroups.size(); i++) {
+            final Element group = mGroups.get(i).getXMLElement();
+            document.addContent(group);
+        }
+        
+        // Save Pool 
+        for (int i = 0; i < mPools.size(); i++) {
+            final Element pool = mPools.get(i).getXMLElement();
+            document.addContent(pool);
+        }
+
+        // Save coachs
+        for (int i = 0; i < mCoachs.size(); i++) {
+            final Element coach = mCoachs.get(i).getXMLElement();
+            document.addContent(coach);
+        }
+
+        // Save teams
+        for (int i = 0; i
+                < mTeams.size(); i++) {
+            final Element team = mTeams.get(i).getXMLElement();
+            document.addContent(team);
+        }
+
+        // Save rounds
+        for (int i = 0; i < mRounds.size(); i++) {
+
+            final Element round = mRounds.get(i).getXMLElement();
+
+            if (withRanking) {
+
+                // Build list of rankings
+                final ArrayList<Ranking> rankings = new ArrayList<>();
+                final boolean forPool = (getPools().size() > 0) && (!getRounds().get(i).mCup);
+                rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new MjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getCoachs(), false, false, forPool)));
+                if (this.getParams().mTeamTournament) {
+                    rankings.add(new Ranking(StringConstants.CS_TEAM, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"),
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""),
+                            new MjtRankingTeam(this.getParams().mTeamVictoryOnly, i,
+                                    this.getTeams(), false)));
+                }
+                if (mParams.mEnableClans) {
+                    rankings.add(new Ranking(StringConstants.CS_CLAN, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new MjtRankingClan(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, this.getDisplayClans(), false)));
+
+                }
+                if (mParams.mGroupsEnable) {
+                    for (int j = 0; j < mGroups.size(); j++) {
+                        final Group g = mGroups.get(j);
+                        final ArrayList<Coach> ArrayList = new ArrayList<>();
+                        for (int k = 0; k < this.getCoachs().size(); k++) {
+                            final Coach c = this.getCoachs().get(k);
+                            for (int l = 0; l < g.mRosters.size(); l++) {
+                                if (g.mRosters.get(l).mName.equals(c.getRoster().mName)) {
+                                    ArrayList.add(c);
+                                    break;
+                                }
+                            }
+                        }
+                        rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"), g.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), new MjtRankingIndiv(i, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, ArrayList, false, false, false)));
+                    }
+                }
+                // Annex ranking
+                for (int j = 0; j < mParams.mCriterias.size(); j++) {
+                    final Criteria criteria = mParams.mCriterias.get(j);
+                    rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new MjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getCoachs(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, mParams.mTeamTournament, false)));
+                    rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new MjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getCoachs(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, mParams.mTeamTournament, false)));
+
+                    if (mParams.mTeamTournament) {
+                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new MjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getTeams(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
+                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVS"), new MjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getTeams(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
+                    }
+
+                    if (mParams.mEnableClans) {
+                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new MjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, getClans(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
+                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.mName, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new MjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, getClans(), true, this.getParams().mRankingIndiv1, this.getParams().mRankingIndiv2, this.getParams().mRankingIndiv3, this.getParams().mRankingIndiv4, this.getParams().mRankingIndiv5, false)));
+                    }
+                }
+
+                // Store rankings
+                for (int j = 0; j < rankings.size(); j++) {
+                    final Element rank = rankings.get(j).getXMLElement();
+                    round.addContent(rank);
+                }
+            }
+
+            document.addContent(round);
+        }
+        FileOutputStream os = null;
+        try {
+            final XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+            os = new FileOutputStream(file);
+            sortie.output(document, os);
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        } finally {
+            if (os != null) {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+
+        }
+    }
+
+    /**
+     *
+     * @param round
+     * @param withRoster
+     * @param withNaf
+     * @return
+     */
     protected String generateCSVRanking(final int round, final boolean withRoster, final boolean withNaf) {
         final StringBuilder a = new StringBuilder(this.mParams.mTournamentName);
         a.append(";");
@@ -426,7 +533,7 @@ public class Tournament {
         a.append(";\n");
 
         if (this.mParams.mTeamTournament) {
-            final mjtRankingTeam rt = new mjtRankingTeam(getParams().mTeamVictoryOnly, round - 1,
+            final MjtRankingTeam rt = new MjtRankingTeam(getParams().mTeamVictoryOnly, round - 1,
                     mTeams, false);
 
             for (int i = 0; i < rt.getRowCount(); i++) {
@@ -449,7 +556,7 @@ public class Tournament {
         }
 
         final boolean forPool = (getPools().size() > 0) && (!getRounds().get(round).mCup);
-        final mjtRankingIndiv ri = new mjtRankingIndiv(round,
+        final MjtRankingIndiv ri = new MjtRankingIndiv(round,
                 mParams.mRankingIndiv1,
                 mParams.mRankingIndiv2,
                 mParams.mRankingIndiv3,
@@ -465,11 +572,11 @@ public class Tournament {
                 if (mCoachs.get(j).mName.equals(coach)) {
                     if (withNaf) {
                         a.append(";");
-                        a.append(Integer.toString(mCoachs.get(j).mNaf));
+                        a.append(Integer.toString(mCoachs.get(j).getNaf()));
                     }
                     if (withRoster) {
                         a.append(";");
-                        a.append(mCoachs.get(j).mRoster.mName);
+                        a.append(mCoachs.get(j).getRoster().mName);
                     }
                 }
             }
@@ -478,24 +585,30 @@ public class Tournament {
         return a.toString();
     }
 
+    /**
+     *
+     * @param round
+     * @return
+     */
+    
     public RenderedImage generateRankingQRCode(final int round) {
         RenderedImage image;
         final String s = generateCSVRanking(round, false, false);
         QRCode qrcode;
         try {
             qrcode = Encoder.encode(s, ErrorCorrectionLevel.H);
-
+            
             final int magnify = 10; //The resolution of the QRCode 
             final byte[][] matrix = qrcode.getMatrix().getArray();
             final int size = qrcode.getMatrix().getWidth() * magnify;
-
+            
             //Make the BufferedImage that are to hold the QRCode 
             final BufferedImage im = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
             im.createGraphics();
             final Graphics2D g = (Graphics2D) im.getGraphics();
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, size * magnify, size * magnify);
-
+            
             //paint the image using the ByteMatrik 
             for (int h = 0; h < qrcode.getMatrix().getHeight(); h++) {
                 for (int w = 0; w < qrcode.getMatrix().getWidth(); w++) {
@@ -520,19 +633,31 @@ public class Tournament {
         return image;
     }
 
+    /**
+     *
+     * @param file
+     */
     public void exportFullFBB(final java.io.File file) {
         this.saveXML(file, true);
     }
 
+    /**
+     *
+     * @param file
+     */
     public void exportFBB(final java.io.File file) {
+        PrintWriter writer = null;
+        BufferedWriter bw = null;
+        FileWriter fw = null;
         try {
-            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
-                final String s = generateCSVRanking(mRounds.size(), true, true);
-                String s_tmp = s;
-                while (s_tmp.length() > 0) {
-                    writer.print(s_tmp.substring(0, Math.min(255, s_tmp.length() - 1)));
-                    s_tmp = s_tmp.substring(Math.min(256, s_tmp.length()));
-                }
+            fw = new FileWriter(file);
+            bw = new BufferedWriter(fw);
+            writer = new PrintWriter(bw);
+            final String s = generateCSVRanking(mRounds.size(), true, true);
+            String s_tmp = s;
+            while (s_tmp.length() > 0) {
+                writer.print(s_tmp.substring(0, Math.min(255, s_tmp.length() - 1)));
+                s_tmp = s_tmp.substring(Math.min(256, s_tmp.length()));
             }
 
             final RenderedImage im = generateRankingQRCode(mRounds.size());
@@ -542,58 +667,37 @@ public class Tournament {
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
             }
-
-            /*writer.println(this.mParams.mTournamentName + ";" + this.mParams.mDate.toString() + ";" + this.mParams.mTeamTournament);
-             writer.println(";");
-             if (this.mParams.mTeamTournament) {
-             mjtRankingTeam rt = new mjtRankingTeam(true, this.mRounds.size() - 1,
-             mParams.mRankingTeam1,
-             mParams.mRankingTeam2,
-             mParams.mRankingTeam3,
-             mParams.mRankingTeam4,
-             mParams.mRankingTeam5,
-             mTeams);
-
-             for (int i = 0; i < rt.getRowCount(); i++) {
-             String team = (String) rt.getValueAt(i, 1);
-             writer.print((i + 1) + ";" + team);
-             for (int j = 0; j < mTeams.size(); j++) {
-             if (mTeams.get(j).mName.equals(team)) {
-             for (int k = 0; k < mTeams.get(j).mCoachs.size(); k++) {
-             writer.print(";" + mTeams.get(j).mCoachs.get(k).mName);
-             }
-             }
-             }
-             writer.print("\n");
-             }
-
-             writer.println(";");
-             }
-
-             mjtRankingIndiv ri = new mjtRankingIndiv(mRounds.size(),
-             mParams.mRankingIndiv1,
-             mParams.mRankingIndiv2,
-             mParams.mRankingIndiv3,
-             mParams.mRankingIndiv4,
-             mParams.mRankingIndiv5,
-             mCoachs, false);
-             for (int i = 0; i < ri.getRowCount(); i++) {
-             String coach = (String) ri.getValueAt(i, 2);
-             writer.print((i + 1) + ";" + coach);
-             for (int j = 0; j < mCoachs.size(); j++) {
-             if (mCoachs.get(j).mName.equals(coach)) {
-             writer.print(";" + mCoachs.get(j).mNaf);
-             writer.print(";" + mCoachs.get(j).mRoster.mName);
-             }
-             }
-             writer.print("\n");
-             }*/
+            writer.close();
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+            if (bw != null) {
+                try {
+                    bw.close();
+
+                } catch (IOException e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+            if (fw != null) {
+                try {
+                    fw.close();
+                } catch (IOException e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+
         }
     }
 
+    /**
+     *
+     * @param file
+     */
     public void exportNAF(final java.io.File file) {
         final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
@@ -611,87 +715,90 @@ public class Tournament {
         }
 
         try {
-            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
-                writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                writer.println("<nafReport xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.bloodbowl.net' xsi:schemaLocation='http://www.bloodbowl.net ../../../test/naf.xsd'>");
-                writer.println(java.text.MessageFormat.format(("<ORGANISER>{0}</ORGANISER>"), new Object[]{mParams.mTournamentOrga}));
-                writer.println(("<COACHES>"));
-                for (int i = 0; i < mCoachs.size(); i++) {
-                    if (mCoachs.get(i).mNaf > 0) {
-                        writer.println(("<COACH>"));
-                        writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{mCoachs.get(i).mName}));
-                        writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{mCoachs.get(i).mNaf}));
-                        writer.println(java.text.MessageFormat.format(("<TEAM>{0}</TEAM>"), new Object[]{getRosterTranslation(mCoachs.get(i).mRoster.mName)}));
-                        writer.println(("</COACH>"));
-                    }
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            writer.println("<nafReport xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.bloodbowl.net' xsi:schemaLocation='http://www.bloodbowl.net ../../../test/naf.xsd'>");
+            writer.println(java.text.MessageFormat.format(("<ORGANISER>{0}</ORGANISER>"), new Object[]{mParams.mTournamentOrga}));
+            writer.println(("<COACHES>"));
+            for (int i = 0; i < mCoachs.size(); i++) {
+                if (mCoachs.get(i).getNaf() > 0) {
+                    writer.println(("<COACH>"));
+                    writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{mCoachs.get(i).mName}));
+                    writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{mCoachs.get(i).getNaf()}));
+                    writer.println(java.text.MessageFormat.format(("<TEAM>{0}</TEAM>"), new Object[]{getRosterTranslation(mCoachs.get(i).getRoster().mName)}));
+                    writer.println(("</COACH>"));
                 }
-                writer.println(("</COACHES>"));
-
-                for (int i = 0; i
-                        < mRounds.size(); i++) {
-                    for (int j = 0; j
-                            < mRounds.get(i).mMatchs.size(); j++) {
-                        if ((((Coach) mRounds.get(i).mMatchs.get(j).mCompetitor1).mNaf > 0)
-                                && (((Coach) mRounds.get(i).mMatchs.get(j).mCompetitor2).mNaf > 0)) {
-
-                            writer.println(("<GAME>"));
-                            final CoachMatch m = mRounds.get(i).getCoachMatchs().get(j);
-                            writer.println(java.text.MessageFormat.format(("<TIMESTAMP>{0}</TIMESTAMP>"), new Object[]{format.format(mRounds.get(i).mHour)}));
-                            Coach p;
-                            if (m.mSubstitute1 == null) {
-                                p = (Coach) m.mCompetitor1;
-                            } else {
-                                p = (Coach) m.mSubstitute1.mSubstitute;
-                            }
-                            writer.println(("<PLAYERRECORD>"));
-                            writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{p.mName}));
-                            writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{p.mNaf}));
-                            writer.println(java.text.MessageFormat.format(("<TEAMRATING>{0}</TEAMRATING>"), new Object[]{p.mRank}));
-                            writer.println(java.text.MessageFormat.format(("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[]{m.mValues.get(critTd).mValue1}));
-                            writer.println(java.text.MessageFormat.format(("<BADLYHURT>{0}</BADLYHURT>"), new Object[]{m.mValues.get(critInj).mValue1}));
-                            if (m.mRoster1 != null) {
-                                writer.println(java.text.MessageFormat.format(("<TEAM>{0}</TEAM>"), new Object[]{getRosterTranslation(m.mRoster1.mName)}));
-                            }
-                            writer.println(("<SERIOUSLYINJURED>0</SERIOUSLYINJURED>"));
-                            writer.println(("<DEAD>0</DEAD>"));
-                            writer.println(("<WINNINGS>0</WINNINGS>"));
-                            writer.println(("</PLAYERRECORD>"));
-
-                            if (m.mSubstitute2 == null) {
-                                p = (Coach) m.mCompetitor2;
-                            } else {
-                                p = (Coach) m.mSubstitute2.mSubstitute;
-                            }
-
-                            writer.println(("<PLAYERRECORD>"));
-                            writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{p.mName}));
-                            writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{p.mNaf}));
-                            writer.println(java.text.MessageFormat.format(("<TEAMRATING>{0}</TEAMRATING>"), new Object[]{p.mRank}));
-                            writer.println(java.text.MessageFormat.format(("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[]{m.mValues.get(critTd).mValue2}));
-                            writer.println(java.text.MessageFormat.format(("<BADLYHURT>{0}</BADLYHURT>"), new Object[]{m.mValues.get(critInj).mValue2}));
-                            if (m.mRoster2 != null) {
-                                writer.println(java.text.MessageFormat.format(("<TEAM>{0}</TEAM>"), new Object[]{getRosterTranslation(m.mRoster2.mName)}));
-                            }
-                            writer.println(("<SERIOUSLYINJURED>0</SERIOUSLYINJURED>"));
-                            writer.println(("<DEAD>0</DEAD>"));
-                            writer.println(("<WINNINGS>0</WINNINGS>"));
-                            writer.println(("</PLAYERRECORD>"));
-                            writer.println(("<GATE>2</GATE>"));
-                            writer.println(("</GAME>"));
-                        }
-                    }
-                }
-                writer.println(("</NAFREPORT>"));
             }
+            writer.println(("</COACHES>"));
+
+            for (int i = 0; i
+                    < mRounds.size(); i++) {
+                for (int j = 0; j
+                        < mRounds.get(i).mMatchs.size(); j++) {
+                    if ((((Coach) mRounds.get(i).mMatchs.get(j).mCompetitor1).getNaf() > 0)
+                            && (((Coach) mRounds.get(i).mMatchs.get(j).mCompetitor2).getNaf() > 0)) {
+
+                        writer.println(("<GAME>"));
+                        final CoachMatch m = mRounds.get(i).getCoachMatchs().get(j);
+                        writer.println(java.text.MessageFormat.format(("<TIMESTAMP>{0}</TIMESTAMP>"), new Object[]{format.format(mRounds.get(i).mHour)}));
+                        Coach p;
+                        if (m.getSubstitute1() == null) {
+                            p = (Coach) m.mCompetitor1;
+                        } else {
+                            p = (Coach) m.getSubstitute1().mSubstitute;
+                        }
+                        writer.println(("<PLAYERRECORD>"));
+                        writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{p.mName}));
+                        writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{p.getNaf()}));
+                        writer.println(java.text.MessageFormat.format(("<TEAMRATING>{0}</TEAMRATING>"), new Object[]{p.getRank()}));
+                        writer.println(java.text.MessageFormat.format(("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[]{m.mValues.get(critTd).mValue1}));
+                        writer.println(java.text.MessageFormat.format(("<BADLYHURT>{0}</BADLYHURT>"), new Object[]{m.mValues.get(critInj).mValue1}));
+                        if (m.getRoster1() != null) {
+                            writer.println(java.text.MessageFormat.format(("<TEAM>{0}</TEAM>"), new Object[]{getRosterTranslation(m.getRoster1().mName)}));
+                        }
+                        writer.println(("<SERIOUSLYINJURED>0</SERIOUSLYINJURED>"));
+                        writer.println(("<DEAD>0</DEAD>"));
+                        writer.println(("<WINNINGS>0</WINNINGS>"));
+                        writer.println(("</PLAYERRECORD>"));
+
+                        if (m.getSubstitute2() == null) {
+                            p = (Coach) m.mCompetitor2;
+                        } else {
+                            p = (Coach) m.getSubstitute2().mSubstitute;
+                        }
+
+                        writer.println(("<PLAYERRECORD>"));
+                        writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{p.mName}));
+                        writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{p.getNaf()}));
+                        writer.println(java.text.MessageFormat.format(("<TEAMRATING>{0}</TEAMRATING>"), new Object[]{p.getRank()}));
+                        writer.println(java.text.MessageFormat.format(("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[]{m.mValues.get(critTd).mValue2}));
+                        writer.println(java.text.MessageFormat.format(("<BADLYHURT>{0}</BADLYHURT>"), new Object[]{m.mValues.get(critInj).mValue2}));
+                        if (m.getRoster2() != null) {
+                            writer.println(java.text.MessageFormat.format(("<TEAM>{0}</TEAM>"), new Object[]{getRosterTranslation(m.getRoster2().mName)}));
+                        }
+                        writer.println(("<SERIOUSLYINJURED>0</SERIOUSLYINJURED>"));
+                        writer.println(("<DEAD>0</DEAD>"));
+                        writer.println(("<WINNINGS>0</WINNINGS>"));
+                        writer.println(("</PLAYERRECORD>"));
+                        writer.println(("<GATE>2</GATE>"));
+                        writer.println(("</GAME>"));
+                    }
+                }
+            }
+            writer.println(("</NAFREPORT>"));
+            writer.close();
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
         }
 
-
     }
 
-    protected void LoadXMLv2(final Element Root) {
+    /**
+     *
+     * @param Root
+     */
+    protected void loadXMLv2(final Element Root) {
         final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         /* Utilisateur */
         final Element params = Root.getChild(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("PARAMETERS"));
@@ -714,7 +821,6 @@ public class Tournament {
                 c3.mPointsFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_FOUL")).getIntValue();
                 c3.mPointsAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_FOUL")).getIntValue();
 
-
                 try {
                     c4.mPointsFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_PAS")).getIntValue();
                     c4.mPointsAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_PAS")).getIntValue();
@@ -722,10 +828,8 @@ public class Tournament {
                     c5.mPointsFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_INT")).getIntValue();
                     c5.mPointsAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_INT")).getIntValue();
 
-
                 } catch (NullPointerException npe) {
                 }
-
 
                 mParams.mCriterias.add(c1);
                 mParams.mCriterias.add(c2);
@@ -745,10 +849,6 @@ public class Tournament {
                 mParams.mRankingIndiv4 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK4")).getIntValue();
                 mParams.mRankingIndiv5 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK5")).getIntValue();
 
-
-
-
-
                 try {
                     mParams.mGapLargeVictory = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LARGE_VICTORY_GAP")).getIntValue();
                     mParams.mGapLittleLost = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LITTLE_LOST_GAP")).getIntValue();
@@ -761,15 +861,8 @@ public class Tournament {
                     mParams.mTeamIndivPairing = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMINDIVPAIRING")).getIntValue();
                     mParams.mTeamVictoryOnly = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMVICTORYONLY")).getBooleanValue();
 
-
-
-
-
                     try {
                         mParams.mDate = format.parse(params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE")).getValue());
-
-
-
 
                     } catch (ParseException pe) {
                     }
@@ -783,9 +876,6 @@ public class Tournament {
                     mParams.mTeamPairing = 1;
                     mParams.mTeamIndivPairing = 0;
 
-
-
-
                 }
                 try {
 
@@ -796,20 +886,12 @@ public class Tournament {
                     c3.mPointsTeamFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_FOUL_TEAM")).getIntValue();
                     c3.mPointsTeamAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_FOUL_TEAM")).getIntValue();
 
-
-
-
-
                     try {
                         c4.mPointsTeamFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_PAS_TEAM")).getIntValue();
                         c4.mPointsTeamAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_PAS_TEAM")).getIntValue();
 
                         c5.mPointsTeamFor = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_POS_INT_TEAM")).getIntValue();
                         c5.mPointsTeamAgainst = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("BONUS_NEG_INT_TEAM")).getIntValue();
-
-
-
-
 
                     } catch (NullPointerException npe) {
                     }
@@ -823,9 +905,6 @@ public class Tournament {
                     mParams.mRankingTeam4 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK4_TEAM")).getIntValue();
                     mParams.mRankingTeam5 = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK5_TEAM")).getIntValue();
 
-
-
-
                 } catch (NullPointerException ne2) {
                 }
                 try {
@@ -834,9 +913,6 @@ public class Tournament {
                     mParams.mAvoidClansMatch = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AVOIDMATCH")).getBooleanValue();
                     mParams.mTeamMatesClansNumber = params.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLANTEAMMATESNUMBER")).getIntValue();
 
-
-
-
                 } catch (NullPointerException ne3) {
                 }
             }
@@ -844,32 +920,29 @@ public class Tournament {
             final List clans = Root.getChildren(StringConstants.CS_CLAN);
             final Iterator h = clans.iterator();
             mClans.clear();
-            Clan.sClanMap = new HashMap();
-
-
-
+            Clan.newClanMap();
 
             while (h.hasNext()) {
                 final Element clan = (Element) h.next();
                 final Clan c = new Clan(clan.getAttributeValue(StringConstants.CS_NAME));
                 mClans.add(c);
-                Clan.sClanMap.put(c.mName, c);
+                Clan.putClan(c.getName(), c);
             }
 
             final List coachs = Root.getChildren(StringConstants.CS_COACH);
             final Iterator i = coachs.iterator();
             mCoachs.clear();
-            final HashMap<String, Coach> map = new HashMap();
+            final HashMap<String, Coach> map = new HashMap<>();
 
             while (i.hasNext()) {
                 final Element coach = (Element) i.next();
                 final Coach c = new Coach();
                 c.mName = coach.getAttributeValue(StringConstants.CS_NAME);
-                c.mTeam = coach.getAttributeValue(StringConstants.CS_TEAM);
-                c.mRoster = RosterType.mRosterTypes.get(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER")));
-                c.mNaf = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue();
-                c.mRank = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue();
-                c.mClan = Clan.sClanMap.get(coach.getAttributeValue(StringConstants.CS_CLAN));
+                c.setTeam(coach.getAttributeValue(StringConstants.CS_TEAM));
+                c.setRoster(RosterType.mRosterTypes.get(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"))));
+                c.setNaf(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue());
+                c.setRank(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue());
+                c.mClan = Clan.getClan(coach.getAttributeValue(StringConstants.CS_CLAN));
 
                 if (c.mClan == null) {
                     if (mClans.isEmpty()) {
@@ -898,23 +971,17 @@ public class Tournament {
                 while (m.hasNext()) {
                     final Element coach = (Element) m.next();
                     final Coach c = map.get(coach.getAttribute(StringConstants.CS_NAME).getValue());
-                    c.mTeamMates = t;
+                    c.setTeamMates(t);
                     t.mCoachs.add(c);
 
                 }
                 mTeams.add(t);
-
-
-
 
             }
 
             final List rounds = Root.getChildren(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROUND"));
             final Iterator j = rounds.iterator();
             mRounds.clear();
-
-
-
 
             while (j.hasNext()) {
                 final Element round = (Element) j.next();
@@ -974,7 +1041,6 @@ public class Tournament {
                         v5.mValue1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT1")).getIntValue();
                         v5.mValue2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INT2")).getIntValue();
 
-
                     } catch (NullPointerException npe) {
                     }
                     m.mValues.put(c4, v4);
@@ -985,27 +1051,22 @@ public class Tournament {
 
                     r.mMatchs.add(m);
 
-
-
-
                 }
 
                 mRounds.add(r);
-
-
-
 
             }
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
 
-
-
-
         }
     }
 
-    protected void LoadXMLv3(final Element racine) {
+    /**
+     *
+     * @param racine
+     */
+    protected void loadXMLv3(final Element racine) {
         try {
             mRoundRobin = Boolean.parseBoolean(racine.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUNDROBIN")));
         } catch (Exception e) {
@@ -1059,7 +1120,7 @@ public class Tournament {
         final List clans = racine.getChildren(StringConstants.CS_CLAN);
         final Iterator h = clans.iterator();
         mClans.clear();
-        Clan.sClanMap = new HashMap();
+        Clan.newClanMap();
 
         while (h.hasNext()) {
             final Element clan = (Element) h.next();
@@ -1072,24 +1133,24 @@ public class Tournament {
         final List categories = racine.getChildren(StringConstants.CS_CATEGORY);
         final Iterator itc = categories.iterator();
         mCategories.clear();
-        Category.sCategoryMap = new HashMap();
+        Category.newCategoryMap();
 
         while (itc.hasNext()) {
             final Element cat = (Element) itc.next();
             final Category c = new Category(cat.getAttributeValue(StringConstants.CS_NAME));
-            Category.sCategoryMap.put(c.mName, c);
+            Category.putCategory(c.getName(), c);
             mCategories.add(c);
         }
         if (mCategories.isEmpty()) {
-            Category.sCategoryMap.put(StringConstants.CS_NONE, new Category(StringConstants.CS_NONE));
+            Category.putCategory(StringConstants.CS_NONE, new Category(StringConstants.CS_NONE));
         }
 
         /* Coachs */
         final List coachs = racine.getChildren(StringConstants.CS_COACH);
         final Iterator i = coachs.iterator();
         mCoachs.clear();
-        Coach.sCoachMap = new HashMap();
-        Coach.sCoachMap.put(StringConstants.CS_NONE, Coach.sNullCoach);
+        Coach.newCoachMap();
+        Coach.putCoach(StringConstants.CS_NONE, Coach.getNullCoach());
 
         while (i.hasNext()) {
             final Element coach = (Element) i.next();
@@ -1139,6 +1200,10 @@ public class Tournament {
         }
     }
 
+    /**
+     *
+     * @param file
+     */
     public void loadXML(final java.io.File file) {
         final SAXBuilder sxb = new SAXBuilder();
 
@@ -1149,11 +1214,11 @@ public class Tournament {
             try {
                 final String version = racine.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VERSION"));
                 if (Integer.parseInt(version) == 3) {
-                    LoadXMLv3(racine);
+                    loadXMLv3(racine);
 
                 }
             } catch (NumberFormatException npe) {
-                LoadXMLv2(racine);
+                loadXMLv2(racine);
             }
 
         } catch (JDOMException e) {
@@ -1164,28 +1229,41 @@ public class Tournament {
         }
     }
 
-    public int GetActiveCoachNumber() {
+    /**
+     *
+     * @return
+     */
+    public int getActiveCoachNumber() {
         int nb = 0;
         for (int i = 0; i < mCoachs.size(); i++) {
-            if (mCoachs.get(i).mActive) {
+            if (mCoachs.get(i).isActive()) {
                 nb++;
             }
         }
         return nb;
     }
 
-    public ArrayList<Coach> GetActiveCoaches() {
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Coach> getActiveCoaches() {
         final ArrayList<Coach> v = new ArrayList<>();
 
         for (int i = 0; i < mCoachs.size(); i++) {
-            if (mCoachs.get(i).mActive) {
+            if (mCoachs.get(i).isActive()) {
                 v.add(mCoachs.get(i));
             }
         }
         return v;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Pool> getPools() {
         return mPools;
     }
+
 }

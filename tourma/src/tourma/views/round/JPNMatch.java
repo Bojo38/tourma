@@ -6,7 +6,7 @@ package tourma.views.round;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.util.logging.Logger;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Match;
@@ -238,4 +238,5 @@ public class JPNMatch extends javax.swing.JPanel {
     private javax.swing.JLabel jlbScore2;
     private javax.swing.JLabel jlbTag;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNMatch.class.getName());
 }

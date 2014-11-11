@@ -5,51 +5,19 @@
 package tourma.views.fullscreen;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.DisplayMode;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.ScrollPane;
-import java.awt.Scrollbar;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.ScrollPaneConstants;
-import tourma.data.Clan;
-import tourma.data.Coach;
-import tourma.data.CoachMatch;
-import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.IWithNameAndPicture;
-import tourma.data.Match;
 import tourma.data.ObjectAnnexRanking;
-import tourma.data.Parameters;
-import tourma.data.Round;
-import tourma.data.Team;
-import tourma.data.TeamMatch;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtAnnexRank;
-import tourma.tableModel.mjtAnnexRankClan;
-import tourma.tableModel.mjtAnnexRankIndiv;
-import tourma.tableModel.mjtAnnexRankTeam;
-import tourma.tableModel.mjtRanking;
-import static tourma.tableModel.mjtRanking.getSubtypeByValue;
-import tourma.tableModel.mjtRankingIndiv;
-import tourma.utils.ImageTreatment;
-import tourma.views.GraphicalMatch;
+import tourma.tableModel.MjtAnnexRank;
+import tourma.tableModel.MjtAnnexRankClan;
+import tourma.tableModel.MjtAnnexRankTeam;
 
 /**
  *
@@ -59,6 +27,13 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
 
     int round;
 
+    /**
+     *
+     * @param r
+     * @param full
+     * @param team
+     * @throws IOException
+     */
     public JFullScreenClanTeamAnnex(int r, boolean full, boolean team) throws IOException {
         super();
         try {
@@ -155,10 +130,10 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
 
                 line++;
 
-                mjtAnnexRank annexRank;
+                MjtAnnexRank annexRank;
                 if (team)
                 {
-                    annexRank=new mjtAnnexRankTeam(
+                    annexRank=new MjtAnnexRankTeam(
                         Tournament.getTournament().getParams().mTeamVictoryOnly,
                         round, crit, 0,
                         Tournament.getTournament().getTeams(),
@@ -167,7 +142,7 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
                 }
                 else
                 {
-                    annexRank=new mjtAnnexRankClan(
+                    annexRank=new MjtAnnexRankClan(
                         round, crit, 0,full,
                         Tournament.getTournament().getClans(),
                         false);
@@ -178,7 +153,7 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
                 int nb_col = column;
                 for (int j = 0; j < annexRank.getRowCount(); j++) {
                     Color bkg = new Color(255, 255, 255);
-                    if (j % 2 == 1) {
+                    if (j % 2 !=0) {
                         bkg = new Color(220, 220, 220);
                     }
                     column = 0;
@@ -210,7 +185,7 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
 
                 if (team)
                 {
-                    annexRank=new mjtAnnexRankTeam(
+                    annexRank=new MjtAnnexRankTeam(
                         Tournament.getTournament().getParams().mTeamVictoryOnly,
                         round, crit, 1,
                         Tournament.getTournament().getTeams(),
@@ -219,7 +194,7 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
                 }
                 else
                 {
-                    annexRank=new mjtAnnexRankClan(
+                    annexRank=new MjtAnnexRankClan(
                         round, crit, 1,full,
                         Tournament.getTournament().getClans(),
                         false);
@@ -288,4 +263,5 @@ public class JFullScreenClanTeamAnnex extends JFullScreen {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JFullScreenClanTeamAnnex.class.getName());
 }

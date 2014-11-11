@@ -5,46 +5,17 @@
 package tourma.views.fullscreen;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.DisplayMode;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.ScrollPane;
-import java.awt.Scrollbar;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.ScrollPaneConstants;
-import tourma.data.Clan;
 import tourma.data.Coach;
-import tourma.data.CoachMatch;
-import tourma.data.Competitor;
 import tourma.data.Criteria;
-import tourma.data.IWithNameAndPicture;
-import tourma.data.Match;
-import tourma.data.Parameters;
-import tourma.data.Round;
-import tourma.data.Team;
-import tourma.data.TeamMatch;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtRanking;
-import static tourma.tableModel.mjtRanking.getSubtypeByValue;
-import tourma.tableModel.mjtRankingIndiv;
-import tourma.utils.ImageTreatment;
-import tourma.views.GraphicalMatch;
+import tourma.tableModel.MjtRanking;
+import tourma.tableModel.MjtRankingIndiv;
 
 /**
  *
@@ -54,6 +25,11 @@ public class JFullScreenIndivRank extends JFullScreen {
 
     int round;
 
+    /**
+     *
+     * @param r
+     * @throws IOException
+     */
     public JFullScreenIndivRank(int r) throws IOException {
         super();
         try {
@@ -74,7 +50,7 @@ public class JFullScreenIndivRank extends JFullScreen {
 
             final boolean forPool = (Tournament.getTournament().getPools().size() > 0) && (!Tournament.getTournament().getRounds().get(r).mCup);
 
-            mjtRankingIndiv ranking = new mjtRankingIndiv(round,
+            MjtRankingIndiv ranking = new MjtRankingIndiv(round,
                     Tournament.getTournament().getParams().mRankingIndiv1,
                     Tournament.getTournament().getParams().mRankingIndiv2,
                     Tournament.getTournament().getParams().mRankingIndiv3,
@@ -158,7 +134,7 @@ public class JFullScreenIndivRank extends JFullScreen {
 
             for (int j = 0; j < Tournament.getTournament().getParams().getIndivRankingNumber(); j++) {
                 int rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
-                String name = mjtRanking.getRankingString(rankingType);
+                String name = MjtRanking.getRankingString(rankingType);
                 if (rankingType == 0) {
                     break;
                 } else {
@@ -176,7 +152,7 @@ public class JFullScreenIndivRank extends JFullScreen {
             int nbRows = ranking.getRowCount();
             for (int i = 0; i < nbRows; i++) {
                 Color bkg = new Color(255, 255, 255);
-                if (i % 2 == 1) {
+                if (i % 2 !=0) {
                     bkg = new Color(220, 220, 220);
                 }
 
@@ -200,7 +176,7 @@ public class JFullScreenIndivRank extends JFullScreen {
 
                 Coach coach = (Coach) ranking.getSortedDatas().get(i).getObject();
                 if (Tournament.getTournament().getParams().mTeamTournament) {
-                    JLabel jlb = getLabelForObject(coach.mTeamMates, computed_height, computed_width, currentFont, bkg);
+                    JLabel jlb = getLabelForObject(coach.getTeamMates(), computed_height, computed_width, currentFont, bkg);
                     jpnContent.add(jlb, getGridbBagConstraints(index, i + 1, 1, 5));
                     index += 5;
                 }
@@ -213,14 +189,14 @@ public class JFullScreenIndivRank extends JFullScreen {
                 jpnContent.add(jlbCoach, getGridbBagConstraints(index, i + 1, 1, 5));
                 index += 5;
 
-                JLabel jlbRoster = new JLabel(coach.mRoster.mName);
+                JLabel jlbRoster = new JLabel(coach.getRoster().mName);
                 jlbRoster.setFont(currentFont);
                 jlbRoster.setOpaque(true);
                 jlbRoster.setBackground(bkg);
                 jpnContent.add(jlbRoster, getGridbBagConstraints(index, i + 1, 1, 3));
                 index += 3;
 
-                JLabel jlbTeam = new JLabel(coach.mTeam);
+                JLabel jlbTeam = new JLabel(coach.getTeam());
                 jlbTeam.setFont(currentFont);
                 jlbTeam.setOpaque(true);
                 jlbTeam.setBackground(bkg);
@@ -282,4 +258,5 @@ public class JFullScreenIndivRank extends JFullScreen {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JFullScreenIndivRank.class.getName());
 }

@@ -5,28 +5,38 @@
 package tourma.data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.JOptionPane;
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
+import java.util.Random;
+import java.util.logging.Logger;
 import org.jdom2.Element;
-import tourma.MainFrame;
 
 /**
  *
  * @author Frederic Berger
  */
 public class TeamMatch extends Match {
+    private static final Logger LOG = Logger.getLogger(TeamMatch.class.getName());
 
+    /**
+     *
+     */
     public ArrayList<CoachMatch> mMatchs;
 
+    /**
+     *
+     * @param round
+     */
     public TeamMatch(Round round) {
         super(round);
         mMatchs = new ArrayList<>();
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public Competitor getWinner() {
 
         Tournament tour = Tournament.getTournament();
@@ -62,7 +72,9 @@ public class TeamMatch extends Match {
                     if (nbVictory < nbLost) {
                         winner = team2;
                     } else {
-                        if (((int) Math.random()) % 2 == 0) {
+                        Random ran=new Random();
+                        final int r = ran.nextInt()%2;
+                        if (r == 0) {
                             winner = team1;
                         } else {
                             winner = team2;
@@ -74,6 +86,11 @@ public class TeamMatch extends Match {
         return winner;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public Competitor getLooser() {
         Tournament tour = Tournament.getTournament();
         final Team team1 = (Team) mCompetitor1;
@@ -108,7 +125,9 @@ public class TeamMatch extends Match {
                     if (nbVictory < nbLost) {
                         looser = team1;
                     } else {
-                        if (((int) Math.random()) % 2 == 0) {
+                        Random ran=new Random();
+                        final int r = ran.nextInt()%2;
+                        if (r == 0) {
                             looser = team2;
                         } else {
                             looser = team1;
@@ -166,6 +185,12 @@ public class TeamMatch extends Match {
      }
      return winner;
      }*/
+
+    /**
+     *
+     * @return
+     */
+    
     @Override
     public Element getXMLElement() {
         final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
@@ -179,6 +204,10 @@ public class TeamMatch extends Match {
         return match;
     }
 
+    /**
+     *
+     * @param match
+     */
     @Override
     public void setXMLElement(final Element match) {
 
@@ -215,6 +244,11 @@ public class TeamMatch extends Match {
         }
     }
 
+    /**
+     *
+     * @param t1
+     * @return
+     */
     public int getVictories(Team t1) {
         Tournament tour = Tournament.getTournament();
         final Team team1 = (Team) t1;
@@ -264,6 +298,11 @@ public class TeamMatch extends Match {
         return nbVictories;
     }
 
+    /**
+     *
+     * @param t1
+     * @return
+     */
     public int getLoss(Team t1) {
         Tournament tour = Tournament.getTournament();
         final Team team1 = (Team) t1;
@@ -323,6 +362,11 @@ public class TeamMatch extends Match {
         return nbLoose;
     }
 
+    /**
+     *
+     * @param t1
+     * @return
+     */
     public int getDraw(Team t1) {
         Tournament tour = Tournament.getTournament();
         final Team team1 = (Team) t1;

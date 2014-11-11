@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Logger;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
@@ -20,15 +21,20 @@ import tourma.data.Tournament;
  * @author WFMJ7631
  */
 public class Balancing {
+    private static final Logger LOG = Logger.getLogger(Balancing.class.getName());
 
-    public static void BalanceCoachMatchs(ArrayList<Match> matchs) {
+    /**
+     *
+     * @param matchs
+     */
+    public static void balanceCoachMatchs(ArrayList<Match> matchs) {
 
         ArrayList<Team> teams = new ArrayList<>();
         // Build possible teams opponents
         for (int i = 0; i < matchs.size(); i++) {
             CoachMatch cm = (CoachMatch) matchs.get(i);
-            Team t1 = ((Coach) cm.mCompetitor1).mTeamMates;
-            Team t2 = ((Coach) cm.mCompetitor2).mTeamMates;
+            Team t1 = ((Coach) cm.mCompetitor1).getTeamMates();
+            Team t2 = ((Coach) cm.mCompetitor2).getTeamMates();
 
             if (!teams.contains(t1)) {
                 teams.add(t1);
@@ -42,10 +48,10 @@ public class Balancing {
         // According to each competitor (Coach), evaluates rounds
         HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC = new HashMap<>();
         HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT = new HashMap<>();
-        FillHashMap(matchs, evaluationPreviousC, evaluationPreviousT, teams);
+        fillHashMap(matchs, evaluationPreviousC, evaluationPreviousT, teams);
 
         int i = 0;
-        while ((!IsRoundValid(matchs, evaluationPreviousC, evaluationPreviousT))
+        while ((!isRoundValid(matchs, evaluationPreviousC, evaluationPreviousT))
                 || (i < 10000)) {
 
             int minT = getMinimumFromHash(evaluationPreviousT);
@@ -136,7 +142,7 @@ public class Balancing {
                                 }
 
                                 ArrayList<Team> minTeams = new ArrayList<>();
-                                ArrayList<Team> maxTeams = new ArrayList<>();
+                                //ArrayList<Team> maxTeams = new ArrayList<Team>();
                                 itOpp = mapOpp.keySet().iterator();
                                 while (itOpp.hasNext()) {
                                     Team t = (Team) itOpp.next();
@@ -144,12 +150,12 @@ public class Balancing {
                                     if (nb == minOpp) {
                                         minTeams.add(t);
                                     }
-                                    if (nb == maxOpp) {
-                                        maxTeams.add(t);
-                                    }
+                                    /*if (nb == maxOpp) {
+                                     maxTeams.add(t);
+                                     }*/
                                 }
 
-                                if (minTeams.contains(coach.mTeamMates)) {
+                                if (minTeams.contains(coach.getTeamMates())) {
                                     // Test if opponent adversary is not
                                     // from same team that the current coach
                                     Coach oppopp;
@@ -160,7 +166,7 @@ public class Balancing {
                                         } else {
                                             oppopp = (Coach) m.mCompetitor1;
                                         }
-                                        if (oppopp.mTeamMates != coach.mTeamMates) {
+                                        if (oppopp.getTeamMates() != coach.getTeamMates()) {
                                             break;
                                         }
                                     } else {
@@ -169,42 +175,46 @@ public class Balancing {
                                 }
                             }
 
-                            // Swap opponent and current opponent                            
-                            if (opponent.mMatchs.size() > 0) {
-                                Coach oppopp;
-                                Coach curropp;
-                                CoachMatch OpponentMatch = (CoachMatch) opponent.mMatchs.get(opponent.mMatchs.size() - 1);
-                                CoachMatch CurrenttMatch = (CoachMatch) coach.mMatchs.get(coach.mMatchs.size() - 1);
-                                
-                                if (OpponentMatch.mCompetitor1 == opponent) {
-                                    oppopp = (Coach) OpponentMatch.mCompetitor2;
-                                } else {
-                                    oppopp = (Coach) OpponentMatch.mCompetitor1;
+                            if (opponent != null) {
+                                if (opponent.mMatchs != null) {
+                                    // Swap opponent and current opponent                            
+                                    if (opponent.mMatchs.size() > 0) {
+                                        Coach oppopp;
+                                        Coach curropp;
+                                        CoachMatch OpponentMatch = (CoachMatch) opponent.mMatchs.get(opponent.mMatchs.size() - 1);
+                                        CoachMatch CurrenttMatch = (CoachMatch) coach.mMatchs.get(coach.mMatchs.size() - 1);
+
+                                        if (OpponentMatch.mCompetitor1 == opponent) {
+                                            oppopp = (Coach) OpponentMatch.mCompetitor2;
+                                        } else {
+                                            oppopp = (Coach) OpponentMatch.mCompetitor1;
+                                        }
+
+                                        if (CurrenttMatch.mCompetitor1 == coach) {
+                                            curropp = (Coach) CurrenttMatch.mCompetitor2;
+                                        } else {
+                                            curropp = (Coach) CurrenttMatch.mCompetitor1;
+                                        }
+
+                                        coach.mMatchs.remove(CurrenttMatch);
+                                        curropp.mMatchs.remove(CurrenttMatch);
+
+                                        opponent.mMatchs.remove(OpponentMatch);
+                                        oppopp.mMatchs.remove(OpponentMatch);
+
+                                        CurrenttMatch.mCompetitor1 = coach;
+                                        CurrenttMatch.mCompetitor2 = opponent;
+
+                                        OpponentMatch.mCompetitor1 = curropp;
+                                        OpponentMatch.mCompetitor2 = oppopp;
+
+                                        coach.mMatchs.add(CurrenttMatch);
+                                        opponent.mMatchs.add(CurrenttMatch);
+
+                                        curropp.mMatchs.add(OpponentMatch);
+                                        oppopp.mMatchs.add(OpponentMatch);
+                                    }
                                 }
-                                
-                                if (CurrenttMatch.mCompetitor1 == coach) {
-                                    curropp = (Coach) CurrenttMatch.mCompetitor2;
-                                } else {
-                                    curropp = (Coach) CurrenttMatch.mCompetitor1;
-                                }
-                                
-                                coach.mMatchs.remove(CurrenttMatch);
-                                curropp.mMatchs.remove(CurrenttMatch);
-                                
-                                opponent.mMatchs.remove(OpponentMatch);
-                                oppopp.mMatchs.remove(OpponentMatch);
-                                
-                                CurrenttMatch.mCompetitor1=coach;
-                                CurrenttMatch.mCompetitor2=opponent;
-                                
-                                OpponentMatch.mCompetitor1=curropp;
-                                OpponentMatch.mCompetitor2=oppopp;
-                                
-                                coach.mMatchs.add(CurrenttMatch);
-                                opponent.mMatchs.add(CurrenttMatch);
-                                
-                                curropp.mMatchs.add(OpponentMatch);
-                                oppopp.mMatchs.add(OpponentMatch);                                                                
                             }
                         }
                     }
@@ -214,30 +224,44 @@ public class Balancing {
             }
             // Find possible opponents team for the coach
 
-            FillHashMap(matchs, evaluationPreviousC, evaluationPreviousT, teams);
+            fillHashMap(matchs, evaluationPreviousC, evaluationPreviousT, teams);
             i++;
         }
     }
 
-    static protected void FillHashMap(ArrayList<Match> matchs, HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
+    /**
+     *
+     * @param matchs
+     * @param evaluationPreviousC
+     * @param evaluationPreviousT
+     * @param teams
+     */
+    static protected void fillHashMap(ArrayList<Match> matchs, HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
             HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT, ArrayList<Team> teams) {
 
 
-      /*  for (int i = 0; i < matchs.size(); i++) {
-            Coach comp1 = (Coach) matchs.get(i).mCompetitor1;
-            Coach comp2 = (Coach) matchs.get(i).mCompetitor2;
-            evaluationPreviousC.put(comp1, comp1.getTeamOppositionCount(teams));
-            evaluationPreviousC.put(comp2, comp2.getTeamOppositionCount(teams));
-            if (!evaluationPreviousT.containsKey(comp1.mTeamMates)) {
-                evaluationPreviousT.put(comp1.mTeamMates, comp1.getTeamOppositionCount(teams));
-            }
-            if (!evaluationPreviousT.containsKey(comp2.mTeamMates)) {
-                evaluationPreviousT.put(comp2.mTeamMates, comp2.getTeamOppositionCount(teams));
-            }
-        }*/
+        /*  for (int i = 0; i < matchs.size(); i++) {
+         Coach comp1 = (Coach) matchs.get(i).mCompetitor1;
+         Coach comp2 = (Coach) matchs.get(i).mCompetitor2;
+         evaluationPreviousC.put(comp1, comp1.getTeamOppositionCount(teams));
+         evaluationPreviousC.put(comp2, comp2.getTeamOppositionCount(teams));
+         if (!evaluationPreviousT.containsKey(comp1.mTeamMates)) {
+         evaluationPreviousT.put(comp1.mTeamMates, comp1.getTeamOppositionCount(teams));
+         }
+         if (!evaluationPreviousT.containsKey(comp2.mTeamMates)) {
+         evaluationPreviousT.put(comp2.mTeamMates, comp2.getTeamOppositionCount(teams));
+         }
+         }*/
     }
 
-    static public boolean IsRoundValid(ArrayList<Match> matchs, HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
+    /**
+     *
+     * @param matchs
+     * @param evaluationPreviousC
+     * @param evaluationPreviousT
+     * @return
+     */
+    static public boolean isRoundValid(ArrayList<Match> matchs, HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
             HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT) {
 
         int minT = getMinimumFromHash(evaluationPreviousT);
@@ -246,13 +270,15 @@ public class Balancing {
         int minC = getMinimumFromHash(evaluationPreviousC);
         int maxC = getMaximumFromHash(evaluationPreviousC);
 
-        if ((maxT - minT > 1) || (maxC - minC > 1)) {
-            return false;
-        }
-        return true;
+        return !((maxT - minT > 1) || (maxC - minC > 1));
 
     }
 
+    /**
+     *
+     * @param hash
+     * @return
+     */
     static public int getMinimumFromHash(HashMap<Competitor, HashMap<Team, Integer>> hash) {
 
         Iterator it = hash.keySet().iterator();
@@ -262,15 +288,23 @@ public class Balancing {
             Iterator it2 = hash2.keySet().iterator();
             while (it2.hasNext()) {
                 Competitor en2 = (Competitor) it2.next();
-                int nb2 = hash2.get(en2);
-                if (nb2 < minimum2) {
-                    minimum2 = nb2;
+                if (en2 instanceof Team) {
+                    Team t2 = (Team) en2;
+                    int nb2 = hash2.get(t2);
+                    if (nb2 < minimum2) {
+                        minimum2 = nb2;
+                    }
                 }
             }
         }
         return minimum2;
     }
 
+    /**
+     *
+     * @param hash
+     * @return
+     */
     static public int getMaximumFromHash(HashMap<Competitor, HashMap<Team, Integer>> hash) {
 
         Iterator it = hash.keySet().iterator();
@@ -280,9 +314,12 @@ public class Balancing {
             Iterator it2 = hash2.keySet().iterator();
             while (it2.hasNext()) {
                 Competitor en2 = (Competitor) it2.next();
-                int nb2 = hash2.get(en2);
-                if (nb2 > maximum2) {
-                    maximum2 = nb2;
+                if (en2 instanceof Team) {
+                    Team t2 = (Team) en2;
+                    int nb2 = hash2.get(t2);
+                    if (nb2 > maximum2) {
+                        maximum2 = nb2;
+                    }
                 }
             }
         }

@@ -4,6 +4,7 @@
  */
 package tourma.views.fullscreen;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -31,6 +32,11 @@ public class JFullScreenMatchs extends JFullScreen {
 
     Round round;
 
+    /**
+     *
+     * @param r
+     * @throws IOException
+     */
     public JFullScreenMatchs(Round r) throws IOException {
         super();
 
@@ -56,7 +62,7 @@ public class JFullScreenMatchs extends JFullScreen {
 
             for (int i = 0; i < r.getMatchs().size(); i++) {
                 Color bkg = new Color(255, 255, 255);
-                if (i % 2 == 1) {
+                if (i % 2 !=0) {
                     bkg = new Color(220, 220, 220);
                 }
                 Match m = (Match) r.getMatchs().get(i);
@@ -84,8 +90,8 @@ public class JFullScreenMatchs extends JFullScreen {
                         computed_width = width / nbCols;
                         colIndex = 1;
 
-                        JLabel TeamIcon1 = getLabelForObject(((Coach) (cm.mCompetitor1)).mTeamMates, computed_height, computed_width, f0, bkg);
-                        JLabel TeamIcon2 = getLabelForObject(((Coach) (cm.mCompetitor2)).mTeamMates, computed_height, computed_width, f0, bkg);
+                        JLabel TeamIcon1 = getLabelForObject(((Coach) (cm.mCompetitor1)).getTeamMates(), computed_height, computed_width, f0, bkg);
+                        JLabel TeamIcon2 = getLabelForObject(((Coach) (cm.mCompetitor2)).getTeamMates(), computed_height, computed_width, f0, bkg);
                         TeamIcon1.setHorizontalTextPosition(JLabel.LEADING);
                         TeamIcon1.setHorizontalAlignment(JLabel.RIGHT);
                         TeamIcon2.setHorizontalAlignment(JLabel.LEFT);
@@ -157,7 +163,7 @@ public class JFullScreenMatchs extends JFullScreen {
                 if (m instanceof TeamMatch) {
                     TeamMatch tm = (TeamMatch) m;
 
-                    int colIndex = 0;
+                    int colIndex;
                     nbCols = 5;
                     int nbValues = tm.mMatchs.get(0).mValues.size();
                     int NbLinesPerCoachMatch = nbValues + 1;
@@ -317,8 +323,13 @@ public class JFullScreenMatchs extends JFullScreen {
     boolean animationStarted = false;
     Animation animation;
 
+    /**
+     *
+     */
     public class Animation extends Thread {
 
+        @SuppressFBWarnings(value="SWL_SLEEP_WITH_LOCK_HELD",justification="Sleep is used for animation")
+        @Override
         public void run() {
             long computedTime = getHeight() / 100;
             int blockIncrement = jscrp.getVerticalScrollBar().getBlockIncrement();
@@ -393,4 +404,5 @@ public class JFullScreenMatchs extends JFullScreen {
      }
      }
      }*/
+    private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
 }

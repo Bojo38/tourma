@@ -6,6 +6,7 @@ package tourma.utility;
 
 import java.io.File;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import javax.swing.filechooser.FileFilter;
 
 /**
@@ -15,13 +16,24 @@ import javax.swing.filechooser.FileFilter;
 public class ExtensionFileFilter extends FileFilter {
 
     static final ResourceBundle LANGUAGE = ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
+    private static final Logger LOG = Logger.getLogger(ExtensionFileFilter.class.getName());
     String description;
     String extensions[];
 
+    /**
+     *
+     * @param description
+     * @param extension
+     */
     public ExtensionFileFilter(final String description, final String extension) {
         this(description, new String[]{extension});
     }
 
+    /**
+     *
+     * @param description
+     * @param extensions
+     */
     public ExtensionFileFilter(final String description, final String extensions[]) {
         if (description == null) {
             this.description = extensions[0];

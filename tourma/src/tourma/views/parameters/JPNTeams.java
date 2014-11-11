@@ -4,14 +4,15 @@
  */
 package tourma.views.parameters;
 
+import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtTeams;
+import tourma.tableModel.MjtTeams;
 import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
 import tourma.data.Team;
-import tourma.jdgCoach;
-import tourma.jdgTeam;
+import tourma.JdgCoach;
+import tourma.JdgTeam;
 
 /**
  *
@@ -103,7 +104,7 @@ public class JPNTeams extends javax.swing.JPanel {
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddTeamActionPerformed
 
-        final jdgTeam jdg = new jdgTeam(MainFrame.getMainFrame(), true);
+        final JdgTeam jdg = new JdgTeam(MainFrame.getMainFrame(), true);
         jdg.setVisible(true);
 
         update();
@@ -119,7 +120,10 @@ public class JPNTeams extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jbtRemoveTeamActionPerformed
 
-     public void update() {
+    /**
+     *
+     */
+    public void update() {
 
           final boolean bTourStarted = mTournament.getRounds().size() > 0;
           
@@ -139,7 +143,7 @@ public class JPNTeams extends javax.swing.JPanel {
                     + "("+text+")");
         } 
 
-        final mjtTeams teamModel = new mjtTeams(mTournament.getTeams());
+        final MjtTeams teamModel = new MjtTeams(mTournament.getTeams());
         jtbTeam.setModel(teamModel);
         TableFormat.setColumnSize(jtbTeam);
         jtbTeam.setDefaultRenderer(String.class, teamModel);
@@ -150,12 +154,12 @@ public class JPNTeams extends javax.swing.JPanel {
         if (mTournament.getTeams().size() > jtbTeam.getSelectedRow()) {
             final Team t = mTournament.getTeams().get(jtbTeam.getSelectedRow());
             if (jtbTeam.getSelectedColumn() == 1) {
-                final jdgTeam jdg=new jdgTeam(MainFrame.getMainFrame(),true,t);
+                final JdgTeam jdg=new JdgTeam(MainFrame.getMainFrame(),true,t);
                 jdg.setVisible(true);
                 //final String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterTeamName"), t.mName);
                 //t.mName = name;
             } else if (jtbTeam.getSelectedColumn() > 1) {
-                final jdgCoach jdg = new jdgCoach(MainFrame.getMainFrame(), true, t.mCoachs.get(jtbTeam.getSelectedColumn() - 2));
+                final JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, t.mCoachs.get(jtbTeam.getSelectedColumn() - 2));
                 jdg.setVisible(true);
             }
             update();
@@ -171,4 +175,5 @@ public class JPNTeams extends javax.swing.JPanel {
     private javax.swing.JLabel jlbDetails;
     private javax.swing.JTable jtbTeam;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNTeams.class.getName());
 }

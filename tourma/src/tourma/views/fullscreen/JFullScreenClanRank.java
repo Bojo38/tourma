@@ -14,12 +14,9 @@ import javax.swing.JLabel;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.Team;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtRanking;
-import tourma.tableModel.mjtRankingClan;
-import tourma.tableModel.mjtRankingIndiv;
-import tourma.tableModel.mjtRankingTeam;
+import tourma.tableModel.MjtRanking;
+import tourma.tableModel.MjtRankingClan;
 
 /**
  *
@@ -29,6 +26,11 @@ public class JFullScreenClanRank extends JFullScreen {
 
     int round;
 
+    /**
+     *
+     * @param r
+     * @throws IOException
+     */
     public JFullScreenClanRank(int r) throws IOException {
         super();
         try {
@@ -49,7 +51,7 @@ public class JFullScreenClanRank extends JFullScreen {
 
             final boolean forPool = (Tournament.getTournament().getPools().size() > 0) && (!Tournament.getTournament().getRounds().get(r).mCup);
 
-            mjtRankingClan ranking = new mjtRankingClan(
+            MjtRankingClan ranking = new MjtRankingClan(
                     round,
                     Tournament.getTournament().getClans(),
                     false);
@@ -88,7 +90,7 @@ public class JFullScreenClanRank extends JFullScreen {
 
             for (int j = 0; j < Tournament.getTournament().getParams().getIndivRankingNumber(); j++) {
                 int rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
-                String name = mjtRanking.getRankingString(rankingType);
+                String name = MjtRanking.getRankingString(rankingType);
                 if (rankingType == 0) {
                     break;
                 } else {
@@ -118,7 +120,7 @@ public class JFullScreenClanRank extends JFullScreen {
                 
                 
                 Color bkg = new Color(255, 255, 255);
-                if (clanIndex % 2 == 1) {
+                if (clanIndex % 2 !=0) {
                     bkg = new Color(220, 220, 220);
                 }
 
@@ -221,4 +223,5 @@ public class JFullScreenClanRank extends JFullScreen {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JFullScreenClanRank.class.getName());
 }

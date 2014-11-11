@@ -8,6 +8,7 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import tourma.data.Parameters;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
@@ -494,6 +495,9 @@ public class JdgParameters extends javax.swing.JDialog {
     private javax.swing.JSpinner jspCoachNumber;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     */
     protected void update() {
         if (mParams.mTeamTournament) {
             jrbIndividualTeamPairing.setEnabled(true);
@@ -527,4 +531,5 @@ public class JdgParameters extends javax.swing.JDialog {
             jpnIndivTeamRanking.setEnabled(false);
         }
     }
+    private static final Logger LOG = Logger.getLogger(JdgParameters.class.getName());
 }

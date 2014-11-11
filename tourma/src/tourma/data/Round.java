@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -19,14 +20,41 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class Round implements XMLExport {
+    private static final Logger LOG = Logger.getLogger(Round.class.getName());
 
+    /**
+     *
+     */
     protected ArrayList<Match> mMatchs;
+
+    /**
+     *
+     */
     protected Date mHour;
+
+    /**
+     *
+     */
     public boolean mCup = false;
+
+    /**
+     *
+     */
     public int mCupTour = 0;
+
+    /**
+     *
+     */
     public int mCupMaxTour = 0;
+
+    /**
+     *
+     */
     public boolean mLooserCup = false;
 
+    /**
+     *
+     */
     public Round() {
         mMatchs = new ArrayList<>();
     }
@@ -37,10 +65,18 @@ public class Round implements XMLExport {
         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ") + (index + 1);
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Match> getMatchs() {
         return mMatchs;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<CoachMatch> getCoachMatchs() {
         ArrayList<CoachMatch> tmp;
         tmp = new ArrayList<>();
@@ -64,14 +100,26 @@ public class Round implements XMLExport {
         return tmp;
     }
 
+    /**
+     *
+     * @param heure
+     */
     public void setHour(final Date heure) {
-        mHour = heure;
+        mHour= heure;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getHour() {
         return mHour;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
@@ -92,6 +140,10 @@ public class Round implements XMLExport {
         return round;
     }
 
+    /**
+     *
+     * @param round
+     */
     @Override
     public void setXMLElement(final Element round) {
         final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());

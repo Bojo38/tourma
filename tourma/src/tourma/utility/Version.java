@@ -4,8 +4,10 @@
  */
 package tourma.utility;
 
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,23 +16,50 @@ import java.util.Properties;
 public class Version {
 
     private static Version mSingleton = null;
+    private static volatile Object myLock = new Object();
+
+    private static final Logger LOG = Logger.getLogger(Version.class.getName());
+
+    /**
+     *
+     * @return
+     */
+    public static Version getSingleton() {
+        synchronized (myLock) {
+            if (mSingleton == null) {
+                mSingleton = new Version();
+            }
+        }
+        return mSingleton;
+    }
     private Properties mData;
 
     private Version() {
         mData = new Properties();
+        InputStream is=null;
         try {
-            mData.load(getClass().getResourceAsStream(java.util.ResourceBundle.getBundle("tourma/version").getString("/TOURMA/VERSION.PROPERTIES")));
+            is=getClass().getResourceAsStream(java.util.ResourceBundle.getBundle("tourma/version").getString("/TOURMA/VERSION.PROPERTIES"));
+            mData.load(is);
         } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        finally {
+            if (is!=null)
+            {
+                try {
+                    is.close();
+                } catch (IOException e) {
+
+                }
+            }
         }
     }
 
-    public static Version getSingleton() {
-        if (mSingleton == null) {
-            mSingleton = new Version();
-        }
-        return mSingleton;
-    }
-
+    /**
+     *
+     * @param key
+     * @return
+     */
     public String getProperty(final String key) {
         return mData.getProperty(key);
     }

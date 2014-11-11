@@ -17,36 +17,42 @@ import tourma.utility.StringConstants;
  */
 public abstract class Competitor implements Comparable,IWithNameAndPicture {
 
+    /**
+     *
+     */
     public String mName;
+
+    /**
+     *
+     */
     public Color mColor;
+
+    /**
+     *
+     */
     public ArrayList<Match> mMatchs=new ArrayList<>();
+
+    /**
+     *
+     */
     public BufferedImage picture=null;
     /**
      * Clan
      */
     public Clan mClan;
 
-    protected Color generateRandomColor(final Color mix) {
-        final Random random = new Random();
-        int red = random.nextInt(256);
-        int green = random.nextInt(256);
-        int blue = random.nextInt(256);
-
-        // mix the color
-        if (mix != null) {
-            red = (red + mix.getRed()) / 2;
-            green = (green + mix.getGreen()) / 2;
-            blue = (blue + mix.getBlue()) / 2;
-        }
-
-        return new Color(red, green, blue);
-    }
-
+    /**
+     *
+     */
     public Competitor() {
         mColor = generateRandomColor(Color.WHITE);
-                mMatchs = new ArrayList<>();
+        mMatchs = new ArrayList<>();
     }
 
+    /**
+     *
+     * @param name
+     */
     public Competitor(final String name) {
         mName = name;
         if (mName.equals(StringConstants.CS_NONE)) {
@@ -54,33 +60,96 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
         } else {
             mColor = generateRandomColor(Color.WHITE);
         }
-                mMatchs = new ArrayList<>();
+        mMatchs = new ArrayList<>();
     }
 
+    /**
+     *
+     * @param mix
+     * @return
+     */
+    protected Color generateRandomColor(final Color mix) {
+        final Random random = new Random();
+        int red = random.nextInt(256);
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
+        
+        // mix the color
+        if (mix != null) {
+            red = (red + mix.getRed()) / 2;
+            green = (green + mix.getGreen()) / 2;
+            blue = (blue + mix.getBlue()) / 2;
+        }
+        
+        return new Color(red, green, blue);
+    }
     
-    public abstract void AddMatch(Competitor opponent, Round r);
+    /**
+     *
+     * @param opponent
+     * @param r
+     */
+    public abstract void addMatch(Competitor opponent, Round r);
 
-    public abstract void AddMatchRoundRobin(Competitor opponent, Round r);
+    /**
+     *
+     * @param opponent
+     * @param r
+     */
+    public abstract void addMatchRoundRobin(Competitor opponent, Round r);
 
+    /**
+     *
+     * @param opponent
+     * @return
+     */
     public abstract boolean havePlayed(Competitor opponent);
 
+    /**
+     *
+     * @param opponents
+     * @param r
+     * @return
+     */
     public abstract ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r);
 
+    /**
+     *
+     * @return
+     */
     public abstract String getDecoratedName();
 
-    public abstract void RoundCheck(Round r);
+    /**
+     *
+     * @param r
+     */
+    public abstract void roundCheck(Round r);
 
+    /**
+     *
+     * @param teams
+     * @param current
+     * @return
+     */
     public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams,Round current);    
     @Override
     public String toString() {
         return getName();
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String getName() {
         return mName;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BufferedImage getPicture() {
         return picture;

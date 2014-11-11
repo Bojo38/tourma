@@ -2,10 +2,11 @@ package tourma.views.parameters;
 
 
 import java.awt.BorderLayout;
+import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Tournament;
-import tourma.jdgCoach;
-import tourma.tableModel.mjtCoaches;
+import tourma.JdgCoach;
+import tourma.tableModel.MjtCoaches;
 import tourma.utils.TableFormat;
 
 /*
@@ -74,13 +75,16 @@ public class JPNParameters extends javax.swing.JPanel {
         jpnParticipant.add(jpnTeamTour, BorderLayout.NORTH);
     }
 
-    
+    /**
+     *
+     * @param bTourStarted
+     */
     protected void updateTables(final boolean bTourStarted) {
 
         jbtAdd.setEnabled(!bTourStarted);
         jbtRemove.setEnabled(!bTourStarted);
 
-        final mjtCoaches coachModel = new mjtCoaches(mTournament.getCoachs());
+        final MjtCoaches coachModel = new MjtCoaches(mTournament.getCoachs());
         jtbCoachs.setModel(coachModel);
         TableFormat.setColumnSize(jtbCoachs);
 
@@ -88,7 +92,11 @@ public class JPNParameters extends javax.swing.JPanel {
         jtbCoachs.setDefaultRenderer(Integer.class, coachModel);
 
     }
-     public void update() {
+
+    /**
+     *
+     */
+    public void update() {
 
         final boolean bTourStarted = mTournament.getRounds().size() > 0;
 
@@ -281,7 +289,7 @@ public class JPNParameters extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfOrgasKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
-        final jdgCoach w = new jdgCoach(MainFrame.getMainFrame(), true);
+        final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true);
         w.setVisible(true);
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
@@ -294,7 +302,7 @@ public class JPNParameters extends javax.swing.JPanel {
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
 
         if (jtbCoachs.getSelectedRow() >= 0) {
-            final jdgCoach w = new jdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoachs().get(jtbCoachs.getSelectedRow()));
+            final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoachs().get(jtbCoachs.getSelectedRow()));
             w.setVisible(true);
             update();
         }
@@ -330,4 +338,5 @@ public class JPNParameters extends javax.swing.JPanel {
     private javax.swing.JTextField jtfTournamentName;
     private javax.swing.JTabbedPane jtpOptions;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNParameters.class.getName());
 }

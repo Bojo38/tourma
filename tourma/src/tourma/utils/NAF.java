@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
@@ -26,95 +27,131 @@ import tourma.data.Tournament;
  */
 public class NAF {
 
-    public static double GetRanking(String Name, Coach coach) {
+    private static final Logger LOG = Logger.getLogger(NAF.class.getName());
+
+    /**
+     *
+     * @param Name
+     * @param coach
+     * @return
+     */
+    public static double getRanking(String Name, Coach coach) {
         double naf = 150;
+        InputStream is = null;
+        InputStreamReader isr=null;
+        BufferedReader reader=null;
         try {
             URL url = new URL("http://member.thenaf.net/index.php?module=NAF&type=coachpage&coach=" + Name);
-            InputStream is = url.openConnection().getInputStream();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-                ArrayList<String> rosters = new ArrayList<>();
-                ArrayList<Double> ranks = new ArrayList<>();
+            is = url.openConnection().getInputStream();
+            isr=new InputStreamReader(is);
+            reader = new BufferedReader(isr);
 
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    if (line.contains("pn-maincontent")) {
+            ArrayList<String> rosters = new ArrayList<>();
+            ArrayList<Double> ranks = new ArrayList<>();
 
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("pn-maincontent")) {
 
-                        int pos = line.indexOf("<table bgcolor=\"#858390\" cellpadding=\"2\" cellspacing=\"1\" border=\"0\"><tr><th bgcolor=\"#D9D8D0\" colspan=\"7\">Rankings</th></tr>");
-                        String buffer = line.substring(pos);
-                        pos = buffer.indexOf("</table>");
-                        buffer = buffer.substring(0, pos + 8);
+                    int pos = line.indexOf("<table bgcolor=\"#858390\" cellpadding=\"2\" cellspacing=\"1\" border=\"0\"><tr><th bgcolor=\"#D9D8D0\" colspan=\"7\">Rankings</th></tr>");
+                    String buffer = line.substring(pos);
+                    pos = buffer.indexOf("</table>");
+                    buffer = buffer.substring(0, pos + 8);
 
+                    System.out.println(buffer);
+                    final SAXBuilder sxb = new SAXBuilder();
 
-                        System.out.println(buffer);
-                        final SAXBuilder sxb = new SAXBuilder();
+                    pos = buffer.indexOf("coach=");
+                    String subBuff = buffer.substring(pos + 6);
+                    pos = subBuff.indexOf("&amp;");
+                    subBuff = subBuff.substring(0, pos);
 
-                        pos = buffer.indexOf("coach=");
-                        String subBuff = buffer.substring(pos + 6);
-                        pos = subBuff.indexOf("&amp;");
-                        subBuff = subBuff.substring(0, pos);
+                    coach.setNaf(Integer.parseInt(subBuff));
 
-                        coach.mNaf = Integer.parseInt(subBuff);
+                    try {
+                        StringReader Sreader = new StringReader(buffer);
+                        final org.jdom2.Document document = sxb.build(Sreader);
+                        final Element racine = document.getRootElement();
 
-                        try {
-                            StringReader Sreader = new StringReader(buffer);
-                            final org.jdom2.Document document = sxb.build(Sreader);
-                            final Element racine = document.getRootElement();
+                        List trs = racine.getChildren("tr");
+                        final Iterator i = trs.iterator();
+                        String roster = "";
+                        double rank = 150;
 
-                            List trs = racine.getChildren("tr");
-                            final Iterator i = trs.iterator();
-                            String roster = "";
-                            double rank = 150;
+                        while (i.hasNext()) {
+                            final Element tr = (Element) i.next();
+                            List tds = tr.getChildren("td");
+                            final Iterator j = tds.iterator();
+                            int index = 0;
 
-                            while (i.hasNext()) {
-                                final Element tr = (Element) i.next();
-                                List tds = tr.getChildren("td");
-                                final Iterator j = tds.iterator();
-                                int index = 0;
-
-
-                                while (j.hasNext()) {
-                                    final Element td = (Element) j.next();
-                                    if (index == 0) {
+                            while (j.hasNext()) {
+                                final Element td = (Element) j.next();
+                                if (index == 0) {
+                                    // Roster
+                                    Element a = td.getChild("a");
+                                    roster = a.getText();
+                                    rosters.add(roster);
+                                } else {
+                                    if (index == 1) {
                                         // Roster
-                                        Element a = td.getChild("a");
-                                        roster = a.getText();
-                                        rosters.add(roster);
+                                        rank = Double.parseDouble(td.getText());                                        
+                                        ranks.add(Double.valueOf(td.getText()));
                                     } else {
-                                        if (index == 1) {
-                                            // Roster
-                                            rank = Double.parseDouble(td.getText());
-                                            ranks.add(new Double(rank));
-                                        } else {
-                                            break;
-                                        }
+                                        break;
                                     }
-                                    index++;
                                 }
-
-                                if (roster.equals(Tournament.getRosterTranslation(Name))) {
-                                    naf = rank;
-                                    coach.mNafRank = naf;
-                                    break;
-                                }
+                                index++;
                             }
-                        } catch (JDOMException | IOException | NumberFormatException e) {
-                        }
-                    }
-                }
 
-                for (int i = 0; i < rosters.size(); i++) {
-                    Name = Tournament.getRosterTranslation(coach.mRoster.mName);
-                    String name2=rosters.get(i);
-                    if (name2.equals(Name)) {
-                        naf = ranks.get(i);
-                        coach.mNafRank = naf;
-                        break;
+                            if (roster.equals(Tournament.getRosterTranslation(Name))) {
+                                naf = rank;
+                                coach.setNafRank(naf);
+                                break;
+                            }
+                        }
+                    } catch (JDOMException e) {
+                    } catch (IOException e) {
+                    } catch (NumberFormatException e) {
                     }
                 }
             }
-        } catch (IOException | NumberFormatException exc) {
+
+            for (int i = 0; i < rosters.size(); i++) {
+                Name = Tournament.getRosterTranslation(coach.getRoster().mName);
+                String name2 = rosters.get(i);
+                if (name2.equals(Name)) {
+                    naf = ranks.get(i);
+                    coach.setNafRank(naf);
+                    break;
+                }
+            }
+
+        } catch (IOException exc) {
             if (exc instanceof MalformedURLException) {
+            }
+        } catch (NumberFormatException exc) {
+
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();                    
+                } catch (IOException e) {
+
+                }
+            }
+            if (isr != null) {
+                try {
+                    isr.close();                    
+                } catch (IOException e) {
+
+                }
+            }
+            if (is != null) {
+                try {
+                    is.close();                    
+                } catch (IOException e) {
+
+                }
             }
         }
         return naf;

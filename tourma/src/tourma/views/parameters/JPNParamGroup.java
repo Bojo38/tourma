@@ -5,10 +5,10 @@
 package tourma.views.parameters;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import tourma.data.RosterType;
 import tourma.data.Group;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
@@ -286,6 +286,9 @@ public class JPNParamGroup extends javax.swing.JPanel {
         jlsRight.setModel(listModel);
     }//GEN-LAST:event_jcbGroupRightActionPerformed
 
+    /**
+     *
+     */
     public void update() {
 
         final boolean bTourStarted = mTournament.getRounds().size() > 0;
@@ -340,4 +343,5 @@ public class JPNParamGroup extends javax.swing.JPanel {
     private javax.swing.JList jlsLeft;
     private javax.swing.JList jlsRight;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNParamGroup.class.getName());
 }

@@ -9,6 +9,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 import org.jdom2.Element;
@@ -20,14 +22,58 @@ import org.jdom2.Element;
  */
 public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
 
-    public static HashMap<String, Clan> sClanMap = new HashMap();
+    /**
+     * 
+     */
+    private static HashMap<String, Clan> sClanMap = new HashMap<>();
+    
+    private static final Logger LOG = Logger.getLogger(Clan.class.getName());
+
+    /**
+     *
+     * @return
+     */
+    /*public static HashMap<String, Clan> getsClanMap() {
+        return sClanMap;
+    }*/
+    
+    /**
+     * 
+     * @param key
+     * @return 
+     */
+    public static Clan getClan(String key)
+    {
+        return sClanMap.get(key);
+    }
+    
+    /**
+     * 
+     * @param key
+     * @param c 
+     */
+    public static void putClan(String key, Clan c)
+    {
+        sClanMap.put(key, c);
+    }
+    
+    /**
+     * New Clan Map
+     */
+    public static  void newClanMap() {
+        sClanMap=new HashMap<>();
+    }
+
+        
     /**
      * Name of the clan
      */
-    public String mName;
+    private String mName;
 
-    
-    public BufferedImage picture;
+    /**
+     * 
+     */
+    private BufferedImage picture;
     /**
      * Constructor by name
      *
@@ -37,15 +83,51 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
         mName = name;
     }
 
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        
+        boolean result;
+        result = false;
+        if (obj instanceof Clan) {
+            Clan cat=(Clan) obj;
+            result=this.getName().equals(cat.getName());
+        } 
+        return result;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    @Override
+    public int hashCode() {
+        return mName.hashCode();
+    }
+    
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
     @Override
     public int compareTo(final Object obj) {
         int result=-1;
-        if (obj instanceof Coach) {
-            result=mName.compareTo(((Clan) obj).mName);
+        if (obj instanceof Clan) {
+            Clan clan=(Clan) obj;
+            result=this.getName().compareTo(clan.getName());
         } 
         return result;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public Element getXMLElement() {
         final Element clan = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"));
@@ -55,11 +137,13 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
         {
         try {
             Element image=new Element("Picture");
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(picture, "png", baos);
-            baos.flush();
-            String encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
-            baos.close(); // should be inside a finally block
+            String encodedImage;
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                ImageIO.write(picture, "png", baos);
+                baos.flush();
+                encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                // should be inside a finally block
+            }
             image.addContent(encodedImage);
             clan.addContent(image);
         } catch (IOException e) {
@@ -68,6 +152,10 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
         return clan;
     }
 
+    /**
+     * 
+     * @param e 
+     */
     @Override
     public void setXMLElement(final Element e) {
         this.mName=e.getAttributeValue("Name");
@@ -82,21 +170,47 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
             picture = ImageIO.read(new ByteArrayInputStream(bytes));
         } catch (IOException e2) {
         }
-        catch (Exception e1)
+        catch (NullPointerException e1)
         {
-            
+            LOG.log(Level.FINE, e1.getLocalizedMessage());
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getName() {
         return mName;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public BufferedImage getPicture() {
         return picture;
     }
     
+    /**
+     *
+     * @param p
+     */
+    @Override
+    public void setPicture(BufferedImage p) {
+        picture=p;
+    }
+    
+    /**
+     *
+     * @param name
+     */
+    @Override
+    public void setName(String name)
+    {
+        mName=name;
+    }
     
 }

@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.util.logging.Logger;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -13,6 +14,7 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class ObjectRanking implements Comparable, XMLExport {
+    private static final Logger LOG = Logger.getLogger(ObjectRanking.class.getName());
 
     Comparable mObject;
     int mValue1;
@@ -21,37 +23,70 @@ public class ObjectRanking implements Comparable, XMLExport {
     int mValue4;
     int mValue5;
 
-    public Comparable getObject() {
-        return mObject;
-    }
-
-    public int getValue1() {
-        return mValue1;
-    }
-
-    public int getValue2() {
-        return mValue2;
-    }
-
-    public int getValue3() {
-        return mValue3;
-    }
-
-    public int getValue4() {
-        return mValue4;
-    }
-
-    public int getValue5() {
-        return mValue5;
-    }
-
-    public ObjectRanking(final Comparable c, final int value1,final int value2,final int value3,final  int value4, final int value5) {
+    /**
+     *
+     * @param c
+     * @param value1
+     * @param value2
+     * @param value3
+     * @param value4
+     * @param value5
+     */
+    public ObjectRanking(final Comparable c, final int value1, final int value2, final int value3, final  int value4, final int value5) {
         mObject = c;
         mValue1 = value1;
         mValue2 = value2;
         mValue3 = value3;
         mValue4 = value4;
         mValue5 = value5;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Comparable getObject() {
+        return mObject;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getValue1() {
+        return mValue1;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getValue2() {
+        return mValue2;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getValue3() {
+        return mValue3;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getValue4() {
+        return mValue4;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getValue5() {
+        return mValue5;
     }
 
     @Override
@@ -81,7 +116,10 @@ public class ObjectRanking implements Comparable, XMLExport {
         return value;
     }
 
-    
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final Element ic = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"));
@@ -90,9 +128,9 @@ public class ObjectRanking implements Comparable, XMLExport {
         if (mObject instanceof Coach) {
             final Coach c = (Coach) mObject;
             ic.setAttribute(new Attribute(StringConstants.CS_COACH, c.mName));
-            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"), c.mTeam));
-            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), c.mClan.mName));
-            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), c.mRoster.mName));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"), c.getTeam()));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), c.mClan.getName()));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), c.getRoster().mName));
         }
 
         if (mObject instanceof Team) {
@@ -107,7 +145,7 @@ public class ObjectRanking implements Comparable, XMLExport {
 
         if (mObject instanceof Clan) {
             final Clan t = (Clan) mObject;
-            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), t.mName));
+            ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), t.getName()));
             for (int k = 0; k < Tournament.getTournament().getCoachs().size(); k++) {
                 if (Tournament.getTournament().getCoachs().get(k).mClan == t) {
                     final Element m = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
@@ -125,6 +163,10 @@ public class ObjectRanking implements Comparable, XMLExport {
         return ic;
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void setXMLElement(final Element e) {
         // Method only for implementing interface

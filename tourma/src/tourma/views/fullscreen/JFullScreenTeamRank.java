@@ -11,13 +11,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
-import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.Team;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtRanking;
-import tourma.tableModel.mjtRankingIndiv;
-import tourma.tableModel.mjtRankingTeam;
+import tourma.tableModel.MjtRanking;
+import tourma.tableModel.MjtRankingTeam;
 
 /**
  *
@@ -27,6 +25,11 @@ public class JFullScreenTeamRank extends JFullScreen {
 
     int round;
 
+    /**
+     *
+     * @param r
+     * @throws IOException
+     */
     public JFullScreenTeamRank(int r) throws IOException {
         super();
         try {
@@ -47,7 +50,7 @@ public class JFullScreenTeamRank extends JFullScreen {
 
             final boolean forPool = (Tournament.getTournament().getPools().size() > 0) && (!Tournament.getTournament().getRounds().get(r).mCup);
 
-            mjtRankingTeam ranking = new mjtRankingTeam(
+            MjtRankingTeam ranking = new MjtRankingTeam(
                     Tournament.getTournament().getParams().mTeamVictoryOnly,
                     round,
                     Tournament.getTournament().getTeams(),
@@ -79,7 +82,7 @@ public class JFullScreenTeamRank extends JFullScreen {
 
             for (int j = 0; j < Tournament.getTournament().getParams().getTeamRankingNumber(); j++) {
                 int rankingType = Tournament.getTournament().getParams().getTeamRankingType(j);
-                String name = mjtRanking.getRankingString(rankingType);
+                String name = MjtRanking.getRankingString(rankingType);
                 if (rankingType == 0) {
                     break;
                 } else {
@@ -97,7 +100,7 @@ public class JFullScreenTeamRank extends JFullScreen {
             int nbRows = ranking.getRowCount();
             for (int i = 0; i < nbRows; i++) {
                 Color bkg = new Color(255, 255, 255);
-                if (i % 2 == 1) {
+                if (i % 2 !=0) {
                     bkg = new Color(220, 220, 220);
                 }
 
@@ -179,4 +182,5 @@ public class JFullScreenTeamRank extends JFullScreen {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JFullScreenTeamRank.class.getName());
 }

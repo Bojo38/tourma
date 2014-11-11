@@ -5,6 +5,7 @@
 package tourma.utils;
 
 import java.awt.FontMetrics;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 
 /**
@@ -13,6 +14,12 @@ import javax.swing.JTable;
  */
 public class TableFormat {
 
+    private static final Logger LOG = Logger.getLogger(TableFormat.class.getName());
+
+    /**
+     *
+     * @param t
+     */
     public static void setColumnSize(final JTable t) {
         final FontMetrics fm = t.getFontMetrics(t.getFont());
         for (int i = 0; i

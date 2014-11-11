@@ -5,11 +5,14 @@
 
 package tourma.data;
 
+import java.util.logging.Logger;
+
 /**
  *
  * @author Administrateur
  */
 public class Value {
+    private static final Logger LOG = Logger.getLogger(Value.class.getName());
     /**
      * Name of the criteria
      */
@@ -23,6 +26,10 @@ public class Value {
      */
     public int mValue2;
 
+    /**
+     *
+     * @param criteria
+     */
     public Value(final Criteria criteria)
     {
         mCriteria=criteria;

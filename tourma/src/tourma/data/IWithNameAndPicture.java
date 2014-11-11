@@ -12,6 +12,27 @@ import java.awt.image.BufferedImage;
  */
 public interface IWithNameAndPicture {
 
+    /**
+     *
+     * @return
+     */
     public String getName();
-    public BufferedImage getPicture();
+
+    /**
+     *
+     * @param name
+     */
+    public void setName(String name);
+
+    /**
+     *
+     * @return
+     */
+    public BufferedImage getPicture();     
+
+    /**
+     *
+     * @param p
+     */
+    public void setPicture(BufferedImage p);
 }

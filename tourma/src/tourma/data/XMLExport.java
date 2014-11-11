@@ -11,6 +11,16 @@ import org.jdom2.Element;
  * @author WFMJ7631
  */
 public interface XMLExport {
+
+    /**
+     *
+     * @return
+     */
     public Element getXMLElement();
+
+    /**
+     *
+     * @param e
+     */
     public void setXMLElement(final Element e);
 }

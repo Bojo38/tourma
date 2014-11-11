@@ -5,13 +5,10 @@
 package tourma.views;
 
 import java.util.ArrayList;
-import tourma.data.Coach;
-import tourma.data.Criteria;
-import tourma.data.CoachMatch;
+import java.util.logging.Logger;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Tournament;
-import tourma.data.Value;
 import tourma.views.round.JPNMatch;
 
 /**
@@ -57,6 +54,9 @@ public class JPNCup extends javax.swing.JPanel {
     private javax.swing.JScrollPane jsp1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     */
     public void update() {
         final ArrayList<Round> rounds_with_cup = new ArrayList<>();
         final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
@@ -151,4 +151,5 @@ public class JPNCup extends javax.swing.JPanel {
             }
         }
     }
+    private static final Logger LOG = Logger.getLogger(JPNCup.class.getName());
 }

@@ -5,6 +5,7 @@
 package tourma.utils;
 
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -12,13 +13,37 @@ import javax.swing.ImageIcon;
  * @author WFMJ7631
  */
 public class Icons {
+
+    /**
+     *
+     */
     protected static ImageIcon sDICES=null;
+
+    /**
+     *
+     */
     protected static ImageIcon sPARAMS=null;
+
+    /**
+     *
+     */
     protected static ImageIcon sSTAR=null;
+
+    /**
+     *
+     */
     protected static ImageIcon sSTAT=null;
     
-    protected static ResourceBundle bundle=ResourceBundle.getBundle("tourma/languages/language");
+    /**
+     *
+     */
+    protected static final ResourceBundle bundle=ResourceBundle.getBundle("tourma/languages/language");
+    private static final Logger LOG = Logger.getLogger(Icons.class.getName());
     
+    /**
+     *
+     * @return
+     */
     public static ImageIcon getDices()
     {
         if (sDICES==null)
@@ -28,7 +53,11 @@ public class Icons {
         return sDICES;
     }
     
-     public static ImageIcon getParams()
+    /**
+     *
+     * @return
+     */
+    public static ImageIcon getParams()
     {
         if (sPARAMS==null)
         {
@@ -37,7 +66,11 @@ public class Icons {
         return sPARAMS;
     }
      
-      public static ImageIcon getStar()
+    /**
+     *
+     * @return
+     */
+    public static ImageIcon getStar()
     {
         if (sSTAR==null)
         {
@@ -46,7 +79,11 @@ public class Icons {
         return sSTAR;
     }
       
-       public static ImageIcon getStats()
+    /**
+     *
+     * @return
+     */
+    public static ImageIcon getStats()
     {
         if (sSTAT==null)
         {

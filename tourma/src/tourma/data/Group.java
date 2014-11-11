@@ -7,6 +7,7 @@ package tourma.data;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -15,15 +16,31 @@ import tourma.utility.StringConstants;
  * @author Administrateur
  */
 public class Group implements XMLExport {
+    private static final Logger LOG = Logger.getLogger(Group.class.getName());
 
+    /**
+     *
+     */
     public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+
+    /**
+     *
+     */
     public ArrayList<RosterType> mRosters;
 
+    /**
+     *
+     * @param name
+     */
     public Group(final String name) {
         mName = name;
         mRosters = new ArrayList<>();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final Element group = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"));
@@ -36,6 +53,10 @@ public class Group implements XMLExport {
         return group;
     }
 
+    /**
+     *
+     * @param group
+     */
     @Override
     public void setXMLElement(final Element group) {
         mName = group.getAttributeValue(StringConstants.CS_NAME);

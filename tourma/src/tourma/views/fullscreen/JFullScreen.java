@@ -4,43 +4,22 @@
  */
 package tourma.views.fullscreen;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.DisplayMode;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.ScrollPane;
-import java.awt.Scrollbar;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ScrollPaneConstants;
-import tourma.data.Clan;
 import tourma.data.Coach;
-import tourma.data.CoachMatch;
-import tourma.data.Competitor;
-import tourma.data.Criteria;
 import tourma.data.IWithNameAndPicture;
-import tourma.data.Match;
-import tourma.data.Round;
-import tourma.data.Team;
-import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.utils.ImageTreatment;
-import tourma.views.GraphicalMatch;
 
 /**
  *
@@ -53,12 +32,21 @@ public abstract class JFullScreen extends javax.swing.JFrame {
      */
     public JFullScreen() {
         super();
-        initComponents();
-        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+        initComponents();        
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
+        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
     }
 
+    /**
+     *
+     * @param object
+     * @param height
+     * @param width
+     * @param f
+     * @param bkg
+     * @return
+     */
     protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
 
         JLabel l = new JLabel();
@@ -80,6 +68,14 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         return l;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param height
+     * @param width
+     * @return
+     */
     protected GridBagConstraints getGridbBagConstraints(int x, int y, int height, int width) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
@@ -137,8 +133,13 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     boolean animationStarted = false;
     Animation animation;
 
+    /**
+     *
+     */
     public class Animation extends Thread {
 
+        @SuppressFBWarnings(value="SWL_SLEEP_WITH_LOCK_HELD",justification="Sleep is used for animation")
+        @Override
         public void run() {
             long computedTime = getHeight() / 100;
             //int blockIncrement = jscrp.getVerticalScrollBar().getBlockIncrement();

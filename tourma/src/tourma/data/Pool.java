@@ -7,6 +7,7 @@ package tourma.data;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -15,12 +16,25 @@ import tourma.utility.StringConstants;
  * @author WFMJ7631
  */
 public class Pool implements XMLExport {
+    private static final Logger LOG = Logger.getLogger(Pool.class.getName());
 
     //public ArrayList<Coach> mCoachs = new ArrayList<>();
     //public ArrayList<Team> mTeams = new ArrayList<>();
-    public ArrayList<Competitor> mCompetitors=new ArrayList<>();
+
+    /**
+     *
+     */
+        public ArrayList<Competitor> mCompetitors=new ArrayList<>();
+
+    /**
+     *
+     */
     public String mName = "";
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final Element pool = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POOL"));
@@ -38,6 +52,10 @@ public class Pool implements XMLExport {
         return pool;
     }
 
+    /**
+     *
+     * @param pool
+     */
     @Override
     public void setXMLElement(final Element pool) {
        mName = pool.getAttributeValue(StringConstants.CS_NAME);
@@ -48,7 +66,7 @@ public class Pool implements XMLExport {
         while (ro.hasNext()) {
             final Element competitor = (Element) ro.next();
             final String name=competitor.getAttributeValue(StringConstants.CS_NAME);
-            Competitor c=Coach.sCoachMap.get(name);
+            Competitor c=Coach.getCoach(name);
             if (c==null)
             {
                 c=Team.sTeamMap.get(name);

@@ -1,14 +1,14 @@
 package tourma.views.round;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
 import tourma.data.Tournament;
-import tourma.tableModel.mjtRankingIndiv;
-import tourma.utility.StringConstants;
+import tourma.tableModel.MjtRankingIndiv;
 import tourma.utils.TableFormat;
-import tourma.views.report.jdgRanking;
+import tourma.views.report.JdgRanking;
 
 /*
  * To change this template, choose Tools | Templates
@@ -30,6 +30,9 @@ public class JPNGroup extends javax.swing.JPanel {
     Group mGroup;
     int mRoundNumber;
 
+    /**
+     *
+     */
     public boolean mRoundOnly=false;
     
     /** Creates new form JPNGroup */
@@ -86,20 +89,23 @@ public class JPNGroup extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     */
     public void update() {
         final ArrayList<Coach> ArrayList = new ArrayList<>();
 
         for (int i = 0; i < mTournament.getCoachs().size(); i++) {
             final Coach c = mTournament.getCoachs().get(i);
             for (int j = 0; j < mGroup.mRosters.size(); j++) {
-                if (mGroup.mRosters.get(j).mName.equals(c.mRoster.mName)) {
+                if (mGroup.mRosters.get(j).mName.equals(c.getRoster().mName)) {
                     ArrayList.add(c);
                     break;
                 }
             }
         }
 
-        final mjtRankingIndiv tableModel = new mjtRankingIndiv(mRoundNumber,
+        final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber,
                 mTournament.getParams().mRankingIndiv1,
                 mTournament.getParams().mRankingIndiv2,
                 mTournament.getParams().mRankingIndiv3,
@@ -118,7 +124,7 @@ public class JPNGroup extends javax.swing.JPanel {
 
      @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralClanActionPerformed
-        final jdgRanking jdg = new jdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR GROUPE")+": " +mGroup.mName, mRoundNumber, mTournament, (mjtRankingIndiv) jtbGroup.getModel(), 0);
+        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR GROUPE")+": " +mGroup.mName, mRoundNumber, mTournament, (MjtRankingIndiv) jtbGroup.getModel(), 0);
         jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralClanActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -127,4 +133,5 @@ public class JPNGroup extends javax.swing.JPanel {
     private javax.swing.JButton jbtGeneralClan;
     private javax.swing.JTable jtbGroup;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNGroup.class.getName());
 }

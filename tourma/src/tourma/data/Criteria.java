@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -14,6 +15,7 @@ import tourma.MainFrame;
  * @author Administrateur
  */
 public class Criteria implements XMLExport {
+    private static final Logger LOG = Logger.getLogger(Criteria.class.getName());
 
     /**
      * Name of the criteria
@@ -36,6 +38,10 @@ public class Criteria implements XMLExport {
      */
     public int mPointsTeamAgainst;
 
+    /**
+     *
+     * @param name
+     */
     public Criteria(final String name) {
         mName = name;
         mPointsFor = 0;
@@ -44,6 +50,10 @@ public class Criteria implements XMLExport {
         mPointsTeamAgainst = 0;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final Element crit = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITERIA"));
@@ -55,6 +65,10 @@ public class Criteria implements XMLExport {
         return crit;
     }
 
+    /**
+     *
+     * @param criteria
+     */
     @Override
     public void setXMLElement(final Element criteria) {
         try {

@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,12 +13,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.xml.bind.DatatypeConverter;
 import org.jdom2.Element;
+import tourma.JdgPairing;
 import tourma.MainFrame;
-import tourma.jdgPairing;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
 
@@ -27,92 +29,131 @@ import tourma.utils.Generation;
  */
 public class Team extends Competitor implements XMLExport {
 
+    /**
+     *
+     */
     protected static Team sNullTeam;
-    public ArrayList<Coach> mCoachs;
+
+
+    /**
+     *
+     */
     public static HashMap<String, Team> sTeamMap = new HashMap<>();
 
+    private static volatile Object myLock = new Object();
+    private static final Logger LOG = Logger.getLogger(Team.class.getName());
+
+    /**
+     *
+     * @return
+     */
+    public static Team getNullTeam() {
+        
+        synchronized (Team.myLock) {
+            if (sNullTeam == null) {
+                sNullTeam = new Team(StringConstants.CS_NONE);
+                int nbTeamMates = Tournament.getTournament().getParams().mTeamMatesNumber;
+                
+                for (int i = 0; i < nbTeamMates; i++) {
+                    sNullTeam.mCoachs.add(Coach.getNullCoach());
+                    if (Coach.getNullCoach().getTeamMates() == null) {
+                        Coach.getNullCoach().setTeamMates(sNullTeam);
+                    }
+                }
+                sNullTeam.mName = StringConstants.CS_NONE;
+            }
+            
+        }
+        return sNullTeam;
+    }
+    /**
+     *
+     */
+    public ArrayList<Coach> mCoachs;
+
+    /**
+     *
+     */
     public Team() {
         super();
         mCoachs = new ArrayList<>();
     }
 
+    /**
+     *
+     * @param name
+     */
     public Team(final String name) {
         super(name);
         mCoachs = new ArrayList<>();
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getName() {
-        String text=mName;
-        if (Tournament.getTournament().getParams().mEnableClans)
-        {
-            if (mClan!=null)
-            {
-                text+=" ("+mClan.mName+")";
+        String text = mName;
+        if (Tournament.getTournament().getParams().mEnableClans) {
+            if (mClan != null) {
+                text += " (" + mClan.getName() + ")";
             }
         }
         return text;
-    }
-    
-    public static Team getNullTeam() {
-        if (sNullTeam == null) {
-            sNullTeam = new Team(StringConstants.CS_NONE);
-            int nbTeamMates = Tournament.getTournament().getParams().mTeamMatesNumber;
-
-            for (int i = 0; i < nbTeamMates; i++) {
-                sNullTeam.mCoachs.add(Coach.getNullCoach());
-                if (Coach.getNullCoach().mTeamMates == null) {
-                    Coach.getNullCoach().mTeamMates = sNullTeam;
-                }
-            }
-            sNullTeam.mName=StringConstants.CS_NONE;
-        }
-        return sNullTeam;
     }
 
     @Override
     public int compareTo(final Object obj) {
         int result = -1;
         if (obj instanceof Team) {
-
-            double rank = 0;
-            for (int i = 0; i < this.mCoachs.size(); i++) {
-                rank += mCoachs.get(i).mNafRank;
+            Team team=(Team)obj;
+            double rank = 0.0;
+            for (Coach mCoach : this.mCoachs) {
+                rank += mCoach.getNafRank();
             }
             rank = rank / mCoachs.size();
 
             double rankobj = 0;
-            for (int i = 0; i < ((Team) obj).mCoachs.size(); i++) {
-                rankobj += ((Team) obj).mCoachs.get(i).mNafRank;
+            for (Coach mCoach : team.mCoachs) {
+                rankobj += mCoach.getNafRank();
             }
-            rankobj = rankobj / ((Team) obj).mCoachs.size();
+            rankobj = rankobj / team.mCoachs.size();
 
             result = ((Double) rank).compareTo(rankobj);
         }
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getActivePlayerNumber() {
         int nb = 0;
 
         for (int i = 0; i < mCoachs.size(); i++) {
-            if (mCoachs.get(i).mActive) {
+            if (mCoachs.get(i).isActive()) {
                 nb++;
             }
         }
         return nb;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Coach> getActivePlayers() {
         final ArrayList<Coach> v = new ArrayList<>();
         if (this == sNullTeam) {
             for (int i = 0; i < Tournament.getTournament().getParams().mTeamMatesNumber; i++) {
-                v.add(Coach.sNullCoach);
+                v.add(Coach.getNullCoach());
             }
         } else {
             for (int i = 0; i < mCoachs.size(); i++) {
-                if (mCoachs.get(i).mActive) {
+                if (mCoachs.get(i).isActive()) {
                     v.add(mCoachs.get(i));
                 }
             }
@@ -120,6 +161,10 @@ public class Team extends Competitor implements XMLExport {
         return v;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
         final Element team = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
@@ -149,6 +194,10 @@ public class Team extends Competitor implements XMLExport {
         return team;
     }
 
+    /**
+     *
+     * @param team
+     */
     @Override
     public void setXMLElement(final Element team) {
         this.mName = team.getAttributeValue(StringConstants.CS_NAME);
@@ -159,8 +208,8 @@ public class Team extends Competitor implements XMLExport {
         Team.sTeamMap.put(mName, this);
         while (m.hasNext()) {
             final Element coach = (Element) m.next();
-            final Coach c = Coach.sCoachMap.get(coach.getAttribute(StringConstants.CS_NAME).getValue());
-            c.mTeamMates = this;
+            final Coach c = Coach.getCoach(coach.getAttribute(StringConstants.CS_NAME).getValue());
+            c.setTeamMates(this);
             this.mCoachs.add(c);
         }
 
@@ -175,13 +224,18 @@ public class Team extends Competitor implements XMLExport {
 
         try {
             String ClanName = team.getAttributeValue(StringConstants.CS_CLAN);
-            this.mClan = Clan.sClanMap.get(ClanName);
+            this.mClan = Clan.getClan(ClanName);
         } catch (Exception e1) {
         }
     }
 
+    /**
+     *
+     * @param opponent
+     * @param r
+     */
     @Override
-    public void AddMatch(Competitor opponent, Round r) {
+    public void addMatch(Competitor opponent, Round r) {
         Tournament tour = Tournament.getTournament();
 
         final ArrayList<Round> vs = new ArrayList<>();
@@ -207,7 +261,6 @@ public class Team extends Competitor implements XMLExport {
         this.mMatchs.add(m);
         opponent.mMatchs.add(m);
 
-
         switch (tour.getParams().mTeamIndivPairing) {
             // Ranking
             case 0:
@@ -218,27 +271,27 @@ public class Team extends Competitor implements XMLExport {
                     Collections.shuffle(shuffle2);
                     //}
                     for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-                        m.mMatchs.add(team1.getActivePlayers().get(k).CreateMatch(shuffle2.get(k), r));
+                        m.mMatchs.add(team1.getActivePlayers().get(k).createMatch(shuffle2.get(k), r));
                     }
                 } else {
                     final ArrayList<ObjectRanking> coachs1 = Generation.subRanking(team1.mCoachs, vs);
                     final ArrayList<ObjectRanking> coachs2 = Generation.subRanking(team2.mCoachs, vs);
                     for (int k = 0; k < coachs1.size(); k++) {
-                        m.mMatchs.add(((Coach) coachs1.get(k).getObject()).CreateMatch((Coach) coachs2.get(k).getObject(), r));
+                        m.mMatchs.add(((Coach) coachs1.get(k).getObject()).createMatch((Coach) coachs2.get(k).getObject(), r));
                     }
                 }
                 break;
             // Manual
             case 1:
-                final jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r, m.mMatchs);
+                final JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true, team1, team2, r, m.mMatchs);
                 jdg.setVisible(true);
                 break;
-            // GenRandom
+            // genRandom
             case 2:
                 final ArrayList<Coach> shuffle2 = new ArrayList<>(team2.getActivePlayers());
                 Collections.shuffle(shuffle2);
                 for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-                    m.mMatchs.add(team1.getActivePlayers().get(k).CreateMatch(shuffle2.get(k), r));
+                    m.mMatchs.add(team1.getActivePlayers().get(k).createMatch(shuffle2.get(k), r));
                 }
                 break;
             // NAF
@@ -249,12 +302,17 @@ public class Team extends Competitor implements XMLExport {
                 Collections.sort(sort2);
 
                 for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-                    m.mMatchs.add(sort1.get(k).CreateMatch(sort2.get(k), r));
+                    m.mMatchs.add(sort1.get(k).createMatch(sort2.get(k), r));
                 }
                 break;
         }
     }
 
+    /**
+     *
+     * @param opponent
+     * @return
+     */
     @Override
     public boolean havePlayed(Competitor opponent) {
         boolean have_played = false;
@@ -273,6 +331,12 @@ public class Team extends Competitor implements XMLExport {
         return have_played;
     }
 
+    /**
+     *
+     * @param opponents
+     * @param r
+     * @return
+     */
     @Override
     public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
 
@@ -282,13 +346,12 @@ public class Team extends Competitor implements XMLExport {
 
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
 
-
         if (this.mClan != null) {
             if (this.mClan != clans.get(0)) {
-                if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch && tour.getRounds().size() == 0) || (params.mAvoidClansMatch))) {
+                if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch && tour.getRounds().isEmpty()) || (params.mAvoidClansMatch))) {
                     for (int i = 0; i
                             < possible.size(); i++) {
-                        if (((Team) possible.get(i)).mClan.mName.equals(this.mClan.mName)) {
+                        if (((Team) possible.get(i)).mClan.getName().equals(this.mClan.getName())) {
                             possible.remove(i);
                             i--;
                         }
@@ -314,15 +377,25 @@ public class Team extends Competitor implements XMLExport {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getDecoratedName() {
         return mName;
     }
 
-    public void AddMatchRoundRobin(Competitor c, Round r) {
+    /**
+     *
+     * @param c
+     * @param r
+     */
+    @Override
+    public void addMatchRoundRobin(Competitor c, Round r) {
         final boolean complete = (JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL (INCLUANT TOUS LES JOUEURS)?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
         if (!complete) {
-            AddMatch(c, r);
+            addMatch(c, r);
         } else {
             Tournament tour = Tournament.getTournament();
             Parameters params = tour.getParams();
@@ -343,12 +416,18 @@ public class Team extends Competitor implements XMLExport {
                     final Coach c1 = t1players.get(l);
                     final Coach c2 = t2players.get(l);
 
-                    c1.AddMatch(c2, r);
+                    c1.addMatch(c2, r);
                 }
             }
         }
     }
 
+    /**
+     *
+     * @param opponent
+     * @param r
+     * @return
+     */
     public boolean canPlay(Team opponent, Round r) {
         boolean have_played = this.havePlayed(opponent);
         Parameters params = Tournament.getTournament().getParams();
@@ -356,7 +435,7 @@ public class Team extends Competitor implements XMLExport {
         boolean same_clan = false;
         if (params.mEnableClans) {
             if ((mClan != null) && (opponent.mClan != null)) {
-                if ((params.mAvoidClansFirstMatch && (Tournament.getTournament().getRounds().size() == 0))
+                if ((params.mAvoidClansFirstMatch && (Tournament.getTournament().getRounds().isEmpty()))
                         || (params.mAvoidClansMatch)) {
                     if (mClan.equals(opponent.mClan)) {
                         same_clan = true;
@@ -367,7 +446,12 @@ public class Team extends Competitor implements XMLExport {
         return !have_played && !same_clan;
     }
 
-    public void RoundCheck(Round round) {
+    /**
+     *
+     * @param round
+     */
+    @Override
+    public void roundCheck(Round round) {
 
         Tournament tour = Tournament.getTournament();
         ArrayList<Match> matchs = round.getMatchs();
@@ -377,7 +461,6 @@ public class Team extends Competitor implements XMLExport {
             final Team t1 = (Team) matchs.get(i).mCompetitor1;
             final Team t2 = (Team) matchs.get(i).mCompetitor2;
             boolean have_played = !t1.canPlay(t2, round);
-
 
             if (have_played) {
                 for (int k = i - 1; k >= 0; k--) {
@@ -430,6 +513,12 @@ public class Team extends Competitor implements XMLExport {
         }
     }
 
+    /**
+     *
+     * @param teams
+     * @param current
+     * @return
+     */
     @Override
     public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current) {
 
@@ -457,15 +546,14 @@ public class Team extends Competitor implements XMLExport {
                 }
 
                 try {
-                    int nb = map.get(opp.mTeamMates);
+                    int nb = map.get(opp.getTeamMates());
                     nb = nb + 1;
-                    map.put(opp.mTeamMates, nb);
+                    map.put(opp.getTeamMates(), nb);
                 } catch (NullPointerException npe) {
-                    System.out.println("Impossible to manage " + mName + " vs " + opp.mTeamMates.mName);
+                    System.out.println("Impossible to manage " + mName + " vs " + opp.getTeamMates().mName);
                 }
             }
         }
-
 
         /// Add current Round
         if (current != null) {
@@ -483,11 +571,11 @@ public class Team extends Competitor implements XMLExport {
 
                     if (opp != null) {
                         try {
-                            int nb = map.get(opp.mTeamMates);
+                            int nb = map.get(opp.getTeamMates());
                             nb = nb + 1;
-                            map.put(opp.mTeamMates, nb);
+                            map.put(opp.getTeamMates(), nb);
                         } catch (NullPointerException npe) {
-                            System.out.println("Impossible to manage " + mName + " vs " + opp.mTeamMates.mName);
+                            System.out.println("Impossible to manage " + mName + " vs " + opp.getTeamMates().mName);
                         }
                     }
                 }
@@ -495,5 +583,24 @@ public class Team extends Competitor implements XMLExport {
         }
 
         return map;
+    }
+    
+    /**
+     *
+     * @param p
+     */
+    @Override
+    public void setPicture(BufferedImage p) {
+        picture=p;
+    }
+
+    /**
+     *
+     * @param name
+     */
+    @Override
+    public void setName(String name)
+    {
+        mName=name;
     }
 }

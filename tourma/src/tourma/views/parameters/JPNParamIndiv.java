@@ -6,6 +6,7 @@ package tourma.views.parameters;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Criteria;
 import tourma.data.Tournament;
@@ -373,6 +374,10 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         }
         update();// TODO add your handling code here:
     }//GEN-LAST:event_jtffConcedeedFocusLost
+
+    /**
+     *
+     */
     public void update() {
 
         jtffDraw.setValue(mTournament.getParams().mPointsIndivDraw);
@@ -488,4 +493,5 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jtffRefused;
     private javax.swing.JFormattedTextField jtffVictory;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNParamIndiv.class.getName());
 }

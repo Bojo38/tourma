@@ -4,12 +4,13 @@
  */
 package tourma.views.parameters;
 
+import java.util.logging.Logger;
 import tourma.data.Criteria;
 import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
-import tourma.tableModel.mjtCriterias;
+import tourma.tableModel.MjtCriterias;
 
 /**
  *
@@ -111,10 +112,13 @@ public class JPNParamCriterias extends javax.swing.JPanel {
     repaint();
     }//GEN-LAST:event_jbtRemoveCriteriaActionPerformed
 
+    /**
+     *
+     */
     protected void update() {
 
         final boolean bTourStarted = mTournament.getRounds().size() > 0;
-        jtbCriteria.setModel(new mjtCriterias(mTournament));
+        jtbCriteria.setModel(new MjtCriterias(mTournament));
         jbtAddCriteria.setEnabled(!bTourStarted);
         jbtRemoveCriteria.setEnabled(!bTourStarted);
     }
@@ -125,4 +129,5 @@ public class JPNParamCriterias extends javax.swing.JPanel {
     private javax.swing.JButton jbtRemoveCriteria;
     private javax.swing.JTable jtbCriteria;
     // End of variables declaration//GEN-END:variables
+    private static final Logger LOG = Logger.getLogger(JPNParamCriterias.class.getName());
 }

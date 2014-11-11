@@ -4,7 +4,7 @@
  */
 package tourma.data;
 
-import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -13,20 +13,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.xml.bind.DatatypeConverter;
-import org.jdom2.Content;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import teamma.data.Player;
-import teamma.data.StarPlayer;
-import teamma.data.lrb;
+import teamma.data.Roster;
 import tourma.MainFrame;
 import tourma.utility.StringConstants;
-import tourma.utils.Balancing;
 
 /**
  * This class contains data relative to coach
@@ -35,25 +32,124 @@ import tourma.utils.Balancing;
  */
 public final class Coach extends Competitor implements XMLExport {
 
-    protected static Coach sNullCoach = null;
-    public static HashMap<String, Coach> sCoachMap = new HashMap<>();
-    public Category mCategory;
-    public String mTeam;
-    public RosterType mRoster;
-    public int mNaf;
-    public int mRank;
-    public boolean mActive = true;
-    public Team mTeamMates = null;
-    public ArrayList<teamma.data.Roster> mCompositions;
-    public double mNafRank = 150.0;
-    public int mHandicap = 0;
+    /**
+     *
+     */
+    private static Coach sNullCoach = null;
 
+    /**
+     *
+     */
+    private static HashMap<String, Coach> sCoachMap = new HashMap<>();
+    private final static Object myLock = new Object();
+    private static final Logger LOG = Logger.getLogger(Coach.class.getName());
+
+    /**
+     *
+     * @param s
+     * @return
+     */
+    public static Coach getCoach(String s) {
+        return sCoachMap.get(s);
+    }
+
+    /**
+     * new Coach map
+     */
+    public static void newCoachMap() {
+        sCoachMap = new HashMap<>();
+    }
+
+    /**
+     *
+     * @param s
+     * @param c
+     */
+    public static void putCoach(String s, Coach c) {
+        sCoachMap.put(s, c);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Coach getNullCoach() {
+        synchronized (Coach.myLock) {
+            if (sNullCoach == null) {
+                sNullCoach = new Coach(StringConstants.CS_NONE);
+                sNullCoach.setTeamMates(Team.getNullTeam());
+            }
+            if ((Team.getNullTeam() != null) && ((sNullCoach.getTeam() == null))) {
+                sNullCoach.setTeamMates(Team.getNullTeam());
+            }
+        }
+
+        return sNullCoach;
+    }
+
+    /**
+     *
+     */
+    private Category mCategory;
+
+    /**
+     *
+     */
+    private String mTeam;
+
+    /**
+     *
+     */
+    private RosterType mRoster;
+
+    /**
+     *
+     */
+    private int mNaf;
+
+    /**
+     *
+     */
+    private int mRank;
+
+    /**
+     *
+     */
+    private boolean mActive = true;
+
+    /**
+     *
+     */
+    private Team mTeamMates = null;
+
+    /**
+     *
+     */
+    private final ArrayList<teamma.data.Roster> mCompositions;
+
+    /**
+     *
+     */
+    private double mNafRank = 150.0;
+
+    /**
+     *
+     */
+    private int mHandicap = 0;
+
+    /**
+     * New Coach constructor
+     */
     public Coach() {
         super();
         mActive = true;
         mCompositions = new ArrayList<>();
     }
 
+    /**
+     *
+     * @param name
+     */
     public Coach(final String name) {
         super(name);
         mActive = false;
@@ -63,15 +159,37 @@ public final class Coach extends Competitor implements XMLExport {
         mTeamMates = null;
     }
 
-    public static Coach getNullCoach() {
-        if (sNullCoach == null) {
-            sNullCoach = new Coach(StringConstants.CS_NONE);
-            sNullCoach.mTeamMates=Team.getNullTeam();
-        }
-        if ((Team.getNullTeam() != null) && ((sNullCoach.mTeam == null))) {
-            sNullCoach.mTeamMates = Team.getNullTeam();
-        }
-        return sNullCoach;
+    /**
+     *
+     * @return
+     */
+    public int getCompositionCount() {
+        return mCompositions.size();
+    }
+
+    /**
+     *
+     * @param i
+     * @return
+     */
+    public teamma.data.Roster getComposition(int i) {
+        return mCompositions.get(i);
+    }
+
+    /**
+     *
+     * @param r
+     */
+    public void addComposition(teamma.data.Roster r) {
+        mCompositions.add(r);
+    }
+
+    /**
+     *
+     * @param i
+     */
+    public void removeComposition(int i) {
+        mCompositions.remove(i);
     }
 
     @Override
@@ -79,35 +197,59 @@ public final class Coach extends Competitor implements XMLExport {
         int result = -1;
 
         if (obj instanceof Coach) {
-            result = ((Double) mNafRank).compareTo(((Coach) obj).mNafRank);
+            result = ((Double) getNafRank()).compareTo(((Coach) obj).getNafRank());
             if (result == 0) {
-                result = mName.compareTo(((Coach) obj).mName);
+                result = mName.compareTo(((Competitor) obj).mName);
             }
         }
         return result;
     }
 
+    /**
+     * 
+     * @param c
+     * @return 
+     */
+    @Override
+    public boolean equals(Object c)
+    {
+        if (c instanceof Coach)
+        {
+            return mName.equals(((IWithNameAndPicture)c).getName());
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+     
+        return mName.hashCode();
+    }
+    /**
+     *
+     * @return
+     */
     @Override
     public Element getXMLElement() {
 
         final Element coach = new Element(StringConstants.CS_COACH);
         coach.setAttribute(StringConstants.CS_NAME, this.mName);
-        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"), this.mTeam);
-        coach.setAttribute(StringConstants.CS_ROSTER, this.mRoster.mName);
-        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF"), Integer.toString(this.mNaf));
-        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK"), Integer.toString(this.mRank));
-        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), this.mClan.mName);
-        if (this.mCategory != null) {
-            coach.setAttribute(StringConstants.CS_CATEGORY, this.mCategory.mName);
+        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"), this.getTeam());
+        coach.setAttribute(StringConstants.CS_ROSTER, this.getRoster().mName);
+        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF"), Integer.toString(this.getNaf()));
+        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK"), Integer.toString(this.getRank()));
+        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), this.mClan.getName());
+        if (this.getCategory() != null) {
+            coach.setAttribute(StringConstants.CS_CATEGORY, this.getCategory().getName());
         } else {
             coach.setAttribute(StringConstants.CS_CATEGORY, StringConstants.CS_NONE);
         }
-        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE"), Boolean.toString(this.mActive));
+        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE"), Boolean.toString(this.isActive()));
 
-        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP"), Integer.toString(this.mHandicap));
+        coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP"), Integer.toString(this.getHandicap()));
 
-        for (int i = 0; i < mCompositions.size(); i++) {
-            final Element compo = this.mCompositions.get(i).getXMLElement();
+        for (Roster mComposition : mCompositions) {
+            final Element compo = mComposition.getXMLElement();
             coach.addContent(compo);
         }
 
@@ -115,11 +257,13 @@ public final class Coach extends Competitor implements XMLExport {
 
         if (picture != null) {
             try {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(picture, "png", baos);
-                baos.flush();
-                String encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
-                baos.close(); // should be inside a finally block
+                String encodedImage;
+                try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                    ImageIO.write(picture, "png", baos);
+                    baos.flush();
+                    encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                    // should be inside a finally block
+                }
                 image.addContent(encodedImage);
                 coach.addContent(image);
             } catch (IOException e) {
@@ -129,6 +273,10 @@ public final class Coach extends Competitor implements XMLExport {
         return coach;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getName() {
         String text = mName;
@@ -136,39 +284,43 @@ public final class Coach extends Competitor implements XMLExport {
         return text;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getStringRoster() {
-        if (this.mMatchs.size() == 0) {
-            return mRoster.mName;
+        if (this.mMatchs.isEmpty()) {
+            return getRoster().mName;
         }
         ArrayList<RosterType> rosters = new ArrayList<>();
-        for (int i = 0; i < mMatchs.size(); i++) {
-            Match m = mMatchs.get(i);
+        for (Match m : mMatchs) {
             if (this == m.mCompetitor1) {
-                if (((CoachMatch) m).mRoster1 != null) {
-                    if (!rosters.contains(((CoachMatch) m).mRoster1)) {
-                        rosters.add(((CoachMatch) m).mRoster1);
+                if (((CoachMatch) m).getRoster1() != null) {
+                    if (!rosters.contains(((CoachMatch) m).getRoster1())) {
+                        rosters.add(((CoachMatch) m).getRoster1());
+                    } else {
                     }
                 } else {
                     if (!rosters.contains(this.mRoster)) {
-                        rosters.add(this.mRoster);
+                        rosters.add(this.getRoster());
                     }
                 }
             }
 
             if (this == m.mCompetitor2) {
-                if (((CoachMatch) m).mRoster2 != null) {
-                    if (!rosters.contains(((CoachMatch) m).mRoster2)) {
-                        rosters.add(((CoachMatch) m).mRoster2);
+                if (((CoachMatch) m).getRoster2() != null) {
+                    if (!rosters.contains(((CoachMatch) m).getRoster2())) {
+                        rosters.add(((CoachMatch) m).getRoster2());
                     }
                 } else {
                     if (!rosters.contains(this.mRoster)) {
-                        rosters.add(this.mRoster);
+                        rosters.add(this.getRoster());
                     }
                 }
             }
         }
 
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder(32);
         for (int i = 0; i < rosters.size(); i++) {
             if (i > 0) {
                 buf.append(" / ");
@@ -179,28 +331,32 @@ public final class Coach extends Competitor implements XMLExport {
         return buf.toString();
     }
 
+    /**
+     *
+     * @param coach
+     */
     @Override
     public void setXMLElement(final Element coach) {
         try {
             this.mName = coach.getAttributeValue(StringConstants.CS_NAME);
-            this.mTeam = coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
+            this.setTeam(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM")));
             String rName = coach.getAttributeValue(StringConstants.CS_ROSTER);
             String rosterName = RosterType.getRosterName(rName);
-            this.mRoster = RosterType.mRosterTypes.get(rosterName);
+            this.setRoster(RosterType.mRosterTypes.get(rosterName));
 
-            this.mNaf = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue();
-            this.mRank = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue();
-            this.mClan = Clan.sClanMap.get(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN")));
+            this.setNaf(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue());
+            this.setRank(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue());
+            this.mClan = Clan.getClan(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN")));
             if (coach.getAttributeValue(StringConstants.CS_CATEGORY) != null) {
-                this.mCategory = Category.sCategoryMap.get(coach.getAttributeValue(StringConstants.CS_CATEGORY));
+                this.setCategory(Category.getCategory(coach.getAttributeValue(StringConstants.CS_CATEGORY)));
             } else {
-                this.mCategory = Category.sCategoryMap.get(coach.getAttributeValue(StringConstants.CS_NONE));
+                this.setCategory(Category.getCategory(coach.getAttributeValue(StringConstants.CS_NONE)));
             }
             Coach.sCoachMap.put(mName, this);
 
             try {
-                this.mActive = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE")).getBooleanValue();
-                this.mHandicap = coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP")).getIntValue();
+                this.setActive(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE")).getBooleanValue());
+                this.setHandicap(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP")).getIntValue());
             } catch (NullPointerException npe) {
                 // Do nothing
             }
@@ -227,37 +383,53 @@ public final class Coach extends Competitor implements XMLExport {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
 
-
         try {
             Element image = coach.getChild("Picture");
             String encodedImage = image.getText();
             byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
             picture = ImageIO.read(new ByteArrayInputStream(bytes));
         } catch (IOException e) {
-        } catch (Exception e1) {
+            LOG.log(Level.FINE, e.getLocalizedMessage());
         }
 
     }
 
+    /**
+     *
+     * @param opponent
+     * @param r
+     */
     @Override
-    public void AddMatch(Competitor opponent, Round r) {
+    public void addMatch(Competitor opponent, Round r) {
         CoachMatch m = new CoachMatch(r);
         m.mCompetitor1 = this;
         m.mCompetitor2 = opponent;
         r.mMatchs.add(m);
     }
 
-    public CoachMatch CreateMatch(Competitor opponent, Round r) {
+    /**
+     *
+     * @param opponent
+     * @param r
+     * @return
+     */
+    public CoachMatch createMatch(Competitor opponent, Round r) {
         CoachMatch m = new CoachMatch(r);
         m.mCompetitor1 = this;
         m.mCompetitor2 = opponent;
         return m;
     }
 
+    /**
+     *
+     * @param opponent
+     * @return
+     */
+    @Override
     public boolean havePlayed(Competitor opponent) {
         boolean have_played = false;
-        for (int i = 0; i < mMatchs.size(); i++) {
-            if ((mMatchs.get(i).mCompetitor1 == opponent) || (mMatchs.get(i).mCompetitor2 == opponent)) {
+        for (Match mMatch : mMatchs) {
+            if ((mMatch.mCompetitor1 == opponent) || (mMatch.mCompetitor2 == opponent)) {
                 have_played = true;
                 break;
             }
@@ -270,7 +442,6 @@ public final class Coach extends Competitor implements XMLExport {
      ArrayList<Clan> clans = tour.getClans();
      Parameters params = tour.getParams();
      ArrayList<Competitor> possible = new ArrayList<Competitor>(opponents);
-
      if (this.mClan != clans.get(0)) {
      if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch) || (params.mAvoidClansMatch))) {
      for (int i = 0; i
@@ -282,7 +453,6 @@ public final class Coach extends Competitor implements XMLExport {
      }
      }
      }
-
      if ((params.mTeamTournament) && (params.mTeamPairing == 0)) {
      for (int i = 0; i < possible.size(); i++) {
      if (((Coach) possible.get(i)).mTeamMates.getActivePlayers().contains(this)) {
@@ -290,14 +460,12 @@ public final class Coach extends Competitor implements XMLExport {
      i--;
      }
      }
-
      for (int i = 0; i < possible.size(); i++) {
      if (possible.get(i).havePlayed(this)) {
      possible.remove(i);
      i--;
      }
      }
-
      ArrayList<Competitor> balanced = new ArrayList<>(possible);
      ArrayList<Team> oppteam = new ArrayList<>();
      HashMap<Team, Integer> map = new HashMap<>();
@@ -309,8 +477,6 @@ public final class Coach extends Competitor implements XMLExport {
      oppteam.add(t);
      }
      }
-
-
      if (params.mIndivPairingTeamBalanced) {
      // compute the number of matches between the coach team
      // and the other teams
@@ -327,13 +493,11 @@ public final class Coach extends Competitor implements XMLExport {
      opp = (Coach) m.mCompetitor1;
      }
      Team Other = opp.mTeamMates;
-
      int nb = map.get(Other);
      nb = nb + 1;
      map.put(Other, nb);
      }
      }
-
      // Take account current round
      for (int i = 0; i < r.mMatchs.size(); i++) {
      Match m = r.mMatchs.get(i);
@@ -352,7 +516,6 @@ public final class Coach extends Competitor implements XMLExport {
      }
      }
      }
-
      // Compute the minimum
      Iterator it = map.keySet().iterator();
      int minimum = 65535;
@@ -363,19 +526,17 @@ public final class Coach extends Competitor implements XMLExport {
      minimum = nb;
      }
      }
-
      // Remove the teams which are not corresondig to minimum
      it = map.keySet().iterator();
      while (it.hasNext()) {
      Team en = (Team) it.next();
      int nb = map.get(en);
      if (nb > minimum) {
-     System.out.println("Remove " + en.getDecoratedName() + " from possible opponents for " + getDecoratedName() + "remaining " + (oppteam.size() - 1));
+     LOG.log(Level.FINER,"Remove " + en.getDecoratedName() + " from possible opponents for " + getDecoratedName() + "remaining " + (oppteam.size() - 1));
      oppteam.remove(en);
      }
      }
      }
-
      ArrayList<Competitor> indivbalanced = new ArrayList<>(balanced);
      if (params.mIndivPairingIndivBalanced) {
      // compute the number of matches between the coach and the other teams
@@ -387,7 +548,6 @@ public final class Coach extends Competitor implements XMLExport {
      map.put(t, 0);
      }
      }
-
      // Compute the number of match per opponent
      for (int j = 0; j < mMatchs.size(); j++) {
      CoachMatch m = (CoachMatch) mMatchs.get(j);
@@ -398,13 +558,10 @@ public final class Coach extends Competitor implements XMLExport {
      opp = (Coach) m.mCompetitor1;
      }
      Team Other = opp.mTeamMates;
-
      int nb = map.get(Other);
      nb = nb + 1;
      map.put(Other, nb);
      }
-
-
      // Compute the minimum
      Iterator it = map.keySet().iterator();
      int minimum = 65535;
@@ -415,19 +572,17 @@ public final class Coach extends Competitor implements XMLExport {
      minimum = nb;
      }
      }
-
      // Remove the teams which are not corresondig to minimum
      it = map.keySet().iterator();
      while (it.hasNext()) {
      Team en = (Team) it.next();
      int nb = map.get(en);
      if (nb > minimum) {
-     System.out.println("Remove " + en.getDecoratedName() + " from possible opponents for " + getDecoratedName() + "remaining " + (oppteam.size() - 1));
+     LOG.log(Level.FINER,"Remove " + en.getDecoratedName() + " from possible opponents for " + getDecoratedName() + "remaining " + (oppteam.size() - 1));
      oppteam.remove(en);
      }
      }
      }
-
      // Keep only the players in possible list who are in team
      // which are still in the map
      ArrayList<Competitor> buffer = new ArrayList<>(balanced);
@@ -437,16 +592,13 @@ public final class Coach extends Competitor implements XMLExport {
      balanced.remove(c);
      }
      }
-
      if (balanced.isEmpty()) {
      balanced = indivbalanced;
      }
-
      if (!balanced.isEmpty()) {
      possible = balanced;
      }
      }
-
      if (possible.isEmpty()) {
      if (params.mEnableClans) {
      JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
@@ -458,6 +610,13 @@ public final class Coach extends Competitor implements XMLExport {
 
     /*
      * @Override*/
+    /**
+     *
+     * @param opponents
+     * @param r
+     * @return
+     */
+    @Override
     public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
 
         Tournament tour = Tournament.getTournament();
@@ -465,16 +624,17 @@ public final class Coach extends Competitor implements XMLExport {
         Parameters params = tour.getParams();
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
 
-
-
         if (this.mClan != clans.get(0)) {
 
             if ((params.mEnableClans) && ((params.mAvoidClansFirstMatch && tour.getRounds().indexOf(r) == 0) || (params.mAvoidClansMatch))) {
-                for (int i = 0; i
-                        < possible.size(); i++) {
-                    if (((Coach) possible.get(i)).mClan.mName.equals(this.mClan.mName)) {
+
+                int i = 0;
+                while (i < possible.size()) {
+
+                    if (possible.get(i).mClan.getName().equals(this.mClan.getName())) {
                         possible.remove(i);
-                        i--;
+                    } else {
+                        i++;
                     }
                 }
             }
@@ -482,20 +642,23 @@ public final class Coach extends Competitor implements XMLExport {
 
         if ((params.mTeamTournament) && (params.mTeamPairing == 0)) {
 
-            for (int i = 0; i < possible.size(); i++) {
-                if (((Coach) possible.get(i)).mTeamMates.mCoachs.contains(this)) {
+            int i = 0;
+            while (i < possible.size()) {
+                if (((Coach) possible.get(i)).getTeamMates().mCoachs.contains(this)) {
                     possible.remove(i);
-                    i--;
+                } else {
+                    i++;
                 }
             }
 
-            for (int i = 0; i < possible.size(); i++) {
+            i = 0;
+            while (i < possible.size()) {
                 if (possible.get(i).havePlayed(this)) {
                     possible.remove(i);
-                    i--;
+                } else {
+                    i++;
                 }
             }
-
 
             ArrayList<Team> oppteam = getPossibleTeams(r, null);
 
@@ -504,13 +667,12 @@ public final class Coach extends Competitor implements XMLExport {
             // Keep only the players in possible list who are in team
             // which are still in the map
             ArrayList<Competitor> buffer = new ArrayList<>(balanced);
-            for (int i = 0; i < buffer.size(); i++) {
-                Coach c = (Coach) buffer.get(i);
-                if (!oppteam.contains(c.mTeamMates)) {
+            for (Competitor buffer1 : buffer) {
+                Coach c = (Coach) buffer1;
+                if (!oppteam.contains(c.getTeamMates())) {
                     balanced.remove(c);
                 }
             }
-
 
             if (params.mIndivPairingIndivBalanced) {
                 ArrayList<Competitor> indivbalanced = new ArrayList<>(balanced);
@@ -518,29 +680,26 @@ public final class Coach extends Competitor implements XMLExport {
                 // Keep only the players in possible list who are in team
                 // which are still in the map
                 buffer = new ArrayList<>(indivbalanced);
-                for (int i = 0; i < buffer.size(); i++) {
-                    Coach c = (Coach) buffer.get(i);
-
+                for (Competitor buffer1 : buffer) {
+                    Coach c = (Coach) buffer1;
                     ArrayList<Team> oppteam2 = c.getPossibleTeams(r, null);
                     if (!oppteam2.contains(this.mTeamMates)) {
-                        //System.out.println("Remove " + c.getDecoratedName() + " from possible opponents for " + getDecoratedName() + " remaining " + (oppteam.size() - 1));
+                        //LOG.log(Level.FINER,"Remove " + c.getDecoratedName() + " from possible opponents for " + getDecoratedName() + " remaining " + (oppteam.size() - 1));
                         indivbalanced.remove(c);
                     }
-
                 }
 
                 if (!indivbalanced.isEmpty()) {
                     balanced = indivbalanced;
                 } else {
-                    System.out.println("Individual balanced empty, using only team balanced");
+                    LOG.log(Level.FINER, "Individual balanced empty, using only team balanced");
                 }
             }
-
 
             if (!balanced.isEmpty()) {
                 possible = balanced;
             } else {
-                System.out.println("Balanced empty, using only possible");
+                LOG.log(Level.FINER, "Balanced empty, using only possible");
             }
         }
 
@@ -553,46 +712,37 @@ public final class Coach extends Competitor implements XMLExport {
         return possible;
     }
 
-    protected ArrayList<Team> getPossibleTeams(Round current, Coach currentOpponent) {
+    /**
+     *
+     * @param current
+     * @param currentOpponent
+     * @return
+     */
+    private ArrayList<Team> getPossibleTeams(Round current, Coach currentOpponent) {
         ArrayList<Team> oppteam = new ArrayList<>(Tournament.getTournament().getTeams());
-        oppteam.remove(this.mTeamMates);
+        oppteam.remove(this.getTeamMates());
 
         HashMap<Team, Integer> map;
 
         if (Tournament.getTournament().getParams().mIndivPairingTeamBalanced) {
 
-            map = this.mTeamMates.getTeamOppositionCount(oppteam, current);
+            map = this.getTeamMates().getTeamOppositionCount(oppteam, current);
 
             // Compute the minimum
             int minimum = getMinimumFromHash(new HashMap<Competitor, Integer>(map));
 
-            // Remove the teams which are not corresondig to minimum
-            Iterator it = map.keySet().iterator();
-            while (it.hasNext()) {
-                Team en = (Team) it.next();
-                int nb = map.get(en);
+            for (Entry<Team,Integer> en : map.entrySet()) {
+                int nb = en.getValue();
                 if (currentOpponent != null) {
-                    if (en.equals(currentOpponent.mTeamMates)) {
+                    if (en.getKey().equals(currentOpponent.getTeamMates())) {
                         nb--;
                     }
                 }
 
                 if (nb > minimum) {
-                    //System.out.println("Remove " + en.getDecoratedName() + " from possible opponents for " + getDecoratedName() + "remaining " + oppteam.size() );
-                    oppteam.remove(en);
+                    oppteam.remove(en.getKey());
                 }
-                /*else {
-                 ArrayList<Team> oppteam2 = new ArrayList<>(Tournament.getTournament().getTeams());
-                 oppteam2.remove(en);
-                 HashMap<Team, Integer> map2 = en.getTeamOppositionCount(oppteam2, r);
-
-                 int minimum2 = getMinimumFromHash(new HashMap<Competitor, Integer>(map2));
-
-                 int nb2 = map2.get(this.mTeamMates);
-                 if (nb2 > minimum2) {
-                 oppteam.remove(en);
-                 }
-                 }*/
+                
             }
         }
 
@@ -604,19 +754,16 @@ public final class Coach extends Competitor implements XMLExport {
             // Compute the minimum
             int minimum = getMinimumFromHash(new HashMap<Competitor, Integer>(map));
 
-            // Remove the teams which are not corresondig to minimum
-            Iterator it = map.keySet().iterator();
-            while (it.hasNext()) {
-                Team en = (Team) it.next();
-                int nb = map.get(en);
+            for (Entry<Team,Integer> en : map.entrySet()) {
+                int nb = en.getValue();
                 if (currentOpponent != null) {
-                    if (en.equals(currentOpponent.mTeamMates)) {
+                    if (en.getKey().equals(currentOpponent.getTeamMates())) {
                         nb--;
                     }
                 }
                 if (nb > minimum) {
-                    //System.out.println("Remove " + en.getDecoratedName() + "(" + nb + ">" + minimum + " matchs) from possible opponents for " + getDecoratedName() + " remaining " + (oppteam.size() - 1));
-                    oppteam.remove(en);
+                    //LOG.log(Level.FINER,"Remove " + en.getDecoratedName() + "(" + nb + ">" + minimum + " matchs) from possible opponents for " + getDecoratedName() + " remaining " + (oppteam.size() - 1));
+                    oppteam.remove(en.getKey());
                 }
             }
         }
@@ -624,12 +771,17 @@ public final class Coach extends Competitor implements XMLExport {
         return oppteam;
     }
 
-    protected int getMinimumFromHash(HashMap<Competitor, Integer> hash) {
-        Iterator it2 = hash.keySet().iterator();
+    /**
+     *
+     * @param hash
+     * @return
+     */
+    private int getMinimumFromHash(HashMap<Competitor, Integer> hash) {
+        Iterator<Entry<Competitor, Integer>> it2 = hash.entrySet().iterator();
         int minimum2 = 65535;
         while (it2.hasNext()) {
-            Competitor en2 = (Competitor) it2.next();
-            int nb2 = hash.get(en2);
+            Entry<Competitor, Integer> en2 =  it2.next();
+            int nb2 = en2.getValue();
             if (nb2 < minimum2) {
                 minimum2 = nb2;
             }
@@ -638,9 +790,7 @@ public final class Coach extends Competitor implements XMLExport {
     }
 
     /* protected HashMap<Team, Integer> getTeamOppositionCount(Team current, ArrayList<Team> oppteam, Round r) {
-
      HashMap<Team, Integer> map = new HashMap<>();
-
      // Build opponents map
      for (int i = 0; i < oppteam.size(); i++) {
      Team t = oppteam.get(i);
@@ -648,7 +798,6 @@ public final class Coach extends Competitor implements XMLExport {
      map.put(t, 0);
      }
      }
-
      // compute the number of matches between the coach team and the other teams
      // Compute the number of match per opponent
      for (int i = 0; i < current.mCoachs.size(); i++) {
@@ -668,12 +817,11 @@ public final class Coach extends Competitor implements XMLExport {
      nb = nb + 1;
      map.put(Other, nb);
      } catch (NullPointerException npe) {
-     System.out.println("Impossible to manage " + current.mName + " vs " + Other.mName);
+     LOG.log(Level.FINER,"Impossible to manage " + current.mName + " vs " + Other.mName);
      }
      }
      }
      }
-
      // Take account current round
      for (int i = 0; i < r.mMatchs.size(); i++) {
      Match m = r.mMatchs.get(i);
@@ -691,18 +839,15 @@ public final class Coach extends Competitor implements XMLExport {
      nb = nb + 1;
      map.put(Other, nb);
      } catch (NullPointerException npe) {
-     System.out.println("Impossible to manage " + current.mName + " vs " + Other.mName);
+     LOG.log(Level.FINER,"Impossible to manage " + current.mName + " vs " + Other.mName);
      }
      }
      }
      }
      return map;
      }
-
      protected HashMap<Team, Integer> getTeamOppositionCount(Coach current, ArrayList<Team> oppteam, Round r) {
-
      HashMap<Team, Integer> map = new HashMap<>();
-
      // Build opponents map
      for (int i = 0; i < oppteam.size(); i++) {
      Team t = oppteam.get(i);
@@ -710,7 +855,6 @@ public final class Coach extends Competitor implements XMLExport {
      map.put(t, 0);
      }
      }
-
      // Compute the number of match per opponent
      for (int j = 0; j < mMatchs.size(); j++) {
      CoachMatch m = (CoachMatch) mMatchs.get(j);
@@ -721,53 +865,54 @@ public final class Coach extends Competitor implements XMLExport {
      opp = (Coach) m.mCompetitor1;
      }
      Team Other = opp.mTeamMates;
-
      if (oppteam.contains(Other)) {
      int nb = map.get(Other);
      nb = nb + 1;
      map.put(Other, nb);
      }
      }
-
      return map;
      }
      */
+    /**
+     *
+     * @param teams
+     * @param r
+     * @return
+     */
+    @Override
     public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round r) {
 
         HashMap<Team, Integer> map = new HashMap<>();
 
         // Build opponents map
-        for (int i = 0; i < teams.size(); i++) {
-            Team t = teams.get(i);
+        for (Team t : teams) {
             if (!t.mName.equals(mTeamMates.mName)) {
                 map.put(t, 0);
             }
         }
 
         // Compute the number of match per opponent
-        for (int j = 0; j < mMatchs.size(); j++) {
-            CoachMatch m = (CoachMatch) mMatchs.get(j);
+        for (Match mMatch : mMatchs) {
+            CoachMatch m = (CoachMatch) mMatch;
             Coach opp;
             if (this == m.mCompetitor1) {
                 opp = (Coach) m.mCompetitor2;
             } else {
                 opp = (Coach) m.mCompetitor1;
             }
-            Team Other = opp.mTeamMates;
-
+            Team Other = opp.getTeamMates();
             int nb = 0;
             if (map.get(Other) != null) {
                 nb = map.get(Other);
             }
-            nb = nb + 1;
+            nb += 1;
             map.put(Other, nb);
         }
 
         if (r != null) {
             for (int i = 0; i < r.getCoachMatchs().size(); i++) {
                 CoachMatch cm = r.getCoachMatchs().get(i);
-                Coach c1 = (Coach) cm.mCompetitor1;
-                Coach c2 = (Coach) cm.mCompetitor2;
 
                 Coach opp = null;
                 if (this == cm.mCompetitor1) {
@@ -777,13 +922,13 @@ public final class Coach extends Competitor implements XMLExport {
                     opp = (Coach) cm.mCompetitor1;
                 }
                 if (opp != null) {
-                    Team Other = opp.mTeamMates;
+                    Team Other = opp.getTeamMates();
 
                     int nb = 0;
                     if (map.get(Other) != null) {
                         nb = map.get(Other);
                     }
-                    nb = nb + 1;
+                    nb += 1;
                     map.put(Other, nb);
                 }
             }
@@ -792,46 +937,62 @@ public final class Coach extends Competitor implements XMLExport {
         return map;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public String getDecoratedName() {
         String tmp = mName;
         Tournament tour = Tournament.getTournament();
-        ArrayList<Clan> clans = tour.getClans();
+        ArrayList<Clan> clans;
         Parameters params = tour.getParams();
         if (params.mEnableClans) {
-            tmp = mName + " / " + mClan.mName;
+            tmp = mName + " / " + mClan.getName();
         }
         if (params.mTeamTournament) {
-            tmp = mName + " / " + mTeamMates.mName;
+            tmp = mName + " / " + getTeamMates().mName;
         }
         return tmp;
     }
 
+    /**
+     *
+     * @param c
+     * @param r
+     */
     @Override
-    public void AddMatchRoundRobin(Competitor c, Round r) {
-        AddMatch(c, r);
+    public void addMatchRoundRobin(Competitor c, Round r) {
+        addMatch(c, r);
     }
 
-    protected boolean isBalanced(Coach opp, Round round) {
+    /**
+     *
+     * @param opp
+     * @param round
+     * @return
+     */
+    private boolean isBalanced(Coach opp, Round round) {
 
         boolean balanced = true;
         ArrayList<Team> teams = new ArrayList<>();
 
-        if (this.mTeamMates == opp.mTeamMates) {
+        if (this.getTeamMates() == opp.getTeamMates()) {
             return false;
         }
 
-        for (int i = 0; i < round.mMatchs.size(); i++) {
-            CoachMatch m = (CoachMatch) round.mMatchs.get(i);
+        for (Match mMatch : round.mMatchs) {
+            CoachMatch m = (CoachMatch) mMatch;
             Coach c1 = (Coach) m.mCompetitor1;
             Coach c2 = (Coach) m.mCompetitor2;
-            if (c1.mTeamMates != this.mTeamMates) {
-                if (!teams.contains(c1.mTeamMates)) {
-                    teams.add(c1.mTeamMates);
+            if (c1.getTeamMates() != this.getTeamMates()) {
+                if (!teams.contains(c1.getTeamMates())) {
+                    teams.add(c1.getTeamMates());
                 }
             }
-            if (c2.mTeamMates != this.mTeamMates) {
-                if (!teams.contains(c2.mTeamMates)) {
-                    teams.add(c2.mTeamMates);
+            if (c2.getTeamMates() != this.getTeamMates()) {
+                if (!teams.contains(c2.getTeamMates())) {
+                    teams.add(c2.getTeamMates());
                 }
             }
         }
@@ -843,16 +1004,19 @@ public final class Coach extends Competitor implements XMLExport {
         int maximum = 0;
         while (it2.hasNext()) {
             Competitor en2 = (Competitor) it2.next();
-            int nb2 = hash.get(en2);
-            if (nb2 < minimum) {
-                minimum = nb2;
-            }
-            if (nb2 > maximum) {
-                maximum = nb2;
+            if (en2 instanceof Team) {
+                Team t2 = (Team) en2;
+                int nb2 = hash.get(t2);
+                if (nb2 < minimum) {
+                    minimum = nb2;
+                }
+                if (nb2 > maximum) {
+                    maximum = nb2;
+                }
             }
         }
 
-        int nb = hash.get(opp.mTeamMates);
+        int nb = hash.get(opp.getTeamMates());
 
         if ((maximum == nb) && (maximum - minimum > 1)) {
             balanced = false;
@@ -860,58 +1024,72 @@ public final class Coach extends Competitor implements XMLExport {
         return balanced;
     }
 
-    protected ArrayList<Team> getMinimumTeamsBalanced(Round round) {
+    /**
+     *
+     * @param round
+     * @return
+     */
+    ArrayList<Team> getMinimumTeamsBalanced(Round round) {
 
-        ArrayList<Team> possible = new ArrayList();
+        ArrayList<Team> possible = new ArrayList<>();
 
         ArrayList<Team> teams = new ArrayList<>();
-        for (int i = 0; i < round.mMatchs.size(); i++) {
-            CoachMatch m = (CoachMatch) round.mMatchs.get(i);
+        for (Match mMatch : round.mMatchs) {
+            CoachMatch m = (CoachMatch) mMatch;
             Coach c1 = (Coach) m.mCompetitor1;
             Coach c2 = (Coach) m.mCompetitor2;
-            if (c1.mTeamMates != this.mTeamMates) {
-                if (!teams.contains(c2.mTeamMates)) {
-                    teams.add(c2.mTeamMates);
+            if (c1.getTeamMates() != this.getTeamMates()) {
+                if (!teams.contains(c2.getTeamMates())) {
+                    teams.add(c2.getTeamMates());
                 }
             }
-            if (c2.mTeamMates != this.mTeamMates) {
-                if (!teams.contains(c1.mTeamMates)) {
-                    teams.add(c1.mTeamMates);
+            if (c2.getTeamMates() != this.getTeamMates()) {
+                if (!teams.contains(c1.getTeamMates())) {
+                    teams.add(c1.getTeamMates());
                 }
             }
         }
 
         HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
 
-        Iterator it2 = hash.keySet().iterator();
+        Iterator<Entry<Team, Integer>> it2 = hash.entrySet().iterator();
         int minimum = 65535;
         int maximum = 0;
         while (it2.hasNext()) {
-            Competitor en2 = (Competitor) it2.next();
-            int nb2 = hash.get(en2);
-            if (nb2 < minimum) {
-                minimum = nb2;
-            }
-            if (nb2 > maximum) {
-                maximum = nb2;
+            Entry<Team, Integer> en2 =  it2.next();
+            if (en2.getKey() instanceof Team) {
+                int nb2 = en2.getValue();
+                if (nb2 < minimum) {
+                    minimum = nb2;
+                }
+                if (nb2 > maximum) {
+                    maximum = nb2;
+                }
             }
         }
 
-        it2 = hash.keySet().iterator();
+        it2 = hash.entrySet().iterator();
         while (it2.hasNext()) {
-            Team en2 = (Team) it2.next();
-            int nb2 = hash.get(en2);
+            Entry<Team, Integer> en2 = it2.next();
+            int nb2 = en2.getValue();
             if (nb2 == minimum) {
-                possible.add(en2);
+                possible.add(en2.getKey());
             }
         }
 
         return possible;
     }
 
-    protected boolean canMatch(Coach Opponent, Coach opponentOpponent, Coach currentOpp, Round current) {
-        boolean canMatch = true;
-
+    /**
+     *
+     * @param Opponent
+     * @param opponentOpponent
+     * @param currentOpp
+     * @param current
+     * @return
+     */
+    private boolean canMatch(Coach Opponent, Coach opponentOpponent, Coach currentOpp, Round current) {
+        boolean canMatch;
 
         // Already played
         boolean have_played = havePlayed(Opponent);
@@ -921,12 +1099,12 @@ public final class Coach extends Competitor implements XMLExport {
 
         // Same clan 
         if ((tour.getParams().mEnableClans) && (tour.getParams().mAvoidClansMatch)) {
-            if (!Opponent.mClan.mName.equals(StringConstants.CS_NONE)) {
+            if (!Opponent.mClan.getName().equals(StringConstants.CS_NONE)) {
                 if (mClan == Opponent.mClan) {
                     canMatch = false;
                 }
             }
-            if ((!opponentOpponent.mClan.mName.equals(StringConstants.CS_NONE)) && (!currentOpp.mClan.mName.equals(StringConstants.CS_NONE))) {
+            if ((!opponentOpponent.mClan.getName().equals(StringConstants.CS_NONE)) && (!currentOpp.mClan.getName().equals(StringConstants.CS_NONE))) {
                 if (opponentOpponent.mClan == currentOpp.mClan) {
                     canMatch = false;
                 }
@@ -935,13 +1113,13 @@ public final class Coach extends Competitor implements XMLExport {
 
         // Same team
         if ((tour.getParams().mTeamTournament) && (tour.getParams().mTeamPairing == 0)) {
-            if (Opponent.mTeamMates != Team.getNullTeam()) {
-                if (mTeamMates == Opponent.mTeamMates) {
+            if (Opponent.getTeamMates() != Team.getNullTeam()) {
+                if (getTeamMates() == Opponent.getTeamMates()) {
                     canMatch = false;
                 }
             }
-            if ((!opponentOpponent.mTeamMates.mName.equals(StringConstants.CS_NONE)) && (!currentOpp.mTeamMates.mName.equals(StringConstants.CS_NONE))) {
-                if (opponentOpponent.mTeamMates == currentOpp.mTeamMates) {
+            if ((!opponentOpponent.getTeamMates().mName.equals(StringConstants.CS_NONE)) && (!currentOpp.getTeamMates().mName.equals(StringConstants.CS_NONE))) {
+                if (opponentOpponent.getTeamMates() == currentOpp.getTeamMates()) {
                     canMatch = false;
                 }
             }
@@ -951,38 +1129,41 @@ public final class Coach extends Competitor implements XMLExport {
         if ((tour.getParams().mTeamTournament) && (tour.getParams().mTeamPairing == 0)) {
 
             ArrayList<Team> teams = new ArrayList<>();
-            for (int i = 0; i < current.mMatchs.size(); i++) {
-                CoachMatch m = (CoachMatch) current.mMatchs.get(i);
+            for (Match mMatch : current.mMatchs) {
+                CoachMatch m = (CoachMatch) mMatch;
                 Coach c1 = (Coach) m.mCompetitor1;
                 Coach c2 = (Coach) m.mCompetitor2;
-                if (c1.mTeamMates != this.mTeamMates) {
-                    if (!teams.contains(c2.mTeamMates)) {
-                        teams.add(c2.mTeamMates);
+                if (c1.getTeamMates() != this.getTeamMates()) {
+                    if (!teams.contains(c2.getTeamMates())) {
+                        teams.add(c2.getTeamMates());
                     }
                 }
-                if (c2.mTeamMates != this.mTeamMates) {
-                    if (!teams.contains(c1.mTeamMates)) {
-                        teams.add(c1.mTeamMates);
+                if (c2.getTeamMates() != this.getTeamMates()) {
+                    if (!teams.contains(c1.getTeamMates())) {
+                        teams.add(c1.getTeamMates());
                     }
                 }
             }
-            teams.remove(mTeamMates);
+            teams.remove(getTeamMates());
 
             // Team balancing
             if (tour.getParams().mIndivPairingTeamBalanced) {
-                HashMap<Team, Integer> hash = mTeamMates.getTeamOppositionCount(teams, current);
+                HashMap<Team, Integer> hash = getTeamMates().getTeamOppositionCount(teams, current);
 
                 Iterator it2 = hash.keySet().iterator();
                 int minimum = 65535;
                 int maximum = 0;
                 while (it2.hasNext()) {
                     Competitor en2 = (Competitor) it2.next();
-                    int nb2 = hash.get(en2);
-                    if (nb2 < minimum) {
-                        minimum = nb2;
-                    }
-                    if (nb2 > maximum) {
-                        maximum = nb2;
+                    if (en2 instanceof Team) {
+                        Team t2 = (Team) en2;
+                        int nb2 = hash.get(t2);
+                        if (nb2 < minimum) {
+                            minimum = nb2;
+                        }
+                        if (nb2 > maximum) {
+                            maximum = nb2;
+                        }
                     }
                 }
 
@@ -994,13 +1175,12 @@ public final class Coach extends Competitor implements XMLExport {
                     }
                 }
 
-
                 // Check if team is balanced, by One. If yes, the opponent can  
                 // be among teammates opponents or among minimum times encountered teams
                 if (maximum - minimum == 1) {
                     if (!mTeamMates.mCoachs.contains(opponentOpponent)) {
                         // search for minimum teams
-                        if (hash.get(Opponent.mTeamMates) > minimum) {
+                        if (hash.get(Opponent.getTeamMates()) > minimum) {
                             canMatch = false;
                         }
                     }
@@ -1013,25 +1193,25 @@ public final class Coach extends Competitor implements XMLExport {
 
             /*if (canMatch) {
              if (tour.getParams().mIndivPairingIndivBalanced) {
-
+            
              // Search teams against which the player has played less match
              ArrayList<Team> possible = getPossibleTeams(current, currentOpp);
              if (!possible.contains(Opponent.mTeamMates)) {
              canMatch = false;
              }
-
+            
              if (canMatch) {
              possible = Opponent.getPossibleTeams(current, opponentOpponent);
              if (!possible.contains(mTeamMates)) {
              canMatch = false;
              }
              }
-
+            
              if (canMatch) {
-
+            
              if (tour.getParams().mIndivPairingTeamBalanced) {
              HashMap<Team, Integer> hash = mTeamMates.getTeamOppositionCount(teams, current);
-
+            
              Iterator it2 = hash.keySet().iterator();
              int minimum = 65535;
              int maximum = 0;
@@ -1045,7 +1225,7 @@ public final class Coach extends Competitor implements XMLExport {
              maximum = nb2;
              }
              }
-
+            
              if (hash.get(Opponent.mTeamMates) == minimum) {
              if (maximum - minimum == 0) {
              if (opponentOpponent.mTeamMates != mTeamMates) {
@@ -1067,11 +1247,11 @@ public final class Coach extends Competitor implements XMLExport {
     /**
      * This method arrange matchs to avoid double meet and balanced matches
      *
-     * @param r
+     * @param round
      */
     @Override
     @SuppressWarnings("empty-statement")
-    public void RoundCheck(Round round) {
+    public void roundCheck(Round round) {
 
         Tournament tour = Tournament.getTournament();
         ArrayList<Match> matchs = round.getMatchs();
@@ -1083,13 +1263,12 @@ public final class Coach extends Competitor implements XMLExport {
             totallyBalanced = true;
             balancingTries--;
 
-
             if (balancingTries % triesThreshold == 0) {
                 Collections.shuffle(matchs);
             }
-            System.out.println("Remaining tries: " + balancingTries);
+            LOG.log(Level.FINER, "Remaining tries: {0}", balancingTries);
 
-            boolean balanced = true;
+            boolean balanced;
             for (int i = matchs.size() - 1; i > 0; i--) {
 
                 Match current = matchs.get(i);
@@ -1104,7 +1283,7 @@ public final class Coach extends Competitor implements XMLExport {
                     if ((tour.getParams().mIndivPairingTeamBalanced) || (tour.getParams().mIndivPairingIndivBalanced)) {
                         balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
                         if (!balanced) {
-                            System.out.println(c1.mName + " is not balanced");
+                            LOG.log(Level.FINER, "{0} is not balanced", c1.mName);
                             totallyBalanced = false;
                         }
                     }
@@ -1112,14 +1291,16 @@ public final class Coach extends Competitor implements XMLExport {
 
                 if ((have_played) || (!balanced)) {
                     //ArrayList<Competitor> possible = new ArrayList<>();
-                    for (int k = i - 1; k >= 0; k--) {
+                    int k=i-1;
+                    while (k>=0)
+                    {
+                    //for (int k = i - 1; k >= 0; k--) {
 
                         // Get previous match opponent
                         Coach c1_tmp = (Coach) matchs.get(k).mCompetitor1;
                         Coach c2_tmp = (Coach) matchs.get(k).mCompetitor2;
 
-                        //System.out.println("Testing " + c1_tmp.mName + " vs " + c2_tmp.mName);
-
+                        //LOG.log(Level.FINER,"Testing " + c1_tmp.mName + " vs " + c2_tmp.mName);
                         boolean canMatch = c1.canMatch(c2_tmp, c1_tmp, c2, round);
                         if (loop) {
                             canMatch = canMatch && c2.canMatch(c1_tmp, c2_tmp, c1, round);
@@ -1129,8 +1310,8 @@ public final class Coach extends Competitor implements XMLExport {
                             matchs.get(i).mCompetitor2 = c2_tmp;
                             matchs.get(k).mCompetitor2 = c2;
 
-                            System.out.println(c1.mName + " vs " + c2.mName + " becomes " + c1.mName + " vs " + c2_tmp.mName);
-                            System.out.println("And " + c1_tmp.mName + " vs " + c2_tmp.mName + " becomes " + c1_tmp.mName + " vs " + c2.mName);
+                            LOG.log(Level.FINER, "{0} vs {1} becomes {2} vs {3}", new Object[]{c1.mName, c2.mName, c1.mName, c2_tmp.mName});
+                            LOG.log(Level.FINER, "And {0} vs {1} becomes {2} vs {3}", new Object[]{c1_tmp.mName, c2_tmp.mName, c1_tmp.mName, c2.mName});
 
                             break;
                         } else {
@@ -1143,8 +1324,8 @@ public final class Coach extends Competitor implements XMLExport {
                                 matchs.get(i).mCompetitor2 = c1_tmp;
                                 matchs.get(k).mCompetitor1 = c2;
 
-                                System.out.println(c1.mName + " vs " + c2.mName + " becomes " + c1.mName + " vs " + c1_tmp.mName);
-                                System.out.println("And " + c1_tmp.mName + " vs " + c2_tmp.mName + " becomes " + c2.mName + " vs " + c2_tmp.mName);
+                                LOG.log(Level.FINER, "{0} vs {1} becomes {2} vs {3}", new Object[]{c1.mName, c2.mName, c1.mName, c1_tmp.mName});
+                                LOG.log(Level.FINER, "And {0} vs {1} becomes {2} vs {3}", new Object[]{c1_tmp.mName, c2_tmp.mName, c2.mName, c2_tmp.mName});
                                 break;
                             }
                         }
@@ -1155,7 +1336,7 @@ public final class Coach extends Competitor implements XMLExport {
                                 if ((tour.getParams().mIndivPairingTeamBalanced) || (tour.getParams().mIndivPairingIndivBalanced)) {
                                     balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
                                     if (!balanced) {
-                                        System.out.println(c1.mName + " is still not balanced, loop");
+                                        LOG.log(Level.FINER, "{0} is still not balanced, loop", c1.mName);
                                         if (!loop) {
                                             k = matchs.size() - 1;
                                             loop = true;
@@ -1164,11 +1345,10 @@ public final class Coach extends Competitor implements XMLExport {
                                 }
                             }
                         }
-
+                    k--;
                     }
                 }
             }
-
 
             if ((tour.getParams().mTeamTournament)
                     && (tour.getParams().mTeamPairing == 0)) {
@@ -1178,7 +1358,7 @@ public final class Coach extends Competitor implements XMLExport {
                     Coach c2 = (Coach) cm.mCompetitor2;
                     balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
                     if (!balanced) {
-                        System.out.println(c1.mName + " is not balanced");
+                        LOG.log(Level.FINER, "{0} is not balanced", c1.mName);
                         totallyBalanced = false;
                     }
                 }
@@ -1195,4 +1375,149 @@ public final class Coach extends Competitor implements XMLExport {
             }
         }
     }
+
+    /**
+     *
+     * @param p
+     */
+    @Override
+    public void setPicture(BufferedImage p) {
+        picture = p;
+    }
+
+    /**
+     *
+     * @param name
+     */
+    @Override
+    public void setName(String name) {
+        mName = name;
+    }
+
+    /**
+     * @return the mCategory
+     */
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    /**
+     * @param mCategory the mCategory to set
+     */
+    public void setCategory(Category mCategory) {
+        this.mCategory = mCategory;
+    }
+
+    /**
+     * @return the mTeam
+     */
+    public String getTeam() {
+        return mTeam;
+    }
+
+    /**
+     * @param mTeam the mTeam to set
+     */
+    public void setTeam(String mTeam) {
+        this.mTeam = mTeam;
+    }
+
+    /**
+     * @return the mRoster
+     */
+    public RosterType getRoster() {
+        return mRoster;
+    }
+
+    /**
+     * @param mRoster the mRoster to set
+     */
+    public void setRoster(RosterType mRoster) {
+        this.mRoster = mRoster;
+    }
+
+    /**
+     * @return the mNaf
+     */
+    public int getNaf() {
+        return mNaf;
+    }
+
+    /**
+     * @param mNaf the mNaf to set
+     */
+    public void setNaf(int mNaf) {
+        this.mNaf = mNaf;
+    }
+
+    /**
+     * @return the mRank
+     */
+    public int getRank() {
+        return mRank;
+    }
+
+    /**
+     * @param mRank the mRank to set
+     */
+    public void setRank(int mRank) {
+        this.mRank = mRank;
+    }
+
+    /**
+     * @return the mActive
+     */
+    public boolean isActive() {
+        return mActive;
+    }
+
+    /**
+     * @param mActive the mActive to set
+     */
+    public void setActive(boolean mActive) {
+        this.mActive = mActive;
+    }
+
+    /**
+     * @return the mTeamMates
+     */
+    public Team getTeamMates() {
+        return mTeamMates;
+    }
+
+    /**
+     * @param mTeamMates the mTeamMates to set
+     */
+    public void setTeamMates(Team mTeamMates) {
+        this.mTeamMates = mTeamMates;
+    }
+
+    /**
+     * @return the mNafRank
+     */
+    public double getNafRank() {
+        return mNafRank;
+    }
+
+    /**
+     * @param mNafRank the mNafRank to set
+     */
+    public void setNafRank(double mNafRank) {
+        this.mNafRank = mNafRank;
+    }
+
+    /**
+     * @return the mHandicap
+     */
+    public int getHandicap() {
+        return mHandicap;
+    }
+
+    /**
+     * @param mHandicap the mHandicap to set
+     */
+    public void setHandicap(int mHandicap) {
+        this.mHandicap = mHandicap;
+    }
+
 }
