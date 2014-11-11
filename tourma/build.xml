@@ -8,6 +8,8 @@
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
 <project name="TourMa" default="default" basedir=".">
+    <property name="proguard.jar.path" value="${tools.dir}/proguard.jar" />
+
     <description>Builds, tests, and runs the project TourMa.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
@@ -72,9 +74,6 @@
 
     -->
     <target name="-post-jar">
-        
-        
-        
     </target>
 
 
@@ -86,26 +85,108 @@
         <yguard>
 
             <!--<inoutpair in="dist/TourMa.jar" out="dist/TourMa_obf.jar"/>-->
-            <inoutpair in="store/TourMa.jar" out="store/TourMa_obf.jar"/>
+            <inoutpair in="store/TourMa.jar" out="store/TourMa_obf.jar" resources="copy"/>
 
             <externalclasses>
                 <pathelement location="deps/jython-2.2.jar"/>
                 <pathelement location="deps/j2ee-1.4.jar"/>
                 <pathelement location="deps/dom4j-1.4.jar"/>
+                <pathelement location="deps/jdom-1.1.3.jar"/>                
                 <pathelement location="deps/jaxen-1.0-FCS.jar"/>
                 <pathelement location="deps/ant-1.6.5.jar"/>  
                 <pathelement location="deps/javarebel-sdk-2.0.2.jar"/>
             </externalclasses>
 
-            <shrink logfile="shrinklog.xml" createStubs="false">
-                <!--<property name="error-checking" value="pedantic"/>-->
+            <shrink logfile="shrinklog.xml" createStubs="true">
+                <property name="error-checking" value="pedantic"/>
                 <keep>
                     <method name="void main(java.lang.String[])" class="tourma.MainFrame" />
-                    <!--<field name="*" class="javax.xml.parsers.SAXParser"/>
+                    <field name="*" class="javax.xml.parsers.SAXParser"/>
                     <field name="*" class="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
                     <method name="*init*" class="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
-                    <class name="org.apache.xerces.jaxp.SAXParserFactoryImpl" />-->
-                    <!--<class classes="public"/>-->
+                    <class name="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+                    <class name="com.google.zxing.aztec.decoder.Decoder$Table"/>
+                    <class name="com.google.zxing.aztec.detector.Detector$Point"/>
+                    <class name="com.google.zxing.aztec.detector.Detector$1"/>
+                    <class name="com.google.zxing.client.j2se.Config"/>
+                    <class name="com.google.zxing.client.j2se.Inputs"/>
+                    <class name="com.google.zxing.datamatrix.detector.Detector$ResultPointsAndTransitions"/>
+                    <class name="com.google.zxing.datamatrix.detector.Detector$1"/>
+                    <class name="com.google.zxing.oned.rss.Pair"/>
+                    <class name="com.google.zxing.oned.rss.expanded.ExpandedPair"/>
+                    <class name="com.google.zxing.oned.rss.expanded.decoders.GeneralAppIdDecoder"/>
+                    <class name="com.google.zxing.oned.rss.expanded.decoders.DecodedNumeric"/>
+                    <class name="com.google.zxing.oned.rss.expanded.decoders.DecodedInformation"/>
+                    <class name="com.google.zxing.oned.rss.expanded.decoders.BlockParsedResult"/>
+                    <class name="com.google.zxing.oned.rss.expanded.decoders.DecodedChar"/>
+                    <class name="com.google.zxing.pdf417.encoder.PDF417"/>
+                    <class name="com.google.zxing.pdf417.encoder.BarcodeMatrix"/>
+                    <class name="com.google.zxing.pdf417.encoder.BarcodeRow"/>
+                    <class name="freemarker.cache.MruCacheStorage$MruEntry"/>
+                    <class name="freemarker.ext.xml.NodeOperator"/>
+                    <class name="freemarker.ext.jsp.TaglibFactory$TldPath"/>
+                    <class name="freemarker.ext.xml.Navigator$XPathEx"/>
+                    <class name="org.apache.xml.resolver.Catalog"/>
+                    <class name="org.jaxen.saxpath.base.Token"/>
+                    <class name="nu.xom.Element"/>
+                    <class name="nu.xom.jaxen.saxpath.base.Token"/>                     
+                    <class name="nu.xom.xinclude.XPointerSyntaxException"/>
+                    <class name="nu.xom.xinclude.XPointerResourceException"/>
+                    <class name="org.jfree.base.modules.AbstractModule$ReaderHelper"/>
+                    <class name="org.jfree.base.modules.PackageSorter$SortModule"/>
+                    <class name="org.jfree.data.general.CombinedDataset$DatasetInfo"/>
+                    <class name="org.jfree.ui.action.ActionButton$ActionEnablePropertyChangeHandler"/>
+                    <class name="org.jfree.ui.action.ActionMenuItem$ActionEnablePropertyChangeHandler"/>
+                    <class name="org.jfree.ui.action.ActionRadioButton$ActionEnablePropertyChangeHandler"/>
+                    <class name="org.jfree.ui.action.ActionRadioButton$1"/>
+                    <class name="org.junit.internal.runners.FailedBefore"/>
+                    <class name="org.junit.internal.runners.statements.FailOnTimeout$StatementThread"/>
+                    <class name="org.junit.rules.ExpectedExceptionMatcherBuilder"/>
+                    <class name="org.mozilla.javascript.JavaAdapter$JavaAdapterSignature"/>
+                    <class name="org.mozilla.javascript.Interpreter$CallFrame"/>
+                    <class name="org.mozilla.javascript.Interpreter$1"/>
+                    <class name="org.mozilla.javascript.InterpreterData"/>
+                    <class name="org.mozilla.javascript.InterpretedFunction"/>
+                    <class name="org.mozilla.javascript.ScriptRuntime$NoSuchMethodShim"/>
+                    <class name="org.mozilla.javascript.Interpreter$GeneratorState"/>
+                    <class name="org.mozilla.javascript.JavaMembers$MethodSignature"/>
+                    <class name="org.mozilla.javascript.FieldAndMethods"/>
+                    <class name="org.mozilla.javascript.NativeJSON$StringifyState"/>
+                    <class name="org.mozilla.javascript.Node$PropListItem"/>
+                    <class name="org.mozilla.javascript.Node$1"/>
+                    <class name="org.mozilla.javascript.Parser$ConditionData"/>
+                    <class name="org.mozilla.javascript.Parser$1"/>
+                    <class name="org.mozilla.javascript.Parser$ParserException"/>
+                    <class name="org.mozilla.javascript.ScriptRuntime$IdEnumeration"/>
+                    <class name="org.mozilla.javascript.regexp.RECompiled"/>
+                    <class name="org.mozilla.javascript.regexp.CompilerState"/>
+                    <class name="org.mozilla.javascript.regexp.RENode"/>
+                    <class name="org.mozilla.javascript.regexp.REGlobalData"/>
+                    <class name="org.mozilla.javascript.regexp.REBackTrackData"/>
+                    <class name="org.mozilla.javascript.regexp.REProgState"/>
+                    <class name="org.mozilla.javascript.regexp.RECharSet"/>
+                    <class name="org.mozilla.javascript.regexp.GlobData"/>
+                    <class name="org.mozilla.javascript.tools.debugger.Dim$1"/>
+                    <class name="org.mozilla.javascript.tools.debugger.Menubar"/>
+                    <class name="org.mozilla.javascript.tools.debugger.JSInternalConsole"/>
+                    <class name="org.mozilla.javascript.tools.debugger.FileWindow"/>
+                    <class name="org.mozilla.javascript.tools.idswitch.CodePrinter"/>
+                    <class name="org.mozilla.javascript.tools.shell.Main$ScriptReference"/>
+                    <class name="org.apache.xmlbeans.XmlCursor"/>
+                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.XMLName"/>
+                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.Namespace"/>
+                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.QName"/>
+                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.XML"/>
+                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.XML$XScriptAnnotation"/>
+                    <class name="org.mozilla.javascript.xmlimpl.QName"/>
+                    <class name="org.mozilla.javascript.xmlimpl.XmlNode$QName"/>
+                    <class name="org.mozilla.javascript.xmlimpl.XmlProcessor"/>
+                    <class name="org.mozilla.javascript.xmlimpl.XMLName"/>
+                    <class name="org.mozilla.javascript.xmlimpl.Namespace"/>
+                    <class name="org.mozilla.javascript.xmlimpl.XmlNode$Namespace"/>
+                    <class name="org.mozilla.javascript.xmlimpl.XML"/>
+                    <class name="org.mozilla.javascript.xmlimpl.XmlNode$InternalList"/>
+                    <class classes="public"/>
                     <class  classes="public" methods="public">
                         <patternset>
                             <!--<include name="javax.*"/>-->
@@ -114,8 +195,18 @@
                             <include name="org.apache.xerces.parsers.*"/>
                             <include name="org.jfree.chart.resources.*"/>
                             <include name="org.jfree.resources.*"/>
+                            <!--<include name="freemarker.*"/>-->
                         </patternset>
                     </class>
+                    
+                    
+                    <!--<package>
+                        <patternset>
+                            <include name="touma.images.*"/>
+                            <include name="touma.languages.*"/>
+                        </patternset>
+                    </package>-->
+                    
                 </keep>
             </shrink>
 
@@ -147,6 +238,7 @@
                     <include name="tourma/*"/>
                     <include name="org/jfree/chart/resources/*"/>
                     <include name="org/jfree/resources/*"/>
+                    <include name="com/google/zxing/aztec/decoder/*"/>
                 </adjust>
                 <adjust replaceName="false">
                     <include name="**/*.properties"/>
@@ -158,7 +250,9 @@
                     <include name="tourma/views/report/jdgRound*"/>
                     <include name="**/JFreeChartResources*"/>
                     <include name="**/JCommonResources*"/>
-                </adjust>           
+                    <!--<include name="freemarker/*"/>-->
+                </adjust>   
+   
             </rename>
 
         </yguard>
@@ -179,7 +273,7 @@
 
         <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
 
-        <delete dir="${store.dir}"/>
+        <delete file="${store.dir}/*.jar"/>
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
@@ -200,5 +294,5 @@
 
     </target>
 
-    
+                    
 </project>

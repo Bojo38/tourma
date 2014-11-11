@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,22 +18,38 @@ import static org.junit.Assert.*;
  * @author WFMJ7631
  */
 public class XMLExportTest {
+    private static final Logger LOG = Logger.getLogger(XMLExportTest.class.getName());
     
-    public XMLExportTest() {
-    }
-    
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
+    public XMLExportTest() {
+    }
+    
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -64,12 +81,25 @@ public class XMLExportTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class XMLExportImpl implements XMLExport {
 
+        /**
+         *
+         * @return
+         */
+        @Override
         public Element getXMLElement() {
             return null;
         }
 
+        /**
+         *
+         * @param e
+         */
+        @Override
         public void setXMLElement(Element e) {
         }
     }

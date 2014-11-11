@@ -7,6 +7,7 @@ package tourma.data;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,22 +21,38 @@ import static org.junit.Assert.*;
  * @author WFMJ7631
  */
 public class TournamentTest {
+    private static final Logger LOG = Logger.getLogger(TournamentTest.class.getName());
     
-    public TournamentTest() {
-    }
-    
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
+    public TournamentTest() {
+    }
+    
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -292,27 +309,27 @@ public class TournamentTest {
     }
 
     /**
-     * Test of LoadXMLv2 method, of class Tournament.
+     * Test of loadXMLv2 method, of class Tournament.
      */
     @Test
     public void testLoadXMLv2() {
         System.out.println("LoadXMLv2");
         Element Root = null;
         Tournament instance = null;
-        instance.LoadXMLv2(Root);
+        instance.loadXMLv2(Root);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of LoadXMLv3 method, of class Tournament.
+     * Test of loadXMLv3 method, of class Tournament.
      */
     @Test
     public void testLoadXMLv3() {
         System.out.println("LoadXMLv3");
         Element racine = null;
         Tournament instance = null;
-        instance.LoadXMLv3(racine);
+        instance.loadXMLv3(racine);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -331,28 +348,28 @@ public class TournamentTest {
     }
 
     /**
-     * Test of GetActiveCoachNumber method, of class Tournament.
+     * Test of getActiveCoachNumber method, of class Tournament.
      */
     @Test
     public void testGetActiveCoachNumber() {
         System.out.println("GetActiveCoachNumber");
         Tournament instance = null;
         int expResult = 0;
-        int result = instance.GetActiveCoachNumber();
+        int result = instance.getActiveCoachNumber();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of GetActiveCoaches method, of class Tournament.
+     * Test of getActiveCoaches method, of class Tournament.
      */
     @Test
     public void testGetActiveCoaches() {
         System.out.println("GetActiveCoaches");
         Tournament instance = null;
         ArrayList expResult = null;
-        ArrayList result = instance.GetActiveCoaches();
+        ArrayList result = instance.getActiveCoaches();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

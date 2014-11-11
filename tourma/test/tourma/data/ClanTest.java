@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,22 +18,38 @@ import static org.junit.Assert.*;
  * @author WFMJ7631
  */
 public class ClanTest {
+    private static final Logger LOG = Logger.getLogger(ClanTest.class.getName());
 
-    public ClanTest() {
-    }
-
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
+    public ClanTest() {
+    }
+
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }

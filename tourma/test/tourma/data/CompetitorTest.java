@@ -5,7 +5,10 @@
 package tourma.data;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,22 +21,38 @@ import static org.junit.Assert.*;
  * @author WFMJ7631
  */
 public class CompetitorTest {
+    private static final Logger LOG = Logger.getLogger(CompetitorTest.class.getName());
     
-    public CompetitorTest() {
-    }
-    
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
+    public CompetitorTest() {
+    }
+    
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -68,7 +87,7 @@ public class CompetitorTest {
     }
 
     /**
-     * Test of AddMatch method, of class Competitor.
+     * Test of addMatch method, of class Competitor.
      */
     @Test
     public void testAddMatch() {
@@ -76,13 +95,13 @@ public class CompetitorTest {
         Competitor opponent = null;
         Round r = null;
         Competitor instance = new CompetitorImpl();
-        instance.AddMatch(opponent, r);
+        instance.addMatch(opponent, r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of AddMatchRoundRobin method, of class Competitor.
+     * Test of addMatchRoundRobin method, of class Competitor.
      */
     @Test
     public void testAddMatchRoundRobin() {
@@ -90,7 +109,7 @@ public class CompetitorTest {
         Competitor opponent = null;
         Round r = null;
         Competitor instance = new CompetitorImpl();
-        instance.AddMatchRoundRobin(opponent, r);
+        instance.addMatchRoundRobin(opponent, r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -140,14 +159,14 @@ public class CompetitorTest {
     }
 
     /**
-     * Test of RoundCheck method, of class Competitor.
+     * Test of roundCheck method, of class Competitor.
      */
     @Test
     public void testRoundCheck() {
         System.out.println("RoundCheck");
         Round r = null;
         Competitor instance = new CompetitorImpl();
-        instance.RoundCheck(r);
+        instance.roundCheck(r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -166,32 +185,99 @@ public class CompetitorTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class CompetitorImpl extends Competitor {
 
-        public void AddMatch(Competitor opponent, Round r) {
+        /**
+         *
+         * @param opponent
+         * @param r
+         */
+        @Override
+        public void addMatch(Competitor opponent, Round r) {
         }
 
-        public void AddMatchRoundRobin(Competitor opponent, Round r) {
+        /**
+         *
+         * @param opponent
+         * @param r
+         */
+        @Override
+        public void addMatchRoundRobin(Competitor opponent, Round r) {
         }
 
+        /**
+         *
+         * @param opponent
+         * @return
+         */
+        @Override
         public boolean havePlayed(Competitor opponent) {
             return false;
         }
 
+        /**
+         *
+         * @param opponents
+         * @param r
+         * @return
+         */
+        @Override
         public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents,Round r) {
             return null;
         }
 
+        /**
+         *
+         * @return
+         */
+        @Override
         public String getDecoratedName() {
             return "";
         }
 
-        public void RoundCheck(Round r) {
+        /**
+         *
+         * @param r
+         */
+        @Override
+        public void roundCheck(Round r) {
         }
 
         @Override
         public int compareTo(Object o) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            return -1;
+        }
+
+        /**
+         *
+         * @param teams
+         * @param current
+         * @return
+         */
+        @Override
+        public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        /**
+         *
+         * @param name
+         */
+        @Override
+        public void setName(String name) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        /**
+         *
+         * @param p
+         */
+        @Override
+        public void setPicture(BufferedImage p) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 }

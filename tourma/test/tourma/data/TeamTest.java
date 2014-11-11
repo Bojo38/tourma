@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,22 +19,38 @@ import static org.junit.Assert.*;
  * @author WFMJ7631
  */
 public class TeamTest {
+    private static final Logger LOG = Logger.getLogger(TeamTest.class.getName());
     
-    public TeamTest() {
-    }
-    
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
+    public TeamTest() {
+    }
+    
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -122,7 +139,7 @@ public class TeamTest {
     }
 
     /**
-     * Test of AddMatch method, of class Team.
+     * Test of addMatch method, of class Team.
      */
     @Test
     public void testAddMatch() {
@@ -130,7 +147,7 @@ public class TeamTest {
         Competitor opponent = null;
         Round r = null;
         Team instance = new Team();
-        instance.AddMatch(opponent, r);
+        instance.addMatch(opponent, r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -180,7 +197,7 @@ public class TeamTest {
     }
 
     /**
-     * Test of AddMatchRoundRobin method, of class Team.
+     * Test of addMatchRoundRobin method, of class Team.
      */
     @Test
     public void testAddMatchRoundRobin() {
@@ -188,20 +205,20 @@ public class TeamTest {
         Competitor c = null;
         Round r = null;
         Team instance = new Team();
-        instance.AddMatchRoundRobin(c, r);
+        instance.addMatchRoundRobin(c, r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of RoundCheck method, of class Team.
+     * Test of roundCheck method, of class Team.
      */
     @Test
     public void testRoundCheck() {
         System.out.println("RoundCheck");
         Round round = null;
         Team instance = new Team();
-        instance.RoundCheck(round);
+        instance.roundCheck(round);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

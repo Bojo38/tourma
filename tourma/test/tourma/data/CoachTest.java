@@ -6,6 +6,7 @@ package tourma.data;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,22 +20,38 @@ import static org.junit.Assert.*;
  * @author WFMJ7631
  */
 public class CoachTest {
+    private static final Logger LOG = Logger.getLogger(CoachTest.class.getName());
     
-    public CoachTest() {
-    }
-    
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
+    public CoachTest() {
+    }
+    
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -108,7 +125,7 @@ public class CoachTest {
     }
 
     /**
-     * Test of AddMatch method, of class Coach.
+     * Test of addMatch method, of class Coach.
      */
     @Test
     public void testAddMatch() {
@@ -116,13 +133,13 @@ public class CoachTest {
         Competitor opponent = null;
         Round r = null;
         Coach instance = new Coach();
-        instance.AddMatch(opponent, r);
+        instance.addMatch(opponent, r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of CreateMatch method, of class Coach.
+     * Test of createMatch method, of class Coach.
      */
     @Test
     public void testCreateMatch() {
@@ -131,7 +148,7 @@ public class CoachTest {
         Round r = null;
         Coach instance = new Coach();
         CoachMatch expResult = null;
-        CoachMatch result = instance.CreateMatch(opponent, r);
+        CoachMatch result = instance.createMatch(opponent, r);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -182,7 +199,7 @@ public class CoachTest {
     }
 
     /**
-     * Test of AddMatchRoundRobin method, of class Coach.
+     * Test of addMatchRoundRobin method, of class Coach.
      */
     @Test
     public void testAddMatchRoundRobin() {
@@ -190,20 +207,20 @@ public class CoachTest {
         Competitor c = null;
         Round r = null;
         Coach instance = new Coach();
-        instance.AddMatchRoundRobin(c, r);
+        instance.addMatchRoundRobin(c, r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of RoundCheck method, of class Coach.
+     * Test of roundCheck method, of class Coach.
      */
     @Test
     public void testRoundCheck() {
         System.out.println("RoundCheck");
         Round round = null;
         Coach instance = new Coach();
-        instance.RoundCheck(round);
+        instance.roundCheck(round);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

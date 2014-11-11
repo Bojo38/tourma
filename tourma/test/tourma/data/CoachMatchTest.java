@@ -4,7 +4,7 @@
  */
 package tourma.data;
 
-import java.util.ArrayList;
+import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,22 +18,38 @@ import static org.junit.Assert.*;
  * @author WFMJ7631
  */
 public class CoachMatchTest {
+    private static final Logger LOG = Logger.getLogger(CoachMatchTest.class.getName());
     
-    public CoachMatchTest() {
-    }
-    
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
+    public CoachMatchTest() {
+    }
+    
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
