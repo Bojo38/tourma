@@ -163,8 +163,12 @@ public class CoachMatch extends Match {
                 setRefusedBy2(match.getAttribute("RefusedBy2").getBooleanValue());
                 setConcedeedBy1(match.getAttribute("ConcedeedBy1").getBooleanValue());
                 setConcedeedBy2(match.getAttribute("ConcedeedBy2").getBooleanValue());
-            } catch (DataConversionException e) {
+            } catch (DataConversionException | NullPointerException e) {
                 LOG.log(Level.FINE, e.getLocalizedMessage());
+                setRefusedBy1(false);
+                setRefusedBy2(false);
+                setConcedeedBy1(false);
+                setConcedeedBy2(concedeedBy2);
             }
 
             if (((Coach) getCompetitor1())!=null)
@@ -273,7 +277,7 @@ public class CoachMatch extends Match {
                             break;
                         }
                     }
-                    if (getWinner() == null) {
+                    if (super.getWinner() == null) {
                         Random ran=new Random();
                         final int r = ran.nextInt()%2;
                         if (r % 2 == 0) {

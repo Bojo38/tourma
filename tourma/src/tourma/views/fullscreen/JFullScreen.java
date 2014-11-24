@@ -104,7 +104,6 @@ public abstract class JFullScreen extends javax.swing.JFrame {
 
         setAlwaysOnTop(true);
         setName("FullScreen Tourma"); // NOI18N
-        setUndecorated(true);
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);

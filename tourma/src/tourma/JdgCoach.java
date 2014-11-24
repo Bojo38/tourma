@@ -108,7 +108,8 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         if (mCoach.getPicture() == null) {
             try {
-                mCoach.setPicture(ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.gif")));
+                BufferedImage img=ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.png"));
+                mCoach.setPicture(img);
             } catch (IOException ex) {
                 Logger.getLogger(JdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }

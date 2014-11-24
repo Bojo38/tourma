@@ -4,7 +4,6 @@
   <Properties>
     <Property name="alwaysOnTop" type="boolean" value="true"/>
     <Property name="name" type="java.lang.String" value="FullScreen Tourma" noResource="true"/>
-    <Property name="undecorated" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>

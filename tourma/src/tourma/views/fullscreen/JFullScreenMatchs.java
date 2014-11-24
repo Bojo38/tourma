@@ -8,6 +8,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,8 +50,11 @@ public final class JFullScreenMatchs extends JFullScreen {
             Criteria td = Tournament.getTournament().getParams().getCriteria(0);
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            int height = getHeight();
-            int width = getWidth();
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            int width = gd.getDisplayMode().getWidth();
+            int height = gd.getDisplayMode().getHeight();
+            //int height = getHeight();
+            //int width = getWidth();
 
             float size = (float) height / 50;
             Font f0 = font.deriveFont(Font.ITALIC, size);
@@ -267,7 +272,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                         score.setHorizontalAlignment(JLabel.CENTER);
                         jpnContent.add(score, getGridbBagConstraints(colIndex + 1, i * NbLinesPerTeamMatch + j * NbLinesPerCoachMatch + 1, 2, 1));
 
-                        Font f2 = font.deriveFont(Font.ITALIC, (float)height / 75);
+                        Font f2 = font.deriveFont(Font.ITALIC, (float) height / 75);
                         for (int k = 1; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
                             Criteria crit = Tournament.getTournament().getParams().getCriteria(k);
                             value1 = cm.getValue(crit).getValue1();
@@ -320,7 +325,6 @@ public final class JFullScreenMatchs extends JFullScreen {
 
         setAlwaysOnTop(true);
         setName("FullScreen Tourma"); // NOI18N
-        setUndecorated(true);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -369,11 +373,9 @@ public final class JFullScreenMatchs extends JFullScreen {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
-   
     private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
-    
-     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

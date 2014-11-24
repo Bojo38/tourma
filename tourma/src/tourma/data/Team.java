@@ -267,9 +267,11 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
 
         try {
             Element image = team.getChild("Picture");
-            String encodedImage = image.getText();
-            byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
-            setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
+            if (image != null) {
+                String encodedImage = image.getText();
+                byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+                setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
+            }
         } catch (IOException e) {
         }
 
@@ -396,13 +398,12 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
 
         Tournament tour = Tournament.getTournament();
         Parameters params = tour.getParams();
-       
 
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
 
         if (this.getClan() != null) {
-            if (this.getClan() !=  tour.getClan(0)) {
-                if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundsCount()==0) || (params.isAvoidClansMatch()))) {
+            if (this.getClan() != tour.getClan(0)) {
+                if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundsCount() == 0) || (params.isAvoidClansMatch()))) {
                     int i = 0;
                     while (i < possible.size()) {
                         if (possible.get(i).getClan().getName().equals(this.getClan().getName())) {
@@ -494,7 +495,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         boolean same_clan = false;
         if (params.isEnableClans()) {
             if ((getClan() != null) && (opponent.getClan() != null)) {
-                if ((params.isAvoidClansFirstMatch() && (Tournament.getTournament().getRoundsCount()==0))
+                if ((params.isAvoidClansFirstMatch() && (Tournament.getTournament().getRoundsCount() == 0))
                         || (params.isAvoidClansMatch())) {
                     if (getClan().equals(opponent.getClan())) {
                         same_clan = true;
@@ -518,7 +519,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         for (int i = round.getMatchsCount() - 1; i > 0; i--) {
 
             final Team t1 = (Team) round.getMatch(i).getCompetitor1();
-            final Team t2 = (Team)round.getMatch(i).getCompetitor2();
+            final Team t2 = (Team) round.getMatch(i).getCompetitor2();
             boolean have_played = !t1.canPlay(t2, round);
 
             if (have_played) {
@@ -533,8 +534,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
 
                     if (canMatch) {
                         //Switch Team
-                       round.getMatch(i).setCompetitor2(t2_tmp);
-                       round.getMatch(k).setCompetitor2(t2);
+                        round.getMatch(i).setCompetitor2(t2_tmp);
+                        round.getMatch(k).setCompetitor2(t2);
 
                         // Switch coachs into matchs 
                         for (int j = 0; j < tour.getParams().getTeamMatesNumber(); j++) {
@@ -552,8 +553,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                         canMatch = !have_played;
                         if (canMatch) {
                             //Switch Team
-                           round.getMatch(i).setCompetitor2(t1_tmp);
-                           round.getMatch(k).setCompetitor2(t2);
+                            round.getMatch(i).setCompetitor2(t1_tmp);
+                            round.getMatch(k).setCompetitor2(t2);
 
                             // Switch coachs into matchs 
                             for (int j = 0; j < tour.getParams().getTeamMatesNumber(); j++) {

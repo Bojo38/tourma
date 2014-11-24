@@ -7,6 +7,8 @@ package tourma.views.fullscreen;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -42,8 +44,9 @@ public final class JFullScreenClanRank extends JFullScreen {
             //Criteria td = Tournament.getTournament().getParams().getCriteria(0);
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            int height = getHeight();
-            int width = getWidth();
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            int width = gd.getDisplayMode().getWidth();
+            int height = gd.getDisplayMode().getHeight();
 
             float size= height /((float) 50.0);
             Font f0 = font.deriveFont(Font.ITALIC,size);
@@ -213,7 +216,6 @@ public final class JFullScreenClanRank extends JFullScreen {
 
         setAlwaysOnTop(true);
         setName("FullScreen Tourma"); // NOI18N
-        setUndecorated(true);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
