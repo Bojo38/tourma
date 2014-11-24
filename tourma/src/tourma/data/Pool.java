@@ -18,18 +18,16 @@ import tourma.utility.StringConstants;
 public class Pool implements XMLExport {
     private static final Logger LOG = Logger.getLogger(Pool.class.getName());
 
-    //public ArrayList<Coach> mCoachs = new ArrayList<>();
-    //public ArrayList<Team> mTeams = new ArrayList<>();
 
     /**
      *
      */
-        public ArrayList<Competitor> mCompetitors=new ArrayList<>();
+        private final ArrayList<Competitor> mCompetitors=new ArrayList<>();
 
     /**
      *
      */
-    public String mName = "";
+    private String mName = "";
 
     /**
      *
@@ -38,10 +36,10 @@ public class Pool implements XMLExport {
     @Override
     public Element getXMLElement() {
         final Element pool = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POOL"));
-        pool.setAttribute(StringConstants.CS_NAME, this.mName);
-        for (int j = 0; j < this.mCompetitors.size(); j++) {
+        pool.setAttribute(StringConstants.CS_NAME, this.getName());
+        for (Competitor mCompetitor : mCompetitors) {
             final Element coach = new Element(StringConstants.CS_COACH);
-            coach.setAttribute(StringConstants.CS_NAME, this.mCompetitors.get(j).getName());
+            coach.setAttribute(StringConstants.CS_NAME, mCompetitor.getName());
             pool.addContent(coach);
         }
         /*for (int j = 0; j < this.mTeams.size(); j++) {
@@ -58,20 +56,20 @@ public class Pool implements XMLExport {
      */
     @Override
     public void setXMLElement(final Element pool) {
-       mName = pool.getAttributeValue(StringConstants.CS_NAME);
+        setName(pool.getAttributeValue(StringConstants.CS_NAME));
         
-       mCompetitors.clear();
-        final List coachs = pool.getChildren(StringConstants.CS_COACH);
-        Iterator ro = coachs.iterator();
+        mCompetitors.clear();
+        final List<Element> coachs = pool.getChildren(StringConstants.CS_COACH);
+        Iterator<Element> ro = coachs.iterator();
         while (ro.hasNext()) {
-            final Element competitor = (Element) ro.next();
+            final Element competitor = ro.next();
             final String name=competitor.getAttributeValue(StringConstants.CS_NAME);
             Competitor c=Coach.getCoach(name);
             if (c==null)
             {
-                c=Team.sTeamMap.get(name);
+                c=Team.getTeam(name);
             }
-            this.mCompetitors.add(c);
+            mCompetitors.add(c);
         }
         
         /*mTeams.clear();
@@ -83,4 +81,55 @@ public class Pool implements XMLExport {
             this.mTeams.add(Team.sTeamMap.get(name));
         }*/
     }
+
+    /**
+     * @return the mName
+     */
+    public String getName() {
+        return mName;
+    }
+
+    /**
+     * @param mName the mName to set
+     */
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    /**
+     * @param i
+     * @return the mCompetitors
+     */
+    public Competitor getCompetitor(int i) {
+        return mCompetitors.get(i);
+    }
+    
+    /**
+     * @param c
+     */
+    public void addCompetitor(Competitor c) {
+         mCompetitors.add(c);
+    }
+    
+    /**
+     * @return the mCompetitors
+     */
+    public int getCompetitorCount() {
+        return mCompetitors.size();
+    }
+    
+    /**
+     * @return the mCompetitors
+     */
+    @SuppressWarnings("ReturnOfCollectionOrArrayField")
+    public ArrayList<Competitor> getCompetitors(){
+        return mCompetitors;
+    }
+
+    /**
+     * @param mCompetitors the mCompetitors to set
+     */
+    /*public void setCompetitors(ArrayList<Competitor> mCompetitors) {
+        this.mCompetitors = mCompetitors;
+    }*/
 }

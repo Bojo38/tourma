@@ -21,12 +21,12 @@ public class Group implements XMLExport {
     /**
      *
      */
-    public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+    private String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
     /**
      *
      */
-    public ArrayList<RosterType> mRosters;
+    private ArrayList<RosterType> mRosters;
 
     /**
      *
@@ -44,10 +44,10 @@ public class Group implements XMLExport {
     @Override
     public Element getXMLElement() {
         final Element group = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"));
-        group.setAttribute(StringConstants.CS_NAME, this.mName);
-        for (int j = 0; j < this.mRosters.size(); j++) {
+        group.setAttribute(StringConstants.CS_NAME, this.getName());
+        for (int j = 0; j < this.getRosterCount(); j++) {
             final Element roster = new Element(StringConstants.CS_ROSTER);
-            roster.setAttribute(StringConstants.CS_NAME, this.mRosters.get(j).mName);
+            roster.setAttribute(StringConstants.CS_NAME, this.getRoster(j).getName());
             group.addContent(roster);
         }
         return group;
@@ -59,7 +59,7 @@ public class Group implements XMLExport {
      */
     @Override
     public void setXMLElement(final Element group) {
-        mName = group.getAttributeValue(StringConstants.CS_NAME);
+        setName(group.getAttributeValue(StringConstants.CS_NAME));
 
         final List rosters = group.getChildren(StringConstants.CS_ROSTER);
         final Iterator ro = rosters.iterator();
@@ -67,8 +67,62 @@ public class Group implements XMLExport {
             final Element roster = (Element) ro.next();
              String name=roster.getAttributeValue(StringConstants.CS_NAME);
                         name=RosterType.getRosterName(name);
-            final RosterType rost = RosterType.mRosterTypes.get(name);
-            this.mRosters.add(rost);
+            final RosterType rost = RosterType.getRosterType(name);
+            this.addRoster(rost);
         }
+    }
+
+    /**
+     * @return the mName
+     */
+    public String getName() {
+        return mName;
+    }
+
+    /**
+     * @param mName the mName to set
+     */
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    /**
+     * @param i
+     * @return the mRosters
+     */
+    public RosterType getRoster(int i) {
+        return mRosters.get(i);
+    }
+ 
+            
+    /**
+     *
+     * @return 
+     */
+    public int getRosterCount() {
+        return mRosters.size();
+    }
+    
+    /**
+     * 
+     * @param rt 
+     */
+    public void addRoster(RosterType rt) {
+        mRosters.add(rt);
+    }
+    
+    /**
+     * 
+     * @param rt 
+     */
+    public void removeRoster(RosterType rt) {
+        mRosters.remove(rt);
+    }
+
+    /**
+     * New roster array
+     */
+    public void newRosters() {
+        this.mRosters = new ArrayList<>();
     }
 }

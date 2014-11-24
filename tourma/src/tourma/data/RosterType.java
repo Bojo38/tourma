@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -37,17 +38,17 @@ public class RosterType implements XMLExport{
      *
      */
     
-    public static ArrayList<String> mRostersNames = new ArrayList<>();
+    private static ArrayList<String> mRostersNames = new ArrayList<>();
 
     /**
      *
      */
-    public static HashMap<String,RosterType> mRosterTypes = new HashMap<>();
+    private static HashMap<String,RosterType> mRosterTypes = new HashMap<>();
 
     private static final Logger LOG = Logger.getLogger(RosterType.class.getName());
 
     /**
-     *
+     * Initializes collection
      */
     public static void initCollection() {
         mRostersNames.clear();
@@ -247,10 +248,121 @@ public class RosterType implements XMLExport{
         }
         return result;
     }
+
+    /**
+     * @param r
+     * @return the mRosterTypes
+     */
+    /*public static HashMap<String,RosterType> getRosterTypes() {
+        return mRosterTypes;
+    }*/
+    
+    /**
+     * 
+     * @param r
+     * @return 
+     */
+    public static RosterType getRosterType(String r) {
+        return mRosterTypes.get(r);
+    }
+    
+    /**
+     * 
+     * @param i
+     * @return 
+     */
+    public static RosterType getRosterType(int i) {
+        return (RosterType) mRosterTypes.values().toArray()[i];
+    }
+    
+    /**
+     * 
+     * @param n
+     * @param r
+     */
+    public static void putRosterType(String n,RosterType r)
+    {
+        mRosterTypes.put(n, r);
+    }
+
+ 
+    /**
+     * @param n
+     */
+    public static void addRosterName(String n)
+    {
+        mRostersNames.add(n);
+    }
+    
+    /**
+     * @return the mRostersNames
+     */
+    public static int getRostersNamesCount() {
+        return mRostersNames.size();
+    }
+    
+    
+    /**
+     * 
+     * @param i
+     * @return 
+     */
+     public static String getRostersName(int i) {
+        return mRostersNames.get(i);
+    }
+     
+      /*public static ArrayList<String> getRostersNames() {
+        return mRostersNames;
+    }*/
+
+    /**
+     * @param amRostersNames the mRostersNames to set
+     */
+    /*public static void setRostersNames(ArrayList<String> amRostersNames) {
+        mRostersNames = amRostersNames;
+    }*/
+    
+    /**
+     * Reate new roster names array
+     */
+    public static void newRostersNames() {
+        mRostersNames = new ArrayList<>();
+    }
+
+    /**
+     * Create new roster type hashmap
+     */
+     public static void newRostersTypes() {
+        mRosterTypes = new HashMap<>();
+    }
+
+     /**
+      * 
+      * @return 
+      */
+    public static DefaultComboBoxModel<String> getRostersNamesModel() {
+        return new DefaultComboBoxModel<>(getRostersNames());
+    }
+     
+    
+    /**
+      * 
+      * @return 
+      */
+    public static String[] getRostersNames() {
+         String[] s=new String[mRostersNames.size()];
+        for(int i=0; i<mRostersNames.size(); i++ )
+        {
+               s[i]= mRostersNames.get(i);
+        }
+        return s;
+    }
+
+    
     /**
      *
      */
-    public String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+    private String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
 
     /**
      *
@@ -264,27 +376,43 @@ public class RosterType implements XMLExport{
      *
      * @param name
      */
-    public RosterType(final String name) {
+    public RosterType(final String name)
+    {
         mName = name;
     }
-    
+
     /**
      *
      * @return
      */
     @Override
-    public Element getXMLElement() {
-        final Element elt = new Element("Roster");
-        elt.setAttribute("Name",this.mName);
-        return elt;        
-    }
-
+public Element getXMLElement() {
+    final Element elt = new Element("Roster");
+    elt.setAttribute("Name", this.getName());
+    return elt;
+}
+    
     /**
      *
      * @param e
      */
     @Override
     public void setXMLElement(Element e) {
-            this.mName = e.getAttributeValue(StringConstants.CS_NAME);
+        this.setName(e.getAttributeValue(StringConstants.CS_NAME));
     }
+
+    /**
+     * @return the mName
+     */
+    public String getName() {
+        return mName;
+    }
+
+    /**
+     * @param mName the mName to set
+     */
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+    
 }

@@ -6,6 +6,7 @@ import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
 import tourma.data.Tournament;
+import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.utils.TableFormat;
 import tourma.views.report.JdgRanking;
@@ -24,18 +25,21 @@ import tourma.views.report.JdgRanking;
  *
  * @author Administrateur
  */
-public class JPNGroup extends javax.swing.JPanel {
+public final class JPNGroup extends javax.swing.JPanel {
 
-    Tournament mTournament;
-    Group mGroup;
-    int mRoundNumber;
+    private final Tournament mTournament;
+    private final Group mGroup;
+    private final int mRoundNumber;
 
     /**
      *
      */
-    public boolean mRoundOnly=false;
+    private  boolean mRoundOnly=false;
     
-    /** Creates new form JPNGroup */
+    /** Creates new form JPNGroup
+     * @param t
+     * @param g
+     * @param roundNumber */
     public JPNGroup(final Tournament t,final  Group g,final int roundNumber) {
         initComponents();
         mTournament = t;
@@ -44,6 +48,14 @@ public class JPNGroup extends javax.swing.JPanel {
         update();
     }
 
+     /**
+     * 
+     * @param r 
+     */
+    public void setRoundOnly(boolean r)
+    {
+        mRoundOnly=r;
+    }
     
     /** This method is called from within the constructor to
      * initialize the form.
@@ -90,28 +102,23 @@ public class JPNGroup extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     *
+     * Update panel
      */
     public void update() {
         final ArrayList<Coach> ArrayList = new ArrayList<>();
 
-        for (int i = 0; i < mTournament.getCoachs().size(); i++) {
-            final Coach c = mTournament.getCoachs().get(i);
-            for (int j = 0; j < mGroup.mRosters.size(); j++) {
-                if (mGroup.mRosters.get(j).mName.equals(c.getRoster().mName)) {
+        for (int i = 0; i < mTournament.getCoachsCount(); i++) {
+            final Coach c = mTournament.getCoach(i);
+            for (int j = 0; j < mGroup.getRosterCount(); j++) {
+                if (mGroup.getRoster(j).getName().equals(c.getRoster().getName())) {
                     ArrayList.add(c);
                     break;
                 }
             }
         }
 
-        final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber,
-                mTournament.getParams().mRankingIndiv1,
-                mTournament.getParams().mRankingIndiv2,
-                mTournament.getParams().mRankingIndiv3,
-                mTournament.getParams().mRankingIndiv4,
-                mTournament.getParams().mRankingIndiv5,
-                ArrayList, mTournament.getParams().mTeamTournament,mRoundOnly,false);
+        final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                ArrayList, mTournament.getParams().isTeamTournament(),mRoundOnly,false);
         jtbGroup.setModel(tableModel);
         jtbGroup.setDefaultRenderer(String.class, tableModel);
         jtbGroup.setDefaultRenderer(Integer.class, tableModel);
@@ -124,7 +131,7 @@ public class JPNGroup extends javax.swing.JPanel {
 
      @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralClanActionPerformed
-        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR GROUPE")+": " +mGroup.mName, mRoundNumber, mTournament, (MjtRankingIndiv) jtbGroup.getModel(), 0);
+        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR GROUPE")+": " +mGroup.getName(), mRoundNumber, mTournament, (MjtRanking) jtbGroup.getModel(), 0);
         jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralClanActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -134,4 +141,13 @@ public class JPNGroup extends javax.swing.JPanel {
     private javax.swing.JTable jtbGroup;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNGroup.class.getName());
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+    
+    
 }

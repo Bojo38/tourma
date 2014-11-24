@@ -4,23 +4,25 @@
  */
 package tourma.views.parameters;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
+import tourma.JdgCoach;
+import tourma.JdgTeam;
 import tourma.MainFrame;
+import tourma.data.ETeamPairing;
+import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtTeams;
 import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
-import tourma.data.Team;
-import tourma.JdgCoach;
-import tourma.JdgTeam;
 
 /**
  *
  * @author WFMJ7631
  */
-public class JPNTeams extends javax.swing.JPanel {
+public final class JPNTeams extends javax.swing.JPanel {
 
-    Tournament mTournament;
+    private final Tournament mTournament;
 
     /**
      * Creates new form JPNTeams
@@ -111,39 +113,44 @@ public class JPNTeams extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAddTeamActionPerformed
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveTeamActionPerformed
-        final Team t = mTournament.getTeams().get(jtbTeam.getSelectedRow());
-        for (int i = 0; i < t.mCoachs.size(); i++) {
-            mTournament.getCoachs().remove(t.mCoachs.get(i));
+        final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
+        for (int i = 0; i < t.getCoachCount(); i++) {
+            mTournament.removeCoach(t.getCoach(i));
         }
-        t.mCoachs.clear();
-        mTournament.getTeams().remove(t);
+        t.clearCoachs();
+        mTournament.removeTeam(t);
         update();
     }//GEN-LAST:event_jbtRemoveTeamActionPerformed
 
     /**
-     *
+     * Update Panel
      */
     public void update() {
 
-          final boolean bTourStarted = mTournament.getRounds().size() > 0;
+          final boolean bTourStarted = mTournament.getRoundsCount() > 0;
           
         jbtAddTeam.setEnabled(!bTourStarted);
         jbtRemoveTeam.setEnabled(!bTourStarted);
 
-        if (mTournament.getParams().mTeamTournament) {
+        if (mTournament.getParams().isTeamTournament()) {
             String text;
-            if (mTournament.getParams().mTeamPairing == 0) {
+            if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
                 text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single");
             } else {
                 text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam");
             }
             jlbDetails.setText(
                     java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("MEMBERSNUMBER")
-                    + ": " + mTournament.getParams().mTeamMatesNumber
+                    + ": " + mTournament.getParams().getTeamMatesNumber()
                     + "("+text+")");
         } 
 
-        final MjtTeams teamModel = new MjtTeams(mTournament.getTeams());
+        ArrayList<Team> teams=new ArrayList<>();
+        for (int cpt=0;cpt<mTournament.getTeamsCount(); cpt++)
+        {
+            teams.add(mTournament.getTeam(cpt));
+        }
+        final MjtTeams teamModel = new MjtTeams(teams);
         jtbTeam.setModel(teamModel);
         TableFormat.setColumnSize(jtbTeam);
         jtbTeam.setDefaultRenderer(String.class, teamModel);
@@ -151,15 +158,15 @@ public class JPNTeams extends javax.swing.JPanel {
     }
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
-        if (mTournament.getTeams().size() > jtbTeam.getSelectedRow()) {
-            final Team t = mTournament.getTeams().get(jtbTeam.getSelectedRow());
+        if (mTournament.getTeamsCount() > jtbTeam.getSelectedRow()) {
+            final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
             if (jtbTeam.getSelectedColumn() == 1) {
                 final JdgTeam jdg=new JdgTeam(MainFrame.getMainFrame(),true,t);
                 jdg.setVisible(true);
                 //final String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterTeamName"), t.mName);
                 //t.mName = name;
             } else if (jtbTeam.getSelectedColumn() > 1) {
-                final JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, t.mCoachs.get(jtbTeam.getSelectedColumn() - 2));
+                final JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, t.getCoach(jtbTeam.getSelectedColumn() - 2));
                 jdg.setVisible(true);
             }
             update();
@@ -176,4 +183,12 @@ public class JPNTeams extends javax.swing.JPanel {
     private javax.swing.JTable jtbTeam;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNTeams.class.getName());
+    
+     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

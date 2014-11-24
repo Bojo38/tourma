@@ -17,25 +17,28 @@ import freemarker.template.TemplateException;
 import java.awt.Dimension;
 import java.awt.print.PrinterException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import tourma.*;
+import tourma.MainFrame;
 import tourma.data.Coach;
-import tourma.data.Criteria;
 import tourma.data.CoachMatch;
 import tourma.data.Match;
 import tourma.data.Round;
@@ -48,16 +51,17 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class JdgRound extends javax.swing.JDialog {
+public final class JdgRound extends javax.swing.JDialog {
+    private static final long serialVersionUID = 13L;
 
-    Round mRound;
-    int mRoundNumber;
-    Tournament mTour;
-    boolean mResult;
-    boolean mTeam = false;
-    ArrayList<Team> mTeams1;
-    ArrayList<Team> mTeams2;
-    File mFilename = null;
+    private Round mRound;
+    private int mRoundNumber;
+    private Tournament mTour;
+    private boolean mResult;
+    private boolean mTeam = false;
+    private ArrayList<Team> mTeams1;
+    private ArrayList<Team> mTeams2;
+    private File mFilename = null;
 
     /**
      * Creates new form jdgRoundReport
@@ -78,7 +82,7 @@ public class JdgRound extends javax.swing.JDialog {
         mResult = result;
         mTeam = team;
 
-        this.setTitle(tour.getParams().mTournamentName
+        this.setTitle(tour.getParams().getTournamentName()
                 + " -" + StringConstants.CS_THICK
                 + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND)
                 + " "
@@ -117,7 +121,7 @@ public class JdgRound extends javax.swing.JDialog {
         mRoundNumber = roundNumber;
         mTour = tour;
 
-        this.setTitle(tour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + roundNumber);
+        this.setTitle(tour.getParams().getTournamentName() + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + roundNumber);
         try {
             jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
             File f;
@@ -209,15 +213,16 @@ public class JdgRound extends javax.swing.JDialog {
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             final File export = jfc.getSelectedFile();
 
-            FileWriter out = null;
-            FileReader in = null;
+            OutputStreamWriter out = null;
+            InputStreamReader in = null;
             try {
-                in = new FileReader(mFilename);
+                in = new InputStreamReader(new FileInputStream(mFilename),Charset.defaultCharset());
                 {
-                    out = new FileWriter(export);
-                    int c;
-                    while ((c = in.read()) != -1) {
+                    out = new OutputStreamWriter(new FileOutputStream(export),Charset.defaultCharset());
+                    int c = in.read();
+                    while (c != -1) {
                         out.write(c);
+                        c = in.read();
                     }
                 }
 
@@ -230,7 +235,7 @@ public class JdgRound extends javax.swing.JDialog {
                     try {
                         in.close();
                     } catch (IOException e) {
-                        System.out.println(e.getLocalizedMessage());
+                        LOG.log(Level.INFO,e.getLocalizedMessage());
                     }
                 }
 
@@ -238,7 +243,7 @@ public class JdgRound extends javax.swing.JDialog {
                     try {
                         out.close();
                     } catch (IOException e) {
-                        System.out.println(e.getLocalizedMessage());
+                        LOG.log(Level.INFO,e.getLocalizedMessage());
                     }
                 }
             }
@@ -272,57 +277,57 @@ public class JdgRound extends javax.swing.JDialog {
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             final Template temp = cfg.getTemplate("round.html");
 
-            final Map root = new HashMap();
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + mRoundNumber);
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE"), mRound.getMatchs().size());
+            final Map<String, Object> root = new HashMap<>();
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().getTournamentName() + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + mRoundNumber);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLE"), mRound.getMatchsCount());
 
             final ArrayList<CoachMatch> matches = mRound.getCoachMatchs();
-            final ArrayList parMatches = new ArrayList();
+            final ArrayList<Object> parMatches = new ArrayList<>();
             if (mResult) {
                 root.put(StringConstants.CS_RESULT, 1);
             } else {
                 root.put(StringConstants.CS_RESULT, 0);
             }
 
-            final ArrayList crits = new ArrayList();
-            final ArrayList<Criteria> criterias = Tournament.getTournament().getParams().mCriterias;
-            for (int i = 1; i < criterias.size(); i++) {
-                crits.add(criterias.get(i).mName);
+            final ArrayList<Object> crits = new ArrayList<>();
+            //final ArrayList<Criteria> criterias = Tournament.getTournament().getParams().getCriterias();
+            for (int i = 1; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                crits.add(Tournament.getTournament().getParams().getCriteria(i).getName());
             }
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITERIAS"), crits);
 
             for (int i = 0; i < matches.size(); i++) {
                 final CoachMatch match = matches.get(i);
 
-                final HashMap m = new HashMap();
+                final HashMap<String,Object> m = new HashMap<>();
                 m.put("numero", i + 1);
 
                 if (match.getRoster1() == null) {
-                    m.put("roster1", ((Coach) match.mCompetitor1).getRoster().mName);
+                    m.put("roster1", ((Coach) match.getCompetitor1()).getRoster().getName());
                 } else {
-                    m.put("roster1", match.getRoster1().mName);
+                    m.put("roster1", match.getRoster1().getName());
                 }
 
                 if (match.getRoster2() == null) {
-                    m.put("roster2", ((Coach) match.mCompetitor2).getRoster().mName);
+                    m.put("roster2", ((Coach) match.getCompetitor2()).getRoster().getName());
                 } else {
-                    m.put("roster2", match.getRoster2().mName);
+                    m.put("roster2", match.getRoster2().getName());
                 }
 
-                if (!mTour.getParams().mTeamTournament) {
-                    m.put("coach1", match.mCompetitor1.mName);
+                if (!mTour.getParams().isTeamTournament()) {
+                    m.put("coach1", match.getCompetitor1().getName());
                 } else {
-                    m.put("coach1", ((Coach) match.mCompetitor1).getTeamMates().mName + StringConstants.CS_THICK + match.mCompetitor1.mName);
+                    m.put("coach1", ((Coach) match.getCompetitor1()).getTeamMates().getName() + StringConstants.CS_THICK + match.getCompetitor1().getName());
                 }
                 if (mResult) {
-                    m.put("score1", match.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0)).mValue1);
-                    m.put("score2", match.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0)).mValue2);
+                    m.put("score1", match.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1());
+                    m.put("score2", match.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2());
 
-                    final ArrayList values = new ArrayList();
-                    for (int j = 1; j < criterias.size(); j++) {
-                        final HashMap value = new HashMap();
-                        value.put("value1", match.mValues.get(criterias.get(j)).mValue1);
-                        value.put("value2", match.mValues.get(criterias.get(j)).mValue2);
+                    final ArrayList<Object> values = new ArrayList<>();
+                    for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
+                        final HashMap<String,Object> value = new HashMap<>();
+                        value.put("value1", match.getValue(Tournament.getTournament().getParams().getCriteria(j)).getValue1());
+                        value.put("value2", match.getValue(Tournament.getTournament().getParams().getCriteria(j)).getValue2());
                         values.add(value);
                     }
                     m.put("values", values);
@@ -330,19 +335,19 @@ public class JdgRound extends javax.swing.JDialog {
                 } else {
                     m.put("score1", StringConstants.CS_HTML_EMPTY);
                     m.put("score2", StringConstants.CS_HTML_EMPTY);
-                    final ArrayList values = new ArrayList();
-                    for (int j = 1; j < criterias.size(); j++) {
-                        final HashMap value = new HashMap();
+                    final ArrayList<Object> values = new ArrayList<>();
+                    for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
+                        final HashMap<String,Object> value = new HashMap<>();
                         value.put("value1", StringConstants.CS_HTML_EMPTY);
                         value.put("value2", StringConstants.CS_HTML_EMPTY);
                         values.add(value);
                     }
                     m.put("values", values);
                 }
-                if (!mTour.getParams().mTeamTournament) {
-                    m.put("coach2", match.mCompetitor2.mName);
+                if (!mTour.getParams().isTeamTournament()) {
+                    m.put("coach2", match.getCompetitor2().getName());
                 } else {
-                    m.put("coach2", ((Coach) match.mCompetitor2).getTeamMates().mName + StringConstants.CS_THICK + match.mCompetitor2.mName);
+                    m.put("coach2", ((Coach) match.getCompetitor2()).getTeamMates().getName() + StringConstants.CS_THICK + match.getCompetitor2().getName());
                 }
                 //m.put("coach2", match.mCompetitor2.mName);
                 parMatches.add(m);
@@ -355,15 +360,11 @@ public class JdgRound extends javax.swing.JDialog {
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATEGENERATION"), formatShort.format(new Date()));
             address = File.createTempFile(StringConstants.CS_RESULT + format.format(new Date()), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".TMP"));
             address.deleteOnExit();
-            out = new FileWriter(address);
+            out = new OutputStreamWriter(new FileOutputStream(address),Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (TemplateException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (URISyntaxException e) {
+        } catch (IOException | TemplateException | URISyntaxException e) {
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
         } finally {
             if (out != null) {
@@ -398,9 +399,9 @@ public class JdgRound extends javax.swing.JDialog {
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             final Template temp = cfg.getTemplate("team_round.html");
 
-            final Map root = new HashMap();
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().mTournamentName + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + mRoundNumber);
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLES"), mRound.getMatchs().size());
+            final Map<String,Object> root = new HashMap<>();
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"), mTour.getParams().getTournamentName() + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + mRoundNumber);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLES"), mRound.getMatchsCount());
 
             if (mResult) {
                 root.put(StringConstants.CS_RESULT, 1);
@@ -409,10 +410,10 @@ public class JdgRound extends javax.swing.JDialog {
             }
 
             final ArrayList<Team> teams = new ArrayList<>();
-            for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                final Match m = mRound.getMatchs().get(i);
-                final Team team1 = (Team) m.mCompetitor1;
-                final Team team2 = (Team) m.mCompetitor2;
+            for (int i = 0; i < mRound.getMatchsCount(); i++) {
+                final Match m = mRound.getMatch(i);
+                final Team team1 = (Team) m.getCompetitor1();
+                final Team team2 = (Team) m.getCompetitor2();
                 if (!teams.contains(team1)) {
                     teams.add(team1);
                 }
@@ -421,10 +422,10 @@ public class JdgRound extends javax.swing.JDialog {
                 }
             }
             final MjtMatchTeams model = new MjtMatchTeams(teams, mRound);
-            final ArrayList parMatches = new ArrayList();
+            final ArrayList<Object> parMatches = new ArrayList<>();
             for (int i = 0; i < model.getRowCount(); i++) {
 
-                final HashMap m = new HashMap();
+                final HashMap<String,Object> m = new HashMap<>();
                 m.put("numero", model.getValueAt(i, 0));
                 m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM1"), model.getValueAt(i, 1));
                 if (mResult) {
@@ -447,15 +448,11 @@ public class JdgRound extends javax.swing.JDialog {
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATEGENERATION"), formatShort.format(new Date()));
             address = File.createTempFile(StringConstants.CS_RESULT + format.format(new Date()), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".TMP"));
             address.deleteOnExit();
-            out = new FileWriter(address);
+            out = new OutputStreamWriter(new FileOutputStream(address),Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (TemplateException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (URISyntaxException e) {
+        } catch (IOException | TemplateException | URISyntaxException e) {
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
         } finally {
             if (out != null) {
@@ -490,23 +487,23 @@ public class JdgRound extends javax.swing.JDialog {
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             final Template temp = cfg.getTemplate("team_round.html");
 
-            final Map root = new HashMap();
+            final Map<String,Object> root = new HashMap<>();
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"),
-                    mTour.getParams().mTournamentName + " - "
+                    mTour.getParams().getTournamentName() + " - "
                     + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round") + " " + mRoundNumber);
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLES"), mTour.getTeams().size() / 2);
+            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TABLES"), mTour.getTeamsCount() / 2);
             root.put(StringConstants.CS_RESULT, 0);
 
-            final ArrayList parMatches = new ArrayList();
+            final ArrayList<Object> parMatches = new ArrayList<>();
             for (int i = 0; i < mTeams1.size(); i++) {
-                final HashMap m = new HashMap();
+                final HashMap<String,Object> m = new HashMap<>();
                 m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMERO"), i + 1);
-                m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN1"), mTeams1.get(i).mName);
+                m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN1"), mTeams1.get(i).getName());
                 m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V1"), StringConstants.CS_HTML_EMPTY);
                 m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("N"), StringConstants.CS_HTML_EMPTY);
                 m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("V2"), StringConstants.CS_HTML_EMPTY);
 
-                m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN2"), mTeams2.get(i).mName);
+                m.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN2"), mTeams2.get(i).getName());
                 parMatches.add(m);
             }
 
@@ -517,15 +514,11 @@ public class JdgRound extends javax.swing.JDialog {
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATEGENERATION"), formatShort.format(new Date()));
             address = File.createTempFile(StringConstants.CS_RESULT + format.format(new Date()), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".TMP"));
             address.deleteOnExit();
-            out = new FileWriter(address);
+            out = new OutputStreamWriter(new FileOutputStream(address),Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (TemplateException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (URISyntaxException e) {
+        } catch (IOException | TemplateException | URISyntaxException e) {
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
         } finally {
             if (out != null) {
@@ -540,4 +533,12 @@ public class JdgRound extends javax.swing.JDialog {
         return address;
     }
     private static final Logger LOG = Logger.getLogger(JdgRound.class.getName());
+    
+     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

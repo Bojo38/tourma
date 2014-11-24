@@ -19,30 +19,51 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
 
     /**
      *
+     * @param mix
+     * @return
      */
-    public String mName;
+    public static Color generateRandomColor(final Color mix) {
+        final Random random = new Random();
+        int red = random.nextInt(256);
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
+        
+        // mix the color
+        if (mix != null) {
+            red = (red + mix.getRed()) / 2;
+            green = (green + mix.getGreen()) / 2;
+            blue = (blue + mix.getBlue()) / 2;
+        }
+        
+        return new Color(red, green, blue);
+    }
 
     /**
      *
      */
-    public Color mColor;
+    private String mName;
 
     /**
      *
      */
-    public ArrayList<Match> mMatchs=new ArrayList<>();
+    private Color mColor;
 
     /**
      *
      */
-    public BufferedImage picture=null;
+    private ArrayList<Match> mMatchs=new ArrayList<>();
+
+    /**
+     *
+     */
+    private BufferedImage picture=null;
     /**
      * Clan
      */
-    public Clan mClan;
+    private Clan mClan;
 
     /**
-     *
+     * Default constructor
      */
     public Competitor() {
         mColor = generateRandomColor(Color.WHITE);
@@ -63,27 +84,6 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
         mMatchs = new ArrayList<>();
     }
 
-    /**
-     *
-     * @param mix
-     * @return
-     */
-    protected Color generateRandomColor(final Color mix) {
-        final Random random = new Random();
-        int red = random.nextInt(256);
-        int green = random.nextInt(256);
-        int blue = random.nextInt(256);
-        
-        // mix the color
-        if (mix != null) {
-            red = (red + mix.getRed()) / 2;
-            green = (green + mix.getGreen()) / 2;
-            blue = (blue + mix.getBlue()) / 2;
-        }
-        
-        return new Color(red, green, blue);
-    }
-    
     /**
      *
      * @param opponent
@@ -131,12 +131,12 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
      * @param current
      * @return
      */
-    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams,Round current);    
+    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current);    
+
     @Override
     public String toString() {
         return getName();
     }
-    
     /**
      *
      * @return
@@ -154,4 +154,114 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
     public BufferedImage getPicture() {
         return picture;
     }
+
+    /**
+     * @param mName the mName to set
+     */
+    @Override
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    /**
+     * @return the mColor
+     */
+    public Color getColor() {
+        return mColor;
+    }
+
+    /**
+     * @param mColor the mColor to set
+     */
+    public void setColor(Color mColor) {
+        this.mColor = mColor;
+    }
+
+    /**
+     * @param picture the picture to set
+     */
+    @Override
+    public void setPicture(BufferedImage picture) {
+        this.picture = picture;
+    }
+
+    /**
+     * @return the mClan
+     */
+    public Clan getClan() {
+        return mClan;
+    }
+
+    /**
+     * @param mClan the mClan to set
+     */
+    public void setClan(Clan mClan) {
+        this.mClan = mClan;
+    }
+
+    /**
+     * @param i
+     * @return the mMatchs
+     */
+    public Match getMatch(int i) {
+        return mMatchs.get(i);
+    }
+    
+    /**
+     *
+     * @return 
+     */
+    public int getMatchCount() {
+        return mMatchs.size();
+    }
+ 
+    /**
+     *
+     * @param m 
+     */
+    public void addMatch(Match m) {
+        mMatchs.add(m);
+    }
+
+    /**
+     *
+     * @param m 
+     */
+    public void removeMatch(Match m) {
+        mMatchs.remove(m);
+    }
+    
+    /**
+     *
+     * @return 
+     */
+    public boolean isMatchsNotNull() {
+        return mMatchs!=null;
+    }
+    
+    /**
+     * New match arrays
+     */
+    public void newMatchs()
+    {
+        this.mMatchs = new ArrayList<>();
+    }
+    
+    /**
+     * 
+     * @param m
+     * @return 
+     */
+    public int matchIndex(Match m) {
+        return mMatchs.indexOf(m);
+    }
+    
+    /**
+     *  clear the matchs array
+     */
+    public void clearMatchs()
+    {
+        mMatchs.clear();
+    }
+    
 }

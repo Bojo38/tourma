@@ -21,9 +21,21 @@ import tourma.data.Tournament;
 public abstract class MjtAnnexRank extends MjtRanking {
 
 
-    boolean mFullRanking;
-    Criteria mCriteria;
-    int mSubtype;
+    /**
+     * 
+     */
+    @SuppressWarnings("ProtectedField")
+    protected boolean mFullRanking;
+    /**
+     * 
+     */
+    @SuppressWarnings("ProtectedField")
+    protected Criteria mCriteria;
+    /**
+     * 
+     */
+    @SuppressWarnings("ProtectedField")
+    protected int mSubtype;
 
     /**
      *
@@ -39,6 +51,7 @@ public abstract class MjtAnnexRank extends MjtRanking {
      * @param ranking_type5
      * @param round_only
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public MjtAnnexRank(final int round, final Criteria criteria, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects,round_only);
         mCriteria = criteria;
@@ -79,7 +92,7 @@ public abstract class MjtAnnexRank extends MjtRanking {
         jlb.setBackground(new Color(255, 255, 255));
         jlb.setForeground(new Color(0, 0, 0));
 
-        boolean useColor = Tournament.getTournament().getParams().useColor;
+        boolean useColor = Tournament.getTournament().getParams().isUseColor();
 
         if (value instanceof String) {
             jlb.setText((String) value);
@@ -130,4 +143,12 @@ public abstract class MjtAnnexRank extends MjtRanking {
         jlb.setHorizontalAlignment(JTextField.CENTER);
         return jlb;
     }
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+    
 }

@@ -4,13 +4,11 @@
  */
 package tourma.utility;
 
-import java.util.logging.Logger;
-
 /**
  *
  * @author WFMJ7631
  */
-public class StringConstants {
+public interface StringConstants {
 
     /**
      *
@@ -101,7 +99,7 @@ public class StringConstants {
      *
      */
     public static final String CS_LANGUAGE_RESOURCE="tourma/languages/language";
-    private static final Logger LOG = Logger.getLogger(StringConstants.class.getName());
+
     
    
 }

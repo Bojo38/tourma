@@ -12,33 +12,34 @@ import javax.swing.ImageIcon;
  *
  * @author WFMJ7631
  */
-public class Icons {
+public final class Icons {
 
     /**
      *
      */
-    protected static ImageIcon sDICES=null;
+    private static ImageIcon sDICES=null;
 
     /**
      *
      */
-    protected static ImageIcon sPARAMS=null;
+    private static ImageIcon sPARAMS=null;
 
     /**
      *
      */
-    protected static ImageIcon sSTAR=null;
+    private static ImageIcon sSTAR=null;
 
     /**
      *
      */
-    protected static ImageIcon sSTAT=null;
+    private static ImageIcon sSTAT=null;
     
     /**
      *
      */
-    protected static final ResourceBundle bundle=ResourceBundle.getBundle("tourma/languages/language");
+    private static final ResourceBundle bundle=ResourceBundle.getBundle("tourma/languages/language");
     private static final Logger LOG = Logger.getLogger(Icons.class.getName());
+
     
     /**
      *
@@ -90,5 +91,8 @@ public class Icons {
             sSTAT=new javax.swing.ImageIcon(Icons.class.getResource(bundle.getString("/TOURMA/IMAGES/STATIS.PNG")));
         }
         return sSTAT;
+    }
+
+    private Icons() {
     }
 }

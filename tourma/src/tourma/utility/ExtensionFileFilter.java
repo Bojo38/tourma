@@ -5,6 +5,7 @@
 package tourma.utility;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javax.swing.filechooser.FileFilter;
@@ -17,8 +18,8 @@ public class ExtensionFileFilter extends FileFilter {
 
     static final ResourceBundle LANGUAGE = ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
     private static final Logger LOG = Logger.getLogger(ExtensionFileFilter.class.getName());
-    String description;
-    String extensions[];
+    private String description;
+    private String extensions[];
 
     /**
      *
@@ -40,14 +41,14 @@ public class ExtensionFileFilter extends FileFilter {
         } else {
             this.description = description;
         }
-        this.extensions = (String[]) extensions.clone();
+        this.extensions = extensions.clone();
         toLower(this.extensions);
     }
 
     private void toLower(String array[]) {
         final int n = array.length;
         for (int i = 0; i < n; i++) {
-            array[i] = array[i].toLowerCase();
+            array[i] = array[i].toLowerCase(Locale.getDefault());
         }
     }
 
@@ -63,7 +64,7 @@ public class ExtensionFileFilter extends FileFilter {
             result = true;
         } else {
             final int n = extensions.length;
-            final String path = file.getAbsolutePath().toLowerCase();
+            final String path = file.getAbsolutePath().toLowerCase(Locale.getDefault());
             for (int i = 0; i < n; i++) {
                 final String extension = extensions[i];
                 if ((path.endsWith(extension) && (path.charAt(path.length() - extension.length() - 1)) == '.')) {
@@ -73,5 +74,12 @@ public class ExtensionFileFilter extends FileFilter {
             }
         }
         return result;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -18,7 +18,7 @@ import tourma.utility.StringConstants;
  */
 public class JPNParamIndiv extends javax.swing.JPanel {
 
-    Tournament mTournament;
+    private final Tournament mTournament;
 
     /**
      * Creates new form JPNParamIndiv
@@ -252,8 +252,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
 
         try {
             jtffLargeVictory.commitEdit();
-            final int points = ((Long) jtffLargeVictory.getValue()).intValue();
-            mTournament.getParams().mPointsIndivLargeVictory = points;
+            final int points = ((Number) jtffLargeVictory.getValue()).intValue();
+            mTournament.getParams().setPointsIndivLargeVictory(points);
         } catch (ParseException e) {
             jtffLargeVictory.setValue(jtffLargeVictory.getValue());
         }
@@ -263,8 +263,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private void jtffLargeVictoryGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryGapFocusLost
         try {
             jtffLargeVictoryGap.commitEdit();
-            final int points = ((Long) jtffLargeVictoryGap.getValue()).intValue();
-            mTournament.getParams().mGapLargeVictory = points;
+            final int points = ((Number) jtffLargeVictoryGap.getValue()).intValue();
+            mTournament.getParams().setGapLargeVictory(points);
         } catch (ParseException e) {
             jtffLargeVictoryGap.setValue(jtffLargeVictoryGap.getValue());
         }
@@ -275,8 +275,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private void jtffVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryFocusLost
         try {
             jtffVictory.commitEdit();
-            final int points = ((Long) jtffVictory.getValue()).intValue();
-            mTournament.getParams().mPointsIndivVictory = points;
+            final int points = ((Number) jtffVictory.getValue()).intValue();
+            mTournament.getParams().setPointsIndivVictory(points);
         } catch (ParseException e) {
             jtffVictory.setValue(jtffVictory.getValue());
         }
@@ -286,8 +286,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private void jtffDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawFocusLost
         try {
             jtffDraw.commitEdit();
-            final int points = ((Long) jtffDraw.getValue()).intValue();
-            mTournament.getParams().mPointsIndivDraw = points;
+            final int points = ((Number) jtffDraw.getValue()).intValue();
+            mTournament.getParams().setPointsIndivDraw(points);
         } catch (ParseException e) {
             jtffDraw.setValue(jtffDraw.getValue());
         }
@@ -297,8 +297,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private void jtffLittleLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostFocusLost
         try {
             jtffLittleLost.commitEdit();
-            final int points = ((Long) jtffLittleLost.getValue()).intValue();
-            mTournament.getParams().mPointsIndivLittleLost = points;
+            final int points = ((Number) jtffLittleLost.getValue()).intValue();
+            mTournament.getParams().setPointsIndivLittleLost(points);
         } catch (ParseException e) {
             jtffLittleLost.setValue(jtffLittleLost.getValue());
         }
@@ -308,8 +308,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private void jtffLittleLostGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLittleLostGapFocusLost
         try {
             jtffLittleLostGap.commitEdit();
-            final int points = ((Long) jtffLittleLostGap.getValue()).intValue();
-            mTournament.getParams().mGapLittleLost = points;
+            final int points = ((Number) jtffLittleLostGap.getValue()).intValue();
+            mTournament.getParams().setGapLittleLost(points);
         } catch (ParseException e) {
             jtffLittleLostGap.setValue(jtffLittleLostGap.getValue());
         }
@@ -320,8 +320,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private void jtffLostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostFocusLost
         try {
             jtffLost.commitEdit();
-            final int points = ((Long) jtffLost.getValue()).intValue();
-            mTournament.getParams().mPointsIndivLost = points;
+            final int points = ((Number) jtffLost.getValue()).intValue();
+            mTournament.getParams().setPointsIndivLost(points);
         } catch (ParseException e) {
             jtffLost.setValue(jtffLost.getValue());
         }
@@ -329,35 +329,35 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     }//GEN-LAST:event_jtffLostFocusLost
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1ActionPerformed
-        mTournament.getParams().mRankingIndiv1 = jcbRank1.getSelectedIndex();
+        mTournament.getParams().setRankingIndiv1(jcbRank1.getSelectedIndex());
         update();
     }//GEN-LAST:event_jcbRank1ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2ActionPerformed
-        mTournament.getParams().mRankingIndiv2 = jcbRank2.getSelectedIndex();
+        mTournament.getParams().setRankingIndiv2(jcbRank2.getSelectedIndex());
         update();
     }//GEN-LAST:event_jcbRank2ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3ActionPerformed
-        mTournament.getParams().mRankingIndiv3 = jcbRank3.getSelectedIndex();
+        mTournament.getParams().setRankingIndiv3(jcbRank3.getSelectedIndex());
         update();
     }//GEN-LAST:event_jcbRank3ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4ActionPerformed
-        mTournament.getParams().mRankingIndiv4 = jcbRank4.getSelectedIndex();
+        mTournament.getParams().setRankingIndiv4(jcbRank4.getSelectedIndex());
         update();
     }//GEN-LAST:event_jcbRank4ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5ActionPerformed
-        mTournament.getParams().mRankingIndiv5 = jcbRank5.getSelectedIndex();
+        mTournament.getParams().setRankingIndiv5(jcbRank5.getSelectedIndex());
         update();
     }//GEN-LAST:event_jcbRank5ActionPerformed
 
     private void jtffRefusedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffRefusedFocusLost
         try {
             jtffRefused.commitEdit();
-            final int points = ((Long) jtffRefused.getValue()).intValue();
-            mTournament.getParams().mPointsRefused = points;
+            final int points = ((Number) jtffRefused.getValue()).intValue();
+            mTournament.getParams().setPointsRefused(points);
         } catch (ParseException e) {
             jtffRefused.setValue(jtffRefused.getValue());
         }
@@ -367,8 +367,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private void jtffConcedeedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffConcedeedFocusLost
         try {
             jtffConcedeed.commitEdit();
-            final int points = ((Long) jtffConcedeed.getValue()).intValue();
-            mTournament.getParams().mPointsConcedeed = points;
+            final int points = ((Number) jtffConcedeed.getValue()).intValue();
+            mTournament.getParams().setPointsConcedeed(points);
         } catch (ParseException e) {
             jtffConcedeed.setValue(jtffConcedeed.getValue());
         }
@@ -376,21 +376,21 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     }//GEN-LAST:event_jtffConcedeedFocusLost
 
     /**
-     *
+     * Update Panel
      */
     public void update() {
 
-        jtffDraw.setValue(mTournament.getParams().mPointsIndivDraw);
-        jtffLargeVictory.setValue(mTournament.getParams().mPointsIndivLargeVictory);
-        jtffLittleLost.setValue(mTournament.getParams().mPointsIndivLittleLost);
-        jtffLargeVictoryGap.setValue(mTournament.getParams().mGapLargeVictory);
-        jtffLittleLostGap.setValue(mTournament.getParams().mGapLittleLost);
-        jtffLost.setValue(mTournament.getParams().mPointsIndivLost);
+        jtffDraw.setValue(mTournament.getParams().getPointsIndivDraw());
+        jtffLargeVictory.setValue(mTournament.getParams().getPointsIndivLargeVictory());
+        jtffLittleLost.setValue(mTournament.getParams().getPointsIndivLittleLost());
+        jtffLargeVictoryGap.setValue(mTournament.getParams().getGapLargeVictory());
+        jtffLittleLostGap.setValue(mTournament.getParams().getGapLittleLost());
+        jtffLost.setValue(mTournament.getParams().getPointsIndivLost());
 
-        jtffRefused.setValue(mTournament.getParams().mPointsRefused);
-        jtffConcedeed.setValue(mTournament.getParams().mPointsConcedeed);
+        jtffRefused.setValue(mTournament.getParams().getPointsRefused());
+        jtffConcedeed.setValue(mTournament.getParams().getPointsConcedeed());
 
-        jtffVictory.setValue(mTournament.getParams().mPointsIndivVictory);
+        jtffVictory.setValue(mTournament.getParams().getPointsIndivVictory());
 
         final ArrayList<String> rankChoices = new ArrayList<>();
         rankChoices.add(StringConstants.CS_NONE);
@@ -400,11 +400,11 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO"));
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO ADVERSAIRES"));
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MATCHS JOUÉS"));
-        for (int i = 0; i < Tournament.getTournament().getParams().mCriterias.size(); i++) {
-            final Criteria criteria = Tournament.getTournament().getParams().mCriterias.get(i);
-            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" JOUEUR"));
-            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE"));
-            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFÉRENCE"));
+        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            final Criteria criteria = Tournament.getTournament().getParams().getCriteria(i);
+            rankChoices.add(criteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" JOUEUR"));
+            rankChoices.add(criteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE"));
+            rankChoices.add(criteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFÉRENCE"));
         }
 
         jcbRank1.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
@@ -419,11 +419,11 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         jcbRank4.removeActionListener(jcbRank4.getActionListeners()[0]);
         jcbRank5.removeActionListener(jcbRank5.getActionListeners()[0]);
 
-        jcbRank1.setSelectedIndex(mTournament.getParams().mRankingIndiv1);
-        jcbRank2.setSelectedIndex(mTournament.getParams().mRankingIndiv2);
-        jcbRank3.setSelectedIndex(mTournament.getParams().mRankingIndiv3);
-        jcbRank4.setSelectedIndex(mTournament.getParams().mRankingIndiv4);
-        jcbRank5.setSelectedIndex(mTournament.getParams().mRankingIndiv5);
+        jcbRank1.setSelectedIndex(mTournament.getParams().getRankingIndiv1());
+        jcbRank2.setSelectedIndex(mTournament.getParams().getRankingIndiv2());
+        jcbRank3.setSelectedIndex(mTournament.getParams().getRankingIndiv3());
+        jcbRank4.setSelectedIndex(mTournament.getParams().getRankingIndiv4());
+        jcbRank5.setSelectedIndex(mTournament.getParams().getRankingIndiv5());
 
 
 
@@ -494,4 +494,12 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jtffVictory;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNParamIndiv.class.getName());
+     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+    
 }

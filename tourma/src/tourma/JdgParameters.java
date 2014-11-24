@@ -9,6 +9,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+import tourma.data.EIndivPairing;
+import tourma.data.ETeamPairing;
 import tourma.data.Parameters;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
@@ -18,13 +20,15 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class JdgParameters extends javax.swing.JDialog {
+public final class JdgParameters extends javax.swing.JDialog {
 
     static final ResourceBundle language = ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
-    Parameters mParams;
+    private Parameters mParams;
 
     /**
      * Creates new form JdgParameters
+     * @param parent
+     * @param modal
      */
     public JdgParameters(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -37,58 +41,55 @@ public class JdgParameters extends javax.swing.JDialog {
 
         this.setSize(640, 480);
 
-        if (dmode != null) {
             final int screenWidth = dmode.getWidth();
             final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        }
 
 
         mParams = Tournament.getTournament().getParams();
 
         // Load current parameters
 
-        if (mParams.mGame == RosterType.C_BLOOD_BOWL) {
+        if (mParams.getGame() == RosterType.C_BLOOD_BOWL) {
             jrbBloodBowl.setSelected(true);
         } else {
             jrbDreadBall.setSelected(true);
         }
 
 
-        if (mParams.mTeamTournament) {
+        if (mParams.isTeamTournament()) {
             jrbTeam.setSelected(true);
         } else {
             jrbIndividual.setSelected(true);
         }
 
-        jcbMultiroster.setSelected(mParams.mMultiRoster);
+        jcbMultiroster.setSelected(mParams.isMultiRoster());
 
-        if (mParams.mTeamPairing == 0) {
+        if (mParams.getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
             jrbIndividualTeamPairing.setSelected(true);
         } else {
             jrbTeamPairing.setSelected(true);
         }
 
-        switch (mParams.mTeamIndivPairing) {
-            case 0:
-                jrbIndivPairingByRanking.setSelected(true);
-                break;
-            case 1:
+        switch (mParams.getTeamIndivPairing()) {
+
+            case FREE:
                 jrbIndivPairingManual.setSelected(true);
                 break;
-            case 2:
+            case RANDOM:
                 jrbIndivPairingRandom.setSelected(true);
                 break;
-            case 3:
+            case NAF:
                 jrbIndivPairingNaf.setSelected(true);
                 break;
+            case RANKING:
             default:
                 jrbIndivPairingByRanking.setSelected(true);
                 break;
         }
 
-        jspCoachNumber.setValue(mParams.mTeamMatesNumber);
-        jckSubstitutes.setEnabled(mParams.mSubstitutes);
+        jspCoachNumber.setValue(mParams.getTeamMatesNumber());
+        jckSubstitutes.setEnabled(mParams.isSubstitutes());
 
         update();
     }
@@ -325,47 +326,47 @@ public class JdgParameters extends javax.swing.JDialog {
 
     private void jrbDreadBallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbDreadBallActionPerformed
         if (jrbDreadBall.isSelected()) {
-            mParams.mGame = RosterType.C_DREAD_BALL;
+            mParams.setGame(RosterType.C_DREAD_BALL);
         } else {
-            mParams.mGame = RosterType.C_BLOOD_BOWL;
+            mParams.setGame(RosterType.C_BLOOD_BOWL);
         }
         update();
     }//GEN-LAST:event_jrbDreadBallActionPerformed
 
     private void jrbBloodBowlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbBloodBowlActionPerformed
         if (jrbBloodBowl.isSelected()) {
-            mParams.mGame = RosterType.C_BLOOD_BOWL;
+            mParams.setGame(RosterType.C_BLOOD_BOWL);
         } else {
-            mParams.mGame = RosterType.C_DREAD_BALL;
+            mParams.setGame(RosterType.C_DREAD_BALL);
         }
         update();
     }//GEN-LAST:event_jrbBloodBowlActionPerformed
 
     private void jrbTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTeamActionPerformed
-        mParams.mTeamTournament = jrbTeam.isSelected();
+        mParams.setTeamTournament(jrbTeam.isSelected());
         update();
     }//GEN-LAST:event_jrbTeamActionPerformed
 
     private void jrbIndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndividualActionPerformed
-        mParams.mTeamTournament = jrbTeam.isSelected();
+        mParams.setTeamTournament(jrbTeam.isSelected());
         update();
     }//GEN-LAST:event_jrbIndividualActionPerformed
 
     private void jckSubstitutesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jckSubstitutesActionPerformed
-        mParams.mSubstitutes = jckSubstitutes.isSelected();
+        mParams.setSubstitutes(jckSubstitutes.isSelected());
         update();
     }//GEN-LAST:event_jckSubstitutesActionPerformed
 
     private void jspCoachNumberStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspCoachNumberStateChanged
-        mParams.mTeamMatesNumber = (Integer) jspCoachNumber.getValue();
+        mParams.setTeamMatesNumber((Integer) jspCoachNumber.getValue());
         update();
     }//GEN-LAST:event_jspCoachNumberStateChanged
 
     private void jrbIndividualTeamPairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndividualTeamPairingActionPerformed
         if (jrbIndividualTeamPairing.isSelected()) {
-            mParams.mTeamPairing = 0;
+            mParams.setTeamPairing(ETeamPairing.INDIVIDUAL_PAIRING);
         } else {
-            mParams.mTeamPairing = 1;
+            mParams.setTeamPairing(ETeamPairing.TEAM_PAIRING);
         }
         update();
     }//GEN-LAST:event_jrbIndividualTeamPairingActionPerformed
@@ -373,25 +374,25 @@ public class JdgParameters extends javax.swing.JDialog {
     private void jrbTeamPairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTeamPairingActionPerformed
 
         if (jrbIndividualTeamPairing.isSelected()) {
-            mParams.mTeamPairing = 0;
+            mParams.setTeamPairing(ETeamPairing.INDIVIDUAL_PAIRING);
         } else {
-            mParams.mTeamPairing = 1;
+            mParams.setTeamPairing(ETeamPairing.TEAM_PAIRING);
         }
         update();
     }//GEN-LAST:event_jrbTeamPairingActionPerformed
 
     private void jrbIndivPairingByRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndivPairingByRankingActionPerformed
         if (jrbIndivPairingByRanking.isSelected()) {
-            mParams.mTeamIndivPairing = 0;
+            mParams.setTeamIndivPairing(EIndivPairing.RANKING);
         } else {
             if (jrbIndivPairingManual.isSelected()) {
-                mParams.mTeamIndivPairing = 1;
+                mParams.setTeamIndivPairing(EIndivPairing.FREE);
             } else {
                 if (jrbIndivPairingRandom.isSelected()) {
-                    mParams.mTeamIndivPairing = 2;
+                    mParams.setTeamIndivPairing(EIndivPairing.RANDOM);
                 } else {
                     if (jrbIndivPairingNaf.isSelected()) {
-                        mParams.mTeamIndivPairing = 3;
+                        mParams.setTeamIndivPairing(EIndivPairing.NAF);
                     }
                 }
             }
@@ -401,16 +402,16 @@ public class JdgParameters extends javax.swing.JDialog {
 
     private void jrbIndivPairingRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndivPairingRandomActionPerformed
         if (jrbIndivPairingByRanking.isSelected()) {
-            mParams.mTeamIndivPairing = 0;
+            mParams.setTeamIndivPairing(EIndivPairing.RANKING);
         } else {
             if (jrbIndivPairingManual.isSelected()) {
-                mParams.mTeamIndivPairing = 1;
+                mParams.setTeamIndivPairing(EIndivPairing.FREE);
             } else {
                 if (jrbIndivPairingRandom.isSelected()) {
-                    mParams.mTeamIndivPairing = 2;
+                    mParams.setTeamIndivPairing(EIndivPairing.RANDOM);
                 } else {
                     if (jrbIndivPairingNaf.isSelected()) {
-                        mParams.mTeamIndivPairing = 3;
+                        mParams.setTeamIndivPairing(EIndivPairing.NAF);
                     }
                 }
             }
@@ -420,16 +421,16 @@ public class JdgParameters extends javax.swing.JDialog {
 
     private void jrbIndivPairingManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndivPairingManualActionPerformed
         if (jrbIndivPairingByRanking.isSelected()) {
-            mParams.mTeamIndivPairing = 0;
+            mParams.setTeamIndivPairing(EIndivPairing.RANKING);
         } else {
             if (jrbIndivPairingManual.isSelected()) {
-                mParams.mTeamIndivPairing = 1;
+                mParams.setTeamIndivPairing(EIndivPairing.FREE);
             } else {
                 if (jrbIndivPairingRandom.isSelected()) {
-                    mParams.mTeamIndivPairing = 2;
+                    mParams.setTeamIndivPairing(EIndivPairing.RANDOM);
                 } else {
                     if (jrbIndivPairingNaf.isSelected()) {
-                        mParams.mTeamIndivPairing = 3;
+                        mParams.setTeamIndivPairing(EIndivPairing.NAF);
                     }
                 }
             }
@@ -439,16 +440,16 @@ public class JdgParameters extends javax.swing.JDialog {
 
     private void jrbIndivPairingNafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIndivPairingNafActionPerformed
         if (jrbIndivPairingByRanking.isSelected()) {
-            mParams.mTeamIndivPairing = 0;
+            mParams.setTeamIndivPairing(EIndivPairing.RANKING);
         } else {
             if (jrbIndivPairingManual.isSelected()) {
-                mParams.mTeamIndivPairing = 1;
+                mParams.setTeamIndivPairing(EIndivPairing.FREE);
             } else {
                 if (jrbIndivPairingRandom.isSelected()) {
-                    mParams.mTeamIndivPairing = 2;
+                    mParams.setTeamIndivPairing(EIndivPairing.RANDOM);
                 } else {
                     if (jrbIndivPairingNaf.isSelected()) {
-                        mParams.mTeamIndivPairing = 3;
+                        mParams.setTeamIndivPairing(EIndivPairing.NAF);
                     }
                 }
             }
@@ -457,7 +458,7 @@ public class JdgParameters extends javax.swing.JDialog {
     }//GEN-LAST:event_jrbIndivPairingNafActionPerformed
 
     private void jcxMultipleRosterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxMultipleRosterActionPerformed
-        mParams.mMultiRoster=jcxMultipleRoster.isSelected();
+        mParams.setMultiRoster(jcxMultipleRoster.isSelected());
     }//GEN-LAST:event_jcxMultipleRosterActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -496,10 +497,10 @@ public class JdgParameters extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     *
+     * update hmi
      */
-    protected void update() {
-        if (mParams.mTeamTournament) {
+    private void update() {
+        if (mParams.isTeamTournament()) {
             jrbIndividualTeamPairing.setEnabled(true);
             jrbTeamPairing.setEnabled(true);
             jspCoachNumber.setEnabled(true);
@@ -517,7 +518,7 @@ public class JdgParameters extends javax.swing.JDialog {
             jpnPairing.setEnabled(false);
         }
 
-        if (mParams.mTeamTournament && mParams.mTeamPairing == 1) {
+        if (mParams.isTeamTournament() && mParams.getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
             jrbIndivPairingByRanking.setEnabled(true);
             jrbIndivPairingManual.setEnabled(true);
             jrbIndivPairingNaf.setEnabled(true);
@@ -532,4 +533,11 @@ public class JdgParameters extends javax.swing.JDialog {
         }
     }
     private static final Logger LOG = Logger.getLogger(JdgParameters.class.getName());
+private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

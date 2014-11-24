@@ -7,7 +7,6 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -15,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Coach;
+import tourma.data.IContainCoachs;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
 
@@ -25,21 +25,22 @@ import tourma.utility.StringConstants;
 public class MjtCoaches extends AbstractTableModel implements TableCellRenderer {
     private static final Logger LOG = Logger.getLogger(MjtCoaches.class.getName());
 
-    ArrayList<Coach> mCoachs;
-
+    private IContainCoachs t=null;
+    
     /**
-     *
-     * @param coachs
+     * 
+     * @param container 
      */
-    public MjtCoaches(final ArrayList<Coach> coachs) {
-        mCoachs = coachs;
+     public MjtCoaches(IContainCoachs container) {
+        t = container;
     }
 
+     
     @Override
     public int getColumnCount() {
 
         int result = 8;
-        if (Tournament.getTournament().getParams().mEnableClans) {
+        if (Tournament.getTournament().getParams().isEnableClans()) {
             result = 9;
         }
         return result;
@@ -47,7 +48,7 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public int getRowCount() {
-        return mCoachs.size();
+            return t.getCoachCount();
     }
 
     @Override
@@ -90,14 +91,14 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
     @Override
     public Object getValueAt(final int row, final int col) {
         Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
-        if (mCoachs.size() > 0) {
-            final Coach c = mCoachs.get(row);
+        if (t.getCoachCount()> 0) {
+            final Coach c = t.getCoach(row);
             switch (col) {
                 case 0:
                     val = row + 1;
                     break;
                 case 1:
-                    val = c.mName;
+                    val = c.getName();
                     break;
                 case 2:
                     val = c.getTeam();
@@ -105,7 +106,7 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
                 case 3:
                     if (c.getRoster()!=null)
                     {
-                    val = c.getRoster().mName;
+                    val = c.getRoster().getName();
                     }
                     else
                     {
@@ -122,7 +123,7 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
                     val = Double.toString(c.getNafRank());
                     break;
                 case 8:
-                    val = c.mClan.getName();
+                    val = c.getClan().getName();
                     break;
                 case 6:
                     if (c.isActive()) {
@@ -169,7 +170,7 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
             jlb.setText(Integer.toString((Integer) value));
         }
 
-        final Coach c = mCoachs.get(row);
+        final Coach c = t.getCoach(row);
         if (!c.isActive()) {
             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
         }

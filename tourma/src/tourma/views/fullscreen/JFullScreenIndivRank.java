@@ -8,11 +8,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import tourma.data.Coach;
-import tourma.data.Criteria;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
@@ -21,53 +21,56 @@ import tourma.tableModel.MjtRankingIndiv;
  *
  * @author WFMJ7631
  */
-public class JFullScreenIndivRank extends JFullScreen {
+public final class JFullScreenIndivRank extends JFullScreen {
+   
+    private static final long serialVersionUID = 11L;
 
-    int round;
+    private int round;
 
     /**
      *
      * @param r
      * @throws IOException
      */
+    @SuppressWarnings("LeakingThisInConstructor")
     public JFullScreenIndivRank(int r) throws IOException {
         super();
+        initComponents();
         try {
             round = r;
 
-            Criteria td = Tournament.getTournament().getParams().mCriterias.get(0);
+//            Criteria td = Tournament.getTournament().getParams().getCriteria(0);
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
             int height = getHeight();
             int width = getWidth();
 
-            Font f0 = font.deriveFont(Font.ITALIC, height / 50);
-            Font f1 = font.deriveFont(Font.BOLD, height / 50);
-            Font f = font.deriveFont(Font.PLAIN, height / 50);
+            float size=(float)height / 50;
+            Font f0 = font.deriveFont(Font.ITALIC, size);
+            Font f1 = font.deriveFont(Font.BOLD, size);
+            Font f = font.deriveFont(Font.PLAIN, size);
 
             int computed_height = height / 20;
 
+            final ArrayList<Coach> coaches = new ArrayList<>();
+                for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
+                    coaches.add(Tournament.getTournament().getCoach(cpt));
+                }
 
-            final boolean forPool = (Tournament.getTournament().getPools().size() > 0) && (!Tournament.getTournament().getRounds().get(r).mCup);
+            final boolean forPool = (Tournament.getTournament().getPoolCount() > 0) && (!Tournament.getTournament().getRound(r).isCup());
 
-            MjtRankingIndiv ranking = new MjtRankingIndiv(round,
-                    Tournament.getTournament().getParams().mRankingIndiv1,
-                    Tournament.getTournament().getParams().mRankingIndiv2,
-                    Tournament.getTournament().getParams().mRankingIndiv3,
-                    Tournament.getTournament().getParams().mRankingIndiv4,
-                    Tournament.getTournament().getParams().mRankingIndiv5,
-                    Tournament.getTournament().getCoachs(),
-                    Tournament.getTournament().getParams().mTeamTournament,
+            MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
+                    coaches, Tournament.getTournament().getParams().isTeamTournament(),
                     false,
                     forPool);
 
             int nbCols = Tournament.getTournament().getParams().getIndivRankingNumber() + 4;
-            boolean teamTour = Tournament.getTournament().getParams().mTeamTournament;
-            boolean clanTour = Tournament.getTournament().getClans().size() > 1;
-            if (Tournament.getTournament().getParams().mTeamTournament) {
+//            boolean teamTour = Tournament.getTournament().getParams().isTeamTournament();
+//            boolean clanTour = Tournament.getTournament().getClansCount() > 1;
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
                 nbCols++;
             } else {
-                if (Tournament.getTournament().getClans().size() > 1) {
+                if (Tournament.getTournament().getClansCount() > 1) {
                     nbCols++;
                 }
             }
@@ -85,7 +88,7 @@ public class JFullScreenIndivRank extends JFullScreen {
 
             int index = 1;
 
-            if (Tournament.getTournament().getParams().mTeamTournament) {
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
                 JLabel jlbTTeam = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
                 jlbTTeam.setFont(f1);
                 jlbTTeam.setOpaque(true);
@@ -95,7 +98,7 @@ public class JFullScreenIndivRank extends JFullScreen {
                 jpnContent.add(jlbTTeam, getGridbBagConstraints(index, 0, 1, 5));
                 index += 5;
             }
-            if (Tournament.getTournament().getClans().size() > 1) {
+            if (Tournament.getTournament().getClansCount() > 1) {
                 JLabel jlbTClan = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
                 jlbTClan.setFont(f1);
                 jlbTClan.setOpaque(true);
@@ -174,14 +177,14 @@ public class JFullScreenIndivRank extends JFullScreen {
 
                 index = 1;
 
-                Coach coach = (Coach) ranking.getSortedDatas().get(i).getObject();
-                if (Tournament.getTournament().getParams().mTeamTournament) {
+                Coach coach = (Coach) ranking.getSortedObject(i).getObject();
+                if (Tournament.getTournament().getParams().isTeamTournament()) {
                     JLabel jlb = getLabelForObject(coach.getTeamMates(), computed_height, computed_width, currentFont, bkg);
                     jpnContent.add(jlb, getGridbBagConstraints(index, i + 1, 1, 5));
                     index += 5;
                 }
-                if (Tournament.getTournament().getClans().size() > 1) {
-                    JLabel jlb = getLabelForObject(coach.mClan, computed_height, computed_width, currentFont, bkg);
+                if (Tournament.getTournament().getClansCount() > 1) {
+                    JLabel jlb = getLabelForObject(coach.getClan(), computed_height, computed_width, currentFont, bkg);
                     jpnContent.add(jlb, getGridbBagConstraints(index, i + 1, 1, 5));
                     index += 5;
                 }
@@ -189,7 +192,7 @@ public class JFullScreenIndivRank extends JFullScreen {
                 jpnContent.add(jlbCoach, getGridbBagConstraints(index, i + 1, 1, 5));
                 index += 5;
 
-                JLabel jlbRoster = new JLabel(coach.getRoster().mName);
+                JLabel jlbRoster = new JLabel(coach.getRoster().getName());
                 jlbRoster.setFont(currentFont);
                 jlbRoster.setOpaque(true);
                 jlbRoster.setBackground(bkg);
@@ -205,24 +208,9 @@ public class JFullScreenIndivRank extends JFullScreen {
 
                 for (int j = 0; j < Tournament.getTournament().getParams().getIndivRankingNumber(); j++) {
                     int rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
-                    int value = 0;
-                    switch (j) {
-                        case 0:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue1();
-                            break;
-                        case 1:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue2();
-                            break;
-                        case 2:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue3();
-                            break;
-                        case 3:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue4();
-                            break;
-                        case 4:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue5();
-                            break;
-                    }
+                    int value ;
+                    value=ranking.getSortedValue(i, j+1);
+                    
                     String name = Integer.toString(value);
                     if (rankingType == 0) {
                         break;
@@ -239,6 +227,7 @@ public class JFullScreenIndivRank extends JFullScreen {
         } catch (FontFormatException ex) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
     }
 
     /**

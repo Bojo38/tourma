@@ -19,10 +19,12 @@ import java.util.logging.Logger;
  *
  * @author root.106572700130
  */
-public class JdgOnlineHelp extends javax.swing.JDialog {
+public final class JdgOnlineHelp extends javax.swing.JDialog {
 
     /**
      * Creates new form jdgAbout
+     * @param parent
+     * @param modal
      */
     public JdgOnlineHelp(final java.awt.Frame parent,final boolean modal) {
         super(parent, modal);
@@ -34,11 +36,10 @@ public class JdgOnlineHelp extends javax.swing.JDialog {
 
         this.setSize(580, 350);
 
-        if (dmode != null) {
             final int screenWidth = dmode.getWidth();
             final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        }
+        
 
     }
 

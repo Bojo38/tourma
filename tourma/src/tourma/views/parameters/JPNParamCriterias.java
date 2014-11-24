@@ -5,8 +5,8 @@
 package tourma.views.parameters;
 
 import java.util.logging.Logger;
-import tourma.data.Criteria;
 import tourma.data.CoachMatch;
+import tourma.data.Criteria;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
@@ -16,9 +16,9 @@ import tourma.tableModel.MjtCriterias;
  *
  * @author WFMJ7631
  */
-public class JPNParamCriterias extends javax.swing.JPanel {
+public final class JPNParamCriterias extends javax.swing.JPanel {
 
-    Tournament mTournament;
+    private final Tournament mTournament;
 
     /**
      * Creates new form JPNParamCriterias
@@ -83,14 +83,14 @@ public class JPNParamCriterias extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
-    final int nb = Tournament.getTournament().getParams().mCriterias.size();
+    final int nb = Tournament.getTournament().getParams().getCriteriaCount();
     final Criteria c = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITÈRE")+" "+ Integer.toString(nb));
-    Tournament.getTournament().getParams().mCriterias.add(c);
-    for (int i = 0; i < mTournament.getRounds().size(); i++) {
-        final Round r = mTournament.getRounds().get(i);
+    Tournament.getTournament().getParams().addCriteria(c);
+    for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+        final Round r = mTournament.getRound(i);
         for (int j = 0; j < r.getCoachMatchs().size(); j++) {
             final CoachMatch m = r.getCoachMatchs().get(j);
-            m.mValues.put(c, new Value(c));
+            m.putValue(c, new Value(c));
         }
     }
 
@@ -98,26 +98,26 @@ public class JPNParamCriterias extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAddCriteriaActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
-    if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < mTournament.getParams().mCriterias.size())) {
-        final Criteria crit = mTournament.getParams().mCriterias.get(jtbCriteria.getSelectedRow());
-        for (int i = 0; i < mTournament.getRounds().size(); i++) {
-            final Round r = mTournament.getRounds().get(i);
+    if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < mTournament.getParams().getCriteriaCount())) {
+        final Criteria crit = mTournament.getParams().getCriteria(jtbCriteria.getSelectedRow());
+        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+            final Round r = mTournament.getRound(i);
             for (int j = 0; j < r.getCoachMatchs().size(); j++) {
                 final CoachMatch m = r.getCoachMatchs().get(j);
-                m.mValues.remove(crit);
+                m.removeValue(crit);
             }
         }
-        mTournament.getParams().mCriterias.remove(jtbCriteria.getSelectedRow());
+        mTournament.getParams().removeCriteria(jtbCriteria.getSelectedRow());
     }
     repaint();
     }//GEN-LAST:event_jbtRemoveCriteriaActionPerformed
 
     /**
-     *
+     * Update Panel
      */
-    protected void update() {
+    public void update() {
 
-        final boolean bTourStarted = mTournament.getRounds().size() > 0;
+        final boolean bTourStarted = mTournament.getRoundsCount() > 0;
         jtbCriteria.setModel(new MjtCriterias(mTournament));
         jbtAddCriteria.setEnabled(!bTourStarted);
         jbtRemoveCriteria.setEnabled(!bTourStarted);
@@ -130,4 +130,12 @@ public class JPNParamCriterias extends javax.swing.JPanel {
     private javax.swing.JTable jtbCriteria;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNParamCriterias.class.getName());
+    
+     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

@@ -45,6 +45,7 @@ public class JdgTeamPairing extends javax.swing.JDialog {
      * @param round
      *
      */
+    
     public JdgTeamPairing(final java.awt.Frame parent, final boolean modal, final ArrayList<Team> teams1, final ArrayList<Team> teams2, final Round round) {
         super(parent, modal);
         initComponents();
@@ -61,8 +62,8 @@ public class JdgTeamPairing extends javax.swing.JDialog {
         mTeams2 = teams2;
         mRound = round;
 
-        mPairsDone = new ArrayList<>();
-        for (Team team : mTeams1) {
+        mPairsDone = new ArrayList<>();        
+        for (int i=0; i<mTeams1.size(); i++) {
             mPairsDone.add(false);
         }
 
@@ -72,14 +73,14 @@ public class JdgTeamPairing extends javax.swing.JDialog {
 
     private void update() {
 
-        final MjtPairs model = new MjtPairs(mTeams1, mTeams2, mPairsDone);
+        MjtPairs model = new MjtPairs(mTeams1, mTeams2, mPairsDone);
         jtPairs.setModel(model);
         jtPairs.setDefaultRenderer(String.class, model);
         jtPairs.setDefaultRenderer(Integer.class, model);
 
         boolean allOK = true;
         for (Boolean b : mPairsDone) {
-            allOK &= b.booleanValue();
+            allOK &= b;
         }
         jbtOK.setEnabled(allOK);
     }
@@ -180,7 +181,7 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelectActionPerformed
         if (jtPairs.getSelectedRow() >= 0) {
-            final JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true, mTeams1.get(jtPairs.getSelectedRow()), mTeams2.get(jtPairs.getSelectedRow()), mRound, ((TeamMatch) mRound.getMatchs().get(jtPairs.getSelectedRow())).mMatchs);
+            final JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true, mTeams1.get(jtPairs.getSelectedRow()), mTeams2.get(jtPairs.getSelectedRow()), mRound, (TeamMatch) mRound.getMatch(jtPairs.getSelectedRow()));
             jdg.setVisible(true);
             mPairsDone.add(jtPairs.getSelectedRow(), true);
         }
@@ -194,10 +195,10 @@ public class JdgTeamPairing extends javax.swing.JDialog {
 
             final Team t1 = mTeams1.get(jtPairs.getSelectedRow());
             int i = 0;
-            while (i < mRound.getMatchs().size()) {
-                if ((((Coach) mRound.getMatchs().get(i).mCompetitor1).getTeamMates() == t1)
-                        || (((Coach) mRound.getMatchs().get(i).mCompetitor2).getTeamMates() == t1)) {
-                    mRound.getMatchs().remove(i);
+            while (i < mRound.getMatchsCount()) {
+                if ((((Coach) mRound.getMatch(i).getCompetitor1()).getTeamMates() == t1)
+                        || (((Coach) mRound.getMatch(i).getCompetitor2()).getTeamMates() == t1)) {
+                    mRound.removeMatch(i);
                     i = 0;
                 } else {
                     i++;
@@ -210,8 +211,8 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     private void jbtSeeMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSeeMatchesActionPerformed
 
         int nb = 1;
-        for (int i = 0; i < Tournament.getTournament().getRounds().size(); i++) {
-            if (Tournament.getTournament().getRounds().get(i).getHour().before(mRound.getHour())) {
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+            if (Tournament.getTournament().getRound(i).getHour().before(mRound.getHour())) {
                 nb++;
             }
         }
@@ -230,4 +231,12 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     private javax.swing.JTable jtPairs;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JdgTeamPairing.class.getName());
+
+ private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Criteria;
+import tourma.data.ETeamPairing;
 import tourma.data.Tournament;
 import tourma.utility.StringConstants;
 
@@ -16,9 +17,9 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class JPNParamTeam extends javax.swing.JPanel {
+public final class JPNParamTeam extends javax.swing.JPanel {
 
-    Tournament mTournament;
+    private final Tournament mTournament;
 
     /**
      * Creates new form JPNParamTeam
@@ -246,20 +247,20 @@ public class JPNParamTeam extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jrbTeamVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTeamVictoryActionPerformed
-    mTournament.getParams().mTeamVictoryOnly = jrbTeamVictory.isSelected();
+    mTournament.getParams().setTeamVictoryOnly(jrbTeamVictory.isSelected());
     update();
     }//GEN-LAST:event_jrbTeamVictoryActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jrbCoachPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCoachPointsActionPerformed
-    mTournament.getParams().mTeamVictoryOnly = !jrbCoachPoints.isSelected();
+    mTournament.getParams().setTeamVictoryOnly(!jrbCoachPoints.isSelected());
     update();
     }//GEN-LAST:event_jrbCoachPointsActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffVictoryTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryTeamFocusLost
     try {
         jtffVictoryTeam.commitEdit();
-        final int points = ((Long) jtffVictoryTeam.getValue()).intValue();
-        mTournament.getParams().mPointsTeamVictory = points;
+        final int points = ((Number) jtffVictoryTeam.getValue()).intValue();
+        mTournament.getParams().setPointsTeamVictory(points);
     } catch (ParseException e) {
         jtffVictoryTeam.setValue(jtffVictoryTeam.getValue());
     }
@@ -269,8 +270,8 @@ public class JPNParamTeam extends javax.swing.JPanel {
     private void jtffDrawTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffDrawTeamFocusLost
     try {
         jtffDrawTeam.commitEdit();
-        final int points = ((Long) jtffDrawTeam.getValue()).intValue();
-        mTournament.getParams().mPointsTeamDraw = points;
+        final int points = ((Number) jtffDrawTeam.getValue()).intValue();
+        mTournament.getParams().setPointsTeamDraw(points);
     } catch (ParseException e) {
         jtffDrawTeam.setValue(jtffDrawTeam.getValue());
     }
@@ -280,8 +281,8 @@ public class JPNParamTeam extends javax.swing.JPanel {
     private void jtffLostTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLostTeamFocusLost
     try {
         jtffLostTeam.commitEdit();
-        final int points = ((Long) jtffLostTeam.getValue()).intValue();
-        mTournament.getParams().mPointsTeamLost = points;
+        final int points = ((Number) jtffLostTeam.getValue()).intValue();
+        mTournament.getParams().setPointsTeamLost(points);
     } catch (ParseException e) {
         jtffLostTeam.setValue(jtffLostTeam.getValue());
     }
@@ -289,35 +290,35 @@ public class JPNParamTeam extends javax.swing.JPanel {
     }//GEN-LAST:event_jtffLostTeamFocusLost
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank1TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1TeamActionPerformed
-    mTournament.getParams().mRankingTeam1 = jcbRank1Team.getSelectedIndex();
+    mTournament.getParams().setRankingTeam1(jcbRank1Team.getSelectedIndex());
     update();
     }//GEN-LAST:event_jcbRank1TeamActionPerformed
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank2TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2TeamActionPerformed
-        mTournament.getParams().mRankingTeam2 = jcbRank2Team.getSelectedIndex();
+        mTournament.getParams().setRankingTeam2(jcbRank2Team.getSelectedIndex());
         update();
     }//GEN-LAST:event_jcbRank2TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank3TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3TeamActionPerformed
-    mTournament.getParams().mRankingTeam3 = jcbRank3Team.getSelectedIndex();
+    mTournament.getParams().setRankingTeam3(jcbRank3Team.getSelectedIndex());
     update();
     }//GEN-LAST:event_jcbRank3TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank4TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4TeamActionPerformed
-    mTournament.getParams().mRankingTeam4 = jcbRank4Team.getSelectedIndex();
+    mTournament.getParams().setRankingTeam4(jcbRank4Team.getSelectedIndex());
     update();
     }//GEN-LAST:event_jcbRank4TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank5TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5TeamActionPerformed
-    mTournament.getParams().mRankingTeam5 = jcbRank5Team.getSelectedIndex();
+    mTournament.getParams().setRankingTeam5(jcbRank5Team.getSelectedIndex());
     update();
     }//GEN-LAST:event_jcbRank5TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffTeamVictoryBonusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamVictoryBonusFocusLost
     try {
         jtffTeamVictoryBonus.commitEdit();
-        final int points = ((Long) jtffTeamVictoryBonus.getValue()).intValue();
-        mTournament.getParams().mPointsTeamVictoryBonus = points;
+        final int points = ((Number) jtffTeamVictoryBonus.getValue()).intValue();
+        mTournament.getParams().setPointsTeamVictoryBonus(points);
     } catch (ParseException e) {
         jtffTeamVictoryBonus.setValue(jtffTeamVictoryBonus.getValue());
     }
@@ -327,8 +328,8 @@ public class JPNParamTeam extends javax.swing.JPanel {
     private void jtffTeamDrawBonusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamDrawBonusFocusLost
     try {
         jtffTeamDrawBonus.commitEdit();
-        final int points = ((Long) jtffTeamDrawBonus.getValue()).intValue();
-        mTournament.getParams().mPointsTeamDrawBonus = points;
+        final int points = ((Number) jtffTeamDrawBonus.getValue()).intValue();
+        mTournament.getParams().setPointsTeamDrawBonus(points);
     } catch (ParseException e) {
         jtffTeamDrawBonus.setValue(jtffTeamDrawBonus.getValue());
     }
@@ -337,65 +338,65 @@ public class JPNParamTeam extends javax.swing.JPanel {
 
     private void jcxTeamBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxTeamBalanceActionPerformed
         
-        if ((mTournament.getParams().mTeamTournament)&&(mTournament.getParams().mTeamPairing==0))
+        if ((mTournament.getParams().isTeamTournament())&&(mTournament.getParams().getTeamPairing()==ETeamPairing.INDIVIDUAL_PAIRING))
         {
-            mTournament.getParams().mIndivPairingTeamBalanced=jcxTeamBalance.isSelected();            
+            mTournament.getParams().setIndivPairingTeamBalanced(jcxTeamBalance.isSelected());            
         }
         update();
     }//GEN-LAST:event_jcxTeamBalanceActionPerformed
 
     private void jcxIndividualBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxIndividualBalanceActionPerformed
-        if ((mTournament.getParams().mTeamTournament)&&(mTournament.getParams().mTeamPairing==0))
+        if ((mTournament.getParams().isTeamTournament())&&(mTournament.getParams().getTeamPairing()==ETeamPairing.INDIVIDUAL_PAIRING))
         {
-            mTournament.getParams().mIndivPairingIndivBalanced=jcxIndividualBalance.isSelected();            
+            mTournament.getParams().setIndivPairingIndivBalanced(jcxIndividualBalance.isSelected());            
         }
         update();
     }//GEN-LAST:event_jcxIndividualBalanceActionPerformed
 
     /**
-     *
+     * Update panel
      */
     public void update() {
 
-        final boolean teamMatches = mTournament.getParams().mTeamTournament && (mTournament.getParams().mTeamPairing == 1);
-        final boolean IndivMatches = mTournament.getParams().mTeamTournament && (mTournament.getParams().mTeamPairing == 0);
+        final boolean teamMatches = mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING);
+        final boolean IndivMatches = mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING);
 
-        jtffDrawTeam.setValue(mTournament.getParams().mPointsTeamDraw);
-        jtffLostTeam.setValue(mTournament.getParams().mPointsTeamLost);
+        jtffDrawTeam.setValue(mTournament.getParams().getPointsTeamDraw());
+        jtffLostTeam.setValue(mTournament.getParams().getPointsTeamLost());
 
-        jtffVictoryTeam.setValue(mTournament.getParams().mPointsTeamVictory);
+        jtffVictoryTeam.setValue(mTournament.getParams().getPointsTeamVictory());
 
         jrbCoachPoints.setEnabled(teamMatches);
         jrbTeamVictory.setEnabled(teamMatches);
 
-        jtffTeamVictoryBonus.setEnabled(teamMatches && (!mTournament.getParams().mTeamVictoryOnly));
+        jtffTeamVictoryBonus.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
 
-        jtffTeamDrawBonus.setEnabled(teamMatches && (!mTournament.getParams().mTeamVictoryOnly));
-        jlbVictoryPoints.setEnabled(teamMatches && (!mTournament.getParams().mTeamVictoryOnly));
-        jlbVictoryPoints1.setEnabled(teamMatches && (!mTournament.getParams().mTeamVictoryOnly));
+        jtffTeamDrawBonus.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
+        jlbVictoryPoints.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
+        jlbVictoryPoints1.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
 
-        jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jtffLostTeam.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jtffLostTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
 
-        jtffVictoryTeam.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jtffVictoryTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
 
         jcxIndividualBalance.setEnabled(IndivMatches);
         jcxTeamBalance.setEnabled(IndivMatches);
 
-        jLabel23.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jLabel24.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jLabel25.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jLabel26.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jLabel27.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jLabel28.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jLabel29.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jLabel30.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jLabel23.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jLabel24.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jLabel25.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jLabel26.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jLabel27.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jLabel28.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jLabel29.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jLabel30.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
 
-        jrbCoachPoints.setSelected(!mTournament.getParams().mTeamVictoryOnly);
-        jrbTeamVictory.setSelected(mTournament.getParams().mTeamVictoryOnly);
-        jtffTeamVictoryBonus.setValue(mTournament.getParams().mPointsTeamVictoryBonus);
-        jtffTeamDrawBonus.setValue(mTournament.getParams().mPointsTeamDrawBonus);
+        jrbCoachPoints.setSelected(!mTournament.getParams().isTeamVictoryOnly());
+        jrbTeamVictory.setSelected(mTournament.getParams().isTeamVictoryOnly());
+        jtffTeamVictoryBonus.setValue(mTournament.getParams().getPointsTeamVictoryBonus());
+        jtffTeamDrawBonus.setValue(mTournament.getParams().getPointsTeamDrawBonus());
 
         final ArrayList<String> rankChoices = new ArrayList<>();
         rankChoices.add(StringConstants.CS_NONE);
@@ -405,15 +406,15 @@ public class JPNParamTeam extends javax.swing.JPanel {
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO"));
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO ADVERSAIRES"));
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MATCHS JOUÉS"));
-        for (int i = 0; i < Tournament.getTournament().getParams().mCriterias.size(); i++) {
-            final Criteria criteria = Tournament.getTournament().getParams().mCriterias.get(i);
-            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" JOUEUR"));
-            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE"));
-            rankChoices.add(criteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFÉRENCE"));
+        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            final Criteria criteria = Tournament.getTournament().getParams().getCriteria(i);
+            rankChoices.add(criteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" JOUEUR"));
+            rankChoices.add(criteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE"));
+            rankChoices.add(criteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFÉRENCE"));
         }
 
-        jcxIndividualBalance.setSelected(mTournament.getParams().mIndivPairingIndivBalanced);
-        jcxTeamBalance.setSelected(mTournament.getParams().mIndivPairingTeamBalanced);
+        jcxIndividualBalance.setSelected(mTournament.getParams().isIndivPairingIndivBalanced());
+        jcxTeamBalance.setSelected(mTournament.getParams().isIndivPairingTeamBalanced());
 
         jcbRank1Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
         jcbRank2Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
@@ -421,11 +422,11 @@ public class JPNParamTeam extends javax.swing.JPanel {
         jcbRank4Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
         jcbRank5Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
 
-        jcbRank1Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jcbRank2Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jcbRank3Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jcbRank4Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
-        jcbRank5Team.setEnabled(teamMatches && (mTournament.getParams().mTeamVictoryOnly));
+        jcbRank1Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jcbRank2Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jcbRank3Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jcbRank4Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jcbRank5Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
 
         jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
         jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
@@ -433,11 +434,11 @@ public class JPNParamTeam extends javax.swing.JPanel {
         jcbRank4Team.removeActionListener(jcbRank4Team.getActionListeners()[0]);
         jcbRank5Team.removeActionListener(jcbRank5Team.getActionListeners()[0]);
 
-        jcbRank1Team.setSelectedIndex(mTournament.getParams().mRankingTeam1);
-        jcbRank2Team.setSelectedIndex(mTournament.getParams().mRankingTeam2);
-        jcbRank3Team.setSelectedIndex(mTournament.getParams().mRankingTeam3);
-        jcbRank4Team.setSelectedIndex(mTournament.getParams().mRankingTeam4);
-        jcbRank5Team.setSelectedIndex(mTournament.getParams().mRankingTeam5);
+        jcbRank1Team.setSelectedIndex(mTournament.getParams().getRankingTeam1());
+        jcbRank2Team.setSelectedIndex(mTournament.getParams().gemRankingTeam2());
+        jcbRank3Team.setSelectedIndex(mTournament.getParams().getRankingTeam3());
+        jcbRank4Team.setSelectedIndex(mTournament.getParams().getRankingTeam4());
+        jcbRank5Team.setSelectedIndex(mTournament.getParams().getRankingTeam5());
 
         
         
@@ -506,4 +507,11 @@ public class JPNParamTeam extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jtffVictoryTeam;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNParamTeam.class.getName());
+     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

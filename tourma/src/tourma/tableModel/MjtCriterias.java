@@ -22,9 +22,10 @@ import tourma.data.Tournament;
  */
 public class MjtCriterias extends AbstractTableModel implements TableCellRenderer {
     private static final Logger LOG = Logger.getLogger(MjtCriterias.class.getName());
+    private static final long serialVersionUID = 2L;
 
-    Tournament mTour;
-    Parameters mParams;
+    private final Tournament mTour;
+    private final Parameters mParams;
 
     /**
      *
@@ -38,7 +39,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
     @Override
     public int getColumnCount() {
         int result = 3;
-        if (mParams.mTeamTournament) {
+        if (mParams.isTeamTournament()) {
             result = 5;
         }
         return result;
@@ -46,7 +47,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
 
     @Override
     public int getRowCount() {
-        return mParams.mCriterias.size();
+        return mParams.getCriteriaCount();
     }
 
     @Override
@@ -79,19 +80,19 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
         Object result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         switch (col) {
             case 0:
-                result = mParams.mCriterias.get(row).mName;
+                result = mParams.getCriteria(row).getName();
                 break;
             case 1:
-                result = mParams.mCriterias.get(row).mPointsFor;
+                result = mParams.getCriteria(row).getPointsFor();
                 break;
             case 2:
-                result = mParams.mCriterias.get(row).mPointsAgainst;
+                result = mParams.getCriteria(row).getPointsAgainst();
                 break;
             case 3:
-                result = mParams.mCriterias.get(row).mPointsTeamFor;
+                result = mParams.getCriteria(row).getPointsTeamFor();
                 break;
             case 4:
-                result = mParams.mCriterias.get(row).mPointsTeamAgainst;
+                result = mParams.getCriteria(row).getPointsTeamAgainst();
                 break;
             default:
         }
@@ -103,9 +104,9 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
         if (value != null) {
 
             boolean exists = false;
-            for (int i = 0; i < mParams.mCriterias.size(); i++) {
+            for (int i = 0; i < mParams.getCriteriaCount(); i++) {
                 if (i != row) {
-                    if (value.toString().equals(mParams.mCriterias.get(i).mName)) {
+                    if (value.toString().equals(mParams.getCriteria(i).getName())) {
                         exists = true;
                         break;
                     }
@@ -115,23 +116,28 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                 JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERROR"),java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CriteriaAlreadyExists0")+value.toString(),JOptionPane.ERROR_MESSAGE);
                 
             } else {
-
-                final Criteria c = mParams.mCriterias.get(row);
+                String tmp=value.toString();
+                final Criteria c = mParams.getCriteria(row);
+                int val;
                 switch (col) {
                     case 0:
-                        c.mName = value.toString();
+                        c.setName(tmp);
                         break;
                     case 1:
-                        c.mPointsFor = Integer.valueOf(value.toString());
+                        val=Integer.parseInt(tmp);
+                        c.setPointsFor(val);
                         break;
                     case 2:
-                        c.mPointsAgainst = Integer.valueOf(value.toString());
+                        val=Integer.parseInt(tmp);
+                        c.setPointsAgainst(val);
                         break;
                     case 3:
-                        c.mPointsTeamFor = Integer.valueOf(value.toString());
+                        val=Integer.parseInt(tmp);
+                        c.setPointsTeamFor(val);
                         break;
                     case 4:
-                        c.mPointsTeamAgainst = Integer.valueOf(value.toString());
+                        val=Integer.parseInt(tmp);
+                        c.setPointsTeamAgainst(val);
                         break;
                     default:
                 }
@@ -153,7 +159,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
 
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        return mTour.getRounds().size() <= 0;
+        return mTour.getRoundsCount() <= 0;
     }
 
     @Override
@@ -178,5 +184,13 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
         jlb.setForeground(frg);
         jlb.setHorizontalAlignment(JTextField.CENTER);
         return jlb;
+    }
+    
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
     }
 }

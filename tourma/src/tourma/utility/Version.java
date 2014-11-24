@@ -7,6 +7,7 @@ package tourma.utility;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 public class Version {
 
     private static Version mSingleton = null;
-    private static volatile Object myLock = new Object();
+    private static final Object myLock = new Object();
 
     private static final Logger LOG = Logger.getLogger(Version.class.getName());
 
@@ -40,8 +41,8 @@ public class Version {
         try {
             is=getClass().getResourceAsStream(java.util.ResourceBundle.getBundle("tourma/version").getString("/TOURMA/VERSION.PROPERTIES"));
             mData.load(is);
-        } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+        } catch (IOException e) {
+            LOG.log(Level.FINE,e.getLocalizedMessage());
         }
         finally {
             if (is!=null)
@@ -49,7 +50,7 @@ public class Version {
                 try {
                     is.close();
                 } catch (IOException e) {
-
+                       LOG.log(Level.FINE,e.getLocalizedMessage());
                 }
             }
         }

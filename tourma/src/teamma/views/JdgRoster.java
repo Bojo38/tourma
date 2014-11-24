@@ -1144,7 +1144,7 @@ public final class JdgRoster extends javax.swing.JDialog {
                 null, rosterlist.toArray(), "Amazons");
         RosterType rt = LRB.getLRB().getRosterType(input);
         if (_coach != null) {
-            _coach.setRoster(tourma.data.RosterType.mRosterTypes.get(input));
+            _coach.setRoster(tourma.data.RosterType.getRosterType(input));
         }
         if (rt != null) {
             if (_data.getRoster() != rt) {
@@ -1198,10 +1198,9 @@ public final class JdgRoster extends javax.swing.JDialog {
          * Build Avilable Positions
          */
         ArrayList<String> coachs_name = new ArrayList<>();
-        ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
-        for (i = 0; i < coaches.size(); i++) {
-            Coach c = coaches.get(i);
-            coachs_name.add(c.mName);
+        for (i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+            Coach c = Tournament.getTournament().getCoach(i);
+            coachs_name.add(c.getName());
         }
 
         String input = (String) JOptionPane.showInputDialog(this,
@@ -1483,11 +1482,11 @@ public final class JdgRoster extends javax.swing.JDialog {
         if (_coach == null) {
             jbtSelectCoach.setText("Associer un coach");
         } else {
-            jbtSelectCoach.setText(_coach.mName);
-            jlbCoachName.setText("Coach: " + _coach.mName);
+            jbtSelectCoach.setText(_coach.getName());
+            jlbCoachName.setText("Coach: " + _coach.getName());
             if (_coach.getRoster() != null) {
                 if (_data.getRoster() == null) {
-                    _data.setRoster(LRB.getLRB().getRosterType(_coach.getRoster().mName));
+                    _data.setRoster(LRB.getLRB().getRosterType(_coach.getRoster().getName()));
                 }
                 if (_data.getRoster() != null) {
                     jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data.getRoster().getImage())));

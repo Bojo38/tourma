@@ -24,7 +24,7 @@ import tourma.utility.StringConstants;
 public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
     private static final Logger LOG = Logger.getLogger(MjtTeams.class.getName());
 
-    ArrayList<Team> mTeams;
+    private final ArrayList<Team> mTeams;
 
     /**
      *
@@ -39,7 +39,7 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
 
         int nbCol = 2;
         for (int i = 0; i < mTeams.size(); i++) {
-            nbCol = Math.max(nbCol, mTeams.get(i).mCoachs.size() + 2);
+            nbCol = Math.max(nbCol, mTeams.get(i).getCoachCount() + 2);
         }
         return nbCol;
     }
@@ -75,14 +75,14 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
                     object = row + 1;
                     break;
                 case 1:
-                    object = t.mName;
+                    object = t.getName();
                     break;
                 default:
             }
-            if (t.mCoachs.size() > 0) {
-                if (t.mCoachs.size() > (col - 2)) {
+            if (t.getCoachCount() > 0) {
+                if (t.getCoachCount() > (col - 2)) {
                     if (col >= 2) {
-                        object = t.mCoachs.get(col - 2).mName;
+                        object = t.getCoach(col - 2).getName();
                     }
                 }
             }
@@ -127,9 +127,9 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
         }
 
         final Team t = mTeams.get(row);
-        if (t.mCoachs.size() > column - 2) {
+        if (t.getCoachCount() > column - 2) {
             if (column >= 2) {
-                final Coach c = t.mCoachs.get(column - 2);
+                final Coach c = t.getCoach(column - 2);
                 if (!c.isActive()) {
                     jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                 }
@@ -143,5 +143,13 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
             jlb.setBackground(Color.WHITE);
         }
         return jlb;
+    }
+    
+      private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
     }
 }

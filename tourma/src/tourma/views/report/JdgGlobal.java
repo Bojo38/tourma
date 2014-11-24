@@ -17,23 +17,26 @@ import freemarker.template.TemplateException;
 import java.awt.Dimension;
 import java.awt.print.PrinterException;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import tourma.*;
+import tourma.MainFrame;
 import tourma.data.Criteria;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -45,20 +48,30 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class JdgGlobal extends javax.swing.JDialog {
+public final class JdgGlobal extends javax.swing.JDialog {
+    private static final long serialVersionUID = 12L;
 
-    int mRoundNumber;
-    Tournament mTour;
-    boolean mResult;
-    File mFilename = null;
-    MjtRanking mRanking;
-    HashMap<Criteria, MjtAnnexRank> mAnnexAgainstRankings;
-    HashMap<Criteria, MjtAnnexRank> mAnnexForRankings;
-    boolean mClan;
-    boolean mTeam;
+    private int mRoundNumber;
+    private Tournament mTour;
+    private boolean mResult;
+    private File mFilename = null;
+    private MjtRanking mRanking;
+    private HashMap<Criteria, MjtAnnexRank> mAnnexAgainstRankings;
+    private HashMap<Criteria, MjtAnnexRank> mAnnexForRankings;
+    private boolean mClan;
+    private boolean mTeam;
 
     /**
      * Creates new form jdgRoundReport
+     * @param parent
+     * @param modal
+     * @param roundNumber
+     * @param tour
+     * @param team
+     * @param annexForRankings
+     * @param model
+     * @param annexAgainstRankings
+     * @param clan
      */
     public JdgGlobal(final java.awt.Frame parent, final boolean modal, final int roundNumber, final Tournament tour, final MjtRanking model, final HashMap<Criteria, MjtAnnexRank> annexForRankings, final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings, final boolean clan, final boolean team) {
         super(parent, modal);
@@ -75,7 +88,7 @@ public class JdgGlobal extends javax.swing.JDialog {
         mAnnexAgainstRankings = annexAgainstRankings;
 
         this.setTitle(
-                tour.getParams().mTournamentName
+                tour.getParams().getTournamentName()
                 + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + roundNumber);
         try {
             jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
@@ -165,30 +178,28 @@ public class JdgGlobal extends javax.swing.JDialog {
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             final File export = jfc.getSelectedFile();
 
-            FileWriter out = null;
-            FileReader in = null;
+            OutputStreamWriter out = null;
+            InputStreamReader in = null;
             try {
-                in = new FileReader(mFilename);
+                in = new InputStreamReader(new FileInputStream(mFilename),Charset.defaultCharset());
                 {
-                    out = new FileWriter(export);
-                    int c;
-                    while ((c = in.read()) != -1) {
+                    
+                    out = new OutputStreamWriter(new FileOutputStream(export),Charset.defaultCharset());
+                    int c= in.read();
+                    while (c  != -1) {
                         out.write(c);
+                         c= in.read();
                     }
                 }
 
-            } catch (FileNotFoundException fnf) {
-                JOptionPane.showMessageDialog(this, fnf.getLocalizedMessage());
-            } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(this, ioe.getLocalizedMessage());
-            } catch (Exception ioe) {
-                JOptionPane.showMessageDialog(this, ioe.getLocalizedMessage());
-            } finally {
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            }  finally {
                 if (in != null) {
                     try {
                         in.close();
                     } catch (IOException e) {
-                        System.out.println(e.getLocalizedMessage());
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
                     }
                 }
 
@@ -196,7 +207,7 @@ public class JdgGlobal extends javax.swing.JDialog {
                     try {
                         out.close();
                     } catch (IOException e) {
-                        System.out.println(e.getLocalizedMessage());
+                       LOG.log(Level.INFO,e.getLocalizedMessage());
                     }
                 }
             }
@@ -232,14 +243,14 @@ public class JdgGlobal extends javax.swing.JDialog {
 
             final ArrayList<Round> rounds;
             rounds = new ArrayList<>();
-            for (int i = 0; i < mTour.getRounds().size() && i < mRoundNumber; i++) {
-                rounds.add(mTour.getRounds().get(i));
+            for (int i = 0; i < mTour.getRoundsCount() && i < mRoundNumber; i++) {
+                rounds.add(mTour.getRound(i));
             }
 
             final Map root = new HashMap();
             root.put(
                     java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM"),
-                    mTour.getParams().mTournamentName
+                    mTour.getParams().getTournamentName()
                     + " - " + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Round") + " " + mRoundNumber);
             String name;
             if (mClan) {
@@ -278,10 +289,10 @@ public class JdgGlobal extends javax.swing.JDialog {
             root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TITRELESSAGAINST"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE MOINS SUBI"));
 
             final ArrayList criterias = new ArrayList();
-            for (int i = 0; i < mTour.getParams().mCriterias.size(); i++) {
+            for (int i = 0; i < mTour.getParams().getCriteriaCount(); i++) {
                 final HashMap criteria = new HashMap();
-                final Criteria c = mTour.getParams().mCriterias.get(i);
-                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), c.mName);
+                final Criteria c = mTour.getParams().getCriteria(i);
+                criteria.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), c.getName());
 
                 final MjtAnnexRank annexFor = mAnnexForRankings.get(c);
                 final MjtAnnexRank annexAgainst = mAnnexAgainstRankings.get(c);
@@ -300,15 +311,11 @@ public class JdgGlobal extends javax.swing.JDialog {
             address = File.createTempFile(
                     java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULT") + " " + format.format(new Date()), ".tmp");
             address.deleteOnExit();
-            out = new FileWriter(address);
+            out = new OutputStreamWriter(new FileOutputStream(address),Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (TemplateException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
-        } catch (URISyntaxException e) {
+        } catch (IOException | TemplateException | URISyntaxException e) {
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
         } finally {
             if (out != null) {
@@ -324,4 +331,11 @@ public class JdgGlobal extends javax.swing.JDialog {
         return address;
     }
     private static final Logger LOG = Logger.getLogger(JdgGlobal.class.getName());
+     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

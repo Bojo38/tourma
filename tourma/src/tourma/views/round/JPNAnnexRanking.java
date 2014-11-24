@@ -31,30 +31,47 @@ import tourma.views.report.JdgRanking;
  *
  * @author Administrateur
  */
-public class JPNAnnexRanking extends javax.swing.JPanel {
+public final class JPNAnnexRanking extends javax.swing.JPanel {
     private static final ResourceBundle language = ResourceBundle.getBundle("tourma/languages/language");
 
-    String mName = "";
-    Criteria mCriteria = null;
-    Tournament mTour = null;
-    Round mRound = null;
-    boolean mClan;
-    boolean mTeam;
+    private String mName = "";
+    private Criteria mCriteria = null;
+    private Tournament mTour = null;
+    private Round mRound = null;
+    private boolean mClan;
+    private boolean mTeam;
 
     /**
      *
      */
-    public boolean mRoundOnly = false;
-    ArrayList<Coach> mCoachs = null;
-    ArrayList<Team> mTeams = null;
+    private boolean mRoundOnly = false;
+    private ArrayList<Coach> mCoachs = null;
+    private ArrayList<Team> mTeams = null;
 
     /**
      * Creates new form JPNAnnexRanking
+     * @param name
+     * @param criteria
+     * @param tour
+     * @param coachs
+     * @param teams
+     * @param team
+     * @param round
+     * @param clan
      */
-    public JPNAnnexRanking(final String name, final Criteria criteria, final Tournament tour, final Round round, final boolean clan, final boolean team) {
-        this(name, criteria, tour, round, clan, team, tour.getCoachs(), tour.getTeams());
+    public JPNAnnexRanking(final String name, final Criteria criteria, final Tournament tour,final ArrayList<Coach> coachs,final ArrayList<Team> teams, final Round round, final boolean clan, final boolean team) {
+        this(name, criteria, tour, round, clan, team, coachs, teams);
     }
 
+    /**
+     * 
+     * @param r 
+     */
+    public void setRoundOnly(boolean r)
+    {
+        mRoundOnly=r;
+    }
+    
     /**
      *
      * @param name
@@ -79,7 +96,7 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
         mTeams = t;
 
         int roundnumber = 0;
-        while (round != tour.getRounds().get(roundnumber)) {
+        while (round != tour.getRound(roundnumber)) {
             roundnumber++;
         }
 
@@ -189,26 +206,22 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtPositiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPositiveActionPerformed
-         for (int i = 0; i < mTour.getRounds().size(); i++) {
-             if (mRound == mTour.getRounds().get(i)) {
+         for (int i = 0; i < mTour.getRoundsCount(); i++) {
+             if (mRound == mTour.getRound(i)) {
                  MjtAnnexRank model;
                  if (mClan) {
                      model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                             mTour.getDisplayClans(), true, mTour.getParams().mRankingIndiv1,
-                             mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
-                             mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
+                             mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                  } else {
                      if (mTeam) {
                          model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                 mTeams, true, mTour.getParams().mRankingIndiv1,
-                                 mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
-                                 mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
+                                 mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
 
                      } else {
-                         model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
+                         model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                      }
                  }
-                 final StringBuffer a = new StringBuffer(mCriteria.mName);
+                 final StringBuffer a = new StringBuffer(mCriteria.getName());
                  if (mClan) {
                      a.append(language.getString(" PAR LE CLAN"));
                  } else {
@@ -227,30 +240,23 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtNegativeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNegativeActionPerformed
-         for (int i = 0; i < mTour.getRounds().size(); i++) {
-             if (mRound == mTour.getRounds().get(i)) {
+         for (int i = 0; i < mTour.getRoundsCount(); i++) {
+             if (mRound == mTour.getRound(i)) {
                  MjtAnnexRank model;
                  if (mClan) {
                      model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                             mTour.getDisplayClans(), true, mTour.getParams().mRankingIndiv1,
-                             mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
-                             mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
+                             mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                  } else {
                      if (mTeam) {
                          model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                 mTeams, true, mTour.getParams().mRankingIndiv1,
-                                 mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
-                                 mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
+                                 mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                      } else {
                          model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                 mCoachs, true, mTour.getParams().mRankingIndiv1,
-                                 mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3,
-                                 mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5,
-                                 mTour.getParams().mTeamTournament, mRoundOnly);
+                                 mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                      }
                  }
 
-                 final StringBuffer a = new StringBuffer(mCriteria.mName);
+                 final StringBuffer a = new StringBuffer(mCriteria.getName());
                  if (mClan) {
                      a.append(language.getString(" CONTRE LE CLAN"));
                  } else {
@@ -282,15 +288,15 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
 
 
      /**
-      * 
+      * Update panel
      */
     public void update() {
 
         if (mRound != null) {
             final ArrayList<Round> v = new ArrayList<>();
-            for (int i = 0; i < mTour.getRounds().size(); i++) {
-                if (mTour.getRounds().get(i).getHour().before(mRound.getHour())) {
-                    v.add(mTour.getRounds().get(i));
+            for (int i = 0; i < mTour.getRoundsCount(); i++) {
+                if (mTour.getRound(i).getHour().before(mRound.getHour())) {
+                    v.add(mTour.getRound(i));
                 }
             }
             v.add(mRound);
@@ -301,23 +307,23 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
             if (mClan) {
                 modelPos =
                         new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                        mTour.getDisplayClans(), true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
+                        mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                 modelNeg =
                         new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                        mTour.getDisplayClans(), true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
+                        mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
             } else {
                 if (mTeam) {
                     modelPos =
                             new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            mTeams, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
+                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                     modelNeg =
                             new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            mTeams, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mRoundOnly);
+                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                 } else {
                     modelPos =
-                            new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
+                            new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                     modelNeg =
-                            new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, mTour.getParams().mRankingIndiv1, mTour.getParams().mRankingIndiv2, mTour.getParams().mRankingIndiv3, mTour.getParams().mRankingIndiv4, mTour.getParams().mRankingIndiv5, mTour.getParams().mTeamTournament, mRoundOnly);
+                            new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                 }
             }
             jtbNegative.setModel(modelNeg);
@@ -337,4 +343,12 @@ public class JPNAnnexRanking extends javax.swing.JPanel {
         }
     }
     private static final Logger LOG = Logger.getLogger(JPNAnnexRanking.class.getName());
+    
+     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

@@ -22,9 +22,11 @@ import tourma.utility.Version;
  *
  * @author root.106572700130
  */
-public class JdgAbout extends javax.swing.JDialog {
+public final class JdgAbout extends javax.swing.JDialog {
 
-    /** Creates new form jdgAbout */
+    /** Creates new form jdgAbout
+     * @param parent
+     * @param modal */
     public JdgAbout(final java.awt.Frame parent,final  boolean modal) {
         super(parent, modal);
         initComponents();
@@ -35,11 +37,11 @@ public class JdgAbout extends javax.swing.JDialog {
 
         this.setSize(580, 350);
 
-        if (dmode != null) {
+
             final int screenWidth = dmode.getWidth();
             final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        }
+        
 
         jlbNom.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(": ")+Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LONG_NAME")));
         jlbDate.setText(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Date")+java.util.ResourceBundle.getBundle("tourma/languages/language").getString(": ")+Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE")));

@@ -17,17 +17,17 @@ public class Substitute implements XMLExport {
     /**
      *
      */
-    public CoachMatch mMatch;
+    private CoachMatch mMatch;
 
     /**
      *
      */
-    public Coach mSubstitute;
+    private Coach mSubstitute;
 
     /**
      *
      */
-    public Coach mTitular;
+    private Coach mTitular;
 
     /**
      *
@@ -37,8 +37,8 @@ public class Substitute implements XMLExport {
     public Element getXMLElement() {
 
         final Element coach = new Element("Subtitution");
-        coach.setAttribute("Titular", mTitular.mName);
-        coach.setAttribute("Subtitute", mSubstitute.mName);
+        coach.setAttribute("Titular", getTitular().getName());
+        coach.setAttribute("Subtitute", getSubstitute().getName());
         return coach;
     }
 
@@ -51,8 +51,50 @@ public class Substitute implements XMLExport {
         if (e != null) {
             String Sub = e.getAttributeValue("Subtitute");
             String Tit = e.getAttributeValue("Titular");
-            mTitular=Coach.getCoach(Tit);
-            mSubstitute=Coach.getCoach(Sub);            
+            setTitular(Coach.getCoach(Tit));
+            setSubstitute(Coach.getCoach(Sub));            
         }
+    }
+
+    /**
+     * @return the mMatch
+     */
+    public CoachMatch getMatch() {
+        return mMatch;
+    }
+
+    /**
+     * @param mMatch the mMatch to set
+     */
+    public void setMatch(CoachMatch mMatch) {
+        this.mMatch = mMatch;
+    }
+
+    /**
+     * @return the mSubstitute
+     */
+    public Coach getSubstitute() {
+        return mSubstitute;
+    }
+
+    /**
+     * @param mSubstitute the mSubstitute to set
+     */
+    public void setSubstitute(Coach mSubstitute) {
+        this.mSubstitute = mSubstitute;
+    }
+
+    /**
+     * @return the mTitular
+     */
+    public Coach getTitular() {
+        return mTitular;
+    }
+
+    /**
+     * @param mTitular the mTitular to set
+     */
+    public void setTitular(Coach mTitular) {
+        this.mTitular = mTitular;
     }
 }

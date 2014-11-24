@@ -37,10 +37,10 @@ public class Skill {
      * 
      */
     public static final int _C_MOVEMENT_COST=30000;
-    
-    
     private static final Logger LOG = Logger.getLogger(Skill.class.getName());
     
+    
+       
     /**
      * 
      */

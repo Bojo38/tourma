@@ -12,8 +12,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import tourma.data.Coach;
-import tourma.data.Criteria;
 import tourma.data.CoachMatch;
+import tourma.data.Criteria;
+import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Pool;
@@ -26,12 +27,12 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
-public class MjtRankingIndiv extends MjtRanking {
+public final class MjtRankingIndiv extends MjtRanking {
     private static final Logger LOG = Logger.getLogger(MjtRankingIndiv.class.getName());
 
-    boolean mTeamTournament;
-    boolean mPositive;
-    boolean mForPool;
+    private final boolean mTeamTournament;
+    private boolean mPositive;
+    private final boolean mForPool;
 
     /**
      *
@@ -46,7 +47,13 @@ public class MjtRankingIndiv extends MjtRanking {
      * @param round_only
      * @param forPool
      */
-    public MjtRankingIndiv(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool) {
+    public MjtRankingIndiv(final int round, 
+            final int ranking_type1,
+            final int ranking_type2,
+            final int ranking_type3,
+            final int ranking_type4,
+            final int ranking_type5,
+            final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs,round_only);
         mTeamTournament = tournament;
         mForPool = forPool;
@@ -64,25 +71,25 @@ public class MjtRankingIndiv extends MjtRanking {
         final ArrayList<Round> rounds = new ArrayList<>();
 
         if (mRoundOnly) {
-            rounds.add(Tournament.getTournament().getRounds().get(mRound));
+            rounds.add(Tournament.getTournament().getRound(mRound));
         } else {
             for (int l = 0; (l <= mRound); l++) {
-                rounds.add(Tournament.getTournament().getRounds().get(l));
+                rounds.add(Tournament.getTournament().getRound(l));
             }
         }
 
         for (int i = 0; i < mObjects.size(); i++) {
             final Coach c = (Coach) mObjects.get(i);
-            if (c.mMatchs.size() > 0) {
+            if (c.getMatchCount() > 0) {
                 int value1 = 0;
                 int value2 = 0;
                 int value3 = 0;
                 int value4 = 0;
                 int value5 = 0;
 
-                for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
+                for (int j = 0; j <= c.getMatchCount() - 1; j++) {
 
-                    final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
+                    final CoachMatch m = (CoachMatch) c.getMatch(j);
                     boolean bFound = false;
                     for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
                         final Round r = rounds.get(l);
@@ -150,21 +157,21 @@ public class MjtRankingIndiv extends MjtRanking {
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
-        if ((mForPool) && (!tour.getParams().mTeamTournament)) {
-            if (mObjects.size() > tour.getPools().get(0).mCompetitors.size()) {
-                final int nbPool = tour.getPools().size();
+        if ((mForPool) && (!tour.getParams().isTeamTournament())) {
+            if (mObjects.size() > tour.getPool(0).getCompetitorCount()) {
+                final int nbPool = tour.getPoolCount();
                 Pool p;
                 final ArrayList<MjtRankingIndiv> pRank = new ArrayList<>();
                 for (int j = 0; j < nbPool; j++) {
-                    p = tour.getPools().get(j);
-                    final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.mCompetitors, mTeamTournament, mRoundOnly, false);
+                    p = tour.getPool(j);
+                    final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.getCompetitors(), mTeamTournament, mRoundOnly, false);
                     pRank.add(mjtr);
                 }
 
 
                 final ArrayList datas = new ArrayList();
 
-                for (int i = 0; i < tour.getPools().get(0).mCompetitors.size(); i++) {
+                for (int i = 0; i < tour.getPool(0).getCompetitorCount(); i++) {
                     final ArrayList<Coach> rank = new ArrayList<>();
                     for (int j = 0; j < nbPool; j++) {
                         final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
@@ -178,10 +185,10 @@ public class MjtRankingIndiv extends MjtRanking {
                 }
 
                 final ArrayList<Coach> rank = new ArrayList<>();
-                for (int i = 0; i < tour.getCoachs().size(); i++) {
+                for (int i = 0; i < tour.getCoachsCount(); i++) {
 
-                    if (!tour.getCoachs().get(i).isActive()) {
-                        rank.add(tour.getCoachs().get(i));
+                    if (!tour.getCoach(i).isActive()) {
+                        rank.add(tour.getCoach(i));
                     }
                 }
                 final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
@@ -214,15 +221,15 @@ public class MjtRankingIndiv extends MjtRanking {
     public int getColumnCount() {
         int result = 9;
         Parameters params = Tournament.getTournament().getParams();
-        if (params.mRankingIndiv5 == 0) {
+        if (params.getRankingIndiv5() == 0) {
             result--;
-            if (params.mRankingIndiv4 == 0) {
+            if (params.getRankingIndiv4() == 0) {
                 result--;
-                if (params.mRankingIndiv3 == 0) {
+                if (params.getRankingIndiv3() == 0) {
                     result--;
-                    if (params.mRankingIndiv2 == 0) {
+                    if (params.getRankingIndiv2() == 0) {
                         result--;
-                        if (params.mRankingIndiv1 == 0) {
+                        if (params.getRankingIndiv1() == 0) {
                             result--;
                         }
                     }
@@ -299,7 +306,7 @@ public class MjtRankingIndiv extends MjtRanking {
                     cl = col - 1;
                 }
                 if (col == 1) {
-                    object = ((Coach) obj.getObject()).getTeamMates().mName;
+                    object = ((Coach) obj.getObject()).getTeamMates().getName();
                 }
             }
 
@@ -317,7 +324,7 @@ public class MjtRankingIndiv extends MjtRanking {
                     }
                     break;
                 case 2:
-                    object = ((Coach) obj.getObject()).mName;
+                    object = ((IWithNameAndPicture) obj.getObject()).getName();
                     break;
                 case 3:
                     object = ((Coach) obj.getObject()).getStringRoster();
@@ -347,12 +354,12 @@ public class MjtRankingIndiv extends MjtRanking {
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        if (Tournament.getTournament().getParams().useImage)
+        if (Tournament.getTournament().getParams().isUseImage())
         {
         if ((column == 1) && mTeamTournament) {
             Coach c = (Coach)mObjects.get(row);
-            if (c.getTeamMates().picture != null) {
-                ImageIcon icon = ImageTreatment.resize(new ImageIcon(c.getTeamMates().picture), 30, 30);
+            if (c.getTeamMates().getPicture() != null) {
+                ImageIcon icon = ImageTreatment.resize(new ImageIcon(c.getTeamMates().getPicture()), 30, 30);
                 obj.setIcon(icon);
                 obj.setOpaque(true);
                 return obj;

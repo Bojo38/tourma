@@ -15,7 +15,7 @@ import tourma.views.round.JPNMatch;
  *
  * @author WFMJ7631
  */
-public class JPNCup extends javax.swing.JPanel {
+public final class JPNCup extends javax.swing.JPanel {
 
     /**
      * Creates new form JPNCup
@@ -55,16 +55,17 @@ public class JPNCup extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     /**
-     *
+     * Update panel
      */
     public void update() {
         final ArrayList<Round> rounds_with_cup = new ArrayList<>();
-        final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
+        //final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
         boolean bLooserCup = false;
-        for (int i = 0; i < rounds.size(); i++) {
-            if (rounds.get(i).mCup) {
-                rounds_with_cup.add(rounds.get(i));
-                if (rounds.get(i).mLooserCup) {
+        for (int i=0; i<Tournament.getTournament().getRoundsCount(); i++) {
+            Round round=Tournament.getTournament().getRound(i);
+            if (round.isCup()) {
+                rounds_with_cup.add(round);
+                if (round.isLooserCup()) {
                     bLooserCup = true;
                 }
             }
@@ -79,7 +80,7 @@ public class JPNCup extends javax.swing.JPanel {
         jpnCup.setSize(max_width, max_heigth);
 
 
-        final int max_nb_match = (int) Math.pow(2, rounds_with_cup.get(0).mCupMaxTour - 1);
+        final int max_nb_match = (int) Math.pow(2, rounds_with_cup.get(0).getCupMaxTour() - 1);
         final int base_high = 60;
         final int total_high = 60 * max_nb_match;
 
@@ -90,7 +91,7 @@ public class JPNCup extends javax.swing.JPanel {
         int offset = 0;
         for (int i = 0; i < rounds_with_cup.size(); i++) {
             final Round r = rounds_with_cup.get(i);
-            final int remaining_tour = r.mCupMaxTour - r.mCupTour + 1;
+            final int remaining_tour = r.getCupMaxTour() - r.getCupTour() + 1;
             int nb_match = (int) Math.pow(2, remaining_tour - 1) / 2;
             if (nb_match == 0) {
                 nb_match = 1;
@@ -103,10 +104,10 @@ public class JPNCup extends javax.swing.JPanel {
             final int h = 50;
             int x = i * 200 + 5;
 
-            final Tournament tour = Tournament.getTournament();
+            //final Tournament tour = Tournament.getTournament();
             for (int j = 0; j < nb_match; j++) {
                 Match m;
-                m = r.getMatchs().get(j);
+                m = r.getMatch(j);
 
                 
                 final JPNMatch match = new JPNMatch(m, true);
@@ -117,27 +118,27 @@ public class JPNCup extends javax.swing.JPanel {
                                                 
             }
 
-            if (r.mLooserCup) {
-                if (r.mCupTour > 0) {
+            if (r.isLooserCup()) {
+                if (r.getCupTour() > 0) {
                     nb_looseMatch = nb_looseMatch / 2 + nb_match;
 
                     /* Check the maximum round for looser cup */
-                    if (Math.pow(2, i-1)/2==rounds_with_cup.get(0).getMatchs().size())
+                    if (Math.round(Math.pow(2, i-1)/2)==rounds_with_cup.get(0).getMatchsCount())
                     {
                         /* We are at maximum looser cup round */
                         nb_looseMatch=1;
                     }
-                    if (Math.pow(2, i-1)/2>rounds_with_cup.get(0).getMatchs().size())
+                    if (Math.pow(2, i-1)/2>rounds_with_cup.get(0).getMatchsCount())
                     {
                         /* We are at maximum looser cup round */
                         nb_looseMatch=0;
                     }
                     
                     int factor = 1;
-                    for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j < r.getMatchs().size()); j++) {
+                    for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j < r.getMatchsCount()); j++) {
                         Match m;
 
-                        m = r.getMatchs().get(j);
+                        m = r.getMatch(j);
 
                         final JPNMatch match = new JPNMatch(m, false);
                         match.setSize(175, 50);

@@ -12,8 +12,9 @@ import javax.swing.JTable;
  *
  * @author WFMJ7631
  */
-public class TableFormat {
+public final class TableFormat {
 
+    
     private static final Logger LOG = Logger.getLogger(TableFormat.class.getName());
 
     /**
@@ -34,7 +35,7 @@ public class TableFormat {
                 }
 
                 if (value instanceof Integer) {
-                    tmp = ((Integer) value).toString();
+                    tmp = value.toString();
                 }
 
                 final int taille = fm.stringWidth(tmp);
@@ -51,5 +52,11 @@ public class TableFormat {
 
             t.getColumnModel().getColumn(i).setPreferredWidth(max + 10);
         }
+    }
+
+    /**
+     *
+     */
+    private TableFormat() {
     }
 }

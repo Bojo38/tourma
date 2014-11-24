@@ -13,14 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import tourma.data.Clan;
 import tourma.data.Coach;
-import tourma.data.Criteria;
 import tourma.data.CoachMatch;
+import tourma.data.Criteria;
+import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectRanking;
-import tourma.data.Parameters;
 import tourma.data.Team;
 import tourma.data.Tournament;
-import static tourma.tableModel.MjtRanking.getCriteriaByValue;
-import static tourma.tableModel.MjtRanking.getSubtypeByValue;
 import static tourma.tableModel.MjtRanking.getValue;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
@@ -29,7 +27,7 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
-public class MjtRankingClan extends MjtRanking {
+public final class MjtRankingClan extends MjtRanking {
     private static final Logger LOG = Logger.getLogger(MjtRankingClan.class.getName());
 
     /**
@@ -43,7 +41,13 @@ public class MjtRankingClan extends MjtRanking {
      * @param clans
      * @param round_only
      */
-    public MjtRankingClan(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList<Clan> clans, final boolean round_only) {
+    public MjtRankingClan(final int round,
+            final int ranking_type1,
+            final int ranking_type2, 
+            final int ranking_type3,
+            final int ranking_type4,
+            final int ranking_type5, 
+            final ArrayList<Clan> clans, final boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, clans,round_only);
 
         sortDatas();
@@ -56,11 +60,7 @@ public class MjtRankingClan extends MjtRanking {
      * @param round_only
      */
     public MjtRankingClan(final int round, final ArrayList<Clan> clans, final boolean round_only) {
-        super(round, Tournament.getTournament().getParams().mRankingIndiv1,
-                Tournament.getTournament().getParams().mRankingIndiv2,
-                Tournament.getTournament().getParams().mRankingIndiv3,
-                Tournament.getTournament().getParams().mRankingIndiv4,
-                Tournament.getTournament().getParams().mRankingIndiv5, clans,round_only);
+        super(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), clans,round_only);
         sortDatas();
     }
 
@@ -71,7 +71,7 @@ public class MjtRankingClan extends MjtRanking {
     protected void sortDatas() {
         mDatas.clear();
         mDatas = new ArrayList();
-        if (Tournament.getTournament().getParams().mTeamTournament) {
+        if (Tournament.getTournament().getParams().isTeamTournament()) {
             sortDatasTeam();
         } else {
             sortDatasCoach();
@@ -80,13 +80,17 @@ public class MjtRankingClan extends MjtRanking {
     }
 
     /**
-     *
+     * Sort Clan data
      */
-    protected void sortDatasTeam() {
+    private void sortDatasTeam() {
 
 
-        final ArrayList<Team> teams = Tournament.getTournament().getTeams();
-        final ArrayList<Clan> clans = (ArrayList<Clan>) mObjects;
+        ArrayList<Team> teams=new ArrayList<>();
+        for (int cpt=0; cpt<Tournament.getTournament().getTeamsCount(); cpt++)
+        {
+            teams.add(Tournament.getTournament().getTeam(cpt));
+        }
+        final ArrayList<Clan> clans = mObjects;
 
         for (int i = 0; i < clans.size(); i++) {
             final ArrayList<Integer> Vvalue1 = new ArrayList<>();
@@ -104,7 +108,7 @@ public class MjtRankingClan extends MjtRanking {
             for (int k = 0; k < teams.size(); k++) {
                 final Team t = teams.get(k);
 
-                if (t.mClan == clans.get(i)) {
+                if (t.getClan() == clans.get(i)) {
                     int value1 = 0;
                     int value2 = 0;
                     int value3 = 0;
@@ -117,14 +121,14 @@ public class MjtRankingClan extends MjtRanking {
                         j = mRound;
                     }
 
-                    while (j <= Math.min(t.mMatchs.size() - 1, mRound)) {
+                    while (j <= Math.min(t.getMatchCount() - 1, mRound)) {
                         //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
                         //final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
 
                         final Criteria c1 = getCriteriaByValue(mRankingType1);
                         final int subType1 = getSubtypeByValue(mRankingType1);
                         if (c1 == null) {
-                            value1 = getValue(t, mRankingType1, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                            value1 = getValue(t, mRankingType1, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value1 += getValue(t, c1, subType1);
                         }
@@ -132,7 +136,7 @@ public class MjtRankingClan extends MjtRanking {
                         final Criteria c2 = getCriteriaByValue(mRankingType2);
                         final int subType2 = getSubtypeByValue(mRankingType2);
                         if (c2 == null) {
-                            value2 = getValue(t, mRankingType2, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                            value2 = getValue(t, mRankingType2, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value2 += getValue(t, c2, subType2);
                         }
@@ -140,7 +144,7 @@ public class MjtRankingClan extends MjtRanking {
                         final Criteria c3 = getCriteriaByValue(mRankingType3);
                         final int subType3 = getSubtypeByValue(mRankingType3);
                         if (c3 == null) {
-                            value3 = getValue(t, mRankingType3, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                            value3 = getValue(t, mRankingType3, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value3 += getValue(t, c3, subType3);
                         }
@@ -148,7 +152,7 @@ public class MjtRankingClan extends MjtRanking {
                         final Criteria c4 = getCriteriaByValue(mRankingType4);
                         final int subType4 = getSubtypeByValue(mRankingType4);
                         if (c4 == null) {
-                            value4 = getValue(t, mRankingType4, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                            value4 = getValue(t, mRankingType4, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value4 += getValue(t, c4, subType4);
                         }
@@ -156,7 +160,7 @@ public class MjtRankingClan extends MjtRanking {
                         final Criteria c5 = getCriteriaByValue(mRankingType5);
                         final int subType5 = getSubtypeByValue(mRankingType5);
                         if (c5 == null) {
-                            value5 = getValue(t, mRankingType5, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                            value5 = getValue(t, mRankingType5, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value5 += getValue(t, c5, subType5);
                         }
@@ -169,7 +173,7 @@ public class MjtRankingClan extends MjtRanking {
                     Vvalue5.add(value5);
                 }
 
-                while (Vvalue1.size() > Tournament.getTournament().getParams().mTeamMatesClansNumber) {
+                while (Vvalue1.size() > Tournament.getTournament().getParams().getTeamMatesClansNumber()) {
                     int currentValue = Vvalue1.get(0);
                     // Search minimum and remove it
                     for (int j = 1; j < Vvalue1.size(); j++) {
@@ -201,13 +205,17 @@ public class MjtRankingClan extends MjtRanking {
     }
     
     /**
-     *
+     * Sort Coach data
      */
-    protected void sortDatasCoach() {
+    private void sortDatasCoach() {
 
 
-        final ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
-        final ArrayList<Clan> clans = (ArrayList<Clan>) mObjects;
+        final ArrayList<Coach>     coaches = new ArrayList<>();
+        for (int i=0; i<Tournament.getTournament().getCoachsCount(); i++)
+        {
+            coaches.add(Tournament.getTournament().getCoach(i));
+        }
+        final ArrayList<Clan> clans = mObjects;
 
         for (int i = 0; i < clans.size(); i++) {
             final ArrayList<Integer> Vvalue1 = new ArrayList<>();
@@ -225,7 +233,7 @@ public class MjtRankingClan extends MjtRanking {
             for (int k = 0; k < coaches.size(); k++) {
                 final Coach c = coaches.get(k);
 
-                if (c.mClan == clans.get(i)) {
+                if (c.getClan() == clans.get(i)) {
                     int value1 = 0;
                     int value2 = 0;
                     int value3 = 0;
@@ -238,9 +246,9 @@ public class MjtRankingClan extends MjtRanking {
                         j = mRound;
                     }
 
-                    while (j <= Math.min(c.mMatchs.size() - 1, mRound)) {
+                    while (j <= Math.min(c.getMatchCount() - 1, mRound)) {
                         //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
-                        final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
+                        final CoachMatch m = (CoachMatch) c.getMatch(j);
 
                         final Criteria c1 = getCriteriaByValue(mRankingType1);
                         final int subType1 = getSubtypeByValue(mRankingType1);
@@ -290,7 +298,7 @@ public class MjtRankingClan extends MjtRanking {
                     Vvalue5.add(value5);
                 }
 
-                while (Vvalue1.size() > Tournament.getTournament().getParams().mTeamMatesClansNumber) {
+                while (Vvalue1.size() > Tournament.getTournament().getParams().getTeamMatesClansNumber()) {
                     int currentValue = Vvalue1.get(0);
                     // Search minimum and remove it
                     for (int j = 1; j < Vvalue1.size(); j++) {
@@ -324,7 +332,7 @@ public class MjtRankingClan extends MjtRanking {
     @Override
     public int getColumnCount() {
         int result = 7;
-        Parameters params = Tournament.getTournament().getParams();
+        //Parameters params = Tournament.getTournament().getParams();
         if (mRankingType5 == 0) {
             result--;
             if (mRankingType4 == 0) {
@@ -385,7 +393,7 @@ public class MjtRankingClan extends MjtRanking {
                 object = row + 1;
                 break;
             case 1:
-                object = ((Clan) obj.getObject()).getName();
+                object = ((IWithNameAndPicture) obj.getObject()).getName();
                 break;
             case 2:
                 object = obj.getValue1();
@@ -411,7 +419,7 @@ public class MjtRankingClan extends MjtRanking {
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        if (Tournament.getTournament().getParams().useImage) {
+        if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
                 Clan t = (Clan) mObjects.get(row);
                 if (t.getPicture() != null) {

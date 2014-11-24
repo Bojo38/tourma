@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -72,10 +73,6 @@ public class Category implements Comparable, XMLExport {
         mName = name;
     }
 
-    @Override
-    public int hashCode() {
-        return getName().hashCode();
-    }
     
     @Override
     public boolean equals(final Object obj) {
@@ -87,6 +84,17 @@ public class Category implements Comparable, XMLExport {
             result=this.getName().equals(cat.getName());
         } 
         return result;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.mName);
+        return hash;
     }
     
     @Override

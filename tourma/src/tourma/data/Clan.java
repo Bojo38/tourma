@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -99,15 +100,16 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
         } 
         return result;
     }
-    
-    /**
-     * 
-     * @return 
-     */
+
     @Override
     public int hashCode() {
-        return mName.hashCode();
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.mName);
+        hash = 11 * hash + Objects.hashCode(this.picture);
+        return hash;
     }
+    
+    
     
     /**
      * 

@@ -8,12 +8,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import tourma.data.Clan;
 import tourma.data.Coach;
-import tourma.data.Criteria;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingClan;
@@ -22,38 +22,48 @@ import tourma.tableModel.MjtRankingClan;
  *
  * @author WFMJ7631
  */
-public class JFullScreenClanRank extends JFullScreen {
+public final class JFullScreenClanRank extends JFullScreen {
+    private static final long serialVersionUID = 10L;
 
-    int round;
+    private int round;
 
     /**
      *
      * @param r
      * @throws IOException
      */
+    @SuppressWarnings("LeakingThisInConstructor")
     public JFullScreenClanRank(int r) throws IOException {
         super();
+        initComponents();
         try {
             round = r;
 
-            Criteria td = Tournament.getTournament().getParams().mCriterias.get(0);
+            //Criteria td = Tournament.getTournament().getParams().getCriteria(0);
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
             int height = getHeight();
             int width = getWidth();
 
-            Font f0 = font.deriveFont(Font.ITALIC, height / 50);
-            Font f1 = font.deriveFont(Font.BOLD, height / 50);
-            Font f = font.deriveFont(Font.PLAIN, height / 50);
+            float size= height /((float) 50.0);
+            Font f0 = font.deriveFont(Font.ITALIC,size);
+            Font f1 = font.deriveFont(Font.BOLD, size);
+            Font f = font.deriveFont(Font.PLAIN, size);
 
             int computed_height = height / 20;
 
 
-            final boolean forPool = (Tournament.getTournament().getPools().size() > 0) && (!Tournament.getTournament().getRounds().get(r).mCup);
+            final boolean forPool = (Tournament.getTournament().getPoolCount() > 0) && (!Tournament.getTournament().getRound(r).isCup());
 
+            
+            ArrayList<Clan> clans=new ArrayList<>();
+            for (int i=0; i<Tournament.getTournament().getClansCount(); i++)
+            {
+                clans.add(Tournament.getTournament().getClan(i));
+            }
             MjtRankingClan ranking = new MjtRankingClan(
                     round,
-                    Tournament.getTournament().getClans(),
+                    clans,
                     false);
 
             int nbCols = Tournament.getTournament().getParams().getTeamRankingNumber() + 3;
@@ -107,9 +117,9 @@ public class JFullScreenClanRank extends JFullScreen {
 
             int nbRows = ranking.getRowCount();
             int clanIndex=0;
-            Clan NoClan=Tournament.getTournament().getClans().get(0);
+            Clan NoClan=Tournament.getTournament().getClan(0);
             for (int i = 0; i < nbRows; i++) {
-                Clan clan = (Clan) ranking.getSortedDatas().get(i).getObject();
+                Clan clan = (Clan) ranking.getSortedObject(i).getObject();
                 if (clan==NoClan)
                 {
                     continue;
@@ -147,18 +157,18 @@ public class JFullScreenClanRank extends JFullScreen {
                 jpnContent.add(jlbCoach, getGridbBagConstraints(index, clanIndex + 1, 1, 5));
                 index += 5;
 
-                String members = "";
-                for (int j = 0; j < Tournament.getTournament().getCoachs().size(); j++) {
-                    Coach c = Tournament.getTournament().getCoachs().get(j);
-                    if (c.mClan == clan) {
-                        if (!members.equals(""))
+                StringBuilder members = new StringBuilder("");
+                for (int j = 0; j < Tournament.getTournament().getCoachsCount(); j++) {
+                    Coach c = Tournament.getTournament().getCoach(j);
+                    if (c.getClan() == clan) {
+                        if (!members.toString().isEmpty())
                         {
-                            members+=" / ";
+                            members.append(" / ");
                         }
-                        members += c.mName;
+                        members.append(c.getName());
                     }
                 }
-                JLabel jlbMembers = new JLabel(members);
+                JLabel jlbMembers = new JLabel(members.toString());
                 jlbMembers.setFont(currentFont);
                 jlbMembers.setOpaque(true);
                 jlbMembers.setBackground(bkg);
@@ -168,24 +178,9 @@ public class JFullScreenClanRank extends JFullScreen {
 
                 for (int j = 0; j < Tournament.getTournament().getParams().getIndivRankingNumber(); j++) {
                     int rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
-                    int value = 0;
-                    switch (j) {
-                        case 0:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue1();
-                            break;
-                        case 1:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue2();
-                            break;
-                        case 2:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue3();
-                            break;
-                        case 3:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue4();
-                            break;
-                        case 4:
-                            value = (Integer) ranking.getSortedDatas().get(i).getValue5();
-                            break;
-                    }
+                    int value ;
+                    value=ranking.getSortedValue(i, j+1);
+
                     String name = Integer.toString(value);
                     if (rankingType == 0) {
                         break;
@@ -204,6 +199,7 @@ public class JFullScreenClanRank extends JFullScreen {
         } catch (FontFormatException ex) {
             Logger.getLogger(JFullScreenClanRank.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
     }
 
     /**

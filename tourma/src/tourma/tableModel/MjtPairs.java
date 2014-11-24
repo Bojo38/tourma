@@ -20,11 +20,12 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
+
     private static final Logger LOG = Logger.getLogger(MjtPairs.class.getName());
 
-    ArrayList<Team> mTeams1;
-    ArrayList<Team> mTeams2;
-    ArrayList<Boolean> mDone;
+    private final ArrayList<Team> mTeams1;
+    private final ArrayList<Team> mTeams2;
+    private final ArrayList<Boolean> mDone;
 
     /**
      *
@@ -77,13 +78,13 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
                 val = row + 1;
                 break;
             case 1:
-                val = mTeams1.get(row).mName;
+                val = mTeams1.get(row).getName();
                 break;
             case 2:
                 val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VS");
                 break;
             case 3:
-                val = mTeams2.get(row).mName;
+                val = mTeams2.get(row).getName();
                 break;
             default:
         }
@@ -108,20 +109,20 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(
-            final JTable table,final  Object value,final  boolean isSelected, final boolean hasFocus,final  int row,final  int column) {
-       final  JTextField jlb = new JTextField();
+            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        final JTextField jlb = new JTextField();
 
         jlb.setEditable(false);
         if (value instanceof String) {
             jlb.setText((String) value);
         }
         if (value instanceof Integer) {
-            jlb.setText(((Integer) value).toString());
+            jlb.setText(value.toString());
         }
 
         Color bkg = new Color(255, 255, 255);
         final Color frg = new Color(0, 0, 0);
-        if (mDone.get(row).booleanValue()) {
+        if (mDone.get(row)) {
             bkg = new Color(190, 190, 190);
         }
 
@@ -129,5 +130,14 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
         jlb.setForeground(frg);
         jlb.setHorizontalAlignment(JTextField.CENTER);
         return jlb;
+
+    }
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
     }
 }

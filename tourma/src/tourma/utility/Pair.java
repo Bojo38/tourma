@@ -30,8 +30,8 @@ public class Pair<A, B> {
 
     @Override
     public int hashCode() {
-    	int hashFirst = first != null ? first.hashCode() : 0;
-    	int hashSecond = second != null ? second.hashCode() : 0;
+    	int hashFirst = getFirst() != null ? getFirst().hashCode() : 0;
+    	int hashSecond = getSecond() != null ? getSecond().hashCode() : 0;
 
     	return (hashFirst + hashSecond) * hashSecond + hashFirst;
     }
@@ -39,14 +39,14 @@ public class Pair<A, B> {
     @Override
     public boolean equals(Object other) {
     	if (other instanceof Pair) {
-    		Pair otherPair = (Pair) other;
+    		Pair<A,B> otherPair = (Pair<A,B>) other;
     		return 
-    		((  this.first == otherPair.first ||
-    			( this.first != null && otherPair.first != null &&
-    			  this.first.equals(otherPair.first))) &&
-    		 (	this.second == otherPair.second ||
-    			( this.second != null && otherPair.second != null &&
-    			  this.second.equals(otherPair.second))) );
+    		((  this.getFirst() == otherPair.getFirst() ||
+    			( this.getFirst() != null && otherPair.getFirst() != null &&
+                        this.getFirst().equals(otherPair.getFirst()))) &&
+    		 (	this.getSecond() == otherPair.getSecond() ||
+                        ( this.getSecond() != null && otherPair.getSecond() != null &&
+    			  this.getSecond().equals(otherPair.getSecond()))) );
     	}
 
     	return false;
@@ -55,7 +55,7 @@ public class Pair<A, B> {
     @Override
     public String toString()
     { 
-           return "(" + first + ", " + second + ")"; 
+           return "(" + getFirst() + ", " + getSecond() + ")"; 
     }
 
     /**

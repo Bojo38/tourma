@@ -13,27 +13,27 @@ public abstract class Match implements XMLExport {
     /**
      *
      */
-    public Competitor mCompetitor1;
+    private Competitor mCompetitor1;
 
     /**
      *
      */
-    public Competitor mCompetitor2;
+    private Competitor mCompetitor2;
     
     /**
      *
      */
-    public Round mRound;
+    private Round mRound;
 
     /**
      *
      */
-    protected Competitor mWinner = null;
+    private Competitor mWinner = null;
 
     /**
      *
      */
-    protected Competitor mLooser = null;
+    private Competitor mLooser = null;
 
     /**
      *
@@ -47,20 +47,82 @@ public abstract class Match implements XMLExport {
      *
      * @return
      */
-    public abstract Competitor getWinner();
+    public Competitor getWinner()
+    {
+        return mWinner;
+    }
 
     /**
      *
      * @return
      */
-    public abstract Competitor  getLooser();
+    public Competitor  getLooser()
+    {
+        return mLooser;
+    }
 
     /**
-     *
+     * Reset Winner/Looser
      */
     public void resetWL() {
-        mWinner = null;
-        mLooser = null;
+        setWinner(null);
+        setLooser(null);
+    }
+
+    /**
+     * @return the mCompetitor1
+     */
+    public Competitor getCompetitor1() {
+        return mCompetitor1;
+    }
+
+    /**
+     * @param mCompetitor1 the mCompetitor1 to set
+     */
+    public void setCompetitor1(Competitor mCompetitor1) {
+        this.mCompetitor1 = mCompetitor1;
+    }
+
+    /**
+     * @return the mCompetitor2
+     */
+    public Competitor getCompetitor2() {
+        return mCompetitor2;
+    }
+
+    /**
+     * @param mCompetitor2 the mCompetitor2 to set
+     */
+    public void setCompetitor2(Competitor mCompetitor2) {
+        this.mCompetitor2 = mCompetitor2;
+    }
+
+    /**
+     * @return the mRound
+     */
+    public Round getRound() {
+        return mRound;
+    }
+
+    /**
+     * @param mRound the mRound to set
+     */
+    public void setRound(Round mRound) {
+        this.mRound = mRound;
+    }
+
+    /**
+     * @param mWinner the mWinner to set
+     */
+    public void setWinner(Competitor mWinner) {
+        this.mWinner = mWinner;
+    }
+
+    /**
+     * @param mLooser the mLooser to set
+     */
+    public void setLooser(Competitor mLooser) {
+        this.mLooser = mLooser;
     }
 
     

@@ -2,10 +2,11 @@ package tourma.views.parameters;
 
 
 import java.awt.BorderLayout;
+import java.util.Date;
 import java.util.logging.Logger;
+import tourma.JdgCoach;
 import tourma.MainFrame;
 import tourma.data.Tournament;
-import tourma.JdgCoach;
 import tourma.tableModel.MjtCoaches;
 import tourma.utils.TableFormat;
 
@@ -17,16 +18,16 @@ import tourma.utils.TableFormat;
  *
  * @author WFMJ7631
  */
-public class JPNParameters extends javax.swing.JPanel {
+public final class JPNParameters extends javax.swing.JPanel {
 
-      Tournament mTournament;
-    JPNParamGroup mJpnGroup;
-    JPNParamCategories mJpnCategories;
-    JPNParamClan mJpnClan;
-    JPNParamTeam mJpnTeam;
-    JPNParamCriterias mJpnCriterias;
-    JPNParamIndiv mJpnIndiv;
-    JPNTeams jpnTeamTour;
+    private final  Tournament mTournament;
+    private final JPNParamGroup mJpnGroup;
+    private final JPNParamCategories mJpnCategories;
+    private final JPNParamClan mJpnClan;
+    private final JPNParamTeam mJpnTeam;
+    private final JPNParamCriterias mJpnCriterias;
+    private final JPNParamIndiv mJpnIndiv;
+    private final JPNTeams jpnTeamTour;
 
     /**
      * Creates new form JPNParameters
@@ -79,12 +80,12 @@ public class JPNParameters extends javax.swing.JPanel {
      *
      * @param bTourStarted
      */
-    protected void updateTables(final boolean bTourStarted) {
+    private void updateTables(final boolean bTourStarted) {
 
         jbtAdd.setEnabled(!bTourStarted);
         jbtRemove.setEnabled(!bTourStarted);
 
-        final MjtCoaches coachModel = new MjtCoaches(mTournament.getCoachs());
+        final MjtCoaches coachModel = new MjtCoaches(mTournament);
         jtbCoachs.setModel(coachModel);
         TableFormat.setColumnSize(jtbCoachs);
 
@@ -94,15 +95,15 @@ public class JPNParameters extends javax.swing.JPanel {
     }
 
     /**
-     *
+     * Update Panel
      */
     public void update() {
 
-        final boolean bTourStarted = mTournament.getRounds().size() > 0;
+        final boolean bTourStarted = mTournament.getRoundsCount() > 0;
 
         updateTables(bTourStarted);
 
-         if (mTournament.getParams().mTeamTournament) {
+         if (mTournament.getParams().isTeamTournament()) {
              jpnTeamTour.update();
             jpnTeamTour.setVisible(true);
             jpnCoachButtons.setVisible(false);
@@ -119,15 +120,18 @@ public class JPNParameters extends javax.swing.JPanel {
         mJpnGroup.update();
         mJpnCategories.update();
 
-        jtpOptions.setEnabledAt(4,!mTournament.getParams().mMultiRoster);
-        jtpOptions.setEnabledAt(2, mTournament.getParams().mTeamTournament);
+        jtpOptions.setEnabledAt(4,!mTournament.getParams().isMultiRoster());
+        jtpOptions.setEnabledAt(2, mTournament.getParams().isTeamTournament());
 //        jtpOptions.setEnabledAt(3, !mTournament.getParams().mTeamTournament);
 
-        jtfOrgas.setText(mTournament.getParams().mTournamentOrga);
-        jtfTournamentName.setText(mTournament.getParams().mTournamentName);
+        jtfOrgas.setText(mTournament.getParams().getTournamentOrga());
+        jtfTournamentName.setText(mTournament.getParams().getTournamentName());
 
-        jDate.setDate(mTournament.getParams().mDate);
-        jtfPlace.setText(mTournament.getParams().mPlace);
+        Date d=new Date();
+        d.setTime(mTournament.getParams().getDateTime());
+        jDate.setDate(d);
+
+        jtfPlace.setText(mTournament.getParams().getPlace());
 
         
         MainFrame.getMainFrame().update();
@@ -281,11 +285,11 @@ public class JPNParameters extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
-        mTournament.getParams().mTournamentName = jtfTournamentName.getText()+evt.getKeyChar();
+        mTournament.getParams().setTournamentName(jtfTournamentName.getText()+evt.getKeyChar());
     }//GEN-LAST:event_jtfTournamentNameKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
-        mTournament.getParams().mTournamentOrga = jtfOrgas.getText()+evt.getKeyChar();
+        mTournament.getParams().semTournamentOrga(jtfOrgas.getText()+evt.getKeyChar());
     }//GEN-LAST:event_jtfOrgasKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
@@ -295,25 +299,25 @@ public class JPNParameters extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAddActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        mTournament.getCoachs().remove(jtbCoachs.getSelectedRow());
+        mTournament.removeCoach(jtbCoachs.getSelectedRow());
         update();
     }//GEN-LAST:event_jbtRemoveActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
 
         if (jtbCoachs.getSelectedRow() >= 0) {
-            final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoachs().get(jtbCoachs.getSelectedRow()));
+            final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoach(jtbCoachs.getSelectedRow()));
             w.setVisible(true);
             update();
         }
     }//GEN-LAST:event_jbtModifyActionPerformed
 
     private void jtfOrgasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOrgasActionPerformed
-        mTournament.getParams().mTournamentOrga = jtfOrgas.getText();
+        mTournament.getParams().semTournamentOrga(jtfOrgas.getText());
     }//GEN-LAST:event_jtfOrgasActionPerformed
 
     private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
-        mTournament.getParams().mPlace=jtfPlace.getText()+evt.getKeyChar();
+        mTournament.getParams().setPlace(jtfPlace.getText()+evt.getKeyChar());
     }//GEN-LAST:event_jtfPlaceKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -339,4 +343,12 @@ public class JPNParameters extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jtpOptions;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNParameters.class.getName());
+    
+     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

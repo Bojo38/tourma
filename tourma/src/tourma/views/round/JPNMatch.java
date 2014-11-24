@@ -10,10 +10,10 @@ import java.util.logging.Logger;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Match;
+import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
-import tourma.data.Team;
 
 /**
  *
@@ -23,16 +23,18 @@ public class JPNMatch extends javax.swing.JPanel {
 
     /**
      * Creates new form JPNMatch
+     * @param m
+     * @param winner
      */
     public JPNMatch(final Match m, final boolean winner) {
         initComponents();
 
-        if (Tournament.getTournament().getParams().useColor) {
-            jlbPlayer1.setBackground(m.mCompetitor1.mColor);
-            jlbPlayer2.setBackground(m.mCompetitor2.mColor);
+        if (Tournament.getTournament().getParams().isUseColor()) {
+            jlbPlayer1.setBackground(m.getCompetitor1().getColor());
+            jlbPlayer2.setBackground(m.getCompetitor2().getColor());
 
-            jPanel2.setBackground(m.mCompetitor1.mColor);
-            jPanel4.setBackground(m.mCompetitor2.mColor);
+            jPanel2.setBackground(m.getCompetitor1().getColor());
+            jPanel4.setBackground(m.getCompetitor2().getColor());
         } else {
             jlbPlayer1.setBackground(Color.WHITE);
             jlbPlayer2.setBackground(Color.LIGHT_GRAY);
@@ -43,39 +45,39 @@ public class JPNMatch extends javax.swing.JPanel {
 
         if (m instanceof CoachMatch) {
 
-            final Value v = ((CoachMatch) m).mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-            if ((v.mValue1 == -1) || (v.mValue2 == -1)) {
+            final Value v = ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0));
+            if ((v.getValue1() == -1) || (v.getValue2() == -1)) {
                 jlbScore1.setText("");
                 jlbScore2.setText("");
             } else {
 
-                if (m.getWinner() == m.mCompetitor1) {
+                if (m.getWinner() == m.getCompetitor1()) {
                     jlbPlayer1.setFont(jlbPlayer1.getFont().deriveFont(Font.BOLD));
                     jlbPlayer2.setFont(jlbPlayer2.getFont().deriveFont(Font.PLAIN));
                 }
 
-                if (m.getWinner() == m.mCompetitor2) {
+                if (m.getWinner() == m.getCompetitor2()) {
                     jlbPlayer2.setFont(jlbPlayer1.getFont().deriveFont(Font.BOLD));
                     jlbPlayer1.setFont(jlbPlayer2.getFont().deriveFont(Font.PLAIN));
                 }
-                jlbScore1.setText(Integer.toString(v.mValue1));
-                jlbScore2.setText(Integer.toString(v.mValue2));
+                jlbScore1.setText(Integer.toString(v.getValue1()));
+                jlbScore2.setText(Integer.toString(v.getValue2()));
 
             }
         }
 
         if (m instanceof TeamMatch) {
-            int nbVictories = ((TeamMatch) m).getVictories((Team) m.mCompetitor1);
-            int nbDraw = ((TeamMatch) m).getDraw((Team) m.mCompetitor1);
-            int nbLoss = ((TeamMatch) m).getVictories((Team) m.mCompetitor2);
+            int nbVictories = ((TeamMatch) m).getVictories((Team) m.getCompetitor1());
+            int nbDraw = ((TeamMatch) m).getDraw((Team) m.getCompetitor1());
+            int nbLoss = ((TeamMatch) m).getVictories((Team) m.getCompetitor2());
 
-            if (nbVictories + nbLoss + nbDraw != Tournament.getTournament().getParams().mTeamMatesNumber) {
+            if (nbVictories + nbLoss + nbDraw != Tournament.getTournament().getParams().getTeamMatesNumber()) {
                 jlbScore1.setText("");
                 jlbScore2.setText("");
                 jlbTag.setText("#");
             } else {
                 jlbTag.setText("");
-                if (m.getWinner() == m.mCompetitor1) {
+                if (m.getWinner() == m.getCompetitor1()) {
                     Font f = jlbPlayer1.getFont();
                     Font fb = f.deriveFont(Font.ITALIC | Font.BOLD);
                     jlbPlayer1.setFont(fb);
@@ -86,7 +88,7 @@ public class JPNMatch extends javax.swing.JPanel {
                     jlbScore2.setForeground(Color.DARK_GRAY);
                 }
 
-                if (m.getWinner() == m.mCompetitor2) {
+                if (m.getWinner() == m.getCompetitor2()) {
                     Font f = jlbPlayer2.getFont();
                     Font fb = f.deriveFont(Font.ITALIC | Font.BOLD);
                     jlbPlayer2.setFont(fb);
@@ -103,13 +105,13 @@ public class JPNMatch extends javax.swing.JPanel {
             }
         }
 
-        if ((m.mCompetitor1 != Coach.getNullCoach()) && (m.mCompetitor1 != Team.getNullTeam())) {
-            jlbPlayer1.setText(m.mCompetitor1.mName);
+        if ((m.getCompetitor1() != Coach.getNullCoach()) && (m.getCompetitor1() != Team.getNullTeam())) {
+            jlbPlayer1.setText(m.getCompetitor1().getName());
         } else {
             jlbPlayer1.setText("");
         }
-        if ((m.mCompetitor2 != Coach.getNullCoach()) && (m.mCompetitor2 != Team.getNullTeam())) {
-            jlbPlayer2.setText(m.mCompetitor2.mName);
+        if ((m.getCompetitor2() != Coach.getNullCoach()) && (m.getCompetitor2() != Team.getNullTeam())) {
+            jlbPlayer2.setText(m.getCompetitor2().getName());
         } else {
             jlbPlayer2.setText("");
         }
@@ -120,6 +122,7 @@ public class JPNMatch extends javax.swing.JPanel {
         }
 
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -239,4 +242,12 @@ public class JPNMatch extends javax.swing.JPanel {
     private javax.swing.JLabel jlbTag;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNMatch.class.getName());
+
+ private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

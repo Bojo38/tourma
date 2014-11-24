@@ -35,7 +35,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         initComponents();        
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
-        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+        
     }
 
     /**
@@ -47,10 +47,11 @@ public abstract class JFullScreen extends javax.swing.JFrame {
      * @param bkg
      * @return
      */
+    @SuppressWarnings("SuspiciousNameCombination")
     protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
 
         JLabel l = new JLabel();
-        if ((object.getPicture() != null)&&(Tournament.getTournament().getParams().useImage)) {
+        if ((object.getPicture() != null)&&(Tournament.getTournament().getParams().isUseImage())) {
             l.setIcon(ImageTreatment.resize(new ImageIcon(object.getPicture()), height, height));
         } else {
             if (!(object instanceof Coach)) {
@@ -130,16 +131,17 @@ public abstract class JFullScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    boolean animationStarted = false;
-    Animation animation;
+    private boolean animationStarted = false;
+    private Animation animation;
 
     /**
-     *
+     * Animation inner class
      */
-    public class Animation extends Thread {
+    private class Animation extends Thread {
 
         @SuppressFBWarnings(value="SWL_SLEEP_WITH_LOCK_HELD",justification="Sleep is used for animation")
         @Override
+        @SuppressWarnings("SleepWhileInLoop")
         public void run() {
             long computedTime = getHeight() / 100;
             //int blockIncrement = jscrp.getVerticalScrollBar().getBlockIncrement();
@@ -148,7 +150,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
             int lastValue = 0;
             while (animationStarted) {
                 int value = jscrp.getVerticalScrollBar().getValue();
-                value = value + 1;
+                value += 1;
                 if (value <= lastValue) {
                     value = 0;
                     try {

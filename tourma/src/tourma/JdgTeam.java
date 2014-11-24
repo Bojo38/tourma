@@ -30,7 +30,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
-import tourma.data.Clan;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtCoaches;
@@ -40,11 +39,11 @@ import tourma.utility.ExtensionFileFilter;
  *
  * @author Frederic Berger
  */
-public class JdgTeam extends javax.swing.JDialog {
+public final class JdgTeam extends javax.swing.JDialog {
 
-    boolean mTeamTournament;
-    Team mTeam;
-    Tournament mTour;
+    private boolean mTeamTournament;
+    private Team mTeam;
+    private Tournament mTour;
 
     /**
      *
@@ -61,36 +60,33 @@ public class JdgTeam extends javax.swing.JDialog {
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
-        if (dmode != null) {
-            final int screenWidth = dmode.getWidth();
-            final int screenHeight = dmode.getHeight();
-            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        }
-        if (mTeam.picture == null) {
+
+        final int screenWidth = dmode.getWidth();
+        final int screenHeight = dmode.getHeight();
+        this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+
+        if (mTeam.getPicture() == null) {
             try {
-                mTeam.picture = ImageIO.read(getClass().getResource("/tourma/images/flags/france.png"));
+                mTeam.setPicture(ImageIO.read(getClass().getResource("/tourma/images/flags/france.png")));
             } catch (IOException ex) {
                 Logger.getLogger(JdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.picture), 80, 80));
+        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.getPicture()), 80, 80));
 
         final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
-        for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
-            clanListModel.addElement(Tournament.getTournament().getClans().get(i).getName());
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            clanListModel.addElement(Tournament.getTournament().getClan(i).getName());
         }
         jcbClan.setModel(clanListModel);
 
-        if ((Tournament.getTournament().getParams().mEnableClans) && (Tournament.getTournament().getClans().size() > 1)) {
+        if ((Tournament.getTournament().getParams().isEnableClans()) && (Tournament.getTournament().getClansCount() > 1)) {
             jcbClan.setEnabled(true);
             jLabel2.setEnabled(true);
-        }
-        else
-        {
+        } else {
             jcbClan.setEnabled(false);
             jLabel2.setEnabled(false);
         }
-
 
         update();
     }
@@ -108,35 +104,34 @@ public class JdgTeam extends javax.swing.JDialog {
         mTour = Tournament.getTournament();
         mTeam = team;
 
-        jtbCoachs.setModel(new MjtCoaches(mTeam.mCoachs));
+        jtbCoachs.setModel(new MjtCoaches(mTeam));
 
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
-        if (dmode != null) {
-            final int screenWidth = dmode.getWidth();
-            final int screenHeight = dmode.getHeight();
-            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        }
 
-        if (mTeam.picture == null) {            
-                mTeam.picture = new BufferedImage(96, 96, BufferedImage.TYPE_4BYTE_ABGR);            
+        final int screenWidth = dmode.getWidth();
+        final int screenHeight = dmode.getHeight();
+        this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+
+        if (mTeam.getPicture() == null) {
+            mTeam.setPicture(new BufferedImage(96, 96, BufferedImage.TYPE_4BYTE_ABGR));
         }
 
         final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
-        for (int i = 0; i < Tournament.getTournament().getClans().size(); i++) {
-            clanListModel.addElement(Tournament.getTournament().getClans().get(i).getName());
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            clanListModel.addElement(Tournament.getTournament().getClan(i).getName());
         }
         jcbClan.setModel(clanListModel);
 
-        if ((Tournament.getTournament().getParams().mEnableClans) && (Tournament.getTournament().getClans().size() > 1)) {
+        if ((Tournament.getTournament().getParams().isEnableClans()) && (Tournament.getTournament().getClansCount() > 1)) {
             jcbClan.setEnabled(true);
-            if (team.mClan != null) {
-                jcbClan.setSelectedItem(team.mClan.getName());
+            if (team.getClan() != null) {
+                jcbClan.setSelectedItem(team.getClan().getName());
             }
         }
 
-        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.picture), 80, 80));
+        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.getPicture()), 80, 80));
         update();
     }
 
@@ -277,18 +272,18 @@ public class JdgTeam extends javax.swing.JDialog {
         if (jtfNom.getText().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
             JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM DE L'ÉQUIPE VIDE"));
         } else {
-            mTeam.mName = jtfNom.getText();
+            mTeam.setName(jtfNom.getText());
 
-            if (mTour.getParams().mEnableClans) {
+            if (mTour.getParams().isEnableClans()) {
                 if (jcbClan.getSelectedIndex() > 0) {
-                    mTeam.mClan = (Clan) Tournament.getTournament().getClans().get(jcbClan.getSelectedIndex());
+                    mTeam.setClan(Tournament.getTournament().getClan(jcbClan.getSelectedIndex()));
                 } else {
-                    mTeam.mClan = (Clan) Tournament.getTournament().getClans().get(0);
+                    mTeam.setClan(Tournament.getTournament().getClan(0));
                 }
             }
 
-            if (!mTour.getTeams().contains(mTeam)) {
-                mTour.getTeams().add(mTeam);
+            if (!mTour.containsTeam(mTeam)) {
+                mTour.addTeam(mTeam);
             }
             this.setVisible(false);
         }
@@ -304,8 +299,8 @@ public class JdgTeam extends javax.swing.JDialog {
 }//GEN-LAST:event_jbtAddActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        mTour.getCoachs().remove(mTeam.mCoachs.get(jtbCoachs.getSelectedRow()));
-        mTeam.mCoachs.remove(jtbCoachs.getSelectedRow());
+        mTour.removeCoach(mTeam.getCoach(jtbCoachs.getSelectedRow()));
+        mTeam.removeCoach(jtbCoachs.getSelectedRow());
 
         update();
 }//GEN-LAST:event_jbtRemoveActionPerformed
@@ -313,7 +308,7 @@ public class JdgTeam extends javax.swing.JDialog {
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
 
         if (jtbCoachs.getSelectedRow() >= 0) {
-            final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTeam.mCoachs.get(jtbCoachs.getSelectedRow()));
+            final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTeam.getCoach(jtbCoachs.getSelectedRow()));
             w.setVisible(true);
             update();
         }
@@ -338,14 +333,14 @@ public class JdgTeam extends javax.swing.JDialog {
                 ImageIcon icon = new ImageIcon(path);
                 objects[i] = resize(icon, 80, 80);
             } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
+                LOG.log(Level.INFO, "Directory {0}", listOfFiles[i].getName());
             }
         }
 
         ImageIcon empty = new ImageIcon();
         objects[listOfFiles.length] = empty;
 
-        JComboBox combo = new JComboBox(objects);
+        JComboBox<Object> combo = new JComboBox<>(objects);
         JPanel panel = new JPanel(new BorderLayout());
         JLabel l = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SelectPicture"));
         panel.add(l, BorderLayout.NORTH);
@@ -362,22 +357,22 @@ public class JdgTeam extends javax.swing.JDialog {
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
                 icon = resize(icon, 80, 80);
-                this.mTeam.picture = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-                Graphics g = this.mTeam.picture.createGraphics();
+                this.mTeam.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
+                Graphics g = this.mTeam.getPicture().createGraphics();
                 // paint the Icon to the BufferedImage.
                 icon.paintIcon(null, g, 0, 0);
                 g.dispose();
             }
         } else {
             ImageIcon icon = (ImageIcon) combo.getSelectedItem();
-            this.mTeam.picture = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-            Graphics g = this.mTeam.picture.createGraphics();
+            this.mTeam.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
+            Graphics g = this.mTeam.getPicture().createGraphics();
             // paint the Icon to the BufferedImage.
             icon.paintIcon(null, g, 0, 0);
             g.dispose();
         }
 
-        jbtAvatar.setIcon(new ImageIcon(mTeam.picture));
+        jbtAvatar.setIcon(new ImageIcon(mTeam.getPicture()));
     }//GEN-LAST:event_jbtAvatarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -399,26 +394,34 @@ public class JdgTeam extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     *
+     * Update hmi
      */
-    protected void update() {
+    private void update() {
 
-        jtfNom.setText(mTeam.mName);
-        jtbCoachs.setModel(new MjtCoaches(mTeam.mCoachs));
+        jtfNom.setText(mTeam.getName());
+        jtbCoachs.setModel(new MjtCoaches(mTeam));
 
-        if (mTeam.mCoachs.size() < mTour.getParams().mTeamMatesNumber) {
+        if (mTeam.getCoachCount() < mTour.getParams().getTeamMatesNumber()) {
             jbtOK.setEnabled(false);
         }
 
-        if (mTeam.mCoachs.size() >= mTour.getParams().mTeamMatesNumber) {
+        if (mTeam.getCoachCount() >= mTour.getParams().getTeamMatesNumber()) {
             jbtOK.setEnabled(true);
         }
 
-        if ((mTeam.mCoachs.size() == mTour.getParams().mTeamMatesNumber) && (!mTour.getParams().mSubstitutes)) {
+        if ((mTeam.getCoachCount() == mTour.getParams().getTeamMatesNumber()) && (!mTour.getParams().isSubstitutes())) {
             jbtAdd.setEnabled(false);
         } else {
             jbtAdd.setEnabled(true);
         }
     }
     private static final Logger LOG = Logger.getLogger(JdgTeam.class.getName());
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

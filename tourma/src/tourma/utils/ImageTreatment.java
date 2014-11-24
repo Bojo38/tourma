@@ -12,7 +12,8 @@ import javax.swing.ImageIcon;
  *
  * @author WFMJ7631
  */
-public class ImageTreatment {
+public final class ImageTreatment {
+
 
     private static final Logger LOG = Logger.getLogger(ImageTreatment.class.getName());
 
@@ -27,5 +28,8 @@ public class ImageTreatment {
         Image img = image.getImage();
         Image newimg = img.getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(newimg);
+    }
+
+    private ImageTreatment() {
     }
 }

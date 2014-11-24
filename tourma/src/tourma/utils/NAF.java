@@ -9,11 +9,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -25,8 +26,9 @@ import tourma.data.Tournament;
  *
  * @author Perso
  */
-public class NAF {
+public final class NAF {
 
+    
     private static final Logger LOG = Logger.getLogger(NAF.class.getName());
 
     /**
@@ -43,14 +45,14 @@ public class NAF {
         try {
             URL url = new URL("http://member.thenaf.net/index.php?module=NAF&type=coachpage&coach=" + Name);
             is = url.openConnection().getInputStream();
-            isr=new InputStreamReader(is);
+            isr=new InputStreamReader(is,Charset.defaultCharset());
             reader = new BufferedReader(isr);
 
             ArrayList<String> rosters = new ArrayList<>();
             ArrayList<Double> ranks = new ArrayList<>();
 
-            String line;
-            while ((line = reader.readLine()) != null) {
+            String line= reader.readLine();
+            while (line  != null) {
                 if (line.contains("pn-maincontent")) {
 
                     int pos = line.indexOf("<table bgcolor=\"#858390\" cellpadding=\"2\" cellspacing=\"1\" border=\"0\"><tr><th bgcolor=\"#D9D8D0\" colspan=\"7\">Rankings</th></tr>");
@@ -58,7 +60,6 @@ public class NAF {
                     pos = buffer.indexOf("</table>");
                     buffer = buffer.substring(0, pos + 8);
 
-                    System.out.println(buffer);
                     final SAXBuilder sxb = new SAXBuilder();
 
                     pos = buffer.indexOf("coach=");
@@ -109,29 +110,27 @@ public class NAF {
                                 break;
                             }
                         }
-                    } catch (JDOMException e) {
-                    } catch (IOException e) {
-                    } catch (NumberFormatException e) {
+                    } catch (JDOMException | IOException | NumberFormatException e) {
+                        LOG.log(Level.FINE,e.getLocalizedMessage());
                     }
                 }
+                line= reader.readLine();
             }
 
             for (int i = 0; i < rosters.size(); i++) {
-                Name = Tournament.getRosterTranslation(coach.getRoster().mName);
+                String tmpName = Tournament.getRosterTranslation(coach.getRoster().getName());
                 String name2 = rosters.get(i);
-                if (name2.equals(Name)) {
+                if (name2.equals(tmpName)) {
                     naf = ranks.get(i);
                     coach.setNafRank(naf);
                     break;
                 }
             }
 
-        } catch (IOException exc) {
-            if (exc instanceof MalformedURLException) {
-            }
-        } catch (NumberFormatException exc) {
-
-        } finally {
+        } catch (IOException | NumberFormatException exc) {
+           LOG.log(Level.INFO,exc.getLocalizedMessage());
+        } 
+        finally {
             if (reader != null) {
                 try {
                     reader.close();                    
@@ -155,5 +154,8 @@ public class NAF {
             }
         }
         return naf;
+    }
+
+    private NAF() {
     }
 }

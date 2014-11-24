@@ -20,23 +20,23 @@ public class Criteria implements XMLExport {
     /**
      * Name of the criteria
      */
-    public String mName;
+    private String mName;
     /**
      * Points for
      */
-    public int mPointsFor;
+    private int mPointsFor;
     /**
      * Points against
      */
-    public int mPointsAgainst;
+    private int mPointsAgainst;
     /**
      * Team Points for
      */
-    public int mPointsTeamFor;
+    private int mPointsTeamFor;
     /**
      * Team Points against
      */
-    public int mPointsTeamAgainst;
+    private int mPointsTeamAgainst;
 
     /**
      *
@@ -57,11 +57,11 @@ public class Criteria implements XMLExport {
     @Override
     public Element getXMLElement() {
         final Element crit = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITERIA"));
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), this.mName);
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSFOR"), Integer.toString(this.mPointsFor));
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMFOR"), Integer.toString(this.mPointsTeamFor));
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSAGAINST"), Integer.toString(this.mPointsAgainst));
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMAGAINST"), Integer.toString(this.mPointsTeamAgainst));
+        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), this.getName());
+        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSFOR"), Integer.toString(this.getPointsFor()));
+        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMFOR"), Integer.toString(this.getPointsTeamFor()));
+        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSAGAINST"), Integer.toString(this.getPointsAgainst()));
+        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMAGAINST"), Integer.toString(this.getPointsTeamAgainst()));
         return crit;
     }
 
@@ -72,13 +72,83 @@ public class Criteria implements XMLExport {
     @Override
     public void setXMLElement(final Element criteria) {
         try {
-            this.mName = criteria.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
-            this.mPointsFor = criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSFOR")).getIntValue();
-            this.mPointsTeamFor = criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMFOR")).getIntValue();
-            this.mPointsAgainst = criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSAGAINST")).getIntValue();
-            this.mPointsTeamAgainst = criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMAGAINST")).getIntValue();
+            this.setName(criteria.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME")));
+            this.setPointsFor(criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSFOR")).getIntValue());
+            this.setPointsTeamFor(criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMFOR")).getIntValue());
+            this.setPointsAgainst(criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSAGAINST")).getIntValue());
+            this.setPointsTeamAgainst(criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMAGAINST")).getIntValue());
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
+    }
+
+    /**
+     * @return the mName
+     */
+    public String getName() {
+        return mName;
+    }
+
+    /**
+     * @param mName the mName to set
+     */
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    /**
+     * @return the mPointsFor
+     */
+    public int getPointsFor() {
+        return mPointsFor;
+    }
+
+    /**
+     * @param mPointsFor the mPointsFor to set
+     */
+    public void setPointsFor(int mPointsFor) {
+        this.mPointsFor = mPointsFor;
+    }
+
+    /**
+     * @return the mPointsAgainst
+     */
+    public int getPointsAgainst() {
+        return mPointsAgainst;
+    }
+
+    /**
+     * @param mPointsAgainst the mPointsAgainst to set
+     */
+    public void setPointsAgainst(int mPointsAgainst) {
+        this.mPointsAgainst = mPointsAgainst;
+    }
+
+    /**
+     * @return the mPointsTeamFor
+     */
+    public int getPointsTeamFor() {
+        return mPointsTeamFor;
+    }
+
+    /**
+     * @param mPointsTeamFor the mPointsTeamFor to set
+     */
+    public void setPointsTeamFor(int mPointsTeamFor) {
+        this.mPointsTeamFor = mPointsTeamFor;
+    }
+
+    /**
+     * @return the mPointsTeamAgainst
+     */
+    public int getPointsTeamAgainst() {
+        return mPointsTeamAgainst;
+    }
+
+    /**
+     * @param mPointsTeamAgainst the mPointsTeamAgainst to set
+     */
+    public void setPointsTeamAgainst(int mPointsTeamAgainst) {
+        this.mPointsTeamAgainst = mPointsTeamAgainst;
     }
 }

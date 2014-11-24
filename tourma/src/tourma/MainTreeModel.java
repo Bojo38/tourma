@@ -29,19 +29,19 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
     /**
      * 
      */
-    public ArrayList<TreeModelListener> mListeners;
-    Tournament mTournament;
-    DefaultMutableTreeNode mRoot;
+    private final ArrayList<TreeModelListener> mListeners;
+    private final Tournament mTournament;
+    private final DefaultMutableTreeNode mRoot;
     /**
      * 
      */
-    public DefaultMutableTreeNode mParams;
-    DefaultMutableTreeNode mCup;
+    private DefaultMutableTreeNode mParams;
+    private DefaultMutableTreeNode mCup;
     /**
      * 
      */
-    public DefaultMutableTreeNode mStats;
-    ArrayList<DefaultMutableTreeNode> mRounds;
+    private final DefaultMutableTreeNode mStats;
+    private final ArrayList<DefaultMutableTreeNode> mRounds;
 
     MainTreeModel() {
         mListeners = new ArrayList<>();
@@ -49,8 +49,8 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
         mRounds = new ArrayList<>();
 
         String name = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOURNOI");
-        if (!mTournament.getParams().mTournamentName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-            name = mTournament.getParams().mTournamentName;
+        if (!mTournament.getParams().getTournamentName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+            name = mTournament.getParams().getTournamentName();
         }
 
         mRoot = new DefaultMutableTreeNode(name, true);
@@ -64,9 +64,9 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
         mStats.setUserObject(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STATISTICS"));
 
         boolean cup = false;
-        for (int i = 0; i < mTournament.getRounds().size(); i++) {
-            final Round r = mTournament.getRounds().get(i);
-            if (r.mCup) {
+        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+            final Round r = mTournament.getRound(i);
+            if (r.isCup()) {
                 cup = true;
             }
             final String tmp= java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round");
@@ -162,7 +162,7 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
             jlb.revalidate();
         }
 
-        if (value == mParams) {
+        if (value == getParams()) {
             jlb.setIcon(Icons.getParams());
         }
         for (DefaultMutableTreeNode mRound : mRounds) {
@@ -181,5 +181,19 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
 
 
         return jlb;
+    }
+
+    /**
+     * @return the mParams
+     */
+    public DefaultMutableTreeNode getParams() {
+        return mParams;
+    }
+
+    /**
+     * @param mParams the mParams to set
+     */
+    public void setParams(DefaultMutableTreeNode mParams) {
+        this.mParams = mParams;
     }
 }

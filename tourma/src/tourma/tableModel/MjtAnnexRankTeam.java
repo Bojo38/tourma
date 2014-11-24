@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import tourma.data.Criteria;
+import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Team;
 import tourma.data.Tournament;
@@ -22,7 +23,8 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
-public class MjtAnnexRankTeam extends MjtAnnexRank {
+public final class MjtAnnexRankTeam extends MjtAnnexRank {
+
     private static final Logger LOG = Logger.getLogger(MjtAnnexRankTeam.class.getName());
 
     /**
@@ -55,18 +57,13 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
      */
     public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) {
 
-        super(
-                round, criteria, subtype, teams, full, Tournament.getTournament().getParams().mRankingTeam1,
-                Tournament.getTournament().getParams().mRankingTeam2,
-                Tournament.getTournament().getParams().mRankingTeam3,
-                Tournament.getTournament().getParams().mRankingTeam4,
-                Tournament.getTournament().getParams().mRankingTeam5, round_only);
+        super(round, criteria, subtype, teams, full, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(), round_only);
         if (!teamVictory) {
-            this.mRankingType1 = Tournament.getTournament().getParams().mRankingIndiv1;
-            this.mRankingType2 = Tournament.getTournament().getParams().mRankingIndiv2;
-            this.mRankingType3 = Tournament.getTournament().getParams().mRankingIndiv3;
-            this.mRankingType4 = Tournament.getTournament().getParams().mRankingIndiv4;
-            this.mRankingType5 = Tournament.getTournament().getParams().mRankingIndiv5;
+            this.mRankingType1 = Tournament.getTournament().getParams().getRankingIndiv1();
+            this.mRankingType2 = Tournament.getTournament().getParams().getRankingIndiv2();
+            this.mRankingType3 = Tournament.getTournament().getParams().getRankingIndiv3();
+            this.mRankingType4 = Tournament.getTournament().getParams().getRankingIndiv4();
+            this.mRankingType5 = Tournament.getTournament().getParams().getRankingIndiv5();
         }
         sortDatas();
 
@@ -86,13 +83,12 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
             int value4 = 0;
             int value5 = 0;
 
-
             value += getValue(t, mCriteria, mSubtype);
 
             final Criteria c1 = getCriteriaByValue(mRankingType1);
             final int subType1 = getSubtypeByValue(mRankingType1);
             if (c1 == null) {
-                value1 = getValue(t, mRankingType1, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                value1 = getValue(t, mRankingType1, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
             } else {
                 value1 += getValue(t, c1, subType1);
             }
@@ -100,7 +96,7 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
             final Criteria c2 = getCriteriaByValue(mRankingType2);
             final int subType2 = getSubtypeByValue(mRankingType2);
             if (c2 == null) {
-                value2 = getValue(t, mRankingType2, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                value2 = getValue(t, mRankingType2, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
             } else {
                 value2 += getValue(t, c2, subType2);
             }
@@ -108,7 +104,7 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
             final Criteria c3 = getCriteriaByValue(mRankingType3);
             final int subType3 = getSubtypeByValue(mRankingType3);
             if (c3 == null) {
-                value3 = getValue(t, mRankingType3, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                value3 = getValue(t, mRankingType3, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
             } else {
                 value3 += getValue(t, c3, subType3);
             }
@@ -116,7 +112,7 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
             final Criteria c4 = getCriteriaByValue(mRankingType4);
             final int subType4 = getSubtypeByValue(mRankingType4);
             if (c4 == null) {
-                value4 = getValue(t, mRankingType4, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                value4 = getValue(t, mRankingType4, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
             } else {
                 value4 += getValue(t, c4, subType4);
             }
@@ -124,7 +120,7 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
             final Criteria c5 = getCriteriaByValue(mRankingType5);
             final int subType5 = getSubtypeByValue(mRankingType5);
             if (c5 == null) {
-                value5 = getValue(t, mRankingType5, 0,Tournament.getTournament().getParams().mTeamVictoryOnly);
+                value5 = getValue(t, mRankingType5, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
             } else {
                 value5 += getValue(t, c5, subType5);
             }
@@ -152,15 +148,17 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
                 break;
             case 2:
                 if (mSubtype == 0) {
-                    val = mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH)});
+                    val = mCriteria.getName() + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH)});
                 } else {
                     if (mSubtype == 1) {
-                        val = mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opponent")});
+                        val = mCriteria.getName() + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opponent")});
                     } else {
-                        val = mCriteria.mName + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Difference")});
+                        val = mCriteria.getName() + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Difference")});
                     }
                 }
+                break;
             default:
+                break;
         }
         return val;
     }
@@ -176,10 +174,10 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
                 val = row + 1;
                 break;
             case 1:
-                val = ((Team) obj.getObject()).mName;
+                val = ((IWithNameAndPicture) obj.getObject()).getName();
                 break;
             case 2:
-                val = obj.mValue;
+                val = obj.getValue();
                 break;
             default:
         }
@@ -190,11 +188,11 @@ public class MjtAnnexRankTeam extends MjtAnnexRank {
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        if (Tournament.getTournament().getParams().useImage) {
+        if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
                 Team t = (Team) mObjects.get(row);
-                if (t.picture != null) {
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.picture), 30, 30);
+                if (t.getPicture() != null) {
+                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.getPicture()), 30, 30);
                     obj.setIcon(icon);
                 }
             }

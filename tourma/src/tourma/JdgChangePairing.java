@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
+import tourma.data.IContainCoachs;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -33,15 +34,19 @@ import tourma.data.TeamMatch;
  *
  * @author Administrateur
  */
-public class JdgChangePairing extends JDialog implements ActionListener {
+public final class JdgChangePairing extends JDialog implements ActionListener {
+    private static final long serialVersionUID = 1L;
 
-    Round mRound;
-    ArrayList<JComboBox> mPlayersSelected;
-    ArrayList<Competitor> mPlayers;
-    ArrayList<Competitor> mPlayersTmp;
+    private final Round mRound;
+    private final ArrayList<JComboBox> mPlayersSelected;
+    private final ArrayList<Competitor> mPlayers;
+    private final ArrayList<Competitor> mPlayersTmp;
 
     /**
      * Creates new form jdgChangePairing
+     * @param parent
+     * @param modal
+     * @param round
      */
     public JdgChangePairing(final java.awt.Frame parent, final boolean modal, final Round round) {
         super(parent, modal);
@@ -53,25 +58,23 @@ public class JdgChangePairing extends JDialog implements ActionListener {
 
         this.setSize(640, 480);
 
-        if (dmode != null) {
             final int screenWidth = dmode.getWidth();
             final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        }
 
         mRound = round;
         mPlayersSelected = new ArrayList<>();
         mPlayers = new ArrayList<>();
 
-        for (int i = 0; i < mRound.getMatchs().size(); i++) {
-            final Match m = mRound.getMatchs().get(i);
-            mPlayers.add(m.mCompetitor1);
-            mPlayers.add(m.mCompetitor2);
+        for (int i = 0; i < mRound.getMatchsCount(); i++) {
+            final Match m = mRound.getMatch(i);
+            mPlayers.add(m.getCompetitor1());
+            mPlayers.add(m.getCompetitor2());
         }
 
         mPlayersTmp = mPlayers;
 
-        final GridLayout lay = new GridLayout(mRound.getMatchs().size(), 2);
+        final GridLayout lay = new GridLayout(mRound.getMatchsCount(), 2);
         jpnMatchs.setLayout(lay);
 
         update();
@@ -140,55 +143,55 @@ public class JdgChangePairing extends JDialog implements ActionListener {
         final int result = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS CONFIRMEER LE NOUVEL APPARIEMENT ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CONFIRMER"), JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
 
-            for (int i = 0; i < mRound.getMatchs().size(); i++) {
-                Match m = mRound.getMatchs().get(i);                
+            for (int i = 0; i < mRound.getMatchsCount(); i++) {
+                Match m = mRound.getMatch(i);                
 
                 if (m instanceof TeamMatch)
                 {
                     Team t1=(Team)mPlayersTmp.get(2 * i);
                     Team t2=(Team)mPlayersTmp.get(2 * i+1);
-                    if ((m.mCompetitor1!=t1)||
-                            (m.mCompetitor2!=t2))
+                    if ((m.getCompetitor1()!=t1)||
+                            (m.getCompetitor2()!=t2))
                     {                        
                         // Remove matchs from coachs
-                        for (int j=0; j<((TeamMatch)m).mMatchs.size(); j++)
+                        for (int j=0; j<((TeamMatch)m).getMatchCount(); j++)
                         {
-                            CoachMatch cm=((TeamMatch)m).mMatchs.get(j);
-                            for (int k=0; k<((Team)m.mCompetitor1).mCoachs.size(); k++)
+                            CoachMatch cm=((TeamMatch)m).getMatch(j);
+                            for (int k=0; k<((IContainCoachs)m.getCompetitor1()).getCoachCount(); k++)
                             {
-                                Coach c=((Team)m.mCompetitor1).mCoachs.get(k);
-                                c.mMatchs.remove(cm);
+                                Coach c=((IContainCoachs)m.getCompetitor1()).getCoach(k);
+                                c.removeMatch(cm);
                             }
                             
-                            for (int k=0; k<((Team)m.mCompetitor2).mCoachs.size(); k++)
+                            for (int k=0; k<((IContainCoachs)m.getCompetitor2()).getCoachCount(); k++)
                             {
-                                Coach c=((Team)m.mCompetitor2).mCoachs.get(k);
-                                c.mMatchs.remove(cm);
+                                Coach c=((IContainCoachs)m.getCompetitor2()).getCoach(k);
+                                c.removeMatch(cm);
                             }
                         }
                         
-                        ((TeamMatch)m).mMatchs.clear();
+                        ((TeamMatch)m).clearMatchs();
                         JdgPairing jdg=new JdgPairing(MainFrame.getMainFrame(), true, 
-                                t1,t2, mRound, ((TeamMatch)m).mMatchs);
+                                t1,t2, mRound, (TeamMatch)m);
                         jdg.setVisible(true);
                         
-                        for (int j=0; j<((TeamMatch)m).mMatchs.size(); j++)
+                        for (int j=0; j<((TeamMatch)m).getMatchCount(); j++)
                         {
-                            CoachMatch cm=((TeamMatch)m).mMatchs.get(j);
-                            cm.mCompetitor1.mMatchs.add(cm);
-                            cm.mCompetitor2.mMatchs.add(cm);                            
+                            CoachMatch cm=((TeamMatch)m).getMatch(j);
+                            cm.getCompetitor1().addMatch(cm);
+                            cm.getCompetitor2().addMatch(cm);                            
                         }
                     }
                 }
                                 
-                m.mCompetitor1 = mPlayersTmp.get(2 * i);
-                m.mCompetitor2 = mPlayersTmp.get(2 * i + 1);
+                m.setCompetitor1(mPlayersTmp.get(2 * i));
+                m.setCompetitor2(mPlayersTmp.get(2 * i + 1));
                 
-                m.mCompetitor1.mMatchs.remove(m.mCompetitor1.mMatchs.get( m.mCompetitor1.mMatchs.size() - 1));
-                m.mCompetitor2.mMatchs.remove(m.mCompetitor2.mMatchs.get(m.mCompetitor2.mMatchs.size() - 1));
+                m.getCompetitor1().removeMatch(m.getCompetitor1().getMatch( m.getCompetitor1().getMatchCount() - 1));
+                m.getCompetitor2().removeMatch(m.getCompetitor2().getMatch(m.getCompetitor2().getMatchCount() - 1));
                 
-                m.mCompetitor1.mMatchs.add(m);
-                m.mCompetitor2.mMatchs.add(m);
+                m.getCompetitor1().addMatch(m);
+                m.getCompetitor2().addMatch(m);
             
         }
 
@@ -231,21 +234,20 @@ public class JdgChangePairing extends JDialog implements ActionListener {
     // End of variables declaration//GEN-END:variables
 
     /**
-     *
+     * Update Panel
      */
     public void update() {
 
         final ArrayList<String> playersNames = new ArrayList<>();
-        for (int i = 0; i < mPlayersTmp.size(); i++) {
-
-            String name = mPlayersTmp.get(i).getDecoratedName();
+        for (Competitor mPlayersTmp1 : mPlayersTmp) {
+            String name = mPlayersTmp1.getDecoratedName();
             playersNames.add(name);
         }
 
         mPlayersSelected.clear();
 
         for (int i = 0; i < mPlayers.size(); i++) {
-            final JComboBox jcb = new JComboBox(playersNames.toArray());
+            final JComboBox<Object> jcb = new JComboBox<>(playersNames.toArray());
             jcb.setSelectedIndex(i);
             jcb.addActionListener(this);
             mPlayersSelected.add(jcb);
@@ -262,4 +264,12 @@ public class JdgChangePairing extends JDialog implements ActionListener {
         repaint();
     }
     private static final Logger LOG = Logger.getLogger(JdgChangePairing.class.getName());
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
 import tourma.data.Coach;
-import tourma.data.Criteria;
 import tourma.data.CoachMatch;
+import tourma.data.Competitor;
+import tourma.data.Criteria;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -22,7 +23,7 @@ import tourma.utility.StringConstants;
 public class MjtAnnexRankIndiv extends MjtAnnexRank {
     private static final Logger LOG = Logger.getLogger(MjtAnnexRankIndiv.class.getName());
 
-    boolean mTeamTournament;
+    private final boolean mTeamTournament;
 
     /**
      *
@@ -48,10 +49,10 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
     protected void sortDatas() {
         mDatas.clear();
         mDatas = new ArrayList();
-        final ArrayList<Coach> coaches = (ArrayList<Coach>) mObjects;
+        final ArrayList<Coach> coaches = mObjects;
         for (int k = 0; k < coaches.size(); k++) {
             final Coach c = coaches.get(k);
-            if (c.mMatchs.size() > 0) {
+            if (c.getMatchCount() > 0) {
                 int value = 0;
                 int value1 = 0;
                 int value2 = 0;
@@ -62,20 +63,20 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 final ArrayList<Round> rounds = new ArrayList<>();
 
                 if (mRoundOnly) {
-                    rounds.add(Tournament.getTournament().getRounds().get(mRound));
+                    rounds.add(Tournament.getTournament().getRound(mRound));
                 } else {
                     for (int l = 0; (l <= mRound); l++) {
-                        rounds.add(Tournament.getTournament().getRounds().get(l));
+                        rounds.add(Tournament.getTournament().getRound(l));
                     }
                 }
 
 
-                for (int j = 0; j <= c.mMatchs.size() - 1; j++) {
+                for (int j = 0; j <= c.getMatchCount() - 1; j++) {
 
-                    final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
+                    final CoachMatch m = (CoachMatch) c.getMatch(j);
                     boolean bFound = false;
                     for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
-                        final Round r = Tournament.getTournament().getRounds().get(i);
+                        final Round r = Tournament.getTournament().getRound(i);
                         if (r.getCoachMatchs().contains(m)) {
                             bFound = true;
                         }
@@ -157,12 +158,12 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 break;
             case 4:
                 if (mSubtype == 0) {
-                    result = mCriteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" COACH");
+                    result = mCriteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" COACH");
                 } else {
                     if (mSubtype == 1) {
-                        result = mCriteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE");
+                        result = mCriteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" ADVERSAIRE");
                     } else {
-                        result = mCriteria.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFERENCE");
+                        result = mCriteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFERENCE");
                     }
                 }
                 break;
@@ -184,7 +185,7 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 val = ((Coach) obj.getObject()).getTeam();
                 break;
             case 2:
-                val = ((Coach) obj.getObject()).getDecoratedName();
+                val = ((Competitor) obj.getObject()).getDecoratedName();
                 break;
             case 3:
                 val = ((Coach) obj.getObject()).getStringRoster();

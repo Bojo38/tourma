@@ -249,7 +249,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 if (getmCoach().getTeam() != null) {
                     root.put("title", getmCoach().getTeam());
                 } else {
-                    root.put("title", getmCoach().mName);
+                    root.put("title", getmCoach().getName());
                 }
             } else {
                 root.put("title", "?");

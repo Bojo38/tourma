@@ -22,6 +22,7 @@ import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.tableModel.MjtMatches;
 import tourma.utility.StringConstants;
 
@@ -29,54 +30,61 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class JdgPairing extends javax.swing.JDialog {
+public final class JdgPairing extends javax.swing.JDialog {
 
-    Team mTeam1;
-    Team mTeam2;
-    Round mRound;
-    ArrayList<String> mItems1;
-    ArrayList<String> mItems2;
-    HashMap<String, Coach> mCoachs;
-    ArrayList<CoachMatch> mMatchs;
-    ArrayList<CoachMatch> mCMatchs;
+    private final Team mTeam1;
+    private final Team mTeam2;
+    private final Round mRound;
+    private final ArrayList<String> mItems1;
+    private final ArrayList<String> mItems2;
+    private final HashMap<String, Coach> mCoachs;
+    private final ArrayList<CoachMatch> mMatchs;
+    private final TeamMatch teamMatch;
+
     /**
      * Creates new form jdgCoach
+     *
+     * @param parent
+     * @param modal
+     * @param team1
+     * @param round
+     * @param team2
+     * @param teammatch
      */
-    public JdgPairing(final java.awt.Frame parent,final  boolean modal,final  Team team1,final  Team team2, final Round round,final ArrayList<CoachMatch> CMatchs) {
+    public JdgPairing(final java.awt.Frame parent, final boolean modal, final Team team1, final Team team2, final Round round, TeamMatch teammatch) {
         super(parent, modal);
         initComponents();
 
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
-        if (dmode != null) {
+
             final int screenWidth = dmode.getWidth();
-           final  int screenHeight = dmode.getHeight();
+            final int screenHeight = dmode.getHeight();
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        }
 
         mTeam1 = team1;
         mTeam2 = team2;
         mCoachs = new HashMap<>();
-
-        this.setTitle(team1.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS ")+ team2.mName);
+teamMatch=teammatch;
+        this.setTitle(team1.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS ") + team2.getName());
 
         mRound = round;
         mMatchs = new ArrayList<>();
-        mCMatchs=CMatchs;
+
+
         mItems1 = new ArrayList();
-        for (int i = 0; i < mTeam1.mCoachs.size(); i++) {
-           final  Coach c = mTeam1.mCoachs.get(i);
-            mItems1.add(c.mName + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().mName);
-            mCoachs.put(c.mName + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().mName, c);
+        for (int i = 0; i < mTeam1.getCoachCount(); i++) {
+            final Coach c = mTeam1.getCoach(i);
+            mItems1.add(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName());
+            mCoachs.put(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName(), c);
         }
 
-
         mItems2 = new ArrayList();
-        for (int i = 0; i < mTeam1.mCoachs.size(); i++) {
-            final Coach c = mTeam2.mCoachs.get(i);
-            mItems2.add(c.mName + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().mName);
-            mCoachs.put(c.mName + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().mName, c);
+        for (int i = 0; i < mTeam1.getCoachCount(); i++) {
+            final Coach c = mTeam2.getCoach(i);
+            mItems2.add(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName());
+            mCoachs.put(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName(), c);
         }
 
         update();
@@ -87,12 +95,12 @@ public class JdgPairing extends javax.swing.JDialog {
         jcbTeam1.setModel(new DefaultComboBoxModel(mItems1.toArray()));
         jcbTeam2.setModel(new DefaultComboBoxModel(mItems2.toArray()));
 
-       final  MjtMatches model = new MjtMatches(mMatchs, true, true, false);
+        final MjtMatches model = new MjtMatches(mMatchs, true, true, false);
         jtbMatches.setModel(model);
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
 
-        jbtOK.setEnabled(mMatchs.size() == mTeam1.mCoachs.size());
+        jbtOK.setEnabled(mMatchs.size() == mTeam1.getCoachCount());
     }
 
     /**
@@ -194,45 +202,47 @@ public class JdgPairing extends javax.swing.JDialog {
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        for (int i = 0; i < mMatchs.size(); i++) {
-            mCMatchs.add(mMatchs.get(i));
+        for (CoachMatch mMatch : mMatchs) {
+            teamMatch.addMatch(mMatch);
         }
-        this.setVisible(false);
+    this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
-@SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
         if (mItems1.size() > 0) {
             final CoachMatch m = new CoachMatch(mRound);
-            m.mCompetitor1 = mCoachs.get((String) jcbTeam1.getSelectedItem());
-            m.mCompetitor2 = mCoachs.get((String) jcbTeam2.getSelectedItem());
+            String name1=(String)jcbTeam1.getSelectedItem();
+            String name2=(String)jcbTeam2.getSelectedItem();
+            m.setCompetitor1(mCoachs.get(name1));
+            m.setCompetitor2(mCoachs.get(name2));
             mMatchs.add(m);
             mItems1.remove(jcbTeam1.getSelectedIndex());
             mItems2.remove(jcbTeam2.getSelectedIndex());
         }
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
-@SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
 
         if (jtbMatches.getSelectedRow() >= 0) {
             final CoachMatch m = mMatchs.get(jtbMatches.getSelectedRow());
-            mItems1.add(m.mCompetitor1.mName + StringConstants.CS_THICK + ((Coach)m.mCompetitor1).getTeam() + StringConstants.CS_THICK +((Coach) m.mCompetitor1).getRoster().mName);
-            mItems2.add(m.mCompetitor2.mName + StringConstants.CS_THICK + ((Coach)m.mCompetitor2).getTeam() + StringConstants.CS_THICK + ((Coach)m.mCompetitor2).getRoster().mName);
+            mItems1.add(m.getCompetitor1().getName() + StringConstants.CS_THICK + ((Coach) m.getCompetitor1()).getTeam() + StringConstants.CS_THICK + ((Coach) m.getCompetitor1()).getRoster().getName());
+            mItems2.add(m.getCompetitor2().getName() + StringConstants.CS_THICK + ((Coach) m.getCompetitor2()).getTeam() + StringConstants.CS_THICK + ((Coach) m.getCompetitor2()).getRoster().getName());
             mMatchs.remove(jtbMatches.getSelectedRow());
         }
         update();
     }//GEN-LAST:event_jbtRemoveActionPerformed
 
     private void jbtRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRandomActionPerformed
-        
+
         Collections.shuffle(mItems1);
         Collections.shuffle(mItems2);
-                        
-        while ((mItems1.size() > 0)&&(mItems2.size() > 0)) {
+
+        while ((mItems1.size() > 0) && (mItems2.size() > 0)) {
             final CoachMatch m = new CoachMatch(mRound);
-            m.mCompetitor1 = mCoachs.get(mItems1.get(0));
-            m.mCompetitor2 = mCoachs.get(mItems2.get(0));
+            m.setCompetitor1(mCoachs.get(mItems1.get(0)));
+            m.setCompetitor2(mCoachs.get(mItems2.get(0)));
             mMatchs.add(m);
             mItems1.remove(0);
             mItems2.remove(0);
@@ -255,4 +265,12 @@ public class JdgPairing extends javax.swing.JDialog {
     private javax.swing.JTable jtbMatches;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JdgPairing.class.getName());
+
+private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
 }

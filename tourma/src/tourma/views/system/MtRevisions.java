@@ -20,8 +20,8 @@ import tourma.utility.StringConstants;
 public class MtRevisions extends AbstractTableModel implements TableCellRenderer {
     private static final Logger LOG = Logger.getLogger(MtRevisions.class.getName());
 
-    ArrayList mVersions;
-    ArrayList mDescriptions;
+    private final ArrayList mVersions;
+    private final ArrayList mDescriptions;
 
     /**
      *

@@ -16,8 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Coach;
-import tourma.data.Criteria;
 import tourma.data.CoachMatch;
+import tourma.data.Criteria;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.utility.StringConstants;
@@ -28,12 +28,14 @@ import tourma.utils.ImageTreatment;
  * @author Frederic Berger
  */
 public class MjtMatches extends AbstractTableModel implements TableCellRenderer {
-    private static final Logger LOG = Logger.getLogger(MjtMatches.class.getName());
 
-    ArrayList<CoachMatch> mMatchs;
-    boolean mLocked;
-    boolean mTeamTournament;
-    boolean mFull;
+    private static final Logger LOG = Logger.getLogger(MjtMatches.class.getName());
+    private static final long serialVersionUID = 4L;
+
+    private final ArrayList<CoachMatch> mMatchs;
+    private final boolean mLocked;
+    private final boolean mTeamTournament;
+    private final boolean mFull;
 
     /**
      *
@@ -53,9 +55,9 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
     public int getColumnCount() {
         int res;
         if (mTeamTournament) {
-            res = Tournament.getTournament().getParams().mCriterias.size() * 2 + 5;
+            res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5;
         } else {
-            res = Tournament.getTournament().getParams().mCriterias.size() * 2 + 3;
+            res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3;
         }
         return res;
     }
@@ -93,12 +95,12 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team2");
                     break;
                 default:
-                    final Criteria crit = Tournament.getTournament().getParams().mCriterias.get((col - 5) / 2);
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
                     final int ind = (col - 5) % 2;
                     if (ind == 0) {
-                        result = crit.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1");
+                        result = crit.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1");
                     } else {
-                        result = crit.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2");
+                        result = crit.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2");
                     }
             }
         } else {
@@ -119,11 +121,11 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach2");
                     break;
                 default:
-                    final Criteria crit = Tournament.getTournament().getParams().mCriterias.get((col - 3) / 2);
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
                     if ((col - 3) % 2 > 0) {
-                        result = crit.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2");
+                        result = crit.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2");
                     } else {
-                        result = crit.mName + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1");
+                        result = crit.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1");
                     }
             }
         }
@@ -143,7 +145,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     obj = row + 1;
                     break;
                 case 1:
-                    obj = ((Coach) m.mCompetitor1).getTeamMates().mName;
+                    obj = ((Coach) m.getCompetitor1()).getTeamMates().getName();
                     break;
                 case 2: {
                     String tmp = "";
@@ -155,30 +157,30 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     }
 
                     if (m.getRoster1() == null) {
-                        rosterName = ((Coach) m.mCompetitor1).getRoster().mName;
+                        rosterName = ((Coach) m.getCompetitor1()).getRoster().getName();
                     } else {
-                        rosterName = m.getRoster1().mName;
+                        rosterName = m.getRoster1().getName();
                     }
                     if (m.getSubstitute1() != null) {
-                        tmp += m.mCompetitor1.mName + "/" + m.getSubstitute1().mSubstitute.mName + StringConstants.CS_THICK + rosterName;
+                        tmp += m.getCompetitor1().getName() + "/" + m.getSubstitute1().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
                     } else {
-                        tmp += m.mCompetitor1.mName + StringConstants.CS_THICK + rosterName;
+                        tmp += m.getCompetitor1().getName() + StringConstants.CS_THICK + rosterName;
                     }
                     obj = tmp;
                 }
                 break;
                 case 3:
-                    val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue1 != -1) {
-                        obj = val.mValue1;
+                    val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                    if (val.getValue1() != -1) {
+                        obj = val.getValue1();
                     } else {
                         obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     }
                     break;
                 case 4:
-                    val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue2 != -1) {
-                        obj = val.mValue2;
+                    val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                    if (val.getValue2() != -1) {
+                        obj = val.getValue2();
                     } else {
                         obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     }
@@ -192,29 +194,29 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
                     }
                     if (m.getRoster2() == null) {
-                        rosterName = ((Coach) m.mCompetitor2).getRoster().mName;
+                        rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
                     } else {
-                        rosterName = m.getRoster2().mName;
+                        rosterName = m.getRoster2().getName();
                     }
                     if (m.getSubstitute2() != null) {
-                        tmp += m.mCompetitor2.mName + "/" + m.getSubstitute2().mSubstitute.mName + StringConstants.CS_THICK + rosterName;
+                        tmp += m.getCompetitor2().getName() + "/" + m.getSubstitute2().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
                     } else {
-                        tmp += m.mCompetitor2.mName + StringConstants.CS_THICK + rosterName;
+                        tmp += m.getCompetitor2().getName() + StringConstants.CS_THICK + rosterName;
                     }
                     obj = tmp;
                 }
                 break;
                 case 6:
-                    obj = ((Coach) m.mCompetitor2).getTeamMates().mName;
+                    obj = ((Coach) m.getCompetitor2()).getTeamMates().getName();
                     break;
                 default:
                     index = (col - 5) / 2;
-                    final Criteria crit = Tournament.getTournament().getParams().mCriterias.get(index);
-                    val = m.mValues.get(crit);
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(index);
+                    val = m.getValue(crit);
                     if ((col - 5) % 2 == 0) {
-                        obj = val.mValue1;
+                        obj = val.getValue1();
                     } else {
-                        obj = val.mValue2;
+                        obj = val.getValue2();
                     }
             }
         } else {
@@ -231,30 +233,30 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
                     }
                     if (m.getRoster1() == null) {
-                        rosterName = ((Coach) m.mCompetitor1).getRoster().mName;
+                        rosterName = ((Coach) m.getCompetitor1()).getRoster().getName();
                     } else {
-                        rosterName = m.getRoster1().mName;
+                        rosterName = m.getRoster1().getName();
                     }
                     if (m.getSubstitute1() != null) {
-                        tmp += m.mCompetitor1.mName + "/" + m.getSubstitute1().mSubstitute.mName + StringConstants.CS_THICK + rosterName;
+                        tmp += m.getCompetitor1().getName() + "/" + m.getSubstitute1().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
                     } else {
-                        tmp += m.mCompetitor1.mName + StringConstants.CS_THICK + rosterName;
+                        tmp += m.getCompetitor1().getName() + StringConstants.CS_THICK + rosterName;
                     }
                     obj = tmp;
                 }
                 break;
                 case 2:
-                    val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue1 != -1) {
-                        obj = val.mValue1;
+                    val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                    if (val.getValue1() != -1) {
+                        obj = val.getValue1();
                     } else {
                         obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     }
                     break;
                 case 3:
-                    val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                    if (val.mValue2 != -1) {
-                        obj = val.mValue2;
+                    val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                    if (val.getValue2() != -1) {
+                        obj = val.getValue2();
                     } else {
                         obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
                     }
@@ -268,26 +270,26 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
                     }
                     if (m.getRoster2() == null) {
-                        rosterName = ((Coach) m.mCompetitor2).getRoster().mName;
+                        rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
                     } else {
-                        rosterName = m.getRoster2().mName;
+                        rosterName = m.getRoster2().getName();
                     }
                     if (m.getSubstitute2() != null) {
-                        tmp += m.mCompetitor2.mName + "/" + m.getSubstitute2().mSubstitute.mName + StringConstants.CS_THICK + rosterName;
+                        tmp += m.getCompetitor2().getName() + "/" + m.getSubstitute2().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
                     } else {
-                        tmp += m.mCompetitor2.mName + StringConstants.CS_THICK + rosterName;
+                        tmp += m.getCompetitor2().getName() + StringConstants.CS_THICK + rosterName;
                     }
                     obj = tmp;
                 }
                 break;
                 default:
                     index = (col - 3) / 2;
-                    final Criteria crit = Tournament.getTournament().getParams().mCriterias.get(index);
-                    val = m.mValues.get(crit);
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(index);
+                    val = m.getValue(crit);
                     if ((col - 3) % 2 == 0) {
-                        obj = val.mValue1;
+                        obj = val.getValue1();
                     } else {
-                        obj = val.mValue2;
+                        obj = val.getValue2();
                     }
             }
         }
@@ -298,43 +300,44 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
     public void setValueAt(final Object value, final int row, final int col) {
         if (value != null) {
             Value val;
+            String tmp = value.toString();
             final CoachMatch m = mMatchs.get(row);
             if (mTeamTournament) {
                 switch (col) {
                     case 3:
-                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                        val.mValue1 = Integer.parseInt(value.toString());
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        val.setValue1(Integer.parseInt(tmp));
                         break;
                     case 4:
-                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                        val.mValue2 = Integer.parseInt(value.toString());
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        val.setValue2(Integer.parseInt(tmp));
                         break;
                     default:
                         final int index = (col - 5) / 2;
-                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(index));
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(index));
                         if ((col - 5) % 2 == 0) {
-                            val.mValue1 = Integer.valueOf(value.toString());
+                            val.setValue1(Integer.parseInt(tmp));
                         } else {
-                            val.mValue2 = Integer.valueOf(value.toString());
+                            val.setValue2(Integer.parseInt(tmp));
                         }
                 }
             } else {
                 switch (col) {
                     case 2:
-                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                        val.mValue1 = Integer.valueOf(value.toString());
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        val.setValue1(Integer.parseInt(tmp));
                         break;
                     case 3:
-                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
-                        val.mValue2 = Integer.valueOf(value.toString());
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        val.setValue2(Integer.parseInt(tmp));
                         break;
                     default:
                         final int index = (col - 3) / 2;
-                        val = m.mValues.get(Tournament.getTournament().getParams().mCriterias.get(index));
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(index));
                         if ((col - 3) % 2 == 0) {
-                            val.mValue1 = Integer.valueOf(value.toString());
+                            val.setValue1(Integer.parseInt(tmp));
                         } else {
-                            val.mValue2 = Integer.valueOf(value.toString());
+                            val.setValue2(Integer.parseInt(tmp));
                         }
                 }
             }
@@ -381,7 +384,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
         jlb.setEditable(false);
 
-        boolean useColor = Tournament.getTournament().getParams().useColor;
+        boolean useColor = Tournament.getTournament().getParams().isUseColor();
 
         if (value instanceof String) {
             jlb.setText((String) value);
@@ -394,19 +397,18 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         Color bkg = new Color(255, 255, 255);
         Color frg = new Color(0, 0, 0);
 
-
         if (isSelected) {
             bkg = new Color(200, 200, 200);
         } else {
             Value val;
             CoachMatch m = mMatchs.get(row);
-            val = mMatchs.get(row).mValues.get(Tournament.getTournament().getParams().mCriterias.get(0));
+            val = mMatchs.get(row).getValue(Tournament.getTournament().getParams().getCriteria(0));
             if (mTeamTournament) {
 
                 switch (column) {
                     case 0:
                         if (!useColor) {
-                            if (row % 2 !=0) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -415,16 +417,16 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(200, 150, 150);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
                         //frg = new Color(255, 255, 255);
-                        if (val.mValue1 > val.mValue2) {
+                        if (val.getValue1() > val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
-                        if (val.mValue1 == val.mValue2) {
+                        if (val.getValue1() == val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
 
@@ -433,16 +435,16 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(200, 150, 150);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
                         //frg = new Color(255, 255, 255);
-                        if (val.mValue1 > val.mValue2) {
+                        if (val.getValue1() > val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
-                        if (val.mValue1 == val.mValue2) {
+                        if (val.getValue1() == val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         if (m.isConcedeedBy1()) {
@@ -453,39 +455,31 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                         break;
                     case 3:
-                        if (useColor) {
-                            bkg = new Color(250, 200, 200);
-                        } else {
-                            if (row % 2 == 1) {
-                                bkg = new Color(220, 220, 220);
-                            }
-                        }
-
-                        break;
                     case 4:
                         if (useColor) {
                             bkg = new Color(250, 200, 200);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
 
                         break;
+
                     case 5:
                         if (useColor) {
                             bkg = new Color(150, 150, 220);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
 
                         //frg = new Color(255, 255, 255);
-                        if (val.mValue1 < val.mValue2) {
+                        if (val.getValue1() < val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
-                        if (val.mValue1 == val.mValue2) {
+                        if (val.getValue1() == val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         if (m.isConcedeedBy2()) {
@@ -499,18 +493,17 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(150, 150, 250);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
 
                         // frg = new Color(255, 255, 255);
-
-                        if (val.mValue1 < val.mValue2) {
+                        if (val.getValue1() < val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
-                        if (val.mValue1 == val.mValue2) {
+                        if (val.getValue1() == val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         break;
@@ -522,7 +515,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                 frg = new Color(50, 50, 150);
                             }
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 !=0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -531,7 +524,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 switch (column) {
                     case 0:
                         if (!useColor) {
-                            if (row % 2 == 1) {
+                            if (row % 2 !=0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -540,17 +533,17 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(200, 150, 150);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 !=0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
 
                         //frg = new Color(255, 255, 255);
-                        if (val.mValue1 > val.mValue2) {
+                        if (val.getValue1() > val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
-                        if (val.mValue1 == val.mValue2) {
+                        if (val.getValue1() == val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         if (m.isConcedeedBy1()) {
@@ -564,7 +557,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(250, 200, 200);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 !=0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -573,7 +566,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(200, 200, 250);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 !=0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -582,16 +575,16 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(150, 150, 200);
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 !=0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
 
                         //frg = new Color(255, 255, 255);
-                        if (val.mValue1 < val.mValue2) {
+                        if (val.getValue1() < val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
-                        if (val.mValue1 == val.mValue2) {
+                        if (val.getValue1() == val.getValue2()) {
                             jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                         }
                         if (m.isConcedeedBy2()) {
@@ -610,7 +603,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                 frg = new Color(50, 50, 150);
                             }
                         } else {
-                            if (row % 2 == 1) {
+                            if (row % 2 !=0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -621,36 +614,44 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         jlb.setForeground(frg);
         jlb.setHorizontalAlignment(JTextField.CENTER);
 
-        if (Tournament.getTournament().getParams().useImage){
-        if ((column == 1) && (Tournament.getTournament().getParams().mTeamTournament)) {
+        if (Tournament.getTournament().getParams().isUseImage()) {
+            if ((column == 1) && (Tournament.getTournament().getParams().isTeamTournament())) {
 
-            CoachMatch m = mMatchs.get(row);
-            if (((Coach) m.mCompetitor1).getTeamMates().picture != null) {
-                JLabel obj = new JLabel();
-                ImageIcon icon = ImageTreatment.resize(new ImageIcon(((Coach) m.mCompetitor1).getTeamMates().picture), 30, 30);
-                obj.setIcon(icon);
-                obj.setText((String) value);
-                obj.setOpaque(true);
-                obj.setBackground(bkg);
-                return obj;
+                CoachMatch m = mMatchs.get(row);
+                if (((Coach) m.getCompetitor1()).getTeamMates().getPicture() != null) {
+                    JLabel obj = new JLabel();
+                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(((Coach) m.getCompetitor1()).getTeamMates().getPicture()), 30, 30);
+                    obj.setIcon(icon);
+                    obj.setText((String) value);
+                    obj.setOpaque(true);
+                    obj.setBackground(bkg);
+                    return obj;
+                }
             }
-        }
 
-        if ((column == 6) && (Tournament.getTournament().getParams().mTeamTournament)) {
+            if ((column == 6) && (Tournament.getTournament().getParams().isTeamTournament())) {
 
-            CoachMatch m = mMatchs.get(row);
-            if (((Coach) m.mCompetitor2).getTeamMates().picture != null) {
-                JLabel obj = new JLabel();
-                ImageIcon icon = ImageTreatment.resize(new ImageIcon(((Coach) m.mCompetitor2).getTeamMates().picture), 30, 30);
-                obj.setIcon(icon);
-                obj.setText((String) value);
-                obj.setOpaque(true);
-                obj.setBackground(bkg);
-                return obj;
+                CoachMatch m = mMatchs.get(row);
+                if (((Coach) m.getCompetitor2()).getTeamMates().getPicture() != null) {
+                    JLabel obj = new JLabel();
+                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(((Coach) m.getCompetitor2()).getTeamMates().getPicture()), 30, 30);
+                    obj.setIcon(icon);
+                    obj.setText((String) value);
+                    obj.setOpaque(true);
+                    obj.setBackground(bkg);
+                    return obj;
+                }
             }
-        }
         }
 
         return jlb;
+    }
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
     }
 }

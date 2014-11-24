@@ -27,9 +27,10 @@ import tourma.utils.ImageTreatment;
  */
 public class MjtMatchTeams extends AbstractTableModel implements TableCellRenderer {
     private static final Logger LOG = Logger.getLogger(MjtMatchTeams.class.getName());
+    private static final long serialVersionUID = 3L;
 
-    ArrayList<Team> mTeams;
-    Round mRound;
+    private final ArrayList<Team> mTeams;
+    private final Round mRound;
 
     /**
      *
@@ -48,7 +49,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
     @Override
     public int getRowCount() {
-        return mRound.getMatchs().size();
+        return mRound.getMatchsCount();
     }
 
     @Override
@@ -83,9 +84,9 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
         Object obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mTeams.size() > 0) {
 
-            final TeamMatch m = (TeamMatch) mRound.getMatchs().get(row);
-            Team team1 = (Team) m.mCompetitor1;
-            Team team2 = (Team) m.mCompetitor2;
+            final TeamMatch m = (TeamMatch) mRound.getMatch(row);
+            Team team1 = (Team) m.getCompetitor1();
+            Team team2 = (Team) m.getCompetitor2();
 
             int nbVictory = m.getVictories(team1);
             int nbLost = m.getLoss(team1);
@@ -96,7 +97,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                     obj = row + 1;
                     break;
                 case 1:
-                    obj = team1.mName;
+                    obj = team1.getName();
                     break;
                 case 2:
                     obj = nbVictory;
@@ -108,7 +109,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                     obj = nbLost;
                     break;
                 case 5:
-                    obj = team2.mName;
+                    obj = team2.getName();
                     break;
                 default:
             }
@@ -145,7 +146,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
         if (value instanceof Integer) {
             jlb.setText(Integer.toString((Integer) value));
         }
-        boolean useColor = Tournament.getTournament().getParams().useColor;
+        boolean useColor = Tournament.getTournament().getParams().isUseColor();
         Color bkg = new Color(255, 255, 255);
         Color frg = new Color(0, 0, 0);
         if (!useColor) {
@@ -182,11 +183,6 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                         frg = new Color(255, 255, 255);
                         break;
                     case 6:
-                        frg = new Color(200, 50, 50);
-                        break;
-
-
-
                     case 7:
                         frg = new Color(200, 50, 50);
                         break;
@@ -202,12 +198,12 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
             }
         }
 
-        if (Tournament.getTournament().getParams().useImage) {
+        if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
-                TeamMatch tm = (TeamMatch) mRound.getMatchs().get(row);
-                if (tm.mCompetitor1.picture != null) {
+                TeamMatch tm = (TeamMatch) mRound.getMatch(row);
+                if (tm.getCompetitor1().getPicture() != null) {
                     JLabel obj = new JLabel();
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(tm.mCompetitor1.picture), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(tm.getCompetitor1().getPicture()), 30, 30);
                     obj.setIcon(icon);
                     obj.setText((String) value);
                     obj.setOpaque(true);
@@ -216,10 +212,10 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                 }
             }
             if (column == 5) {
-                TeamMatch tm = (TeamMatch) mRound.getMatchs().get(row);
-                if (tm.mCompetitor2.picture != null) {
+                TeamMatch tm = (TeamMatch) mRound.getMatch(row);
+                if (tm.getCompetitor2().getPicture() != null) {
                     JLabel obj = new JLabel();
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(tm.mCompetitor2.picture), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(tm.getCompetitor2().getPicture()), 30, 30);
                     obj.setIcon(icon);
                     obj.setText((String) value);
                     obj.setOpaque(true);
@@ -234,5 +230,13 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
         jlb.setForeground(frg);
         jlb.setHorizontalAlignment(JTextField.CENTER);
         return jlb;
+    }
+    
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        throw new java.io.NotSerializableException(getClass().getName());
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        throw new java.io.NotSerializableException(getClass().getName());
     }
 }
