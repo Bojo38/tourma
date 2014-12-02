@@ -542,4 +542,12 @@ public final class LRB {
     }
 
 
+    /**
+     * Unload the LRB
+     */
+    public static void unloadLRB()
+    {
+        LRB._singleton=null;
+    }
+    
 }

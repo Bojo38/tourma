@@ -107,17 +107,17 @@ public final class JPNCategory extends javax.swing.JPanel {
      * Update Panel
      */
     public void update() {
-        final ArrayList<Coach> ArrayList = new ArrayList<>();
+        final ArrayList<Coach> al = new ArrayList<>();
 
         for (int i = 0; i < mTournament.getCoachsCount(); i++) {
             final Coach c = mTournament.getCoach(i);
             if (mCategory == c.getCategory()) {
-                ArrayList.add(c);
+                al.add(c);
             }
         }
 
         final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                ArrayList, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+                al, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
         jtbCategory.setModel(tableModel);
         jtbCategory.setDefaultRenderer(String.class, tableModel);
         jtbCategory.setDefaultRenderer(Integer.class, tableModel);
