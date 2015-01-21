@@ -578,6 +578,34 @@ public class Tournament implements IContainCoachs {
         return mGroups.get(i);
     }
     
+    public Group getGroup(Coach C) {
+        for (Group g: mGroups)
+        {
+            if (g.containsRoster(C.getRoster()))
+            {
+                return g;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * 
+     * @param n
+     * @return 
+     */
+    public Group getGroup(String n) {
+        for (int i=0; i<mGroups.size(); i++)
+        {
+            Group g=mGroups.get(i);
+            if (g.getName().equals(n))
+            {
+                return g;
+            }
+        }
+        return null;
+    }
+    
     /**
      *
      * @return
@@ -671,6 +699,12 @@ public class Tournament implements IContainCoachs {
             final Element group = mGroup.getXMLElement();
             document.addContent(group);
         }
+        
+        for (Group mGroup : mGroups) {
+            final Element group = mGroup.getXMLElementForPoints();
+            document.addContent(group);
+        }
+        
 
         // Save Pool
         for (Pool mPool : mPools) {
@@ -1381,6 +1415,21 @@ public class Tournament implements IContainCoachs {
                 groupe.setXMLElement(group);
                 mGroups.add(groupe);
             }
+            
+        } catch (NullPointerException npe) {
+        }
+        
+        try {
+            final List<Element> groups = racine.getChildren("GROUP_MODIFIER_POINTS");
+            final Iterator<Element> gr = groups.iterator();
+
+            while (gr.hasNext()) {
+                final Element group = gr.next();
+                String name=group.getAttributeValue(StringConstants.CS_NAME);
+                final Group groupe = getGroup(name);
+                groupe.setXMLElementForPoints(group);
+            }
+            
         } catch (NullPointerException npe) {
         }
 

@@ -640,9 +640,19 @@ public final class Coach extends Competitor implements XMLExport {
             }
         }
 
+        int i = 0;
+
+        i = 0;
+        while (i < possible.size()) {
+            if (possible.get(i).havePlayed(this)) {
+                possible.remove(i);
+            } else {
+                i++;
+            }
+        }
+
         if ((params.isTeamTournament()) && (params.getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
 
-            int i = 0;
             while (i < possible.size()) {
                 if (((Coach) possible.get(i)).getTeamMates().containsCoach(this)) {
                     possible.remove(i);
@@ -651,26 +661,19 @@ public final class Coach extends Competitor implements XMLExport {
                 }
             }
 
-            i = 0;
-            while (i < possible.size()) {
-                if (possible.get(i).havePlayed(this)) {
-                    possible.remove(i);
-                } else {
-                    i++;
-                }
-            }
-
             ArrayList<Team> oppteam = getPossibleTeams(r, null);
-
             ArrayList<Competitor> balanced = new ArrayList<>(possible);
 
             // Keep only the players in possible list who are in team
             // which are still in the map
             ArrayList<Competitor> buffer = new ArrayList<>(balanced);
-            for (Competitor buffer1 : buffer) {
-                Coach c = (Coach) buffer1;
-                if (!oppteam.contains(c.getTeamMates())) {
-                    balanced.remove(c);
+
+            if (params.isIndivPairingTeamBalanced()) {
+                for (Competitor buffer1 : buffer) {
+                    Coach c = (Coach) buffer1;
+                    if (!oppteam.contains(c.getTeamMates())) {
+                        balanced.remove(c);
+                    }
                 }
             }
 
@@ -684,7 +687,6 @@ public final class Coach extends Competitor implements XMLExport {
                     Coach c = (Coach) buffer1;
                     ArrayList<Team> oppteam2 = c.getPossibleTeams(r, null);
                     if (!oppteam2.contains(this.mTeamMates)) {
-                        //LOG.log(Level.FINER,"Remove " + c.getDecoratedName() + " from possible opponents for " + getDecoratedName() + " remaining " + (oppteam.size() - 1));
                         indivbalanced.remove(c);
                     }
                 }

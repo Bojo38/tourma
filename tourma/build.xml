@@ -147,6 +147,7 @@
                     <class name="org.mozilla.javascript.Interpreter$1"/>
                     <class name="org.mozilla.javascript.InterpreterData"/>
                     <class name="org.mozilla.javascript.InterpretedFunction"/>
+                    <class name="org.mozilla.javascript.Scriptable"/>
                     <class name="org.mozilla.javascript.ScriptRuntime$NoSuchMethodShim"/>
                     <class name="org.mozilla.javascript.Interpreter$GeneratorState"/>
                     <class name="org.mozilla.javascript.JavaMembers$MethodSignature"/>

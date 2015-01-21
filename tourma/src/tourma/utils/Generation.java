@@ -947,10 +947,11 @@ public final class Generation {
 
     /**
      *
-     * @param competitors
-     * @param datas
-     * @param r
-     * @return
+     * Generates a swiss pairing for this round
+     * @param competitors list of competitors
+     * @param datas ranking data
+     * @param r current round
+     * @return new round
      */
     private static Round genSwiss(final ArrayList competitors, final ArrayList<ObjectRanking> datas, final Round r) {
 
@@ -961,6 +962,7 @@ public final class Generation {
 
         ArrayList comps = new ArrayList(competitors);
 
+        // Remove inactives coaches
         if (competitors.get(0) instanceof Coach) {
             for (int i = 0; i < competitors.size(); i++) {
                 final Coach c = (Coach) competitors.get(i);
@@ -975,6 +977,7 @@ public final class Generation {
             }
         }
 
+        // If number of players is odd; add one null a the end
         if (comps.size() % 2 == 1) {
             if (comps.get(0) instanceof Coach) {
                 comps.add(Coach.getNullCoach());
@@ -984,6 +987,7 @@ public final class Generation {
             }
         }
 
+        // If the number of round is more than the number of players, no switch
         if (comps.size() - 1 <= tour.getRoundsCount()) {
             for (int i = 0; i < datas_tmp.size() / 2; i++) {
                 Competitor c1 = (Competitor) datas_tmp.get(2 * i).getObject();

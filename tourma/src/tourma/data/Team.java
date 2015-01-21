@@ -233,13 +233,17 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             Element image = new Element("Picture");
             String encodedImage;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                if (getPicture()!=null)
+                {
                 ImageIO.write(getPicture(), "png", baos);
                 baos.flush();
                 encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                image.addContent(encodedImage);
+            team.addContent(image);
+                }
                 // should be inside a finally block
             }
-            image.addContent(encodedImage);
-            team.addContent(image);
+            
         } catch (IOException e) {
             LOG.log(Level.INFO, e.getLocalizedMessage());
         }

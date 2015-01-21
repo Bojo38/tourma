@@ -17,6 +17,7 @@ import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
+import tourma.data.Group;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
@@ -264,6 +265,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     if (val.getValue1() >= 0) {
                         if (val.getValue1() >= val.getValue2() + Tournament.getTournament().getParams().getGapLargeVictory()) {
                             value += Tournament.getTournament().getParams().getPointsIndivLargeVictory();
+
                         } else {
                             if (val.getValue1() > val.getValue2()) {
                                 value += Tournament.getTournament().getParams().getPointsIndivVictory();
@@ -288,6 +290,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                         }
 
                     }
+                    value += getGroupModifier(c, m);
                 }
             }
         }
@@ -324,6 +327,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                             value += va.getValue1() * cri.getPointsAgainst();
                         }
                     }
+                    value += getGroupModifier(c, m);
                 }
             }
         }
@@ -556,6 +560,44 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         //sortDatas();
     }
 
+    private static int getGroupModifier(Coach c, CoachMatch m) {
+        int value = 0;
+        if (Tournament.getTournament().getGroupsCount() > 1) {
+            final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+            Group g = Tournament.getTournament().getGroup(c);
+            Value v = m.getValue(td);
+            if ((v.getValue1() >= 0) && ((v.getValue2() >= 0))) {
+                if (m.getCompetitor1() == c) {
+                    Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor2());
+
+                    if (v.getValue1() > v.getValue2()) {
+                        value = g.getOpponentModificationPoints(go).getVictoryPoints();
+                    } else {
+                        if (v.getValue1() == v.getValue2()) {
+                            value = g.getOpponentModificationPoints(go).getDrawPoints();
+                        } else {
+                            value = g.getOpponentModificationPoints(go).getLossPoints();
+                        }
+                    }
+
+                }
+                if (m.getCompetitor2() == c) {
+                    Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor1());
+                    if (v.getValue1() < v.getValue2()) {
+                        value = g.getOpponentModificationPoints(go).getVictoryPoints();
+                    } else {
+                        if (v.getValue1() == v.getValue2()) {
+                            value = g.getOpponentModificationPoints(go).getDrawPoints();
+                        } else {
+                            value = g.getOpponentModificationPoints(go).getLossPoints();
+                        }
+                    }
+                }
+            }
+        }
+        return value;
+    }
+
     /**
      *
      * @return
@@ -563,17 +605,16 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     /* public ArrayList<ObjectRanking> getSortedDatas() {
      return mDatas;
      }*/
-    
     /**
-     * 
+     *
      * @param index
      * @param valIndex
-     * @return 
+     * @return
      */
     public int getSortedValue(int index, int valIndex) {
         ObjectRanking obj = (ObjectRanking) mDatas.get(index);
         switch (valIndex) {
-            
+
             case 1:
                 return obj.getValue1();
             case 2:
@@ -590,15 +631,15 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     }
 
     /**
-     * 
+     *
      * @param index
-     * @return 
+     * @return
      */
     public ObjectRanking getSortedObject(int index) {
         ObjectRanking obj = (ObjectRanking) mDatas.get(index);
         return obj;
     }
-    
+
     /**
      * Abstract sortDatas
      */
@@ -608,7 +649,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     abstract public int getColumnCount();
 
     @Override
-    abstract public String getColumnName(int col);
+    public abstract String getColumnName(int col);
 
     @Override
     public abstract Object getValueAt(int row, int col);

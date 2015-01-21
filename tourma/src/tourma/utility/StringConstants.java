@@ -99,6 +99,8 @@ public interface StringConstants {
      *
      */
     public static final String CS_LANGUAGE_RESOURCE="tourma/languages/language";
+    
+    public static final String CS_GROUP="group";
 
     
    
