@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
+import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Element;
 
 /**
@@ -143,7 +143,8 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 ImageIO.write(picture, "png", baos);
                 baos.flush();
-                encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                encodedImage=Base64.encode(baos.toByteArray());
                 // should be inside a finally block
             }
             image.addContent(encodedImage);
@@ -168,7 +169,8 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
         try {
             Element image = e.getChild("Picture");
             String encodedImage = image.getText();
-            byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+            //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+            byte[] bytes=Base64.decode(encodedImage);
             picture = ImageIO.read(new ByteArrayInputStream(bytes));
         } catch (IOException e2) {
         }

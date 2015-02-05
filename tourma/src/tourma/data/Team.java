@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import javax.xml.bind.DatatypeConverter;
+import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Element;
 import tourma.JdgPairing;
 import tourma.MainFrame;
@@ -237,7 +237,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                 {
                 ImageIO.write(getPicture(), "png", baos);
                 baos.flush();
-                encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                encodedImage=Base64.encode(baos.toByteArray());
                 image.addContent(encodedImage);
             team.addContent(image);
                 }
@@ -273,7 +274,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             Element image = team.getChild("Picture");
             if (image != null) {
                 String encodedImage = image.getText();
-                byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+                //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+                byte[] bytes=Base64.decode(encodedImage);
                 setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
             }
         } catch (IOException e) {

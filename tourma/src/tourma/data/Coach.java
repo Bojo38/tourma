@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import javax.xml.bind.DatatypeConverter;
+import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import teamma.data.Roster;
@@ -254,16 +254,18 @@ public final class Coach extends Competitor implements XMLExport {
 
         if (getPicture() != null) {
             try {
-                String encodedImage;
+                String encodedImage;                                              
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                     ImageIO.write(getPicture(), "png", baos);
                     baos.flush();
-                    encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                    //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
+                    encodedImage = Base64.encode(baos.toByteArray());
+                   baos.close();
                     // should be inside a finally block
                 }
                 image.addContent(encodedImage);
                 coach.addContent(image);
-            } catch (IOException e) {
+            } catch (IOException e) {                
             }
         }
 
@@ -383,7 +385,8 @@ public final class Coach extends Competitor implements XMLExport {
             if (image != null) {
                 String encodedImage = image.getText();
                 if (!encodedImage.isEmpty()) {
-                    byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+                    //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+                    byte[] bytes = Base64.decode(encodedImage);
                     setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
                 }
             }
