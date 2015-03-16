@@ -15,12 +15,14 @@ import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import tourma.MainFrame;
+import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
 public class CoachMatch extends Match {
+
     private static final Logger LOG = Logger.getLogger(CoachMatch.class.getName());
 
     /**
@@ -149,12 +151,10 @@ public class CoachMatch extends Match {
             final String c2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2")).getValue();
             this.setCompetitor1(Coach.getCoach(c1));
             this.setCompetitor2(Coach.getCoach(c2));
-            if (this.getCompetitor1()==null)
-            {
+            if (this.getCompetitor1() == null) {
                 this.setCompetitor1(Coach.getNullCoach());
             }
-            if (this.getCompetitor2()==null)
-            {
+            if (this.getCompetitor2() == null) {
                 this.setCompetitor2(Coach.getNullCoach());
             }
 
@@ -171,30 +171,21 @@ public class CoachMatch extends Match {
                 setConcedeedBy2(concedeedBy2);
             }
 
-            if (((Coach) getCompetitor1())!=null)
-            {
-                if (getCompetitor1().isMatchsNotNull())
-                {
-                getCompetitor1().addMatch(this);
+            if (((Coach) getCompetitor1()) != null) {
+                if (getCompetitor1().isMatchsNotNull()) {
+                    getCompetitor1().addMatch(this);
                 }
-            }
-            else
-            {
+            } else {
                 setCompetitor1(Coach.getNullCoach());
             }
-            
-            if (((Coach) getCompetitor2())!=null)
-            {
-                if (getCompetitor2().isMatchsNotNull())
-                {
-                getCompetitor2().addMatch(this);
+
+            if (((Coach) getCompetitor2()) != null) {
+                if (getCompetitor2().isMatchsNotNull()) {
+                    getCompetitor2().addMatch(this);
                 }
-            }
-            else
-            {
+            } else {
                 setCompetitor2(Coach.getNullCoach());
             }
-            
 
             final List values = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"));
             final Iterator v = values.iterator();
@@ -254,7 +245,7 @@ public class CoachMatch extends Match {
      */
     @Override
     public Competitor getWinner() {
-        if (super.getWinner()== null) {
+        if (super.getWinner() == null) {
             if (getCompetitor1() == Coach.getNullCoach()) {
                 super.setWinner(getCompetitor2());
                 super.setLooser(getCompetitor1());
@@ -265,7 +256,7 @@ public class CoachMatch extends Match {
                 } else {
                     //final ArrayList<Criteria> crits = Tournament.getTournament().getParams().getCriterias();
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criteria crit=Tournament.getTournament().getParams().getCriteria(i);
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
                         if (getValue(crit).getValue1() > getValue(crit).getValue2()) {
                             super.setWinner(getCompetitor1());
                             super.setLooser(getCompetitor2());
@@ -278,8 +269,8 @@ public class CoachMatch extends Match {
                         }
                     }
                     if (super.getWinner() == null) {
-                        Random ran=new Random();
-                        final int r = ran.nextInt()%2;
+                        Random ran = new Random();
+                        final int r = ran.nextInt() % 2;
                         if (r % 2 == 0) {
                             super.setWinner(getCompetitor2());
                             super.setLooser(getCompetitor1());
@@ -313,7 +304,7 @@ public class CoachMatch extends Match {
                 } else {
                     //final ArrayList<Criteria> crits = Tournament.getTournament().getParams().getCriterias();
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criteria crit=Tournament.getTournament().getParams().getCriteria(i);
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
                         if (getValue(crit).getValue1() < getValue(crit).getValue2()) {
                             super.setWinner(getCompetitor1());
                             super.setLooser(getCompetitor2());
@@ -327,8 +318,8 @@ public class CoachMatch extends Match {
                     }
 
                     if (getLooser() == null) {
-                        Random ran=new Random();
-                        final int r = ran.nextInt()%2;
+                        Random ran = new Random();
+                        final int r = ran.nextInt() % 2;
                         if (r % 2 == 0) {
                             super.setWinner(getCompetitor1());
                             super.setLooser(getCompetitor2());
@@ -466,56 +457,82 @@ public class CoachMatch extends Match {
     }
 
     /**
-     * 
+     *
      * @param c
-     * @return 
+     * @return
      */
-    public Value getValue(Criteria c)
-    {
+    public Value getValue(Criteria c) {
         return mValues.get(c);
     }
-    
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public int getValueCount()
-    {
+    public int getValueCount() {
         return mValues.size();
     }
 
     /**
-     * 
+     *
      * @param c
-     * @param v 
+     * @param v
      */
-    public void putValue(Criteria c,Value v)
-    {
-        mValues.put(c,v);
+    public void putValue(Criteria c, Value v) {
+        mValues.put(c, v);
     }
-    
+
     /**
-     * 
-     * @param c 
+     *
+     * @param c
      */
-    public void removeValue(Criteria c)
-    {
+    public void removeValue(Criteria c) {
         mValues.remove(c);
     }
-    
+
+    @Override
+    public Element getXMLElementForDisplay() {
+        Element match = getXMLElement();
+        Element c1 = ((XMLExport) getCompetitor1()).getXMLElement();
+        Element c2 = ((XMLExport) getCompetitor2()).getXMLElement();
+        match.addContent(c1);
+        match.addContent(c2);
+        return match;
+    }
+
+    @Override
+    public void setXMLElementForDisplay(Element element) {
+
+        List<Element> elts = element.getChildren(StringConstants.CS_COACH);
+        if (elts.size() == 2) {
+            Element c1 = elts.get(0);
+            Coach coach1 = new Coach();
+            coach1.setXMLElement(c1);
+            if (Coach.getCoach(coach1.getName()) == null) {
+                Tournament.getTournament().addCoach(coach1);
+            }
+            
+            Element c2 = elts.get(1);
+            Coach coach2 = new Coach();
+            coach2.setXMLElement(c2);
+            if (Coach.getCoach(coach2.getName()) == null) {
+                Tournament.getTournament().addCoach(coach2);
+            }
+        }
+
+        setXMLElement(element);
+    }
+
     /**
      * @return the mValues
      */
     /*public HashMap<Criteria, Value> getValues() {
-        return mValues;
-    }*/
-
+     return mValues;
+     }*/
     /**
      * @param mValues the mValues to set
      */
     /*public void setValues(HashMap<Criteria, Value> mValues) {
-        this.mValues = mValues;
-    }*/
-
+     this.mValues = mValues;
+     }*/
 }

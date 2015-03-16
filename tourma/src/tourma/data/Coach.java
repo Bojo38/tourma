@@ -339,7 +339,12 @@ public final class Coach extends Competitor implements XMLExport {
             this.setTeam(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM")));
             String rName = coach.getAttributeValue(StringConstants.CS_ROSTER);
             String rosterName = RosterType.getRosterName(rName);
-            this.setRoster(RosterType.getRosterType(rosterName));
+            RosterType tmpRoster=RosterType.getRosterType(rosterName);
+            if (tmpRoster==null)
+            {
+                tmpRoster=new RosterType(rName);
+            }
+            this.setRoster(tmpRoster);
 
             this.setNaf(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue());
             this.setRank(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue());

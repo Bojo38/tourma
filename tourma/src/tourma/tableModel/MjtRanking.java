@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -26,12 +27,13 @@ import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.utility.StringConstants;
+import tourma.utils.Ranked;
 
 /**
  *
  * @author Frederic Berger
  */
-abstract public class MjtRanking extends AbstractTableModel implements TableCellRenderer {
+abstract public class MjtRanking extends AbstractTableModel implements TableCellRenderer, Ranked {
 
     /**
      *
@@ -440,6 +442,56 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return value;
     }
 
+    public static int getRankingFromString(String ranking, ArrayList<String> criterias) {
+        ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
+
+        if (ranking.equals(bundle.getString("Points"))) {
+            return Parameters.C_RANKING_POINTS;
+        }
+
+        if (ranking.equals(bundle.getString("Nothing"))) {
+            return Parameters.C_RANKING_NONE;
+        }
+        if (ranking.equals(bundle.getString("Opp. Pts"))) {
+            return Parameters.C_RANKING_OPP_POINTS;
+        }
+        if (ranking.equals(bundle.getString("V/D/L"))) {
+            return Parameters.C_RANKING_VND;
+        }
+        if (ranking.equals(bundle.getString("ELO"))) {
+            return Parameters.C_RANKING_ELO;
+        }
+
+        if (ranking.equals(bundle.getString("OpponentsElo"))) {
+            return Parameters.C_RANKING_ELO_OPP;
+        }
+        if (ranking.equals(bundle.getString("MatchCount"))) {
+            return Parameters.C_RANKING_NB_MATCHS;
+        }       
+        
+        if (ranking.endsWith(bundle.getString(" COACH")))
+        {
+            String tmp=ranking.replace(bundle.getString(" COACH"), "");
+            int i=criterias.indexOf(tmp);
+            return Parameters.C_MAX_RANKING+1+(i*3);
+            
+        }
+        if (ranking.endsWith(bundle.getString(" ADVERSAIRE")))
+        {
+            String tmp=ranking.replace(bundle.getString(" ADVERSAIRE"), "");
+            int i=criterias.indexOf(tmp);
+            return Parameters.C_MAX_RANKING+1+(i*3)+1;
+        }
+        if (ranking.endsWith(bundle.getString(" DIFFERENCE")))
+        {
+            String tmp=ranking.replace(bundle.getString(" DIFFERENCE"), "");
+            int i=criterias.indexOf(tmp);
+            return Parameters.C_MAX_RANKING+1+(i*3)+2;
+        }
+        
+        return Parameters.C_RANKING_NONE;
+    }
+    
     /**
      *
      * @param rankingType
@@ -1134,4 +1186,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return jlb;
     }
 
+    public int getRound()
+    {
+        return mRound;
+    }
 }

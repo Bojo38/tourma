@@ -4,8 +4,12 @@
  */
 package tourma.data;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -15,6 +19,7 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class ObjectRanking implements Comparable, XMLExport {
+
     private static final Logger LOG = Logger.getLogger(ObjectRanking.class.getName());
 
     private Comparable mObject;
@@ -33,7 +38,7 @@ public class ObjectRanking implements Comparable, XMLExport {
      * @param value4
      * @param value5
      */
-    public ObjectRanking(final Comparable c, final int value1, final int value2, final int value3, final  int value4, final int value5) {
+    public ObjectRanking(final Comparable c, final int value1, final int value2, final int value3, final int value4, final int value5) {
         mObject = c;
         mValue1 = value1;
         mValue2 = value2;
@@ -118,8 +123,8 @@ public class ObjectRanking implements Comparable, XMLExport {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
     public int hashCode() {
@@ -134,24 +139,22 @@ public class ObjectRanking implements Comparable, XMLExport {
     }
 
     /**
-     * 
+     *
      * @param o
-     * @return 
+     * @return
      */
     @Override
-    public boolean equals(Object o)
-    {
-        if (o instanceof ObjectRanking)
-        {
-             return (((ObjectRanking)o).getValue5()==getValue5())
-            &&(((ObjectRanking)o).getValue4()==getValue4())                    
-                    &&(((ObjectRanking)o).getValue1()==getValue1())
-                    &&(((ObjectRanking)o).getValue2()==getValue2())
-                    &&(((ObjectRanking)o).getValue3()==getValue3());
+    public boolean equals(Object o) {
+        if (o instanceof ObjectRanking) {
+            return (((ObjectRanking) o).getValue5() == getValue5())
+                    && (((ObjectRanking) o).getValue4() == getValue4())
+                    && (((ObjectRanking) o).getValue1() == getValue1())
+                    && (((ObjectRanking) o).getValue2() == getValue2())
+                    && (((ObjectRanking) o).getValue3() == getValue3());
         }
         return false;
     }
-    
+
     /**
      *
      * @return
@@ -167,6 +170,25 @@ public class ObjectRanking implements Comparable, XMLExport {
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"), c.getTeam()));
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), c.getClan().getName()));
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), c.getRoster().getName()));
+            if ((Tournament.getTournament().getParams().isUseImage()) && (c.getPicture() != null)) {
+                Element image = new Element("Picture");
+                if (c.getPicture() != null) {
+                    try {
+                        String encodedImage;
+                        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                            ImageIO.write(c.getPicture(), "png", baos);
+                            baos.flush();
+                            //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
+                            encodedImage = Base64.encode(baos.toByteArray());
+                            baos.close();
+                            // should be inside a finally block
+                        }
+                        image.addContent(encodedImage);
+                        ic.addContent(image);
+                    } catch (IOException e) {
+                    }
+                }
+            }
         }
 
         if (getObject() instanceof Team) {
@@ -176,6 +198,26 @@ public class ObjectRanking implements Comparable, XMLExport {
                 final Element c = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
                 c.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), t.getCoach(k).getName());
                 ic.addContent(c);
+            }
+
+            if ((Tournament.getTournament().getParams().isUseImage()) && (t.getPicture() != null)) {
+                Element image = new Element("Picture");
+                if (t.getPicture() != null) {
+                    try {
+                        String encodedImage;
+                        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                            ImageIO.write(t.getPicture(), "png", baos);
+                            baos.flush();
+                            //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
+                            encodedImage = Base64.encode(baos.toByteArray());
+                            baos.close();
+                            // should be inside a finally block
+                        }
+                        image.addContent(encodedImage);
+                        ic.addContent(image);
+                    } catch (IOException e) {
+                    }
+                }
             }
         }
 
@@ -187,6 +229,25 @@ public class ObjectRanking implements Comparable, XMLExport {
                     final Element m = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
                     m.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), Tournament.getTournament().getCoach(k).getName());
                     ic.addContent(m);
+                }
+            }
+            if ((Tournament.getTournament().getParams().isUseImage()) && (t.getPicture() != null)) {
+                Element image = new Element("Picture");
+                if (t.getPicture() != null) {
+                    try {
+                        String encodedImage;
+                        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                            ImageIO.write(t.getPicture(), "png", baos);
+                            baos.flush();
+                            //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
+                            encodedImage = Base64.encode(baos.toByteArray());
+                            baos.close();
+                            // should be inside a finally block
+                        }
+                        image.addContent(encodedImage);
+                        ic.addContent(image);
+                    } catch (IOException e) {
+                    }
                 }
             }
         }

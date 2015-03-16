@@ -250,6 +250,20 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         }
         return team;
     }
+    
+    public Element getXMLElementForDisplay() {
+        final Element team = this.getXMLElement();
+
+        // Remove all Coachs
+        team.removeChildren(StringConstants.CS_COACH);
+        
+        // Adding complete coachs
+        for (Coach mCoach : this.mCoachs) {
+            final Element coach = mCoach.getXMLElement();
+            team.addContent(coach);
+        }
+        return team;
+    }
 
     /**
      *
@@ -265,7 +279,12 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         Team.sTeamMap.put(getName(), this);
         while (m.hasNext()) {
             final Element coach = m.next();
-            final Coach c = Coach.getCoach(coach.getAttribute(StringConstants.CS_NAME).getValue());
+            Coach c = Coach.getCoach(coach.getAttribute(StringConstants.CS_NAME).getValue());
+            if (c==null)
+            {
+                c=new Coach(coach.getAttribute(StringConstants.CS_NAME).getValue());
+                Tournament.getTournament().addCoach(c);
+            }
             c.setTeamMates(this);
             this.mCoachs.add(c);
         }
@@ -288,6 +307,21 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         }
     }
 
+    public void setXMLElementForDisplay(final Element team) {
+        
+        List<Element> childs=team.getChildren(StringConstants.CS_COACH);
+        Iterator<Element> it=childs.iterator();
+        while (it.hasNext())
+        {
+            Element child=it.next();
+            Coach c=new Coach();
+            c.setXMLElement(child);
+            Tournament.getTournament().addCoach(c);
+        }
+        
+        setXMLElement(team);
+    }
+    
     /**
      *
      * @param opponent

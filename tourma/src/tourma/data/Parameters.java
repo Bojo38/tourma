@@ -1228,6 +1228,10 @@ public class Parameters implements XMLExport {
     public int getRankingTeam1() {
         return mRankingTeam1;
     }
+    
+    public int getRankingTeam2() {
+        return mRankingTeam2;
+    }
 
     /**
      * @param mRankingTeam1 the mRankingTeam1 to set

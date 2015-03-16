@@ -34,19 +34,7 @@ public final class MjtRankingIndiv extends MjtRanking {
     private boolean mPositive;
     private final boolean mForPool;
 
-    /**
-     *
-     * @param round
-     * @param ranking_type1
-     * @param ranking_type2
-     * @param ranking_type3
-     * @param ranking_type4
-     * @param ranking_type5
-     * @param coachs
-     * @param tournament
-     * @param round_only
-     * @param forPool
-     */
+    
     public MjtRankingIndiv(final int round, 
             final int ranking_type1,
             final int ranking_type2,

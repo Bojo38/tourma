@@ -11,6 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -27,15 +29,30 @@ import tourma.utils.ImageTreatment;
  */
 public abstract class JFullScreen extends javax.swing.JFrame {
 
+    protected Socket socket;
+    ClientLoop cl;
+
+    public JFullScreen(Socket s) throws IOException {
+        super();
+        initComponents();
+        GridBagLayout gbl = new GridBagLayout();
+        jpnContent.setLayout(gbl);
+
+        socket = s;
+
+        cl = new ClientLoop(this);
+        cl.start();
+    }
+
     /**
      * Creates new form FullScreen
      */
     public JFullScreen() {
         super();
-        initComponents();        
+        initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
-        
+
     }
 
     /**
@@ -51,7 +68,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
 
         JLabel l = new JLabel();
-        if ((object.getPicture() != null)&&(Tournament.getTournament().getParams().isUseImage())) {
+        if ((object.getPicture() != null) && (Tournament.getTournament().getParams().isUseImage())) {
             l.setIcon(ImageTreatment.resize(new ImageIcon(object.getPicture()), height, height));
         } else {
             if (!(object instanceof Coach)) {
@@ -138,7 +155,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
      */
     private class Animation extends Thread {
 
-        @SuppressFBWarnings(value="SWL_SLEEP_WITH_LOCK_HELD",justification="Sleep is used for animation")
+        @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD", justification = "Sleep is used for animation")
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
@@ -173,9 +190,43 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         }
     }
 
+    protected abstract void clientLoop();
+
+    protected abstract void setStop(boolean s);
+
+    protected class ClientLoop extends Thread {
+
+        JFullScreen parentFrame;
+
+        ClientLoop(JFullScreen fs) {
+            parentFrame = fs;
+        }
+
+        public void setStop(boolean s) {
+            parentFrame.setStop(s);
+        }
+
+        public void run() {
+            parentFrame.clientLoop();
+
+        }
+    }
+
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
+            if (socket != null) {
+                if (cl != null) {
+                    cl.setStop(true);
+                    cl.interrupt();
+                }
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.exit(0);
+            }
         }
         if (evt.getKeyCode() == KeyEvent.VK_S) {
             if (animationStarted) {
@@ -204,4 +255,5 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     protected javax.swing.JPanel jpnNorth;
     protected javax.swing.JScrollPane jscrp;
     // End of variables declaration//GEN-END:variables
+
 }

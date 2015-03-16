@@ -77,19 +77,19 @@ public class Round implements XMLExport {
     public Match getMatch(int i) {
         return mMatchs.get(i);
     }
-    
+
     /**
-     * 
-     * 
-     * @return 
+     *
+     *
+     * @return
      */
     public int getMatchsCount() {
         return mMatchs.size();
     }
-    
+
     /**
-     * 
-     * @param m 
+     *
+     * @param m
      */
     public void addMatch(Match m) {
         mMatchs.add(m);
@@ -98,29 +98,26 @@ public class Round implements XMLExport {
     /**
      * Shuffle the matchs
      */
-    public void shuffleMatchs()
-    {
+    public void shuffleMatchs() {
         Collections.shuffle(mMatchs);
     }
-    
+
     /**
-     * 
+     *
      * @param m
-     * @return 
+     * @return
      */
-    public boolean containsMatch(Match m)
-    {
+    public boolean containsMatch(Match m) {
         return mMatchs.contains(m);
     }
-    
+
     /**
      * Clear The match Array
      */
-    public void clearMatchs()
-    {
+    public void clearMatchs() {
         mMatchs.clear();
     }
-    
+
     /**
      *
      * @return
@@ -161,13 +158,13 @@ public class Round implements XMLExport {
             Logger.getLogger(Round.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Set round hour as current one
      */
     public void setCurrentHour() {
-       final Calendar cal = Calendar.getInstance();
-        mHour=cal.getTime();
+        final Calendar cal = Calendar.getInstance();
+        mHour = cal.getTime();
     }
 
     /**
@@ -177,7 +174,7 @@ public class Round implements XMLExport {
     @SuppressWarnings("ReturnOfDateField")
     //@SuppressFBWarnings({"",""})
     public Date getHour() {
-        return (Date)mHour.clone();
+        return (Date) mHour.clone();
     }
 
     /**
@@ -205,6 +202,28 @@ public class Round implements XMLExport {
 
     /**
      *
+     * @return
+     */    
+    public Element getXMLElementForDisplay() {
+        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final Element round = new Element(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROUND"));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"), format.format(this.getHour()));
+
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOOSERCUP"), Boolean.toString(isLooserCup()));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"), Boolean.toString(isCup()));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"), Integer.toString(getCupTour()));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"), Integer.toString(getCupMaxTour()));
+
+        for (Match mMatch : this.mMatchs) {
+            final Element match = mMatch.getXMLElementForDisplay();
+            round.addContent(match);
+        }
+
+        return round;
+    }
+
+    /**
+     *
      * @param round
      */
     @Override
@@ -213,7 +232,7 @@ public class Round implements XMLExport {
 
         final String date = round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"));
         try {
-            mHour=format.parse(date);
+            mHour = format.parse(date);
 
         } catch (ParseException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
@@ -242,6 +261,48 @@ public class Round implements XMLExport {
                 m = new CoachMatch(this);
             }
             m.setXMLElement(match);
+            this.mMatchs.add(m);
+        }
+    }
+
+    /**
+     *
+     * @param round
+     */
+    public void setXMLElementForDisplay(final Element round) {
+        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+
+        final String date = round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"));
+        try {
+            mHour = format.parse(date);
+
+        } catch (ParseException e) {
+            LOG.log(Level.FINE, e.getLocalizedMessage());
+        }
+
+        try {
+            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOOSERCUP"))));
+            setCup(Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"))));
+            setCupTour(Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"))));
+            setCupMaxTour(Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"))));
+        } catch (NumberFormatException e) {
+            LOG.log(Level.FINE, e.getLocalizedMessage());
+        }
+
+        final List<Element> matchs = round.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
+        final Iterator<Element> k = matchs.iterator();
+        this.mMatchs.clear();
+
+        while (k.hasNext()) {
+            final Element match = k.next();
+            Match m;
+            if ((Tournament.getTournament().getParams().isTeamTournament())
+                    && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                m = new TeamMatch(this);
+            } else {
+                m = new CoachMatch(this);
+            }
+            m.setXMLElementForDisplay(match);
             this.mMatchs.add(m);
         }
     }
@@ -303,21 +364,19 @@ public class Round implements XMLExport {
     }
 
     /**
-     * 
-     * @param i 
+     *
+     * @param i
      */
-    public void removeMatch(int i)
-    {
-       mMatchs.remove(i);
+    public void removeMatch(int i) {
+        mMatchs.remove(i);
     }
-    
+
     /**
-     * 
-     * @param i 
+     *
+     * @param i
      */
-    public void removeMatch(Match i)
-    {
-       mMatchs.remove(i);
+    public void removeMatch(Match i) {
+        mMatchs.remove(i);
     }
- 
+
 }

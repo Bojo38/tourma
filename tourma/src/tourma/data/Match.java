@@ -4,6 +4,8 @@
  */
 package tourma.data;
 
+import org.jdom2.Element;
+
 /**
  *
  * @author WFMJ7631
@@ -125,5 +127,6 @@ public abstract class Match implements XMLExport {
         this.mLooser = mLooser;
     }
 
-    
+    public abstract Element getXMLElementForDisplay();
+    public abstract void setXMLElementForDisplay(Element element);
 }

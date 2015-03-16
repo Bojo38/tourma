@@ -10,6 +10,7 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,41 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
 
     private int round;
 
+    private boolean loopStop = false;
+
+    public JFullScreenClanTeamAnnex(Socket s) throws IOException {
+        super(s);
+        initComponents();
+        loopStop = false;
+    }
+
+    protected void clientLoop() {
+        try {
+
+            Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
+
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            int width = gd.getDisplayMode().getWidth();
+            int height = gd.getDisplayMode().getHeight();
+
+            float size = (float) height / 50;
+            Font f0 = font.deriveFont(Font.ITALIC, size);
+            Font f1 = font.deriveFont(Font.BOLD, size);
+            Font f = font.deriveFont(Font.PLAIN, size);
+
+            int computed_height = height / 20;
+            
+            
+
+        } catch (IOException | FontFormatException e) {
+            Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    protected void setStop(boolean s) {
+        loopStop = true;
+    }
+    
     /**
      *
      * @param r

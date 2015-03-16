@@ -15,6 +15,9 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -47,6 +50,7 @@ import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
 import tourma.utils.NAF;
+import tourma.utils.TMultiServer;
 import tourma.views.JPNCup;
 import tourma.views.JPNStatistics;
 import tourma.views.fullscreen.JFullScreenClanRank;
@@ -235,6 +239,8 @@ public final class MainFrame extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jmiSubstitutePlayer = new javax.swing.JMenuItem();
         jmiAddCoach = new javax.swing.JMenuItem();
+        jSeparator15 = new javax.swing.JPopupMenu.Separator();
+        jcxmiAsServer = new javax.swing.JCheckBoxMenuItem();
         jmnRound = new javax.swing.JMenu();
         jmiGenerateNextRound = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
@@ -460,6 +466,15 @@ public final class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnParameters.add(jmiAddCoach);
+        jmnParameters.add(jSeparator15);
+
+        jcxmiAsServer.setText(bundle.getString("AsServer")); // NOI18N
+        jcxmiAsServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxmiAsServerActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jcxmiAsServer);
 
         jMenuBar1.add(jmnParameters);
 
@@ -1028,7 +1043,6 @@ public final class MainFrame extends javax.swing.JFrame {
 
     private void jmiNafLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNafLoadActionPerformed
 
-        
         ProgressMonitor progressMonitor = new ProgressMonitor(this,
                 java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DownloadFromNAF"),
                 java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Downloading"), 0, Tournament.getTournament().getCoachsCount());
@@ -1046,8 +1060,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private void jmiSubstitutePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSubstitutePlayerActionPerformed
         // Select Player to subtitute
         ArrayList<Coach> list = new ArrayList<>();
-        for (int i=0; i<Tournament.getTournament().getCoachsCount(); i++)
-        {
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             list.add(Tournament.getTournament().getCoach(i));
         }
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
@@ -1312,7 +1325,7 @@ public final class MainFrame extends javax.swing.JFrame {
                             round.addMatch(m);
 
                             for (int cpt = 0; cpt < m.getMatchCount(); cpt++) {
-                                    CoachMatch c = m.getMatch(cpt);
+                                CoachMatch c = m.getMatch(cpt);
                                 c.getCompetitor1().addMatch(c);
                                 c.getCompetitor2().addMatch(c);
                             }
@@ -1387,12 +1400,12 @@ public final class MainFrame extends javax.swing.JFrame {
                 if (Tournament.getTournament().getParams().isTeamTournament()) {
                     CoachMatch c = round.getCoachMatchs().get(row);
                     // Fint TeamMatch corresponding to CoachMatch
-                    int j=0;
-                    while (j<round.getMatchsCount()) {
+                    int j = 0;
+                    while (j < round.getMatchsCount()) {
                         TeamMatch t = ((TeamMatch) round.getMatch(j));
-                        int i=0;
-                        while (i< t.getMatchCount()) {
-                            if (t.containsMatch(c) ) {
+                        int i = 0;
+                        while (i < t.getMatchCount()) {
+                            if (t.containsMatch(c)) {
                                 for (int cpt = 0; cpt < t.getMatchCount(); cpt++) {
                                     CoachMatch cm = t.getMatch(cpt);
                                     cm.getCompetitor1().removeMatch(cm);
@@ -1452,7 +1465,7 @@ public final class MainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (HeadlessException e) {
-            LOG.log (Level.INFO,e.getLocalizedMessage());
+            LOG.log(Level.INFO, e.getLocalizedMessage());
         }
     }//GEN-LAST:event_jmiConceedMatchActionPerformed
 
@@ -1467,7 +1480,7 @@ public final class MainFrame extends javax.swing.JFrame {
                 m.setConcedeedBy2(false);
             }
         } catch (Exception e) {
-            LOG.log (Level.INFO, e.getLocalizedMessage());
+            LOG.log(Level.INFO, e.getLocalizedMessage());
         }
     }//GEN-LAST:event_jmiCancelConceedMatchActionPerformed
 
@@ -1500,7 +1513,7 @@ public final class MainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (HeadlessException e) {
-            LOG.log (Level.INFO,e.getLocalizedMessage());
+            LOG.log(Level.INFO, e.getLocalizedMessage());
         }
     }//GEN-LAST:event_jmiRefuseMatchActionPerformed
 
@@ -1514,7 +1527,7 @@ public final class MainFrame extends javax.swing.JFrame {
                 m.setRefusedBy2(false);
             }
         } catch (Exception e) {
-           LOG.log (Level.INFO,e.getLocalizedMessage());
+            LOG.log(Level.INFO, e.getLocalizedMessage());
         }
     }//GEN-LAST:event_jmiCancelMatchRefuseActionPerformed
 
@@ -1669,34 +1682,130 @@ public final class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmiFullScreenRankAnnexClan1ActionPerformed
 
+    TMultiServer server = null;
+
+    private void jcxmiAsServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxmiAsServerActionPerformed
+        if (jcxmiAsServer.isSelected()) {
+            if (server == null) {
+                server = new TMultiServer();
+                server.start();
+            } else {
+                synchronized (this) {
+                    server.stopServer();
+                    try {
+                        server.wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                server.start();
+            }
+        } else {
+            synchronized (this) {
+                server.stopServer();
+                try {
+                    server.wait();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            server = null;
+
+        }
+    }//GEN-LAST:event_jcxmiAsServerActionPerformed
+
     /**
      * @param args the command line arguments
      */
     //@com.yworks.util.annotation.Obfuscation ( exclude = false)
     public static void main(final String args[]) {
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        try {
+            java.awt.EventQueue.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
 
-                final ArrayList<String> StartOptions = new ArrayList<>();
-                StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGame"));
-                StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
-                StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UseRosterEditor"));
-                final int res = JOptionPane.showOptionDialog(null, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
+                    final ArrayList<String> StartOptions = new ArrayList<>();
+                    StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGame"));
+                    StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
+                    StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UseRosterEditor"));
+                    StartOptions.add("Client Viewer");
+                    final int res = JOptionPane.showOptionDialog(null, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
 
-                if ((res == 0) || (res == 1)) {
-                    MainFrame window = MainFrame.getMainFrame(res);
-                    window.setVisible(true);
-                }
+                    if ((res == 0) || (res == 1)) {
+                        MainFrame window = MainFrame.getMainFrame(res);
+                        window.setVisible(true);
+                    }
 
-                if (res == 2) {
-                    teamma.views.JdgRoster jdg = new JdgRoster(null, true);
-                    jdg.setVisible(true);
-                    //System.exit(0);
+                    if (res == 2) {
+                        teamma.views.JdgRoster jdg = new JdgRoster(null, true);
+                        jdg.setVisible(true);
+                        //System.exit(0);
+                    }
+
+                    if (res == 3) {
+
+                        String address = (String) JOptionPane.showInputDialog(null, "Enter remote server IP address", "127.0.0.1");
+
+                        try {
+                            Socket socket = null;
+                            try {
+                                socket = new Socket(address, 2017);
+                            } catch (ConnectException e) {
+                                JOptionPane.showMessageDialog(null, "Connection to " + address + " impossible, exiting");
+                                System.exit(1);
+                            }
+
+                            ArrayList<String> labels = new ArrayList<>();
+
+                            // Index 0: Individual Ranking
+                            labels.add("Individual ranking");
+                            // Index 1: Team Ranking
+                            labels.add("Team ranking");
+                            // Index 3: Rolling ranks
+                            labels.add("Matchs");
+                            // Index 4: Rolling ranks
+                            labels.add("Rolling rankings");
+                            // Index 5: Last actions
+                            labels.add("Last actions");
+
+                            final JPanel jpn = new JPanel(new BorderLayout());
+                            final JComboBox jcb = new JComboBox(labels.toArray());
+                            jpn.add(jcb, BorderLayout.CENTER);
+                            final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
+                            jpn.add(jlb, BorderLayout.NORTH);
+
+                            JOptionPane.showMessageDialog(null, jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
+
+                            final int index = jcb.getSelectedIndex();
+
+                            switch (index) {
+                                case 0:
+                                    JFullScreenIndivRank indiv = new JFullScreenIndivRank(socket);
+                                    indiv.setVisible(true);
+                                    break;
+                                case 1:
+                                    JFullScreenTeamRank team = new JFullScreenTeamRank(socket);
+                                    team.setVisible(true);
+                                    break;
+                                case 2:
+                                    JFullScreenMatchs matchs = new JFullScreenMatchs(socket);
+                                    matchs.setVisible(true);
+                                    break;
+
+                            }
+                        } catch (IOException e) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, e);
+                        }
+                    }
                 }
             }
-        });
+            );
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private static MainFrame mSingleton;
@@ -1734,6 +1843,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator13;
     private javax.swing.JPopupMenu.Separator jSeparator14;
+    private javax.swing.JPopupMenu.Separator jSeparator15;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1747,6 +1857,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
     private javax.swing.JCheckBoxMenuItem jcxUseColor;
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
+    private javax.swing.JCheckBoxMenuItem jcxmiAsServer;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAddCoach;
     private javax.swing.JMenuItem jmiAddFreeMatch;

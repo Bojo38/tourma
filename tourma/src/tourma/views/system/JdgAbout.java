@@ -53,8 +53,8 @@ public final class JdgAbout extends javax.swing.JDialog {
         jlbJCommonC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("JCOMMON_COPYRIGHT")));
         jlbJDom.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("JDOM")));
         jlbJDomC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("JDOM_COPYRIGHT")));
-        jlbSubstance.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBSTANCE")));
-        jlbSubstanceC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBSTANCE_COPYRIGHT")));
+        //jlbSubstance.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBSTANCE")));
+        //jlbSubstanceC.setText(Version.getSingleton().getProperty(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBSTANCE_COPYRIGHT")));
     }
 
     /** This method is called from within the constructor to
@@ -75,13 +75,13 @@ public final class JdgAbout extends javax.swing.JDialog {
         jlbJDomC = new javax.swing.JLabel();
         jlbJCommon = new javax.swing.JLabel();
         jlbJCommonC = new javax.swing.JLabel();
-        jlbSubstance = new javax.swing.JLabel();
-        jlbSubstanceC = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jlbNom = new javax.swing.JLabel();
         jlbVersion = new javax.swing.JLabel();
         jlbDate = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
@@ -132,21 +132,11 @@ public final class JdgAbout extends javax.swing.JDialog {
         jlbJCommonC.setText("JCOMMON"); // NOI18N
         jPanel2.add(jlbJCommonC);
 
-        jlbSubstance.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jlbSubstance.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbSubstance.setText("Substance"); // NOI18N
-        jPanel2.add(jlbSubstance);
-
-        jlbSubstanceC.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jlbSubstanceC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbSubstanceC.setText("SUBSTANCE"); // NOI18N
-        jPanel2.add(jlbSubstanceC);
-
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setLayout(new java.awt.GridLayout(3, 0));
+        jPanel4.setLayout(new java.awt.GridLayout(4, 0));
 
         jlbNom.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jlbNom.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -163,7 +153,15 @@ public final class JdgAbout extends javax.swing.JDialog {
         jlbDate.setText(bundle.getString("Date")); // NOI18N
         jPanel4.add(jlbDate);
 
-        jPanel3.add(jPanel4, java.awt.BorderLayout.CENTER);
+        jPanel3.add(jPanel4, java.awt.BorderLayout.NORTH);
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText(bundle.getString("License")); // NOI18N
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.NORTH);
 
@@ -182,6 +180,8 @@ public final class JdgAbout extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel jlbDate;
     private javax.swing.JLabel jlbFreeMarker;
     private javax.swing.JLabel jlbFreeMarkerC;
@@ -190,8 +190,6 @@ public final class JdgAbout extends javax.swing.JDialog {
     private javax.swing.JLabel jlbJDom;
     private javax.swing.JLabel jlbJDomC;
     private javax.swing.JLabel jlbNom;
-    private javax.swing.JLabel jlbSubstance;
-    private javax.swing.JLabel jlbSubstanceC;
     private javax.swing.JLabel jlbVersion;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JdgAbout.class.getName());

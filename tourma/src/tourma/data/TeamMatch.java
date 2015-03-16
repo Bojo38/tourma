@@ -16,6 +16,7 @@ import org.jdom2.Element;
  * @author Frederic Berger
  */
 public class TeamMatch extends Match {
+
     private static final Logger LOG = Logger.getLogger(TeamMatch.class.getName());
 
     /**
@@ -71,8 +72,8 @@ public class TeamMatch extends Match {
                     if (nbVictory < nbLost) {
                         winner = team2;
                     } else {
-                        Random ran=new Random();
-                        final int r = ran.nextInt()%2;
+                        Random ran = new Random();
+                        final int r = ran.nextInt() % 2;
                         if (r == 0) {
                             winner = team1;
                         } else {
@@ -123,8 +124,8 @@ public class TeamMatch extends Match {
                     if (nbVictory < nbLost) {
                         looser = team1;
                     } else {
-                        Random ran=new Random();
-                        final int r = ran.nextInt()%2;
+                        Random ran = new Random();
+                        final int r = ran.nextInt() % 2;
                         if (r == 0) {
                             looser = team2;
                         } else {
@@ -183,12 +184,10 @@ public class TeamMatch extends Match {
      }
      return winner;
      }*/
-
     /**
      *
      * @return
      */
-    
     @Override
     public Element getXMLElement() {
         final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
@@ -199,6 +198,18 @@ public class TeamMatch extends Match {
             Element subMatch = mMatch.getXMLElement();
             match.addContent(subMatch);
         }
+        return match;
+    }
+
+    @Override
+    public Element getXMLElementForDisplay() {
+        Element match = getXMLElement();
+
+        Element t1 = ((Team) this.getCompetitor1()).getXMLElementForDisplay();
+        Element t2 = ((Team) this.getCompetitor2()).getXMLElementForDisplay();
+        match.addContent(t1);
+        match.addContent(t2);
+
         return match;
     }
 
@@ -407,7 +418,7 @@ public class TeamMatch extends Match {
     public int getMatchCount() {
         return mMatchs.size();
     }
-    
+
     /**
      * @param i
      * @return the mMatchs
@@ -419,28 +430,49 @@ public class TeamMatch extends Match {
     /**
      * Clear the match list
      */
-   public void clearMatchs()
-   {
-       mMatchs.clear();
-   }
-    
-   /**
-    * 
-    * @param c
-    * @return 
-    */
-   public boolean containsMatch(CoachMatch c)
-   {
-       return mMatchs.contains(c);
-   }
-   
-   /**
-    * 
-    * @param c 
-    */
-   public void addMatch(CoachMatch c)
-   {
-       mMatchs.add(c);
-   }
-    
+    public void clearMatchs() {
+        mMatchs.clear();
+    }
+
+    /**
+     *
+     * @param c
+     * @return
+     */
+    public boolean containsMatch(CoachMatch c) {
+        return mMatchs.contains(c);
+    }
+
+    /**
+     *
+     * @param c
+     */
+    public void addMatch(CoachMatch c) {
+        mMatchs.add(c);
+    }
+
+    @Override
+    public void setXMLElementForDisplay(Element match) {
+
+        List<Element> elts = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
+        if (elts.size() == 2) {
+            Element t1 = elts.get(0);
+            Team team1 = new Team();
+            team1.setXMLElementForDisplay(t1);
+            if (Team.getTeam(team1.getName()) == null) {
+                Tournament.getTournament().addTeam(team1);                
+            }
+
+            Element t2 = elts.get(1);
+            Team team2 = new Team();
+            team2.setXMLElementForDisplay(t2);
+            if (Team.getTeam(team2.getName()) == null) {
+                Tournament.getTournament().addTeam(team2);
+            }
+
+        }
+
+        setXMLElement(match);
+    }
+
 }
