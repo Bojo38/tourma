@@ -69,6 +69,17 @@ public class Tournament implements IContainCoachs {
         return mSingleton;
     }
 
+    public int getRoundIndex(Round round)
+    {
+        if (this.mRounds!=null)
+        {
+            return mRounds.indexOf(round);
+        }
+        else{
+            return -1;
+        }
+    }
+    
     /**
      *
      * @return
