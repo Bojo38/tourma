@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ScrollPaneConstants;
 import tourma.data.Coach;
@@ -32,8 +33,14 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     protected Socket socket;
     ClientLoop cl;
 
+    private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
+
     public JFullScreen(Socket s) throws IOException {
         super();
+        
+        this.setUndecorated(true);
+        this.setState(JFrame.MAXIMIZED_BOTH);
+        
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
@@ -49,6 +56,8 @@ public abstract class JFullScreen extends javax.swing.JFrame {
      */
     public JFullScreen() {
         super();
+        this.setUndecorated(true);
+        this.setState(JFrame.MAXIMIZED_BOTH);
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
@@ -213,6 +222,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     }
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        LOG.log(Level.FINE, "KeyPressed: "+evt.getKeyChar());
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
             if (socket != null) {
