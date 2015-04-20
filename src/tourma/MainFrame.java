@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -53,6 +54,7 @@ import tourma.utils.NAF;
 import tourma.utils.TMultiServer;
 import tourma.views.JPNCup;
 import tourma.views.JPNStatistics;
+import tourma.views.fullscreen.JFullScreen;
 import tourma.views.fullscreen.JFullScreenClanRank;
 import tourma.views.fullscreen.JFullScreenClanTeamAnnex;
 import tourma.views.fullscreen.JFullScreenIndivAnnex;
@@ -1243,6 +1245,9 @@ public final class MainFrame extends javax.swing.JFrame {
             jpn.add(jcb, BorderLayout.CENTER);
             final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
             jpn.add(jlb, BorderLayout.NORTH);
+            
+            final JCheckBox jcxClash=new JCheckBox("Animation");
+            jpn.add(jcxClash,BorderLayout.SOUTH);
 
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
 
@@ -1254,6 +1259,15 @@ public final class MainFrame extends javax.swing.JFrame {
                 update();
             }
             updateTree();
+            
+            if (jcxClash.isSelected())
+            {
+                try {
+                    JFullScreen fs=new JFullScreenMatchs(Tournament.getTournament().getRound(round_number+1),true);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_jmiGenerateNextRoundActionPerformed
 
