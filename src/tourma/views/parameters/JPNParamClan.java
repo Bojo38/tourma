@@ -285,7 +285,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtEditClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditClanActionPerformed
         final String enterClanName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterClanNameKey");
-        final String clanName = (String) jlsClans.getSelectedValue().toString();
+        final String clanName = ((Clan) jlsClans.getSelectedValue()).toString();
         final String newClanName = JOptionPane.showInputDialog(this, enterClanName, clanName);
         if (!clanName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
             mTournament.getClan(jlsClans.getSelectedIndex()).setName(newClanName);

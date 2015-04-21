@@ -217,4 +217,10 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
         mName=name;
     }
     
+    
+    @Override
+    public String toString()
+    {
+        return mName;
+    }
 }
