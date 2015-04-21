@@ -12,8 +12,9 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -43,6 +44,8 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.utility.Sleeping;
+import tourma.utility.Suspendable;
 import tourma.utils.ImageTreatment;
 import tourma.utils.TourmaProtocol;
 
@@ -429,6 +432,8 @@ public final class JFullScreenMatchs extends JFullScreen {
     public JFullScreenMatchs(Round r, boolean clash) throws IOException {
         super();
 
+        this.removeKeyListener(this.getKeyListeners()[0]);
+
         initComponents();
 
         this.clash = clash;
@@ -471,6 +476,7 @@ public final class JFullScreenMatchs extends JFullScreen {
     private void initComponents() {
 
         setAlwaysOnTop(true);
+        setBackground(new java.awt.Color(255, 255, 255));
         setName("FullScreen Tourma"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -484,7 +490,7 @@ public final class JFullScreenMatchs extends JFullScreen {
     private JFullScreenMatchs.Animation clashAnim;
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_C) {
+        if (evt.getKeyCode() == KeyEvent.VK_S) {
             if (animationStarted) {
                 jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
                 jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -501,11 +507,23 @@ public final class JFullScreenMatchs extends JFullScreen {
                 clashAnim = new JFullScreenMatchs.Animation();
                 clashAnim.start();
             }
-
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (animationStarted) {
+                animationStarted = false;
+                if (clashAnim.isAlive()) {
+                    try {
+                        clashAnim.join();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_formKeyPressed
     private boolean animationStarted = false;
-    private Animation animation;
+    public Animation animation;
 
     private JFullScreenMatchs me = this;
 
@@ -513,8 +531,8 @@ public final class JFullScreenMatchs extends JFullScreen {
         JPanel p = null;
 
         if (t != null) {
-            int max_width=0, c_height=0;
-            
+            int max_width = 0, c_height = 0;
+
             GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
@@ -544,9 +562,9 @@ public final class JFullScreenMatchs extends JFullScreen {
             p.setLayout(new BorderLayout());
             p.setBackground(Color.WHITE);
             p.add(jlbTeam, BorderLayout.CENTER);
-            c_height+=jlbTeam.getPreferredSize().height;
-            max_width=Math.max(max_width, jlbTeam.getPreferredSize().width);
-            
+            c_height += jlbTeam.getPreferredSize().height;
+            max_width = Math.max(max_width, jlbTeam.getPreferredSize().width);
+
             if (t.getPicture() != null) {
                 BufferedImage pict = t.getPicture();
                 JLabel icon = new JLabel();
@@ -554,30 +572,36 @@ public final class JFullScreenMatchs extends JFullScreen {
                 icon.setBackground(Color.WHITE);
                 icon.setHorizontalAlignment(JLabel.CENTER);
                 p.add(icon, BorderLayout.NORTH);
-                c_height+=pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight();
+                c_height += pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight();
             }
 
-            JPanel players = new JPanel(new GridLayout(tm.getMatchCount(), 1));
+            JPanel players = new JPanel(new GridBagLayout());
             players.setBackground(Color.WHITE);
             for (int i = 0; i < tm.getMatchCount(); i++) {
                 Coach c = null;
-                int p_width=0;
+                int score = -1;
+                int p_width = 0;
                 if (tm.getCompetitor1() == t) {
                     c = (Coach) tm.getMatch(i).getCompetitor1();
+                    score = tm.getMatch(i).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1();
                 }
                 if (tm.getCompetitor2() == t) {
                     c = (Coach) tm.getMatch(i).getCompetitor2();
+                    score = tm.getMatch(i).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2();
                 }
+
                 if (c != null) {
-                    JPanel jpn2 = new JPanel(new BorderLayout());
+                    JLabel icon = new JLabel();
                     if (c.getPicture() != null) {
                         BufferedImage pict = t.getPicture();
-                        JLabel icon = new JLabel();
                         icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height * nbPlayers / 2, pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight()));
-                        jpn2.add(icon, right ? BorderLayout.EAST : BorderLayout.WEST);
-                        p_width=line_height * nbPlayers / 2;
+                        p_width = line_height * nbPlayers / 2;
+                    } else {
+                        icon.setText(" ");
                     }
-                    jpn2.setBackground(Color.WHITE);
+                    icon.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
+                    icon.setOpaque(true);
+
                     JLabel jlbCoach = new JLabel();
                     jlbCoach.setOpaque(true);
                     jlbCoach.setHorizontalAlignment(right ? JLabel.LEFT : JLabel.RIGHT);
@@ -588,17 +612,37 @@ public final class JFullScreenMatchs extends JFullScreen {
                     }
                     jlbCoach.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
                     jlbCoach.setFont(font.deriveFont((float) line_height));
-                    jpn2.add(jlbCoach, BorderLayout.CENTER);
-                    p_width+=jlbCoach.getPreferredSize().width;                    
-                    players.add(jpn2);
-                    max_width=Math.max(max_width,p_width);
-                    if (c.getPicture()!=null)
-                    {
-                        c_height+=Math.max(jlbCoach.getPreferredSize().height,c.getPicture().getWidth() * (line_height * nbPlayers / 2) / c.getPicture().getHeight());
+
+                    JLabel jlbScore = new JLabel(" ");
+                    if (score > -1) {
+                        jlbScore.setText(Integer.toString(score));
                     }
-                    else
-                    {
-                        c_height+=jlbCoach.getPreferredSize().height;
+                    jlbScore.setOpaque(true);
+                    jlbScore.setHorizontalAlignment(JLabel.CENTER);
+                    jlbScore.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
+                    jlbScore.setFont(font.deriveFont((float) line_height));
+                    //jlbScore.setSize(line_height, line_height);
+
+                    p_width += jlbCoach.getPreferredSize().width;
+
+                    max_width = Math.max(max_width, p_width);
+                    if (c.getPicture() != null) {
+                        c_height += Math.max(jlbCoach.getPreferredSize().height, c.getPicture().getWidth() * (line_height * nbPlayers / 2) / c.getPicture().getHeight());
+                    } else {
+                        c_height += jlbCoach.getPreferredSize().height;
+                    }
+
+                    GridBagConstraints c1 = new GridBagConstraints(0, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+                    GridBagConstraints c2 = new GridBagConstraints(1, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+                    GridBagConstraints c3 = new GridBagConstraints(2, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+                    if (right) {
+                        players.add(jlbScore, c1);
+                        players.add(jlbCoach, c2);
+                        players.add(icon, c3);
+                    } else {
+                        players.add(icon, c1);
+                        players.add(jlbCoach, c2);
+                        players.add(jlbScore, c3);
                     }
                 }
             }
@@ -669,7 +713,13 @@ public final class JFullScreenMatchs extends JFullScreen {
     /**
      * Internal class for animation
      */
-    private class Animation extends Thread {
+    public class Animation extends Thread implements Suspendable {
+
+        private boolean suspended = false;
+
+        public void setSuspended(boolean s) {
+            suspended = s;
+        }
 
         @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD", justification = "Sleep is used for animation")
         @Override
@@ -682,9 +732,15 @@ public final class JFullScreenMatchs extends JFullScreen {
             //System.out.println("Clash: " + clash);
             me.setSize(width, height);
 
+            Sleeping spleeping = new Sleeping(this);
+
+            this.setPriority(Thread.MAX_PRIORITY);
             while (animationStarted) {
                 if (clash) {
                     for (int i = 0; i < round.getMatchsCount(); i++) {
+                        if (!animationStarted) {
+                            break;
+                        }
                         if (jpnClash1 != null) {
                             jpnContent.remove(jpnClash1);
                         }
@@ -757,8 +813,13 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                             // 1 seconde <=> lateral margin => timer
                             long timer = time / (width / 2);
+                            long timer1 = timer / 1000000;
+                            long timer2 = timer % 1000000;
 
-                            for (int j = 0; j < width; j++) {
+                            for (int j = 0; j < width; j += 2) {
+                                if (!animationStarted) {
+                                    break;
+                                }
                                 // Clear
                                 // Draw vs
                                 // Set JPN1 & JPN2 position
@@ -768,12 +829,25 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                                 //System.err.println("X1: " + jpn1X + " Y1: " + jpn1Y + " X2: " + jpn2X + " Y2: " + jpn2Y);
                                 //me.repaint();
-                                try {
-                                    // Animate !!
-                                    sleep(timer / 1000000, (int) timer % 1000000);
-                                } catch (InterruptedException ex) {
-                                    Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                                synchronized (this) {
+                                    suspended = true;
+
+                                    spleeping.sleep(timer1, (int) timer2);
+                                    while (suspended&&animationStarted) {
+                                        try {
+                                            wait();
+                                        } catch (InterruptedException ex) {
+                                            Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
                                 }
+
+                                /* try {
+                                 // Animate !!
+                                 sleep(timer1, (int)timer2);
+                                 } catch (InterruptedException ex) {
+                                 Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                                 }*/
                                 //Insets insets = jpnContent.getInsets();
                                 jpnClash1.setBounds(jpn1X, jpn1Y, size1.width, size1.height);
                                 jpnClash2.setBounds(jpn2X, jpn2Y, size2.width, size2.height);
@@ -783,11 +857,22 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 me.repaint();
                                 //jpnContent.paintComponents(me.getGraphics());
                             }
-                            try {
-                                sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                            synchronized (this) {
+                                suspended = true;
+                                spleeping.sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
+                                while (suspended&&animationStarted) {
+                                    try {
+                                        wait();
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
                             }
+                            /*try {
+                             sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
+                             } catch (InterruptedException ex) {
+                             Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                             }*/
                         }
                     }
                 }

@@ -256,6 +256,7 @@ public final class MainFrame extends javax.swing.JFrame {
         jmiDelFreeMatch = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
         jmiFullScreenMatchs = new javax.swing.JMenuItem();
+        jmiFullScreenMatchsClash = new javax.swing.JMenuItem();
         jmiFullScreenRankGeneral = new javax.swing.JMenuItem();
         jmiFullScreenRankAnnexIndiv = new javax.swing.JMenuItem();
         jmiFullScreenRankAnnexIndiv1 = new javax.swing.JMenuItem();
@@ -554,6 +555,15 @@ public final class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnRound.add(jmiFullScreenMatchs);
+
+        jmiFullScreenMatchsClash.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jmiFullScreenMatchsClash.setText(bundle.getString("FullScreenMatchIndivClash")); // NOI18N
+        jmiFullScreenMatchsClash.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenMatchsClashActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenMatchsClash);
 
         jmiFullScreenRankGeneral.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankGeneral.setText(bundle.getString("FullScreenIndivRank")); // NOI18N
@@ -1728,6 +1738,19 @@ public final class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jcxmiAsServerActionPerformed
 
+    private void jmiFullScreenMatchsClashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenMatchsClashActionPerformed
+         JFullScreenMatchs fs;
+        try {
+            if (jpnContent instanceof JPNRound) {
+                JPNRound jpnr = ((JPNRound) jpnContent);
+                fs = new JFullScreenMatchs(jpnr.getRound(),true);
+                fs.setVisible(true);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jmiFullScreenMatchsClashActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1889,6 +1912,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiExportFbb;
     private javax.swing.JMenuItem jmiExportFbb1;
     private javax.swing.JMenuItem jmiFullScreenMatchs;
+    private javax.swing.JMenuItem jmiFullScreenMatchsClash;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexClan;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexClan1;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexIndiv;
