@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.FontMetrics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
@@ -545,18 +546,12 @@ public final class JFullScreenMatchs extends JFullScreen {
             int line_height = (height * 6 / 10) / (nbPlayers * 2);
             JLabel jlbTeam = new JLabel();
             jlbTeam.setHorizontalAlignment(JLabel.CENTER);
-            Font font;
-            try {
-                font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
-            } catch (FontFormatException | IOException ex) {
-                Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                font = this.getFont();
-            }
+            Font font = getOptimalFont(width / 4, line_height * nbPlayers / 2, t.getName());
+
             jlbTeam.setBackground(Color.WHITE);
 
-            jlbTeam.setFont(font.deriveFont((float) (line_height * nbPlayers / 2)));
-
+            jlbTeam.setPreferredSize(new Dimension(width / 3, line_height * nbPlayers / 2));
+            jlbTeam.setFont(font);
             jlbTeam.setText(t.getName());
 
             p.setLayout(new BorderLayout());
@@ -598,6 +593,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                         p_width = line_height * nbPlayers / 2;
                     } else {
                         icon.setText(" ");
+                        icon.setPreferredSize(new Dimension(line_height * nbPlayers / 2, line_height * nbPlayers / 2));
                     }
                     icon.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
                     icon.setOpaque(true);
@@ -611,7 +607,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                         jlbCoach.setText(c.getName() + " ");
                     }
                     jlbCoach.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
-                    jlbCoach.setFont(font.deriveFont((float) line_height));
+                    jlbCoach.setFont(getOptimalFont(width * 2 / 9, line_height, jlbCoach.getText()));
 
                     JLabel jlbScore = new JLabel(" ");
                     if (score > -1) {
@@ -620,7 +616,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                     jlbScore.setOpaque(true);
                     jlbScore.setHorizontalAlignment(JLabel.CENTER);
                     jlbScore.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
-                    jlbScore.setFont(font.deriveFont((float) line_height));
+                    jlbScore.setFont(getOptimalFont(width / 9, line_height, jlbScore.getText()));
                     //jlbScore.setSize(line_height, line_height);
 
                     p_width += jlbCoach.getPreferredSize().width;
@@ -632,14 +628,17 @@ public final class JFullScreenMatchs extends JFullScreen {
                         c_height += jlbCoach.getPreferredSize().height;
                     }
 
-                    GridBagConstraints c1 = new GridBagConstraints(0, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-                    GridBagConstraints c2 = new GridBagConstraints(1, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-                    GridBagConstraints c3 = new GridBagConstraints(2, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
                     if (right) {
+                        GridBagConstraints c1 = new GridBagConstraints(0, i, 1, 1, 0.5, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+                        GridBagConstraints c2 = new GridBagConstraints(1, i, 1, 1, 1.0, 1.0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+                        GridBagConstraints c3 = new GridBagConstraints(2, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
                         players.add(jlbScore, c1);
                         players.add(jlbCoach, c2);
                         players.add(icon, c3);
                     } else {
+                        GridBagConstraints c1 = new GridBagConstraints(0, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+                        GridBagConstraints c2 = new GridBagConstraints(1, i, 1, 1, 1.0, 1.0, GridBagConstraints.LINE_END, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+                        GridBagConstraints c3 = new GridBagConstraints(2, i, 1, 1, 0.5, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
                         players.add(icon, c1);
                         players.add(jlbCoach, c2);
                         players.add(jlbScore, c3);
@@ -653,35 +652,124 @@ public final class JFullScreenMatchs extends JFullScreen {
         return p;
     }
 
-    public JPanel createClashCoachPane(Coach t, boolean right) {
+    private Font getOptimalFont(int width, int height, String s) {
+        Font font;
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
+        } catch (FontFormatException | IOException ex) {
+            Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            font = this.getFont();
+        }
+
+        FontMetrics fm = this.getFontMetrics(font); //this is a JPanel
+        do {
+            font = font.deriveFont((float) font.getSize() + 1);
+            fm = this.getFontMetrics(font);
+        } while (fm.stringWidth(s) < width && fm.getHeight() < height);
+        return font;
+    }
+
+    public JPanel createClashCoachPane(Coach t, int score, boolean right) {
         JPanel p = null;
         if (t != null) {
+            int mwidth = 0;
+            int mheight = 0;
             p = new JPanel();
+
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            int width = gd.getDisplayMode().getWidth();
+            int height = gd.getDisplayMode().getHeight();
+
             //Compute dimensions
+            int line_height = (height / 10);
+            JLabel jlbCoach = new JLabel();
 
-            // Compute number of lines: 2x nbPlayers
-            int line_height = (this.getHeight() * 8 / 10) / 2;
-            JLabel jlbCoach = new JLabel(t.getName());
-            Font font;
-            try {
-                font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
-            } catch (FontFormatException | IOException ex) {
-                Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                font = this.getFont();
-            }
-            jlbCoach.setFont(font.deriveFont(line_height));
+            jlbCoach.setPreferredSize(new Dimension(width / 4, line_height));
+            jlbCoach.setFont(getOptimalFont(width / 6, line_height, t.getName()));
+            jlbCoach.setText(t.getName());
 
+            jlbCoach.setOpaque(true);
+            jlbCoach.setHorizontalAlignment(JLabel.CENTER);
+            jlbCoach.setBackground(Color.WHITE);
             p.setLayout(new BorderLayout());
             p.add(jlbCoach, BorderLayout.CENTER);
 
-            if (t.getPicture() != null) {
-                BufferedImage pict = t.getPicture();
-                JLabel icon = new JLabel();
+            mheight += line_height;
+            mwidth += width / 4;
 
-                icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height, pict.getWidth() * line_height / pict.getHeight()));
+            if (Tournament.getTournament().getParams().isUseImage()) {
+                if (t.getPicture() != null) {
+                    BufferedImage pict = t.getPicture();
+                    JLabel icon = new JLabel();
+                    icon.setBackground(Color.WHITE);
+                    icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), pict.getWidth() * (line_height) / pict.getHeight(), line_height));
+                    p.add(icon, right ? BorderLayout.EAST : BorderLayout.WEST);
+                    mwidth += icon.getWidth();
+                    mheight = Math.max(mheight, icon.getHeight());
+                }
+            }
+
+            if (t.getTeamMates() != null) {
+                JLabel icon = new JLabel();
+                icon.setBackground(Color.WHITE);
+                if (Tournament.getTournament().getParams().isUseImage()) {
+                    if (t.getTeamMates().getPicture() != null) {
+                        BufferedImage pict = t.getTeamMates().getPicture();
+                        icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height, pict.getWidth() * (line_height) / pict.getHeight()));
+                    } else {
+                        icon.setText(" ");
+                        icon.setPreferredSize(new Dimension(line_height, line_height));
+                        icon.setHorizontalTextPosition(right?JLabel.LEADING:JLabel.TRAILING);
+                    }
+                }
+                icon.setText(t.getTeamMates().getName());
+                icon.setFont(getOptimalFont(width / 5, line_height, t.getTeamMates().getName()));
+
+                icon.setHorizontalAlignment(JLabel.CENTER);
+
+                mheight += icon.getHeight();
                 p.add(icon, BorderLayout.NORTH);
             }
+
+            if (t.getClan() != null) {
+                JLabel icon = new JLabel();
+                icon.setBackground(Color.WHITE);
+                if (Tournament.getTournament().getParams().isUseImage()) {
+                    if (t.getClan().getPicture() != null) {
+                        BufferedImage pict = t.getClan().getPicture();
+                        icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height, pict.getWidth() * (line_height) / pict.getHeight()));
+                    } else {
+                        icon.setText(" ");
+                        icon.setPreferredSize(new Dimension(line_height, line_height));
+                    }
+                }
+                icon.setText(t.getClan().getName());
+                icon.setFont(getOptimalFont(width / 5, line_height, t.getClan().getName()));
+                icon.setHorizontalAlignment(JLabel.CENTER);
+                icon.setHorizontalTextPosition(right?JLabel.LEADING:JLabel.TRAILING);
+                mheight += line_height + line_height / 10;
+                p.add(icon, BorderLayout.NORTH);
+            }
+
+            JLabel jlbScore = new JLabel();
+            jlbScore.setBackground(Color.WHITE);
+            jlbScore.setOpaque(true);
+            if (score < 0) {
+                jlbScore.setText(" ");
+            } else {
+                jlbScore.setText(Integer.toString(score));
+            }
+            jlbScore.setPreferredSize(new Dimension(width / 10, line_height));
+            jlbScore.setFont(getOptimalFont(width / 16, line_height, jlbScore.getText()));
+            jlbScore.setHorizontalAlignment(right ? JLabel.LEADING : JLabel.TRAILING);
+            p.add(jlbScore, right ? BorderLayout.WEST : BorderLayout.EAST);
+
+            mwidth += jlbScore.getPreferredSize().width;
+
+            p.setOpaque(true);
+            p.setBackground(Color.WHITE);
+            p.setSize(width / 3, mheight);
         }
         return p;
     }
@@ -695,21 +783,6 @@ public final class JFullScreenMatchs extends JFullScreen {
     private int jpn1Y = 0;
     private int jpn2Y = 0;
 
-    /*@Override
-     public void paint(Graphics g) {
-     super.paint(g);
-
-     GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-     int width = gd.getDisplayMode().getWidth();
-     int height = gd.getDisplayMode().getHeight();
-     if (clash && jpnClash1 != null && jpnClash2 != null && jlbVS != null) {
-     jlbVS.paintImmediately((height - jlbVS.getHeight()) / 2, (width - jlbVS.getWidth()) / 2, jlbVS.getHeight(), jlbVS.getWidth());
-
-     jpnClash1.paintImmediately(jpn1X, jpn1Y, size1.width, jpnClash1.getHeight());
-     jpnClash2.paintImmediately(jpn2X, jpn2Y, size2.width, jpnClash2.getHeight());
-
-     }
-     }*/
     /**
      * Internal class for animation
      */
@@ -729,7 +802,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
-            //System.out.println("Clash: " + clash);
+
             me.setSize(width, height);
 
             Sleeping spleeping = new Sleeping(this);
@@ -762,8 +835,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                             jpnClash2 = createClashTeamPane((Team) m.getCompetitor2(), (TeamMatch) m, true);
                         }
                         if (m instanceof CoachMatch) {
-                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), false);
-                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), true);
+                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1(), false);
+                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2(), true);
                         }
 
                         if ((jpnClash1 != null) && (jpnClash2 != null)) {
@@ -827,13 +900,11 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 jpn1X = 0 - size1.width + (j < width / 2 ? j : width / 2);
                                 jpn2X = width - (j > width / 2 ? j - width / 2 : 0);
 
-                                //System.err.println("X1: " + jpn1X + " Y1: " + jpn1Y + " X2: " + jpn2X + " Y2: " + jpn2Y);
-                                //me.repaint();
                                 synchronized (this) {
                                     suspended = true;
 
                                     spleeping.sleep(timer1, (int) timer2);
-                                    while (suspended&&animationStarted) {
+                                    while (suspended && animationStarted) {
                                         try {
                                             wait();
                                         } catch (InterruptedException ex) {
@@ -842,25 +913,16 @@ public final class JFullScreenMatchs extends JFullScreen {
                                     }
                                 }
 
-                                /* try {
-                                 // Animate !!
-                                 sleep(timer1, (int)timer2);
-                                 } catch (InterruptedException ex) {
-                                 Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
-                                 }*/
                                 //Insets insets = jpnContent.getInsets();
                                 jpnClash1.setBounds(jpn1X, jpn1Y, size1.width, size1.height);
                                 jpnClash2.setBounds(jpn2X, jpn2Y, size2.width, size2.height);
 
-                                //jpnClash1.paintComponents(jpnContent.getGraphics());
-                                //jpnClash2.paintComponents(jpnContent.getGraphics());
                                 me.repaint();
-                                //jpnContent.paintComponents(me.getGraphics());
                             }
                             synchronized (this) {
                                 suspended = true;
                                 spleeping.sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
-                                while (suspended&&animationStarted) {
+                                while (suspended && animationStarted) {
                                     try {
                                         wait();
                                     } catch (InterruptedException ex) {
