@@ -4,7 +4,6 @@
  */
 package tourma.views.fullscreen;
 
-import tourma.utils.Ranked;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -31,6 +30,7 @@ import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingTeam;
+import tourma.utils.Ranked;
 import tourma.utils.TourmaProtocol;
 
 /**
@@ -82,12 +82,19 @@ public final class JFullScreenTeamRank extends JFullScreen {
                     if (inputLine.equals(TourmaProtocol.TKey.END.toString())) {
                         SAXBuilder sb = new SAXBuilder();
                         try {
+                            try {
+                                semAnimate.acquire();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(JFullScreenTeamRank.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
                             Document doc = sb.build(new StringReader(buffer));
                             Element element = doc.getRootElement();
                             r = new Ranking(element);
 
                             buildPanel(r);
 
+                            semAnimate.release();
                             this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
