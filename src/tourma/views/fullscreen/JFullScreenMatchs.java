@@ -529,6 +529,7 @@ public final class JFullScreenMatchs extends JFullScreen {
     private JFullScreenMatchs me = this;
 
     public JPanel createClashTeamPane(Team t, TeamMatch tm, boolean right) {
+
         JPanel p = null;
 
         if (t != null) {
@@ -548,6 +549,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             jlbTeam.setHorizontalAlignment(JLabel.CENTER);
             Font font = getOptimalFont(width / 4, line_height * nbPlayers / 2, t.getName());
 
+            jlbTeam.setOpaque(true);
             jlbTeam.setBackground(Color.WHITE);
 
             jlbTeam.setPreferredSize(new Dimension(width / 3, line_height * nbPlayers / 2));
@@ -555,24 +557,28 @@ public final class JFullScreenMatchs extends JFullScreen {
             jlbTeam.setText(t.getName());
 
             p.setLayout(new BorderLayout());
-            p.setBackground(Color.WHITE);
             p.add(jlbTeam, BorderLayout.CENTER);
             c_height += jlbTeam.getPreferredSize().height;
             max_width = Math.max(max_width, jlbTeam.getPreferredSize().width);
 
-            if (t.getPicture() != null) {
-                BufferedImage pict = t.getPicture();
-                JLabel icon = new JLabel();
-                icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height * nbPlayers / 2, pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight()));
-                icon.setBackground(Color.WHITE);
-                icon.setHorizontalAlignment(JLabel.CENTER);
-                p.add(icon, BorderLayout.NORTH);
-                c_height += pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight();
+            if (Tournament.getTournament().getParams().isUseImage()) {
+                if (t.getPicture() != null) {
+                    BufferedImage pict = t.getPicture();
+                    JLabel icon = new JLabel();
+                    icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height * nbPlayers / 2, pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight()));
+                    icon.setBackground(Color.WHITE);
+                    icon.setOpaque(true);
+                    icon.setHorizontalAlignment(JLabel.CENTER);
+                    p.add(icon, BorderLayout.NORTH);
+                    c_height += pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight();
+                }
             }
 
             JPanel players = new JPanel(new GridBagLayout());
             players.setBackground(Color.WHITE);
+            players.setOpaque(true);
             for (int i = 0; i < tm.getMatchCount(); i++) {
+
                 Coach c = null;
                 int score = -1;
                 int p_width = 0;
@@ -586,14 +592,14 @@ public final class JFullScreenMatchs extends JFullScreen {
                 }
 
                 if (c != null) {
+
                     JLabel icon = new JLabel();
-                    if (c.getPicture() != null) {
+                    if ((c.getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
                         BufferedImage pict = t.getPicture();
                         icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height * nbPlayers / 2, pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight()));
                         p_width = line_height * nbPlayers / 2;
                     } else {
                         icon.setText(" ");
-                        icon.setPreferredSize(new Dimension(line_height * nbPlayers / 2, line_height * nbPlayers / 2));
                     }
                     icon.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
                     icon.setOpaque(true);
@@ -607,7 +613,9 @@ public final class JFullScreenMatchs extends JFullScreen {
                         jlbCoach.setText(c.getName() + " ");
                     }
                     jlbCoach.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
-                    jlbCoach.setFont(getOptimalFont(width * 2 / 9, line_height, jlbCoach.getText()));
+                    //jlbCoach.setFont(font.deriveFont((float) line_height));
+                    Font font2 = getOptimalFont(width * 2 / 9, line_height, jlbCoach.getText());
+                    jlbCoach.setFont(font2);
 
                     JLabel jlbScore = new JLabel(" ");
                     if (score > -1) {
@@ -617,12 +625,11 @@ public final class JFullScreenMatchs extends JFullScreen {
                     jlbScore.setHorizontalAlignment(JLabel.CENTER);
                     jlbScore.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
                     jlbScore.setFont(getOptimalFont(width / 9, line_height, jlbScore.getText()));
-                    //jlbScore.setSize(line_height, line_height);
 
                     p_width += jlbCoach.getPreferredSize().width;
 
                     max_width = Math.max(max_width, p_width);
-                    if (c.getPicture() != null) {
+                    if ((c.getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
                         c_height += Math.max(jlbCoach.getPreferredSize().height, c.getPicture().getWidth() * (line_height * nbPlayers / 2) / c.getPicture().getHeight());
                     } else {
                         c_height += jlbCoach.getPreferredSize().height;
@@ -645,7 +652,10 @@ public final class JFullScreenMatchs extends JFullScreen {
                     }
                 }
             }
+            p.setOpaque(true);
+            p.setBackground(Color.WHITE);
             p.add(players, BorderLayout.SOUTH);
+
             p.setSize(max_width, c_height);
         }
 
@@ -720,7 +730,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                     } else {
                         icon.setText(" ");
                         icon.setPreferredSize(new Dimension(line_height, line_height));
-                        icon.setHorizontalTextPosition(right?JLabel.LEADING:JLabel.TRAILING);
+                        icon.setHorizontalTextPosition(right ? JLabel.LEADING : JLabel.TRAILING);
                     }
                 }
                 icon.setText(t.getTeamMates().getName());
@@ -747,7 +757,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                 icon.setText(t.getClan().getName());
                 icon.setFont(getOptimalFont(width / 5, line_height, t.getClan().getName()));
                 icon.setHorizontalAlignment(JLabel.CENTER);
-                icon.setHorizontalTextPosition(right?JLabel.LEADING:JLabel.TRAILING);
+                icon.setHorizontalTextPosition(right ? JLabel.LEADING : JLabel.TRAILING);
                 mheight += line_height + line_height / 10;
                 p.add(icon, BorderLayout.NORTH);
             }
@@ -916,6 +926,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 //Insets insets = jpnContent.getInsets();
                                 jpnClash1.setBounds(jpn1X, jpn1Y, size1.width, size1.height);
                                 jpnClash2.setBounds(jpn2X, jpn2Y, size2.width, size2.height);
+                                //jpnClash1.setBounds(0, 0, size1.width, size1.height);
+                                //jpnClash2.setBounds(size1.width, 0, size2.width, size2.height);
 
                                 me.repaint();
                             }
