@@ -4,7 +4,6 @@
  */
 package tourma.views.fullscreen;
 
-import tourma.utils.Ranked;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -31,6 +30,7 @@ import tourma.data.Ranking;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
+import tourma.utils.Ranked;
 import tourma.utils.TourmaProtocol;
 
 /**
@@ -83,18 +83,23 @@ public final class JFullScreenIndivRank extends JFullScreen {
                     if (inputLine.equals(TourmaProtocol.TKey.END.toString())) {
                         SAXBuilder sb = new SAXBuilder();
                         try {
+                            try {
+                                semAnimate.acquire();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                             Document doc = sb.build(new StringReader(buffer));
                             Element element = doc.getRootElement();
                             r = new Ranking(element);
-                            
+
                             buildPanel(r);
-                            
+                            semAnimate.release();
                             this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
+
                         try {
                             Thread.sleep(10000);
                         } catch (InterruptedException ex) {
@@ -102,7 +107,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                         }
                         out.println(TourmaProtocol.TKey.INDIVIDUAL_RANK.toString());
                         out.println(TourmaProtocol.TKey.END.toString());
-                        
+
                         buffer = "";
                     } else {
                         buffer += inputLine;
@@ -113,8 +118,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
 
         } catch (IOException | FontFormatException e) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, e);
-        }
-        finally{
+        } finally {
             try {
                 socket.close();
             } catch (IOException ex) {
@@ -162,20 +166,17 @@ public final class JFullScreenIndivRank extends JFullScreen {
     private void buildPanel(Ranked ranked) throws FontFormatException {
 
         Font font;
-        
-        JPanel jpn=new JPanel();
+
+        JPanel jpn = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
         jpn.setLayout(gbl);
-        
+
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
         } catch (IOException ex) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        finally
-        {
-            font=this.getFont();
+        } finally {
+            font = this.getFont();
         }
 
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -345,9 +346,9 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 }
             }
         }
-        
+
         jscrp.setViewportView(jpn);
-        jpnContent=jpn;
+        jpnContent = jpn;
         this.repaint();
 
     }

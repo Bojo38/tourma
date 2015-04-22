@@ -377,7 +377,40 @@ public class Tournament implements IContainCoachs {
     public boolean containsTeam(Team t) {
         return mTeams.contains(t);
     }
+    
+    public boolean containsTeam(String name) {
+        for (int i=0; i<mTeams.size(); i++)
+        {
+            if (mTeams.get(i).getName().equals(name))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+     public int getTeamIndex(String name) {
+        for (int i=0; i<mTeams.size(); i++)
+        {
+            if (mTeams.get(i).getName().equals(name))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 
+     public Team getTeam(String name) {
+        for (int i=0; i<mTeams.size(); i++)
+        {
+            if (mTeams.get(i).getName().equals(name))
+            {
+                return mTeams.get(i);
+            }
+        }
+        return null;
+    }
+     
     /**
      *
      * @param c

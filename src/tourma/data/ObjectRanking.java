@@ -168,6 +168,15 @@ public class ObjectRanking implements Comparable, XMLExport {
             final Coach c = (Coach) getObject();
             ic.setAttribute(new Attribute(StringConstants.CS_COACH, c.getName()));
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"), c.getTeam()));
+            if (c.getTeamMates()!=null)
+            {
+                ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMMATES"), c.getTeamMates().getName()));
+            }
+            else
+            {
+                ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMMATES"),""));
+            }
+            
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), c.getClan().getName()));
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), c.getRoster().getName()));
             if ((Tournament.getTournament().getParams().isUseImage()) && (c.getPicture() != null)) {

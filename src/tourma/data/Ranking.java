@@ -127,7 +127,7 @@ public class Ranking implements XMLExport, Ranked {
             this.mName = e.getAttributeValue(bundle.getString("NAME"));
             this.mType = e.getAttributeValue(bundle.getString("TYPE"));
             this.mValueType = e.getAttributeValue(bundle.getString("ORDER"));
-            
+
             try {
                 Tournament.getTournament().getParams().setTeamTournament(e.getAttribute("BYTEAM").getBooleanValue());
             } catch (DataConversionException ex) {
@@ -193,6 +193,8 @@ public class Ranking implements XMLExport, Ranked {
                         c.setName(att.getValue());
                         c.setTeam(obj.getAttribute(bundle.getString("TEAM")).getValue());
                         String clanName = obj.getAttribute(bundle.getString("CLAN")).getValue();
+                        String teamName = obj.getAttribute(bundle.getString("TEAMMATES")).getValue();
+
                         Clan cl = null;
                         if (!Tournament.getTournament().containsClan(clanName)) {
                             cl = new Clan(clanName);
@@ -201,6 +203,20 @@ public class Ranking implements XMLExport, Ranked {
                             cl = Tournament.getTournament().getClan(clanName);
                         }
                         c.setClan(cl);
+
+                        if (!teamName.equals("")) {
+                            Team tm = null;
+                            if (!Tournament.getTournament().containsTeam(teamName)) {
+                                tm = new Team(teamName);
+                                Tournament.getTournament().addTeam(tm);
+                            } else {
+                                tm = Tournament.getTournament().getTeam(teamName);
+                            }
+                            c.setTeamMates(tm);
+                            if (!tm.containsCoach(c)) {
+                                tm.addCoach(c);
+                            }
+                        }
 
                         if (!Tournament.getTournament().containsClan(clanName)) {
                             cl = new Clan(clanName);
