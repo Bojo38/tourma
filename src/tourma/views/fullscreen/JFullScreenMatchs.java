@@ -66,6 +66,13 @@ public final class JFullScreenMatchs extends JFullScreen {
         loopStop = false;
     }
 
+    public JFullScreenMatchs(Socket s, boolean clash) throws IOException {
+        super(s);
+        initComponents();
+        loopStop = false;
+        this.clash = clash;
+    }
+
     protected void clientLoop() {
         try {
 
@@ -95,10 +102,18 @@ public final class JFullScreenMatchs extends JFullScreen {
                 String inputLine;
                 inputLine = in.readLine();
                 String buffer = "";
+
                 while (inputLine != null) {
+
                     if (inputLine.equals(TourmaProtocol.TKey.END.toString())) {
                         SAXBuilder sb = new SAXBuilder();
                         try {
+                            try {
+                                semAnimate.acquire();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
                             Document doc = sb.build(new StringReader(buffer));
                             Tournament.getTournament().loadRosters(doc.getRootElement());
                             Element element = doc.getRootElement().getChild("Parameters");
@@ -107,7 +122,13 @@ public final class JFullScreenMatchs extends JFullScreen {
                             r = new Round();
                             r.setXMLElementForDisplay(element);
 
-                            buildPanel(r);
+                            if (clash) {
+                                this.round = r;
+                                buildClash();
+                            } else {
+                                buildPanel(r);
+                            }
+                            semAnimate.release();
 
                             this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
 
@@ -115,11 +136,14 @@ public final class JFullScreenMatchs extends JFullScreen {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-                        try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
+                        if (!animationStarted) {
+                            try {
+                                Thread.sleep(10000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
+
                         out.println(TourmaProtocol.TKey.MATCHS.toString());
                         out.println(TourmaProtocol.TKey.END.toString());
 
@@ -432,9 +456,6 @@ public final class JFullScreenMatchs extends JFullScreen {
     @SuppressWarnings("LeakingThisInConstructor")
     public JFullScreenMatchs(Round r, boolean clash) throws IOException {
         super();
-
-        this.removeKeyListener(this.getKeyListeners()[0]);
-
         initComponents();
 
         this.clash = clash;
@@ -445,7 +466,7 @@ public final class JFullScreenMatchs extends JFullScreen {
         } else {
             buildPanel(r);
         }
-        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+        //this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
     }
 
     private Font getCoachMatchFont(CoachMatch cm, Competitor comp, Font winner, Font looser, Font draw, Font def) {
@@ -479,52 +500,90 @@ public final class JFullScreenMatchs extends JFullScreen {
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
         setName("FullScreen Tourma"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                formKeyPressed(evt);
-            }
-        });
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private JFullScreenMatchs.Animation clashAnim;
 
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+    @Override
+    protected void keyPressed(KeyEvent evt)
+    {
+        LOG.log(Level.FINE, "KeyPressed: " + evt.getKeyChar());
         if (evt.getKeyCode() == KeyEvent.VK_S) {
             if (animationStarted) {
                 jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
                 jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 animationStarted = false;
-                if (clashAnim.isAlive()) {
-                    try {
-                        clashAnim.join();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                if (clash) {
+                    if (clashAnim.isAlive()) {
+                        try {
+                            clashAnim.join();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } else {
+                    if (animation.isAlive()) {
+                        try {
+                            animation.join();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
             } else {
                 animationStarted = true;
-                clashAnim = new JFullScreenMatchs.Animation();
-                clashAnim.start();
+                if (clash) {
+                    clashAnim = new JFullScreenMatchs.Animation();
+                    clashAnim.start();
+                } else {
+                    animation = new JFullScreen.Animation();
+                    animation.start();
+                }
             }
         }
+
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             if (animationStarted) {
                 animationStarted = false;
-                if (clashAnim.isAlive()) {
-                    try {
-                        clashAnim.join();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                if (clash) {
+                    if (clashAnim.isAlive()) {
+                        try {
+                            clashAnim.join();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } else {
+                    if (animation.isAlive()) {
+                        try {
+                            animation.join();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
                 this.dispose();
             }
         }
-    }//GEN-LAST:event_formKeyPressed
-    private boolean animationStarted = false;
-    public Animation animation;
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            this.dispose();
+            if (socket != null) {
+                if (cl != null) {
+                    cl.setStop(true);
+                    cl.interrupt();
+                }
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.exit(0);
+            }
+        }
+    }
+        //public Animation animation;
 
     private JFullScreenMatchs me = this;
 
@@ -819,6 +878,12 @@ public final class JFullScreenMatchs extends JFullScreen {
 
             this.setPriority(Thread.MAX_PRIORITY);
             while (animationStarted) {
+                try {
+                    semAnimate.acquire();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                long time = 1000000000;
                 if (clash) {
                     for (int i = 0; i < round.getMatchsCount(); i++) {
                         if (!animationStarted) {
@@ -873,16 +938,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 me.getContentPane().validate();
 
                                 me.repaint();
-                                /*me.setResizable(false);
-                                 me.getContentPane().setSize(width, height);
-                                 me.getContentPane().validate();
-                                
-                                 //                                me.setUndecorated(true);
-                                 //me.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                                 me.setSize(width, height);*/
                             }
 
-                            long time = 1000000000;
                             Dimension size1 = jpnClash1.getPreferredSize();
                             Dimension size2 = jpnClash2.getPreferredSize();
                             jpn1Y = (height - size1.height) / 2;
@@ -923,30 +980,36 @@ public final class JFullScreenMatchs extends JFullScreen {
                                     }
                                 }
 
-                                //Insets insets = jpnContent.getInsets();
                                 jpnClash1.setBounds(jpn1X, jpn1Y, size1.width, size1.height);
                                 jpnClash2.setBounds(jpn2X, jpn2Y, size2.width, size2.height);
-                                //jpnClash1.setBounds(0, 0, size1.width, size1.height);
-                                //jpnClash2.setBounds(size1.width, 0, size2.width, size2.height);
 
                                 me.repaint();
                             }
-                            synchronized (this) {
-                                suspended = true;
-                                spleeping.sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
-                                while (suspended && animationStarted) {
-                                    try {
-                                        wait();
-                                    } catch (InterruptedException ex) {
-                                        Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                            if (i <= round.getMatchsCount() - 1) {
+                                synchronized (this) {
+                                    suspended = true;
+                                    spleeping.sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
+                                    while (suspended && animationStarted) {
+                                        try {
+                                            wait();
+                                        } catch (InterruptedException ex) {
+                                            Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
                                     }
                                 }
                             }
-                            /*try {
-                             sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
-                             } catch (InterruptedException ex) {
-                             Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
-                             }*/
+                        }
+                    }
+                    semAnimate.release();
+                    synchronized (this) {
+                        suspended = true;
+                        spleeping.sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
+                        while (suspended && animationStarted) {
+                            try {
+                                wait();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 }

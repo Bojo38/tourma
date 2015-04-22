@@ -1255,9 +1255,9 @@ public final class MainFrame extends javax.swing.JFrame {
             jpn.add(jcb, BorderLayout.CENTER);
             final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
             jpn.add(jlb, BorderLayout.NORTH);
-            
-            final JCheckBox jcxClash=new JCheckBox("Animation");
-            jpn.add(jcxClash,BorderLayout.SOUTH);
+
+            final JCheckBox jcxClash = new JCheckBox("Animation");
+            jpn.add(jcxClash, BorderLayout.SOUTH);
 
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
 
@@ -1269,11 +1269,10 @@ public final class MainFrame extends javax.swing.JFrame {
                 update();
             }
             updateTree();
-            
-            if (jcxClash.isSelected())
-            {
+
+            if (jcxClash.isSelected()) {
                 try {
-                    JFullScreen fs=new JFullScreenMatchs(Tournament.getTournament().getRound(round_number+1),true);
+                    JFullScreen fs = new JFullScreenMatchs(Tournament.getTournament().getRound(round_number + 1), true);
                 } catch (IOException ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1739,11 +1738,11 @@ public final class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jcxmiAsServerActionPerformed
 
     private void jmiFullScreenMatchsClashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenMatchsClashActionPerformed
-         JFullScreenMatchs fs;
+        JFullScreenMatchs fs;
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenMatchs(jpnr.getRound(),true);
+                fs = new JFullScreenMatchs(jpnr.getRound(), true);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -1799,11 +1798,13 @@ public final class MainFrame extends javax.swing.JFrame {
                             labels.add("Individual ranking");
                             // Index 1: Team Ranking
                             labels.add("Team ranking");
-                            // Index 3: Rolling ranks
+                            // Index 2: Rolling ranks
                             labels.add("Matchs");
-                            // Index 4: Rolling ranks
+                            // Index 3: Clash Match
+                            labels.add("Matchs Clash");
+                            // Index 5: Rolling ranks
                             labels.add("Rolling rankings");
-                            // Index 5: Last actions
+                            // Index 6: Last actions
                             labels.add("Last actions");
 
                             final JPanel jpn = new JPanel(new BorderLayout());
@@ -1828,6 +1829,10 @@ public final class MainFrame extends javax.swing.JFrame {
                                 case 2:
                                     JFullScreenMatchs matchs = new JFullScreenMatchs(socket);
                                     matchs.setVisible(true);
+                                    break;
+                                case 3:
+                                    JFullScreenMatchs matchsC = new JFullScreenMatchs(socket, true);
+                                    matchsC.setVisible(true);
                                     break;
 
                             }

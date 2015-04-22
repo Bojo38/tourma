@@ -203,7 +203,7 @@ public class Round implements XMLExport {
     /**
      *
      * @return
-     */    
+     */
     public Element getXMLElementForDisplay() {
         final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROUND"));
@@ -213,6 +213,7 @@ public class Round implements XMLExport {
         round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"), Boolean.toString(isCup()));
         round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"), Integer.toString(getCupTour()));
         round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"), Integer.toString(getCupMaxTour()));
+        round.setAttribute("INDEX", Integer.toString(Tournament.getTournament().getRoundIndex(this)));
 
         for (Match mMatch : this.mMatchs) {
             final Element match = mMatch.getXMLElementForDisplay();
@@ -289,6 +290,15 @@ public class Round implements XMLExport {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
 
+        int roundIndex = Integer.parseInt(round.getAttributeValue("INDEX"));
+        int i = 0;
+        while (Tournament.getTournament().getRoundsCount() > 0) {
+            Tournament.getTournament().removeRound(0);
+        }
+        while (i < roundIndex) {
+            Tournament.getTournament().addRound(new Round());
+        }
+
         final List<Element> matchs = round.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
         final Iterator<Element> k = matchs.iterator();
         this.mMatchs.clear();
@@ -305,6 +315,7 @@ public class Round implements XMLExport {
             m.setXMLElementForDisplay(match);
             this.mMatchs.add(m);
         }
+        Tournament.getTournament().addRound(this);
     }
 
     /**

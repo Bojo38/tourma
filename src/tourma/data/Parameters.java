@@ -432,6 +432,10 @@ public class Parameters implements XMLExport {
         params.setAttribute(sbundle.getString("INDIVBALANCED"), Boolean.toString(this.isIndivPairingIndivBalanced()));
         params.setAttribute(sbundle.getString("TEAMBALANCED"), Boolean.toString(this.isIndivPairingTeamBalanced()));
 
+        params.setAttribute("Portugal", Boolean.toString(this.isPortugal()));
+        params.setAttribute("Color", Boolean.toString(this.isUseColor()));
+        params.setAttribute("Image", Boolean.toString(this.isUseImage()));
+        
         return params;
     }
 
@@ -561,7 +565,9 @@ public class Parameters implements XMLExport {
                 this.setAvoidClansMatch(params.getAttribute(sbundle.getString("AVOIDMATCH")).getBooleanValue());
                 this.setSubstitutes(params.getAttribute(sbundle.getString("SUBSTITUTES")).getBooleanValue());
                 this.setMultiRoster(params.getAttribute(sbundle.getString("MULTIROSTER")).getBooleanValue());
-                this.setMultiRoster(params.getAttribute("Portugal").getBooleanValue());
+                this.setPortugal(params.getAttribute("Portugal").getBooleanValue());
+                this.setUseColor(params.getAttribute("Color").getBooleanValue());
+                this.setUseImage(params.getAttribute("Image").getBooleanValue());
 
             } catch (NullPointerException ne3) {
                 //JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());

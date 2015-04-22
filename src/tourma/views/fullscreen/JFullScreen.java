@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -31,16 +32,16 @@ import tourma.utils.ImageTreatment;
 public abstract class JFullScreen extends javax.swing.JFrame {
 
     protected Socket socket;
-    ClientLoop cl;
+    protected ClientLoop cl;
 
     private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
 
     public JFullScreen(Socket s) throws IOException {
         super();
-        
+
         this.setUndecorated(true);
         this.setState(JFrame.MAXIMIZED_BOTH);
-        
+
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
@@ -156,13 +157,13 @@ public abstract class JFullScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private boolean animationStarted = false;
-    private Animation animation;
+    protected boolean animationStarted = false;
+    protected Animation animation;
 
     /**
      * Animation inner class
      */
-    private class Animation extends Thread {
+    protected class Animation extends Thread {
 
         @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD", justification = "Sleep is used for animation")
         @Override
@@ -173,29 +174,41 @@ public abstract class JFullScreen extends javax.swing.JFrame {
 
             //System.out.println("Screen Height: " + getHeight() + " ScrollBar size: " + (jscrp.getVerticalScrollBar().getMaximum() - jscrp.getVerticalScrollBar().getMinimum()) + " Computed Time: " + computedTime);
             int lastValue = 0;
+            try {
+                semAnimate.acquire();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+            }
             while (animationStarted) {
                 int value = jscrp.getVerticalScrollBar().getValue();
                 value += 1;
                 if (value <= lastValue) {
                     value = 0;
+                    semAnimate.release();
                     try {
                         sleep(10000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    try {
+                        semAnimate.acquire();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     jscrp.getVerticalScrollBar().setValue(jscrp.getVerticalScrollBar().getMinimum());
                 } else {
                     jscrp.getVerticalScrollBar().setValue(value);
                 }
-
                 try {
                     sleep(computedTime);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
                 //System.out.println("Current value: " + value + " last Value: " + lastValue);
                 lastValue = value;
             }
+            semAnimate.release();
         }
     }
 
@@ -217,12 +230,13 @@ public abstract class JFullScreen extends javax.swing.JFrame {
 
         public void run() {
             parentFrame.clientLoop();
-
         }
     }
 
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        LOG.log(Level.FINE, "KeyPressed: "+evt.getKeyChar());
+    protected Semaphore semAnimate = new Semaphore(1);
+
+    protected void keyPressed(KeyEvent evt) {
+        LOG.log(Level.FINE, "KeyPressed: " + evt.getKeyChar());
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
             if (socket != null) {
@@ -259,6 +273,11 @@ public abstract class JFullScreen extends javax.swing.JFrame {
             }
 
         }
+    }
+
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        keyPressed(evt);
     }//GEN-LAST:event_formKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JPanel jpnContent;
