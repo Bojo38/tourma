@@ -54,6 +54,7 @@ public class Ranking implements XMLExport, Ranked {
     private ArrayList<String> mCriterias;
     private ArrayList<ObjectRanking> mObjectsRanked;
 
+    private Criteria mCriteria = null;
     private int mRoundIndex = -1;
 
     /**
@@ -74,6 +75,17 @@ public class Ranking implements XMLExport, Ranked {
 
     public Ranking(Element e) {
         this.setXMLElement(e);
+    }
+
+    public Criteria getCriteria() {
+        if (mCriteria == null) {
+            mCriteria = new Criteria("???");
+        }
+        return mCriteria;
+    }
+
+    public void setCriteria(Criteria c) {
+        mCriteria = c;
     }
 
     /**
@@ -103,7 +115,14 @@ public class Ranking implements XMLExport, Ranked {
 
         //final ArrayList<ObjectRanking> datas = getRank().getSortedDatas();
         for (int k = 0; k < getRank().getRowCount(); k++) {
-            final Element ic = getRank().getSortedObject(k).getXMLElement();
+
+            Element ic;
+            Object obj = getRank().getSortedObject(k);
+            if (obj instanceof ObjectAnnexRanking) {
+                ic = ((ObjectAnnexRanking) obj).getXMLElement();
+            } else {
+                ic = ((ObjectRanking) obj).getXMLElement();
+            }
             ic.setAttribute(new Attribute(bundle.getString("POS"), Integer.toString(k + 1)));
             rank.addContent(ic);
         }
@@ -120,13 +139,18 @@ public class Ranking implements XMLExport, Ranked {
         ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
 
         mObjectsRanked = new ArrayList();
-
+        boolean annex = false;
         int round = -1;
 
         if (e.getName().equals(bundle.getString("RANKING"))) {
             this.mName = e.getAttributeValue(bundle.getString("NAME"));
             this.mType = e.getAttributeValue(bundle.getString("TYPE"));
             this.mValueType = e.getAttributeValue(bundle.getString("ORDER"));
+
+            if (getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"))) {
+                mCriteria = new Criteria(mType);
+                annex = true;
+            }
 
             try {
                 Tournament.getTournament().getParams().setTeamTournament(e.getAttribute("BYTEAM").getBooleanValue());
@@ -166,11 +190,23 @@ public class Ranking implements XMLExport, Ranked {
             while (it.hasNext()) {
                 try {
                     Element obj = (Element) it.next();
-                    int value1 = obj.getAttribute(bundle.getString("RANK1")).getIntValue();
-                    int value2 = obj.getAttribute(bundle.getString("RANK2")).getIntValue();
-                    int value3 = obj.getAttribute(bundle.getString("RANK3")).getIntValue();
-                    int value4 = obj.getAttribute(bundle.getString("RANK4")).getIntValue();
-                    int value5 = obj.getAttribute(bundle.getString("RANK5")).getIntValue();
+                    int value = 0;
+                    if (annex) {
+                        value = obj.getAttribute(bundle.getString("VALUE")).getIntValue();
+                    }
+                    int value1 = 0;
+                    int value2 = 0;
+                    int value3 = 0;
+                    int value4 = 0;
+                    int value5 = 0;
+
+                    if (!annex) {
+                        value1 = obj.getAttribute(bundle.getString("RANK1")).getIntValue();
+                        value2 = obj.getAttribute(bundle.getString("RANK2")).getIntValue();
+                        value3 = obj.getAttribute(bundle.getString("RANK3")).getIntValue();
+                        value4 = obj.getAttribute(bundle.getString("RANK4")).getIntValue();
+                        value5 = obj.getAttribute(bundle.getString("RANK5")).getIntValue();
+                    }
 
                     Element pict = obj.getChild("Picture");
                     BufferedImage bi = null;
@@ -225,7 +261,11 @@ public class Ranking implements XMLExport, Ranked {
                         }
                         c.setClan(cl);
                         c.setTeam(obj.getAttribute(bundle.getString("TEAM")).getValue());
-                        so = new ObjectRanking(c, value1, value2, value3, value4, value5);
+                        if (annex) {
+                            so = new ObjectAnnexRanking(c, value, value1, value2, value3, value4, value5);
+                        } else {
+                            so = new ObjectRanking(c, value1, value2, value3, value4, value5);
+                        }
 
                         RosterType rt = new RosterType(bundle.getString("ROSTER"));
                         c.setRoster(rt);
@@ -245,43 +285,33 @@ public class Ranking implements XMLExport, Ranked {
                             if (bi != null) {
                                 cl.setPicture(bi);
                             }
-                            List<Element> members=obj.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
+                            List<Element> members = obj.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
                             Iterator<Element> itm = members.iterator();
-                            while(itm.hasNext())
-                            {
-                                Element em=itm.next();
-                                if (Tournament.getTournament().getParams().isTeamTournament())
-                                {
-                                    Team t=new Team();
-                                    String name=em.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
-                                    if(!Tournament.getTournament().containsTeam(name))
-                                    {
+                            while (itm.hasNext()) {
+                                Element em = itm.next();
+                                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                                    Team t = new Team();
+                                    String name = em.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
+                                    if (!Tournament.getTournament().containsTeam(name)) {
                                         Tournament.getTournament().addTeam(t);
                                         t.setName(name);
-                                    }
-                                    else
-                                    {
-                                        t=Tournament.getTournament().getTeam(name);
+                                    } else {
+                                        t = Tournament.getTournament().getTeam(name);
                                     }
                                     t.setClan(cl);
-                                }
-                                else
-                                {
-                                    Coach c=new Coach();
-                                    String name=em.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
-                                    if(!Tournament.getTournament().containsCoach(name))
-                                    {
+                                } else {
+                                    Coach c = new Coach();
+                                    String name = em.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
+                                    if (!Tournament.getTournament().containsCoach(name)) {
                                         Tournament.getTournament().addCoach(c);
                                         c.setName(name);
-                                    }
-                                    else
-                                    {
-                                        c=Tournament.getTournament().getCoach(name);
+                                    } else {
+                                        c = Tournament.getTournament().getCoach(name);
                                     }
                                     c.setClan(cl);
                                 }
                             }
-                            
+
                             so = new ObjectRanking(cl, value1, value2, value3, value4, value5);
                         } else {
                             att = obj.getAttribute(bundle.getString("NAME"));

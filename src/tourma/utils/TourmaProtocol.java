@@ -10,12 +10,15 @@ import org.jdom2.Element;
 import org.jdom2.output.XMLOutputter;
 import tourma.data.Clan;
 import tourma.data.Coach;
+import tourma.data.Criteria;
 import tourma.data.Parameters;
 import tourma.data.Ranking;
 import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.XMLExport;
+import tourma.tableModel.MjtAnnexRankIndiv;
 import tourma.tableModel.MjtRankingClan;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
@@ -33,7 +36,7 @@ public class TourmaProtocol {
         TEAM_RANK,
         MATCHS,
         CLAN_RANK,
-        ROLLING, RANK,
+        INDIVIDUAL_ANNEX, RANK,
         LAST_ACTION,
         END,
         UNKNOWN
@@ -49,6 +52,8 @@ public class TourmaProtocol {
                 return TKey.MATCHS;
             case "CLAN_RANK":
                 return TKey.CLAN_RANK;
+            case "INDIVIDUAL_ANNEX":
+                return TKey.INDIVIDUAL_ANNEX;
             case "END":
                 return TKey.END;
             default:
@@ -60,6 +65,7 @@ public class TourmaProtocol {
         if (object == null) {
             return "";
         }
+        ArrayList array = null;
         Ranking r = null;
         Round round = null;
         Parameters params = null;
@@ -67,7 +73,7 @@ public class TourmaProtocol {
             TKey k = getKey((String) object);
 
             switch (k) {
-                case INDIVIDUAL_RANK:
+                case INDIVIDUAL_RANK: {
                     ArrayList<Coach> coachs = new ArrayList<>();
                     for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
                         coachs.add(Tournament.getTournament().getCoach(i));
@@ -85,7 +91,8 @@ public class TourmaProtocol {
                                     coachs, false, false, Tournament.getTournament().getPoolCount() > 0),
                             Tournament.getTournament().getRankingTypes(false)
                     );
-                    break;
+                }
+                break;
                 case TEAM_RANK:
                     ArrayList<Team> teams = new ArrayList<>();
                     for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
@@ -119,8 +126,83 @@ public class TourmaProtocol {
                             Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
                     );
                     break;
+                case INDIVIDUAL_ANNEX: {
+                    ArrayList<Coach> coachs = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+                        coachs.add(Tournament.getTournament().getCoach(i));
+                    }
+                    array=new ArrayList();
+                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"),
+                                crit.getName(),
+                                "Positive",
+                                new MjtAnnexRankIndiv(
+                                        Tournament.getTournament().getRoundsCount() - 1,crit,Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        coachs,true,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        Tournament.getTournament().getParams().isTeamTournament(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+                        
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"),
+                                crit.getName(),
+                                "Negative",
+                                new MjtAnnexRankIndiv(
+                                        Tournament.getTournament().getRoundsCount() - 1,crit,Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                        coachs,true,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        Tournament.getTournament().getParams().isTeamTournament(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+                        
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"),
+                                crit.getName(),
+                                "Difference",
+                                new MjtAnnexRankIndiv(
+                                        Tournament.getTournament().getRoundsCount() - 1,crit,Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                        coachs,true,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        Tournament.getTournament().getParams().isTeamTournament(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+                    }
+                }
+                break;
             }
-            if (r != null) {                
+
+            if (array != null) {
+                Element main = new Element("array");
+                for (int i = 0; i < array.size(); i++) {
+                    Element element = ((XMLExport) array.get(i)).getXMLElement();
+                    main.addContent(element);
+                }
+                XMLOutputter outp = new XMLOutputter();
+                return outp.outputString(main);
+            }
+
+            if (r != null) {
                 Element element = r.getXMLElement();
                 XMLOutputter outp = new XMLOutputter();
                 return outp.outputString(element);

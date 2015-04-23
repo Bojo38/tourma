@@ -23,6 +23,8 @@ import javax.swing.ScrollPaneConstants;
 import tourma.data.Coach;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.Tournament;
+import tourma.utility.Sleeping;
+import tourma.utility.Suspendable;
 import tourma.utils.ImageTreatment;
 
 /**
@@ -163,7 +165,13 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     /**
      * Animation inner class
      */
-    protected class Animation extends Thread {
+    protected class Animation extends Thread implements Suspendable {
+
+        private boolean suspended = false;
+
+        public void setSuspended(boolean s) {
+            suspended = s;
+        }
 
         @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD", justification = "Sleep is used for animation")
         @Override
@@ -179,30 +187,48 @@ public abstract class JFullScreen extends javax.swing.JFrame {
             } catch (InterruptedException ex) {
                 Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            Sleeping spleeping = new Sleeping(this);
             while (animationStarted) {
                 int value = jscrp.getVerticalScrollBar().getValue();
                 value += 1;
                 if (value <= lastValue) {
-                    value = 0;
+                   
                     semAnimate.release();
-                    try {
-                        sleep(10000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    synchronized (this) {
+                        suspended = true;
+
+                        spleeping.sleep(10000, 0);
+                        while (suspended && animationStarted) {
+                            try {
+                                wait();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }                     
                     try {
                         semAnimate.acquire();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    value = 0;
                     jscrp.getVerticalScrollBar().setValue(jscrp.getVerticalScrollBar().getMinimum());
                 } else {
                     jscrp.getVerticalScrollBar().setValue(value);
                 }
-                try {
-                    sleep(computedTime);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
+
+                synchronized (this) {
+                    suspended = true;
+
+                    spleeping.sleep(computedTime, (int) 0);
+                    while (suspended && animationStarted) {
+                        try {
+                            wait();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                 }
 
                 //System.out.println("Current value: " + value + " last Value: " + lastValue);

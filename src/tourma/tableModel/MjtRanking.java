@@ -19,6 +19,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.Group;
+import tourma.data.GroupPoints;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
@@ -467,31 +468,28 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         }
         if (ranking.equals(bundle.getString("MatchCount"))) {
             return Parameters.C_RANKING_NB_MATCHS;
-        }       
-        
-        if (ranking.endsWith(bundle.getString(" COACH")))
-        {
-            String tmp=ranking.replace(bundle.getString(" COACH"), "");
-            int i=criterias.indexOf(tmp);
-            return Parameters.C_MAX_RANKING+1+(i*3);
-            
         }
-        if (ranking.endsWith(bundle.getString(" ADVERSAIRE")))
-        {
-            String tmp=ranking.replace(bundle.getString(" ADVERSAIRE"), "");
-            int i=criterias.indexOf(tmp);
-            return Parameters.C_MAX_RANKING+1+(i*3)+1;
+
+        if (ranking.endsWith(bundle.getString(" COACH"))) {
+            String tmp = ranking.replace(bundle.getString(" COACH"), "");
+            int i = criterias.indexOf(tmp);
+            return Parameters.C_MAX_RANKING + 1 + (i * 3);
+
         }
-        if (ranking.endsWith(bundle.getString(" DIFFERENCE")))
-        {
-            String tmp=ranking.replace(bundle.getString(" DIFFERENCE"), "");
-            int i=criterias.indexOf(tmp);
-            return Parameters.C_MAX_RANKING+1+(i*3)+2;
+        if (ranking.endsWith(bundle.getString(" ADVERSAIRE"))) {
+            String tmp = ranking.replace(bundle.getString(" ADVERSAIRE"), "");
+            int i = criterias.indexOf(tmp);
+            return Parameters.C_MAX_RANKING + 1 + (i * 3) + 1;
         }
-        
+        if (ranking.endsWith(bundle.getString(" DIFFERENCE"))) {
+            String tmp = ranking.replace(bundle.getString(" DIFFERENCE"), "");
+            int i = criterias.indexOf(tmp);
+            return Parameters.C_MAX_RANKING + 1 + (i * 3) + 2;
+        }
+
         return Parameters.C_RANKING_NONE;
     }
-    
+
     /**
      *
      * @param rankingType
@@ -617,31 +615,39 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         if (Tournament.getTournament().getGroupsCount() > 1) {
             final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
             Group g = Tournament.getTournament().getGroup(c);
-            Value v = m.getValue(td);
-            if ((v.getValue1() >= 0) && ((v.getValue2() >= 0))) {
-                if (m.getCompetitor1() == c) {
-                    Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor2());
+            if (g != null) {
+                Value v = m.getValue(td);
+                if ((v.getValue1() >= 0) && ((v.getValue2() >= 0))) {
+                    if (m.getCompetitor1() == c) {
 
-                    if (v.getValue1() > v.getValue2()) {
-                        value = g.getOpponentModificationPoints(go).getVictoryPoints();
-                    } else {
-                        if (v.getValue1() == v.getValue2()) {
-                            value = g.getOpponentModificationPoints(go).getDrawPoints();
-                        } else {
-                            value = g.getOpponentModificationPoints(go).getLossPoints();
+                        Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor2());
+                        GroupPoints gp=g.getOpponentModificationPoints(go);
+                        if ((go != null)&&(gp!=null)) {
+                            if (v.getValue1() > v.getValue2()) {
+                                value = gp.getVictoryPoints();
+                            } else {
+                                if (v.getValue1() == v.getValue2()) {
+                                    value = gp.getDrawPoints();
+                                } else {
+                                    value =gp.getLossPoints();
+                                }
+                            }
                         }
-                    }
 
-                }
-                if (m.getCompetitor2() == c) {
-                    Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor1());
-                    if (v.getValue1() < v.getValue2()) {
-                        value = g.getOpponentModificationPoints(go).getVictoryPoints();
-                    } else {
-                        if (v.getValue1() == v.getValue2()) {
-                            value = g.getOpponentModificationPoints(go).getDrawPoints();
-                        } else {
-                            value = g.getOpponentModificationPoints(go).getLossPoints();
+                    }
+                    if (m.getCompetitor2() == c) {
+                        Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor1());
+                        GroupPoints gp=g.getOpponentModificationPoints(go);
+                        if ((go != null)&&(gp!=null)) {
+                            if (v.getValue1() < v.getValue2()) {
+                                value = gp.getVictoryPoints();
+                            } else {
+                                if (v.getValue1() == v.getValue2()) {
+                                    value = gp.getDrawPoints();
+                                } else {
+                                    value = gp.getLossPoints();
+                                }
+                            }
                         }
                     }
                 }
@@ -1186,8 +1192,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return jlb;
     }
 
-    public int getRound()
-    {
+    public int getRound() {
         return mRound;
     }
 }
