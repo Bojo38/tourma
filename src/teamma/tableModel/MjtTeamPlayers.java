@@ -103,7 +103,7 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
     @Override
     public Object getValueAt(int row, int col) {
         int i;
-        int value;
+//        int value;
         StringBuilder tmpstring = new StringBuilder(32);
         if (_roster.getPlayerCount() > 0) {
             Player player = _roster.getPlayer(row);
@@ -300,11 +300,11 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
         return jta;
     }
 
-    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+/*    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 
     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
         throw new java.io.NotSerializableException(getClass().getName());
-    }
+    }*/
 }

@@ -74,7 +74,7 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
     @Override
     public Object getValueAt(int row, int col) {
         int i;
-        int value;
+//        int value;
         StringBuilder tmpstring = new StringBuilder(32);
         if (_roster.getChampionCount() > 0) {
             StarPlayer player = _roster.getChampion(row);
@@ -182,16 +182,16 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
      * @param stream
      * @throws java.io.IOException 
      */
-    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+    /*private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
-    }
+    }*/
 /**
  * 
  * @param stream
  * @throws java.io.IOException
  * @throws ClassNotFoundException 
  */
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+    /*private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
         throw new java.io.NotSerializableException(getClass().getName());
-    }
+    }*/
 }
