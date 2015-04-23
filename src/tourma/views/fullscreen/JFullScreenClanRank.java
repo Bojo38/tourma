@@ -52,7 +52,8 @@ public final class JFullScreenClanRank extends JFullScreen {
         loopStop = false;
     }
 
-    protected void clientLoop() {
+    @Override
+    protected void clientLoop() throws InterruptedException {
         try {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));

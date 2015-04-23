@@ -113,6 +113,7 @@ public final class MainFrame extends javax.swing.JFrame {
                 jmiAddFreeMatch.setEnabled(true);
                 jmiDelFreeMatch.setEnabled(true);
                 jmiFullScreenMatchs.setEnabled(true);
+                jmiFullScreenMatchsClash.setEnabled(true);
                 jmiFullScreenRankGeneral.setEnabled(true);
                 jmiFullScreenRankAnnexIndiv.setEnabled(true);
                 jmiFullScreenRankAnnexIndiv1.setEnabled(true);
@@ -142,6 +143,7 @@ public final class MainFrame extends javax.swing.JFrame {
 
             }
             jmiFullScreenMatchs.setEnabled(true);
+            jmiFullScreenMatchsClash.setEnabled(true);
             jckmiRoundOnly.setEnabled(true);
             jmiFullScreenRankTeam.setEnabled(mTournament.getParams().isTeamTournament());
             jmiFullScreenRankClan.setEnabled(mTournament.getClansCount() > 1);
@@ -162,6 +164,7 @@ public final class MainFrame extends javax.swing.JFrame {
             jmiConceedMatch.setEnabled(false);
             jmiRefuseMatch.setEnabled(false);
             jmiFullScreenMatchs.setEnabled(false);
+            jmiFullScreenMatchsClash.setEnabled(false);
             jmiFullScreenRankTeam.setEnabled(false);
             jmiFullScreenRankClan.setEnabled(false);
             jmiFullScreenRankGeneral.setEnabled(false);

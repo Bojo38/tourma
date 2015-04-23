@@ -13,7 +13,6 @@ package tourma.views.round;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
-import javax.swing.JTable;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
@@ -42,7 +41,7 @@ public final class JPNPoolRound extends javax.swing.JPanel {
     private final Round mRound;
     private final Tournament mTournament;
     private final Pool mPool;
-    private final JTable mJtbTeamMatch = null;
+//    private final JTable mJtbTeamMatch = null;
 
     /**
      *
@@ -253,11 +252,11 @@ public final class JPNPoolRound extends javax.swing.JPanel {
     {
         mRoundOnly=r;
     }
-     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+/*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 
     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
         throw new java.io.NotSerializableException(getClass().getName());
-    }
+    }*/
 }

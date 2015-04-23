@@ -49,7 +49,9 @@ public final class JFullScreenTeamRank extends JFullScreen {
         loopStop = false;
     }
 
-    protected void clientLoop() {
+    @Override
+    protected void clientLoop() throws InterruptedException {
+
         try {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
@@ -87,7 +89,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(JFullScreenTeamRank.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            
+
                             Document doc = sb.build(new StringReader(buffer));
                             Element element = doc.getRootElement();
                             r = new Ranking(element);

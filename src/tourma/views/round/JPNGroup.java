@@ -141,13 +141,13 @@ public final class JPNGroup extends javax.swing.JPanel {
     private javax.swing.JTable jtbGroup;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNGroup.class.getName());
-    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+/*    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 
     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
         throw new java.io.NotSerializableException(getClass().getName());
-    }
+    }*/
     
     
 }

@@ -54,7 +54,9 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
         loopStop = false;
     }
 
-    protected void clientLoop() {
+    
+    @Override
+    protected void clientLoop()throws InterruptedException {
         try {
 
 

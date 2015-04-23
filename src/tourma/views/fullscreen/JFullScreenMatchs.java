@@ -73,7 +73,9 @@ public final class JFullScreenMatchs extends JFullScreen {
         this.clash = clash;
     }
 
-    protected void clientLoop() {
+        @Override
+    protected void clientLoop()throws InterruptedException {
+
         try {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));

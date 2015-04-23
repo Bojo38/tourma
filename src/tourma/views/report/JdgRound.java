@@ -534,11 +534,11 @@ public final class JdgRound extends javax.swing.JDialog {
     }
     private static final Logger LOG = Logger.getLogger(JdgRound.class.getName());
     
-     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+/*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 
     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
         throw new java.io.NotSerializableException(getClass().getName());
-    }
+    }*/
 }

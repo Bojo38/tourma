@@ -53,7 +53,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
 
     private int mRoundNumber;
     private Tournament mTour;
-    private boolean mResult;
+//    private boolean mResult;
     private File mFilename = null;
     private MjtRanking mRanking;
     private HashMap<Criteria, MjtAnnexRank> mAnnexAgainstRankings;
@@ -331,11 +331,11 @@ public final class JdgGlobal extends javax.swing.JDialog {
         return address;
     }
     private static final Logger LOG = Logger.getLogger(JdgGlobal.class.getName());
-     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+/*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 
     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
         throw new java.io.NotSerializableException(getClass().getName());
-    }
+    }*/
 }

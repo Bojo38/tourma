@@ -249,7 +249,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         }
     }
 
-    protected abstract void clientLoop();
+    protected abstract void clientLoop() throws InterruptedException;
 
     protected abstract void setStop(boolean s);
 
@@ -266,7 +266,13 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         }
 
         public void run() {
+            try{
             parentFrame.clientLoop();
+            }
+            catch (InterruptedException ie)
+            {
+                LOG.log(Level.INFO,"Sleep interrupted, probably before exiting");
+            }
         }
     }
 

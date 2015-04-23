@@ -67,7 +67,8 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
 
     }
 
-    protected void clientLoop() {
+    @Override
+    protected void clientLoop() throws InterruptedException{
         // Synchronized the end of constructor with the client thread
         synchronized (this) {
             while (!startUnlock) {
