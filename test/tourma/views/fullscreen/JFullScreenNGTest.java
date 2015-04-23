@@ -80,6 +80,17 @@ public class JFullScreenNGTest {
     }
 
     public class JFullScreenImpl extends JFullScreen {
+
+        @Override
+        protected void clientLoop() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        protected void setStop(boolean s) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+     
     }
     
 }
