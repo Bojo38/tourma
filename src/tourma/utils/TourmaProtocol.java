@@ -18,7 +18,9 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.data.XMLExport;
+import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtAnnexRankIndiv;
+import tourma.tableModel.MjtAnnexRankTeam;
 import tourma.tableModel.MjtRankingClan;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
@@ -36,7 +38,10 @@ public class TourmaProtocol {
         TEAM_RANK,
         MATCHS,
         CLAN_RANK,
-        INDIVIDUAL_ANNEX, RANK,
+        INDIVIDUAL_ANNEX,
+        TEAM_ANNEX,
+        CLAN_ANNEX,
+        RANK,
         LAST_ACTION,
         END,
         UNKNOWN
@@ -46,6 +51,7 @@ public class TourmaProtocol {
         switch (k) {
             case "INDIVIDUAL_RANK":
                 return TKey.INDIVIDUAL_RANK;
+
             case "TEAM_RANK":
                 return TKey.TEAM_RANK;
             case "MATCHS":
@@ -54,6 +60,10 @@ public class TourmaProtocol {
                 return TKey.CLAN_RANK;
             case "INDIVIDUAL_ANNEX":
                 return TKey.INDIVIDUAL_ANNEX;
+            case "TEAM_ANNEX":
+                return TKey.TEAM_ANNEX;
+            case "CLAN_ANNEX":
+                return TKey.CLAN_ANNEX;
             case "END":
                 return TKey.END;
             default:
@@ -93,7 +103,7 @@ public class TourmaProtocol {
                     );
                 }
                 break;
-                case TEAM_RANK:
+                case TEAM_RANK: {
                     ArrayList<Team> teams = new ArrayList<>();
                     for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
                         teams.add(Tournament.getTournament().getTeam(i));
@@ -107,12 +117,13 @@ public class TourmaProtocol {
                                     teams, false),
                             Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
                     );
-                    break;
+                }
+                break;
                 case MATCHS:
                     params = Tournament.getTournament().getParams();
                     round = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
                     break;
-                case CLAN_RANK:
+                case CLAN_RANK: {
                     ArrayList<Clan> clans = new ArrayList<>();
                     for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
                         clans.add(Tournament.getTournament().getClan(i));
@@ -125,21 +136,22 @@ public class TourmaProtocol {
                                     clans, false),
                             Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
                     );
-                    break;
+                }
+                break;
                 case INDIVIDUAL_ANNEX: {
                     ArrayList<Coach> coachs = new ArrayList<>();
                     for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
                         coachs.add(Tournament.getTournament().getCoach(i));
                     }
-                    array=new ArrayList();
+                    array = new ArrayList();
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                         Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
                         r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"),
                                 crit.getName(),
                                 "Positive",
                                 new MjtAnnexRankIndiv(
-                                        Tournament.getTournament().getRoundsCount() - 1,crit,Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                        coachs,true,
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        coachs, true,
                                         Tournament.getTournament().getParams().getRankingIndiv1(),
                                         Tournament.getTournament().getParams().getRankingIndiv2(),
                                         Tournament.getTournament().getParams().getRankingIndiv3(),
@@ -151,13 +163,13 @@ public class TourmaProtocol {
                         );
                         r.setCriteria(crit);
                         array.add(r);
-                        
+
                         r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"),
                                 crit.getName(),
                                 "Negative",
                                 new MjtAnnexRankIndiv(
-                                        Tournament.getTournament().getRoundsCount() - 1,crit,Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                        coachs,true,
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                        coachs, true,
                                         Tournament.getTournament().getParams().getRankingIndiv1(),
                                         Tournament.getTournament().getParams().getRankingIndiv2(),
                                         Tournament.getTournament().getParams().getRankingIndiv3(),
@@ -169,13 +181,13 @@ public class TourmaProtocol {
                         );
                         r.setCriteria(crit);
                         array.add(r);
-                        
+
                         r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"),
                                 crit.getName(),
                                 "Difference",
                                 new MjtAnnexRankIndiv(
-                                        Tournament.getTournament().getRoundsCount() - 1,crit,Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
-                                        coachs,true,
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                        coachs, true,
                                         Tournament.getTournament().getParams().getRankingIndiv1(),
                                         Tournament.getTournament().getParams().getRankingIndiv2(),
                                         Tournament.getTournament().getParams().getRankingIndiv3(),
@@ -183,6 +195,110 @@ public class TourmaProtocol {
                                         Tournament.getTournament().getParams().getRankingIndiv5(),
                                         Tournament.getTournament().getParams().isTeamTournament(),
                                         false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+                    }
+                }
+                break;
+                case TEAM_ANNEX: {
+                    ArrayList<Team> teams = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+                        teams.add(Tournament.getTournament().getTeam(i));
+                    }
+                    array = new ArrayList();
+                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM_ANNEX"),
+                                crit.getName(),
+                                "Positive",
+                                new MjtAnnexRankTeam(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        teams, true,
+                                        Tournament.getTournament().getParams().getRankingTeam1(),
+                                        Tournament.getTournament().getParams().getRankingTeam2(),
+                                        Tournament.getTournament().getParams().getRankingTeam3(),
+                                        Tournament.getTournament().getParams().getRankingTeam4(),
+                                        Tournament.getTournament().getParams().getRankingTeam5(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM_ANNEX"),
+                                crit.getName(),
+                                "Negative",
+                                new MjtAnnexRankTeam(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                        teams, true,
+                                        Tournament.getTournament().getParams().getRankingTeam1(),
+                                        Tournament.getTournament().getParams().getRankingTeam2(),
+                                        Tournament.getTournament().getParams().getRankingTeam3(),
+                                        Tournament.getTournament().getParams().getRankingTeam4(),
+                                        Tournament.getTournament().getParams().getRankingTeam5(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM_ANNEX"),
+                                crit.getName(),
+                                "Difference",
+                                new MjtAnnexRankTeam(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                        teams, true,
+                                        Tournament.getTournament().getParams().getRankingTeam1(),
+                                        Tournament.getTournament().getParams().getRankingTeam2(),
+                                        Tournament.getTournament().getParams().getRankingTeam3(),
+                                        Tournament.getTournament().getParams().getRankingTeam4(),
+                                        Tournament.getTournament().getParams().getRankingTeam5(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+                    }
+                }
+                break;
+                case CLAN_ANNEX: {
+                    ArrayList<Clan> clans = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+                        clans.add(Tournament.getTournament().getClan(i));
+                    }
+                    array = new ArrayList();
+                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN_ANNEX"),
+                                crit.getName(),
+                                "Positive",
+                                new MjtAnnexRankClan(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        true, clans, false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM_ANNEX"),
+                                crit.getName(),
+                                "Negative",
+                                new MjtAnnexRankClan(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                        true, clans, false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriteria(crit);
+                        array.add(r);
+
+                        r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM_ANNEX"),
+                                crit.getName(),
+                                "Difference",
+                                new MjtAnnexRankClan(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                        true, clans, false),
                                 Tournament.getTournament().getRankingTypes(false)
                         );
                         r.setCriteria(crit);

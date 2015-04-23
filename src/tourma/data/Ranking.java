@@ -147,7 +147,9 @@ public class Ranking implements XMLExport, Ranked {
             this.mType = e.getAttributeValue(bundle.getString("TYPE"));
             this.mValueType = e.getAttributeValue(bundle.getString("ORDER"));
 
-            if (getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"))) {
+            if (getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"))
+                    || getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM_ANNEX"))
+                    || getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN_ANNEX"))) {
                 mCriteria = new Criteria(mType);
                 annex = true;
             }
@@ -312,7 +314,11 @@ public class Ranking implements XMLExport, Ranked {
                                 }
                             }
 
-                            so = new ObjectRanking(cl, value1, value2, value3, value4, value5);
+                            if (annex) {
+                                so = new ObjectAnnexRanking(cl, value, value1, value2, value3, value4, value5);
+                            } else {
+                                so = new ObjectRanking(cl, value1, value2, value3, value4, value5);
+                            }
                         } else {
                             att = obj.getAttribute(bundle.getString("NAME"));
                             if (att != null) {
@@ -322,7 +328,11 @@ public class Ranking implements XMLExport, Ranked {
                                 if (bi != null) {
                                     t.setPicture(bi);
                                 }
-                                so = new ObjectRanking(t, value1, value2, value3, value4, value5);
+                                if (annex) {
+                                    so = new ObjectAnnexRanking(t, value, value1, value2, value3, value4, value5);
+                                } else {
+                                    so = new ObjectRanking(t, value1, value2, value3, value4, value5);
+                                }
                             }
                         }
                     }

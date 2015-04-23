@@ -1807,7 +1807,9 @@ public final class MainFrame extends javax.swing.JFrame {
                             // Index 5: Individual Annex ranks
                             labels.add("Individual Annex rankings");
                             // Index 6: Last actions
-                            labels.add("Last actions");
+                            labels.add("Team Annex Ranking");
+                            // Index 7: Last actions
+                            labels.add("Clan Annex Ranking");
 
                             final JPanel jpn = new JPanel(new BorderLayout());
                             final JComboBox jcb = new JComboBox(labels.toArray());
@@ -1844,7 +1846,14 @@ public final class MainFrame extends javax.swing.JFrame {
                                     JFullScreenIndivAnnex indivAnnex = new JFullScreenIndivAnnex(socket);
                                     indivAnnex.setVisible(true);
                                     break;
-
+                                case 6:
+                                    JFullScreenClanTeamAnnex teamAnnex = new JFullScreenClanTeamAnnex(socket, true);
+                                    teamAnnex.setVisible(true);
+                                    break;
+                                case 7:
+                                    JFullScreenClanTeamAnnex clanAnnex = new JFullScreenClanTeamAnnex(socket, false);
+                                    clanAnnex.setVisible(true);
+                                    break;
                             }
                         } catch (IOException e) {
                             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, e);

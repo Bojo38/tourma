@@ -193,12 +193,23 @@ public abstract class JFullScreen extends javax.swing.JFrame {
                 int value = jscrp.getVerticalScrollBar().getValue();
                 value += 1;
                 if (value <= lastValue) {
-                   
+                   synchronized (this) {
+                        suspended = true;
+
+                        spleeping.sleep(8000, 0);
+                        while (suspended && animationStarted) {
+                            try {
+                                wait();
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
                     semAnimate.release();
                     synchronized (this) {
                         suspended = true;
 
-                        spleeping.sleep(10000, 0);
+                        spleeping.sleep(8000, 0);
                         while (suspended && animationStarted) {
                             try {
                                 wait();
