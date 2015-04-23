@@ -389,6 +389,17 @@ public class Tournament implements IContainCoachs {
         return false;
     }
     
+    public boolean containsCoach(String name) {
+        for (int i=0; i<mCoachs.size(); i++)
+        {
+            if (mCoachs.get(i).getName().equals(name))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
      public int getTeamIndex(String name) {
         for (int i=0; i<mTeams.size(); i++)
         {
@@ -406,6 +417,17 @@ public class Tournament implements IContainCoachs {
             if (mTeams.get(i).getName().equals(name))
             {
                 return mTeams.get(i);
+            }
+        }
+        return null;
+    }
+     
+     public Coach getCoach(String name) {
+        for (int i=0; i<mCoachs.size(); i++)
+        {
+            if (mCoachs.get(i).getName().equals(name))
+            {
+                return mCoachs.get(i);
             }
         }
         return null;
@@ -481,21 +503,7 @@ public class Tournament implements IContainCoachs {
         return categories;
     }
 
-    /**
-     *
-     * @param input
-     * @return
-     */
-    public Coach getCoach(final String input) {
-        Coach result = null;
-        for (Coach c : mCoachs) {
-            if (c.getName().equals(input)) {
-                result = c;
-                break;
-            }
-        }
-        return result;
-    }
+
 
     /**
      *

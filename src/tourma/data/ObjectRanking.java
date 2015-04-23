@@ -168,15 +168,12 @@ public class ObjectRanking implements Comparable, XMLExport {
             final Coach c = (Coach) getObject();
             ic.setAttribute(new Attribute(StringConstants.CS_COACH, c.getName()));
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"), c.getTeam()));
-            if (c.getTeamMates()!=null)
-            {
+            if (c.getTeamMates() != null) {
                 ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMMATES"), c.getTeamMates().getName()));
+            } else {
+                ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMMATES"), ""));
             }
-            else
-            {
-                ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAMMATES"),""));
-            }
-            
+
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), c.getClan().getName()));
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), c.getRoster().getName()));
             if ((Tournament.getTournament().getParams().isUseImage()) && (c.getPicture() != null)) {
@@ -233,11 +230,21 @@ public class ObjectRanking implements Comparable, XMLExport {
         if (getObject() instanceof Clan) {
             final Clan t = (Clan) getObject();
             ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), t.getName()));
-            for (int k = 0; k < Tournament.getTournament().getCoachsCount(); k++) {
-                if (Tournament.getTournament().getCoach(k).getClan() == t) {
-                    final Element m = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
-                    m.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), Tournament.getTournament().getCoach(k).getName());
-                    ic.addContent(m);
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
+                for (int k = 0; k < Tournament.getTournament().getTeamsCount(); k++) {
+                    if (Tournament.getTournament().getTeam(k).getClan() == t) {
+                        final Element m = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
+                        m.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), Tournament.getTournament().getTeam(k).getName());
+                        ic.addContent(m);
+                    }
+                }
+            } else {
+                for (int k = 0; k < Tournament.getTournament().getCoachsCount(); k++) {
+                    if (Tournament.getTournament().getCoach(k).getClan() == t) {
+                        final Element m = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
+                        m.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), Tournament.getTournament().getCoach(k).getName());
+                        ic.addContent(m);
+                    }
                 }
             }
             if ((Tournament.getTournament().getParams().isUseImage()) && (t.getPicture() != null)) {

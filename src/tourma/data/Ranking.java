@@ -245,6 +245,43 @@ public class Ranking implements XMLExport, Ranked {
                             if (bi != null) {
                                 cl.setPicture(bi);
                             }
+                            List<Element> members=obj.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
+                            Iterator<Element> itm = members.iterator();
+                            while(itm.hasNext())
+                            {
+                                Element em=itm.next();
+                                if (Tournament.getTournament().getParams().isTeamTournament())
+                                {
+                                    Team t=new Team();
+                                    String name=em.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
+                                    if(!Tournament.getTournament().containsTeam(name))
+                                    {
+                                        Tournament.getTournament().addTeam(t);
+                                        t.setName(name);
+                                    }
+                                    else
+                                    {
+                                        t=Tournament.getTournament().getTeam(name);
+                                    }
+                                    t.setClan(cl);
+                                }
+                                else
+                                {
+                                    Coach c=new Coach();
+                                    String name=em.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
+                                    if(!Tournament.getTournament().containsCoach(name))
+                                    {
+                                        Tournament.getTournament().addCoach(c);
+                                        c.setName(name);
+                                    }
+                                    else
+                                    {
+                                        c=Tournament.getTournament().getCoach(name);
+                                    }
+                                    c.setClan(cl);
+                                }
+                            }
+                            
                             so = new ObjectRanking(cl, value1, value2, value3, value4, value5);
                         } else {
                             att = obj.getAttribute(bundle.getString("NAME"));

@@ -8,6 +8,7 @@ package tourma.utils;
 import java.util.ArrayList;
 import org.jdom2.Element;
 import org.jdom2.output.XMLOutputter;
+import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Parameters;
 import tourma.data.Ranking;
@@ -15,6 +16,7 @@ import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.tableModel.MjtRankingClan;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.StringConstants;
@@ -45,7 +47,8 @@ public class TourmaProtocol {
                 return TKey.TEAM_RANK;
             case "MATCHS":
                 return TKey.MATCHS;
-
+            case "CLAN_RANK":
+                return TKey.CLAN_RANK;
             case "END":
                 return TKey.END;
             default:
@@ -102,24 +105,37 @@ public class TourmaProtocol {
                     params = Tournament.getTournament().getParams();
                     round = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
                     break;
+                case CLAN_RANK:
+                    ArrayList<Clan> clans = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+                        clans.add(Tournament.getTournament().getClan(i));
+                    }
+                    r = new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"),
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL"),
+                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""),
+                            new MjtRankingClan(
+                                    Tournament.getTournament().getRoundsCount() - 1,
+                                    clans, false),
+                            Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
+                    );
+                    break;
             }
-
-            if (r != null) {
+            if (r != null) {                
                 Element element = r.getXMLElement();
                 XMLOutputter outp = new XMLOutputter();
                 return outp.outputString(element);
             }
             if ((round != null) && (params != null)) {
                 XMLOutputter outp = new XMLOutputter();
-                Element matchs=new Element("Matchs");
+                Element matchs = new Element("Matchs");
                 for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
                     final Element ros = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"));
                     ros.setAttribute(StringConstants.CS_NAME, RosterType.getRostersName(i));
                     matchs.addContent(ros);
                 }
-                matchs.addContent(params.getXMLElement());                
+                matchs.addContent(params.getXMLElement());
                 matchs.addContent(round.getXMLElementForDisplay());
-                String buffer =  outp.outputString(matchs);
+                String buffer = outp.outputString(matchs);
                 return buffer;
             }
         } else {

@@ -53,8 +53,6 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
             Font f = font.deriveFont(Font.PLAIN, size);
 
             int computed_height = height / 20;
-            
-            
 
         } catch (IOException | FontFormatException e) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, e);

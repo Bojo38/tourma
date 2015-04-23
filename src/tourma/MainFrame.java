@@ -1802,6 +1802,8 @@ public final class MainFrame extends javax.swing.JFrame {
                             labels.add("Matchs");
                             // Index 3: Clash Match
                             labels.add("Matchs Clash");
+                            // Index 4: Individual Ranking
+                            labels.add("Clan ranking");
                             // Index 5: Rolling ranks
                             labels.add("Rolling rankings");
                             // Index 6: Last actions
@@ -1833,6 +1835,10 @@ public final class MainFrame extends javax.swing.JFrame {
                                 case 3:
                                     JFullScreenMatchs matchsC = new JFullScreenMatchs(socket, true);
                                     matchsC.setVisible(true);
+                                    break;
+                                case 4:
+                                    JFullScreenClanRank clan = new JFullScreenClanRank(socket);
+                                    clan.setVisible(true);
                                     break;
 
                             }
