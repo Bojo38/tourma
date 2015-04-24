@@ -128,6 +128,10 @@ public final class MainFrame extends javax.swing.JFrame {
                 jmiFullScreenRankAnnexGroups1.setEnabled(Tournament.getTournament().getGroupsCount() > 0);
                 jmiFullScreenRankGroups.setEnabled(Tournament.getTournament().getGroupsCount() > 0);
 
+                jmiFullScreenRankAnnexPool.setEnabled(Tournament.getTournament().getPoolCount() > 0);
+                jmiFullScreenRankAnnexPool1.setEnabled(Tournament.getTournament().getPoolCount() > 0);
+                jmiFullScreenPool.setEnabled(Tournament.getTournament().getPoolCount() > 0);
+
                 jmiFullScreenRankTeam.setEnabled(mTournament.getParams().isTeamTournament());
                 jmiFullScreenRankClan.setEnabled(mTournament.getClansCount() > 1);
                 if (((JPNRound) jpnContent).getMatchTableSelectedRow() >= 0) {
@@ -191,6 +195,9 @@ public final class MainFrame extends javax.swing.JFrame {
             jmiFullScreenRankAnnexGroups.setEnabled(false);
             jmiFullScreenRankAnnexGroups1.setEnabled(false);
             jmiFullScreenRankGroups.setEnabled(false);
+            jmiFullScreenRankAnnexPool.setEnabled(false);
+            jmiFullScreenRankAnnexPool1.setEnabled(false);
+            jmiFullScreenPool.setEnabled(false);
         }
     }
 
@@ -1966,8 +1973,8 @@ public final class MainFrame extends javax.swing.JFrame {
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()),true,
-                                true,true);
+                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true,
+                                true, true);
                         fs.setVisible(true);
                     }
                 } catch (IOException ex) {
@@ -1978,7 +1985,7 @@ public final class MainFrame extends javax.swing.JFrame {
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()),true,
+                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true,
                                 C_POOL);
                         fs.setVisible(true);
                     }
@@ -1996,8 +2003,8 @@ public final class MainFrame extends javax.swing.JFrame {
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()),false,
-                                true,true);
+                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false,
+                                true, true);
                         fs.setVisible(true);
                     }
                 } catch (IOException ex) {
@@ -2008,7 +2015,7 @@ public final class MainFrame extends javax.swing.JFrame {
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()),false,
+                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false,
                                 C_POOL);
                         fs.setVisible(true);
                     }
