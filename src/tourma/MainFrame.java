@@ -60,6 +60,7 @@ import tourma.views.fullscreen.JFullScreenClanTeamAnnex;
 import tourma.views.fullscreen.JFullScreenIndivAnnex;
 import tourma.views.fullscreen.JFullScreenIndivRank;
 import static tourma.views.fullscreen.JFullScreenIndivRank.C_GROUP;
+import static tourma.views.fullscreen.JFullScreenIndivRank.C_POOL;
 import tourma.views.fullscreen.JFullScreenMatchs;
 import tourma.views.fullscreen.JFullScreenTeamRank;
 import tourma.views.parameters.JPNParameters;
@@ -291,6 +292,9 @@ public final class MainFrame extends javax.swing.JFrame {
         jmiFullScreenRankCategory = new javax.swing.JMenuItem();
         jmiFullScreenRankAnnexCategory = new javax.swing.JMenuItem();
         jmiFullScreenRankAnnexCategory1 = new javax.swing.JMenuItem();
+        jmiFullScreenPool = new javax.swing.JMenuItem();
+        jmiFullScreenRankAnnexPool = new javax.swing.JMenuItem();
+        jmiFullScreenRankAnnexPool1 = new javax.swing.JMenuItem();
         jSeparator14 = new javax.swing.JPopupMenu.Separator();
         jmiConceedMatch = new javax.swing.JMenuItem();
         jmiCancelConceedMatch = new javax.swing.JMenuItem();
@@ -307,11 +311,11 @@ public final class MainFrame extends javax.swing.JFrame {
         setTitle(bundle.getString("SoftwareTitle")); // NOI18N
         setIconImage((Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IMAGES/ICONE.PNG")))));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -718,6 +722,30 @@ public final class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnRound.add(jmiFullScreenRankAnnexCategory1);
+
+        jmiFullScreenPool.setText(bundle.getString("FullScreenPoolRank")); // NOI18N
+        jmiFullScreenPool.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenPoolActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenPool);
+
+        jmiFullScreenRankAnnexPool.setText(bundle.getString("FullScreenPoolAnnexRank")); // NOI18N
+        jmiFullScreenRankAnnexPool.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenRankAnnexPoolActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenRankAnnexPool);
+
+        jmiFullScreenRankAnnexPool1.setText(bundle.getString("FullScreenPoolAnnexRankShort")); // NOI18N
+        jmiFullScreenRankAnnexPool1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenRankAnnexPool1ActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenRankAnnexPool1);
         jmnRound.add(jSeparator14);
 
         jmiConceedMatch.setText(bundle.getString("MatchConceed")); // NOI18N
@@ -1828,7 +1856,7 @@ public final class MainFrame extends javax.swing.JFrame {
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()),JFullScreenIndivRank.C_GROUP);
+                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()), JFullScreenIndivRank.C_GROUP);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -1841,7 +1869,7 @@ public final class MainFrame extends javax.swing.JFrame {
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true,C_GROUP);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true, C_GROUP);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -1850,11 +1878,11 @@ public final class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFullScreenRankAnnexGroupsActionPerformed
 
     private void jmiFullScreenRankAnnexGroups1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankAnnexGroups1ActionPerformed
-       JFullScreenIndivAnnex fs;
+        JFullScreenIndivAnnex fs;
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false,C_GROUP);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false, C_GROUP);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -1863,11 +1891,11 @@ public final class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFullScreenRankAnnexGroups1ActionPerformed
 
     private void jmiFullScreenRankCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankCategoryActionPerformed
-       JFullScreenIndivRank fs;
+        JFullScreenIndivRank fs;
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()),JFullScreenIndivRank.C_CATEGORY);
+                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()), JFullScreenIndivRank.C_CATEGORY);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -1880,7 +1908,7 @@ public final class MainFrame extends javax.swing.JFrame {
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true,JFullScreenIndivRank.C_CATEGORY);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true, JFullScreenIndivRank.C_CATEGORY);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -1893,13 +1921,103 @@ public final class MainFrame extends javax.swing.JFrame {
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false,JFullScreenIndivRank.C_CATEGORY);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false, JFullScreenIndivRank.C_CATEGORY);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jmiFullScreenRankAnnexCategory1ActionPerformed
+
+    private void jmiFullScreenPoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenPoolActionPerformed
+        if (Tournament.getTournament().getPoolCount() > 0) {
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
+                JFullScreenTeamRank fs;
+                try {
+                    if (jpnContent instanceof JPNRound) {
+                        JPNRound jpnr = ((JPNRound) jpnContent);
+                        fs = new JFullScreenTeamRank(Tournament.getTournament().indexOfRound(jpnr.getRound()),
+                                true);
+                        fs.setVisible(true);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JFullScreenIndivRank fs;
+                try {
+                    if (jpnContent instanceof JPNRound) {
+                        JPNRound jpnr = ((JPNRound) jpnContent);
+                        fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()),
+                                C_POOL);
+                        fs.setVisible(true);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jmiFullScreenPoolActionPerformed
+
+    private void jmiFullScreenRankAnnexPoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankAnnexPoolActionPerformed
+        if (Tournament.getTournament().getPoolCount() > 0) {
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
+                JFullScreenClanTeamAnnex fs;
+                try {
+                    if (jpnContent instanceof JPNRound) {
+                        JPNRound jpnr = ((JPNRound) jpnContent);
+                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()),true,
+                                true,true);
+                        fs.setVisible(true);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JFullScreenIndivAnnex fs;
+                try {
+                    if (jpnContent instanceof JPNRound) {
+                        JPNRound jpnr = ((JPNRound) jpnContent);
+                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()),true,
+                                C_POOL);
+                        fs.setVisible(true);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jmiFullScreenRankAnnexPoolActionPerformed
+
+    private void jmiFullScreenRankAnnexPool1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankAnnexPool1ActionPerformed
+        if (Tournament.getTournament().getPoolCount() > 0) {
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
+                JFullScreenClanTeamAnnex fs;
+                try {
+                    if (jpnContent instanceof JPNRound) {
+                        JPNRound jpnr = ((JPNRound) jpnContent);
+                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()),false,
+                                true,true);
+                        fs.setVisible(true);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JFullScreenIndivAnnex fs;
+                try {
+                    if (jpnContent instanceof JPNRound) {
+                        JPNRound jpnr = ((JPNRound) jpnContent);
+                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()),false,
+                                C_POOL);
+                        fs.setVisible(true);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jmiFullScreenRankAnnexPool1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1947,20 +2065,20 @@ public final class MainFrame extends javax.swing.JFrame {
 
                             // Index 0: Individual Ranking
                             labels.add("Individual ranking");
-                            // Index 1: Team Ranking
-                            labels.add("Team ranking");
-                            // Index 2: Rolling ranks
-                            labels.add("Matchs");
-                            // Index 3: Clash Match
-                            labels.add("Matchs Clash");
-                            // Index 4: Individual Ranking
-                            labels.add("Clan ranking");
-                            // Index 5: Individual Annex ranks
+                            // Index 1: Individual Annex ranks
                             labels.add("Individual Annex rankings");
-                            // Index 6: Last actions
+                            // Index 2: Team Ranking
+                            labels.add("Team ranking");
+                            // Index 3: Team Annex
                             labels.add("Team Annex Ranking");
-                            // Index 7: Last actions
+                            // Index 4: Clan Ranking
+                            labels.add("Clan ranking");
+                            // Index 5: Clan Annex
                             labels.add("Clan Annex Ranking");
+                            // Index 6:Matchs
+                            labels.add("Matchs");
+                            // Index 7: Clash Match
+                            labels.add("Matchs Clash");
                             // Index 8: Categories
                             labels.add("Categories Ranking");
                             // Index 9: Categories
@@ -1969,6 +2087,14 @@ public final class MainFrame extends javax.swing.JFrame {
                             labels.add("Group Ranking");
                             // Index 11: Categories
                             labels.add("Group Annex Ranking");
+                            // Index 12: Indiv Pool
+                            labels.add("Individual Pool Ranking");
+                            // Index 13: Indiv Pool Annex
+                            labels.add("Individual Pool Annex Ranking");
+                            // Index 14: Team Pool
+                            labels.add("Team Pool Ranking");
+                            // Index 15: Categories
+                            labels.add("Team Pool Annex Ranking");
 
                             final JPanel jpn = new JPanel(new BorderLayout());
                             final JComboBox jcb = new JComboBox(labels.toArray());
@@ -1986,32 +2112,32 @@ public final class MainFrame extends javax.swing.JFrame {
                                     indiv.setVisible(true);
                                     break;
                                 case 1:
+                                    JFullScreenIndivAnnex indivAnnex = new JFullScreenIndivAnnex(socket);
+                                    indivAnnex.setVisible(true);
+                                    break;
+                                case 2:
                                     JFullScreenTeamRank team = new JFullScreenTeamRank(socket);
                                     team.setVisible(true);
                                     break;
-                                case 2:
-                                    JFullScreenMatchs matchs = new JFullScreenMatchs(socket);
-                                    matchs.setVisible(true);
-                                    break;
                                 case 3:
-                                    JFullScreenMatchs matchsC = new JFullScreenMatchs(socket, true);
-                                    matchsC.setVisible(true);
+                                    JFullScreenClanTeamAnnex teamAnnex = new JFullScreenClanTeamAnnex(socket, true);
+                                    teamAnnex.setVisible(true);
                                     break;
                                 case 4:
                                     JFullScreenClanRank clan = new JFullScreenClanRank(socket);
                                     clan.setVisible(true);
                                     break;
                                 case 5:
-                                    JFullScreenIndivAnnex indivAnnex = new JFullScreenIndivAnnex(socket);
-                                    indivAnnex.setVisible(true);
-                                    break;
-                                case 6:
-                                    JFullScreenClanTeamAnnex teamAnnex = new JFullScreenClanTeamAnnex(socket, true);
-                                    teamAnnex.setVisible(true);
-                                    break;
-                                case 7:
                                     JFullScreenClanTeamAnnex clanAnnex = new JFullScreenClanTeamAnnex(socket, false);
                                     clanAnnex.setVisible(true);
+                                    break;
+                                case 6:
+                                    JFullScreenMatchs matchs = new JFullScreenMatchs(socket);
+                                    matchs.setVisible(true);
+                                    break;
+                                case 7:
+                                    JFullScreenMatchs matchsC = new JFullScreenMatchs(socket, true);
+                                    matchsC.setVisible(true);
                                     break;
                                 case 8:
                                     JFullScreenIndivRank category = new JFullScreenIndivRank(socket, JFullScreenIndivRank.C_CATEGORY);
@@ -2028,6 +2154,22 @@ public final class MainFrame extends javax.swing.JFrame {
                                 case 11:
                                     JFullScreenIndivAnnex groupAnnex = new JFullScreenIndivAnnex(socket, JFullScreenIndivRank.C_GROUP);
                                     groupAnnex.setVisible(true);
+                                    break;
+                                case 12:
+                                    JFullScreenIndivRank indivPool = new JFullScreenIndivRank(socket, JFullScreenIndivRank.C_POOL);
+                                    indivPool.setVisible(true);
+                                    break;
+                                case 13:
+                                    JFullScreenIndivAnnex indivPoolAnnex = new JFullScreenIndivAnnex(socket, JFullScreenIndivRank.C_POOL);
+                                    indivPoolAnnex.setVisible(true);
+                                    break;
+                                case 14:
+                                    JFullScreenTeamRank teamPool = new JFullScreenTeamRank(socket, true);
+                                    teamPool.setVisible(true);
+                                    break;
+                                case 15:
+                                    JFullScreenClanTeamAnnex teamPoolAnnex = new JFullScreenClanTeamAnnex(socket, false, true);
+                                    teamPoolAnnex.setVisible(true);
                                     break;
 
                             }
@@ -2113,6 +2255,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiExportFbb1;
     private javax.swing.JMenuItem jmiFullScreenMatchs;
     private javax.swing.JMenuItem jmiFullScreenMatchsClash;
+    private javax.swing.JMenuItem jmiFullScreenPool;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexCategory;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexCategory1;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexClan;
@@ -2121,6 +2264,8 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiFullScreenRankAnnexGroups1;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexIndiv;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexIndiv1;
+    private javax.swing.JMenuItem jmiFullScreenRankAnnexPool;
+    private javax.swing.JMenuItem jmiFullScreenRankAnnexPool1;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexTeam;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexTeam1;
     private javax.swing.JMenuItem jmiFullScreenRankCategory;

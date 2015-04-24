@@ -32,6 +32,7 @@ import tourma.data.Criteria;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.ObjectRanking;
+import tourma.data.Pool;
 import tourma.data.Ranking;
 import tourma.data.Team;
 import tourma.data.Tournament;
@@ -51,21 +52,26 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
 
     private boolean loopStop = false;
     private boolean team;
-    
+
+    private boolean forPool = false;
 
     public JFullScreenClanTeamAnnex(Socket s, boolean team) throws IOException {
+        this(s, team, false);
+    }
+
+    public JFullScreenClanTeamAnnex(Socket s, boolean team, boolean pool) throws IOException {
         super(s);
         initComponents();
         this.team = team;
         loopStop = false;
-        
+        forPool = pool;
         // Synchronized the end of constructor with the client thread
         semStart.release();
 
     }
 
     @Override
-    protected void clientLoop() throws InterruptedException{
+    protected void clientLoop() throws InterruptedException {
         // Synchronized the end of constructor with the client thread
         semStart.acquire();
 
@@ -73,7 +79,11 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             if (team) {
-                out.println(TourmaProtocol.TKey.TEAM_ANNEX.toString());
+                if (!forPool) {
+                    out.println(TourmaProtocol.TKey.TEAM_ANNEX.toString());
+                } else {
+                    out.println(TourmaProtocol.TKey.POOL_TEAM_ANNEX.toString());
+                }
             } else {
                 out.println(TourmaProtocol.TKey.CLAN_ANNEX.toString());
             }
@@ -124,7 +134,11 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         if (team) {
-                            out.println(TourmaProtocol.TKey.TEAM_ANNEX.toString());
+                            if (!forPool) {
+                                out.println(TourmaProtocol.TKey.TEAM_ANNEX.toString());
+                            } else {
+                                out.println(TourmaProtocol.TKey.POOL_TEAM_ANNEX.toString());
+                            }
                         } else {
                             out.println(TourmaProtocol.TKey.CLAN_ANNEX.toString());
                         }
@@ -154,6 +168,11 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
         loopStop = true;
     }
 
+    public JFullScreenClanTeamAnnex(int r, boolean full, boolean team
+    ) throws IOException {
+        this(r, full, team, false);
+    }
+
     /**
      *
      * @param r
@@ -162,41 +181,70 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
      * @throws IOException
      */
     @SuppressWarnings("LeakingThisInConstructor")
-    public JFullScreenClanTeamAnnex(int r, boolean full, boolean team) throws IOException {
+    public JFullScreenClanTeamAnnex(int r, boolean full, boolean team, boolean pool) throws IOException {
         super();
         initComponents();
         this.team = team;
-
+        forPool = pool;
         round = r;
 
         try {
 
             if (team) {
-                final ArrayList<Team> teams = new ArrayList<>();
-                for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                    teams.add(Tournament.getTournament().getTeam(cpt));
-                }
-
                 ArrayList<Ranked> rs = new ArrayList<>();
-                for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
 
-                    MjtAnnexRankTeam annexRank0 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                            round, crit, 0, teams, full, false);
-                    MjtAnnexRankTeam annexRank1 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                            round, crit, 1,
-                            teams, full, false);
-                    MjtAnnexRankTeam annexRank2 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                            round, crit, 2,
-                            teams, full, false);
+                if (!pool) {
+                    final ArrayList<Team> teams = new ArrayList<>();
+                    for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
+                        teams.add(Tournament.getTournament().getTeam(cpt));
+                    }
 
-                    rs.add(annexRank0);
-                    rs.add(annexRank1);
-                    rs.add(annexRank2);
-                }
-                buildPanel(rs);
+                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
 
-            } else {
+                        MjtAnnexRankTeam annexRank0 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                round, crit, 0, teams, full, false);
+                        MjtAnnexRankTeam annexRank1 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                round, crit, 1,
+                                teams, full, false);
+                        MjtAnnexRankTeam annexRank2 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                round, crit, 2,
+                                teams, full, false);
+
+                        rs.add(annexRank0);
+                        rs.add(annexRank1);
+                        rs.add(annexRank2);
+                    }
+                } else {
+                    for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
+                        Pool p = Tournament.getTournament().getPool(cpt);
+                        
+                         final ArrayList<Team> teams = new ArrayList<>();
+                        for (int cpt2 = 0; cpt2 < p.getCompetitorCount(); cpt2++) {
+                            teams.add((Team) p.getCompetitor(cpt2));
+                        }
+                        
+                        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+
+                            MjtAnnexRankTeam annexRank0 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                    round, crit, 0, teams, full, false);
+                            MjtAnnexRankTeam annexRank1 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                    round, crit, 1,
+                                    teams, full, false);
+                            MjtAnnexRankTeam annexRank2 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                    round, crit, 2,
+                                    teams, full, false);
+
+                            rs.add(annexRank0);
+                            rs.add(annexRank1);
+                            rs.add(annexRank2);
+                        }
+                    }
+                    }
+                    buildPanel(rs);
+
+                }else {
                 final ArrayList<Clan> clans = new ArrayList<>();
                 for (int cpt = 0; cpt < Tournament.getTournament().getClansCount(); cpt++) {
                     clans.add(Tournament.getTournament().getClan(cpt));
@@ -220,11 +268,13 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 buildPanel(rs);
             }
 
-        } catch (FontFormatException ex) {
+            }catch (FontFormatException ex) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
-    }
+            this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+        }
+
+    
 
     private void buildPanel(ArrayList<Ranked> rankeds) throws FontFormatException {
 
@@ -280,6 +330,16 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             jpn.add(titleNumber, getGridbBagConstraints(column, line, 1, 1));
             column++;
 
+            if (forPool) {
+                JLabel titlePool = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                titlePool.setHorizontalAlignment(JLabel.CENTER);
+                titlePool.setBackground(Color.BLACK);
+                titlePool.setForeground(Color.WHITE);
+                titlePool.setOpaque(true);
+                jpn.add(titlePool, getGridbBagConstraints(column, line, 1, 1));
+                column++;
+            }
+
             JLabel titleCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
             if (!team) {
                 titleCoach.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
@@ -314,6 +374,16 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             jpn.add(titleNumber2, getGridbBagConstraints(column, line, 1, 1));
             column++;
 
+            if (forPool) {
+                JLabel titlePool2 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                titlePool2.setHorizontalAlignment(JLabel.CENTER);
+                titlePool2.setBackground(Color.BLACK);
+                titlePool2.setForeground(Color.WHITE);
+                titlePool2.setOpaque(true);
+                jpn.add(titlePool2, getGridbBagConstraints(column, line, 1, 1));
+                column++;
+            }
+
             JLabel titleCoach2 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
             if (!team) {
                 titleCoach2.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
@@ -339,6 +409,16 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             emptyT3.setOpaque(true);
             jpn.add(emptyT3, getGridbBagConstraints(column, line, 1, 1));
             column++;
+
+            if (forPool) {
+                JLabel titlePool3 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                titlePool3.setHorizontalAlignment(JLabel.CENTER);
+                titlePool3.setBackground(Color.BLACK);
+                titlePool3.setForeground(Color.WHITE);
+                titlePool3.setOpaque(true);
+                jpn.add(titlePool3, getGridbBagConstraints(column, line, 1, 1));
+                column++;
+            }
 
             JLabel titleNumber3 = new JLabel("#");
             titleNumber3.setHorizontalAlignment(JLabel.CENTER);
@@ -391,6 +471,14 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                     jpn.add(number, getGridbBagConstraints(column, line_pos, 1, 1));
                     column++;
 
+                    if (forPool) {
+                        JLabel pool = new JLabel(ranked0.getDetail());
+                        pool.setBackground(bkg);
+                        pool.setOpaque(true);
+                        jpn.add(pool, getGridbBagConstraints(column, line_pos, 1, 1));
+                        column++;
+                    }
+
                     JLabel lcoach = getLabelForObject(objAnnex, computed_height, computed_width, f, bkg);
                     jpn.add(lcoach, getGridbBagConstraints(column, line_pos, 1, 5));
                     column += 5;
@@ -430,6 +518,14 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                     jpn.add(number, getGridbBagConstraints(column, line_neg, 1, 1));
                     column++;
 
+                    if (forPool) {
+                        JLabel pool = new JLabel(ranked1.getDetail());
+                        pool.setBackground(bkg);
+                        pool.setOpaque(true);
+                        jpn.add(pool, getGridbBagConstraints(column, line_neg, 1, 1));
+                        column++;
+                    }
+
                     JLabel lcoach = getLabelForObject(coach, computed_height, computed_width, f, bkg);
                     jpn.add(lcoach, getGridbBagConstraints(column, line_neg, 1, 5));
                     column += 5;
@@ -468,6 +564,14 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                     number.setOpaque(true);
                     jpn.add(number, getGridbBagConstraints(column, line_diff, 1, 1));
                     column++;
+
+                    if (forPool) {
+                        JLabel pool = new JLabel(ranked2.getDetail());
+                        pool.setBackground(bkg);
+                        pool.setOpaque(true);
+                        jpn.add(pool, getGridbBagConstraints(column, line_diff, 1, 1));
+                        column++;
+                    }
 
                     JLabel lcoach = getLabelForObject(coach, computed_height, computed_width, f, bkg);
                     jpn.add(lcoach, getGridbBagConstraints(column, line_diff, 1, 5));

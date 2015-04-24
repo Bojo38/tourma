@@ -30,6 +30,7 @@ import org.jdom2.input.SAXBuilder;
 import tourma.data.Category;
 import tourma.data.Coach;
 import tourma.data.Group;
+import tourma.data.Pool;
 import tourma.data.Ranking;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtRanking;
@@ -53,7 +54,6 @@ public final class JFullScreenIndivRank extends JFullScreen {
     private int round;
     private boolean loopStop = false;
     private int indivRankType = C_GENERAL;
-
 
     public JFullScreenIndivRank(Socket s) throws IOException {
         this(s, C_GENERAL);
@@ -96,6 +96,10 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 } else {
                     if (indivRankType == C_CATEGORY) {
                         out.println(TourmaProtocol.TKey.CATEGORY_RANK.toString());
+                    } else {
+                        if (indivRankType == C_POOL) {
+                            out.println(TourmaProtocol.TKey.POOL_INDIV_RANK.toString());
+                        }
                     }
                 }
             }
@@ -119,18 +123,14 @@ public final class JFullScreenIndivRank extends JFullScreen {
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            if (this.indivRankType == C_GENERAL) {
-                                Document doc = sb.build(new StringReader(buffer));
-                                ArrayList<Ranked> rs = new ArrayList<>();
-                                Element element = doc.getRootElement();
+                            Document doc = sb.build(new StringReader(buffer));
+                            ArrayList<Ranked> rs = new ArrayList<>();
+                            Element element = doc.getRootElement();
+                            if (this.indivRankType == C_GENERAL) {                               
                                 r = new Ranking(element);
                                 rs.add(r);
-                                buildPanel(rs);
-                            } else {
-                                Document doc = sb.build(new StringReader(buffer));
-                                Element element = doc.getRootElement();
-                                ArrayList<Ranked> rs = new ArrayList<>();
 
+                            } else {
                                 List<Element> elements = element.getChildren();
                                 Iterator<Element> it = elements.iterator();
                                 while (it.hasNext()) {
@@ -140,6 +140,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                                 }
                                 buildPanel(rs);
                             }
+                            buildPanel(rs);
                             semAnimate.release();
                             this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
 
@@ -160,6 +161,10 @@ public final class JFullScreenIndivRank extends JFullScreen {
                             } else {
                                 if (indivRankType == C_CATEGORY) {
                                     out.println(TourmaProtocol.TKey.CATEGORY_RANK.toString());
+                                } else {
+                                    if (indivRankType == C_POOL) {
+                                        out.println(TourmaProtocol.TKey.POOL_INDIV_RANK.toString());
+                                    }
                                 }
                             }
                         }
@@ -217,7 +222,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                         coaches, Tournament.getTournament().getParams().isTeamTournament(),
                         false,
-                        false);
+                        Tournament.getTournament().getPoolCount() > 0);
                 ranking.setDetail("General");
                 rankeds.add(ranking);
 
@@ -259,6 +264,19 @@ public final class JFullScreenIndivRank extends JFullScreen {
                             false,
                             false);
                     ranking.setDetail(cat.getName());
+                    rankeds.add(ranking);
+                }
+
+            }
+            if (indivRankType == C_POOL) {
+                for (int i = 0; i < Tournament.getTournament().getPoolCount(); i++) {
+                    Pool p = Tournament.getTournament().getPool(i);
+
+                    MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
+                            p.getCompetitors(), Tournament.getTournament().getParams().isTeamTournament(),
+                            false,
+                            false);
+                    ranking.setDetail(Integer.toString(i + 1));
                     rankeds.add(ranking);
                 }
 
@@ -307,6 +325,10 @@ public final class JFullScreenIndivRank extends JFullScreen {
             }
         }
 
+        if (indivRankType == C_POOL) {
+            nbCols++;
+        }
+
         int computed_width = width / nbCols;
 
         int line = 0;
@@ -325,6 +347,17 @@ public final class JFullScreenIndivRank extends JFullScreen {
             jpn.add(jlbTNum, getGridbBagConstraints(0, line, 1, 1));
 
             int index = 1;
+
+            if (indivRankType == C_POOL) {
+                JLabel jlbTPool = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                jlbTPool.setFont(f1);
+                jlbTPool.setOpaque(true);
+                jlbTPool.setBackground(Color.BLACK);
+                jlbTPool.setForeground(Color.WHITE);
+
+                jpn.add(jlbTPool, getGridbBagConstraints(index, line, 1, 1));
+                index += 1;
+            }
 
             if (Tournament.getTournament().getParams().isTeamTournament()) {
                 JLabel jlbTTeam = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
@@ -411,6 +444,15 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 jpn.add(jlbNum, getGridbBagConstraints(0, line, 1, 1));
 
                 index = 1;
+
+                if (indivRankType == C_POOL) {
+                    JLabel jlbPool = new JLabel(ranked.getDetail());
+                    jlbNum.setFont(currentFont);
+                    jlbNum.setOpaque(true);
+                    jlbNum.setBackground(bkg);
+                    jpn.add(jlbPool, getGridbBagConstraints(index, line, 1, 1));
+                    index += 1;
+                }
 
                 Coach coach = (Coach) ranked.getSortedObject(i).getObject();
                 if (Tournament.getTournament().getParams().isTeamTournament()) {
