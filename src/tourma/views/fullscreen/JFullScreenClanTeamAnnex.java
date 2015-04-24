@@ -218,12 +218,12 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 } else {
                     for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
                         Pool p = Tournament.getTournament().getPool(cpt);
-                        
-                         final ArrayList<Team> teams = new ArrayList<>();
+
+                        final ArrayList<Team> teams = new ArrayList<>();
                         for (int cpt2 = 0; cpt2 < p.getCompetitorCount(); cpt2++) {
                             teams.add((Team) p.getCompetitor(cpt2));
                         }
-                        
+
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                             Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
 
@@ -236,15 +236,19 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                                     round, crit, 2,
                                     teams, full, false);
 
+                            annexRank0.setDetail(Integer.toString(cpt+1));
+                            annexRank1.setDetail(Integer.toString(cpt+1));
+                            annexRank2.setDetail(Integer.toString(cpt+1));
+                            
                             rs.add(annexRank0);
                             rs.add(annexRank1);
                             rs.add(annexRank2);
                         }
                     }
-                    }
-                    buildPanel(rs);
+                }
+                buildPanel(rs);
 
-                }else {
+            } else {
                 final ArrayList<Clan> clans = new ArrayList<>();
                 for (int cpt = 0; cpt < Tournament.getTournament().getClansCount(); cpt++) {
                     clans.add(Tournament.getTournament().getClan(cpt));
@@ -268,13 +272,11 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 buildPanel(rs);
             }
 
-            }catch (FontFormatException ex) {
+        } catch (FontFormatException ex) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
         }
-            this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
-        }
-
-    
+        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+    }
 
     private void buildPanel(ArrayList<Ranked> rankeds) throws FontFormatException {
 
@@ -410,6 +412,14 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             jpn.add(emptyT3, getGridbBagConstraints(column, line, 1, 1));
             column++;
 
+            JLabel titleNumber3 = new JLabel("#");
+            titleNumber3.setHorizontalAlignment(JLabel.CENTER);
+            titleNumber3.setBackground(Color.BLACK);
+            titleNumber3.setForeground(Color.WHITE);
+            titleNumber3.setOpaque(true);
+            jpn.add(titleNumber3, getGridbBagConstraints(column, line, 1, 1));
+            column++;
+
             if (forPool) {
                 JLabel titlePool3 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
                 titlePool3.setHorizontalAlignment(JLabel.CENTER);
@@ -419,14 +429,6 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 jpn.add(titlePool3, getGridbBagConstraints(column, line, 1, 1));
                 column++;
             }
-
-            JLabel titleNumber3 = new JLabel("#");
-            titleNumber3.setHorizontalAlignment(JLabel.CENTER);
-            titleNumber3.setBackground(Color.BLACK);
-            titleNumber3.setForeground(Color.WHITE);
-            titleNumber3.setOpaque(true);
-            jpn.add(titleNumber3, getGridbBagConstraints(column, line, 1, 1));
-            column++;
 
             JLabel titleCoach3 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
             if (!team) {

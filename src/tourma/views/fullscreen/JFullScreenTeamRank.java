@@ -190,6 +190,9 @@ public final class JFullScreenTeamRank extends JFullScreen {
 
         //final boolean forPool = (Tournament.getTournament().getPoolCount() > 0) && (!Tournament.getTournament().getRound(r).isCup());
         int nbCols = Tournament.getTournament().getParams().getTeamRankingNumber() + 3;
+        if (forPool) {
+            nbCols++;
+        }
         int computed_width = width / nbCols;
 
         int line = 0;
@@ -201,16 +204,28 @@ public final class JFullScreenTeamRank extends JFullScreen {
             jlbTNum.setOpaque(true);
             jlbTNum.setBackground(Color.BLACK);
             jlbTNum.setForeground(Color.WHITE);
-
+            jlbTNum.setHorizontalAlignment(JLabel.CENTER);
             jpn.add(jlbTNum, getGridbBagConstraints(0, line, 1, 1));
 
             int index = 1;
+
+            if (forPool) {
+                JLabel jlbTPool = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                jlbTPool.setFont(f1);
+                jlbTPool.setOpaque(true);
+                jlbTPool.setBackground(Color.BLACK);
+                jlbTPool.setForeground(Color.WHITE);
+                jlbTPool.setHorizontalAlignment(JLabel.CENTER);
+                jpn.add(jlbTPool, getGridbBagConstraints(index, line, 1, 5));
+                index++;
+            }
 
             JLabel jlbTCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
             jlbTCoach.setFont(f1);
             jlbTCoach.setOpaque(true);
             jlbTCoach.setBackground(Color.BLACK);
             jlbTCoach.setForeground(Color.WHITE);
+            jlbTCoach.setHorizontalAlignment(JLabel.CENTER);
             jpn.add(jlbTCoach, getGridbBagConstraints(index, line, 1, 5));
             index += 5;
 
@@ -255,6 +270,16 @@ public final class JFullScreenTeamRank extends JFullScreen {
                 jpn.add(jlbNum, getGridbBagConstraints(0, line, 1, 1));
 
                 index = 1;
+
+                if (forPool) {
+                    JLabel jlbPool = new JLabel(ranked.getDetail());
+                    jlbPool.setFont(currentFont);
+                    jlbPool.setOpaque(true);
+                    jlbPool.setBackground(bkg);
+                    jlbPool.setHorizontalAlignment(JLabel.CENTER);
+                    jpn.add(jlbPool, getGridbBagConstraints(index, line, 1, 1));
+                    index++;
+                }
 
                 Team team = (Team) ranked.getSortedObject(i).getObject();
                 JLabel jlbCoach = getLabelForObject(team, computed_height, computed_width, currentFont, bkg);
@@ -330,6 +355,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
                             round,
                             p.getCompetitors(),
                             false);
+                    ranking.setDetail(Integer.toString(i + 1));
                     rankeds.add(ranking);
                 }
             }

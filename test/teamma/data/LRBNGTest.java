@@ -93,7 +93,7 @@ public class LRBNGTest {
     @Test
     public void testGetRosterType_String() {
         LOG.log(Level.FINE, "getRosterType");
-        String name = "";
+//        String name = "";
         LRB instance = LRB.getLRB();
         RosterType result = instance.getRosterType("Chaos");
         Assert.assertNotNull(result);

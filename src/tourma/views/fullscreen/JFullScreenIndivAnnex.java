@@ -234,7 +234,9 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                         MjtAnnexRankIndiv annexRank2 = new MjtAnnexRankIndiv(round, crit, 2,
                                 coaches, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
                                 false);
-
+                        annexRank0.setDetail(Integer.toString(cpt + 1));
+                        annexRank1.setDetail(Integer.toString(cpt + 1));
+                        annexRank2.setDetail(Integer.toString(cpt + 1));
                         rs.add(annexRank0);
                         rs.add(annexRank1);
                         rs.add(annexRank2);

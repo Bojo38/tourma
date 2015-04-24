@@ -54,7 +54,7 @@ public class StarPlayerNGTest {
         System.out.println("getName");
         StarPlayer instance = lrb.getStarPlayer(0);
         if (instance != null) {
-            String expResult = "";
+//            String expResult = "";
             String result = instance.getName();
             Assert.assertNotNull(result);
         } else {
@@ -68,10 +68,10 @@ public class StarPlayerNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String _name = "";
+//        String _name = "";
         StarPlayer instance = lrb.getStarPlayer(0);
         if (instance != null) {
-            String expResult = "";
+//            String expResult = "";
             instance.setName("TOTO");
             String result = instance.getName();
             Assert.assertEquals(result, "TOTO");
@@ -88,7 +88,7 @@ public class StarPlayerNGTest {
         System.out.println("getPosition");
         StarPlayer instance = null;
         if (instance != null) {
-            String expResult = "";
+//            String expResult = "";
             String result = instance.getPosition();
             Assert.assertNotNull(result);
         } else {
