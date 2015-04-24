@@ -33,6 +33,9 @@ import tourma.utils.ImageTreatment;
 public class MjtAnnexRankClan extends MjtAnnexRank {
     private static final Logger LOG = Logger.getLogger(MjtAnnexRankClan.class.getName());
 
+    
+    
+    
     /**
      *
      * @param round

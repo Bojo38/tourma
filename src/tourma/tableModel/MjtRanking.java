@@ -45,6 +45,16 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      */
     public static final int C_ELO_K = 256;
 
+    protected String mType;
+
+    public String getDetail() {
+        return mType;
+    }
+
+    public void setDetail(String d) {
+        mType = d;
+    }
+
     /**
      *
      * @param c
@@ -621,15 +631,15 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     if (m.getCompetitor1() == c) {
 
                         Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor2());
-                        GroupPoints gp=g.getOpponentModificationPoints(go);
-                        if ((go != null)&&(gp!=null)) {
+                        GroupPoints gp = g.getOpponentModificationPoints(go);
+                        if ((go != null) && (gp != null)) {
                             if (v.getValue1() > v.getValue2()) {
                                 value = gp.getVictoryPoints();
                             } else {
                                 if (v.getValue1() == v.getValue2()) {
                                     value = gp.getDrawPoints();
                                 } else {
-                                    value =gp.getLossPoints();
+                                    value = gp.getLossPoints();
                                 }
                             }
                         }
@@ -637,8 +647,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     }
                     if (m.getCompetitor2() == c) {
                         Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor1());
-                        GroupPoints gp=g.getOpponentModificationPoints(go);
-                        if ((go != null)&&(gp!=null)) {
+                        GroupPoints gp = g.getOpponentModificationPoints(go);
+                        if ((go != null) && (gp != null)) {
                             if (v.getValue1() < v.getValue2()) {
                                 value = gp.getVictoryPoints();
                             } else {

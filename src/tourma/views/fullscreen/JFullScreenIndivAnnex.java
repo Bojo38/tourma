@@ -37,6 +37,9 @@ import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankIndiv;
 import tourma.utils.Ranked;
 import tourma.utils.TourmaProtocol;
+import static tourma.views.fullscreen.JFullScreenIndivRank.C_CATEGORY;
+import static tourma.views.fullscreen.JFullScreenIndivRank.C_GENERAL;
+import static tourma.views.fullscreen.JFullScreenIndivRank.C_GROUP;
 
 /**
  *
@@ -45,23 +48,38 @@ import tourma.utils.TourmaProtocol;
 public final class JFullScreenIndivAnnex extends JFullScreen {
 
     private int round;
-
+    private int indivRankType = C_GENERAL;
     private boolean loopStop = false;
 
     public JFullScreenIndivAnnex(Socket s) throws IOException {
+        this(s, C_GENERAL);
+    }
+
+    public JFullScreenIndivAnnex(Socket s, int type) throws IOException  {
         super(s);
         initComponents();
         loopStop = false;
+        indivRankType = type;
+        semStart.release();
     }
 
-    
     @Override
-    protected void clientLoop()throws InterruptedException {
+    protected void clientLoop() throws InterruptedException {
+        semStart.acquire();
+
         try {
-
-
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println(TourmaProtocol.TKey.INDIVIDUAL_ANNEX.toString());
+            if (indivRankType == C_GENERAL) {
+                out.println(TourmaProtocol.TKey.INDIVIDUAL_ANNEX.toString());
+            } else {
+                if (indivRankType == C_GROUP) {
+                    out.println(TourmaProtocol.TKey.GROUP_ANNEX.toString());
+                } else {
+                    if (indivRankType == C_CATEGORY) {
+                        out.println(TourmaProtocol.TKey.CATEGORY_ANNEX.toString());
+                    }
+                }
+            }
             out.println(TourmaProtocol.TKey.END.toString());
 
             BufferedReader in = new BufferedReader(
@@ -108,7 +126,17 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                         } catch (InterruptedException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        out.println(TourmaProtocol.TKey.INDIVIDUAL_ANNEX.toString());
+                        if (indivRankType == C_GENERAL) {
+                            out.println(TourmaProtocol.TKey.INDIVIDUAL_ANNEX.toString());
+                        } else {
+                            if (indivRankType == C_GROUP) {
+                                out.println(TourmaProtocol.TKey.GROUP_ANNEX.toString());
+                            } else {
+                                if (indivRankType == C_CATEGORY) {
+                                    out.println(TourmaProtocol.TKey.CATEGORY_ANNEX.toString());
+                                }
+                            }
+                        }
                         out.println(TourmaProtocol.TKey.END.toString());
 
                         buffer = "";
@@ -128,10 +156,15 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                 Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        semStart.release();
     }
 
     protected void setStop(boolean s) {
         loopStop = true;
+    }
+
+    public JFullScreenIndivAnnex(int r, boolean full) throws IOException {
+        this(r, full, C_GENERAL);
     }
 
     /**
@@ -141,9 +174,10 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
      * @throws IOException
      */
     @SuppressWarnings("LeakingThisInConstructor")
-    public JFullScreenIndivAnnex(int r, boolean full) throws IOException {
+    public JFullScreenIndivAnnex(int r, boolean full, int type) throws IOException {
         super();
         initComponents();
+        this.indivRankType = type;
         try {
             round = r;
 
@@ -159,10 +193,10 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                 MjtAnnexRankIndiv annexRank0 = new MjtAnnexRankIndiv(round, crit, 0,
                         coaches, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
                         false);
-                 MjtAnnexRankIndiv annexRank1 = new MjtAnnexRankIndiv(round, crit, 1,
+                MjtAnnexRankIndiv annexRank1 = new MjtAnnexRankIndiv(round, crit, 1,
                         coaches, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
                         false);
-                  MjtAnnexRankIndiv annexRank2 = new MjtAnnexRankIndiv(round, crit, 2,
+                MjtAnnexRankIndiv annexRank2 = new MjtAnnexRankIndiv(round, crit, 2,
                         coaches, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
                         false);
 
@@ -205,21 +239,19 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
 
         int line = 0;
 
-        for (int i = 0; i < rankeds.size()/3; i++) {
-            Ranked ranked0 = rankeds.get(3*i);
-            Ranked ranked1 = rankeds.get(3*i+1);
-            Ranked ranked2 = rankeds.get(3*i+2);
+        for (int i = 0; i < rankeds.size() / 3; i++) {
+            Ranked ranked0 = rankeds.get(3 * i);
+            Ranked ranked1 = rankeds.get(3 * i + 1);
+            Ranked ranked2 = rankeds.get(3 * i + 2);
 
             Criteria crit;
             if (ranked0 instanceof MjtAnnexRank) {
                 crit = ((MjtAnnexRank) ranked0).getCriteria();
             } else {
                 if (ranked0 instanceof Ranking) {
-                    crit = ((Ranking)ranked0).getCriteria();
-                }
-                else
-                {
-                    crit=new Criteria("???");
+                    crit = ((Ranking) ranked0).getCriteria();
+                } else {
+                    crit = new Criteria("???");
                 }
             }
 
@@ -319,8 +351,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
             titleValue2.setOpaque(true);
             jpn.add(titleValue2, getGridbBagConstraints(column, line, 1, 5));
             column += 5;
-            
-            
+
             JLabel emptyT3 = new JLabel("");
             emptyT3.setBackground(Color.WHITE);
             emptyT3.setOpaque(true);
@@ -377,7 +408,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
             int line_diff = line;
             int line_neg = line;
             int nb_col = column;
-            
+
             for (int j = 0; j < ranked0.getRowCount(); j++) {
                 Color bkg = new Color(255, 255, 255);
                 if (j % 2 == 0) {
@@ -421,8 +452,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                     line_pos++;
                 }
             }
-            
-            
+
             for (int j = 0; j < ranked1.getRowCount(); j++) {
                 Color bkg = new Color(255, 255, 255);
                 if (j % 2 == 0) {
@@ -474,13 +504,12 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                 }
             }
 
-            
             for (int j = 0; j < ranked2.getRowCount(); j++) {
                 Color bkg = new Color(255, 255, 255);
                 if (j % 2 == 0) {
                     bkg = new Color(220, 220, 220);
                 }
-                column = 2*nb_col / 3;
+                column = 2 * nb_col / 3;
 
                 JLabel empty = new JLabel("");
                 empty.setBackground(Color.WHITE);

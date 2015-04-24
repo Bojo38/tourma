@@ -20,7 +20,16 @@ import tourma.data.Tournament;
  */
 public abstract class MjtAnnexRank extends MjtRanking {
 
-
+    protected String mType;
+    public String getDetail()
+    {
+        return mType;
+    }
+    
+    public void setDetail(String d)
+    {
+        mType=d;
+    }
     /**
      * 
      */

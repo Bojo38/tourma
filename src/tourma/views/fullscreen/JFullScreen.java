@@ -35,12 +35,17 @@ public abstract class JFullScreen extends javax.swing.JFrame {
 
     protected Socket socket;
     protected ClientLoop cl;
-
+    protected Semaphore semStart = new Semaphore(1);
+    
     private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
 
     public JFullScreen(Socket s) throws IOException {
         super();
-
+        try {
+            semStart.acquire();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setUndecorated(true);
         this.setState(JFrame.MAXIMIZED_BOTH);
 
@@ -272,6 +277,10 @@ public abstract class JFullScreen extends javax.swing.JFrame {
             catch (InterruptedException ie)
             {
                 LOG.log(Level.INFO,"Sleep interrupted, probably before exiting");
+            }
+            finally
+            {
+                semAnimate.release();
             }
         }
     }

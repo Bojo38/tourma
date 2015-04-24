@@ -15,4 +15,6 @@ public interface Ranked {
     public int getRowCount();
     public ObjectRanking getSortedObject(int i);
     public int getSortedValue(int i,int valIndex);
+    public String getDetail();
+    public void setDetail(String s);
 }

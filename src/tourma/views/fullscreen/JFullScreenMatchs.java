@@ -61,9 +61,8 @@ public final class JFullScreenMatchs extends JFullScreen {
     private boolean clash = false;
 
     public JFullScreenMatchs(Socket s) throws IOException {
-        super(s);
-        initComponents();
-        loopStop = false;
+        this(s,false);
+        
     }
 
     public JFullScreenMatchs(Socket s, boolean clash) throws IOException {
@@ -71,11 +70,12 @@ public final class JFullScreenMatchs extends JFullScreen {
         initComponents();
         loopStop = false;
         this.clash = clash;
+        semStart.release();
     }
 
         @Override
     protected void clientLoop()throws InterruptedException {
-
+        semStart.acquire();
         try {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
@@ -160,6 +160,7 @@ public final class JFullScreenMatchs extends JFullScreen {
         } catch (IOException | FontFormatException e) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, e);
         }
+        semStart.release();
     }
 
     private void buildClash() {

@@ -393,6 +393,16 @@ public class Ranking implements XMLExport, Ranked {
         return mName;
     }
 
+    public String getDetail()
+    {
+        return mType;
+    }
+    
+    public void setDetail(String d)
+    {
+        mType=d;
+    }
+    
     /**
      * @param mName the mName to set
      */

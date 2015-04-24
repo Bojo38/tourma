@@ -59,6 +59,7 @@ import tourma.views.fullscreen.JFullScreenClanRank;
 import tourma.views.fullscreen.JFullScreenClanTeamAnnex;
 import tourma.views.fullscreen.JFullScreenIndivAnnex;
 import tourma.views.fullscreen.JFullScreenIndivRank;
+import static tourma.views.fullscreen.JFullScreenIndivRank.C_GROUP;
 import tourma.views.fullscreen.JFullScreenMatchs;
 import tourma.views.fullscreen.JFullScreenTeamRank;
 import tourma.views.parameters.JPNParameters;
@@ -117,6 +118,15 @@ public final class MainFrame extends javax.swing.JFrame {
                 jmiFullScreenRankGeneral.setEnabled(true);
                 jmiFullScreenRankAnnexIndiv.setEnabled(true);
                 jmiFullScreenRankAnnexIndiv1.setEnabled(true);
+
+                jmiFullScreenRankAnnexCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 0);
+                jmiFullScreenRankAnnexCategory1.setEnabled(Tournament.getTournament().getCategoriesCount() > 0);
+                jmiFullScreenRankCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 0);
+
+                jmiFullScreenRankAnnexGroups.setEnabled(Tournament.getTournament().getGroupsCount() > 0);
+                jmiFullScreenRankAnnexGroups1.setEnabled(Tournament.getTournament().getGroupsCount() > 0);
+                jmiFullScreenRankGroups.setEnabled(Tournament.getTournament().getGroupsCount() > 0);
+
                 jmiFullScreenRankTeam.setEnabled(mTournament.getParams().isTeamTournament());
                 jmiFullScreenRankClan.setEnabled(mTournament.getClansCount() > 1);
                 if (((JPNRound) jpnContent).getMatchTableSelectedRow() >= 0) {
@@ -174,6 +184,12 @@ public final class MainFrame extends javax.swing.JFrame {
             jmiFullScreenRankAnnexClan1.setEnabled(false);
             jmiFullScreenRankAnnexTeam.setEnabled(false);
             jmiFullScreenRankAnnexTeam1.setEnabled(false);
+            jmiFullScreenRankAnnexCategory.setEnabled(false);
+            jmiFullScreenRankAnnexCategory1.setEnabled(false);
+            jmiFullScreenRankCategory.setEnabled(false);
+            jmiFullScreenRankAnnexGroups.setEnabled(false);
+            jmiFullScreenRankAnnexGroups1.setEnabled(false);
+            jmiFullScreenRankGroups.setEnabled(false);
         }
     }
 
@@ -269,6 +285,12 @@ public final class MainFrame extends javax.swing.JFrame {
         jmiFullScreenRankClan = new javax.swing.JMenuItem();
         jmiFullScreenRankAnnexClan = new javax.swing.JMenuItem();
         jmiFullScreenRankAnnexClan1 = new javax.swing.JMenuItem();
+        jmiFullScreenRankGroups = new javax.swing.JMenuItem();
+        jmiFullScreenRankAnnexGroups = new javax.swing.JMenuItem();
+        jmiFullScreenRankAnnexGroups1 = new javax.swing.JMenuItem();
+        jmiFullScreenRankCategory = new javax.swing.JMenuItem();
+        jmiFullScreenRankAnnexCategory = new javax.swing.JMenuItem();
+        jmiFullScreenRankAnnexCategory1 = new javax.swing.JMenuItem();
         jSeparator14 = new javax.swing.JPopupMenu.Separator();
         jmiConceedMatch = new javax.swing.JMenuItem();
         jmiCancelConceedMatch = new javax.swing.JMenuItem();
@@ -648,6 +670,54 @@ public final class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnRound.add(jmiFullScreenRankAnnexClan1);
+
+        jmiFullScreenRankGroups.setText(bundle.getString("FullScreenGroupRank")); // NOI18N
+        jmiFullScreenRankGroups.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenRankGroupsActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenRankGroups);
+
+        jmiFullScreenRankAnnexGroups.setText(bundle.getString("FullScreenGroupAnnexRank")); // NOI18N
+        jmiFullScreenRankAnnexGroups.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenRankAnnexGroupsActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenRankAnnexGroups);
+
+        jmiFullScreenRankAnnexGroups1.setText(bundle.getString("FullScreenGroupAnnexRankShort")); // NOI18N
+        jmiFullScreenRankAnnexGroups1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenRankAnnexGroups1ActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenRankAnnexGroups1);
+
+        jmiFullScreenRankCategory.setText(bundle.getString("FullScreenCategoryRank")); // NOI18N
+        jmiFullScreenRankCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenRankCategoryActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenRankCategory);
+
+        jmiFullScreenRankAnnexCategory.setText(bundle.getString("FullScreenCategoryAnnexRank")); // NOI18N
+        jmiFullScreenRankAnnexCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenRankAnnexCategoryActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenRankAnnexCategory);
+
+        jmiFullScreenRankAnnexCategory1.setText(bundle.getString("FullScreenCategoryAnnexRankShort")); // NOI18N
+        jmiFullScreenRankAnnexCategory1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFullScreenRankAnnexCategory1ActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiFullScreenRankAnnexCategory1);
         jmnRound.add(jSeparator14);
 
         jmiConceedMatch.setText(bundle.getString("MatchConceed")); // NOI18N
@@ -1753,6 +1823,84 @@ public final class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmiFullScreenMatchsClashActionPerformed
 
+    private void jmiFullScreenRankGroupsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankGroupsActionPerformed
+        JFullScreenIndivRank fs;
+        try {
+            if (jpnContent instanceof JPNRound) {
+                JPNRound jpnr = ((JPNRound) jpnContent);
+                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()),JFullScreenIndivRank.C_GROUP);
+                fs.setVisible(true);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jmiFullScreenRankGroupsActionPerformed
+
+    private void jmiFullScreenRankAnnexGroupsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankAnnexGroupsActionPerformed
+        JFullScreenIndivAnnex fs;
+        try {
+            if (jpnContent instanceof JPNRound) {
+                JPNRound jpnr = ((JPNRound) jpnContent);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true,C_GROUP);
+                fs.setVisible(true);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jmiFullScreenRankAnnexGroupsActionPerformed
+
+    private void jmiFullScreenRankAnnexGroups1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankAnnexGroups1ActionPerformed
+       JFullScreenIndivAnnex fs;
+        try {
+            if (jpnContent instanceof JPNRound) {
+                JPNRound jpnr = ((JPNRound) jpnContent);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false,C_GROUP);
+                fs.setVisible(true);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jmiFullScreenRankAnnexGroups1ActionPerformed
+
+    private void jmiFullScreenRankCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankCategoryActionPerformed
+       JFullScreenIndivRank fs;
+        try {
+            if (jpnContent instanceof JPNRound) {
+                JPNRound jpnr = ((JPNRound) jpnContent);
+                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()),JFullScreenIndivRank.C_CATEGORY);
+                fs.setVisible(true);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jmiFullScreenRankCategoryActionPerformed
+
+    private void jmiFullScreenRankAnnexCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankAnnexCategoryActionPerformed
+        JFullScreenIndivAnnex fs;
+        try {
+            if (jpnContent instanceof JPNRound) {
+                JPNRound jpnr = ((JPNRound) jpnContent);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true,JFullScreenIndivRank.C_CATEGORY);
+                fs.setVisible(true);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jmiFullScreenRankAnnexCategoryActionPerformed
+
+    private void jmiFullScreenRankAnnexCategory1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFullScreenRankAnnexCategory1ActionPerformed
+        JFullScreenIndivAnnex fs;
+        try {
+            if (jpnContent instanceof JPNRound) {
+                JPNRound jpnr = ((JPNRound) jpnContent);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false,JFullScreenIndivRank.C_CATEGORY);
+                fs.setVisible(true);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jmiFullScreenRankAnnexCategory1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1813,6 +1961,14 @@ public final class MainFrame extends javax.swing.JFrame {
                             labels.add("Team Annex Ranking");
                             // Index 7: Last actions
                             labels.add("Clan Annex Ranking");
+                            // Index 8: Categories
+                            labels.add("Categories Ranking");
+                            // Index 9: Categories
+                            labels.add("Categories Annex Ranking");
+                            // Index 10: Group
+                            labels.add("Group Ranking");
+                            // Index 11: Categories
+                            labels.add("Group Annex Ranking");
 
                             final JPanel jpn = new JPanel(new BorderLayout());
                             final JComboBox jcb = new JComboBox(labels.toArray());
@@ -1857,6 +2013,23 @@ public final class MainFrame extends javax.swing.JFrame {
                                     JFullScreenClanTeamAnnex clanAnnex = new JFullScreenClanTeamAnnex(socket, false);
                                     clanAnnex.setVisible(true);
                                     break;
+                                case 8:
+                                    JFullScreenIndivRank category = new JFullScreenIndivRank(socket, JFullScreenIndivRank.C_CATEGORY);
+                                    category.setVisible(true);
+                                    break;
+                                case 9:
+                                    JFullScreenIndivAnnex categoryAnnex = new JFullScreenIndivAnnex(socket, JFullScreenIndivRank.C_CATEGORY);
+                                    categoryAnnex.setVisible(true);
+                                    break;
+                                case 10:
+                                    JFullScreenIndivRank group = new JFullScreenIndivRank(socket, JFullScreenIndivRank.C_GROUP);
+                                    group.setVisible(true);
+                                    break;
+                                case 11:
+                                    JFullScreenIndivAnnex groupAnnex = new JFullScreenIndivAnnex(socket, JFullScreenIndivRank.C_GROUP);
+                                    groupAnnex.setVisible(true);
+                                    break;
+
                             }
                         } catch (IOException e) {
                             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, e);
@@ -1940,14 +2113,20 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiExportFbb1;
     private javax.swing.JMenuItem jmiFullScreenMatchs;
     private javax.swing.JMenuItem jmiFullScreenMatchsClash;
+    private javax.swing.JMenuItem jmiFullScreenRankAnnexCategory;
+    private javax.swing.JMenuItem jmiFullScreenRankAnnexCategory1;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexClan;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexClan1;
+    private javax.swing.JMenuItem jmiFullScreenRankAnnexGroups;
+    private javax.swing.JMenuItem jmiFullScreenRankAnnexGroups1;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexIndiv;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexIndiv1;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexTeam;
     private javax.swing.JMenuItem jmiFullScreenRankAnnexTeam1;
+    private javax.swing.JMenuItem jmiFullScreenRankCategory;
     private javax.swing.JMenuItem jmiFullScreenRankClan;
     private javax.swing.JMenuItem jmiFullScreenRankGeneral;
+    private javax.swing.JMenuItem jmiFullScreenRankGroups;
     private javax.swing.JMenuItem jmiFullScreenRankTeam;
     private javax.swing.JMenuItem jmiGenerateFirstRound;
     private javax.swing.JMenuItem jmiGenerateNextRound;

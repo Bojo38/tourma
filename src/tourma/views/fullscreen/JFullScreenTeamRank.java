@@ -47,11 +47,12 @@ public final class JFullScreenTeamRank extends JFullScreen {
         super(s);
         initComponents();
         loopStop = false;
+        semStart.release();
     }
 
     @Override
     protected void clientLoop() throws InterruptedException {
-
+        semStart.acquire();
         try {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
@@ -128,6 +129,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
                 Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        semStart.release();
     }
 
     private void buildPanel(Ranked ranked) throws FontFormatException {

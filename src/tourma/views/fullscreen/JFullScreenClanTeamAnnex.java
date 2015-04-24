@@ -51,7 +51,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
 
     private boolean loopStop = false;
     private boolean team;
-    private boolean startUnlock = false;
+    
 
     public JFullScreenClanTeamAnnex(Socket s, boolean team) throws IOException {
         super(s);
@@ -60,25 +60,14 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
         loopStop = false;
         
         // Synchronized the end of constructor with the client thread
-        synchronized (cl) {
-            startUnlock = true;
-            cl.notify();
-        }
+        semStart.release();
 
     }
 
     @Override
     protected void clientLoop() throws InterruptedException{
         // Synchronized the end of constructor with the client thread
-        synchronized (this) {
-            while (!startUnlock) {
-                try {
-                    wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(JFullScreenClanTeamAnnex.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        semStart.acquire();
 
         try {
 
@@ -158,6 +147,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        semStart.release();
     }
 
     protected void setStop(boolean s) {
