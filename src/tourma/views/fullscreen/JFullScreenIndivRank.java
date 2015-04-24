@@ -306,6 +306,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 nbCols++;
             }
         }
+
         int computed_width = width / nbCols;
 
         int line = 0;

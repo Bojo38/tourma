@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import tourma.views.fullscreen.JFullScreenClanRank;
 
 /**
  *
@@ -49,9 +52,11 @@ public class TServerThread extends Thread {
                 inputLine = in.readLine();
             }
             _socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException se) {
+            LOG.log(Level.INFO, "Socket reseted, connection probably closed: " + se.getLocalizedMessage());
         }
     }
+
+    private static final Logger LOG = Logger.getLogger(JFullScreenClanRank.class.getName());
 
 }
