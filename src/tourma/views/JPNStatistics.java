@@ -112,9 +112,9 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private void addTeamBalanced() {
 
         ArrayList<Team> teams = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                teams.add(Tournament.getTournament().getTeam(cpt));
-            }
+        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
+            teams.add(Tournament.getTournament().getTeam(cpt));
+        }
         DefaultListModel model = new DefaultListModel();
         for (Team team : teams) {
             model.addElement(team.getName());
@@ -176,9 +176,8 @@ public final class JPNStatistics extends javax.swing.JPanel {
      */
     private void addIndivBalanced() {
 
-        final ArrayList<Coach>     coachs = new ArrayList<>();
-        for (int i=0; i<Tournament.getTournament().getCoachsCount(); i++)
-        {
+        final ArrayList<Coach> coachs = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coachs.add(Tournament.getTournament().getCoach(i));
         }
         DefaultListModel model = new DefaultListModel();
@@ -481,9 +480,10 @@ public final class JPNStatistics extends javax.swing.JPanel {
                     if (r == null) {
                         r = c.getRoster();
                     }
-                    if (!names.contains(r.getName())) {
-                        names.add(r.getName());
-                    }
+
+                    //if (!names.contains(r.getName())) {
+                    names.add(r.getName());
+                    //}
                 }
 
                 for (String rName : names) {
@@ -498,7 +498,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-         int i=0;
+        int i = 0;
         while (i < datas.getItemCount()) {
             final Number value = datas.getValue(i);
             if (value.intValue() == 0) {
@@ -559,14 +559,12 @@ public final class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        int i=0;
+        int i = 0;
         while (i < datas.getItemCount()) {
             final Number value = datas.getValue(i);
             if (value.intValue() == 0) {
                 datas.remove(datas.getKey(i));
-            }
-            else
-            {
+            } else {
                 i++;
             }
         }
@@ -717,10 +715,8 @@ public final class JPNStatistics extends javax.swing.JPanel {
         // creation et partage du panel
 
         // creation de la list de checkbox
-        
-        final ArrayList<Coach>     coach = new ArrayList<>();
-        for (int i=0; i<Tournament.getTournament().getCoachsCount(); i++)
-        {
+        final ArrayList<Coach> coach = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coach.add(Tournament.getTournament().getCoach(i));
         }
         DefaultListModel model = new DefaultListModel();
