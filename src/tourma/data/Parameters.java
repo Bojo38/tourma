@@ -70,7 +70,11 @@ public class Parameters implements XMLExport {
     /**
      *
      */
-    public static final int C_MAX_RANKING = 6;
+    public static final int C_RANKING_OPP_POINTS_OTHER_MATCHS = 7;
+    /**
+     * 
+     */
+    public static final int C_MAX_RANKING = 7;
     /**
      *
      */
@@ -178,7 +182,7 @@ public class Parameters implements XMLExport {
     /**
      *
      */
-    private int mRankingIndiv2 = C_RANKING_OPP_POINTS;
+    private int mRankingIndiv2 = C_RANKING_OPP_POINTS_OTHER_MATCHS;
 
     /**
      *
@@ -259,7 +263,7 @@ public class Parameters implements XMLExport {
     /**
      *
      */
-    private int mRankingTeam2 = C_RANKING_OPP_POINTS;
+    private int mRankingTeam2 = C_RANKING_OPP_POINTS_OTHER_MATCHS;
 
     /**
      *

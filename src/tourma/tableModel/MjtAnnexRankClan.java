@@ -19,6 +19,7 @@ import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import static tourma.tableModel.MjtRanking.getCriteriaByValue;
 import static tourma.tableModel.MjtRanking.getSubtypeByValue;
@@ -135,6 +136,16 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         j = mRound;
                     }
 
+                    TeamMatch tm = null;
+                    Round round = Tournament.getTournament().getRound(this.getRound());
+                    for (int l = 0; l < round.getMatchsCount(); l++) {
+                        TeamMatch tmp = (TeamMatch) round.getMatch(l);
+                        if ((tmp.getCompetitor1() == t) || (tmp.getCompetitor2() == t)) {
+                            tm = tmp;
+                            break;
+                        }
+                    }
+                    
                     while (j <= Math.min(t.getMatchCount() - 1, mRound)) {
 
                          value = getValue(t, mCriteria, mSubtype);
@@ -142,7 +153,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         final Criteria c1 = getCriteriaByValue(mRankingType1);
                         final int subType1 = getSubtypeByValue(mRankingType1);
                         if (c1 == null) {
-                            value1 = getValue(t, mRankingType1, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
+                            value1 = getValue(t, tm,mRankingType1, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value1 += getValue(t, c1, subType1);
                         }
@@ -150,7 +161,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         final Criteria c2 = getCriteriaByValue(mRankingType2);
                         final int subType2 = getSubtypeByValue(mRankingType2);
                         if (c2 == null) {
-                            value2 = getValue(t, mRankingType2, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
+                            value2 = getValue(t, tm,mRankingType2, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value2 += getValue(t, c2, subType2);
                         }
@@ -158,7 +169,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         final Criteria c3 = getCriteriaByValue(mRankingType3);
                         final int subType3 = getSubtypeByValue(mRankingType3);
                         if (c3 == null) {
-                            value3 = getValue(t, mRankingType3, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
+                            value3 = getValue(t, tm,mRankingType3, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value3 += getValue(t, c3, subType3);
                         }
@@ -166,7 +177,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         final Criteria c4 = getCriteriaByValue(mRankingType4);
                         final int subType4 = getSubtypeByValue(mRankingType4);
                         if (c4 == null) {
-                            value4 = getValue(t, mRankingType4, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
+                            value4 = getValue(t, tm,mRankingType4, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value4 += getValue(t, c4, subType4);
                         }
@@ -174,7 +185,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         final Criteria c5 = getCriteriaByValue(mRankingType5);
                         final int subType5 = getSubtypeByValue(mRankingType5);
                         if (c5 == null) {
-                            value5 = getValue(t, mRankingType5, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
+                            value5 = getValue(t, tm,mRankingType5, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
                         } else {
                             value5 += getValue(t, c5, subType5);
                         }

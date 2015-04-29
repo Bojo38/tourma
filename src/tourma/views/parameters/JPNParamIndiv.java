@@ -400,6 +400,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO"));
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO ADVERSAIRES"));
         rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MATCHS JOUÉS"));
+        rankChoices.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS ADVERSAIRES EXCEPT OWN MATCH"));
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
             final Criteria criteria = Tournament.getTournament().getParams().getCriteria(i);
             rankChoices.add(criteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" JOUEUR"));
