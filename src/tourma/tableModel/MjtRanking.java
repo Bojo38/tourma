@@ -83,6 +83,10 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     CoachMatch om = (CoachMatch) opponent.getMatch(i);
                     if ((includeCurrent) || ((!includeCurrent) && (om != m))) {
                         value += getPointsByCoach((Coach) opponent, om);
+                    }   
+                    if (om==m)
+                    {
+                        break;
                     }
                 }
             }
