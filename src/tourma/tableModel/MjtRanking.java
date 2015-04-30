@@ -283,9 +283,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     value += Tournament.getTournament().getParams().getPointsRefused();
                 } else {
                     if (val.getValue1() >= 0) {
-                        if (val.getValue1() >= val.getValue2() + Tournament.getTournament().getParams().getGapLargeVictory()) {
+                        if ((val.getValue1() >= val.getValue2() + Tournament.getTournament().getParams().getGapLargeVictory())&&Tournament.getTournament().getParams().isUseLargeVictory()) {
                             value += Tournament.getTournament().getParams().getPointsIndivLargeVictory();
-
                         } else {
                             if (val.getValue1() > val.getValue2()) {
                                 value += Tournament.getTournament().getParams().getPointsIndivVictory();
@@ -293,7 +292,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                                 if (val.getValue1() == val.getValue2()) {
                                     value += Tournament.getTournament().getParams().getPointsIndivDraw();
                                 } else {
-                                    if (val.getValue1() + Tournament.getTournament().getParams().getGapLittleLost() >= val.getValue2()) {
+                                    if ((val.getValue1() + Tournament.getTournament().getParams().getGapLittleLost() >= val.getValue2())&&Tournament.getTournament().getParams().isUseLittleLoss()) {
                                         value += Tournament.getTournament().getParams().getPointsIndivLittleLost();
                                     } else {
                                         value += Tournament.getTournament().getParams().getPointsIndivLost();
@@ -322,7 +321,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     value += Tournament.getTournament().getParams().getPointsRefused();
                 } else {
                     if (val.getValue1() >= 0) {
-                        if (val.getValue2() >= val.getValue1() + Tournament.getTournament().getParams().getGapLargeVictory()) {
+                        if ((val.getValue2() >= val.getValue1() + Tournament.getTournament().getParams().getGapLargeVictory())&&Tournament.getTournament().getParams().isUseLargeVictory()) {
                             value += Tournament.getTournament().getParams().getPointsIndivLargeVictory();
                         } else {
                             if (val.getValue2() > val.getValue1()) {
@@ -331,7 +330,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                                 if (val.getValue2() == val.getValue1()) {
                                     value += Tournament.getTournament().getParams().getPointsIndivDraw();
                                 } else {
-                                    if (val.getValue2() + Tournament.getTournament().getParams().getGapLittleLost() >= val.getValue1()) {
+                                    if ((val.getValue2() + Tournament.getTournament().getParams().getGapLittleLost() >= val.getValue1())&&Tournament.getTournament().getParams().isUseLittleLoss()) {
                                         value += Tournament.getTournament().getParams().getPointsIndivLittleLost();
                                     } else {
                                         value += Tournament.getTournament().getParams().getPointsIndivLost();

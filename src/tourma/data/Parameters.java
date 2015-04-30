@@ -97,7 +97,15 @@ public class Parameters implements XMLExport {
     /**
      *
      */
-    private int mPointsIndivLargeVictory = 1100;
+    private int mPointsIndivLargeVictory = 1000;
+    /**
+     * 
+     */
+    private boolean mUseLargeVictory=false;
+    /**
+     * 
+     */
+    private boolean mUseLittleLoss=false;
 
     /**
      *
@@ -440,6 +448,9 @@ public class Parameters implements XMLExport {
         params.setAttribute("Color", Boolean.toString(this.isUseColor()));
         params.setAttribute("Image", Boolean.toString(this.isUseImage()));
         
+        params.setAttribute("UseLargeVictory", Boolean.toString(this.isUseLargeVictory()));
+        params.setAttribute("UseLittleLoss", Boolean.toString(this.isUseLittleLoss()));
+        
         return params;
     }
 
@@ -572,6 +583,8 @@ public class Parameters implements XMLExport {
                 this.setPortugal(params.getAttribute("Portugal").getBooleanValue());
                 this.setUseColor(params.getAttribute("Color").getBooleanValue());
                 this.setUseImage(params.getAttribute("Image").getBooleanValue());
+                this.setUseLargeVictory(params.getAttribute("UseLargeVictory").getBooleanValue());
+                this.setUseLittleLoss(params.getAttribute("UseLittleLoss").getBooleanValue());
 
             } catch (NullPointerException ne3) {
                 //JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());
@@ -1431,7 +1444,21 @@ public class Parameters implements XMLExport {
     public void setUseImage(boolean useImage) {
         this.useImage = useImage;
     }
+    
+    public void setUseLargeVictory(boolean use) {
+        this.mUseLargeVictory = use;
+    }
+    
+    public void setUseLittleLoss(boolean use) {
+        this.mUseLittleLoss = use;
+    }
 
+    public boolean isUseLargeVictory() {
+        return mUseLargeVictory;
+    }
+    public boolean isUseLittleLoss() {
+        return mUseLittleLoss;
+    }
 
 
 }

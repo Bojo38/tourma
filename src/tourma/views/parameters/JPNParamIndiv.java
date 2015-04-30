@@ -37,17 +37,17 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
+        jcxLargeVictory = new javax.swing.JCheckBox();
         jtffLargeVictory = new javax.swing.JFormattedTextField();
-        jLabel19 = new javax.swing.JLabel();
+        jlbLargeVictoryGap = new javax.swing.JLabel();
         jtffLargeVictoryGap = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jtffVictory = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jtffDraw = new javax.swing.JFormattedTextField();
-        jLabel6 = new javax.swing.JLabel();
+        jcxLittleLoss = new javax.swing.JCheckBox();
         jtffLittleLost = new javax.swing.JFormattedTextField();
-        jLabel20 = new javax.swing.JLabel();
+        jlbLittleLossGap = new javax.swing.JLabel();
         jtffLittleLostGap = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         jtffLost = new javax.swing.JFormattedTextField();
@@ -68,11 +68,16 @@ public class JPNParamIndiv extends javax.swing.JPanel {
 
         setLayout(new java.awt.GridLayout(14, 2));
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jLabel3.setText(bundle.getString("LargeVictoryKey")); // NOI18N
-        jLabel3.setToolTipText(bundle.getString("LargeVictoryTipKey")); // NOI18N
-        add(jLabel3);
+        jcxLargeVictory.setText(bundle.getString("LargeVictoryKey")); // NOI18N
+        jcxLargeVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jcxLargeVictory.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jcxLargeVictory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxLargeVictoryActionPerformed(evt);
+            }
+        });
+        add(jcxLargeVictory);
 
         jtffLargeVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
         jtffLargeVictory.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -82,10 +87,10 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         });
         add(jtffLargeVictory);
 
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel19.setText(bundle.getString("MinimumGapForLargeVictoryKey")); // NOI18N
-        jLabel19.setToolTipText(bundle.getString("GapForLargeVictoryTipKey")); // NOI18N
-        add(jLabel19);
+        jlbLargeVictoryGap.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbLargeVictoryGap.setText(bundle.getString("MinimumGapForLargeVictoryKey")); // NOI18N
+        jlbLargeVictoryGap.setToolTipText(bundle.getString("GapForLargeVictoryTipKey")); // NOI18N
+        add(jlbLargeVictoryGap);
 
         jtffLargeVictoryGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
         jtffLargeVictoryGap.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -121,10 +126,15 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         });
         add(jtffDraw);
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText(bundle.getString("ShortLossKey")); // NOI18N
-        jLabel6.setToolTipText(bundle.getString("ShortLossTipKey")); // NOI18N
-        add(jLabel6);
+        jcxLittleLoss.setText(bundle.getString("ShortLossKey")); // NOI18N
+        jcxLittleLoss.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jcxLittleLoss.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jcxLittleLoss.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxLittleLossActionPerformed(evt);
+            }
+        });
+        add(jcxLittleLoss);
 
         jtffLittleLost.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
         jtffLittleLost.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -134,10 +144,10 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         });
         add(jtffLittleLost);
 
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel20.setText(bundle.getString("MaximumGapForShortLossKey")); // NOI18N
-        jLabel20.setToolTipText(bundle.getString("MaximumGapForShortLossTipKey")); // NOI18N
-        add(jLabel20);
+        jlbLittleLossGap.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbLittleLossGap.setText(bundle.getString("MaximumGapForShortLossKey")); // NOI18N
+        jlbLittleLossGap.setToolTipText(bundle.getString("MaximumGapForShortLossTipKey")); // NOI18N
+        add(jlbLittleLossGap);
 
         jtffLittleLostGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
         jtffLittleLostGap.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -375,10 +385,31 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         update();// TODO add your handling code here:
     }//GEN-LAST:event_jtffConcedeedFocusLost
 
+    private void jcxLittleLossActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxLittleLossActionPerformed
+        mTournament.getParams().setUseLittleLoss(jcxLittleLoss.isSelected());
+        update();
+    }//GEN-LAST:event_jcxLittleLossActionPerformed
+
+    private void jcxLargeVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxLargeVictoryActionPerformed
+        mTournament.getParams().setUseLargeVictory(jcxLargeVictory.isSelected());
+        update();
+    }//GEN-LAST:event_jcxLargeVictoryActionPerformed
+
     /**
      * Update Panel
      */
     public void update() {
+
+        jcxLargeVictory.setSelected(mTournament.getParams().isUseLargeVictory());
+        jcxLittleLoss.setSelected(mTournament.getParams().isUseLittleLoss());
+
+        jtffLargeVictory.setEnabled(mTournament.getParams().isUseLargeVictory());
+        jtffLargeVictoryGap.setEnabled(mTournament.getParams().isUseLargeVictory());
+        jlbLargeVictoryGap.setEnabled(mTournament.getParams().isUseLargeVictory());
+        
+        jtffLittleLost.setEnabled(mTournament.getParams().isUseLittleLoss());
+        jtffLittleLostGap.setEnabled(mTournament.getParams().isUseLittleLoss());
+        jlbLittleLossGap.setEnabled(mTournament.getParams().isUseLittleLoss());
 
         jtffDraw.setValue(mTournament.getParams().getPointsIndivDraw());
         jtffLargeVictory.setValue(mTournament.getParams().getPointsIndivLargeVictory());
@@ -426,8 +457,6 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         jcbRank4.setSelectedIndex(mTournament.getParams().getRankingIndiv4());
         jcbRank5.setSelectedIndex(mTournament.getParams().getRankingIndiv5());
 
-
-
         jcbRank1.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(final java.awt.event.ActionEvent evt) {
@@ -470,12 +499,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -484,6 +509,10 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private javax.swing.JComboBox jcbRank3;
     private javax.swing.JComboBox jcbRank4;
     private javax.swing.JComboBox jcbRank5;
+    private javax.swing.JCheckBox jcxLargeVictory;
+    private javax.swing.JCheckBox jcxLittleLoss;
+    private javax.swing.JLabel jlbLargeVictoryGap;
+    private javax.swing.JLabel jlbLittleLossGap;
     private javax.swing.JFormattedTextField jtffConcedeed;
     private javax.swing.JFormattedTextField jtffDraw;
     private javax.swing.JFormattedTextField jtffLargeVictory;
@@ -495,12 +524,13 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jtffVictory;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNParamIndiv.class.getName());
-     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 
     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
-    
+
 }
