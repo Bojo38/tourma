@@ -42,6 +42,11 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         jbtRemoveCriteria = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jtbCriteria = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -80,6 +85,30 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         jScrollPane5.setViewportView(jtbCriteria);
 
         add(jScrollPane5, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TableBonus"))); // NOI18N
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
+
+        jCheckBox1.setText(bundle.getString("TablePoints")); // NOI18N
+        jCheckBox1.setToolTipText(bundle.getString("PointsTableTooltip")); // NOI18N
+        jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jPanel1.add(jCheckBox1);
+
+        jCheckBox2.setText(bundle.getString("TablePonderation")); // NOI18N
+        jCheckBox2.setToolTipText(bundle.getString("BonusPointPonderationTooltip")); // NOI18N
+        jPanel1.add(jCheckBox2);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel1.setText("Pondération des points table:");
+        jPanel1.add(jLabel1);
+
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextField1.setText("1");
+        jFormattedTextField1.setToolTipText(bundle.getString("CoeffToolTip")); // NOI18N
+        jPanel1.add(jFormattedTextField1);
+
+        add(jPanel1, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
@@ -123,6 +152,11 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         jbtRemoveCriteria.setEnabled(!bTourStarted);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton jbtAddCriteria;

@@ -75,10 +75,18 @@ public class Parameters implements XMLExport {
      *
      */
     public static final int C_RANKING_TABLES = 8;
+     /**
+     *
+     */
+    public static final int C_RANKING_POINTS_WITHOUT_BONUS = 9;
+     /**
+     *
+     */
+    public static final int C_RANKING_BONUS_POINTS = 10;
     /**
      * 
      */
-    public static final int C_MAX_RANKING = 8;
+    public static final int C_MAX_RANKING = 10;
     /**
      *
      */
