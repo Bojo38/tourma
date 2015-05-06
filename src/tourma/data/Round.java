@@ -94,6 +94,10 @@ public class Round implements XMLExport {
     public void addMatch(Match m) {
         mMatchs.add(m);
     }
+    
+     public int indexOf(Match m) {
+        return mMatchs.indexOf(m);
+    }
 
     /**
      * Shuffle the matchs

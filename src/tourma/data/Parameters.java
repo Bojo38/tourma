@@ -72,9 +72,13 @@ public class Parameters implements XMLExport {
      */
     public static final int C_RANKING_OPP_POINTS_OTHER_MATCHS = 7;
     /**
+     *
+     */
+    public static final int C_RANKING_TABLES = 8;
+    /**
      * 
      */
-    public static final int C_MAX_RANKING = 7;
+    public static final int C_MAX_RANKING = 8;
     /**
      *
      */
