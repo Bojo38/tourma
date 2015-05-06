@@ -119,6 +119,7 @@ public final class NAF {
             }
 
             for (int i = 0; i < rosters.size(); i++) {
+                String name=coach.getRoster().getName();
                 String tmpName = Tournament.getRosterTranslation(coach.getRoster().getName());
                 String name2 = rosters.get(i);
                 if (name2.equals(tmpName)) {

@@ -67,7 +67,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         mTeamTournament = Tournament.getTournament().getParams().isTeamTournament();
 
         jcbRoster.setModel(RosterType.getRostersNamesModel());
-
+        mCoach.setRoster(new RosterType(jcbRoster.getSelectedIndex()));
         final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
         for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
             clanListModel.addElement(Tournament.getTournament().getClan(i).getName());
@@ -135,7 +135,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         mTeamTournament = Tournament.getTournament().getParams().isTeamTournament();
 
         jcbRoster.setModel(RosterType.getRostersNamesModel());
-
+        mCoach.setRoster(new RosterType(jcbRoster.getSelectedIndex()));
         final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
         for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
             clanListModel.addElement(Tournament.getTournament().getClan(i).getName());
@@ -635,7 +635,7 @@ public final class JdgCoach extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfNomKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRosterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRosterActionPerformed
-        //mCoach.mRoster = new RosterType(jcbRoster.getSelectedIndex());
+        mCoach.setRoster(new RosterType(jcbRoster.getSelectedIndex()));
     }//GEN-LAST:event_jcbRosterActionPerformed
 
     private void jbtDownloadFromNafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDownloadFromNafActionPerformed
