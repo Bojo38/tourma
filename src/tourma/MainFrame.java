@@ -41,6 +41,7 @@ import teamma.views.JdgRoster;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.ETeamPairing;
+import static tourma.data.ETeamPairing.TEAM_PAIRING;
 import tourma.data.Group;
 import tourma.data.Match;
 import tourma.data.Parameters;
@@ -1019,90 +1020,200 @@ public final class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmiExportFbb1ActionPerformed
 
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jmiGenerateFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateFirstRoundActionPerformed
-        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) && mTournament.getTeamsCount() % 2 > 0) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OddTeamNumber"));
-            } else {
+    private boolean areRulesValid() {
 
-                final ArrayList<String> labels = new ArrayList<>();
-                final ArrayList<Integer> Options = new ArrayList<>();
+        boolean valid = true;
 
-                /**
-                 * GenRandom possible ?
-                 */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
-                Options.add(Generation.GEN_RANDOM);
+        // Check that large victory is more than victory
+        if (mTournament.getParams().isUseLargeVictory()) {
+            valid = (mTournament.getParams().getPointsIndivLargeVictory() > mTournament.getParams().getPointsIndivVictory());
+            if (!valid) {
+                JOptionPane.showMessageDialog(this, "Large victory points are not superior ti victory points", "Check", JOptionPane.ERROR_MESSAGE);
+            }
+        }
 
-                /**
-                 * Coupe
-                 */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COUPE"));
-                Options.add(Generation.GEN_CUP);
-
-                /**
-                 * Ordre
-                 */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORDER D'INSCRIPTION"));
-                Options.add(Generation.GEN_ORDER);
-
-                /**
-                 * Round Robin
-                 */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN"));
-                Options.add(Generation.GEN_RROBIN);
-
-                /**
-                 * manuel
-                 */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOIX MANUEL"));
-                Options.add(Generation.GEN_MANUAL);
-
-                /**
-                 * Poules
-                 */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POULES"));
-                Options.add(Generation.GEN_POOL);
-
-                /**
-                 * Naf Ranking
-                 */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF_RANK"));
-                Options.add(Generation.GEN_NAF);
-
-                /**
-                 * Naf Ranking
-                 */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
-                Options.add(Generation.GEN_FREE);
-
-                if (Tournament.getTournament().getParams().isTeamTournament()) {
-                    if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
-                        /**
-                         * Balanced Options
-                         */
-                        labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RandomAndBalancing"));
-                        Options.add(Generation.GEN_BALANCED);
-                    }
+        if (valid) {
+            // Check that little loss is more than loss
+            if (mTournament.getParams().isUseLittleLoss()) {
+                valid = (mTournament.getParams().getPointsIndivLittleLost() > mTournament.getParams().getPointsIndivLost());
+                if (!valid) {
+                    JOptionPane.showMessageDialog(this, "Little loss points are not superior to loss points", "Check", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        }
 
-                final JPanel jpn = new JPanel(new BorderLayout());
-                final JComboBox jcb = new JComboBox(labels.toArray());
-                jpn.add(jcb, BorderLayout.CENTER);
-                final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
-                jpn.add(jlb, BorderLayout.NORTH);
+        if (valid) {
+            // Check that touchdown gap is positive
+            if (mTournament.getParams().isUseLargeVictory()) {
+                valid = (mTournament.getParams().getGapLargeVictory() > 1);
+                if (!valid) {
 
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
-                final int index = jcb.getSelectedIndex();
+                    JOptionPane.showMessageDialog(this, "Large victory gap is not more than 1 touchdown", "Check", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
 
-                Generation.generateFirstRound(Options.get(index));
+        if (valid) {
+            // Check that little loss is positive
+            if (mTournament.getParams().isUseLittleLoss()) {
+                valid = (mTournament.getParams().getGapLittleLost() > 0);
+                if (!valid) {
+                    JOptionPane.showMessageDialog(this, "Little loss gap is not superior to 0", "Check", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
 
-                updateTree();
-                update();
-
+        if (valid) {
+            // Check that vicotry is more than 2 draw
+            valid = (mTournament.getParams().getPointsIndivVictory() >= 2 * mTournament.getParams().getPointsIndivDraw());
+            if (!valid) {
+                JOptionPane.showMessageDialog(this, "2 draws are more than one victory ", "Check", JOptionPane.ERROR_MESSAGE);
             }
 
+        }
+
+        if (valid) {
+            // Check that draw is more than 2 lost
+            valid = (mTournament.getParams().getPointsIndivDraw() >= 2 * mTournament.getParams().getPointsIndivLost());
+            if (!valid) {
+                JOptionPane.showMessageDialog(this, "2 loss are more than one draw ", "Check", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        if (valid) {
+            // Check that little loss is positive
+            if (mTournament.getParams().isUseLittleLoss()) {
+                valid = (mTournament.getParams().getPointsIndivDraw() >= 2 * mTournament.getParams().getPointsIndivLittleLost());
+                if (!valid) {
+                    JOptionPane.showMessageDialog(this, "2 Little loss are more than one draw", "Check", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+
+        if (mTournament.getParams().isTeamTournament()) {
+            if (mTournament.getParams().getTeamPairing() == TEAM_PAIRING) {
+                if (mTournament.getParams().isTeamVictoryOnly()) {
+                    if (valid) {
+                        // Check that vicotry is more than 2 draw
+                        valid = (mTournament.getParams().getPointsTeamVictory() >= 2 * mTournament.getParams().getPointsTeamDraw());
+                        if (!valid) {
+                            JOptionPane.showMessageDialog(this, "2 Team draws are more than one team victory ", "Check", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    }
+                    
+                    if (valid) {
+                        // Check that vicotry is more than 2 draw
+                        valid = (mTournament.getParams().getPointsTeamDraw()>= 2 * mTournament.getParams().getPointsTeamLost());
+                        if (!valid) {
+                            JOptionPane.showMessageDialog(this, "2 Team loss are more than one team draw ", "Check", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    }                                       
+                }
+                else
+                {
+                     if (valid) {
+                        // Check that vicotry is more than 2 draw
+                        valid = (mTournament.getParams().getPointsTeamVictoryBonus()>= 2 * mTournament.getParams().getPointsTeamDrawBonus());
+                        if (!valid) {
+                            JOptionPane.showMessageDialog(this, "2 Team draws bonus are more than one team victory bonus", "Check", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        return valid;
+    }
+
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    private void jmiGenerateFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateFirstRoundActionPerformed
+        if (areRulesValid()) {
+            if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                if (mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) && mTournament.getTeamsCount() % 2 > 0) {
+                    JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OddTeamNumber"));
+                } else {
+
+                    final ArrayList<String> labels = new ArrayList<>();
+                    final ArrayList<Integer> Options = new ArrayList<>();
+
+                    /**
+                     * GenRandom possible ?
+                     */
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
+                    Options.add(Generation.GEN_RANDOM);
+
+                    /**
+                     * Coupe
+                     */
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COUPE"));
+                    Options.add(Generation.GEN_CUP);
+
+                    /**
+                     * Ordre
+                     */
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORDER D'INSCRIPTION"));
+                    Options.add(Generation.GEN_ORDER);
+
+                    /**
+                     * Round Robin
+                     */
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN"));
+                    Options.add(Generation.GEN_RROBIN);
+
+                    /**
+                     * manuel
+                     */
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOIX MANUEL"));
+                    Options.add(Generation.GEN_MANUAL);
+
+                    /**
+                     * Poules
+                     */
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POULES"));
+                    Options.add(Generation.GEN_POOL);
+
+                    /**
+                     * Naf Ranking
+                     */
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF_RANK"));
+                    Options.add(Generation.GEN_NAF);
+
+                    /**
+                     * Naf Ranking
+                     */
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
+                    Options.add(Generation.GEN_FREE);
+
+                    if (Tournament.getTournament().getParams().isTeamTournament()) {
+                        if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
+                            /**
+                             * Balanced Options
+                             */
+                            labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RandomAndBalancing"));
+                            Options.add(Generation.GEN_BALANCED);
+                        }
+                    }
+
+                    final JPanel jpn = new JPanel(new BorderLayout());
+                    final JComboBox jcb = new JComboBox(labels.toArray());
+                    jpn.add(jcb, BorderLayout.CENTER);
+                    final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
+                    jpn.add(jlb, BorderLayout.NORTH);
+
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
+                    final int index = jcb.getSelectedIndex();
+
+                    Generation.generateFirstRound(Options.get(index));
+
+                    updateTree();
+                    update();
+
+                }
+
+            }
         }
     }//GEN-LAST:event_jmiGenerateFirstRoundActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -1355,86 +1466,86 @@ public final class MainFrame extends javax.swing.JFrame {
 
     private void jmiGenerateNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateNextRoundActionPerformed
 
-        final ArrayList<String> labels = new ArrayList<>();
-        final ArrayList<Integer> Options = new ArrayList<>();
+        if (areRulesValid()) {
+            final ArrayList<String> labels = new ArrayList<>();
+            final ArrayList<Integer> Options = new ArrayList<>();
 
-        if (jpnContent instanceof JPNRound) {
-
-            JPNRound jpnr = (JPNRound) jpnContent;
-            Round round = jpnr.getRound();
-            int round_number = mTournament.indexOfRound(round);
-            
-
-            /**
-             * Swiss possible ?
-             */
-            if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE SUISSE"));
-                Options.add(Generation.GEN_SWISS);
-            }
-
-            /**
-             * QSwiss possible ?
-             */
-            if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE SUISSE ACCELERÉE"));
-                Options.add(Generation.GEN_QSWISS);
-            }
-
-            /**
-             * GenRandom possible ?
-             */
-            if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
-                Options.add(Generation.GEN_RANDOM);
-            }
-
-            /**
-             * Coupe
-             */
-            labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COUPE"));
-            Options.add(Generation.GEN_CUP);
-
-            /**
-             *
-             * Libre
-             */
-            if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
-                Options.add(Generation.GEN_FREE);
-            }
-
-            final JPanel jpn = new JPanel(new BorderLayout());
-            final JComboBox jcb = new JComboBox(labels.toArray());
-            jpn.add(jcb, BorderLayout.CENTER);
-            final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
-            jpn.add(jlb, BorderLayout.NORTH);
-
-            final JCheckBox jcxClash = new JCheckBox("Animation");
-            jpn.add(jcxClash, BorderLayout.SOUTH);
-
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
-
-            final int index = jcb.getSelectedIndex();
-
-            Generation.nextRound(round, Options.get(index), round_number);
-            
-            
-            if (mTournament.getParams().isTableBonusPerRound()) {
-                editRoundCoef(mTournament.getRound(mTournament.getRoundsCount()-1));
-            }
-            
             if (jpnContent instanceof JPNRound) {
-                ((JPNRound) jpnContent).update();
-                update();
-            }
-            updateTree();
 
-            if (jcxClash.isSelected()) {
-                try {
-                    JFullScreen fs = new JFullScreenMatchs(Tournament.getTournament().getRound(round_number + 1), true);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                JPNRound jpnr = (JPNRound) jpnContent;
+                Round round = jpnr.getRound();
+                int round_number = mTournament.indexOfRound(round);
+
+                /**
+                 * Swiss possible ?
+                 */
+                if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE SUISSE"));
+                    Options.add(Generation.GEN_SWISS);
+                }
+
+                /**
+                 * QSwiss possible ?
+                 */
+                if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE SUISSE ACCELERÉE"));
+                    Options.add(Generation.GEN_QSWISS);
+                }
+
+                /**
+                 * GenRandom possible ?
+                 */
+                if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
+                    Options.add(Generation.GEN_RANDOM);
+                }
+
+                /**
+                 * Coupe
+                 */
+                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COUPE"));
+                Options.add(Generation.GEN_CUP);
+
+                /**
+                 *
+                 * Libre
+                 */
+                if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
+                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
+                    Options.add(Generation.GEN_FREE);
+                }
+
+                final JPanel jpn = new JPanel(new BorderLayout());
+                final JComboBox jcb = new JComboBox(labels.toArray());
+                jpn.add(jcb, BorderLayout.CENTER);
+                final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
+                jpn.add(jlb, BorderLayout.NORTH);
+
+                final JCheckBox jcxClash = new JCheckBox("Animation");
+                jpn.add(jcxClash, BorderLayout.SOUTH);
+
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
+
+                final int index = jcb.getSelectedIndex();
+
+                Generation.nextRound(round, Options.get(index), round_number);
+
+                if (mTournament.getParams().isTableBonusPerRound()) {
+                    editRoundCoef(mTournament.getRound(mTournament.getRoundsCount() - 1));
+                }
+
+                if (jpnContent instanceof JPNRound) {
+                    ((JPNRound) jpnContent).update();
+                    update();
+                }
+                updateTree();
+
+                if (jcxClash.isSelected()) {
+                    try {
+                        JFullScreen fs = new JFullScreenMatchs(Tournament.getTournament().getRound(round_number + 1), true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
