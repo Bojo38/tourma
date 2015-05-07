@@ -40,31 +40,31 @@ public class Parameters implements XMLExport {
     public static final int C_RANKING_SUBTYPE_DIFFERENCE = 2;
 
     /**
-     * 
+     *
      */
     public static final int C_RANKING_NONE = 0;
     /**
-     * 
+     *
      */
     public static final int C_RANKING_POINTS = 1;
     /**
-     * 
+     *
      */
     public static final int C_RANKING_OPP_POINTS = 2;
     /**
-     * 
+     *
      */
     public static final int C_RANKING_VND = 3;
     /**
-     * 
+     *
      */
     public static final int C_RANKING_ELO = 4;
     /**
-     * 
+     *
      */
     public static final int C_RANKING_ELO_OPP = 5;
     /**
-     * 
+     *
      */
     public static final int C_RANKING_NB_MATCHS = 6;
     /**
@@ -75,16 +75,16 @@ public class Parameters implements XMLExport {
      *
      */
     public static final int C_RANKING_TABLES = 8;
-     /**
+    /**
      *
      */
     public static final int C_RANKING_POINTS_WITHOUT_BONUS = 9;
-     /**
+    /**
      *
      */
     public static final int C_RANKING_BONUS_POINTS = 10;
     /**
-     * 
+     *
      */
     public static final int C_MAX_RANKING = 10;
     /**
@@ -111,13 +111,13 @@ public class Parameters implements XMLExport {
      */
     private int mPointsIndivLargeVictory = 1000;
     /**
-     * 
+     *
      */
-    private boolean mUseLargeVictory=false;
+    private boolean mUseLargeVictory = false;
     /**
-     * 
+     *
      */
-    private boolean mUseLittleLoss=false;
+    private boolean mUseLittleLoss = false;
 
     /**
      *
@@ -228,6 +228,21 @@ public class Parameters implements XMLExport {
      *
      */
     private boolean mMultiRoster = false;
+
+    /**
+     *
+     */
+    private boolean mTableBonus = false;
+
+    /**
+     *
+     */
+    private double mTableBonusCoef = 1.0;
+
+    /**
+     *
+     */
+    private boolean mTableBonusPerRound = false;
 
 
     /* Pairing: 0: Individuel
@@ -387,7 +402,7 @@ public class Parameters implements XMLExport {
             params.setAttribute("Refused", Integer.toString(this.getPointsRefused()));
             params.setAttribute("Conceeded", Integer.toString(this.getPointsConcedeed()));
         } catch (Exception e) {
-            LOG.log(Level.FINE,e.getLocalizedMessage());
+            LOG.log(Level.FINE, e.getLocalizedMessage());
         }
         params.setAttribute(sbundle.getString("LITTLE_LOST"), Integer.toString(this.getPointsIndivLittleLost()));
         params.setAttribute("Portugal", Boolean.toString(this.isPortugal()));
@@ -459,10 +474,14 @@ public class Parameters implements XMLExport {
         params.setAttribute("Portugal", Boolean.toString(this.isPortugal()));
         params.setAttribute("Color", Boolean.toString(this.isUseColor()));
         params.setAttribute("Image", Boolean.toString(this.isUseImage()));
-        
+
         params.setAttribute("UseLargeVictory", Boolean.toString(this.isUseLargeVictory()));
         params.setAttribute("UseLittleLoss", Boolean.toString(this.isUseLittleLoss()));
         
+        params.setAttribute(sbundle.getString("TABLEBONUS"), Boolean.toString(this.isTableBonus()));
+        params.setAttribute(sbundle.getString("TABLEBONUSPERROUND"), Boolean.toString(this.isTableBonusPerRound()));
+        params.setAttribute(sbundle.getString("TABLEBONUSCOEF"), Double.toString(this.getTableBonusCoef()));
+
         return params;
     }
 
@@ -486,9 +505,8 @@ public class Parameters implements XMLExport {
                 this.setPointsRefused(params.getAttribute("Refused").getIntValue());
                 this.setPointsConcedeed(params.getAttribute("Concedeed").getIntValue());
             } catch (DataConversionException e) {
-                LOG.log(Level.FINE,e.getLocalizedMessage());
-            }
-             catch (NullPointerException e) {
+                LOG.log(Level.FINE, e.getLocalizedMessage());
+            } catch (NullPointerException e) {
                 this.setPointsRefused(0);
                 this.setPointsConcedeed(0);
             }
@@ -539,15 +557,14 @@ public class Parameters implements XMLExport {
                     default:
                         this.setTeamIndivPairing(EIndivPairing.RANKING);
                         break;
-                        
-                        
+
                 }
                 this.setTeamVictoryOnly(params.getAttribute(sbundle.getString("TEAMVICTORYONLY")).getBooleanValue());
                 try {
                     this.setPointsTeamDrawBonus(params.getAttribute(sbundle.getString("TEAMDRAWPOINTS")).getIntValue());
                 } catch (DataConversionException e) {
                     this.setPointsTeamDrawBonus(0);
-                    LOG.log(Level.FINE,e.getLocalizedMessage());
+                    LOG.log(Level.FINE, e.getLocalizedMessage());
                 }
 
                 try {
@@ -559,7 +576,7 @@ public class Parameters implements XMLExport {
                     this.setGame(params.getAttribute(sbundle.getString("GAMETYPE")).getIntValue());
                 } catch (DataConversionException pe) {
                     this.setGame(1);
-                    LOG.log(Level.FINE,pe.getLocalizedMessage());
+                    LOG.log(Level.FINE, pe.getLocalizedMessage());
                 }
 
                 this.setGroupsEnable(params.getAttribute(sbundle.getString("GROUPENABLE")).getBooleanValue());
@@ -610,6 +627,16 @@ public class Parameters implements XMLExport {
             } catch (NullPointerException ne4) {
                 //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
             }
+            
+            try {
+                this.setTableBonus(params.getAttribute(sbundle.getString("TABLEBONUS")).getBooleanValue());
+                this.setTableBonusPerRound(params.getAttribute(sbundle.getString("TABLEBONUSPERROUND")).getBooleanValue());
+
+                this.setTableBonusCoef(params.getAttribute(sbundle.getString("TABLEBONUSCOEF")).getDoubleValue());
+
+            } catch (NullPointerException ne4) {
+                //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
+            }
 
             final List criterias = params.getChildren(sbundle.getString("CRITERIA"));
             final Iterator cr = criterias.iterator();
@@ -638,7 +665,7 @@ public class Parameters implements XMLExport {
      * @return
      */
     public int getTeamRankingType(int j) {
-        int rank ;
+        int rank;
         switch (j) {
             case 0:
                 rank = getRankingTeam1();
@@ -1006,26 +1033,23 @@ public class Parameters implements XMLExport {
         this.mPlace = mPlace;
     }
 
- 
     /**
-     * 
+     *
      * @param format
-     * @return 
+     * @return
      */
-    public String getStringDate(SimpleDateFormat format)
-    {
+    public String getStringDate(SimpleDateFormat format) {
         return format.format(mDate);
     }
 
-       /**
-     * 
-     * @return 
+    /**
+     *
+     * @return
      */
-    public long getDateTime()
-    {
+    public long getDateTime() {
         return mDate.getTime();
     }
-    
+
     /**
      * @param mDate the mDate to set
      */
@@ -1124,6 +1148,33 @@ public class Parameters implements XMLExport {
         return mMultiRoster;
     }
 
+    public boolean isTableBonus() {
+        return mTableBonus;
+    }
+
+    public boolean isTableBonusPerRound() {
+        return mTableBonusPerRound;
+    }
+    
+    public double getTableBonusCoef()
+    {
+        return mTableBonusCoef;
+    }
+
+    
+    public void setTableBonus(boolean b) {
+        mTableBonus=b;
+    }
+
+    public void setTableBonusPerRound(boolean b) {
+        mTableBonusPerRound=b;
+    }
+    
+    public void setTableBonusCoef(double val)
+    {
+        mTableBonusCoef=val;
+    }
+    
     /**
      * @param mMultiRoster the mMultiRoster to set
      */
@@ -1263,7 +1314,7 @@ public class Parameters implements XMLExport {
     public int getRankingTeam1() {
         return mRankingTeam1;
     }
-    
+
     public int getRankingTeam2() {
         return mRankingTeam2;
     }
@@ -1456,11 +1507,11 @@ public class Parameters implements XMLExport {
     public void setUseImage(boolean useImage) {
         this.useImage = useImage;
     }
-    
+
     public void setUseLargeVictory(boolean use) {
         this.mUseLargeVictory = use;
     }
-    
+
     public void setUseLittleLoss(boolean use) {
         this.mUseLittleLoss = use;
     }
@@ -1468,9 +1519,9 @@ public class Parameters implements XMLExport {
     public boolean isUseLargeVictory() {
         return mUseLargeVictory;
     }
+
     public boolean isUseLittleLoss() {
         return mUseLittleLoss;
     }
-
 
 }

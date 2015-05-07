@@ -56,6 +56,9 @@ public class Round implements XMLExport {
      */
     private boolean mLooserCup = false;
 
+    private double mMinBonus = 1.0;
+    private double mMaxBonus = 1.0;
+
     /**
      * Default constructor
      */
@@ -67,6 +70,31 @@ public class Round implements XMLExport {
     public String toString() {
         final int index = Tournament.getTournament().indexOfRound(this);
         return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ") + (index + 1);
+    }
+
+    public double getMinBonus() {
+        return mMinBonus;
+    }
+
+    public double getMaxBonus() {
+        return mMaxBonus;
+    }
+
+    public void setMinBonus(double v) {
+        mMinBonus = v;
+    }
+
+    public void setMaxBonus(double v) {
+        mMaxBonus = v;
+    }
+
+    public double getCoef(Match m) {
+        double coef = 1.0;
+        int index = this.indexOf(m);
+        double gap = this.getMaxBonus() - this.getMinBonus();
+        double steps = gap / this.getMatchsCount();
+        coef = this.getMinBonus() + steps * index;
+        return coef;
     }
 
     /**
@@ -94,8 +122,8 @@ public class Round implements XMLExport {
     public void addMatch(Match m) {
         mMatchs.add(m);
     }
-    
-     public int indexOf(Match m) {
+
+    public int indexOf(Match m) {
         return mMatchs.indexOf(m);
     }
 
@@ -195,6 +223,9 @@ public class Round implements XMLExport {
         round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"), Boolean.toString(isCup()));
         round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"), Integer.toString(getCupTour()));
         round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"), Integer.toString(getCupMaxTour()));
+        
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MINCOEF"), Double.toString(getMinBonus()));
+        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXCOEF"), Double.toString(getMaxBonus()));
 
         for (Match mMatch : this.mMatchs) {
             final Element match = mMatch.getXMLElement();
@@ -290,6 +321,8 @@ public class Round implements XMLExport {
             setCup(Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"))));
             setCupTour(Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"))));
             setCupMaxTour(Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"))));
+            setMinBonus(Double.parseDouble(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MINCOEF"))));
+            setMaxBonus(Double.parseDouble(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXCOEF"))));
         } catch (NumberFormatException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }

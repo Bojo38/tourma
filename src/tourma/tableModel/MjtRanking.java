@@ -351,12 +351,42 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                         }
 
                         if (withBonusPOints) {
+
+                            int bonus = 0;
+
                             for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
                                 final Criteria cri = Tournament.getTournament().getParams().getCriteria(j);
                                 final Value va = m.getValue(cri);
-                                value += va.getValue1() * cri.getPointsFor();
-                                value += va.getValue2() * cri.getPointsAgainst();
+                                bonus += va.getValue1() * cri.getPointsFor();
+                                bonus += va.getValue2() * cri.getPointsAgainst();
                             }
+
+                            if (Tournament.getTournament().getParams().isTableBonus()) {
+                                double coef = Tournament.getTournament().getParams().getTableBonusCoef();
+                                
+                                bonus += Math.round(getCoachTable(c, m) * coef);
+                            }
+
+                            if (Tournament.getTournament().getParams().isTableBonusPerRound()) {
+                                // Find Round
+                                Round round = null;
+                                for (int cpt = 0; cpt < Tournament.getTournament().getRoundsCount(); cpt++) {
+
+                                    Round r = Tournament.getTournament().getRound(cpt);
+                                    if (r.containsMatch(m)) {
+                                        round = r;
+                                    }
+                                }
+                                if (round != null) {
+                                    if (round.getMatchsCount() > 0) {
+                                        double fBonus = bonus * round.getCoef(m);
+                                        bonus = (int) Math.round(fBonus);
+                                    }
+
+                                }
+                            }
+
+                            value += bonus;
                         }
                     }
                     if (withMainPoints) {
@@ -397,13 +427,39 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                             }
                         }
                         if (withBonusPOints) {
+                            int bonus = 0;
                             for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
 
                                 final Criteria cri = Tournament.getTournament().getParams().getCriteria(j);
                                 final Value va = m.getValue(cri);
-                                value += va.getValue2() * cri.getPointsFor();
-                                value += va.getValue1() * cri.getPointsAgainst();
+                                bonus += va.getValue2() * cri.getPointsFor();
+                                bonus += va.getValue1() * cri.getPointsAgainst();
                             }
+                            if (Tournament.getTournament().getParams().isTableBonus()) {
+                                double coef = Tournament.getTournament().getParams().getTableBonusCoef();
+                                bonus += Math.round(getCoachTable(c, m) * coef);
+                            }
+
+                            if (Tournament.getTournament().getParams().isTableBonusPerRound()) {
+                                // Find Round
+                                Round round = null;
+                                for (int cpt = 0; cpt < Tournament.getTournament().getRoundsCount(); cpt++) {
+
+                                    Round r = Tournament.getTournament().getRound(cpt);
+                                    if (r.containsMatch(m)) {
+                                        round = r;
+                                    }
+                                }
+                                if (round != null) {
+                                    if (round.getMatchsCount() > 0) {
+                                        double fBonus = bonus * round.getCoef(m);
+                                        bonus = (int) Math.round(fBonus);
+                                    }
+
+                                }
+                            }
+
+                            value += bonus;
                         }
                     }
                     if (withMainPoints) {
@@ -869,11 +925,31 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                                 }
                             }
                             if (withBonus) {
+
+                                int bonus = 0;
                                 for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
                                     final Criteria criteria = Tournament.getTournament().getParams().getCriteria(k);
-                                    value += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamFor();
-                                    value += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamAgainst();
+                                    bonus += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamFor();
+                                    bonus += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamAgainst();
                                 }
+                                if (Tournament.getTournament().getParams().isTableBonus()) {
+                                    double coef = Tournament.getTournament().getParams().getTableBonusCoef();
+                                    bonus += Math.round(getCoachTable(c, m) * coef);
+                                }
+
+                                if (Tournament.getTournament().getParams().isTableBonusPerRound()) {
+                                    // Find Round
+                                    Round round = Tournament.getTournament().getRound(i);
+
+                                    if (round != null) {
+                                        if (round.getMatchsCount() > 0) {
+                                            double fBonus = bonus * round.getCoef(m);
+                                            bonus = (int) Math.round(fBonus);
+                                        }
+
+                                    }
+                                }
+                                value += bonus;
                             }
 
                         } else {
@@ -885,11 +961,30 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                                 }
                             }
                             if (withBonus) {
+                                int bonus = 0;
                                 for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
                                     final Criteria criteria = Tournament.getTournament().getParams().getCriteria(k);
-                                    value += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamFor();
-                                    value += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamAgainst();
+                                    bonus += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamFor();
+                                    bonus += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamAgainst();
                                 }
+                                if (Tournament.getTournament().getParams().isTableBonus()) {
+                                    double coef = Tournament.getTournament().getParams().getTableBonusCoef();
+                                    bonus += Math.round(getCoachTable(c, m) * coef);
+                                }
+
+                                if (Tournament.getTournament().getParams().isTableBonusPerRound()) {
+                                    // Find Round
+                                    Round round = Tournament.getTournament().getRound(i);
+
+                                    if (round != null) {
+                                        if (round.getMatchsCount() > 0) {
+                                            double fBonus = bonus * round.getCoef(m);
+                                            bonus = (int) Math.round(fBonus);
+                                        }
+
+                                    }
+                                }
+                                value += bonus;
                             }
                         }
                     }
@@ -1065,9 +1160,9 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 //for (int i = 0; i <= mRound; i++) {
                 final CoachMatch m = (CoachMatch) c.getMatch(i);
                 if (m.getCompetitor1() == c) {
-                    value += getPointsByTeam(((Coach) m.getCompetitor2()).getTeamMates(), tm, includeCurrent,true,true);
+                    value += getPointsByTeam(((Coach) m.getCompetitor2()).getTeamMates(), tm, includeCurrent, true, true);
                 } else {
-                    value += getPointsByTeam(((Coach) m.getCompetitor1()).getTeamMates(), tm, includeCurrent,true,true);
+                    value += getPointsByTeam(((Coach) m.getCompetitor1()).getTeamMates(), tm, includeCurrent, true, true);
                 }
                 i++;
             }

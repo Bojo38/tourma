@@ -11,6 +11,7 @@
 package tourma;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.io.File;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -25,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -166,7 +169,7 @@ public final class MainFrame extends javax.swing.JFrame {
             jmiFullScreenRankAnnexClan1.setEnabled(mTournament.getClansCount() > 1);
             jmiFullScreenRankAnnexTeam.setEnabled(mTournament.getParams().isTeamTournament());
             jmiFullScreenRankAnnexTeam1.setEnabled(mTournament.getParams().isTeamTournament());
-
+            jmiEditCoef.setEnabled(mTournament.getParams().isTableBonusPerRound());
         } else {
             jckmiRoundOnly.setEnabled(false);
             jmiDelRound.setEnabled(false);
@@ -198,6 +201,7 @@ public final class MainFrame extends javax.swing.JFrame {
             jmiFullScreenRankAnnexPool.setEnabled(false);
             jmiFullScreenRankAnnexPool1.setEnabled(false);
             jmiFullScreenPool.setEnabled(false);
+            jmiEditCoef.setEnabled(false);
         }
     }
 
@@ -276,6 +280,7 @@ public final class MainFrame extends javax.swing.JFrame {
         jmiDelRound = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         jmiChangePairing = new javax.swing.JMenuItem();
+        jmiEditCoef = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         jckmiRoundOnly = new javax.swing.JCheckBoxMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
@@ -531,7 +536,7 @@ public final class MainFrame extends javax.swing.JFrame {
         jmnRound.add(jSeparator7);
 
         jmiDelRound.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
-        jmiDelRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
+        jmiDelRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/trashcan_empty.png"))); // NOI18N
         jmiDelRound.setText(bundle.getString("DeleteCurrentRoundKey")); // NOI18N
         jmiDelRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -550,6 +555,16 @@ public final class MainFrame extends javax.swing.JFrame {
             }
         });
         jmnRound.add(jmiChangePairing);
+
+        jmiEditCoef.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
+        jmiEditCoef.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/reload.png"))); // NOI18N
+        jmiEditCoef.setText(bundle.getString("ChangeCoef")); // NOI18N
+        jmiEditCoef.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditCoefActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jmiEditCoef);
         jmnRound.add(jSeparator9);
 
         jckmiRoundOnly.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
@@ -1309,6 +1324,35 @@ public final class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmiDelRoundActionPerformed
 
+    private void editRoundCoef(Round r) {
+        JPanel jpn = new JPanel();
+        jpn.setLayout(new GridLayout(2, 2));
+        JLabel jlb1 = new JLabel("Coefficient pour la première table :");
+        jlb1.setHorizontalAlignment(JLabel.TRAILING);
+        JLabel jlb2 = new JLabel("Coefficient pour la dernière table :");
+        jlb2.setHorizontalAlignment(JLabel.TRAILING);
+
+        JFormattedTextField jftf1 = new JFormattedTextField(new DecimalFormat("####.##"));
+        jftf1.setValue(new Double(r.getMaxBonus()));
+
+        JFormattedTextField jftf2 = new JFormattedTextField(new DecimalFormat("####.##"));
+        jftf2.setValue(new Double(r.getMinBonus()));
+
+        jpn.add(jlb1);
+        jpn.add(jftf1);
+        jpn.add(jlb2);
+        jpn.add(jftf2);
+
+        int res = JOptionPane.showConfirmDialog(this, jpn, "Round coefficient", JOptionPane.OK_CANCEL_OPTION);
+        if (res == JOptionPane.OK_OPTION) {
+            Double val1 = (Double) jftf1.getValue();
+            r.setMaxBonus(val1);
+            Double val2 = (Double) jftf2.getValue();
+            r.setMinBonus(val2);
+            update();
+        }
+    }
+
     private void jmiGenerateNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateNextRoundActionPerformed
 
         final ArrayList<String> labels = new ArrayList<>();
@@ -1319,6 +1363,8 @@ public final class MainFrame extends javax.swing.JFrame {
             JPNRound jpnr = (JPNRound) jpnContent;
             Round round = jpnr.getRound();
             int round_number = mTournament.indexOfRound(round);
+            
+
             /**
              * Swiss possible ?
              */
@@ -1372,6 +1418,12 @@ public final class MainFrame extends javax.swing.JFrame {
             final int index = jcb.getSelectedIndex();
 
             Generation.nextRound(round, Options.get(index), round_number);
+            
+            
+            if (mTournament.getParams().isTableBonusPerRound()) {
+                editRoundCoef(mTournament.getRound(mTournament.getRoundsCount()-1));
+            }
+            
             if (jpnContent instanceof JPNRound) {
                 ((JPNRound) jpnContent).update();
                 update();
@@ -2026,6 +2078,16 @@ public final class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmiFullScreenRankAnnexPool1ActionPerformed
 
+    private void jmiEditCoefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditCoefActionPerformed
+
+        if (jpnContent instanceof JPNRound) {
+            JPNRound jpnr = ((JPNRound) jpnContent);
+
+            editRoundCoef(jpnr.getRound());
+        }
+
+    }//GEN-LAST:event_jmiEditCoefActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2255,6 +2317,7 @@ public final class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiConceedMatch;
     private javax.swing.JMenuItem jmiDelFreeMatch;
     private javax.swing.JMenuItem jmiDelRound;
+    private javax.swing.JMenuItem jmiEditCoef;
     private javax.swing.JMenuItem jmiEditTeam;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
