@@ -56,7 +56,7 @@ and open the template in the editor.
             <double>
                 <skillType>Strength</skillType>
                 <skillType>Agility</skillType>
-                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
             </double>
         </playerType>
         <playerType>

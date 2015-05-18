@@ -37,6 +37,7 @@ import teamma.data.StarPlayer;
 import teamma.tableModel.MjtTeamPlayers;
 import teamma.tableModel.MjtTeamStars;
 import teamma.views.report.JdgPrintableRoster;
+import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Tournament;
 import tourma.utility.ExtensionFileFilter;
@@ -53,6 +54,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     /**
      * Creates new form JdgRoster
+     *
      * @param parent
      * @param modal
      */
@@ -61,11 +63,11 @@ public final class JdgRoster extends javax.swing.JDialog {
     }
 
     /**
-     * 
+     *
      * @param parent
      * @param coach
      * @param roster
-     * @param modal 
+     * @param modal
      */
     public JdgRoster(java.awt.Frame parent, Coach coach, Roster roster, boolean modal) {
         super(parent, modal);
@@ -91,10 +93,9 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         this.setSize(1024, 768);
 
-            int screenWidth = dmode.getWidth();
-            int screenHeight = dmode.getHeight();
-            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        
+        int screenWidth = dmode.getWidth();
+        int screenHeight = dmode.getHeight();
+        this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
         update();
         jbtAddSkill.setEnabled(false);
@@ -1142,24 +1143,26 @@ public final class JdgRoster extends javax.swing.JDialog {
         String input = (String) JOptionPane.showInputDialog(null,
                 "Choisissez le roster", "Choix du roster", JOptionPane.INFORMATION_MESSAGE,
                 null, rosterlist.toArray(), "Amazons");
-        RosterType rt = LRB.getLRB().getRosterType(input);
-        if (_coach != null) {
-            _coach.setRoster(tourma.data.RosterType.getRosterType(input));
-        }
-        if (rt != null) {
-            if (_data.getRoster() != rt) {
-                _data.setRoster(rt);
-                _data.clearPlayers();
+        if (input != null) {
+            RosterType rt = LRB.getLRB().getRosterType(input);
+            if (_coach != null) {
+                _coach.setRoster(tourma.data.RosterType.getRosterType(input));
             }
-            if (rt.getImage() != null) {
-                ImageIcon image = new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + rt.getImage()));
-                jlbIcon.setIcon(image); // NOI18N
+            if (rt != null) {
+                if (_data.getRoster() != rt) {
+                    _data.setRoster(rt);
+                    _data.clearPlayers();
+                }
+                if (rt.getImage() != null) {
+                    ImageIcon image = new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + rt.getImage()));
+                    jlbIcon.setIcon(image); // NOI18N
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Erreur de choix du roster: " + input);
-        }
 
-        update();
+            update();
+        }
 
     }//GEN-LAST:event_jlbRosterTypeMouseClicked
 
@@ -1221,6 +1224,9 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
         this.setVisible(false);
+        if (MainFrame.getMainFrame() == null) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_jbtOKActionPerformed
 
     private void jtbPlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbPlayersMouseClicked
@@ -1462,6 +1468,14 @@ public final class JdgRoster extends javax.swing.JDialog {
                 final Element racine = document.getRootElement();
                 _data = new Roster();
                 _data.setXMLElement(racine);
+
+                if (_data.getRoster() != null) {
+                    if (_data.getRoster().getImage() != null) {
+                        ImageIcon image = new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data.getRoster().getImage()));
+                        jlbIcon.setIcon(image); // NOI18N
+                    }
+                }
+
             } catch (JDOMException e) {
                 JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
 
@@ -1501,7 +1515,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jbtSelectCoach.setEnabled(Tournament.getTournament().getActiveCoachNumber() > 0);
 
         jbtAdd.setEnabled(_data.getChampionCount() + _data.getPlayerCount() < 16);
-        jbtRemove.setEnabled(_data.getPlayerCount()> 0);
+        jbtRemove.setEnabled(_data.getPlayerCount() > 0);
 
         /**
          * Players
@@ -1847,12 +1861,12 @@ public final class JdgRoster extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
 
-/*private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
+    /*private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+     throw new java.io.NotSerializableException(getClass().getName());
+     }
 
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
+     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+     throw new java.io.NotSerializableException(getClass().getName());
+     }*/
     private static final Logger LOG = Logger.getLogger(JdgRoster.class.getName());
 }
