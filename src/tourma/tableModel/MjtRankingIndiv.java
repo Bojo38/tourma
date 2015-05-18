@@ -28,21 +28,21 @@ import tourma.utils.ImageTreatment;
  * @author Frederic Berger
  */
 public final class MjtRankingIndiv extends MjtRanking {
+
     private static final Logger LOG = Logger.getLogger(MjtRankingIndiv.class.getName());
 
     private final boolean mTeamTournament;
     private boolean mPositive;
     private final boolean mForPool;
 
-    
-    public MjtRankingIndiv(final int round, 
+    public MjtRankingIndiv(final int round,
             final int ranking_type1,
             final int ranking_type2,
             final int ranking_type3,
             final int ranking_type4,
             final int ranking_type5,
             final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs,round_only);
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs, round_only);
         mTeamTournament = tournament;
         mForPool = forPool;
         sortDatas();
@@ -68,70 +68,67 @@ public final class MjtRankingIndiv extends MjtRanking {
 
         for (int i = 0; i < mObjects.size(); i++) {
             final Coach c = (Coach) mObjects.get(i);
-            if (c.getMatchCount() > 0) {
+            if (c.isActive()) {
                 int value1 = 0;
                 int value2 = 0;
                 int value3 = 0;
                 int value4 = 0;
                 int value5 = 0;
+                if (c.getMatchCount() > 0) {
 
-                for (int j = 0; j <= c.getMatchCount() - 1; j++) {
+                    for (int j = 0; j <= c.getMatchCount() - 1; j++) {
 
-                    final CoachMatch m = (CoachMatch) c.getMatch(j);
-                    boolean bFound = false;
-                    for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
-                        final Round r = rounds.get(l);
-                        if (r.getCoachMatchs().contains(m)) {
-                            bFound = true;
+                        final CoachMatch m = (CoachMatch) c.getMatch(j);
+                        boolean bFound = false;
+                        for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
+                            final Round r = rounds.get(l);
+                            if (r.getCoachMatchs().contains(m)) {
+                                bFound = true;
+                            }
                         }
-                    }
-                    // test if match is in round
-                    if (bFound) {
-                        final Criteria c1 = getCriteriaByValue(mRankingType1);
-                        final int subType1 = getSubtypeByValue(mRankingType1);
-                        if (c1 == null) {
-                            value1 = getValue(c, m, mRankingType1, value1);
-                        } else {
-                            value1 += getValue(c, m, c1, subType1);
-                        }
+                        // test if match is in round
+                        if (bFound) {
+                            final Criteria c1 = getCriteriaByValue(mRankingType1);
+                            final int subType1 = getSubtypeByValue(mRankingType1);
+                            if (c1 == null) {
+                                value1 = getValue(c, m, mRankingType1, value1);
+                            } else {
+                                value1 += getValue(c, m, c1, subType1);
+                            }
 
-                        final Criteria c2 = getCriteriaByValue(mRankingType2);
-                        final int subType2 = getSubtypeByValue(mRankingType2);
-                        if (c2 == null) {
-                            value2 = getValue(c, m, mRankingType2, value2);
-                        } else {
-                            value2 += getValue(c, m, c1, subType2);
-                        }
+                            final Criteria c2 = getCriteriaByValue(mRankingType2);
+                            final int subType2 = getSubtypeByValue(mRankingType2);
+                            if (c2 == null) {
+                                value2 = getValue(c, m, mRankingType2, value2);
+                            } else {
+                                value2 += getValue(c, m, c1, subType2);
+                            }
 
-                        final Criteria c3 = getCriteriaByValue(mRankingType3);
-                        final int subType3 = getSubtypeByValue(mRankingType3);
-                        if (c3 == null) {
-                            value3 = getValue(c, m, mRankingType3, value3);
-                        } else {
-                            value3 += getValue(c, m, c3, subType3);
-                        }
+                            final Criteria c3 = getCriteriaByValue(mRankingType3);
+                            final int subType3 = getSubtypeByValue(mRankingType3);
+                            if (c3 == null) {
+                                value3 = getValue(c, m, mRankingType3, value3);
+                            } else {
+                                value3 += getValue(c, m, c3, subType3);
+                            }
 
-                        final Criteria c4 = getCriteriaByValue(mRankingType4);
-                        final int subType4 = getSubtypeByValue(mRankingType4);
-                        if (c4 == null) {
-                            value4 = getValue(c, m, mRankingType4, value4);
-                        } else {
-                            value4 += getValue(c, m, c4, subType4);
-                        }
+                            final Criteria c4 = getCriteriaByValue(mRankingType4);
+                            final int subType4 = getSubtypeByValue(mRankingType4);
+                            if (c4 == null) {
+                                value4 = getValue(c, m, mRankingType4, value4);
+                            } else {
+                                value4 += getValue(c, m, c4, subType4);
+                            }
 
-                        final Criteria c5 = getCriteriaByValue(mRankingType5);
-                        final int subType5 = getSubtypeByValue(mRankingType5);
-                        if (c5 == null) {
-                            value5 = getValue(c, m, mRankingType5, value5);
-                        } else {
-                            value5 += getValue(c, m, c5, subType5);
-                        }
+                            final Criteria c5 = getCriteriaByValue(mRankingType5);
+                            final int subType5 = getSubtypeByValue(mRankingType5);
+                            if (c5 == null) {
+                                value5 = getValue(c, m, mRankingType5, value5);
+                            } else {
+                                value5 += getValue(c, m, c5, subType5);
+                            }
 
-                        /*value1 = getValue(c, matchs, mRankingType1, _rounds);
-                         value2 = getValue(c, matchs, mRankingType2, _rounds);
-                         value3 = getValue(c, matchs, mRankingType3, _rounds);
-                         value4 = getValue(c, matchs, mRankingType4, _rounds);
-                         value5 = getValue(c, matchs, mRankingType5, _rounds);*/
+                        }
                     }
                 }
                 mDatas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
@@ -155,7 +152,6 @@ public final class MjtRankingIndiv extends MjtRanking {
                     final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.getCompetitors(), mTeamTournament, mRoundOnly, false);
                     pRank.add(mjtr);
                 }
-
 
                 final ArrayList datas = new ArrayList();
 
@@ -342,17 +338,16 @@ public final class MjtRankingIndiv extends MjtRanking {
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        if (Tournament.getTournament().getParams().isUseImage())
-        {
-        if ((column == 1) && mTeamTournament) {
-            Coach c = (Coach)mObjects.get(row);
-            if (c.getTeamMates().getPicture() != null) {
-                ImageIcon icon = ImageTreatment.resize(new ImageIcon(c.getTeamMates().getPicture()), 30, 30);
-                obj.setIcon(icon);
-                obj.setOpaque(true);
-                return obj;
+        if (Tournament.getTournament().getParams().isUseImage()) {
+            if ((column == 1) && mTeamTournament) {
+                Coach c = (Coach) mObjects.get(row);
+                if (c.getTeamMates().getPicture() != null) {
+                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(c.getTeamMates().getPicture()), 30, 30);
+                    obj.setIcon(icon);
+                    obj.setOpaque(true);
+                    return obj;
+                }
             }
-        }
         }
         return obj;
     }

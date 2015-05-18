@@ -1959,7 +1959,8 @@ public final class Generation {
             final boolean forPool = (tour.getPoolCount() > 0) && (!tour.getRound(roundnumber).isCup());
             final ArrayList<Coach> coaches = new ArrayList<>();
             for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                coaches.add(Tournament.getTournament().getCoach(i));
+                Coach coach=Tournament.getTournament().getCoach(i);                
+                coaches.add(coach);
             }
             ranking = new MjtRankingIndiv(roundnumber, tour.getParams().getRankingIndiv1(), tour.getParams().getRankingIndiv2(), tour.getParams().getRankingIndiv3(), tour.getParams().getRankingIndiv4(), tour.getParams().getRankingIndiv5(),
                     coaches, false, false, forPool);
