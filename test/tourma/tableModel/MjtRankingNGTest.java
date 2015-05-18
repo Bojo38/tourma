@@ -53,7 +53,7 @@ public class MjtRankingNGTest {
         Coach c = null;
         CoachMatch m = null;
         int expResult = 0;
-        int result = MjtRanking.getOppPointsByCoach(c, m);
+        int result = MjtRanking.getOppPointsByCoach(c, m,true);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -128,8 +128,8 @@ public class MjtRankingNGTest {
         Coach c = null;
         CoachMatch m = null;
         int expResult = 0;
-        int result = MjtRanking.getPointsByCoach(c, m);
-        assertEquals(result, expResult);
+//        int result = MjtRanking.getPointsByCoach(c, m,true);
+//        assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -336,8 +336,8 @@ public class MjtRankingNGTest {
         Team t = null;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getPointsByTeam(t);
-        assertEquals(result, expResult);
+        //int result = instance.getPointsByTeam(t, true,true,true);
+//        assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -367,8 +367,8 @@ public class MjtRankingNGTest {
         Team t = null;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getVNDByTeam(t);
-        assertEquals(result, expResult);
+//        int result = instance.getVNDByTeam(t);
+//        assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -382,8 +382,8 @@ public class MjtRankingNGTest {
         Team t = null;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getOppPointsByTeam(t);
-        assertEquals(result, expResult);
+//        int result = instance.getOppPointsByTeam(t);
+//        assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -415,8 +415,8 @@ public class MjtRankingNGTest {
         boolean teamVictory = false;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getValue(t, rankingType, teamVictory);
-        assertEquals(result, expResult);
+//        int result = instance.getValue(t, rankingType, teamVictory);
+//        assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -450,8 +450,8 @@ public class MjtRankingNGTest {
         boolean teamVictory = false;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getValue(t, rankingType, v, teamVictory);
-        assertEquals(result, expResult);
+//        int result = instance.getValue(t, rankingType, v, teamVictory);
+//        assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
