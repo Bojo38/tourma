@@ -91,6 +91,7 @@ public final class JPNParameters extends javax.swing.JPanel {
 
         jtbCoachs.setDefaultRenderer(String.class, coachModel);
         jtbCoachs.setDefaultRenderer(Integer.class, coachModel);
+        jtbCoachs.setAutoCreateRowSorter(true);
 
     }
 
