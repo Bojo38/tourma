@@ -340,6 +340,9 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
             jtbPositive.setRowHeight(25);
             jtbNegative.setRowHeight(25);
+            
+            jtbPositive.setAutoCreateRowSorter(true);
+            jtbNegative.setAutoCreateRowSorter(true);
         }
     }
     private static final Logger LOG = Logger.getLogger(JPNAnnexRanking.class.getName());
