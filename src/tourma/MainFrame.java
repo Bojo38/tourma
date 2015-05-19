@@ -14,6 +14,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -33,6 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.ProgressMonitor;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -78,7 +81,7 @@ import tourma.views.system.JdgRevisions;
  * @author Frederic Berger
  */
 //@com.yworks.util.annotation.Obfuscation ( exclude = true, applyToMembers = true )
-public final class MainFrame extends javax.swing.JFrame {
+public final class MainFrame extends javax.swing.JFrame implements PropertyChangeListener  {
 
     private Tournament mTournament;
     private File mFile = null;
@@ -1287,19 +1290,30 @@ public final class MainFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jtrPanelsValueChanged
 
+    ProgressMonitor progressMonitor;
+    
     private void jmiNafLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNafLoadActionPerformed
 
-        ProgressMonitor progressMonitor = new ProgressMonitor(this,
+        progressMonitor = new ProgressMonitor(this,
                 java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DownloadFromNAF"),
                 java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Downloading"), 0, Tournament.getTournament().getCoachsCount());
         progressMonitor.setProgress(0);
+        
+        task = new NafTask();
+        task.addPropertyChangeListener(this);
+        task.execute();
+        
+       /* progressMonitor.setMinimum(0);
+        progressMonitor.setMaximum(Tournament.getTournament().getCoachsCount());
+        
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             Coach c = Tournament.getTournament().getCoach(i);
             progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download0") + " " + c.getName());
             c.setNafRank(NAF.getRanking(c.getName(), c));
             progressMonitor.setProgress(i + 1);
         }
-        progressMonitor.close();
+        progressMonitor.close();*/
+        
         update();
     }//GEN-LAST:event_jmiNafLoadActionPerformed
 
@@ -2199,6 +2213,43 @@ public final class MainFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jmiEditCoefActionPerformed
 
+    private NafTask task;
+
+  class NafTask extends SwingWorker<Void, Void> {
+    @Override
+    public Void doInBackground() {
+
+      setProgress(0);
+      try {
+        Thread.sleep(100);
+        
+        for (int i = 0; (i < Tournament.getTournament().getCoachsCount()) && (!isCancelled()) ; i++) {
+            Coach c = Tournament.getTournament().getCoach(i);
+            progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download") + " " + c.getName());
+            c.setNafRank(NAF.getRanking(c.getName(), c));
+            progressMonitor.setProgress(i + 1);
+        }
+ 
+      } catch (InterruptedException ignore) {
+      }
+      return null;
+    }
+
+    @Override
+    public void done() {
+      Toolkit.getDefaultToolkit().beep();
+      
+      progressMonitor.setProgress(0);
+      progressMonitor.close();
+      
+      if (jpnContent instanceof JPNParameters)
+      {
+          ((JPNParameters)jpnContent).update();
+      }      
+    }
+    
+  }
+    
     /**
      * @param args the command line arguments
      */
@@ -2481,4 +2532,24 @@ public final class MainFrame extends javax.swing.JFrame {
         throw new java.io.NotSerializableException(getClass().getName());
     }
     private static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
+    
+    
+    public void propertyChange(PropertyChangeEvent evt) {
+    if ("progress" == evt.getPropertyName()) {
+      int progress = (Integer) evt.getNewValue();
+      progressMonitor.setProgress(progress);
+      String message = String.format("Completed %d%%.\n", progress);
+      progressMonitor.setNote(message);
+      //taskOutput.append(message);
+      if (progressMonitor.isCanceled() || task.isDone()) {
+        Toolkit.getDefaultToolkit().beep();
+        if (progressMonitor.isCanceled()) {
+          task.cancel(true);
+          //taskOutput.append("Task canceled.\n");
+        } else {
+          //taskOutput.append("Task completed.\n");
+        }
+      }
+    }
+  }
 }
