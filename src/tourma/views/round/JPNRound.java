@@ -55,6 +55,7 @@ public final class JPNRound extends javax.swing.JPanel {
     private JPNTeamRound mJpnTeamRound = null;
     private JPNClanRound mJpnClanRound = null;
     private boolean mRoundOnly = false;
+    private boolean mNafOnly = false;
 
     /**
      * Creates new form JPNRound
@@ -127,6 +128,9 @@ public final class JPNRound extends javax.swing.JPanel {
             jtpAnnexRankings.add(criteria.getName(), jpn);
         }
 
+        mNafOnly=MainFrame.getMainFrame().isNafOnly();
+        mRoundOnly=MainFrame.getMainFrame().isRoundOnly();
+        
         update();
     }
 
@@ -164,7 +168,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
 //            jbtDeleteRound.setEnabled(!locked);
 
-            final MjtMatches model = new MjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().isTeamTournament(), true);
+            final MjtMatches model = new MjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().isTeamTournament(), true,mNafOnly);
             jtbMatches.setModel(model);
             jtbMatches.setDefaultRenderer(String.class, model);
             jtbMatches.setDefaultRenderer(Integer.class, model);
@@ -465,6 +469,10 @@ public final class JPNRound extends javax.swing.JPanel {
      */
     public void setRoundOnly(boolean roundonly) {
         mRoundOnly = roundonly;
+    }
+    
+    public void setNafOnly(boolean nafonly) {
+        mNafOnly = nafonly;
     }
 
     private void jtbMatchesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbMatchesMouseClicked

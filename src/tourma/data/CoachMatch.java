@@ -535,4 +535,11 @@ public class CoachMatch extends Match {
     /*public void setValues(HashMap<Criteria, Value> mValues) {
      this.mValues = mValues;
      }*/
+    
+    public boolean isFullNaf()
+    {
+        Coach c1=(Coach)getCompetitor1();
+        Coach c2=(Coach)getCompetitor2();
+        return (c1.getNaf()>0)&&(c2.getNaf()>0);
+    }
 }

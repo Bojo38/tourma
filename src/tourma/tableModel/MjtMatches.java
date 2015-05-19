@@ -36,6 +36,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
     private final boolean mLocked;
     private final boolean mTeamTournament;
     private final boolean mFull;
+    private final boolean mNafOnly;
 
     /**
      *
@@ -44,11 +45,28 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
      * @param teamTournament
      * @param full
      */
-    public MjtMatches(final ArrayList<CoachMatch> matchs, final boolean locked, final boolean teamTournament, final boolean full) {
-        mMatchs = matchs;
+    public MjtMatches(final ArrayList<CoachMatch> matchs, final boolean locked, final boolean teamTournament, final boolean full,final boolean nafOnly) {
+        mMatchs = new ArrayList<>();
         mLocked = locked;
         mTeamTournament = teamTournament;
         mFull = full;
+        mNafOnly=nafOnly;
+        
+        if (mNafOnly)
+        {
+            for (int i=0; i<matchs.size(); i++)
+            {
+                CoachMatch m=matchs.get(i);
+                if (m.isFullNaf())
+                {
+                    mMatchs.add(m);
+                }
+            }
+        }
+        else
+        {
+            mMatchs.addAll(matchs);
+        }
     }
 
     @Override
@@ -64,7 +82,8 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public int getRowCount() {
-        return mMatchs.size();
+        int count=mMatchs.size();        
+        return count;
     }
 
     @Override

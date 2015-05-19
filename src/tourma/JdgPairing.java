@@ -95,7 +95,7 @@ teamMatch=teammatch;
         jcbTeam1.setModel(new DefaultComboBoxModel(mItems1.toArray()));
         jcbTeam2.setModel(new DefaultComboBoxModel(mItems2.toArray()));
 
-        final MjtMatches model = new MjtMatches(mMatchs, true, true, false);
+        final MjtMatches model = new MjtMatches(mMatchs, true, true, false,false);
         jtbMatches.setModel(model);
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);

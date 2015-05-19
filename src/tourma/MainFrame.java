@@ -81,7 +81,7 @@ import tourma.views.system.JdgRevisions;
  * @author Frederic Berger
  */
 //@com.yworks.util.annotation.Obfuscation ( exclude = true, applyToMembers = true )
-public final class MainFrame extends javax.swing.JFrame implements PropertyChangeListener  {
+public final class MainFrame extends javax.swing.JFrame implements PropertyChangeListener {
 
     private Tournament mTournament;
     private File mFile = null;
@@ -167,6 +167,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiFullScreenMatchs.setEnabled(true);
             jmiFullScreenMatchsClash.setEnabled(true);
             jckmiRoundOnly.setEnabled(true);
+            jckmiHideNonNaf.setEnabled(true);
             jmiFullScreenRankTeam.setEnabled(mTournament.getParams().isTeamTournament());
             jmiFullScreenRankClan.setEnabled(mTournament.getClansCount() > 1);
             jmiFullScreenRankAnnexClan.setEnabled(mTournament.getClansCount() > 1);
@@ -176,6 +177,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiEditCoef.setEnabled(mTournament.getParams().isTableBonusPerRound());
         } else {
             jckmiRoundOnly.setEnabled(false);
+            jckmiHideNonNaf.setEnabled(false);
             jmiDelRound.setEnabled(false);
             jmiGenerateNextRound.setEnabled(false);
             jmiChangePairing.setEnabled(false);
@@ -287,10 +289,12 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiEditCoef = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         jckmiRoundOnly = new javax.swing.JCheckBoxMenuItem();
+        jckmiHideNonNaf = new javax.swing.JCheckBoxMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         jmiAddFreeMatch = new javax.swing.JMenuItem();
         jmiDelFreeMatch = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
+        jMenu1 = new javax.swing.JMenu();
         jmiFullScreenMatchs = new javax.swing.JMenuItem();
         jmiFullScreenMatchsClash = new javax.swing.JMenuItem();
         jmiFullScreenRankGeneral = new javax.swing.JMenuItem();
@@ -579,6 +583,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnRound.add(jckmiRoundOnly);
+
+        jckmiHideNonNaf.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jckmiHideNonNaf.setText(bundle.getString("HideNonNaf")); // NOI18N
+        jckmiHideNonNaf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jckmiHideNonNafActionPerformed(evt);
+            }
+        });
+        jmnRound.add(jckmiHideNonNaf);
         jmnRound.add(jSeparator10);
 
         jmiAddFreeMatch.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ADD, java.awt.event.InputEvent.CTRL_MASK));
@@ -602,6 +615,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnRound.add(jmiDelFreeMatch);
         jmnRound.add(jSeparator12);
 
+        jMenu1.setText(bundle.getString("FullScreen")); // NOI18N
+
         jmiFullScreenMatchs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenMatchs.setText(bundle.getString("FullScreenMatchIndiv")); // NOI18N
         jmiFullScreenMatchs.addActionListener(new java.awt.event.ActionListener() {
@@ -609,7 +624,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenMatchsActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenMatchs);
+        jMenu1.add(jmiFullScreenMatchs);
 
         jmiFullScreenMatchsClash.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jmiFullScreenMatchsClash.setText(bundle.getString("FullScreenMatchIndivClash")); // NOI18N
@@ -618,7 +633,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenMatchsClashActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenMatchsClash);
+        jMenu1.add(jmiFullScreenMatchsClash);
 
         jmiFullScreenRankGeneral.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankGeneral.setText(bundle.getString("FullScreenIndivRank")); // NOI18N
@@ -627,7 +642,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankGeneralActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankGeneral);
+        jMenu1.add(jmiFullScreenRankGeneral);
 
         jmiFullScreenRankAnnexIndiv.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankAnnexIndiv.setText(bundle.getString("FullScreenIndivAnnexRank")); // NOI18N
@@ -636,7 +651,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexIndivActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexIndiv);
+        jMenu1.add(jmiFullScreenRankAnnexIndiv);
 
         jmiFullScreenRankAnnexIndiv1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankAnnexIndiv1.setText(bundle.getString("FullScreenIndivAnnexShort")); // NOI18N
@@ -645,7 +660,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexIndiv1ActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexIndiv1);
+        jMenu1.add(jmiFullScreenRankAnnexIndiv1);
 
         jmiFullScreenRankTeam.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankTeam.setText(bundle.getString("FullScreenTeamRank")); // NOI18N
@@ -654,7 +669,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankTeamActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankTeam);
+        jMenu1.add(jmiFullScreenRankTeam);
 
         jmiFullScreenRankAnnexTeam.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankAnnexTeam.setText(bundle.getString("FullScreenTeamAnnexRank")); // NOI18N
@@ -663,7 +678,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexTeamActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexTeam);
+        jMenu1.add(jmiFullScreenRankAnnexTeam);
 
         jmiFullScreenRankAnnexTeam1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankAnnexTeam1.setText(bundle.getString("FullScreenTeamAnnexRankShort")); // NOI18N
@@ -672,7 +687,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexTeam1ActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexTeam1);
+        jMenu1.add(jmiFullScreenRankAnnexTeam1);
 
         jmiFullScreenRankClan.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankClan.setText(bundle.getString("FullScreenClanRank")); // NOI18N
@@ -681,7 +696,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankClanActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankClan);
+        jMenu1.add(jmiFullScreenRankClan);
 
         jmiFullScreenRankAnnexClan.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankAnnexClan.setText(bundle.getString("FullScreenClanAnnexRank")); // NOI18N
@@ -690,7 +705,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexClanActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexClan);
+        jMenu1.add(jmiFullScreenRankAnnexClan);
 
         jmiFullScreenRankAnnexClan1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
         jmiFullScreenRankAnnexClan1.setText(bundle.getString("FullScreenClanAnnexRankShort")); // NOI18N
@@ -699,7 +714,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexClan1ActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexClan1);
+        jMenu1.add(jmiFullScreenRankAnnexClan1);
 
         jmiFullScreenRankGroups.setText(bundle.getString("FullScreenGroupRank")); // NOI18N
         jmiFullScreenRankGroups.addActionListener(new java.awt.event.ActionListener() {
@@ -707,7 +722,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankGroupsActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankGroups);
+        jMenu1.add(jmiFullScreenRankGroups);
 
         jmiFullScreenRankAnnexGroups.setText(bundle.getString("FullScreenGroupAnnexRank")); // NOI18N
         jmiFullScreenRankAnnexGroups.addActionListener(new java.awt.event.ActionListener() {
@@ -715,7 +730,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexGroupsActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexGroups);
+        jMenu1.add(jmiFullScreenRankAnnexGroups);
 
         jmiFullScreenRankAnnexGroups1.setText(bundle.getString("FullScreenGroupAnnexRankShort")); // NOI18N
         jmiFullScreenRankAnnexGroups1.addActionListener(new java.awt.event.ActionListener() {
@@ -723,7 +738,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexGroups1ActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexGroups1);
+        jMenu1.add(jmiFullScreenRankAnnexGroups1);
 
         jmiFullScreenRankCategory.setText(bundle.getString("FullScreenCategoryRank")); // NOI18N
         jmiFullScreenRankCategory.addActionListener(new java.awt.event.ActionListener() {
@@ -731,7 +746,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankCategoryActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankCategory);
+        jMenu1.add(jmiFullScreenRankCategory);
 
         jmiFullScreenRankAnnexCategory.setText(bundle.getString("FullScreenCategoryAnnexRank")); // NOI18N
         jmiFullScreenRankAnnexCategory.addActionListener(new java.awt.event.ActionListener() {
@@ -739,7 +754,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexCategoryActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexCategory);
+        jMenu1.add(jmiFullScreenRankAnnexCategory);
 
         jmiFullScreenRankAnnexCategory1.setText(bundle.getString("FullScreenCategoryAnnexRankShort")); // NOI18N
         jmiFullScreenRankAnnexCategory1.addActionListener(new java.awt.event.ActionListener() {
@@ -747,7 +762,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexCategory1ActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexCategory1);
+        jMenu1.add(jmiFullScreenRankAnnexCategory1);
 
         jmiFullScreenPool.setText(bundle.getString("FullScreenPoolRank")); // NOI18N
         jmiFullScreenPool.addActionListener(new java.awt.event.ActionListener() {
@@ -755,7 +770,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenPoolActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenPool);
+        jMenu1.add(jmiFullScreenPool);
 
         jmiFullScreenRankAnnexPool.setText(bundle.getString("FullScreenPoolAnnexRank")); // NOI18N
         jmiFullScreenRankAnnexPool.addActionListener(new java.awt.event.ActionListener() {
@@ -763,7 +778,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexPoolActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexPool);
+        jMenu1.add(jmiFullScreenRankAnnexPool);
 
         jmiFullScreenRankAnnexPool1.setText(bundle.getString("FullScreenPoolAnnexRankShort")); // NOI18N
         jmiFullScreenRankAnnexPool1.addActionListener(new java.awt.event.ActionListener() {
@@ -771,7 +786,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 jmiFullScreenRankAnnexPool1ActionPerformed(evt);
             }
         });
-        jmnRound.add(jmiFullScreenRankAnnexPool1);
+        jMenu1.add(jmiFullScreenRankAnnexPool1);
+
+        jmnRound.add(jMenu1);
         jmnRound.add(jSeparator14);
 
         jmiConceedMatch.setText(bundle.getString("MatchConceed")); // NOI18N
@@ -1104,21 +1121,19 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                         }
 
                     }
-                    
+
                     if (valid) {
                         // Check that vicotry is more than 2 draw
-                        valid = (mTournament.getParams().getPointsTeamDraw()>= 2 * mTournament.getParams().getPointsTeamLost());
+                        valid = (mTournament.getParams().getPointsTeamDraw() >= 2 * mTournament.getParams().getPointsTeamLost());
                         if (!valid) {
                             JOptionPane.showMessageDialog(this, "2 Team loss are more than one team draw ", "Check", JOptionPane.ERROR_MESSAGE);
                         }
 
-                    }                                       
-                }
-                else
-                {
-                     if (valid) {
+                    }
+                } else {
+                    if (valid) {
                         // Check that vicotry is more than 2 draw
-                        valid = (mTournament.getParams().getPointsTeamVictoryBonus()>= 2 * mTournament.getParams().getPointsTeamDrawBonus());
+                        valid = (mTournament.getParams().getPointsTeamVictoryBonus() >= 2 * mTournament.getParams().getPointsTeamDrawBonus());
                         if (!valid) {
                             JOptionPane.showMessageDialog(this, "2 Team draws bonus are more than one team victory bonus", "Check", JOptionPane.ERROR_MESSAGE);
                         }
@@ -1291,29 +1306,28 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jtrPanelsValueChanged
 
     ProgressMonitor progressMonitor;
-    
+
     private void jmiNafLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNafLoadActionPerformed
 
         progressMonitor = new ProgressMonitor(this,
                 java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DownloadFromNAF"),
                 java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Downloading"), 0, Tournament.getTournament().getCoachsCount());
         progressMonitor.setProgress(0);
-        
+
         task = new NafTask();
         task.addPropertyChangeListener(this);
         task.execute();
+
+        /* progressMonitor.setMinimum(0);
+         progressMonitor.setMaximum(Tournament.getTournament().getCoachsCount());
         
-       /* progressMonitor.setMinimum(0);
-        progressMonitor.setMaximum(Tournament.getTournament().getCoachsCount());
-        
-        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            Coach c = Tournament.getTournament().getCoach(i);
-            progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download0") + " " + c.getName());
-            c.setNafRank(NAF.getRanking(c.getName(), c));
-            progressMonitor.setProgress(i + 1);
-        }
-        progressMonitor.close();*/
-        
+         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+         Coach c = Tournament.getTournament().getCoach(i);
+         progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download0") + " " + c.getName());
+         c.setNafRank(NAF.getRanking(c.getName(), c));
+         progressMonitor.setProgress(i + 1);
+         }
+         progressMonitor.close();*/
         update();
     }//GEN-LAST:event_jmiNafLoadActionPerformed
 
@@ -2213,43 +2227,60 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }//GEN-LAST:event_jmiEditCoefActionPerformed
 
+    private void jckmiHideNonNafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jckmiHideNonNafActionPerformed
+        if (jpnContent instanceof JPNRound) {
+
+            JPNRound jpnr = (JPNRound) jpnContent;
+            jpnr.setNafOnly(jckmiHideNonNaf.isSelected());
+            jpnr.update();
+        }
+    }//GEN-LAST:event_jckmiHideNonNafActionPerformed
+
+    public boolean isRoundOnly() {
+        return jckmiRoundOnly.isSelected();
+    }
+
+    public boolean isNafOnly() {
+        return jckmiHideNonNaf.isSelected();
+    }
+
     private NafTask task;
 
-  class NafTask extends SwingWorker<Void, Void> {
-    @Override
-    public Void doInBackground() {
+    class NafTask extends SwingWorker<Void, Void> {
 
-      setProgress(0);
-      try {
-        Thread.sleep(100);
-        
-        for (int i = 0; (i < Tournament.getTournament().getCoachsCount()) && (!isCancelled()) ; i++) {
-            Coach c = Tournament.getTournament().getCoach(i);
-            progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download") + " " + c.getName());
-            c.setNafRank(NAF.getRanking(c.getName(), c));
-            progressMonitor.setProgress(i + 1);
+        @Override
+        public Void doInBackground() {
+
+            setProgress(0);
+            try {
+                Thread.sleep(100);
+
+                for (int i = 0; (i < Tournament.getTournament().getCoachsCount()) && (!isCancelled()); i++) {
+                    Coach c = Tournament.getTournament().getCoach(i);
+                    progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download") + " " + c.getName());
+                    c.setNafRank(NAF.getRanking(c.getName(), c));
+                    progressMonitor.setProgress(i + 1);
+                }
+
+            } catch (InterruptedException ignore) {
+            }
+            return null;
         }
- 
-      } catch (InterruptedException ignore) {
-      }
-      return null;
+
+        @Override
+        public void done() {
+            Toolkit.getDefaultToolkit().beep();
+
+            progressMonitor.setProgress(0);
+            progressMonitor.close();
+
+            if (jpnContent instanceof JPNParameters) {
+                ((JPNParameters) jpnContent).update();
+            }
+        }
+
     }
 
-    @Override
-    public void done() {
-      Toolkit.getDefaultToolkit().beep();
-      
-      progressMonitor.setProgress(0);
-      progressMonitor.close();
-      
-      if (jpnContent instanceof JPNParameters)
-      {
-          ((JPNParameters)jpnContent).update();
-      }      
-    }
-    
-  }
-    
     /**
      * @param args the command line arguments
      */
@@ -2445,6 +2476,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         return mSingleton;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -2462,6 +2494,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JCheckBoxMenuItem jckmiHideNonNaf;
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
@@ -2532,24 +2565,23 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         throw new java.io.NotSerializableException(getClass().getName());
     }
     private static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
-    
-    
+
     public void propertyChange(PropertyChangeEvent evt) {
-    if ("progress" == evt.getPropertyName()) {
-      int progress = (Integer) evt.getNewValue();
-      progressMonitor.setProgress(progress);
-      String message = String.format("Completed %d%%.\n", progress);
-      progressMonitor.setNote(message);
-      //taskOutput.append(message);
-      if (progressMonitor.isCanceled() || task.isDone()) {
-        Toolkit.getDefaultToolkit().beep();
-        if (progressMonitor.isCanceled()) {
-          task.cancel(true);
-          //taskOutput.append("Task canceled.\n");
-        } else {
-          //taskOutput.append("Task completed.\n");
+        if ("progress" == evt.getPropertyName()) {
+            int progress = (Integer) evt.getNewValue();
+            progressMonitor.setProgress(progress);
+            String message = String.format("Completed %d%%.\n", progress);
+            progressMonitor.setNote(message);
+            //taskOutput.append(message);
+            if (progressMonitor.isCanceled() || task.isDone()) {
+                Toolkit.getDefaultToolkit().beep();
+                if (progressMonitor.isCanceled()) {
+                    task.cancel(true);
+                    //taskOutput.append("Task canceled.\n");
+                } else {
+                    //taskOutput.append("Task completed.\n");
+                }
+            }
         }
-      }
     }
-  }
 }

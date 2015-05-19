@@ -777,6 +777,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         mRankingType4 = ranking_type4;
         mRankingType5 = ranking_type5;
         mObjects = objects;
+        mRoundOnly=roundOnly;
         //sortDatas();
     }
 
