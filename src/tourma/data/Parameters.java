@@ -785,6 +785,11 @@ public class Parameters implements XMLExport {
     public Criteria getCriteria(int i) {
         return mCriterias.get(i);
     }
+    
+    public int getIndexOfCriteria(Criteria c)
+    {
+        return mCriterias.indexOf(c);
+    }
 
     /**
      * Clear the criterias array

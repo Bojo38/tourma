@@ -21,7 +21,6 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
-import static tourma.tableModel.MjtRanking.getValue;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 
@@ -249,6 +248,12 @@ public final class MjtRankingClan extends MjtRanking {
                     int value4 = 0;
                     int value5 = 0;
 
+                    ArrayList<Integer> aValue1 = new ArrayList<>();
+                    ArrayList<Integer> aValue2 = new ArrayList<>();
+                    ArrayList<Integer> aValue3 = new ArrayList<>();
+                    ArrayList<Integer> aValue4 = new ArrayList<>();
+                    ArrayList<Integer> aValue5 = new ArrayList<>();
+
                     int j = 0;
 
                     if (mRoundOnly) {
@@ -259,47 +264,20 @@ public final class MjtRankingClan extends MjtRanking {
                         //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
                         final CoachMatch m = (CoachMatch) c.getMatch(j);
 
-                        final Criteria c1 = getCriteriaByValue(mRankingType1);
-                        final int subType1 = getSubtypeByValue(mRankingType1);
-                        if (c1 == null) {
-                            value1 = getValue(c, m, mRankingType1, value1);
-                        } else {
-                            value1 += getValue(c, m, c1, subType1);
-                        }
+                        aValue1.add(getValueByRankingType(mRankingType1, c, m));
+                        aValue2.add(getValueByRankingType(mRankingType2, c, m));
+                        aValue3.add(getValueByRankingType(mRankingType3, c, m));
+                        aValue4.add(getValueByRankingType(mRankingType4, c, m));
+                        aValue5.add(getValueByRankingType(mRankingType5, c, m));
 
-                        final Criteria c2 = getCriteriaByValue(mRankingType2);
-                        final int subType2 = getSubtypeByValue(mRankingType2);
-                        if (c2 == null) {
-                            value2 = getValue(c, m, mRankingType2, value2);
-                        } else {
-                            value2 += getValue(c, m, c2, subType2);
-                        }
-
-                        final Criteria c3 = getCriteriaByValue(mRankingType3);
-                        final int subType3 = getSubtypeByValue(mRankingType3);
-                        if (c3 == null) {
-                            value3 = getValue(c, m, mRankingType3, value3);
-                        } else {
-                            value3 += getValue(c, m, c3, subType3);
-                        }
-
-                        final Criteria c4 = getCriteriaByValue(mRankingType4);
-                        final int subType4 = getSubtypeByValue(mRankingType4);
-                        if (c4 == null) {
-                            value4 = getValue(c, m, mRankingType4, value4);
-                        } else {
-                            value4 += getValue(c, m, c4, subType4);
-                        }
-
-                        final Criteria c5 = getCriteriaByValue(mRankingType5);
-                        final int subType5 = getSubtypeByValue(mRankingType5);
-                        if (c5 == null) {
-                            value5 = getValue(c, m, mRankingType5, value5);
-                        } else {
-                            value5 += getValue(c, m, c5, subType5);
-                        }
                         j++;
                     }
+                    value1 = getValueFromArray(mRankingType1, aValue1);
+                    value2 = getValueFromArray(mRankingType2, aValue2);
+                    value3 = getValueFromArray(mRankingType3, aValue3);
+                    value4 = getValueFromArray(mRankingType4, aValue4);
+                    value5 = getValueFromArray(mRankingType5, aValue5);
+
                     Vvalue1.add(value1);
                     Vvalue2.add(value2);
                     Vvalue3.add(value3);

@@ -176,17 +176,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
             jtbRankingIndiv.setRowHeight(30);
 
-            //jbtNextRound.setEnabled((!mTournament.mRoundRobin) || (mTournament.mRoundRobin && (mRoundNumber == mTournament.getRoundsCount() - 1)));
-
-            /*        jtbMatches.setDefaultEditor(Integer.class, model);*/
             TableFormat.setColumnSize(jtbMatches);
-            /*final ArrayList<Round> v = new ArrayList<>();
-             for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-             if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
-             v.add(mTournament.getRound(i));
-             }
-             }
-             v.add(mRound);*/
 
             if (mRoundNumber < mTournament.getRoundsCount()) {
                 final boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());

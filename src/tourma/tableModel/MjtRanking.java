@@ -57,6 +57,38 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         mType = d;
     }
 
+    protected int getValueByRankingType(int rt, Coach c, CoachMatch m) {
+        int value = 0;
+        final Criteria c1 = getCriteriaByValue(rt);
+        final int subType1 = getSubtypeByValue(rt);
+        if (c1 == null) {
+            value = getValue(c, m, rt, 0);
+        } else {
+            value = getValue(c, m, c1, subType1);
+        }
+        return value;
+    }
+    
+    
+    protected int getValueFromArray(int rt,ArrayList<Integer> av)
+    {
+        int value=0;
+        
+        if ((rt==Parameters.C_RANKING_ELO)||(rt==Parameters.C_RANKING_NB_MATCHS))
+        {
+            value=av.get(av.size()-1);
+        }
+        else
+        {
+            for(Integer i:av)
+            {
+                value+=i;
+            }
+        }
+        
+        return value;
+    }
+
     /**
      *
      * @param c
@@ -363,7 +395,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
 
                             if (Tournament.getTournament().getParams().isTableBonus()) {
                                 double coef = Tournament.getTournament().getParams().getTableBonusCoef();
-                                
+
                                 bonus += Math.round(getCoachTable(c, m) * coef);
                             }
 
@@ -777,7 +809,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         mRankingType4 = ranking_type4;
         mRankingType5 = ranking_type5;
         mObjects = objects;
-        mRoundOnly=roundOnly;
+        mRoundOnly = roundOnly;
         //sortDatas();
     }
 
