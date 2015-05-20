@@ -190,8 +190,8 @@ public class MjtRankingNGTest {
         int valueType = 0;
         int lastValue = 0;
         int expResult = 0;
-        int result = MjtRanking.getValue(c, m, valueType, lastValue);
-        assertEquals(result, expResult);
+/*        int result = MjtRanking.getValue(c, m, valueType, lastValue);
+        assertEquals(result, expResult);*/
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -321,8 +321,8 @@ public class MjtRankingNGTest {
         Team T = null;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getTeamNbMatch(T);
-        assertEquals(result, expResult);
+/*        int result = instance.getTeamNbMatch(T);
+        assertEquals(result, expResult);*/
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -352,8 +352,8 @@ public class MjtRankingNGTest {
         int roundIndex = 0;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getELOByTeam(t, roundIndex);
-        assertEquals(result, expResult);
+/*        int result = instance.getELOByTeam(t, roundIndex);
+        assertEquals(result, expResult);*/
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -398,8 +398,8 @@ public class MjtRankingNGTest {
         int roundIndex = 0;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getOppELOByTeam(t, roundIndex);
-        assertEquals(result, expResult);
+/*        int result = instance.getOppELOByTeam(t, roundIndex);
+        assertEquals(result, expResult);*/
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -432,8 +432,8 @@ public class MjtRankingNGTest {
         int subtype = 0;
         MjtRanking instance = null;
         int expResult = 0;
-        int result = instance.getValue(t, crit, subtype);
-        assertEquals(result, expResult);
+/*        int result = instance.getValue(t, crit, subtype);
+        assertEquals(result, expResult);*/
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

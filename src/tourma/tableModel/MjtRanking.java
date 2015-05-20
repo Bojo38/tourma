@@ -21,7 +21,6 @@ import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
 import tourma.data.GroupPoints;
-import tourma.data.Match;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
@@ -62,30 +61,38 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         final Criteria c1 = getCriteriaByValue(rt);
         final int subType1 = getSubtypeByValue(rt);
         if (c1 == null) {
-            value = getValue(c, m, rt, 0);
+            value = getValue(c, m, rt);
         } else {
             value = getValue(c, m, c1, subType1);
         }
         return value;
     }
-    
-    
-    protected int getValueFromArray(int rt,ArrayList<Integer> av)
-    {
-        int value=0;
-        
-        if ((rt==Parameters.C_RANKING_ELO)||(rt==Parameters.C_RANKING_NB_MATCHS))
-        {
-            value=av.get(av.size()-1);
+
+    protected int getValueByRankingType(int rt, Team t, TeamMatch tm) {
+        int value = 0;
+        final Criteria c1 = getCriteriaByValue(rt);
+        final int subType1 = getSubtypeByValue(rt);
+        boolean teamVictory = Tournament.getTournament().getParams().isTeamVictoryOnly();
+        if (c1 == null) {
+            value = getValue(t, tm, rt, teamVictory);
+        } else {
+            value = getValue(t, tm, c1, subType1);
         }
-        else
-        {
-            for(Integer i:av)
-            {
-                value+=i;
+        return value;
+    }
+
+    protected int getValueFromArray(int rt, ArrayList<Integer> av) {
+        int value = 0;
+
+        if ((rt == Parameters.C_RANKING_ELO)
+                || (rt == Parameters.C_RANKING_NB_MATCHS)) {
+            value = av.get(av.size() - 1);
+        } else {
+            for (Integer i : av) {
+                value += i;
             }
         }
-        
+
         return value;
     }
 
@@ -155,26 +162,22 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return 0;
     }
 
-    public int getTeamTable(final Team t) {
-        int i = 1;
-        if (mRoundOnly) {
-            i = mRound;
-        }
-        int value = 0;
-        while (i <= mRound) {
+    public int getTeamTable(final Team t, TeamMatch tm) {
+
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
             Round r = Tournament.getTournament().getRound(i);
-            int maxvalue = r.getMatchsCount();
-            for (int j = 0; j < r.getMatchsCount(); j++) {
-                Match m = r.getMatch(j);
-                if (m instanceof TeamMatch) {
-                    if ((m.getCompetitor1().equals(t)) || ((m.getCompetitor2().equals(t)))) {
-                        value += maxvalue - j;
-                    }
+            if (r.containsMatch(tm)) {
+                // No point for first round
+                if (i == 0) {
+                    return 0;
+                } else {
+                    int maxvalue = r.getMatchsCount();
+                    return maxvalue - r.indexOf(tm);
                 }
             }
-            i++;
         }
-        return value;
+        return 0;
+
     }
 
     /**
@@ -576,45 +579,45 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      * @param lastValue
      * @return
      */
-    public static int getValue(final Coach c, final CoachMatch m, final int valueType, int lastValue) {
+    public static int getValue(final Coach c, final CoachMatch m, final int valueType) {
         int value;
 
         switch (valueType) {
             case Parameters.C_RANKING_POINTS:
-                value = lastValue + getPointsByCoach(c, m, true, true);
+                value = getPointsByCoach(c, m, true, true);
                 break;
             case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
-                value = lastValue + getPointsByCoach(c, m, true, false);
+                value = getPointsByCoach(c, m, true, false);
                 break;
             case Parameters.C_RANKING_BONUS_POINTS:
-                value = lastValue + getPointsByCoach(c, m, false, true);
+                value = getPointsByCoach(c, m, false, true);
                 break;
             case Parameters.C_RANKING_NONE:
-                value = lastValue + 0;
+                value = 0;
                 break;
             case Parameters.C_RANKING_OPP_POINTS:
-                value = lastValue + getOppPointsByCoach(c, m, true);
+                value = getOppPointsByCoach(c, m, true);
                 break;
             case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
-                value = lastValue + getOppPointsByCoach(c, m, false);
+                value = getOppPointsByCoach(c, m, false);
                 break;
             case Parameters.C_RANKING_VND:
-                value = lastValue + getVNDByCoach(c, m);
+                value = getVNDByCoach(c, m);
                 break;
             case Parameters.C_RANKING_ELO:
                 value = getELOByCoach(c, m);
                 break;
             case Parameters.C_RANKING_ELO_OPP:
-                value = lastValue + getOppELOByCoach(c, m);
+                value = getOppELOByCoach(c, m);
                 break;
             case Parameters.C_RANKING_NB_MATCHS:
                 value = getCoachNbMatchs(c, m);
                 break;
             case Parameters.C_RANKING_TABLES:
-                value = lastValue + getCoachTable(c, m);
+                value = getCoachTable(c, m);
                 break;
             default:
-                value = lastValue;
+                value = 0;
                 break;
         }
 
@@ -920,12 +923,12 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return mDatas.size();
     }
 
-    int getTeamNbMatch(final Team T) {
-        int index = mRound;
+    int getTeamNbMatch(final Team t, TeamMatch tm) {
+        int index = t.matchIndex(tm);
         return index + 1;
     }
 
-    int getPointsByTeam(final Team t, TeamMatch tm, boolean includeCurrent, boolean withMainPoints, boolean withBonus) {
+    int getPointsByTeam(final Team t, TeamMatch tm, boolean withMainPoints, boolean withBonus) {
 
         int value = 0;
         int countTeamVictories = 0;
@@ -946,7 +949,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 final Coach c = t.getCoach(j);
                 if (c.getMatchCount() > i) {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
-                    if (((!includeCurrent && (!tm.containsMatch(m))) || (includeCurrent))) {
+                    if (tm.containsMatch(m)) {
                         final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
                         final Value val = m.getValue(crit);
                         if (m.getCompetitor1() == c) {
@@ -1043,10 +1046,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return value;
     }
 
-    int getELOByTeam(final Team t, int roundIndex) {
+    int getELOByTeam(final Team t, TeamMatch tm, int roundIndex) {
         int value;
-
-        TeamMatch tm = (TeamMatch) t.getMatch(roundIndex);
 
         int nbVic = tm.getVictories(t);
 //        int nbLoss = tm.getVictories(t);
@@ -1067,12 +1068,12 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             // Find Previous Match for current player
 
             if (roundIndex > 0) {
-                lastTeamRank = getELOByTeam(t, roundIndex - 1);
+                lastTeamRank = getELOByTeam(t, tm, roundIndex - 1);
             }
 
             // Find Previous Match for oponnent player
             if (roundIndex > 0) {
-                lastOppRank = getELOByTeam(opp, roundIndex - 1);
+                lastOppRank = getELOByTeam(opp, tm, roundIndex - 1);
             }
         }
 
@@ -1136,7 +1137,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 final Coach c = t.getCoach(j);
                 if (c.getMatchCount() > i) {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
-                    if (((includeCurrent && (!tm.containsMatch(m))) || (!includeCurrent))) {
+                    if (includeCurrent && tm.containsMatch(m)) {
                         final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
                         final Value val = m.getValue(crit);
                         if (m.getCompetitor1() == c) {
@@ -1179,53 +1180,49 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
 
     int getOppPointsByTeam(final Team t, TeamMatch tm, boolean includeCurrent) {
 
+        int index = 0;
+        TeamMatch tmp_m = (TeamMatch) t.getMatch(index);
+        while (tmp_m != tm) {
+            index++;
+            tmp_m = (TeamMatch) t.getMatch(index);
+        }
+
         int value = 0;
-        final Coach c = t.getCoach(0);
-        //ArrayList<Team> opponents = new ArrayList<Team>();
-        if (mRound <= c.getMatchCount()) {
+        Competitor opponent;
+        if (tm.getCompetitor1() == t) {
+            opponent = tm.getCompetitor2();
+        } else {
+            opponent = tm.getCompetitor1();
+        }
 
-            int i = 0;
-            if (mRoundOnly) {
-                i = mRound;
-            }
-
-            while (i <= mRound) {
-                //for (int i = 0; i <= mRound; i++) {
-                final CoachMatch m = (CoachMatch) c.getMatch(i);
-                if (m.getCompetitor1() == c) {
-                    value += getPointsByTeam(((Coach) m.getCompetitor2()).getTeamMates(), tm, includeCurrent, true, true);
-                } else {
-                    value += getPointsByTeam(((Coach) m.getCompetitor1()).getTeamMates(), tm, includeCurrent, true, true);
+        if (((Team) opponent) != null) {
+            if (opponent.isMatchsNotNull()) {
+                for (int i = 0; i < opponent.getMatchCount(); i++) {
+                    TeamMatch om = (TeamMatch) opponent.getMatch(i);
+                    if ((includeCurrent) || ((!includeCurrent) && (om != tm))) {
+                        value += getPointsByTeam((Team) opponent, om, true, true);
+                    }
+                    if (om == tm) {
+                        break;
+                    }
                 }
-                i++;
             }
         }
+
         return value;
     }
 
-    int getOppELOByTeam(final Team t, int roundIndex) {
+    int getOppELOByTeam(final Team t, TeamMatch tm, int roundIndex) {
 
-        int value = 0;
-        final Coach c = t.getCoach(0);
-        //ArrayList<Team> opponents = new ArrayList<Team>();
-        if (mRound <= c.getMatchCount()) {
-
-            int i = 0;
-            if (mRoundOnly) {
-                i = mRound;
-            }
-
-            while (i <= mRound) {
-                //for (int i = 0; i <= mRound; i++) {
-                final CoachMatch m = (CoachMatch) c.getMatch(i);
-                if (m.getCompetitor1() == c) {
-                    value += getELOByTeam(((Coach) m.getCompetitor2()).getTeamMates(), roundIndex);
-                } else {
-                    value += getELOByTeam(((Coach) m.getCompetitor1()).getTeamMates(), roundIndex);
-                }
-                i++;
-            }
+        int value;
+        Competitor opponent;
+        if (tm.getCompetitor1() == t) {
+            opponent = tm.getCompetitor2();
+        } else {
+            opponent = tm.getCompetitor1();
         }
+        value = getELOByTeam((Team) opponent, tm, roundIndex);
+
         return value;
     }
 
@@ -1236,13 +1233,13 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         if (teamVictory) {
             switch (rankingType) {
                 case Parameters.C_RANKING_POINTS:
-                    value = getPointsByTeam(t, tm, true, true, true);
+                    value = getPointsByTeam(t, tm, true, true);
                     break;
                 case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
-                    value = getPointsByTeam(t, tm, true, true, false);
+                    value = getPointsByTeam(t, tm, true, false);
                     break;
                 case Parameters.C_RANKING_BONUS_POINTS:
-                    value = getPointsByTeam(t, tm, true, false, true);
+                    value = getPointsByTeam(t, tm, false, true);
                     break;
                 case Parameters.C_RANKING_NONE:
                     value = 0;
@@ -1257,60 +1254,72 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     value = getVNDByTeam(t, tm, true);
                     break;
                 case Parameters.C_RANKING_ELO:
-                    value = getELOByTeam(t, mRound);
+                    value = getELOByTeam(t, tm, mRound);
                     break;
                 case Parameters.C_RANKING_ELO_OPP:
-                    value = getOppELOByTeam(t, mRound);
+                    value = getOppELOByTeam(t, tm, mRound);
                     break;
                 case Parameters.C_RANKING_NB_MATCHS:
-                    value = getTeamNbMatch(t);
+                    value = getTeamNbMatch(t, tm);
                     break;
                 case Parameters.C_RANKING_TABLES:
-                    value = getTeamTable(t);
+                    value = getTeamTable(t, tm);
                     break;
                 default:
             }
         } else {
-            for (int i = 0; i < t.getCoachCount(); i++) {
-                final Coach c = t.getCoach(i);
-                for (int j = 0; j < c.getMatchCount(); j++) {
-                    final CoachMatch m = (CoachMatch) c.getMatch(j);
+            /*for (int i = 0; i < t.getCoachCount(); i++) {
+             final Coach c = t.getCoach(i);
+             //for (int j = 0; j < c.getMatchCount(); j++) {
+             final CoachMatch m = (CoachMatch) c.getMatch(j);*/
+            for (int i = 0; i < tm.getMatchCount(); i++) {
+                CoachMatch cm = tm.getMatch(i);
+                Coach c = null;
+                Coach c1 = (Coach) cm.getCompetitor1();
+                Coach c2 = (Coach) cm.getCompetitor2();
+                if (c1.getTeamMates() == t) {
+                    c = c1;
+                }
+                if (c2.getTeamMates() == t) {
+                    c = c2;
+                }
+                if (c != null) {
                     switch (rankingType) {
                         case Parameters.C_RANKING_POINTS:
-                            value += getPointsByCoach(c, m, true, true);
+                            value += getPointsByCoach(c, cm, true, true);
                             break;
                         case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
-                            value += getPointsByCoach(c, m, true, false);
+                            value += getPointsByCoach(c, cm, true, false);
                             break;
                         case Parameters.C_RANKING_BONUS_POINTS:
-                            value += getPointsByCoach(c, m, false, true);
+                            value += getPointsByCoach(c, cm, false, true);
                             break;
                         case Parameters.C_RANKING_NONE:
                             value += 0;
                             break;
                         case Parameters.C_RANKING_OPP_POINTS:
-                            value += getOppPointsByCoach(c, m, true);
+                            value += getOppPointsByCoach(c, cm, true);
                             break;
                         case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
-                            value += getOppPointsByCoach(c, m, false);
+                            value += getOppPointsByCoach(c, cm, false);
                             break;
                         case Parameters.C_RANKING_VND:
-                            value += getVNDByCoach(c, m);
+                            value += getVNDByCoach(c, cm);
                             break;
                         case Parameters.C_RANKING_ELO:
-                            value += getELOByCoach(c, m);
+                            value += getELOByCoach(c, cm);
                             break;
                         case Parameters.C_RANKING_ELO_OPP:
-                            value += getOppELOByCoach(c, m);
+                            value += getOppELOByCoach(c, cm);
                             break;
                         case Parameters.C_RANKING_NB_MATCHS:
-                            value += getCoachNbMatchs(c, m);
+                            value += getCoachNbMatchs(c, cm);
                             break;
                         case Parameters.C_RANKING_TABLES:
                             if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
-                                value = getTeamTable(t);
+                                value = getTeamTable(t, tm);
                             } else {
-                                value += getCoachTable(c, m);
+                                value += getCoachTable(c, cm);
                             }
                             break;
                         default:
@@ -1365,27 +1374,36 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return value;
     }
 
-    int getValue(final Team t, final Criteria crit, final int subtype) {
+    int getValue(final Team t, TeamMatch tm, final Criteria crit, final int subtype) {
         int value = 0;
-        for (int i = 0; i < t.getCoachCount(); i++) {
-            final Coach c = t.getCoach(i);
-            for (int j = 0; j < c.getMatchCount(); j++) {
-                value += getValue(c, (CoachMatch) c.getMatch(j), crit, subtype);
+        for (int i = 0; i < tm.getMatchCount(); i++) {
+            CoachMatch cm = tm.getMatch(i);
+
+            Coach c = null;
+
+            Coach c1 = (Coach) cm.getCompetitor1();
+            Coach c2 = (Coach) cm.getCompetitor2();
+
+            if (c1.getTeamMates() == t) {
+                c = c1;
+            }
+            if (c2.getTeamMates() == t) {
+                c = c2;
+            }
+            if (c != null) {
+                    value += getValue(c, cm, crit, subtype);
             }
         }
         return value;
-    }
 
-    int getValue(final Team t, TeamMatch tm, final int rankingType, final int v, final boolean teamVictory) {
-        int value = v;
-        final Criteria c = getCriteriaByValue(rankingType);
-        final int subType = getSubtypeByValue(rankingType);
-        if (c == null) {
-            value += getValue(t, tm, rankingType, teamVictory);
-        } else {
-            value += getValue(t, c, subType);
-        }
-        return value;
+        /*int value = 0;
+         for (int i = 0; i < t.getCoachCount(); i++) {
+         final Coach c = t.getCoach(i);
+         for (int j = 0; j < c.getMatchCount(); j++) {
+         value += getValue(c, (CoachMatch) c.getMatch(j), crit, subtype);
+         }
+         }
+         return value;*/
     }
 
     @Override

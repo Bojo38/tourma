@@ -174,30 +174,130 @@ public final class MjtRankingTeam extends MjtRanking {
     /**
      *
      */
-    @Override
+    /*    @Override
+     protected void sortDatas() {
+
+     mDatas.clear();
+     mDatas = new ArrayList();
+     for (int i = 0; i < mObjects.size(); i++) {
+     final Team t = (Team) mObjects.get(i);
+
+     TeamMatch tm = null;
+     Round round = Tournament.getTournament().getRound(this.getRound());
+     for (int j = 0; j < round.getMatchsCount(); j++) {
+     TeamMatch tmp = (TeamMatch) round.getMatch(j);
+     if ((tmp.getCompetitor1() == t) || (tmp.getCompetitor2() == t)) {
+     tm = tmp;
+     break;
+     }
+     }
+     final int value1 = getValue(t, tm, mRankingType1, 0, mTeamVictory);
+     final int value2 = getValue(t, tm, mRankingType2, 0, mTeamVictory);
+     final int value3 = getValue(t, tm, mRankingType3, 0, mTeamVictory);
+     final int value4 = getValue(t, tm, mRankingType4, 0, mTeamVictory);
+     final int value5 = getValue(t, tm, mRankingType5, 0, mTeamVictory);
+
+     mDatas.add(new ObjectRanking(t, value1, value2, value3, value4, value5));
+     }
+
+     Collections.sort(mDatas);
+
+     final Tournament tour = Tournament.getTournament();
+
+     // On ajuste le tri par poule si nécessaire pour que
+     // l'écart minimum entre 2 membres de la même poule
+     // soit le nombre de joueurs de la poule
+     if ((tour.getPoolCount() > 0) && (tour.getRoundsCount() > 0) && (!tour.getRound(mRound).isCup())) {
+     if (mObjects.size() > tour.getPool(0).getCompetitorCount()) {
+     final int nbPool = tour.getPoolCount();
+     Pool p;
+     final ArrayList<MjtRankingTeam> pRank = new ArrayList<>();
+     for (int j = 0; j < nbPool; j++) {
+     p = tour.getPool(j);
+     final MjtRankingTeam mjtr = new MjtRankingTeam(mTeamVictory, mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.getCompetitors(), mRoundOnly);
+     pRank.add(mjtr);
+     }
+
+     final ArrayList datas = new ArrayList();
+
+     for (int i = 0; i < tour.getPool(0).getCompetitorCount(); i++) {
+     final ArrayList<Team> rank = new ArrayList<>();
+     for (int j = 0; j < nbPool; j++) {
+     final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
+     rank.add((Team) obj.getObject());
+     }
+     final MjtRankingTeam mjtr = new MjtRankingTeam(mTeamVictory, mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mRoundOnly);
+
+     for (int j = 0; j < mjtr.mDatas.size(); j++) {
+     datas.add(mjtr.mDatas.get(j));
+     }
+     }
+
+     mDatas = datas;
+     }
+     }
+     }*/
     protected void sortDatas() {
 
         mDatas.clear();
         mDatas = new ArrayList();
+
+        final ArrayList<Round> rounds = new ArrayList<>();
+
+        if (mRoundOnly) {
+            rounds.add(Tournament.getTournament().getRound(mRound));
+        } else {
+            for (int l = 0; (l <= mRound); l++) {
+                rounds.add(Tournament.getTournament().getRound(l));
+            }
+        }
+
         for (int i = 0; i < mObjects.size(); i++) {
             final Team t = (Team) mObjects.get(i);
 
-            TeamMatch tm = null;
-            Round round = Tournament.getTournament().getRound(this.getRound());
-            for (int j = 0; j < round.getMatchsCount(); j++) {
-                TeamMatch tmp = (TeamMatch) round.getMatch(j);
-                if ((tmp.getCompetitor1() == t) || (tmp.getCompetitor2() == t)) {
-                    tm = tmp;
-                    break;
-                }
-            }
-            final int value1 = getValue(t, tm, mRankingType1, 0, mTeamVictory);
-            final int value2 = getValue(t, tm, mRankingType2, 0, mTeamVictory);
-            final int value3 = getValue(t, tm, mRankingType3, 0, mTeamVictory);
-            final int value4 = getValue(t, tm, mRankingType4, 0, mTeamVictory);
-            final int value5 = getValue(t, tm, mRankingType5, 0, mTeamVictory);
+            int value1 = 0;
+            int value2 = 0;
+            int value3 = 0;
+            int value4 = 0;
+            int value5 = 0;
 
-            mDatas.add(new ObjectRanking(t, value1, value2, value3, value4, value5));
+            ArrayList<Integer> aValue1 = new ArrayList<>();
+            ArrayList<Integer> aValue2 = new ArrayList<>();
+            ArrayList<Integer> aValue3 = new ArrayList<>();
+            ArrayList<Integer> aValue4 = new ArrayList<>();
+            ArrayList<Integer> aValue5 = new ArrayList<>();
+
+            if (t.getMatchCount() > 0) {
+
+                for (int j = 0; j <= t.getMatchCount() - 1; j++) {
+
+                    final TeamMatch tm = (TeamMatch) t.getMatch(j);
+                    boolean bFound = false;
+                    for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
+                        final Round r = rounds.get(l);
+                        if (r.containsMatch(tm)) {
+                            bFound = true;
+                        }
+                    }
+                    // test if match is in round
+
+                    if (bFound) {
+                        aValue1.add(getValueByRankingType(mRankingType1, t, tm));
+                        aValue2.add(getValueByRankingType(mRankingType2, t, tm));
+                        aValue3.add(getValueByRankingType(mRankingType3, t, tm));
+                        aValue4.add(getValueByRankingType(mRankingType4, t, tm));
+                        aValue5.add(getValueByRankingType(mRankingType5, t, tm));
+                    }
+
+                }
+                value1 = getValueFromArray(mRankingType1, aValue1);
+                value2 = getValueFromArray(mRankingType2, aValue2);
+                value3 = getValueFromArray(mRankingType3, aValue3);
+                value4 = getValueFromArray(mRankingType4, aValue4);
+                value5 = getValueFromArray(mRankingType5, aValue5);
+
+                mDatas.add(new ObjectRanking(t, value1, value2, value3, value4, value5));
+            }
         }
 
         Collections.sort(mDatas);
@@ -279,7 +379,8 @@ public final class MjtRankingTeam extends MjtRanking {
     }
 
     @Override
-    public String getColumnName(final int col) {
+    public String getColumnName(final int col
+    ) {
         String val = "";
         switch (col) {
             case 0:
@@ -381,7 +482,9 @@ public final class MjtRankingTeam extends MjtRanking {
      return value;
      }*/
     @Override
-    public Object getValueAt(final int row, final int col) {
+    public Object getValueAt(final int row,
+            final int col
+    ) {
         Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
         if (mDatas.size() > row) {
             final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
@@ -414,7 +517,13 @@ public final class MjtRankingTeam extends MjtRanking {
     }
 
     @Override
-    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+    public Component getTableCellRendererComponent(final JTable table,
+            final Object value,
+            final boolean isSelected,
+            final boolean hasFocus,
+            final int row,
+            final int column
+    ) {
 
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if (Tournament.getTournament().getParams().isUseImage()) {

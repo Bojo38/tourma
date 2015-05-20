@@ -14,7 +14,6 @@ import javax.swing.JTable;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
-import tourma.data.Criteria;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectRanking;
 import tourma.data.Round;
@@ -131,51 +130,31 @@ public final class MjtRankingClan extends MjtRanking {
                         }
                     }
 
+                    ArrayList<Integer> aValue1 = new ArrayList<>();
+                    ArrayList<Integer> aValue2 = new ArrayList<>();
+                    ArrayList<Integer> aValue3 = new ArrayList<>();
+                    ArrayList<Integer> aValue4 = new ArrayList<>();
+                    ArrayList<Integer> aValue5 = new ArrayList<>();
+
                     while (j <= Math.min(t.getMatchCount() - 1, mRound)) {
                         //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
                         //final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
 
-                        final Criteria c1 = getCriteriaByValue(mRankingType1);
-                        final int subType1 = getSubtypeByValue(mRankingType1);
-                        if (c1 == null) {
-                            value1 = getValue(t, tm, mRankingType1, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value1 += getValue(t, c1, subType1);
-                        }
+                        aValue1.add(getValueByRankingType(mRankingType1, t, tm));
+                        aValue2.add(getValueByRankingType(mRankingType2, t, tm));
+                        aValue3.add(getValueByRankingType(mRankingType3, t, tm));
+                        aValue4.add(getValueByRankingType(mRankingType4, t, tm));
+                        aValue5.add(getValueByRankingType(mRankingType5, t, tm));
 
-                        final Criteria c2 = getCriteriaByValue(mRankingType2);
-                        final int subType2 = getSubtypeByValue(mRankingType2);
-                        if (c2 == null) {
-                            value2 = getValue(t, tm, mRankingType2, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value2 += getValue(t, c2, subType2);
-                        }
-
-                        final Criteria c3 = getCriteriaByValue(mRankingType3);
-                        final int subType3 = getSubtypeByValue(mRankingType3);
-                        if (c3 == null) {
-                            value3 = getValue(t, tm, mRankingType3, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value3 += getValue(t, c3, subType3);
-                        }
-
-                        final Criteria c4 = getCriteriaByValue(mRankingType4);
-                        final int subType4 = getSubtypeByValue(mRankingType4);
-                        if (c4 == null) {
-                            value4 = getValue(t, tm, mRankingType4, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value4 += getValue(t, c4, subType4);
-                        }
-
-                        final Criteria c5 = getCriteriaByValue(mRankingType5);
-                        final int subType5 = getSubtypeByValue(mRankingType5);
-                        if (c5 == null) {
-                            value5 = getValue(t, tm, mRankingType5, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value5 += getValue(t, c5, subType5);
-                        }
                         j++;
                     }
+
+                    value1 = getValueFromArray(mRankingType1, aValue1);
+                    value2 = getValueFromArray(mRankingType2, aValue2);
+                    value3 = getValueFromArray(mRankingType3, aValue3);
+                    value4 = getValueFromArray(mRankingType4, aValue4);
+                    value5 = getValueFromArray(mRankingType5, aValue5);
+
                     Vvalue1.add(value1);
                     Vvalue2.add(value2);
                     Vvalue3.add(value3);

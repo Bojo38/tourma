@@ -21,8 +21,6 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
-import static tourma.tableModel.MjtRanking.getCriteriaByValue;
-import static tourma.tableModel.MjtRanking.getSubtypeByValue;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 
@@ -94,31 +92,28 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      */
     protected void sortDatasTeam() {
 
-        ArrayList<Team> teams = new ArrayList<>();
-        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-            teams.add(Tournament.getTournament().getTeam(cpt));
+        final ArrayList<Team> teams = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+            teams.add(Tournament.getTournament().getTeam(i));
         }
+
         final ArrayList<Clan> clans = mObjects;
 
-        for (int i = 0; i < clans.size(); i++) {
+        for (Clan clan : clans) {
             final ArrayList<Integer> Vvalue = new ArrayList<>();
             final ArrayList<Integer> Vvalue1 = new ArrayList<>();
             final ArrayList<Integer> Vvalue2 = new ArrayList<>();
             final ArrayList<Integer> Vvalue3 = new ArrayList<>();
             final ArrayList<Integer> Vvalue4 = new ArrayList<>();
             final ArrayList<Integer> Vvalue5 = new ArrayList<>();
-
             int cvalue = 0;
             int cvalue1 = 0;
             int cvalue2 = 0;
             int cvalue3 = 0;
             int cvalue4 = 0;
             int cvalue5 = 0;
-
-            for (int k = 0; k < teams.size(); k++) {
-                final Team t = teams.get(k);
-
-                if (t.getClan() == clans.get(i)) {
+            for (Team t : teams) {
+                if (t.getClan() == clan) {
                     int value = 0;
                     int value1 = 0;
                     int value2 = 0;
@@ -126,67 +121,54 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                     int value4 = 0;
                     int value5 = 0;
 
-                    int j = 0;
+                    ArrayList<Integer> aValue = new ArrayList<>();
+                    ArrayList<Integer> aValue1 = new ArrayList<>();
+                    ArrayList<Integer> aValue2 = new ArrayList<>();
+                    ArrayList<Integer> aValue3 = new ArrayList<>();
+                    ArrayList<Integer> aValue4 = new ArrayList<>();
+                    ArrayList<Integer> aValue5 = new ArrayList<>();
 
-                    if (mRoundOnly) {
-                        j = mRound;
+                    for (int j = 0; j <= t.getMatchCount() - 1; j++) {
+
+                        final TeamMatch tm = (TeamMatch) t.getMatch(j);
+                        boolean bFound = false;
+
+                        int l = 0;
+
+                        if (mRoundOnly) {
+                            l = mRound;
+                        }
+
+                        while ((l <= mRound) && (!bFound)) {
+
+                            //for (int l = 0; (l <= mRound) && (!bFound); l++) {
+                            final Round r = Tournament.getTournament().getRound(l);
+                            if (r.containsMatch(tm)) {
+                                bFound = true;
+                            }
+                            l++;
+                        }
+                        // test if match is in round
+                        if (bFound) {
+                            aValue.add(getValue(t, tm, mCriteria, mSubtype));
+
+                            aValue1.add(getValueByRankingType(mRankingType1, t, tm));
+                            aValue2.add(getValueByRankingType(mRankingType2, t, tm));
+                            aValue3.add(getValueByRankingType(mRankingType3, t, tm));
+                            aValue4.add(getValueByRankingType(mRankingType4, t, tm));
+                            aValue5.add(getValueByRankingType(mRankingType5, t, tm));
+                        }
+
                     }
-
-                    TeamMatch tm = null;
-                    Round round = Tournament.getTournament().getRound(this.getRound());
-                    for (int l = 0; l < round.getMatchsCount(); l++) {
-                        TeamMatch tmp = (TeamMatch) round.getMatch(l);
-                        if ((tmp.getCompetitor1() == t) || (tmp.getCompetitor2() == t)) {
-                            tm = tmp;
-                            break;
-                        }
+                    for (Integer i : aValue) {
+                        value += i;
                     }
+                    value1 = getValueFromArray(mRankingType1, aValue1);
+                    value2 = getValueFromArray(mRankingType2, aValue2);
+                    value3 = getValueFromArray(mRankingType3, aValue3);
+                    value4 = getValueFromArray(mRankingType4, aValue4);
+                    value5 = getValueFromArray(mRankingType5, aValue5);
 
-                    while (j <= Math.min(t.getMatchCount() - 1, mRound)) {
-
-                        value = getValue(t, mCriteria, mSubtype);
-
-                        final Criteria c1 = getCriteriaByValue(mRankingType1);
-                        final int subType1 = getSubtypeByValue(mRankingType1);
-                        if (c1 == null) {
-                            value1 = getValue(t, tm, mRankingType1, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value1 += getValue(t, c1, subType1);
-                        }
-
-                        final Criteria c2 = getCriteriaByValue(mRankingType2);
-                        final int subType2 = getSubtypeByValue(mRankingType2);
-                        if (c2 == null) {
-                            value2 = getValue(t, tm, mRankingType2, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value2 += getValue(t, c2, subType2);
-                        }
-
-                        final Criteria c3 = getCriteriaByValue(mRankingType3);
-                        final int subType3 = getSubtypeByValue(mRankingType3);
-                        if (c3 == null) {
-                            value3 = getValue(t, tm, mRankingType3, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value3 += getValue(t, c3, subType3);
-                        }
-
-                        final Criteria c4 = getCriteriaByValue(mRankingType4);
-                        final int subType4 = getSubtypeByValue(mRankingType4);
-                        if (c4 == null) {
-                            value4 = getValue(t, tm, mRankingType4, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value4 += getValue(t, c4, subType4);
-                        }
-
-                        final Criteria c5 = getCriteriaByValue(mRankingType5);
-                        final int subType5 = getSubtypeByValue(mRankingType5);
-                        if (c5 == null) {
-                            value5 = getValue(t, tm, mRankingType5, 0, Tournament.getTournament().getParams().isTeamVictoryOnly());
-                        } else {
-                            value5 += getValue(t, c5, subType5);
-                        }
-                        j++;
-                    }
                     Vvalue.add(value);
                     Vvalue1.add(value1);
                     Vvalue2.add(value2);
@@ -194,28 +176,26 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                     Vvalue4.add(value4);
                     Vvalue5.add(value5);
                 }
-
-                while (Vvalue1.size() > Tournament.getTournament().getParams().getTeamMatesClansNumber()) {
-                    int currentValue = Vvalue.get(0);
-                    // Search minimum and remove it
-                    for (int j = 1; j < Vvalue.size(); j++) {
-                        currentValue = Math.min(currentValue, Vvalue.get(j));
-                    }
-                    for (int j = 0; j < Vvalue.size(); j++) {
-                        if (Vvalue.get(j) == currentValue) {
-                            Vvalue.remove(j);
-                            Vvalue1.remove(j);
-                            Vvalue2.remove(j);
-                            Vvalue3.remove(j);
-                            Vvalue4.remove(j);
-                            Vvalue5.remove(j);
-                            break;
-                        }
+            }
+            while (Vvalue.size() > Tournament.getTournament().getParams().getTeamMatesClansNumber()) {
+                int currentValue = Vvalue.get(0);
+                // Search minimum and remove it
+                for (int j = 1; j < Vvalue.size(); j++) {
+                    currentValue = Math.min(currentValue, Vvalue.get(j));
+                }
+                for (int j = 0; j < Vvalue.size(); j++) {
+                    if (Vvalue.get(j) == currentValue) {
+                        Vvalue.remove(j);
+                        Vvalue1.remove(j);
+                        Vvalue2.remove(j);
+                        Vvalue3.remove(j);
+                        Vvalue4.remove(j);
+                        Vvalue5.remove(j);
+                        break;
                     }
                 }
-
             }
-            for (int j = 0; j < Vvalue1.size(); j++) {
+            for (int j = 0; j < Vvalue.size(); j++) {
                 cvalue += Vvalue.get(j);
                 cvalue1 += Vvalue1.get(j);
                 cvalue2 += Vvalue2.get(j);
@@ -223,7 +203,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                 cvalue4 += Vvalue4.get(j);
                 cvalue5 += Vvalue5.get(j);
             }
-            mDatas.add(new ObjectAnnexRanking(clans.get(i), cvalue, cvalue1, cvalue2, cvalue3, cvalue4, cvalue5));
+            mDatas.add(new ObjectAnnexRanking(clan, cvalue, cvalue1, cvalue2, cvalue3, cvalue4, cvalue5));
         }
     }
 

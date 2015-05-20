@@ -272,6 +272,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
 
         for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
             final JPNAnnexRanking jpn = (JPNAnnexRanking) jtpAnnexRank.getComponent(i);
+            jpn.setRoundOnly(mRoundOnly);
             jpn.update();
         }
 

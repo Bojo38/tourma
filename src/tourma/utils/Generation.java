@@ -190,15 +190,20 @@ public final class Generation {
 
         final ArrayList<Coach> coachs = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            coachs.add(Tournament.getTournament().getCoach(i));
+            Coach c=Tournament.getTournament().getCoach(i);
+            coachs.add(c);
+            c.clearMatchs();
         }
         //final ArrayList<Round> rounds = tour.getRounds();
         ArrayList<Team> vteams = new ArrayList<>();
         for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-            vteams.add(Tournament.getTournament().getTeam(cpt));
+            Team t=Tournament.getTournament().getTeam(cpt);
+            vteams.add(t);
+            t.clearMatchs();
         }
 
         tour.clearRounds();
+        
         tour.setRoundRobin(false);
 
         if (params.isTeamTournament()) {
@@ -297,8 +302,9 @@ public final class Generation {
                 Round r = tour.getRound(k);
                 for (int i = 0; i < r.getMatchsCount(); i++) {
                     final Match m = r.getMatch(i);
-                    m.getCompetitor1().addMatch(m);
-                    m.getCompetitor2().addMatch(m);
+                    
+                    //m.getCompetitor1().addMatch(m);
+                    //m.getCompetitor2().addMatch(m);
 
                     if (m instanceof TeamMatch) {
                         for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
@@ -1512,11 +1518,11 @@ public final class Generation {
             for (int k = 0; k < c.getMatchCount(); k++) {
                 final CoachMatch m = (CoachMatch) c.getMatch(k);
                 if (rounds.contains(m.getRound())) {
-                    value1 = MjtRankingIndiv.getValue(c, m, params.getRankingIndiv1(), value1);
-                    value2 = MjtRankingIndiv.getValue(c, m, params.getRankingIndiv2(), value2);
-                    value3 = MjtRankingIndiv.getValue(c, m, params.getRankingIndiv3(), value3);
-                    value4 = MjtRankingIndiv.getValue(c, m, params.getRankingIndiv4(), value4);
-                    value5 = MjtRankingIndiv.getValue(c, m, params.getRankingIndiv5(), value5);
+                    value1 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv1());
+                    value2 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv2());
+                    value3 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv3());
+                    value4 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv4());
+                    value5 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv5());
                 }
             }
             final ObjectRanking obj = new ObjectRanking(c, value1, value2, value3, value4, value5);
