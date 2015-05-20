@@ -5,9 +5,11 @@ import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
+import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
+import tourma.tableModel.MjtRankingTeam;
 import tourma.utils.TableFormat;
 import tourma.views.report.JdgRanking;
 
@@ -35,9 +37,12 @@ public final class JPNCategory extends javax.swing.JPanel {
      *
      */
     private boolean mRoundOnly = false;
+    private boolean mEnableTeam = false;
+    private boolean mEnableCoach = false;
 
     /**
      * Creates new form JPNCategory
+     *
      * @param t
      * @param g
      * @param roundNumber
@@ -47,18 +52,44 @@ public final class JPNCategory extends javax.swing.JPanel {
         mTournament = t;
         mCategory = g;
         mRoundNumber = roundNumber;
+
+        if (Tournament.getTournament().getParams().isTeamTournament()) {
+            for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+                Team team = Tournament.getTournament().getTeam(i);
+                if (team.containsCategory(g)) {
+                    mEnableTeam = true;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+            Coach coach = Tournament.getTournament().getCoach(i);
+            if (coach.containsCategory(g)) {
+                mEnableCoach = true;
+                break;
+            }
+        }
+
+        if (!mEnableCoach) {
+            jPanel2.remove(jspIndiv);
+        }
+
+        if (!mEnableTeam) {
+            jPanel2.remove(jspTeam);
+        }
+
         update();
     }
 
     /**
-     * 
-     * @param r 
+     *
+     * @param r
      */
-    public void setRoundOnly(boolean r)
-    {
-        mRoundOnly=r;
+    public void setRoundOnly(boolean r) {
+        mRoundOnly = r;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,27 +99,15 @@ public final class JPNCategory extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtbCategory = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jbtGeneral = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jspIndiv = new javax.swing.JScrollPane();
+        jtbCategory = new javax.swing.JTable();
+        jspTeam = new javax.swing.JScrollPane();
+        jtbTeam = new javax.swing.JTable();
 
         setLayout(new java.awt.BorderLayout());
-
-        jtbCategory.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jtbCategory);
-
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jbtGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
@@ -101,49 +120,111 @@ public final class JPNCategory extends javax.swing.JPanel {
         jPanel1.add(jbtGeneral);
 
         add(jPanel1, java.awt.BorderLayout.SOUTH);
+
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
+
+        jtbCategory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jspIndiv.setViewportView(jtbCategory);
+
+        jPanel2.add(jspIndiv);
+
+        jtbTeam.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jspTeam.setViewportView(jtbTeam);
+
+        jPanel2.add(jspTeam);
+
+        add(jPanel2, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * Update Panel
      */
     public void update() {
-        final ArrayList<Coach> al = new ArrayList<>();
 
-        for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-            final Coach c = mTournament.getCoach(i);
-            if (mCategory == c.getCategory()) {
-                al.add(c);
+        if (mEnableCoach) {
+            final ArrayList<Coach> al = new ArrayList<>();
+
+            for (int i = 0; i < mTournament.getCoachsCount(); i++) {
+                final Coach c = mTournament.getCoach(i);
+                if (c.containsCategory(mCategory)) {
+                    al.add(c);
+                }
             }
+
+            final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                    al, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+            jtbCategory.setModel(tableModel);
+            jtbCategory.setDefaultRenderer(String.class, tableModel);
+            jtbCategory.setDefaultRenderer(Integer.class, tableModel);
+
+            jtbCategory.setRowHeight(25);
+            TableFormat.setColumnSize(jtbCategory);
         }
+        if (mEnableTeam) {
+            final ArrayList<Team> al = new ArrayList<>();
 
-        final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                al, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
-        jtbCategory.setModel(tableModel);
-        jtbCategory.setDefaultRenderer(String.class, tableModel);
-        jtbCategory.setDefaultRenderer(Integer.class, tableModel);
+            for (int i = 0; i < mTournament.getTeamsCount(); i++) {
+                final Team t = mTournament.getTeam(i);
+                if (t.containsCategory(mCategory)) {
+                    al.add(t);
+                }
+            }
 
-        jtbCategory.setRowHeight(25);
-        TableFormat.setColumnSize(jtbCategory);
+            final MjtRankingTeam tableModel = new MjtRankingTeam(
+                    mTournament.getParams().isTeamTournament(),
+                    mRoundNumber,
+                    al,
+                    mRoundOnly);
+            jtbTeam.setModel(tableModel);
+            jtbTeam.setDefaultRenderer(String.class, tableModel);
+            jtbTeam.setDefaultRenderer(Integer.class, tableModel);
+
+            jtbTeam.setRowHeight(25);
+            TableFormat.setColumnSize(jtbTeam);
+        }
     }
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
-         final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CATEGORIE")+ ": ") +mCategory.getName(), mRoundNumber, mTournament, (MjtRanking) jtbCategory.getModel(), 0);
-         jdg.setVisible(true);
+        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CATEGORIE") + ": ") + mCategory.getName(), mRoundNumber, mTournament, (MjtRanking) jtbCategory.getModel(), 0);
+        jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtGeneral;
+    private javax.swing.JScrollPane jspIndiv;
+    private javax.swing.JScrollPane jspTeam;
     private javax.swing.JTable jtbCategory;
+    private javax.swing.JTable jtbTeam;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNCategory.class.getName());
-    
-/*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
+    /*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+     throw new java.io.NotSerializableException(getClass().getName());
+     }
+
+     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+     throw new java.io.NotSerializableException(getClass().getName());
+     }*/
 }

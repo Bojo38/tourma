@@ -37,6 +37,11 @@ public class Category implements Comparable, XMLExport {
         sCategoryMap.put(s, c);
     }
     
+    public static void delCategory(String s)
+    {
+        sCategoryMap.remove(s);
+    }
+    
     /**
      * Create a new Category Map
      */

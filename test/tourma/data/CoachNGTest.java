@@ -365,32 +365,7 @@ public class CoachNGTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of getCategory method, of class Coach.
-     */
-    @Test
-    public void testGetCategory() {
-        System.out.println("getCategory");
-        Coach instance = new Coach();
-        Category expResult = null;
-        Category result = instance.getCategory();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setCategory method, of class Coach.
-     */
-    @Test
-    public void testSetCategory() {
-        System.out.println("setCategory");
-        Category mCategory = null;
-        Coach instance = new Coach();
-        instance.setCategory(mCategory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    
 
     /**
      * Test of getTeam method, of class Coach.

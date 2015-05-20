@@ -229,34 +229,39 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             coach.setAttribute(StringConstants.CS_NAME, mCoach.getName());
             team.addContent(coach);
         }
+
+        for (int i = 0; i < getCategoryCount(); i++) {
+            Element ec = new Element(StringConstants.CS_CATEGORY);
+            ec.setAttribute(StringConstants.CS_NAME, getCategory(i).getName());
+        }
+
         try {
             Element image = new Element("Picture");
             String encodedImage;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                if (getPicture()!=null)
-                {
-                ImageIO.write(getPicture(), "png", baos);
-                baos.flush();
-                //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
-                encodedImage=Base64.encode(baos.toByteArray());
-                image.addContent(encodedImage);
-            team.addContent(image);
+                if (getPicture() != null) {
+                    ImageIO.write(getPicture(), "png", baos);
+                    baos.flush();
+                    //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+                    encodedImage = Base64.encode(baos.toByteArray());
+                    image.addContent(encodedImage);
+                    team.addContent(image);
                 }
                 // should be inside a finally block
             }
-            
+
         } catch (IOException e) {
             LOG.log(Level.INFO, e.getLocalizedMessage());
         }
         return team;
     }
-    
+
     public Element getXMLElementForDisplay() {
         final Element team = this.getXMLElement();
 
         // Remove all Coachs
         team.removeChildren(StringConstants.CS_COACH);
-        
+
         // Adding complete coachs
         for (Coach mCoach : this.mCoachs) {
             final Element coach = mCoach.getXMLElement();
@@ -280,13 +285,20 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         while (m.hasNext()) {
             final Element coach = m.next();
             Coach c = Coach.getCoach(coach.getAttribute(StringConstants.CS_NAME).getValue());
-            if (c==null)
-            {
-                c=new Coach(coach.getAttribute(StringConstants.CS_NAME).getValue());
+            if (c == null) {
+                c = new Coach(coach.getAttribute(StringConstants.CS_NAME).getValue());
                 Tournament.getTournament().addCoach(c);
             }
             c.setTeamMates(this);
             this.mCoachs.add(c);
+        }
+
+        final List cats = team.getChildren(StringConstants.CS_CATEGORY);
+        final Iterator itCat = cats.iterator();
+        while (itCat.hasNext()) {
+            Element cat = (Element) itCat.next();
+            Category category = Category.getCategory(cat.getAttributeValue(StringConstants.CS_NAME));
+            this.addCategory(category);
         }
 
         try {
@@ -294,7 +306,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             if (image != null) {
                 String encodedImage = image.getText();
                 //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
-                byte[] bytes=Base64.decode(encodedImage);
+                byte[] bytes = Base64.decode(encodedImage);
                 setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
             }
         } catch (IOException e) {
@@ -308,20 +320,19 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     }
 
     public void setXMLElementForDisplay(final Element team) {
-        
-        List<Element> childs=team.getChildren(StringConstants.CS_COACH);
-        Iterator<Element> it=childs.iterator();
-        while (it.hasNext())
-        {
-            Element child=it.next();
-            Coach c=new Coach();
+
+        List<Element> childs = team.getChildren(StringConstants.CS_COACH);
+        Iterator<Element> it = childs.iterator();
+        while (it.hasNext()) {
+            Element child = it.next();
+            Coach c = new Coach();
             c.setXMLElement(child);
             Tournament.getTournament().addCoach(c);
         }
-        
+
         setXMLElement(team);
     }
-    
+
     /**
      *
      * @param opponent

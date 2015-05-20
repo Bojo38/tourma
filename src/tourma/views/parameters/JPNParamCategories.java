@@ -48,6 +48,8 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         jlsCategories = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
         jlsCoachList = new javax.swing.JList();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jlsTeamList = new javax.swing.JList();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -112,28 +114,44 @@ public final class JPNParamCategories extends javax.swing.JPanel {
 
         jPanel14.add(jScrollPane4);
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TeamofCategory"))); // NOI18N
+
+        jlsTeamList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jlsTeamList);
+
+        jPanel14.add(jScrollPane1);
+
         add(jPanel14, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCategoryActionPerformed
 
-       final String enterCategoryName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterCategoryNameKey");
-       final String categoryName = JOptionPane.showInputDialog(this, enterCategoryName);
-       if (categoryName != null) {
-           if (!categoryName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-               mTournament.addCategory(new Category(categoryName));
-           }
-       }
-       update();
+        final String enterCategoryName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterCategoryNameKey");
+        final String categoryName = JOptionPane.showInputDialog(this, enterCategoryName);
+        if (categoryName != null) {
+            if (!categoryName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+                Category cat = new Category(categoryName);
+                mTournament.addCategory(cat);
+                Category.putCategory(categoryName, cat);
+            }
+        }
+        update();
     }//GEN-LAST:event_jbtAddCategoryActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtEditCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditCategoryActionPerformed
         final String enterCategoryName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterCategoryNameKey");
-        final String clanName = (String) jlsCategories.getSelectedValue();
-        final String newCategoryName = JOptionPane.showInputDialog(this, enterCategoryName, clanName);
-        if (!clanName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-            mTournament.getCategory(jlsCategories.getSelectedIndex()).setmName(newCategoryName);
+        final String categoryName = (String) jlsCategories.getSelectedValue();
+        final String newCategoryName = JOptionPane.showInputDialog(this, enterCategoryName, categoryName);
+        if (!newCategoryName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+            Category cat = mTournament.getCategory(jlsCategories.getSelectedIndex());
+            cat.setmName(newCategoryName);
+            Category.delCategory(categoryName);
+            Category.putCategory(newCategoryName, cat);
         }
         update();
     }//GEN-LAST:event_jbtEditCategoryActionPerformed
@@ -142,6 +160,8 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         final int index = jlsCategories.getSelectedIndex();
 
         if (index > 0) {
+            Category cat = mTournament.getCategory(index);
+            Category.delCategory(cat.getName());
             mTournament.removeCategory(index);
         }
         update();
@@ -156,20 +176,35 @@ public final class JPNParamCategories extends javax.swing.JPanel {
      */
     public void update() {
 
-
         final int selectedCategory = jlsCategories.getSelectedIndex();
         final DefaultListModel coachListModel = new DefaultListModel();
         if (selectedCategory >= 0) {
             final String categName = mTournament.getCategory(selectedCategory).getName();
+            Category cat = Category.getCategory(categName);
             for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-                if (mTournament.getCoach(i).getCategory().getName() != null) {
-                    if (categName.equals(mTournament.getCoach(i).getCategory().getName())) {
-                        coachListModel.addElement(mTournament.getCoach(i).getName());
-                    }
+                if (mTournament.getCoach(i).containsCategory(cat)) {
+                    coachListModel.addElement(mTournament.getCoach(i).getName());
                 }
             }
         }
         jlsCoachList.setModel(coachListModel);
+
+        if (Tournament.getTournament().getParams().isTeamTournament()) {
+            jlsTeamList.setEnabled(true);
+            final DefaultListModel teamListModel = new DefaultListModel();
+            if (selectedCategory >= 0) {
+                final String categName = mTournament.getCategory(selectedCategory).getName();
+                Category cat = Category.getCategory(categName);
+                for (int i = 0; i < mTournament.getTeamsCount(); i++) {
+                    if (mTournament.getTeam(i).containsCategory(cat)) {
+                        teamListModel.addElement(mTournament.getTeam(i).getName());
+                    }
+                }
+            }
+            jlsTeamList.setModel(teamListModel);
+        } else {
+            jlsTeamList.setEnabled(false);
+        }
 
         final DefaultListModel listModel = new DefaultListModel();
         for (int i = 0; i < mTournament.getCategoriesCount(); i++) {
@@ -181,6 +216,7 @@ public final class JPNParamCategories extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton jbtAddCategory;
@@ -188,10 +224,11 @@ public final class JPNParamCategories extends javax.swing.JPanel {
     private javax.swing.JButton jbtRemoveCategory;
     private javax.swing.JList jlsCategories;
     private javax.swing.JList jlsCoachList;
+    private javax.swing.JList jlsTeamList;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNParamCategories.class.getName());
-    
-     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

@@ -367,7 +367,7 @@ public class TourmaProtocol {
                         ArrayList<Coach> coachs = new ArrayList<>();
                         for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
                             Coach coach = Tournament.getTournament().getCoach(i);
-                            if (coach.getCategory().equals(cat)) {
+                            if (coach.containsCategory(cat)) {
                                 coachs.add(coach);
                             }
                         }
@@ -467,7 +467,7 @@ public class TourmaProtocol {
                         ArrayList<Coach> coachs = new ArrayList<>();
                         for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
                             Coach coach = Tournament.getTournament().getCoach(i);
-                            if (coach.getCategory().equals(cat)) {
+                            if (coach.containsCategory(cat)) {
                                 coachs.add(coach);
                             }
                         }

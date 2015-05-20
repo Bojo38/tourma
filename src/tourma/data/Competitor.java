@@ -19,6 +19,39 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
 
     /**
      *
+     */
+    private ArrayList<Category> mCategories=new ArrayList<>();
+    
+    public boolean containsCategory(Category cat)
+    {
+        return mCategories.contains(cat);
+    }
+    
+    public int getCategoryCount() {
+        return mCategories.size();
+    }
+    
+    public Category getCategory(int i) {
+        return mCategories.get(i);
+    }
+
+    /**
+     * @param mCategory the mCategory to set
+     */
+    public void addCategory(Category mCategory) {
+        mCategories.add(mCategory);
+    }
+    
+    public void delCategory(Category mCategory) {
+        mCategories.remove(mCategory);
+    }
+    
+    public void clearCategory() {
+        mCategories.clear();
+    }
+    
+    /**
+     *
      * @param mix
      * @return
      */

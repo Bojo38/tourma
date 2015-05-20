@@ -19,10 +19,13 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -30,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
+import tourma.data.Category;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.tableModel.MjtCoaches;
@@ -144,11 +148,6 @@ public final class JdgTeam extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jtfNom = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jcbClan = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtCancel = new javax.swing.JButton();
@@ -159,27 +158,24 @@ public final class JdgTeam extends javax.swing.JDialog {
         jbtModify = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCoachs = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
         jbtAvatar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jtfNom = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jcbClan = new javax.swing.JComboBox();
+        jPanel5 = new javax.swing.JPanel();
+        jpnBtns1 = new javax.swing.JPanel();
+        jbtAddCategory = new javax.swing.JButton();
+        jbtDelCategory = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jlsCategories = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jLabel1.setText(bundle.getString("TeamNameKey")); // NOI18N
-        jPanel1.add(jLabel1);
-        jPanel1.add(jtfNom);
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel2.setText(bundle.getString("ClanNameKey")); // NOI18N
-        jPanel1.add(jLabel2);
-
-        jPanel1.add(jcbClan);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
-
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,6 +246,8 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         getContentPane().add(jPanel7, java.awt.BorderLayout.CENTER);
 
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
         jbtAvatar.setMnemonic('A');
         jbtAvatar.setPreferredSize(new java.awt.Dimension(80, 80));
         jbtAvatar.addActionListener(new java.awt.event.ActionListener() {
@@ -257,7 +255,58 @@ public final class JdgTeam extends javax.swing.JDialog {
                 jbtAvatarActionPerformed(evt);
             }
         });
-        getContentPane().add(jbtAvatar, java.awt.BorderLayout.WEST);
+        jPanel3.add(jbtAvatar, java.awt.BorderLayout.WEST);
+
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel1.setText(bundle.getString("TeamNameKey")); // NOI18N
+        jPanel1.add(jLabel1);
+        jPanel1.add(jtfNom);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel2.setText(bundle.getString("ClanNameKey")); // NOI18N
+        jPanel1.add(jLabel2);
+
+        jPanel1.add(jcbClan);
+
+        jPanel3.add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Category"))); // NOI18N
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jpnBtns1.setLayout(new java.awt.GridLayout(3, 1, 1, 1));
+
+        jbtAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddCategoryActionPerformed(evt);
+            }
+        });
+        jpnBtns1.add(jbtAddCategory);
+
+        jbtDelCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtDelCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtDelCategoryActionPerformed(evt);
+            }
+        });
+        jpnBtns1.add(jbtDelCategory);
+
+        jPanel5.add(jpnBtns1, java.awt.BorderLayout.WEST);
+
+        jlsCategories.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jlsCategories);
+
+        jPanel5.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+
+        jPanel3.add(jPanel5, java.awt.BorderLayout.SOUTH);
+
+        getContentPane().add(jPanel3, java.awt.BorderLayout.NORTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -374,20 +423,64 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         jbtAvatar.setIcon(new ImageIcon(mTeam.getPicture()));
     }//GEN-LAST:event_jbtAvatarActionPerformed
+
+    private void jbtAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCategoryActionPerformed
+        ArrayList<String> cats = new ArrayList<>();
+        cats.add(" ");
+        for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+            Category cat = Tournament.getTournament().getCategory(i);
+            if (!mTeam.containsCategory(cat)) {
+                cats.add(cat.getName());
+            }
+        }
+        JComboBox jcb = new JComboBox(cats.toArray());
+        jcb.setEditable(true);
+        JOptionPane.showMessageDialog(this, jcb, "Please select catecory", JOptionPane.QUESTION_MESSAGE);
+
+        if (jcb.getSelectedIndex() > 0) {
+            String name = cats.get(jcb.getSelectedIndex());
+            Category cat = Category.getCategory(name);
+            mTeam.addCategory(cat);
+        }
+        update();
+
+    }//GEN-LAST:event_jbtAddCategoryActionPerformed
+
+    private void jbtDelCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDelCategoryActionPerformed
+
+        List selection = jlsCategories.getSelectedValuesList();
+        for (Object o : selection) {
+            if (o instanceof String) {
+                String name = (String) o;
+                Category cat = Category.getCategory(name);
+                mTeam.delCategory(cat);
+            }
+        }
+
+        update();
+    }//GEN-LAST:event_jbtDelCategoryActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbtAdd;
+    private javax.swing.JButton jbtAddCategory;
     private javax.swing.JButton jbtAvatar;
     private javax.swing.JButton jbtCancel;
+    private javax.swing.JButton jbtDelCategory;
     private javax.swing.JButton jbtModify;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtRemove;
     private javax.swing.JComboBox jcbClan;
+    private javax.swing.JList jlsCategories;
+    private javax.swing.JPanel jpnBtns1;
     private javax.swing.JPanel jpnCoachButtons;
     private javax.swing.JTable jtbCoachs;
     private javax.swing.JTextField jtfNom;
@@ -414,6 +507,15 @@ public final class JdgTeam extends javax.swing.JDialog {
         } else {
             jbtAdd.setEnabled(true);
         }
+
+        final DefaultListModel categoryListModel = new DefaultListModel();
+        for (int i = 0; i < this.mTeam.getCategoryCount(); i++) {
+            categoryListModel.addElement(mTeam.getCategory(i).getName());
+        }
+        jlsCategories.setModel(categoryListModel);
+        
+        jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount()>0);
+        jbtDelCategory.setEnabled(mTeam.getCategoryCount()>0);
     }
     private static final Logger LOG = Logger.getLogger(JdgTeam.class.getName());
 

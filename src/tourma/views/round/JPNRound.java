@@ -91,7 +91,7 @@ public final class JPNRound extends javax.swing.JPanel {
             }
         }
 
-        if (mTournament.getCategoriesCount() > 1) {
+        if (mTournament.getCategoriesCount() >0) {
             for (int i = 0; i < mTournament.getCategoriesCount(); i++) {
                 final Category c = mTournament.getCategory(i);
                 if (!c.getName().equals(StringConstants.CS_NONE)) {

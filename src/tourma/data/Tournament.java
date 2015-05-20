@@ -69,17 +69,14 @@ public class Tournament implements IContainCoachs {
         return mSingleton;
     }
 
-    public int getRoundIndex(Round round)
-    {
-        if (this.mRounds!=null)
-        {
+    public int getRoundIndex(Round round) {
+        if (this.mRounds != null) {
             return mRounds.indexOf(round);
-        }
-        else{
+        } else {
             return -1;
         }
     }
-    
+
     /**
      *
      * @return
@@ -377,62 +374,52 @@ public class Tournament implements IContainCoachs {
     public boolean containsTeam(Team t) {
         return mTeams.contains(t);
     }
-    
+
     public boolean containsTeam(String name) {
-        for (int i=0; i<mTeams.size(); i++)
-        {
-            if (mTeams.get(i).getName().equals(name))
-            {
+        for (int i = 0; i < mTeams.size(); i++) {
+            if (mTeams.get(i).getName().equals(name)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public boolean containsCoach(String name) {
-        for (int i=0; i<mCoachs.size(); i++)
-        {
-            if (mCoachs.get(i).getName().equals(name))
-            {
+        for (int i = 0; i < mCoachs.size(); i++) {
+            if (mCoachs.get(i).getName().equals(name)) {
                 return true;
             }
         }
         return false;
     }
-    
-     public int getTeamIndex(String name) {
-        for (int i=0; i<mTeams.size(); i++)
-        {
-            if (mTeams.get(i).getName().equals(name))
-            {
+
+    public int getTeamIndex(String name) {
+        for (int i = 0; i < mTeams.size(); i++) {
+            if (mTeams.get(i).getName().equals(name)) {
                 return i;
             }
         }
         return -1;
     }
 
-     public Team getTeam(String name) {
-        for (int i=0; i<mTeams.size(); i++)
-        {
-            if (mTeams.get(i).getName().equals(name))
-            {
+    public Team getTeam(String name) {
+        for (int i = 0; i < mTeams.size(); i++) {
+            if (mTeams.get(i).getName().equals(name)) {
                 return mTeams.get(i);
             }
         }
         return null;
     }
-     
-     public Coach getCoach(String name) {
-        for (int i=0; i<mCoachs.size(); i++)
-        {
-            if (mCoachs.get(i).getName().equals(name))
-            {
+
+    public Coach getCoach(String name) {
+        for (int i = 0; i < mCoachs.size(); i++) {
+            if (mCoachs.get(i).getName().equals(name)) {
                 return mCoachs.get(i);
             }
         }
         return null;
     }
-     
+
     /**
      *
      * @param c
@@ -490,8 +477,12 @@ public class Tournament implements IContainCoachs {
             counts.put(mCategorie, 0);
         }
         final ArrayList<Category> categories = new ArrayList<>();
+
         for (Coach c : mCoachs) {
-            counts.put(c.getCategory(), counts.get(c.getCategory()) + 1);
+            for (int i = 0; i < c.getCategoryCount(); i++) {
+                Category cat = c.getCategory(i);
+                counts.put(cat, counts.get(cat) + 1);
+            }
         }
 
         for (Category mCategorie : mCategories) {
@@ -502,8 +493,6 @@ public class Tournament implements IContainCoachs {
 
         return categories;
     }
-
-
 
     /**
      *
@@ -521,30 +510,25 @@ public class Tournament implements IContainCoachs {
     public boolean containsCoach(Coach c) {
         return mCoachs.contains(c);
     }
-    
+
     public boolean containsClan(String c) {
-        for(Clan cl: mClans)
-        {
-            if (cl.getName().equals(c))
-            {
+        for (Clan cl : mClans) {
+            if (cl.getName().equals(c)) {
                 return true;
             }
         }
         return false;
     }
 
-    public Clan getClan(String name)
-    {
-        for(Clan cl: mClans)
-        {
-            if (cl.getName().equals(name))
-            {
+    public Clan getClan(String name) {
+        for (Clan cl : mClans) {
+            if (cl.getName().equals(name)) {
                 return cl;
             }
         }
         return null;
     }
-    
+
     /**
      *
      * @param i
@@ -847,17 +831,17 @@ public class Tournament implements IContainCoachs {
                 for (int j = 0; j < getParams().getCriteriaCount(); j++) {
                     final Criteria criteria = getParams().getCriteria(j);
                     rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"),
-                            new MjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), getParams().isTeamTournament(), false),getRankingTypes(false)));
-                    rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new MjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mCoachs, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), getParams().isTeamTournament(), false),getRankingTypes(false)));
+                            new MjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), getParams().isTeamTournament(), false), getRankingTypes(false)));
+                    rankings.add(new Ranking(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL"), criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new MjtAnnexRankIndiv(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mCoachs, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), getParams().isTeamTournament(), false), getRankingTypes(false)));
 
                     if (getParams().isTeamTournament()) {
-                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new MjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mTeams, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), false),getRankingTypes(true)));
-                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVS"), new MjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mTeams, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), false),getRankingTypes(true)));
+                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new MjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mTeams, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), false), getRankingTypes(true)));
+                        rankings.add(new Ranking(StringConstants.CS_TEAM, criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVS"), new MjtAnnexRankTeam(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mTeams, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), false), getRankingTypes(true)));
                     }
 
                     if (getParams().isEnableClans()) {
-                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new MjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mClans, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), false),getRankingTypes(false)));
-                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new MjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mClans, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), false),getRankingTypes(false)));
+                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIVE"), new MjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mClans, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), false), getRankingTypes(false)));
+                        rankings.add(new Ranking(StringConstants.CS_CLAN, criteria.getName(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NEGATIVE"), new MjtAnnexRankClan(i, criteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mClans, true, this.getParams().getRankingIndiv1(), this.getParams().getRankingIndiv2(), this.getParams().getRankingIndiv3(), this.getParams().getRankingIndiv4(), this.getParams().getRankingIndiv5(), false), getRankingTypes(false)));
                     }
                 }
 
@@ -1484,8 +1468,7 @@ public class Tournament implements IContainCoachs {
         }
     }
 
-    public void loadRosters(Element racine)
-    {
+    public void loadRosters(Element racine) {
         try {
             final List<Element> ros = racine.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"));
             if (ros != null) {
@@ -1510,7 +1493,7 @@ public class Tournament implements IContainCoachs {
             RosterType.initCollection();
         }
     }
-    
+
     /**
      *
      * @param racine

@@ -255,7 +255,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                     final ArrayList<Coach> coaches = new ArrayList<>();
                     for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
                         Coach coach = Tournament.getTournament().getCoach(cpt);
-                        if (coach.getCategory().equals(cat)) {
+                        if (coach.containsCategory(cat)) {
                             coaches.add(coach);
                         }
                     }

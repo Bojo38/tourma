@@ -85,10 +85,7 @@ public final class Coach extends Competitor implements XMLExport {
         return sNullCoach;
     }
 
-    /**
-     *
-     */
-    private Category mCategory;
+    
 
     /**
      *
@@ -236,11 +233,17 @@ public final class Coach extends Competitor implements XMLExport {
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF"), Integer.toString(this.getNaf()));
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK"), Integer.toString(this.getRank()));
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"), this.getClan().getName());
-        if (this.getCategory() != null) {
+                
+        for (int i=0; i<getCategoryCount(); i++)
+        {
+            Element ec=new Element(StringConstants.CS_CATEGORY);
+            ec.setAttribute(StringConstants.CS_NAME, getCategory(i).getName());
+        }
+        /*if (this.getCategory() != null) {
             coach.setAttribute(StringConstants.CS_CATEGORY, this.getCategory().getName());
         } else {
             coach.setAttribute(StringConstants.CS_CATEGORY, StringConstants.CS_NONE);
-        }
+        }*/
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIVE"), Boolean.toString(this.isActive()));
 
         coach.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HANDICAP"), Integer.toString(this.getHandicap()));
@@ -349,11 +352,19 @@ public final class Coach extends Competitor implements XMLExport {
             this.setNaf(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF")).getIntValue());
             this.setRank(coach.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK")).getIntValue());
             this.setClan(Clan.getClan(coach.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"))));
+
             if (coach.getAttributeValue(StringConstants.CS_CATEGORY) != null) {
-                this.setCategory(Category.getCategory(coach.getAttributeValue(StringConstants.CS_CATEGORY)));
-            } else {
-                this.setCategory(Category.getCategory(coach.getAttributeValue(StringConstants.CS_NONE)));
+                this.addCategory(Category.getCategory(coach.getAttributeValue(StringConstants.CS_CATEGORY)));
+            } 
+            final List cats = coach.getChildren(StringConstants.CS_CATEGORY);
+            final Iterator itCat = cats.iterator();
+            while (itCat.hasNext()) {
+                Element cat = (Element) itCat.next();
+                Category category = Category.getCategory(cat.getAttributeValue(StringConstants.CS_NAME));
+                this.addCategory(category);
             }
+           
+            
             Coach.sCoachMap.put(getName(), this);
 
             try {
@@ -1414,16 +1425,8 @@ public final class Coach extends Competitor implements XMLExport {
     /**
      * @return the mCategory
      */
-    public Category getCategory() {
-        return mCategory;
-    }
-
-    /**
-     * @param mCategory the mCategory to set
-     */
-    public void setCategory(Category mCategory) {
-        this.mCategory = mCategory;
-    }
+    
+    
 
     /**
      * @return the mTeam
