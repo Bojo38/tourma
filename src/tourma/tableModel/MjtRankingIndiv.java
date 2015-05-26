@@ -47,6 +47,17 @@ public final class MjtRankingIndiv extends MjtRanking {
         sortDatas();
     }
 
+    public MjtRankingIndiv(final int round, final ArrayList coachs, boolean teamTournament,final boolean round_only) {
+
+        this(round, 
+                Tournament.getTournament().getParams().getRankingIndiv1(),
+                Tournament.getTournament().getParams().getRankingIndiv1(),
+                Tournament.getTournament().getParams().getRankingIndiv1(),
+                Tournament.getTournament().getParams().getRankingIndiv1(),
+                Tournament.getTournament().getParams().getRankingIndiv1(),
+                coachs, teamTournament,round_only,false);
+    }
+    
     /**
      *
      */

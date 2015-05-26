@@ -200,10 +200,12 @@ public final class JPNParamCategories extends javax.swing.JPanel {
                         teamListModel.addElement(mTournament.getTeam(i).getName());
                     }
                 }
-            }
+            }            
             jlsTeamList.setModel(teamListModel);
         } else {
             jlsTeamList.setEnabled(false);
+            final DefaultListModel teamListModel = new DefaultListModel();
+            jlsTeamList.setModel(teamListModel);
         }
 
         final DefaultListModel listModel = new DefaultListModel();

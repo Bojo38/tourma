@@ -233,6 +233,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         for (int i = 0; i < getCategoryCount(); i++) {
             Element ec = new Element(StringConstants.CS_CATEGORY);
             ec.setAttribute(StringConstants.CS_NAME, getCategory(i).getName());
+            team.addContent(ec);
         }
 
         try {

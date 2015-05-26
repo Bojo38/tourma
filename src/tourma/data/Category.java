@@ -161,6 +161,11 @@ public class Category implements Comparable, XMLExport {
     public void setmName(String mName) {
         this.mName = mName;
     }
-    
+
+    @Override
+    public String toString()
+    {
+        return getName();
+    }
     
 }
