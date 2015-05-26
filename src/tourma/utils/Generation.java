@@ -1713,7 +1713,7 @@ public final class Generation {
                     
                     jpn.add(jpnsouth,BorderLayout.SOUTH);
 
-                    while (jls.getSelectedValuesList().size() == 0) {
+                    while (jls.getSelectedValuesList().isEmpty()) {
                         JOptionPane.showMessageDialog(null, jpn, StringConstants.CS_CUP, JOptionPane.QUESTION_MESSAGE);
                     }
 
