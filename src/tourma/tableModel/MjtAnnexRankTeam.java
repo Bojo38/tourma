@@ -84,7 +84,7 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
             int value3 = 0;
             int value4 = 0;
             int value5 = 0;
-            
+
             if (t.getMatchCount() > 0) {
                 ArrayList<Integer> aValue = new ArrayList<>();
                 ArrayList<Integer> aValue1 = new ArrayList<>();
@@ -104,7 +104,7 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                 }
 
                 for (int j = 0; j <= t.getMatchCount() - 1; j++) {
-                    
+
                     final TeamMatch tm = (TeamMatch) t.getMatch(j);
                     boolean bFound = false;
                     for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
@@ -127,23 +127,43 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                 for (Integer i : aValue) {
                     value += i;
                 }
+
+                if (Tournament.getTournament().getParams().isApplyToAnnexTeam()) {
+                    removeMaxValue(aValue);
+                    removeMinValue(aValue);
+                }
+
                 if (Tournament.getTournament().getParams().isUseBestResultTeam()) {
-                        while (aValue1.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
-                            removeMinValue(aValue1);
-                        }
-                        while (aValue2.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
-                            removeMinValue(aValue2);
-                        }
-                        while (aValue3.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
-                            removeMinValue(aValue3);
-                        }
-                        while (aValue4.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
-                            removeMinValue(aValue4);
-                        }
-                        while (aValue5.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
-                            removeMinValue(aValue5);
-                        }
+                    while (aValue1.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                        removeMinValue(aValue1);
                     }
+                    while (aValue2.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                        removeMinValue(aValue2);
+                    }
+                    while (aValue3.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                        removeMinValue(aValue3);
+                    }
+                    while (aValue4.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                        removeMinValue(aValue4);
+                    }
+                    while (aValue5.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                        removeMinValue(aValue5);
+                    }
+                } else {
+                    if (Tournament.getTournament().getParams().isExceptBestAndWorstTeam()) {
+                        removeMinValue(aValue1);
+                        removeMinValue(aValue2);
+                        removeMinValue(aValue3);
+                        removeMinValue(aValue4);
+                        removeMinValue(aValue5);
+                        removeMaxValue(aValue1);
+                        removeMaxValue(aValue2);
+                        removeMaxValue(aValue3);
+                        removeMaxValue(aValue4);
+                        removeMaxValue(aValue5);
+                    }
+                }
+
                 value1 = getValueFromArray(mRankingType1, aValue1);
                 value2 = getValueFromArray(mRankingType2, aValue2);
                 value3 = getValueFromArray(mRankingType3, aValue3);

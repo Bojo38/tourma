@@ -67,8 +67,10 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         jcbRank5 = new javax.swing.JComboBox();
         jcxBestResult = new javax.swing.JCheckBox();
         jspBestResults = new javax.swing.JSpinner();
+        jcxExceptBestAndWorst = new javax.swing.JCheckBox();
+        jcxForAnnexRankingToo = new javax.swing.JCheckBox();
 
-        setLayout(new java.awt.GridLayout(15, 2));
+        setLayout(new java.awt.GridLayout(16, 2));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jcxLargeVictory.setText(bundle.getString("LargeVictoryKey")); // NOI18N
@@ -274,6 +276,24 @@ public class JPNParamIndiv extends javax.swing.JPanel {
             }
         });
         add(jspBestResults);
+
+        jcxExceptBestAndWorst.setText(bundle.getString("ExceptBestAndWorst")); // NOI18N
+        jcxExceptBestAndWorst.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jcxExceptBestAndWorst.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jcxExceptBestAndWorst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxExceptBestAndWorstActionPerformed(evt);
+            }
+        });
+        add(jcxExceptBestAndWorst);
+
+        jcxForAnnexRankingToo.setText(bundle.getString("ExceptBestAndWorstAnnex")); // NOI18N
+        jcxForAnnexRankingToo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxForAnnexRankingTooActionPerformed(evt);
+            }
+        });
+        add(jcxForAnnexRankingToo);
     }// </editor-fold>//GEN-END:initComponents
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -424,6 +444,16 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jspBestResultsStateChanged
 
+    private void jcxExceptBestAndWorstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxExceptBestAndWorstActionPerformed
+        mTournament.getParams().setExceptBestAndWorstIndiv(jcxExceptBestAndWorst.isSelected());
+        update();
+    }//GEN-LAST:event_jcxExceptBestAndWorstActionPerformed
+
+    private void jcxForAnnexRankingTooActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxForAnnexRankingTooActionPerformed
+        mTournament.getParams().setApplyToAnnexIndiv(jcxForAnnexRankingToo.isSelected());
+        update();
+    }//GEN-LAST:event_jcxForAnnexRankingTooActionPerformed
+
     /**
      * Update Panel
      */
@@ -454,6 +484,12 @@ public class JPNParamIndiv extends javax.swing.JPanel {
 
         jspBestResults.setEnabled(mTournament.getParams().isUseBestResultIndiv());
         jspBestResults.setValue(mTournament.getParams().getBestResultIndiv());
+        
+        jcxExceptBestAndWorst.setEnabled(!mTournament.getParams().isUseBestResultIndiv());
+        
+        jcxExceptBestAndWorst.setSelected(mTournament.getParams().isExceptBestAndWorstIndiv());
+        jcxForAnnexRankingToo.setSelected(mTournament.getParams().isApplyToAnnexIndiv());
+        
         
         final ArrayList<String> rankChoices = new ArrayList<>();
         rankChoices.add(StringConstants.CS_NONE);
@@ -547,6 +583,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private javax.swing.JComboBox jcbRank4;
     private javax.swing.JComboBox jcbRank5;
     private javax.swing.JCheckBox jcxBestResult;
+    private javax.swing.JCheckBox jcxExceptBestAndWorst;
+    private javax.swing.JCheckBox jcxForAnnexRankingToo;
     private javax.swing.JCheckBox jcxLargeVictory;
     private javax.swing.JCheckBox jcxLittleLoss;
     private javax.swing.JLabel jlbLargeVictoryGap;

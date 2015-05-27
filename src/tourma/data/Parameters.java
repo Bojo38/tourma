@@ -365,6 +365,47 @@ public class Parameters implements XMLExport {
     private int mBestResultsIndiv = 5;
     private int mBestResultsTeam = 5;
 
+    private boolean mExceptBestAndWorstIndiv=false;
+    private boolean mApplyToAnnexIndiv=false;
+    private boolean mExceptBestAndWorstTeam=false;
+    private boolean mApplyToAnnexTeam=false;
+    
+    public boolean isApplyToAnnexIndiv()
+    {
+        return mApplyToAnnexIndiv;
+    }
+    public void setApplyToAnnexIndiv(boolean b)
+    {
+        mApplyToAnnexIndiv=b;
+    }
+    
+    public boolean isExceptBestAndWorstIndiv()
+    {
+        return mExceptBestAndWorstIndiv;
+    }
+    public void setExceptBestAndWorstIndiv(boolean b)
+    {
+        mExceptBestAndWorstIndiv=b;
+    }
+    
+    public boolean isApplyToAnnexTeam()
+    {
+        return mApplyToAnnexTeam;
+    }
+    public void setApplyToAnnexTeam(boolean b)
+    {
+        mApplyToAnnexTeam=b;
+    }
+    
+    public boolean isExceptBestAndWorstTeam()
+    {
+        return mExceptBestAndWorstTeam;
+    }
+    public void setExceptBestAndWorstTeam(boolean b)
+    {
+        mExceptBestAndWorstTeam=b;
+    }
+    
     public boolean isUseBestResultIndiv() {
         return mUseBestResultsIndiv;
     }
@@ -524,6 +565,12 @@ public class Parameters implements XMLExport {
 
         params.setAttribute("BEST_RESULT_INDIV", Integer.toString(this.getBestResultIndiv()));
         params.setAttribute("BEST_RESULT_TEAM", Integer.toString(this.getBestResultTeam()));
+        
+        params.setAttribute("APPLY_TO_ANNEX_TEAM", Boolean.toString(this.isApplyToAnnexTeam()));
+        params.setAttribute("APPLY_TO_ANNEX_INDIV", Boolean.toString(this.isApplyToAnnexIndiv()));
+        
+        params.setAttribute("EXCEPT_BEST_AND_WORST_INDIV", Boolean.toString(this.isExceptBestAndWorstIndiv()));
+        params.setAttribute("EXCEPT_BEST_AND_WORST_TEAM", Boolean.toString(this.isExceptBestAndWorstTeam()));
 
         return params;
     }
@@ -670,6 +717,11 @@ public class Parameters implements XMLExport {
                 this.setUseBestResultTeam(params.getAttribute("USE_BEST_RESULT_TEAM").getBooleanValue());
                 this.setBestResultIndiv(params.getAttribute("BEST_RESULT_INDIV").getIntValue());
                 this.setBestResultTeam(params.getAttribute("BEST_RESULT_TEAM").getIntValue());
+                
+                this.setApplyToAnnexIndiv(params.getAttribute("APPLY_TO_ANNEX_INDIV").getBooleanValue());
+                this.setApplyToAnnexTeam(params.getAttribute("APPLY_TO_ANNEX_TEAM").getBooleanValue());
+                this.setExceptBestAndWorstIndiv(params.getAttribute("EXCEPT_BEST_AND_WORST_INDIV").getBooleanValue());
+                this.setExceptBestAndWorstTeam(params.getAttribute("EXCEPT_BEST_AND_WORST_TEAM").getBooleanValue());
 
             } catch (NullPointerException ne4) {
                 //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());

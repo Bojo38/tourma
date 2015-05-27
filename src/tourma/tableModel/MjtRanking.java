@@ -110,6 +110,20 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         }
     }
 
+    protected void removeMaxValue(ArrayList<Integer> aValue) {
+        int max = Integer.MIN_VALUE;
+        int index = 0;
+        if (aValue.size() > 0) {
+            for (int k = 0; k < aValue.size(); k++) {
+                max = Math.max(max, aValue.get(k));
+                if (max == aValue.get(k)) {
+                    index = k;
+                }
+            }
+            aValue.remove(index);
+        }
+    }
+
     /**
      *
      * @param c

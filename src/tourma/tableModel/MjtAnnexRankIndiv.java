@@ -103,6 +103,11 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                     value += i;
                 }
 
+                if (Tournament.getTournament().getParams().isApplyToAnnexIndiv()) {
+                    removeMaxValue(aValue);
+                    removeMinValue(aValue);
+                }
+
                 if (Tournament.getTournament().getParams().isUseBestResultIndiv()) {
                     while (aValue1.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
                         removeMinValue(aValue1);
@@ -117,6 +122,19 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                         removeMinValue(aValue4);
                     }
                     while (aValue5.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                        removeMinValue(aValue5);
+                    }
+                } else {
+                    if (Tournament.getTournament().getParams().isExceptBestAndWorstIndiv()) {
+                        removeMaxValue(aValue1);
+                        removeMinValue(aValue1);
+                        removeMaxValue(aValue2);
+                        removeMinValue(aValue2);
+                        removeMaxValue(aValue3);
+                        removeMinValue(aValue3);
+                        removeMaxValue(aValue4);
+                        removeMinValue(aValue4);
+                        removeMaxValue(aValue5);
                         removeMinValue(aValue5);
                     }
                 }

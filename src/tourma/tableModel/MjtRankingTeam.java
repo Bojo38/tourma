@@ -306,6 +306,19 @@ public final class MjtRankingTeam extends MjtRanking {
                     while (aValue5.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
                         removeMinValue(aValue5);
                     }
+                } else {
+                    if (Tournament.getTournament().getParams().isExceptBestAndWorstTeam()) {
+                        removeMinValue(aValue1);
+                        removeMinValue(aValue2);
+                        removeMinValue(aValue3);
+                        removeMinValue(aValue4);
+                        removeMinValue(aValue5);
+                        removeMaxValue(aValue1);
+                        removeMaxValue(aValue2);
+                        removeMaxValue(aValue3);
+                        removeMaxValue(aValue4);
+                        removeMaxValue(aValue5);
+                    }
                 }
 
                 value1 = getValueFromArray(mRankingType1, aValue1);

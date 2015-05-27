@@ -129,6 +129,19 @@ public final class MjtRankingIndiv extends MjtRanking {
                         while (aValue5.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
                             removeMinValue(aValue5);
                         }
+                    } else {
+                        if (Tournament.getTournament().getParams().isExceptBestAndWorstIndiv()) {
+                            removeMaxValue(aValue1);
+                            removeMinValue(aValue1);
+                            removeMaxValue(aValue2);
+                            removeMinValue(aValue2);
+                            removeMaxValue(aValue3);
+                            removeMinValue(aValue3);
+                            removeMaxValue(aValue4);
+                            removeMinValue(aValue4);
+                            removeMaxValue(aValue5);
+                            removeMinValue(aValue5);
+                        }
                     }
 
                     value1 = getValueFromArray(mRankingType1, aValue1);

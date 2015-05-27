@@ -63,6 +63,8 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         jtffTeamDrawBonus = new javax.swing.JFormattedTextField();
         jcxBestResult = new javax.swing.JCheckBox();
         jspBestResults = new javax.swing.JSpinner();
+        jcxExceptBestAndWorst = new javax.swing.JCheckBox();
+        jcxForAnnexRankingToo = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jcxTeamBalance = new javax.swing.JCheckBox();
         jcxIndividualBalance = new javax.swing.JCheckBox();
@@ -71,7 +73,7 @@ public final class JPNParamTeam extends javax.swing.JPanel {
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Team Ranking"))); // NOI18N
-        jPanel1.setLayout(new java.awt.GridLayout(12, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(13, 2));
 
         jrbTeamVictory.setText(bundle.getString("UseTeamVictory")); // NOI18N
         jrbTeamVictory.setHideActionText(true);
@@ -239,6 +241,24 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         });
         jPanel1.add(jspBestResults);
 
+        jcxExceptBestAndWorst.setText(bundle.getString("ExceptBestAndWorst")); // NOI18N
+        jcxExceptBestAndWorst.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jcxExceptBestAndWorst.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jcxExceptBestAndWorst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxExceptBestAndWorstActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jcxExceptBestAndWorst);
+
+        jcxForAnnexRankingToo.setText(bundle.getString("ExceptBestAndWorstAnnex")); // NOI18N
+        jcxForAnnexRankingToo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxForAnnexRankingTooActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jcxForAnnexRankingToo);
+
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Pairing"))); // NOI18N
@@ -380,6 +400,16 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jspBestResultsStateChanged
 
+    private void jcxExceptBestAndWorstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxExceptBestAndWorstActionPerformed
+        mTournament.getParams().setExceptBestAndWorstTeam(jcxExceptBestAndWorst.isSelected());
+        update();
+    }//GEN-LAST:event_jcxExceptBestAndWorstActionPerformed
+
+    private void jcxForAnnexRankingTooActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxForAnnexRankingTooActionPerformed
+        mTournament.getParams().setApplyToAnnexTeam(jcxForAnnexRankingToo.isSelected());
+        update();
+    }//GEN-LAST:event_jcxForAnnexRankingTooActionPerformed
+
     /**
      * Update panel
      */
@@ -414,6 +444,13 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         jspBestResults.setEnabled(mTournament.getParams().isUseBestResultTeam());
         jspBestResults.setValue(mTournament.getParams().getBestResultTeam());
 
+        jcxBestResult.setSelected(mTournament.getParams().isUseBestResultTeam());
+         jcxExceptBestAndWorst.setEnabled(!mTournament.getParams().isUseBestResultTeam());
+
+        
+        jcxExceptBestAndWorst.setSelected(mTournament.getParams().isExceptBestAndWorstTeam());
+        jcxForAnnexRankingToo.setSelected(mTournament.getParams().isApplyToAnnexTeam());
+        
         jLabel23.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
         jLabel24.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
         jLabel25.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
@@ -527,6 +564,8 @@ public final class JPNParamTeam extends javax.swing.JPanel {
     private javax.swing.JComboBox jcbRank4Team;
     private javax.swing.JComboBox jcbRank5Team;
     private javax.swing.JCheckBox jcxBestResult;
+    private javax.swing.JCheckBox jcxExceptBestAndWorst;
+    private javax.swing.JCheckBox jcxForAnnexRankingToo;
     private javax.swing.JCheckBox jcxIndividualBalance;
     private javax.swing.JCheckBox jcxTeamBalance;
     private javax.swing.JLabel jlbVictoryPoints;
