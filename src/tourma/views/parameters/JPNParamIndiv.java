@@ -65,8 +65,10 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         jcbRank4 = new javax.swing.JComboBox();
         jLabel18 = new javax.swing.JLabel();
         jcbRank5 = new javax.swing.JComboBox();
+        jcxBestResult = new javax.swing.JCheckBox();
+        jspBestResults = new javax.swing.JSpinner();
 
-        setLayout(new java.awt.GridLayout(14, 2));
+        setLayout(new java.awt.GridLayout(15, 2));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jcxLargeVictory.setText(bundle.getString("LargeVictoryKey")); // NOI18N
@@ -255,6 +257,23 @@ public class JPNParamIndiv extends javax.swing.JPanel {
             }
         });
         add(jcbRank5);
+
+        jcxBestResult.setText(bundle.getString("KeepBestResults")); // NOI18N
+        jcxBestResult.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jcxBestResult.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jcxBestResult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxBestResultActionPerformed(evt);
+            }
+        });
+        add(jcxBestResult);
+
+        jspBestResults.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jspBestResultsStateChanged(evt);
+            }
+        });
+        add(jspBestResults);
     }// </editor-fold>//GEN-END:initComponents
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -395,6 +414,16 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jcxLargeVictoryActionPerformed
 
+    private void jcxBestResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxBestResultActionPerformed
+        mTournament.getParams().setUseBestResultIndiv(jcxBestResult.isSelected());
+        update();
+    }//GEN-LAST:event_jcxBestResultActionPerformed
+
+    private void jspBestResultsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspBestResultsStateChanged
+        mTournament.getParams().setBestResultIndiv((Integer)jspBestResults.getValue());
+        update();
+    }//GEN-LAST:event_jspBestResultsStateChanged
+
     /**
      * Update Panel
      */
@@ -423,6 +452,9 @@ public class JPNParamIndiv extends javax.swing.JPanel {
 
         jtffVictory.setValue(mTournament.getParams().getPointsIndivVictory());
 
+        jspBestResults.setEnabled(mTournament.getParams().isUseBestResultIndiv());
+        jspBestResults.setValue(mTournament.getParams().getBestResultIndiv());
+        
         final ArrayList<String> rankChoices = new ArrayList<>();
         rankChoices.add(StringConstants.CS_NONE);
         rankChoices.add(StringConstants.CS_POINTS);
@@ -442,6 +474,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
             rankChoices.add(criteria.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" DIFFÉRENCE"));
         }
 
+        
+        
         jcbRank1.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
         jcbRank2.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
         jcbRank3.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
@@ -512,10 +546,12 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private javax.swing.JComboBox jcbRank3;
     private javax.swing.JComboBox jcbRank4;
     private javax.swing.JComboBox jcbRank5;
+    private javax.swing.JCheckBox jcxBestResult;
     private javax.swing.JCheckBox jcxLargeVictory;
     private javax.swing.JCheckBox jcxLittleLoss;
     private javax.swing.JLabel jlbLargeVictoryGap;
     private javax.swing.JLabel jlbLittleLossGap;
+    private javax.swing.JSpinner jspBestResults;
     private javax.swing.JFormattedTextField jtffConcedeed;
     private javax.swing.JFormattedTextField jtffDraw;
     private javax.swing.JFormattedTextField jtffLargeVictory;

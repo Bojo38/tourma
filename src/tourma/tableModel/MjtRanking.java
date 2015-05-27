@@ -96,6 +96,20 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return value;
     }
 
+    protected void removeMinValue(ArrayList<Integer> aValue) {
+        int min = Integer.MAX_VALUE;
+        int index = 0;
+        if (aValue.size() > 0) {
+            for (int k = 0; k < aValue.size(); k++) {
+                min = Math.min(min, aValue.get(k));
+                if (min == aValue.get(k)) {
+                    index = k;
+                }
+            }
+            aValue.remove(index);
+        }
+    }
+
     /**
      *
      * @param c
@@ -1391,7 +1405,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 c = c2;
             }
             if (c != null) {
-                    value += getValue(c, cm, crit, subtype);
+                value += getValue(c, cm, crit, subtype);
             }
         }
         return value;

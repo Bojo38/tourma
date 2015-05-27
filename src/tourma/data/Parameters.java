@@ -360,6 +360,43 @@ public class Parameters implements XMLExport {
      */
     private boolean useImage = false;
 
+    private boolean mUseBestResultsIndiv = false;
+    private boolean mUseBestResultsTeam = false;
+    private int mBestResultsIndiv = 5;
+    private int mBestResultsTeam = 5;
+
+    public boolean isUseBestResultIndiv() {
+        return mUseBestResultsIndiv;
+    }
+
+    public boolean isUseBestResultTeam() {
+        return mUseBestResultsTeam;
+    }
+
+    public void setUseBestResultIndiv(boolean b) {
+        mUseBestResultsIndiv = b;
+    }
+
+    public void setUseBestResultTeam(boolean b) {
+        mUseBestResultsTeam = b;
+    }
+
+    public int getBestResultIndiv() {
+        return mBestResultsIndiv;
+    }
+
+    public int getBestResultTeam() {
+        return mBestResultsTeam;
+    }
+
+    public void setBestResultIndiv(int i) {
+        mBestResultsIndiv = i;
+    }
+
+    public void setBestResultTeam(int i) {
+        mBestResultsTeam = i;
+    }
+
     /**
      * Parameters defautl constructor
      */
@@ -477,10 +514,16 @@ public class Parameters implements XMLExport {
 
         params.setAttribute("UseLargeVictory", Boolean.toString(this.isUseLargeVictory()));
         params.setAttribute("UseLittleLoss", Boolean.toString(this.isUseLittleLoss()));
-        
+
         params.setAttribute(sbundle.getString("TABLEBONUS"), Boolean.toString(this.isTableBonus()));
         params.setAttribute(sbundle.getString("TABLEBONUSPERROUND"), Boolean.toString(this.isTableBonusPerRound()));
         params.setAttribute(sbundle.getString("TABLEBONUSCOEF"), Double.toString(this.getTableBonusCoef()));
+
+        params.setAttribute("USE_BEST_RESULT_INDIV", Boolean.toString(this.isUseBestResultIndiv()));
+        params.setAttribute("USE_BEST_RESULT_TEAM", Boolean.toString(this.isUseBestResultTeam()));
+
+        params.setAttribute("BEST_RESULT_INDIV", Integer.toString(this.getBestResultIndiv()));
+        params.setAttribute("BEST_RESULT_TEAM", Integer.toString(this.getBestResultTeam()));
 
         return params;
     }
@@ -621,17 +664,20 @@ public class Parameters implements XMLExport {
             try {
                 this.setIndivPairingIndivBalanced(params.getAttribute(sbundle.getString("INDIVBALANCED")).getBooleanValue());
                 this.setIndivPairingTeamBalanced(params.getAttribute(sbundle.getString("TEAMBALANCED")).getBooleanValue());
-
                 this.setClansMembersNumber(params.getAttribute(sbundle.getString("CLANTEAMMATESNUMBER")).getIntValue());
+
+                this.setUseBestResultIndiv(params.getAttribute("USE_BEST_RESULT_INDIV").getBooleanValue());
+                this.setUseBestResultTeam(params.getAttribute("USE_BEST_RESULT_TEAM").getBooleanValue());
+                this.setBestResultIndiv(params.getAttribute("BEST_RESULT_INDIV").getIntValue());
+                this.setBestResultTeam(params.getAttribute("BEST_RESULT_TEAM").getIntValue());
 
             } catch (NullPointerException ne4) {
                 //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
             }
-            
+
             try {
                 this.setTableBonus(params.getAttribute(sbundle.getString("TABLEBONUS")).getBooleanValue());
                 this.setTableBonusPerRound(params.getAttribute(sbundle.getString("TABLEBONUSPERROUND")).getBooleanValue());
-
                 this.setTableBonusCoef(params.getAttribute(sbundle.getString("TABLEBONUSCOEF")).getDoubleValue());
 
             } catch (NullPointerException ne4) {
@@ -785,9 +831,8 @@ public class Parameters implements XMLExport {
     public Criteria getCriteria(int i) {
         return mCriterias.get(i);
     }
-    
-    public int getIndexOfCriteria(Criteria c)
-    {
+
+    public int getIndexOfCriteria(Criteria c) {
         return mCriterias.indexOf(c);
     }
 
@@ -1160,26 +1205,23 @@ public class Parameters implements XMLExport {
     public boolean isTableBonusPerRound() {
         return mTableBonusPerRound;
     }
-    
-    public double getTableBonusCoef()
-    {
+
+    public double getTableBonusCoef() {
         return mTableBonusCoef;
     }
 
-    
     public void setTableBonus(boolean b) {
-        mTableBonus=b;
+        mTableBonus = b;
     }
 
     public void setTableBonusPerRound(boolean b) {
-        mTableBonusPerRound=b;
+        mTableBonusPerRound = b;
     }
-    
-    public void setTableBonusCoef(double val)
-    {
-        mTableBonusCoef=val;
+
+    public void setTableBonusCoef(double val) {
+        mTableBonusCoef = val;
     }
-    
+
     /**
      * @param mMultiRoster the mMultiRoster to set
      */

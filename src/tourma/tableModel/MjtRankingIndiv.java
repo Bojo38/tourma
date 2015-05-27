@@ -47,17 +47,17 @@ public final class MjtRankingIndiv extends MjtRanking {
         sortDatas();
     }
 
-    public MjtRankingIndiv(final int round, final ArrayList coachs, boolean teamTournament,final boolean round_only) {
+    public MjtRankingIndiv(final int round, final ArrayList coachs, boolean teamTournament, final boolean round_only) {
 
-        this(round, 
+        this(round,
                 Tournament.getTournament().getParams().getRankingIndiv1(),
                 Tournament.getTournament().getParams().getRankingIndiv1(),
                 Tournament.getTournament().getParams().getRankingIndiv1(),
                 Tournament.getTournament().getParams().getRankingIndiv1(),
                 Tournament.getTournament().getParams().getRankingIndiv1(),
-                coachs, teamTournament,round_only,false);
+                coachs, teamTournament, round_only, false);
     }
-    
+
     /**
      *
      */
@@ -84,13 +84,13 @@ public final class MjtRankingIndiv extends MjtRanking {
                 int value3 = 0;
                 int value4 = 0;
                 int value5 = 0;
-                
-                ArrayList<Integer> aValue1=new ArrayList<>();
-                ArrayList<Integer> aValue2=new ArrayList<>();
-                ArrayList<Integer> aValue3=new ArrayList<>();
-                ArrayList<Integer> aValue4=new ArrayList<>();
-                ArrayList<Integer> aValue5=new ArrayList<>();
-                
+
+                ArrayList<Integer> aValue1 = new ArrayList<>();
+                ArrayList<Integer> aValue2 = new ArrayList<>();
+                ArrayList<Integer> aValue3 = new ArrayList<>();
+                ArrayList<Integer> aValue4 = new ArrayList<>();
+                ArrayList<Integer> aValue5 = new ArrayList<>();
+
                 if (c.getMatchCount() > 0) {
 
                     for (int j = 0; j <= c.getMatchCount() - 1; j++) {
@@ -112,11 +112,30 @@ public final class MjtRankingIndiv extends MjtRanking {
                             aValue5.add(getValueByRankingType(mRankingType5, c, m));
                         }
                     }
-                    value1=getValueFromArray(mRankingType1, aValue1);
-                    value2=getValueFromArray(mRankingType2, aValue2);
-                    value3=getValueFromArray(mRankingType3, aValue3);
-                    value4=getValueFromArray(mRankingType4, aValue4);
-                    value5=getValueFromArray(mRankingType5, aValue5);
+
+                    if (Tournament.getTournament().getParams().isUseBestResultIndiv()) {
+                        while (aValue1.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue1);
+                        }
+                        while (aValue2.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue2);
+                        }
+                        while (aValue3.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue3);
+                        }
+                        while (aValue4.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue4);
+                        }
+                        while (aValue5.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue5);
+                        }
+                    }
+
+                    value1 = getValueFromArray(mRankingType1, aValue1);
+                    value2 = getValueFromArray(mRankingType2, aValue2);
+                    value3 = getValueFromArray(mRankingType3, aValue3);
+                    value4 = getValueFromArray(mRankingType4, aValue4);
+                    value5 = getValueFromArray(mRankingType5, aValue5);
                 }
                 mDatas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
             }

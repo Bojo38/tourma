@@ -102,6 +102,25 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 for (Integer i : aValue) {
                     value += i;
                 }
+
+                if (Tournament.getTournament().getParams().isUseBestResultIndiv()) {
+                    while (aValue1.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                        removeMinValue(aValue1);
+                    }
+                    while (aValue2.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                        removeMinValue(aValue2);
+                    }
+                    while (aValue3.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                        removeMinValue(aValue3);
+                    }
+                    while (aValue4.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                        removeMinValue(aValue4);
+                    }
+                    while (aValue5.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                        removeMinValue(aValue5);
+                    }
+                }
+
                 value1 = getValueFromArray(mRankingType1, aValue1);
                 value2 = getValueFromArray(mRankingType2, aValue2);
                 value3 = getValueFromArray(mRankingType3, aValue3);
