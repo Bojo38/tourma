@@ -124,15 +124,14 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                         aValue5.add(getValueByRankingType(mRankingType5, t, tm));
                     }
                 }
-                for (Integer i : aValue) {
-                    value += i;
-                }
 
                 if (Tournament.getTournament().getParams().isApplyToAnnexTeam()) {
                     removeMaxValue(aValue);
                     removeMinValue(aValue);
                 }
-
+                for (Integer i : aValue) {
+                    value += i;
+                }
                 if (Tournament.getTournament().getParams().isUseBestResultTeam()) {
                     while (aValue1.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
                         removeMinValue(aValue1);
