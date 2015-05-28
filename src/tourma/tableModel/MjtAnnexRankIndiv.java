@@ -98,14 +98,14 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                         aValue4.add(getValueByRankingType(mRankingType4, c, m));
                         aValue5.add(getValueByRankingType(mRankingType5, c, m));
                     }
-                }
-                for (Integer i : aValue) {
-                    value += i;
-                }
+                }                
 
                 if (Tournament.getTournament().getParams().isApplyToAnnexIndiv()) {
                     removeMaxValue(aValue);
                     removeMinValue(aValue);
+                }
+                for (Integer i : aValue) {
+                    value += i;
                 }
 
                 if (Tournament.getTournament().getParams().isUseBestResultIndiv()) {

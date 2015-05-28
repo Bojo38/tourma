@@ -84,12 +84,14 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     protected int getValueFromArray(int rt, ArrayList<Integer> av) {
         int value = 0;
 
-        if ((rt == Parameters.C_RANKING_ELO)
-                || (rt == Parameters.C_RANKING_NB_MATCHS)) {
-            value = av.get(av.size() - 1);
-        } else {
-            for (Integer i : av) {
-                value += i;
+        if (av.size() > 0) {
+            if ((rt == Parameters.C_RANKING_ELO)
+                    || (rt == Parameters.C_RANKING_NB_MATCHS)) {
+                value = av.get(av.size() - 1);
+            } else {
+                for (Integer i : av) {
+                    value += i;
+                }
             }
         }
 

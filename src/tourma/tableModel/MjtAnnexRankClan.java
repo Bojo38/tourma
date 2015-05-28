@@ -160,13 +160,14 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         }
 
                     }
-                    for (Integer i : aValue) {
-                        value += i;
-                    }
+                   
 
                     if (Tournament.getTournament().getParams().isApplyToAnnexTeam()) {
                         removeMaxValue(aValue);
                         removeMinValue(aValue);
+                    }
+                     for (Integer i : aValue) {
+                        value += i;
                     }
 
                     if (Tournament.getTournament().getParams().isUseBestResultTeam()) {
@@ -315,13 +316,14 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         }
 
                     }
-                    for (Integer i : aValue) {
-                        value += i;
-                    }
+                   
 
                     if (Tournament.getTournament().getParams().isApplyToAnnexIndiv()) {
                         removeMaxValue(aValue);
                         removeMinValue(aValue);
+                    }
+                     for (Integer i : aValue) {
+                        value += i;
                     }
                     
                     if (Tournament.getTournament().getParams().isUseBestResultIndiv()) {
