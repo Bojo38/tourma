@@ -11,13 +11,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
+import tourma.languages.Translate;
+import static tourma.languages.Translate.CS_Injuries;
+import static tourma.languages.Translate.CS_Touchdowns;
 import tourma.utility.StringConstants;
 
 /**
@@ -87,10 +89,6 @@ public class Parameters implements XMLExport {
      *
      */
     public static final int C_MAX_RANKING = 10;
-    /**
-     *
-     */
-    protected static final ResourceBundle sbundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
     /**
      *
      */
@@ -370,39 +368,57 @@ public class Parameters implements XMLExport {
     private boolean mExceptBestAndWorstTeam=false;
     private boolean mApplyToAnnexTeam=false;
     
+
+    
+    /**
+     * Parameters defautl constructor
+     */
+    public Parameters()
+    {
+        mTournamentName = StringConstants.CS_NULL;
+        mTournamentOrga = StringConstants.CS_NULL;
+        mCriterias = new ArrayList<>();
+        
+        Criteria c = new Criteria(Translate.translate(CS_Touchdowns));
+        c.setPointsFor(2);
+        mCriterias.add(c);
+        c = new Criteria(Translate.translate(CS_Injuries));
+        c.setPointsFor(1);
+        mCriterias.add(c);
+    }
     public boolean isApplyToAnnexIndiv()
     {
         return mApplyToAnnexIndiv;
     }
+    
     public void setApplyToAnnexIndiv(boolean b)
     {
         mApplyToAnnexIndiv=b;
     }
-    
     public boolean isExceptBestAndWorstIndiv()
     {
         return mExceptBestAndWorstIndiv;
     }
+    
     public void setExceptBestAndWorstIndiv(boolean b)
     {
         mExceptBestAndWorstIndiv=b;
     }
-    
     public boolean isApplyToAnnexTeam()
     {
         return mApplyToAnnexTeam;
     }
+    
     public void setApplyToAnnexTeam(boolean b)
     {
         mApplyToAnnexTeam=b;
     }
-    
     public boolean isExceptBestAndWorstTeam()
     {
         return mExceptBestAndWorstTeam;
     }
-    public void setExceptBestAndWorstTeam(boolean b)
-    {
+    
+    public void setExceptBestAndWorstTeam(boolean b) {
         mExceptBestAndWorstTeam=b;
     }
     
@@ -439,138 +455,122 @@ public class Parameters implements XMLExport {
     }
 
     /**
-     * Parameters defautl constructor
-     */
-    public Parameters() {
-        mTournamentName = sbundle.getString("");
-        mTournamentOrga = sbundle.getString("");
-        mCriterias = new ArrayList<>();
-
-        Criteria c = new Criteria(sbundle.getString("Touchdowns"));
-        c.setPointsFor(2);
-        mCriterias.add(c);
-        c = new Criteria(sbundle.getString("Injuries"));
-        c.setPointsFor(1);
-        mCriterias.add(c);
-    }
-
-    /**
      *
      * @return
      */
     @Override
     public Element getXMLElement() {
-        final SimpleDateFormat format = new SimpleDateFormat(sbundle.getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
-        final Element params = new Element(sbundle.getString("PARAMETERS"));
-        params.setAttribute(sbundle.getString("ORGANIZER"), this.getTournamentOrga());
-        params.setAttribute(sbundle.getString("NAME"), this.getTournamentName());
-        params.setAttribute(sbundle.getString("DATE"), getStringDate(format));
-        params.setAttribute(sbundle.getString("PLACE"), this.getTournamentName());
+        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final Element params = new Element(StringConstants.CS_PARAMETERS);
+        params.setAttribute(StringConstants.CS_ORGANIZER, this.getTournamentOrga());
+        params.setAttribute(StringConstants.CS_NAME, this.getTournamentName());
+        params.setAttribute(StringConstants.CS_DATE, getStringDate(format));
+        params.setAttribute(StringConstants.CS_PLACE, this.getTournamentName());
 
         for (int i = 0; i < this.getCriteriaCount(); i++) {
             final Element crit = getCriteria(i).getXMLElement();
             params.addContent(crit);
         }
 
-        params.setAttribute(sbundle.getString("VICTORY"), Integer.toString(this.getPointsIndivVictory()));
-        params.setAttribute(sbundle.getString("LARGE_VICTORY"), Integer.toString(this.getPointsIndivLargeVictory()));
-        params.setAttribute(sbundle.getString("DRAW"), Integer.toString(this.getPointsIndivDraw()));
-        params.setAttribute(sbundle.getString("LOST"), Integer.toString(this.getPointsIndivLost()));
+        params.setAttribute(StringConstants.CS_VICTORY, Integer.toString(this.getPointsIndivVictory()));
+        params.setAttribute(StringConstants.CS_LARGE_VICTORY, Integer.toString(this.getPointsIndivLargeVictory()));
+        params.setAttribute(StringConstants.CS_DRAW, Integer.toString(this.getPointsIndivDraw()));
+        params.setAttribute(StringConstants.CS_LOST, Integer.toString(this.getPointsIndivLost()));
         try {
-            params.setAttribute("Refused", Integer.toString(this.getPointsRefused()));
-            params.setAttribute("Conceeded", Integer.toString(this.getPointsConcedeed()));
+            params.setAttribute(StringConstants.CS_REFUSED, Integer.toString(this.getPointsRefused()));
+            params.setAttribute(StringConstants.CS_CONCEEDED, Integer.toString(this.getPointsConcedeed()));
         } catch (Exception e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
-        params.setAttribute(sbundle.getString("LITTLE_LOST"), Integer.toString(this.getPointsIndivLittleLost()));
-        params.setAttribute("Portugal", Boolean.toString(this.isPortugal()));
+        params.setAttribute(StringConstants.CS_LITTLE_LOST, Integer.toString(this.getPointsIndivLittleLost()));
+        //params.setAttribute(StringConstants.CS_PORTUGAL, Boolean.toString(this.isPortugal()));
 
-        params.setAttribute(sbundle.getString("VICTORY_TEAM"), Integer.toString(this.getPointsTeamVictory()));
-        params.setAttribute(sbundle.getString("DRAW_TEAM"), Integer.toString(this.getPointsTeamDraw()));
-        params.setAttribute(sbundle.getString("LOST_TEAM"), Integer.toString(this.getPointsTeamLost()));
+        params.setAttribute(StringConstants.CS_VICTORY_TEAM, Integer.toString(this.getPointsTeamVictory()));
+        params.setAttribute(StringConstants.CS_DRAW_TEAM, Integer.toString(this.getPointsTeamDraw()));
+        params.setAttribute(StringConstants.CS_LOST_TEAM, Integer.toString(this.getPointsTeamLost()));
 
-        params.setAttribute(sbundle.getString("LARGE_VICTORY_GAP"), Integer.toString(this.getGapLargeVictory()));
-        params.setAttribute(sbundle.getString("LITTLE_LOST_GAP"), Integer.toString(this.getGapLittleLost()));
+        params.setAttribute(StringConstants.CS_LARGE_VICTORY_GAP, Integer.toString(this.getGapLargeVictory()));
+        params.setAttribute(StringConstants.CS_LITTLE_LOST_GAP, Integer.toString(this.getGapLittleLost()));
 
-        params.setAttribute(sbundle.getString("RANK1"), Integer.toString(this.getRankingIndiv1()));
-        params.setAttribute(sbundle.getString("RANK2"), Integer.toString(this.getRankingIndiv2()));
-        params.setAttribute(sbundle.getString("RANK3"), Integer.toString(this.getRankingIndiv3()));
-        params.setAttribute(sbundle.getString("RANK4"), Integer.toString(this.getRankingIndiv4()));
-        params.setAttribute(sbundle.getString("RANK5"), Integer.toString(this.getRankingIndiv5()));
+        params.setAttribute(StringConstants.CS_RANK+1, Integer.toString(this.getRankingIndiv1()));
+        params.setAttribute(StringConstants.CS_RANK+2, Integer.toString(this.getRankingIndiv2()));
+        params.setAttribute(StringConstants.CS_RANK+3, Integer.toString(this.getRankingIndiv3()));
+        params.setAttribute(StringConstants.CS_RANK+4, Integer.toString(this.getRankingIndiv4()));
+        params.setAttribute(StringConstants.CS_RANK+5, Integer.toString(this.getRankingIndiv5()));
 
-        params.setAttribute(sbundle.getString("RANK1_TEAM"), Integer.toString(this.getRankingTeam1()));
-        params.setAttribute(sbundle.getString("RANK2_TEAM"), Integer.toString(this.gemRankingTeam2()));
-        params.setAttribute(sbundle.getString("RANK3_TEAM"), Integer.toString(this.getRankingTeam3()));
-        params.setAttribute(sbundle.getString("RANK4_TEAM"), Integer.toString(this.getRankingTeam4()));
-        params.setAttribute(sbundle.getString("RANK5_TEAM"), Integer.toString(this.getRankingTeam5()));
+        params.setAttribute(StringConstants.CS_RANK+1+"_"+StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam1()));
+        params.setAttribute(StringConstants.CS_RANK+2+"_"+StringConstants.CS_TEAM, Integer.toString(this.gemRankingTeam2()));
+        params.setAttribute(StringConstants.CS_RANK+3+"_"+StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam3()));
+        params.setAttribute(StringConstants.CS_RANK+4+"_"+StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam4()));
+        params.setAttribute(StringConstants.CS_RANK+5+"_"+StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam5()));
 
-        params.setAttribute(sbundle.getString("BYTEAM"), Boolean.toString(this.isTeamTournament()));
-        params.setAttribute(sbundle.getString("TEAMMATES"), Integer.toString(this.getTeamMatesNumber()));
+        params.setAttribute(StringConstants.CS_BYTEAM, Boolean.toString(this.isTeamTournament()));
+        params.setAttribute(StringConstants.CS_TEAMMATES, Integer.toString(this.getTeamMatesNumber()));
         switch (this.getTeamPairing()) {
             case INDIVIDUAL_PAIRING:
-                params.setAttribute(sbundle.getString("TEAMPAIRING"), "0");
+                params.setAttribute(StringConstants.CS_TEAMPAIRING, "0");
                 break;
             case TEAM_PAIRING:
-                params.setAttribute(sbundle.getString("TEAMPAIRING"), "1");
+                params.setAttribute(StringConstants.CS_TEAMPAIRING, "1");
                 break;
         }
 
         switch (this.getTeamIndivPairing()) {
             case RANKING:
-                params.setAttribute(sbundle.getString("TEAMINDIVPAIRING"), "0");
+                params.setAttribute(StringConstants.CS_TEAMINDIVPAIRING, "0");
                 break;
             case FREE:
-                params.setAttribute(sbundle.getString("TEAMINDIVPAIRING"), "1");
+                params.setAttribute(StringConstants.CS_TEAMINDIVPAIRING, "1");
                 break;
             case RANDOM:
-                params.setAttribute(sbundle.getString("TEAMINDIVPAIRING"), "2");
+                params.setAttribute(StringConstants.CS_TEAMINDIVPAIRING, "2");
                 break;
             case NAF:
-                params.setAttribute(sbundle.getString("TEAMINDIVPAIRING"), "3");
+                params.setAttribute(StringConstants.CS_TEAMINDIVPAIRING, "3");
                 break;
         }
 
-        params.setAttribute(sbundle.getString("TEAMVICTORYPOINTS"), Integer.toString(this.getPointsTeamVictoryBonus()));
-        params.setAttribute(sbundle.getString("TEAMDRAWPOINTS"), Integer.toString(this.getPointsTeamDrawBonus()));
-        params.setAttribute(sbundle.getString("TEAMVICTORYONLY"), Boolean.toString(this.isTeamVictoryOnly()));
+        params.setAttribute(StringConstants.CS_TEAMVICTORYPOINTS, Integer.toString(this.getPointsTeamVictoryBonus()));
+        params.setAttribute(StringConstants.CS_TEAMDRAWPOINTS, Integer.toString(this.getPointsTeamDrawBonus()));
+        params.setAttribute(StringConstants.CS_TEAMVICTORYONLY, Boolean.toString(this.isTeamVictoryOnly()));
 
-        params.setAttribute(sbundle.getString("GROUPENABLE"), Boolean.toString(this.isGroupsEnable()));
-        params.setAttribute(sbundle.getString("SUBSTITUTES"), Boolean.toString(this.isSubstitutes()));
-        params.setAttribute(sbundle.getString("GAMETYPE"), Integer.toString(this.getGame()));
+        params.setAttribute(StringConstants.CS_GROUPENABLE, Boolean.toString(this.isGroupsEnable()));
+        params.setAttribute(StringConstants.CS_SUBSTITUTES, Boolean.toString(this.isSubstitutes()));
+        params.setAttribute(StringConstants.CS_GAMETYPE, Integer.toString(this.getGame()));
 
-        params.setAttribute(sbundle.getString("ACTVATECLANS"), Boolean.toString(this.isEnableClans()));
-        params.setAttribute(sbundle.getString("AVOIDFIRSTMATCH"), Boolean.toString(this.isAvoidClansFirstMatch()));
-        params.setAttribute(sbundle.getString("AVOIDMATCH"), Boolean.toString(this.isAvoidClansMatch()));
+        params.setAttribute(StringConstants.CS_ACTVATECLANS, Boolean.toString(this.isEnableClans()));
+        params.setAttribute(StringConstants.CS_AVOIDFIRSTMATCH, Boolean.toString(this.isAvoidClansFirstMatch()));
+        params.setAttribute(StringConstants.CS_AVOIDMATCH, Boolean.toString(this.isAvoidClansMatch()));
 
-        params.setAttribute(sbundle.getString("CLANTEAMMATESNUMBER"), Integer.toString(this.getTeamMatesClansNumber()));
+        params.setAttribute(StringConstants.CS_CLANTEAMMATESNUMBER, Integer.toString(this.getTeamMatesClansNumber()));
 
-        params.setAttribute(sbundle.getString("MULTIROSTER"), Boolean.toString(this.isMultiRoster()));
+        params.setAttribute(StringConstants.CS_MULTIROSTER, Boolean.toString(this.isMultiRoster()));
 
-        params.setAttribute(sbundle.getString("INDIVBALANCED"), Boolean.toString(this.isIndivPairingIndivBalanced()));
-        params.setAttribute(sbundle.getString("TEAMBALANCED"), Boolean.toString(this.isIndivPairingTeamBalanced()));
+        params.setAttribute(StringConstants.CS_INDIVBALANCED, Boolean.toString(this.isIndivPairingIndivBalanced()));
+        params.setAttribute(StringConstants.CS_TEAMBALANCED, Boolean.toString(this.isIndivPairingTeamBalanced()));
 
-        params.setAttribute("Portugal", Boolean.toString(this.isPortugal()));
-        params.setAttribute("Color", Boolean.toString(this.isUseColor()));
-        params.setAttribute("Image", Boolean.toString(this.isUseImage()));
+        params.setAttribute(StringConstants.CS_PORTUGAL, Boolean.toString(this.isPortugal()));
+        params.setAttribute(StringConstants.CS_COLOR, Boolean.toString(this.isUseColor()));
+        params.setAttribute(StringConstants.CS_USE_IMAGE, Boolean.toString(this.isUseImage()));
 
-        params.setAttribute("UseLargeVictory", Boolean.toString(this.isUseLargeVictory()));
-        params.setAttribute("UseLittleLoss", Boolean.toString(this.isUseLittleLoss()));
+        params.setAttribute(StringConstants.CS_USE_LARGE_VICTORY, Boolean.toString(this.isUseLargeVictory()));
+        params.setAttribute(StringConstants.CS_USE_LITTLE_LOST, Boolean.toString(this.isUseLittleLoss()));
 
-        params.setAttribute(sbundle.getString("TABLEBONUS"), Boolean.toString(this.isTableBonus()));
-        params.setAttribute(sbundle.getString("TABLEBONUSPERROUND"), Boolean.toString(this.isTableBonusPerRound()));
-        params.setAttribute(sbundle.getString("TABLEBONUSCOEF"), Double.toString(this.getTableBonusCoef()));
+        params.setAttribute(StringConstants.CS_TABLEBONUS, Boolean.toString(this.isTableBonus()));
+        params.setAttribute(StringConstants.CS_TABLEBONUSPERROUND, Boolean.toString(this.isTableBonusPerRound()));
+        params.setAttribute(StringConstants.CS_TABLEBONUSCOEF, Double.toString(this.getTableBonusCoef()));
 
-        params.setAttribute("USE_BEST_RESULT_INDIV", Boolean.toString(this.isUseBestResultIndiv()));
-        params.setAttribute("USE_BEST_RESULT_TEAM", Boolean.toString(this.isUseBestResultTeam()));
+        params.setAttribute(StringConstants.CS_USE_BEST_RESULT_INDIV, Boolean.toString(this.isUseBestResultIndiv()));
+        params.setAttribute(StringConstants.CS_USE_BEST_RESULT_TEAM, Boolean.toString(this.isUseBestResultTeam()));
 
-        params.setAttribute("BEST_RESULT_INDIV", Integer.toString(this.getBestResultIndiv()));
-        params.setAttribute("BEST_RESULT_TEAM", Integer.toString(this.getBestResultTeam()));
+        params.setAttribute(StringConstants.CS_BEST_RESULT_INDIV, Integer.toString(this.getBestResultIndiv()));
+        params.setAttribute(StringConstants.CS_BEST_RESULT_TEAM, Integer.toString(this.getBestResultTeam()));
         
-        params.setAttribute("APPLY_TO_ANNEX_TEAM", Boolean.toString(this.isApplyToAnnexTeam()));
-        params.setAttribute("APPLY_TO_ANNEX_INDIV", Boolean.toString(this.isApplyToAnnexIndiv()));
+        params.setAttribute(StringConstants.CS_APPLY_TO_ANNEX_TEAM, Boolean.toString(this.isApplyToAnnexTeam()));
+        params.setAttribute(StringConstants.CS_APPLY_TO_ANNEX_INDIV, Boolean.toString(this.isApplyToAnnexIndiv()));
         
-        params.setAttribute("EXCEPT_BEST_AND_WORST_INDIV", Boolean.toString(this.isExceptBestAndWorstIndiv()));
-        params.setAttribute("EXCEPT_BEST_AND_WORST_TEAM", Boolean.toString(this.isExceptBestAndWorstTeam()));
+        params.setAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_INDIV, Boolean.toString(this.isExceptBestAndWorstIndiv()));
+        params.setAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_TEAM, Boolean.toString(this.isExceptBestAndWorstTeam()));
 
         return params;
     }
@@ -581,42 +581,42 @@ public class Parameters implements XMLExport {
      */
     @Override
     public void setXMLElement(final Element params) {
-        final SimpleDateFormat format = new SimpleDateFormat(sbundle.getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
         try {
-            this.semTournamentOrga(params.getAttribute(sbundle.getString("ORGANIZER")).getValue());
-            this.setTournamentName(params.getAttribute(sbundle.getString("NAME")).getValue());
+            this.semTournamentOrga(params.getAttribute(StringConstants.CS_ORGANIZER).getValue());
+            this.setTournamentName(params.getAttribute(StringConstants.CS_NAME).getValue());
 
-            this.setPointsIndivVictory(params.getAttribute(sbundle.getString("VICTORY")).getIntValue());
-            this.setPointsIndivLargeVictory(params.getAttribute(sbundle.getString("LARGE_VICTORY")).getIntValue());
-            this.setPointsIndivDraw(params.getAttribute(sbundle.getString("DRAW")).getIntValue());
-            this.setPointsIndivLost(params.getAttribute(sbundle.getString("LOST")).getIntValue());
+            this.setPointsIndivVictory(params.getAttribute(StringConstants.CS_VICTORY).getIntValue());
+            this.setPointsIndivLargeVictory(params.getAttribute(StringConstants.CS_LARGE_VICTORY).getIntValue());
+            this.setPointsIndivDraw(params.getAttribute(StringConstants.CS_DRAW).getIntValue());
+            this.setPointsIndivLost(params.getAttribute(StringConstants.CS_LOST).getIntValue());
             try {
-                this.setPointsRefused(params.getAttribute("Refused").getIntValue());
-                this.setPointsConcedeed(params.getAttribute("Concedeed").getIntValue());
+                this.setPointsRefused(params.getAttribute(StringConstants.CS_REFUSED).getIntValue());
+                this.setPointsConcedeed(params.getAttribute(StringConstants.CS_CONCEEDED).getIntValue());
             } catch (DataConversionException e) {
                 LOG.log(Level.FINE, e.getLocalizedMessage());
             } catch (NullPointerException e) {
                 this.setPointsRefused(0);
                 this.setPointsConcedeed(0);
             }
-            this.setPointsIndivLittleLost(params.getAttribute(sbundle.getString("LITTLE_LOST")).getIntValue());
+            this.setPointsIndivLittleLost(params.getAttribute(StringConstants.CS_LITTLE_LOST).getIntValue());
 
-            Attribute r1 = params.getAttribute("Rank1");
+            Attribute r1 = params.getAttribute(StringConstants.CS_RANK+1);
             this.setRankingIndiv1((r1.getIntValue()));
-            this.setRankingIndiv2((params.getAttribute("Rank2").getIntValue()));
-            this.setRankingIndiv3((params.getAttribute("Rank3").getIntValue()));
-            this.setRankingIndiv4((params.getAttribute("Rank4").getIntValue()));
-            this.setRankingIndiv5((params.getAttribute("Rank5").getIntValue()));
+            this.setRankingIndiv2((params.getAttribute(StringConstants.CS_RANK+2).getIntValue()));
+            this.setRankingIndiv3((params.getAttribute(StringConstants.CS_RANK+3).getIntValue()));
+            this.setRankingIndiv4((params.getAttribute(StringConstants.CS_RANK+4).getIntValue()));
+            this.setRankingIndiv5((params.getAttribute(StringConstants.CS_RANK+5).getIntValue()));
 
             try {
-                this.setGapLargeVictory(params.getAttribute(sbundle.getString("LARGE_VICTORY_GAP")).getIntValue());
-                this.setGapLittleLost(params.getAttribute(sbundle.getString("LITTLE_LOST_GAP")).getIntValue());
-                this.setPlace(params.getAttribute(sbundle.getString("PLACE")).getValue());
-                this.setTeamTournament(params.getAttribute(sbundle.getString("BYTEAM")).getBooleanValue());
+                this.setGapLargeVictory(params.getAttribute(StringConstants.CS_LARGE_VICTORY_GAP).getIntValue());
+                this.setGapLittleLost(params.getAttribute(StringConstants.CS_LITTLE_LOST_GAP).getIntValue());
+                this.setPlace(params.getAttribute(StringConstants.CS_PLACE).getValue());
+                this.setTeamTournament(params.getAttribute(StringConstants.CS_BYTEAM).getBooleanValue());
 
-                this.setTeamMatesNumber(params.getAttribute(sbundle.getString("TEAMMATES")).getIntValue());
-                int val = params.getAttribute(sbundle.getString("TEAMPAIRING")).getIntValue();
+                this.setTeamMatesNumber(params.getAttribute(StringConstants.CS_TEAMMATES).getIntValue());
+                int val = params.getAttribute(StringConstants.CS_TEAMPAIRING).getIntValue();
                 switch (val) {
                     case (0):
                         this.setTeamPairing(ETeamPairing.INDIVIDUAL_PAIRING);
@@ -629,8 +629,8 @@ public class Parameters implements XMLExport {
                         break;
                 }
 
-                this.setPointsTeamVictoryBonus(params.getAttribute(sbundle.getString("TEAMVICTORYPOINTS")).getIntValue());
-                val = params.getAttribute(sbundle.getString("TEAMINDIVPAIRING")).getIntValue();
+                this.setPointsTeamVictoryBonus(params.getAttribute(StringConstants.CS_TEAMVICTORYPOINTS).getIntValue());
+                val = params.getAttribute(StringConstants.CS_TEAMINDIVPAIRING).getIntValue();
                 switch (val) {
                     case (0):
                         this.setTeamIndivPairing(EIndivPairing.RANKING);
@@ -649,101 +649,101 @@ public class Parameters implements XMLExport {
                         break;
 
                 }
-                this.setTeamVictoryOnly(params.getAttribute(sbundle.getString("TEAMVICTORYONLY")).getBooleanValue());
+                this.setTeamVictoryOnly(params.getAttribute(StringConstants.CS_TEAMVICTORYONLY).getBooleanValue());
                 try {
-                    this.setPointsTeamDrawBonus(params.getAttribute(sbundle.getString("TEAMDRAWPOINTS")).getIntValue());
+                    this.setPointsTeamDrawBonus(params.getAttribute(StringConstants.CS_TEAMDRAWPOINTS).getIntValue());
                 } catch (DataConversionException e) {
                     this.setPointsTeamDrawBonus(0);
                     LOG.log(Level.FINE, e.getLocalizedMessage());
                 }
 
                 try {
-                    this.setDate(format.parse(params.getAttribute(sbundle.getString("DATE")).getValue()));
+                    this.setDate(format.parse(params.getAttribute(StringConstants.CS_DATE).getValue()));
                 } catch (ParseException pe) {
                 }
 
                 try {
-                    this.setGame(params.getAttribute(sbundle.getString("GAMETYPE")).getIntValue());
+                    this.setGame(params.getAttribute(StringConstants.CS_GAMETYPE).getIntValue());
                 } catch (DataConversionException pe) {
                     this.setGame(1);
                     LOG.log(Level.FINE, pe.getLocalizedMessage());
                 }
 
-                this.setGroupsEnable(params.getAttribute(sbundle.getString("GROUPENABLE")).getBooleanValue());
+                this.setGroupsEnable(params.getAttribute(StringConstants.CS_GROUPENABLE).getBooleanValue());
 
             } catch (NullPointerException ne) {
                 this.setGapLargeVictory(3);
                 this.setGapLittleLost(1);
-                this.setPlace(sbundle.getString(""));
+                this.setPlace(StringConstants.CS_NULL);
                 this.setTeamTournament(false);
                 this.setTeamMatesNumber(6);
                 this.setTeamPairing(ETeamPairing.TEAM_PAIRING);
                 this.setTeamIndivPairing(EIndivPairing.RANKING);
             }
             try {
-                this.setPointsTeamVictory(params.getAttribute(sbundle.getString("VICTORY_TEAM")).getIntValue());
-                this.setPointsTeamDraw(params.getAttribute(sbundle.getString("DRAW_TEAM")).getIntValue());
-                this.setPointsTeamLost(params.getAttribute(sbundle.getString("LOST_TEAM")).getIntValue());
-                this.setRankingTeam1(params.getAttribute(sbundle.getString("RANK1_TEAM")).getIntValue());
-                this.setRankingTeam2(params.getAttribute(sbundle.getString("RANK2_TEAM")).getIntValue());
-                this.setRankingTeam3(params.getAttribute(sbundle.getString("RANK3_TEAM")).getIntValue());
-                this.setRankingTeam4(params.getAttribute(sbundle.getString("RANK4_TEAM")).getIntValue());
-                this.setRankingTeam5(params.getAttribute(sbundle.getString("RANK5_TEAM")).getIntValue());
+                this.setPointsTeamVictory(params.getAttribute(StringConstants.CS_VICTORY_TEAM).getIntValue());
+                this.setPointsTeamDraw(params.getAttribute(StringConstants.CS_DRAW_TEAM).getIntValue());
+                this.setPointsTeamLost(params.getAttribute(StringConstants.CS_LOST_TEAM).getIntValue());
+                this.setRankingTeam1(params.getAttribute(StringConstants.CS_RANK+1+"_"+StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam2(params.getAttribute(StringConstants.CS_RANK+2+"_"+StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam3(params.getAttribute(StringConstants.CS_RANK+3+"_"+StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam4(params.getAttribute(StringConstants.CS_RANK+4+"_"+StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam5(params.getAttribute(StringConstants.CS_RANK+5+"_"+StringConstants.CS_TEAM).getIntValue());
             } catch (NullPointerException ne2) {
                 JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
             }
 
             try {
-                this.setEnableClans(params.getAttribute(sbundle.getString("ACTVATECLANS")).getBooleanValue());
-                this.setAvoidClansFirstMatch(params.getAttribute(sbundle.getString("AVOIDFIRSTMATCH")).getBooleanValue());
-                this.setAvoidClansMatch(params.getAttribute(sbundle.getString("AVOIDMATCH")).getBooleanValue());
-                this.setSubstitutes(params.getAttribute(sbundle.getString("SUBSTITUTES")).getBooleanValue());
-                this.setMultiRoster(params.getAttribute(sbundle.getString("MULTIROSTER")).getBooleanValue());
-                this.setPortugal(params.getAttribute("Portugal").getBooleanValue());
-                this.setUseColor(params.getAttribute("Color").getBooleanValue());
-                this.setUseImage(params.getAttribute("Image").getBooleanValue());
-                this.setUseLargeVictory(params.getAttribute("UseLargeVictory").getBooleanValue());
-                this.setUseLittleLoss(params.getAttribute("UseLittleLoss").getBooleanValue());
+                this.setEnableClans(params.getAttribute(StringConstants.CS_ACTVATECLANS).getBooleanValue());
+                this.setAvoidClansFirstMatch(params.getAttribute(StringConstants.CS_AVOIDFIRSTMATCH).getBooleanValue());
+                this.setAvoidClansMatch(params.getAttribute(StringConstants.CS_AVOIDMATCH).getBooleanValue());
+                this.setSubstitutes(params.getAttribute(StringConstants.CS_SUBSTITUTES).getBooleanValue());
+                this.setMultiRoster(params.getAttribute(StringConstants.CS_MULTIROSTER).getBooleanValue());
+                this.setPortugal(params.getAttribute(StringConstants.CS_PORTUGAL).getBooleanValue());
+                this.setUseColor(params.getAttribute(StringConstants.CS_COLOR).getBooleanValue());
+                this.setUseImage(params.getAttribute(StringConstants.CS_USE_IMAGE).getBooleanValue());
+                this.setUseLargeVictory(params.getAttribute(StringConstants.CS_USE_LARGE_VICTORY).getBooleanValue());
+                this.setUseLittleLoss(params.getAttribute(StringConstants.CS_USE_LITTLE_LOST).getBooleanValue());
 
             } catch (NullPointerException ne3) {
                 //JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());
             }
             try {
-                this.setIndivPairingIndivBalanced(params.getAttribute(sbundle.getString("INDIVBALANCED")).getBooleanValue());
-                this.setIndivPairingTeamBalanced(params.getAttribute(sbundle.getString("TEAMBALANCED")).getBooleanValue());
-                this.setClansMembersNumber(params.getAttribute(sbundle.getString("CLANTEAMMATESNUMBER")).getIntValue());
+                this.setIndivPairingIndivBalanced(params.getAttribute(StringConstants.CS_INDIVBALANCED).getBooleanValue());
+                this.setIndivPairingTeamBalanced(params.getAttribute(StringConstants.CS_TEAMBALANCED).getBooleanValue());
+                this.setClansMembersNumber(params.getAttribute(StringConstants.CS_CLANTEAMMATESNUMBER).getIntValue());
 
-                this.setUseBestResultIndiv(params.getAttribute("USE_BEST_RESULT_INDIV").getBooleanValue());
-                this.setUseBestResultTeam(params.getAttribute("USE_BEST_RESULT_TEAM").getBooleanValue());
-                this.setBestResultIndiv(params.getAttribute("BEST_RESULT_INDIV").getIntValue());
-                this.setBestResultTeam(params.getAttribute("BEST_RESULT_TEAM").getIntValue());
+                this.setUseBestResultIndiv(params.getAttribute(StringConstants.CS_USE_BEST_RESULT_INDIV).getBooleanValue());
+                this.setUseBestResultTeam(params.getAttribute(StringConstants.CS_USE_BEST_RESULT_TEAM).getBooleanValue());
+                this.setBestResultIndiv(params.getAttribute(StringConstants.CS_BEST_RESULT_INDIV).getIntValue());
+                this.setBestResultTeam(params.getAttribute(StringConstants.CS_BEST_RESULT_TEAM).getIntValue());
                 
-                this.setApplyToAnnexIndiv(params.getAttribute("APPLY_TO_ANNEX_INDIV").getBooleanValue());
-                this.setApplyToAnnexTeam(params.getAttribute("APPLY_TO_ANNEX_TEAM").getBooleanValue());
-                this.setExceptBestAndWorstIndiv(params.getAttribute("EXCEPT_BEST_AND_WORST_INDIV").getBooleanValue());
-                this.setExceptBestAndWorstTeam(params.getAttribute("EXCEPT_BEST_AND_WORST_TEAM").getBooleanValue());
+                this.setApplyToAnnexIndiv(params.getAttribute(StringConstants.CS_APPLY_TO_ANNEX_INDIV).getBooleanValue());
+                this.setApplyToAnnexTeam(params.getAttribute(StringConstants.CS_APPLY_TO_ANNEX_TEAM).getBooleanValue());
+                this.setExceptBestAndWorstIndiv(params.getAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_INDIV).getBooleanValue());
+                this.setExceptBestAndWorstTeam(params.getAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_TEAM).getBooleanValue());
 
             } catch (NullPointerException ne4) {
                 //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
             }
 
             try {
-                this.setTableBonus(params.getAttribute(sbundle.getString("TABLEBONUS")).getBooleanValue());
-                this.setTableBonusPerRound(params.getAttribute(sbundle.getString("TABLEBONUSPERROUND")).getBooleanValue());
-                this.setTableBonusCoef(params.getAttribute(sbundle.getString("TABLEBONUSCOEF")).getDoubleValue());
+                this.setTableBonus(params.getAttribute(StringConstants.CS_TABLEBONUS).getBooleanValue());
+                this.setTableBonusPerRound(params.getAttribute(StringConstants.CS_TABLEBONUSPERROUND).getBooleanValue());
+                this.setTableBonusCoef(params.getAttribute(StringConstants.CS_TABLEBONUSCOEF).getDoubleValue());
 
             } catch (NullPointerException ne4) {
                 //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
             }
 
-            final List criterias = params.getChildren(sbundle.getString("CRITERIA"));
-            final Iterator cr = criterias.iterator();
+            final List<Element> criterias = params.getChildren(StringConstants.CS_CRITERIA);
+            final Iterator<Element> cr = criterias.iterator();
 
             this.clearCiterias();
 
             while (cr.hasNext()) {
-                final Element criteria = (Element) cr.next();
-                final Criteria crit = new Criteria(criteria.getAttributeValue(sbundle.getString("NAME")));
+                final Element criteria =  cr.next();
+                final Criteria crit = new Criteria(criteria.getAttributeValue(StringConstants.CS_NAME));
                 crit.setXMLElement(criteria);
                 this.addCriteria(crit);
             }
@@ -754,7 +754,7 @@ public class Parameters implements XMLExport {
 
     @Override
     public String toString() {
-        return sbundle.getString("PARAMÈTRES");
+        return Translate.translate(Translate.CS_Parameters);
     }
 
     /**

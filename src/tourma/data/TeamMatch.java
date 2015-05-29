@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 import org.jdom2.Element;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -139,60 +140,15 @@ public class TeamMatch extends Match {
 
     }
 
-    /* public static Team getTeamMatchWinner(final int teamMatesNumber, final int matchIndex, final ArrayList<CoachMatch> matchs) {
-     final Criteria td = Tournament.getTournament().getParams().mCriterias.get(0);
-     CoachMatch m = matchs.get(matchIndex * teamMatesNumber);
-     final Team team1 = m.mCoach1.mTeamMates;
-     final Team team2 = m.mCoach2.mTeamMates;
-
-     Team winner;
-
-     int nbVictory = 0;
-     int nbLost = 0;
-
-     for (int j = 0; j < teamMatesNumber; j++) {
-     m = matchs.get(matchIndex * teamMatesNumber + j);
-     if (m.mValues.get(td).mValue1 > m.mValues.get(td).mValue2) {
-     nbVictory++;
-     } else {
-     if (m.mValues.get(td).mValue1 < m.mValues.get(td).mValue2) {
-     nbLost++;
-     }
-     }
-     }
-
-     if (team1 == Team.sNullTeam) {
-     winner = team2;
-     } else {
-     if (team2 == Team.sNullTeam) {
-     winner = team1;
-     } else {
-     if (nbVictory > nbLost) {
-     winner = team1;
-     } else {
-     if (nbVictory < nbLost) {
-     winner = team2;
-     } else {
-     if (((int) Math.random()) % 2 == 0) {
-     winner = team1;
-     } else {
-     winner = team2;
-     }
-     }
-     }
-     }
-     }
-     return winner;
-     }*/
     /**
      *
      * @return
      */
     @Override
     public Element getXMLElement() {
-        final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
-        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM1"), this.getCompetitor1().getName());
-        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM2"), this.getCompetitor2().getName());
+        final Element match = new Element(StringConstants.CS_MATCH);
+        match.setAttribute(StringConstants.CS_TEAM+1, this.getCompetitor1().getName());
+        match.setAttribute(StringConstants.CS_TEAM+2, this.getCompetitor2().getName());
 
         for (CoachMatch mMatch : mMatchs) {
             Element subMatch = mMatch.getXMLElement();
@@ -220,8 +176,8 @@ public class TeamMatch extends Match {
     @Override
     public void setXMLElement(final Element match) {
 
-        final String c1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM1")).getValue();
-        final String c2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM2")).getValue();
+        final String c1 = match.getAttribute(StringConstants.CS_TEAM+1).getValue();
+        final String c2 = match.getAttribute(StringConstants.CS_TEAM+2).getValue();
         this.setCompetitor1(Team.getTeam(c1));
         this.setCompetitor2(Team.getTeam(c2));
 
@@ -241,7 +197,7 @@ public class TeamMatch extends Match {
             setCompetitor2(Team.getNullTeam());
         }
 
-        final List<Element> values = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
+        final List<Element> values = match.getChildren(StringConstants.CS_MATCH);
         final Iterator<Element> v = values.iterator();
 
         while (v.hasNext()) {
@@ -454,7 +410,7 @@ public class TeamMatch extends Match {
     @Override
     public void setXMLElementForDisplay(Element match) {
 
-        List<Element> elts = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
+        List<Element> elts = match.getChildren(StringConstants.CS_TEAM);
         if (elts.size() == 2) {
             Element t1 = elts.get(0);
             Team team1 = new Team();

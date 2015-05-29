@@ -101,34 +101,30 @@ public class CoachMatch extends Match {
      */
     @Override
     public Element getXMLElement() {
-        final Element match = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
-        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1"), this.getCompetitor1().getName());
-        match.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2"), this.getCompetitor2().getName());
+        final Element match = new Element(StringConstants.CS_MATCH);
+        match.setAttribute(StringConstants.CS_COACH+1 , this.getCompetitor1().getName());
+        match.setAttribute(StringConstants.CS_COACH+2, this.getCompetitor2().getName());
 
-        match.setAttribute("RefusedBy1", Boolean.toString(isRefusedBy1()));
-        match.setAttribute("RefusedBy2", Boolean.toString(isRefusedBy2()));
-        match.setAttribute("ConcedeedBy1", Boolean.toString(isConcedeedBy1()));
-        match.setAttribute("ConcedeedBy2", Boolean.toString(isConcedeedBy2()));
+        match.setAttribute(StringConstants.CS_REFUSED_BY+1, Boolean.toString(isRefusedBy1()));
+        match.setAttribute(StringConstants.CS_REFUSED_BY+2, Boolean.toString(isRefusedBy2()));
+        match.setAttribute(StringConstants.CS_CONCEEDED_BY+1, Boolean.toString(isConcedeedBy1()));
+        match.setAttribute(StringConstants.CS_CONCEEDED_BY+2, Boolean.toString(isConcedeedBy2()));
 
         for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
             final Value val = this.getValue(Tournament.getTournament().getParams().getCriteria(k));
-            final Element value = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"));
-            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), val.getCriteria().getName());
-            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1"), Integer.toString(val.getValue1()));
-            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2"), Integer.toString(val.getValue2()));
+            final Element value = new Element(StringConstants.CS_VALUE);
+            value.setAttribute(StringConstants.CS_NAME, val.getCriteria().getName());
+            value.setAttribute(StringConstants.CS_VALUE+1, Integer.toString(val.getValue1()));
+            value.setAttribute(StringConstants.CS_VALUE+2, Integer.toString(val.getValue2()));
 
-            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1"), Integer.toString(val.getValue1()));
-            value.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2"), Integer.toString(val.getValue2()));
             match.addContent(value);
         }
 
         if (this.getRoster1() != null) {
-            String key1 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
-            match.setAttribute(key1, this.getRoster1().getName());
+            match.setAttribute(StringConstants.CS_ROSTER+1, this.getRoster1().getName());
         }
         if (this.getRoster2() != null) {
-            String key2 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER2");
-            match.setAttribute(key2, this.getRoster2().getName());
+            match.setAttribute(StringConstants.CS_ROSTER+2, this.getRoster2().getName());
         }
 
         if (getSubstitute1() != null) {
@@ -147,8 +143,8 @@ public class CoachMatch extends Match {
     @Override
     public void setXMLElement(final Element match) {
         try {
-            final String c1 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH1")).getValue();
-            final String c2 = match.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COACH2")).getValue();
+            final String c1 = match.getAttribute(StringConstants.CS_COACH+1).getValue();
+            final String c2 = match.getAttribute(StringConstants.CS_COACH+2).getValue();
             this.setCompetitor1(Coach.getCoach(c1));
             this.setCompetitor2(Coach.getCoach(c2));
             if (this.getCompetitor1() == null) {
@@ -159,10 +155,10 @@ public class CoachMatch extends Match {
             }
 
             try {
-                setRefusedBy1(match.getAttribute("RefusedBy1").getBooleanValue());
-                setRefusedBy2(match.getAttribute("RefusedBy2").getBooleanValue());
-                setConcedeedBy1(match.getAttribute("ConcedeedBy1").getBooleanValue());
-                setConcedeedBy2(match.getAttribute("ConcedeedBy2").getBooleanValue());
+                setRefusedBy1(match.getAttribute(StringConstants.CS_REFUSED_BY+1).getBooleanValue());
+                setRefusedBy2(match.getAttribute(StringConstants.CS_REFUSED_BY+2).getBooleanValue());
+                setConcedeedBy1(match.getAttribute(StringConstants.CS_CONCEEDED_BY+1).getBooleanValue());
+                setConcedeedBy2(match.getAttribute(StringConstants.CS_CONCEEDED_BY+2).getBooleanValue());
             } catch (DataConversionException | NullPointerException e) {
                 LOG.log(Level.FINE, e.getLocalizedMessage());
                 setRefusedBy1(false);
@@ -187,42 +183,41 @@ public class CoachMatch extends Match {
                 setCompetitor2(Coach.getNullCoach());
             }
 
-            final List values = match.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"));
-            final Iterator v = values.iterator();
+            final List<Element> values = match.getChildren(StringConstants.CS_VALUE);
+            final Iterator<Element> v = values.iterator();
 
             while (v.hasNext()) {
-                final Element val = (Element) v.next();
+                final Element val =  v.next();
                 Criteria crit = null;
 
                 for (int cpt = 0; cpt < Tournament.getTournament().getParams().getCriteriaCount(); cpt++) {
                     final Criteria criteria = Tournament.getTournament().getParams().getCriteria(cpt);
-                    final String tmp = val.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME")).getValue();
+                    final String tmp = val.getAttribute(StringConstants.CS_NAME).getValue();
 
                     if (criteria.getName().equals(tmp)) {
                         crit = criteria;
                     }
                 }
                 final Value value = new Value(crit);
-                value.setValue1(val.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE1")).getIntValue());
-                value.setValue2(val.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE2")).getIntValue());
+                value.setValue1(val.getAttribute(StringConstants.CS_VALUE+1).getIntValue());
+                value.setValue2(val.getAttribute(StringConstants.CS_VALUE+2).getIntValue());
                 this.putValue(crit, value);
             }
 
-            String key1 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER1");
-            Attribute att1 = match.getAttribute(key1);
+
+            Attribute att1 = match.getAttribute(StringConstants.CS_ROSTER+1);
             if (att1 != null) {
                 this.setRoster1(RosterType.getRosterType(att1.getValue()));
             }
-            String key2 = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER2");
-            Attribute att2 = match.getAttribute(key2);
+            Attribute att2 = match.getAttribute(StringConstants.CS_ROSTER+2);
             if (att2 != null) {
                 this.setRoster2(RosterType.getRosterType(att2.getValue()));
             }
 
-            final List subs = match.getChildren("Subtitution");
-            final Iterator it = subs.iterator();
+            final List<Element> subs = match.getChildren(StringConstants.CS_SUBSTITUTION);
+            final Iterator<Element> it = subs.iterator();
             while (it.hasNext()) {
-                final Element sub = (Element) it.next();
+                final Element sub = it.next();
                 Substitute s = new Substitute();
                 s.setXMLElement(sub);
                 s.setMatch(this);
@@ -254,7 +249,6 @@ public class CoachMatch extends Match {
                     super.setWinner(getCompetitor1());
                     super.setLooser(getCompetitor2());
                 } else {
-                    //final ArrayList<Criteria> crits = Tournament.getTournament().getParams().getCriterias();
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                         Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
                         if (getValue(crit).getValue1() > getValue(crit).getValue2()) {
@@ -302,7 +296,7 @@ public class CoachMatch extends Match {
                     super.setWinner(getCompetitor1());
                     super.setLooser(getCompetitor2());
                 } else {
-                    //final ArrayList<Criteria> crits = Tournament.getTournament().getParams().getCriterias();
+
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                         Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
                         if (getValue(crit).getValue1() < getValue(crit).getValue2()) {
@@ -522,19 +516,6 @@ public class CoachMatch extends Match {
 
         setXMLElement(element);
     }
-
-    /**
-     * @return the mValues
-     */
-    /*public HashMap<Criteria, Value> getValues() {
-     return mValues;
-     }*/
-    /**
-     * @param mValues the mValues to set
-     */
-    /*public void setValues(HashMap<Criteria, Value> mValues) {
-     this.mValues = mValues;
-     }*/
     
     public boolean isFullNaf()
     {

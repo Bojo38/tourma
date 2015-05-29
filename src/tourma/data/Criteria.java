@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import tourma.MainFrame;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -56,12 +57,12 @@ public class Criteria implements XMLExport {
      */
     @Override
     public Element getXMLElement() {
-        final Element crit = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITERIA"));
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), this.getName());
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSFOR"), Integer.toString(this.getPointsFor()));
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMFOR"), Integer.toString(this.getPointsTeamFor()));
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSAGAINST"), Integer.toString(this.getPointsAgainst()));
-        crit.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMAGAINST"), Integer.toString(this.getPointsTeamAgainst()));
+        final Element crit = new Element(StringConstants.CS_CRITERIA);
+        crit.setAttribute(StringConstants.CS_CRITERIA, this.getName());
+        crit.setAttribute(StringConstants.CS_POINTS_FOR, Integer.toString(this.getPointsFor()));
+        crit.setAttribute(StringConstants.CS_POINTS_AGAINST, Integer.toString(this.getPointsTeamFor()));
+        crit.setAttribute(StringConstants.CS_TEAM_POINTS_FOR, Integer.toString(this.getPointsAgainst()));
+        crit.setAttribute(StringConstants.CS_TEAM_POINTS_AGAINST, Integer.toString(this.getPointsTeamAgainst()));
         return crit;
     }
 
@@ -72,11 +73,11 @@ public class Criteria implements XMLExport {
     @Override
     public void setXMLElement(final Element criteria) {
         try {
-            this.setName(criteria.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME")));
-            this.setPointsFor(criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSFOR")).getIntValue());
-            this.setPointsTeamFor(criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMFOR")).getIntValue());
-            this.setPointsAgainst(criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSAGAINST")).getIntValue());
-            this.setPointsTeamAgainst(criteria.getAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTSTEAMAGAINST")).getIntValue());
+            this.setName(criteria.getAttributeValue(StringConstants.CS_NAME));
+            this.setPointsFor(criteria.getAttribute(StringConstants.CS_POINTS_FOR).getIntValue());
+            this.setPointsTeamFor(criteria.getAttribute(StringConstants.CS_TEAM_POINTS_FOR).getIntValue());
+            this.setPointsAgainst(criteria.getAttribute(StringConstants.CS_POINTS_AGAINST).getIntValue());
+            this.setPointsTeamAgainst(criteria.getAttribute(StringConstants.CS_TEAM_POINTS_AGAINST).getIntValue());
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }

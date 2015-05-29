@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom2.Element;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 
 /**
@@ -69,7 +70,7 @@ public class Round implements XMLExport {
     @Override
     public String toString() {
         final int index = Tournament.getTournament().indexOfRound(this);
-        return java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ") + (index + 1);
+        return Translate.translate(Translate.CS_Round_) + (index + 1);
     }
 
     public double getMinBonus() {
@@ -89,7 +90,7 @@ public class Round implements XMLExport {
     }
 
     public double getCoef(Match m) {
-        double coef = 1.0;
+        double coef;
         int index = this.indexOf(m);
         double gap = this.getMaxBonus() - this.getMinBonus();
         double steps = gap / this.getMatchsCount();
@@ -183,7 +184,7 @@ public class Round implements XMLExport {
      * @param data
      */
     public void setHour(String data) {
-        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         try {
             mHour = format.parse(data);
         } catch (ParseException ex) {
@@ -215,17 +216,17 @@ public class Round implements XMLExport {
      */
     @Override
     public Element getXMLElement() {
-        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
-        final Element round = new Element(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROUND"));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"), format.format(this.getHour()));
+        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final Element round = new Element(StringConstants.CS_ROUND);
+        round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOOSERCUP"), Boolean.toString(isLooserCup()));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"), Boolean.toString(isCup()));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"), Integer.toString(getCupTour()));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"), Integer.toString(getCupMaxTour()));
+        round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
+        round.setAttribute(StringConstants.CS_CUP, Boolean.toString(isCup()));
+        round.setAttribute(StringConstants.CS_TOUR, Integer.toString(getCupTour()));
+        round.setAttribute(StringConstants.CS_MAXTOUR, Integer.toString(getCupMaxTour()));
         
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MINCOEF"), Double.toString(getMinBonus()));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXCOEF"), Double.toString(getMaxBonus()));
+        round.setAttribute(StringConstants.CS_MINCOEF, Double.toString(getMinBonus()));
+        round.setAttribute(StringConstants.CS_MAXCOEF, Double.toString(getMaxBonus()));
 
         for (Match mMatch : this.mMatchs) {
             final Element match = mMatch.getXMLElement();
@@ -240,15 +241,15 @@ public class Round implements XMLExport {
      * @return
      */
     public Element getXMLElementForDisplay() {
-        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
-        final Element round = new Element(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROUND"));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"), format.format(this.getHour()));
+        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final Element round = new Element(StringConstants.CS_ROUND);
+        round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOOSERCUP"), Boolean.toString(isLooserCup()));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"), Boolean.toString(isCup()));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"), Integer.toString(getCupTour()));
-        round.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"), Integer.toString(getCupMaxTour()));
-        round.setAttribute("INDEX", Integer.toString(Tournament.getTournament().getRoundIndex(this)));
+        round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
+        round.setAttribute(StringConstants.CS_CUP, Boolean.toString(isCup()));
+        round.setAttribute(StringConstants.CS_TOUR, Integer.toString(getCupTour()));
+        round.setAttribute(StringConstants.CS_MAXTOUR, Integer.toString(getCupMaxTour()));
+        round.setAttribute(StringConstants.CS_INDEX, Integer.toString(Tournament.getTournament().getRoundIndex(this)));
 
         for (Match mMatch : this.mMatchs) {
             final Element match = mMatch.getXMLElementForDisplay();
@@ -264,9 +265,9 @@ public class Round implements XMLExport {
      */
     @Override
     public void setXMLElement(final Element round) {
-        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
-        final String date = round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"));
+        final String date = round.getAttributeValue(StringConstants.CS_DATE);
         try {
             mHour = format.parse(date);
 
@@ -275,15 +276,15 @@ public class Round implements XMLExport {
         }
 
         try {
-            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOOSERCUP"))));
-            setCup(Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"))));
-            setCupTour(Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"))));
-            setCupMaxTour(Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"))));
+            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_LOOSERCUP)));
+            setCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_CUP)));
+            setCupTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_TOUR)));
+            setCupMaxTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_MAXTOUR)));
         } catch (NumberFormatException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
 
-        final List<Element> matchs = round.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
+        final List<Element> matchs = round.getChildren(StringConstants.CS_MATCH);
         final Iterator<Element> k = matchs.iterator();
         this.mMatchs.clear();
 
@@ -306,9 +307,9 @@ public class Round implements XMLExport {
      * @param round
      */
     public void setXMLElementForDisplay(final Element round) {
-        final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
-        final String date = round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATE"));
+        final String date = round.getAttributeValue(StringConstants.CS_DATE);
         try {
             mHour = format.parse(date);
 
@@ -317,17 +318,17 @@ public class Round implements XMLExport {
         }
 
         try {
-            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LOOSERCUP"))));
-            setCup(Boolean.parseBoolean(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"))));
-            setCupTour(Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR"))));
-            setCupMaxTour(Integer.parseInt(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXTOUR"))));
-            setMinBonus(Double.parseDouble(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MINCOEF"))));
-            setMaxBonus(Double.parseDouble(round.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAXCOEF"))));
+            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_LOOSERCUP)));
+            setCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_CUP)));
+            setCupTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_TOUR)));
+            setCupMaxTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_MAXTOUR)));
+            setMinBonus(Double.parseDouble(round.getAttributeValue(StringConstants.CS_MINCOEF)));
+            setMaxBonus(Double.parseDouble(round.getAttributeValue(StringConstants.CS_MAXCOEF)));
         } catch (NumberFormatException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
 
-        int roundIndex = Integer.parseInt(round.getAttributeValue("INDEX"));
+        int roundIndex = Integer.parseInt(round.getAttributeValue(StringConstants.CS_INDEX));
         int i = 0;
         while (Tournament.getTournament().getRoundsCount() > 0) {
             Tournament.getTournament().removeRound(0);
@@ -336,7 +337,7 @@ public class Round implements XMLExport {
             Tournament.getTournament().addRound(new Round());
         }
 
-        final List<Element> matchs = round.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH"));
+        final List<Element> matchs = round.getChildren(StringConstants.CS_MATCH);
         final Iterator<Element> k = matchs.iterator();
         this.mMatchs.clear();
 

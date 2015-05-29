@@ -35,18 +35,13 @@ public class Pool implements XMLExport {
      */
     @Override
     public Element getXMLElement() {
-        final Element pool = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POOL"));
+        final Element pool = new Element(StringConstants.CS_POOL);
         pool.setAttribute(StringConstants.CS_NAME, this.getName());
         for (Competitor mCompetitor : mCompetitors) {
             final Element coach = new Element(StringConstants.CS_COACH);
             coach.setAttribute(StringConstants.CS_NAME, mCompetitor.getName());
             pool.addContent(coach);
         }
-        /*for (int j = 0; j < this.mTeams.size(); j++) {
-            final Element team = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
-            team.setAttribute(StringConstants.CS_NAME, this.mTeams.get(j).mName);
-            pool.addContent(team);
-        }*/
         return pool;
     }
 
@@ -71,15 +66,6 @@ public class Pool implements XMLExport {
             }
             mCompetitors.add(c);
         }
-        
-        /*mTeams.clear();
-        final List teams = pool.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
-        ro = teams.iterator();
-        while (ro.hasNext()) {
-            final Element team = (Element) ro.next();
-            final String name=team.getAttributeValue(StringConstants.CS_NAME);
-            this.mTeams.add(Team.sTeamMap.get(name));
-        }*/
     }
 
     /**
@@ -126,10 +112,4 @@ public class Pool implements XMLExport {
         return mCompetitors;
     }
 
-    /**
-     * @param mCompetitors the mCompetitors to set
-     */
-    /*public void setCompetitors(ArrayList<Competitor> mCompetitors) {
-        this.mCompetitors = mCompetitors;
-    }*/
 }

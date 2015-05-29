@@ -15,7 +15,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Category implements Comparable, XMLExport {
+public class Category implements Comparable<Object>, XMLExport {
 
     /**
      *
@@ -120,7 +120,7 @@ public class Category implements Comparable, XMLExport {
     @Override
     public Element getXMLElement() {
         final Element clan = new Element(StringConstants.CS_CATEGORY);
-        clan.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), getName());
+        clan.setAttribute(StringConstants.CS_NAME, getName());
         return clan;
     }
 
@@ -141,7 +141,7 @@ public class Category implements Comparable, XMLExport {
      */
     @Override
     public void setXMLElement(final Element e) {
-        this.setmName(e.getAttributeValue("Name"));
+        this.setmName(e.getAttributeValue(StringConstants.CS_NAME));
         if (!isCategoryMapNull())
         {
             putCategory(getName(), this);

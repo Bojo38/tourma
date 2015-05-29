@@ -7,6 +7,7 @@ package tourma.data;
 import java.util.logging.Logger;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -31,7 +32,7 @@ public class ObjectAnnexRanking extends ObjectRanking {
      * @param value4
      * @param value5
      */
-    public ObjectAnnexRanking(final Comparable c, final int value, final int value1, final int value2, final int value3, final int value4, final int value5) {
+    public ObjectAnnexRanking(final Comparable<Object> c, final int value, final int value1, final int value2, final int value3, final int value4, final int value5) {
         super(c, value1, value2, value3, value4, value5);
         mValue = value;
     }
@@ -86,13 +87,13 @@ public class ObjectAnnexRanking extends ObjectRanking {
     public Element getXMLElement() {
         final Element ic = super.getXMLElement();
 
-        ic.setAttribute(new Attribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE"), Integer.toString(getValue())));
+        ic.setAttribute(new Attribute(StringConstants.CS_VALUE, Integer.toString(getValue())));
 
-        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK1"));
-        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK2"));
-        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK3"));
-        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK4"));
-        ic.removeAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RANK5"));
+        ic.removeAttribute(StringConstants.CS_RANK+1);
+        ic.removeAttribute(StringConstants.CS_RANK+2);
+        ic.removeAttribute(StringConstants.CS_RANK+3);
+        ic.removeAttribute(StringConstants.CS_RANK+4);
+        ic.removeAttribute(StringConstants.CS_RANK+5);
         return ic;
     }
 

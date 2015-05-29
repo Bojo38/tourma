@@ -20,7 +20,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import tourma.data.Coach;
-import tourma.data.Tournament;
+import tourma.data.RosterType;
 
 /**
  *
@@ -104,7 +104,7 @@ public final class NAF {
                                     index++;
                                 }
 
-                                if (roster.equals(Tournament.getRosterTranslation(Name))) {
+                                if (roster.equals(RosterType.getRosterTranslation(Name))) {
                                     naf = rank;
                                     coach.setNafRank(naf);
                                     break;
@@ -120,7 +120,7 @@ public final class NAF {
 
             for (int i = 0; i < rosters.size(); i++) {
                 String name=coach.getRoster().getName();
-                String tmpName = Tournament.getRosterTranslation(coach.getRoster().getName());
+                String tmpName = RosterType.getRosterTranslation(coach.getRoster().getName());
                 String name2 = rosters.get(i);
                 if (name2.equals(tmpName)) {
                     naf = ranks.get(i);

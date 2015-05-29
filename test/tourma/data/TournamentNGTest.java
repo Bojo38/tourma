@@ -67,19 +67,7 @@ public class TournamentNGTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of getRosterTranslation method, of class Tournament.
-     */
-    @Test
-    public void testGetRosterTranslation() {
-        System.out.println("getRosterTranslation");
-        String source = "";
-        String expResult = "";
-        String result = Tournament.getRosterTranslation(source);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+
 
     /**
      * Test of getClansCount method, of class Tournament.
@@ -735,18 +723,7 @@ public class TournamentNGTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of loadXMLv2 method, of class Tournament.
-     */
-    @Test
-    public void testLoadXMLv2() {
-        System.out.println("loadXMLv2");
-        Element Root = null;
-        Tournament instance = null;
-        instance.loadXMLv2(Root);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+
 
     /**
      * Test of loadXMLv3 method, of class Tournament.

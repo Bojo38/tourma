@@ -217,7 +217,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
      */
     @Override
     public Element getXMLElement() {
-        final Element team = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM"));
+        final Element team = new Element(StringConstants.CS_TEAM);
         team.setAttribute(StringConstants.CS_NAME, this.getName());
 
         if (this.getClan() != null) {
@@ -237,13 +237,12 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         }
 
         try {
-            Element image = new Element("Picture");
+            Element image = new Element(StringConstants.CS_PICTURE);
             String encodedImage;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 if (getPicture() != null) {
                     ImageIO.write(getPicture(), "png", baos);
                     baos.flush();
-                    //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
                     encodedImage = Base64.encode(baos.toByteArray());
                     image.addContent(encodedImage);
                     team.addContent(image);
@@ -294,19 +293,18 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             this.mCoachs.add(c);
         }
 
-        final List cats = team.getChildren(StringConstants.CS_CATEGORY);
-        final Iterator itCat = cats.iterator();
+        final List<Element> cats = team.getChildren(StringConstants.CS_CATEGORY);
+        final Iterator<Element> itCat = cats.iterator();
         while (itCat.hasNext()) {
-            Element cat = (Element) itCat.next();
+            Element cat =  itCat.next();
             Category category = Category.getCategory(cat.getAttributeValue(StringConstants.CS_NAME));
             this.addCategory(category);
         }
 
         try {
-            Element image = team.getChild("Picture");
+            Element image = team.getChild(StringConstants.CS_PICTURE);
             if (image != null) {
                 String encodedImage = image.getText();
-                //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
                 byte[] bytes = Base64.decode(encodedImage);
                 setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
             }
@@ -371,11 +369,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             // Ranking
             case RANKING:
                 if (vs.size() == 1) {
-                    //final boolean random = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AFFECTATION ALÉATOITE (SINON, L'ORDER D'INSCRIPTION SERA UTILISÉE) ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERATION"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
                     final ArrayList<Coach> shuffle2 = new ArrayList<>(team2.getActivePlayers());
-                    //if (random) {
                     Collections.shuffle(shuffle2);
-                    //}
                     for (int k = 0; k < tour.getParams().getTeamMatesNumber(); k++) {
                         m.addMatch(team1.getActivePlayers().get(k).createMatch(shuffle2.get(k), r));
                     }
@@ -424,7 +419,6 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         boolean have_played = false;
         for (Coach mCoach : mCoachs) {
             if (opponent instanceof Team) {
-                //ArrayList<Match> matchs = mCoachs.get(j).getMatchs();
                 for (int k = 0; k < ((IContainCoachs) opponent).getCoachCount(); k++) {
                     for (int i = 0; i < mCoach.getMatchCount(); i++) {
                         Coach c = ((IContainCoachs) opponent).getCoach(k);

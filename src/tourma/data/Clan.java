@@ -15,13 +15,14 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Element;
+import tourma.utility.StringConstants;
 
 /**
  * This class contains data relative to a clan
  *
  * @author Administrateur
  */
-public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
+public class Clan implements Comparable<Object>, XMLExport,IWithNameAndPicture {
 
     /**
      * 
@@ -132,13 +133,13 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
      */
     @Override
     public Element getXMLElement() {
-        final Element clan = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"));
-        clan.setAttribute(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"), mName);
+        final Element clan = new Element(StringConstants.CS_CLAN);
+        clan.setAttribute(StringConstants.CS_NAME, mName);
         
         if (picture!=null)
         {
         try {
-            Element image=new Element("Picture");
+            Element image=new Element(StringConstants.CS_PICTURE);
             String encodedImage;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 ImageIO.write(picture, "png", baos);
@@ -161,13 +162,13 @@ public class Clan implements Comparable, XMLExport,IWithNameAndPicture {
      */
     @Override
     public void setXMLElement(final Element e) {
-        this.mName=e.getAttributeValue("Name");
+        this.mName=e.getAttributeValue(StringConstants.CS_NAME);
         if (sClanMap!=null)
         {
             sClanMap.put(mName, this);
         }        
         try {
-            Element image = e.getChild("Picture");
+            Element image = e.getChild(StringConstants.CS_PICTURE);
             String encodedImage = image.getText();
             //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
             byte[] bytes=Base64.decode(encodedImage);

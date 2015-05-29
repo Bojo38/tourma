@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -18,6 +17,7 @@ import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 import tourma.utils.Ranked;
@@ -26,9 +26,19 @@ import tourma.utils.Ranked;
  *
  * @author WFMJ7631
  */
-public class Ranking implements XMLExport, Ranked {
+public final class Ranking implements XMLExport, Ranked {
 
     private static final Logger LOG = Logger.getLogger(Ranking.class.getName());
+    public static final String CS_Individual_Annex = "INDIVIDUAL_ANNEX";
+    public static final String CS_Team_Annex = "TEAM_ANNEX";
+    public static final String CS_Clan_Annex = "CLAN_ANNEX";
+    public static final String CS_Individual = "INDIVIDUAL";
+    public static final String CS_General = "General";
+    public static final String CS_Clan = "Clan";
+    public static final String CS_Group = "Group";
+    public static final String CS_Positive="Positive";
+    public static final String CS_Negative="Negative";
+    public static final String CS_Team="Team";
 
     /**
      *
@@ -55,7 +65,6 @@ public class Ranking implements XMLExport, Ranked {
     private ArrayList<ObjectRanking> mObjectsRanked;
 
     private Criteria mCriteria = null;
-    private int mRoundIndex = -1;
 
     /**
      *
@@ -94,17 +103,16 @@ public class Ranking implements XMLExport, Ranked {
      */
     @Override
     public Element getXMLElement() {
-        ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
 
-        final Element rank = new Element(bundle.getString("RANKING"));
-        rank.setAttribute(new Attribute(bundle.getString("NAME"), getName()));
-        rank.setAttribute(new Attribute(bundle.getString("TYPE"), getType()));
-        rank.setAttribute(new Attribute(bundle.getString("ORDER"), getValueType()));
-        rank.setAttribute(new Attribute(bundle.getString("ROUND"), Integer.toString(getRank().getRound())));
-        rank.setAttribute(new Attribute("BYTEAM", Boolean.toString(Tournament.getTournament().getParams().isTeamTournament())));
-        rank.setAttribute("USEPICTURE", Boolean.toString(Tournament.getTournament().getParams().isUseImage()));
+        final Element rank = new Element(StringConstants.CS_RANKING);
+        rank.setAttribute(new Attribute(StringConstants.CS_NAME, getName()));
+        rank.setAttribute(new Attribute(StringConstants.CS_TYPE, getType()));
+        rank.setAttribute(new Attribute(StringConstants.CS_ORDER, getValueType()));
+        rank.setAttribute(new Attribute(StringConstants.CS_ROUND, Integer.toString(getRank().getRound())));
+        rank.setAttribute(new Attribute(StringConstants.CS_BYTEAM, Boolean.toString(Tournament.getTournament().getParams().isTeamTournament())));
+        rank.setAttribute(StringConstants.CS_USE_IMAGE, Boolean.toString(Tournament.getTournament().getParams().isUseImage()));
         for (int i = 0; i < mRankings.size(); i++) {
-            int rankType = mRankings.get(i).intValue();
+            int rankType = mRankings.get(i);
             rank.setAttribute(new Attribute("R" + (i + 1), MjtRanking.getRankingString(rankType)));
         }
 
@@ -119,15 +127,16 @@ public class Ranking implements XMLExport, Ranked {
             Element ic;
             Object obj = getRank().getSortedObject(k);
             if (obj instanceof ObjectAnnexRanking) {
-                ic = ((ObjectAnnexRanking) obj).getXMLElement();
+                ic = ((XMLExport) obj).getXMLElement();
             } else {
-                ic = ((ObjectRanking) obj).getXMLElement();
+                ic = ((XMLExport) obj).getXMLElement();
             }
-            ic.setAttribute(new Attribute(bundle.getString("POS"), Integer.toString(k + 1)));
+            ic.setAttribute(new Attribute(StringConstants.CS_POS, Integer.toString(k + 1)));
             rank.addContent(ic);
         }
         return rank;
     }
+
 
     /**
      *
@@ -136,36 +145,33 @@ public class Ranking implements XMLExport, Ranked {
     @Override
     public void setXMLElement(final Element e) {
 
-        ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
-
-        mObjectsRanked = new ArrayList();
+        mObjectsRanked = new ArrayList<>();
         boolean annex = false;
         int round = -1;
+        if (e.getName().equals(StringConstants.CS_RANKING)) {
+            this.mName = e.getAttributeValue(StringConstants.CS_NAME);
+            this.mType = e.getAttributeValue(StringConstants.CS_TYPE);
+            this.mValueType = e.getAttributeValue(StringConstants.CS_ORDER);
 
-        if (e.getName().equals(bundle.getString("RANKING"))) {
-            this.mName = e.getAttributeValue(bundle.getString("NAME"));
-            this.mType = e.getAttributeValue(bundle.getString("TYPE"));
-            this.mValueType = e.getAttributeValue(bundle.getString("ORDER"));
-
-            if (getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INDIVIDUAL_ANNEX"))
-                    || getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM_ANNEX"))
-                    || getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN_ANNEX"))) {
+            if (getName().equals(Translate.translate(CS_Individual_Annex))
+                    || getName().equals(Translate.translate(CS_Team_Annex))
+                    || getName().equals(Translate.translate(CS_Clan_Annex))) {
                 mCriteria = new Criteria(mType);
                 annex = true;
             }
 
             try {
-                Tournament.getTournament().getParams().setTeamTournament(e.getAttribute("BYTEAM").getBooleanValue());
+                Tournament.getTournament().getParams().setTeamTournament(e.getAttribute(StringConstants.CS_BYTEAM).getBooleanValue());
             } catch (DataConversionException ex) {
                 Logger.getLogger(Ranking.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                Tournament.getTournament().getParams().setUseImage(e.getAttribute("USEPICTURE").getBooleanValue());
+                Tournament.getTournament().getParams().setUseImage(e.getAttribute(StringConstants.CS_USE_IMAGE).getBooleanValue());
             } catch (DataConversionException ex) {
                 Logger.getLogger(Ranking.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                round = e.getAttribute(bundle.getString("ROUND")).getIntValue();
+                round = e.getAttribute(StringConstants.CS_ROUND).getIntValue();
             } catch (DataConversionException ex) {
                 Logger.getLogger(Ranking.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -188,13 +194,13 @@ public class Ranking implements XMLExport, Ranked {
             }
 
             List<Element> objs = e.getChildren();
-            Iterator it = objs.iterator();
+            Iterator<Element> it = objs.iterator();
             while (it.hasNext()) {
                 try {
-                    Element obj = (Element) it.next();
+                    Element obj = it.next();
                     int value = 0;
                     if (annex) {
-                        value = obj.getAttribute(bundle.getString("VALUE")).getIntValue();
+                        value = obj.getAttribute(StringConstants.CS_VALUE).getIntValue();
                     }
                     int value1 = 0;
                     int value2 = 0;
@@ -203,14 +209,14 @@ public class Ranking implements XMLExport, Ranked {
                     int value5 = 0;
 
                     if (!annex) {
-                        value1 = obj.getAttribute(bundle.getString("RANK1")).getIntValue();
-                        value2 = obj.getAttribute(bundle.getString("RANK2")).getIntValue();
-                        value3 = obj.getAttribute(bundle.getString("RANK3")).getIntValue();
-                        value4 = obj.getAttribute(bundle.getString("RANK4")).getIntValue();
-                        value5 = obj.getAttribute(bundle.getString("RANK5")).getIntValue();
+                        value1 = obj.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
+                        value2 = obj.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
+                        value3 = obj.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
+                        value4 = obj.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
+                        value5 = obj.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
                     }
 
-                    Element pict = obj.getChild("Picture");
+                    Element pict = obj.getChild(StringConstants.CS_PICTURE);
                     BufferedImage bi = null;
                     if (pict != null) {
                         try {
@@ -229,11 +235,11 @@ public class Ranking implements XMLExport, Ranked {
                     if (att != null) {
                         Coach c = new Coach();
                         c.setName(att.getValue());
-                        c.setTeam(obj.getAttribute(bundle.getString("TEAM")).getValue());
-                        String clanName = obj.getAttribute(bundle.getString("CLAN")).getValue();
-                        String teamName = obj.getAttribute(bundle.getString("TEAMMATES")).getValue();
+                        c.setTeam(obj.getAttribute(StringConstants.CS_TEAM).getValue());
+                        String clanName = obj.getAttribute(StringConstants.CS_CLAN).getValue();
+                        String teamName = obj.getAttribute(StringConstants.CS_TEAMMATES).getValue();
 
-                        Clan cl = null;
+                        Clan cl;
                         if (!Tournament.getTournament().containsClan(clanName)) {
                             cl = new Clan(clanName);
                             Tournament.getTournament().addClan(cl);
@@ -242,8 +248,8 @@ public class Ranking implements XMLExport, Ranked {
                         }
                         c.setClan(cl);
 
-                        if (!teamName.equals("")) {
-                            Team tm = null;
+                        if (!teamName.isEmpty()) {
+                            Team tm;
                             if (!Tournament.getTournament().containsTeam(teamName)) {
                                 tm = new Team(teamName);
                                 Tournament.getTournament().addTeam(tm);
@@ -262,21 +268,21 @@ public class Ranking implements XMLExport, Ranked {
                             cl = Tournament.getTournament().getClan(clanName);
                         }
                         c.setClan(cl);
-                        c.setTeam(obj.getAttribute(bundle.getString("TEAM")).getValue());
+                        c.setTeam(obj.getAttribute(StringConstants.CS_TEAM).getValue());
                         if (annex) {
                             so = new ObjectAnnexRanking(c, value, value1, value2, value3, value4, value5);
                         } else {
                             so = new ObjectRanking(c, value1, value2, value3, value4, value5);
                         }
 
-                        RosterType rt = new RosterType(bundle.getString("ROSTER"));
+                        RosterType rt = new RosterType(StringConstants.CS_ROSTER);
                         c.setRoster(rt);
                         if (bi != null) {
                             c.setPicture(bi);
                         }
 
                     } else {
-                        att = obj.getAttribute(bundle.getString("CLAN"));
+                        att = obj.getAttribute(StringConstants.CS_CLAN);
                         if (att != null) {
                             String clanName = att.getValue();
                             Clan cl = Tournament.getTournament().getClan(clanName);
@@ -287,13 +293,13 @@ public class Ranking implements XMLExport, Ranked {
                             if (bi != null) {
                                 cl.setPicture(bi);
                             }
-                            List<Element> members = obj.getChildren(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MEMBER"));
+                            List<Element> members = obj.getChildren(StringConstants.CS_MEMBER);
                             Iterator<Element> itm = members.iterator();
                             while (itm.hasNext()) {
                                 Element em = itm.next();
                                 if (Tournament.getTournament().getParams().isTeamTournament()) {
                                     Team t = new Team();
-                                    String name = em.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
+                                    String name = em.getAttributeValue(StringConstants.CS_NAME);
                                     if (!Tournament.getTournament().containsTeam(name)) {
                                         Tournament.getTournament().addTeam(t);
                                         t.setName(name);
@@ -303,7 +309,7 @@ public class Ranking implements XMLExport, Ranked {
                                     t.setClan(cl);
                                 } else {
                                     Coach c = new Coach();
-                                    String name = em.getAttributeValue(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAME"));
+                                    String name = em.getAttributeValue(StringConstants.CS_NAME);
                                     if (!Tournament.getTournament().containsCoach(name)) {
                                         Tournament.getTournament().addCoach(c);
                                         c.setName(name);
@@ -320,7 +326,7 @@ public class Ranking implements XMLExport, Ranked {
                                 so = new ObjectRanking(cl, value1, value2, value3, value4, value5);
                             }
                         } else {
-                            att = obj.getAttribute(bundle.getString("NAME"));
+                            att = obj.getAttribute(StringConstants.CS_NAME);
                             if (att != null) {
                                 String name = att.getValue();
                                 Team t = new Team();
@@ -345,8 +351,8 @@ public class Ranking implements XMLExport, Ranked {
                 }
             }
 
-            if (mName.equals(bundle.getString("INDIVIDUAL"))) {
-                if (mType.equals(bundle.getString("GENERAL"))) {
+            if (mName.equals(CS_Individual)) {
+                if (mType.equals(CS_General)) {
                     /*this.mRank = new MjtRankingIndiv(
                      round,
                      mRankings,
@@ -359,7 +365,8 @@ public class Ranking implements XMLExport, Ranked {
                 }
             }
 
-            Tournament.getTournament().getParams().clearCiterias();
+            Tournament.getTournament()
+                    .getParams().clearCiterias();
             for (String crit : mCriterias) {
                 Criteria cr = new Criteria(crit);
                 Tournament.getTournament().getParams().addCriteria(cr);
@@ -393,16 +400,16 @@ public class Ranking implements XMLExport, Ranked {
         return mName;
     }
 
-    public String getDetail()
-    {
+    @Override
+    public String getDetail() {
         return mType;
     }
-    
-    public void setDetail(String d)
-    {
-        mType=d;
+
+    @Override
+    public void setDetail(String d) {
+        mType = d;
     }
-    
+
     /**
      * @param mName the mName to set
      */

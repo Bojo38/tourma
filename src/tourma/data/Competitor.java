@@ -15,41 +15,8 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public abstract class Competitor implements Comparable,IWithNameAndPicture {
+public abstract class Competitor implements Comparable<Object>,IWithNameAndPicture {
 
-    /**
-     *
-     */
-    private ArrayList<Category> mCategories=new ArrayList<>();
-    
-    public boolean containsCategory(Category cat)
-    {
-        return mCategories.contains(cat);
-    }
-    
-    public int getCategoryCount() {
-        return mCategories.size();
-    }
-    
-    public Category getCategory(int i) {
-        return mCategories.get(i);
-    }
-
-    /**
-     * @param mCategory the mCategory to set
-     */
-    public void addCategory(Category mCategory) {
-        mCategories.add(mCategory);
-    }
-    
-    public void delCategory(Category mCategory) {
-        mCategories.remove(mCategory);
-    }
-    
-    public void clearCategory() {
-        mCategories.clear();
-    }
-    
     /**
      *
      * @param mix
@@ -70,6 +37,12 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
         
         return new Color(red, green, blue);
     }
+
+    /**
+     *
+     */
+    private final ArrayList<Category> mCategories=new ArrayList<>();
+    
 
     /**
      *
@@ -117,6 +90,33 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
         mMatchs = new ArrayList<>();
     }
 
+    public boolean containsCategory(Category cat) {
+        return mCategories.contains(cat);
+    }
+
+    public int getCategoryCount() {
+        return mCategories.size();
+    }
+
+    public Category getCategory(int i) {
+        return mCategories.get(i);
+    }
+
+    /**
+     * @param mCategory the mCategory to set
+     */
+    public void addCategory(Category mCategory) {
+        mCategories.add(mCategory);
+    }
+
+    public void delCategory(Category mCategory) {
+        mCategories.remove(mCategory);
+    }
+
+    public void clearCategory() {
+        mCategories.clear();
+    }
+
     /**
      *
      * @param opponent
@@ -130,7 +130,6 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
      * @param r
      */
     public abstract void addMatchRoundRobin(Competitor opponent, Round r);
-
     /**
      *
      * @param opponent
@@ -170,6 +169,7 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
     public String toString() {
         return getName();
     }
+
     /**
      *
      * @return
@@ -228,7 +228,8 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
     /**
      * @param mClan the mClan to set
      */
-    public void setClan(Clan mClan) {
+    public void setClan(Clan mClan)
+    {
         this.mClan = mClan;
     }
 
@@ -244,7 +245,8 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
      *
      * @return 
      */
-    public int getMatchCount() {
+    public int getMatchCount()
+    {
         return mMatchs.size();
     }
  
@@ -275,8 +277,7 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
     /**
      * New match arrays
      */
-    public void newMatchs()
-    {
+    public void newMatchs() {
         this.mMatchs = new ArrayList<>();
     }
     
@@ -292,8 +293,7 @@ public abstract class Competitor implements Comparable,IWithNameAndPicture {
     /**
      *  clear the matchs array
      */
-    public void clearMatchs()
-    {
+    public void clearMatchs() {
         mMatchs.clear();
     }
     

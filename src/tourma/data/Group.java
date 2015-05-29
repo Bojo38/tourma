@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import static tourma.data.Parameters.sbundle;
 import tourma.utility.StringConstants;
 
 /**
@@ -26,7 +25,7 @@ public class Group implements XMLExport {
     /**
      *
      */
-    private String mName = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+    private String mName = StringConstants.CS_NULL;
 
     /**
      *
@@ -36,7 +35,7 @@ public class Group implements XMLExport {
     /**
      *
      */
-    private HashMap<Group, GroupPoints> opponentModificationPoints = new HashMap<>();
+    private final HashMap<Group, GroupPoints> opponentModificationPoints = new HashMap<>();
 
     /**
      *
@@ -53,7 +52,7 @@ public class Group implements XMLExport {
      */
     @Override
     public Element getXMLElement() {
-        final Element group = new Element(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUP"));
+        final Element group = new Element(StringConstants.CS_GROUP);
         group.setAttribute(StringConstants.CS_NAME, this.getName());
         for (int j = 0; j < this.getRosterCount(); j++) {
             final Element roster = new Element(StringConstants.CS_ROSTER);
@@ -64,16 +63,16 @@ public class Group implements XMLExport {
     }
 
     public Element getXMLElementForPoints() {
-        final Element group = new Element("GROUP_MODIFIER_POINTS");
+        final Element group = new Element(StringConstants.CS_GROUP_MODIFIER_POINTS);
         group.setAttribute(StringConstants.CS_NAME, this.getName());
 
         for (Group g : opponentModificationPoints.keySet()) {
             final Element ge = new Element(StringConstants.CS_GROUP);
             ge.setAttribute(StringConstants.CS_NAME, g.getName());
             GroupPoints gp = opponentModificationPoints.get(g);
-            ge.setAttribute(sbundle.getString("VICTORY"), Integer.toString(gp.getVictoryPoints()));
-            ge.setAttribute(sbundle.getString("DRAW"), Integer.toString(gp.getDrawPoints()));
-            ge.setAttribute(sbundle.getString("LOST"), Integer.toString(gp.getLossPoints()));
+            ge.setAttribute(StringConstants.CS_VICTORY, Integer.toString(gp.getVictoryPoints()));
+            ge.setAttribute(StringConstants.CS_DRAW, Integer.toString(gp.getDrawPoints()));
+            ge.setAttribute(StringConstants.CS_LOST, Integer.toString(gp.getLossPoints()));
             group.addContent(ge);
         }
         return group;
@@ -87,10 +86,10 @@ public class Group implements XMLExport {
     public void setXMLElement(final Element group) {
         setName(group.getAttributeValue(StringConstants.CS_NAME));
 
-        final List rosters = group.getChildren(StringConstants.CS_ROSTER);
-        final Iterator ro = rosters.iterator();
+        final List<Element> rosters = group.getChildren(StringConstants.CS_ROSTER);
+        final Iterator<Element> ro = rosters.iterator();
         while (ro.hasNext()) {
-            final Element roster = (Element) ro.next();
+            final Element roster = ro.next();
             String name = roster.getAttributeValue(StringConstants.CS_NAME);
             name = RosterType.getRosterName(name);
             final RosterType rost = RosterType.getRosterType(name);
@@ -100,17 +99,17 @@ public class Group implements XMLExport {
 
     public void setXMLElementForPoints(final Element group) {
 
-        final List groups = group.getChildren(StringConstants.CS_GROUP);
-        final Iterator gro = groups.iterator();
+        final List<Element> groups = group.getChildren(StringConstants.CS_GROUP);
+        final Iterator<Element> gro = groups.iterator();
         while (gro.hasNext()) {
             try {
-                final Element g = (Element) gro.next();
+                final Element g =  gro.next();
                 String name = g.getAttributeValue(StringConstants.CS_NAME);
                 Group ge = Tournament.getTournament().getGroup(name);
                 GroupPoints gp = new GroupPoints();
-                gp.setDrawPoints(g.getAttribute(sbundle.getString("DRAW")).getIntValue());
-                gp.setVictoryPoints(g.getAttribute(sbundle.getString("VICTORY")).getIntValue());
-                gp.setLossPoints(g.getAttribute(sbundle.getString("LOST")).getIntValue());
+                gp.setDrawPoints(g.getAttribute(StringConstants.CS_DRAW).getIntValue());
+                gp.setVictoryPoints(g.getAttribute(StringConstants.CS_VICTORY).getIntValue());
+                gp.setLossPoints(g.getAttribute(StringConstants.CS_LOST).getIntValue());
                 this.opponentModificationPoints.put(ge, gp);
             } catch (DataConversionException ex) {
                 Logger.getLogger(Group.class.getName()).log(Level.SEVERE, null, ex);

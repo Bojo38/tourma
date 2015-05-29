@@ -6,6 +6,7 @@ package tourma.data;
 
 import java.util.logging.Logger;
 import org.jdom2.Element;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -36,9 +37,9 @@ public class Substitute implements XMLExport {
     @Override
     public Element getXMLElement() {
 
-        final Element coach = new Element("Subtitution");
-        coach.setAttribute("Titular", getTitular().getName());
-        coach.setAttribute("Subtitute", getSubstitute().getName());
+        final Element coach = new Element(StringConstants.CS_SUBSTITUTION);
+        coach.setAttribute(StringConstants.CS_TITULAR, getTitular().getName());
+        coach.setAttribute(StringConstants.CS_SUBSTITUTE, getSubstitute().getName());
         return coach;
     }
 
@@ -49,8 +50,8 @@ public class Substitute implements XMLExport {
     @Override
     public void setXMLElement(Element e) {
         if (e != null) {
-            String Sub = e.getAttributeValue("Subtitute");
-            String Tit = e.getAttributeValue("Titular");
+            String Sub = e.getAttributeValue(StringConstants.CS_SUBSTITUTE);
+            String Tit = e.getAttributeValue(StringConstants.CS_TITULAR);
             setTitular(Coach.getCoach(Tit));
             setSubstitute(Coach.getCoach(Sub));            
         }
