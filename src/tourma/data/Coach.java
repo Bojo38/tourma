@@ -80,9 +80,9 @@ public final class Coach extends Competitor implements XMLExport {
                 sNullCoach = new Coach(StringConstants.CS_NONE);
                 sNullCoach.setTeamMates(Team.getNullTeam());
             }
-            if ((Team.getNullTeam() != null) && ((sNullCoach.getTeam() == null))) {
+            /*if ((Team.getNullTeam() != null) && ((sNullCoach.getTeam() == null))) {
                 sNullCoach.setTeamMates(Team.getNullTeam());
-            }
+            }*/
         }
 
         return sNullCoach;

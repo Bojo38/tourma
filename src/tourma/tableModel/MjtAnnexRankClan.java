@@ -21,6 +21,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 
@@ -28,6 +29,7 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public class MjtAnnexRankClan extends MjtAnnexRank {
 
     private static final Logger LOG = Logger.getLogger(MjtAnnexRankClan.class.getName());
@@ -68,6 +70,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * @param clans
      * @param round_only
      */
+    @SuppressWarnings("unchecked")
     public MjtAnnexRankClan(final int round, final Criteria criteria, final int subtype, boolean full, final ArrayList clans, final boolean round_only) {
 
         this(round, criteria, subtype, clans, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
@@ -76,9 +79,10 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void sortDatas() {
         mDatas.clear();
-        mDatas = new ArrayList();
+        mDatas = new ArrayList<>();
         if (Tournament.getTournament().getParams().isTeamTournament()) {
             sortDatasTeam();
         } else {
@@ -90,6 +94,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     /**
      * Sort teams data
      */
+    @SuppressWarnings("unchecked")
     protected void sortDatasTeam() {
 
         final ArrayList<Team> teams = new ArrayList<>();
@@ -115,11 +120,11 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
             for (Team t : teams) {
                 if (t.getClan() == clan) {
                     int value = 0;
-                    int value1 = 0;
-                    int value2 = 0;
-                    int value3 = 0;
-                    int value4 = 0;
-                    int value5 = 0;
+                    int value1 ;
+                    int value2 ;
+                    int value3;
+                    int value4 ;
+                    int value5 ;
 
                     ArrayList<Integer> aValue = new ArrayList<>();
                     ArrayList<Integer> aValue1 = new ArrayList<>();
@@ -247,6 +252,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     /**
      * Sort data Coach
      */
+    @SuppressWarnings("unchecked")
     protected void sortDatasCoach() {
         final ArrayList<Coach> coaches = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
@@ -271,11 +277,11 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
             for (Coach c : coaches) {
                 if (c.getClan() == clan) {
                     int value = 0;
-                    int value1 = 0;
-                    int value2 = 0;
-                    int value3 = 0;
-                    int value4 = 0;
-                    int value5 = 0;
+                    int value1;
+                    int value2 ;
+                    int value3 ;
+                    int value4 ;
+                    int value5 ;
 
                     ArrayList<Integer> aValue = new ArrayList<>();
                     ArrayList<Integer> aValue1 = new ArrayList<>();
@@ -408,13 +414,13 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
 
     @Override
     public String getColumnName(final int col) {
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                result =  StringConstants.CS_HASH;
                 break;
             case 1:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
+                result = Translate.translate(Translate.CS_Clan);
                 break;
             case 2:
                 result = mCriteria.getName();
@@ -429,7 +435,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     public Object getValueAt(final int row, final int col) {
 
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
                 result = Integer.toString(row + 1);

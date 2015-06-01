@@ -7,21 +7,21 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Team;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
 
-    private static final Logger LOG = Logger.getLogger(MjtPairs.class.getName());
 
     private final ArrayList<Team> mTeams1;
     private final ArrayList<Team> mTeams2;
@@ -51,19 +51,19 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
 
     @Override
     public String getColumnName(final int col) {
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Table");
+                result = Translate.translate(Translate.CS_Table);
                 break;
             case 1:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan1");
+                result = Translate.translate(Translate.CS_Clan)+" 1";
                 break;
             case 2:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+                result = StringConstants.CS_NULL;
                 break;
             case 3:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Clan2");
+                result =  Translate.translate(Translate.CS_Clan)+" 2";
                 break;
             default:
         }
@@ -72,7 +72,7 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
 
     @Override
     public Object getValueAt(final int row, final int col) {
-        Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object val = StringConstants.CS_NULL;
         switch (col) {
             case 0:
                 val = row + 1;
@@ -81,7 +81,7 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
                 val = mTeams1.get(row).getName();
                 break;
             case 2:
-                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VS");
+                val = Translate.translate(Translate.CS_ACCR_Versus);
                 break;
             case 3:
                 val = mTeams2.get(row).getName();

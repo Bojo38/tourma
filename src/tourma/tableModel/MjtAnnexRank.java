@@ -18,14 +18,17 @@ import tourma.data.Tournament;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public abstract class MjtAnnexRank extends MjtRanking {
 
     protected String mType;
+    @Override
     public String getDetail()
     {
         return mType;
     }
     
+    @Override
     public void setDetail(String d)
     {
         mType=d;

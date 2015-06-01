@@ -7,7 +7,6 @@ package tourma.tableModel;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -19,6 +18,7 @@ import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.Round;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 
@@ -26,12 +26,11 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public final class MjtRankingIndiv extends MjtRanking {
 
-    private static final Logger LOG = Logger.getLogger(MjtRankingIndiv.class.getName());
 
     private final boolean mTeamTournament;
-    private boolean mPositive;
     private final boolean mForPool;
 
     public MjtRankingIndiv(final int round,
@@ -205,21 +204,7 @@ public final class MjtRankingIndiv extends MjtRanking {
         }
     }
 
-    /*protected int getValues(Coach c, int ranking_type, int round) {
-     int value = 0;
-
-     Criteria criteria=getCriteriaByValue(ranking_type);
-     if (criteria!=null)
-     {
-     getValue(c, c.mMatchs.get(round), ranking_type, round);
-     }
-     else
-     {
-     getValue(c, c.mMatchs.get(round), criteria, mPositive);
-     }
-
-     return value;
-     }*/
+   
     @Override
     public int getColumnCount() {
         int result = 9;
@@ -248,35 +233,35 @@ public final class MjtRankingIndiv extends MjtRanking {
     @Override
     public String getColumnName(final int col) {
 
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = StringConstants.CS_NULL;
         int cl = col;
         if (mTeamTournament) {
             if (col > 1) {
                 cl = col - 1;
             }
             if (col == 1) {
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
+                result = Translate.translate(Translate.CS_Team);
             }
         }
 
         switch (cl) {
             case 0:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                result = StringConstants.CS_HASH;
                 break;
             case 1:
                 if (mTeamTournament) {
                     if (col != 1) {
-                        result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
+                        result = Translate.translate(Translate.CS_Team);
                     }
                 } else {
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team");
+                    result = Translate.translate(Translate.CS_Team);
                 }
                 break;
             case 2:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH);
+                result = Translate.translate(Translate.CS_Coach);
                 break;
             case 3:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Roster");
+                result = Translate.translate(Translate.CS_Roster);
                 break;
             case 4:
                 result = getRankingString(mRankingType1);

@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -20,6 +19,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 
@@ -27,10 +27,8 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public class MjtMatches extends AbstractTableModel implements TableCellRenderer {
-
-    private static final Logger LOG = Logger.getLogger(MjtMatches.class.getName());
-    private static final long serialVersionUID = 4L;
 
     private final ArrayList<CoachMatch> mMatchs;
     private final boolean mLocked;
@@ -45,26 +43,21 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
      * @param teamTournament
      * @param full
      */
-    public MjtMatches(final ArrayList<CoachMatch> matchs, final boolean locked, final boolean teamTournament, final boolean full,final boolean nafOnly) {
+    public MjtMatches(final ArrayList<CoachMatch> matchs, final boolean locked, final boolean teamTournament, final boolean full, final boolean nafOnly) {
         mMatchs = new ArrayList<>();
         mLocked = locked;
         mTeamTournament = teamTournament;
         mFull = full;
-        mNafOnly=nafOnly;
-        
-        if (mNafOnly)
-        {
-            for (int i=0; i<matchs.size(); i++)
-            {
-                CoachMatch m=matchs.get(i);
-                if (m.isFullNaf())
-                {
+        mNafOnly = nafOnly;
+
+        if (mNafOnly) {
+            for (int i = 0; i < matchs.size(); i++) {
+                CoachMatch m = matchs.get(i);
+                if (m.isFullNaf()) {
                     mMatchs.add(m);
                 }
             }
-        }
-        else
-        {
+        } else {
             mMatchs.addAll(matchs);
         }
     }
@@ -82,7 +75,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public int getRowCount() {
-        int count=mMatchs.size();        
+        int count = mMatchs.size();
         return count;
     }
 
@@ -93,58 +86,58 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         if (mTeamTournament) {
             switch (col) {
                 case 0:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Table");
+                    result = Translate.translate(Translate.CS_Table);
                     break;
                 case 1:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team1");
+                    result = Translate.translate(Translate.CS_Team) + " 1";
                     break;
                 case 2:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach1");
+                    result = Translate.translate(Translate.CS_Coach) + " 1";
                     break;
                 case 3:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Score1");
+                    result = Translate.translate(Translate.CS_Score) + " 1";
                     break;
                 case 4:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Score2");
+                    result = Translate.translate(Translate.CS_Score) + " 2";
                     break;
                 case 5:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach2");
+                    result = Translate.translate(Translate.CS_Coach) + " 2";
                     break;
                 case 6:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team2");
+                    result = Translate.translate(Translate.CS_Team) + " 2";
                     break;
                 default:
                     final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
                     final int ind = (col - 5) % 2;
                     if (ind == 0) {
-                        result = crit.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1");
+                        result = crit.getName() + " 1";
                     } else {
-                        result = crit.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2");
+                        result = crit.getName() + " 2";
                     }
             }
         } else {
             switch (col) {
                 case 0:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Table");
+                    result = Translate.translate(Translate.CS_Table);
                     break;
                 case 1:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach1");
+                    result = Translate.translate(Translate.CS_Coach) + " 1";
                     break;
                 case 2:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Score1");
+                    result = Translate.translate(Translate.CS_Score) + " 1";
                     break;
                 case 3:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Score2");
+                    result = Translate.translate(Translate.CS_Score) + " 2";
                     break;
                 case 4:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Coach2");
+                    result = Translate.translate(Translate.CS_Coach) + " 2";
                     break;
                 default:
                     final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
                     if ((col - 3) % 2 > 0) {
-                        result = crit.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 2");
+                        result = crit.getName() + " 2";
                     } else {
-                        result = crit.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" 1");
+                        result = crit.getName() + " 1";
                     }
             }
         }
@@ -169,10 +162,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 2: {
                     String tmp = "";
                     if (m.isConcedeedBy1()) {
-                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(CONCEEDED) ");
+                        tmp = "("+Translate.translate(Translate.CS_Conceeded)+") ";
                     }
                     if (m.isRefusedBy1()) {
-                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
+                        tmp = "("+Translate.translate(Translate.CS_Refused)+") ";
                     }
 
                     if (m.getRoster1() == null) {
@@ -193,7 +186,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     if (val.getValue1() != -1) {
                         obj = val.getValue1();
                     } else {
-                        obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+                        obj = StringConstants.CS_NULL;
                     }
                     break;
                 case 4:
@@ -201,16 +194,16 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     if (val.getValue2() != -1) {
                         obj = val.getValue2();
                     } else {
-                        obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+                        obj = StringConstants.CS_NULL;
                     }
                     break;
                 case 5: {
                     String tmp = "";
                     if (m.isConcedeedBy2()) {
-                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(CONCEEDED) ");
+                        tmp = "("+Translate.translate(Translate.CS_Conceeded)+") ";
                     }
                     if (m.isRefusedBy2()) {
-                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
+                        tmp = "("+Translate.translate(Translate.CS_Refused)+") ";
                     }
                     if (m.getRoster2() == null) {
                         rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
@@ -246,10 +239,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 1: {
                     String tmp = "";
                     if (m.isConcedeedBy1()) {
-                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(CONCEEDED) ");
+                        tmp = "("+Translate.translate(Translate.CS_Conceeded)+") ";
                     }
                     if (m.isRefusedBy1()) {
-                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
+                        tmp = "("+Translate.translate(Translate.CS_Refused)+") ";
                     }
                     if (m.getRoster1() == null) {
                         rosterName = ((Coach) m.getCompetitor1()).getRoster().getName();
@@ -269,7 +262,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     if (val.getValue1() != -1) {
                         obj = val.getValue1();
                     } else {
-                        obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+                        obj = StringConstants.CS_NULL;
                     }
                     break;
                 case 3:
@@ -277,16 +270,16 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     if (val.getValue2() != -1) {
                         obj = val.getValue2();
                     } else {
-                        obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+                        obj = StringConstants.CS_NULL;
                     }
                     break;
                 case 4: {
                     String tmp = "";
                     if (m.isConcedeedBy2()) {
-                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(CONCEEDED) ");
+                        tmp = "("+Translate.translate(Translate.CS_Conceeded)+") ";;
                     }
                     if (m.isRefusedBy2()) {
-                        tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("(REFUSED) ");
+                        tmp = "("+Translate.translate(Translate.CS_Refused)+") ";;
                     }
                     if (m.getRoster2() == null) {
                         rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
@@ -534,7 +527,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                 frg = new Color(50, 50, 150);
                             }
                         } else {
-                            if (row % 2 !=0) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -543,7 +536,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 switch (column) {
                     case 0:
                         if (!useColor) {
-                            if (row % 2 !=0) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -552,7 +545,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(200, 150, 150);
                         } else {
-                            if (row % 2 !=0) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -576,7 +569,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(250, 200, 200);
                         } else {
-                            if (row % 2 !=0) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -585,7 +578,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(200, 200, 250);
                         } else {
-                            if (row % 2 !=0) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -594,7 +587,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (useColor) {
                             bkg = new Color(150, 150, 200);
                         } else {
-                            if (row % 2 !=0) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }
@@ -622,7 +615,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                 frg = new Color(50, 50, 150);
                             }
                         } else {
-                            if (row % 2 !=0) {
+                            if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
                         }

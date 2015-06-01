@@ -6,7 +6,6 @@ package tourma.tableModel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -15,14 +14,16 @@ import javax.swing.table.TableCellRenderer;
 import tourma.data.Criteria;
 import tourma.data.Parameters;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
+import tourma.utility.StringConstants;
 
 /**
  *
  * @author Administrateur
  */
+@SuppressWarnings("serial")
 public class MjtCriterias extends AbstractTableModel implements TableCellRenderer {
-    private static final Logger LOG = Logger.getLogger(MjtCriterias.class.getName());
-    private static final long serialVersionUID = 2L;
+    private static final String CS_CriteriaAlreadyExists = "CriteriaAlreadyExists0";
 
     private final Tournament mTour;
     private final Parameters mParams;
@@ -52,22 +53,22 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
 
     @Override
     public String getColumnName(final int col) {
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM CRITÈRE");
+                result = Translate.translate(Translate.CS_Critera_Name);
                 break;
             case 1:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS +");
+                result = Translate.translate(Translate.CS_Points_Plus);
                 break;
             case 2:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS -");
+                result = Translate.translate(Translate.CS_Points_Minus);
                 break;
             case 3:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS EQUIPE +");
+                result = Translate.translate(Translate.CS_Points_Team_Plus);
                 break;
             case 4:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS EQUIPE -");
+                result = Translate.translate(Translate.CS_Points_Team_Minus);
                 break;
             default:
         }
@@ -77,7 +78,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
     @Override
     public Object getValueAt(final int row, final int col) {
 
-        Object result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
                 result = mParams.getCriteria(row).getName();
@@ -99,6 +100,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
         return result;
     }
 
+    
     @Override
     public void setValueAt(final Object value, final int row, final int col) {
         if (value != null) {
@@ -113,7 +115,8 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                 }
             }
             if (exists) {
-                JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERROR"),java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CriteriaAlreadyExists0")+value.toString(),JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, Translate.translate(Translate.CS_Error),
+                        Translate.translate(CS_CriteriaAlreadyExists),JOptionPane.ERROR_MESSAGE);
                 
             } else {
                 String tmp=value.toString();

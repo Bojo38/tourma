@@ -16,11 +16,10 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class RosterType implements XMLExport{
+public class RosterType implements XMLExport {
 
     private static ResourceBundle sBundle = null;
 
-    
     /**
      *
      */
@@ -40,13 +39,12 @@ public class RosterType implements XMLExport{
     /**
      *
      */
-    
     private static ArrayList<String> mRostersNames = new ArrayList<>();
 
     /**
      *
      */
-    private static HashMap<String,RosterType> mRosterTypes = new HashMap<>();
+    private static HashMap<String, RosterType> mRosterTypes = new HashMap<>();
 
     private static final Logger LOG = Logger.getLogger(RosterType.class.getName());
 
@@ -54,7 +52,17 @@ public class RosterType implements XMLExport{
         if (sBundle == null) {
             sBundle = java.util.ResourceBundle.getBundle("tourma/languages/rosters");
         }
-        return sBundle.getString(key);
+
+        String name = "";
+        try {
+            name = sBundle.getString(key);
+        } catch (Exception e) {
+
+        } finally {
+
+        }
+
+        return name;
     }
 
     /**
@@ -89,31 +97,31 @@ public class RosterType implements XMLExport{
         mRostersNames.add(translate("VampireKey"));
 
         mRosterTypes.clear();
-        mRosterTypes.put(translate("AmazonKey"),new RosterType(translate("AmazonKey")));
-        mRosterTypes.put(translate("UnderworldKey"),new RosterType(translate("UnderworldKey")));
-        mRosterTypes.put(translate("ChaosKey"),new RosterType(translate("ChaosKey")));
-        mRosterTypes.put(translate("ElfKey"),new RosterType(translate("ElfKey")));
-        mRosterTypes.put(translate("WoodElfKey"),new RosterType(translate("WoodElfKey")));
-        mRosterTypes.put(translate("DarkElfKey"),new RosterType(translate("DarkElfKey")));
-        mRosterTypes.put(translate("GoblinKey"),new RosterType(translate("GoblinKey")));
-        mRosterTypes.put(translate("HalflingKey"),new RosterType(translate("HalflingKey")));
-        mRosterTypes.put(translate("HighElfKey"),new RosterType(translate("HighElfKey")));
-        mRosterTypes.put(translate("LizardmenKey"),new RosterType(translate("LizardmenKey")));
-        mRosterTypes.put(translate("HumanKey"),new RosterType(translate("HumanKey")));
-        mRosterTypes.put(translate("KhemriKey"),new RosterType(translate("KhemriKey")));
-        mRosterTypes.put(translate("KhorneKey"),new RosterType(translate("KhorneKey")));
-        mRosterTypes.put(translate("UndeadKey"),new RosterType(translate("UndeadKey")));
-        mRosterTypes.put(translate("DwarfKey"),new RosterType(translate("DwarfKey")));
-        mRosterTypes.put(translate("ChaosDwarfKey"),new RosterType(translate("ChaosDwarfKey")));
-        mRosterTypes.put(translate("NecromanticKey"),new RosterType(translate("NecromanticKey")));
-        mRosterTypes.put(translate("NorseKey"),new RosterType(translate("NorseKey")));
-        mRosterTypes.put(translate("NurgleKey"),new RosterType(translate("NurgleKey")));
-        mRosterTypes.put(translate("OgreKey"),new RosterType(translate("OgreKey")));
-        mRosterTypes.put(translate("OrcKey"),new RosterType(translate("OrcKey")));
-        mRosterTypes.put(translate("ChaosPactKey"),new RosterType(translate("ChaosPactKey")));
-        mRosterTypes.put(translate("SkavenKey"),new RosterType(translate("SkavenKey")));
-        mRosterTypes.put(translate("SlannKey"),new RosterType(translate("SlannKey")));
-        mRosterTypes.put(translate("VampireKey"),new RosterType(translate("VampireKey")));
+        mRosterTypes.put(translate("AmazonKey"), new RosterType(translate("AmazonKey")));
+        mRosterTypes.put(translate("UnderworldKey"), new RosterType(translate("UnderworldKey")));
+        mRosterTypes.put(translate("ChaosKey"), new RosterType(translate("ChaosKey")));
+        mRosterTypes.put(translate("ElfKey"), new RosterType(translate("ElfKey")));
+        mRosterTypes.put(translate("WoodElfKey"), new RosterType(translate("WoodElfKey")));
+        mRosterTypes.put(translate("DarkElfKey"), new RosterType(translate("DarkElfKey")));
+        mRosterTypes.put(translate("GoblinKey"), new RosterType(translate("GoblinKey")));
+        mRosterTypes.put(translate("HalflingKey"), new RosterType(translate("HalflingKey")));
+        mRosterTypes.put(translate("HighElfKey"), new RosterType(translate("HighElfKey")));
+        mRosterTypes.put(translate("LizardmenKey"), new RosterType(translate("LizardmenKey")));
+        mRosterTypes.put(translate("HumanKey"), new RosterType(translate("HumanKey")));
+        mRosterTypes.put(translate("KhemriKey"), new RosterType(translate("KhemriKey")));
+        mRosterTypes.put(translate("KhorneKey"), new RosterType(translate("KhorneKey")));
+        mRosterTypes.put(translate("UndeadKey"), new RosterType(translate("UndeadKey")));
+        mRosterTypes.put(translate("DwarfKey"), new RosterType(translate("DwarfKey")));
+        mRosterTypes.put(translate("ChaosDwarfKey"), new RosterType(translate("ChaosDwarfKey")));
+        mRosterTypes.put(translate("NecromanticKey"), new RosterType(translate("NecromanticKey")));
+        mRosterTypes.put(translate("NorseKey"), new RosterType(translate("NorseKey")));
+        mRosterTypes.put(translate("NurgleKey"), new RosterType(translate("NurgleKey")));
+        mRosterTypes.put(translate("OgreKey"), new RosterType(translate("OgreKey")));
+        mRosterTypes.put(translate("OrcKey"), new RosterType(translate("OrcKey")));
+        mRosterTypes.put(translate("ChaosPactKey"), new RosterType(translate("ChaosPactKey")));
+        mRosterTypes.put(translate("SkavenKey"), new RosterType(translate("SkavenKey")));
+        mRosterTypes.put(translate("SlannKey"), new RosterType(translate("SlannKey")));
+        mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));
     }
 
     /**
@@ -155,7 +163,6 @@ public class RosterType implements XMLExport{
      * @return
      */
     public static String getRosterName(String name) {
-        ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
         String result = name;
         // Patching roster name for older versions
         // Amazone,
@@ -184,76 +191,76 @@ public class RosterType implements XMLExport{
         // Vampire
         switch (name) {
             case "Amazone":
-                result = bundle.getString("AmazonKey");
+                result = translate("AmazonKey");
                 break;
             case "Bas-Fonds":
-                result = bundle.getString("UnderworldKey");
+                result = translate("UnderworldKey");
                 break;
             case "Chaos":
-                result = bundle.getString("ChaosKey");
+                result = translate("ChaosKey");
                 break;
             case "Elfe":
-                result = bundle.getString("ElfKey");
+                result = translate("ElfKey");
                 break;
             case "Elfe sylvain":
-                result = bundle.getString("WoodElfKey");
+                result = translate("WoodElfKey");
                 break;
             case "Elfe noir":
-                result = bundle.getString("DarkElfKey");
+                result = translate("DarkElfKey");
                 break;
             case "Gobelin":
-                result = bundle.getString("GoblinKey");
+                result = translate("GoblinKey");
                 break;
             case "Halfling":
-                result = bundle.getString("HalflingKey");
+                result = translate("HalflingKey");
                 break;
             case "Haut Elfe":
-                result = bundle.getString("HighElfKey");
+                result = translate("HighElfKey");
                 break;
             case "Homme lézard":
-                result = bundle.getString("LizardmenKey");
+                result = translate("LizardmenKey");
                 break;
             case "Humain":
-                result = bundle.getString("HumanKey");
+                result = translate("HumanKey");
                 break;
             case "Khemri":
-                result = bundle.getString("KhemriKey");
+                result = translate("KhemriKey");
                 break;
             case "Mort-Vivant":
-                result = bundle.getString("UndeadKey");
+                result = translate("UndeadKey");
                 break;
             case "Nain":
-                result = bundle.getString("DwarfKey");
+                result = translate("DwarfKey");
                 break;
             case "Nain du chaos":
-                result = bundle.getString("ChaosDwarfKey");
+                result = translate("ChaosDwarfKey");
                 break;
             case "Necromantique":
-                result = bundle.getString("NecromanticKey");
+                result = translate("NecromanticKey");
                 break;
             case "Nordique":
-                result = bundle.getString("NorseKey");
+                result = translate("NorseKey");
                 break;
             case "Nurgle":
-                result = bundle.getString("NurgleKey");
+                result = translate("NurgleKey");
                 break;
             case "Ogre":
-                result = bundle.getString("OgreKey");
+                result = translate("OgreKey");
                 break;
             case "Orque":
-                result = bundle.getString("OrcKey");
+                result = translate("OrcKey");
                 break;
             case "Pacte Chaotique":
-                result = bundle.getString("ChaosPactKey");
+                result = translate("ChaosPactKey");
                 break;
             case "Skaven":
-                result = bundle.getString("SkavenKey");
+                result = translate("SkavenKey");
                 break;
             case "Slann":
-                result = bundle.getString("SlannKey");
+                result = translate("SlannKey");
                 break;
             case "Vampire":
-                result = bundle.getString("VampireKey");
+                result = translate("VampireKey");
                 break;
         }
         return result;
@@ -264,35 +271,32 @@ public class RosterType implements XMLExport{
      * @return the mRosterTypes
      */
     /*public static HashMap<String,RosterType> getRosterTypes() {
-    return mRosterTypes;
-    }*/
+     return mRosterTypes;
+     }*/
     /**
-     * 
+     *
      * @param r
-     * @return 
+     * @return
      */
     public static RosterType getRosterType(String r) {
         return mRosterTypes.get(r);
     }
-    
+
     /**
-     * 
+     *
      * @param i
-     * @return 
+     * @return
      */
-    public static RosterType getRosterType(int i)
-    {
+    public static RosterType getRosterType(int i) {
         return (RosterType) mRosterTypes.values().toArray()[i];
     }
-    
- 
+
     /**
-     * 
+     *
      * @param n
      * @param r
      */
-    public static void putRosterType(String n, RosterType r)
-    {
+    public static void putRosterType(String n, RosterType r) {
         mRosterTypes.put(n, r);
     }
 
@@ -302,33 +306,32 @@ public class RosterType implements XMLExport{
     public static void addRosterName(String n) {
         mRostersNames.add(n);
     }
-    
-    
+
     /**
      * @return the mRostersNames
      */
     public static int getRostersNamesCount() {
         return mRostersNames.size();
     }
-     
-      /**
+
+    /**
      *
      * @param i
-     * @return 
+     * @return
      */
     public static String getRostersName(int i) {
         return mRostersNames.get(i);
     }
 
     /*public static ArrayList<String> getRostersNames() {
-    return mRostersNames;
-    }*/
-     /**
+     return mRostersNames;
+     }*/
+    /**
      * @param amRostersNames the mRostersNames to set
      */
     /*public static void setRostersNames(ArrayList<String> amRostersNames) {
-    mRostersNames = amRostersNames;
-    }*/
+     mRostersNames = amRostersNames;
+     }*/
     /**
      * Reate new roster names array
      */
@@ -336,14 +339,13 @@ public class RosterType implements XMLExport{
         mRostersNames = new ArrayList<>();
     }
 
-     /**
+    /**
      * Create new roster type hashmap
      */
     public static void newRostersTypes() {
         mRosterTypes = new HashMap<>();
     }
-     
-    
+
     /**
      *
      * @return
@@ -357,10 +359,9 @@ public class RosterType implements XMLExport{
      * @return
      */
     public static String[] getRostersNames() {
-        String[] s=new String[mRostersNames.size()];
-        for(int i=0; i<mRostersNames.size(); i++ )
-        {
-            s[i]= mRostersNames.get(i);
+        String[] s = new String[mRostersNames.size()];
+        for (int i = 0; i < mRostersNames.size(); i++) {
+            s[i] = mRostersNames.get(i);
         }
         return s;
     }
@@ -447,7 +448,6 @@ public class RosterType implements XMLExport{
         return result;
     }
 
-    
     /**
      *
      */
@@ -460,13 +460,12 @@ public class RosterType implements XMLExport{
     public RosterType(final int i) {
         mName = mRostersNames.get(i);
     }
-    
+
     /**
      *
      * @param name
      */
-    public RosterType(final String name)
-    {
+    public RosterType(final String name) {
         mName = name;
     }
 
@@ -475,12 +474,12 @@ public class RosterType implements XMLExport{
      * @return
      */
     @Override
-public Element getXMLElement() {
-    final Element elt = new Element(StringConstants.CS_ROSTER);
-    elt.setAttribute(StringConstants.CS_NAME, this.getName());
-    return elt;
-}
-    
+    public Element getXMLElement() {
+        final Element elt = new Element(StringConstants.CS_ROSTER);
+        elt.setAttribute(StringConstants.CS_NAME, this.getName());
+        return elt;
+    }
+
     /**
      *
      * @param e
@@ -503,6 +502,5 @@ public Element getXMLElement() {
     public void setName(String mName) {
         this.mName = mName;
     }
-    
-    
+
 }

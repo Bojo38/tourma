@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -28,6 +27,7 @@ import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 import tourma.utils.Ranked;
 
@@ -35,6 +35,7 @@ import tourma.utils.Ranked;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 abstract public class MjtRanking extends AbstractTableModel implements TableCellRenderer, Ranked {
 
     /**
@@ -46,90 +47,12 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      */
     public static final int C_ELO_K = 256;
 
-    protected String mType;
-
-    public String getDetail() {
-        return mType;
-    }
-
-    public void setDetail(String d) {
-        mType = d;
-    }
-
-    protected int getValueByRankingType(int rt, Coach c, CoachMatch m) {
-        int value = 0;
-        final Criteria c1 = getCriteriaByValue(rt);
-        final int subType1 = getSubtypeByValue(rt);
-        if (c1 == null) {
-            value = getValue(c, m, rt);
-        } else {
-            value = getValue(c, m, c1, subType1);
-        }
-        return value;
-    }
-
-    protected int getValueByRankingType(int rt, Team t, TeamMatch tm) {
-        int value = 0;
-        final Criteria c1 = getCriteriaByValue(rt);
-        final int subType1 = getSubtypeByValue(rt);
-        boolean teamVictory = Tournament.getTournament().getParams().isTeamVictoryOnly();
-        if (c1 == null) {
-            value = getValue(t, tm, rt, teamVictory);
-        } else {
-            value = getValue(t, tm, c1, subType1);
-        }
-        return value;
-    }
-
-    protected int getValueFromArray(int rt, ArrayList<Integer> av) {
-        int value = 0;
-
-        if (av.size() > 0) {
-            if ((rt == Parameters.C_RANKING_ELO)
-                    || (rt == Parameters.C_RANKING_NB_MATCHS)) {
-                value = av.get(av.size() - 1);
-            } else {
-                for (Integer i : av) {
-                    value += i;
-                }
-            }
-        }
-
-        return value;
-    }
-
-    protected void removeMinValue(ArrayList<Integer> aValue) {
-        int min = Integer.MAX_VALUE;
-        int index = 0;
-        if (aValue.size() > 0) {
-            for (int k = 0; k < aValue.size(); k++) {
-                min = Math.min(min, aValue.get(k));
-                if (min == aValue.get(k)) {
-                    index = k;
-                }
-            }
-            aValue.remove(index);
-        }
-    }
-
-    protected void removeMaxValue(ArrayList<Integer> aValue) {
-        int max = Integer.MIN_VALUE;
-        int index = 0;
-        if (aValue.size() > 0) {
-            for (int k = 0; k < aValue.size(); k++) {
-                max = Math.max(max, aValue.get(k));
-                if (max == aValue.get(k)) {
-                    index = k;
-                }
-            }
-            aValue.remove(index);
-        }
-    }
 
     /**
      *
      * @param c
      * @param m
+     * @param includeCurrent
      * @return
      */
     public static int getOppPointsByCoach(final Coach c, final CoachMatch m, boolean includeCurrent) {
@@ -190,24 +113,6 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             }
         }
         return 0;
-    }
-
-    public int getTeamTable(final Team t, TeamMatch tm) {
-
-        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
-            Round r = Tournament.getTournament().getRound(i);
-            if (r.containsMatch(tm)) {
-                // No point for first round
-                if (i == 0) {
-                    return 0;
-                } else {
-                    int maxvalue = r.getMatchsCount();
-                    return maxvalue - r.indexOf(tm);
-                }
-            }
-        }
-        return 0;
-
     }
 
     /**
@@ -370,6 +275,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      *
      * @param c
      * @param m
+     * @param withMainPoints
+     * @param withBonusPOints
      * @return
      */
     public static int getPointsByCoach(final Coach c, final CoachMatch m, final boolean withMainPoints, final boolean withBonusPOints) {
@@ -606,7 +513,6 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      * @param c
      * @param m
      * @param valueType
-     * @param lastValue
      * @return
      */
     public static int getValue(final Coach c, final CoachMatch m, final int valueType) {
@@ -655,57 +561,56 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     }
 
     public static int getRankingFromString(String ranking, ArrayList<String> criterias) {
-        ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
 
-        if (ranking.equals(bundle.getString("Points"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_Points))) {
             return Parameters.C_RANKING_POINTS;
         }
-        if (ranking.equals(bundle.getString("Points sans bonus"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_Points_Without_Bonus))) {
             return Parameters.C_RANKING_POINTS_WITHOUT_BONUS;
         }
-        if (ranking.equals(bundle.getString("Bonus Points"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_Bonus_Points))) {
             return Parameters.C_RANKING_BONUS_POINTS;
         }
 
-        if (ranking.equals(bundle.getString("Nothing"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_Nothing))) {
             return Parameters.C_RANKING_NONE;
         }
-        if (ranking.equals(bundle.getString("Opp. Pts"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_ACCR_Opponent_Points))) {
             return Parameters.C_RANKING_OPP_POINTS;
         }
-        if (ranking.equals(bundle.getString("Opp. Pts wo"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_ACCR_Opponent_Points_Without_Bonus))) {
             return Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS;
         }
-        if (ranking.equals(bundle.getString("V/D/L"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_ACCR_Victory_Drawn_Lost))) {
             return Parameters.C_RANKING_VND;
         }
-        if (ranking.equals(bundle.getString("ELO"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_ELO))) {
             return Parameters.C_RANKING_ELO;
         }
 
-        if (ranking.equals(bundle.getString("OpponentsElo"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_OpponentsElo))) {
             return Parameters.C_RANKING_ELO_OPP;
         }
-        if (ranking.equals(bundle.getString("MatchCount"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_MatchCount))) {
             return Parameters.C_RANKING_NB_MATCHS;
         }
-        if (ranking.equals(bundle.getString("TablesPoints"))) {
+        if (ranking.equals(Translate.translate(Translate.CS_TablesPoints))) {
             return Parameters.C_RANKING_TABLES;
         }
 
-        if (ranking.endsWith(bundle.getString(" COACH"))) {
-            String tmp = ranking.replace(bundle.getString(" COACH"), "");
+        if (ranking.endsWith(" "+Translate.translate(Translate.CS_Coach))) {
+            String tmp = ranking.replace(" "+Translate.translate(Translate.CS_Coach), StringConstants.CS_NULL);
             int i = criterias.indexOf(tmp);
             return Parameters.C_MAX_RANKING + 1 + (i * 3);
 
         }
-        if (ranking.endsWith(bundle.getString(" ADVERSAIRE"))) {
-            String tmp = ranking.replace(bundle.getString(" ADVERSAIRE"), "");
+        if (ranking.endsWith(" "+Translate.translate(Translate.CS_Opponent))) {
+            String tmp = ranking.replace(" "+Translate.translate(Translate.CS_Opponent), StringConstants.CS_NULL);
             int i = criterias.indexOf(tmp);
             return Parameters.C_MAX_RANKING + 1 + (i * 3) + 1;
         }
-        if (ranking.endsWith(bundle.getString(" DIFFERENCE"))) {
-            String tmp = ranking.replace(bundle.getString(" DIFFERENCE"), "");
+        if (ranking.endsWith(" "+Translate.translate(Translate.CS_Difference))) {
+            String tmp = ranking.replace(" "+Translate.translate(Translate.CS_Difference), StringConstants.CS_NULL);
             int i = criterias.indexOf(tmp);
             return Parameters.C_MAX_RANKING + 1 + (i * 3) + 2;
         }
@@ -719,42 +624,42 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      * @return
      */
     public static String getRankingString(final int rankingType) {
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = StringConstants.CS_NULL;
         final Criteria c = MjtRanking.getCriteriaByValue(rankingType);
         if (c == null) {
             switch (rankingType) {
                 case Parameters.C_RANKING_POINTS:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Points");
+                    result = Translate.translate(Translate.CS_Points);
                     break;
                 case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Points sans bonus");
+                    result = Translate.translate(Translate.CS_Points_Without_Bonus);
                     break;
                 case Parameters.C_RANKING_BONUS_POINTS:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Bonus Points");
+                    result = Translate.translate(Translate.CS_Bonus_Points);
                     break;
                 case Parameters.C_RANKING_NONE:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Nothing");
+                    result = Translate.translate(Translate.CS_Nothing);
                     break;
                 case Parameters.C_RANKING_OPP_POINTS:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opp. Pts");
+                    result = Translate.translate(Translate.CS_ACCR_Opponent_Points);
                     break;
                 case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opp. Pts wo");
+                    result = Translate.translate(Translate.CS_ACCR_Opponent_Points_Without_Bonus);
                     break;
                 case Parameters.C_RANKING_VND:
-                    result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("V/D/L");
+                    result = Translate.translate(Translate.CS_ACCR_Victory_Drawn_Lost);
                     break;
                 case Parameters.C_RANKING_ELO:
-                    result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ELO");
+                    result = Translate.translate(Translate.CS_ELO);
                     break;
                 case Parameters.C_RANKING_ELO_OPP:
-                    result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OpponentsElo");
+                    result = Translate.translate(Translate.CS_OpponentsElo);
                     break;
                 case Parameters.C_RANKING_NB_MATCHS:
-                    result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MatchCount");
+                    result = Translate.translate(Translate.CS_MatchCount);
                     break;
                 case Parameters.C_RANKING_TABLES:
-                    result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TablesPoints");
+                    result = Translate.translate(Translate.CS_TablesPoints);
                     break;
                 default:
             }
@@ -775,6 +680,53 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         }
         return result;
     }
+    
+    private static int getGroupModifier(Coach c, CoachMatch m) {
+        int value = 0;
+        if (Tournament.getTournament().getGroupsCount() > 1) {
+            final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+            Group g = Tournament.getTournament().getGroup(c);
+            if (g != null) {
+                Value v = m.getValue(td);
+                if ((v.getValue1() >= 0) && ((v.getValue2() >= 0))) {
+                    if (m.getCompetitor1() == c) {
+                        
+                        Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor2());
+                        GroupPoints gp = g.getOpponentModificationPoints(go);
+                        if ((go != null) && (gp != null)) {
+                            if (v.getValue1() > v.getValue2()) {
+                                value = gp.getVictoryPoints();
+                            } else {
+                                if (v.getValue1() == v.getValue2()) {
+                                    value = gp.getDrawPoints();
+                                } else {
+                                    value = gp.getLossPoints();
+                                }
+                            }
+                        }
+                        
+                    }
+                    if (m.getCompetitor2() == c) {
+                        Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor1());
+                        GroupPoints gp = g.getOpponentModificationPoints(go);
+                        if ((go != null) && (gp != null)) {
+                            if (v.getValue1() < v.getValue2()) {
+                                value = gp.getVictoryPoints();
+                            } else {
+                                if (v.getValue1() == v.getValue2()) {
+                                    value = gp.getDrawPoints();
+                                } else {
+                                    value = gp.getLossPoints();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return value;
+    }
+    protected String mDetails;
 
     /**
      * Current Round
@@ -845,66 +797,117 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         mRoundOnly = roundOnly;
         //sortDatas();
     }
-
-    private static int getGroupModifier(Coach c, CoachMatch m) {
+    
+    public String getDetail() {
+        return mDetails;
+    }
+    
+    public void setDetail(String d) {
+        mDetails = d;
+    }
+    
+    protected int getValueByRankingType(int rt, Coach c, CoachMatch m) {
         int value = 0;
-        if (Tournament.getTournament().getGroupsCount() > 1) {
-            final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
-            Group g = Tournament.getTournament().getGroup(c);
-            if (g != null) {
-                Value v = m.getValue(td);
-                if ((v.getValue1() >= 0) && ((v.getValue2() >= 0))) {
-                    if (m.getCompetitor1() == c) {
-
-                        Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor2());
-                        GroupPoints gp = g.getOpponentModificationPoints(go);
-                        if ((go != null) && (gp != null)) {
-                            if (v.getValue1() > v.getValue2()) {
-                                value = gp.getVictoryPoints();
-                            } else {
-                                if (v.getValue1() == v.getValue2()) {
-                                    value = gp.getDrawPoints();
-                                } else {
-                                    value = gp.getLossPoints();
-                                }
-                            }
-                        }
-
-                    }
-                    if (m.getCompetitor2() == c) {
-                        Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor1());
-                        GroupPoints gp = g.getOpponentModificationPoints(go);
-                        if ((go != null) && (gp != null)) {
-                            if (v.getValue1() < v.getValue2()) {
-                                value = gp.getVictoryPoints();
-                            } else {
-                                if (v.getValue1() == v.getValue2()) {
-                                    value = gp.getDrawPoints();
-                                } else {
-                                    value = gp.getLossPoints();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        final Criteria c1 = getCriteriaByValue(rt);
+        final int subType1 = getSubtypeByValue(rt);
+        if (c1 == null) {
+            value = getValue(c, m, rt);
+        } else {
+            value = getValue(c, m, c1, subType1);
         }
         return value;
     }
+    
+    protected int getValueByRankingType(int rt, Team t, TeamMatch tm) {
+        int value ;
+        final Criteria c1 = getCriteriaByValue(rt);
+        final int subType1 = getSubtypeByValue(rt);
+        boolean teamVictory = Tournament.getTournament().getParams().isTeamVictoryOnly();
+        if (c1 == null) {
+            value = getValue(t, tm, rt, teamVictory);
+        } else {
+            value = getValue(t, tm, c1, subType1);
+        }
+        return value;
+    }
+    
+    protected int getValueFromArray(int rt, ArrayList<Integer> av) {
+        int value = 0;
 
+        if (av.size() > 0) {
+            if ((rt == Parameters.C_RANKING_ELO)
+                    || (rt == Parameters.C_RANKING_NB_MATCHS)) {
+                value = av.get(av.size() - 1);
+            } else {
+                for (Integer i : av) {
+                    value += i;
+                }
+            }
+        }
+        
+        return value;
+    }
+
+    protected void removeMinValue(ArrayList<Integer> aValue) {
+        int min = Integer.MAX_VALUE;
+        int index = 0;
+        if (aValue.size() > 0) {
+            for (int k = 0; k < aValue.size(); k++) {
+                min = Math.min(min, aValue.get(k));
+                if (min == aValue.get(k)) {
+                    index = k;
+                }
+            }
+            aValue.remove(index);
+        }
+    }
+    
+    protected void removeMaxValue(ArrayList<Integer> aValue) {
+        int max = Integer.MIN_VALUE;
+        int index = 0;
+        if (aValue.size() > 0) {
+            for (int k = 0; k < aValue.size(); k++) {
+                max = Math.max(max, aValue.get(k));
+                if (max == aValue.get(k)) {
+                    index = k;
+                }
+            }
+            aValue.remove(index);
+        }
+    }
+    
+    public int getTeamTable(final Team t, TeamMatch tm) {
+        
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+            Round r = Tournament.getTournament().getRound(i);
+            if (r.containsMatch(tm)) {
+                // No point for first round
+                if (i == 0) {
+                    return 0;
+                } else {
+                    int maxvalue = r.getMatchsCount();
+                    return maxvalue - r.indexOf(tm);
+                }
+            }
+        }
+        return 0;
+        
+    }
+    
     /**
      *
      * @return
      */
     /* public ArrayList<ObjectRanking> getSortedDatas() {
-     return mDatas;
-     }*/
+    return mDatas;
+    }*/
     /**
      *
      * @param index
      * @param valIndex
      * @return
      */
+    @Override
     public int getSortedValue(int index, int valIndex) {
         ObjectRanking obj = (ObjectRanking) mDatas.get(index);
         switch (valIndex) {
@@ -929,6 +932,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      * @param index
      * @return
      */
+    @Override
     public ObjectRanking getSortedObject(int index) {
         ObjectRanking obj = (ObjectRanking) mDatas.get(index);
         return obj;
@@ -940,8 +944,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     protected abstract void sortDatas();
 
     @Override
-    abstract public int getColumnCount();
-
+    public abstract int getColumnCount();
+    
     @Override
     public abstract String getColumnName(int col);
 
@@ -1243,7 +1247,6 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     }
 
     int getOppELOByTeam(final Team t, TeamMatch tm, int roundIndex) {
-
         int value;
         Competitor opponent;
         if (tm.getCompetitor1() == t) {
@@ -1299,9 +1302,9 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             }
         } else {
             /*for (int i = 0; i < t.getCoachCount(); i++) {
-             final Coach c = t.getCoach(i);
-             //for (int j = 0; j < c.getMatchCount(); j++) {
-             final CoachMatch m = (CoachMatch) c.getMatch(j);*/
+            final Coach c = t.getCoach(i);
+            //for (int j = 0; j < c.getMatchCount(); j++) {
+            final CoachMatch m = (CoachMatch) c.getMatch(j);*/
             for (int i = 0; i < tm.getMatchCount(); i++) {
                 CoachMatch cm = tm.getMatch(i);
                 Coach c = null;
@@ -1427,13 +1430,13 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return value;
 
         /*int value = 0;
-         for (int i = 0; i < t.getCoachCount(); i++) {
-         final Coach c = t.getCoach(i);
-         for (int j = 0; j < c.getMatchCount(); j++) {
-         value += getValue(c, (CoachMatch) c.getMatch(j), crit, subtype);
-         }
-         }
-         return value;*/
+        for (int i = 0; i < t.getCoachCount(); i++) {
+        final Coach c = t.getCoach(i);
+        for (int j = 0; j < c.getMatchCount(); j++) {
+        value += getValue(c, (CoachMatch) c.getMatch(j), crit, subtype);
+        }
+        }
+        return value;*/
     }
 
     @Override
@@ -1442,9 +1445,9 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     }
 
     /*
-     * Don't need to implement this method unless your table's
-     * editable.
-     */
+    * Don't need to implement this method unless your table's
+    * editable.
+    */
     @Override
     public boolean isCellEditable(final int row, final int col) {
         //Note that the data/cell address is constant,

@@ -276,12 +276,12 @@ public final class JPNParamGroup extends javax.swing.JPanel {
     private void jbtAddGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddGroupActionPerformed
         final String newGroup = JOptionPane.showInputDialog(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOM DU NOUVEAU GROUPE"));
         if (newGroup != null) {
-            Group ng=new Group(newGroup);
+            Group ng = new Group(newGroup);
             mTournament.addGroup(ng);
 
             for (int i = 0; i < mTournament.getGroupsCount(); i++) {
-                Group g=mTournament.getGroup(i);
-                GroupPoints gp=new GroupPoints();
+                Group g = mTournament.getGroup(i);
+                GroupPoints gp = new GroupPoints();
                 g.setOpponentModificationPoints(ng, gp);
             }
 
@@ -297,9 +297,9 @@ public final class JPNParamGroup extends javax.swing.JPanel {
                 mTournament.getGroup(0).addRoster(g.getRoster(i));
             }
             mTournament.removeGroup(jlsGroups.getSelectedIndex());
-            
+
             for (int i = 0; i < mTournament.getGroupsCount(); i++) {
-                Group g2=mTournament.getGroup(i);
+                Group g2 = mTournament.getGroup(i);
                 g2.delOpponentModificationPoints(g);
             }
             update();
@@ -396,9 +396,9 @@ public final class JPNParamGroup extends javax.swing.JPanel {
     }//GEN-LAST:event_jcbGroupRightActionPerformed
 
     private void jcbPointsSelectedGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPointsSelectedGroupActionPerformed
-       updatePoints();
-        
-        
+        updatePoints();
+
+
     }//GEN-LAST:event_jcbPointsSelectedGroupActionPerformed
 
     private void jcbPointsOpponentGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPointsOpponentGroupActionPerformed
@@ -408,8 +408,8 @@ public final class JPNParamGroup extends javax.swing.JPanel {
     private void jftfGroupVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jftfGroupVictoryFocusLost
         Group g = mTournament.getGroup(jcbPointsSelectedGroup.getSelectedIndex());
         Group go = mTournament.getGroup(jcbPointsOpponentGroup.getSelectedIndex());
-        
-        GroupPoints gp=g.getOpponentModificationPoints(go);
+
+        GroupPoints gp = g.getOpponentModificationPoints(go);
         try {
             jftfGroupVictory.commitEdit();
             final int points = ((Number) jftfGroupVictory.getValue()).intValue();
@@ -422,8 +422,8 @@ public final class JPNParamGroup extends javax.swing.JPanel {
     private void jftfGroupDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jftfGroupDrawFocusLost
         Group g = mTournament.getGroup(jcbPointsSelectedGroup.getSelectedIndex());
         Group go = mTournament.getGroup(jcbPointsOpponentGroup.getSelectedIndex());
-        
-        GroupPoints gp=g.getOpponentModificationPoints(go);
+
+        GroupPoints gp = g.getOpponentModificationPoints(go);
         try {
             jftfGroupDraw.commitEdit();
             final int points = ((Number) jftfGroupDraw.getValue()).intValue();
@@ -436,8 +436,8 @@ public final class JPNParamGroup extends javax.swing.JPanel {
     private void jftfGroupLossFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jftfGroupLossFocusLost
         Group g = mTournament.getGroup(jcbPointsSelectedGroup.getSelectedIndex());
         Group go = mTournament.getGroup(jcbPointsOpponentGroup.getSelectedIndex());
-        
-        GroupPoints gp=g.getOpponentModificationPoints(go);
+
+        GroupPoints gp = g.getOpponentModificationPoints(go);
         try {
             jftfGroupLoss.commitEdit();
             final int points = ((Number) jftfGroupLoss.getValue()).intValue();
@@ -447,35 +447,36 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jftfGroupLossFocusLost
 
-    private void updatePoints()
-    {
-        Group g = mTournament.getGroup(jcbPointsSelectedGroup.getSelectedIndex());
-        Group go = mTournament.getGroup(jcbPointsOpponentGroup.getSelectedIndex());
-        
-        GroupPoints gp=g.getOpponentModificationPoints(go);
-        if (gp==null)
-        {
-            gp=new GroupPoints();
-            g.setOpponentModificationPoints(go, gp);
+    private void updatePoints() {
+        int index = jcbPointsSelectedGroup.getSelectedIndex();
+        int indexO = jcbPointsOpponentGroup.getSelectedIndex();
+        if ((index >= 0) && (indexO >= 0)) {
+            Group g = mTournament.getGroup(index);
+            Group go = mTournament.getGroup(indexO);
+
+            GroupPoints gp = g.getOpponentModificationPoints(go);
+            if (gp == null) {
+                gp = new GroupPoints();
+                g.setOpponentModificationPoints(go, gp);
+            }
+
+            jftfGroupVictory.setValue(gp.getVictoryPoints());
+            jftfGroupDraw.setValue(gp.getDrawPoints());
+            jftfGroupLoss.setValue(gp.getLossPoints());
         }
-        
-        jftfGroupVictory.setValue(gp.getVictoryPoints());
-        jftfGroupDraw.setValue(gp.getDrawPoints());
-        jftfGroupLoss.setValue(gp.getLossPoints());        
     }
-    
+
     /**
      * Update Panel
      */
     public void update() {
 
         /*final boolean bTourStarted = mTournament.getRoundsCount() > 0;
-        jbtAddGroup.setEnabled(!bTourStarted);
-        jbtRemoveGroup.setEnabled(!bTourStarted);
-        jbtRenameGroup.setEnabled(!bTourStarted);
-        jbtGrouToLeft.setEnabled(!bTourStarted);
-        jbtGroupToRight.setEnabled(!bTourStarted);*/
-
+         jbtAddGroup.setEnabled(!bTourStarted);
+         jbtRemoveGroup.setEnabled(!bTourStarted);
+         jbtRenameGroup.setEnabled(!bTourStarted);
+         jbtGrouToLeft.setEnabled(!bTourStarted);
+         jbtGroupToRight.setEnabled(!bTourStarted);*/
         final DefaultListModel groupModel = new DefaultListModel();
         final DefaultComboBoxModel groupsLeftModel = new DefaultComboBoxModel();
         final DefaultComboBoxModel groupsRightModel = new DefaultComboBoxModel();
@@ -508,7 +509,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
                 jcbPointsOpponentGroup.setSelectedIndex(0);
             }
         }
-        
+
         updatePoints();
 
     }

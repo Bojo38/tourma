@@ -16,13 +16,13 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import tourma.MainFrame;
-import tourma.utility.StringConstants;
 
 /**
  *
  * @author WFMJ7631
  */
 public final class LRB {
+
     /**
      *
      */
@@ -51,48 +51,44 @@ public final class LRB {
      */
     private ArrayList<RosterType> _rosterTypes = null;
     /**
-     * 
+     *
      */
     private ArrayList<StarPlayer> _starPlayers = null;
     /**
-     * 
+     *
      */
     private ArrayList<SkillType> _skillTypes = null;
     /**
-     * 
+     *
      */
     private String _name;
     /**
-     * 
+     *
      */
     private boolean _allowSpecialSkills = false;
 
     /**
-     * 
+     *
      */
     private LRB() {
         _rosterTypes = new ArrayList<>();
         _starPlayers = new ArrayList<>();
         _skillTypes = new ArrayList<>();
 
-       /* URL url;
-        url = getClass().getResource("/teamma/rules/rules.xml");*/
-        InputStream is=getClass().getResourceAsStream("/teamma/rules/rules.xml");
+        /* URL url;
+         url = getClass().getResource("/teamma/rules/rules.xml");*/
+        InputStream is = getClass().getResourceAsStream("/teamma/rules/rules.xml");
         loadLRB(is);
-        try
-        {
-        is.close();
-        }
-        catch (IOException e)
-        {
-           LOG.severe(e.getLocalizedMessage());
+        try {
+            is.close();
+        } catch (IOException e) {
+            LOG.severe(e.getLocalizedMessage());
         }
     }
 
-
     /**
      *
-     * @param file 
+     * @param file
      */
     private void loadLRB(InputStream file) {
         try {
@@ -101,14 +97,14 @@ public final class LRB {
             Element racine = document.getRootElement();
 
             /*
-            * Get LRB name
-            */
+             * Get LRB name
+             */
             Element e_name = racine.getChild("name");
             setName(e_name.getValue());
 
             /*
-            * Get Skill file name
-            */
+             * Get Skill file name
+             */
             Element e_skillfile = racine.getChild("skills");
             String skillfile = e_skillfile.getValue();
 
@@ -128,8 +124,8 @@ public final class LRB {
                 loadTeam(getClass().getResourceAsStream("/teamma/rules/" + teamfile), imagename);
             }
             /*
-            * Get Star Players file name
-            */
+             * Get Star Players file name
+             */
             Element e_starfile = racine.getChild("starplayers");
             String starfile = e_starfile.getValue();
             loadStarPlayers(getClass().getResourceAsStream("/teamma/rules/" + starfile));
@@ -141,7 +137,7 @@ public final class LRB {
 
     /**
      *
-     * @param file 
+     * @param file
      */
     private void loadSkills(InputStream file) {
         try {
@@ -183,9 +179,9 @@ public final class LRB {
     }
 
     /**
-     * 
+     *
      * @param file
-     * @param image 
+     * @param image
      */
     private void loadTeam(InputStream file, String image) {
         try {
@@ -194,7 +190,13 @@ public final class LRB {
             Element racine = document.getRootElement();
 
             Element e_name = racine.getChild("name");
-            RosterType rt = new RosterType(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(e_name.getValue()));
+            //RosterType rt = new RosterType(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(e_name.getValue()));
+            String n = tourma.data.RosterType.getRosterName(e_name.getValue());
+            if (n == null) {
+                n = tourma.data.RosterType.translate(e_name.getValue());
+
+            }
+            RosterType rt = new RosterType(n);
             rt.setImage(image);
             Element e_reroll_cost = racine.getChild("reroll");
             rt.setReroll_cost(Integer.parseInt(e_reroll_cost.getValue()));
@@ -222,17 +224,17 @@ public final class LRB {
                 Element e_position = e_player.getChild("position");
                 PlayerType pt = new PlayerType(e_position.getValue());
                 Element e_limit = e_player.getChild("limit");
-                pt.setLimit (Integer.parseInt(e_limit.getValue()));
+                pt.setLimit(Integer.parseInt(e_limit.getValue()));
                 Element e_movement = e_player.getChild("movement");
-                pt.setMovement (Integer.parseInt(e_movement.getValue()));
+                pt.setMovement(Integer.parseInt(e_movement.getValue()));
                 Element e_strength = e_player.getChild("strength");
-                pt.setStrength (Integer.parseInt(e_strength.getValue()));
+                pt.setStrength(Integer.parseInt(e_strength.getValue()));
                 Element e_agility = e_player.getChild("agility");
-                pt.setAgility (Integer.parseInt(e_agility.getValue()));
+                pt.setAgility(Integer.parseInt(e_agility.getValue()));
                 Element e_armor = e_player.getChild("armor");
-                pt.setArmor (Integer.parseInt(e_armor.getValue()));
+                pt.setArmor(Integer.parseInt(e_armor.getValue()));
                 Element e_cost = e_player.getChild("cost");
-                pt.setCost( Integer.parseInt(e_cost.getValue()));
+                pt.setCost(Integer.parseInt(e_cost.getValue()));
 
                 Element e_skills = e_player.getChild("skills");
                 List<Element> l_skills = e_skills.getChildren("skill");
@@ -283,7 +285,7 @@ public final class LRB {
 
     /**
      *
-     * @param file 
+     * @param file
      */
     private void loadStarPlayers(InputStream file) {
         try {
@@ -324,9 +326,15 @@ public final class LRB {
                 i = rosterlist.iterator();
                 while (i.hasNext()) {
                     Element e_team = i.next();
-                    RosterType rt = getRosterType(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(e_team.getValue()));
+                    String n = tourma.data.RosterType.getRosterName(e_team.getValue());
+                    if (n == null) {
+                        n = tourma.data.RosterType.translate(e_team.getValue());
+
+                    }
+                    RosterType rt = new RosterType(n);
+                    //RosterType rt = getRosterType(tourma.data.RosterType.translate(e_team.getValue()));
                     if (rt == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "RosterType not found: " + e_team.getValue() + " for player " + sp.getName());
+                        JOptionPane.showMessageDialog(null, "RosterType not found: " + e_team.getValue() + " for player " + sp.getName());
                     } else {
                         sp.addRoster(rt);
                         rt.addAvailableStarPlayer(sp);
@@ -343,9 +351,9 @@ public final class LRB {
     }
 
     /**
-     * 
+     *
      * @param name
-     * @return 
+     * @return
      */
     public Skill getSkill(String name) {
         int i, j;
@@ -362,9 +370,9 @@ public final class LRB {
     }
 
     /**
-     * 
+     *
      * @param name
-     * @return 
+     * @return
      */
     public SkillType getSkillType(String name) {
         int i;
@@ -380,9 +388,9 @@ public final class LRB {
     }
 
     /**
-     * 
+     *
      * @param name
-     * @return 
+     * @return
      */
     public RosterType getRosterType(String name) {
         int i;
@@ -397,9 +405,9 @@ public final class LRB {
     }
 
     /**
-     * 
+     *
      * @param name
-     * @return 
+     * @return
      */
     public StarPlayer getStarPlayer(String name) {
         int i;
@@ -415,7 +423,7 @@ public final class LRB {
 
     /**
      *
-     * @return 
+     * @return
      */
     public ArrayList<String> getRosterTypeListAsString() {
         int i;
@@ -434,24 +442,23 @@ public final class LRB {
     public RosterType getRosterType(int i) {
         return _rosterTypes.get(i);
     }
-    
+
     /**
      * @return the _rosterTypes
      */
     public int getRosterTypeCount() {
         return _rosterTypes.size();
     }
-    
+
     /**
      * Clear the roster types list
      */
     public void clearRosterTypes() {
         _rosterTypes.clear();
     }
-    
-    
+
     /**
-     * @param rt     * 
+     * @param rt *
      */
     public void addRosterType(RosterType rt) {
         _rosterTypes.add(rt);
@@ -463,6 +470,7 @@ public final class LRB {
     public int getStarPlayerCount() {
         return _starPlayers.size();
     }
+
     /**
      * @param i
      * @return the _starPlayers
@@ -470,13 +478,14 @@ public final class LRB {
     public StarPlayer getStarPlayer(int i) {
         return _starPlayers.get(i);
     }
-    
+
     /**
      * Clear the star player list
      */
     public void clearStarPlayers() {
-         _starPlayers.clear();
+        _starPlayers.clear();
     }
+
     /**
      * @param sp
      */
@@ -490,14 +499,14 @@ public final class LRB {
     public void addSkillType(SkillType st) {
         _skillTypes.add(st);
     }
-    
+
     /**
      * Clear the skill types list
      */
     public void clearSkillTypes() {
         _skillTypes.clear();
     }
-    
+
     /**
      * @param i
      * @return the _skillTypes
@@ -505,7 +514,7 @@ public final class LRB {
     public SkillType getSkillType(int i) {
         return _skillTypes.get(i);
     }
-    
+
     /**
      * @return the _skillTypes
      */
@@ -541,13 +550,11 @@ public final class LRB {
         this._allowSpecialSkills = _allowSpecialSkills;
     }
 
-
     /**
      * Unload the LRB
      */
-    public static void unloadLRB()
-    {
-        LRB._singleton=null;
+    public static void unloadLRB() {
+        LRB._singleton = null;
     }
-    
+
 }

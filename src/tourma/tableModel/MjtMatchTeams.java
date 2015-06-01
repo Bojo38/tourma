@@ -7,7 +7,6 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -18,6 +17,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 
@@ -25,9 +25,8 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public class MjtMatchTeams extends AbstractTableModel implements TableCellRenderer {
-    private static final Logger LOG = Logger.getLogger(MjtMatchTeams.class.getName());
-    private static final long serialVersionUID = 3L;
 
     private final ArrayList<Team> mTeams;
     private final Round mRound;
@@ -54,25 +53,25 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
     @Override
     public String getColumnName(final int col) {
-        String res = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String res = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                res = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                res = StringConstants.CS_HASH;
                 break;
             case 1:
-                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team1");
+                res = Translate.translate(Translate.CS_Team)+" 1";
                 break;
             case 2:
-                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("V1");
+                res =  Translate.translate(Translate.CS_ACCR_Victory1);
                 break;
             case 3:
-                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("N");
+                res = Translate.translate(Translate.CS_ACCR_Drawn);
                 break;
             case 4:
-                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("V2");
+                res = Translate.translate(Translate.CS_ACCR_Victory2);
                 break;
             case 5:
-                res = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Team2");
+                res = Translate.translate(Translate.CS_Team)+" 1";
                 break;
             default:
         }
@@ -81,7 +80,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
     @Override
     public Object getValueAt(final int row, final int col) {
-        Object obj = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object obj = StringConstants.CS_NULL;
         if (mTeams.size() > 0) {
 
             final TeamMatch m = (TeamMatch) mRound.getMatch(row);

@@ -8,21 +8,21 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Coach;
 import tourma.data.Team;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
-    private static final Logger LOG = Logger.getLogger(MjtTeams.class.getName());
 
     private final ArrayList<Team> mTeams;
 
@@ -54,20 +54,20 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
         String val;
         switch (col) {
             case 0:
-                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                val = StringConstants.CS_HASH;
                 break;
             case 1:
-                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name");
+                val = Translate.translate(Translate.CS_Name);
                 break;
             default:
-                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH) + (col - 1);
+                val = Translate.translate(Translate.CS_Coach) + (col - 1);
         }
         return val;
     }
 
     @Override
     public Object getValueAt(final int row, final int col) {
-        Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object object = StringConstants.CS_NULL;
         if (mTeams.size() > 0) {
             final Team t = mTeams.get(row);
             switch (col) {

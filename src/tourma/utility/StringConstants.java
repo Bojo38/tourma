@@ -13,23 +13,24 @@ public interface StringConstants {
     /**
      *
      */
-    public static final String CS_ROSTER = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROSTER");
+    public static final String CS_ROSTER = "Roster";
 
     /**
      *
      */
     public static final String CS_NAME = "Name";
     public static final String CS_NULL = "";
+    public static final String CS_HASH = "#";
 
     /**
      *
      */
-    public static final String CS_COACH = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("COACH");
+    public static final String CS_COACH = "Coach";
 
     /**
      *
      */
-    public static final String CS_TEAM = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TEAM");
+    public static final String CS_TEAM = "Team";
 
     /**
      *
@@ -39,22 +40,22 @@ public interface StringConstants {
     /**
      *
      */
-    public static final String CS_POOL = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("POULE");
+    public static final String CS_POOL = "pool";
 
     /**
      *
      */
-    public static final String CS_ROUND = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ROUND");
+    public static final String CS_ROUND = "Round";
 
     /**
      *
      */
-    public static final String CS_RESULT = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RESULT");
+    public static final String CS_RESULT = "result";
 
     /**
      *
      */
-    public static final String CS_CUP = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("COUPE");
+    public static final String CS_CUP = "Cup";
 
     /**
      *
@@ -84,7 +85,7 @@ public interface StringConstants {
     /**
      *
      */
-    public static final String CS_NONE = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AUCUN");
+    public static final String CS_NONE = "NONE";
 
     /**
      *
@@ -112,7 +113,7 @@ public interface StringConstants {
     public static final String CS_REFUSED_BY = "RefusedBy";
     public static final String CS_CONCEEDED_BY = "ConcedeedBy";
     public static final String CS_REFUSED = "Refused";
-    public static final String CS_CONCEEDED = "Concedeed";
+    public static final String CS_CONCEEDED = "Conceeded";
     public static final String CS_VALUE = "Value";
     public static final String CS_SUBSTITUTION = "Substitution";
     public static final String CS_CRITERIA = "Criteria";
@@ -135,7 +136,7 @@ public interface StringConstants {
     public static final String CS_PLACE = "Place";
     public static final String CS_PORTUGAL = "Portugal";
     public static final String CS_VICTORY_TEAM = "Victory_Team";
-    public static final String CS_DRAW_TEAM = "DRAW_TEAM";
+    public static final String CS_DRAW_TEAM = "Draw_Team";
     public static final String CS_LOST_TEAM = "Lost_Team";
     public static final String CS_LARGE_VICTORY_GAP = "Large_Victory_Gap";
     public static final String CS_LITTLE_LOST_GAP = "Little_Lost_Gap";
@@ -144,7 +145,7 @@ public interface StringConstants {
     public static final String CS_TEAMINDIVPAIRING = "TeamIndivPairing";
     public static final String CS_TEAMVICTORYPOINTS = "TeamVictoryPoints";
     public static final String CS_TEAMDRAWPOINTS = "TeamDrawPoints";
-    public static final String CS_TEAMVICTORYONLY = "TEAMVICTORYONLY";
+    public static final String CS_TEAMVICTORYONLY = "TeamVictoryOnly";
     public static final String CS_GROUPENABLE = "GroupEnable";
     public static final String CS_SUBSTITUTES = "Substitutes";
     public static final String CS_GAMETYPE = "GameType";
@@ -179,7 +180,7 @@ public interface StringConstants {
     public static final String CS_MAXTOUR = "MaxTour";
     public static final String CS_MINCOEF = "mincoef";
     public static final String CS_MAXCOEF = "maxcoef";
-    public static final String CS_INDEX = "INDEX";
+    public static final String CS_INDEX = "Index";
     public static final String CS_TITULAR = "Titular";
     public static final String CS_SUBSTITUTE = "Substitute";
     public static final String CS_TOURNAMENT="Tournament";

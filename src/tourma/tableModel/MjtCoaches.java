@@ -7,8 +7,6 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -16,14 +14,15 @@ import javax.swing.table.TableCellRenderer;
 import tourma.data.Coach;
 import tourma.data.IContainCoachs;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
-public class MjtCoaches extends AbstractTableModel implements TableCellRenderer {
-    private static final Logger LOG = Logger.getLogger(MjtCoaches.class.getName());
+@SuppressWarnings("serial")
+public class MjtCoaches extends AbstractTableModel implements TableCellRenderer {   
 
     private IContainCoachs t=null;
     
@@ -53,35 +52,34 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public String getColumnName(final int col) {
-        String val = "";
-        ResourceBundle bundle=java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
+        String val = StringConstants.CS_NULL      ;
         switch (col) {
             case 0:
-                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                val = StringConstants.CS_HASH;
                 break;
             case 1:
-                val = bundle.getString("Coach");
+                val = Translate.translate(Translate.CS_Coach);
                 break;
             case 2:
-                val = bundle.getString("Team");
+                val = Translate.translate(Translate.CS_Team);
                 break;
             case 3:
-                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER");
+                val = Translate.translate(Translate.CS_Roster);
                 break;
             case 4:
-                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF");
+                val = Translate.translate(Translate.CS_NAF);
                 break;
             case 5:
-                val = bundle.getString("Ranking");
+                val = Translate.translate(Translate.CS_Ranking);
                 break;
             case 8:
-                val =java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN");
+                val = Translate.translate(Translate.CS_Clan);
                 break;
             case 6:
-                val = "";
+                val = StringConstants.CS_NULL;
                 break;
             case 7:
-                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLASSEMENT");
+                val = Translate.translate(Translate.CS_Ranking);
                 break;
             default:
         }
@@ -90,7 +88,7 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public Object getValueAt(final int row, final int col) {
-        Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object val = StringConstants.CS_NULL;
         if (t.getCoachCount()> 0) {
             final Coach c = t.getCoach(row);
             switch (col) {
@@ -110,7 +108,7 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
                     }
                     else
                     {
-                        val=java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UNKNOWN");
+                        val=Translate.translate(Translate.CS_Unknown);
                     }
                     break;
                 case 4:
@@ -127,13 +125,17 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 case 6:
                     if (c.isActive()) {
-                        val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ACTIF");
+                        val = Translate.translate(Translate.CS_Active);
                     } else {
-                        val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("INACTIF");
+                        val = Translate.translate(Translate.CS_Inactive);
                     }
                     break;
                 default:
             }
+        }
+        if (val==null)
+        {
+            val=StringConstants.CS_NULL;
         }
         return val;
     }

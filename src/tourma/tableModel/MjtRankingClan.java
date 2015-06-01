@@ -7,7 +7,6 @@ package tourma.tableModel;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -20,6 +19,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 
@@ -27,9 +27,9 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public final class MjtRankingClan extends MjtRanking {
 
-    private static final Logger LOG = Logger.getLogger(MjtRankingClan.class.getName());
 
     /**
      *
@@ -108,11 +108,11 @@ public final class MjtRankingClan extends MjtRanking {
                 final Team t = teams.get(k);
 
                 if (t.getClan() == clans.get(i)) {
-                    int value1 = 0;
-                    int value2 = 0;
-                    int value3 = 0;
-                    int value4 = 0;
-                    int value5 = 0;
+                    int value1 ;
+                    int value2 ;
+                    int value3 ;
+                    int value4 ;
+                    int value5 ;
 
                     int j = 0;
 
@@ -251,11 +251,11 @@ public final class MjtRankingClan extends MjtRanking {
                 final Coach c = coaches.get(k);
 
                 if (c.getClan() == clans.get(i)) {
-                    int value1 = 0;
-                    int value2 = 0;
-                    int value3 = 0;
-                    int value4 = 0;
-                    int value5 = 0;
+                    int value1 ;
+                    int value2 ;
+                    int value3 ;
+                    int value4 ;
+                    int value5 ;
 
                     ArrayList<Integer> aValue1 = new ArrayList<>();
                     ArrayList<Integer> aValue2 = new ArrayList<>();
@@ -382,13 +382,13 @@ public final class MjtRankingClan extends MjtRanking {
 
     @Override
     public String getColumnName(final int col) {
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                result = StringConstants.CS_HASH;
                 break;
             case 1:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
+                result = Translate.translate(Translate.CS_Clan);
                 break;
             case 2:
                 result = getRankingString(mRankingType1);
@@ -413,7 +413,7 @@ public final class MjtRankingClan extends MjtRanking {
 
     @Override
     public Object getValueAt(final int row, final int col) {
-        Object object = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object object = StringConstants.CS_NULL;
         final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
         switch (col) {
             case 0:

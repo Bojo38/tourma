@@ -7,7 +7,6 @@ package tourma.tableModel;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -18,6 +17,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
 
@@ -25,10 +25,10 @@ import tourma.utils.ImageTreatment;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings({"serial", "ClassWithoutLogger"})
 public final class MjtAnnexRankTeam extends MjtAnnexRank {
 
-    private static final Logger LOG = Logger.getLogger(MjtAnnexRankTeam.class.getName());
-
+    
     /**
      *
      * @param round
@@ -72,9 +72,11 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void sortDatas() {
         mDatas.clear();
-        mDatas = new ArrayList();
+        mDatas = new ArrayList<>();
+        @SuppressWarnings("unchecked")
         final ArrayList<Team> teams = mObjects;
         for (int k = 0; k < teams.size(); k++) {
             final Team t = teams.get(k);
@@ -182,22 +184,22 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
 
     @Override
     public String getColumnName(final int col) {
-        String val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String val = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("#");
+                val = StringConstants.CS_HASH;
                 break;
             case 1:
-                val = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ClanKey");
+                val = Translate.translate(Translate.CS_Clan);
                 break;
             case 2:
                 if (mSubtype == 0) {
-                    val = mCriteria.getName() + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_COACH)});
+                    val = mCriteria.getName() + " "+Translate.translate(Translate.CS_Coach);
                 } else {
                     if (mSubtype == 1) {
-                        val = mCriteria.getName() + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Opponent")});
+                        val = mCriteria.getName() + " "+Translate.translate(Translate.CS_Opponent);
                     } else {
-                        val = mCriteria.getName() + java.text.MessageFormat.format(" {0}", new Object[]{java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Difference")});
+                        val = mCriteria.getName() + " "+Translate.translate(Translate.CS_Difference);
                     }
                 }
                 break;
@@ -210,7 +212,7 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
     @Override
     public Object getValueAt(final int row, final int col) {
 
-        Object val = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        Object val = StringConstants.CS_NULL;
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
 
         switch (col) {
