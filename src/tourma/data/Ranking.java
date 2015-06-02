@@ -39,6 +39,8 @@ public final class Ranking implements XMLExport, Ranked {
     public static final String CS_Positive="Positive";
     public static final String CS_Negative="Negative";
     public static final String CS_Team="Team";
+    public static final String CS_array="array";
+    public static final String CS_Matchs="Matchs";
 
     /**
      *

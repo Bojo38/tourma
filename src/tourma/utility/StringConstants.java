@@ -90,12 +90,12 @@ public interface StringConstants {
     /**
      *
      */
-    public static final String CS_POINTS = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("POINTS");
+    public static final String CS_POINTS = "Points";
 
     /**
      *
      */
-    public static final String CS_GEN_ERROR = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ERREUR DE GÉNÉRATION");
+    
 
     /**
      *

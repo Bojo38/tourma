@@ -13,8 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -40,11 +38,12 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
+import static tourma.languages.Translate.CS_Pool;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingManual;
 import tourma.tableModel.MjtRankingTeam;
-import tourma.utility.StringConstants;
 
 /**
  *
@@ -113,8 +112,35 @@ public final class Generation {
     private final static String[] mPortugueses = {"yanno",
         "obelix", "oon", "fredriech", "pershum",
         "buldogr", "simon_mlf", "haktar", "tristelune", "fredao",
-        "haktar"};
-    private static final Logger LOG = Logger.getLogger(Generation.class.getName());
+        "haktar", "jc"};
+
+    private static final String CS_GenerationError = "ERREUR DE GÉNÉRATION";
+    private final static String CS_BadNumberOfActivePlayersForTeam = "MAUVAIS NOMBRE DE JOUEURS ACTIF POUR L'ÉQUIPE";
+    private final static String CS_OddNumberOfActiveCoachs = "NOMBRE IMPAIR DE COACH ACTIFS";
+    private final static String CS_DoYouWantATeamFirstPairing = "DoYouWantATeamFirstPairing";
+    private final static String CS_FirstRound = "FirstRound";
+    private final static String CS_NumberByPool = "FirstRound";
+    private final static String CS_TheNumberOfTeamsIsNotAMultipleOfYourChoice = "LE NOMBRE D'ÉQUIPE N'EST PAS UN MULTIPLE DE VOTRE CHOIX";
+    private final static String CS_DoYouWantToChooseRankTeam = "VOULEZ VOUS CHOISIR L'ÉQUIPE DU RANG {0} ?";
+    private final static String CS_ChooseCompetitor = "CHOISISSEZ UN COACH";
+    private final static String CS_ChooseOpponentFor = "ChooseOpponentFor";
+    private final static String CS_ChoosOpponent = "ChoosOpponent";
+    private final static String CS_IsItDoubleKickTournament="SAGIT-IL D'UN TOURNOI À DOUBLE ÉLIMINATION ?";
+    private final static String CS_NotEnoughRoundToAvoidSameMatch="NotEnoughRoundToAvoidSameMatch";
+    private final static String CS_AccleratedSwissMethodIsNotApplicable="LA MÉTHODE SUISSE ACCELÉRÉE N'EST PAS APPLICABLE";
+    private final static String CS_DoYouWantToMixDraw="VOULEZ VOUS MÉLANGER LE(S) TABLEAU(X) ?";
+    private final static String CS_FinalRoundReached="TOUR FINAL ATTEINT";
+    private final static String CS_DoYouWantToGenerateThirdPlaceMatch="VOULEZ VOUS GÉNÉRER LE MATCH POUR LA 3E PLACE ?";
+    private final static String CS_NumberOfTurns ="NOMBRE DE TOURS: ";
+    private final static String CS_DoYouWantToUseCategoriesForTheCup="DoYouWantToUseCategoriesForTheCup";
+    private final static String CS_PleaseSelectCategoriesToUseForTheCup="PleaseSelectCategoriesToUseForTheCup";
+    private final static String CS_MixAll="MixAll";
+    private final static String CS_MixByAbsoluteRanking="MixByAbsoluteRanking";
+    private final static String CS_MixByCategoryRanking="MixByCategoryRanking";
+    private final static String CS_KeepGroup="KeepGroup";
+    private final static String CS_AffectRoundsToRemainingCoachs="AFFECTER UNE RONDE AUX JOUEURS RESTANTS ?";
+    private final static String CS_UseSwissRoundOrRandom="UTILISER UNE RONDE SUISSE (ALÉATOIRE SINON)? ";
+    
 
     /**
      *
@@ -184,7 +210,6 @@ public final class Generation {
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
         final Tournament tour = Tournament.getTournament();
-        //final ArrayList<Round> rounds = tour.getRounds();
         tour.clearRounds();
         tour.addRound(r);
     }
@@ -222,14 +247,17 @@ public final class Generation {
             for (int i = 0; i < vteams.size(); i++) {
                 if (vteams.get(i).getActivePlayerNumber() != params.getTeamMatesNumber()) {
                     JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
-                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MAUVAIS NOMBRE DE JOUEURS ACTIF POUR L'ÉQUIPE") + " " + vteams.get(i).getName());
+                            Translate.translate(CS_BadNumberOfActivePlayersForTeam) + " " + vteams.get(i).getName());
                     return;
                 }
             }
         } else {
             final int nb_coach = tour.getActiveCoachNumber();
             if (nb_coach % 2 > 0) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE IMPAIR DE COACH ACTIFS"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                        Translate.translate(CS_OddNumberOfActiveCoachs),
+                        Translate.translate(CS_GenerationError),
+                        JOptionPane.WARNING_MESSAGE);
             }
         }
 
@@ -245,7 +273,10 @@ public final class Generation {
                 if (tour.getTeamsCount() % 2 > 0) {
                     competitors = tour.getActiveCoaches();
                 } else {
-                    int res = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DoYouWantATeamFirstPairing"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FirstRound"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int res = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
+                            Translate.translate(CS_DoYouWantATeamFirstPairing),
+                            Translate.translate(CS_FirstRound),
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (res == JOptionPane.YES_OPTION) {
                         ArrayList<Team> teams = new ArrayList<>();
                         for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
@@ -285,11 +316,6 @@ public final class Generation {
                 break;
             case GEN_CUP:
                 generateFirstRoundCup(competitors);
-                /*if (!params.mTeamTournament) {
-                 generateIndividualFirstRoundCup();
-                 } else {
-                 generateTeamFirstRoundCup();
-                 }*/
                 break;
             case GEN_NAF:
                 generateFirstRoundOrder(competitors, false, true);
@@ -326,18 +352,23 @@ public final class Generation {
             }
         }
 
+        saveTemporaryTournament();
+    }
+
+    private static void saveTemporaryTournament()
+    {
         final StringBuffer filename = new StringBuffer(Tournament.getTournament().getParams().getTournamentName());
-        filename.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("."));
+        filename.append(".");
         filename.append(Tournament.getTournament().getRoundsCount());
         final Date date = new Date();
-        filename.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("."));
+        filename.append(".");
         filename.append(Long.toString(date.getTime()));
-        filename.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".XML"));
+        filename.append(".xml");
         final File file = new File(filename.toString());
 
         Tournament.getTournament().saveXML(file, false);
     }
-
+    
     /**
      *
      * @param competitors
@@ -348,18 +379,15 @@ public final class Generation {
 
         tour.clearPools();
 
+        @SuppressWarnings("unchecked")
         ArrayList<Competitor> comps = new ArrayList<>(competitors);
 
         final JPanel message = new JPanel();
         message.setLayout(new BorderLayout());
 
-        final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE PAR POULE: "));
+        final JLabel jlb = new JLabel(Translate.translate(CS_NumberByPool));
 
         final JSpinner jspNb = new JSpinner();
-        /*int max = comps.size() / 2;
-         if (max % 2 != 0) {
-         max++;
-         }*/
 
         final SpinnerNumberModel model = new SpinnerNumberModel(2, 2, comps.size() / 2, 2);
         jspNb.setModel(model);
@@ -367,16 +395,15 @@ public final class Generation {
         message.add(jlb, BorderLayout.NORTH);
         message.add(jspNb, BorderLayout.CENTER);
 
-        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), message, StringConstants.CS_POOL, JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), message, Translate.translate(CS_Pool), JOptionPane.QUESTION_MESSAGE);
 
         final int nb = (Integer) model.getValue();
 
         if (comps.size() % nb != 0) {
-            //JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE NOMBRE DD'ÉQUIPE N'EST PAS UN MULTIPLE DE VOTRE CHOIX"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERREUR"), JOptionPane.ERROR_MESSAGE);
 
             boolean complete = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
-                    java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LE NOMBRE D'ÉQUIPE N'EST PAS UN MULTIPLE DE VOTRE CHOIX"),
-                    java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERREUR"),
+                    Translate.translate(CS_TheNumberOfTeamsIsNotAMultipleOfYourChoice),
+                    Translate.translate(CS_GenerationError),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
             if (complete) {
                 Competitor nc;
@@ -407,12 +434,13 @@ public final class Generation {
         while (nbCounter > 0) {
 
             if (response == JOptionPane.YES_OPTION) {
-                String question = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS CHOISIR L'ÉQUIPE DU RANG {0} ?");
+                String question = Translate.translate(CS_DoYouWantToChooseRankTeam);
+
                 String formattedQuestion = question.replace("{0}", Integer.toString(nb - nbCounter + 1));
                 response = JOptionPane.showConfirmDialog(
                         MainFrame.getMainFrame(),
                         formattedQuestion,
-                        StringConstants.CS_POOL, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        Translate.translate(Translate.CS_Pool), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             }
             if (response == JOptionPane.YES_OPTION) {
                 for (int i = 0; i < nbPools; i++) {
@@ -420,9 +448,9 @@ public final class Generation {
                     for (int j = 0; j < comps.size(); j++) {
                         names.add(comps.get(j).getName());
                     }
-                    String question = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ UN COACH");
+                    String question = Translate.translate(CS_ChooseCompetitor);
                     question = Integer.toString(i + 1) + ": " + question;
-                    final int index = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), question, StringConstants.CS_POOL, JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, names.toArray(), 0);
+                    final int index = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), question, Translate.translate(Translate.CS_Pool), JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, names.toArray(), 0);
                     tour.getPool(i).addCompetitor(comps.get(index));
                     comps.remove(index);
                 }
@@ -455,6 +483,7 @@ public final class Generation {
         final Tournament tour = Tournament.getTournament();
 
         tour.setRoundRobin(false);
+        @SuppressWarnings("unchecked")
         final ArrayList<Competitor> comps = new ArrayList<>(competitors);
         final Round r = new Round();
         //final Calendar cal = Calendar.getInstance();
@@ -469,7 +498,6 @@ public final class Generation {
                 possibilities[i] = possible.get(i).getDecoratedName();
             }
 
-            final ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
             final String name = c.getDecoratedName();
 
             String opp = null;
@@ -478,9 +506,9 @@ public final class Generation {
                 while (opp == null) {
                     opp = (String) JOptionPane.showInputDialog(
                             MainFrame.getMainFrame(),
-                            bundle.getString("ChooseOpponentFor")
+                            Translate.translate(CS_ChooseOpponentFor)
                             + " " + name,
-                            bundle.getString("ChoosOpponent"),
+                            Translate.translate(CS_ChoosOpponent),
                             JOptionPane.INFORMATION_MESSAGE,
                             null,
                             possibilities,
@@ -519,6 +547,7 @@ public final class Generation {
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
 
+        @SuppressWarnings("unchecked")
         final ArrayList<Competitor> shuffle = new ArrayList<>(competitors);
         if (naf) {
             Collections.sort(shuffle);
@@ -542,52 +571,6 @@ public final class Generation {
 
     /**
      *
-     * @param k
-     * @param r
-     * @param RotateList
-     * @param evaluationPreviousC
-     * @param evaluationPreviousT
-     */
-    /*    private static void permutation(int k,
-     ArrayList<Competitor> r,
-     ArrayList<ArrayList<Competitor>> RotateList,
-     HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
-     HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT) {
-     int fact = 1;
-     int compteur = 0; //Le compteur sert à déterminer s'il y a eu une permutation
-
-     for (int i = 2; i < r.size() + 1; i++) {
-     fact *= (i - 1);
-     int pos = i - (k / fact % i) - 1;
-
-     Competitor s1 = r.get(pos);
-     Competitor s2 = r.get(i - 1);
-
-     if (!(s1.equals(s2))) {
-     swap(pos, i - 1, r);
-     compteur++;
-     }
-     }
-     if (compteur != 0) {
-     if (isDrawValidForBalanced(r, evaluationPreviousC, evaluationPreviousT)) {
-     RotateList.add(r);
-     }
-     }
-     }*/
-    /**
-     *
-     * @param i
-     * @param j
-     * @param A
-     */
-    /*    private static void swap(int i, int j, ArrayList<Competitor> A) {
-     Competitor oi = A.get(i);
-     Competitor oj = A.get(j);
-     A.set(j, oi);
-     A.set(i, oj);
-     }*/
-    /**
-     *
      * @param n
      * @return
      */
@@ -601,197 +584,6 @@ public final class Generation {
 
     /**
      *
-     * @param l
-     * @param evaluationPreviousC
-     * @param evaluationPreviousT
-     * @return
-     */
-    /*private static boolean isDrawValidForBalanced(ArrayList<Competitor> l, HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
-     HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT) {
-     boolean valid = true;
-
-     Round r = new Round();
-
-     // Optimize algorithm for avoid same team players
-         
-     ArrayList<Competitor> l2 = new ArrayList<>(l);
-
-     for (int i = 0; i < l.size() - 1; i++) {
-     Competitor c1 = l.get(i);
-     Competitor c2 = l.get(i + 1);
-     if ((c1 instanceof Coach) && (c2 instanceof Coach)) {
-     Coach co1 = (Coach) c1;
-     Coach co2 = (Coach) c2;
-     if (co1.getTeamMates().containsCoach(co2)) {
-     if (i < l.size() - 2) {
-     for (int j = i + 2; j < l.size(); j++) {
-     if (!((Coach) l.get(j)).getTeamMates().containsCoach(co1)) {
-     swap(i + 1, j, l);
-     break;
-     }
-     }
-     } else {
-     for (int j = i - 1; j > 0; j--) {
-     if (!((Coach) l.get(j)).getTeamMates().containsCoach(co1)) {
-     swap(i, j, l);
-     break;
-     }
-     }
-     }
-     }
-     }
-     }
-
-     for (int i = 0; i < l.size() / 2; i++) {
-     Competitor c1 = l.get(2 * i);
-     Competitor c2 = l.get(2 * i + 1);
-     if (c1.havePlayed(c2)) {
-     valid = false;
-     break;
-     }
-     if ((c1 instanceof Coach) && (c2 instanceof Coach)) {
-     Coach co1 = (Coach) c1;
-     Coach co2 = (Coach) c2;
-     if (co1.getTeamMates().containsCoach(co2)) {
-     valid = false;
-     break;
-     }
-     }
-     CoachMatch cm = new CoachMatch(r);
-     cm.setCompetitor1(c1);
-     cm.setCompetitor2(c2);
-     r.addMatch(cm);
-     }
-
-     if (valid) {
-
-     HashMap<Competitor, HashMap<Team, Integer>> evaluationC = new HashMap<>(evaluationPreviousC);
-     HashMap<Competitor, HashMap<Team, Integer>> evaluationT = new HashMap<>(evaluationPreviousT);
-
-     Iterator<Competitor> it = evaluationPreviousC.keySet().iterator();
-     while (it.hasNext()) {
-     Competitor c = it.next();
-     HashMap<Team, Integer> hm_tmp = evaluationPreviousC.get(c);
-     HashMap<Team, Integer> hm = new HashMap<>(hm_tmp);
-     evaluationC.put(c, hm);
-     }
-
-     it = evaluationPreviousT.keySet().iterator();
-     while (it.hasNext()) {
-     Competitor c = (Competitor) it.next();
-     HashMap<Team, Integer> hm = new HashMap<>(evaluationPreviousT.get(c));
-     evaluationT.put(c, hm);
-     }
-
-     // Evaluates Map
-     ArrayList<CoachMatch> matchs = r.getCoachMatchs();
-     for (int i = 0; i < matchs.size(); i++) {
-     CoachMatch m = matchs.get(i);
-     Coach c1 = (Coach) m.getCompetitor1();
-     Coach c2 = (Coach) m.getCompetitor2();
-
-     int nb1C = evaluationC.get(c1).get(c2.getTeamMates());
-     int nb2C = evaluationC.get(c2).get(c1.getTeamMates());
-
-     int nb1T = evaluationT.get(c1.getTeamMates()).get(c2.getTeamMates());
-     int nb2T = evaluationT.get(c2.getTeamMates()).get(c1.getTeamMates());
-
-     nb1C++;
-     nb2C++;
-     nb1T++;
-     nb2T++;
-
-     evaluationC.get(c1).put(c2.getTeamMates(), nb1C);
-     evaluationC.get(c2).put(c1.getTeamMates(), nb2C);
-     evaluationT.get(c1.getTeamMates()).put(c2.getTeamMates(), nb1T);
-     evaluationT.get(c2.getTeamMates()).put(c1.getTeamMates(), nb2T);
-     }
-
-     int minC = Balancing.getMinimumFromHash(evaluationC);
-     int minT = Balancing.getMinimumFromHash(evaluationT);
-
-     int maxC = Balancing.getMaximumFromHash(evaluationC);
-     int maxT = Balancing.getMaximumFromHash(evaluationT);
-
-     if ((maxT - minT > 1) || (maxC - minC > 1)) {
-     valid = false;
-     } else {
-     LOG.log(Level.INFO, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FOUND "));
-
-     for (int i = 0; i < l.size() / 2; i++) {
-     Competitor c1 = l.get(2 * i);
-     Competitor c2 = l.get(2 * i + 1);
-     LOG.log(Level.INFO, "{0}. {1} vs {2}", new Object[]{i, c1.getName(), c2.getName()});
-     }
-     }
-     }
-
-     if (!valid) {
-     l.clear();
-     l.addAll(l2);
-     }
-
-     return valid;
-     }*/
-    /**
-     *
-     * @param l
-     * @param RotateList
-     * @param evaluationPreviousC
-     * @param evaluationPreviousT
-     */
-    /*    private static void rotateListForBalanced(ArrayList<Competitor> l, ArrayList<ArrayList<Competitor>> RotateList, HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
-     HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT) {
-
-     // Pour optimiser le tirage on ordonne de telle façon à ce que les éléments
-     // de la même équipe de soient pas cote à cote sur le premier tirage
-     Collections.shuffle(l);
-     for (int i = 0; i < l.size() - 1; i++) {
-     Competitor c1 = l.get(i);
-     Competitor c2 = l.get(i + 1);
-     if ((c1 instanceof Coach) && (c2 instanceof Coach)) {
-     Coach co1 = (Coach) c1;
-     Coach co2 = (Coach) c2;
-     if (co1.getTeamMates().containsCoach(co2)) {
-     if (i < l.size() - 2) {
-     for (int j = i + 2; j < l.size(); j++) {
-     if (!((Coach) l.get(j)).getTeamMates().containsCoach(co1)) {
-     swap(i + 1, j, l);
-     break;
-     }
-     }
-     } else {
-     for (int j = i - 1; j > 0; j--) {
-     if (!((Coach) l.get(j)).getTeamMates().containsCoach(co1)) {
-     swap(i, j, l);
-     break;
-     }
-     }
-     }
-     }
-     }
-     }
-
-     int resFact = factorielle(l.size());
-
-     if (isDrawValidForBalanced(l, evaluationPreviousC, evaluationPreviousT)) {
-     RotateList.add(l); //j'ajoute à l'arrayliste Jour le tableau de base, et je
-     // commence la boucle qui suit à 1 au lieu de 0
-     // pour éviter des calculs..
-     }
-
-     if (RotateList.isEmpty()) {
-     for (int i = 1; i < resFact; i++) {
-     ArrayList<Competitor> r = new ArrayList<>(l);
-     permutation(i, r, RotateList, evaluationPreviousC, evaluationPreviousT);
-     if (!RotateList.isEmpty()) {
-     break;
-     }
-     }
-     }
-     }*/
-    /**
-     *
      * @param competitors
      * @param r
      */
@@ -799,16 +591,16 @@ public final class Generation {
 
         /*        final Tournament tour = Tournament.getTournament();
          final ArrayList<Round> rounds = tour.getRounds();
-
+        
          tour.mRoundRobin = false;
          final Calendar cal = Calendar.getInstance();
          r.setCurrentHour();
-
+        
          final ArrayList<Competitor> competitors2 = new ArrayList<>(competitors);
          Collections.shuffle(competitors2);
-
+        
          ArrayList RotationList = new ArrayList();
-
+        
         
          // According to each competitor (Coach), evaluates previous rounds
          HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC = new HashMap<>();
@@ -820,9 +612,9 @@ public final class Generation {
          evaluationPreviousT.put(comp.mTeamMates, comp.getTeamOppositionCount(Tournament.getTournament().getTeams()));
          }
          }
-
+        
          rotateListForBalanced(competitors2, RotationList, evaluationPreviousC, evaluationPreviousT);
-
+        
          if (RotationList.size() > 0) {
          ArrayList<Competitor> l = (ArrayList<Competitor>) RotationList.get(0);
          for (int i = 0; i < l.size() / 2; i++) {
@@ -832,7 +624,7 @@ public final class Generation {
          cm.mCompetitor1 = c1;
          cm.mCompetitor2 = c2;
          r.getMatchs().add(cm);
-
+        
          System.out.println(i + ". " + c1.mName + " vs " + c2.mName);
          }
          } else {
@@ -896,7 +688,6 @@ public final class Generation {
 
         final Tournament tour = Tournament.getTournament();
 
-        //final ArrayList<Round> rounds = tour.getRounds();
         // Analyze number of players
         final int nb_comps = competitors.size();
         final ArrayList<Competitor> comps;
@@ -918,10 +709,12 @@ public final class Generation {
         int nb_matchs = nb_tmp / 2;
 
         final Round r = new Round();
-        //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
 
-        r.setLooserCup(JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SAGIT-IL D'UN TOURNOI À DOUBLE ÉLIMINATION ?"), StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+        r.setLooserCup(
+                JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), 
+                Translate.translate(CS_IsItDoubleKickTournament),
+                Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
         // there is nb_tmp/matchs
 
         for (int i = 0; i < nb_matchs / 2; i++) {
@@ -934,7 +727,6 @@ public final class Generation {
         r.setCup(true);
         r.setCupMaxTour(nbrounds);
         r.setCupTour(0);
-        //r.mLooserCup = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Sagit-il d'un tournoi à double élimination ?", StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
         tour.addRound(r);
     }
 
@@ -966,6 +758,7 @@ public final class Generation {
      * @param r current round
      * @return new round
      */
+    @SuppressWarnings("unchecked")
     private static Round genSwiss(final ArrayList competitors, final ArrayList<ObjectRanking> datas, final Round r) {
 
         final Tournament tour = Tournament.getTournament();
@@ -1007,7 +800,8 @@ public final class Generation {
                 Competitor c2 = (Competitor) datas_tmp.get(2 * i + 1).getObject();
                 c1.addMatch(c2, r);
             }
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NotEnoughRoundToAvoidSameMatch"));
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), 
+                    Translate.translate(CS_NotEnoughRoundToAvoidSameMatch));
         } else {
             ArrayList<ObjectRanking> datas2 = new ArrayList<>(datas_tmp);
             while (datas2.size() > 0) {
@@ -1044,59 +838,7 @@ public final class Generation {
         return r;
     }
 
-    /*private static void affectTeamCoachs(final Round round, final Team team1, final Team team2, final Round r) {
-     final Tournament tour = Tournament.getTournament();
-     final ArrayList<Round> vs = new ArrayList<>();
-     for (int i = 0; i < tour.getRoundsCount(); i++) {
-     if (tour.getRound(i).getHour().before(round.getHour())) {
-     vs.add(tour.getRound(i));
-     }
-     }
-     vs.add(round);
-      
-     switch (tour.getParams().mTeamIndivPairing) {
-     // Ranking
-     case 0:
-     final ArrayList<ObjectRanking> coachs1 = subRanking(team1.mCoachs, vs);
-     final ArrayList<ObjectRanking> coachs2 = subRanking(team2.mCoachs, vs);
-     for (int k = 0; k < coachs1.size(); k++) {
-     final CoachMatch m = new CoachMatch(r);
-     m.mCompetitor1 = (Coach) coachs1.get(k).getObject();
-     m.mCompetitor2 = (Coach) coachs2.get(k).getObject();
-     r.getMatchs().add(m);
-     }
-     break;
-     // Manual
-     case 1:
-     final jdgPairing jdg = new jdgPairing(MainFrame.getMainFrame(), true, team1, team2, r);
-     jdg.setVisible(true);
-     break;
-     // genRandom
-     case 2:
-     for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-     final ArrayList<Coach> shuffle2 = new ArrayList<>(team2.getActivePlayers());
-     Collections.shuffle(shuffle2);
-     final CoachMatch m = new CoachMatch(r);
-     m.mCompetitor1 = team1.getActivePlayers().get(k);
-     m.mCompetitor2 = shuffle2.get(k);
-     r.getMatchs().add(m);
-     }
-     break;
-     // NAF
-     case 3:
-     for (int k = 0; k < tour.getParams().mTeamMatesNumber; k++) {
-     final ArrayList<Coach> sort1 = new ArrayList<>(team1.getActivePlayers());
-     final ArrayList<Coach> sort2 = new ArrayList<>(team2.getActivePlayers());
-     Collections.sort(sort1);
-     Collections.sort(sort2);
-     final CoachMatch m = new CoachMatch(r);
-     m.mCompetitor1 = sort1.get(k);
-     m.mCompetitor2 = sort2.get(k);
-     r.getMatchs().add(m);
-     }
-     break;
-     }
-     }*/
+   
     /**
      *
      * @param competitors
@@ -1104,6 +846,7 @@ public final class Generation {
      * @param r
      * @return
      */
+    @SuppressWarnings("unchecked")
     private static Round genQSwiss(final ArrayList competitors, final MjtRanking datas, Round r2) {
 
         final Tournament tour = Tournament.getTournament();
@@ -1138,7 +881,9 @@ public final class Generation {
         int idx4;
         final int size = datas.getRowCount();
         if (size < 4) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("LA MÉTHODE SUISSE ACCELÉRÉE N'EST PAS APPLICABLE"));
+            JOptionPane.showMessageDialog(
+                    MainFrame.getMainFrame(), 
+                    Translate.translate(CS_AccleratedSwissMethodIsNotApplicable));
             r = null;
         } else {
             int half_size = size / 2;
@@ -1176,7 +921,8 @@ public final class Generation {
                     Competitor c2 = (Competitor) datas_4.get(i).getObject();
                     c1.addMatch(c2, r);
                 }
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NotEnoughRoundToAvoidSameMatch"));
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                        Translate.translate(CS_NotEnoughRoundToAvoidSameMatch));
             } else {
                 final ArrayList<ObjectRanking> datas_tmp1 = new ArrayList<>(datas_1);
                 final ArrayList<ObjectRanking> datas_tmp2 = new ArrayList<>(datas_2);
@@ -1230,69 +976,12 @@ public final class Generation {
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
 
+        @SuppressWarnings("unchecked")
         final ArrayList<Competitor> shuffle = new ArrayList<>(competitors);
         Collections.shuffle(shuffle);
         while (shuffle.size() > 0) {
             Competitor c = shuffle.get(0);
-            /*            if ((Tournament.getTournament().getParams().mTeamTournament
-             && (Tournament.getTournament().getParams().mTeamPairing == 0))
-             && (Tournament.getTournament().getParams().mIndivPairingIndivBalanced
-             || Tournament.getTournament().getParams().mIndivPairingTeamBalanced)) {
-
-             // allocates matchs to still not allocated team layers
-             HashMap<Team, Integer> map = new HashMap<>();
-             for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-             Team t = Tournament.getTournament().getTeam(i);
-             map.put(t, 0);
-             }
-
-             // Count the number of times each team has been aoolcated during this round
-             for (int i = 0; i < r.getCoachMatchs().size(); i++) {
-             CoachMatch m = r.getCoachMatchs().get(i);
-             Team t1 = ((Coach) m.mCompetitor1).mTeamMates;
-             Team t2 = ((Coach) m.mCompetitor2).mTeamMates;
-
-             int nb1 = map.get(t1);
-             int nb2 = map.get(t2);
-             nb1 = nb1 + 1;
-             nb2 = nb2 + 1;
-             map.put(t2, nb2);
-             map.put(t1, nb1);
-             }
-
-             // Find the minimum
-             Iterator it = map.keySet().iterator();
-             int minimum = 65535;
-             while (it.hasNext()) {
-             Team en = (Team) it.next();
-             int nb = map.get(en);
-             if (nb < minimum) {
-             minimum = nb;
-             }
-             }
-
-             // Select a team with the Minimum of use
-             it = map.keySet().iterator();
-             Team t = null;
-             while (it.hasNext() && (t == null)) {
-             Team en = (Team) it.next();
-             int nb = map.get(en);
-             if (nb == minimum) {
-             t = en;
-             }
-             }
-
-             // Select a player from this team
-             for (int i = 0; i < t.mCoachs.size(); i++) {
-             Coach co = t.mCoachs.get(i);
-             if (co.mActive) {
-             if (shuffle.contains(co)) {
-             c = co;
-             break;
-             }
-             }
-             }
-             }*/
+            
 
             shuffle.remove(c);
             ArrayList<Competitor> opp = c.getPossibleOpponents(shuffle, r);
@@ -1338,7 +1027,10 @@ public final class Generation {
             _loosers.add(round.getMatch(i).getLooser());
         }
         if (nb_match > 0) {
-            final int option = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS MÉLANGER LE(S) TABLEAU(X) ?"), StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION);
+            final int option = JOptionPane.showConfirmDialog(
+                    MainFrame.getMainFrame(), 
+                    Translate.translate(CS_DoYouWantToMixDraw),
+                    Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 Collections.shuffle(_winners);
                 Collections.shuffle(_loosers);
@@ -1478,16 +1170,7 @@ public final class Generation {
 
         applyPortugal(r);
 
-        final StringBuffer filename = new StringBuffer(Tournament.getTournament().getParams().getTournamentName());
-        filename.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("."));
-        filename.append(Tournament.getTournament().getRoundsCount());
-        final Date date = new Date();
-        filename.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("."));
-        filename.append(Long.toString(date.getTime()));
-        filename.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".XML"));
-        final File file = new File(filename.toString());
-
-        Tournament.getTournament().saveXML(file);
+        saveTemporaryTournament();
     }
 
     /**
@@ -1573,7 +1256,9 @@ public final class Generation {
                 }
             } else {
                 if (tour.getActiveCoachNumber() % 2 > 0) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE COACHS ACTIF IMPAIR"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                            Translate.translate(CS_OddNumberOfActiveCoachs),
+                            Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
                     r = null;
                 } else {
                     final ArrayList<Coach> coaches = new ArrayList<>();
@@ -1598,6 +1283,7 @@ public final class Generation {
      * @param roundnumber
      * @return
      */
+    @SuppressWarnings("unchecked")
     private static Round nextRoundCup(final Round round, final int roundnumber) {
 
         final Tournament tour = Tournament.getTournament();
@@ -1607,13 +1293,17 @@ public final class Generation {
         if ((round != null) && (round.isCup())) {
             if (((round.getCupTour() == round.getCupMaxTour() - 1) && (!round.isLooserCup()))
                     || (round.getCupTour() == round.getCupMaxTour() + 2)) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TOUR FINAL ATTEINT"), StringConstants.CS_CUP, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                        Translate.translate(CS_FinalRoundReached), 
+                        Translate.translate(Translate.CS_Cup), JOptionPane.ERROR_MESSAGE);
                 r = null;
             } else {
 
                 boolean _third_place = false;
                 if ((round.getCupTour() == round.getCupMaxTour() - 2) && (!round.isLooserCup())) {
-                    _third_place = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS GÉNÉRER LE MATCH POUR LA 3E PLACE ?"), StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+                    _third_place = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
+                            Translate.translate(CS_DoYouWantToGenerateThirdPlaceMatch),
+                            Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
                 }
 
                 genCup(round, r, _third_place);
@@ -1627,7 +1317,10 @@ public final class Generation {
         } else {
             int cup_max_tour = 0;
             int nb_tmp = 1;
-            r.setLooserCup(JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SAGIT-IL D'UN TOURNOI À DOUBLE ÉLIMINATION ?"), StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+            r.setLooserCup(JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), 
+                    Translate.translate(CS_IsItDoubleKickTournament),
+                    Translate.translate(Translate.CS_Cup),
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
             if (tour.getParams().isTeamTournament()) {
                 if (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
                     while (nb_tmp < tour.getActiveCoachNumber()) {
@@ -1642,7 +1335,9 @@ public final class Generation {
                 }
             } else {
                 if (tour.getActiveCoachNumber() % 2 > 0) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE COACHS ACTIF IMPAIR"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                            Translate.translate(CS_OddNumberOfActiveCoachs),
+                            Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
                     r = null;
                 } else {
                     while (nb_tmp < tour.getActiveCoachNumber()) {
@@ -1656,7 +1351,8 @@ public final class Generation {
                 final JPanel message = new JPanel();
                 message.setLayout(new BorderLayout());
 
-                final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE TOURS: "));
+                final JLabel jlb = new JLabel(
+                        Translate.translate(CS_NumberOfTurns));
                 // generate cup for the first round
                 final JSpinner jspNbTeams = new JSpinner();
                 final SpinnerNumberModel model = new SpinnerNumberModel(1, 1, cup_max_tour, 1);
@@ -1665,14 +1361,17 @@ public final class Generation {
                 message.add(jlb, BorderLayout.NORTH);
                 message.add(jspNbTeams, BorderLayout.CENTER);
 
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), message, StringConstants.CS_CUP, JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), message, Translate.translate(Translate.CS_Cup), JOptionPane.QUESTION_MESSAGE);
 
                 cup_max_tour = (Integer) model.getValue();
                 final int nb = (int) Math.pow(2, cup_max_tour);
 
                 boolean useCategories = false;
                 if (Tournament.getTournament().getCategoriesCount() > 1) {
-                    useCategories = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Voulez vous utilisez les catégories pour la coupe", StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+                    useCategories = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), 
+                            Translate.translate(CS_DoYouWantToUseCategoriesForTheCup),
+                            Translate.translate(Translate.CS_Cup), 
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
                 }
                 MjtRanking datas;
                 if (!useCategories) {
@@ -1680,25 +1379,26 @@ public final class Generation {
                 } else {
                     ArrayList<Category> cats = new ArrayList<>();
                     JPanel jpn = new JPanel(new BorderLayout());
-                    DefaultListModel model2 = new DefaultListModel();
+                    DefaultListModel<Category> model2 = new DefaultListModel<>();
                     for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
                         Category cat = Tournament.getTournament().getCategory(i);
                         cats.add(cat);
                         model2.addElement(cat);
                     }
 
+                    @SuppressWarnings("unchecked")
                     JList jls = new JList(model2);
                     jls.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-                    JLabel jlb2 = new JLabel("Please Select categories to use for the cup rounds");
+                    JLabel jlb2 = new JLabel(Translate.translate(CS_PleaseSelectCategoriesToUseForTheCup));
                     jpn.add(jlb2, BorderLayout.NORTH);
                     jpn.add(jls, BorderLayout.CENTER);
 
                     JPanel jpnsouth = new JPanel(new GridLayout(2, 2));
-                    JRadioButton jrbMixAll = new JRadioButton("Mix all");
+                    JRadioButton jrbMixAll = new JRadioButton(Translate.translate(CS_MixAll));
                     jrbMixAll.setSelected(true);
-                    JRadioButton jrbAbsoluteOrder = new JRadioButton("Mix by absolute ranking");
-                    JRadioButton jrbMixGroups = new JRadioButton("Mix by category ranking");
-                    JRadioButton jrbKeepGroup = new JRadioButton("Keep group");
+                    JRadioButton jrbAbsoluteOrder = new JRadioButton(Translate.translate(CS_MixByAbsoluteRanking));
+                    JRadioButton jrbMixGroups = new JRadioButton(Translate.translate(CS_MixByCategoryRanking));
+                    JRadioButton jrbKeepGroup = new JRadioButton(Translate.translate(CS_KeepGroup));
 
                     ButtonGroup bg = new ButtonGroup();
                     bg.add(jrbMixAll);
@@ -1710,11 +1410,11 @@ public final class Generation {
                     jpnsouth.add(jrbAbsoluteOrder);
                     jpnsouth.add(jrbMixGroups);
                     jpnsouth.add(jrbKeepGroup);
-                    
-                    jpn.add(jpnsouth,BorderLayout.SOUTH);
+
+                    jpn.add(jpnsouth, BorderLayout.SOUTH);
 
                     while (jls.getSelectedValuesList().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, jpn, StringConstants.CS_CUP, JOptionPane.QUESTION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, jpn, Translate.translate(Translate.CS_Cup), JOptionPane.QUESTION_MESSAGE);
                     }
 
                     int mix = 0;
@@ -1750,7 +1450,9 @@ public final class Generation {
 
         if (r != null) {
             if (r.getMatchsCount() < tour.getActiveCoachNumber() / 2) {
-                int res = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AFFECTER UNE RONDE AUX JOUEURS RESTANTS ?"), StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION);
+                int res = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
+                        Translate.translate(CS_AffectRoundsToRemainingCoachs),
+                        Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION);
                 if (res == JOptionPane.YES_OPTION) {
 
                     MjtRanking d = getSortedRankingData(roundnumber);
@@ -1832,7 +1534,9 @@ public final class Generation {
                         }
                     } else {
                         if (tour.getActiveCoachNumber() % 2 > 0) {
-                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE COACHS ACTIF IMPAIR"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                                    Translate.translate(CS_OddNumberOfActiveCoachs),
+                                    Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
                             r = null;
                         } else {
                             coachs = new ArrayList<>(tour.getActiveCoaches());
@@ -1873,7 +1577,9 @@ public final class Generation {
                         final ArrayList<CoachMatch> matchs = new ArrayList<>();
                         buildUntilRound(round, v, matchs);
 
-                        res = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UTILISER UNE RONDE SUISSE (ALÉATOIRE SINON)? "), StringConstants.CS_CUP, JOptionPane.YES_NO_OPTION);
+                        res = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
+                                Translate.translate(CS_UseSwissRoundOrRandom),
+                                Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION);
                         if (res == JOptionPane.YES_OPTION) {
 
                             if (tour.getParams().isTeamTournament()) {
@@ -1892,7 +1598,9 @@ public final class Generation {
                                 }
                             } else {
                                 if (tour.getActiveCoachNumber() % 2 > 0) {
-                                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE COACHS ACTIF IMPAIR"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), 
+                                             Translate.translate(CS_OddNumberOfActiveCoachs),
+                                            Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
                                     r = null;
                                 } else {
                                     final ArrayList<Coach> coaches = new ArrayList<>();
@@ -1919,7 +1627,9 @@ public final class Generation {
                                 }
                             } else {
                                 if (tour.getActiveCoachNumber() % 2 > 0) {
-                                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE COACHS ACTIF IMPAIR"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                                             Translate.translate(CS_OddNumberOfActiveCoachs),
+                                            Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
                                     r = null;
                                 } else {
                                     final ArrayList<Coach> coaches = new ArrayList<>();
@@ -2004,7 +1714,9 @@ public final class Generation {
                 }
             } else {
                 if (tour.getActiveCoachNumber() % 2 > 0) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE COACHS ACTIF IMPAIR"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), 
+                             Translate.translate(CS_OddNumberOfActiveCoachs),
+                            Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
                     r = null;
                 } else {
                     final ArrayList<Coach> coaches = new ArrayList<>();
@@ -2023,7 +1735,7 @@ public final class Generation {
         return r;
     }
 
-    private static MjtRanking getSortedRankingDataCategories(int roundNumber, List categories, int mix, int nbPlayers) {
+    private static MjtRanking getSortedRankingDataCategories(int roundNumber, List<Category> categories, int mix, int nbPlayers) {
         // First, collect coachs by categories      
         ArrayList<ArrayList<Competitor>> acomps = new ArrayList<>();
         for (Object obj : categories) {
@@ -2085,7 +1797,7 @@ public final class Generation {
         // In order to respect the draw, the newly created ranking has to take account the match order.
         // If mix by absolute order
         if ((mix == 1) || (mix == 0)) {
-            // Create the list of all elements and add them to one ranking.            
+            // Create the list of all elements and add them to one ranking.
 
             ArrayList<Competitor> c = new ArrayList<>();
 
@@ -2132,11 +1844,10 @@ public final class Generation {
                     } else {
                         m = new MjtRankingIndiv(roundNumber, sub, Tournament.getTournament().getParams().isTeamTournament(), false);
                     }
-                    for (int j=0; j<m.getRowCount(); j++)
-                    {
-                        c.add((Competitor)m.getSortedObject(j).getObject());
+                    for (int j = 0; j < m.getRowCount(); j++) {
+                        c.add((Competitor) m.getSortedObject(j).getObject());
                     }
-                }                
+                }
                 mjt = new MjtRankingManual(roundNumber, 0, 0, 0, 0, 0, c, false);
 
             } else {
@@ -2191,7 +1902,12 @@ public final class Generation {
                 Coach coach = Tournament.getTournament().getCoach(i);
                 coaches.add(coach);
             }
-            ranking = new MjtRankingIndiv(roundnumber, tour.getParams().getRankingIndiv1(), tour.getParams().getRankingIndiv2(), tour.getParams().getRankingIndiv3(), tour.getParams().getRankingIndiv4(), tour.getParams().getRankingIndiv5(),
+            ranking = new MjtRankingIndiv(roundnumber, 
+                    tour.getParams().getRankingIndiv1(),
+                    tour.getParams().getRankingIndiv2(),
+                    tour.getParams().getRankingIndiv3(), 
+                    tour.getParams().getRankingIndiv4(), 
+                    tour.getParams().getRankingIndiv5(),
                     coaches, false, false, forPool);
 
         }
@@ -2205,7 +1921,13 @@ public final class Generation {
             ranking = new MjtRankingTeam(tour.getParams().isTeamVictoryOnly(), roundnumber, p.getCompetitors(), false);
         } else {
             final boolean forPool = (tour.getPoolCount() > 0) && (!tour.getRound(roundnumber).isCup());
-            ranking = new MjtRankingIndiv(roundnumber, tour.getParams().getRankingIndiv1(), tour.getParams().getRankingIndiv2(), tour.getParams().getRankingIndiv3(), tour.getParams().getRankingIndiv4(), tour.getParams().getRankingIndiv5(), p.getCompetitors(), false, false, forPool);
+            ranking = new MjtRankingIndiv(roundnumber, 
+                    tour.getParams().getRankingIndiv1(),
+                    tour.getParams().getRankingIndiv2(),
+                    tour.getParams().getRankingIndiv3(), 
+                    tour.getParams().getRankingIndiv4(), 
+                    tour.getParams().getRankingIndiv5(), 
+                    p.getCompetitors(), false, false, forPool);
 
         }
         return ranking;
@@ -2230,9 +1952,6 @@ public final class Generation {
     private static Round nextRoundRandom(final Round round) {
         final Tournament tour = Tournament.getTournament();
 
-        /*  final ArrayList<Round> v = new ArrayList<>();
-         final ArrayList<Match> matchs = new ArrayList<>();
-         buildUntilRound(round, v, matchs);*/
         Round r = new Round();
         r.clearMatchs();
 
@@ -2249,7 +1968,9 @@ public final class Generation {
                 }
             } else {
                 if (tour.getActiveCoachNumber() % 2 > 0) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE COACHS ACTIF IMPAIR"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), 
+                             Translate.translate(CS_OddNumberOfActiveCoachs),
+                            Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
                     r = null;
                 } else {
                     Generation.genRandom(tour.getActiveCoaches(), r);
@@ -2270,9 +1991,6 @@ public final class Generation {
     private static Round nextRoundBalanced() {
         final Tournament tour = Tournament.getTournament();
 
-        /*  final ArrayList<Round> v = new ArrayList<>();
-         final ArrayList<Match> matchs = new ArrayList<>();
-         buildUntilRound(round, v, matchs);*/
         Round r = new Round();
         if (tour.getPoolCount() == 0) {
             if (tour.getParams().isTeamTournament()) {
@@ -2281,7 +1999,9 @@ public final class Generation {
                 }
             } else {
                 if (tour.getActiveCoachNumber() % 2 > 0) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE COACHS ACTIF IMPAIR"), StringConstants.CS_GEN_ERROR, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                             Translate.translate(CS_OddNumberOfActiveCoachs),
+                            Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
                 }
             }
         } else {

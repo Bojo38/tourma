@@ -35,11 +35,14 @@ public class Version {
     }
     private Properties mData;
 
+    private final static String CS_VERSION_RESOURCES="tourma/version";
+    private final static String CS_VERSION_KEY="/TOURMA/VERSION.PROPERTIES";
+    
     private Version() {
         mData = new Properties();
         InputStream is=null;
         try {
-            is=getClass().getResourceAsStream(java.util.ResourceBundle.getBundle("tourma/version").getString("/TOURMA/VERSION.PROPERTIES"));
+            is=getClass().getResourceAsStream(java.util.ResourceBundle.getBundle(CS_VERSION_RESOURCES).getString(CS_VERSION_KEY));
             mData.load(is);
         } catch (IOException e) {
             LOG.log(Level.FINE,e.getLocalizedMessage());

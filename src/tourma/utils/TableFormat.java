@@ -5,7 +5,6 @@
 package tourma.utils;
 
 import java.awt.FontMetrics;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 
 /**
@@ -15,7 +14,6 @@ import javax.swing.JTable;
 public final class TableFormat {
 
     
-    private static final Logger LOG = Logger.getLogger(TableFormat.class.getName());
 
     /**
      *

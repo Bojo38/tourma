@@ -5,7 +5,6 @@
 package tourma.utils;
 
 import java.awt.Image;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -13,9 +12,6 @@ import javax.swing.ImageIcon;
  * @author WFMJ7631
  */
 public final class ImageTreatment {
-
-
-    private static final Logger LOG = Logger.getLogger(ImageTreatment.class.getName());
 
     /**
      *

@@ -70,9 +70,9 @@ public final class Balancing {
 
                     int min = 65535;
                     int max = 0;
-                    Iterator it2 = map.keySet().iterator();
+                    Iterator<Team> it2 = map.keySet().iterator();
                     while (it2.hasNext()) {
-                        Team t = (Team) it2.next();
+                        Team t =  it2.next();
                         int nb = map.get(t);
                         if (nb < min) {
                             min = nb;
@@ -88,7 +88,7 @@ public final class Balancing {
                         Team maxTeam = null;
                         it2 = map.keySet().iterator();
                         while (it2.hasNext()) {
-                            Team t = (Team) it2.next();
+                            Team t =  it2.next();
                             int nb = map.get(t);
                             if (nb == min) {
                                 minTeam = t;
@@ -130,9 +130,9 @@ public final class Balancing {
 
                                     int minOpp = 65535;
                                     int maxOpp = 0;
-                                    Iterator itOpp = mapOpp.keySet().iterator();
+                                    Iterator<Team> itOpp = mapOpp.keySet().iterator();
                                     while (itOpp.hasNext()) {
-                                        Team t = (Team) itOpp.next();
+                                        Team t =  itOpp.next();
                                         int nb = mapOpp.get(t);
                                         if (nb < minOpp) {
                                             minOpp = nb;
@@ -146,7 +146,7 @@ public final class Balancing {
                                     //ArrayList<Team> maxTeams = new ArrayList<Team>();
                                     itOpp = mapOpp.keySet().iterator();
                                     while (itOpp.hasNext()) {
-                                        Team t = (Team) itOpp.next();
+                                        Team t =  itOpp.next();
                                         int nb = mapOpp.get(t);
                                         if (nb == minOpp) {
                                             minTeams.add(t);

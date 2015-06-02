@@ -4,8 +4,6 @@
  */
 package tourma.utils;
 
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -37,9 +35,6 @@ public final class Icons {
     /**
      *
      */
-    private static final ResourceBundle bundle=ResourceBundle.getBundle("tourma/languages/language");
-    private static final Logger LOG = Logger.getLogger(Icons.class.getName());
-
     
     /**
      *
@@ -49,7 +44,7 @@ public final class Icons {
     {
         if (sDICES==null)
         {
-            sDICES=new javax.swing.ImageIcon(Icons.class.getResource(bundle.getString("/TOURMA/IMAGES/DICE.PNG")));
+            sDICES=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Dice.png"));
         }
         return sDICES;
     }
@@ -62,7 +57,7 @@ public final class Icons {
     {
         if (sPARAMS==null)
         {
-            sPARAMS=new javax.swing.ImageIcon(Icons.class.getResource(bundle.getString("/TOURMA/IMAGES/TOOLS.PNG")));
+            sPARAMS=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Tools.png"));
         }
         return sPARAMS;
     }
@@ -75,7 +70,7 @@ public final class Icons {
     {
         if (sSTAR==null)
         {
-            sSTAR=new javax.swing.ImageIcon(Icons.class.getResource(bundle.getString("/TOURMA/IMAGES/STAR.PNG")));
+            sSTAR=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Star.png"));
         }
         return sSTAR;
     }
@@ -88,7 +83,7 @@ public final class Icons {
     {
         if (sSTAT==null)
         {
-            sSTAT=new javax.swing.ImageIcon(Icons.class.getResource(bundle.getString("/TOURMA/IMAGES/STATIS.PNG")));
+            sSTAT=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Statis.png"));
         }
         return sSTAT;
     }

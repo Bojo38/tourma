@@ -17,6 +17,8 @@ public class Translate {
     public static final String CS_Touchdowns = "Touchdowns";
     public static final String CS_Injuries = "Injuries";
     public final static String CS_None = "None";
+    public final static String CS_Pool = "Pool";
+    public final static String CS_Cup = "Cup";
     public final static String CS_Parameters = "Parameters";
     public final static String CS_Round_ = "ROUND ";
     public final static String CS_Clan = "ClanKey";
