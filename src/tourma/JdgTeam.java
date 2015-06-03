@@ -36,13 +36,16 @@ import javax.swing.filechooser.FileFilter;
 import tourma.data.Category;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtCoaches;
 import tourma.utility.ExtensionFileFilter;
+import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public final class JdgTeam extends javax.swing.JDialog {
 
     private boolean mTeamTournament;
@@ -54,6 +57,7 @@ public final class JdgTeam extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
+    @SuppressWarnings("unchecked")
     public JdgTeam(final java.awt.Frame parent, final boolean modal) {
         super(parent, modal);
         initComponents();
@@ -101,6 +105,7 @@ public final class JdgTeam extends javax.swing.JDialog {
      * @param modal
      * @param team
      */
+    @SuppressWarnings("unchecked")
     public JdgTeam(final java.awt.Frame parent, final boolean modal, final Team team) {
         super(parent, modal);
         initComponents();
@@ -195,7 +200,7 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Coachs"));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Coachs"))); // NOI18N
         jPanel7.setPreferredSize(new java.awt.Dimension(450, 240));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
@@ -315,11 +320,16 @@ public final class JdgTeam extends javax.swing.JDialog {
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
+    
+    private final static String CS_EmptyTeamName="NOM DE L'ÉQUIPE VIDE";
+    
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        if (jtfNom.getText().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM DE L'ÉQUIPE VIDE"));
+        if (jtfNom.getText().equals(StringConstants.CS_NULL)) {
+            JOptionPane.showMessageDialog(this, 
+                    Translate.translate(CS_EmptyTeamName)
+            );
         } else {
             mTeam.setName(jtfNom.getText());
 
@@ -369,6 +379,9 @@ public final class JdgTeam extends javax.swing.JDialog {
         return new ImageIcon(newimg);
     }
 
+    private static final String CS_SelectPicture="Select picture";
+    private static final String CS_Picture="Picture";
+    
     private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
         File folder;
         folder = new File(getClass().getResource("/tourma/images/flags").getFile());
@@ -391,7 +404,9 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         JComboBox<Object> combo = new JComboBox<>(objects);
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel l = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SelectPicture"));
+        JLabel l = new JLabel(
+                Translate.translate(CS_SelectPicture)
+        );
         panel.add(l, BorderLayout.NORTH);
         panel.add(combo, BorderLayout.CENTER);
 
@@ -401,7 +416,9 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         if (combo.getSelectedItem() == empty) {
             final JFileChooser jfc = new JFileChooser();
-            final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Picture"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+            final FileFilter filter1 = new ExtensionFileFilter(
+                    Translate.translate(CS_Picture),
+                    new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
@@ -424,6 +441,8 @@ public final class JdgTeam extends javax.swing.JDialog {
         jbtAvatar.setIcon(new ImageIcon(mTeam.getPicture()));
     }//GEN-LAST:event_jbtAvatarActionPerformed
 
+    private static final String CS_PleaseSelectCategory="PleaseSelectCategory";
+    
     private void jbtAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCategoryActionPerformed
         ArrayList<String> cats = new ArrayList<>();
         cats.add(" ");
@@ -435,7 +454,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         }
         JComboBox jcb = new JComboBox(cats.toArray());
         jcb.setEditable(true);
-        JOptionPane.showMessageDialog(this, jcb, "Please select catecory", JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showMessageDialog(this, jcb, Translate.translate(CS_PleaseSelectCategory), JOptionPane.QUESTION_MESSAGE);
 
         if (jcb.getSelectedIndex() > 0) {
             String name = cats.get(jcb.getSelectedIndex());
@@ -489,6 +508,7 @@ public final class JdgTeam extends javax.swing.JDialog {
     /**
      * Update hmi
      */
+    @SuppressWarnings("unchecked")
     private void update() {
 
         jtfNom.setText(mTeam.getName());

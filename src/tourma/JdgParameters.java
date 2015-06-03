@@ -7,14 +7,11 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import tourma.data.EIndivPairing;
 import tourma.data.ETeamPairing;
 import tourma.data.Parameters;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
-import tourma.utility.StringConstants;
 
 /**
  *
@@ -22,7 +19,6 @@ import tourma.utility.StringConstants;
  */
 public final class JdgParameters extends javax.swing.JDialog {
 
-    static final ResourceBundle language = ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
     private Parameters mParams;
 
     /**
@@ -171,7 +167,7 @@ public final class JdgParameters extends javax.swing.JDialog {
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jpnPairing.setBorder(javax.swing.BorderFactory.createTitledBorder("Appariement"));
+        jpnPairing.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Pairing"))); // NOI18N
         jpnPairing.setLayout(new java.awt.GridLayout(2, 1));
 
         btgTeamPairing.add(jrbIndividualTeamPairing);
@@ -194,11 +190,11 @@ public final class JdgParameters extends javax.swing.JDialog {
 
         jPanel3.add(jpnPairing, java.awt.BorderLayout.CENTER);
 
-        jpnNbCoachs.setBorder(javax.swing.BorderFactory.createTitledBorder("Nombre de coéquipiers"));
+        jpnNbCoachs.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TeammatesNumber"))); // NOI18N
         jpnNbCoachs.setLayout(new java.awt.GridLayout(2, 2));
 
         jlbNbCoachs.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbNbCoachs.setText(language.getString("CoachNumber")); // NOI18N
+        jlbNbCoachs.setText(bundle.getString("CoachNumber")); // NOI18N
         jpnNbCoachs.add(jlbNbCoachs);
 
         jspCoachNumber.setModel(new javax.swing.SpinnerNumberModel(1, 1, 16, 1));
@@ -222,7 +218,7 @@ public final class JdgParameters extends javax.swing.JDialog {
 
         jPanel3.add(jpnNbCoachs, java.awt.BorderLayout.NORTH);
 
-        jpnMisc.setBorder(javax.swing.BorderFactory.createTitledBorder("Divers"));
+        jpnMisc.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Miscellaneous"))); // NOI18N
         jpnMisc.setLayout(new java.awt.GridLayout(1, 1));
 
         jcxMultipleRoster.setText(bundle.getString("UseSeveralRosters")); // NOI18N
@@ -237,7 +233,7 @@ public final class JdgParameters extends javax.swing.JDialog {
 
         jpnByTeam.add(jPanel3);
 
-        jpnIndivTeamRanking.setBorder(javax.swing.BorderFactory.createTitledBorder("Appariement des membres d'équipe"));
+        jpnIndivTeamRanking.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TeamMembersPairing"))); // NOI18N
         jpnIndivTeamRanking.setLayout(new java.awt.GridLayout(4, 0));
 
         btgIndivTeamPairing.add(jrbIndivPairingByRanking);
@@ -282,7 +278,7 @@ public final class JdgParameters extends javax.swing.JDialog {
 
         jPanel2.add(jpnByTeam, java.awt.BorderLayout.CENTER);
 
-        jpnTeam.setBorder(javax.swing.BorderFactory.createTitledBorder("Type de tournoi"));
+        jpnTeam.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TournamentKind"))); // NOI18N
 
         btgTeam.add(jrbTeam);
         jrbTeam.setText(bundle.getString("byTeam")); // NOI18N
@@ -532,7 +528,7 @@ public final class JdgParameters extends javax.swing.JDialog {
             jpnIndivTeamRanking.setEnabled(false);
         }
     }
-    private static final Logger LOG = Logger.getLogger(JdgParameters.class.getName());
+   
 private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }

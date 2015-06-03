@@ -16,13 +16,13 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtMatches;
 import tourma.utility.StringConstants;
 
@@ -40,6 +40,8 @@ public final class JdgPairing extends javax.swing.JDialog {
     private final HashMap<String, Coach> mCoachs;
     private final ArrayList<CoachMatch> mMatchs;
     private final TeamMatch teamMatch;
+
+    private final static String CS_ACCR_Versus = "VS";
 
     /**
      * Creates new form jdgCoach
@@ -59,19 +61,20 @@ public final class JdgPairing extends javax.swing.JDialog {
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
 
-            final int screenWidth = dmode.getWidth();
-            final int screenHeight = dmode.getHeight();
-            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        final int screenWidth = dmode.getWidth();
+        final int screenHeight = dmode.getHeight();
+        this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
         mTeam1 = team1;
         mTeam2 = team2;
         mCoachs = new HashMap<>();
-teamMatch=teammatch;
-        this.setTitle(team1.getName() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS ") + team2.getName());
+        teamMatch = teammatch;
+        this.setTitle(team1.getName()
+                + " " + Translate.translate(CS_ACCR_Versus) + " "
+                + team2.getName());
 
         mRound = round;
         mMatchs = new ArrayList<>();
-
 
         mItems1 = new ArrayList();
         for (int i = 0; i < mTeam1.getCoachCount(); i++) {
@@ -95,7 +98,7 @@ teamMatch=teammatch;
         jcbTeam1.setModel(new DefaultComboBoxModel(mItems1.toArray()));
         jcbTeam2.setModel(new DefaultComboBoxModel(mItems2.toArray()));
 
-        final MjtMatches model = new MjtMatches(mMatchs, true, true, false,false);
+        final MjtMatches model = new MjtMatches(mMatchs, true, true, false, false);
         jtbMatches.setModel(model);
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
@@ -202,9 +205,9 @@ teamMatch=teammatch;
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        for (CoachMatch mMatch : mMatchs) {
-            teamMatch.addMatch(mMatch);
-        }
+    for (CoachMatch mMatch : mMatchs) {
+        teamMatch.addMatch(mMatch);
+    }
     this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
@@ -212,8 +215,8 @@ teamMatch=teammatch;
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
         if (mItems1.size() > 0) {
             final CoachMatch m = new CoachMatch(mRound);
-            String name1=(String)jcbTeam1.getSelectedItem();
-            String name2=(String)jcbTeam2.getSelectedItem();
+            String name1 = (String) jcbTeam1.getSelectedItem();
+            String name2 = (String) jcbTeam2.getSelectedItem();
             m.setCompetitor1(mCoachs.get(name1));
             m.setCompetitor2(mCoachs.get(name2));
             mMatchs.add(m);
@@ -264,9 +267,8 @@ teamMatch=teammatch;
     private javax.swing.JComboBox jcbTeam2;
     private javax.swing.JTable jtbMatches;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JdgPairing.class.getName());
 
-private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

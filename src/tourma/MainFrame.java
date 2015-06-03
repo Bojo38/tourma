@@ -54,6 +54,7 @@ import tourma.data.Substitute;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
@@ -86,6 +87,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private Tournament mTournament;
     private File mFile = null;
 
+    private final static String CS_TourMaXMLFile = "TourMaXMLFile";
+
     /**
      * Creates new form MainFrame
      *
@@ -102,7 +105,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiNouveauActionPerformed(null);
         } else {
             final JFileChooser jfc = new JFileChooser();
-            final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
+            final FileFilter filter1 = new ExtensionFileFilter(
+                    Translate.translate(CS_TourMaXMLFile),
+                    new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
@@ -400,6 +405,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnFile.add(jmiExport);
 
         jmiExportFbb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExportFbb.setText(bundle.getString("ExportFBBResultXML")); // NOI18N
         jmiExportFbb.setActionCommand(bundle.getString("FBBExport")); // NOI18N
         jmiExportFbb.setLabel(bundle.getString("FBBExport")); // NOI18N
         jmiExportFbb.addActionListener(new java.awt.event.ActionListener() {
@@ -862,18 +868,20 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
+        final FileFilter filter1 = new ExtensionFileFilter(
+                Translate.translate(CS_TourMaXMLFile),
+                new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
-            String ext = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+            String ext = StringConstants.CS_NULL;
             final int i = url2.toString().lastIndexOf('.');
             if (i > 0 && i < url2.length() - 1) {
                 ext = url2.substring(i + 1).toLowerCase(Locale.getDefault());
             }
 
             if (!ext.equals(StringConstants.CS_MINXML)) {
-                url2 = url2.append(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".XML"));
+                url2 = url2.append(".XML");
             }
             mFile = new File(url2.toString());
             Tournament.getTournament().saveXML(mFile);
@@ -890,7 +898,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TourMaXMLFile"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
+        final FileFilter filter1 = new ExtensionFileFilter(
+                Translate.translate(CS_TourMaXMLFile),
+                new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
         jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().loadXML(jfc.getSelectedFile());
@@ -901,17 +911,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         }
     }//GEN-LAST:event_jmiChargerActionPerformed
+
+    private static final String CS_None = "None";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiNouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNouveauActionPerformed
-
-
-        /*for (int i = jtpMain.getTabCount() - 1; i
-         >= 0; i--) {
-         final Component obj = jtpMain.getComponentAt(i);
-         if (obj instanceof JPNRound) {
-         jtpMain.remove(obj);
-         }
-         }*/
         mTournament = Tournament.resetTournament();
 
         JdgParameters jdgParams = new JdgParameters(this, true);
@@ -929,8 +933,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
 
         mTournament.clearGroups();
-        final java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
-        final Group group = new Group(bundle.getString("NoneKey"));
+        final Group group = new Group(Translate.translate(CS_None));
         mTournament.addGroup(group);
 
         for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
@@ -939,18 +942,30 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
         update();
     }//GEN-LAST:event_jmiNouveauActionPerformed
+
+    private final static String CS_NAFXMLFile = "NAF XML FILE";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF XML FILE"), new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
+        final FileFilter filter1 = new ExtensionFileFilter(
+                Translate.translate(CS_NAFXMLFile),
+                new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().exportNAF(jfc.getSelectedFile());
         }
     }//GEN-LAST:event_jmiExportActionPerformed
+
+    private final static String CS_DoYouWantToSave = "VOULEZ VOUS SAUVGARDER ?";
+    private final static String CS_Exit = "EXIT";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExitActionPerformed
-        int res = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS SAUVGARDER ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXIT"), JOptionPane.YES_NO_CANCEL_OPTION);
+        int res = JOptionPane.showConfirmDialog(this,
+                Translate.translate(CS_DoYouWantToSave),
+                Translate.translate(CS_Exit),
+                JOptionPane.YES_NO_CANCEL_OPTION);
         if (res == JOptionPane.CANCEL_OPTION) {
         } else {
             if (res == JOptionPane.YES_OPTION) {
@@ -977,7 +992,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
 
-        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS SAUVGARDER ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXIT"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this,
+                Translate.translate(CS_DoYouWantToSave),
+                Translate.translate(CS_Exit),
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (mFile.getName().isEmpty()) {
                 jmiSaveAsActionPerformed(null);
             } else {
@@ -993,7 +1011,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 }//GEN-LAST:event_jmiAboutActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS SAUVGARDER ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EXIT"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this,
+                Translate.translate(CS_DoYouWantToSave),
+                Translate.translate(CS_Exit),
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             if (mFile == null) {
                 jmiSaveAsActionPerformed(null);
             } else {
@@ -1016,10 +1037,16 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         LRB.getLRB().setAllowSpecialSkills(jcxAllowSpecialSkill.getState());
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
 
+    private final static String CS_FBBCSVFile = "FBB CSV FILE";
+    private final static String CS_FBBXMLFile = "FBB XML FILE";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbbActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FBB CSV FILE"), new String[]{java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CSV"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CSV")});
+        final FileFilter filter1 = new ExtensionFileFilter(
+                Translate.translate(CS_FBBCSVFile),
+                new String[]{"CSV",
+                    "CSV"});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().exportFBB(jfc.getSelectedFile());
@@ -1028,17 +1055,32 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbb1ActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FBB XML FILE"), new String[]{java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FBB_XML"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FBB_XML")});
+        final FileFilter filter1 = new ExtensionFileFilter(
+                Translate.translate(CS_FBBXMLFile),
+                new String[]{"FBB_XML",
+                    "FBB_XML"});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             final File f = jfc.getSelectedFile();
-            if (f.getName().endsWith(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".FBB_XML"))) {
+            if (f.getName().endsWith(".fbb_xml")) {
                 Tournament.getTournament().exportFullFBB(f);
             } else {
-                Tournament.getTournament().exportFullFBB(new File(f.getAbsolutePath() + java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".FBB_XML")));
+                Tournament.getTournament().exportFullFBB(new File(f.getAbsolutePath() + ".fbb_xml"));
             }
         }
     }//GEN-LAST:event_jmiExportFbb1ActionPerformed
+
+    private final static String CS_Check = "Check";
+    private final static String CS_LargeVictoryPointsAreNotSuperiorToVictoryPoints = "Large victory points are not superior to victory points";
+    private final static String CS_LittleLossPointsAreNotSuperiorToLossPoints = "Little loss points are not superior to loss points";
+    private final static String CS_LargeVictoryGapIsNotMoreThanOneTouchdown = "Large victory gap is not more than 1 touchdown";
+    private final static String CS_LittleLostGapIsNotSuperiorTo0 = "Little lost gap is not superior to 0";
+    private final static String CS_2DrawsAreMoreThan1Victory = "2 draws are more than one victory";
+    private final static String CS_2LostAreMoreThan1Draw = "2 lost are more than one draw";
+    private final static String CS_2LittleLostAreMoreThanOneDraw = "2 little loss are more than one draw";
+    private final static String CS_2TeamDrawsAreMoreThan1TeamVictory = "2 team draws are more than one team victory";
+    private final static String CS_2TeamLostAreMoreThan1TeamVictory = "2 team lost are more than one team draw";
+    private final static String CS_2TeamDrawBonusAreMoreThan1TeamVictoryBonus = "2 team draw bonus are more than one team victory bonus";
 
     private boolean areRulesValid() {
 
@@ -1048,7 +1090,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         if (mTournament.getParams().isUseLargeVictory()) {
             valid = (mTournament.getParams().getPointsIndivLargeVictory() > mTournament.getParams().getPointsIndivVictory());
             if (!valid) {
-                JOptionPane.showMessageDialog(this, "Large victory points are not superior ti victory points", "Check", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        Translate.translate(CS_LargeVictoryPointsAreNotSuperiorToVictoryPoints),
+                        Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -1057,7 +1101,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             if (mTournament.getParams().isUseLittleLoss()) {
                 valid = (mTournament.getParams().getPointsIndivLittleLost() > mTournament.getParams().getPointsIndivLost());
                 if (!valid) {
-                    JOptionPane.showMessageDialog(this, "Little loss points are not superior to loss points", "Check", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,
+                            Translate.translate(CS_LittleLossPointsAreNotSuperiorToLossPoints),
+                            Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -1068,7 +1114,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 valid = (mTournament.getParams().getGapLargeVictory() > 1);
                 if (!valid) {
 
-                    JOptionPane.showMessageDialog(this, "Large victory gap is not more than 1 touchdown", "Check", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,
+                            Translate.translate(CS_LargeVictoryGapIsNotMoreThanOneTouchdown),
+                            Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -1078,7 +1126,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             if (mTournament.getParams().isUseLittleLoss()) {
                 valid = (mTournament.getParams().getGapLittleLost() > 0);
                 if (!valid) {
-                    JOptionPane.showMessageDialog(this, "Little loss gap is not superior to 0", "Check", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,
+                            Translate.translate(CS_LittleLostGapIsNotSuperiorTo0),
+                            Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -1087,7 +1137,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             // Check that vicotry is more than 2 draw
             valid = (mTournament.getParams().getPointsIndivVictory() >= 2 * mTournament.getParams().getPointsIndivDraw());
             if (!valid) {
-                JOptionPane.showMessageDialog(this, "2 draws are more than one victory ", "Check", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        Translate.translate(CS_2DrawsAreMoreThan1Victory),
+                        Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
             }
 
         }
@@ -1096,7 +1148,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             // Check that draw is more than 2 lost
             valid = (mTournament.getParams().getPointsIndivDraw() >= 2 * mTournament.getParams().getPointsIndivLost());
             if (!valid) {
-                JOptionPane.showMessageDialog(this, "2 loss are more than one draw ", "Check", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Translate.translate(CS_2LostAreMoreThan1Draw),
+                        Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -1105,7 +1158,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             if (mTournament.getParams().isUseLittleLoss()) {
                 valid = (mTournament.getParams().getPointsIndivDraw() >= 2 * mTournament.getParams().getPointsIndivLittleLost());
                 if (!valid) {
-                    JOptionPane.showMessageDialog(this, "2 Little loss are more than one draw", "Check", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, Translate.translate(CS_2LittleLostAreMoreThanOneDraw),
+                            Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -1117,7 +1171,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                         // Check that vicotry is more than 2 draw
                         valid = (mTournament.getParams().getPointsTeamVictory() >= 2 * mTournament.getParams().getPointsTeamDraw());
                         if (!valid) {
-                            JOptionPane.showMessageDialog(this, "2 Team draws are more than one team victory ", "Check", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, Translate.translate(CS_2TeamDrawsAreMoreThan1TeamVictory),
+                                    Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
                         }
 
                     }
@@ -1126,7 +1181,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                         // Check that vicotry is more than 2 draw
                         valid = (mTournament.getParams().getPointsTeamDraw() >= 2 * mTournament.getParams().getPointsTeamLost());
                         if (!valid) {
-                            JOptionPane.showMessageDialog(this, "2 Team loss are more than one team draw ", "Check", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, Translate.translate(CS_2TeamLostAreMoreThan1TeamVictory),
+                                    Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
                         }
 
                     }
@@ -1135,7 +1191,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                         // Check that vicotry is more than 2 draw
                         valid = (mTournament.getParams().getPointsTeamVictoryBonus() >= 2 * mTournament.getParams().getPointsTeamDrawBonus());
                         if (!valid) {
-                            JOptionPane.showMessageDialog(this, "2 Team draws bonus are more than one team victory bonus", "Check", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, Translate.translate(CS_2TeamDrawBonusAreMoreThan1TeamVictoryBonus),
+                                    Translate.translate(CS_Check), JOptionPane.ERROR_MESSAGE);
                         }
 
                     }
@@ -1146,12 +1203,26 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         return valid;
     }
 
+    private static final String CS_Random = "Random";
+    private static final String CS_Cup = "Cup";
+    private static final String CS_RegisteringOrder = "Registering order";
+    private static final String CS_RoundRobin = "ROUND ROBIN";
+    private static final String CS_OddTeamNumber = "OddTeamNumber";
+    private static final String CS_ManualChoice = "CHOIX MANUEL";
+    private static final String CS_Pools = "POULES";
+    private static final String CS_FreeRound = "FREE_ROUND";
+    private static final String CS_NafRanking = "NAF_RANK";
+    private static final String CS_RandomAndBalancing = "RandomAndBalancing";
+    private static final String CS_Generation = "GÉNÉRATION";
+    private static final String CS_ChooseGenerationMethod = "CHOISISSEZ LA MÉTHODE DE GÉNÉRATION:";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiGenerateFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateFirstRoundActionPerformed
         if (areRulesValid()) {
             if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 if (mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) && mTournament.getTeamsCount() % 2 > 0) {
-                    JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OddTeamNumber"));
+                    JOptionPane.showMessageDialog(this,
+                            Translate.translate(CS_OddTeamNumber));
                 } else {
 
                     final ArrayList<String> labels = new ArrayList<>();
@@ -1160,49 +1231,49 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     /**
                      * GenRandom possible ?
                      */
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
+                    labels.add(Translate.translate(CS_Random));
                     Options.add(Generation.GEN_RANDOM);
 
                     /**
                      * Coupe
                      */
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COUPE"));
+                    labels.add(Translate.translate(CS_Cup));
                     Options.add(Generation.GEN_CUP);
 
                     /**
                      * Ordre
                      */
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ORDER D'INSCRIPTION"));
+                    labels.add(Translate.translate(CS_RegisteringOrder));
                     Options.add(Generation.GEN_ORDER);
 
                     /**
                      * Round Robin
                      */
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN"));
+                    labels.add(Translate.translate(CS_RoundRobin));
                     Options.add(Generation.GEN_RROBIN);
 
                     /**
                      * manuel
                      */
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOIX MANUEL"));
+                    labels.add(Translate.translate(CS_ManualChoice));
                     Options.add(Generation.GEN_MANUAL);
 
                     /**
                      * Poules
                      */
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POULES"));
+                    labels.add(Translate.translate(CS_Pools));
                     Options.add(Generation.GEN_POOL);
 
                     /**
                      * Naf Ranking
                      */
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NAF_RANK"));
+                    labels.add(Translate.translate(CS_NafRanking));
                     Options.add(Generation.GEN_NAF);
 
                     /**
                      * Naf Ranking
                      */
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
+                    labels.add(Translate.translate(CS_FreeRound));
                     Options.add(Generation.GEN_FREE);
 
                     if (Tournament.getTournament().getParams().isTeamTournament()) {
@@ -1210,7 +1281,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                             /**
                              * Balanced Options
                              */
-                            labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RandomAndBalancing"));
+                            labels.add(
+                                    Translate.translate(CS_RandomAndBalancing));
                             Options.add(Generation.GEN_BALANCED);
                         }
                     }
@@ -1218,10 +1290,13 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     final JPanel jpn = new JPanel(new BorderLayout());
                     final JComboBox jcb = new JComboBox(labels.toArray());
                     jpn.add(jcb, BorderLayout.CENTER);
-                    final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
+                    final JLabel jlb = new JLabel(
+                            Translate.translate(CS_ChooseGenerationMethod));
                     jpn.add(jlb, BorderLayout.NORTH);
 
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn,
+                            Translate.translate(CS_Generation),
+                            JOptionPane.QUESTION_MESSAGE);
                     final int index = jcb.getSelectedIndex();
 
                     Generation.generateFirstRound(Options.get(index));
@@ -1275,7 +1350,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     }
                 }
 
-                if (object.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CUP"))) {
+                if (object.equals(MainTreeModel.CS_Cup)) {
                     jspSplit.remove(jpnContent);
                     JPNCup jpn = new JPNCup();
                     jspSplit.add(jpn, JSplitPane.RIGHT);
@@ -1286,7 +1361,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     this.revalidate();
                 }
 
-                if (object.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("STATISTICS"))) {
+                if (object.equals(Translate.translate(MainTreeModel.CS_Statistics))) {
                     jspSplit.remove(jpnContent);
                     JPNStatistics jpn = new JPNStatistics();
                     jspSplit.add(jpn, JSplitPane.RIGHT);
@@ -1305,31 +1380,34 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }//GEN-LAST:event_jtrPanelsValueChanged
 
-    ProgressMonitor progressMonitor;
+    private ProgressMonitor progressMonitor;
+
+    private static final String CS_DownloadFromNAF = "DownloadFromNAF";
+    private static final String CS_Downloading = "Downloading";
 
     private void jmiNafLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNafLoadActionPerformed
 
         progressMonitor = new ProgressMonitor(this,
-                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DownloadFromNAF"),
-                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Downloading"), 0, Tournament.getTournament().getCoachsCount());
+                Translate.translate(CS_DownloadFromNAF),
+                Translate.translate(CS_Downloading), 0,
+                Tournament.getTournament().getCoachsCount());
         progressMonitor.setProgress(0);
 
         task = new NafTask();
         task.addPropertyChangeListener(this);
         task.execute();
 
-        /* progressMonitor.setMinimum(0);
-         progressMonitor.setMaximum(Tournament.getTournament().getCoachsCount());
-        
-         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-         Coach c = Tournament.getTournament().getCoach(i);
-         progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download0") + " " + c.getName());
-         c.setNafRank(NAF.getRanking(c.getName(), c));
-         progressMonitor.setProgress(i + 1);
-         }
-         progressMonitor.close();*/
         update();
     }//GEN-LAST:event_jmiNafLoadActionPerformed
+
+    private final static String CS_WhichCoachIsSubstituted = "WhichCoachIsSubstituted";
+    private final static String CS_Substitution = "Substitution";
+    private final static String CS_Round = "Round";
+    private final static String CS_ACCR_Versus = "vs";
+    private final static String CS_WhichMatch = "WhichMatch";
+    private final static String CS_ChooseASubstitute = "ChooseASubstitute";
+    private final static String CS_NewDOTDOTDOT = "New...";
+
 
     private void jmiSubstitutePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSubstitutePlayerActionPerformed
         // Select Player to subtitute
@@ -1343,11 +1421,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         }
         JComboBox<Object> jcb = new JComboBox<>(list.toArray());
-        JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WhichCoachIsSubstituted"));
+        JLabel jlb = new JLabel(
+                Translate.translate(CS_WhichCoachIsSubstituted)
+        );
         JPanel jpn = new JPanel(new BorderLayout());
         jpn.add(jlb, BorderLayout.NORTH);
         jpn.add(jcb, BorderLayout.CENTER);
-        int ret = JOptionPane.showConfirmDialog(this, jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Substitution"), JOptionPane.OK_CANCEL_OPTION);
+        int ret = JOptionPane.showConfirmDialog(this, jpn,
+                Translate.translate(CS_Substitution),
+                JOptionPane.OK_CANCEL_OPTION);
         if (ret == JOptionPane.OK_OPTION) {
             Coach c = (Coach) jcb.getSelectedItem();
             ArrayList<String> matchs_descr = new ArrayList<>();
@@ -1356,15 +1438,20 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             for (int i = 0; i < c.getMatchCount(); i++) {
                 Match mMatch = c.getMatch(i);
                 CoachMatch m = (CoachMatch) mMatch;
-                String tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Round01") + " " + Tournament.getTournament().indexOfRound(m.getRound()) + "1";
-                tmp = tmp + " / " + m.getCompetitor1().getDecoratedName() + " VS " + m.getCompetitor2().getDecoratedName();
+                String tmp
+                        = Translate.translate(CS_Round)
+                        + " " + (Tournament.getTournament().indexOfRound(m.getRound()) + 1);
+                tmp = tmp + " / " + m.getCompetitor1().getDecoratedName() + " " + Translate.translate(CS_ACCR_Versus) + " "
+                        + m.getCompetitor2().getDecoratedName();
                 matchs_descr.add(tmp);
             }
             jpn.remove(jcb);
             jcb = new JComboBox(matchs_descr.toArray());
             jpn.add(jcb, BorderLayout.CENTER);
-            jlb.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WhichMatch"));
-            JOptionPane.showConfirmDialog(this, jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Substitution"), JOptionPane.OK_OPTION);
+            jlb.setText(Translate.translate(CS_WhichMatch));
+            JOptionPane.showConfirmDialog(this, jpn,
+                    Translate.translate(CS_Substitution),
+                    JOptionPane.OK_OPTION);
             CoachMatch m = (CoachMatch) c.getMatch(jcb.getSelectedIndex());
 
             // Select subtitute
@@ -1381,12 +1468,18 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 availableCoachsName.add(availableCoach.getDecoratedName());
             }
 
-            availableCoachsName.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("New..."));
+            availableCoachsName.add(
+                    Translate.translate(CS_NewDOTDOTDOT)
+            );
             jpn.remove(jcb);
             jcb = new JComboBox(availableCoachsName.toArray());
             jpn.add(jcb, BorderLayout.CENTER);
-            jlb.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseASubstitute"));
-            JOptionPane.showConfirmDialog(this, jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Substitution"), JOptionPane.OK_OPTION);
+            jlb.setText(
+                    Translate.translate(CS_ChooseASubstitute)
+            );
+            JOptionPane.showConfirmDialog(this, jpn,
+                    Translate.translate(CS_Substitution),
+                    JOptionPane.OK_OPTION);
 
             // Create Substitution
             // If None
@@ -1463,12 +1556,16 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jmiDelRoundActionPerformed
 
+    private final static String CS_FirstTableCoef = "FirstTableCoef";
+    private final static String CS_LastTableCoef = "LastTableCoef";
+    private final static String CS_RoundCoefficient = "Round coefficient";
+
     private void editRoundCoef(Round r) {
         JPanel jpn = new JPanel();
         jpn.setLayout(new GridLayout(2, 2));
-        JLabel jlb1 = new JLabel("Coefficient pour la première table :");
+        JLabel jlb1 = new JLabel(Translate.translate(CS_FirstTableCoef));
         jlb1.setHorizontalAlignment(JLabel.TRAILING);
-        JLabel jlb2 = new JLabel("Coefficient pour la dernière table :");
+        JLabel jlb2 = new JLabel(Translate.translate(CS_LastTableCoef));
         jlb2.setHorizontalAlignment(JLabel.TRAILING);
 
         JFormattedTextField jftf1 = new JFormattedTextField(new DecimalFormat("####.##"));
@@ -1482,7 +1579,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jpn.add(jlb2);
         jpn.add(jftf2);
 
-        int res = JOptionPane.showConfirmDialog(this, jpn, "Round coefficient", JOptionPane.OK_CANCEL_OPTION);
+        int res = JOptionPane.showConfirmDialog(this, jpn, Translate.translate(CS_RoundCoefficient), JOptionPane.OK_CANCEL_OPTION);
         if (res == JOptionPane.OK_OPTION) {
             Double val1 = (Double) jftf1.getValue();
             r.setMaxBonus(val1);
@@ -1492,6 +1589,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }
 
+    private final static String CS_SwissRound="RONDE SUISSE";
+    private final static String CS_AcceleratedSwissRound="RONDE SUISSE ACCELERÉE";
+    private final static String CS_Animation="Animation";
+    
     private void jmiGenerateNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateNextRoundActionPerformed
 
         if (areRulesValid()) {
@@ -1508,7 +1609,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                  * Swiss possible ?
                  */
                 if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE SUISSE"));
+                    labels.add(Translate.translate(CS_SwissRound));
                     Options.add(Generation.GEN_SWISS);
                 }
 
@@ -1516,7 +1617,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                  * QSwiss possible ?
                  */
                 if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RONDE SUISSE ACCELERÉE"));
+                    labels.add(Translate.translate(CS_AcceleratedSwissRound));
                     Options.add(Generation.GEN_QSWISS);
                 }
 
@@ -1524,14 +1625,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                  * GenRandom possible ?
                  */
                 if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALÉATOIRE"));
+                    labels.add(Translate.translate(CS_Random));
                     Options.add(Generation.GEN_RANDOM);
                 }
 
                 /**
                  * Coupe
                  */
-                labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("COUPE"));
+                labels.add(Translate.translate(CS_Cup));
                 Options.add(Generation.GEN_CUP);
 
                 /**
@@ -1539,20 +1640,21 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                  * Libre
                  */
                 if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
-                    labels.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("FREE_ROUND"));
+                    labels.add(Translate.translate(CS_FreeRound));
                     Options.add(Generation.GEN_FREE);
                 }
 
                 final JPanel jpn = new JPanel(new BorderLayout());
                 final JComboBox jcb = new JComboBox(labels.toArray());
                 jpn.add(jcb, BorderLayout.CENTER);
-                final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
+                final JLabel jlb = new JLabel(Translate.translate(CS_ChooseGenerationMethod));
                 jpn.add(jlb, BorderLayout.NORTH);
 
-                final JCheckBox jcxClash = new JCheckBox("Animation");
+                final JCheckBox jcxClash = new JCheckBox(Translate.translate(CS_Animation));
                 jpn.add(jcxClash, BorderLayout.SOUTH);
 
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, 
+                        Translate.translate(CS_Generation), JOptionPane.QUESTION_MESSAGE);
 
                 final int index = jcb.getSelectedIndex();
 
@@ -1602,6 +1704,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jckmiRoundOnlyActionPerformed
 
+    private static final String CS_FreeMatch="MATCH LIBRE";
+    private static final String CS_Error="ERROR";
+    private static final String CS_ImpossibleMatch="MATCH IMPOSSIBLE";
+    
     private void jmiAddFreeMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddFreeMatchActionPerformed
 
         if (jpnContent instanceof JPNRound) {
@@ -1633,10 +1739,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     final JPanel jpnQuestion = new JPanel(new BorderLayout(0, 0));
                     jpnQuestion.add(jcb1, BorderLayout.WEST);
                     jpnQuestion.add(jcb2, BorderLayout.EAST);
-                    final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS "));
+                    final JLabel jlb = new JLabel(
+                            " "+Translate.translate(CS_ACCR_Versus)+" "
+                    );
                     jpnQuestion.add(jlb, BorderLayout.CENTER);
 
-                    final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH LIBRE"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+                    final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion, 
+                            Translate.translate(CS_FreeMatch),
+                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
                     if (ret == JOptionPane.OK_OPTION) {
                         if (jcb1.getSelectedIndex() != jcb2.getSelectedIndex()) {
                             TeamMatch m = new TeamMatch(round);
@@ -1654,7 +1764,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                             ValidMatch = true;
                         } else {
-                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH IMPOSSIBLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERREUR"), JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), 
+                                    Translate.translate(CS_ImpossibleMatch), 
+                                    Translate.translate(CS_Error),
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
                         ValidMatch = true;
@@ -1684,10 +1797,13 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     final JPanel jpnQuestion = new JPanel(new BorderLayout(0, 0));
                     jpnQuestion.add(jcb1, BorderLayout.WEST);
                     jpnQuestion.add(jcb2, BorderLayout.EAST);
-                    final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(" VS "));
+                    final JLabel jlb = new JLabel(
+                            " "+Translate.translate(CS_ACCR_Versus)+" ");
                     jpnQuestion.add(jlb, BorderLayout.CENTER);
 
-                    final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH LIBRE"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+                    final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion, 
+                            Translate.translate(CS_FreeMatch),
+                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
                     if (ret == JOptionPane.OK_OPTION) {
                         if (jcb1.getSelectedIndex() != jcb2.getSelectedIndex()) {
@@ -1700,7 +1816,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                             m.getCompetitor2().addMatch(m);
                             ValidMatch = true;
                         } else {
-                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH IMPOSSIBLE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ERREUR"), JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), 
+                                    Translate.translate(CS_ImpossibleMatch),
+                                    Translate.translate(CS_Error), JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
                         ValidMatch = true;
@@ -1758,6 +1876,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         mTournament.getParams().setPortugal(jcxPatchPortugal.isSelected());
     }//GEN-LAST:event_jcxPatchPortugalActionPerformed
 
+    private static final String CS_MatchAlreadyConceededOrRefused="MatchAlreadyConceededOrRefused";
+    private static final String CS_Cancel="Cancel";
+    private static final String CS_ConceedAMatch="ConceedAMatch";
+    private static final String CS_WhoConceedTheMatch="WhoConceedTheMatch";
+    private static final String CS_RefuseAMatch="RefuseAMatch";
+    private static final String CS_WhoRefuseMatch="WhoRefuseMatch";
+    
+    
     private void jmiConceedMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConceedMatchActionPerformed
         try {
             if (jpnContent instanceof JPNRound) {
@@ -1765,14 +1891,20 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 int nbMatch = jpnr.getMatchTableSelectedRow();
                 CoachMatch m = jpnr.getRound().getCoachMatchs().get(nbMatch);
                 if (m.isConcedeedBy1() || m.isConcedeedBy2() || m.isRefusedBy1() || m.isRefusedBy2()) {
-                    JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Error"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MatchAlreadyConceededOrRefused"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, 
+                            Translate.translate(CS_Error),
+                            Translate.translate(CS_MatchAlreadyConceededOrRefused), 
+                            JOptionPane.ERROR_MESSAGE);
                 } else {
                     Object[] options = new Object[3];
                     options[0] = m.getCompetitor1();
                     options[1] = m.getCompetitor2();
-                    options[2] = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cancel");
+                    options[2] = Translate.translate(CS_Cancel);
 
-                    Object option = JOptionPane.showInputDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ConceedAMatch"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WhoConceedTheMatch"), JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                    Object option = JOptionPane.showInputDialog(null, 
+                            Translate.translate(CS_ConceedAMatch),
+                            Translate.translate(CS_WhoConceedTheMatch), 
+                            JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
 
                     if (option.equals(m.getCompetitor1())) {
                         m.setConcedeedBy1(true);
@@ -1813,14 +1945,20 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 int nbMatch = jpnr.getMatchTableSelectedRow();
                 CoachMatch m = jpnr.getRound().getCoachMatchs().get(nbMatch);
                 if (m.isConcedeedBy1() || m.isConcedeedBy2() || m.isRefusedBy1() || m.isRefusedBy2()) {
-                    JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Error"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MatchAlreadyConceededOrRefused"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            Translate.translate(CS_Error),
+                            Translate.translate(CS_MatchAlreadyConceededOrRefused), 
+                            JOptionPane.ERROR_MESSAGE);
                 } else {
                     Object[] options = new Object[3];
                     options[0] = m.getCompetitor1();
                     options[1] = m.getCompetitor2();
-                    options[2] = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Cancel");
+                    options[2] = Translate.translate(CS_Cancel);
 
-                    Object option = JOptionPane.showInputDialog(null, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RefuseAMatch"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("WhoRefuseMatch"), JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                    Object option = JOptionPane.showInputDialog(null, 
+                            Translate.translate(CS_RefuseAMatch), 
+                            Translate.translate(CS_WhoRefuseMatch),
+                            JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
 
                     if (option.equals(m.getCompetitor1())) {
                         m.setRefusedBy1(true);
@@ -2004,7 +2142,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jmiFullScreenRankAnnexClan1ActionPerformed
 
-    TMultiServer server = null;
+    private TMultiServer server = null;
 
     private void jcxmiAsServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxmiAsServerActionPerformed
         if (jcxmiAsServer.isSelected()) {
@@ -2246,6 +2384,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     private NafTask task;
 
+    private static final String CS_Download="Download";
+    
     class NafTask extends SwingWorker<Void, Void> {
 
         @Override
@@ -2257,7 +2397,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                 for (int i = 0; (i < Tournament.getTournament().getCoachsCount()) && (!isCancelled()); i++) {
                     Coach c = Tournament.getTournament().getCoach(i);
-                    progressMonitor.setNote(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Download") + " " + c.getName());
+                    progressMonitor.setNote(
+                            Translate.translate(CS_Download) + 
+                                    " " + c.getName());
                     c.setNafRank(NAF.getRanking(c.getName(), c));
                     progressMonitor.setProgress(i + 1);
                 }
@@ -2281,10 +2423,36 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }
 
+    private static final String CS_NewGame="NewGame";
+    private static final String CS_Open="Open";
+    private static final String CS_UseRosterEditor="UseRosterEditor";
+    private static final String CS_ClientViewer="ClientViewer";
+    private static final String CS_NewGameOrOpen="NewGameOrOpen";
+    private static final String CS_EnterRemoteTourmaServer="Enter remote server IP address";
+    private static final String CS_Exiting="Exiting";
+    private static final String CS_ConnectionImpossibleTo="Connection impossible to";
+    private static final String CS_ChooseFullScreen="ChooseFullScreen";
     /**
      * @param args the command line arguments
      */
-    //@com.yworks.util.annotation.Obfuscation ( exclude = false)
+    
+    private static final String CS_IndividualRanking="Individual ranking";
+private static final String CS_IndividualAnnexRanking="Individual Annex rankings";
+private static final String CS_TeamRanking="Team ranking";
+private static final String CS_TeamAnnexRanking="Team Annex Ranking";
+private static final String CS_ClanRanking="Clan ranking";
+private static final String CS_ClanAnnexRanking="Clan Annex Ranking";
+private static final String CS_MatchsClash="Matchs Clash";
+private static final String CS_CategoryRanking="Categories Ranking";
+private static final String CS_CategoryAnnexRanking="Categories Annex Ranking";
+private static final String CS_GroupeRanking="Group Ranking";
+private static final String CS_GroupeAnnexRanking="Group Annex Ranking";
+private static final String CS_IndividualPoolRanking="Individual Pool Ranking";
+private static final String CS_IndividualPoolAnnexRanking="Individual Pool Annex Ranking";
+private static final String CS_TeamPoolRanking="Team Pool Ranking";
+private static final String CS_TeamPoolAnnexRanking="Team Pool Annex Ranking";
+private static final String CS_Matchs="Matchs";
+    
     public static void main(final String args[]) {
 
         try {
@@ -2293,11 +2461,18 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 public void run() {
 
                     final ArrayList<String> StartOptions = new ArrayList<>();
-                    StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGame"));
-                    StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
-                    StartOptions.add(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("UseRosterEditor"));
-                    StartOptions.add("Client Viewer");
-                    final int res = JOptionPane.showOptionDialog(null, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NewGameOrOpen"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Open"));
+                    StartOptions.add(
+                            Translate.translate(CS_NewGame));
+                    StartOptions.add(
+                            Translate.translate(CS_Open));
+                    StartOptions.add(
+                             Translate.translate(CS_UseRosterEditor));
+                    StartOptions.add( Translate.translate(CS_ClientViewer));
+                    final int res = JOptionPane.showOptionDialog(null, 
+                            Translate.translate(CS_NewGameOrOpen), 
+                            StringConstants.CS_NULL,
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), 
+                             Translate.translate(CS_Open));
 
                     if ((res == 0) || (res == 1)) {
                         MainFrame window = MainFrame.getMainFrame(res);
@@ -2312,59 +2487,66 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                     if (res == 3) {
 
-                        String address = (String) JOptionPane.showInputDialog(null, "Enter remote server IP address", "127.0.0.1");
+                        String address = (String) JOptionPane.showInputDialog(null, 
+                                Translate.translate(CS_EnterRemoteTourmaServer), "127.0.0.1");
 
                         try {
                             Socket socket = null;
                             try {
                                 socket = new Socket(address, 2017);
                             } catch (ConnectException e) {
-                                JOptionPane.showMessageDialog(null, "Connection to " + address + " impossible, exiting");
+                                JOptionPane.showMessageDialog(null, Translate.translate(CS_ConnectionImpossibleTo) +
+                                        " "+ address +". "+
+                                        Translate.translate(CS_Exiting));
                                 System.exit(1);
                             }
 
                             ArrayList<String> labels = new ArrayList<>();
 
                             // Index 0: Individual Ranking
-                            labels.add("Individual ranking");
+                            labels.add(Translate.translate(CS_IndividualRanking));
                             // Index 1: Individual Annex ranks
-                            labels.add("Individual Annex rankings");
+                            labels.add(Translate.translate(CS_IndividualAnnexRanking));
                             // Index 2: Team Ranking
-                            labels.add("Team ranking");
+                            labels.add(Translate.translate(CS_TeamRanking));
                             // Index 3: Team Annex
-                            labels.add("Team Annex Ranking");
+                            labels.add(Translate.translate(CS_TeamAnnexRanking));
                             // Index 4: Clan Ranking
-                            labels.add("Clan ranking");
+                            labels.add(Translate.translate(CS_ClanRanking));
                             // Index 5: Clan Annex
-                            labels.add("Clan Annex Ranking");
+                            labels.add(Translate.translate(CS_ClanAnnexRanking));
                             // Index 6:Matchs
-                            labels.add("Matchs");
+                            labels.add(Translate.translate(CS_Matchs));
                             // Index 7: Clash Match
-                            labels.add("Matchs Clash");
+                            labels.add(Translate.translate(CS_MatchsClash));
                             // Index 8: Categories
-                            labels.add("Categories Ranking");
+                            labels.add(Translate.translate(CS_CategoryRanking));
                             // Index 9: Categories
-                            labels.add("Categories Annex Ranking");
+                            labels.add(Translate.translate(CS_CategoryAnnexRanking));
                             // Index 10: Group
-                            labels.add("Group Ranking");
+                            labels.add(Translate.translate(CS_GroupeRanking));
                             // Index 11: Categories
-                            labels.add("Group Annex Ranking");
+                            labels.add(Translate.translate(CS_GroupeAnnexRanking));
                             // Index 12: Indiv Pool
-                            labels.add("Individual Pool Ranking");
+                            labels.add(Translate.translate(CS_IndividualPoolRanking));
                             // Index 13: Indiv Pool Annex
-                            labels.add("Individual Pool Annex Ranking");
+                            labels.add(Translate.translate(CS_IndividualPoolAnnexRanking));
                             // Index 14: Team Pool
-                            labels.add("Team Pool Ranking");
+                            labels.add(Translate.translate(CS_TeamPoolRanking));
                             // Index 15: Categories
-                            labels.add("Team Pool Annex Ranking");
+                            labels.add(Translate.translate(CS_TeamPoolAnnexRanking));
 
                             final JPanel jpn = new JPanel(new BorderLayout());
                             final JComboBox jcb = new JComboBox(labels.toArray());
                             jpn.add(jcb, BorderLayout.CENTER);
-                            final JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: "));
+                            final JLabel jlb = new JLabel(
+                                    Translate.translate(CS_ChooseFullScreen)
+                            );
                             jpn.add(jlb, BorderLayout.NORTH);
 
-                            JOptionPane.showMessageDialog(null, jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GÉNÉRATION"), JOptionPane.QUESTION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, jpn, 
+                                    Translate.translate(CS_Generation), 
+                                    JOptionPane.QUESTION_MESSAGE);
 
                             final int index = jcb.getSelectedIndex();
 
@@ -2570,7 +2752,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         if ("progress" == evt.getPropertyName()) {
             int progress = (Integer) evt.getNewValue();
             progressMonitor.setProgress(progress);
-            String message = String.format("Completed %d%%.\n", progress);
+            String message = String.format("%d%%.\n", progress);
             progressMonitor.setNote(message);
             //taskOutput.append(message);
             if (progressMonitor.isCanceled() || task.isDone()) {

@@ -39,7 +39,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="CoachNumber" replaceFormat="language.getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="tourma/languages/language.properties" key="CoachNumber" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
@@ -78,7 +78,7 @@
               <Image iconType="3" name="/tourma/images/Select.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="OK" replaceFormat="language.getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="tourma/languages/language.properties" key="OK" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <Events>

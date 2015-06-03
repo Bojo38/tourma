@@ -118,7 +118,9 @@
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Appariement"/>
+                        <TitledBorder title="Appariement">
+                          <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="Pairing" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </TitledBorder>
                       </Border>
                     </Property>
                   </Properties>
@@ -165,7 +167,9 @@
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Nombre de co&#xe9;quipiers"/>
+                        <TitledBorder title="Nombre de co&#xe9;quipiers">
+                          <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="TeammatesNumber" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </TitledBorder>
                       </Border>
                     </Property>
                   </Properties>
@@ -184,7 +188,7 @@
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="11"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="tourma/languages/language.properties" key="CoachNumber" replaceFormat="language.getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="tourma/languages/language.properties" key="CoachNumber" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                         </Property>
                       </Properties>
                     </Component>
@@ -218,7 +222,9 @@
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Divers"/>
+                        <TitledBorder title="Divers">
+                          <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="Miscellaneous" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </TitledBorder>
                       </Border>
                     </Property>
                   </Properties>
@@ -251,7 +257,9 @@
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Appariement des membres d&apos;&#xe9;quipe"/>
+                    <TitledBorder title="Appariement des membres d&apos;&#xe9;quipe">
+                      <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="TeamMembersPairing" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </TitledBorder>
                   </Border>
                 </Property>
               </Properties>
@@ -323,7 +331,9 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Type de tournoi"/>
+                <TitledBorder title="Type de tournoi">
+                  <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="TournamentKind" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </TitledBorder>
               </Border>
             </Property>
           </Properties>

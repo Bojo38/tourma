@@ -14,10 +14,10 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.RosterType;
+import tourma.languages.Translate;
 
 /**
  *
@@ -167,17 +167,23 @@ public final class JdgRosters extends javax.swing.JDialog {
         this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
-@SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+@SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal", "unchecked"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
 
-       final Object name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOM DU NOUVEAU ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOUVEAU ROSTER"));
+       final Object name = JOptionPane.showInputDialog(this,
+               Translate.translate(CS_NewRosterName),
+               Translate.translate(CS_NewRoster));
         if (name != null) {
             mModel.addElement(name);
         }
 
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
-@SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+
+    private final static String CS_NewRoster="NOUVEAU ROSTER";
+    private final static String CS_NewRosterName="NOM DU NOUVEAU ROSTER";
+    
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
 
         if ((jlsRosters.getSelectedIndex() > 0) && (jlsRosters.getSelectedIndex() < mModel.getSize())) {
@@ -208,5 +214,4 @@ public final class JdgRosters extends javax.swing.JDialog {
     private javax.swing.JButton jbtRemoveAll;
     private javax.swing.JList jlsRosters;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JdgRosters.class.getName());
 }

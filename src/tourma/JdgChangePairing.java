@@ -17,7 +17,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -29,12 +28,14 @@ import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
+import tourma.languages.Translate;
 
 /**
  *
  * @author Administrateur
  */
 public final class JdgChangePairing extends JDialog implements ActionListener {
+
     private static final long serialVersionUID = 1L;
 
     private final Round mRound;
@@ -44,6 +45,7 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
 
     /**
      * Creates new form jdgChangePairing
+     *
      * @param parent
      * @param modal
      * @param round
@@ -58,9 +60,9 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
 
         this.setSize(640, 480);
 
-            final int screenWidth = dmode.getWidth();
-            final int screenHeight = dmode.getHeight();
-            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        final int screenWidth = dmode.getWidth();
+        final int screenHeight = dmode.getHeight();
+        this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
         mRound = round;
         mPlayersSelected = new ArrayList<>();
@@ -113,7 +115,7 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
 
         jsp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder("Matchs"));
+        jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Matchs"))); // NOI18N
 
         javax.swing.GroupLayout jpnMatchsLayout = new javax.swing.GroupLayout(jpnMatchs);
         jpnMatchs.setLayout(jpnMatchsLayout);
@@ -140,66 +142,63 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        final int result = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VOULEZ VOUS CONFIRMEER LE NOUVEL APPARIEMENT ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CONFIRMER"), JOptionPane.YES_NO_OPTION);
+        final int result = JOptionPane.showConfirmDialog(this,
+                Translate.translate(CS_DoYouConfirmNewpairing),
+                Translate.translate(CS_Confirm),
+                JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
 
             for (int i = 0; i < mRound.getMatchsCount(); i++) {
-                Match m = mRound.getMatch(i);                
+                Match m = mRound.getMatch(i);
 
-                if (m instanceof TeamMatch)
-                {
-                    Team t1=(Team)mPlayersTmp.get(2 * i);
-                    Team t2=(Team)mPlayersTmp.get(2 * i+1);
-                    if ((m.getCompetitor1()!=t1)||
-                            (m.getCompetitor2()!=t2))
-                    {                        
+                if (m instanceof TeamMatch) {
+                    Team t1 = (Team) mPlayersTmp.get(2 * i);
+                    Team t2 = (Team) mPlayersTmp.get(2 * i + 1);
+                    if ((m.getCompetitor1() != t1)
+                            || (m.getCompetitor2() != t2)) {
                         // Remove matchs from coachs
-                        for (int j=0; j<((TeamMatch)m).getMatchCount(); j++)
-                        {
-                            CoachMatch cm=((TeamMatch)m).getMatch(j);
-                            for (int k=0; k<((IContainCoachs)m.getCompetitor1()).getCoachCount(); k++)
-                            {
-                                Coach c=((IContainCoachs)m.getCompetitor1()).getCoach(k);
+                        for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
+                            CoachMatch cm = ((TeamMatch) m).getMatch(j);
+                            for (int k = 0; k < ((IContainCoachs) m.getCompetitor1()).getCoachCount(); k++) {
+                                Coach c = ((IContainCoachs) m.getCompetitor1()).getCoach(k);
                                 c.removeMatch(cm);
                             }
-                            
-                            for (int k=0; k<((IContainCoachs)m.getCompetitor2()).getCoachCount(); k++)
-                            {
-                                Coach c=((IContainCoachs)m.getCompetitor2()).getCoach(k);
+
+                            for (int k = 0; k < ((IContainCoachs) m.getCompetitor2()).getCoachCount(); k++) {
+                                Coach c = ((IContainCoachs) m.getCompetitor2()).getCoach(k);
                                 c.removeMatch(cm);
                             }
                         }
-                        
-                        ((TeamMatch)m).clearMatchs();
-                        JdgPairing jdg=new JdgPairing(MainFrame.getMainFrame(), true, 
-                                t1,t2, mRound, (TeamMatch)m);
+
+                        ((TeamMatch) m).clearMatchs();
+                        JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true,
+                                t1, t2, mRound, (TeamMatch) m);
                         jdg.setVisible(true);
-                        
-                        for (int j=0; j<((TeamMatch)m).getMatchCount(); j++)
-                        {
-                            CoachMatch cm=((TeamMatch)m).getMatch(j);
+
+                        for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
+                            CoachMatch cm = ((TeamMatch) m).getMatch(j);
                             cm.getCompetitor1().addMatch(cm);
-                            cm.getCompetitor2().addMatch(cm);                            
+                            cm.getCompetitor2().addMatch(cm);
                         }
                     }
                 }
-                                
+
                 m.setCompetitor1(mPlayersTmp.get(2 * i));
                 m.setCompetitor2(mPlayersTmp.get(2 * i + 1));
-                
-                m.getCompetitor1().removeMatch(m.getCompetitor1().getMatch( m.getCompetitor1().getMatchCount() - 1));
+
+                m.getCompetitor1().removeMatch(m.getCompetitor1().getMatch(m.getCompetitor1().getMatchCount() - 1));
                 m.getCompetitor2().removeMatch(m.getCompetitor2().getMatch(m.getCompetitor2().getMatchCount() - 1));
-                
+
                 m.getCompetitor1().addMatch(m);
                 m.getCompetitor2().addMatch(m);
-            
-        }
 
-        this.setVisible(false);
-    }
+            }
+
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_jbtOKActionPerformed
-@Override
-        public void actionPerformed(final ActionEvent e) {
+    @Override
+    public void actionPerformed(final ActionEvent e) {
         final JComboBox jcb = (JComboBox) e.getSource();
 
         Competitor oldCoach = null;
@@ -221,7 +220,6 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                 }
             }
         }
-
 
         update();
     }
@@ -253,7 +251,9 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
             mPlayersSelected.add(jcb);
         }
 
-        jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCHS")));
+        jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                Translate.translate(CS_Matchs)
+        ));
 
         jpnMatchs.removeAll();
         for (int i = 0; i < mPlayersSelected.size(); i++) {
@@ -263,7 +263,10 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
         jsp.setViewportView(jpnMatchs);
         repaint();
     }
-    private static final Logger LOG = Logger.getLogger(JdgChangePairing.class.getName());
+
+    private static final String CS_Matchs = "MATCHS";
+    private static final String CS_Confirm = "CONFIRMER";
+    private static final String CS_DoYouConfirmNewpairing = "VOULEZ VOUS CONFIRMER LE NOUVEL APPARIEMENT ?";
 
     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());

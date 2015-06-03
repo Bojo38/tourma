@@ -13,18 +13,14 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import tourma.data.Tournament;
-import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
 public final class JdgSelectNumber extends javax.swing.JDialog {
-
-    static final ResourceBundle language = ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
 
     private final Tournament mTournament;
 
@@ -67,18 +63,20 @@ public final class JdgSelectNumber extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
 
+		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+		
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText(language.getString("CoachNumber")); // NOI18N
+        jLabel1.setText(bundle.getString("CoachNumber")); // NOI18N
         jPanel1.add(jLabel1);
 
         jspCoachNumber.setModel(new javax.swing.SpinnerNumberModel(1, 1, 16, 1));
         jPanel1.add(jspCoachNumber);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        
         jckSubstitutes.setText(bundle.getString("AllowedSubstitutes")); // NOI18N
         jckSubstitutes.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jckSubstitutes.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -88,7 +86,7 @@ public final class JdgSelectNumber extends javax.swing.JDialog {
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        jbtOK.setText(language.getString("OK")); // NOI18N
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);

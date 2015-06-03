@@ -15,7 +15,6 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import tourma.data.Coach;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -28,6 +27,7 @@ import tourma.views.report.JdgRound;
  *
  * @author Frederic Berger
  */
+@SuppressWarnings("serial")
 public class JdgTeamPairing extends javax.swing.JDialog {
 
     private final  ArrayList<Team> mTeams1;
@@ -230,7 +230,6 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     private javax.swing.JButton jbtSelect;
     private javax.swing.JTable jtPairs;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JdgTeamPairing.class.getName());
 
  private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());

@@ -1,5 +1,5 @@
 
-        /*
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -40,6 +40,7 @@ import tourma.data.Coach;
 import tourma.data.RosterType;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
@@ -61,6 +62,7 @@ public final class JdgCoach extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
+    @SuppressWarnings("unchecked")
     public JdgCoach(final java.awt.Frame parent, final boolean modal) {
         super(parent, modal);
         mCoach = new Coach();
@@ -82,13 +84,12 @@ public final class JdgCoach extends javax.swing.JDialog {
             categoryListModel.addElement(mCoach.getCategory(i).getName());
         }
         jlsCategories.setModel(categoryListModel);
-        
-       /*final DefaultComboBoxModel categoryListModel = new DefaultComboBoxModel();
-        for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
-            categoryListModel.addElement(Tournament.getTournament().getCategory(i).getName());
-        }
-        jcbCategory.setModel(categoryListModel);*/
 
+        /*final DefaultComboBoxModel categoryListModel = new DefaultComboBoxModel();
+         for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+         categoryListModel.addElement(Tournament.getTournament().getCategory(i).getName());
+         }
+         jcbCategory.setModel(categoryListModel);*/
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
@@ -103,7 +104,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         }
 
         jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 1);
-        jbtDelCategory.setEnabled((Tournament.getTournament().getCategoriesCount() > 1)&&(jlsCategories.getSelectedValuesList().size()>0));
+        jbtDelCategory.setEnabled((Tournament.getTournament().getCategoriesCount() > 1) && (jlsCategories.getSelectedValuesList().size() > 0));
 
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jbtAdd.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
@@ -136,6 +137,7 @@ public final class JdgCoach extends javax.swing.JDialog {
      * @param modal
      * @param team
      */
+    @SuppressWarnings("unchecked")
     public JdgCoach(final java.awt.Frame parent, final boolean modal, final Team team) {
         super(parent, modal);
         mCoach = new Coach();
@@ -172,7 +174,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         }
 
         jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 1);
-        jbtDelCategory.setEnabled((Tournament.getTournament().getCategoriesCount() > 1)&&(jlsCategories.getSelectedValuesList().size()>0));
+        jbtDelCategory.setEnabled((Tournament.getTournament().getCategoriesCount() > 1) && (jlsCategories.getSelectedValuesList().size() > 0));
 
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jLabel4.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
@@ -227,7 +229,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         }
         jcbClan.setModel(clanListModel);
 
-       final DefaultListModel categoryListModel = new DefaultListModel();
+        final DefaultListModel categoryListModel = new DefaultListModel();
         for (int i = 0; i < this.mCoach.getCategoryCount(); i++) {
             categoryListModel.addElement(mCoach.getCategory(i).getName());
         }
@@ -258,11 +260,6 @@ public final class JdgCoach extends javax.swing.JDialog {
         if (Tournament.getTournament().getCategoriesCount() > 1) {
             jbtAddCategory.setEnabled(true);
             jbtDelCategory.setEnabled(true);
-            /*if (mCoach.getCategory() != null) {
-                jcbCategory.setSelectedItem(mCoach.getCategory().getName());
-            } else {
-                jcbCategory.setSelectedIndex(0);
-            }*/
         }
 
         jcbRoster.setSelectedItem(mCoach.getRoster().getName());
@@ -494,7 +491,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         jLabel5.setText(bundle.getString("Ranking")); // NOI18N
         jPanel1.add(jLabel5);
 
-        jtfRank.setText(bundle.getString("110")); // NOI18N
+        jtfRank.setText("110");
         jPanel1.add(jtfRank);
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -547,6 +544,17 @@ public final class JdgCoach extends javax.swing.JDialog {
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
+
+    private final static String CS_AnotherCoachHasTheSameName = "UN AUTRE COACH A DÉJÀ LE MÊME NOM";
+    private final static String CS_NameIsEmpty = "NameIsEmpty";
+    private final static String CS_TeamIsEmpty = "TeamIsEmpty";
+    private final static String CS_RosterIsEmpty = "RosterIsEmpty";
+    private final static String CS_RostersChoice = "Roster's Choice";
+    private final static String CS_ChooseRoster = "ChooseRoster";
+    private final static String CS_RostersChoiceError0 = "RostersChoiceError0";
+    private final static String CS_SelectPicture = "Select picture";
+    private final static String CS_Picture = "Picture";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
         Coach c;
@@ -560,7 +568,9 @@ public final class JdgCoach extends javax.swing.JDialog {
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             final Coach tmp = Tournament.getTournament().getCoach(i);
             if ((tmp.getName().equals(jtfNom.getText())) && (!tmp.equals(c))) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("UN AUTRE COACH A DÉJÀ LE MÊME NOM"));
+                JOptionPane.showMessageDialog(this,
+                        Translate.translate(CS_AnotherCoachHasTheSameName)
+                );
                 error = true;
                 break;
             }
@@ -591,30 +601,17 @@ public final class JdgCoach extends javax.swing.JDialog {
             c.setPicture(mCoach.getPicture());
         }
 
-        /*try {
-            Category cat = null;
-            String tmp = (String) jcbCategory.getSelectedItem();
-            for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
-                if (Tournament.getTournament().getCategory(i).getName().equals(tmp)) {
-                    cat = Tournament.getTournament().getCategory(i);
-                    c.setCategory(cat);
-                }
-            }
-        } catch (NumberFormatException e) {
-            c.setCategory(Tournament.getTournament().getCategory(0));
-        }*/
-
         if (!error) {
-            if (c.getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NameIsEmpty"));
+            if (c.getName().equals(StringConstants.CS_NULL)) {
+                JOptionPane.showMessageDialog(this, Translate.translate(CS_NameIsEmpty));
                 error = true;
             }
-            if (c.getTeam().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("TeamIsEmpty"));
+            if (c.getTeam().equals(StringConstants.CS_NULL)) {
+                JOptionPane.showMessageDialog(this, Translate.translate(CS_TeamIsEmpty));
                 error = true;
             }
-            if (c.getRoster().getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("RosterIsEmpty"));
+            if (c.getRoster().getName().equals(StringConstants.CS_NULL)) {
+                JOptionPane.showMessageDialog(this, Translate.translate(CS_RosterIsEmpty));
                 error = true;
             }
 
@@ -626,13 +623,6 @@ public final class JdgCoach extends javax.swing.JDialog {
         } else {
             c.setClan(Tournament.getTournament().getClan(0));
 
-/*            if (jcbCategory.getSelectedIndex() > 0) {
-                c.setCategory(Tournament.getTournament().getCategory(jcbCategory.getSelectedIndex()));
-            } else {
-                if (Tournament.getTournament().getCategoriesCount() > 0) {
-                    c.setCategory(Tournament.getTournament().getCategory(0));
-               }
-            }*/
         }
 
         if (!error) {
@@ -643,9 +633,7 @@ public final class JdgCoach extends javax.swing.JDialog {
                 }
                 Tournament.getTournament().addCoach(c);
             }
-            //c.setPicture(mCoach.getPicture());
         }
-
 
         if (!error) {
             this.setVisible(false);
@@ -660,12 +648,6 @@ public final class JdgCoach extends javax.swing.JDialog {
             final teamma.views.JdgRoster window = new JdgRoster(MainFrame.getMainFrame(), mCoach, mCoach.getComposition(jlsCompositions.getSelectedIndex()), true);
             window.setVisible(true);
 
-            /*if (mCoach.mComposition != null) {
-             mCoach.mRoster = new RosterType(mCoach.mComposition._roster._name);
-             mCoach.mRank = mCoach.mComposition.getValue(false) / 10000;
-             jtfRank.setText(Integer.toString(mCoach.mRank));
-             }
-             jcbRoster.setSelectedItem(mCoach.mRoster.mName);*/
             updatelist();
         }
 
@@ -697,6 +679,7 @@ public final class JdgCoach extends javax.swing.JDialog {
     /**
      * Update list
      */
+    @SuppressWarnings("unchecked")
     private void updatelist() {
         DefaultListModel model = new DefaultListModel();
         for (int i = 0; i < mCoach.getCompositionCount(); i++) {
@@ -706,7 +689,7 @@ public final class JdgCoach extends javax.swing.JDialog {
             }
         }
         jlsCompositions.setModel(model);
-        
+
         final DefaultListModel categoryListModel = new DefaultListModel();
         for (int i = 0; i < this.mCoach.getCategoryCount(); i++) {
             categoryListModel.addElement(mCoach.getCategory(i).getName());
@@ -716,8 +699,10 @@ public final class JdgCoach extends javax.swing.JDialog {
 
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
 
-            String input = (String) JOptionPane.showInputDialog(this,
-                java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ChooseRoster"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Roster's Choice"), JOptionPane.INFORMATION_MESSAGE,
+        String input = (String) JOptionPane.showInputDialog(this,
+                Translate.translate(CS_ChooseRoster),
+                Translate.translate(CS_RostersChoice),
+                JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.getRostersNames(), "Amazons");
         teamma.data.RosterType rt = teamma.data.LRB.getLRB().getRosterType(input);
         if (rt != null) {
@@ -726,7 +711,8 @@ public final class JdgCoach extends javax.swing.JDialog {
             mCoach.addComposition(compo);
             updatelist();
         } else {
-            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RostersChoiceError0") + input);
+            JOptionPane.showMessageDialog(this,
+                    Translate.translate(CS_RostersChoiceError0) + input);
         }
     }//GEN-LAST:event_jbtAddActionPerformed
 
@@ -752,7 +738,9 @@ public final class JdgCoach extends javax.swing.JDialog {
                 ImageIcon icon = new ImageIcon(path);
                 objects[i] = ImageTreatment.resize(icon, 80, 80);
             } else if (listOfFiles[i].isDirectory()) {
-                LOG.log(Level.INFO, "{0} {1}", new Object[]{java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DIRECTORY"), listOfFiles[i].getName()});
+                LOG.log(Level.INFO, "{0} {1}",
+                        new Object[]{"DIRECTORY",
+                            listOfFiles[i].getName()});
             }
         }
 
@@ -761,7 +749,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         JComboBox combo = new JComboBox(objects);
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel l = new JLabel(("Select picture"));
+        JLabel l = new JLabel(Translate.translate(CS_SelectPicture));
         panel.add(l, BorderLayout.NORTH);
         panel.add(combo, BorderLayout.CENTER);
 
@@ -771,7 +759,9 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         if (combo.getSelectedItem() == empty) {
             final JFileChooser jfc = new JFileChooser();
-            final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Picture"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+            final FileFilter filter1 = new ExtensionFileFilter(
+                    Translate.translate(CS_Picture),
+                    new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
             jfc.setFileFilter(filter1);
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
@@ -794,44 +784,44 @@ public final class JdgCoach extends javax.swing.JDialog {
         jbtAvatar.setIcon(new ImageIcon(mCoach.getPicture()));
     }//GEN-LAST:event_jbtAvatarActionPerformed
 
+    private final static String CS_PleaseSelectCategory="PleaseSelectCategory";
+    
     private void jbtAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCategoryActionPerformed
-        ArrayList<String> cats=new ArrayList<>();
+        ArrayList<String> cats = new ArrayList<>();
         cats.add(" ");
-        for (int i=0; i<Tournament.getTournament().getCategoriesCount(); i++)
-        {
-            Category cat=Tournament.getTournament().getCategory(i);
-            if (!mCoach.containsCategory(cat))
-            {
+        for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+            Category cat = Tournament.getTournament().getCategory(i);
+            if (!mCoach.containsCategory(cat)) {
                 cats.add(cat.getName());
             }
         }
-        JComboBox jcb=new JComboBox(cats.toArray());
+        @SuppressWarnings("unchecked")
+        JComboBox jcb = new JComboBox(cats.toArray());
         jcb.setEditable(true);
-        JOptionPane.showMessageDialog(this,jcb,"Please select catecory", JOptionPane.QUESTION_MESSAGE);
-        
-        if (jcb.getSelectedIndex()>0)
-        {
-            String name=cats.get(jcb.getSelectedIndex());
-            Category cat=Category.getCategory(name);
+        JOptionPane.showMessageDialog(this, jcb,
+                Translate.translate(CS_PleaseSelectCategory),
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (jcb.getSelectedIndex() > 0) {
+            String name = cats.get(jcb.getSelectedIndex());
+            Category cat = Category.getCategory(name);
             mCoach.addCategory(cat);
         }
         updatelist();
-        
+
     }//GEN-LAST:event_jbtAddCategoryActionPerformed
 
     private void jbtDelCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDelCategoryActionPerformed
-       
-        List selection=jlsCategories.getSelectedValuesList();
-        for (Object o:selection)
-        {
-            if (o instanceof String)
-            {
-                String name=(String)o;
-                Category cat=Category.getCategory(name);
-                mCoach.delCategory(cat);                
+
+        List<Object> selection = jlsCategories.getSelectedValuesList();
+        for (Object o : selection) {
+            if (o instanceof String) {
+                String name = (String) o;
+                Category cat = Category.getCategory(name);
+                mCoach.delCategory(cat);
             }
         }
-        
+
         updatelist();
     }//GEN-LAST:event_jbtDelCategoryActionPerformed
 
