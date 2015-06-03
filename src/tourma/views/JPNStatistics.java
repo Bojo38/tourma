@@ -53,6 +53,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
@@ -105,6 +106,9 @@ public final class JPNStatistics extends javax.swing.JPanel {
         addPointsAverage();
         addPositions();
     }
+
+    private final static String CS_OpponentByTeam = "OPPONENT BY TEAM";
+    private final static String CS_OpponentByCoach = "OPPOSITIONS PAR JOUEUR";
 
     /**
      *
@@ -167,7 +171,9 @@ public final class JPNStatistics extends javax.swing.JPanel {
         // update positions
         updateBalancedTeam();
 
-        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OPPONENT BY TEAM"), jpnBalancedTeam);
+        jtpStatistics.addTab(
+                Translate.translate(CS_OpponentByTeam),
+                jpnBalancedTeam);
 
     }
 
@@ -231,9 +237,17 @@ public final class JPNStatistics extends javax.swing.JPanel {
         // update positions
         updateBalancedIndiv();
 
-        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("OPPOSITIONS PAR JOUEUR"), jpnBalancedIndiv);
+        jtpStatistics.addTab(
+                Translate.translate(CS_OpponentByCoach),
+                jpnBalancedIndiv);
 
     }
+
+    private static final String CS_Done = "RÉALISÉS";
+    private static final String CS_DoneAgainst = "SUBIS";
+    private static final String CS_ValueByRoster = "VALUE PAR ROSTER";
+    private static final String CS_Roster = "ROSTER";
+    private static final String CS_Number = "NUMBER";
 
     /**
      *
@@ -306,12 +320,20 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 final double mt = minus.get(roster);
                 final double tot = total.get(roster);
                 if (((pt != 0) || (mt != 0)) && (tot != 0)) {
-                    datas.addValue(pt / tot, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RÉALISÉS"), roster);
-                    datas.addValue(mt / tot, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SUBIS"), roster);
+                    datas.addValue(pt / tot,
+                            Translate.translate(CS_Done),
+                            roster);
+                    datas.addValue(mt / tot,
+                            Translate.translate(CS_DoneAgainst),
+                            roster);
                 }
             }
 
-            final JFreeChart chart = ChartFactory.createStackedBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VALUE PAR ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMBER"), datas, PlotOrientation.HORIZONTAL, true, true, false);
+            final JFreeChart chart = ChartFactory.createStackedBarChart(
+                    Translate.translate(CS_ValueByRoster),
+                    Translate.translate(CS_Roster),
+                    Translate.translate(CS_Number),
+                    datas, PlotOrientation.HORIZONTAL, true, true, false);
 
             final CategoryPlot plot = chart.getCategoryPlot();
             final BarRenderer br = (BarRenderer) plot.getRenderer();
@@ -333,6 +355,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
             jtpStatistics.addTab(crit.getName(), chartPanel);
         }
     }
+
+    private static final String CS_Victories = "VICTOIRES";
+    private static final String CS_Drawns = "NULS";
+    private static final String CS_Losts = "DÉFAITES";
+    private static final String CS_ResultsByRoster = "RESULTATS PAR ROSTER";
 
     /**
      *
@@ -418,13 +445,20 @@ public final class JPNStatistics extends javax.swing.JPanel {
             final double l = loss.get(roster);
             final double t = total.get(roster);
             if (((v != 0) || (d != 0) || (l != 0)) && (t != 0.0)) {
-                datas.addValue(v / t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("VICTOIRES"), roster);
-                datas.addValue(d / t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NULS"), roster);
-                datas.addValue(l / t, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DÉFAITES"), roster);
+                datas.addValue(v / t,
+                        Translate.translate(CS_Victories), roster);
+                datas.addValue(d / t,
+                        Translate.translate(CS_Drawns), roster);
+                datas.addValue(l / t,
+                        Translate.translate(CS_Losts), roster);
             }
         }
 
-        final JFreeChart chart = ChartFactory.createStackedBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULTATS PAR ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMBER"), datas, PlotOrientation.VERTICAL, true, true, false);
+        final JFreeChart chart = ChartFactory.createStackedBarChart(
+                Translate.translate(CS_ResultsByRoster),
+                Translate.translate(CS_Roster),
+                Translate.translate(CS_Number),
+                datas, PlotOrientation.VERTICAL, true, true, false);
 
         final CategoryPlot plot = chart.getCategoryPlot();
         final BarRenderer br = (BarRenderer) plot.getRenderer();
@@ -447,9 +481,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 "{0}/{1}: {2}", NumberFormat.getInstance()));
 
         final ChartPanel chartPanel = new ChartPanel(chart);
-        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULTATS"), chartPanel);
+        jtpStatistics.addTab(Translate.translate(CS_Results), chartPanel);
 
     }
+
+    private final static String CS_Results = "RESULTATS";
 
     /**
      *
@@ -513,7 +549,9 @@ public final class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        final JFreeChart chart = ChartFactory.createPieChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTERS"), datas, true, true, false);
+        final JFreeChart chart = ChartFactory.createPieChart(
+                Translate.translate(CS_Roster),
+                datas, true, true, false);
 
         final PiePlot plot = (PiePlot) chart.getPlot();
         final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator(
@@ -525,8 +563,10 @@ public final class JPNStatistics extends javax.swing.JPanel {
         plot.setForegroundAlpha(0.5f);
 
         final ChartPanel chartPanel = new ChartPanel(chart);
-        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTERS"), chartPanel);
+        jtpStatistics.addTab(Translate.translate(CS_Roster), chartPanel);
     }
+
+    private final static String CS_Groups = "GROUPS";
 
     /**
      *
@@ -569,7 +609,8 @@ public final class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        final JFreeChart chart = ChartFactory.createPieChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUPS"), datas, true, true, false);
+        final JFreeChart chart = ChartFactory.createPieChart(
+                Translate.translate(CS_Groups), datas, true, true, false);
 
         final PiePlot plot = (PiePlot) chart.getPlot();
         final StandardPieSectionLabelGenerator label = new StandardPieSectionLabelGenerator(
@@ -581,7 +622,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
         plot.setForegroundAlpha(0.5f);
 
         final ChartPanel chartPanel = new ChartPanel(chart);
-        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GROUPS"), chartPanel);
+        jtpStatistics.addTab(Translate.translate(CS_Groups), chartPanel);
     }
 
     /**
@@ -613,8 +654,8 @@ public final class JPNStatistics extends javax.swing.JPanel {
             for (CoachMatch cm : acm) {
                 if ((cm.getCompetitor1() != Coach.getNullCoach()) && (cm.getCompetitor2() != Coach.getNullCoach())) {
 
-                    double p1 = MjtRanking.getPointsByCoach((Coach) cm.getCompetitor1(), cm,true,true);
-                    double p2 = MjtRanking.getPointsByCoach((Coach) cm.getCompetitor2(), cm,true,true);
+                    double p1 = MjtRanking.getPointsByCoach((Coach) cm.getCompetitor1(), cm, true, true);
+                    double p2 = MjtRanking.getPointsByCoach((Coach) cm.getCompetitor2(), cm, true, true);
 
                     double avg_value = 0.0;
                     double avg_opp_value = 0.0;
@@ -677,12 +718,20 @@ public final class JPNStatistics extends javax.swing.JPanel {
             final double avg_value = avg.get(roster);
             final double avg_opp_value = avg_opp.get(roster);
             if ((avg_value != 0) && (avg_opp_value != 0)) {
-                datas.addValue(avg_value, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS"), roster);
-                datas.addValue(avg_opp_value, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS ADVERSAIRES"), roster);
+                datas.addValue(avg_value,
+                        Translate.translate(CS_Points),
+                        roster);
+                datas.addValue(avg_opp_value,
+                        Translate.translate(CS_OpponentsPoints),
+                        roster);
             }
         }
 
-        final JFreeChart chart = ChartFactory.createStackedBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RESULTATS PAR ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NUMBER"), datas, PlotOrientation.VERTICAL, true, true, false);
+        final JFreeChart chart = ChartFactory.createStackedBarChart(
+                Translate.translate(CS_ResultsByRoster),
+                Translate.translate(CS_Roster),
+                Translate.translate(CS_Number),
+                datas, PlotOrientation.VERTICAL, true, true, false);
 
         final CategoryPlot plot = chart.getCategoryPlot();
         final BarRenderer br = (BarRenderer) plot.getRenderer();
@@ -704,9 +753,14 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 "{0}/{1}: {2}", NumberFormat.getInstance()));
 
         final ChartPanel chartPanel = new ChartPanel(chart);
-        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POINTS"), chartPanel);
+        jtpStatistics.addTab(Translate.translate(CS_Points), chartPanel);
 
     }
+
+    private final static String CS_Points = "POINTS";
+    private final static String CS_OpponentsPoints = "POINTS ADVERSAIRES";
+    private final static String CS_Rankings = "POSITIONS";
+    private final static String CS_TeamRankings = "TEAM POSITIONS";
 
     /**
      *
@@ -765,7 +819,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
         // update positions
         updatePositions();
 
-        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIONS"), jpnPositions);
+        jtpStatistics.addTab(Translate.translate(CS_Rankings), jpnPositions);
 
     }
 
@@ -831,9 +885,12 @@ public final class JPNStatistics extends javax.swing.JPanel {
         // update positions
         updateTeamPositions();
 
-        jtpStatistics.addTab(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("TEAM POSITIONS"), jpnTeamPositions);
+        jtpStatistics.addTab(Translate.translate(CS_TeamRankings), jpnTeamPositions);
 
     }
+
+    private final static String CS_Ranking = "Position";
+    private final static String CS_Round = "Round";
 
     /**
      *
@@ -857,7 +914,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
             datas.addSeries(serie);
         }
 
-        JFreeChart chart = ChartFactory.createXYLineChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIONS"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"), datas, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                Translate.translate(CS_Rankings),
+                Translate.translate(CS_Round),
+                Translate.translate(CS_Ranking),
+                datas, PlotOrientation.VERTICAL, true, true, true);
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, true);
         plot.setRenderer(renderer);
@@ -899,7 +960,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        JFreeChart chart = ChartFactory.createBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ADVERSAIRES PAR ÉQUIPE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ADVERSAIRES"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MATCHS"), datas, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart = ChartFactory.createBarChart(
+                Translate.translate(CS_OpponentsByTeam),
+                Translate.translate(CS_Opponents),
+                Translate.translate(CS_MatchsCount),
+                datas, PlotOrientation.VERTICAL, true, true, true);
 
         final CategoryPlot plot = chart.getCategoryPlot();
 
@@ -926,6 +991,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
         repaint();
     }
 
+    private static final String CS_OpponentsByTeam = "ADVERSAIRES PAR ÉQUIPE";
+    private static final String CS_OpponentsByCoach = "ADVERSAIRES COACH";
+    private static final String CS_Opponents = "ADVERSAIRES";
+    private static final String CS_MatchsCount = "NOMBRE DE MATCHS";
+
     /**
      * Update individual positions graph
      */
@@ -951,7 +1021,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
             }
         }
 
-        JFreeChart chart = ChartFactory.createBarChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ADVERSAIRES PAR ÉQUIPE"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ADVERSAIRES"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("NOMBRE DE MATCHS"), datas, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart = ChartFactory.createBarChart(
+                 Translate.translate(CS_OpponentsByCoach),
+                Translate.translate(CS_Opponents),
+                Translate.translate(CS_MatchsCount),
+                datas, PlotOrientation.VERTICAL, true, true, true);
 
         final CategoryPlot plot = chart.getCategoryPlot();
 
@@ -1000,7 +1074,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
             datas.addSeries(serie);
         }
 
-        JFreeChart chart = ChartFactory.createXYLineChart(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITIONS"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("POSITION"), datas, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                Translate.translate(CS_Rankings),
+                Translate.translate(CS_Round),
+                Translate.translate(CS_Ranking),
+                datas, PlotOrientation.VERTICAL, true, true, true);
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, true);
         plot.setRenderer(renderer);
