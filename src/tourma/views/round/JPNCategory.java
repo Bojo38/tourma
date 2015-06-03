@@ -1,12 +1,12 @@
 package tourma.views.round;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
@@ -204,9 +204,13 @@ public final class JPNCategory extends javax.swing.JPanel {
         }
     }
 
+    private final static String CS_GeneralByCategory="GENERAL PAR CATEGORIE";
+    
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
-        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CATEGORIE") + ": ") + mCategory.getName(), mRoundNumber, mTournament, (MjtRanking) jtbCategory.getModel(), 0);
+        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
+                Translate.translate(CS_GeneralByCategory) + ": " 
+                        + mCategory.getName(), mRoundNumber, mTournament, (MjtRanking) jtbCategory.getModel(), 0);
         jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -218,13 +222,5 @@ public final class JPNCategory extends javax.swing.JPanel {
     private javax.swing.JTable jtbCategory;
     private javax.swing.JTable jtbTeam;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JPNCategory.class.getName());
 
-    /*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-     throw new java.io.NotSerializableException(getClass().getName());
-     }
-
-     private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-     throw new java.io.NotSerializableException(getClass().getName());
-     }*/
 }

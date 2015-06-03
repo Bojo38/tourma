@@ -14,7 +14,6 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +30,7 @@ import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankIndiv;
 import tourma.tableModel.MjtMatches;
@@ -47,18 +47,30 @@ import tourma.views.report.JdgRound;
  * @author Frederic Berger
  */
 public final class JPNRound extends javax.swing.JPanel {
+
     private static final long serialVersionUID = 31L;
 
     private final Round mRound;
     private final int mRoundNumber;
     private final Tournament mTournament;
     private JPNTeamRound mJpnTeamRound = null;
-    private JPNClanRound mJpnClanRound = null;
+    private JPNClan mJpnClanRound = null;
     private boolean mRoundOnly = false;
     private boolean mNafOnly = false;
 
+    private final static String CS_ByTeam = "ByTeam";
+    private final static String CS_ByClan = "ByClan";
+    private final static String CS_None = "None";
+    private final static String CS_Group = "Group";
+    private final static String CS_Category = "Category";
+    private final static String CS_Pool = "Pool";
+    private final static String CS_GeneralByCoach = "GENERAL PAR COACH";
+    private final static String CS_ChooseARosterFor = "CHOISISSEZ UN ROSTER POUR ";
+    private final static String CS_Roster = "Roster";
+
     /**
      * Creates new form JPNRound
+     *
      * @param roundNumber
      * @param r
      * @param t
@@ -71,33 +83,41 @@ public final class JPNRound extends javax.swing.JPanel {
 
         if (mTournament.getParams().isTeamTournament()) {
             mJpnTeamRound = new JPNTeamRound(r, t);
-            jtpGlobal.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam"), new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/TEAM.PNG"))), mJpnTeamRound);
+            jtpGlobal.addTab(
+                    Translate.translate(CS_ByTeam),
+                    new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png"
+                            )), mJpnTeamRound);
         }
         if (mTournament.getParams().isEnableClans()) {
-            mJpnClanRound = new JPNClanRound(r, t);
-            jtpGlobal.addTab(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByClan"), new javax.swing.ImageIcon(getClass().getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("/TOURMA/IMAGES/CLAN.PNG"))), mJpnClanRound);
+            mJpnClanRound = new JPNClan(r, t);
+            jtpGlobal.addTab(
+                    Translate.translate(CS_ByClan),
+                    new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png"
+                            )), mJpnClanRound);
         }
 
         if (mTournament.getGroupsCount() > 1) {
             for (int i = 0; i < mTournament.getGroupsCount(); i++) {
                 final Group g = mTournament.getGroup(i);
-                if (!g.getName().equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("AUCUN"))) {
+                if (!g.getName().equals(
+                        Translate.translate(CS_None)
+                )) {
                     final JPNGroup jpnGroup = new JPNGroup(t, g, mRoundNumber);
                     jtpGlobal.addTab(
-                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Group")+" "+ g.getName(),
+                            Translate.translate(CS_Group) + " " + g.getName(),
                             new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")),
                             jpnGroup);
                 }
             }
         }
 
-        if (mTournament.getCategoriesCount() >0) {
+        if (mTournament.getCategoriesCount() > 0) {
             for (int i = 0; i < mTournament.getCategoriesCount(); i++) {
                 final Category c = mTournament.getCategory(i);
                 if (!c.getName().equals(StringConstants.CS_NONE)) {
                     final JPNCategory jpnCategory = new JPNCategory(t, c, mRoundNumber);
                     jtpGlobal.addTab(
-                            java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Category")+" "+ c.getName(),
+                            Translate.translate(CS_Category) + " " + c.getName(),
                             new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group2.png")),
                             jpnCategory);
                 }
@@ -107,30 +127,30 @@ public final class JPNRound extends javax.swing.JPanel {
         if (mTournament.getPoolCount() >= 1) {
             for (int i = 0; i < mTournament.getPoolCount(); i++) {
                 final Pool p = mTournament.getPool(i);
-                final JPNPoolRound jpnPool = new JPNPoolRound(r, t, p);
+                final JPNPool jpnPool = new JPNPool(r, t, p);
                 jtpGlobal.addTab(
-                        java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool")+" "+ p.getName(),
+                        Translate.translate(CS_Pool) + " " + p.getName(),
                         new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Pool.png")), jpnPool);
             }
         }
 
         ArrayList<Team> teams = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                teams.add(Tournament.getTournament().getTeam(cpt));
-            }
+        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
+            teams.add(Tournament.getTournament().getTeam(cpt));
+        }
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
             final Criteria criteria = mTournament.getParams().getCriteria(i);
-             final ArrayList<Coach> coaches = new ArrayList<>();
-                for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
-                    coaches.add(Tournament.getTournament().getCoach(cpt));
-                }
-            final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, Tournament.getTournament(),coaches,teams, mRound, false, false);
+            final ArrayList<Coach> coaches = new ArrayList<>();
+            for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
+                coaches.add(Tournament.getTournament().getCoach(cpt));
+            }
+            final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, Tournament.getTournament(), coaches, teams, mRound, false, false);
             jtpAnnexRankings.add(criteria.getName(), jpn);
         }
 
-        mNafOnly=MainFrame.getMainFrame().isNafOnly();
-        mRoundOnly=MainFrame.getMainFrame().isRoundOnly();
-        
+        mNafOnly = MainFrame.getMainFrame().isNafOnly();
+        mRoundOnly = MainFrame.getMainFrame().isRoundOnly();
+
         update();
     }
 
@@ -167,8 +187,7 @@ public final class JPNRound extends javax.swing.JPanel {
             }
 
 //            jbtDeleteRound.setEnabled(!locked);
-
-            final MjtMatches model = new MjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().isTeamTournament(), true,mNafOnly);
+            final MjtMatches model = new MjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().isTeamTournament(), true, mNafOnly);
             jtbMatches.setModel(model);
             jtbMatches.setDefaultRenderer(String.class, model);
             jtbMatches.setDefaultRenderer(Integer.class, model);
@@ -180,8 +199,8 @@ public final class JPNRound extends javax.swing.JPanel {
 
             if (mRoundNumber < mTournament.getRoundsCount()) {
                 final boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
-                
-                 final ArrayList<Coach> coaches = new ArrayList<>();
+
+                final ArrayList<Coach> coaches = new ArrayList<>();
                 for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
                     coaches.add(Tournament.getTournament().getCoach(cpt));
                 }
@@ -191,7 +210,7 @@ public final class JPNRound extends javax.swing.JPanel {
                 jtbRankingIndiv.setDefaultRenderer(Integer.class, mRanking);
 
                 for (int i = 0; i < jtpAnnexRankings.getComponentCount(); i++) {
-                    ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).setRoundOnly( mRoundOnly);
+                    ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).setRoundOnly(mRoundOnly);
                     ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
                 }
                 TableFormat.setColumnSize(jtbRankingIndiv);
@@ -202,23 +221,23 @@ public final class JPNRound extends javax.swing.JPanel {
             Object panel;
             panel = jtpGlobal.getComponent(i);
             if (panel instanceof JPNGroup) {
-                ((JPNGroup) panel).setRoundOnly( mRoundOnly);
+                ((JPNGroup) panel).setRoundOnly(mRoundOnly);
                 ((JPNGroup) panel).update();
             } else {
                 if (panel instanceof JPNTeamRound) {
-                    ((JPNTeamRound) panel).setRoundOnly( mRoundOnly);
+                    ((JPNTeamRound) panel).setRoundOnly(mRoundOnly);
                     ((JPNTeamRound) panel).update();
                 } else {
-                    if (panel instanceof JPNClanRound) {
-                        ((JPNClanRound) panel).setRoundOnly( mRoundOnly);
-                        ((JPNClanRound) panel).update();
+                    if (panel instanceof JPNClan) {
+                        ((JPNClan) panel).setRoundOnly(mRoundOnly);
+                        ((JPNClan) panel).update();
                     } else {
-                        if (panel instanceof JPNPoolRound) {
-                            ((JPNPoolRound) panel).setRoundOnly( mRoundOnly);
-                            ((JPNPoolRound) panel).update();
+                        if (panel instanceof JPNPool) {
+                            ((JPNPool) panel).setRoundOnly(mRoundOnly);
+                            ((JPNPool) panel).update();
                         } else {
                             if (panel instanceof JPNCategory) {
-                                ((JPNCategory) panel).setRoundOnly( mRoundOnly);
+                                ((JPNCategory) panel).setRoundOnly(mRoundOnly);
                                 ((JPNCategory) panel).update();
                             } else {
                                 if (panel instanceof JPNCup) {
@@ -368,6 +387,7 @@ public final class JPNRound extends javax.swing.JPanel {
         jtpGlobal.addTab(bundle.getString("IndividualRankingKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User.png")), jSplitPane1); // NOI18N
 
         add(jtpGlobal, java.awt.BorderLayout.CENTER);
+        jtpGlobal.getAccessibleContext().setAccessibleName(bundle.getString("Matchs")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -400,12 +420,14 @@ public final class JPNRound extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
                 final boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
-                 final ArrayList<Coach> coaches = new ArrayList<>();
+                final ArrayList<Coach> coaches = new ArrayList<>();
                 for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
                     coaches.add(Tournament.getTournament().getCoach(cpt));
                 }
                 final MjtRankingIndiv model = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool);
-                final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR COACH"), i + 1, mTournament, model, 0);
+                final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
+                        Translate.translate(CS_GeneralByCoach),
+                        i + 1, mTournament, model, 0);
                 jdg.setVisible(true);
                 break;
             }
@@ -421,7 +443,7 @@ public final class JPNRound extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
                 final boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
-                 final ArrayList<Coach> coaches = new ArrayList<>();
+                final ArrayList<Coach> coaches = new ArrayList<>();
                 for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
                     coaches.add(Tournament.getTournament().getCoach(cpt));
                 }
@@ -460,7 +482,7 @@ public final class JPNRound extends javax.swing.JPanel {
     public void setRoundOnly(boolean roundonly) {
         mRoundOnly = roundonly;
     }
-    
+
     public void setNafOnly(boolean nafonly) {
         mNafOnly = nafonly;
     }
@@ -487,12 +509,16 @@ public final class JPNRound extends javax.swing.JPanel {
                     JPanel jpn = new JPanel();
                     jpn.setLayout(new BorderLayout());
 
-                    JLabel jlb = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CHOISISSEZ UN ROSTER POUR ")+coach.getName());
+                    JLabel jlb = new JLabel(
+                            Translate.translate(CS_ChooseARosterFor)+" "
+                            + coach.getName());
 
                     jpn.add(jlb, BorderLayout.NORTH);
                     jpn.add(jcbRoster, BorderLayout.CENTER);
 
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROSTER"), JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn,
+                            Translate.translate(CS_Roster),
+                            JOptionPane.QUESTION_MESSAGE);
 
                     int index = jcbRoster.getSelectedIndex();
                     if (col == 1) {
@@ -525,13 +551,5 @@ public final class JPNRound extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jtpAnnexRankings;
     private javax.swing.JTabbedPane jtpGlobal;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JPNRound.class.getName());
-    
-/*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
 }

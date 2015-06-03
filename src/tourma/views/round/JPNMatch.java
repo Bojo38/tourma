@@ -14,6 +14,7 @@ import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -108,12 +109,12 @@ public class JPNMatch extends javax.swing.JPanel {
         if ((m.getCompetitor1() != Coach.getNullCoach()) && (m.getCompetitor1() != Team.getNullTeam())) {
             jlbPlayer1.setText(m.getCompetitor1().getName());
         } else {
-            jlbPlayer1.setText("");
+            jlbPlayer1.setText(StringConstants.CS_NULL);
         }
         if ((m.getCompetitor2() != Coach.getNullCoach()) && (m.getCompetitor2() != Team.getNullTeam())) {
             jlbPlayer2.setText(m.getCompetitor2().getName());
         } else {
-            jlbPlayer2.setText("");
+            jlbPlayer2.setText(StringConstants.CS_NULL);
         }
 
         if (!winner) {

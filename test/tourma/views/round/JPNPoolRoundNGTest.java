@@ -37,25 +37,25 @@ public class JPNPoolRoundNGTest {
     }
 
     /**
-     * Test of update method, of class JPNPoolRound.
+     * Test of update method, of class JPNPool.
      */
     @Test
     public void testUpdate() {
         System.out.println("update");
-        JPNPoolRound instance = null;
+        JPNPool instance = null;
         instance.update();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setRoundOnly method, of class JPNPoolRound.
+     * Test of setRoundOnly method, of class JPNPool.
      */
     @Test
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean r = false;
-        JPNPoolRound instance = null;
+        JPNPool instance = null;
         instance.setRoundOnly(r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

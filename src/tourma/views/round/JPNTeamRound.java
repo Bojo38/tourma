@@ -12,7 +12,6 @@ package tourma.views.round;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import tourma.MainFrame;
@@ -24,6 +23,7 @@ import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankTeam;
 import tourma.tableModel.MjtMatchTeams;
@@ -48,6 +48,8 @@ public final class JPNTeamRound extends javax.swing.JPanel {
      */
     private boolean mRoundOnly = false;
 
+    private static final String CS_Matchs="MATCHS";
+    
     /**
      * Creates new form JPNTeamRound
      *
@@ -63,8 +65,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
             final JScrollPane jsp = new JScrollPane();
             mJtbTeamMatch = new JTable();
             jsp.setViewportView(mJtbTeamMatch);
-            jtpTeams.add(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCHS"), jsp);
-            /*jpnTeam.add(jsp, BorderLayout.EAST);*/
+            jtpTeams.add(Translate.translate(CS_Matchs), jsp);
             jbtShowMatchTeam.setVisible(true);
         } else {
             jbtShowMatchTeam.setVisible(false);
@@ -147,6 +148,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         jtpTeams.addTab(bundle.getString("CLASSEMENT"), jScrollPane3); // NOI18N
 
         jpnTeam.add(jtpTeams, java.awt.BorderLayout.CENTER);
+        jtpTeams.getAccessibleContext().setAccessibleName(bundle.getString("Ranking")); // NOI18N
 
         jbtGeneralTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGeneralTeam.setText(bundle.getString("GeneralRankingKey")); // NOI18N
@@ -187,6 +189,8 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private static final String CS_generalByTeam="GENERAL PAR EQUIPE";
+    
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralTeamActionPerformed
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
@@ -198,7 +202,9 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         }
                 final MjtRankingTeam model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), i,
                         teams, mRoundOnly);
-                final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR EQUIPE"), i + 1, mTournament, model, 0);
+                final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, 
+                        Translate.translate(CS_generalByTeam),
+                        i + 1, mTournament, model, 0);
                 jdg.setVisible(true);
                 break;
             }
@@ -311,14 +317,6 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         jtbRankingTeam.setRowHeight(30);
 
     }
-    private static final Logger LOG = Logger.getLogger(JPNTeamRound.class.getName());
-    
-/*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
     
 }

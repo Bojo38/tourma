@@ -12,7 +12,6 @@ package tourma.views.round;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
@@ -20,6 +19,7 @@ import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtRankingClan;
@@ -31,7 +31,7 @@ import tourma.views.report.JdgRanking;
  *
  * @author Frederic Berger
  */
-public final class JPNClanRound extends javax.swing.JPanel {
+public final class JPNClan extends javax.swing.JPanel {
 
     private final Round mRound;
     private final Tournament mTournament;
@@ -47,7 +47,7 @@ public final class JPNClanRound extends javax.swing.JPanel {
      * @param r
      * @param t
      */
-    public JPNClanRound(final Round r, final Tournament t) {
+    public JPNClan(final Round r, final Tournament t) {
         initComponents();
         mRound = r;
         mTournament = t;
@@ -145,6 +145,8 @@ public final class JPNClanRound extends javax.swing.JPanel {
         add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private final static String CS_GeneralByClan="GENERAL PAR CLAN";
+    
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralClanActionPerformed
      for (int i = 0; i < mTournament.getRoundsCount(); i++) {
@@ -156,7 +158,9 @@ public final class JPNClanRound extends javax.swing.JPanel {
              } else {
                  model = new MjtRankingClan(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mTournament.getDisplayClans(), mRoundOnly);
              }
-             final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR CLAN"), i + 1, mTournament, model, 0);
+             final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, 
+                     Translate.translate(CS_GeneralByClan),
+                     i + 1, mTournament, model, 0);
              jdg.setVisible(true);
              break;
          }
@@ -237,13 +241,5 @@ public final class JPNClanRound extends javax.swing.JPanel {
         }
         jtbRankingClan.setRowHeight(25);
     }
-    private static final Logger LOG = Logger.getLogger(JPNClanRound.class.getName());
-    
-/*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
 }

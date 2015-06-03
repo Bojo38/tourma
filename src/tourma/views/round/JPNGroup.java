@@ -1,11 +1,11 @@
 package tourma.views.round;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.utils.TableFormat;
@@ -69,7 +69,7 @@ public final class JPNGroup extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbGroup = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jbtGeneralClan = new javax.swing.JButton();
+        jbtGeneral = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -88,15 +88,15 @@ public final class JPNGroup extends javax.swing.JPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jbtGeneralClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jbtGeneralClan.setText(bundle.getString("GeneralRankingKey")); // NOI18N
-        jbtGeneralClan.addActionListener(new java.awt.event.ActionListener() {
+        jbtGeneral.setText(bundle.getString("GeneralRankingKey")); // NOI18N
+        jbtGeneral.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGeneralClanActionPerformed(evt);
+                jbtGeneralActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtGeneralClan);
+        jPanel1.add(jbtGeneral);
 
         add(jPanel1, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
@@ -127,27 +127,22 @@ public final class JPNGroup extends javax.swing.JPanel {
         TableFormat.setColumnSize(jtbGroup);
     }
 
+    private static final String CS_Group="GENERAL PAR GROUPE";
     
 
      @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jbtGeneralClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralClanActionPerformed
-        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, java.util.ResourceBundle.getBundle("tourma/languages/language").getString("GENERAL PAR GROUPE")+": " +mGroup.getName(), mRoundNumber, mTournament, (MjtRanking) jtbGroup.getModel(), 0);
+    private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
+        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, 
+               Translate.translate(CS_Group)+": " +mGroup.getName(), mRoundNumber, mTournament, (MjtRanking) jtbGroup.getModel(), 0);
         jdg.setVisible(true);
-}//GEN-LAST:event_jbtGeneralClanActionPerformed
+}//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbtGeneralClan;
+    private javax.swing.JButton jbtGeneral;
     private javax.swing.JTable jtbGroup;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JPNGroup.class.getName());
-/*    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
     
     
 }

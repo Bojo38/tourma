@@ -37,25 +37,25 @@ public class JPNClanRoundNGTest {
     }
 
     /**
-     * Test of setRoundOnly method, of class JPNClanRound.
+     * Test of setRoundOnly method, of class JPNClan.
      */
     @Test
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean r = false;
-        JPNClanRound instance = null;
+        JPNClan instance = null;
         instance.setRoundOnly(r);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of update method, of class JPNClanRound.
+     * Test of update method, of class JPNClan.
      */
     @Test
     public void testUpdate() {
         System.out.println("update");
-        JPNClanRound instance = null;
+        JPNClan instance = null;
         instance.update();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
