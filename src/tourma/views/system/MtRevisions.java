@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 
 /**
@@ -43,15 +44,18 @@ public class MtRevisions extends AbstractTableModel implements TableCellRenderer
         return mVersions.size();
     }
 
+    private static final String CS_Version="Version";
+    private static final String CS_Description="Description";
+    
     @Override
     public String getColumnName(final int col) {
-        String result = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Version");
+                result = Translate.translate(CS_Version);
                 break;
             case 1:
-                result = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Description");
+                result = Translate.translate(CS_Description);
                 break;
             default:
         }
@@ -60,7 +64,7 @@ public class MtRevisions extends AbstractTableModel implements TableCellRenderer
 
     @Override
     public Object getValueAt(final int row,final int col) {
-        String tmp = java.util.ResourceBundle.getBundle("tourma/languages/language").getString("");
+        String tmp = StringConstants.CS_NULL;
         switch (col) {
             case 0:
                 tmp = (String) (mVersions.get(row));

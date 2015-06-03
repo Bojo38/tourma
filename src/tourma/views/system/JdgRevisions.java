@@ -14,7 +14,6 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.swing.ListSelectionModel;
 import tourma.utility.Version;
 
@@ -48,15 +47,19 @@ public final class JdgRevisions extends javax.swing.JDialog {
         final ArrayList descriptions = new ArrayList();
 
         int n = 1;
-        String tmpV = Version.getSingleton().getProperty(Integer.toString(n) + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("-V"));
-        String tmpD = Version.getSingleton().getProperty(Integer.toString(n) + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("-D"));
+        String tmpV = Version.getSingleton().getProperty(Integer.toString(n) + 
+                "-V");
+        String tmpD = Version.getSingleton().getProperty(Integer.toString(n) + 
+                "-D");
 
         while (tmpV != null) {
             versions.add(tmpV);
             descriptions.add(tmpD);
             n++;
-            tmpV = Version.getSingleton().getProperty(Integer.toString(n) + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("-V"));
-            tmpD = Version.getSingleton().getProperty(Integer.toString(n) + java.util.ResourceBundle.getBundle("tourma/languages/language").getString("-D"));
+            tmpV = Version.getSingleton().getProperty(Integer.toString(n) + 
+                    "-V");
+            tmpD = Version.getSingleton().getProperty(Integer.toString(n) + 
+                    "-D");
         }
 
         final MtRevisions model = new MtRevisions(versions, descriptions);
@@ -129,5 +132,5 @@ public final class JdgRevisions extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jxtVersions;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JdgRevisions.class.getName());
+    
 }
