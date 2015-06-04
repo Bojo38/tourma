@@ -33,6 +33,7 @@ import tourma.data.Group;
 import tourma.data.Pool;
 import tourma.data.Ranking;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.utils.Ranked;
@@ -55,6 +56,13 @@ public final class JFullScreenIndivRank extends JFullScreen {
     private boolean loopStop = false;
     private int indivRankType = C_GENERAL;
 
+    private final static String CS_Pool="Pool";
+    private final static String CS_Team="Team";
+    private final static String CS_Clan="Clan";
+    private final static String CS_Coach="Coach";
+    private final static String CS_Roster="Roster";
+    private final static String CS_RosterName="RosterName";
+    
     public JFullScreenIndivRank(Socket s) throws IOException {
         this(s, C_GENERAL);
     }
@@ -223,7 +231,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                         coaches, Tournament.getTournament().getParams().isTeamTournament(),
                         false,
                         Tournament.getTournament().getPoolCount() > 0);
-                ranking.setDetail("General");
+                ranking.setDetail(Ranking.CS_General);
                 rankeds.add(ranking);
 
             }
@@ -349,7 +357,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
             int index = 1;
 
             if (indivRankType == C_POOL) {
-                JLabel jlbTPool = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                JLabel jlbTPool = new JLabel(Translate.translate(CS_Pool));
                 jlbTPool.setFont(f1);
                 jlbTPool.setOpaque(true);
                 jlbTPool.setBackground(Color.BLACK);
@@ -360,7 +368,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
             }
 
             if (Tournament.getTournament().getParams().isTeamTournament()) {
-                JLabel jlbTTeam = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
+                JLabel jlbTTeam = new JLabel(Translate.translate(CS_Team));
                 jlbTTeam.setFont(f1);
                 jlbTTeam.setOpaque(true);
                 jlbTTeam.setBackground(Color.BLACK);
@@ -370,7 +378,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 index += 5;
             }
             if (Tournament.getTournament().getClansCount() > 1) {
-                JLabel jlbTClan = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
+                JLabel jlbTClan = new JLabel(Translate.translate(CS_Clan));
                 jlbTClan.setFont(f1);
                 jlbTClan.setOpaque(true);
 
@@ -380,7 +388,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 index += 5;
             }
 
-            JLabel jlbTCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Coach"));
+            JLabel jlbTCoach = new JLabel(Translate.translate(CS_Coach));
             jlbTCoach.setFont(f1);
             jlbTCoach.setOpaque(true);
             jlbTCoach.setBackground(Color.BLACK);
@@ -388,7 +396,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
             jpn.add(jlbTCoach, getGridbBagConstraints(index, line, 1, 5));
             index += 5;
 
-            JLabel jlbTRoster = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Roster"));
+            JLabel jlbTRoster = new JLabel(Translate.translate(CS_Roster));
             jlbTRoster.setFont(f1);
             jlbTRoster.setOpaque(true);
             jlbTRoster.setBackground(Color.BLACK);
@@ -396,7 +404,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
             jpn.add(jlbTRoster, getGridbBagConstraints(index, line, 1, 3));
             index += 3;
 
-            JLabel jlbTRosterName = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("RosterName"));
+            JLabel jlbTRosterName = new JLabel(Translate.translate(CS_RosterName));
             jlbTRosterName.setFont(f1);
             jlbTRosterName.setOpaque(true);
             jlbTRosterName.setBackground(Color.BLACK);
@@ -537,5 +545,5 @@ public final class JFullScreenIndivRank extends JFullScreen {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JFullScreenIndivRank.class.getName());
+    
 }

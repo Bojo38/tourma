@@ -288,7 +288,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
     protected Semaphore semAnimate = new Semaphore(1);
 
     protected void keyPressed(KeyEvent evt) {
-        LOG.log(Level.FINE, "KeyPressed: " + evt.getKeyChar());
+//        LOG.log(Level.FINE, "KeyPressed: " + evt.getKeyChar());
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
             if (socket != null) {

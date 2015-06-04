@@ -36,6 +36,7 @@ import tourma.data.Pool;
 import tourma.data.Ranking;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtAnnexRankTeam;
@@ -277,6 +278,10 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
         }
         this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
     }
+    
+    private final static String CS_Clan="Clan";
+    private final static String CS_Team="Team";
+    private final static String CS_Pool="Pool";
 
     private void buildPanel(ArrayList<Ranked> rankeds) throws FontFormatException {
 
@@ -333,7 +338,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             column++;
 
             if (forPool) {
-                JLabel titlePool = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                JLabel titlePool = new JLabel(Translate.translate(CS_Pool));
                 titlePool.setHorizontalAlignment(JLabel.CENTER);
                 titlePool.setBackground(Color.BLACK);
                 titlePool.setForeground(Color.WHITE);
@@ -342,9 +347,9 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 column++;
             }
 
-            JLabel titleCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
+            JLabel titleCoach = new JLabel(Translate.translate(CS_Team));
             if (!team) {
-                titleCoach.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
+                titleCoach.setText(Translate.translate(CS_Clan));
             }
 
             titleCoach.setHorizontalAlignment(JLabel.CENTER);
@@ -377,7 +382,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             column++;
 
             if (forPool) {
-                JLabel titlePool2 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                JLabel titlePool2 = new JLabel(Translate.translate(CS_Pool));
                 titlePool2.setHorizontalAlignment(JLabel.CENTER);
                 titlePool2.setBackground(Color.BLACK);
                 titlePool2.setForeground(Color.WHITE);
@@ -386,9 +391,9 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 column++;
             }
 
-            JLabel titleCoach2 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
+            JLabel titleCoach2 = new JLabel(Translate.translate(CS_Team));
             if (!team) {
-                titleCoach2.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
+                titleCoach2.setText(Translate.translate(CS_Clan));
             }
 
             titleCoach2.setHorizontalAlignment(JLabel.CENTER);
@@ -421,7 +426,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             column++;
 
             if (forPool) {
-                JLabel titlePool3 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                JLabel titlePool3 = new JLabel(Translate.translate(CS_Pool));
                 titlePool3.setHorizontalAlignment(JLabel.CENTER);
                 titlePool3.setBackground(Color.BLACK);
                 titlePool3.setForeground(Color.WHITE);
@@ -430,9 +435,9 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 column++;
             }
 
-            JLabel titleCoach3 = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
+            JLabel titleCoach3 = new JLabel(Translate.translate(CS_Team));
             if (!team) {
-                titleCoach3.setText(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Clan"));
+                titleCoach3.setText(Translate.translate(CS_Clan));
             }
             titleCoach3.setHorizontalAlignment(JLabel.CENTER);
             titleCoach3.setBackground(Color.BLACK);
@@ -441,7 +446,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             jpn.add(titleCoach3, getGridbBagConstraints(column, line, 1, 5));
             column += 5;
 
-            JLabel titleValue3 = new JLabel("diff " + crit.getName());
+            JLabel titleValue3 = new JLabel("+/- " + crit.getName());
             titleValue3.setHorizontalAlignment(JLabel.CENTER);
             titleValue3.setBackground(Color.BLACK);
             titleValue3.setForeground(Color.WHITE);

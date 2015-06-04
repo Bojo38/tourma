@@ -29,6 +29,7 @@ import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Ranking;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingClan;
 import tourma.utils.Ranked;
@@ -166,6 +167,9 @@ public final class JFullScreenClanRank extends JFullScreen {
         this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
         repaint();
     }
+    
+    private static final String CS_Clan="Clan";
+    private static final String CS_Members="Members";
 
     private void buildPanel(Ranked ranked) throws FontFormatException {
 
@@ -193,16 +197,6 @@ public final class JFullScreenClanRank extends JFullScreen {
         Font f = font.deriveFont(Font.PLAIN, size);
 
         int computed_height = height / 20;
-
-        //final boolean forPool = (Tournament.getTournament().getPoolCount() > 0) && (!Tournament.getTournament().getRound(r).isCup());
-        /*ArrayList<Clan> clans = new ArrayList<>();
-        for (int i = 0; i <ranked.getRowCount(); i++) {
-            clans.add(Tournament.getTournament().getClan(i));
-        }*/
-        /*MjtRankingClan ranking = new MjtRankingClan(
-                round,
-                clans,
-                false);*/
 
         int nbCols = 0;
         if (Tournament.getTournament().getParams().isTeamTournament()) {
@@ -232,7 +226,7 @@ public final class JFullScreenClanRank extends JFullScreen {
 
         int index = 1;
 
-        JLabel jlbTCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CLAN"));
+        JLabel jlbTCoach = new JLabel(Translate.translate(CS_Clan));
         jlbTCoach.setFont(f1);
         jlbTCoach.setOpaque(true);
         jlbTCoach.setBackground(Color.BLACK);
@@ -240,7 +234,7 @@ public final class JFullScreenClanRank extends JFullScreen {
         jpn.add(jlbTCoach, getGridbBagConstraints(index, 0, 1, 5));
         index += 5;
 
-        JLabel jlbTCoachs = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Members"));
+        JLabel jlbTCoachs = new JLabel(Translate.translate(CS_Members));
         jlbTCoachs.setFont(f1);
         jlbTCoachs.setOpaque(true);
         jlbTCoachs.setBackground(Color.BLACK);
@@ -360,5 +354,4 @@ public final class JFullScreenClanRank extends JFullScreen {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JFullScreenClanRank.class.getName());
 }

@@ -31,6 +31,7 @@ import tourma.data.Pool;
 import tourma.data.Ranking;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingTeam;
 import tourma.utils.Ranked;
@@ -161,6 +162,9 @@ public final class JFullScreenTeamRank extends JFullScreen {
         semStart.release();
     }
 
+    private final static String CS_Pool="Pool";
+    private final static String CS_Team="Team";
+    
     private void buildPanel(ArrayList<Ranked> rankeds) throws FontFormatException {
 
         Font font;
@@ -210,7 +214,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
             int index = 1;
 
             if (forPool) {
-                JLabel jlbTPool = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Pool"));
+                JLabel jlbTPool = new JLabel(Translate.translate(CS_Pool));
                 jlbTPool.setFont(f1);
                 jlbTPool.setOpaque(true);
                 jlbTPool.setBackground(Color.BLACK);
@@ -220,7 +224,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
                 index++;
             }
 
-            JLabel jlbTCoach = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Team"));
+            JLabel jlbTCoach = new JLabel(Translate.translate(CS_Team));
             jlbTCoach.setFont(f1);
             jlbTCoach.setOpaque(true);
             jlbTCoach.setBackground(Color.BLACK);

@@ -45,7 +45,9 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.Sleeping;
+import tourma.utility.StringConstants;
 import tourma.utility.Suspendable;
 import tourma.utils.ImageTreatment;
 import tourma.utils.TourmaProtocol;
@@ -118,9 +120,9 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                             Document doc = sb.build(new StringReader(buffer));
                             Tournament.getTournament().loadRosters(doc.getRootElement());
-                            Element element = doc.getRootElement().getChild("Parameters");
+                            Element element = doc.getRootElement().getChild(StringConstants.CS_PARAMETERS);
                             Tournament.getTournament().getParams().setXMLElement(element);
-                            element = doc.getRootElement().getChild("Round");
+                            element = doc.getRootElement().getChild(StringConstants.CS_ROUND);
                             r = new Round();
                             r.setXMLElementForDisplay(element);
 
@@ -866,6 +868,9 @@ public final class JFullScreenMatchs extends JFullScreen {
             suspended = s;
         }
 
+        private static final String CS_Round="Round";
+        private static final String CS_Table="Table";
+        
         @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD", justification = "Sleep is used for animation")
         @Override
         @SuppressWarnings("SleepWhileInLoop")
@@ -921,12 +926,12 @@ public final class JFullScreenMatchs extends JFullScreen {
                             jlbTitle1 = new JLabel();
                             int line_height = (height * 1 / 10);
                             jlbTitle1.setFont(getFont().deriveFont((float) line_height));
-                            jlbTitle1.setText("Round " + (Tournament.getTournament().getRoundIndex(round) + 1));
+                            jlbTitle1.setText(Translate.translate(CS_Round)+" " + (Tournament.getTournament().getRoundIndex(round) + 1));
 
                             jlbTitle2 = new JLabel();
                             line_height = (height * 1 / 20);
                             jlbTitle2.setFont(getFont().deriveFont((float) line_height));
-                            jlbTitle2.setText("Table " + (i + 1));
+                            jlbTitle2.setText(Translate.translate(CS_Table)+" " + (i + 1));
 
                             jpnContent.add(jlbTitle1);
                             jpnContent.add(jlbTitle2);
@@ -1024,11 +1029,5 @@ public final class JFullScreenMatchs extends JFullScreen {
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
 
-    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
-
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
+    
 }
