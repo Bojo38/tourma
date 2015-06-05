@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileFilter;
 import tourma.data.Clan;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.ImageTreatment;
@@ -166,7 +167,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         add(jPanel12, java.awt.BorderLayout.NORTH);
 
         jbtAddClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAddClan.setText(bundle.getString("AddKey")); // NOI18N
+        jbtAddClan.setText(bundle.getString("Add")); // NOI18N
         jbtAddClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddClanActionPerformed(evt);
@@ -175,7 +176,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         jPanel13.add(jbtAddClan);
 
         jbtEditClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
-        jbtEditClan.setText(bundle.getString("EditKey")); // NOI18N
+        jbtEditClan.setText(bundle.getString("Edit")); // NOI18N
         jbtEditClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtEditClanActionPerformed(evt);
@@ -184,7 +185,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         jPanel13.add(jbtEditClan);
 
         jbtEditClanIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
-        jbtEditClanIcon.setText(bundle.getString("EditIconKey")); // NOI18N
+        jbtEditClanIcon.setText(bundle.getString("EditIcon")); // NOI18N
         jbtEditClanIcon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtEditClanIconActionPerformed(evt);
@@ -193,7 +194,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         jPanel13.add(jbtEditClanIcon);
 
         jbtRemoveClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemoveClan.setText(bundle.getString("RemoveKey")); // NOI18N
+        jbtRemoveClan.setText(bundle.getString("Remove")); // NOI18N
         jbtRemoveClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRemoveClanActionPerformed(evt);
@@ -273,21 +274,25 @@ public final class JPNParamClan extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddClanActionPerformed
 
-        final String enterClanName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterClanNameKey");
+        final String enterClanName = 
+                Translate.translate(CS_EnterClanNameKey);
         final String clanName = JOptionPane.showInputDialog(this, enterClanName);
         if (clanName != null) {
-            if (!clanName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+            if (!clanName.equals(StringConstants.CS_NULL)) {
                 mTournament.addClan(new Clan(clanName));
             }
         }
         update();
     }//GEN-LAST:event_jbtAddClanActionPerformed
+    
+    private final static String CS_EnterClanNameKey="EnterClanNameKey";
+    
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtEditClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditClanActionPerformed
-        final String enterClanName = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterClanNameKey");
-        final String clanName = ((Clan) jlsClans.getSelectedValue()).toString();
+        final String enterClanName = Translate.translate(CS_EnterClanNameKey);
+        final String clanName = jlsClans.getSelectedValue().toString();
         final String newClanName = JOptionPane.showInputDialog(this, enterClanName, clanName);
-        if (!clanName.equals(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(""))) {
+        if (!clanName.equals(StringConstants.CS_NULL)) {
             mTournament.getClan(jlsClans.getSelectedIndex()).setName(newClanName);
         }
         update();
@@ -306,6 +311,9 @@ public final class JPNParamClan extends javax.swing.JPanel {
         updateSublist();
     }//GEN-LAST:event_jlsClansMouseClicked
 
+    private final static String CS_SelectAnPicture="SÉLECTIONNEZ UNE IMAGE";
+    private final static String CS_Picture="Picture";
+    
     private void jbtEditClanIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditClanIconActionPerformed
         if (jlsClans.getSelectedIndex() >= 0) {
             File folder;
@@ -329,7 +337,8 @@ public final class JPNParamClan extends javax.swing.JPanel {
 
             JComboBox combo = new JComboBox(objects);
             JPanel panel = new JPanel(new BorderLayout());
-            JLabel l = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SÉLECTIONNEZ UNE IMAGE"));
+            JLabel l = new JLabel(
+                    Translate.translate(CS_SelectAnPicture));
             panel.add(l, BorderLayout.NORTH);
             panel.add(combo, BorderLayout.CENTER);
 
@@ -340,7 +349,8 @@ public final class JPNParamClan extends javax.swing.JPanel {
             Clan c = mTournament.getClan(jlsClans.getSelectedIndex());
             if (combo.getSelectedItem() == empty) {
                 final JFileChooser jfc = new JFileChooser();
-                final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IMAGE"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+                final FileFilter filter1 = new ExtensionFileFilter(
+                        Translate.translate(CS_Picture), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
                 jfc.setFileFilter(filter1);
                 if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
@@ -453,11 +463,5 @@ public final class JPNParamClan extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNParamClan.class.getName());
 
-     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 }

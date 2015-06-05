@@ -214,7 +214,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot; 1:&quot;)" type="code"/>
+          <Connection code="Translate.translate(&quot;RankingCriteria&quot;)+&quot; 1:&quot;" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -247,7 +247,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot; 2:&quot;)" type="code"/>
+          <Connection code="Translate.translate(&quot;RankingCriteria&quot;)+&quot; 2:&quot;" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -280,7 +280,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot; 3:&quot;)" type="code"/>
+          <Connection code="Translate.translate(&quot;RankingCriteria&quot;)+&quot; 3:&quot;" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -313,7 +313,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot; 4:&quot;)" type="code"/>
+          <Connection code="Translate.translate(&quot;RankingCriteria&quot;)+&quot; 4:&quot;" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -346,7 +346,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot;RankingCriteria&quot;)+java.util.ResourceBundle.getBundle(&quot;tourma/languages/language&quot;).getString(&quot; 5:&quot;)" type="code"/>
+          <Connection code="Translate.translate(&quot;RankingCriteria&quot;)+&quot; 5:&quot;" type="code"/>
         </Property>
       </Properties>
     </Component>

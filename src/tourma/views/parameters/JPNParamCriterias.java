@@ -4,13 +4,13 @@
  */
 package tourma.views.parameters;
 
-import java.util.logging.Logger;
 import javax.swing.JSpinner;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtCriterias;
 /**
  *
@@ -28,6 +28,8 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         initComponents();
     }
 
+    private final static String CS_Criteria="CRITÈRE";
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,7 +102,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         });
         jPanel1.add(jcxTableBonus);
 
-        jcxTableCoefPerRound.setText(bundle.getString("TablePonderation")); // NOI18N
+        jcxTableCoefPerRound.setText(bundle.getString("TableBonusPonderation")); // NOI18N
         jcxTableCoefPerRound.setToolTipText(bundle.getString("BonusPointPonderationTooltip")); // NOI18N
         jcxTableCoefPerRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,7 +112,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         jPanel1.add(jcxTableCoefPerRound);
 
         jlbCoef.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbCoef.setText("Pondération des points table:");
+        jlbCoef.setText(bundle.getString("TablePonderation")); // NOI18N
         jPanel1.add(jlbCoef);
 
         jspCoef.setModel(new javax.swing.SpinnerNumberModel(1.0,0.0 ,1000.0,0.01));
@@ -127,7 +129,9 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
         final int nb = Tournament.getTournament().getParams().getCriteriaCount();
-        final Criteria c = new Criteria(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("CRITÈRE") + " " + Integer.toString(nb));
+        final Criteria c = new Criteria(
+                Translate.translate(CS_Criteria)
+                        + " " + Integer.toString(nb));
         Tournament.getTournament().getParams().addCriteria(c);
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             final Round r = mTournament.getRound(i);
@@ -201,13 +205,5 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
     private javax.swing.JSpinner jspCoef;
     private javax.swing.JTable jtbCriteria;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JPNParamCriterias.class.getName());
 
-    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
-
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 }

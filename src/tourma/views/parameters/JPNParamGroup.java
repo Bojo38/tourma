@@ -6,7 +6,6 @@ package tourma.views.parameters;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.ParseException;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -14,6 +13,7 @@ import tourma.data.Group;
 import tourma.data.GroupPoints;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 
 /**
  *
@@ -80,7 +80,8 @@ public final class JPNParamGroup extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("Edition des groupes"));
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GroupEdition"))); // NOI18N
         jPanel20.setLayout(new java.awt.GridLayout(1, 3, 2, 0));
 
         jPanel21.setLayout(new java.awt.BorderLayout(2, 2));
@@ -150,17 +151,16 @@ public final class JPNParamGroup extends javax.swing.JPanel {
 
         add(jPanel20, java.awt.BorderLayout.CENTER);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
-        jpnPointsModifiers.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("MODIFICATEURS DE POINTS"))); // NOI18N
+        jpnPointsModifiers.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PointsModifers"))); // NOI18N
         jpnPointsModifiers.setLayout(new java.awt.GridLayout(4, 3, 5, 0));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(bundle.getString("Selected Croup")); // NOI18N
+        jLabel1.setText(bundle.getString("SelectedGroup")); // NOI18N
         jpnPointsModifiers.add(jLabel1);
         jpnPointsModifiers.add(jLabel2);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText(bundle.getString("Opponent Group")); // NOI18N
+        jLabel3.setText(bundle.getString("OpponentGroup")); // NOI18N
         jpnPointsModifiers.add(jLabel3);
 
         jcbPointsSelectedGroup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -172,7 +172,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         jpnPointsModifiers.add(jcbPointsSelectedGroup);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("vs");
+        jLabel4.setText(bundle.getString("vs")); // NOI18N
         jpnPointsModifiers.add(jLabel4);
 
         jcbPointsOpponentGroup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -225,7 +225,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
 
         add(jpnPointsModifiers, java.awt.BorderLayout.SOUTH);
 
-        jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste de groupes"));
+        jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GroupList"))); // NOI18N
         jPanel18.setLayout(new java.awt.BorderLayout(1, 1));
 
         jlsGroups.setModel(new javax.swing.AbstractListModel() {
@@ -241,7 +241,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         jPanel19.setLayout(new java.awt.GridLayout(3, 1, 1, 1));
 
         jbtAddGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        jbtAddGroup.setText(bundle.getString("AJOUTER")); // NOI18N
+        jbtAddGroup.setText(bundle.getString("Add")); // NOI18N
         jbtAddGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddGroupActionPerformed(evt);
@@ -250,7 +250,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         jPanel19.add(jbtAddGroup);
 
         jbtRemoveGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
-        jbtRemoveGroup.setText(bundle.getString("RETIRER")); // NOI18N
+        jbtRemoveGroup.setText(bundle.getString("Remove")); // NOI18N
         jbtRemoveGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRemoveGroupActionPerformed(evt);
@@ -259,7 +259,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         jPanel19.add(jbtRemoveGroup);
 
         jbtRenameGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
-        jbtRenameGroup.setText(bundle.getString("RENOMMER")); // NOI18N
+        jbtRenameGroup.setText(bundle.getString("Rename")); // NOI18N
         jbtRenameGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRenameGroupActionPerformed(evt);
@@ -272,9 +272,12 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         add(jPanel18, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
 
+    private static final String CS_EnterNewGroupName="ENTREZ LE NOM DU NOUVEAU GROUPE";
+    
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddGroupActionPerformed
-        final String newGroup = JOptionPane.showInputDialog(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOM DU NOUVEAU GROUPE"));
+        final String newGroup = JOptionPane.showInputDialog(
+                Translate.translate(CS_EnterNewGroupName));
         if (newGroup != null) {
             Group ng = new Group(newGroup);
             mTournament.addGroup(ng);
@@ -305,13 +308,19 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             update();
         }
     }//GEN-LAST:event_jbtRemoveGroupActionPerformed
+    
+    private final static String CS_EnterGroupNewName="ENTREZ LE NOUVEAU NOM DU GROUPE";
+    
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRenameGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRenameGroupActionPerformed
 
         if (jlsGroups.getSelectedIndex() >= 0) {
             final String currentName = mTournament.getGroup(jlsGroups.getSelectedIndex()).getName();
 
-            final String newGroup = JOptionPane.showInputDialog(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ENTREZ LE NOUVEAU NOM DU GROUPE"), currentName);
+            
+            final String newGroup = JOptionPane.showInputDialog(
+                    Translate.translate(CS_EnterGroupNewName), 
+                    currentName);
             if (newGroup != null) {
                 mTournament.getGroup(jlsGroups.getSelectedIndex()).setName(newGroup);
                 update();
@@ -470,13 +479,6 @@ public final class JPNParamGroup extends javax.swing.JPanel {
      * Update Panel
      */
     public void update() {
-
-        /*final boolean bTourStarted = mTournament.getRoundsCount() > 0;
-         jbtAddGroup.setEnabled(!bTourStarted);
-         jbtRemoveGroup.setEnabled(!bTourStarted);
-         jbtRenameGroup.setEnabled(!bTourStarted);
-         jbtGrouToLeft.setEnabled(!bTourStarted);
-         jbtGroupToRight.setEnabled(!bTourStarted);*/
         final DefaultListModel groupModel = new DefaultListModel();
         final DefaultComboBoxModel groupsLeftModel = new DefaultComboBoxModel();
         final DefaultComboBoxModel groupsRightModel = new DefaultComboBoxModel();
@@ -550,13 +552,5 @@ public final class JPNParamGroup extends javax.swing.JPanel {
     private javax.swing.JList jlsRight;
     private javax.swing.JPanel jpnPointsModifiers;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JPNParamGroup.class.getName());
 
-    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
-
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
 }

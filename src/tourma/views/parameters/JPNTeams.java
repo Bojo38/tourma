@@ -5,15 +5,14 @@
 package tourma.views.parameters;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import tourma.JdgCoach;
 import tourma.JdgTeam;
 import tourma.MainFrame;
 import tourma.data.ETeamPairing;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.languages.Translate;
 import tourma.tableModel.MjtTeams;
-import tourma.utility.StringConstants;
 import tourma.utils.TableFormat;
 
 /**
@@ -122,6 +121,9 @@ public final class JPNTeams extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jbtRemoveTeamActionPerformed
 
+    private static final String CS_ByTeam="ByTeam";
+    private static final String CS_Single="Single";
+    private static final String CS_Membersnumber="MEMBERSNUMBER";
     /**
      * Update Panel
      */
@@ -135,12 +137,12 @@ public final class JPNTeams extends javax.swing.JPanel {
         if (mTournament.getParams().isTeamTournament()) {
             String text;
             if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
-                text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Single");
+                text = Translate.translate(CS_Single);
             } else {
-                text = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ByTeam");
+                text = Translate.translate(CS_ByTeam);
             }
             jlbDetails.setText(
-                    java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("MEMBERSNUMBER")
+                    Translate.translate(CS_Membersnumber)
                     + ": " + mTournament.getParams().getTeamMatesNumber()
                     + "("+text+")");
         } 
@@ -163,8 +165,6 @@ public final class JPNTeams extends javax.swing.JPanel {
             if (jtbTeam.getSelectedColumn() == 1) {
                 final JdgTeam jdg=new JdgTeam(MainFrame.getMainFrame(),true,t);
                 jdg.setVisible(true);
-                //final String name = JOptionPane.showInputDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EnterTeamName"), t.mName);
-                //t.mName = name;
             } else if (jtbTeam.getSelectedColumn() > 1) {
                 final JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, t.getCoach(jtbTeam.getSelectedColumn() - 2));
                 jdg.setVisible(true);
@@ -182,13 +182,4 @@ public final class JPNTeams extends javax.swing.JPanel {
     private javax.swing.JLabel jlbDetails;
     private javax.swing.JTable jtbTeam;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(JPNTeams.class.getName());
-    
-/*     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
-
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
 }
