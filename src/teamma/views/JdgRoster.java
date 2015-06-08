@@ -260,7 +260,8 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel14.setPreferredSize(new java.awt.Dimension(300, 150));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Assistants :");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
+        jLabel1.setText(bundle.getString("Assistants")); // NOI18N
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 30));
         jPanel3.add(jLabel1);
 
@@ -306,7 +307,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel14.add(jPanel3);
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel8.setText("Pom Pom girls :");
+        jLabel8.setText(bundle.getString("Cheerleaders")); // NOI18N
         jLabel8.setPreferredSize(new java.awt.Dimension(100, 30));
         jPanel15.add(jLabel8);
 
@@ -352,7 +353,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel14.add(jPanel15);
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel9.setText("Popularité :");
+        jLabel9.setText(bundle.getString("FanFactor")); // NOI18N
         jLabel9.setPreferredSize(new java.awt.Dimension(100, 30));
         jPanel16.add(jLabel9);
 
@@ -398,7 +399,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel14.add(jPanel16);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel10.setText("Relances :");
+        jLabel10.setText(bundle.getString("Rerolls")); // NOI18N
         jLabel10.setPreferredSize(new java.awt.Dimension(100, 30));
         jPanel17.add(jLabel10);
 
@@ -444,7 +445,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel14.add(jPanel17);
 
         jlbApothecary.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbApothecary.setText("Apothecary :");
+        jlbApothecary.setText(bundle.getString("Apothecary")); // NOI18N
         jlbApothecary.setPreferredSize(new java.awt.Dimension(100, 30));
         jPanel18.add(jlbApothecary);
 
@@ -490,14 +491,14 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel14.add(jPanel18);
         jPanel14.add(jPanel19);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jtpGoods.addTab(bundle.getString("TeamGoods"), jPanel14); // NOI18N
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle1.getString("Mercenaires et Champions"))); // NOI18N
         jPanel8.setPreferredSize(new java.awt.Dimension(200, 250));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel2.setText("Extra Reroll");
+        jLabel2.setText(bundle.getString("Extra Reroll")); // NOI18N
         jLabel2.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel1.add(jLabel2);
 
@@ -546,7 +547,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel8.add(jPanel1);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel3.setText("Bribe the Ref");
+        jLabel3.setText(bundle.getString("Bribe the Ref")); // NOI18N
         jLabel3.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel9.add(jLabel3);
 
@@ -595,7 +596,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel8.add(jPanel9);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel4.setText("Local Apothecary");
+        jLabel4.setText(bundle.getString("Local Apothecary")); // NOI18N
         jLabel4.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel10.add(jLabel4);
 
@@ -644,7 +645,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel8.add(jPanel10);
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel5.setText("Wizard");
+        jLabel5.setText(bundle.getString("Wizard")); // NOI18N
         jLabel5.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel11.add(jLabel5);
 
@@ -692,7 +693,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel8.add(jPanel11);
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Igor");
+        jLabel6.setText(bundle.getString("Igor")); // NOI18N
         jLabel6.setPreferredSize(new java.awt.Dimension(120, 14));
         jPanel12.add(jLabel6);
 
@@ -872,7 +873,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jtpGoods.addTab(bundle.getString("Inducements"), jPanel8); // NOI18N
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle1.getString("Mercenaires et Champions"))); // NOI18N
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 150));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
@@ -900,8 +901,9 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 160));
 
         jbtAddStar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddStar.setActionCommand(bundle.getString("Straplayer")); // NOI18N
         jbtAddStar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtAddStar.setLabel(bundle.getString("Star")); // NOI18N
+        jbtAddStar.setLabel(bundle1.getString("Star")); // NOI18N
         jbtAddStar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbtAddStar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -911,8 +913,9 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel5.add(jbtAddStar);
 
         jbtRemoveStar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveStar.setActionCommand(bundle.getString("Straplayer")); // NOI18N
         jbtRemoveStar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtRemoveStar.setLabel(bundle.getString("Star")); // NOI18N
+        jbtRemoveStar.setLabel(bundle1.getString("Star")); // NOI18N
         jbtRemoveStar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jbtRemoveStar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -935,7 +938,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         });
         jPanel22.add(jlbIcon);
 
-        jbtSelectCoach.setText("Associer un coach");
+        jbtSelectCoach.setText(bundle.getString("Associate a coach")); // NOI18N
         jbtSelectCoach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtSelectCoachActionPerformed(evt);
@@ -945,7 +948,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jPanel7.add(jPanel22, java.awt.BorderLayout.CENTER);
 
-        jcbWithSkills.setText("Inclure les compétences");
+        jcbWithSkills.setText(bundle.getString("Include skills")); // NOI18N
         jcbWithSkills.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbWithSkillsActionPerformed(evt);
@@ -957,7 +960,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel20.add(jLabel17);
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Prix total");
+        jLabel12.setText(bundle.getString("Total Cost")); // NOI18N
         jPanel20.add(jLabel12);
 
         jlbTotalCost.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -969,7 +972,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel20.add(jLabel16);
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Classement");
+        jLabel15.setText(bundle.getString("Ranking")); // NOI18N
         jPanel20.add(jLabel15);
 
         jlbRanking.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -982,7 +985,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jPanel7.add(jPanel20, java.awt.BorderLayout.SOUTH);
 
-        jtpGoods.addTab("Coach", jPanel7);
+        jtpGoods.addTab(bundle.getString("Coach"), jPanel7); // NOI18N
 
         getContentPane().add(jtpGoods, java.awt.BorderLayout.CENTER);
 
@@ -1072,12 +1075,12 @@ public final class JdgRoster extends javax.swing.JDialog {
         jpnTitle.setLayout(new java.awt.GridLayout(1, 3, 5, 5));
 
         jlbTeamName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jlbTeamName.setText("TeamName");
+        jlbTeamName.setText(bundle.getString("TeamName")); // NOI18N
         jpnTitle.add(jlbTeamName);
 
         jlbRosterType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlbRosterType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbRosterType.setText("Roster: Unknown");
+        jlbRosterType.setText(bundle.getString("Roster: Unknown")); // NOI18N
         jlbRosterType.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlbRosterTypeMouseClicked(evt);
@@ -1087,7 +1090,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbCoachName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlbCoachName.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jlbCoachName.setText("Coach: Unknown");
+        jlbCoachName.setText(bundle.getString("Coach: Unknown")); // NOI18N
         jpnTitle.add(jlbCoachName);
 
         jpnCenter.add(jpnTitle, java.awt.BorderLayout.NORTH);
@@ -1097,7 +1100,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel6.setPreferredSize(new java.awt.Dimension(640, 50));
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        jbtOK.setText("OK");
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -1106,7 +1109,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel6.add(jbtOK);
 
         jbtHTML.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
-        jbtHTML.setText("HTML");
+        jbtHTML.setText(bundle.getString("HTML")); // NOI18N
         jbtHTML.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtHTMLActionPerformed(evt);
@@ -1115,7 +1118,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel6.add(jbtHTML);
 
         jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
-        jbtExport.setText("Export");
+        jbtExport.setText(bundle.getString("Export")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtExportActionPerformed(evt);
@@ -1124,7 +1127,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel6.add(jbtExport);
 
         jbtImport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
-        jbtImport.setText("Import");
+        jbtImport.setText(bundle.getString("Import")); // NOI18N
         jbtImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtImportActionPerformed(evt);
