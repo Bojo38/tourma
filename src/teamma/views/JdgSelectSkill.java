@@ -13,7 +13,6 @@ import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +20,7 @@ import teamma.data.LRB;
 import teamma.data.Player;
 import teamma.data.Skill;
 import teamma.data.SkillType;
+import teamma.languages.Translate;
 import tourma.MainFrame;
 
 /**
@@ -33,6 +33,9 @@ public class JdgSelectSkill extends javax.swing.JDialog {
     private ArrayList<JComboBox> _jcbs;
     private Color _color = Color.BLACK;
 
+    private final static String CS_SingleRoll="Single Roll";
+    private final static String CS_DoubleRoll="Double Roll";
+    
     /**
      * Creates new form JdgSelectSkill
      *
@@ -84,11 +87,11 @@ public class JdgSelectSkill extends javax.swing.JDialog {
 
             /* Get if Single Roll or doubl roll */
             if (_player.getPlayertype().containedBySingle(st)) {
-                jlb2.setText("Single Roll");
+                jlb2.setText(Translate.translate(CS_SingleRoll));
                 enabled = true;
             }
             if (_player.getPlayertype().containedByDouble(st)) {
-                jlb2.setText("Double Roll");
+                jlb2.setText(Translate.translate(CS_DoubleRoll));
                 enabled = true;
             }
 
@@ -145,7 +148,8 @@ public class JdgSelectSkill extends javax.swing.JDialog {
 
         getContentPane().add(jpnSkills, java.awt.BorderLayout.CENTER);
 
-        jbtOK.setText("OK");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
+        jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -153,7 +157,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         });
         jPanel2.add(jbtOK);
 
-        jbtCancel.setText("Annuler");
+        jbtCancel.setText(bundle.getString("Cancel")); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtCancelActionPerformed(evt);
@@ -163,7 +167,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
 
-        jLabel1.setText("Select Color :");
+        jLabel1.setText(bundle.getString("SelectColor")); // NOI18N
         jPanel1.add(jLabel1);
 
         ccColor.setColor(new java.awt.Color(0, 0, 0));
@@ -195,6 +199,9 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
 
+    private final static String CS_Error="Error";
+    private final static String CS_NoSkillSelected="No skill selected";
+    
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
         Skill s = null;
@@ -215,7 +222,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             getPlayer().addSkill(s2);
             this.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Error", "No skill selected", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), CS_Error, CS_NoSkillSelected, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbtOKActionPerformed
 
@@ -233,14 +240,6 @@ public class JdgSelectSkill extends javax.swing.JDialog {
     private javax.swing.JPanel jpnSkills;
     // End of variables declaration//GEN-END:variables
 
-/*    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
-
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
-    private static final Logger LOG = Logger.getLogger(JdgSelectSkill.class.getName());
 
     /**
      * @return the _player

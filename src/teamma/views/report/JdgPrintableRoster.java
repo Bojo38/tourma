@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ import teamma.data.StarPlayer;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.utility.StringConstants;
+import tourma.views.report.ReportKeys;
 
 /**
  *
@@ -74,7 +76,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         mCoach = coach;
         mWithSkill = withSkill;
         try {
-            jepHTML.setContentType(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("HTML"));
+            jepHTML.setContentType("html");
             mFilename = createReport();
 
             jepHTML.setPage(mFilename.toURI().toURL());
@@ -107,7 +109,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,10 +174,10 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 in = new InputStreamReader(fis, StandardCharsets.UTF_8);
                 fos = new FileOutputStream(export);
                 out = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-                int c=in.read();
+                int c = in.read();
                 while (c != -1) {
                     out.write(c);
-                    c=in.read();
+                    c = in.read();
                 }
 
             } catch (FileNotFoundException e) {
@@ -189,7 +191,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                         in.close();
                     }
                 } catch (IOException e) {
-                    LOG.log(Level.INFO,e.getLocalizedMessage());
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
                 }
 
                 try {
@@ -197,7 +199,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                         fis.close();
                     }
                 } catch (IOException e) {
-                    LOG.log(Level.INFO,e.getLocalizedMessage());
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
                 }
 
                 try {
@@ -205,7 +207,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                         out.close();
                     }
                 } catch (IOException e) {
-                    LOG.log(Level.INFO,e.getLocalizedMessage());
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
                 }
 
                 try {
@@ -227,6 +229,64 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
     private javax.swing.JEditorPane jepHTML;
     // End of variables declaration//GEN-END:variables
 
+    private static final String CS_title = "title";
+    private static final String CS_numero = "numero";
+    private static final String CS_name = "name";
+    private static final String CS_position = "position";
+    private static final String CS_movement = "movement";
+    private static final String CS_strength = "strength";
+    private static final String CS_agility = "agility";
+    private static final String CS_armor = "armor";
+    private static final String CS_skills = "skills";
+    private static final String CS_cost = "cost";
+    private static final String CS_single = "single";
+    private static final String CS_double = "double";
+    private static final String CS_NBSP = "&nbsp;";
+    private static final String CS_players = "players";
+    private static final String CS_teamname = "teamname";
+    private static final String CS_apothecary = "apothecary";
+    private static final String CS_apo_price = "apo_price";
+    private static final String CS_apo_cost = "apo_cost";
+    private static final String CS_coachname = "coachname";
+    private static final String CS_assists = "assists";
+    private static final String CS_ass_price = "ass_price";
+    private static final String CS_ass_cost = "ass_cost";
+    private static final String CS_race = "race";
+
+    private static final String CS_cheer = "cheer";
+    private static final String CS_cheer_price = "cheer_price";
+    private static final String CS_cheer_cost = "cheer_cost";
+    private static final String CS_rank = "rank";
+    private static final String CS_reroll = "reroll";
+    private static final String CS_reroll_price = "reroll_price";
+    private static final String CS_reroll_cost = "reroll_cost";
+    private static final String CS_pop = "pop";
+    private static final String CS_pop_price = "pop_price";
+    private static final String CS_pop_cost = "pop_cost";
+    private static final String CS_extra = "extra";
+    private static final String CS_extra_price = "extra_price";
+    private static final String CS_extra_cost = "extra_cost";
+    private static final String CS_local = "local";
+    private static final String CS_local_price = "local_price";
+    private static final String CS_local_cost = "local_cost";
+    private static final String CS_igor = "igor";
+    private static final String CS_igor_price = "igor_price";
+    private static final String CS_igor_cost = "igor_cost";
+    private static final String CS_bribe = "bribe";
+    private static final String CS_bribe_price = "bribe_price";
+    private static final String CS_bribe_cost = "bribe_cost";
+    private static final String CS_wizard = "wizard";
+    private static final String CS_wizard_price = "wizard_price";
+    private static final String CS_wizard_cost = "wizard_cost";
+    private static final String CS_babes = "babes";
+    private static final String CS_babes_price = "babes_price";
+    private static final String CS_babes_cost = "babes_cost";
+    private static final String CS_chef = "chef";
+    private static final String CS_chef_price = "chef_price";
+    private static final String CS_chef_cost = "chef_cost";
+    private static final String CS_cards = "cards";
+    private static final String CS_total = "total";
+
     private File createReport() {
         File address = null;
 
@@ -243,30 +303,30 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             final Template temp = cfg.getTemplate("roster.html");
 
-            final Map<String,Object> root = new HashMap<>();
+            final Map<String, Object> root = new HashMap<>();
 
             if (getmCoach() != null) {
                 if (getmCoach().getTeam() != null) {
-                    root.put("title", getmCoach().getTeam());
+                    root.put(CS_title, getmCoach().getTeam());
                 } else {
-                    root.put("title", getmCoach().getName());
+                    root.put(CS_title, getmCoach().getName());
                 }
             } else {
-                root.put("title", "?");
+                root.put(CS_title, "?");
             }
 
-            ArrayList<HashMap<String,Object>> players = new ArrayList<>();
+            ArrayList<HashMap<String, Object>> players = new ArrayList<>();
 
             for (int i = 0; i < getmRoster().getPlayerCount(); i++) {
                 Player p = getmRoster().getPlayer(i);
-                final HashMap<String,Object> player = new HashMap<>();
-                player.put("numero", i + 1);
-                player.put("name", p.getName());
-                player.put("position", p.getPlayertype().getPosition());
-                player.put("movement", p.getPlayertype().getMovement());
-                player.put("strength", p.getPlayertype().getStrength());
-                player.put("agility", p.getPlayertype().getAgility());
-                player.put("armor", p.getPlayertype().getArmor());
+                final HashMap<String, Object> player = new HashMap<>();
+                player.put(CS_numero, i + 1);
+                player.put(CS_name, p.getName());
+                player.put(CS_position, p.getPlayertype().getPosition());
+                player.put(CS_movement, p.getPlayertype().getMovement());
+                player.put(CS_strength, p.getPlayertype().getStrength());
+                player.put(CS_agility, p.getPlayertype().getAgility());
+                player.put(CS_armor, p.getPlayertype().getArmor());
 
                 ArrayList<String> skills = new ArrayList<>();
                 for (int cpt = 0; cpt < p.getPlayertype().getSkillCount(); cpt++) {
@@ -283,152 +343,149 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                     ctmp = ctmp + c.getBlue() + ")";
                     skills.add("<div style=\"color:" + ctmp + ";\">" + _skill.getmName() + "</div>");
                 }
-                player.put("skills", skills);
-                player.put("cost", p.getValue(isWithSkill()));
+                player.put(CS_skills, skills);
+                player.put(CS_cost, p.getValue(isWithSkill()));
 
                 ArrayList<String> single = new ArrayList<>();
-                for (int cpt=0; cpt<p.getPlayertype().getSingleCount(); cpt++)
-                {
-                    SkillType _single=p.getPlayertype().getSingle(cpt);
+                for (int cpt = 0; cpt < p.getPlayertype().getSingleCount(); cpt++) {
+                    SkillType _single = p.getPlayertype().getSingle(cpt);
                     single.add(_single.getAccronym());
                 }
-                player.put("single", single);
+                player.put(CS_single, single);
 
                 ArrayList<String> doubleT = new ArrayList<>();
-                 for (int cpt=0; cpt<p.getPlayertype().getDoubleCount(); cpt++)
-                {
-                    SkillType _double=p.getPlayertype().getDouble(cpt);
+                for (int cpt = 0; cpt < p.getPlayertype().getDoubleCount(); cpt++) {
+                    SkillType _double = p.getPlayertype().getDouble(cpt);
                     doubleT.add(_double.getAccronym());
                 }
-                player.put("double", doubleT);
+                player.put(CS_double, doubleT);
 
                 players.add(player);
             }
 
-            for (int cpt=0; cpt< getmRoster().getChampionCount(); cpt++) {
-                StarPlayer p=getmRoster().getChampion(cpt);
+            for (int cpt = 0; cpt < getmRoster().getChampionCount(); cpt++) {
+                StarPlayer p = getmRoster().getChampion(cpt);
                 final HashMap<String, Object> player = new HashMap<>();
-                player.put("numero", players.size() + 1);
-                player.put("name", p.getName());
-                player.put("position", p.getPosition());
-                player.put("movement", p.getMovement());
-                player.put("strength", p.getStrength());
-                player.put("agility", p.getAgility());
-                player.put("armor", p.getArmor());
+                player.put(CS_numero, players.size() + 1);
+                player.put(CS_name, p.getName());
+                player.put(CS_position, p.getPosition());
+                player.put(CS_movement, p.getMovement());
+                player.put(CS_strength, p.getStrength());
+                player.put(CS_agility, p.getAgility());
+                player.put(CS_armor, p.getArmor());
 
                 ArrayList<String> skills = new ArrayList<>();
-                for (int cpt2=0; cpt2<p.getSkillCount(); cpt2++)
-                {
-                    Skill _skill=p.getSkill(cpt2);
+                for (int cpt2 = 0; cpt2 < p.getSkillCount(); cpt2++) {
+                    Skill _skill = p.getSkill(cpt2);
                     skills.add(_skill.getmName());
                 }
-                player.put("skills", skills);
-                player.put("cost", p.getCost());
+                player.put(CS_skills, skills);
+                player.put(CS_cost, p.getCost());
 
                 ArrayList<String> single = new ArrayList<>();
-                single.add("&nbsp;");
-                player.put("single", single);
+                single.add(CS_NBSP);
+                player.put(CS_single, single);
 
                 ArrayList<String> doubleT = new ArrayList<>();
-                doubleT.add("&nbsp;");
-                player.put("double", doubleT);
+                doubleT.add(CS_NBSP);
+                player.put(CS_double, doubleT);
 
                 players.add(player);
             }
 
-            root.put("players", players);
+            root.put(CS_players, players);
 
-            root.put("teamname", "&nbsp;");
+            root.put(CS_teamname, CS_NBSP);
             if (getmRoster().isApothecary()) {
-                root.put("apothecary", 1);
+                root.put(CS_apothecary, 1);
             } else {
-                root.put("apothecary", 0);
+                root.put(CS_apothecary, 0);
             }
-            root.put("apo_price", RosterType.getApothecary_cost());
+            root.put(CS_apo_price, RosterType.getApothecary_cost());
             if (getmRoster().isApothecary()) {
-                root.put("apo_cost", RosterType.getApothecary_cost());
+                root.put(CS_apo_cost, RosterType.getApothecary_cost());
             } else {
-                root.put("apo_cost", 0);
+                root.put(CS_apo_cost, 0);
             }
 
-            root.put("coachname", "&nbsp");
-            root.put("assists", getmRoster().getAssistants());
-            root.put("ass_price", RosterType.getAssistant_cost());
-            root.put("ass_cost", getmRoster().getAssistants() * RosterType.getAssistant_cost());
+            root.put(CS_coachname, CS_NBSP);
+            root.put(CS_assists, getmRoster().getAssistants());
+            root.put(CS_ass_price, RosterType.getAssistant_cost());
+            root.put(CS_ass_cost, getmRoster().getAssistants() * RosterType.getAssistant_cost());
 
             if (getmRoster().getRoster() != null) {
-                root.put("race", getmRoster().getRoster().getName());
+                root.put(CS_race, getmRoster().getRoster().getName());
             } else {
-                root.put("race", "&nbsp;");
+                root.put(CS_race, CS_NBSP);
             }
-            root.put("cheer", getmRoster().getCheerleaders());
+            root.put(CS_cheer, getmRoster().getCheerleaders());
 
-            root.put("cheer_price", RosterType.getCheerleader_cost());
-            root.put("cheer_cost", getmRoster().getCheerleaders() * RosterType.getCheerleader_cost());
+            root.put(CS_cheer_price, RosterType.getCheerleader_cost());
+            root.put(CS_cheer_cost, getmRoster().getCheerleaders() * RosterType.getCheerleader_cost());
 
-            root.put("rank", getmRoster().getValue(isWithSkill()) / 10000);
-            root.put("reroll", getmRoster().getRerolls());
+            root.put(CS_rank, getmRoster().getValue(isWithSkill()) / 10000);
+            root.put(CS_reroll, getmRoster().getRerolls());
             if (getmRoster().getRoster() != null) {
-                root.put("reroll_price", getmRoster().getRoster().getReroll_cost());
+                root.put(CS_reroll_price, getmRoster().getRoster().getReroll_cost());
             } else {
-                root.put("reroll_price", 0);
+                root.put(CS_reroll_price, 0);
             }
-            root.put("reroll_cost", getmRoster().getRerolls() * RosterType.getCheerleader_cost());
+            root.put(CS_reroll_cost, getmRoster().getRerolls() * RosterType.getCheerleader_cost());
 
-            root.put("pop", getmRoster().getRerolls());
-            root.put("pop_price", RosterType.getFan_factor_cost());
-            root.put("pop_cost", getmRoster().getFanfactor() * RosterType.getFan_factor_cost());
+            root.put(CS_pop, getmRoster().getRerolls());
+            root.put(CS_pop_price, RosterType.getFan_factor_cost());
+            root.put(CS_pop_cost, getmRoster().getFanfactor() * RosterType.getFan_factor_cost());
 
-            root.put("extra", getmRoster().getExtrarerolls());
-            root.put("extra_price", RosterType.getExtraRerollCost());
-            root.put("extra_cost", getmRoster().getExtrarerolls() * RosterType.getExtraRerollCost());
+            root.put(CS_extra, getmRoster().getExtrarerolls());
+            root.put(CS_extra_price, RosterType.getExtraRerollCost());
+            root.put(CS_extra_cost, getmRoster().getExtrarerolls() * RosterType.getExtraRerollCost());
 
-            root.put("local", getmRoster().getLocalapothecary());
-            root.put("local_price", RosterType.getLocal_apo_cost());
-            root.put("local_cost", getmRoster().getLocalapothecary() * RosterType.getLocal_apo_cost());
+            root.put(CS_local, getmRoster().getLocalapothecary());
+            root.put(CS_local_price, RosterType.getLocal_apo_cost());
+            root.put(CS_local_cost, getmRoster().getLocalapothecary() * RosterType.getLocal_apo_cost());
 
-            root.put("igor", getmRoster().isIgor() ? 1 : 0);
-            root.put("igor_price", RosterType.getIgor_cost());
-            root.put("igor_cost", getmRoster().isIgor() ? RosterType.getIgor_cost() : 0);
+            root.put(CS_igor, getmRoster().isIgor() ? 1 : 0);
+            root.put(CS_igor_price, RosterType.getIgor_cost());
+            root.put(CS_igor_cost, getmRoster().isIgor() ? RosterType.getIgor_cost() : 0);
 
-            root.put("bribe", getmRoster().getCorruptions());
+            root.put(CS_bribe, getmRoster().getCorruptions());
             if (getmRoster().getRoster() != null) {
-                root.put("bribe_price", getmRoster().getRoster().getBribe_cost());
-                root.put("bribe_cost", getmRoster().getCorruptions() * getmRoster().getRoster().getBribe_cost());
+                root.put(CS_bribe_price, getmRoster().getRoster().getBribe_cost());
+                root.put(CS_bribe_cost, getmRoster().getCorruptions() * getmRoster().getRoster().getBribe_cost());
             } else {
-                root.put("bribe_price", 0);
-                root.put("bribe_cost", 0);
+                root.put(CS_bribe_price, 0);
+                root.put(CS_bribe_cost, 0);
             }
 
-            root.put("wizard", getmRoster().isWizard() ? 1 : 0);
-            root.put("wizard_price", RosterType.getWizard_cost());
-            root.put("wizard_cost", getmRoster().isWizard() ? RosterType.getWizard_cost() : 0);
+            root.put(CS_wizard, getmRoster().isWizard() ? 1 : 0);
+            root.put(CS_wizard_price, RosterType.getWizard_cost());
+            root.put(CS_wizard_cost, getmRoster().isWizard() ? RosterType.getWizard_cost() : 0);
 
-            root.put("babes", getmRoster().getBloodweiserbabes());
-            root.put("babes_price", RosterType.getBabe_cost());
-            root.put("babes_cost", getmRoster().getBloodweiserbabes() * RosterType.getBabe_cost());
+            root.put(CS_babes, getmRoster().getBloodweiserbabes());
+            root.put(CS_babes_price, RosterType.getBabe_cost());
+            root.put(CS_babes_cost, getmRoster().getBloodweiserbabes() * RosterType.getBabe_cost());
 
-            root.put("chef", getmRoster().isChef() ? 1 : 0);
+            root.put(CS_chef, getmRoster().isChef() ? 1 : 0);
             if (getmRoster().getRoster() != null) {
-                root.put("chef_price", getmRoster().getRoster().getChef_cost());
-                root.put("chef_cost", getmRoster().isChef() ? getmRoster().getRoster().getChef_cost() : 0);
+                root.put(CS_chef_price, getmRoster().getRoster().getChef_cost());
+                root.put(CS_chef_cost, getmRoster().isChef() ? getmRoster().getRoster().getChef_cost() : 0);
             } else {
-                root.put("chef_price", 0);
-                root.put("chef_cost", 0);
+                root.put(CS_chef_price, 0);
+                root.put(CS_chef_cost, 0);
             }
 
-            root.put("cards", getmRoster().getCards());
+            root.put(CS_cards, getmRoster().getCards());
 
-            root.put("total", getmRoster().getValue(isWithSkill()));
-            root.put("rank", getmRoster().getValue(isWithSkill()) / 10000);
+            root.put(CS_total, getmRoster().getValue(isWithSkill()));
+            root.put(CS_rank, getmRoster().getValue(isWithSkill()) / 10000);
 
-            final SimpleDateFormat format = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("EEEEEEE DD MMMMMMMMMMM YYYY"), Locale.getDefault());
-            final SimpleDateFormat formatShort = new SimpleDateFormat(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DD/MM/YYYY"), Locale.getDefault());
-            root.put(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("DATEGENERATION"), formatShort.format(new Date()));
-            address = File.createTempFile(StringConstants.CS_RESULT + format.format(new Date()), java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".TMP"));
+            final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
+            final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));
+            address = File.createTempFile(
+                    StringConstants.CS_RESULT + " " + format.format(new Date()), ".tmp");
             address.deleteOnExit();
-            fos = new FileOutputStream(address);
-            out = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+            out = new OutputStreamWriter(new FileOutputStream(address), Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
@@ -453,13 +510,6 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         return address;
     }
 
-    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
-
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
     private static final Logger LOG = Logger.getLogger(JdgPrintableRoster.class.getName());
 
     /**

@@ -7,7 +7,6 @@ package teamma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import javax.swing.JEditorPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -15,14 +14,13 @@ import javax.swing.table.TableCellRenderer;
 import teamma.data.Roster;
 import teamma.data.Skill;
 import teamma.data.StarPlayer;
-import tourma.utility.StringConstants;
+import teamma.languages.Translate;
 
 /**
  *
  * @author Frederic Berger
  */
 public class MjtTeamStars extends AbstractTableModel implements TableCellRenderer {
-    private static final Logger LOG = Logger.getLogger(MjtTeamStars.class.getName());
 
     /**
      * 
@@ -48,25 +46,34 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
         return _roster.getChampionCount();
     }
 
+        private final static String CS_Name = "Name";
+    private final static String CS_Position = "Position";
+    private final static String CS_M = "M";
+    private final static String CS_S = "S";
+    private final static String CS_Ag = "Ag";
+    private final static String CS_Ar = "Ar";
+    private final static String CS_Skills = "Skills";
+    private final static String CS_Cost = "Cost";
+    
     @Override
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name");
+                return Translate.translate(CS_Name);
             case 1:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Position");
+                return Translate.translate(CS_Position);
             case 2:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("M");
+                return Translate.translate(CS_M);
             case 3:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("S");
+                return Translate.translate(CS_S);
             case 4:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ag");
+                return Translate.translate(CS_Ag);
             case 5:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ar");
+                return Translate.translate(CS_Ar);
             case 6:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Skills");
+                return Translate.translate(CS_Skills);
             case 7:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Cost");
+                return Translate.translate(CS_Cost);
         }
         return "";
     }
@@ -177,21 +184,4 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
         return jta;
     }
     
-    /**
-     * 
-     * @param stream
-     * @throws java.io.IOException 
-     */
-    /*private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
-/**
- * 
- * @param stream
- * @throws java.io.IOException
- * @throws ClassNotFoundException 
- */
-    /*private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
 }

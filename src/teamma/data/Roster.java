@@ -8,10 +8,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.data.XMLExport;
-import tourma.utility.StringConstants;
 
 /**
  *
@@ -19,7 +17,30 @@ import tourma.utility.StringConstants;
  */
 public class Roster implements XMLExport {
 
-    private static final Logger LOG = Logger.getLogger(Roster.class.getName());
+
+    private final static String CS_Roster = "Roster";
+    private final static String CS_Composition = "Composition";
+    private final static String CS_Apothecary = "Apothecary";
+    private final static String CS_Assistants = "Assistants";
+    private final static String CS_Cheerleaders = "Cheerleaders";
+    private final static String CS_FanFactor = "FanFactor";
+    private final static String CS_Rerolls = "Rerolls";
+    private final static String CS_Inducements = "Inducements";
+    private final static String CS_Chef = "Chef";
+    private final static String CS_Igor = "Igor";
+    private final static String CS_Wizard = "Wizard";
+    private final static String CS_Babes = "Babes";
+    private final static String CS_Cards = "Cards";
+    private final static String CS_Bribe = "Bribe";
+    private final static String CS_ExtraRerolls = "ExtraRerolls";
+    private final static String CS_LocalApothecary = "LocalApothecary";
+
+    private final static String CS_StarPlayer="StarPlayer";
+    private final static String CS_Name="Name";
+    private final static String CS_Player="Player";
+    private final static String CS_Position="Position";
+    private final static String CS_Skill="Skill";
+    private final static String CS_Color="Color";
     /**
      * Pointer to coach owning the team
      */
@@ -91,6 +112,8 @@ public class Roster implements XMLExport {
      */
     private final ArrayList<StarPlayer> _champions;
 
+    
+    
     /**
      * Default Constructor
      */
@@ -150,30 +173,30 @@ public class Roster implements XMLExport {
     @Override
     public Element getXMLElement() {
 
-        Element compo = new Element("Composition");
+        Element compo = new Element(CS_Composition);
         if (this.getRoster() != null) {
-            compo.setAttribute(StringConstants.CS_ROSTER, this.getRoster().getName());
-            compo.setAttribute("Apothecary", Boolean.toString(this.isApothecary()));
-            compo.setAttribute("Assistants", Integer.toString(this.getAssistants()));
-            compo.setAttribute("Cheerleaders", Integer.toString(this.getCheerleaders()));
-            compo.setAttribute("FanFactor", Integer.toString(this.getFanfactor()));
-            compo.setAttribute("Rerolls", Integer.toString(this.getRerolls()));
+            compo.setAttribute(CS_Roster, this.getRoster().getName());
+            compo.setAttribute(CS_Apothecary, Boolean.toString(this.isApothecary()));
+            compo.setAttribute(CS_Assistants, Integer.toString(this.getAssistants()));
+            compo.setAttribute(CS_Cheerleaders, Integer.toString(this.getCheerleaders()));
+            compo.setAttribute(CS_FanFactor, Integer.toString(this.getFanfactor()));
+            compo.setAttribute(CS_Rerolls, Integer.toString(this.getRerolls()));
 
-            final Element inducements = new Element("Inducements");
-            inducements.setAttribute("Chef", Boolean.toString(this.isChef()));
-            inducements.setAttribute("Igor", Boolean.toString(this.isIgor()));
-            inducements.setAttribute("Wizard", Boolean.toString(this.isWizard()));
-            inducements.setAttribute("Babes", Integer.toString(this.getBloodweiserbabes()));
-            inducements.setAttribute("Cards", Integer.toString(this.getCards()));
-            inducements.setAttribute("Bribe", Integer.toString(this.getCorruptions()));
-            inducements.setAttribute("ExtraRerolls", Integer.toString(this.getExtrarerolls()));
-            inducements.setAttribute("LocalApothecary", Integer.toString(this.getLocalapothecary()));
+            final Element inducements = new Element(CS_Inducements);
+            inducements.setAttribute(CS_Chef, Boolean.toString(this.isChef()));
+            inducements.setAttribute(CS_Igor, Boolean.toString(this.isIgor()));
+            inducements.setAttribute(CS_Wizard, Boolean.toString(this.isWizard()));
+            inducements.setAttribute(CS_Babes, Integer.toString(this.getBloodweiserbabes()));
+            inducements.setAttribute(CS_Cards, Integer.toString(this.getCards()));
+            inducements.setAttribute(CS_Bribe, Integer.toString(this.getCorruptions()));
+            inducements.setAttribute(CS_ExtraRerolls, Integer.toString(this.getExtrarerolls()));
+            inducements.setAttribute(CS_ExtraRerolls, Integer.toString(this.getLocalapothecary()));
 
             for (int cpt = 0; cpt < getChampionCount(); cpt++) {
                 StarPlayer _champion = getChampion(cpt);
-                final Element st = new Element("StarPlayer");
+                final Element st = new Element(CS_StarPlayer);
                 if (_champion != null) {
-                    st.setAttribute(StringConstants.CS_NAME, _champion.getName());
+                    st.setAttribute(CS_Name, _champion.getName());
                 }
                 inducements.addContent(st);
 
@@ -182,17 +205,17 @@ public class Roster implements XMLExport {
             compo.addContent(inducements);
 
             for (int cpt = 0; cpt < getPlayerCount(); cpt++) {
-            Player _player = getPlayer(cpt);
-                final Element p = new Element("Player");
+                Player _player = getPlayer(cpt);
+                final Element p = new Element(CS_Player);
                 final teamma.data.Player pl = _player;
-                p.setAttribute(StringConstants.CS_NAME, pl.getName());
-                p.setAttribute("Position", pl.getPlayertype().getPosition());
+                p.setAttribute(CS_Name, pl.getName());
+                p.setAttribute(CS_Position, pl.getPlayertype().getPosition());
                 for (int i = 0; i < pl.getSkillCount(); i++) {
                     Skill _skill = pl.getSkill(i);
-                    final Element s = new Element("Skill");
+                    final Element s = new Element(CS_Skill);
                     final teamma.data.Skill sk = _skill;
-                    s.setAttribute(StringConstants.CS_NAME, sk.getmName());
-                    s.setAttribute("Color", Integer.toString(sk.getmColor().getRGB()));
+                    s.setAttribute(CS_Name, sk.getmName());
+                    s.setAttribute(CS_Color, Integer.toString(sk.getmColor().getRGB()));
                     p.addContent(s);
                 }
                 compo.addContent(p);
@@ -209,51 +232,51 @@ public class Roster implements XMLExport {
     @Override
     public void setXMLElement(Element e) {
         LRB lrb6 = LRB.getLRB();
-        String rosterType = e.getAttributeValue(StringConstants.CS_ROSTER);
+        String rosterType = e.getAttributeValue(CS_Roster);
         this.setRoster(lrb6.getRosterType(rosterType));
-        this.setApothecary(Boolean.parseBoolean(e.getAttributeValue("Apothecary")));
-        this.setAssistants(Integer.parseInt(e.getAttributeValue("Assistants")));
-        this.setCheerleaders(Integer.parseInt(e.getAttributeValue("Cheerleaders")));
-        this.setFanfactor(Integer.parseInt(e.getAttributeValue("FanFactor")));
-        this.setRerolls(Integer.parseInt(e.getAttributeValue("Rerolls")));
+        this.setApothecary(Boolean.parseBoolean(e.getAttributeValue(CS_Apothecary)));
+        this.setAssistants(Integer.parseInt(e.getAttributeValue(CS_Assistants)));
+        this.setCheerleaders(Integer.parseInt(e.getAttributeValue(CS_Cheerleaders)));
+        this.setFanfactor(Integer.parseInt(e.getAttributeValue(CS_FanFactor)));
+        this.setRerolls(Integer.parseInt(e.getAttributeValue(CS_Rerolls)));
 
-        final Element inducements = e.getChild("Inducements");
+        final Element inducements = e.getChild(CS_Inducements);
         if (inducements != null) {
-            this.setBloodweiserbabes(Integer.parseInt(inducements.getAttributeValue("Babes")));
-            this.setCards(Integer.parseInt(inducements.getAttributeValue("Cards")));
-            this.setChef(Boolean.parseBoolean(inducements.getAttributeValue("Chef")));
-            this.setCorruptions(Integer.parseInt(inducements.getAttributeValue("Bribe")));
-            this.setExtrarerolls(Integer.parseInt(inducements.getAttributeValue("ExtraRerolls")));
-            this.setIgor(Boolean.parseBoolean(inducements.getAttributeValue("Igor")));
-            this.setLocalapothecary(Integer.parseInt(inducements.getAttributeValue("LocalApothecary")));
-            this.setWizard(Boolean.parseBoolean(inducements.getAttributeValue("Wizard")));
+            this.setBloodweiserbabes(Integer.parseInt(inducements.getAttributeValue(CS_Babes)));
+            this.setCards(Integer.parseInt(inducements.getAttributeValue(CS_Cards)));
+            this.setChef(Boolean.parseBoolean(inducements.getAttributeValue(CS_Chef)));
+            this.setCorruptions(Integer.parseInt(inducements.getAttributeValue(CS_Bribe)));
+            this.setExtrarerolls(Integer.parseInt(inducements.getAttributeValue(CS_ExtraRerolls)));
+            this.setIgor(Boolean.parseBoolean(inducements.getAttributeValue(CS_Igor)));
+            this.setLocalapothecary(Integer.parseInt(inducements.getAttributeValue(CS_LocalApothecary)));
+            this.setWizard(Boolean.parseBoolean(inducements.getAttributeValue(CS_Wizard)));
 
-            final List<Element> stars = inducements.getChildren("StarPlayer");
+            final List<Element> stars = inducements.getChildren(CS_StarPlayer);
             final Iterator<Element> s = stars.iterator();
             while (s.hasNext()) {
                 final Element star = s.next();
-                final String spn = star.getAttributeValue(StringConstants.CS_NAME);
+                final String spn = star.getAttributeValue(CS_Name);
                 final StarPlayer t = lrb6.getStarPlayer(spn);
                 this.addChampion(t);
             }
         }
 
-        final List<Element> players = e.getChildren("Player");
+        final List<Element> players = e.getChildren(CS_Player);
         final Iterator<Element> ip = players.iterator();
 
         while (ip.hasNext()) {
             final Element p = ip.next();
             if (this.getRoster() != null) {
-                final teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue("Position")));
-                pl.setName(p.getAttributeValue(StringConstants.CS_NAME));
+                final teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue(CS_Position)));
+                pl.setName(p.getAttributeValue(CS_Name));
 
-                final List<Element> skills = p.getChildren("Skill");
+                final List<Element> skills = p.getChildren(CS_Skill);
                 final Iterator<Element> is = skills.iterator();
                 while (is.hasNext()) {
                     final Element s = is.next();
 
-                    final teamma.data.Skill sl = LRB.getLRB().getSkill(s.getAttributeValue(StringConstants.CS_NAME));
-                    sl.setmColor(Color.decode(s.getAttributeValue("Color")));
+                    final teamma.data.Skill sl = LRB.getLRB().getSkill(s.getAttributeValue(CS_Name));
+                    sl.setmColor(Color.decode(s.getAttributeValue(CS_Color)));
                     pl.addSkill(sl);
                 }
 
@@ -410,14 +433,13 @@ public class Roster implements XMLExport {
         return _champions.get(i);
     }
 
-    
     /**
      * @param i
      */
     public void removeChampion(int i) {
         _champions.remove(i);
     }
-    
+
     /**
      * @param sp
      */
@@ -455,12 +477,13 @@ public class Roster implements XMLExport {
     }
 
     /**
-     * 
-     * @param i 
+     *
+     * @param i
      */
     public void removePlayer(int i) {
-         _players.remove(i);
+        _players.remove(i);
     }
+
     /**
      * @return the _players
      */
@@ -474,7 +497,7 @@ public class Roster implements XMLExport {
     public void addPlayer(Player p) {
         _players.add(p);
     }
-    
+
     /**
      * Clear the player list
      */

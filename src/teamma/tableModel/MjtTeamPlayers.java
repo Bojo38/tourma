@@ -17,13 +17,14 @@ import teamma.data.Player;
 import teamma.data.Roster;
 import teamma.data.Skill;
 import teamma.data.SkillType;
-import tourma.utility.StringConstants;
+import teamma.languages.Translate;
 
 /**
  *
  * @author Frederic Berger
  */
 public class MjtTeamPlayers extends AbstractTableModel implements TableCellRenderer {
+
     private static final Logger LOG = Logger.getLogger(MjtTeamPlayers.class.getName());
 
     /**
@@ -58,6 +59,18 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
         return _roster.getPlayerCount();
     }
 
+    private final static String CS_Name = "Name";
+    private final static String CS_Position = "Position";
+    private final static String CS_M = "M";
+    private final static String CS_S = "S";
+    private final static String CS_Ag = "Ag";
+    private final static String CS_Ar = "Ar";
+    private final static String CS_Skills = "Skills";
+    private final static String CS_SR = "SR";
+    private final static String CS_DR = "DR";
+    private final static String CS_BaseCost = "Base Cost";
+    private final static String CS_Cost = "Cost";
+
     /**
      *
      * @param col
@@ -69,30 +82,32 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
             case 0:
                 return "#";
             case 1:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Name");
+                return Translate.translate(CS_Name);
             case 2:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Position");
+                return Translate.translate(CS_Position);
             case 3:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("M");
+                return Translate.translate(CS_M);
             case 4:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("S");
+                return Translate.translate(CS_S);
             case 5:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ag");
+                return Translate.translate(CS_Ag);
             case 6:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Ar");
+                return Translate.translate(CS_Ar);
             case 7:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Skills");
+                return Translate.translate(CS_Skills);
             case 8:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("SR");
+                return Translate.translate(CS_SR);
             case 9:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("DR");
+                return Translate.translate(CS_DR);
             case 10:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Base Cost");
+                return Translate.translate(CS_BaseCost);
             case 11:
-                return java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("Cost");
+                return Translate.translate(CS_Cost);
         }
         return "";
     }
+
+    private final static String CS_Characteristics = "Characteristics";
 
     /**
      *
@@ -200,18 +215,18 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                         /*
                          * If charactristics, it depends.
                          */
-                        if (st.equals(LRB.getLRB().getSkillType("Characteristics"))) {
+                        if (st.equals(LRB.getLRB().getSkillType(CS_Characteristics))) {
                             Skill s = player.getSkill(i);
-                            if (s.getmName().equals("+1 Movement")) {
+                            if (s.getmName().equals(Player.CS_Plus1Movement)) {
                                 skillCost += 30000;
                             }
-                            if (s.getmName().equals("+1 Armor")) {
+                            if (s.getmName().equals(Player.CS_Plus1Armor)) {
                                 skillCost += 30000;
                             }
-                            if (s.getmName().equals("+1 Agility")) {
+                            if (s.getmName().equals(Player.CS_Plus1Agility)) {
                                 skillCost += 40000;
                             }
-                            if (s.getmName().equals("+1 Strength")) {
+                            if (s.getmName().equals(Player.CS_Plus1Strength)) {
                                 skillCost += 50000;
                             }
                         }
@@ -282,7 +297,7 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
 
         jta.setEditable(false);
         if (value instanceof String) {
-            jta.setText("<center>" +  value + "</center>");
+            jta.setText("<center>" + value + "</center>");
         }
 
         if (value instanceof Integer) {
@@ -300,11 +315,4 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
         return jta;
     }
 
-/*    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }
-
-    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.NotSerializableException(getClass().getName());
-    }*/
 }

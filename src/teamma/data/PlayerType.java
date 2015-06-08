@@ -5,14 +5,12 @@
 package teamma.data;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  *
  * @author WFMJ7631
  */
 public class PlayerType {
-    private static final Logger LOG = Logger.getLogger(PlayerType.class.getName());
     /**
      * 
      */

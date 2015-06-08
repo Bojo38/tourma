@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import teamma.languages.Translate;
 import tourma.MainFrame;
 
 /**
@@ -86,6 +87,13 @@ public final class LRB {
         }
     }
 
+    private final static String CS_Name = "name";
+    private final static String CS_Skills = "skills";
+    private final static String CS_Teams = "teams";
+    private final static String CS_Team = "team";
+    private final static String CS_Picture = "image";
+    private final static String CS_Starplayers = "starplayers";
+
     /**
      *
      * @param file
@@ -99,34 +107,34 @@ public final class LRB {
             /*
              * Get LRB name
              */
-            Element e_name = racine.getChild("name");
+            Element e_name = racine.getChild(CS_Name);
             setName(e_name.getValue());
 
             /*
              * Get Skill file name
              */
-            Element e_skillfile = racine.getChild("skills");
+            Element e_skillfile = racine.getChild(CS_Skills);
             String skillfile = e_skillfile.getValue();
 
             LOG.log(Level.FINE, "loading {0} file", skillfile);
             loadSkills(getClass().getResourceAsStream("/teamma/rules/" + skillfile));
 
-            Element e_teams = racine.getChild("teams");
-            List<Element> l_teams = e_teams.getChildren("team");
+            Element e_teams = racine.getChild(CS_Teams);
+            List<Element> l_teams = e_teams.getChildren(CS_Team);
             Iterator<Element> cr = l_teams.iterator();
             this.clearRosterTypes();
 
             while (cr.hasNext()) {
                 Element e_team = cr.next();
                 String teamfile = e_team.getValue();
-                String imagename = e_team.getAttribute("image").getValue();
+                String imagename = e_team.getAttribute(CS_Picture).getValue();
                 LOG.log(Level.FINE, "loading {0} file", teamfile);
                 loadTeam(getClass().getResourceAsStream("/teamma/rules/" + teamfile), imagename);
             }
             /*
              * Get Star Players file name
              */
-            Element e_starfile = racine.getChild("starplayers");
+            Element e_starfile = racine.getChild(CS_Starplayers);
             String starfile = e_starfile.getValue();
             loadStarPlayers(getClass().getResourceAsStream("/teamma/rules/" + starfile));
 
@@ -134,6 +142,11 @@ public final class LRB {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jdomexception.getLocalizedMessage());
         }
     }
+
+    private final static String CS_Category = "category";
+    private final static String CS_Accronym = "accronym";
+    private final static String CS_Special = "special";
+    private final static String CS_Skill = "skill";
 
     /**
      *
@@ -145,24 +158,24 @@ public final class LRB {
             org.jdom2.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
-            List<Element> l_categories = racine.getChildren("category");
+            List<Element> l_categories = racine.getChildren(CS_Category);
             Iterator<Element> cr = l_categories.iterator();
             clearSkillTypes();
 
             while (cr.hasNext()) {
                 Element e_skillType = cr.next();
 
-                Element e_name = e_skillType.getChild("name");
+                Element e_name = e_skillType.getChild(CS_Name);
                 String st_name = e_name.getValue();
 
-                Element e_accro = e_skillType.getChild("accronym");
+                Element e_accro = e_skillType.getChild(CS_Accronym);
                 String st_accro = e_accro.getValue();
 
                 SkillType st = new SkillType(st_name, st_accro);
 
-                Element e_special = e_skillType.getChild("special");
+                Element e_special = e_skillType.getChild(CS_Special);
                 st.setSpecial(Boolean.parseBoolean(e_special.getValue()));
-                List<Element> l_skills = e_skillType.getChildren("skill");
+                List<Element> l_skills = e_skillType.getChildren(CS_Skill);
                 Iterator<Element> i = l_skills.iterator();
 
                 while (i.hasNext()) {
@@ -178,6 +191,28 @@ public final class LRB {
         }
     }
 
+    private final static String CS_Reroll = "reroll";
+    private final static String CS_Apothecary = "apothecary";
+    private final static String CS_Chef = "chef";
+    private final static String CS_Igor = "igor";
+    private final static String CS_Bribe = "bribe";
+    private final static String CS_PlayerTypes = "playertypes";
+    private final static String CS_PlayerType = "playertype";
+    private final static String CS_Position = "position";
+    private final static String CS_Limit = "limit";
+    private final static String CS_Movement = "movement";
+    private final static String CS_Strength = "strength";
+    private final static String CS_Agility = "agility";
+    private final static String CS_Armor = "armor";
+    private final static String CS_Cost = "cost";
+    private final static String CS_Single = "single";
+    private final static String CS_SkillType = "skillType";
+    private final static String CS_Double = "double";
+
+    private final static String CS_SkillNotFound="SkillNotFound";
+    private final static String CS_SkillTypeNotFound="SkillTypeNotFound";
+        private final static String CS_RosterTypeNotFound="RosterTypeNotFound";
+    private final static String CS_forThePlayer="forThePlayer";
     /**
      *
      * @param file
@@ -189,8 +224,8 @@ public final class LRB {
             org.jdom2.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
-            Element e_name = racine.getChild("name");
-            //RosterType rt = new RosterType(java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(e_name.getValue()));
+            Element e_name = racine.getChild(CS_Name);
+
             String n = tourma.data.RosterType.getRosterName(e_name.getValue());
             if (n == null) {
                 n = tourma.data.RosterType.translate(e_name.getValue());
@@ -198,78 +233,78 @@ public final class LRB {
             }
             RosterType rt = new RosterType(n);
             rt.setImage(image);
-            Element e_reroll_cost = racine.getChild("reroll");
+            Element e_reroll_cost = racine.getChild(CS_Reroll);
             rt.setReroll_cost(Integer.parseInt(e_reroll_cost.getValue()));
 
-            Element e_apo = racine.getChild("apothecary");
+            Element e_apo = racine.getChild(CS_Apothecary);
             rt.setApothecary(Boolean.parseBoolean(e_apo.getValue()));
 
-            Element e_chef_cost = racine.getChild("chef");
+            Element e_chef_cost = racine.getChild(CS_Chef);
             rt.setChef_cost(Integer.parseInt(e_chef_cost.getValue()));
 
-            Element e_igor = racine.getChild("igor");
+            Element e_igor = racine.getChild(CS_Igor);
             rt.setIgor(Boolean.parseBoolean(e_igor.getValue()));
 
-            Element e_bribe_cost = racine.getChild("bribe");
+            Element e_bribe_cost = racine.getChild(CS_Bribe);
             rt.setBribe_cost(Integer.parseInt(e_bribe_cost.getValue()));
 
-            Element e_playerType = racine.getChild("playertypes");
-            List<Element> l_players = e_playerType.getChildren("playerType");
+            Element e_playerType = racine.getChild(CS_PlayerTypes);
+            List<Element> l_players = e_playerType.getChildren(CS_PlayerType);
             Iterator<Element> cr = l_players.iterator();
             rt.clearPlayerType();
 
             while (cr.hasNext()) {
                 Element e_player = cr.next();
 
-                Element e_position = e_player.getChild("position");
+                Element e_position = e_player.getChild(CS_Position);
                 PlayerType pt = new PlayerType(e_position.getValue());
-                Element e_limit = e_player.getChild("limit");
+                Element e_limit = e_player.getChild(CS_Limit);
                 pt.setLimit(Integer.parseInt(e_limit.getValue()));
-                Element e_movement = e_player.getChild("movement");
+                Element e_movement = e_player.getChild(CS_Movement);
                 pt.setMovement(Integer.parseInt(e_movement.getValue()));
-                Element e_strength = e_player.getChild("strength");
+                Element e_strength = e_player.getChild(CS_Strength);
                 pt.setStrength(Integer.parseInt(e_strength.getValue()));
-                Element e_agility = e_player.getChild("agility");
+                Element e_agility = e_player.getChild(CS_Agility);
                 pt.setAgility(Integer.parseInt(e_agility.getValue()));
-                Element e_armor = e_player.getChild("armor");
+                Element e_armor = e_player.getChild(CS_Armor);
                 pt.setArmor(Integer.parseInt(e_armor.getValue()));
-                Element e_cost = e_player.getChild("cost");
+                Element e_cost = e_player.getChild(CS_Cost);
                 pt.setCost(Integer.parseInt(e_cost.getValue()));
 
-                Element e_skills = e_player.getChild("skills");
-                List<Element> l_skills = e_skills.getChildren("skill");
+                Element e_skills = e_player.getChild(CS_Skills);
+                List<Element> l_skills = e_skills.getChildren(CS_Skill);
                 Iterator<Element> i = l_skills.iterator();
                 while (i.hasNext()) {
                     Element e_skill = i.next();
                     Skill s = getSkill(e_skill.getValue());
                     if (s == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Skill not found: " + e_skill.getValue() + " for player " + pt.getPosition());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound)+ ": " + e_skill.getValue() + " "+Translate.translate(CS_forThePlayer)+ " "+ pt.getPosition());
                     } else {
                         pt.addSkill(s);
                     }
                 }
 
-                Element e_single = e_player.getChild("single");
-                List<Element> l_singleskilltypes = e_single.getChildren("skillType");
+                Element e_single = e_player.getChild(CS_Single);
+                List<Element> l_singleskilltypes = e_single.getChildren(CS_SkillType);
                 Iterator<Element> j = l_singleskilltypes.iterator();
                 while (j.hasNext()) {
                     Element e_skilltype = j.next();
                     SkillType st = getSkillType(e_skilltype.getValue());
                     if (st == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Skill Type not found: " + e_skilltype.getValue() + " for player " + pt.getPosition());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillTypeNotFound)+ ": " + e_skilltype.getValue() + " "+Translate.translate(CS_forThePlayer)+ " "+ pt.getPosition());
                     } else {
                         pt.addSingle(st);
                     }
                 }
 
-                Element e_double = e_player.getChild("double");
-                List<Element> l_doubleskilltypes = e_double.getChildren("skillType");
+                Element e_double = e_player.getChild(CS_Double);
+                List<Element> l_doubleskilltypes = e_double.getChildren(CS_SkillType);
                 j = l_doubleskilltypes.iterator();
                 while (j.hasNext()) {
                     Element e_skilltype = j.next();
                     SkillType st = getSkillType(e_skilltype.getValue());
                     if (st == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Skill Type not found: " + e_skilltype.getValue() + " for player " + pt.getPosition());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillTypeNotFound)+ ": " + e_skilltype.getValue() + " "+Translate.translate(CS_forThePlayer)+ " "+ pt.getPosition());
                     } else {
                         pt.addDouble(st);
                     }
@@ -283,6 +318,8 @@ public final class LRB {
         }
     }
 
+    private final static String CS_Starplayer="starplayer";
+        
     /**
      *
      * @param file
@@ -295,34 +332,34 @@ public final class LRB {
 
             clearStarPlayers();
 
-            List<Element> stars = racine.getChildren("starplayer");
+            List<Element> stars = racine.getChildren(CS_Starplayer);
             Iterator<Element> j = stars.iterator();
             while (j.hasNext()) {
                 Element e_star = j.next();
 
-                Element e_name = e_star.getChild("name");
+                Element e_name = e_star.getChild(CS_Name);
                 StarPlayer sp = new StarPlayer(e_name.getValue());
 
-                sp.setPosition(e_star.getChild("position").getValue());
-                sp.setMovement(Integer.parseInt(e_star.getChild("movement").getValue()));
-                sp.setStrength(Integer.parseInt(e_star.getChild("strength").getValue()));
-                sp.setAgility(Integer.parseInt(e_star.getChild("agility").getValue()));
-                sp.setArmor(Integer.parseInt(e_star.getChild("armor").getValue()));
-                sp.setCost(Integer.parseInt(e_star.getChild("cost").getValue()));
+                sp.setPosition(e_star.getChild(CS_Position).getValue());
+                sp.setMovement(Integer.parseInt(e_star.getChild(CS_Movement).getValue()));
+                sp.setStrength(Integer.parseInt(e_star.getChild(CS_Strength).getValue()));
+                sp.setAgility(Integer.parseInt(e_star.getChild(CS_Agility).getValue()));
+                sp.setArmor(Integer.parseInt(e_star.getChild(CS_Armor).getValue()));
+                sp.setCost(Integer.parseInt(e_star.getChild(CS_Cost).getValue()));
 
-                List<Element> skilllist = e_star.getChild("skills").getChildren("skill");
+                List<Element> skilllist = e_star.getChild(CS_Skills).getChildren(CS_Skill);
                 Iterator<Element> i = skilllist.iterator();
                 while (i.hasNext()) {
                     Element e_skill = i.next();
                     Skill s = getSkill(e_skill.getValue());
                     if (s == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Skill not found: " + e_skill.getValue() + " for player " + sp.getName());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound)+ ": " + e_skill.getValue() + " "+Translate.translate(CS_forThePlayer)+ " "+ sp.getName());
                     } else {
                         sp.addSkill(s);
                     }
                 }
 
-                List<Element> rosterlist = e_star.getChildren("team");
+                List<Element> rosterlist = e_star.getChildren(CS_Team);
                 i = rosterlist.iterator();
                 while (i.hasNext()) {
                     Element e_team = i.next();
@@ -334,7 +371,7 @@ public final class LRB {
                     RosterType rt = new RosterType(n);
                     //RosterType rt = getRosterType(tourma.data.RosterType.translate(e_team.getValue()));
                     if (rt == null) {
-                        JOptionPane.showMessageDialog(null, "RosterType not found: " + e_team.getValue() + " for player " + sp.getName());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_RosterTypeNotFound)+ ": " + n + " "+Translate.translate(CS_forThePlayer)+ " "+ e_name.getValue());
                     } else {
                         sp.addRoster(rt);
                         rt.addAvailableStarPlayer(sp);
