@@ -128,7 +128,7 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                 case 1:
                     return (player.getName());
                 case 2:
-                    return (player.getPlayertype().getPosition());
+                    return Translate.translate(player.getPlayertype().getPosition());
                 case 3:
                     return player.getMovement();
                 case 4:
@@ -145,13 +145,13 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     ArrayList<String> skills = new ArrayList<>();
                     for (i = 0; i < player.getPlayertype().getSkillCount(); i++) {
                         Skill s = player.getPlayertype().getSkill(i);
-                        skills.add("<FONT color=\"000000\">" + s.getmName() + "</FONT>");
+                        skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
                     }
                     for (i = 0; i < player.getSkillCount(); i++) {
                         Skill s = player.getSkill(i);
                         //int rgb=s.mColor.getRGB();
                         int rgb = s.getmColor().getRed() * 65536 + s.getmColor().getGreen() * 256 + s.getmColor().getBlue();
-                        skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + s.getmName() + "</I></FONT>");
+                        skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getmName()) + "</I></FONT>");
                     }
 
                     for (i = 0; i < skills.size(); i++) {
@@ -168,7 +168,7 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     StringBuilder sr = new StringBuilder(32);
                     for (i = 0; i < player.getPlayertype().getSingleCount(); i++) {
                         SkillType st = player.getPlayertype().getSingle(i);
-                        sr.append(st.getAccronym());
+                        sr.append(Translate.translate(st.getAccronym()));
                     }
                     return sr.toString();
                 case 9:
@@ -178,7 +178,7 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                     StringBuilder dr = new StringBuilder(32);
                     for (i = 0; i < player.getPlayertype().getDoubleCount(); i++) {
                         SkillType st = player.getPlayertype().getDouble(i);
-                        dr.append(st.getAccronym());
+                        dr.append(Translate.translate(st.getAccronym()));
                     }
                     return dr.toString();
                 case 10:

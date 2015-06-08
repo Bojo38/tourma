@@ -209,10 +209,11 @@ public final class LRB {
     private final static String CS_SkillType = "skillType";
     private final static String CS_Double = "double";
 
-    private final static String CS_SkillNotFound="SkillNotFound";
-    private final static String CS_SkillTypeNotFound="SkillTypeNotFound";
-        private final static String CS_RosterTypeNotFound="RosterTypeNotFound";
-    private final static String CS_forThePlayer="forThePlayer";
+    private final static String CS_SkillNotFound = "SkillNotFound";
+    private final static String CS_SkillTypeNotFound = "SkillTypeNotFound";
+    private final static String CS_RosterTypeNotFound = "RosterTypeNotFound";
+    private final static String CS_forThePlayer = "forThePlayer";
+
     /**
      *
      * @param file
@@ -278,7 +279,7 @@ public final class LRB {
                     Element e_skill = i.next();
                     Skill s = getSkill(e_skill.getValue());
                     if (s == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound)+ ": " + e_skill.getValue() + " "+Translate.translate(CS_forThePlayer)+ " "+ pt.getPosition());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
                     } else {
                         pt.addSkill(s);
                     }
@@ -291,7 +292,7 @@ public final class LRB {
                     Element e_skilltype = j.next();
                     SkillType st = getSkillType(e_skilltype.getValue());
                     if (st == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillTypeNotFound)+ ": " + e_skilltype.getValue() + " "+Translate.translate(CS_forThePlayer)+ " "+ pt.getPosition());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillTypeNotFound) + ": " + e_skilltype.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
                     } else {
                         pt.addSingle(st);
                     }
@@ -304,7 +305,7 @@ public final class LRB {
                     Element e_skilltype = j.next();
                     SkillType st = getSkillType(e_skilltype.getValue());
                     if (st == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillTypeNotFound)+ ": " + e_skilltype.getValue() + " "+Translate.translate(CS_forThePlayer)+ " "+ pt.getPosition());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillTypeNotFound) + ": " + e_skilltype.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
                     } else {
                         pt.addDouble(st);
                     }
@@ -318,8 +319,8 @@ public final class LRB {
         }
     }
 
-    private final static String CS_Starplayer="starplayer";
-        
+    private final static String CS_Starplayer = "starplayer";
+
     /**
      *
      * @param file
@@ -353,7 +354,7 @@ public final class LRB {
                     Element e_skill = i.next();
                     Skill s = getSkill(e_skill.getValue());
                     if (s == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound)+ ": " + e_skill.getValue() + " "+Translate.translate(CS_forThePlayer)+ " "+ sp.getName());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + sp.getName());
                     } else {
                         sp.addSkill(s);
                     }
@@ -371,7 +372,7 @@ public final class LRB {
                     RosterType rt = new RosterType(n);
                     //RosterType rt = getRosterType(tourma.data.RosterType.translate(e_team.getValue()));
                     if (rt == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_RosterTypeNotFound)+ ": " + n + " "+Translate.translate(CS_forThePlayer)+ " "+ e_name.getValue());
+                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_RosterTypeNotFound) + ": " + n + " " + Translate.translate(CS_forThePlayer) + " " + e_name.getValue());
                     } else {
                         sp.addRoster(rt);
                         rt.addAvailableStarPlayer(sp);
@@ -429,12 +430,12 @@ public final class LRB {
      * @param name
      * @return
      */
-    public RosterType getRosterType(String name) {
+    public RosterType getRosterType(String name, boolean translate) {
         int i;
         for (i = 0; i < getRosterTypeCount(); i++) {
             RosterType rt = getRosterType(i);
 
-            if (name.equals(rt.getName())) {
+            if (name.equals(Translate.translate(rt.getName()))) {
                 return rt;
             }
         }
@@ -462,11 +463,15 @@ public final class LRB {
      *
      * @return
      */
-    public ArrayList<String> getRosterTypeListAsString() {
+    public ArrayList<String> getRosterTypeListAsString(boolean translate) {
         int i;
         ArrayList<String> res = new ArrayList<>();
         for (i = 0; i < getRosterTypeCount(); i++) {
-            res.add(getRosterType(i).getName());
+            if (translate) {
+                res.add(Translate.translate(getRosterType(i).getName()));
+            } else {
+                res.add(getRosterType(i).getName());
+            }
         }
 
         return res;

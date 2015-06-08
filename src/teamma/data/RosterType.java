@@ -6,50 +6,51 @@ package teamma.data;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import tourma.languages.Translate;
 
 /**
  *
  * @author WFMJ7631
  */
 public class RosterType {
-    
+
     /**
-     * 
+     *
      */
-    private static int extraRerollCost=100000;
+    private static int extraRerollCost = 100000;
     /**
-     * 
+     *
      */
-    private static int _babe_cost=50000;
+    private static int _babe_cost = 50000;
     /**
-     * 
+     *
      */
-    private static int _wizard_cost=150000;
+    private static int _wizard_cost = 150000;
     /**
-     * 
+     *
      */
-    private static int _local_apo_cost=100000;
+    private static int _local_apo_cost = 100000;
     /**
-     * 
+     *
      */
-    private static int  _igor_cost=100000;
-    
+    private static int _igor_cost = 100000;
+
     /**
-     * 
+     *
      */
-    private static int  _assistant_cost=10000;
+    private static int _assistant_cost = 10000;
     /**
-     * 
+     *
      */
-    private static int  _fan_factor_cost=10000;
+    private static int _fan_factor_cost = 10000;
     /**
-     * 
+     *
      */
-    private static int  _cheerleader_cost=10000;
+    private static int _cheerleader_cost = 10000;
     /**
-     * 
+     *
      */
-    private static int  _apothecary_cost=50000;
+    private static int _apothecary_cost = 50000;
     private static final Logger LOG = Logger.getLogger(RosterType.class.getName());
 
     /**
@@ -178,83 +179,94 @@ public class RosterType {
         _apothecary_cost = aApothecary_cost;
     }
     /**
-     * 
+     *
      */
     private String _name;
     /**
-     * 
+     *
      */
     private int _reroll_cost;
     /**
-     * 
+     *
      */
     private boolean _apothecary;
     /**
-     * 
+     *
      */
     private int _bribe_cost;
     /**
-     * 
+     *
      */
     private int _chef_cost;
     /**
-     * 
+     *
      */
     private boolean _igor;
     /**
-     * 
+     *
      */
     private String _image;
     /**
-     * 
+     *
      */
     private final ArrayList<PlayerType> _player_types;
     /**
-     * 
+     *
      */
     private final ArrayList<StarPlayer> _available_starplayers;
-    
+
     /**
-     * 
-     * @param name 
-     */
-    public RosterType(String name)
-    {
-        _name=name;
-        _player_types=new  ArrayList<>();
-        _available_starplayers=new ArrayList<>();
-    }
-    
-    /**
-     * 
+     *
      * @param name
-     * @return 
      */
-    public PlayerType getPlayerType(String name) {
+    public RosterType(String name) {
+        _name = name;
+        _player_types = new ArrayList<>();
+        _available_starplayers = new ArrayList<>();
+    }
+
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public PlayerType getPlayerType(String name, boolean translate) {
         int i;
         for (i = 0; i < getPlayerTypeCount(); i++) {
             PlayerType rt = getPlayerType(i);
 
-            if (name.equals(rt.getPosition())) {
-                return rt;
+            if (translate) {
+                if (name.equals(Translate.translate(rt.getPosition()))) {
+                    return rt;
+                }
+            } else {
+                if (name.equals(rt.getPosition())) {
+                    return rt;
+                }
             }
 
         }
         return null;
     }
-    
+
     /**
-     * 
+     *
      * @param name
-     * @return 
+     * @return
      */
-     public StarPlayer getStarPlayer(String name) {
+    public StarPlayer getStarPlayer(String name, boolean translate) {
         int i;
         for (i = 0; i < getAvailableStarplayerCount(); i++) {
-           StarPlayer sp = getAvailableStarplayer(i);
+            StarPlayer sp = getAvailableStarplayer(i);
 
-            if (name.equals(sp.getName())) {
-                return sp;
+            if (translate) {
+                if (name.equals(Translate.translate(sp.getName()))) {
+                    return sp;
+                }
+            } else {
+                if (name.equals(sp.getName())) {
+                    return sp;
+                }
             }
         }
         return null;
@@ -364,21 +376,21 @@ public class RosterType {
     public void addPlayerType(PlayerType p) {
         _player_types.add(p);
     }
-    
+
     /**
      * Clear the player type list
      */
     public void clearPlayerType() {
         _player_types.clear();
     }
-    
+
     /**
      * @return the _player_types
      */
     public int getPlayerTypeCount() {
         return _player_types.size();
     }
-    
+
     /**
      * @param i
      * @return the _player_types
@@ -394,21 +406,20 @@ public class RosterType {
     public StarPlayer getAvailableStarplayer(int i) {
         return _available_starplayers.get(i);
     }
-    
+
     /**
      * @return the _available_starplayers
      */
     public int getAvailableStarplayerCount() {
         return _available_starplayers.size();
     }
-    
+
     /**
-     * 
-     * @param s 
+     *
+     * @param s
      */
-    public void addAvailableStarPlayer(StarPlayer s)
-    {
+    public void addAvailableStarPlayer(StarPlayer s) {
         _available_starplayers.add(s);
     }
-    
+
 }

@@ -87,9 +87,9 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
             StarPlayer player = _roster.getChampion(row);
             switch (col) {
                 case 0:
-                    return (player.getName());
+                    return Translate.translate(player.getName());
                 case 1:
-                    return (player.getPosition());
+                    return Translate.translate(player.getPosition());
                 case 2:
                     return player.getMovement();
                 case 3:
@@ -107,7 +107,7 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
                     for (i = 0; i < player.getSkillCount(); i++) {
                         Skill s = player.getSkill(i);
 
-                        skills.add("<FONT color=\"000000\">" + s.getmName() + "</FONT>");
+                        skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
                     }
 
                     for (i = 0; i < skills.size(); i++) {

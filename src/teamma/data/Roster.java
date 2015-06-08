@@ -233,7 +233,7 @@ public class Roster implements XMLExport {
     public void setXMLElement(Element e) {
         LRB lrb6 = LRB.getLRB();
         String rosterType = e.getAttributeValue(CS_Roster);
-        this.setRoster(lrb6.getRosterType(rosterType));
+        this.setRoster(lrb6.getRosterType(rosterType,false));
         this.setApothecary(Boolean.parseBoolean(e.getAttributeValue(CS_Apothecary)));
         this.setAssistants(Integer.parseInt(e.getAttributeValue(CS_Assistants)));
         this.setCheerleaders(Integer.parseInt(e.getAttributeValue(CS_Cheerleaders)));
@@ -267,7 +267,7 @@ public class Roster implements XMLExport {
         while (ip.hasNext()) {
             final Element p = ip.next();
             if (this.getRoster() != null) {
-                final teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue(CS_Position)));
+                final teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue(CS_Position),false));
                 pl.setName(p.getAttributeValue(CS_Name));
 
                 final List<Element> skills = p.getChildren(CS_Skill);
