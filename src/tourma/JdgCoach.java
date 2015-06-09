@@ -703,7 +703,7 @@ public final class JdgCoach extends javax.swing.JDialog {
                 Translate.translate(CS_ChooseRoster),
                 Translate.translate(CS_RostersChoice),
                 JOptionPane.INFORMATION_MESSAGE,
-                null, RosterType.getRostersNames(), "Amazons");
+                null, RosterType.getRostersNames(), RosterType.getRostersNames()[0]);
         teamma.data.RosterType rt = teamma.data.LRB.getLRB().getRosterType(input,true);
         if (rt != null) {
             teamma.data.Roster compo = new teamma.data.Roster();
