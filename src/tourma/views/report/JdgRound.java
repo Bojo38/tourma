@@ -63,10 +63,11 @@ public final class JdgRound extends javax.swing.JDialog {
     private ArrayList<Team> mTeams2;
     private File mFilename = null;
 
-    private final static String CS_Round="Round";
-    
+    private final static String CS_Round = "Round";
+
     /**
      * Creates new form jdgRoundReport
+     *
      * @param parent
      * @param modal
      * @param round
@@ -218,9 +219,9 @@ public final class JdgRound extends javax.swing.JDialog {
             OutputStreamWriter out = null;
             InputStreamReader in = null;
             try {
-                in = new InputStreamReader(new FileInputStream(mFilename),Charset.defaultCharset());
+                in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
                 {
-                    out = new OutputStreamWriter(new FileOutputStream(export),Charset.defaultCharset());
+                    out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
                     int c = in.read();
                     while (c != -1) {
                         out.write(c);
@@ -237,7 +238,7 @@ public final class JdgRound extends javax.swing.JDialog {
                     try {
                         in.close();
                     } catch (IOException e) {
-                        LOG.log(Level.INFO,e.getLocalizedMessage());
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
                     }
                 }
 
@@ -245,7 +246,7 @@ public final class JdgRound extends javax.swing.JDialog {
                     try {
                         out.close();
                     } catch (IOException e) {
-                        LOG.log(Level.INFO,e.getLocalizedMessage());
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
                     }
                 }
             }
@@ -267,8 +268,8 @@ public final class JdgRound extends javax.swing.JDialog {
         try {
             final Configuration cfg = new Configuration();
             final URI uri = getClass().getResource("/tourma/views/report").toURI();
-            if (uri.toString().contains(".jar!")) {
-                cfg.setClassForTemplateLoading(getClass(), "");
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
+                cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
@@ -296,7 +297,7 @@ public final class JdgRound extends javax.swing.JDialog {
             for (int i = 0; i < matches.size(); i++) {
                 final CoachMatch match = matches.get(i);
 
-                final HashMap<String,Object> m = new HashMap<>();
+                final HashMap<String, Object> m = new HashMap<>();
                 m.put(ReportKeys.CS_Numero, i + 1);
 
                 if (match.getRoster1() == null) {
@@ -322,7 +323,7 @@ public final class JdgRound extends javax.swing.JDialog {
 
                     final ArrayList<Object> values = new ArrayList<>();
                     for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                        final HashMap<String,Object> value = new HashMap<>();
+                        final HashMap<String, Object> value = new HashMap<>();
                         value.put(ReportKeys.CS_Value1, match.getValue(Tournament.getTournament().getParams().getCriteria(j)).getValue1());
                         value.put(ReportKeys.CS_Value2, match.getValue(Tournament.getTournament().getParams().getCriteria(j)).getValue2());
                         values.add(value);
@@ -334,7 +335,7 @@ public final class JdgRound extends javax.swing.JDialog {
                     m.put(ReportKeys.CS_Score2, StringConstants.CS_HTML_EMPTY);
                     final ArrayList<Object> values = new ArrayList<>();
                     for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                        final HashMap<String,Object> value = new HashMap<>();
+                        final HashMap<String, Object> value = new HashMap<>();
                         value.put(ReportKeys.CS_Value1, StringConstants.CS_HTML_EMPTY);
                         value.put(ReportKeys.CS_Value2, StringConstants.CS_HTML_EMPTY);
                         values.add(value);
@@ -346,18 +347,21 @@ public final class JdgRound extends javax.swing.JDialog {
                 } else {
                     m.put(ReportKeys.CS_Coach2, ((Coach) match.getCompetitor2()).getTeamMates().getName() + StringConstants.CS_THICK + match.getCompetitor2().getName());
                 }
-                //m.put("coach2", match.mCompetitor2.mName);
+
                 parMatches.add(m);
             }
 
             root.put(ReportKeys.CS_Matches, parMatches);
+
+            root.put("TitleCoach", Translate.translate("TitleCoach"));
+            root.put("TitleScore", Translate.translate("TitleScore"));
 
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));
             address = File.createTempFile(StringConstants.CS_RESULT + format.format(new Date()), ".tmp");
             address.deleteOnExit();
-            out = new OutputStreamWriter(new FileOutputStream(address),Charset.defaultCharset());
+            out = new OutputStreamWriter(new FileOutputStream(address), Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
@@ -390,7 +394,7 @@ public final class JdgRound extends javax.swing.JDialog {
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             final Template temp = cfg.getTemplate("team_round.html");
 
-            final Map<String,Object> root = new HashMap<>();
+            final Map<String, Object> root = new HashMap<>();
             root.put(ReportKeys.CS_Nom, mTour.getParams().getTournamentName() + StringConstants.CS_THICK + Translate.translate(CS_Round) + " " + mRoundNumber);
             root.put(ReportKeys.CS_Tables, mRound.getMatchsCount());
 
@@ -416,7 +420,7 @@ public final class JdgRound extends javax.swing.JDialog {
             final ArrayList<Object> parMatches = new ArrayList<>();
             for (int i = 0; i < model.getRowCount(); i++) {
 
-                final HashMap<String,Object> m = new HashMap<>();
+                final HashMap<String, Object> m = new HashMap<>();
                 m.put(ReportKeys.CS_Numero, model.getValueAt(i, 0));
                 m.put(ReportKeys.CS_Team1, model.getValueAt(i, 1));
                 if (mResult) {
@@ -432,14 +436,17 @@ public final class JdgRound extends javax.swing.JDialog {
                 parMatches.add(m);
             }
 
+            root.put("TitleTeam", Translate.translate("TitleTeam"));
+            root.put("TitleV", Translate.translate("TitleV"));
+            root.put("TitleD", Translate.translate("TitleD"));
             root.put(ReportKeys.CS_Matches, parMatches);
 
-             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
+            final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));
             address = File.createTempFile(StringConstants.CS_RESULT + format.format(new Date()), ".tmp");
             address.deleteOnExit();
-            out = new OutputStreamWriter(new FileOutputStream(address),Charset.defaultCharset());
+            out = new OutputStreamWriter(new FileOutputStream(address), Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
@@ -473,7 +480,7 @@ public final class JdgRound extends javax.swing.JDialog {
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             final Template temp = cfg.getTemplate("team_round.html");
 
-            final Map<String,Object> root = new HashMap<>();
+            final Map<String, Object> root = new HashMap<>();
             root.put(ReportKeys.CS_Nom,
                     mTour.getParams().getTournamentName() + " - "
                     + Translate.translate(CS_Round) + " " + mRoundNumber);
@@ -482,7 +489,7 @@ public final class JdgRound extends javax.swing.JDialog {
 
             final ArrayList<Object> parMatches = new ArrayList<>();
             for (int i = 0; i < mTeams1.size(); i++) {
-                final HashMap<String,Object> m = new HashMap<>();
+                final HashMap<String, Object> m = new HashMap<>();
                 m.put(ReportKeys.CS_Numero, i + 1);
                 m.put(ReportKeys.CS_Team1, mTeams1.get(i).getName());
                 m.put(ReportKeys.CS_V1, StringConstants.CS_HTML_EMPTY);
@@ -495,13 +502,13 @@ public final class JdgRound extends javax.swing.JDialog {
 
             root.put(ReportKeys.CS_Matches, parMatches);
 
-             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
+            final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));
-            address = File.createTempFile(StringConstants.CS_RESULT + format.format(new Date()), 
+            address = File.createTempFile(StringConstants.CS_RESULT + format.format(new Date()),
                     ".tmp");
             address.deleteOnExit();
-            out = new OutputStreamWriter(new FileOutputStream(address),Charset.defaultCharset());
+            out = new OutputStreamWriter(new FileOutputStream(address), Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
@@ -520,6 +527,5 @@ public final class JdgRound extends javax.swing.JDialog {
         return address;
     }
     private static final Logger LOG = Logger.getLogger(JdgRound.class.getName());
-    
 
 }

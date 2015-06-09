@@ -42,7 +42,6 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
-import static tourma.utility.StringConstants.CS_NULL;
 
 /**
  *
@@ -233,9 +232,9 @@ public final class JdgRanking extends javax.swing.JDialog {
         try {
 
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("tourma/views/report").toURI();
+            final URI uri = getClass().getResource("/tourma/views/report").toURI();
             if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
-                cfg.setClassForTemplateLoading(getClass(), CS_NULL);
+                cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }

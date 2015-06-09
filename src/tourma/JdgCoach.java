@@ -257,10 +257,8 @@ public final class JdgCoach extends javax.swing.JDialog {
             jcbClan.setSelectedItem(mCoach.getClan().getName());
         }
 
-        if (Tournament.getTournament().getCategoriesCount() > 1) {
-            jbtAddCategory.setEnabled(true);
-            jbtDelCategory.setEnabled(true);
-        }
+        jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 1);
+        jbtDelCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 1);
 
         jcbRoster.setSelectedItem(mCoach.getRoster().getName());
         if (mCoach.getClan() != null) {
@@ -690,11 +688,18 @@ public final class JdgCoach extends javax.swing.JDialog {
         }
         jlsCompositions.setModel(model);
 
-        final DefaultListModel categoryListModel = new DefaultListModel();
-        for (int i = 0; i < this.mCoach.getCategoryCount(); i++) {
-            categoryListModel.addElement(mCoach.getCategory(i).getName());
+        if (Tournament.getTournament().getCategoriesCount() != 0) {
+            final DefaultListModel categoryListModel = new DefaultListModel();
+            for (int i = 0; i < this.mCoach.getCategoryCount(); i++) {
+                Category cat = mCoach.getCategory(i);
+                categoryListModel.addElement(cat.getName());
+            }
+            jlsCategories.setModel(categoryListModel);
         }
-        jlsCategories.setModel(categoryListModel);
+        jlsCategories.setEnabled(Tournament.getTournament().getCategoriesCount() >1);
+        jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() >1);
+        jbtDelCategory.setEnabled(Tournament.getTournament().getCategoriesCount() >1);
+
     }
 
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
@@ -704,7 +709,9 @@ public final class JdgCoach extends javax.swing.JDialog {
                 Translate.translate(CS_RostersChoice),
                 JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.getRostersNames(), RosterType.getRostersNames()[0]);
-        teamma.data.RosterType rt = teamma.data.LRB.getLRB().getRosterType(input,true);
+
+        teamma.data.RosterType rt = teamma.data.LRB.getLRB().getRosterType(input, true);
+
         if (rt != null) {
             teamma.data.Roster compo = new teamma.data.Roster();
             compo.setRoster(rt);
@@ -784,8 +791,8 @@ public final class JdgCoach extends javax.swing.JDialog {
         jbtAvatar.setIcon(new ImageIcon(mCoach.getPicture()));
     }//GEN-LAST:event_jbtAvatarActionPerformed
 
-    private final static String CS_PleaseSelectCategory="PleaseSelectCategory";
-    
+    private final static String CS_PleaseSelectCategory = "PleaseSelectCategory";
+
     private void jbtAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCategoryActionPerformed
         ArrayList<String> cats = new ArrayList<>();
         cats.add(" ");

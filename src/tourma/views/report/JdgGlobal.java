@@ -245,10 +245,6 @@ public final class JdgGlobal extends javax.swing.JDialog {
             final Configuration cfg = new Configuration();
             final URI uri = getClass().getResource("/tourma/views/report").toURI();
             if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
-                /*String tmp = uri.toString();
-                 tmp = tmp.substring(10, tmp.indexOf(".jar!") - 4);
-                 //tmp=tmp+"";
-                 cfg.setDirectoryForTemplateLoading(new File(tmp));*/
                 cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
@@ -319,7 +315,8 @@ public final class JdgGlobal extends javax.swing.JDialog {
                 criterias.add(criteria);
             }
             root.put(ReportKeys.CS_Criterias, criterias);
-
+            root.put("TitleCategory", Translate.translate("TitleCategory"));
+            
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));

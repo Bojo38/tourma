@@ -55,7 +55,7 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
         final ArrayList<Coach> coaches = mObjects;
         for (int k = 0; k < coaches.size(); k++) {
             final Coach c = coaches.get(k);
-            if (c.getMatchCount() > 0) {
+            //if (c.getMatchCount() > 0) {
                 int value = 0;
                 int value1 ;
                 int value2 ;
@@ -148,7 +148,7 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 value5 = getValueFromArray(mRankingType5, aValue5);
 
                 mDatas.add(new ObjectAnnexRanking(c, value, value1, value2, value3, value4, value5));
-            }
+            //}
         }
 
         Collections.sort(mDatas);

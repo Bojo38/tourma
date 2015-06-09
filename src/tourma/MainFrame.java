@@ -1214,7 +1214,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private static final String CS_NafRanking = "NAF_RANK";
     private static final String CS_RandomAndBalancing = "RandomAndBalancing";
     private static final String CS_Generation = "GÉNÉRATION";
-    private static final String CS_ChooseGenerationMethod = "CHOISISSEZ LA MÉTHODE DE GÉNÉRATION:";
+    private static final String CS_ChooseGenerationMethod = "CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: ";
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiGenerateFirstRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateFirstRoundActionPerformed

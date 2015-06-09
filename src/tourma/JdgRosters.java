@@ -156,8 +156,6 @@ public final class JdgRosters extends javax.swing.JDialog {
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        //final ArrayList<String> rosters = new ArrayList<>();
-
         RosterType.newRostersNames();
         
         for (int i = 0; i < mModel.getSize(); i++) {
