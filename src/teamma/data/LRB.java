@@ -606,4 +606,8 @@ public final class LRB {
         LRB._singleton = null;
     }
 
+    ArrayList getRosterTypeListAsString() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -333,11 +333,14 @@
 	<method signature="java.io.OutputStream getByteStream()" class="org.w3c.dom.ls.LSOutput" />
 	<method signature="java.io.Writer getCharacterStream()" class="org.w3c.dom.ls.LSOutput" />
 	<class name="tourma.MainFrame" />
+	<method signature="boolean isRoundOnly()" class="tourma.MainFrame" />
 	<method signature="void &lt;init&gt;(int)" class="tourma.MainFrame" />
 	<method signature="void main(java.lang.String[])" class="tourma.MainFrame" />
 	<method signature="tourma.MainFrame getMainFrame(int)" class="tourma.MainFrame" />
 	<method signature="void update()" class="tourma.MainFrame" />
 	<method signature="tourma.MainFrame getMainFrame()" class="tourma.MainFrame" />
+	<method signature="void propertyChange(java.beans.PropertyChangeEvent)" class="tourma.MainFrame" />
+	<method signature="boolean isNafOnly()" class="tourma.MainFrame" />
 	<method signature="void updateTree()" class="tourma.MainFrame" />
 	<class name="tourma.tableModel.MjtAnnexRankTeam" />
 	<method signature="java.awt.Component getTableCellRendererComponent(javax.swing.JTable,java.lang.Object,boolean,boolean,int,int)" class="tourma.tableModel.MjtAnnexRankTeam" />
@@ -496,6 +499,7 @@
 	<method signature="void &lt;init&gt;()" class="freemarker.ext.jsp.EventForwarding" />
 	<class name="tourma.tableModel.MjtRankingIndiv" />
 	<method signature="void &lt;init&gt;(int,int,int,int,int,int,java.util.ArrayList,boolean,boolean,boolean)" class="tourma.tableModel.MjtRankingIndiv" />
+	<method signature="void &lt;init&gt;(int,java.util.ArrayList,boolean,boolean)" class="tourma.tableModel.MjtRankingIndiv" />
 	<method signature="java.awt.Component getTableCellRendererComponent(javax.swing.JTable,java.lang.Object,boolean,boolean,int,int)" class="tourma.tableModel.MjtRankingIndiv" />
 	<method signature="java.lang.String getColumnName(int)" class="tourma.tableModel.MjtRankingIndiv" />
 	<method signature="java.lang.Object getValueAt(int,int)" class="tourma.tableModel.MjtRankingIndiv" />
@@ -1036,10 +1040,13 @@
 	<method signature="void fatalError(org.xml.sax.SAXParseException)" class="org.xml.sax.HandlerBase" />
 	<class name="tourma.data.Competitor" />
 	<method signature="java.lang.String getName()" class="tourma.data.Competitor" />
+	<method signature="void delCategory(tourma.data.Category)" class="tourma.data.Competitor" />
 	<method signature="void newMatchs()" class="tourma.data.Competitor" />
 	<method signature="tourma.data.Clan getClan()" class="tourma.data.Competitor" />
 	<method signature="void addMatch(tourma.data.Competitor,tourma.data.Round)" class="tourma.data.Competitor" />
+	<method signature="int getCategoryCount()" class="tourma.data.Competitor" />
 	<method signature="boolean isMatchsNotNull()" class="tourma.data.Competitor" />
+	<method signature="void clearCategory()" class="tourma.data.Competitor" />
 	<method signature="java.util.ArrayList getPossibleOpponents(java.util.ArrayList,tourma.data.Round)" class="tourma.data.Competitor" />
 	<method signature="boolean havePlayed(tourma.data.Competitor)" class="tourma.data.Competitor" />
 	<method signature="int getMatchCount()" class="tourma.data.Competitor" />
@@ -1050,11 +1057,14 @@
 	<method signature="java.awt.Color generateRandomColor(java.awt.Color)" class="tourma.data.Competitor" />
 	<method signature="void addMatch(tourma.data.Match)" class="tourma.data.Competitor" />
 	<method signature="tourma.data.Match getMatch(int)" class="tourma.data.Competitor" />
+	<method signature="tourma.data.Category getCategory(int)" class="tourma.data.Competitor" />
 	<method signature="void setColor(java.awt.Color)" class="tourma.data.Competitor" />
 	<method signature="java.util.HashMap getTeamOppositionCount(java.util.ArrayList,tourma.data.Round)" class="tourma.data.Competitor" />
 	<method signature="void roundCheck(tourma.data.Round)" class="tourma.data.Competitor" />
+	<method signature="boolean containsCategory(tourma.data.Category)" class="tourma.data.Competitor" />
 	<method signature="java.lang.String getDecoratedName()" class="tourma.data.Competitor" />
 	<method signature="int matchIndex(tourma.data.Match)" class="tourma.data.Competitor" />
+	<method signature="void addCategory(tourma.data.Category)" class="tourma.data.Competitor" />
 	<method signature="void setClan(tourma.data.Clan)" class="tourma.data.Competitor" />
 	<method signature="void removeMatch(tourma.data.Match)" class="tourma.data.Competitor" />
 	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round)" class="tourma.data.Competitor" />
@@ -2532,6 +2542,7 @@
 	<method signature="tourma.data.RosterType getRosterType(int)" class="tourma.data.RosterType" />
 	<method signature="java.lang.String getRostersName(int)" class="tourma.data.RosterType" />
 	<method signature="void newRostersNames()" class="tourma.data.RosterType" />
+	<method signature="java.lang.String getRosterTranslation(java.lang.String)" class="tourma.data.RosterType" />
 	<method signature="void putRosterType(java.lang.String,tourma.data.RosterType)" class="tourma.data.RosterType" />
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.RosterType" />
 	<method signature="void addRosterName(java.lang.String)" class="tourma.data.RosterType" />
@@ -2540,6 +2551,7 @@
 	<method signature="javax.swing.DefaultComboBoxModel getRostersNamesModel()" class="tourma.data.RosterType" />
 	<method signature="void setName(java.lang.String)" class="tourma.data.RosterType" />
 	<method signature="void newRostersTypes()" class="tourma.data.RosterType" />
+	<method signature="java.lang.String translate(java.lang.String)" class="tourma.data.RosterType" />
 	<method signature="void initCollection(int)" class="tourma.data.RosterType" />
 	<method signature="int getRostersNamesCount()" class="tourma.data.RosterType" />
 	<method signature="void &lt;init&gt;(java.lang.String)" class="tourma.data.RosterType" />
@@ -2984,6 +2996,9 @@
 	<method signature="java.lang.String getXMLVersion()" class="org.xml.sax.ext.Locator2Impl" />
 	<class name="org.apache.xerces.impl.dv.InvalidDatatypeFacetException" />
 	<method signature="void &lt;init&gt;(java.lang.String,java.lang.Object[])" class="org.apache.xerces.impl.dv.InvalidDatatypeFacetException" />
+	<class name="tourma.languages.Translate" />
+	<method signature="void &lt;init&gt;()" class="tourma.languages.Translate" />
+	<method signature="java.lang.String translate(java.lang.String)" class="tourma.languages.Translate" />
 	<class name="org.apache.xerces.impl.xs.XSGroupDecl" />
 	<method signature="java.lang.String getName()" class="org.apache.xerces.impl.xs.XSGroupDecl" />
 	<method signature="void &lt;init&gt;()" class="org.apache.xerces.impl.xs.XSGroupDecl" />
@@ -3433,10 +3448,6 @@
 	<method signature="void setUpperBound(double)" class="org.jfree.chart.plot.dial.StandardDialRange" />
 	<method signature="void setBounds(double,double)" class="org.jfree.chart.plot.dial.StandardDialRange" />
 	<method signature="void setOuterRadius(double)" class="org.jfree.chart.plot.dial.StandardDialRange" />
-	<class name="tourma.views.round.JPNPoolRound" />
-	<method signature="void update()" class="tourma.views.round.JPNPoolRound" />
-	<method signature="void &lt;init&gt;(tourma.data.Round,tourma.data.Tournament,tourma.data.Pool)" class="tourma.views.round.JPNPoolRound" />
-	<method signature="void setRoundOnly(boolean)" class="tourma.views.round.JPNPoolRound" />
 	<class name="com.google.zxing.EncodeHintType" />
 	<method signature="com.google.zxing.EncodeHintType[] values()" class="com.google.zxing.EncodeHintType" />
 	<method signature="com.google.zxing.EncodeHintType valueOf(java.lang.String)" class="com.google.zxing.EncodeHintType" />
@@ -4042,7 +4053,9 @@
 	<method signature="boolean isCategoryMapNull()" class="tourma.data.Category" />
 	<method signature="void setmName(java.lang.String)" class="tourma.data.Category" />
 	<method signature="void putCategory(java.lang.String,tourma.data.Category)" class="tourma.data.Category" />
+	<method signature="void delCategory(java.lang.String)" class="tourma.data.Category" />
 	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Category" />
+	<method signature="java.lang.String toString()" class="tourma.data.Category" />
 	<method signature="void &lt;init&gt;(java.lang.String)" class="tourma.data.Category" />
 	<class name="com.toedter.calendar.IDateEditor" />
 	<method signature="void setLocale(java.util.Locale)" class="com.toedter.calendar.IDateEditor" />
@@ -4355,6 +4368,8 @@
 	<method signature="void setChef_cost(int)" class="teamma.data.RosterType" />
 	<method signature="void setCheerleader_cost(int)" class="teamma.data.RosterType" />
 	<method signature="void setExtraRerollCost(int)" class="teamma.data.RosterType" />
+	<method signature="teamma.data.PlayerType getPlayerType(java.lang.String,boolean)" class="teamma.data.RosterType" />
+	<method signature="teamma.data.StarPlayer getStarPlayer(java.lang.String,boolean)" class="teamma.data.RosterType" />
 	<method signature="void setFan_factor_cost(int)" class="teamma.data.RosterType" />
 	<method signature="void clearPlayerType()" class="teamma.data.RosterType" />
 	<method signature="boolean isIgor()" class="teamma.data.RosterType" />
@@ -4368,7 +4383,6 @@
 	<method signature="teamma.data.StarPlayer getAvailableStarplayer(int)" class="teamma.data.RosterType" />
 	<method signature="void setApothecary_cost(int)" class="teamma.data.RosterType" />
 	<method signature="int getAvailableStarplayerCount()" class="teamma.data.RosterType" />
-	<method signature="teamma.data.PlayerType getPlayerType(java.lang.String)" class="teamma.data.RosterType" />
 	<method signature="void setIgor_cost(int)" class="teamma.data.RosterType" />
 	<method signature="boolean isApothecary()" class="teamma.data.RosterType" />
 	<method signature="void setAssistant_cost(int)" class="teamma.data.RosterType" />
@@ -4379,7 +4393,6 @@
 	<method signature="int getExtraRerollCost()" class="teamma.data.RosterType" />
 	<method signature="int getReroll_cost()" class="teamma.data.RosterType" />
 	<method signature="void setWizard_cost(int)" class="teamma.data.RosterType" />
-	<method signature="teamma.data.StarPlayer getStarPlayer(java.lang.String)" class="teamma.data.RosterType" />
 	<method signature="int getChef_cost()" class="teamma.data.RosterType" />
 	<method signature="void setBribe_cost(int)" class="teamma.data.RosterType" />
 	<method signature="int getLocal_apo_cost()" class="teamma.data.RosterType" />
@@ -5348,6 +5361,7 @@
 	<method signature="tourma.data.Value getValue(tourma.data.Criteria)" class="tourma.data.CoachMatch" />
 	<method signature="void resetWL()" class="tourma.data.CoachMatch" />
 	<method signature="void setRefusedBy2(boolean)" class="tourma.data.CoachMatch" />
+	<method signature="boolean isFullNaf()" class="tourma.data.CoachMatch" />
 	<method signature="void setRefusedBy1(boolean)" class="tourma.data.CoachMatch" />
 	<class name="org.jfree.chart.plot.dial.ArcDialFrame" />
 	<method signature="double getInnerRadius()" class="org.jfree.chart.plot.dial.ArcDialFrame" />
@@ -5642,8 +5656,8 @@
 	<method signature="void &lt;init&gt;()" class="org.xml.sax.ext.Attributes2Impl" />
 	<method signature="boolean isDeclared(java.lang.String)" class="org.xml.sax.ext.Attributes2Impl" />
 	<class name="tourma.views.parameters.JPNParamClan" />
-	<method signature="void &lt;init&gt;()" class="tourma.views.parameters.JPNParamClan" />
 	<method signature="void update()" class="tourma.views.parameters.JPNParamClan" />
+	<method signature="void &lt;init&gt;()" class="tourma.views.parameters.JPNParamClan" />
 	<class name="org.jfree.chart.resources.JFreeChartResources" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.resources.JFreeChartResources" />
 	<method signature="java.lang.Object[][] getContents()" class="org.jfree.chart.resources.JFreeChartResources" />
@@ -6931,7 +6945,6 @@
 	<method signature="boolean containsClan(java.lang.String)" class="tourma.data.Tournament" />
 	<method signature="int getPoolCount()" class="tourma.data.Tournament" />
 	<method signature="boolean containsTeam(java.lang.String)" class="tourma.data.Tournament" />
-	<method signature="java.lang.String getRosterTranslation(java.lang.String)" class="tourma.data.Tournament" />
 	<method signature="void clearCategories()" class="tourma.data.Tournament" />
 	<method signature="int getGroupsCount()" class="tourma.data.Tournament" />
 	<method signature="int indexOfRound(tourma.data.Round)" class="tourma.data.Tournament" />
@@ -7060,6 +7073,8 @@
 	<class name="edu.umd.cs.findbugs.annotations.package-info" />
 	<class name="freemarker.debug.DebuggerClient" />
 	<method signature="freemarker.debug.Debugger getDebugger(java.net.InetAddress,int,java.lang.String)" class="freemarker.debug.DebuggerClient" />
+	<class name="tourma.views.report.ReportKeys" />
+	<method signature="void &lt;init&gt;()" class="tourma.views.report.ReportKeys" />
 	<class name="org.apache.xerces.impl.xs.traversers.XSAttributeChecker" />
 	<method signature="void &lt;init&gt;(org.apache.xerces.impl.xs.traversers.XSDHandler)" class="org.apache.xerces.impl.xs.traversers.XSAttributeChecker" />
 	<method signature="void resolveNamespace(org.w3c.dom.Element,org.w3c.dom.Attr[],org.apache.xerces.impl.xs.SchemaNamespaceSupport)" class="org.apache.xerces.impl.xs.traversers.XSAttributeChecker" />
@@ -7823,6 +7838,7 @@
 	<method signature="void clearRosterTypes()" class="teamma.data.LRB" />
 	<method signature="teamma.data.StarPlayer getStarPlayer(int)" class="teamma.data.LRB" />
 	<method signature="void addStarPlayer(teamma.data.StarPlayer)" class="teamma.data.LRB" />
+	<method signature="teamma.data.RosterType getRosterType(java.lang.String,boolean)" class="teamma.data.LRB" />
 	<method signature="boolean isAllowSpecialSkills()" class="teamma.data.LRB" />
 	<method signature="void setName(java.lang.String)" class="teamma.data.LRB" />
 	<method signature="teamma.data.RosterType getRosterType(java.lang.String)" class="teamma.data.LRB" />
@@ -7835,7 +7851,7 @@
 	<method signature="void setAllowSpecialSkills(boolean)" class="teamma.data.LRB" />
 	<method signature="teamma.data.StarPlayer getStarPlayer(java.lang.String)" class="teamma.data.LRB" />
 	<method signature="void addSkillType(teamma.data.SkillType)" class="teamma.data.LRB" />
-	<method signature="java.util.ArrayList getRosterTypeListAsString()" class="teamma.data.LRB" />
+	<method signature="java.util.ArrayList getRosterTypeListAsString(boolean)" class="teamma.data.LRB" />
 	<method signature="int getStarPlayerCount()" class="teamma.data.LRB" />
 	<method signature="teamma.data.RosterType getRosterType(int)" class="teamma.data.LRB" />
 	<method signature="void unloadLRB()" class="teamma.data.LRB" />
@@ -8047,6 +8063,7 @@
 	<method signature="java.lang.String getAlign()" class="org.apache.html.dom.HTMLDivElementImpl" />
 	<method signature="void &lt;init&gt;(org.apache.html.dom.HTMLDocumentImpl,java.lang.String)" class="org.apache.html.dom.HTMLDivElementImpl" />
 	<class name="tourma.data.Parameters" />
+	<method signature="void setApplyToAnnexIndiv(boolean)" class="tourma.data.Parameters" />
 	<method signature="void semTournamentOrga(java.lang.String)" class="tourma.data.Parameters" />
 	<method signature="boolean isPortugal()" class="tourma.data.Parameters" />
 	<method signature="int getTeamRankingNumber()" class="tourma.data.Parameters" />
@@ -8054,6 +8071,7 @@
 	<method signature="int getGapLargeVictory()" class="tourma.data.Parameters" />
 	<method signature="long getDateTime()" class="tourma.data.Parameters" />
 	<method signature="boolean isEnableClans()" class="tourma.data.Parameters" />
+	<method signature="boolean isExceptBestAndWorstIndiv()" class="tourma.data.Parameters" />
 	<method signature="boolean isTableBonusPerRound()" class="tourma.data.Parameters" />
 	<method signature="void setAvoidClansMatch(boolean)" class="tourma.data.Parameters" />
 	<method signature="void setGapLargeVictory(int)" class="tourma.data.Parameters" />
@@ -8070,6 +8088,8 @@
 	<method signature="void setEnableClans(boolean)" class="tourma.data.Parameters" />
 	<method signature="void setUseLargeVictory(boolean)" class="tourma.data.Parameters" />
 	<method signature="void setPointsRefused(int)" class="tourma.data.Parameters" />
+	<method signature="boolean isUseBestResultTeam()" class="tourma.data.Parameters" />
+	<method signature="void setUseBestResultTeam(boolean)" class="tourma.data.Parameters" />
 	<method signature="java.lang.String getStringDate(java.text.SimpleDateFormat)" class="tourma.data.Parameters" />
 	<method signature="void setPortugal(boolean)" class="tourma.data.Parameters" />
 	<method signature="void setTeamTournament(boolean)" class="tourma.data.Parameters" />
@@ -8083,6 +8103,7 @@
 	<method signature="void removeCriteria(int)" class="tourma.data.Parameters" />
 	<method signature="void setUseColor(boolean)" class="tourma.data.Parameters" />
 	<method signature="boolean isUseLargeVictory()" class="tourma.data.Parameters" />
+	<method signature="void setApplyToAnnexTeam(boolean)" class="tourma.data.Parameters" />
 	<method signature="java.lang.String getTournamentName()" class="tourma.data.Parameters" />
 	<method signature="void setMultiRoster(boolean)" class="tourma.data.Parameters" />
 	<method signature="int getRankingTeam5()" class="tourma.data.Parameters" />
@@ -8099,14 +8120,19 @@
 	<method signature="int getPointsIndivDraw()" class="tourma.data.Parameters" />
 	<method signature="void setTableBonusCoef(double)" class="tourma.data.Parameters" />
 	<method signature="int getClansMembersNumber()" class="tourma.data.Parameters" />
+	<method signature="boolean isExceptBestAndWorstTeam()" class="tourma.data.Parameters" />
 	<method signature="void setPointsIndivLittleLost(int)" class="tourma.data.Parameters" />
+	<method signature="void setBestResultTeam(int)" class="tourma.data.Parameters" />
 	<method signature="void clearCiterias()" class="tourma.data.Parameters" />
 	<method signature="int getRankingIndiv2()" class="tourma.data.Parameters" />
 	<method signature="int getRankingIndiv3()" class="tourma.data.Parameters" />
 	<method signature="void setTeamMatesClansNumber(int)" class="tourma.data.Parameters" />
 	<method signature="void setUseLittleLoss(boolean)" class="tourma.data.Parameters" />
+	<method signature="void setExceptBestAndWorstIndiv(boolean)" class="tourma.data.Parameters" />
 	<method signature="int getRankingIndiv1()" class="tourma.data.Parameters" />
+	<method signature="int getIndexOfCriteria(tourma.data.Criteria)" class="tourma.data.Parameters" />
 	<method signature="java.lang.String toString()" class="tourma.data.Parameters" />
+	<method signature="void setUseBestResultIndiv(boolean)" class="tourma.data.Parameters" />
 	<method signature="void setRankingTeam5(int)" class="tourma.data.Parameters" />
 	<method signature="boolean isAvoidClansFirstMatch()" class="tourma.data.Parameters" />
 	<method signature="int getPointsTeamDraw()" class="tourma.data.Parameters" />
@@ -8118,6 +8144,7 @@
 	<method signature="int getRankingIndiv5()" class="tourma.data.Parameters" />
 	<method signature="void setRankingTeam3(int)" class="tourma.data.Parameters" />
 	<method signature="boolean isIndivPairingIndivBalanced()" class="tourma.data.Parameters" />
+	<method signature="boolean isUseBestResultIndiv()" class="tourma.data.Parameters" />
 	<method signature="void setTeamVictoryOnly(boolean)" class="tourma.data.Parameters" />
 	<method signature="boolean isGroupsEnable()" class="tourma.data.Parameters" />
 	<method signature="boolean isSubstitutes()" class="tourma.data.Parameters" />
@@ -8132,14 +8159,18 @@
 	<method signature="int getTeamMatesClansNumber()" class="tourma.data.Parameters" />
 	<method signature="int getGame()" class="tourma.data.Parameters" />
 	<method signature="double getTableBonusCoef()" class="tourma.data.Parameters" />
+	<method signature="int getBestResultIndiv()" class="tourma.data.Parameters" />
 	<method signature="int getTeamMatesNumber()" class="tourma.data.Parameters" />
 	<method signature="java.lang.String getPlace()" class="tourma.data.Parameters" />
+	<method signature="boolean isApplyToAnnexTeam()" class="tourma.data.Parameters" />
 	<method signature="tourma.data.EIndivPairing getTeamIndivPairing()" class="tourma.data.Parameters" />
 	<method signature="void setPointsTeamDraw(int)" class="tourma.data.Parameters" />
 	<method signature="void setPointsTeamVictoryBonus(int)" class="tourma.data.Parameters" />
+	<method signature="void setBestResultIndiv(int)" class="tourma.data.Parameters" />
 	<method signature="int getPointsConcedeed()" class="tourma.data.Parameters" />
 	<method signature="tourma.data.Criteria getCriteria(int)" class="tourma.data.Parameters" />
 	<method signature="void setAvoidClansFirstMatch(boolean)" class="tourma.data.Parameters" />
+	<method signature="void setExceptBestAndWorstTeam(boolean)" class="tourma.data.Parameters" />
 	<method signature="boolean isUseLittleLoss()" class="tourma.data.Parameters" />
 	<method signature="int getIndivRankingType(int)" class="tourma.data.Parameters" />
 	<method signature="void setClansMembersNumber(int)" class="tourma.data.Parameters" />
@@ -8161,7 +8192,9 @@
 	<method signature="void setGapLittleLost(int)" class="tourma.data.Parameters" />
 	<method signature="void setPointsConcedeed(int)" class="tourma.data.Parameters" />
 	<method signature="void setPointsIndivLargeVictory(int)" class="tourma.data.Parameters" />
+	<method signature="int getBestResultTeam()" class="tourma.data.Parameters" />
 	<method signature="void setRankingIndiv5(int)" class="tourma.data.Parameters" />
+	<method signature="boolean isApplyToAnnexIndiv()" class="tourma.data.Parameters" />
 	<method signature="void setRankingIndiv4(int)" class="tourma.data.Parameters" />
 	<method signature="void setRankingIndiv3(int)" class="tourma.data.Parameters" />
 	<method signature="void setRankingIndiv2(int)" class="tourma.data.Parameters" />
@@ -8777,6 +8810,9 @@
 	<method signature="void draw(java.awt.Graphics2D,java.awt.geom.Rectangle2D)" class="org.jfree.chart.block.BlockContainer" />
 	<method signature="void &lt;init&gt;(org.jfree.chart.block.Arrangement)" class="org.jfree.chart.block.BlockContainer" />
 	<method signature="void add(org.jfree.chart.block.Block)" class="org.jfree.chart.block.BlockContainer" />
+	<class name="teamma.languages.Translate" />
+	<method signature="void &lt;init&gt;()" class="teamma.languages.Translate" />
+	<method signature="java.lang.String translate(java.lang.String)" class="teamma.languages.Translate" />
 	<class name="org.jfree.util.PublicCloneable" />
 	<method signature="java.lang.Object clone()" class="org.jfree.util.PublicCloneable" />
 	<class name="org.w3c.dom.css.CSSUnknownRule" />
@@ -9357,9 +9393,9 @@
 	<method signature="java.awt.Component getTableCellRendererComponent(javax.swing.JTable,java.lang.Object,boolean,boolean,int,int)" class="tourma.tableModel.MjtMatches" />
 	<method signature="int getRowCount()" class="tourma.tableModel.MjtMatches" />
 	<method signature="void setValueAt(java.lang.Object,int,int)" class="tourma.tableModel.MjtMatches" />
-	<method signature="void &lt;init&gt;(java.util.ArrayList,boolean,boolean,boolean)" class="tourma.tableModel.MjtMatches" />
 	<method signature="java.lang.String getColumnName(int)" class="tourma.tableModel.MjtMatches" />
 	<method signature="java.lang.Class getColumnClass(int)" class="tourma.tableModel.MjtMatches" />
+	<method signature="void &lt;init&gt;(java.util.ArrayList,boolean,boolean,boolean,boolean)" class="tourma.tableModel.MjtMatches" />
 	<method signature="java.lang.Object getValueAt(int,int)" class="tourma.tableModel.MjtMatches" />
 	<method signature="int getColumnCount()" class="tourma.tableModel.MjtMatches" />
 	<class name="freemarker.ext.beans.ArrayModel" />
@@ -9827,6 +9863,7 @@
 	<method signature="void update()" class="tourma.views.round.JPNRound" />
 	<method signature="void &lt;init&gt;(int,tourma.data.Round,tourma.data.Tournament)" class="tourma.views.round.JPNRound" />
 	<method signature="void setRoundOnly(boolean)" class="tourma.views.round.JPNRound" />
+	<method signature="void setNafOnly(boolean)" class="tourma.views.round.JPNRound" />
 	<class name="org.jfree.chart.block.ColorBlock" />
 	<method signature="java.lang.Object draw(java.awt.Graphics2D,java.awt.geom.Rectangle2D,java.lang.Object)" class="org.jfree.chart.block.ColorBlock" />
 	<method signature="boolean equals(java.lang.Object)" class="org.jfree.chart.block.ColorBlock" />
@@ -10404,6 +10441,12 @@
 	<method signature="void &lt;init&gt;()" class="org.apache.xerces.impl.xs.XSGrammarBucket" />
 	<method signature="void putGrammar(org.apache.xerces.impl.xs.SchemaGrammar)" class="org.apache.xerces.impl.xs.XSGrammarBucket" />
 	<method signature="boolean putGrammar(org.apache.xerces.impl.xs.SchemaGrammar,boolean,boolean)" class="org.apache.xerces.impl.xs.XSGrammarBucket" />
+	<class name="tourma.tableModel.MjtRankingManual" />
+	<method signature="void &lt;init&gt;(int,int,int,int,int,int,java.util.ArrayList,boolean)" class="tourma.tableModel.MjtRankingManual" />
+	<method signature="java.awt.Component getTableCellRendererComponent(javax.swing.JTable,java.lang.Object,boolean,boolean,int,int)" class="tourma.tableModel.MjtRankingManual" />
+	<method signature="java.lang.String getColumnName(int)" class="tourma.tableModel.MjtRankingManual" />
+	<method signature="java.lang.Object getValueAt(int,int)" class="tourma.tableModel.MjtRankingManual" />
+	<method signature="int getColumnCount()" class="tourma.tableModel.MjtRankingManual" />
 	<class name="javax.annotation.MatchesPattern$Checker" />
 	<method signature="void &lt;init&gt;()" class="javax.annotation.MatchesPattern$Checker" />
 	<method signature="javax.annotation.meta.When forConstantValue(java.lang.annotation.Annotation,java.lang.Object)" class="javax.annotation.MatchesPattern$Checker" />
@@ -11241,6 +11284,10 @@
 	<method signature="void &lt;init&gt;(java.lang.String)" class="javax.xml.stream.XMLStreamException" />
 	<method signature="void &lt;init&gt;(java.lang.String,javax.xml.stream.Location,java.lang.Throwable)" class="javax.xml.stream.XMLStreamException" />
 	<method signature="void &lt;init&gt;(java.lang.String,javax.xml.stream.Location)" class="javax.xml.stream.XMLStreamException" />
+	<class name="tourma.views.round.JPNClan" />
+	<method signature="void update()" class="tourma.views.round.JPNClan" />
+	<method signature="void &lt;init&gt;(tourma.data.Round,tourma.data.Tournament)" class="tourma.views.round.JPNClan" />
+	<method signature="void setRoundOnly(boolean)" class="tourma.views.round.JPNClan" />
 	<class name="org.jdom2.output.DOMOutputter" />
 	<method signature="void setForceNamespaceAware(boolean)" class="org.jdom2.output.DOMOutputter" />
 	<method signature="org.w3c.dom.Element output(org.jdom2.Element)" class="org.jdom2.output.DOMOutputter" />
@@ -20442,10 +20489,6 @@
 	<method signature="void setId(java.lang.String)" class="org.apache.wml.WMLElement" />
 	<class name="org.jfree.chart.labels.ContourToolTipGenerator" />
 	<method signature="java.lang.String generateToolTip(org.jfree.data.contour.ContourDataset,int)" class="org.jfree.chart.labels.ContourToolTipGenerator" />
-	<class name="tourma.views.round.JPNClanRound" />
-	<method signature="void update()" class="tourma.views.round.JPNClanRound" />
-	<method signature="void &lt;init&gt;(tourma.data.Round,tourma.data.Tournament)" class="tourma.views.round.JPNClanRound" />
-	<method signature="void setRoundOnly(boolean)" class="tourma.views.round.JPNClanRound" />
 	<class name="javax.xml.transform.TransformerFactory" />
 	<method signature="javax.xml.transform.ErrorListener getErrorListener()" class="javax.xml.transform.TransformerFactory" />
 	<method signature="javax.xml.transform.Transformer newTransformer(javax.xml.transform.Source)" class="javax.xml.transform.TransformerFactory" />
@@ -21330,6 +21373,10 @@
 	<class name="org.jfree.chart.util.ParamChecks" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.util.ParamChecks" />
 	<method signature="void nullNotPermitted(java.lang.Object,java.lang.String)" class="org.jfree.chart.util.ParamChecks" />
+	<class name="tourma.views.round.JPNPool" />
+	<method signature="void update()" class="tourma.views.round.JPNPool" />
+	<method signature="void &lt;init&gt;(tourma.data.Round,tourma.data.Tournament,tourma.data.Pool)" class="tourma.views.round.JPNPool" />
+	<method signature="void setRoundOnly(boolean)" class="tourma.views.round.JPNPool" />
 	<class name="tourma.views.parameters.JPNParamCriterias" />
 	<method signature="void update()" class="tourma.views.parameters.JPNParamCriterias" />
 	<method signature="void &lt;init&gt;()" class="tourma.views.parameters.JPNParamCriterias" />
@@ -23555,7 +23602,6 @@
 	<method signature="void setNaf(int)" class="tourma.data.Coach" />
 	<method signature="int getRank()" class="tourma.data.Coach" />
 	<method signature="java.util.ArrayList getPossibleOpponents(java.util.ArrayList,tourma.data.Round)" class="tourma.data.Coach" />
-	<method signature="tourma.data.Category getCategory()" class="tourma.data.Coach" />
 	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Coach" />
 	<method signature="boolean havePlayed(tourma.data.Competitor)" class="tourma.data.Coach" />
 	<method signature="java.lang.String getTeam()" class="tourma.data.Coach" />
@@ -23585,7 +23631,6 @@
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.Coach" />
 	<method signature="boolean isActive()" class="tourma.data.Coach" />
 	<method signature="void removeComposition(int)" class="tourma.data.Coach" />
-	<method signature="void setCategory(tourma.data.Category)" class="tourma.data.Coach" />
 	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round)" class="tourma.data.Coach" />
 	<method signature="java.lang.String getStringRoster()" class="tourma.data.Coach" />
 	<method signature="void &lt;init&gt;(java.lang.String)" class="tourma.data.Coach" />
@@ -23901,8 +23946,8 @@
 	<class name="tourma.tableModel.MjtRanking" />
 	<method signature="int getSortedValue(int,int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getELOByCoach(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
-	<method signature="int getTeamTable(tourma.data.Team)" class="tourma.tableModel.MjtRanking" />
 	<method signature="java.lang.String getDetail()" class="tourma.tableModel.MjtRanking" />
+	<method signature="int getTeamTable(tourma.data.Team,tourma.data.TeamMatch)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getCoachTable(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getCoachNbMatchs(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getOppPointsByCoach(tourma.data.Coach,tourma.data.CoachMatch,boolean)" class="tourma.tableModel.MjtRanking" />
@@ -23912,12 +23957,12 @@
 	<method signature="int getRankingFromString(java.lang.String,java.util.ArrayList)" class="tourma.tableModel.MjtRanking" />
 	<method signature="java.lang.String getRankingString(int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="boolean isCellEditable(int,int)" class="tourma.tableModel.MjtRanking" />
-	<method signature="int getValue(tourma.data.Coach,tourma.data.CoachMatch,int,int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getSubtypeByValue(int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getRowCount()" class="tourma.tableModel.MjtRanking" />
 	<method signature="java.lang.String getColumnName(int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getColumnCount()" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getVNDByCoach(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
+	<method signature="int getValue(tourma.data.Coach,tourma.data.CoachMatch,int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="tourma.data.Criteria getCriteriaByValue(int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getOppELOByCoach(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
 	<method signature="void setDetail(java.lang.String)" class="tourma.tableModel.MjtRanking" />
@@ -24709,8 +24754,8 @@
 </entrypoints>
 
 <!-- WARNING:Unresolved external dependency: org.apache.xml.utils.PrefixResolver not found! -->
-<!-- writing shrinked C:\Perso\Tourma\store\TourMa.jar to C:\Perso\Tourma\store\yguard_temp_3044366804261647618.jar. -->
-<inOutPair in="C:\Perso\Tourma\store\TourMa.jar" out="C:\Perso\Tourma\store\yguard_temp_3044366804261647618.jar">
+<!-- writing shrinked C:\Perso\Tourma\store\TourMa.jar to C:\Perso\Tourma\store\yguard_temp_5127265827569942548.jar. -->
+<inOutPair in="C:\Perso\Tourma\store\TourMa.jar" out="C:\Perso\Tourma\store\yguard_temp_5127265827569942548.jar">
 	<removed-code>
 		<field name="serialVersionUID" class="com.bric.swing.ColorPicker" />
 		<field name="SELECTED_COLOR_PROPERTY" class="com.bric.swing.ColorPicker" />
@@ -29283,14 +29328,278 @@
 		<field name="property" class="org.xml.sax.helpers.XMLReaderFactory" />
 		<field name="DEFAULT_LINE_LENGTH" class="org.xml.sax.helpers.XMLReaderFactory" />
 		<method signature="void &lt;init&gt;()" class="org.xml.sax.helpers.XMLReaderFactory" />
+		<field name="CS_Name" class="teamma.data.LRB" />
+		<field name="CS_Skills" class="teamma.data.LRB" />
+		<field name="CS_Teams" class="teamma.data.LRB" />
+		<field name="CS_Team" class="teamma.data.LRB" />
+		<field name="CS_Picture" class="teamma.data.LRB" />
+		<field name="CS_Starplayers" class="teamma.data.LRB" />
+		<field name="CS_Category" class="teamma.data.LRB" />
+		<field name="CS_Accronym" class="teamma.data.LRB" />
+		<field name="CS_Special" class="teamma.data.LRB" />
+		<field name="CS_Skill" class="teamma.data.LRB" />
+		<field name="CS_Reroll" class="teamma.data.LRB" />
+		<field name="CS_Apothecary" class="teamma.data.LRB" />
+		<field name="CS_Chef" class="teamma.data.LRB" />
+		<field name="CS_Igor" class="teamma.data.LRB" />
+		<field name="CS_Bribe" class="teamma.data.LRB" />
+		<field name="CS_PlayerTypes" class="teamma.data.LRB" />
+		<field name="CS_PlayerType" class="teamma.data.LRB" />
+		<field name="CS_Position" class="teamma.data.LRB" />
+		<field name="CS_Limit" class="teamma.data.LRB" />
+		<field name="CS_Movement" class="teamma.data.LRB" />
+		<field name="CS_Strength" class="teamma.data.LRB" />
+		<field name="CS_Agility" class="teamma.data.LRB" />
+		<field name="CS_Armor" class="teamma.data.LRB" />
+		<field name="CS_Cost" class="teamma.data.LRB" />
+		<field name="CS_Single" class="teamma.data.LRB" />
+		<field name="CS_SkillType" class="teamma.data.LRB" />
+		<field name="CS_Double" class="teamma.data.LRB" />
+		<field name="CS_SkillNotFound" class="teamma.data.LRB" />
+		<field name="CS_SkillTypeNotFound" class="teamma.data.LRB" />
+		<field name="CS_RosterTypeNotFound" class="teamma.data.LRB" />
+		<field name="CS_forThePlayer" class="teamma.data.LRB" />
+		<field name="CS_Starplayer" class="teamma.data.LRB" />
+		<method signature="java.util.ArrayList getRosterTypeListAsString()" class="teamma.data.LRB" />
+		<field name="CS_Plus1Movement" class="teamma.data.Player" />
+		<field name="CS_Minus1Movement" class="teamma.data.Player" />
+		<field name="CS_Plus1Strength" class="teamma.data.Player" />
+		<field name="CS_Minus1Strength" class="teamma.data.Player" />
+		<field name="CS_Plus1Agility" class="teamma.data.Player" />
+		<field name="CS_Minus1Agility" class="teamma.data.Player" />
+		<field name="CS_Plus1Armor" class="teamma.data.Player" />
+		<field name="CS_Minus1Armor" class="teamma.data.Player" />
+		<field name="CS_Roster" class="teamma.data.Roster" />
+		<field name="CS_Composition" class="teamma.data.Roster" />
+		<field name="CS_Apothecary" class="teamma.data.Roster" />
+		<field name="CS_Assistants" class="teamma.data.Roster" />
+		<field name="CS_Cheerleaders" class="teamma.data.Roster" />
+		<field name="CS_FanFactor" class="teamma.data.Roster" />
+		<field name="CS_Rerolls" class="teamma.data.Roster" />
+		<field name="CS_Inducements" class="teamma.data.Roster" />
+		<field name="CS_Chef" class="teamma.data.Roster" />
+		<field name="CS_Igor" class="teamma.data.Roster" />
+		<field name="CS_Wizard" class="teamma.data.Roster" />
+		<field name="CS_Babes" class="teamma.data.Roster" />
+		<field name="CS_Cards" class="teamma.data.Roster" />
+		<field name="CS_Bribe" class="teamma.data.Roster" />
+		<field name="CS_ExtraRerolls" class="teamma.data.Roster" />
+		<field name="CS_LocalApothecary" class="teamma.data.Roster" />
+		<field name="CS_StarPlayer" class="teamma.data.Roster" />
+		<field name="CS_Name" class="teamma.data.Roster" />
+		<field name="CS_Player" class="teamma.data.Roster" />
+		<field name="CS_Position" class="teamma.data.Roster" />
+		<field name="CS_Skill" class="teamma.data.Roster" />
+		<field name="CS_Color" class="teamma.data.Roster" />
 		<field name="_C_SINGLE_COST" class="teamma.data.Skill" />
 		<field name="_C_DOUBLE_COST" class="teamma.data.Skill" />
 		<field name="_C_STRENGHT_COST" class="teamma.data.Skill" />
 		<field name="_C_AGILITY_COST" class="teamma.data.Skill" />
 		<field name="_C_ARMOR_COST" class="teamma.data.Skill" />
 		<field name="_C_MOVEMENT_COST" class="teamma.data.Skill" />
+		<field name="CS_Name" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_Position" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_M" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_S" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_Ag" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_Ar" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_Skills" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_SR" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_DR" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_BaseCost" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_Cost" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_Characteristics" class="teamma.tableModel.MjtTeamPlayers" />
+		<field name="CS_Name" class="teamma.tableModel.MjtTeamStars" />
+		<field name="CS_Position" class="teamma.tableModel.MjtTeamStars" />
+		<field name="CS_M" class="teamma.tableModel.MjtTeamStars" />
+		<field name="CS_S" class="teamma.tableModel.MjtTeamStars" />
+		<field name="CS_Ag" class="teamma.tableModel.MjtTeamStars" />
+		<field name="CS_Ar" class="teamma.tableModel.MjtTeamStars" />
+		<field name="CS_Skills" class="teamma.tableModel.MjtTeamStars" />
+		<field name="CS_Cost" class="teamma.tableModel.MjtTeamStars" />
+		<field name="CS_ChooseRoster" class="teamma.views.JdgRoster" />
+		<field name="CS_RosterChoice" class="teamma.views.JdgRoster" />
+		<field name="CS_RosterChoiceError" class="teamma.views.JdgRoster" />
+		<field name="CS_ChooseCoach" class="teamma.views.JdgRoster" />
+		<field name="CS_CoachChoice" class="teamma.views.JdgRoster" />
+		<field name="CS_SelectSkillToRemove" class="teamma.views.JdgRoster" />
+		<field name="CS_Skill" class="teamma.views.JdgRoster" />
+		<field name="CS_RosterTypeNotSelectedClieckOnRoster" class="teamma.views.JdgRoster" />
+		<field name="CS_ChooseKindOfplayer" class="teamma.views.JdgRoster" />
+		<field name="CS_PlayerChoice" class="teamma.views.JdgRoster" />
+		<field name="CS_Roster" class="teamma.views.JdgRoster" />
+		<field name="CS_Coach" class="teamma.views.JdgRoster" />
+		<field name="CS_RosterUnknown" class="teamma.views.JdgRoster" />
+		<field name="CS_AssociateACoach" class="teamma.views.JdgRoster" />
+		<field name="CS_SingleRoll" class="teamma.views.JdgSelectSkill" />
+		<field name="CS_DoubleRoll" class="teamma.views.JdgSelectSkill" />
+		<field name="CS_Error" class="teamma.views.JdgSelectSkill" />
+		<field name="CS_NoSkillSelected" class="teamma.views.JdgSelectSkill" />
+		<field name="CS_title" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_numero" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_name" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_position" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_movement" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_strength" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_agility" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_armor" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_skills" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_single" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_double" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_NBSP" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_players" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_teamname" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_apothecary" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_apo_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_apo_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_coachname" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_assists" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_ass_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_ass_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_race" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_cheer" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_cheer_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_cheer_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_rank" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_reroll" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_reroll_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_reroll_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_pop" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_pop_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_pop_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_extra" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_extra_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_extra_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_local" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_local_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_local_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_igor" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_igor_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_igor_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_bribe" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_bribe_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_bribe_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_wizard" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_wizard_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_wizard_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_babes" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_babes_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_babes_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_chef" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_chef_price" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_chef_cost" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_cards" class="teamma.views.report.JdgPrintableRoster" />
+		<field name="CS_total" class="teamma.views.report.JdgPrintableRoster" />
 		<field name="serialVersionUID" class="tourma.JdgChangePairing" />
+		<field name="CS_Matchs" class="tourma.JdgChangePairing" />
+		<field name="CS_Confirm" class="tourma.JdgChangePairing" />
+		<field name="CS_DoYouConfirmNewpairing" class="tourma.JdgChangePairing" />
+		<field name="CS_AnotherCoachHasTheSameName" class="tourma.JdgCoach" />
+		<field name="CS_NameIsEmpty" class="tourma.JdgCoach" />
+		<field name="CS_TeamIsEmpty" class="tourma.JdgCoach" />
+		<field name="CS_RosterIsEmpty" class="tourma.JdgCoach" />
+		<field name="CS_RostersChoice" class="tourma.JdgCoach" />
+		<field name="CS_ChooseRoster" class="tourma.JdgCoach" />
+		<field name="CS_RostersChoiceError0" class="tourma.JdgCoach" />
+		<field name="CS_SelectPicture" class="tourma.JdgCoach" />
+		<field name="CS_Picture" class="tourma.JdgCoach" />
+		<field name="CS_PleaseSelectCategory" class="tourma.JdgCoach" />
+		<field name="CS_ACCR_Versus" class="tourma.JdgPairing" />
+		<field name="CS_NewRoster" class="tourma.JdgRosters" />
+		<field name="CS_NewRosterName" class="tourma.JdgRosters" />
 		<field name="mTeamTournament" class="tourma.JdgTeam" />
+		<field name="CS_EmptyTeamName" class="tourma.JdgTeam" />
+		<field name="CS_SelectPicture" class="tourma.JdgTeam" />
+		<field name="CS_Picture" class="tourma.JdgTeam" />
+		<field name="CS_PleaseSelectCategory" class="tourma.JdgTeam" />
+		<field name="CS_TourMaXMLFile" class="tourma.MainFrame" />
+		<field name="CS_None" class="tourma.MainFrame" />
+		<field name="CS_NAFXMLFile" class="tourma.MainFrame" />
+		<field name="CS_DoYouWantToSave" class="tourma.MainFrame" />
+		<field name="CS_Exit" class="tourma.MainFrame" />
+		<field name="CS_FBBCSVFile" class="tourma.MainFrame" />
+		<field name="CS_FBBXMLFile" class="tourma.MainFrame" />
+		<field name="CS_Check" class="tourma.MainFrame" />
+		<field name="CS_LargeVictoryPointsAreNotSuperiorToVictoryPoints" class="tourma.MainFrame" />
+		<field name="CS_LittleLossPointsAreNotSuperiorToLossPoints" class="tourma.MainFrame" />
+		<field name="CS_LargeVictoryGapIsNotMoreThanOneTouchdown" class="tourma.MainFrame" />
+		<field name="CS_LittleLostGapIsNotSuperiorTo0" class="tourma.MainFrame" />
+		<field name="CS_2DrawsAreMoreThan1Victory" class="tourma.MainFrame" />
+		<field name="CS_2LostAreMoreThan1Draw" class="tourma.MainFrame" />
+		<field name="CS_2LittleLostAreMoreThanOneDraw" class="tourma.MainFrame" />
+		<field name="CS_2TeamDrawsAreMoreThan1TeamVictory" class="tourma.MainFrame" />
+		<field name="CS_2TeamLostAreMoreThan1TeamVictory" class="tourma.MainFrame" />
+		<field name="CS_2TeamDrawBonusAreMoreThan1TeamVictoryBonus" class="tourma.MainFrame" />
+		<field name="CS_Random" class="tourma.MainFrame" />
+		<field name="CS_Cup" class="tourma.MainFrame" />
+		<field name="CS_RegisteringOrder" class="tourma.MainFrame" />
+		<field name="CS_RoundRobin" class="tourma.MainFrame" />
+		<field name="CS_OddTeamNumber" class="tourma.MainFrame" />
+		<field name="CS_ManualChoice" class="tourma.MainFrame" />
+		<field name="CS_Pools" class="tourma.MainFrame" />
+		<field name="CS_FreeRound" class="tourma.MainFrame" />
+		<field name="CS_NafRanking" class="tourma.MainFrame" />
+		<field name="CS_RandomAndBalancing" class="tourma.MainFrame" />
+		<field name="CS_Generation" class="tourma.MainFrame" />
+		<field name="CS_ChooseGenerationMethod" class="tourma.MainFrame" />
+		<field name="CS_DownloadFromNAF" class="tourma.MainFrame" />
+		<field name="CS_Downloading" class="tourma.MainFrame" />
+		<field name="CS_WhichCoachIsSubstituted" class="tourma.MainFrame" />
+		<field name="CS_Substitution" class="tourma.MainFrame" />
+		<field name="CS_Round" class="tourma.MainFrame" />
+		<field name="CS_ACCR_Versus" class="tourma.MainFrame" />
+		<field name="CS_WhichMatch" class="tourma.MainFrame" />
+		<field name="CS_ChooseASubstitute" class="tourma.MainFrame" />
+		<field name="CS_NewDOTDOTDOT" class="tourma.MainFrame" />
+		<field name="CS_FirstTableCoef" class="tourma.MainFrame" />
+		<field name="CS_LastTableCoef" class="tourma.MainFrame" />
+		<field name="CS_RoundCoefficient" class="tourma.MainFrame" />
+		<field name="CS_SwissRound" class="tourma.MainFrame" />
+		<field name="CS_AcceleratedSwissRound" class="tourma.MainFrame" />
+		<field name="CS_Animation" class="tourma.MainFrame" />
+		<field name="CS_FreeMatch" class="tourma.MainFrame" />
+		<field name="CS_Error" class="tourma.MainFrame" />
+		<field name="CS_ImpossibleMatch" class="tourma.MainFrame" />
+		<field name="CS_MatchAlreadyConceededOrRefused" class="tourma.MainFrame" />
+		<field name="CS_Cancel" class="tourma.MainFrame" />
+		<field name="CS_ConceedAMatch" class="tourma.MainFrame" />
+		<field name="CS_WhoConceedTheMatch" class="tourma.MainFrame" />
+		<field name="CS_RefuseAMatch" class="tourma.MainFrame" />
+		<field name="CS_WhoRefuseMatch" class="tourma.MainFrame" />
+		<field name="CS_Download" class="tourma.MainFrame" />
+		<field name="CS_NewGame" class="tourma.MainFrame" />
+		<field name="CS_Open" class="tourma.MainFrame" />
+		<field name="CS_UseRosterEditor" class="tourma.MainFrame" />
+		<field name="CS_ClientViewer" class="tourma.MainFrame" />
+		<field name="CS_NewGameOrOpen" class="tourma.MainFrame" />
+		<field name="CS_EnterRemoteTourmaServer" class="tourma.MainFrame" />
+		<field name="CS_Exiting" class="tourma.MainFrame" />
+		<field name="CS_ConnectionImpossibleTo" class="tourma.MainFrame" />
+		<field name="CS_ChooseFullScreen" class="tourma.MainFrame" />
+		<field name="CS_IndividualRanking" class="tourma.MainFrame" />
+		<field name="CS_IndividualAnnexRanking" class="tourma.MainFrame" />
+		<field name="CS_TeamRanking" class="tourma.MainFrame" />
+		<field name="CS_TeamAnnexRanking" class="tourma.MainFrame" />
+		<field name="CS_ClanRanking" class="tourma.MainFrame" />
+		<field name="CS_ClanAnnexRanking" class="tourma.MainFrame" />
+		<field name="CS_MatchsClash" class="tourma.MainFrame" />
+		<field name="CS_CategoryRanking" class="tourma.MainFrame" />
+		<field name="CS_CategoryAnnexRanking" class="tourma.MainFrame" />
+		<field name="CS_GroupeRanking" class="tourma.MainFrame" />
+		<field name="CS_GroupeAnnexRanking" class="tourma.MainFrame" />
+		<field name="CS_IndividualPoolRanking" class="tourma.MainFrame" />
+		<field name="CS_IndividualPoolAnnexRanking" class="tourma.MainFrame" />
+		<field name="CS_TeamPoolRanking" class="tourma.MainFrame" />
+		<field name="CS_TeamPoolAnnexRanking" class="tourma.MainFrame" />
+		<field name="CS_Matchs" class="tourma.MainFrame" />
+		<field name="CS_Tournament" class="tourma.MainTreeModel" />
+		<field name="CS_Statistics" class="tourma.MainTreeModel" />
+		<field name="CS_Parameters" class="tourma.MainTreeModel" />
+		<field name="CS_Round" class="tourma.MainTreeModel" />
+		<field name="CS_Cup" class="tourma.MainTreeModel" />
+		<field name="CS_MESSAGE1" class="tourma.data.Coach" />
+		<field name="CS_MESSAGE2" class="tourma.data.Coach" />
 		<method signature="java.util.ArrayList getMinimumTeamsBalanced(tourma.data.Round)" class="tourma.data.Coach" />
 		<field name="C_RANKING_SUBTYPE_POSITIVE" class="tourma.data.Parameters" />
 		<field name="C_RANKING_SUBTYPE_NEGATIVE" class="tourma.data.Parameters" />
@@ -29307,17 +29616,72 @@
 		<field name="C_RANKING_POINTS_WITHOUT_BONUS" class="tourma.data.Parameters" />
 		<field name="C_RANKING_BONUS_POINTS" class="tourma.data.Parameters" />
 		<field name="C_MAX_RANKING" class="tourma.data.Parameters" />
+		<field name="CS_Individual_Annex" class="tourma.data.Ranking" />
+		<field name="CS_Team_Annex" class="tourma.data.Ranking" />
+		<field name="CS_Clan_Annex" class="tourma.data.Ranking" />
+		<field name="CS_Individual" class="tourma.data.Ranking" />
+		<field name="CS_General" class="tourma.data.Ranking" />
+		<field name="CS_Clan" class="tourma.data.Ranking" />
+		<field name="CS_Group" class="tourma.data.Ranking" />
+		<field name="CS_Positive" class="tourma.data.Ranking" />
+		<field name="CS_Negative" class="tourma.data.Ranking" />
+		<field name="CS_Team" class="tourma.data.Ranking" />
+		<field name="CS_array" class="tourma.data.Ranking" />
+		<field name="CS_Matchs" class="tourma.data.Ranking" />
 		<field name="C_BLOOD_BOWL" class="tourma.data.RosterType" />
 		<field name="C_DREAD_BALL" class="tourma.data.RosterType" />
+		<field name="CS_Touchdowns" class="tourma.languages.Translate" />
+		<field name="CS_Injuries" class="tourma.languages.Translate" />
+		<field name="CS_None" class="tourma.languages.Translate" />
+		<field name="CS_Pool" class="tourma.languages.Translate" />
+		<field name="CS_Cup" class="tourma.languages.Translate" />
+		<field name="CS_Parameters" class="tourma.languages.Translate" />
+		<field name="CS_Round_" class="tourma.languages.Translate" />
+		<field name="CS_Clan" class="tourma.languages.Translate" />
+		<field name="CS_Team" class="tourma.languages.Translate" />
+		<field name="CS_Round" class="tourma.languages.Translate" />
+		<field name="CS_Coach" class="tourma.languages.Translate" />
+		<field name="CS_Opponent" class="tourma.languages.Translate" />
+		<field name="CS_Roster" class="tourma.languages.Translate" />
+		<field name="CS_Difference" class="tourma.languages.Translate" />
+		<field name="CS_NAF" class="tourma.languages.Translate" />
+		<field name="CS_Ranking" class="tourma.languages.Translate" />
+		<field name="CS_Unknown" class="tourma.languages.Translate" />
+		<field name="CS_Active" class="tourma.languages.Translate" />
+		<field name="CS_Inactive" class="tourma.languages.Translate" />
+		<field name="CS_Critera_Name" class="tourma.languages.Translate" />
+		<field name="CS_Error" class="tourma.languages.Translate" />
+		<field name="CS_Points_Plus" class="tourma.languages.Translate" />
+		<field name="CS_Points_Minus" class="tourma.languages.Translate" />
+		<field name="CS_Points_Team_Plus" class="tourma.languages.Translate" />
+		<field name="CS_Points_Team_Minus" class="tourma.languages.Translate" />
+		<field name="CS_Table" class="tourma.languages.Translate" />
+		<field name="CS_Score" class="tourma.languages.Translate" />
+		<field name="CS_Refused" class="tourma.languages.Translate" />
+		<field name="CS_Conceeded" class="tourma.languages.Translate" />
+		<field name="CS_Points" class="tourma.languages.Translate" />
+		<field name="CS_Points_Without_Bonus" class="tourma.languages.Translate" />
+		<field name="CS_Bonus_Points" class="tourma.languages.Translate" />
+		<field name="CS_Nothing" class="tourma.languages.Translate" />
+		<field name="CS_ELO" class="tourma.languages.Translate" />
+		<field name="CS_OpponentsElo" class="tourma.languages.Translate" />
+		<field name="CS_MatchCount" class="tourma.languages.Translate" />
+		<field name="CS_TablesPoints" class="tourma.languages.Translate" />
+		<field name="CS_Name" class="tourma.languages.Translate" />
+		<field name="CS_ACCR_Victory1" class="tourma.languages.Translate" />
+		<field name="CS_ACCR_Victory2" class="tourma.languages.Translate" />
+		<field name="CS_ACCR_Drawn" class="tourma.languages.Translate" />
+		<field name="CS_ACCR_Versus" class="tourma.languages.Translate" />
+		<field name="CS_ACCR_Opponent_Points" class="tourma.languages.Translate" />
+		<field name="CS_ACCR_Opponent_Points_Without_Bonus" class="tourma.languages.Translate" />
+		<field name="CS_ACCR_Victory_Drawn_Lost" class="tourma.languages.Translate" />
 		<method signature="void writeObject(java.io.ObjectOutputStream)" class="tourma.tableModel.MjtAnnexRank" />
 		<method signature="void readObject(java.io.ObjectInputStream)" class="tourma.tableModel.MjtAnnexRank" />
-		<field name="serialVersionUID" class="tourma.tableModel.MjtCriterias" />
+		<field name="CS_CriteriaAlreadyExists" class="tourma.tableModel.MjtCriterias" />
 		<method signature="void writeObject(java.io.ObjectOutputStream)" class="tourma.tableModel.MjtCriterias" />
 		<method signature="void readObject(java.io.ObjectInputStream)" class="tourma.tableModel.MjtCriterias" />
-		<field name="serialVersionUID" class="tourma.tableModel.MjtMatchTeams" />
 		<method signature="void writeObject(java.io.ObjectOutputStream)" class="tourma.tableModel.MjtMatchTeams" />
 		<method signature="void readObject(java.io.ObjectInputStream)" class="tourma.tableModel.MjtMatchTeams" />
-		<field name="serialVersionUID" class="tourma.tableModel.MjtMatches" />
 		<method signature="void writeObject(java.io.ObjectOutputStream)" class="tourma.tableModel.MjtMatches" />
 		<method signature="void readObject(java.io.ObjectInputStream)" class="tourma.tableModel.MjtMatches" />
 		<method signature="void writeObject(java.io.ObjectOutputStream)" class="tourma.tableModel.MjtPairs" />
@@ -29325,16 +29689,113 @@
 		<field name="C_STARTING_RANK" class="tourma.tableModel.MjtRanking" />
 		<field name="C_ELO_K" class="tourma.tableModel.MjtRanking" />
 		<method signature="void sortDatas()" class="tourma.tableModel.MjtRanking" />
-		<field name="mPositive" class="tourma.tableModel.MjtRankingIndiv" />
 		<method signature="void writeObject(java.io.ObjectOutputStream)" class="tourma.tableModel.MjtTeams" />
 		<method signature="void readObject(java.io.ObjectInputStream)" class="tourma.tableModel.MjtTeams" />
+		<field name="CS_ROSTER" class="tourma.utility.StringConstants" />
+		<field name="CS_NAME" class="tourma.utility.StringConstants" />
+		<field name="CS_NULL" class="tourma.utility.StringConstants" />
+		<field name="CS_HASH" class="tourma.utility.StringConstants" />
+		<field name="CS_COACH" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_CLAN" class="tourma.utility.StringConstants" />
+		<field name="CS_POOL" class="tourma.utility.StringConstants" />
+		<field name="CS_ROUND" class="tourma.utility.StringConstants" />
+		<field name="CS_RESULT" class="tourma.utility.StringConstants" />
+		<field name="CS_CUP" class="tourma.utility.StringConstants" />
 		<field name="CS_CATEGORY" class="tourma.utility.StringConstants" />
 		<field name="CS_THICK" class="tourma.utility.StringConstants" />
 		<field name="CS_HTML_EMPTY" class="tourma.utility.StringConstants" />
 		<field name="CS_XML" class="tourma.utility.StringConstants" />
 		<field name="CS_MINXML" class="tourma.utility.StringConstants" />
+		<field name="CS_NONE" class="tourma.utility.StringConstants" />
+		<field name="CS_POINTS" class="tourma.utility.StringConstants" />
 		<field name="CS_LANGUAGE_RESOURCE" class="tourma.utility.StringConstants" />
 		<field name="CS_GROUP" class="tourma.utility.StringConstants" />
+		<field name="CS_PICTURE" class="tourma.utility.StringConstants" />
+		<field name="CS_NAF" class="tourma.utility.StringConstants" />
+		<field name="CS_RANK" class="tourma.utility.StringConstants" />
+		<field name="CS_ACTIVE" class="tourma.utility.StringConstants" />
+		<field name="CS_HANDICAP" class="tourma.utility.StringConstants" />
+		<field name="CS_COMPOSITION" class="tourma.utility.StringConstants" />
+		<field name="CS_MATCH" class="tourma.utility.StringConstants" />
+		<field name="CS_REFUSED_BY" class="tourma.utility.StringConstants" />
+		<field name="CS_CONCEEDED_BY" class="tourma.utility.StringConstants" />
+		<field name="CS_REFUSED" class="tourma.utility.StringConstants" />
+		<field name="CS_CONCEEDED" class="tourma.utility.StringConstants" />
+		<field name="CS_VALUE" class="tourma.utility.StringConstants" />
+		<field name="CS_SUBSTITUTION" class="tourma.utility.StringConstants" />
+		<field name="CS_CRITERIA" class="tourma.utility.StringConstants" />
+		<field name="CS_POINTS_FOR" class="tourma.utility.StringConstants" />
+		<field name="CS_POINTS_AGAINST" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAM_POINTS_FOR" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAM_POINTS_AGAINST" class="tourma.utility.StringConstants" />
+		<field name="CS_GROUP_MODIFIER_POINTS" class="tourma.utility.StringConstants" />
+		<field name="CS_VICTORY" class="tourma.utility.StringConstants" />
+		<field name="CS_LARGE_VICTORY" class="tourma.utility.StringConstants" />
+		<field name="CS_LITTLE_LOST" class="tourma.utility.StringConstants" />
+		<field name="CS_DRAW" class="tourma.utility.StringConstants" />
+		<field name="CS_LOST" class="tourma.utility.StringConstants" />
+		<field name="CS_POSITION" class="tourma.utility.StringConstants" />
+		<field name="CS_MEMBER" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAMMATES" class="tourma.utility.StringConstants" />
+		<field name="CS_PARAMETERS" class="tourma.utility.StringConstants" />
+		<field name="CS_ORGANIZER" class="tourma.utility.StringConstants" />
+		<field name="CS_DATE" class="tourma.utility.StringConstants" />
+		<field name="CS_PLACE" class="tourma.utility.StringConstants" />
+		<field name="CS_PORTUGAL" class="tourma.utility.StringConstants" />
+		<field name="CS_VICTORY_TEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_DRAW_TEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_LOST_TEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_LARGE_VICTORY_GAP" class="tourma.utility.StringConstants" />
+		<field name="CS_LITTLE_LOST_GAP" class="tourma.utility.StringConstants" />
+		<field name="CS_BYTEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAMPAIRING" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAMINDIVPAIRING" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAMVICTORYPOINTS" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAMDRAWPOINTS" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAMVICTORYONLY" class="tourma.utility.StringConstants" />
+		<field name="CS_GROUPENABLE" class="tourma.utility.StringConstants" />
+		<field name="CS_SUBSTITUTES" class="tourma.utility.StringConstants" />
+		<field name="CS_GAMETYPE" class="tourma.utility.StringConstants" />
+		<field name="CS_ACTVATECLANS" class="tourma.utility.StringConstants" />
+		<field name="CS_AVOIDFIRSTMATCH" class="tourma.utility.StringConstants" />
+		<field name="CS_AVOIDMATCH" class="tourma.utility.StringConstants" />
+		<field name="CS_CLANTEAMMATESNUMBER" class="tourma.utility.StringConstants" />
+		<field name="CS_MULTIROSTER" class="tourma.utility.StringConstants" />
+		<field name="CS_INDIVBALANCED" class="tourma.utility.StringConstants" />
+		<field name="CS_TEAMBALANCED" class="tourma.utility.StringConstants" />
+		<field name="CS_COLOR" class="tourma.utility.StringConstants" />
+		<field name="CS_USE_IMAGE" class="tourma.utility.StringConstants" />
+		<field name="CS_USE_LARGE_VICTORY" class="tourma.utility.StringConstants" />
+		<field name="CS_USE_LITTLE_LOST" class="tourma.utility.StringConstants" />
+		<field name="CS_TABLEBONUS" class="tourma.utility.StringConstants" />
+		<field name="CS_TABLEBONUSPERROUND" class="tourma.utility.StringConstants" />
+		<field name="CS_TABLEBONUSCOEF" class="tourma.utility.StringConstants" />
+		<field name="CS_USE_BEST_RESULT_INDIV" class="tourma.utility.StringConstants" />
+		<field name="CS_USE_BEST_RESULT_TEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_BEST_RESULT_INDIV" class="tourma.utility.StringConstants" />
+		<field name="CS_BEST_RESULT_TEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_APPLY_TO_ANNEX_TEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_APPLY_TO_ANNEX_INDIV" class="tourma.utility.StringConstants" />
+		<field name="CS_EXCEPT_BEST_AND_WORST_INDIV" class="tourma.utility.StringConstants" />
+		<field name="CS_EXCEPT_BEST_AND_WORST_TEAM" class="tourma.utility.StringConstants" />
+		<field name="CS_RANKING" class="tourma.utility.StringConstants" />
+		<field name="CS_TYPE" class="tourma.utility.StringConstants" />
+		<field name="CS_ORDER" class="tourma.utility.StringConstants" />
+		<field name="CS_POS" class="tourma.utility.StringConstants" />
+		<field name="CS_LOOSERCUP" class="tourma.utility.StringConstants" />
+		<field name="CS_TOUR" class="tourma.utility.StringConstants" />
+		<field name="CS_MAXTOUR" class="tourma.utility.StringConstants" />
+		<field name="CS_MINCOEF" class="tourma.utility.StringConstants" />
+		<field name="CS_MAXCOEF" class="tourma.utility.StringConstants" />
+		<field name="CS_INDEX" class="tourma.utility.StringConstants" />
+		<field name="CS_TITULAR" class="tourma.utility.StringConstants" />
+		<field name="CS_SUBSTITUTE" class="tourma.utility.StringConstants" />
+		<field name="CS_TOURNAMENT" class="tourma.utility.StringConstants" />
+		<field name="CS_VERSION" class="tourma.utility.StringConstants" />
+		<field name="CS_ROUNDROBIN" class="tourma.utility.StringConstants" />
+		<field name="CS_VERSION_RESOURCES" class="tourma.utility.Version" />
+		<field name="CS_VERSION_KEY" class="tourma.utility.Version" />
 		<method signature="void &lt;init&gt;()" class="tourma.utils.Balancing" />
 		<field name="GEN_ORDER" class="tourma.utils.Generation" />
 		<field name="GEN_RANDOM" class="tourma.utils.Generation" />
@@ -29347,6 +29808,32 @@
 		<field name="GEN_NAF" class="tourma.utils.Generation" />
 		<field name="GEN_FREE" class="tourma.utils.Generation" />
 		<field name="GEN_BALANCED" class="tourma.utils.Generation" />
+		<field name="CS_GenerationError" class="tourma.utils.Generation" />
+		<field name="CS_BadNumberOfActivePlayersForTeam" class="tourma.utils.Generation" />
+		<field name="CS_OddNumberOfActiveCoachs" class="tourma.utils.Generation" />
+		<field name="CS_DoYouWantATeamFirstPairing" class="tourma.utils.Generation" />
+		<field name="CS_FirstRound" class="tourma.utils.Generation" />
+		<field name="CS_NumberByPool" class="tourma.utils.Generation" />
+		<field name="CS_TheNumberOfTeamsIsNotAMultipleOfYourChoice" class="tourma.utils.Generation" />
+		<field name="CS_DoYouWantToChooseRankTeam" class="tourma.utils.Generation" />
+		<field name="CS_ChooseCompetitor" class="tourma.utils.Generation" />
+		<field name="CS_ChooseOpponentFor" class="tourma.utils.Generation" />
+		<field name="CS_ChoosOpponent" class="tourma.utils.Generation" />
+		<field name="CS_IsItDoubleKickTournament" class="tourma.utils.Generation" />
+		<field name="CS_NotEnoughRoundToAvoidSameMatch" class="tourma.utils.Generation" />
+		<field name="CS_AccleratedSwissMethodIsNotApplicable" class="tourma.utils.Generation" />
+		<field name="CS_DoYouWantToMixDraw" class="tourma.utils.Generation" />
+		<field name="CS_FinalRoundReached" class="tourma.utils.Generation" />
+		<field name="CS_DoYouWantToGenerateThirdPlaceMatch" class="tourma.utils.Generation" />
+		<field name="CS_NumberOfTurns" class="tourma.utils.Generation" />
+		<field name="CS_DoYouWantToUseCategoriesForTheCup" class="tourma.utils.Generation" />
+		<field name="CS_PleaseSelectCategoriesToUseForTheCup" class="tourma.utils.Generation" />
+		<field name="CS_MixAll" class="tourma.utils.Generation" />
+		<field name="CS_MixByAbsoluteRanking" class="tourma.utils.Generation" />
+		<field name="CS_MixByCategoryRanking" class="tourma.utils.Generation" />
+		<field name="CS_KeepGroup" class="tourma.utils.Generation" />
+		<field name="CS_AffectRoundsToRemainingCoachs" class="tourma.utils.Generation" />
+		<field name="CS_UseSwissRoundOrRandom" class="tourma.utils.Generation" />
 		<method signature="int factorielle(int)" class="tourma.utils.Generation" />
 		<method signature="void &lt;init&gt;()" class="tourma.utils.Generation" />
 		<method signature="void &lt;init&gt;()" class="tourma.utils.Icons" />
@@ -29354,23 +29841,183 @@
 		<method signature="void &lt;init&gt;()" class="tourma.utils.NAF" />
 		<method signature="void &lt;init&gt;()" class="tourma.utils.TableFormat" />
 		<field name="serialVersionUID" class="tourma.views.GraphicalMatch" />
+		<field name="CS_OpponentByTeam" class="tourma.views.JPNStatistics" />
+		<field name="CS_OpponentByCoach" class="tourma.views.JPNStatistics" />
+		<field name="CS_Done" class="tourma.views.JPNStatistics" />
+		<field name="CS_DoneAgainst" class="tourma.views.JPNStatistics" />
+		<field name="CS_ValueByRoster" class="tourma.views.JPNStatistics" />
+		<field name="CS_Roster" class="tourma.views.JPNStatistics" />
+		<field name="CS_Number" class="tourma.views.JPNStatistics" />
+		<field name="CS_Victories" class="tourma.views.JPNStatistics" />
+		<field name="CS_Drawns" class="tourma.views.JPNStatistics" />
+		<field name="CS_Losts" class="tourma.views.JPNStatistics" />
+		<field name="CS_ResultsByRoster" class="tourma.views.JPNStatistics" />
+		<field name="CS_Results" class="tourma.views.JPNStatistics" />
+		<field name="CS_Groups" class="tourma.views.JPNStatistics" />
+		<field name="CS_Points" class="tourma.views.JPNStatistics" />
+		<field name="CS_OpponentsPoints" class="tourma.views.JPNStatistics" />
+		<field name="CS_Rankings" class="tourma.views.JPNStatistics" />
+		<field name="CS_TeamRankings" class="tourma.views.JPNStatistics" />
+		<field name="CS_Ranking" class="tourma.views.JPNStatistics" />
+		<field name="CS_Round" class="tourma.views.JPNStatistics" />
+		<field name="CS_OpponentsByTeam" class="tourma.views.JPNStatistics" />
+		<field name="CS_OpponentsByCoach" class="tourma.views.JPNStatistics" />
+		<field name="CS_Opponents" class="tourma.views.JPNStatistics" />
+		<field name="CS_MatchsCount" class="tourma.views.JPNStatistics" />
 		<field name="serialVersionUID" class="tourma.views.fullscreen.JFullScreenClanRank" />
+		<field name="CS_Clan" class="tourma.views.fullscreen.JFullScreenClanRank" />
+		<field name="CS_Members" class="tourma.views.fullscreen.JFullScreenClanRank" />
+		<field name="CS_Clan" class="tourma.views.fullscreen.JFullScreenClanTeamAnnex" />
+		<field name="CS_Team" class="tourma.views.fullscreen.JFullScreenClanTeamAnnex" />
+		<field name="CS_Pool" class="tourma.views.fullscreen.JFullScreenClanTeamAnnex" />
+		<field name="CS_Pool" class="tourma.views.fullscreen.JFullScreenIndivAnnex" />
+		<field name="CS_Team" class="tourma.views.fullscreen.JFullScreenIndivAnnex" />
+		<field name="CS_Clan" class="tourma.views.fullscreen.JFullScreenIndivAnnex" />
+		<field name="CS_Coach" class="tourma.views.fullscreen.JFullScreenIndivAnnex" />
 		<field name="serialVersionUID" class="tourma.views.fullscreen.JFullScreenIndivRank" />
 		<field name="C_GENERAL" class="tourma.views.fullscreen.JFullScreenIndivRank" />
 		<field name="C_CATEGORY" class="tourma.views.fullscreen.JFullScreenIndivRank" />
 		<field name="C_GROUP" class="tourma.views.fullscreen.JFullScreenIndivRank" />
 		<field name="C_POOL" class="tourma.views.fullscreen.JFullScreenIndivRank" />
+		<field name="CS_Pool" class="tourma.views.fullscreen.JFullScreenIndivRank" />
+		<field name="CS_Team" class="tourma.views.fullscreen.JFullScreenIndivRank" />
+		<field name="CS_Clan" class="tourma.views.fullscreen.JFullScreenIndivRank" />
+		<field name="CS_Coach" class="tourma.views.fullscreen.JFullScreenIndivRank" />
+		<field name="CS_Roster" class="tourma.views.fullscreen.JFullScreenIndivRank" />
+		<field name="CS_RosterName" class="tourma.views.fullscreen.JFullScreenIndivRank" />
+		<field name="CS_Round" class="tourma.views.fullscreen.JFullScreenMatchs$Animation" />
+		<field name="CS_Table" class="tourma.views.fullscreen.JFullScreenMatchs$Animation" />
+		<field name="CS_Pool" class="tourma.views.fullscreen.JFullScreenTeamRank" />
+		<field name="CS_Team" class="tourma.views.fullscreen.JFullScreenTeamRank" />
+		<field name="CS_EnterCategoryNameKey" class="tourma.views.parameters.JPNParamCategories" />
+		<field name="CS_EnterClanNameKey" class="tourma.views.parameters.JPNParamClan" />
+		<field name="CS_SelectAnPicture" class="tourma.views.parameters.JPNParamClan" />
+		<field name="CS_Picture" class="tourma.views.parameters.JPNParamClan" />
+		<field name="CS_Criteria" class="tourma.views.parameters.JPNParamCriterias" />
+		<field name="CS_EnterNewGroupName" class="tourma.views.parameters.JPNParamGroup" />
+		<field name="CS_EnterGroupNewName" class="tourma.views.parameters.JPNParamGroup" />
+		<field name="CS_None" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_Points" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_OpponentPoints" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_ACCR_VictoryDrawLost" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_ELO" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_OpponentsElo" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_MatchCount" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_OpponentsPointsExceptOwnMatch" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_TablesPoints" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_PointsWithoutBonus" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_BonusPoints" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_Player" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_Opponent" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_Difference" class="tourma.views.parameters.JPNParamIndiv" />
+		<field name="CS_None" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_Points" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_OpponentPoints" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_ACCR_VictoryDrawLost" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_ELO" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_OpponentsElo" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_MatchCount" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_OpponentsPointsExceptOwnMatch" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_TablesPoints" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_PointsWithoutBonus" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_BonusPoints" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_Player" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_Opponent" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_Difference" class="tourma.views.parameters.JPNParamTeam" />
+		<field name="CS_Individual" class="tourma.views.parameters.JPNParameters" />
+		<field name="CS_Criterias" class="tourma.views.parameters.JPNParameters" />
+		<field name="CS_ByTeam" class="tourma.views.parameters.JPNParameters" />
+		<field name="CS_Clan" class="tourma.views.parameters.JPNParameters" />
+		<field name="CS_Group" class="tourma.views.parameters.JPNParameters" />
+		<field name="CS_Category" class="tourma.views.parameters.JPNParameters" />
+		<field name="CS_ByTeam" class="tourma.views.parameters.JPNTeams" />
+		<field name="CS_Single" class="tourma.views.parameters.JPNTeams" />
+		<field name="CS_Membersnumber" class="tourma.views.parameters.JPNTeams" />
 		<field name="serialVersionUID" class="tourma.views.report.JdgGlobal" />
-		<field name="serialVersionUID" class="tourma.views.report.JdgRound" />
-		<field name="serialVersionUID" class="tourma.views.round.JPNPoolRound" />
+		<field name="CS_Round" class="tourma.views.report.JdgGlobal" />
+		<field name="CS_ByClan" class="tourma.views.report.JdgGlobal" />
+		<field name="CS_ByTeam" class="tourma.views.report.JdgGlobal" />
+		<field name="CS_ByCoach" class="tourma.views.report.JdgGlobal" />
+		<field name="CS_TheMostFor" class="tourma.views.report.JdgGlobal" />
+		<field name="CS_TheLessFor" class="tourma.views.report.JdgGlobal" />
+		<field name="CS_TheMoreAgainst" class="tourma.views.report.JdgGlobal" />
+		<field name="CS_TheLessAgainst" class="tourma.views.report.JdgGlobal" />
+		<field name="CS_Round" class="tourma.views.report.JdgRanking" />
+		<field name="CS_Round" class="tourma.views.report.JdgRound" />
+		<field name="CS_Nom" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Table" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Tables" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Result" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Criterias" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Matches" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Numero" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Roster1" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Roster2" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Coach1" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Score1" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Value1" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Coach2" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Score2" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Value2" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Values" class="tourma.views.report.ReportKeys" />
+		<field name="CS_DateGeneration" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Team1" class="tourma.views.report.ReportKeys" />
+		<field name="CS_V1" class="tourma.views.report.ReportKeys" />
+		<field name="CS_N" class="tourma.views.report.ReportKeys" />
+		<field name="CS_V2" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Team2" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Title" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Titles" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Cols" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Lines" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Name" class="tourma.views.report.ReportKeys" />
+		<field name="CS_TitreMoreFor" class="tourma.views.report.ReportKeys" />
+		<field name="CS_TitreLessFor" class="tourma.views.report.ReportKeys" />
+		<field name="CS_TitreLessAgainst" class="tourma.views.report.ReportKeys" />
+		<field name="CS_TitreMoreAgainst" class="tourma.views.report.ReportKeys" />
+		<field name="CS_MoreFor" class="tourma.views.report.ReportKeys" />
+		<field name="CS_LessFor" class="tourma.views.report.ReportKeys" />
+		<field name="CS_LessAgainst" class="tourma.views.report.ReportKeys" />
+		<field name="CS_MoreAgainst" class="tourma.views.report.ReportKeys" />
+		<field name="CS_Clan" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_Opponents" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_Team" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_Coach" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_ByTheClan" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_ByTheCoach" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_ByTheTeam" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_AgainstTheClan" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_AgainstTheCoach" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_AgainstTheTeam" class="tourma.views.round.JPNAnnexRanking" />
+		<field name="CS_GeneralByCategory" class="tourma.views.round.JPNCategory" />
+		<field name="CS_GeneralByClan" class="tourma.views.round.JPNClan" />
+		<field name="CS_Group" class="tourma.views.round.JPNGroup" />
+		<field name="serialVersionUID" class="tourma.views.round.JPNPool" />
+		<field name="CS_GeneralByPool" class="tourma.views.round.JPNPool" />
 		<field name="serialVersionUID" class="tourma.views.round.JPNRound" />
+		<field name="CS_ByTeam" class="tourma.views.round.JPNRound" />
+		<field name="CS_ByClan" class="tourma.views.round.JPNRound" />
+		<field name="CS_None" class="tourma.views.round.JPNRound" />
+		<field name="CS_Group" class="tourma.views.round.JPNRound" />
+		<field name="CS_Category" class="tourma.views.round.JPNRound" />
+		<field name="CS_Pool" class="tourma.views.round.JPNRound" />
+		<field name="CS_GeneralByCoach" class="tourma.views.round.JPNRound" />
+		<field name="CS_ChooseARosterFor" class="tourma.views.round.JPNRound" />
+		<field name="CS_Roster" class="tourma.views.round.JPNRound" />
+		<field name="CS_Matchs" class="tourma.views.round.JPNTeamRound" />
+		<field name="CS_generalByTeam" class="tourma.views.round.JPNTeamRound" />
+		<field name="CS_Name" class="tourma.views.system.JdgAbout" />
+		<field name="CS_Date" class="tourma.views.system.JdgAbout" />
+		<field name="CS_Version" class="tourma.views.system.JdgAbout" />
+		<field name="CS_Version" class="tourma.views.system.MtRevisions" />
+		<field name="CS_Description" class="tourma.views.system.MtRevisions" />
 	</removed-code>
 	<removed-resources>
 	</removed-resources>
-<!-- 	shrinked C:\Perso\Tourma\store\TourMa.jar BY 9,97 %. -->
-<!-- 	size before: 10246 KB, size after: 9224 KB. -->
-<!-- 	removed 103 classes, 826 methods, 3723 fields, 0 resources. -->
-<!-- 	3715 classes remaining of 3818 total. -->
+<!-- 	shrinked C:\Perso\Tourma\store\TourMa.jar BY 10,07 %. -->
+<!-- 	size before: 10277 KB, size after: 9242 KB. -->
+<!-- 	removed 103 classes, 827 methods, 4324 fields, 0 resources. -->
+<!-- 	3736 classes remaining of 3839 total. -->
 </inOutPair>
 <!-- WARNING:Not all dependencies could be resolved. Please see the logfile for details. -->
 </yshrink>

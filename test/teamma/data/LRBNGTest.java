@@ -122,8 +122,8 @@ public class LRBNGTest {
         LOG.log(Level.FINE, "getRosterTypeListAsString");
         LRB instance = null;
         ArrayList expResult = null;
-        ArrayList result = instance.getRosterTypeListAsString();
-        assertEquals(result, expResult);
+//        ArrayList result = instance.getRosterTypeListAsString();
+  //      assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

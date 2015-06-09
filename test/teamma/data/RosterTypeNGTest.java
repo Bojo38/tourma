@@ -271,8 +271,8 @@ public class RosterTypeNGTest {
         String name = "";
         RosterType instance = null;
         PlayerType expResult = null;
-        PlayerType result = instance.getPlayerType(name);
-        assertEquals(result, expResult);
+//        PlayerType result = instance.getPlayerType(name);
+ //       assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -286,8 +286,8 @@ public class RosterTypeNGTest {
         String name = "";
         RosterType instance = null;
         StarPlayer expResult = null;
-        StarPlayer result = instance.getStarPlayer(name);
-        assertEquals(result, expResult);
+//        StarPlayer result = instance.getStarPlayer(name);
+//        assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
