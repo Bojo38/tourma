@@ -44,6 +44,7 @@ import teamma.data.RosterType;
 import teamma.data.Skill;
 import teamma.data.SkillType;
 import teamma.data.StarPlayer;
+import teamma.languages.Translate;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.utility.StringConstants;
@@ -321,8 +322,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 Player p = getmRoster().getPlayer(i);
                 final HashMap<String, Object> player = new HashMap<>();
                 player.put(CS_numero, i + 1);
-                player.put(CS_name, p.getName());
-                player.put(CS_position, p.getPlayertype().getPosition());
+                player.put(CS_name,  Translate.translate(p.getName()));
+                player.put(CS_position, Translate.translate(p.getPlayertype().getPosition()));
                 player.put(CS_movement, p.getPlayertype().getMovement());
                 player.put(CS_strength, p.getPlayertype().getStrength());
                 player.put(CS_agility, p.getPlayertype().getAgility());
@@ -331,7 +332,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 ArrayList<String> skills = new ArrayList<>();
                 for (int cpt = 0; cpt < p.getPlayertype().getSkillCount(); cpt++) {
                     Skill _skill = p.getPlayertype().getSkill(cpt);
-                    skills.add(_skill.getmName());
+                    skills.add(Translate.translate(_skill.getmName()));
                 }
                 for (int cpt = 0; cpt < p.getSkillCount(); cpt++) {
                     Skill _skill = p.getSkill(cpt);
@@ -341,7 +342,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                     ctmp = ctmp + c.getRed() + ",";
                     ctmp = ctmp + c.getGreen() + ",";
                     ctmp = ctmp + c.getBlue() + ")";
-                    skills.add("<div style=\"color:" + ctmp + ";\">" + _skill.getmName() + "</div>");
+                    skills.add("<div style=\"color:" + ctmp + ";\">" + Translate.translate(_skill.getmName()) + "</div>");
                 }
                 player.put(CS_skills, skills);
                 player.put(CS_cost, p.getValue(isWithSkill()));
@@ -349,14 +350,14 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 ArrayList<String> single = new ArrayList<>();
                 for (int cpt = 0; cpt < p.getPlayertype().getSingleCount(); cpt++) {
                     SkillType _single = p.getPlayertype().getSingle(cpt);
-                    single.add(_single.getAccronym());
+                    single.add(Translate.translate(_single.getAccronym()));
                 }
                 player.put(CS_single, single);
 
                 ArrayList<String> doubleT = new ArrayList<>();
                 for (int cpt = 0; cpt < p.getPlayertype().getDoubleCount(); cpt++) {
                     SkillType _double = p.getPlayertype().getDouble(cpt);
-                    doubleT.add(_double.getAccronym());
+                    doubleT.add(Translate.translate(_double.getAccronym()));
                 }
                 player.put(CS_double, doubleT);
 
@@ -367,8 +368,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 StarPlayer p = getmRoster().getChampion(cpt);
                 final HashMap<String, Object> player = new HashMap<>();
                 player.put(CS_numero, players.size() + 1);
-                player.put(CS_name, p.getName());
-                player.put(CS_position, p.getPosition());
+                player.put(CS_name,  Translate.translate(p.getName()));
+                player.put(CS_position, Translate.translate( p.getPosition()));
                 player.put(CS_movement, p.getMovement());
                 player.put(CS_strength, p.getStrength());
                 player.put(CS_agility, p.getAgility());
@@ -377,7 +378,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 ArrayList<String> skills = new ArrayList<>();
                 for (int cpt2 = 0; cpt2 < p.getSkillCount(); cpt2++) {
                     Skill _skill = p.getSkill(cpt2);
-                    skills.add(_skill.getmName());
+                    skills.add( Translate.translate(_skill.getmName()));
                 }
                 player.put(CS_skills, skills);
                 player.put(CS_cost, p.getCost());
@@ -479,6 +480,38 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             root.put(CS_total, getmRoster().getValue(isWithSkill()));
             root.put(CS_rank, getmRoster().getValue(isWithSkill()) / 10000);
 
+            // Pure translation
+            root.put("RosterTitle",Translate.translate("RosterTitle"));
+            root.put("NameTitle",Translate.translate("NameTitle"));
+            root.put("PositionTitle",Translate.translate("PositionTitle"));
+            root.put("MTitle",Translate.translate("MTitle"));
+            root.put("STitle",Translate.translate("STitle"));
+            root.put("AgTitle",Translate.translate("AgTitle"));
+            root.put("ArTitle",Translate.translate("ArTitle"));
+            root.put("SkillsTitle",Translate.translate("SkillsTitle"));
+            root.put("CostTitle",Translate.translate("CostTitle"));
+            root.put("SRTitle",Translate.translate("SRTitle"));
+            root.put("DRTitle",Translate.translate("DRTitle"));
+            root.put("TeamNameTitle",Translate.translate("TeamNameTitle"));
+            root.put("ApothecaryTitle",Translate.translate("ApothecaryTitle"));
+            root.put("CoachNameTitle",Translate.translate("CoachNameTitle"));
+            root.put("AssistTitle",Translate.translate("AssistTitle"));
+            root.put("RaceTitle",Translate.translate("RaceTitle"));
+            root.put("CheerleadersTitle",Translate.translate("CheerleadersTitle"));
+            root.put("FanFactorTitle",Translate.translate("FanFactorTitle"));
+            root.put("ExtraRerollTitle",Translate.translate("ExtraRerollTitle"));
+            root.put("LocalApothecaryTitle",Translate.translate("LocalApothecaryTitle"));
+            root.put("IgorTitle",Translate.translate("IgorTitle"));
+            root.put("BribeTitle",Translate.translate("BribeTitle"));
+            root.put("WizardTitle",Translate.translate("WizardTitle"));
+            root.put("BabesTitle",Translate.translate("BabesTitle"));
+            root.put("ChefTitle",Translate.translate("ChefTitle"));
+            root.put("CardsTitle",Translate.translate("CardsTitle"));
+            root.put("TotalTitle",Translate.translate("TotalTitle"));
+            root.put("RerollTitle",Translate.translate("RerollTitle"));
+            root.put("RankTitle",Translate.translate("RankTitle"));
+
+            
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));

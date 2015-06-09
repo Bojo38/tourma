@@ -1315,6 +1315,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             /**
              * Build Avilable Positions
              */
+
             ArrayList<String> positions = new ArrayList<>();
             for (i = 0; i < _data.getRoster().getPlayerTypeCount(); i++) {
                 PlayerType pt = _data.getRoster().getPlayerType(i);
@@ -1334,7 +1335,8 @@ public final class JdgRoster extends javax.swing.JDialog {
             }
 
             String input = (String) JOptionPane.showInputDialog(this,
-                    Translate.translate(CS_ChooseKindOfplayer), Translate.translate(CS_PlayerChoice), JOptionPane.INFORMATION_MESSAGE,
+                    Translate.translate(CS_ChooseKindOfplayer),
+                    Translate.translate(CS_PlayerChoice), JOptionPane.INFORMATION_MESSAGE,
                     null, positions.toArray(), positions.get(0));
             PlayerType pt = _data.getRoster().getPlayerType(input,true);
             Player p = new Player(pt);

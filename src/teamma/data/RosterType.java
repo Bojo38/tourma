@@ -6,7 +6,7 @@ package teamma.data;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
-import tourma.languages.Translate;
+import teamma.languages.Translate;
 
 /**
  *
@@ -236,6 +236,7 @@ public class RosterType {
             PlayerType rt = getPlayerType(i);
 
             if (translate) {
+                
                 if (name.equals(Translate.translate(rt.getPosition()))) {
                     return rt;
                 }

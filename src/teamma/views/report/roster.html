@@ -22,7 +22,7 @@
         <#setting locale="fr_FR">
         <#setting number_format="0.##">
 
-        <div id="titre">Roster</div>
+        <div id="titre">${RosterTitle}</div>
         <br>
         <table
             style="border-width:1px; width: 100%; text-align: center; margin-left: auto; margin-right: auto;"
@@ -30,16 +30,16 @@
             <tbody>
                 <tr style="text-align:center;">
                     <td >#</td>
-                    <td >Name</td>
-                    <td >Position</td>
-                    <td >M</td>
-                    <td >S</td>
-                    <td >Ag</td>
-                    <td >Ar</td>
-                    <td colspan="3">Skills</td>
-                    <td >Cost</td>
-                    <td >SR</td>
-                    <td >DR</td>
+                    <td >${NameTitle}</td>
+                    <td >${PositionTitle}</td>
+                    <td >${MTitle}</td>
+                    <td >${STitle}</td>
+                    <td >${AgTitle}</td>
+                    <td >${ArTitle}</td>
+                    <td colspan="3">${SkillsTitle}</td>
+                    <td >${CostTitle}</td>
+                    <td >${SRTitle}</td>
+                    <td >${DRTitle}</td>
                 </tr>
                 <#assign odd=0>
                 <#list players as player>
@@ -75,10 +75,10 @@
                 </#if>
                 <tr style="${background};">
                     <td colspan="2" style="text-align:right;">
-                        Team Name
+                        ${TeamNameTitle}
                     </td>
                     <td colspan="5" style="text-align:center;">${teamname}</td>
-                    <td style="text-align:right;">Apothecary </td>
+                    <td style="text-align:right;">${ApothecaryTitle} </td>
                     <td style="text-align:center;">${apothecary} </td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${apo_price}</td>
@@ -92,10 +92,10 @@
                 </#if>
                 <tr style="${background};">
                     <td colspan="2" style="text-align:right;">
-                        Coach Name
+                        ${CoachNameTitle}
                     </td>
                     <td colspan="5" style="text-align:center;">${coachname}</td>
-                    <td style="text-align:right;">Assists</td>
+                    <td style="text-align:right;">${AssistTitle}</td>
                     <td style="text-align:center;">${assists}</td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${ass_price}</td>
@@ -109,10 +109,10 @@
                 </#if>
                 <tr style="${background};">
                     <td colspan="2" style="text-align:right;">
-                        Race
+                        ${RaceTitle}
                     </td>
                     <td colspan="5" style="text-align:center;">${race}</td>
-                    <td style="text-align:right;">Cheerleaders </td>
+                    <td style="text-align:right;">${CheerleadersTitle} </td>
                     <td style="text-align:center;">${cheer}</td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${cheer_price}</td>
@@ -127,15 +127,33 @@
                 </#if>
                 <tr style="${background};">
                     <td colspan="2" style="text-align:right;">
-                        Rank
+                        ${RankTitle}
                     </td>
                     <td colspan="5" style="text-align:center;">${rank}</td>
                     
-                    <td style="text-align:right;">Fan factor</td>
+                    <td style="text-align:right;">${FanFactorTitle}</td>
                     <td style="text-align:center;">${pop}</td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${pop_price}</td>
                     <td colspan="2" style="text-align:center;">${pop_cost}</td>
+                </tr>
+   
+                <#assign odd=odd+1>
+                <#if (odd%2 == 1) >
+                <#assign background="background-color:#ffffff">
+                <#else>
+                <#assign background="background-color:#eeeeee">
+                </#if>
+                <tr style="${background};">
+                    <td colspan="7">
+                        &nbsp;
+                    </td>
+
+                    <td style="text-align:right;">${RerollTitle} </td>
+                    <td style="text-align:center;">${reroll}</td>
+                    <td style="text-align:center;">X</td>
+                    <td style="text-align:center;">${reroll_price}</td>
+                    <td colspan="2" style="text-align:center;">${reroll_cost}</td>
                 </tr>
 
                 <#if (extra > 0) >
@@ -150,7 +168,7 @@
                         &nbsp;
                     </td>
 
-                    <td style="text-align:right;">Extra Reroll</td>
+                    <td style="text-align:right;">${ExtraRerollTitle}</td>
                     <td style="text-align:center;">${extra}</td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${extra_price}</td>
@@ -170,7 +188,7 @@
                         &nbsp;
                     </td>
 
-                    <td style="text-align:right;">Local Apothecary </td>
+                    <td style="text-align:right;">${LocalApothecaryTitle} </td>
                     <td style="text-align:center;">${local}</td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${local_price}</td>
@@ -190,7 +208,7 @@
                         &nbsp;
                     </td>
 
-                    <td style="text-align:right;">Igor </td>
+                    <td style="text-align:right;">${IgorTitle} </td>
                     <td style="text-align:center;">${igor}</td>
                     <td style="text-align:center;">X</td>
                     <td  style="text-align:center;">${igor_price}</td>
@@ -210,7 +228,7 @@
                         &nbsp;
                     </td>
 
-                    <td style="text-align:right;">Bribe the Ref </td>
+                    <td style="text-align:right;">${BribeTitle} </td>
                     <td style="text-align:center;">${bribe}</td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${bribe_price}</td>
@@ -230,7 +248,7 @@
                         &nbsp;
                     </td>
 
-                    <td  style="text-align:right;">Wizard </td>
+                    <td  style="text-align:right;">${WizardTitle} </td>
                     <td style="text-align:center;">${wizard} </td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${wizard_price}</td>
@@ -250,7 +268,7 @@
                         &nbsp;
                     </td>
 
-                    <td style="text-align:right;">Bloodweiser bables </td>
+                    <td style="text-align:right;">${BabesTitle} </td>
                     <td style="text-align:center;">${babes}</td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${babes_price}</td>
@@ -270,7 +288,7 @@
                         &nbsp;
                     </td>
 
-                    <td style="text-align:right;">Halfling Chef</td>
+                    <td style="text-align:right;">${ChefTitle}</td>
                     <td style="text-align:center;">${chef}</td>
                     <td style="text-align:center;">X</td>
                     <td style="text-align:center;">${chef_price}</td>
@@ -290,7 +308,7 @@
                         &nbsp;
                     </td>
 
-                    <td style="text-align:right;">Cards </td>
+                    <td style="text-align:right;">${CardsTitle} </td>
                     <td colspan="3"> &nbsp;</td>
                     <td colspan="2" style="text-align:center;">${cards}</td>
                 </tr>
@@ -307,7 +325,7 @@
                         &nbsp;
                     </td>
 
-                    <td colspan="4" style="text-align:right;font-size:20px;">Total </td>
+                    <td colspan="4" style="text-align:right;font-size:20px;">${TotalTitle} </td>
                     <td colspan="2" style="text-align:center;font-size:20px;">${total}</td>
                 </tr>
             </tbody>

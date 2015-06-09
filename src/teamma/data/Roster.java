@@ -190,7 +190,7 @@ public class Roster implements XMLExport {
             inducements.setAttribute(CS_Cards, Integer.toString(this.getCards()));
             inducements.setAttribute(CS_Bribe, Integer.toString(this.getCorruptions()));
             inducements.setAttribute(CS_ExtraRerolls, Integer.toString(this.getExtrarerolls()));
-            inducements.setAttribute(CS_ExtraRerolls, Integer.toString(this.getLocalapothecary()));
+            inducements.setAttribute(CS_LocalApothecary, Integer.toString(this.getLocalapothecary()));
 
             for (int cpt = 0; cpt < getChampionCount(); cpt++) {
                 StarPlayer _champion = getChampion(cpt);

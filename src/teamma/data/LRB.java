@@ -197,7 +197,7 @@ public final class LRB {
     private final static String CS_Igor = "igor";
     private final static String CS_Bribe = "bribe";
     private final static String CS_PlayerTypes = "playertypes";
-    private final static String CS_PlayerType = "playertype";
+    private final static String CS_PlayerType = "playerType";
     private final static String CS_Position = "position";
     private final static String CS_Limit = "limit";
     private final static String CS_Movement = "movement";
@@ -214,6 +214,8 @@ public final class LRB {
     private final static String CS_RosterTypeNotFound = "RosterTypeNotFound";
     private final static String CS_forThePlayer = "forThePlayer";
 
+    
+    
     /**
      *
      * @param file
@@ -227,11 +229,8 @@ public final class LRB {
 
             Element e_name = racine.getChild(CS_Name);
 
-            String n = tourma.data.RosterType.getRosterName(e_name.getValue());
-            if (n == null) {
-                n = tourma.data.RosterType.translate(e_name.getValue());
+            String n = Translate.translate(e_name.getValue());
 
-            }
             RosterType rt = new RosterType(n);
             rt.setImage(image);
             Element e_reroll_cost = racine.getChild(CS_Reroll);
@@ -364,13 +363,10 @@ public final class LRB {
                 i = rosterlist.iterator();
                 while (i.hasNext()) {
                     Element e_team = i.next();
-                    String n = tourma.data.RosterType.getRosterName(e_team.getValue());
-                    if (n == null) {
-                        n = tourma.data.RosterType.translate(e_team.getValue());
+                    String n = Translate.translate(e_team.getValue());
 
-                    }
-                    RosterType rt = new RosterType(n);
-                    //RosterType rt = getRosterType(tourma.data.RosterType.translate(e_team.getValue()));
+                    //RosterType rt = new RosterType(n);
+                    RosterType rt = getRosterType(n);
                     if (rt == null) {
                         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_RosterTypeNotFound) + ": " + n + " " + Translate.translate(CS_forThePlayer) + " " + e_name.getValue());
                     } else {
@@ -483,6 +479,17 @@ public final class LRB {
      */
     public RosterType getRosterType(int i) {
         return _rosterTypes.get(i);
+    }
+    
+    public RosterType getRosterType(String name) {
+        for (RosterType rt:_rosterTypes)
+        {
+            if (rt.getName().equals(name))
+            {
+                return rt;
+            }
+        }
+        return null;
     }
 
     /**
