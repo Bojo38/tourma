@@ -275,7 +275,7 @@ public class Roster implements XMLExport {
                 final Iterator<Element> is = skills.iterator();
                 while (is.hasNext()) {
                     final Element s = is.next();
-                    final teamma.data.Skill sl = new Skill(LRB.getLRB().getSkill(s.getAttributeValue(CS_Name)));
+                    final teamma.data.Skill sl = new Skill(LRB.getLRB().getSkill(s.getAttributeValue(CS_Name),false));
                     String sColor=s.getAttributeValue(CS_Color);
                     Color col=Color.decode(sColor);
                     sl.setmColor(col);

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.fest.swing.core.BasicRobot;
+import org.fest.swing.core.Robot;
 import org.fest.swing.fixture.DialogFixture;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -36,16 +38,17 @@ public class JdgPrintableRosterNGTest {
     private Roster roster;
     JdgPrintableRoster jdg;
 
-    public JdgPrintableRosterNGTest() {
-    }
+    private static Robot robot;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-
+        robot = BasicRobot.robotWithNewAwtHierarchy();
+        robot.settings().delayBetweenEvents(50);
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        robot.cleanUp();
     }
 
     @BeforeMethod
@@ -56,38 +59,40 @@ public class JdgPrintableRosterNGTest {
         final Element racine = document.getRootElement();
         roster = new Roster();
         roster.setXMLElement(racine);
-        
+
         // Remove local apothecary, because the team is an unded team
         roster.setLocalapothecary(0);
-        
+
         jdg = new JdgPrintableRoster(null, true,
                 roster, null, true);
-        window = new DialogFixture(jdg);
+        window = new DialogFixture(robot, jdg);
         window.show();
+
     }
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
+        window.close();
         window.cleanUp();
+        window = null;
     }
 
     @Test
-    public void hmiGeneralTest()
-    {
+    public void hmiGeneralTest() {
         try {
             System.out.println("hmiGeneralTest");
             window.button("jbtExport").click();
-            Thread.sleep(2000);
-            File d=new File(".");
-            File f=new File("tmp.html");
+            Thread.sleep(1000);
+            File d = new File(".");
+            File f = new File("tmp.html");
             window.fileChooser("jfc").setCurrentDirectory(d);
             window.fileChooser("jfc").selectFile(f);
             window.fileChooser("jfc").approve();
-            Thread.sleep(1000);
-            boolean equals=compareTwoFiles("tmp.html", "test/necros.html");
+            Thread.sleep(500);
+            boolean equals = compareTwoFiles("tmp.html", "test/necros.html");
             Assert.assertTrue(equals);
             Files.delete(f.toPath());
-            
+
         } catch (InterruptedException ex) {
             fail("Exception catched");
             Logger.getLogger(JdgPrintableRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,9 +100,9 @@ public class JdgPrintableRosterNGTest {
             fail("Exception catched");
             Logger.getLogger(JdgPrintableRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     public boolean compareTwoFiles(String file1Path, String file2Path)
             throws IOException {
 

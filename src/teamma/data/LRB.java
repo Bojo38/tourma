@@ -274,7 +274,7 @@ public final class LRB {
                 Iterator<Element> i = l_skills.iterator();
                 while (i.hasNext()) {
                     Element e_skill = i.next();
-                    Skill s = getSkill(e_skill.getValue());
+                    Skill s = getSkill(e_skill.getValue(),false);
                     if (s == null) {
                         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
                     } else {
@@ -349,7 +349,7 @@ public final class LRB {
                 Iterator<Element> i = skilllist.iterator();
                 while (i.hasNext()) {
                     Element e_skill = i.next();
-                    Skill s = getSkill(e_skill.getValue());
+                    Skill s = getSkill(e_skill.getValue(),false);
                     if (s == null) {
                         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + sp.getName());
                     } else {
@@ -387,14 +387,20 @@ public final class LRB {
      * @param name
      * @return
      */
-    public Skill getSkill(String name) {
+    public Skill getSkill(String name, boolean translate) {
         int i, j;
         for (i = 0; i < getSkillTypeCount(); i++) {
             SkillType st = getSkillType(i);
             for (j = 0; j < st.getSkillCount(); j++) {
                 Skill s = st.getSkill(j);
-                if (name.equals(s.getmName())) {
-                    return s;
+                if (!translate) {
+                    if (name.equals(s.getmName())) {
+                        return s;
+                    }
+                } else {
+                    if (name.equals(Translate.translate(s.getmName()))) {
+                        return s;
+                    }
                 }
             }
         }

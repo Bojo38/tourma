@@ -8,6 +8,8 @@ package teamma.views;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.fest.swing.core.BasicRobot;
+import org.fest.swing.core.Robot;
 import org.fest.swing.fixture.DialogFixture;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -21,27 +23,32 @@ import org.testng.annotations.Test;
 import teamma.data.LRB;
 import teamma.data.Player;
 import teamma.data.Roster;
-import teamma.views.report.JdgPrintableRosterNGTest;
+
 /**
  *
  * @author WFMJ7631
  */
 public class JdgSelectSkillNGTest {
-    
-     private DialogFixture window;
+
+    private DialogFixture window;
     private Roster roster;
     JdgSelectSkill jdg;
     Player player;
-    
+
     public JdgSelectSkillNGTest() {
     }
 
+    private static Robot robot;
+
     @BeforeClass
     public static void setUpClass() throws Exception {
+        robot = BasicRobot.robotWithNewAwtHierarchy();
+        robot.settings().delayBetweenEvents(50);
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        robot.cleanUp();
     }
 
     @BeforeMethod
@@ -51,17 +58,20 @@ public class JdgSelectSkillNGTest {
         final Element racine = document.getRootElement();
         roster = new Roster();
         roster.setXMLElement(racine);
-        
+
         // Remove local apothecary, because the team is an unded team
         roster.setLocalapothecary(0);
-        player=roster.getPlayer(0);
-        jdg = new JdgSelectSkill(null,true, player);
-        window = new DialogFixture(jdg);
+        player = roster.getPlayer(0);
+        jdg = new JdgSelectSkill(null, true, player);
+        window = new DialogFixture(robot, jdg);
         window.show();
     }
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
+        window.close();
+        window.cleanUp();
+        window = null;
     }
 
     /**
@@ -69,27 +79,26 @@ public class JdgSelectSkillNGTest {
      */
     @Test
     public void hmiGeneralTest() {
-       System.out.println("hmiGeneralTest");
-       try {
-            LRB lrb=LRB.getLRB();
+        System.out.println("hmiGeneralTest");
+        try {
+            LRB lrb = LRB.getLRB();
             window.comboBox("jcbGeneral").selectItem(1);
             Thread.sleep(200);
-            int nb=player.getSkillCount();
-            Assert.assertEquals(nb,player.getSkillCount());
+            int nb = player.getSkillCount();
+            Assert.assertEquals(nb, player.getSkillCount());
             window.button("cancel").click();
             window.show();
             window.comboBox("jcbGeneral").selectItem(1);
             Thread.sleep(200);
             window.button("ok").click();
-            Assert.assertEquals(nb+1,player.getSkillCount());
-            Assert.assertEquals(lrb.getSkillType("General").getSkill(0).getmName(),player.getSkill(nb).getmName());
+            Assert.assertEquals(nb + 1, player.getSkillCount());
+            Assert.assertEquals(lrb.getSkillType("General").getSkill(0).getmName(), player.getSkill(nb).getmName());
             player.removeSkill(nb);
-            Assert.assertEquals(nb,player.getSkillCount());
+            Assert.assertEquals(nb, player.getSkillCount());
         } catch (InterruptedException ex) {
             fail("Exception catched");
-            Logger.getLogger(JdgPrintableRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            Logger.getLogger(JdgSelectSkillNGTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-  
-    
+
 }

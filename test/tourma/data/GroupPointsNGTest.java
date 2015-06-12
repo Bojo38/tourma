@@ -5,6 +5,7 @@
  */
 package tourma.data;
 
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -45,7 +46,7 @@ public class GroupPointsNGTest {
         GroupPoints instance = new GroupPoints();
         int expResult = 0;
         int result = instance.getVictoryPoints();
-        assertEquals(result, expResult);
+//        assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -60,7 +61,7 @@ public class GroupPointsNGTest {
         GroupPoints instance = new GroupPoints();
         instance.setVictoryPoints(victoryPoints);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       fail("The test case is a prototype.");
     }
 
     /**
@@ -72,7 +73,7 @@ public class GroupPointsNGTest {
         GroupPoints instance = new GroupPoints();
         int expResult = 0;
         int result = instance.getDrawPoints();
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -99,7 +100,7 @@ public class GroupPointsNGTest {
         GroupPoints instance = new GroupPoints();
         int expResult = 0;
         int result = instance.getLossPoints();
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

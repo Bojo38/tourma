@@ -5,6 +5,7 @@
  */
 package tourma.utils;
 
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -46,7 +47,7 @@ public class RankedNGTest {
         Ranked instance = new RankedImpl();
         int expResult = 0;
         int result = instance.getRowCount();
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -61,7 +62,7 @@ public class RankedNGTest {
         Ranked instance = new RankedImpl();
         ObjectRanking expResult = null;
         ObjectRanking result = instance.getSortedObject(i);
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -77,7 +78,7 @@ public class RankedNGTest {
         Ranked instance = new RankedImpl();
         int expResult = 0;
         int result = instance.getSortedValue(i, valIndex);
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -91,7 +92,7 @@ public class RankedNGTest {
         Ranked instance = new RankedImpl();
         String expResult = "";
         String result = instance.getDetail();
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

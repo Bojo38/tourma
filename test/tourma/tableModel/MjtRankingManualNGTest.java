@@ -8,6 +8,7 @@ package tourma.tableModel;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JTable;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -87,7 +88,7 @@ public class MjtRankingManualNGTest {
         MjtRankingManual instance = null;
         int expResult = 0;
         int result = instance.getColumnCount();
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -102,7 +103,7 @@ public class MjtRankingManualNGTest {
         MjtRankingManual instance = null;
         String expResult = "";
         String result = instance.getColumnName(col);
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -118,7 +119,7 @@ public class MjtRankingManualNGTest {
         MjtRankingManual instance = null;
         Object expResult = null;
         Object result = instance.getValueAt(row, col);
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -138,7 +139,7 @@ public class MjtRankingManualNGTest {
         MjtRankingManual instance = null;
         Component expResult = null;
         Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        assertEquals(result, expResult);
+        //assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

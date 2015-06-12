@@ -15,7 +15,6 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import teamma.data.LRB;
 import teamma.data.Player;
 import teamma.data.Skill;
@@ -61,7 +60,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             ArrayList<String> sa = new ArrayList<>();
             sa.add("");
             for (j = 0; j < st.getSkillCount(); j++) {
-                sa.add(st.getSkill(j).getmName());
+                sa.add(Translate.translate(st.getSkill(j).getmName()));
             }
             JComboBox jcb = new JComboBox(sa.toArray());
             jcb.setName("jcb"+st.getName());
@@ -215,7 +214,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             JComboBox<String> jcb = _jcbs.get(i);
             if (jcb.getSelectedIndex() > 0) {
                 stringName = (String) jcb.getSelectedItem();
-                s = LRB.getLRB().getSkill(stringName);
+                s = LRB.getLRB().getSkill(stringName,true);
                 break;
             }
         }
@@ -224,10 +223,12 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             Skill s2 = new Skill(s.getmName(), s.getmCategory());
             s2.setmColor(getColor());
             getPlayer().addSkill(s2);
-            this.setVisible(false);
-        } else {
+            
+        } 
+        this.setVisible(false);
+        /*else {
             JOptionPane.showMessageDialog(this, CS_Error, CS_NoSkillSelected, JOptionPane.ERROR_MESSAGE);
-        }
+        }*/
     }//GEN-LAST:event_jbtOKActionPerformed
 
     private void ccColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccColorActionPerformed

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.fest.swing.core.BasicRobot;
+import org.fest.swing.core.Robot;
 import org.fest.swing.fixture.DialogFixture;
 import org.testng.Assert;
 import static org.testng.Assert.fail;
@@ -37,24 +39,31 @@ public class JdgRosterNGTest {
     public JdgRosterNGTest() {
     }
 
+    private static Robot robot;
+    
     @BeforeClass
     public static void setUpClass() throws Exception {
+        robot = BasicRobot.robotWithNewAwtHierarchy();
+        robot.settings().delayBetweenEvents(50);
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        robot.cleanUp();
     }
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
 
         jdg = new JdgRoster(null, true);
-        window = new DialogFixture(jdg);
+        window = new DialogFixture(robot,jdg);
         window.show();
     }
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
+        window.close();
+        window.cleanUp();
     }
 
     @Test
@@ -66,7 +75,7 @@ public class JdgRosterNGTest {
             window.tabbedPane("jtpGoods").selectTab(3);
             Thread.sleep(500);
             window.button("jlbIcon").click();
-            Thread.sleep(3000);
+            Thread.sleep(1000);
             window.optionPane().list().selectItem(1);
             window.optionPane().okButton().click();
             Thread.sleep(200);
@@ -77,7 +86,7 @@ public class JdgRosterNGTest {
             window.tabbedPane("jtpGoods").selectTab(2);
             Assert.assertFalse(window.button("jbtDelChampion").component().isEnabled());
             window.button("jbtAddChampion").click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             window.optionPane().comboBox().selectItem(1);
             window.optionPane().okButton().click();
             Thread.sleep(200);
@@ -142,7 +151,7 @@ public class JdgRosterNGTest {
             // Add Players
             for (int i = 0; i < 5; i++) {
                 window.button("jbtAdd").click();
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 window.optionPane().comboBox().selectItem(0);
                 window.optionPane().okButton().click();
                 Thread.sleep(200);
@@ -152,7 +161,7 @@ public class JdgRosterNGTest {
                 window.button("jbtRemove").click();
                 Assert.assertTrue(window.table("jtbPlayers").rowCount() == i);
                 window.button("jbtAdd").click();
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 window.optionPane().comboBox().selectItem(0);
                 window.optionPane().okButton().click();
             }
@@ -160,19 +169,21 @@ public class JdgRosterNGTest {
 
             // Add Skills to Players
             for (int i = 0; i <5; i++) {               
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 for (int j=0; j<lrb.getSkillTypeCount(); j++)
                 {
                     window.table("jtbPlayers").selectRows(i);
                     window.button("jbtAddSkill").click();  
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                     String skText=lrb.getSkillType(j).getName();
                     System.out.println("SkillType: "+skText);
                     if (window.dialog("JdgSelectSkill").comboBox("jcb"+skText).component().isEnabled())
                     {
-                        window.dialog("JdgSelectSkill").comboBox("jcb"+skText).selectItem(1);                        
+                        window.dialog("JdgSelectSkill").comboBox("jcb"+skText).selectItem(1);
+                        Thread.sleep(100);
                         window.dialog("JdgSelectSkill").button("ok").click();
                         Thread.sleep(500);
+                        
                     }
                     else
                     {
@@ -183,13 +194,13 @@ public class JdgRosterNGTest {
             
              // Import Export
             window.button("jbtImport").click();
-            Thread.sleep(2000);
+            Thread.sleep(500);
              File d=new File("./test");
             File f=new File("necros2.xml");
             window.fileChooser().setCurrentDirectory(d);
             window.fileChooser().selectFile(f);
             window.fileChooser().approve();
-            Thread.sleep(2000);
+            Thread.sleep(500);
             window.button("jbtExport").click();
             File d2=new File(".");
             File f2=new File("necros_tmp.xml");
@@ -208,7 +219,6 @@ public class JdgRosterNGTest {
             } catch (IOException ex) {
                 Logger.getLogger(JdgRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
             }
-            window.close();
             
 
             // Select title and choose roster
