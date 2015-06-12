@@ -5,20 +5,33 @@
  */
 package teamma.views;
 
-import java.awt.Color;
-import static org.testng.Assert.assertEquals;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.fest.swing.fixture.DialogFixture;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+import org.testng.Assert;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import teamma.data.LRB;
 import teamma.data.Player;
+import teamma.data.Roster;
+import teamma.views.report.JdgPrintableRosterNGTest;
 /**
  *
  * @author WFMJ7631
  */
 public class JdgSelectSkillNGTest {
+    
+     private DialogFixture window;
+    private Roster roster;
+    JdgSelectSkill jdg;
+    Player player;
     
     public JdgSelectSkillNGTest() {
     }
@@ -33,6 +46,18 @@ public class JdgSelectSkillNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        final SAXBuilder sxb = new SAXBuilder();
+        final org.jdom2.Document document = sxb.build(new File("test/necros.xml"));
+        final Element racine = document.getRootElement();
+        roster = new Roster();
+        roster.setXMLElement(racine);
+        
+        // Remove local apothecary, because the team is an unded team
+        roster.setLocalapothecary(0);
+        player=roster.getPlayer(0);
+        jdg = new JdgSelectSkill(null,true, player);
+        window = new DialogFixture(jdg);
+        window.show();
     }
 
     @AfterMethod
@@ -43,54 +68,28 @@ public class JdgSelectSkillNGTest {
      * Test of getPlayer method, of class JdgSelectSkill.
      */
     @Test
-    public void testGetPlayer() {
-        System.out.println("getPlayer");
-        JdgSelectSkill instance = null;
-        Player expResult = null;
-        Player result = instance.getPlayer();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void hmiGeneralTest() {
+       System.out.println("hmiGeneralTest");
+       try {
+            LRB lrb=LRB.getLRB();
+            window.comboBox("jcbGeneral").selectItem(1);
+            Thread.sleep(200);
+            int nb=player.getSkillCount();
+            Assert.assertEquals(nb,player.getSkillCount());
+            window.button("cancel").click();
+            window.show();
+            window.comboBox("jcbGeneral").selectItem(1);
+            Thread.sleep(200);
+            window.button("ok").click();
+            Assert.assertEquals(nb+1,player.getSkillCount());
+            Assert.assertEquals(lrb.getSkillType("General").getSkill(0).getmName(),player.getSkill(nb).getmName());
+            player.removeSkill(nb);
+            Assert.assertEquals(nb,player.getSkillCount());
+        } catch (InterruptedException ex) {
+            fail("Exception catched");
+            Logger.getLogger(JdgPrintableRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
-
-    /**
-     * Test of setPlayer method, of class JdgSelectSkill.
-     */
-    @Test
-    public void testSetPlayer() {
-        System.out.println("setPlayer");
-        Player _player = null;
-        JdgSelectSkill instance = null;
-        instance.setPlayer(_player);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getColor method, of class JdgSelectSkill.
-     */
-    @Test
-    public void testGetColor() {
-        System.out.println("getColor");
-        JdgSelectSkill instance = null;
-        Color expResult = null;
-        Color result = instance.getColor();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setColor method, of class JdgSelectSkill.
-     */
-    @Test
-    public void testSetColor() {
-        System.out.println("setColor");
-        Color _color = null;
-        JdgSelectSkill instance = null;
-        instance.setColor(_color);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  
     
 }

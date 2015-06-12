@@ -173,5 +173,118 @@ public class RankingNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getCriteria method, of class Ranking.
+     */
+    @Test
+    public void testGetCriteria() {
+        System.out.println("getCriteria");
+        Ranking instance = null;
+        Criteria expResult = null;
+        Criteria result = instance.getCriteria();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setCriteria method, of class Ranking.
+     */
+    @Test
+    public void testSetCriteria() {
+        System.out.println("setCriteria");
+        Criteria c = null;
+        Ranking instance = null;
+        instance.setCriteria(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRankingNumber method, of class Ranking.
+     */
+    @Test
+    public void testGetRankingNumber() {
+        System.out.println("getRankingNumber");
+        Ranking instance = null;
+        int expResult = 0;
+        int result = instance.getRankingNumber();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getDetail method, of class Ranking.
+     */
+    @Test
+    public void testGetDetail() {
+        System.out.println("getDetail");
+        Ranking instance = null;
+        String expResult = "";
+        String result = instance.getDetail();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setDetail method, of class Ranking.
+     */
+    @Test
+    public void testSetDetail() {
+        System.out.println("setDetail");
+        String d = "";
+        Ranking instance = null;
+        instance.setDetail(d);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRowCount method, of class Ranking.
+     */
+    @Test
+    public void testGetRowCount() {
+        System.out.println("getRowCount");
+        Ranking instance = null;
+        int expResult = 0;
+        int result = instance.getRowCount();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getSortedObject method, of class Ranking.
+     */
+    @Test
+    public void testGetSortedObject() {
+        System.out.println("getSortedObject");
+        int i = 0;
+        Ranking instance = null;
+        ObjectRanking expResult = null;
+        ObjectRanking result = instance.getSortedObject(i);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getSortedValue method, of class Ranking.
+     */
+    @Test
+    public void testGetSortedValue() {
+        System.out.println("getSortedValue");
+        int i = 0;
+        int valIndex = 0;
+        Ranking instance = null;
+        int expResult = 0;
+        int result = instance.getSortedValue(i, valIndex);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

@@ -5,7 +5,6 @@
 package teamma.data;
 
 import java.awt.Color;
-import java.util.logging.Logger;
 
 /**
  *
@@ -37,7 +36,7 @@ public class Skill {
      * 
      */
     public static final int _C_MOVEMENT_COST=30000;
-    private static final Logger LOG = Logger.getLogger(Skill.class.getName());
+    
     
     
        
@@ -62,6 +61,12 @@ public class Skill {
     public Skill(final String name, final SkillType category) {
         mName = name;
         mCategory = category;
+        mColor=Color.BLACK;
+    }
+    
+    public Skill(Skill sk) {
+        mName = sk.getmName();
+        mCategory = sk.getmCategory();
         mColor=Color.BLACK;
     }
 

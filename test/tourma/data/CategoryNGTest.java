@@ -187,5 +187,31 @@ public class CategoryNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of delCategory method, of class Category.
+     */
+    @Test
+    public void testDelCategory() {
+        System.out.println("delCategory");
+        String s = "";
+        Category.delCategory(s);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of toString method, of class Category.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Category instance = null;
+        String expResult = "";
+        String result = instance.toString();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

@@ -5,6 +5,7 @@
  */
 package tourma;
 
+import java.beans.PropertyChangeEvent;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -96,6 +97,47 @@ public class MainFrameNGTest {
         MainFrame expResult = null;
         MainFrame result = MainFrame.getMainFrame(res);
         assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isRoundOnly method, of class MainFrame.
+     */
+    @Test
+    public void testIsRoundOnly() {
+        System.out.println("isRoundOnly");
+        MainFrame instance = null;
+        boolean expResult = false;
+        boolean result = instance.isRoundOnly();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isNafOnly method, of class MainFrame.
+     */
+    @Test
+    public void testIsNafOnly() {
+        System.out.println("isNafOnly");
+        MainFrame instance = null;
+        boolean expResult = false;
+        boolean result = instance.isNafOnly();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of propertyChange method, of class MainFrame.
+     */
+    @Test
+    public void testPropertyChange() {
+        System.out.println("propertyChange");
+        PropertyChangeEvent evt = null;
+        MainFrame instance = null;
+        instance.propertyChange(evt);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

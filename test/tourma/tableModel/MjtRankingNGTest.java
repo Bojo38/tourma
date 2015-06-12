@@ -6,6 +6,7 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -19,6 +20,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ObjectRanking;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 /**
  *
  * @author WFMJ7631
@@ -527,6 +529,185 @@ public class MjtRankingNGTest {
         public Object getValueAt(int row, int col) {
             return null;
         }
+    }
+
+    /**
+     * Test of getCoachTable method, of class MjtRanking.
+     */
+    @Test
+    public void testGetCoachTable() {
+        System.out.println("getCoachTable");
+        Coach c = null;
+        CoachMatch m = null;
+        int expResult = 0;
+        int result = MjtRanking.getCoachTable(c, m);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValue method, of class MjtRanking.
+     */
+    @Test
+    public void testGetValue_3args() {
+        System.out.println("getValue");
+        Coach c = null;
+        CoachMatch m = null;
+        int valueType = 0;
+        int expResult = 0;
+        int result = MjtRanking.getValue(c, m, valueType);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRankingFromString method, of class MjtRanking.
+     */
+    @Test
+    public void testGetRankingFromString() {
+        System.out.println("getRankingFromString");
+        String ranking = "";
+        ArrayList<String> criterias = null;
+        int expResult = 0;
+        int result = MjtRanking.getRankingFromString(ranking, criterias);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getDetail method, of class MjtRanking.
+     */
+    @Test
+    public void testGetDetail() {
+        System.out.println("getDetail");
+        MjtRanking instance = null;
+        String expResult = "";
+        String result = instance.getDetail();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setDetail method, of class MjtRanking.
+     */
+    @Test
+    public void testSetDetail() {
+        System.out.println("setDetail");
+        String d = "";
+        MjtRanking instance = null;
+        instance.setDetail(d);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValueByRankingType method, of class MjtRanking.
+     */
+    @Test
+    public void testGetValueByRankingType_3args_1() {
+        System.out.println("getValueByRankingType");
+        int rt = 0;
+        Coach c = null;
+        CoachMatch m = null;
+        MjtRanking instance = null;
+        int expResult = 0;
+        int result = instance.getValueByRankingType(rt, c, m);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValueByRankingType method, of class MjtRanking.
+     */
+    @Test
+    public void testGetValueByRankingType_3args_2() {
+        System.out.println("getValueByRankingType");
+        int rt = 0;
+        Team t = null;
+        TeamMatch tm = null;
+        MjtRanking instance = null;
+        int expResult = 0;
+        int result = instance.getValueByRankingType(rt, t, tm);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValueFromArray method, of class MjtRanking.
+     */
+    @Test
+    public void testGetValueFromArray() {
+        System.out.println("getValueFromArray");
+        int rt = 0;
+        ArrayList<Integer> av = null;
+        MjtRanking instance = null;
+        int expResult = 0;
+        int result = instance.getValueFromArray(rt, av);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of removeMinValue method, of class MjtRanking.
+     */
+    @Test
+    public void testRemoveMinValue() {
+        System.out.println("removeMinValue");
+        ArrayList<Integer> aValue = null;
+        MjtRanking instance = null;
+        instance.removeMinValue(aValue);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of removeMaxValue method, of class MjtRanking.
+     */
+    @Test
+    public void testRemoveMaxValue() {
+        System.out.println("removeMaxValue");
+        ArrayList<Integer> aValue = null;
+        MjtRanking instance = null;
+        instance.removeMaxValue(aValue);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeamTable method, of class MjtRanking.
+     */
+    @Test
+    public void testGetTeamTable() {
+        System.out.println("getTeamTable");
+        Team t = null;
+        TeamMatch tm = null;
+        MjtRanking instance = null;
+        int expResult = 0;
+        int result = instance.getTeamTable(t, tm);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRound method, of class MjtRanking.
+     */
+    @Test
+    public void testGetRound() {
+        System.out.println("getRound");
+        MjtRanking instance = null;
+        int expResult = 0;
+        int result = instance.getRound();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }

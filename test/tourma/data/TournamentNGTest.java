@@ -927,5 +927,243 @@ public class TournamentNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getRoundIndex method, of class Tournament.
+     */
+    @Test
+    public void testGetRoundIndex() {
+        System.out.println("getRoundIndex");
+        Round round = null;
+        Tournament instance = null;
+        int expResult = 0;
+        int result = instance.getRoundIndex(round);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getClan method, of class Tournament.
+     */
+    @Test
+    public void testGetClan_int() {
+        System.out.println("getClan");
+        int i = 0;
+        Tournament instance = null;
+        Clan expResult = null;
+        Clan result = instance.getClan(i);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeam method, of class Tournament.
+     */
+    @Test
+    public void testGetTeam_int() {
+        System.out.println("getTeam");
+        int i = 0;
+        Tournament instance = null;
+        Team expResult = null;
+        Team result = instance.getTeam(i);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsTeam method, of class Tournament.
+     */
+    @Test
+    public void testContainsTeam_Team() {
+        System.out.println("containsTeam");
+        Team t = null;
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.containsTeam(t);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsTeam method, of class Tournament.
+     */
+    @Test
+    public void testContainsTeam_String() {
+        System.out.println("containsTeam");
+        String name = "";
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.containsTeam(name);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsCoach method, of class Tournament.
+     */
+    @Test
+    public void testContainsCoach_String() {
+        System.out.println("containsCoach");
+        String name = "";
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.containsCoach(name);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeamIndex method, of class Tournament.
+     */
+    @Test
+    public void testGetTeamIndex() {
+        System.out.println("getTeamIndex");
+        String name = "";
+        Tournament instance = null;
+        int expResult = 0;
+        int result = instance.getTeamIndex(name);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeam method, of class Tournament.
+     */
+    @Test
+    public void testGetTeam_String() {
+        System.out.println("getTeam");
+        String name = "";
+        Tournament instance = null;
+        Team expResult = null;
+        Team result = instance.getTeam(name);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsCoach method, of class Tournament.
+     */
+    @Test
+    public void testContainsCoach_Coach() {
+        System.out.println("containsCoach");
+        Coach c = null;
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.containsCoach(c);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsClan method, of class Tournament.
+     */
+    @Test
+    public void testContainsClan() {
+        System.out.println("containsClan");
+        String c = "";
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.containsClan(c);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getClan method, of class Tournament.
+     */
+    @Test
+    public void testGetClan_String() {
+        System.out.println("getClan");
+        String name = "";
+        Tournament instance = null;
+        Clan expResult = null;
+        Clan result = instance.getClan(name);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGroup method, of class Tournament.
+     */
+    @Test
+    public void testGetGroup_int() {
+        System.out.println("getGroup");
+        int i = 0;
+        Tournament instance = null;
+        Group expResult = null;
+        Group result = instance.getGroup(i);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGroup method, of class Tournament.
+     */
+    @Test
+    public void testGetGroup_Coach() {
+        System.out.println("getGroup");
+        Coach C = null;
+        Tournament instance = null;
+        Group expResult = null;
+        Group result = instance.getGroup(C);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGroup method, of class Tournament.
+     */
+    @Test
+    public void testGetGroup_String() {
+        System.out.println("getGroup");
+        String n = "";
+        Tournament instance = null;
+        Group expResult = null;
+        Group result = instance.getGroup(n);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRankingTypes method, of class Tournament.
+     */
+    @Test
+    public void testGetRankingTypes() {
+        System.out.println("getRankingTypes");
+        boolean byTeam = false;
+        Tournament instance = null;
+        ArrayList expResult = null;
+        ArrayList result = instance.getRankingTypes(byTeam);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of loadRosters method, of class Tournament.
+     */
+    @Test
+    public void testLoadRosters() {
+        System.out.println("loadRosters");
+        Element racine = null;
+        Tournament instance = null;
+        instance.loadRosters(racine);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

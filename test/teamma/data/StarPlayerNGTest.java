@@ -5,9 +5,8 @@
  */
 package teamma.data;
 
-import java.util.logging.Logger;
+import java.util.Random;
 import org.testng.Assert;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -20,8 +19,6 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class StarPlayerNGTest {
-
-    private static final Logger LOG = Logger.getLogger(StarPlayerNGTest.class.getName());
 
     private static LRB lrb;
 
@@ -52,13 +49,21 @@ public class StarPlayerNGTest {
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     public void testGetName() {
         System.out.println("getName");
-        StarPlayer instance = lrb.getStarPlayer(0);
-        if (instance != null) {
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            if (instance != null) {
 //            String expResult = "";
-            String result = instance.getName();
-            Assert.assertNotNull(result);
-        } else {
-            fail("Null star player name");
+                String result = instance.getName();
+                Assert.assertNotNull(result);
+            } else {
+                fail("Null star player");
+            }
         }
     }
 
@@ -68,15 +73,23 @@ public class StarPlayerNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-//        String _name = "";
-        StarPlayer instance = lrb.getStarPlayer(0);
-        if (instance != null) {
-//            String expResult = "";
-            instance.setName("TOTO");
-            String result = instance.getName();
-            Assert.assertEquals(result, "TOTO");
-        } else {
-            fail("Null star player name");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            if (instance != null) {
+                String save = instance.getName();
+                instance.setName("TOTO");
+                String result = instance.getName();
+                Assert.assertEquals(result, "TOTO");
+                instance.setName(save);
+            } else {
+                fail("Null star player name");
+            }
         }
     }
 
@@ -86,14 +99,22 @@ public class StarPlayerNGTest {
     @Test
     public void testGetPosition() {
         System.out.println("getPosition");
-        StarPlayer instance = null;
-        if (instance != null) {
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
 //            String expResult = "";
-            String result = instance.getPosition();
-            Assert.assertNotNull(result);
-        } else {
-            // TODO review the generated test code and remove the default call to fail.
-            fail("The test case is a prototype.");
+                String result = instance.getPosition();
+                Assert.assertNotNull(result);
+            } else {
+                fail("Null position found");
+            }
         }
     }
 
@@ -103,11 +124,24 @@ public class StarPlayerNGTest {
     @Test
     public void testSetPosition() {
         System.out.println("setPosition");
-        String _position = "";
-        StarPlayer instance = null;
-        instance.setPosition(_position);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            if (instance != null) {
+                String save = instance.getPosition();
+                instance.setPosition("POSITION");
+                String result = instance.getPosition();
+                Assert.assertEquals(result, "POSITION");
+                instance.setPosition(save);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -116,12 +150,23 @@ public class StarPlayerNGTest {
     @Test
     public void testGetLimit() {
         System.out.println("getLimit");
-        StarPlayer instance = null;
-        int expResult = 0;
-        int result = instance.getLimit();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getLimit();
+                Assert.assertEquals(result, 0);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -129,12 +174,25 @@ public class StarPlayerNGTest {
      */
     @Test
     public void testSetLimit() {
-        System.out.println("setLimit");
-        int _limit = 0;
-        StarPlayer instance = null;
-        instance.setLimit(_limit);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+                int save = instance.getLimit();
+                instance.setLimit(17);
+                int result = instance.getLimit();
+                Assert.assertEquals(result, 17);
+                instance.setLimit(save);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -143,12 +201,23 @@ public class StarPlayerNGTest {
     @Test
     public void testGetMovement() {
         System.out.println("getMovement");
-        StarPlayer instance = null;
-        int expResult = 0;
-        int result = instance.getMovement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getMovement();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -157,11 +226,25 @@ public class StarPlayerNGTest {
     @Test
     public void testSetMovement() {
         System.out.println("setMovement");
-        int _movement = 0;
-        StarPlayer instance = null;
-        instance.setMovement(_movement);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+                int save = instance.getMovement();
+                instance.setMovement(17);
+                int result = instance.getMovement();
+                Assert.assertEquals(result, 17);
+                instance.setMovement(save);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -170,12 +253,23 @@ public class StarPlayerNGTest {
     @Test
     public void testGetStrength() {
         System.out.println("getStrength");
-        StarPlayer instance = null;
-        int expResult = 0;
-        int result = instance.getStrength();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getStrength();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -184,11 +278,25 @@ public class StarPlayerNGTest {
     @Test
     public void testSetStrength() {
         System.out.println("setStrength");
-        int _strength = 0;
-        StarPlayer instance = null;
-        instance.setStrength(_strength);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+                int save = instance.getStrength();
+                instance.setStrength(17);
+                int result = instance.getStrength();
+                Assert.assertEquals(result, 17);
+                instance.setStrength(save);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -197,12 +305,23 @@ public class StarPlayerNGTest {
     @Test
     public void testGetAgility() {
         System.out.println("getAgility");
-        StarPlayer instance = null;
-        int expResult = 0;
-        int result = instance.getAgility();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getAgility();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -211,11 +330,25 @@ public class StarPlayerNGTest {
     @Test
     public void testSetAgility() {
         System.out.println("setAgility");
-        int _agility = 0;
-        StarPlayer instance = null;
-        instance.setAgility(_agility);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+                int save=instance.getAgility();
+                instance.setAgility(17);
+                int result = instance.getAgility();
+                Assert.assertEquals(result, 17);
+                instance.setAgility(save);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -224,12 +357,23 @@ public class StarPlayerNGTest {
     @Test
     public void testGetArmor() {
         System.out.println("getArmor");
-        StarPlayer instance = null;
-        int expResult = 0;
-        int result = instance.getArmor();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getArmor();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -238,11 +382,25 @@ public class StarPlayerNGTest {
     @Test
     public void testSetArmor() {
         System.out.println("setArmor");
-        int _armor = 0;
-        StarPlayer instance = null;
-        instance.setArmor(_armor);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+                int save = instance.getArmor();
+                instance.setArmor(17);
+                int result = instance.getArmor();
+                Assert.assertEquals(result, 17);
+                instance.setArmor(save);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -251,12 +409,24 @@ public class StarPlayerNGTest {
     @Test
     public void testGetCost() {
         System.out.println("getCost");
-        StarPlayer instance = null;
-        int expResult = 0;
-        int result = instance.getCost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+                int result = instance.getCost();
+                if ((result == 0)&&(!instance.getName().equals("Grotty"))) {
+                    fail("cost is null for "+instance.getName());
+                }
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -265,11 +435,25 @@ public class StarPlayerNGTest {
     @Test
     public void testSetCost() {
         System.out.println("setCost");
-        int _cost = 0;
-        StarPlayer instance = null;
-        instance.setCost(_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+
+            if (instance != null) {
+                int save = instance.getCost();
+                instance.setCost(3000);
+                int result = instance.getCost();
+                Assert.assertEquals(result, 3000);
+                instance.setCost(save);
+            } else {
+                fail("Null position found");
+            }
+        }
     }
 
     /**
@@ -278,11 +462,38 @@ public class StarPlayerNGTest {
     @Test
     public void testAddSkill() {
         System.out.println("addSkill");
-        Skill s = null;
-        StarPlayer instance = null;
-        instance.addSkill(s);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        Random random = new Random();
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            int skillTypeCount = lrb.getSkillTypeCount();
+            if (skillTypeCount == 0) {
+                fail("No skill type in LRB)");
+            }
+            int skillTypeIndex = Math.abs(random.nextInt()) % skillTypeCount;
+            SkillType st = lrb.getSkillType(skillTypeIndex);
+
+            int skillCount = st.getSkillCount();
+            if (skillCount == 0) {
+                fail("No skill in " + st.getName());
+            }
+            int skillIndex = Math.abs(random.nextInt()) % skillCount;
+            Skill s = st.getSkill(skillIndex);
+
+            if (instance != null) {
+                int nb = instance.getSkillCount();
+                instance.addSkill(s);
+                Skill tmp = instance.getSkill(nb);
+                Assert.assertEquals(s, tmp);
+            } else {
+                fail("Null starplayer found");
+            }
+        }
     }
 
     /**
@@ -291,12 +502,37 @@ public class StarPlayerNGTest {
     @Test
     public void testGetSkillCount() {
         System.out.println("getSkillCount");
-        StarPlayer instance = null;
-        int expResult = 0;
-        int result = instance.getSkillCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        Random random = new Random();
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            int skillTypeCount = lrb.getSkillTypeCount();
+            if (skillTypeCount == 0) {
+                fail("No skill type in LRB)");
+            }
+            int skillTypeIndex = Math.abs(random.nextInt()) % skillTypeCount;
+            SkillType st = lrb.getSkillType(skillTypeIndex);
+
+            int skillCount = st.getSkillCount();
+            if (skillCount == 0) {
+                fail("No skill in " + st.getName());
+            }
+            int skillIndex = Math.abs(random.nextInt()) % skillCount;
+            Skill s = st.getSkill(skillIndex);
+
+            if (instance != null) {
+                int nb = instance.getSkillCount();
+                instance.addSkill(s);
+                Assert.assertEquals(nb + 1, instance.getSkillCount());
+            } else {
+                fail("Null starplayer found");
+            }
+        }
     }
 
     /**
@@ -305,13 +541,38 @@ public class StarPlayerNGTest {
     @Test
     public void testGetSkill() {
         System.out.println("getSkill");
-        int i = 0;
-        StarPlayer instance = null;
-        Skill expResult = null;
-        Skill result = instance.getSkill(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        Random random = new Random();
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            int skillTypeCount = lrb.getSkillTypeCount();
+            if (skillTypeCount == 0) {
+                fail("No skill type in LRB)");
+            }
+            int skillTypeIndex = Math.abs(random.nextInt()) % skillTypeCount;
+            SkillType st = lrb.getSkillType(skillTypeIndex);
+
+            int skillCount = st.getSkillCount();
+            if (skillCount == 0) {
+                fail("No skill in " + st.getName());
+            }
+            int skillIndex = Math.abs(random.nextInt()) % skillCount;
+            Skill s = st.getSkill(skillIndex);
+
+            if (instance != null) {
+                int nb = instance.getSkillCount();
+                instance.addSkill(s);
+                Skill tmp = instance.getSkill(nb);
+                Assert.assertEquals(s, tmp);
+            } else {
+                fail("Null starplayer found");
+            }
+        }
     }
 
     /**
@@ -320,11 +581,31 @@ public class StarPlayerNGTest {
     @Test
     public void testAddRoster() {
         System.out.println("addRoster");
-        RosterType r = null;
-        StarPlayer instance = null;
-        instance.addRoster(r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        Random random = new Random();
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            int rosterTypeCount = lrb.getRosterTypeCount();
+            if (rosterTypeCount == 0) {
+                fail("No roster type in LRB)");
+            }
+            int rosterTypeIndex = Math.abs(random.nextInt()) % rosterTypeCount;
+            RosterType rt=lrb.getRosterType(rosterTypeIndex);
+
+            if (instance != null) {
+                int nb = instance.getRosterCount();
+                instance.addRoster(rt);
+                RosterType tmp = instance.getRoster(nb);
+                Assert.assertEquals(rt, tmp);
+            } else {
+                fail("Null starplayer found");
+            }
+        }
     }
 
     /**
@@ -333,12 +614,30 @@ public class StarPlayerNGTest {
     @Test
     public void testGetRosterCount() {
         System.out.println("getRosterCount");
-        StarPlayer instance = null;
-        int expResult = 0;
-        int result = instance.getRosterCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        Random random = new Random();
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            int rosterTypeCount = lrb.getRosterTypeCount();
+            if (rosterTypeCount == 0) {
+                fail("No roster type in LRB)");
+            }
+            int rosterTypeIndex = Math.abs(random.nextInt()) % rosterTypeCount;
+            RosterType rt=lrb.getRosterType(rosterTypeIndex);
+
+            if (instance != null) {
+                int nb = instance.getRosterCount();
+                instance.addRoster(rt);
+                Assert.assertEquals(nb+1, instance.getRosterCount());
+            } else {
+                fail("Null starplayer found");
+            }
+        }
     }
 
     /**
@@ -347,13 +646,31 @@ public class StarPlayerNGTest {
     @Test
     public void testGetRoster() {
         System.out.println("getRoster");
-        int i = 0;
-        StarPlayer instance = null;
-        RosterType expResult = null;
-        RosterType result = instance.getRoster(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        Random random = new Random();
+        for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
+            StarPlayer instance = lrb.getStarPlayer(i);
+            int rosterTypeCount = lrb.getRosterTypeCount();
+            if (rosterTypeCount == 0) {
+                fail("No roster type in LRB)");
+            }
+            int rosterTypeIndex = Math.abs(random.nextInt()) % rosterTypeCount;
+            RosterType rt=lrb.getRosterType(rosterTypeIndex);
+
+            if (instance != null) {
+                int nb = instance.getRosterCount();
+                instance.addRoster(rt);
+                RosterType tmp=instance.getRoster(nb);
+                Assert.assertEquals(rt, tmp);
+            } else {
+                fail("Null starplayer found");
+            }
+        }
     }
 
 }

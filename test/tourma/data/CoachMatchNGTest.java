@@ -376,5 +376,46 @@ public class CoachMatchNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getXMLElementForDisplay method, of class CoachMatch.
+     */
+    @Test
+    public void testGetXMLElementForDisplay() {
+        System.out.println("getXMLElementForDisplay");
+        CoachMatch instance = null;
+        Element expResult = null;
+        Element result = instance.getXMLElementForDisplay();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setXMLElementForDisplay method, of class CoachMatch.
+     */
+    @Test
+    public void testSetXMLElementForDisplay() {
+        System.out.println("setXMLElementForDisplay");
+        Element element = null;
+        CoachMatch instance = null;
+        instance.setXMLElementForDisplay(element);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isFullNaf method, of class CoachMatch.
+     */
+    @Test
+    public void testIsFullNaf() {
+        System.out.println("isFullNaf");
+        CoachMatch instance = null;
+        boolean expResult = false;
+        boolean result = instance.isFullNaf();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

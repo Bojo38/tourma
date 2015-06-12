@@ -90,5 +90,18 @@ public class JPNRoundNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of setNafOnly method, of class JPNRound.
+     */
+    @Test
+    public void testSetNafOnly() {
+        System.out.println("setNafOnly");
+        boolean nafonly = false;
+        JPNRound instance = null;
+        instance.setNafOnly(nafonly);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

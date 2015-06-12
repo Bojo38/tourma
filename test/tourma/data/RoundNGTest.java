@@ -348,5 +348,116 @@ public class RoundNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getMinBonus method, of class Round.
+     */
+    @Test
+    public void testGetMinBonus() {
+        System.out.println("getMinBonus");
+        Round instance = new Round();
+        double expResult = 0.0;
+        double result = instance.getMinBonus();
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMaxBonus method, of class Round.
+     */
+    @Test
+    public void testGetMaxBonus() {
+        System.out.println("getMaxBonus");
+        Round instance = new Round();
+        double expResult = 0.0;
+        double result = instance.getMaxBonus();
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setMinBonus method, of class Round.
+     */
+    @Test
+    public void testSetMinBonus() {
+        System.out.println("setMinBonus");
+        double v = 0.0;
+        Round instance = new Round();
+        instance.setMinBonus(v);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setMaxBonus method, of class Round.
+     */
+    @Test
+    public void testSetMaxBonus() {
+        System.out.println("setMaxBonus");
+        double v = 0.0;
+        Round instance = new Round();
+        instance.setMaxBonus(v);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCoef method, of class Round.
+     */
+    @Test
+    public void testGetCoef() {
+        System.out.println("getCoef");
+        Match m = null;
+        Round instance = new Round();
+        double expResult = 0.0;
+        double result = instance.getCoef(m);
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of indexOf method, of class Round.
+     */
+    @Test
+    public void testIndexOf() {
+        System.out.println("indexOf");
+        Match m = null;
+        Round instance = new Round();
+        int expResult = 0;
+        int result = instance.indexOf(m);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getXMLElementForDisplay method, of class Round.
+     */
+    @Test
+    public void testGetXMLElementForDisplay() {
+        System.out.println("getXMLElementForDisplay");
+        Round instance = new Round();
+        Element expResult = null;
+        Element result = instance.getXMLElementForDisplay();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setXMLElementForDisplay method, of class Round.
+     */
+    @Test
+    public void testSetXMLElementForDisplay() {
+        System.out.println("setXMLElementForDisplay");
+        Element round = null;
+        Round instance = new Round();
+        instance.setXMLElementForDisplay(round);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

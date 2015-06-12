@@ -5,6 +5,8 @@
  */
 package teamma.data;
 
+import java.util.ArrayList;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -12,17 +14,22 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import teamma.languages.Translate;
+
 /**
  *
  * @author WFMJ7631
  */
 public class RosterTypeNGTest {
-    
+
+    private static LRB lrb;
+
     public RosterTypeNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        lrb = LRB.getLRB();
     }
 
     @AfterClass
@@ -43,11 +50,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetExtraRerollCost() {
         System.out.println("getExtraRerollCost");
-        int expResult = 0;
-        int result = RosterType.getExtraRerollCost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getExtraRerollCost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null ExtraRerollCost found");
+            }
+        }
     }
 
     /**
@@ -56,10 +75,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetExtraRerollCost() {
         System.out.println("setExtraRerollCost");
-        int aExtra_reroll_cost = 0;
-        RosterType.setExtraRerollCost(aExtra_reroll_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getExtraRerollCost();
+                instance.setExtraRerollCost(1000);
+                int result = instance.getExtraRerollCost();
+                Assert.assertEquals(result, 1000);
+                instance.setExtraRerollCost(save);
+            } else {
+                fail("Null ExtraRerollCost found");
+            }
+        }
     }
 
     /**
@@ -68,11 +102,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetBabe_cost() {
         System.out.println("getBabe_cost");
-        int expResult = 0;
-        int result = RosterType.getBabe_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getBabe_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -81,10 +127,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetBabe_cost() {
         System.out.println("setBabe_cost");
-        int aBabe_cost = 0;
-        RosterType.setBabe_cost(aBabe_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getBabe_cost();
+                instance.setBabe_cost(1000);
+                int result = instance.getBabe_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setBabe_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -93,11 +154,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetWizard_cost() {
         System.out.println("getWizard_cost");
-        int expResult = 0;
-        int result = RosterType.getWizard_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getWizard_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -106,10 +179,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetWizard_cost() {
         System.out.println("setWizard_cost");
-        int aWizard_cost = 0;
-        RosterType.setWizard_cost(aWizard_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getWizard_cost();
+                instance.setWizard_cost(1000);
+                int result = instance.getWizard_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setWizard_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -118,11 +206,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetLocal_apo_cost() {
         System.out.println("getLocal_apo_cost");
-        int expResult = 0;
-        int result = RosterType.getLocal_apo_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getLocal_apo_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -131,10 +231,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetLocal_apo_cost() {
         System.out.println("setLocal_apo_cost");
-        int aLocal_apo_cost = 0;
-        RosterType.setLocal_apo_cost(aLocal_apo_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getLocal_apo_cost();
+                instance.setLocal_apo_cost(1000);
+                int result = instance.getLocal_apo_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setLocal_apo_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -143,11 +258,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetIgor_cost() {
         System.out.println("getIgor_cost");
-        int expResult = 0;
-        int result = RosterType.getIgor_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getIgor_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -156,10 +283,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetIgor_cost() {
         System.out.println("setIgor_cost");
-        int aIgor_cost = 0;
-        RosterType.setIgor_cost(aIgor_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getIgor_cost();
+                instance.setIgor_cost(1000);
+                int result = instance.getIgor_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setIgor_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -168,11 +310,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetAssistant_cost() {
         System.out.println("getAssistant_cost");
-        int expResult = 0;
-        int result = RosterType.getAssistant_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getAssistant_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -181,10 +335,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetAssistant_cost() {
         System.out.println("setAssistant_cost");
-        int aAssistant_cost = 0;
-        RosterType.setAssistant_cost(aAssistant_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getAssistant_cost();
+                instance.setAssistant_cost(1000);
+                int result = instance.getAssistant_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setAssistant_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -193,11 +362,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetFan_factor_cost() {
         System.out.println("getFan_factor_cost");
-        int expResult = 0;
-        int result = RosterType.getFan_factor_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getFan_factor_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -206,10 +387,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetFan_factor_cost() {
         System.out.println("setFan_factor_cost");
-        int aFan_factor_cost = 0;
-        RosterType.setFan_factor_cost(aFan_factor_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getFan_factor_cost();
+                instance.setFan_factor_cost(1000);
+                int result = instance.getFan_factor_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setFan_factor_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -218,11 +414,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetCheerleader_cost() {
         System.out.println("getCheerleader_cost");
-        int expResult = 0;
-        int result = RosterType.getCheerleader_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getCheerleader_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -231,10 +439,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetCheerleader_cost() {
         System.out.println("setCheerleader_cost");
-        int aCheerleader_cost = 0;
-        RosterType.setCheerleader_cost(aCheerleader_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getCheerleader_cost();
+                instance.setCheerleader_cost(1000);
+                int result = instance.getCheerleader_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setCheerleader_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -243,11 +466,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetApothecary_cost() {
         System.out.println("getApothecary_cost");
-        int expResult = 0;
-        int result = RosterType.getApothecary_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getApothecary_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -256,40 +491,77 @@ public class RosterTypeNGTest {
     @Test
     public void testSetApothecary_cost() {
         System.out.println("setApothecary_cost");
-        int aApothecary_cost = 0;
-        RosterType.setApothecary_cost(aApothecary_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getApothecary_cost();
+                instance.setApothecary_cost(1000);
+                int result = instance.getApothecary_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setApothecary_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
-    /**
-     * Test of getPlayerType method, of class RosterType.
-     */
-    @Test
-    public void testGetPlayerType_String() {
-        System.out.println("getPlayerType");
-        String name = "";
-        RosterType instance = null;
-        PlayerType expResult = null;
-//        PlayerType result = instance.getPlayerType(name);
- //       assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
+      /**
      * Test of getStarPlayer method, of class RosterType.
      */
     @Test
     public void testGetStarPlayer() {
         System.out.println("getStarPlayer");
-        String name = "";
-        RosterType instance = null;
-        StarPlayer expResult = null;
-//        StarPlayer result = instance.getStarPlayer(name);
-//        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getAvailableStarplayerCount();
+                if (nb == 0) {
+                    fail("Number of starplayer is null for " + instance.getName());
+                }
+                ArrayList<String> list = new ArrayList<>();
+                for (int j = 0; j < instance.getAvailableStarplayerCount(); j++) {
+                    StarPlayer pt = instance.getAvailableStarplayer(j);
+                    list.add(pt.getName());
+                }
+                
+                for (int j = 0; j < list.size(); j++) {
+                    String key = list.get(j);
+                    StarPlayer pt = instance.getStarPlayer(key,false);
+                    Assert.assertNotNull(pt);
+                    Assert.assertEquals(pt, instance.getAvailableStarplayer(j));
+                }
+                
+                list.clear();
+                
+                for (int j = 0; j < instance.getAvailableStarplayerCount(); j++) {
+                    StarPlayer pt = instance.getAvailableStarplayer(j);
+                    list.add(Translate.translate(pt.getName()));
+                }
+                
+                for (int j = 0; j < list.size(); j++) {
+                    String key = list.get(j);
+                    StarPlayer pt = instance.getStarPlayer(key,true);
+                    Assert.assertNotNull(pt);
+                    Assert.assertEquals(pt, instance.getAvailableStarplayer(j));
+                }
+                
+            } else {
+                fail("Null Roster type");
+            }
+        }
     }
 
     /**
@@ -298,12 +570,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        RosterType instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                String result = instance.getName();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null name found");
+            }
+        }
     }
 
     /**
@@ -312,11 +595,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String _name = "";
-        RosterType instance = null;
-        instance.setName(_name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                String save = instance.getName();
+                instance.setName("Toto");
+                String value = instance.getName();
+                Assert.assertEquals(value, "Toto");
+                instance.setName(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -325,12 +622,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetReroll_cost() {
         System.out.println("getReroll_cost");
-        RosterType instance = null;
-        int expResult = 0;
-        int result = instance.getReroll_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getReroll_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -339,11 +647,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetReroll_cost() {
         System.out.println("setReroll_cost");
-        int _reroll_cost = 0;
-        RosterType instance = null;
-        instance.setReroll_cost(_reroll_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getReroll_cost();
+                instance.setReroll_cost(1000);
+                int result = instance.getReroll_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setReroll_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -352,12 +674,21 @@ public class RosterTypeNGTest {
     @Test
     public void testIsApothecary() {
         System.out.println("isApothecary");
-        RosterType instance = null;
-        boolean expResult = false;
-        boolean result = instance.isApothecary();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                boolean value = instance.isApothecary();
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -366,11 +697,28 @@ public class RosterTypeNGTest {
     @Test
     public void testSetApothecary() {
         System.out.println("setApothecary");
-        boolean _apothecary = false;
-        RosterType instance = null;
-        instance.setApothecary(_apothecary);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                boolean save = instance.isApothecary();
+                instance.setApothecary(true);
+                boolean value = instance.isApothecary();
+                Assert.assertTrue(value);
+                instance.setApothecary(false);
+                value = instance.isApothecary();
+                Assert.assertFalse(value);
+                instance.setApothecary(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -379,12 +727,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetBribe_cost() {
         System.out.println("getBribe_cost");
-        RosterType instance = null;
-        int expResult = 0;
-        int result = instance.getBribe_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getBribe_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -393,11 +752,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetBribe_cost() {
         System.out.println("setBribe_cost");
-        int _bribe_cost = 0;
-        RosterType instance = null;
-        instance.setBribe_cost(_bribe_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getBribe_cost();
+                instance.setBribe_cost(1000);
+                int result = instance.getBribe_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setBribe_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -406,12 +779,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetChef_cost() {
         System.out.println("getChef_cost");
-        RosterType instance = null;
-        int expResult = 0;
-        int result = instance.getChef_cost();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                int result = instance.getChef_cost();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null Cost found");
+            }
+        }
     }
 
     /**
@@ -420,11 +804,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetChef_cost() {
         System.out.println("setChef_cost");
-        int _chef_cost = 0;
-        RosterType instance = null;
-        instance.setChef_cost(_chef_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                int save = instance.getChef_cost();
+                instance.setChef_cost(1000);
+                int result = instance.getChef_cost();
+                Assert.assertEquals(result, 1000);
+                instance.setChef_cost(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -433,12 +831,21 @@ public class RosterTypeNGTest {
     @Test
     public void testIsIgor() {
         System.out.println("isIgor");
-        RosterType instance = null;
-        boolean expResult = false;
-        boolean result = instance.isIgor();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                boolean value = instance.isIgor();
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -447,11 +854,28 @@ public class RosterTypeNGTest {
     @Test
     public void testSetIgor() {
         System.out.println("setIgor");
-        boolean _igor = false;
-        RosterType instance = null;
-        instance.setIgor(_igor);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                boolean save = instance.isIgor();
+                instance.setIgor(true);
+                boolean value = instance.isIgor();
+                Assert.assertTrue(value);
+                instance.setIgor(false);
+                value = instance.isIgor();
+                Assert.assertFalse(value);
+                instance.setIgor(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -460,12 +884,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetImage() {
         System.out.println("getImage");
-        RosterType instance = null;
-        String expResult = "";
-        String result = instance.getImage();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+//            String expResult = "";
+                String result = instance.getImage();
+                Assert.assertNotEquals(result, 0);
+            } else {
+                fail("Null name found");
+            }
+        }
     }
 
     /**
@@ -474,11 +909,25 @@ public class RosterTypeNGTest {
     @Test
     public void testSetImage() {
         System.out.println("setImage");
-        String _image = "";
-        RosterType instance = null;
-        instance.setImage(_image);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+
+            if (instance != null) {
+                String save = instance.getImage();
+                instance.setImage("Toto");
+                String value = instance.getImage();
+                Assert.assertEquals(value, "Toto");
+                instance.setImage(save);
+            } else {
+                fail("Null roster type found");
+            }
+        }
     }
 
     /**
@@ -487,11 +936,36 @@ public class RosterTypeNGTest {
     @Test
     public void testAddPlayerType() {
         System.out.println("addPlayerType");
-        PlayerType p = null;
-        RosterType instance = null;
-        instance.addPlayerType(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getPlayerTypeCount();
+                if (nb == 0) {
+                    fail("Number availabe player is null for " + instance.getName());
+                }
+                ArrayList<PlayerType> list = new ArrayList<>();
+                for (int j = 0; j < instance.getPlayerTypeCount(); j++) {
+                    list.add(instance.getPlayerType(j));
+                }
+                instance.clearPlayerType();
+
+                for (int j = 0; j < list.size(); j++) {
+                    int idx = instance.getPlayerTypeCount();
+                    instance.addPlayerType(list.get(j));
+                    PlayerType tmp = instance.getPlayerType(idx);
+                    assertEquals(tmp, list.get(j));
+                    assertEquals(idx + 1, instance.getPlayerTypeCount());
+                }
+            } else {
+                fail("Null Roster type");
+            }
+        }
     }
 
     /**
@@ -500,10 +974,32 @@ public class RosterTypeNGTest {
     @Test
     public void testClearPlayerType() {
         System.out.println("clearPlayerType");
-        RosterType instance = null;
-        instance.clearPlayerType();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getPlayerTypeCount();
+                if (nb == 0) {
+                    fail("Number of player is null for " + instance.getName());
+                }
+                ArrayList<PlayerType> list = new ArrayList<>();
+                for (int j = 0; j < instance.getPlayerTypeCount(); j++) {
+                    list.add(instance.getPlayerType(j));
+                }
+                instance.clearPlayerType();
+                assertEquals(instance.getPlayerTypeCount(), 0);
+                for (int j = 0; j < list.size(); j++) {
+                    instance.addPlayerType(list.get(j));
+                }
+            } else {
+                fail("Null Roster type");
+            }
+        }
     }
 
     /**
@@ -512,12 +1008,23 @@ public class RosterTypeNGTest {
     @Test
     public void testGetPlayerTypeCount() {
         System.out.println("getPlayerTypeCount");
-        RosterType instance = null;
-        int expResult = 0;
-        int result = instance.getPlayerTypeCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getPlayerTypeCount();
+                if (nb == 0) {
+                    fail("Number of player is null for " + instance.getName());
+                }                
+            } else {
+                fail("Null Roster type");
+            }
+        }
     }
 
     /**
@@ -526,13 +1033,30 @@ public class RosterTypeNGTest {
     @Test
     public void testGetPlayerType_int() {
         System.out.println("getPlayerType");
-        int i = 0;
-        RosterType instance = null;
-        PlayerType expResult = null;
-        PlayerType result = instance.getPlayerType(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getPlayerTypeCount();
+                if (nb == 0) {
+                    fail("Number of player is null for " + instance.getName());
+                }
+                ArrayList<PlayerType> list = new ArrayList<>();
+                for (int j = 0; j < instance.getPlayerTypeCount(); j++) {
+                    PlayerType pt=instance.getPlayerType(j);
+                    Assert.assertNotNull(pt);
+                    list.add(pt);
+                }
+                
+            } else {
+                fail("Null Roster type");
+            }
+        }
     }
 
     /**
@@ -541,13 +1065,30 @@ public class RosterTypeNGTest {
     @Test
     public void testGetAvailableStarplayer() {
         System.out.println("getAvailableStarplayer");
-        int i = 0;
-        RosterType instance = null;
-        StarPlayer expResult = null;
-        StarPlayer result = instance.getAvailableStarplayer(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getAvailableStarplayerCount();
+                if (nb == 0) {
+                    fail("Number availabe star player is null for " + instance.getName());
+                }
+                ArrayList<StarPlayer> list = new ArrayList<>();
+                for (int j = 0; j < instance.getAvailableStarplayerCount(); j++) {
+                    StarPlayer typ=instance.getAvailableStarplayer(j);
+                    Assert.assertNotNull(typ);
+                    list.add(typ);
+                }
+                
+            } else {
+                fail("Null Roster type");
+            }
+        }
     }
 
     /**
@@ -556,12 +1097,18 @@ public class RosterTypeNGTest {
     @Test
     public void testGetAvailableStarplayerCount() {
         System.out.println("getAvailableStarplayerCount");
-        RosterType instance = null;
-        int expResult = 0;
-        int result = instance.getAvailableStarplayerCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getAvailableStarplayerCount();
+                if (nb == 0) {
+                    fail("Number availabe star player is null for " + instance.getName());
+                }
+                
+            } else {
+                fail("Null Roster type");
+            }
+        }
     }
 
     /**
@@ -570,11 +1117,122 @@ public class RosterTypeNGTest {
     @Test
     public void testAddAvailableStarPlayer() {
         System.out.println("addAvailableStarPlayer");
-        StarPlayer s = null;
-        RosterType instance = null;
-        instance.addAvailableStarPlayer(s);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getAvailableStarplayerCount();
+                if (nb == 0) {
+                    fail("Number availabe star player is null for " + instance.getName());
+                }
+                ArrayList<StarPlayer> list = new ArrayList<>();
+                for (int j = 0; j < instance.getAvailableStarplayerCount(); j++) {
+                    list.add(instance.getAvailableStarplayer(j));
+                }
+                instance.clearAvailableStarPlayerType();
+
+                for (int j = 0; j < list.size(); j++) {
+                    int idx = instance.getAvailableStarplayerCount();
+                    instance.addAvailableStarPlayer(list.get(j));
+                    StarPlayer tmp = instance.getAvailableStarplayer(idx);
+                    assertEquals(tmp, list.get(j));
+                    assertEquals(idx + 1, instance.getAvailableStarplayerCount());
+                }
+            } else {
+                fail("Null Roster type");
+            }
+        }
     }
-    
+
+    /**
+     * Test of getPlayerType method, of class RosterType.
+     */
+    @Test
+    public void testGetPlayerType_String_boolean() {
+        System.out.println("getPlayerType");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getPlayerTypeCount();
+                if (nb == 0) {
+                    fail("Number of player is null for " + instance.getName());
+                }
+                ArrayList<String> list = new ArrayList<>();
+                for (int j = 0; j < instance.getPlayerTypeCount(); j++) {
+                    PlayerType pt = instance.getPlayerType(j);
+                    list.add(pt.getPosition());
+                }
+                
+                for (int j = 0; j < list.size(); j++) {
+                    String key = list.get(j);
+                    PlayerType pt = instance.getPlayerType(key,false);
+                    Assert.assertNotNull(pt);
+                    Assert.assertEquals(pt, instance.getPlayerType(j));
+                }
+                
+                list.clear();
+                
+                for (int j = 0; j < instance.getPlayerTypeCount(); j++) {
+                    PlayerType pt = instance.getPlayerType(j);
+                    list.add(Translate.translate(pt.getPosition()));
+                }
+                
+                for (int j = 0; j < list.size(); j++) {
+                    String key = list.get(j);
+                    PlayerType pt = instance.getPlayerType(key,true);
+                    Assert.assertNotNull(pt);
+                    Assert.assertEquals(pt, instance.getPlayerType(j));
+                }
+                
+            } else {
+                fail("Null Roster type");
+            }
+        }
+    }
+
+    /**
+     * Test of clearAvailableStarPlayerType method, of class RosterType.
+     */
+    @Test
+    public void testClearAvailableStarPlayerType() {
+        System.out.println("clearAvailableStarPlayerType");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType instance = lrb.getRosterType(i);
+            if (instance != null) {
+                int nb = instance.getAvailableStarplayerCount();
+                if (nb == 0) {
+                    fail("Number availabe star player is null for " + instance.getName());
+                }
+                ArrayList<StarPlayer> list = new ArrayList<>();
+                for (int j = 0; j < instance.getAvailableStarplayerCount(); j++) {
+                    list.add(instance.getAvailableStarplayer(j));
+                }
+                instance.clearAvailableStarPlayerType();
+                assertEquals(instance.getAvailableStarplayerCount(), 0);
+                for (int j = 0; j < list.size(); j++) {
+                    instance.addAvailableStarPlayer(list.get(j));
+                }
+            } else {
+                fail("Null Roster type");
+            }
+        }
+    }
+
 }

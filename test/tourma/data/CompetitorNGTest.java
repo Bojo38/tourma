@@ -422,5 +422,87 @@ public class CompetitorNGTest {
         
         
     }
+
+    /**
+     * Test of containsCategory method, of class Competitor.
+     */
+    @Test
+    public void testContainsCategory() {
+        System.out.println("containsCategory");
+        Category cat = null;
+        Competitor instance = new CompetitorImpl();
+        boolean expResult = false;
+        boolean result = instance.containsCategory(cat);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCategoryCount method, of class Competitor.
+     */
+    @Test
+    public void testGetCategoryCount() {
+        System.out.println("getCategoryCount");
+        Competitor instance = new CompetitorImpl();
+        int expResult = 0;
+        int result = instance.getCategoryCount();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCategory method, of class Competitor.
+     */
+    @Test
+    public void testGetCategory() {
+        System.out.println("getCategory");
+        int i = 0;
+        Competitor instance = new CompetitorImpl();
+        Category expResult = null;
+        Category result = instance.getCategory(i);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addCategory method, of class Competitor.
+     */
+    @Test
+    public void testAddCategory() {
+        System.out.println("addCategory");
+        Category mCategory = null;
+        Competitor instance = new CompetitorImpl();
+        instance.addCategory(mCategory);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of delCategory method, of class Competitor.
+     */
+    @Test
+    public void testDelCategory() {
+        System.out.println("delCategory");
+        Category mCategory = null;
+        Competitor instance = new CompetitorImpl();
+        instance.delCategory(mCategory);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clearCategory method, of class Competitor.
+     */
+    @Test
+    public void testClearCategory() {
+        System.out.println("clearCategory");
+        Competitor instance = new CompetitorImpl();
+        instance.clearCategory();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

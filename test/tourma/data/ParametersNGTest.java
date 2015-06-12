@@ -1489,5 +1489,385 @@ public class ParametersNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of isApplyToAnnexIndiv method, of class Parameters.
+     */
+    @Test
+    public void testIsApplyToAnnexIndiv() {
+        System.out.println("isApplyToAnnexIndiv");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isApplyToAnnexIndiv();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setApplyToAnnexIndiv method, of class Parameters.
+     */
+    @Test
+    public void testSetApplyToAnnexIndiv() {
+        System.out.println("setApplyToAnnexIndiv");
+        boolean b = false;
+        Parameters instance = new Parameters();
+        instance.setApplyToAnnexIndiv(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isExceptBestAndWorstIndiv method, of class Parameters.
+     */
+    @Test
+    public void testIsExceptBestAndWorstIndiv() {
+        System.out.println("isExceptBestAndWorstIndiv");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isExceptBestAndWorstIndiv();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setExceptBestAndWorstIndiv method, of class Parameters.
+     */
+    @Test
+    public void testSetExceptBestAndWorstIndiv() {
+        System.out.println("setExceptBestAndWorstIndiv");
+        boolean b = false;
+        Parameters instance = new Parameters();
+        instance.setExceptBestAndWorstIndiv(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isApplyToAnnexTeam method, of class Parameters.
+     */
+    @Test
+    public void testIsApplyToAnnexTeam() {
+        System.out.println("isApplyToAnnexTeam");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isApplyToAnnexTeam();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setApplyToAnnexTeam method, of class Parameters.
+     */
+    @Test
+    public void testSetApplyToAnnexTeam() {
+        System.out.println("setApplyToAnnexTeam");
+        boolean b = false;
+        Parameters instance = new Parameters();
+        instance.setApplyToAnnexTeam(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isExceptBestAndWorstTeam method, of class Parameters.
+     */
+    @Test
+    public void testIsExceptBestAndWorstTeam() {
+        System.out.println("isExceptBestAndWorstTeam");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isExceptBestAndWorstTeam();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setExceptBestAndWorstTeam method, of class Parameters.
+     */
+    @Test
+    public void testSetExceptBestAndWorstTeam() {
+        System.out.println("setExceptBestAndWorstTeam");
+        boolean b = false;
+        Parameters instance = new Parameters();
+        instance.setExceptBestAndWorstTeam(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUseBestResultIndiv method, of class Parameters.
+     */
+    @Test
+    public void testIsUseBestResultIndiv() {
+        System.out.println("isUseBestResultIndiv");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isUseBestResultIndiv();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUseBestResultTeam method, of class Parameters.
+     */
+    @Test
+    public void testIsUseBestResultTeam() {
+        System.out.println("isUseBestResultTeam");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isUseBestResultTeam();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUseBestResultIndiv method, of class Parameters.
+     */
+    @Test
+    public void testSetUseBestResultIndiv() {
+        System.out.println("setUseBestResultIndiv");
+        boolean b = false;
+        Parameters instance = new Parameters();
+        instance.setUseBestResultIndiv(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUseBestResultTeam method, of class Parameters.
+     */
+    @Test
+    public void testSetUseBestResultTeam() {
+        System.out.println("setUseBestResultTeam");
+        boolean b = false;
+        Parameters instance = new Parameters();
+        instance.setUseBestResultTeam(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getBestResultIndiv method, of class Parameters.
+     */
+    @Test
+    public void testGetBestResultIndiv() {
+        System.out.println("getBestResultIndiv");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getBestResultIndiv();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getBestResultTeam method, of class Parameters.
+     */
+    @Test
+    public void testGetBestResultTeam() {
+        System.out.println("getBestResultTeam");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getBestResultTeam();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setBestResultIndiv method, of class Parameters.
+     */
+    @Test
+    public void testSetBestResultIndiv() {
+        System.out.println("setBestResultIndiv");
+        int i = 0;
+        Parameters instance = new Parameters();
+        instance.setBestResultIndiv(i);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setBestResultTeam method, of class Parameters.
+     */
+    @Test
+    public void testSetBestResultTeam() {
+        System.out.println("setBestResultTeam");
+        int i = 0;
+        Parameters instance = new Parameters();
+        instance.setBestResultTeam(i);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getIndexOfCriteria method, of class Parameters.
+     */
+    @Test
+    public void testGetIndexOfCriteria() {
+        System.out.println("getIndexOfCriteria");
+        Criteria c = null;
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getIndexOfCriteria(c);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isTableBonus method, of class Parameters.
+     */
+    @Test
+    public void testIsTableBonus() {
+        System.out.println("isTableBonus");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isTableBonus();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isTableBonusPerRound method, of class Parameters.
+     */
+    @Test
+    public void testIsTableBonusPerRound() {
+        System.out.println("isTableBonusPerRound");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isTableBonusPerRound();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTableBonusCoef method, of class Parameters.
+     */
+    @Test
+    public void testGetTableBonusCoef() {
+        System.out.println("getTableBonusCoef");
+        Parameters instance = new Parameters();
+        double expResult = 0.0;
+        double result = instance.getTableBonusCoef();
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTableBonus method, of class Parameters.
+     */
+    @Test
+    public void testSetTableBonus() {
+        System.out.println("setTableBonus");
+        boolean b = false;
+        Parameters instance = new Parameters();
+        instance.setTableBonus(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTableBonusPerRound method, of class Parameters.
+     */
+    @Test
+    public void testSetTableBonusPerRound() {
+        System.out.println("setTableBonusPerRound");
+        boolean b = false;
+        Parameters instance = new Parameters();
+        instance.setTableBonusPerRound(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTableBonusCoef method, of class Parameters.
+     */
+    @Test
+    public void testSetTableBonusCoef() {
+        System.out.println("setTableBonusCoef");
+        double val = 0.0;
+        Parameters instance = new Parameters();
+        instance.setTableBonusCoef(val);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRankingTeam2 method, of class Parameters.
+     */
+    @Test
+    public void testGetRankingTeam2() {
+        System.out.println("getRankingTeam2");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getRankingTeam2();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUseLargeVictory method, of class Parameters.
+     */
+    @Test
+    public void testSetUseLargeVictory() {
+        System.out.println("setUseLargeVictory");
+        boolean use = false;
+        Parameters instance = new Parameters();
+        instance.setUseLargeVictory(use);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUseLittleLoss method, of class Parameters.
+     */
+    @Test
+    public void testSetUseLittleLoss() {
+        System.out.println("setUseLittleLoss");
+        boolean use = false;
+        Parameters instance = new Parameters();
+        instance.setUseLittleLoss(use);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUseLargeVictory method, of class Parameters.
+     */
+    @Test
+    public void testIsUseLargeVictory() {
+        System.out.println("isUseLargeVictory");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isUseLargeVictory();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUseLittleLoss method, of class Parameters.
+     */
+    @Test
+    public void testIsUseLittleLoss() {
+        System.out.println("isUseLittleLoss");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isUseLittleLoss();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

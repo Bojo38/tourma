@@ -214,8 +214,6 @@ public final class LRB {
     private final static String CS_RosterTypeNotFound = "RosterTypeNotFound";
     private final static String CS_forThePlayer = "forThePlayer";
 
-    
-    
     /**
      *
      * @param file
@@ -430,9 +428,14 @@ public final class LRB {
         int i;
         for (i = 0; i < getRosterTypeCount(); i++) {
             RosterType rt = getRosterType(i);
-
-            if (name.equals(Translate.translate(rt.getName()))) {
-                return rt;
+            if (translate) {
+                if (name.equals(Translate.translate(rt.getName()))) {
+                    return rt;
+                }
+            } else {
+                if (name.equals(rt.getName())) {
+                    return rt;
+                }
             }
         }
         return null;
@@ -480,12 +483,10 @@ public final class LRB {
     public RosterType getRosterType(int i) {
         return _rosterTypes.get(i);
     }
-    
+
     public RosterType getRosterType(String name) {
-        for (RosterType rt:_rosterTypes)
-        {
-            if (rt.getName().equals(name))
-            {
+        for (RosterType rt : _rosterTypes) {
+            if (rt.getName().equals(name)) {
                 return rt;
             }
         }
@@ -604,10 +605,6 @@ public final class LRB {
      */
     public static void unloadLRB() {
         LRB._singleton = null;
-    }
-
-    ArrayList getRosterTypeListAsString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

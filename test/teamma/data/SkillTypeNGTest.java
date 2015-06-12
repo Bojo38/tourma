@@ -5,6 +5,8 @@
  */
 package teamma.data;
 
+import java.util.ArrayList;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -12,17 +14,21 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class SkillTypeNGTest {
-    
+
+    private static LRB lrb;
+
     public SkillTypeNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        lrb = LRB.getLRB();
     }
 
     @AfterClass
@@ -43,12 +49,24 @@ public class SkillTypeNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        SkillType instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getSkillTypeCount(); i++) {
+            SkillType instance = lrb.getSkillType(i);
+            if (instance != null) {
+//            String expResult = "";
+                String result = instance.getName();
+                Assert.assertNotNull(result);
+            } else {
+                fail("Null skill type");
+            }
+        }
+
     }
 
     /**
@@ -57,11 +75,24 @@ public class SkillTypeNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String _name = "";
-        SkillType instance = null;
-        instance.setName(_name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getSkillTypeCount(); i++) {
+            SkillType instance = lrb.getSkillType(i);
+            if (instance != null) {
+                String save = instance.getName();
+                instance.setName("Toto");
+                String result = instance.getName();
+                Assert.assertEquals(result, "Toto");
+                instance.setName(save);
+            } else {
+                fail("Null skill type");
+            }
+        }
     }
 
     /**
@@ -70,12 +101,21 @@ public class SkillTypeNGTest {
     @Test
     public void testGetAccronym() {
         System.out.println("getAccronym");
-        SkillType instance = null;
-        String expResult = "";
-        String result = instance.getAccronym();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getSkillTypeCount(); i++) {
+            SkillType instance = lrb.getSkillType(i);
+            if (instance != null) {
+                String result = instance.getAccronym();
+                Assert.assertNotNull(result);
+            } else {
+                fail("Null skill type");
+            }
+        }
     }
 
     /**
@@ -84,11 +124,24 @@ public class SkillTypeNGTest {
     @Test
     public void testSetAccronym() {
         System.out.println("setAccronym");
-        String _accronym = "";
-        SkillType instance = null;
-        instance.setAccronym(_accronym);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getSkillTypeCount(); i++) {
+            SkillType instance = lrb.getSkillType(i);
+            if (instance != null) {
+                String save = instance.getAccronym();
+                instance.setAccronym("T");
+                String result = instance.getAccronym();
+                Assert.assertEquals(result, "T");
+                instance.setAccronym(save);
+            } else {
+                fail("Null skill type");
+            }
+        }
     }
 
     /**
@@ -97,10 +150,35 @@ public class SkillTypeNGTest {
     @Test
     public void testClearSkills() {
         System.out.println("clearSkills");
-        SkillType instance = null;
-        instance.clearSkills();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getSkillTypeCount(); i++) {
+            SkillType instance = lrb.getSkillType(i);
+            if (instance != null) {
+                int nb=instance.getSkillCount();
+                if (nb==0)
+                {
+                    fail("Number of skill is null for "+instance.getName());
+                }
+                ArrayList<Skill> list=new ArrayList<>();
+                for (int j=0; j<instance.getSkillCount(); j++)
+                {
+                    list.add(instance.getSkill(j));
+                }
+                instance.clearSkills();
+                Assert.assertEquals(instance.getSkillCount(), 0);
+                for (int j=0; j<list.size(); j++)
+                {
+                    instance.addSkill(list.get(j));
+                }
+            } else {
+                fail("Null skill type");
+            }
+        }
     }
 
     /**
@@ -109,11 +187,39 @@ public class SkillTypeNGTest {
     @Test
     public void testAddSkill() {
         System.out.println("addSkill");
-        Skill s = null;
-        SkillType instance = null;
-        instance.addSkill(s);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getSkillTypeCount(); i++) {
+            SkillType instance = lrb.getSkillType(i);
+            if (instance != null) {
+                int nb=instance.getSkillCount();
+                if (nb==0)
+                {
+                    fail("Number of skill is null for "+instance.getName());
+                }
+                ArrayList<Skill> list=new ArrayList<>();
+                for (int j=0; j<instance.getSkillCount(); j++)
+                {
+                    list.add(instance.getSkill(j));
+                }
+                instance.clearSkills();
+                
+                for (int j=0; j<list.size(); j++)
+                {
+                    int idx=instance.getSkillCount();
+                    instance.addSkill(list.get(j));
+                    Skill tmp=instance.getSkill(idx);
+                    assertEquals(tmp, list.get(j));
+                    assertEquals(idx+1, instance.getSkillCount());
+                }
+            } else {
+                fail("Null skill type");
+            }
+        }
     }
 
     /**
@@ -122,12 +228,24 @@ public class SkillTypeNGTest {
     @Test
     public void testGetSkillCount() {
         System.out.println("getSkillCount");
-        SkillType instance = null;
-        int expResult = 0;
-        int result = instance.getSkillCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getSkillTypeCount(); i++) {
+            SkillType instance = lrb.getSkillType(i);
+            if (instance != null) {
+                int nb=instance.getSkillCount();
+                if (nb==0)
+                {
+                    fail("Number of skill is null for "+instance.getName());
+                }
+               } else {
+                fail("Null skill type");
+            }
+        }
     }
 
     /**
@@ -136,13 +254,39 @@ public class SkillTypeNGTest {
     @Test
     public void testGetSkill() {
         System.out.println("getSkill");
-        int i = 0;
-        SkillType instance = null;
-        Skill expResult = null;
-        Skill result = instance.getSkill(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }
+        for (int i = 0; i < lrb.getSkillTypeCount(); i++) {
+            SkillType instance = lrb.getSkillType(i);
+            if (instance != null) {
+                int nb=instance.getSkillCount();
+                if (nb==0)
+                {
+                    fail("Number of skill is null for "+instance.getName());
+                }
+                ArrayList<Skill> list=new ArrayList<>();
+                for (int j=0; j<instance.getSkillCount(); j++)
+                {
+                    list.add(instance.getSkill(j));
+                }
+                instance.clearSkills();
+                
+                for (int j=0; j<list.size(); j++)
+                {
+                    int idx=instance.getSkillCount();
+                    instance.addSkill(list.get(j));
+                    Skill tmp=instance.getSkill(idx);
+                    assertEquals(tmp, list.get(j));
+                    assertEquals(idx+1, instance.getSkillCount());
+                }
+            } else {
+                fail("Null skill type");
+            }
+        }
     }
 
     /**
@@ -151,12 +295,13 @@ public class SkillTypeNGTest {
     @Test
     public void testIsSpecial() {
         System.out.println("isSpecial");
-        SkillType instance = null;
-        boolean expResult = false;
-        boolean result = instance.isSpecial();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }        
+         boolean instance = lrb.isAllowSpecialSkills();         
     }
 
     /**
@@ -165,11 +310,20 @@ public class SkillTypeNGTest {
     @Test
     public void testSetSpecial() {
         System.out.println("setSpecial");
-        boolean _special = false;
-        SkillType instance = null;
-        instance.setSpecial(_special);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       if (lrb == null) {
+            fail("No lrb loaded");
+        }
+        if (lrb.getStarPlayerCount() == 0) {
+            fail("No star player in LRB");
+        }        
+        boolean save= lrb.isAllowSpecialSkills();         
+        lrb.setAllowSpecialSkills(true);         
+         boolean instance = lrb.isAllowSpecialSkills();         
+         Assert.assertTrue(instance);
+         lrb.setAllowSpecialSkills(false);         
+         instance = lrb.isAllowSpecialSkills();         
+         Assert.assertFalse(instance);
+         lrb.setAllowSpecialSkills(save);         
     }
-    
+
 }

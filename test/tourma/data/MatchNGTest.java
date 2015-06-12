@@ -211,5 +211,32 @@ public class MatchNGTest {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
+
+    /**
+     * Test of getXMLElementForDisplay method, of class Match.
+     */
+    @Test
+    public void testGetXMLElementForDisplay() {
+        System.out.println("getXMLElementForDisplay");
+        Match instance = null;
+        Element expResult = null;
+        Element result = instance.getXMLElementForDisplay();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setXMLElementForDisplay method, of class Match.
+     */
+    @Test
+    public void testSetXMLElementForDisplay() {
+        System.out.println("setXMLElementForDisplay");
+        Element element = null;
+        Match instance = null;
+        instance.setXMLElementForDisplay(element);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

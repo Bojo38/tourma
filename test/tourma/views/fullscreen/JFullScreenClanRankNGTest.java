@@ -41,5 +41,30 @@ public class JFullScreenClanRankNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of clientLoop method, of class JFullScreenClanRank.
+     */
+    @Test
+    public void testClientLoop() throws Exception {
+        System.out.println("clientLoop");
+        JFullScreenClanRank instance = null;
+        instance.clientLoop();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setStop method, of class JFullScreenClanRank.
+     */
+    @Test
+    public void testSetStop() {
+        System.out.println("setStop");
+        boolean s = false;
+        JFullScreenClanRank instance = null;
+        instance.setStop(s);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

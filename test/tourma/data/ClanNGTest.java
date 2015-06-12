@@ -201,5 +201,19 @@ public class ClanNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of toString method, of class Clan.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Clan instance = null;
+        String expResult = "";
+        String result = instance.toString();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

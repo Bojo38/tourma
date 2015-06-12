@@ -5,14 +5,11 @@
  */
 package tourma.data;
 
-import java.util.logging.Logger;
-
 /**
  *
  * @author WFMJ7631
  */
 public class GroupPoints  {
-    private static final Logger LOG = Logger.getLogger(GroupPoints.class.getName());
     
     private int victoryPoints=0;
     private int drawPoints=0;

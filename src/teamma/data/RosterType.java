@@ -384,6 +384,10 @@ public class RosterType {
     public void clearPlayerType() {
         _player_types.clear();
     }
+    
+    public void clearAvailableStarPlayerType() {
+        _available_starplayers.clear();
+    }
 
     /**
      * @return the _player_types

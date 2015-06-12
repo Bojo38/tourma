@@ -14,6 +14,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.data.Criteria;
 /**
  *
  * @author WFMJ7631
@@ -150,6 +151,47 @@ public class MjtAnnexRankNGTest {
         public Object getValueAt(int row, int col) {
             return null;
         }
+    }
+
+    /**
+     * Test of getDetail method, of class MjtAnnexRank.
+     */
+    @Test
+    public void testGetDetail() {
+        System.out.println("getDetail");
+        MjtAnnexRank instance = null;
+        String expResult = "";
+        String result = instance.getDetail();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setDetail method, of class MjtAnnexRank.
+     */
+    @Test
+    public void testSetDetail() {
+        System.out.println("setDetail");
+        String d = "";
+        MjtAnnexRank instance = null;
+        instance.setDetail(d);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCriteria method, of class MjtAnnexRank.
+     */
+    @Test
+    public void testGetCriteria() {
+        System.out.println("getCriteria");
+        MjtAnnexRank instance = null;
+        Criteria expResult = null;
+        Criteria result = instance.getCriteria();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }

@@ -41,5 +41,30 @@ public class JFullScreenTeamRankNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of clientLoop method, of class JFullScreenTeamRank.
+     */
+    @Test
+    public void testClientLoop() throws Exception {
+        System.out.println("clientLoop");
+        JFullScreenTeamRank instance = null;
+        instance.clientLoop();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setStop method, of class JFullScreenTeamRank.
+     */
+    @Test
+    public void testSetStop() {
+        System.out.println("setStop");
+        boolean s = false;
+        JFullScreenTeamRank instance = null;
+        instance.setStop(s);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

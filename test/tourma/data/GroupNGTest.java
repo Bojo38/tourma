@@ -158,5 +158,89 @@ public class GroupNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getXMLElementForPoints method, of class Group.
+     */
+    @Test
+    public void testGetXMLElementForPoints() {
+        System.out.println("getXMLElementForPoints");
+        Group instance = null;
+        Element expResult = null;
+        Element result = instance.getXMLElementForPoints();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setXMLElementForPoints method, of class Group.
+     */
+    @Test
+    public void testSetXMLElementForPoints() {
+        System.out.println("setXMLElementForPoints");
+        Element group = null;
+        Group instance = null;
+        instance.setXMLElementForPoints(group);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getOpponentModificationPoints method, of class Group.
+     */
+    @Test
+    public void testGetOpponentModificationPoints() {
+        System.out.println("getOpponentModificationPoints");
+        Group g = null;
+        Group instance = null;
+        GroupPoints expResult = null;
+        GroupPoints result = instance.getOpponentModificationPoints(g);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setOpponentModificationPoints method, of class Group.
+     */
+    @Test
+    public void testSetOpponentModificationPoints() {
+        System.out.println("setOpponentModificationPoints");
+        Group g = null;
+        GroupPoints gp = null;
+        Group instance = null;
+        instance.setOpponentModificationPoints(g, gp);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of delOpponentModificationPoints method, of class Group.
+     */
+    @Test
+    public void testDelOpponentModificationPoints() {
+        System.out.println("delOpponentModificationPoints");
+        Group g = null;
+        Group instance = null;
+        instance.delOpponentModificationPoints(g);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsRoster method, of class Group.
+     */
+    @Test
+    public void testContainsRoster() {
+        System.out.println("containsRoster");
+        RosterType rt = null;
+        Group instance = null;
+        boolean expResult = false;
+        boolean result = instance.containsRoster(rt);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

@@ -257,5 +257,33 @@ public class RosterTypeNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of translate method, of class RosterType.
+     */
+    @Test
+    public void testTranslate() {
+        System.out.println("translate");
+        String key = "";
+        String expResult = "";
+        String result = RosterType.translate(key);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRosterTranslation method, of class RosterType.
+     */
+    @Test
+    public void testGetRosterTranslation() {
+        System.out.println("getRosterTranslation");
+        String source = "";
+        String expResult = "";
+        String result = RosterType.getRosterTranslation(source);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

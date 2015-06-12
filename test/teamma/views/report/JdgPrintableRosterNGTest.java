@@ -5,8 +5,19 @@
  */
 package teamma.views.report;
 
+import java.io.BufferedReader;
 import java.io.File;
-import static org.testng.Assert.assertEquals;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.fest.swing.fixture.DialogFixture;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+import org.testng.Assert;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -14,18 +25,23 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import teamma.data.Roster;
-import tourma.data.Coach;
+
 /**
  *
  * @author WFMJ7631
  */
 public class JdgPrintableRosterNGTest {
-    
+
+    private DialogFixture window;
+    private Roster roster;
+    JdgPrintableRoster jdg;
+
     public JdgPrintableRosterNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+
     }
 
     @AfterClass
@@ -34,118 +50,79 @@ public class JdgPrintableRosterNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+
+        final SAXBuilder sxb = new SAXBuilder();
+        final org.jdom2.Document document = sxb.build(new File("test/necros.xml"));
+        final Element racine = document.getRootElement();
+        roster = new Roster();
+        roster.setXMLElement(racine);
+        
+        // Remove local apothecary, because the team is an unded team
+        roster.setLocalapothecary(0);
+        
+        jdg = new JdgPrintableRoster(null, true,
+                roster, null, true);
+        window = new DialogFixture(jdg);
+        window.show();
     }
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
+        window.cleanUp();
     }
 
-    /**
-     * Test of getmRoster method, of class JdgPrintableRoster.
-     */
     @Test
-    public void testGetmRoster() {
-        System.out.println("getmRoster");
-        JdgPrintableRoster instance = null;
-        Roster expResult = null;
-        Roster result = instance.getmRoster();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setmRoster method, of class JdgPrintableRoster.
-     */
-    @Test
-    public void testSetmRoster() {
-        System.out.println("setmRoster");
-        Roster mRoster = null;
-        JdgPrintableRoster instance = null;
-        instance.setmRoster(mRoster);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getmCoach method, of class JdgPrintableRoster.
-     */
-    @Test
-    public void testGetmCoach() {
-        System.out.println("getmCoach");
-        JdgPrintableRoster instance = null;
-        Coach expResult = null;
-        Coach result = instance.getmCoach();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setmCoach method, of class JdgPrintableRoster.
-     */
-    @Test
-    public void testSetmCoach() {
-        System.out.println("setmCoach");
-        Coach mCoach = null;
-        JdgPrintableRoster instance = null;
-        instance.setmCoach(mCoach);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getmFilename method, of class JdgPrintableRoster.
-     */
-    @Test
-    public void testGetmFilename() {
-        System.out.println("getmFilename");
-        JdgPrintableRoster instance = null;
-        File expResult = null;
-        File result = instance.getmFilename();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setmFilename method, of class JdgPrintableRoster.
-     */
-    @Test
-    public void testSetmFilename() {
-        System.out.println("setmFilename");
-        File mFilename = null;
-        JdgPrintableRoster instance = null;
-        instance.setmFilename(mFilename);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isWithSkill method, of class JdgPrintableRoster.
-     */
-    @Test
-    public void testIsWithSkill() {
-        System.out.println("isWithSkill");
-        JdgPrintableRoster instance = null;
-        boolean expResult = false;
-        boolean result = instance.isWithSkill();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setWithSkill method, of class JdgPrintableRoster.
-     */
-    @Test
-    public void testSetWithSkill() {
-        System.out.println("setWithSkill");
-        boolean mWithSkill = false;
-        JdgPrintableRoster instance = null;
-        instance.setWithSkill(mWithSkill);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void hmiGeneralTest()
+    {
+        try {
+            System.out.println("hmiGeneralTest");
+            window.button("jbtExport").click();
+            Thread.sleep(2000);
+            File d=new File(".");
+            File f=new File("tmp.html");
+            window.fileChooser("jfc").setCurrentDirectory(d);
+            window.fileChooser("jfc").selectFile(f);
+            window.fileChooser("jfc").approve();
+            Thread.sleep(1000);
+            boolean equals=compareTwoFiles("tmp.html", "test/necros.html");
+            Assert.assertTrue(equals);
+            Files.delete(f.toPath());
+            
+        } catch (InterruptedException ex) {
+            fail("Exception catched");
+            Logger.getLogger(JdgPrintableRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            fail("Exception catched");
+            Logger.getLogger(JdgPrintableRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
+    public boolean compareTwoFiles(String file1Path, String file2Path)
+            throws IOException {
+
+        File file1 = new File(file1Path);
+        File file2 = new File(file2Path);
+
+        BufferedReader br1 = new BufferedReader(new FileReader(file1));
+        BufferedReader br2 = new BufferedReader(new FileReader(file2));
+
+        String thisLine = null;
+        String thatLine = null;
+
+        List<String> list1 = new ArrayList<String>();
+        List<String> list2 = new ArrayList<String>();
+
+        while ((thisLine = br1.readLine()) != null) {
+            list1.add(thisLine);
+        }
+        while ((thatLine = br2.readLine()) != null) {
+            list2.add(thatLine);
+        }
+
+        br1.close();
+        br2.close();
+
+        return list1.equals(list2);
+    }
 }

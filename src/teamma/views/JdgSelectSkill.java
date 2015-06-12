@@ -21,7 +21,6 @@ import teamma.data.Player;
 import teamma.data.Skill;
 import teamma.data.SkillType;
 import teamma.languages.Translate;
-import tourma.MainFrame;
 
 /**
  *
@@ -65,6 +64,8 @@ public class JdgSelectSkill extends javax.swing.JDialog {
                 sa.add(st.getSkill(j).getmName());
             }
             JComboBox jcb = new JComboBox(sa.toArray());
+            jcb.setName("jcb"+st.getName());
+            System.out.println("SkillType: "+st.getName());
             _jcbs.add(jcb);
             jcb.addItemListener(new ItemListener() {
                 @Override
@@ -150,6 +151,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
+        jbtOK.setName("ok"); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -158,6 +160,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         jPanel2.add(jbtOK);
 
         jbtCancel.setText(bundle.getString("Cancel")); // NOI18N
+        jbtCancel.setName("cancel"); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtCancelActionPerformed(evt);
@@ -171,6 +174,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
 
         ccColor.setColor(new java.awt.Color(0, 0, 0));
+        ccColor.setName("colorChooser"); // NOI18N
         ccColor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ccColorActionPerformed(evt);
@@ -222,7 +226,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             getPlayer().addSkill(s2);
             this.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), CS_Error, CS_NoSkillSelected, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, CS_Error, CS_NoSkillSelected, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbtOKActionPerformed
 
@@ -244,28 +248,28 @@ public class JdgSelectSkill extends javax.swing.JDialog {
     /**
      * @return the _player
      */
-    public Player getPlayer() {
+    private Player getPlayer() {
         return _player;
     }
 
     /**
      * @param _player the _player to set
      */
-    public void setPlayer(Player _player) {
+    private void setPlayer(Player _player) {
         this._player = _player;
     }
 
     /**
      * @return the _color
      */
-    public Color getColor() {
+    private Color getColor() {
         return _color;
     }
 
     /**
      * @param _color the _color to set
      */
-    public void setColor(Color _color) {
+    private void setColor(Color _color) {
         this._color = _color;
     }
 }

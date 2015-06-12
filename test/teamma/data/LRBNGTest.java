@@ -10,12 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import teamma.languages.Translate;
 
 /**
  *
@@ -54,7 +54,7 @@ public class LRBNGTest {
         Assert.assertNotNull(result);
         Assert.assertNotEquals(result.getRosterTypeCount(), 0);
         Assert.assertNotEquals(result.getSkillTypeCount(), 0);
-        Assert.assertNotEquals(result.getStarPlayerCount(),0);
+        Assert.assertNotEquals(result.getStarPlayerCount(), 0);
     }
 
     /**
@@ -63,13 +63,22 @@ public class LRBNGTest {
     @Test
     public void testGetSkill() {
         LOG.log(Level.FINE, "getSkill");
-        String name = "";
-        LRB instance = null;
-        Skill expResult = null;
-        Skill result = instance.getSkill(name);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB instance = LRB.getLRB();
+        Assert.assertTrue(instance.getSkillTypeCount() > 0);
+        for (int i = 0; i < instance.getSkillTypeCount(); i++) {
+            SkillType sp = instance.getSkillType(i);
+            Assert.assertNotNull(sp);
+            Assert.assertTrue(sp.getSkillCount() > 0);
+            for (int j = 0; j < sp.getSkillCount(); j++) {
+                Skill sk = sp.getSkill(j);
+                Assert.assertNotNull(sk);
+
+                Skill sk2 = instance.getSkill(sk.getmName());
+                assertEquals(sk, sk2);
+
+            }
+        }
+        LRB.unloadLRB();
     }
 
     /**
@@ -78,13 +87,15 @@ public class LRBNGTest {
     @Test
     public void testGetSkillType_String() {
         LOG.log(Level.FINE, "getSkillType");
-        String name = "";
-        LRB instance = null;
-        SkillType expResult = null;
-        SkillType result = instance.getSkillType(name);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB instance = LRB.getLRB();
+        Assert.assertTrue(instance.getSkillTypeCount() > 0);
+        for (int i = 0; i < instance.getSkillTypeCount(); i++) {
+            SkillType sp = instance.getSkillType(i);
+            Assert.assertNotNull(sp);
+            SkillType sp2 = instance.getSkillType(sp.getName());
+            assertEquals(sp, sp2);
+        }
+        LRB.unloadLRB();
     }
 
     /**
@@ -105,27 +116,16 @@ public class LRBNGTest {
     @Test
     public void testGetStarPlayer_String() {
         LOG.log(Level.FINE, "getStarPlayer");
-        String name = "";
-        LRB instance = null;
-        StarPlayer expResult = null;
-        StarPlayer result = instance.getStarPlayer(name);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        LRB instance = LRB.getLRB();
+        Assert.assertTrue(instance.getStarPlayerCount() > 0);
+        for (int i = 0; i < instance.getStarPlayerCount(); i++) {
+            StarPlayer sp = instance.getStarPlayer(i);
+            Assert.assertNotNull(sp);
 
-    /**
-     * Test of getRosterTypeListAsString method, of class LRB.
-     */
-    @Test
-    public void testGetRosterTypeListAsString() {
-        LOG.log(Level.FINE, "getRosterTypeListAsString");
-        LRB instance = null;
-        ArrayList expResult = null;
-//        ArrayList result = instance.getRosterTypeListAsString();
-  //      assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+            StarPlayer sp2 = instance.getStarPlayer(sp.getName());
+            assertEquals(sp, sp2);
+        }
+        LRB.unloadLRB();
     }
 
     /**
@@ -134,10 +134,14 @@ public class LRBNGTest {
     @Test
     public void testGetRosterType_int() {
         LOG.log(Level.FINE, "getRosterType");
-        int i = 0;
         LRB instance = LRB.getLRB();
-        RosterType result = instance.getRosterType(i);
-        Assert.assertNotNull(result);
+        Assert.assertNotNull(instance);
+        Assert.assertTrue(instance.getRosterTypeCount() > 0);
+        for (int i = 0; i < instance.getRosterTypeCount(); i++) {
+            RosterType result = instance.getRosterType(i);
+            Assert.assertNotNull(result);
+        }
+        LRB.unloadLRB();
     }
 
     /**
@@ -186,12 +190,9 @@ public class LRBNGTest {
     @Test
     public void testGetStarPlayerCount() {
         LOG.log(Level.FINE, "getStarPlayerCount");
-        LRB instance = null;
-        int expResult = 0;
-        int result = instance.getStarPlayerCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB instance = LRB.getLRB();
+        Assert.assertTrue(instance.getStarPlayerCount() > 0);
+        LRB.unloadLRB();
     }
 
     /**
@@ -200,13 +201,13 @@ public class LRBNGTest {
     @Test
     public void testGetStarPlayer_int() {
         LOG.log(Level.FINE, "getStarPlayer");
-        int i = 0;
-        LRB instance = null;
-        StarPlayer expResult = null;
-        StarPlayer result = instance.getStarPlayer(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB instance = LRB.getLRB();
+        Assert.assertTrue(instance.getStarPlayerCount() > 0);
+        for (int i = 0; i < instance.getStarPlayerCount(); i++) {
+            StarPlayer sp = instance.getStarPlayer(i);
+            Assert.assertNotNull(sp);
+        }
+        LRB.unloadLRB();
     }
 
     /**
@@ -273,13 +274,13 @@ public class LRBNGTest {
     @Test
     public void testGetSkillType_int() {
         LOG.log(Level.FINE, "getSkillType");
-        int i = 0;
-        LRB instance = null;
-        SkillType expResult = null;
-        SkillType result = instance.getSkillType(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB instance = LRB.getLRB();
+        Assert.assertTrue(instance.getSkillTypeCount() > 0);
+        for (int i = 0; i < instance.getSkillTypeCount(); i++) {
+            SkillType sp = instance.getSkillType(i);
+            Assert.assertNotNull(sp);
+        }
+        LRB.unloadLRB();
     }
 
     /**
@@ -288,12 +289,10 @@ public class LRBNGTest {
     @Test
     public void testGetSkillTypeCount() {
         LOG.log(Level.FINE, "getSkillTypeCount");
-        LRB instance = null;
-        int expResult = 0;
-        int result = instance.getSkillTypeCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB instance = LRB.getLRB();
+        Assert.assertTrue(instance.getSkillTypeCount() > 0);
+
+        LRB.unloadLRB();
     }
 
     /**
@@ -304,7 +303,7 @@ public class LRBNGTest {
         LOG.log(Level.FINE, "getName");
         LRB instance = LRB.getLRB();
         String result = instance.getName();
-        Assert.assertNotNull(result);        
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -313,11 +312,12 @@ public class LRBNGTest {
     @Test
     public void testSetName() {
         LOG.log(Level.FINE, "setName");
-        String _name = "";
-        LRB instance = null;
+        String _name = "Test";
+        LRB instance = LRB.getLRB();
+        String save = instance.getName();
         instance.setName(_name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("Test", instance.getName());
+        instance.setName(save);
     }
 
     /**
@@ -326,12 +326,11 @@ public class LRBNGTest {
     @Test
     public void testIsAllowSpecialSkills() {
         LOG.log(Level.FINE, "isAllowSpecialSkills");
-        LRB instance = null;
-        boolean expResult = false;
-        boolean result = instance.isAllowSpecialSkills();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB instance = LRB.getLRB();
+        boolean save = instance.isAllowSpecialSkills();
+        instance.setAllowSpecialSkills(true);
+        assertEquals(true, instance.isAllowSpecialSkills());
+        instance.setAllowSpecialSkills(save);
     }
 
     /**
@@ -340,11 +339,11 @@ public class LRBNGTest {
     @Test
     public void testSetAllowSpecialSkills() {
         LOG.log(Level.FINE, "setAllowSpecialSkills");
-        boolean _allowSpecialSkills = false;
-        LRB instance = null;
-        instance.setAllowSpecialSkills(_allowSpecialSkills);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB instance = LRB.getLRB();
+        boolean save = instance.isAllowSpecialSkills();
+        instance.setAllowSpecialSkills(true);
+        assertEquals(true, instance.isAllowSpecialSkills());
+        instance.setAllowSpecialSkills(save);
     }
 
     /**
@@ -354,8 +353,65 @@ public class LRBNGTest {
     public void testUnloadLRB() {
         System.out.println("unloadLRB");
         LRB.unloadLRB();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB.getLRB();
+        LRB.unloadLRB();
+    }
+
+    /**
+     * Test of getRosterType method, of class LRB.
+     */
+    @Test
+    public void testGetRosterType_String_boolean() {
+        System.out.println("getRosterType");
+        LRB lrb = LRB.getLRB();
+
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType rt = lrb.getRosterType(i);
+            String name = rt.getName();
+            Assert.assertNotNull(name);
+            RosterType rt2 = lrb.getRosterType(name, false);
+            Assert.assertNotNull(rt2);
+            Assert.assertEquals(rt, rt2);
+        }
+
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType rt = lrb.getRosterType(i);
+            String name = Translate.translate(rt.getName());
+            Assert.assertNotNull(name);
+            RosterType rt2 = lrb.getRosterType(name, true);
+            Assert.assertNotNull(rt2);
+            Assert.assertEquals(rt, rt2);
+        }
+
+        LRB.unloadLRB();
+    }
+
+    /**
+     * Test of getRosterTypeListAsString method, of class LRB.
+     */
+    @Test
+    public void testGetRosterTypeListAsString() {
+        System.out.println("getRosterTypeListAsString");
+        LRB lrb = LRB.getLRB();
+        ArrayList result = lrb.getRosterTypeListAsString(false);
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.size() > 0);
+
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType rt = lrb.getRosterType(i);
+            Assert.assertEquals(rt.getName(), result.get(i));
+        }
+
+        result = lrb.getRosterTypeListAsString(true);
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.size() > 0);
+
+        for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
+            RosterType rt = lrb.getRosterType(i);
+            Assert.assertEquals(Translate.translate(rt.getName()), result.get(i));
+        }
+
+        LRB.unloadLRB();
     }
 
 }

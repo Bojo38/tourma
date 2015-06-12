@@ -1,0 +1,26 @@
+<Composition Roster="Necromantiques" Apothecary="false" Assistants="2" Cheerleaders="3" FanFactor="8" Rerolls="1">
+  <Inducements Chef="true" Igor="true" Wizard="true" Babes="1" Cards="100000" Bribe="2" ExtraRerolls="2" LocalApothecary="0">
+    <StarPlayer Name="Count Luthor Von Drakenborg" />
+    <StarPlayer Name="Setekh" />
+  </Inducements>
+  <Player Name="" Position="Werewolf">
+    <Skill Name="Block" Color="-16449291" />
+  </Player>
+  <Player Name="" Position="Werewolf">
+    <Skill Name="Mighty Blow" Color="-1376143" />
+  </Player>
+  <Player Name="" Position="Ghoul" />
+  <Player Name="" Position="Ghoul" />
+  <Player Name="" Position="Wigth" />
+  <Player Name="" Position="Wigth" />
+  <Player Name="" Position="Flesh Golem">
+    <Skill Name="Guard" Color="-16769117" />
+  </Player>
+  <Player Name="" Position="Flesh Golem">
+    <Skill Name="Guard" Color="-16713116" />
+  </Player>
+  <Player Name="" Position="Zombie" />
+  <Player Name="" Position="Zombie" />
+  <Player Name="" Position="Zombie" />
+  <Player Name="" Position="Zombie" />
+</Composition>

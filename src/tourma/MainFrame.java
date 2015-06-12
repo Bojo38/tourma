@@ -2482,7 +2482,7 @@ private static final String CS_Matchs="Matchs";
                     if (res == 2) {
                         teamma.views.JdgRoster jdg = new JdgRoster(null, true);
                         jdg.setVisible(true);
-                        //System.exit(0);
+                        System.exit(0);
                     }
 
                     if (res == 3) {

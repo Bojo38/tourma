@@ -415,5 +415,32 @@ public class TeamNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getXMLElementForDisplay method, of class Team.
+     */
+    @Test
+    public void testGetXMLElementForDisplay() {
+        System.out.println("getXMLElementForDisplay");
+        Team instance = new Team();
+        Element expResult = null;
+        Element result = instance.getXMLElementForDisplay();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setXMLElementForDisplay method, of class Team.
+     */
+    @Test
+    public void testSetXMLElementForDisplay() {
+        System.out.println("setXMLElementForDisplay");
+        Element team = null;
+        Team instance = new Team();
+        instance.setXMLElementForDisplay(team);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

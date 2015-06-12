@@ -8,6 +8,7 @@ package tourma.views.fullscreen;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -91,6 +92,44 @@ public class JFullScreenNGTest {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
      
+    }
+
+    /**
+     * Test of clientLoop method, of class JFullScreen.
+     */
+    @Test
+    public void testClientLoop() throws Exception {
+        System.out.println("clientLoop");
+        JFullScreen instance = new JFullScreenImpl();
+        instance.clientLoop();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setStop method, of class JFullScreen.
+     */
+    @Test
+    public void testSetStop() {
+        System.out.println("setStop");
+        boolean s = false;
+        JFullScreen instance = new JFullScreenImpl();
+        instance.setStop(s);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of keyPressed method, of class JFullScreen.
+     */
+    @Test
+    public void testKeyPressed() {
+        System.out.println("keyPressed");
+        KeyEvent evt = null;
+        JFullScreen instance = new JFullScreenImpl();
+        instance.keyPressed(evt);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }

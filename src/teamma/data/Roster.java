@@ -215,7 +215,8 @@ public class Roster implements XMLExport {
                     final Element s = new Element(CS_Skill);
                     final teamma.data.Skill sk = _skill;
                     s.setAttribute(CS_Name, sk.getmName());
-                    s.setAttribute(CS_Color, Integer.toString(sk.getmColor().getRGB()));
+                    int rgb=sk.getmColor().getRGB();
+                    s.setAttribute(CS_Color, Integer.toString(rgb));
                     p.addContent(s);
                 }
                 compo.addContent(p);
@@ -274,9 +275,10 @@ public class Roster implements XMLExport {
                 final Iterator<Element> is = skills.iterator();
                 while (is.hasNext()) {
                     final Element s = is.next();
-
-                    final teamma.data.Skill sl = LRB.getLRB().getSkill(s.getAttributeValue(CS_Name));
-                    sl.setmColor(Color.decode(s.getAttributeValue(CS_Color)));
+                    final teamma.data.Skill sl = new Skill(LRB.getLRB().getSkill(s.getAttributeValue(CS_Name)));
+                    String sColor=s.getAttributeValue(CS_Color);
+                    Color col=Color.decode(sColor);
+                    sl.setmColor(col);
                     pl.addSkill(sl);
                 }
 
