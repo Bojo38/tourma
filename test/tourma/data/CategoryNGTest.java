@@ -5,25 +5,30 @@
  */
 package tourma.data;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Objects;
 import org.jdom2.Element;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class CategoryNGTest {
-    
+
     public CategoryNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/category.xml"));
     }
 
     @AfterClass
@@ -44,11 +49,14 @@ public class CategoryNGTest {
     @Test
     public void testPutCategory() {
         System.out.println("putCategory");
-        String s = "";
-        Category c = null;
+        String s = "TestCategory";
+        Category c = new Category(s);
         Category.putCategory(s, c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Category tmp = Category.getCategory(s);
+        assertEquals(c, tmp);
+        Category.delCategory(s);
+        tmp = Category.getCategory(s);
+        Assert.assertNull(tmp);
     }
 
     /**
@@ -57,9 +65,20 @@ public class CategoryNGTest {
     @Test
     public void testNewCategoryMap() {
         System.out.println("newCategoryMap");
+        ArrayList<Category> list = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+            Category c = Tournament.getTournament().getCategory(i);
+            list.add(c);
+        }
         Category.newCategoryMap();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+            Category c = Tournament.getTournament().getCategory(i);
+            Category tmp = Category.getCategory(c.getName());
+            Assert.assertNull(tmp);
+            Category.putCategory(c.getName(), c);
+            tmp = Category.getCategory(c.getName());
+            Assert.assertEquals(c, tmp);
+        }
     }
 
     /**
@@ -68,12 +87,14 @@ public class CategoryNGTest {
     @Test
     public void testGetCategory() {
         System.out.println("getCategory");
-        String s = "";
-        Category expResult = null;
-        Category result = Category.getCategory(s);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestCategory";
+        Category c = new Category(s);
+        Category.putCategory(s, c);
+        Category tmp = Category.getCategory(s);
+        assertEquals(c, tmp);
+        Category.delCategory(s);
+        tmp = Category.getCategory(s);
+        Assert.assertNull(tmp);
     }
 
     /**
@@ -82,13 +103,13 @@ public class CategoryNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object obj = null;
-        Category instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestCategory";
+        Category c = new Category(s);
+        Category c2 = new Category(s);
+        Category c3 = new Category(s + "2");
+
+        Assert.assertTrue(c.equals(c2));
+        Assert.assertFalse(c.equals(c3));
     }
 
     /**
@@ -97,12 +118,12 @@ public class CategoryNGTest {
     @Test
     public void testHashCode() {
         System.out.println("hashCode");
-        Category instance = null;
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        String s = "TestCategory";
+        Category c = new Category(s);
+        // Theorical hashcde
+        int h = Objects.hashCode(s) + 29 * 7;
+        assertEquals(h, c.hashCode());
     }
 
     /**
@@ -111,13 +132,15 @@ public class CategoryNGTest {
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        Object obj = null;
-        Category instance = null;
-        int expResult = 0;
-        int result = instance.compareTo(obj);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Assert.assertTrue(Tournament.getTournament().getCategoriesCount() > 1);
+        for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+            Category c1 = Tournament.getTournament().getCategory(i);
+            for (int j = 0; j < Tournament.getTournament().getCategoriesCount(); j++) {
+                Category c2 = Tournament.getTournament().getCategory(j);
+                assertEquals(c1.compareTo(c2), c1.getName().compareTo(c2.getName()));
+            }
+        }
     }
 
     /**
@@ -126,12 +149,13 @@ public class CategoryNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Category instance = null;
-        Element expResult = null;
+        Category instance = new Category("Test");
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Category cat = new Category("None");
+        cat.setXMLElement(result);
+        assertEquals(instance, cat);
+
     }
 
     /**
@@ -140,12 +164,7 @@ public class CategoryNGTest {
     @Test
     public void testIsCategoryMapNull() {
         System.out.println("isCategoryMapNull");
-        Category instance = null;
-        boolean expResult = false;
-        boolean result = instance.isCategoryMapNull();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertFalse(Category.isCategoryMapNull());
     }
 
     /**
@@ -154,11 +173,12 @@ public class CategoryNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        Category instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Category instance = new Category("Test");
+        Element result = instance.getXMLElement();
+
+        Category cat = new Category("None");
+        cat.setXMLElement(result);
+        assertEquals(instance, cat);
     }
 
     /**
@@ -167,12 +187,9 @@ public class CategoryNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Category instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestCategory";
+        Category c = new Category(s);
+        assertEquals(c.getName(), s);
     }
 
     /**
@@ -181,11 +198,12 @@ public class CategoryNGTest {
     @Test
     public void testSetmName() {
         System.out.println("setmName");
-        String mName = "";
-        Category instance = null;
-        instance.setmName(mName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestCategory";
+        Category c = new Category(s);
+        assertEquals(c.getName(), s);
+        c.setmName("Test");
+        assertEquals(c.getName(), "Test");
+
     }
 
     /**
@@ -194,10 +212,14 @@ public class CategoryNGTest {
     @Test
     public void testDelCategory() {
         System.out.println("delCategory");
-        String s = "";
+        String s = "TestCategory";
+        Category c = new Category(s);
+        Category.putCategory(s, c);
+        Category tmp = Category.getCategory(s);
+        assertEquals(c, tmp);
         Category.delCategory(s);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        tmp = Category.getCategory(s);
+        Assert.assertNull(tmp);
     }
 
     /**
@@ -206,12 +228,9 @@ public class CategoryNGTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Category instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestCategory";
+        Category c = new Category(s);
+        assertEquals(c.toString(), s);
     }
-    
+
 }

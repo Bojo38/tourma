@@ -6,25 +6,32 @@
 package tourma.data;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Objects;
+import javax.swing.ImageIcon;
 import org.jdom2.Element;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class ClanNGTest {
-    
+
     public ClanNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/clan.xml"));
     }
 
     @AfterClass
@@ -45,12 +52,11 @@ public class ClanNGTest {
     @Test
     public void testGetClan() {
         System.out.println("getClan");
-        String key = "";
-        Clan expResult = null;
-        Clan result = Clan.getClan(key);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(Tournament.getTournament().getClansCount() > 1);
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            Clan c = Tournament.getTournament().getClan(i);
+            Assert.assertNotNull(Clan.getClan(c.getName()));
+        }
     }
 
     /**
@@ -59,11 +65,14 @@ public class ClanNGTest {
     @Test
     public void testPutClan() {
         System.out.println("putClan");
-        String key = "";
-        Clan c = null;
-        Clan.putClan(key, c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestClan";
+        Clan c = new Clan(s);
+        Clan.putClan(s, c);
+        Clan tmp = Clan.getClan(s);
+        assertEquals(c, tmp);
+        Clan.delClan(s);
+        tmp = Clan.getClan(s);
+        Assert.assertNull(tmp);
     }
 
     /**
@@ -72,9 +81,20 @@ public class ClanNGTest {
     @Test
     public void testNewClanMap() {
         System.out.println("newClanMap");
+        ArrayList<Clan> list = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            Clan c = Tournament.getTournament().getClan(i);
+            list.add(c);
+        }
         Clan.newClanMap();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            Clan c = Tournament.getTournament().getClan(i);
+            Clan tmp = Clan.getClan(c.getName());
+            Assert.assertNull(tmp);
+            Clan.putClan(c.getName(), c);
+            tmp = Clan.getClan(c.getName());
+            Assert.assertEquals(c, tmp);
+        }
     }
 
     /**
@@ -83,13 +103,13 @@ public class ClanNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object obj = null;
-        Clan instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestClan";
+        Clan c = new Clan(s);
+        Clan c2 = new Clan(s);
+        Clan c3 = new Clan(s + "2");
+
+        Assert.assertTrue(c.equals(c2));
+        Assert.assertFalse(c.equals(c3));
     }
 
     /**
@@ -98,12 +118,14 @@ public class ClanNGTest {
     @Test
     public void testHashCode() {
         System.out.println("hashCode");
-        Clan instance = null;
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestCategory";
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            Clan c = Tournament.getTournament().getClan(i);
+            int h = 7 * 11 + Objects.hashCode(c.getName());
+            h = 11 * h + Objects.hashCode(c.getPicture());
+            assertEquals(h, c.hashCode());
+        }
+
     }
 
     /**
@@ -112,13 +134,14 @@ public class ClanNGTest {
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        Object obj = null;
-        Clan instance = null;
-        int expResult = 0;
-        int result = instance.compareTo(obj);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(Tournament.getTournament().getClansCount() > 1);
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            Clan c1 = Tournament.getTournament().getClan(i);
+            for (int j = 0; j < Tournament.getTournament().getClansCount(); j++) {
+                Clan c2 = Tournament.getTournament().getClan(j);
+                assertEquals(c1.compareTo(c2), c1.getName().compareTo(c2.getName()));
+            }
+        }
     }
 
     /**
@@ -127,12 +150,12 @@ public class ClanNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Clan instance = null;
-        Element expResult = null;
+        Clan instance = new Clan("Test");
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Clan cat = new Clan("None");
+        cat.setXMLElement(result);
+        assertEquals(instance, cat);
     }
 
     /**
@@ -141,11 +164,12 @@ public class ClanNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        Clan instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Clan instance = new Clan("Test");
+        Element result = instance.getXMLElement();
+
+        Clan cat = new Clan("None");
+        cat.setXMLElement(result);
+        assertEquals(instance, cat);
     }
 
     /**
@@ -154,12 +178,9 @@ public class ClanNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Clan instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestClan";
+        Clan c = new Clan(s);
+        assertEquals(c.getName(), s);
     }
 
     /**
@@ -168,12 +189,13 @@ public class ClanNGTest {
     @Test
     public void testGetPicture() {
         System.out.println("getPicture");
-        Clan instance = null;
-        BufferedImage expResult = null;
-        BufferedImage result = instance.getPicture();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ImageIcon icon = new ImageIcon("./test/clan.png");
+        BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        Clan instance = new Clan("Test");
+        instance.setPicture(p);
+
+        assertNotNull(instance.getPicture());
+        assertEquals(p,instance.getPicture());
     }
 
     /**
@@ -182,11 +204,14 @@ public class ClanNGTest {
     @Test
     public void testSetPicture() {
         System.out.println("setPicture");
-        BufferedImage p = null;
-        Clan instance = null;
+
+        ImageIcon icon = new ImageIcon("./test/clan.png");
+        BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        Clan instance = new Clan("Test");
         instance.setPicture(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertNotNull(instance.getPicture());
+        assertEquals(p,instance.getPicture());
     }
 
     /**
@@ -195,11 +220,11 @@ public class ClanNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String name = "";
-        Clan instance = null;
-        instance.setName(name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestClan";
+        Clan c = new Clan(s);
+        assertEquals(c.getName(), s);
+        c.setName("Test");
+        assertEquals(c.getName(), "Test");
     }
 
     /**
@@ -208,12 +233,25 @@ public class ClanNGTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Clan instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String s = "TestClan";
+        Clan c = new Clan(s);
+        assertEquals(c.getName(), s);
     }
-    
+
+    /**
+     * Test of delClan method, of class Clan.
+     */
+    @Test
+    public void testDelClan() {
+        System.out.println("delClan");
+        String s = "TestClan";
+        Clan c = new Clan(s);
+        Clan.putClan(s, c);
+        Clan tmp = Clan.getClan(s);
+        assertEquals(c, tmp);
+        Clan.delClan(s);
+        tmp = Clan.getClan(s);
+        Assert.assertNull(tmp);
+    }
+
 }

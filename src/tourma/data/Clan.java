@@ -49,6 +49,11 @@ public class Clan implements Comparable<Object>, XMLExport,IWithNameAndPicture {
         return sClanMap.get(key);
     }
     
+     public static void delClan(String key)
+    {
+        sClanMap.remove(key);
+    }
+    
     /**
      * 
      * @param key

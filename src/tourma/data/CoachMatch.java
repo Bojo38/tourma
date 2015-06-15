@@ -300,13 +300,13 @@ public class CoachMatch extends Match {
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                         Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
                         if (getValue(crit).getValue1() < getValue(crit).getValue2()) {
-                            super.setWinner(getCompetitor1());
-                            super.setLooser(getCompetitor2());
+                            super.setWinner(getCompetitor2());
+                            super.setLooser(getCompetitor1());
                             break;
                         }
                         if (getValue(crit).getValue1() > getValue(crit).getValue2()) {
-                            super.setWinner(getCompetitor2());
-                            super.setLooser(getCompetitor1());
+                            super.setWinner(getCompetitor1());
+                            super.setLooser(getCompetitor2());
                             break;
                         }
                     }

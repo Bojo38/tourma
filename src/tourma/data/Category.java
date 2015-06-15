@@ -128,7 +128,7 @@ public class Category implements Comparable<Object>, XMLExport {
      * 
      * @return 
      */
-    public boolean isCategoryMapNull()
+    public static boolean isCategoryMapNull()
     {
         return sCategoryMap==null;
     }

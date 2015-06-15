@@ -58,7 +58,8 @@ public class Criteria implements XMLExport {
     @Override
     public Element getXMLElement() {
         final Element crit = new Element(StringConstants.CS_CRITERIA);
-        crit.setAttribute(StringConstants.CS_CRITERIA, this.getName());
+        String key=StringConstants.CS_CRITERIA;
+        crit.setAttribute(key, this.getName());
         crit.setAttribute(StringConstants.CS_POINTS_FOR, Integer.toString(this.getPointsFor()));
         crit.setAttribute(StringConstants.CS_POINTS_AGAINST, Integer.toString(this.getPointsTeamFor()));
         crit.setAttribute(StringConstants.CS_TEAM_POINTS_FOR, Integer.toString(this.getPointsAgainst()));
@@ -73,7 +74,11 @@ public class Criteria implements XMLExport {
     @Override
     public void setXMLElement(final Element criteria) {
         try {
-            this.setName(criteria.getAttributeValue(StringConstants.CS_NAME));
+            this.setName(criteria.getAttributeValue(StringConstants.CS_CRITERIA));
+            if (getName()==null)
+            {
+                this.setName(criteria.getAttributeValue(StringConstants.CS_NAME));
+            }
             this.setPointsFor(criteria.getAttribute(StringConstants.CS_POINTS_FOR).getIntValue());
             this.setPointsTeamFor(criteria.getAttribute(StringConstants.CS_TEAM_POINTS_FOR).getIntValue());
             this.setPointsAgainst(criteria.getAttribute(StringConstants.CS_POINTS_AGAINST).getIntValue());

@@ -5,6 +5,7 @@
  */
 package tourma.languages;
 
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -42,12 +43,11 @@ public class TranslateNGTest {
     @Test
     public void testTranslate() {
         System.out.println("translate");
-        String key = "";
+        String key = "Translate";
         String expResult = "";
-        String result = Translate.translate(key);
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        String result = tourma.languages.Translate.translate(key);
+        
+        Assert.assertEquals(result,"Traduire");
     }
     
 }

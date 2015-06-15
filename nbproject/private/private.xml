@@ -12,11 +12,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Perso/tourma/test/teamma/data/RosterTypeNGTest.java</file>
-            <file>file:/C:/Perso/tourma/test/teamma/data/LRBNGTest.java</file>
-            <file>file:/C:/Perso/tourma/src/tourma/tableModel/MjtAnnexRankClan.java</file>
-            <file>file:/C:/Perso/tourma/test/teamma/data/StarPlayerNGTest.java</file>
-            <file>file:/C:/Perso/tourma/test/teamma/data/SkillTypeNGTest.java</file>
+            <file>file:/C:/Perso/tourma/test/tourma/data/ClanNGTest.java</file>
+            <file>file:/C:/Perso/tourma/src/tourma/views/parameters/JPNParamClan.java</file>
+            <file>file:/C:/Perso/tourma/test/tourma/data/CoachMatchNGTest.java</file>
+            <file>file:/C:/Perso/tourma/src/tourma/data/Tournament.java</file>
+            <file>file:/C:/Perso/tourma/test/tourma/data/CategoryNGTest.java</file>
+            <file>file:/C:/Perso/tourma/src/tourma/data/Clan.java</file>
         </group>
     </open-files>
 </project-private>
