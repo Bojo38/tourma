@@ -205,24 +205,6 @@ public final class Coach extends Competitor implements XMLExport {
         return result;
     }
 
-    /**
-     *
-     * @param c
-     * @return
-     */
-    @Override
-    public boolean equals(Object c) {
-        if (c instanceof Coach) {
-            return getName().equals(((IWithNameAndPicture) c).getName());
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-
-        return getName().hashCode();
-    }
 
     /**
      *

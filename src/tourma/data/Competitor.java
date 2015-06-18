@@ -38,6 +38,19 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
         return new Color(red, green, blue);
     }
 
+    @Override
+     public boolean equals(Object c) {
+        if (c instanceof Competitor) {
+            return getName().equals(((IWithNameAndPicture) c).getName());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
+    
     /**
      *
      */
