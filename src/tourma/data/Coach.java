@@ -703,10 +703,17 @@ public final class Coach extends Competitor implements XMLExport {
         ArrayList<Clan> clans;
         Parameters params = tour.getParams();
         if (params.isEnableClans()) {
-            tmp = getName() + " / " + getClan().getName();
+            if (getClan()!=null)
+            {
+                tmp = getName() + " / " + getClan().getName();
+            }
         }
         if (params.isTeamTournament()) {
-            tmp = getName() + " / " + getTeamMates().getName();
+            if (getTeamMates()!=null)
+            {
+                tmp = getName() + " / " + getTeamMates().getName();
+            }
+            
         }
         return tmp;
     }

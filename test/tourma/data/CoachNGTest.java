@@ -5,10 +5,13 @@
  */
 package tourma.data;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.jdom2.Element;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -16,17 +19,20 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import teamma.data.Roster;
+import tourma.utility.StringConstants;
+
 /**
  *
  * @author WFMJ7631
  */
 public class CoachNGTest {
-    
+
     public CoachNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/coach.xml"));
     }
 
     @AfterClass
@@ -47,12 +53,18 @@ public class CoachNGTest {
     @Test
     public void testGetCoach() {
         System.out.println("getCoach");
-        String s = "";
-        Coach expResult = null;
-        Coach result = Coach.getCoach(s);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+            String name = Tournament.getTournament().getCoach(i).getName();
+            Assert.assertNotNull(Coach.getCoach(name));
+
+        }
     }
 
     /**
@@ -61,9 +73,26 @@ public class CoachNGTest {
     @Test
     public void testNewCoachMap() {
         System.out.println("newCoachMap");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        ArrayList<Coach> list = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+            Coach c = Tournament.getTournament().getCoach(i);
+            list.add(c);
+        }
         Coach.newCoachMap();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+            Coach c = Tournament.getTournament().getCoach(i);
+            Coach tmp = Coach.getCoach(c.getName());
+            Assert.assertNull(tmp);
+            Coach.putCoach(c.getName(), c);
+            tmp = Coach.getCoach(c.getName());
+            Assert.assertEquals(c, tmp);
+        }
     }
 
     /**
@@ -72,11 +101,26 @@ public class CoachNGTest {
     @Test
     public void testPutCoach() {
         System.out.println("putCoach");
-        String s = "";
-        Coach c = null;
-        Coach.putCoach(s, c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        ArrayList<Coach> list = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+            Coach c = Tournament.getTournament().getCoach(i);
+            list.add(c);
+        }
+        Coach.newCoachMap();
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+            Coach c = Tournament.getTournament().getCoach(i);
+            Coach tmp = Coach.getCoach(c.getName());
+            Assert.assertNull(tmp);
+            Coach.putCoach(c.getName(), c);
+            tmp = Coach.getCoach(c.getName());
+            Assert.assertEquals(c, tmp);
+        }
     }
 
     /**
@@ -85,11 +129,8 @@ public class CoachNGTest {
     @Test
     public void testGetNullCoach() {
         System.out.println("getNullCoach");
-        Coach expResult = null;
         Coach result = Coach.getNullCoach();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result.getName(), StringConstants.CS_NONE);
     }
 
     /**
@@ -98,12 +139,14 @@ public class CoachNGTest {
     @Test
     public void testGetCompositionCount() {
         System.out.println("getCompositionCount");
-        Coach instance = new Coach();
-        int expResult = 0;
-        int result = instance.getCompositionCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        Assert.assertTrue(instance.getCompositionCount() > 0);
     }
 
     /**
@@ -112,13 +155,17 @@ public class CoachNGTest {
     @Test
     public void testGetComposition() {
         System.out.println("getComposition");
-        int i = 0;
-        Coach instance = new Coach();
-        Roster expResult = null;
-        Roster result = instance.getComposition(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        Assert.assertTrue(instance.getCompositionCount() > 0);
+        for (int i = 0; i < instance.getCompositionCount(); i++) {
+            Assert.assertNotNull(instance.getComposition(i));
+        }
     }
 
     /**
@@ -127,11 +174,19 @@ public class CoachNGTest {
     @Test
     public void testAddComposition() {
         System.out.println("addComposition");
-        Roster r = null;
-        Coach instance = new Coach();
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        int nb = instance.getCompositionCount();
+        Roster r = new Roster();
         instance.addComposition(r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(nb + 1 == instance.getCompositionCount());
+        instance.removeComposition(nb);
+        Assert.assertTrue(nb == instance.getCompositionCount());
     }
 
     /**
@@ -140,11 +195,19 @@ public class CoachNGTest {
     @Test
     public void testRemoveComposition() {
         System.out.println("removeComposition");
-        int i = 0;
-        Coach instance = new Coach();
-        instance.removeComposition(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        int nb = instance.getCompositionCount();
+        Roster r = new Roster();
+        instance.addComposition(r);
+        Assert.assertTrue(nb + 1 == instance.getCompositionCount());
+        instance.removeComposition(nb);
+        Assert.assertTrue(nb == instance.getCompositionCount());
     }
 
     /**
@@ -153,13 +216,17 @@ public class CoachNGTest {
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        Object obj = null;
-        Coach instance = new Coach();
-        int expResult = 0;
-        int result = instance.compareTo(obj);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        instance.setNaf(0);
+        Coach instance2 = new Coach("Lord Bojo");
+        int result = instance.compareTo(instance2);
+        assertEquals(result, 0);
     }
 
     /**
@@ -168,13 +235,15 @@ public class CoachNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object c = null;
-        Coach instance = new Coach();
-        boolean expResult = false;
-        boolean result = instance.equals(c);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        Coach instance2 = new Coach("Lord Bojo");
+        assertEquals(instance, instance2);
     }
 
     /**
@@ -183,12 +252,16 @@ public class CoachNGTest {
     @Test
     public void testHashCode() {
         System.out.println("hashCode");
-        Coach instance = new Coach();
-        int expResult = 0;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        String s = "Lord Bojo";
         int result = instance.hashCode();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, s.hashCode());
     }
 
     /**
@@ -197,12 +270,18 @@ public class CoachNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Coach instance = new Coach();
-        Element expResult = null;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Coach cm = new Coach();
+        cm.setXMLElement(result);
+        assertEquals(instance, cm);
     }
 
     /**
@@ -211,12 +290,14 @@ public class CoachNGTest {
     @Test
     public void testGetStringRoster() {
         System.out.println("getStringRoster");
-        Coach instance = new Coach();
-        String expResult = "";
-        String result = instance.getStringRoster();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        assertEquals(instance.getStringRoster(), instance.getRoster().getName());
     }
 
     /**
@@ -225,11 +306,18 @@ public class CoachNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element coach = null;
-        Coach instance = new Coach();
-        instance.setXMLElement(coach);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        Element result = instance.getXMLElement();
+
+        Coach cm = new Coach();
+        cm.setXMLElement(result);
+        assertEquals(instance, cm);
     }
 
     /**
@@ -238,12 +326,19 @@ public class CoachNGTest {
     @Test
     public void testAddMatch() {
         System.out.println("addMatch");
-        Competitor opponent = null;
-        Round r = null;
-        Coach instance = new Coach();
-        instance.addMatch(opponent, r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        CoachMatch cm = new CoachMatch(new Round());
+        int nb = instance.getMatchCount();
+        instance.addMatch(cm);
+        assertEquals(nb + 1, instance.getMatchCount());
+        instance.removeMatch(cm);
+        assertEquals(nb, instance.getMatchCount());
     }
 
     /**
@@ -252,14 +347,20 @@ public class CoachNGTest {
     @Test
     public void testCreateMatch() {
         System.out.println("createMatch");
-        Competitor opponent = null;
-        Round r = null;
-        Coach instance = new Coach();
-        CoachMatch expResult = null;
-        CoachMatch result = instance.createMatch(opponent, r);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        Coach c = new Coach("None");
+        int nb = instance.getMatchCount();
+        CoachMatch cm = instance.createMatch(c, new Round());
+        instance.addMatch(cm);
+        assertEquals(nb + 1, instance.getMatchCount());
+        instance.removeMatch(cm);
+        assertEquals(nb, instance.getMatchCount());
     }
 
     /**
@@ -268,13 +369,36 @@ public class CoachNGTest {
     @Test
     public void testHavePlayed() {
         System.out.println("havePlayed");
-        Competitor opponent = null;
-        Coach instance = new Coach();
-        boolean expResult = false;
-        boolean result = instance.havePlayed(opponent);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+            Coach opp = Tournament.getTournament().getCoach(i);
+            if (opp != instance) {
+                boolean found = false;
+                for (int j = 0; j < instance.getMatchCount(); j++) {
+                    Match m = instance.getMatch(j);
+                    Coach c2;
+                    if (m.getCompetitor1() == instance) {
+                        c2 = (Coach) m.getCompetitor2();
+                    } else {
+                        c2 = (Coach) m.getCompetitor1();
+                    }
+                    if (c2 == opp) {
+                        found = true;
+                        break;
+                    }
+                }
+                assertEquals(found, instance.havePlayed(opp));
+            }
+
+        }
+
     }
 
     /**
@@ -283,14 +407,36 @@ public class CoachNGTest {
     @Test
     public void testGetPossibleOpponents() {
         System.out.println("getPossibleOpponents");
-        ArrayList<Competitor> opponents = null;
-        Round r = null;
-        Coach instance = new Coach();
-        ArrayList expResult = null;
-        ArrayList result = instance.getPossibleOpponents(opponents, r);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        ArrayList<Competitor> opponents = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+            Coach opp = Tournament.getTournament().getCoach(i);
+            opponents.add(opp);
+        }
+
+        opponents.remove(instance);
+
+        ArrayList<Competitor> result = instance.getPossibleOpponents(opponents, Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1));
+        for (int j = 0; j < instance.getMatchCount(); j++) {
+            Match m = instance.getMatch(j);
+            Coach c2;
+            if (m.getCompetitor1() == instance) {
+                c2 = (Coach) m.getCompetitor2();
+            } else {
+                c2 = (Coach) m.getCompetitor1();
+            }
+            Assert.assertFalse(result.contains(c2));
+        }
+        assertEquals(result.size(), Tournament.getTournament().getCoachCount() - instance.getMatchCount()-1);
+
     }
 
     /**
@@ -315,12 +461,25 @@ public class CoachNGTest {
     @Test
     public void testGetDecoratedName() {
         System.out.println("getDecoratedName");
-        Coach instance = new Coach();
-        String expResult = "";
-        String result = instance.getDecoratedName();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = new Coach("Lord Bojo");
+        assertEquals("Lord Bojo", instance.getDecoratedName());
+
+        Tournament.getTournament().getParams().setEnableClans(true);
+        instance.setClan(new Clan("Clan"));
+        assertEquals("Lord Bojo / Clan", instance.getDecoratedName());
+        Tournament.getTournament().getParams().setEnableClans(false);
+
+        Tournament.getTournament().getParams().setTeamTournament(true);
+        instance.setTeamMates(new Team("Team"));
+        assertEquals("Lord Bojo / Team", instance.getDecoratedName());
+        Tournament.getTournament().getParams().setTeamTournament(false);
+
     }
 
     /**
@@ -329,12 +488,19 @@ public class CoachNGTest {
     @Test
     public void testAddMatchRoundRobin() {
         System.out.println("addMatchRoundRobin");
-        Competitor c = null;
-        Round r = null;
-        Coach instance = new Coach();
-        instance.addMatchRoundRobin(c, r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        Coach n=new Coach("Opponent");
+        Round r=new Round();
+        CoachMatch cm = new CoachMatch(r);
+        int nb = instance.getMatchCount();
+        instance.addMatchRoundRobin(n,r);
+        assertEquals( 1, r.getMatchsCount());
     }
 
     /**
@@ -358,14 +524,39 @@ public class CoachNGTest {
     @Test
     public void testRoundCheck() {
         System.out.println("roundCheck");
-        Round round = null;
-        Coach instance = new Coach();
-        instance.roundCheck(round);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
 
-    
+        CoachMatch cm4 = (CoachMatch) instance.getMatch(instance.getMatchCount() - 1);
+        CoachMatch cm0 = (CoachMatch) instance.getMatch(0);
+        
+        
+        Coach opponent;
+        if (cm4.getCompetitor1() == instance) {
+            cm0.setCompetitor1(instance);
+            cm0.setCompetitor2(cm4.getCompetitor2());
+            opponent=(Coach)cm4.getCompetitor2();
+        } else {
+            cm0.setCompetitor1(instance);
+            cm0.setCompetitor2(cm4.getCompetitor1());
+            opponent=(Coach)cm4.getCompetitor1();
+        }
+        
+        instance.roundCheck(cm4.getRound());
+
+        CoachMatch cm4bis = (CoachMatch) instance.getMatch(instance.getMatchCount() - 1);
+        if (cm4bis.getCompetitor1() == instance) {
+            Assert.assertNotEquals(opponent, cm4bis.getCompetitor2());
+        } else {
+            Assert.assertNotEquals(opponent, cm4bis.getCompetitor1());
+        }
+
+    }
 
     /**
      * Test of getTeam method, of class Coach.
@@ -373,12 +564,15 @@ public class CoachNGTest {
     @Test
     public void testGetTeam() {
         System.out.println("getTeam");
-        Coach instance = new Coach();
-        String expResult = "";
-        String result = instance.getTeam();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        Assert.assertNotNull(instance.getTeam());
+
     }
 
     /**
@@ -387,11 +581,18 @@ public class CoachNGTest {
     @Test
     public void testSetTeam() {
         System.out.println("setTeam");
-        String mTeam = "";
-        Coach instance = new Coach();
-        instance.setTeam(mTeam);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+        Assert.assertNotNull(instance.getTeam());
+        String name = instance.getTeam();
+        instance.setTeam("Test");
+        assertEquals("Test", instance.getTeam());
+        instance.setTeam(name);
     }
 
     /**
@@ -400,12 +601,18 @@ public class CoachNGTest {
     @Test
     public void testGetRoster() {
         System.out.println("getRoster");
-        Coach instance = new Coach();
-        RosterType expResult = null;
-        RosterType result = instance.getRoster();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        RosterType save = instance.getRoster();
+        instance.setRoster(new RosterType("Toto"));
+        assertEquals(instance.getRoster().getName(), "Toto");
+        instance.setRoster(save);
     }
 
     /**
@@ -414,11 +621,18 @@ public class CoachNGTest {
     @Test
     public void testSetRoster() {
         System.out.println("setRoster");
-        RosterType mRoster = null;
-        Coach instance = new Coach();
-        instance.setRoster(mRoster);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        RosterType save = instance.getRoster();
+        instance.setRoster(new RosterType("Toto"));
+        assertEquals(instance.getRoster().getName(), "Toto");
+        instance.setRoster(save);
     }
 
     /**
@@ -427,12 +641,18 @@ public class CoachNGTest {
     @Test
     public void testGetNaf() {
         System.out.println("getNaf");
-        Coach instance = new Coach();
-        int expResult = 0;
-        int result = instance.getNaf();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        int save = instance.getNaf();
+        instance.setNaf(50);
+        assertEquals(50, instance.getNaf());
+        instance.setNaf(save);
     }
 
     /**
@@ -441,11 +661,18 @@ public class CoachNGTest {
     @Test
     public void testSetNaf() {
         System.out.println("setNaf");
-        int mNaf = 0;
-        Coach instance = new Coach();
-        instance.setNaf(mNaf);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        int save = instance.getNaf();
+        instance.setNaf(50);
+        assertEquals(50, instance.getNaf());
+        instance.setNaf(save);
     }
 
     /**
@@ -454,12 +681,18 @@ public class CoachNGTest {
     @Test
     public void testGetRank() {
         System.out.println("getRank");
-        Coach instance = new Coach();
-        int expResult = 0;
-        int result = instance.getRank();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        int save = instance.getRank();
+        instance.setRank(50);
+        assertTrue(instance.getRank() == 50);
+        instance.setRank(save);
     }
 
     /**
@@ -468,11 +701,18 @@ public class CoachNGTest {
     @Test
     public void testSetRank() {
         System.out.println("setRank");
-        int mRank = 0;
-        Coach instance = new Coach();
-        instance.setRank(mRank);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        int save = instance.getRank();
+        instance.setRank(50);
+        assertTrue(instance.getRank() == 50);
+        instance.setRank(save);
     }
 
     /**
@@ -481,12 +721,21 @@ public class CoachNGTest {
     @Test
     public void testIsActive() {
         System.out.println("isActive");
-        Coach instance = new Coach();
-        boolean expResult = false;
-        boolean result = instance.isActive();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        boolean save = instance.isActive();
+        instance.setActive(true);
+        assertEquals(true, instance.isActive());
+        instance.setActive(false);
+        assertEquals(false, instance.isActive());
+
+        instance.setActive(save);
     }
 
     /**
@@ -495,11 +744,21 @@ public class CoachNGTest {
     @Test
     public void testSetActive() {
         System.out.println("setActive");
-        boolean mActive = false;
-        Coach instance = new Coach();
-        instance.setActive(mActive);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        boolean save = instance.isActive();
+        instance.setActive(true);
+        assertEquals(true, instance.isActive());
+        instance.setActive(false);
+        assertEquals(false, instance.isActive());
+
+        instance.setActive(save);
     }
 
     /**
@@ -508,12 +767,18 @@ public class CoachNGTest {
     @Test
     public void testGetTeamMates() {
         System.out.println("getTeamMates");
-        Coach instance = new Coach();
-        Team expResult = null;
-        Team result = instance.getTeamMates();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        Team save = instance.getTeamMates();
+        instance.setTeamMates(Team.getNullTeam());
+        assertEquals(instance.getTeamMates().getName(), StringConstants.CS_NONE);
+        instance.setTeamMates(save);
     }
 
     /**
@@ -522,11 +787,18 @@ public class CoachNGTest {
     @Test
     public void testSetTeamMates() {
         System.out.println("setTeamMates");
-        Team mTeamMates = null;
-        Coach instance = new Coach();
-        instance.setTeamMates(mTeamMates);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        Team save = instance.getTeamMates();
+        instance.setTeamMates(Team.getNullTeam());
+        assertEquals(instance.getTeamMates().getName(), StringConstants.CS_NONE);
+        instance.setTeamMates(save);
     }
 
     /**
@@ -535,12 +807,18 @@ public class CoachNGTest {
     @Test
     public void testGetNafRank() {
         System.out.println("getNafRank");
-        Coach instance = new Coach();
-        double expResult = 0.0;
-        double result = instance.getNafRank();
-        assertEquals(result, expResult, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        double save = instance.getNafRank();
+        instance.setNafRank(50.0);
+        assertEquals(50.0, instance.getNafRank());
+        instance.setNafRank(save);
     }
 
     /**
@@ -549,11 +827,18 @@ public class CoachNGTest {
     @Test
     public void testSetNafRank() {
         System.out.println("setNafRank");
-        double mNafRank = 0.0;
-        Coach instance = new Coach();
-        instance.setNafRank(mNafRank);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        double save = instance.getNafRank();
+        instance.setNafRank(50);
+        assertTrue(Math.abs(50.0 - instance.getNafRank()) < 0.01);
+        instance.setNafRank(save);
     }
 
     /**
@@ -562,12 +847,18 @@ public class CoachNGTest {
     @Test
     public void testGetHandicap() {
         System.out.println("getHandicap");
-        Coach instance = new Coach();
-        int expResult = 0;
-        int result = instance.getHandicap();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        int save = instance.getHandicap();
+        instance.setHandicap(50);
+        assertEquals(50, instance.getHandicap());
+        instance.setHandicap(save);
     }
 
     /**
@@ -576,11 +867,18 @@ public class CoachNGTest {
     @Test
     public void testSetHandicap() {
         System.out.println("setHandicap");
-        int mHandicap = 0;
-        Coach instance = new Coach();
-        instance.setHandicap(mHandicap);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+        Coach instance = Coach.getCoach("Lord Bojo");
+
+        int save = instance.getHandicap();
+        instance.setHandicap(50);
+        assertEquals(50, instance.getHandicap());
+        instance.setHandicap(save);
     }
-    
+
 }

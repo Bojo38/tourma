@@ -71,11 +71,10 @@ public class CoachMatch extends Match {
      */
     private boolean concedeedBy2 = false;
 
-    public HashMap<Criteria, Value> getValues()
-    {
+    public HashMap<Criteria, Value> getValues() {
         return mValues;
     }
-    
+
     /**
      *
      * @param round
@@ -111,17 +110,20 @@ public class CoachMatch extends Match {
             equality &= (this.refusedBy2 == cm.refusedBy2);
             equality &= (this.mRoster1 == cm.mRoster1);
             equality &= (this.mRoster2 == cm.mRoster2);
-            equality &= (this.getCompetitor1().equals(cm.getCompetitor1()));
-            equality &= (this.getCompetitor2().equals(cm.getCompetitor2()));
+            if ((getCompetitor1() != null) && (getCompetitor2() != null)) {
+                equality &= (this.getCompetitor1().equals(cm.getCompetitor1()));
+                equality &= (this.getCompetitor2().equals(cm.getCompetitor2()));
+            }
+
             for (Criteria crit : this.mValues.keySet()) {
                 Value v = cm.getValue(crit);
                 if (v == null) {
                     return false;
                 }
-                equality&=v.getValue1()==this.mValues.get(crit).getValue1();
-                equality&=v.getValue2()==this.mValues.get(crit).getValue2();
+                equality &= v.getValue1() == this.mValues.get(crit).getValue1();
+                equality &= v.getValue2() == this.mValues.get(crit).getValue2();
             }
-            equality&=this.getRound()==cm.getRound();
+            equality &= this.getRound() == cm.getRound();
 
             return equality;
 
@@ -188,7 +190,8 @@ public class CoachMatch extends Match {
      * @param match
      */
     @Override
-    public void setXMLElement(final Element match) {
+    public void setXMLElement(final Element match
+    ) {
         try {
             final String c1 = match.getAttribute(StringConstants.CS_COACH + 1).getValue();
             final String c2 = match.getAttribute(StringConstants.CS_COACH + 2).getValue();
