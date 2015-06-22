@@ -7,21 +7,25 @@ package tourma.data;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.ImageIcon;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class CompetitorNGTest {
-    
+
     public CompetitorNGTest() {
     }
 
@@ -35,6 +39,7 @@ public class CompetitorNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/coach.xml"));
     }
 
     @AfterMethod
@@ -48,11 +53,8 @@ public class CompetitorNGTest {
     public void testGenerateRandomColor() {
         System.out.println("generateRandomColor");
         Color mix = null;
-        Color expResult = null;
         Color result = Competitor.generateRandomColor(mix);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -61,12 +63,11 @@ public class CompetitorNGTest {
     @Test
     public void testAddMatch_Competitor_Round() {
         System.out.println("addMatch");
-        Competitor opponent = null;
-        Round r = null;
+        Competitor opponent = new CompetitorImpl();
+        Round r = new Round();
         Competitor instance = new CompetitorImpl();
         instance.addMatch(opponent, r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(instance.getMatchCount() == 1);
     }
 
     /**
@@ -75,18 +76,17 @@ public class CompetitorNGTest {
     @Test
     public void testAddMatchRoundRobin() {
         System.out.println("addMatchRoundRobin");
-        Competitor opponent = null;
-        Round r = null;
+        Competitor opponent = new CompetitorImpl();
+        Round r = new Round();
         Competitor instance = new CompetitorImpl();
         instance.addMatchRoundRobin(opponent, r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(instance.getMatchCount() == 1);
     }
 
     /**
      * Test of havePlayed method, of class Competitor.
      */
-    @Test
+    @Test(enabled = false)
     public void testHavePlayed() {
         System.out.println("havePlayed");
         Competitor opponent = null;
@@ -94,14 +94,13 @@ public class CompetitorNGTest {
         boolean expResult = false;
         boolean result = instance.havePlayed(opponent);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of getPossibleOpponents method, of class Competitor.
      */
-    @Test
+    @Test(enabled = false)
     public void testGetPossibleOpponents() {
         System.out.println("getPossibleOpponents");
         ArrayList<Competitor> opponents = null;
@@ -110,41 +109,36 @@ public class CompetitorNGTest {
         ArrayList expResult = null;
         ArrayList result = instance.getPossibleOpponents(opponents, r);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of getDecoratedName method, of class Competitor.
      */
-    @Test
+    @Test(enabled = false)
     public void testGetDecoratedName() {
         System.out.println("getDecoratedName");
         Competitor instance = new CompetitorImpl();
         String expResult = "";
         String result = instance.getDecoratedName();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of roundCheck method, of class Competitor.
      */
-    @Test
+    @Test(enabled = false)
     public void testRoundCheck() {
         System.out.println("roundCheck");
         Round r = null;
         Competitor instance = new CompetitorImpl();
         instance.roundCheck(r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of getTeamOppositionCount method, of class Competitor.
      */
-    @Test
+    @Test(enabled = false)
     public void testGetTeamOppositionCount() {
         System.out.println("getTeamOppositionCount");
         ArrayList<Team> teams = null;
@@ -153,8 +147,6 @@ public class CompetitorNGTest {
         HashMap expResult = null;
         HashMap result = instance.getTeamOppositionCount(teams, current);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -164,11 +156,11 @@ public class CompetitorNGTest {
     public void testToString() {
         System.out.println("toString");
         Competitor instance = new CompetitorImpl();
-        String expResult = "";
+        String expResult = "Test";
+        instance.setName(expResult);
         String result = instance.toString();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -178,11 +170,10 @@ public class CompetitorNGTest {
     public void testGetName() {
         System.out.println("getName");
         Competitor instance = new CompetitorImpl();
-        String expResult = "";
+        String expResult = "Test";
+        instance.setName(expResult);
         String result = instance.getName();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -192,11 +183,12 @@ public class CompetitorNGTest {
     public void testGetPicture() {
         System.out.println("getPicture");
         Competitor instance = new CompetitorImpl();
-        BufferedImage expResult = null;
-        BufferedImage result = instance.getPicture();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ImageIcon icon = new ImageIcon("./test/clan.png");
+        BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        instance.setPicture(p);
+
+        assertNotNull(instance.getPicture());
+        assertEquals(p, instance.getPicture());
     }
 
     /**
@@ -205,11 +197,11 @@ public class CompetitorNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String mName = "";
         Competitor instance = new CompetitorImpl();
-        instance.setName(mName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "Test";
+        instance.setName(expResult);
+        String result = instance.getName();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -219,11 +211,9 @@ public class CompetitorNGTest {
     public void testGetColor() {
         System.out.println("getColor");
         Competitor instance = new CompetitorImpl();
-        Color expResult = null;
-        Color result = instance.getColor();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Color expResult = new Color(456789);
+        instance.setColor(expResult);
+        assertEquals(instance.getColor(), expResult);
     }
 
     /**
@@ -232,11 +222,10 @@ public class CompetitorNGTest {
     @Test
     public void testSetColor() {
         System.out.println("setColor");
-        Color mColor = null;
         Competitor instance = new CompetitorImpl();
-        instance.setColor(mColor);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Color expResult = new Color(456789);
+        instance.setColor(expResult);
+        assertEquals(instance.getColor(), expResult);
     }
 
     /**
@@ -245,11 +234,13 @@ public class CompetitorNGTest {
     @Test
     public void testSetPicture() {
         System.out.println("setPicture");
-        BufferedImage picture = null;
         Competitor instance = new CompetitorImpl();
-        instance.setPicture(picture);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ImageIcon icon = new ImageIcon("./test/clan.png");
+        BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        instance.setPicture(p);
+
+        assertNotNull(instance.getPicture());
+        assertEquals(p, instance.getPicture());
     }
 
     /**
@@ -259,11 +250,11 @@ public class CompetitorNGTest {
     public void testGetClan() {
         System.out.println("getClan");
         Competitor instance = new CompetitorImpl();
-        Clan expResult = null;
-        Clan result = instance.getClan();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Clan expResult = new Clan("Test");
+        assertEquals(instance.getClan(), null);
+        instance.setClan(expResult);
+        assertEquals(instance.getClan(), expResult);
+
     }
 
     /**
@@ -272,11 +263,11 @@ public class CompetitorNGTest {
     @Test
     public void testSetClan() {
         System.out.println("setClan");
-        Clan mClan = null;
         Competitor instance = new CompetitorImpl();
-        instance.setClan(mClan);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Clan expResult = new Clan("Test");
+        assertEquals(instance.getClan(), null);
+        instance.setClan(expResult);
+        assertEquals(instance.getClan(), expResult);
     }
 
     /**
@@ -285,13 +276,15 @@ public class CompetitorNGTest {
     @Test
     public void testGetMatch() {
         System.out.println("getMatch");
-        int i = 0;
+        Competitor opponent = new CompetitorImpl();
+        Round r = new Round();
         Competitor instance = new CompetitorImpl();
-        Match expResult = null;
-        Match result = instance.getMatch(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Match m = new CoachMatch(r);
+        m.setCompetitor1(instance);
+        m.setCompetitor2(opponent);
+        instance.addMatch(m);
+        Match result = instance.getMatch(0);
+        Assert.assertTrue(result == m);
     }
 
     /**
@@ -300,12 +293,15 @@ public class CompetitorNGTest {
     @Test
     public void testGetMatchCount() {
         System.out.println("getMatchCount");
+        Competitor opponent = new CompetitorImpl();
+        Round r = new Round();
         Competitor instance = new CompetitorImpl();
-        int expResult = 0;
-        int result = instance.getMatchCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Match m = new CoachMatch(r);
+        m.setCompetitor1(instance);
+        m.setCompetitor2(opponent);
+        instance.addMatch(m);
+        int count = instance.getMatchCount();
+        assertEquals(count, 1);
     }
 
     /**
@@ -314,11 +310,14 @@ public class CompetitorNGTest {
     @Test
     public void testAddMatch_Match() {
         System.out.println("addMatch");
-        Match m = null;
+        Competitor opponent = new CompetitorImpl();
+        Round r = new Round();
         Competitor instance = new CompetitorImpl();
+        Match m = new CoachMatch(r);
+        m.setCompetitor1(instance);
+        m.setCompetitor2(opponent);
         instance.addMatch(m);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(instance.getMatchCount() == 1);
     }
 
     /**
@@ -327,11 +326,19 @@ public class CompetitorNGTest {
     @Test
     public void testRemoveMatch() {
         System.out.println("removeMatch");
-        Match m = null;
+        Competitor opponent = new CompetitorImpl();
+        Round r = new Round();
         Competitor instance = new CompetitorImpl();
+        instance.setName("Test");
+        opponent.setName("Test2");
+        instance.newMatchs();
+        Match m = new CoachMatch(r);
+        m.setCompetitor1(instance);
+        m.setCompetitor2(opponent);
+        instance.addMatch(m);
+        Assert.assertTrue(instance.getMatchCount() == 1);
         instance.removeMatch(m);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(instance.getMatchCount() == 0);
     }
 
     /**
@@ -341,11 +348,10 @@ public class CompetitorNGTest {
     public void testIsMatchsNotNull() {
         System.out.println("isMatchsNotNull");
         Competitor instance = new CompetitorImpl();
-        boolean expResult = false;
-        boolean result = instance.isMatchsNotNull();
+        boolean expResult = true;
+        instance.newMatchs();
+        boolean result = instance.isMatchsNotNull();        
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -356,8 +362,7 @@ public class CompetitorNGTest {
         System.out.println("newMatchs");
         Competitor instance = new CompetitorImpl();
         instance.newMatchs();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getMatchCount(), 0);
     }
 
     /**
@@ -366,13 +371,18 @@ public class CompetitorNGTest {
     @Test
     public void testMatchIndex() {
         System.out.println("matchIndex");
-        Match m = null;
+        Competitor opponent = new CompetitorImpl();
+        Round r = new Round();
         Competitor instance = new CompetitorImpl();
-        int expResult = 0;
-        int result = instance.matchIndex(m);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Match m = new CoachMatch(r);
+        m.setCompetitor1(instance);
+        m.setCompetitor2(opponent);
+        instance.addMatch(m);
+         instance.setName("Test");
+          opponent.setName("Test2");
+        int index=instance.matchIndex(m) ;
+        Assert.assertTrue(index== 0);
+
     }
 
     /**
@@ -381,18 +391,32 @@ public class CompetitorNGTest {
     @Test
     public void testClearMatchs() {
         System.out.println("clearMatchs");
+        Competitor opponent = new CompetitorImpl();
+        Round r = new Round();
         Competitor instance = new CompetitorImpl();
+        Match m = new CoachMatch(r);
+        m.setCompetitor1(instance);
+        m.setCompetitor2(opponent);
+        instance.addMatch(m);
+        Assert.assertTrue(instance.getMatchCount() == 1);
         instance.clearMatchs();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(instance.getMatchCount() == 0);
     }
 
     public class CompetitorImpl extends Competitor {
 
         public void addMatch(Competitor opponent, Round r) {
+            Match m = new CoachMatch(r);
+            m.setCompetitor1(this);
+            m.setCompetitor2(opponent);
+            mMatchs.add(m);
         }
 
         public void addMatchRoundRobin(Competitor opponent, Round r) {
+            Match m = new CoachMatch(r);
+            m.setCompetitor1(this);
+            m.setCompetitor2(opponent);
+            mMatchs.add(m);
         }
 
         public boolean havePlayed(Competitor opponent) {
@@ -418,9 +442,7 @@ public class CompetitorNGTest {
         public int compareTo(Object o) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-        
-        
-        
+
     }
 
     /**
@@ -429,13 +451,12 @@ public class CompetitorNGTest {
     @Test
     public void testContainsCategory() {
         System.out.println("containsCategory");
-        Category cat = null;
         Competitor instance = new CompetitorImpl();
-        boolean expResult = false;
-        boolean result = instance.containsCategory(cat);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Category expResult = new Category("Test");
+        Assert.assertFalse(instance.containsCategory(expResult));
+        instance.addCategory(expResult);
+        Assert.assertTrue(instance.containsCategory(expResult));
+
     }
 
     /**
@@ -445,11 +466,11 @@ public class CompetitorNGTest {
     public void testGetCategoryCount() {
         System.out.println("getCategoryCount");
         Competitor instance = new CompetitorImpl();
-        int expResult = 0;
-        int result = instance.getCategoryCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Category expResult = new Category("Test");
+        instance.addCategory(expResult);
+        assertEquals(instance.getCategoryCount(), 1);
+        instance.delCategory(expResult);
+        assertEquals(instance.getCategoryCount(), 0);
     }
 
     /**
@@ -458,13 +479,11 @@ public class CompetitorNGTest {
     @Test
     public void testGetCategory() {
         System.out.println("getCategory");
-        int i = 0;
         Competitor instance = new CompetitorImpl();
-        Category expResult = null;
-        Category result = instance.getCategory(i);
+        Category expResult = new Category("Test");
+        instance.addCategory(expResult);
+        Category result = instance.getCategory(0);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -473,11 +492,11 @@ public class CompetitorNGTest {
     @Test
     public void testAddCategory() {
         System.out.println("addCategory");
-        Category mCategory = null;
         Competitor instance = new CompetitorImpl();
-        instance.addCategory(mCategory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Category expResult = new Category("Test");
+        instance.addCategory(expResult);
+        Category result = instance.getCategory(0);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -486,11 +505,14 @@ public class CompetitorNGTest {
     @Test
     public void testDelCategory() {
         System.out.println("delCategory");
-        Category mCategory = null;
         Competitor instance = new CompetitorImpl();
-        instance.delCategory(mCategory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Category expResult = new Category("Test");
+        instance.addCategory(expResult);
+        Category result = instance.getCategory(0);
+        assertEquals(result, expResult);
+        instance.delCategory(expResult);
+        result = instance.getCategory(0);
+        assertEquals(result, null);
     }
 
     /**
@@ -500,9 +522,42 @@ public class CompetitorNGTest {
     public void testClearCategory() {
         System.out.println("clearCategory");
         Competitor instance = new CompetitorImpl();
+        Category expResult = new Category("Test");
+        instance.addCategory(expResult);
+        Category result = instance.getCategory(0);
+        assertEquals(result, expResult);
         instance.clearCategory();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        result = instance.getCategory(0);
+        assertEquals(result, null);
     }
-    
+
+    /**
+     * Test of equals method, of class Competitor.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object c = null;
+        Competitor instance = new CompetitorImpl();
+        instance.setName("Test");
+        Competitor instance2 = new CompetitorImpl();
+        instance2.setName("Test");
+        assertEquals(instance, instance2);
+
+    }
+
+    /**
+     * Test of hashCode method, of class Competitor.
+     */
+    @Test
+    public void testHashCode() {
+        System.out.println("hashCode");
+        Competitor instance = new CompetitorImpl();
+        instance.setName("Test");;
+
+        int result = instance.hashCode();
+        assertEquals(result, ("Test").hashCode());
+
+    }
+
 }

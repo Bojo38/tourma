@@ -6,18 +6,18 @@
 package tourma.data;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class ETeamPairingNGTest {
-    
+
     public ETeamPairingNGTest() {
     }
 
@@ -43,11 +43,13 @@ public class ETeamPairingNGTest {
     @Test
     public void testValues() {
         System.out.println("values");
-        ETeamPairing[] expResult = null;
+        ETeamPairing[] expResult = {
+            ETeamPairing.INDIVIDUAL_PAIRING,
+            ETeamPairing.TEAM_PAIRING
+        };
         ETeamPairing[] result = ETeamPairing.values();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -56,12 +58,11 @@ public class ETeamPairingNGTest {
     @Test
     public void testValueOf() {
         System.out.println("valueOf");
-        String name = "";
-        ETeamPairing expResult = null;
+        String name = "INDIVIDUAL_PAIRING";
+        ETeamPairing expResult = ETeamPairing.INDIVIDUAL_PAIRING;
         ETeamPairing result = ETeamPairing.valueOf(name);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
-    
+
 }

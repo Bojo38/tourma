@@ -7,7 +7,6 @@ package tourma.data;
 
 import org.jdom2.Element;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -44,12 +43,17 @@ public class CriteriaNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Criteria instance = null;
-        Element expResult = null;
+        Criteria instance = new Criteria("Test");
+        instance.setPointsAgainst(1);
+        instance.setPointsFor(2);
+        instance.setPointsTeamAgainst(3);
+        instance.setPointsTeamFor(4);
+        
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Criteria crit = new Criteria("None");
+        crit.setXMLElement(result);
+        assertEquals(instance, crit);
     }
 
     /**
@@ -58,11 +62,17 @@ public class CriteriaNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element criteria = null;
-        Criteria instance = null;
-        instance.setXMLElement(criteria);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance = new Criteria("Test");
+        instance.setPointsAgainst(1);
+        instance.setPointsFor(2);
+        instance.setPointsTeamAgainst(3);
+        instance.setPointsTeamFor(4);
+        
+        Element result = instance.getXMLElement();
+
+        Criteria crit = new Criteria("None");
+        crit.setXMLElement(result);
+        assertEquals(instance, crit);
     }
 
     /**
@@ -71,12 +81,9 @@ public class CriteriaNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Criteria instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance=new Criteria("Test");
+        instance.setName("Test2");
+        assertEquals(instance.getName(),"Test2");
     }
 
     /**
@@ -85,11 +92,9 @@ public class CriteriaNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String mName = "";
-        Criteria instance = null;
-        instance.setName(mName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance=new Criteria("Test");
+        instance.setName("Test2");
+        assertEquals(instance.getName(),"Test2");
     }
 
     /**
@@ -98,12 +103,10 @@ public class CriteriaNGTest {
     @Test
     public void testGetPointsFor() {
         System.out.println("getPointsFor");
-        Criteria instance = null;
-        int expResult = 0;
-        int result = instance.getPointsFor();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance=new Criteria("Test");
+        int value=15;
+        instance.setPointsFor(value);
+        assertEquals(instance.getPointsFor(),value);
     }
 
     /**
@@ -112,11 +115,10 @@ public class CriteriaNGTest {
     @Test
     public void testSetPointsFor() {
         System.out.println("setPointsFor");
-        int mPointsFor = 0;
-        Criteria instance = null;
-        instance.setPointsFor(mPointsFor);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Criteria instance=new Criteria("Test");
+        int value=15;
+        instance.setPointsFor(value);
+        assertEquals(instance.getPointsFor(),value);
     }
 
     /**
@@ -125,12 +127,10 @@ public class CriteriaNGTest {
     @Test
     public void testGetPointsAgainst() {
         System.out.println("getPointsAgainst");
-        Criteria instance = null;
-        int expResult = 0;
-        int result = instance.getPointsAgainst();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Criteria instance=new Criteria("Test");
+        int value=18;
+        instance.setPointsAgainst(value);
+        assertEquals(instance.getPointsAgainst(),value);
     }
 
     /**
@@ -139,11 +139,10 @@ public class CriteriaNGTest {
     @Test
     public void testSetPointsAgainst() {
         System.out.println("setPointsAgainst");
-        int mPointsAgainst = 0;
-        Criteria instance = null;
-        instance.setPointsAgainst(mPointsAgainst);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         Criteria instance=new Criteria("Test");
+        int value=18;
+        instance.setPointsAgainst(value);
+        assertEquals(instance.getPointsAgainst(),value);
     }
 
     /**
@@ -152,12 +151,10 @@ public class CriteriaNGTest {
     @Test
     public void testGetPointsTeamFor() {
         System.out.println("getPointsTeamFor");
-        Criteria instance = null;
-        int expResult = 0;
-        int result = instance.getPointsTeamFor();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         Criteria instance=new Criteria("Test");
+        int value=21;
+        instance.setPointsTeamFor(value);
+        assertEquals(instance.getPointsTeamFor(),value);
     }
 
     /**
@@ -166,11 +163,10 @@ public class CriteriaNGTest {
     @Test
     public void testSetPointsTeamFor() {
         System.out.println("setPointsTeamFor");
-        int mPointsTeamFor = 0;
-        Criteria instance = null;
-        instance.setPointsTeamFor(mPointsTeamFor);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+          Criteria instance=new Criteria("Test");
+        int value=21;
+        instance.setPointsTeamFor(value);
+        assertEquals(instance.getPointsTeamFor(),value);
     }
 
     /**
@@ -179,12 +175,10 @@ public class CriteriaNGTest {
     @Test
     public void testGetPointsTeamAgainst() {
         System.out.println("getPointsTeamAgainst");
-        Criteria instance = null;
-        int expResult = 0;
-        int result = instance.getPointsTeamAgainst();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+           Criteria instance=new Criteria("Test");
+        int value=21;
+        instance.setPointsTeamAgainst(value);
+        assertEquals(instance.getPointsTeamAgainst(),value);
     }
 
     /**
@@ -193,11 +187,10 @@ public class CriteriaNGTest {
     @Test
     public void testSetPointsTeamAgainst() {
         System.out.println("setPointsTeamAgainst");
-        int mPointsTeamAgainst = 0;
-        Criteria instance = null;
-        instance.setPointsTeamAgainst(mPointsTeamAgainst);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+          Criteria instance=new Criteria("Test");
+        int value=21;
+        instance.setPointsTeamAgainst(value);
+        assertEquals(instance.getPointsTeamAgainst(),value);
     }
     
 }

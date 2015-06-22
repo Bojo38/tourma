@@ -6,18 +6,18 @@
 package tourma.data;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class EIndivPairingNGTest {
-    
+
     public EIndivPairingNGTest() {
     }
 
@@ -43,11 +43,14 @@ public class EIndivPairingNGTest {
     @Test
     public void testValues() {
         System.out.println("values");
-        EIndivPairing[] expResult = null;
+        EIndivPairing[] expResult = {
+            EIndivPairing.RANKING,
+            EIndivPairing.FREE,
+            EIndivPairing.RANDOM,
+            EIndivPairing.NAF
+        };
         EIndivPairing[] result = EIndivPairing.values();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -56,12 +59,11 @@ public class EIndivPairingNGTest {
     @Test
     public void testValueOf() {
         System.out.println("valueOf");
-        String name = "";
-        EIndivPairing expResult = null;
+        String name = "RANKING";
+        EIndivPairing expResult = EIndivPairing.RANKING;
         EIndivPairing result = EIndivPairing.valueOf(name);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
-    
+
 }

@@ -136,7 +136,14 @@ public class Group implements XMLExport {
      * @return the mRosters
      */
     public RosterType getRoster(int i) {
+        if (i<mRosters.size())
+        {
         return mRosters.get(i);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -170,6 +177,32 @@ public class Group implements XMLExport {
         this.mRosters = new ArrayList<>();
     }
 
+     /**
+     * 
+     * @param obj
+     * @return 
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        
+        boolean result;
+        result = false;
+        if (obj instanceof Group) {
+            Group g=(Group) obj;
+            result=this.getName().equals(g.getName());
+            result&=this.getRosterCount()==g.getRosterCount();
+            for (RosterType rt:mRosters)
+            {
+                result&=g.containsRoster(rt);
+            }
+            for (Group og:opponentModificationPoints.keySet())
+            {
+                result&=getOpponentModificationPoints(og).equals(g.getOpponentModificationPoints(og)); ;
+            }
+        } 
+        return result;
+    }
+    
     /**
      * @param g
      * @return the opponentModificationPoints
