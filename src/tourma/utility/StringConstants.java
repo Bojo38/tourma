@@ -102,7 +102,7 @@ public interface StringConstants {
      */
     public static final String CS_LANGUAGE_RESOURCE = "tourma/languages/language";
 
-    public static final String CS_GROUP = "group";
+    public static final String CS_GROUP = "Group";
     public static final String CS_PICTURE = "Picture";
     public static final String CS_NAF = "NAF";
     public static final String CS_RANK = "Rank";

@@ -274,7 +274,7 @@ public final class LRB {
                 Iterator<Element> i = l_skills.iterator();
                 while (i.hasNext()) {
                     Element e_skill = i.next();
-                    Skill s = getSkill(e_skill.getValue(),false);
+                    Skill s = getSkill(e_skill.getValue(), false);
                     if (s == null) {
                         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
                     } else {
@@ -349,7 +349,7 @@ public final class LRB {
                 Iterator<Element> i = skilllist.iterator();
                 while (i.hasNext()) {
                     Element e_skill = i.next();
-                    Skill s = getSkill(e_skill.getValue(),false);
+                    Skill s = getSkill(e_skill.getValue(), false);
                     if (s == null) {
                         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + sp.getName());
                     } else {
@@ -433,14 +433,18 @@ public final class LRB {
     public RosterType getRosterType(String name, boolean translate) {
         int i;
         for (i = 0; i < getRosterTypeCount(); i++) {
-            RosterType rt = getRosterType(i);
-            if (translate) {
-                if (name.equals(Translate.translate(rt.getName()))) {
-                    return rt;
-                }
-            } else {
-                if (name.equals(rt.getName())) {
-                    return rt;
+            RosterType rt = getRosterType(i);            
+            if (rt != null) {
+                if (rt.getName() != null) {
+                    if (translate) {
+                        if (name.equals(Translate.translate(rt.getName()))) {
+                            return rt;
+                        }
+                    } else {
+                        if (name.equals(rt.getName())) {
+                            return rt;
+                        }
+                    }
                 }
             }
         }

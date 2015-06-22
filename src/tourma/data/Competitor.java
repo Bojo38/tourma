@@ -41,7 +41,8 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
     @Override
      public boolean equals(Object c) {
         if (c instanceof Competitor) {
-            return getName().equals(((IWithNameAndPicture) c).getName());
+            Competitor comp=(Competitor)c;
+            return getName().equals(comp.getName());
         }
         return false;
     }

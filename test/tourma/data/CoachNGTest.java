@@ -32,7 +32,7 @@ public class CoachNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        Tournament.getTournament().loadXML(new File("./test/coach.xml"));
+
     }
 
     @AfterClass
@@ -41,6 +41,7 @@ public class CoachNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/coach.xml"));
     }
 
     @AfterMethod
@@ -435,7 +436,7 @@ public class CoachNGTest {
             }
             Assert.assertFalse(result.contains(c2));
         }
-        assertEquals(result.size(), Tournament.getTournament().getCoachCount() - instance.getMatchCount()-1);
+        assertEquals(result.size(), Tournament.getTournament().getCoachCount() - instance.getMatchCount() - 1);
 
     }
 
@@ -445,14 +446,29 @@ public class CoachNGTest {
     @Test
     public void testGetTeamOppositionCount() {
         System.out.println("getTeamOppositionCount");
-        ArrayList<Team> teams = null;
-        Round r = null;
-        Coach instance = new Coach();
-        HashMap expResult = null;
-        HashMap result = instance.getTeamOppositionCount(teams, r);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/coach2.xml"));
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+
+        Coach instance = Coach.getCoach("Jeff");
+        ArrayList<Team> teams = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+            if (!Tournament.getTournament().getTeam(i).equals(instance.getTeamMates())) {
+                teams.add(Tournament.getTournament().getTeam(i));
+            }
+        }
+        HashMap<Team, Integer> map = instance.getTeamOppositionCount(teams, Tournament.getTournament().getRound(0));
+        for (Team t : map.keySet()) {
+            if (t.getName().equals("Italy")) {
+                assertEquals(map.get(t).intValue(), 2);
+            } else {
+                assertEquals(map.get(t).intValue(), 0);
+            }
+        }
     }
 
     /**
@@ -495,12 +511,12 @@ public class CoachNGTest {
             fail("No coach in tournament");
         }
         Coach instance = Coach.getCoach("Lord Bojo");
-        Coach n=new Coach("Opponent");
-        Round r=new Round();
+        Coach n = new Coach("Opponent");
+        Round r = new Round();
         CoachMatch cm = new CoachMatch(r);
         int nb = instance.getMatchCount();
-        instance.addMatchRoundRobin(n,r);
-        assertEquals( 1, r.getMatchsCount());
+        instance.addMatchRoundRobin(n, r);
+        assertEquals(1, r.getMatchsCount());
     }
 
     /**
@@ -509,13 +525,20 @@ public class CoachNGTest {
     @Test
     public void testGetMinimumTeamsBalanced() {
         System.out.println("getMinimumTeamsBalanced");
-        Round round = null;
-        Coach instance = new Coach();
-        ArrayList expResult = null;
-        ArrayList result = instance.getMinimumTeamsBalanced(round);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/coach3.xml"));
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getCoachsCount() == 0) {
+            fail("No coach in tournament");
+        }
+
+        Coach instance = Coach.getCoach("Jeff");
+
+        ArrayList<Team> teams = instance.getMinimumTeamsBalanced(Tournament.getTournament().getRound(0));
+        for (Team t : teams) {
+            Assert.assertNotEquals(t.getName(), "Austria");
+        }
     }
 
     /**
@@ -534,26 +557,26 @@ public class CoachNGTest {
 
         CoachMatch cm4 = (CoachMatch) instance.getMatch(instance.getMatchCount() - 1);
         CoachMatch cm0 = (CoachMatch) instance.getMatch(0);
-        
-        
+
         Coach opponent;
         if (cm4.getCompetitor1() == instance) {
             cm0.setCompetitor1(instance);
             cm0.setCompetitor2(cm4.getCompetitor2());
-            opponent=(Coach)cm4.getCompetitor2();
+            opponent = (Coach) cm4.getCompetitor2();
         } else {
             cm0.setCompetitor1(instance);
             cm0.setCompetitor2(cm4.getCompetitor1());
-            opponent=(Coach)cm4.getCompetitor1();
+            opponent = (Coach) cm4.getCompetitor1();
         }
-        
+
         instance.roundCheck(cm4.getRound());
 
         CoachMatch cm4bis = (CoachMatch) instance.getMatch(instance.getMatchCount() - 1);
         if (cm4bis.getCompetitor1() == instance) {
             Assert.assertNotEquals(opponent, cm4bis.getCompetitor2());
         } else {
-            Assert.assertNotEquals(opponent, cm4bis.getCompetitor1());
+            boolean b=opponent.equals(cm4bis.getCompetitor1());
+            Assert.assertTrue(b);
         }
 
     }
