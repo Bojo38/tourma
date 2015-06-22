@@ -6,19 +6,20 @@
 package tourma.data;
 
 import org.jdom2.Element;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class ObjectAnnexRankingNGTest {
-    
+
     public ObjectAnnexRankingNGTest() {
     }
 
@@ -44,12 +45,15 @@ public class ObjectAnnexRankingNGTest {
     @Test
     public void testGetValue() {
         System.out.println("getValue");
-        ObjectAnnexRanking instance = null;
-        int expResult = 0;
-        int result = instance.getValue();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectAnnexRanking instance = new ObjectAnnexRanking(null, mValue, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue(mValue);
+        assertEquals(mValue, instance.getValue());
     }
 
     /**
@@ -58,13 +62,19 @@ public class ObjectAnnexRankingNGTest {
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        Object o = null;
-        ObjectAnnexRanking instance = null;
-        int expResult = 0;
-        int result = instance.compareTo(o);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectAnnexRanking instance = new ObjectAnnexRanking(null, mValue, mValue1, mValue2, mValue3, mValue4, mValue5);
+        ObjectAnnexRanking instance2 = new ObjectAnnexRanking(null, mValue, mValue1, mValue2, mValue3, mValue4, mValue5);
+        assertEquals(instance.compareTo(instance2),0);
+        instance2.setValue(12);
+        Assert.assertTrue(instance.compareTo(instance2)>0);
+        instance2.setValue(8);
+        Assert.assertTrue(instance.compareTo(instance2)<0);
     }
 
     /**
@@ -73,13 +83,15 @@ public class ObjectAnnexRankingNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object o = null;
-        ObjectAnnexRanking instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(o);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectAnnexRanking instance = new ObjectAnnexRanking(null, mValue, mValue1, mValue2, mValue3, mValue4, mValue5);
+        ObjectAnnexRanking instance2 = new ObjectAnnexRanking(null, mValue, mValue1, mValue2, mValue3, mValue4, mValue5);
+        assertEquals(instance, instance2);
     }
 
     /**
@@ -88,39 +100,41 @@ public class ObjectAnnexRankingNGTest {
     @Test
     public void testHashCode() {
         System.out.println("hashCode");
-        ObjectAnnexRanking instance = null;
-        int expResult = 0;
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectAnnexRanking instance = new ObjectAnnexRanking(null, mValue, mValue1, mValue2, mValue3, mValue4, mValue5);
+        int hash = 97 * 7 + mValue;
         int result = instance.hashCode();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, hash);
     }
 
     /**
      * Test of getXMLElement method, of class ObjectAnnexRanking.
      */
-    @Test
+    @Test(enabled = false)
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
         ObjectAnnexRanking instance = null;
         Element expResult = null;
         Element result = instance.getXMLElement();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of setXMLElement method, of class ObjectAnnexRanking.
      */
-    @Test
+    @Test(enabled = false)
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
         Element e = null;
         ObjectAnnexRanking instance = null;
         instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -129,11 +143,15 @@ public class ObjectAnnexRankingNGTest {
     @Test
     public void testSetValue() {
         System.out.println("setValue");
-        int mValue = 0;
-        ObjectAnnexRanking instance = null;
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectAnnexRanking instance = new ObjectAnnexRanking(null, mValue, mValue1, mValue2, mValue3, mValue4, mValue5);
         instance.setValue(mValue);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(mValue, instance.getValue());
     }
-    
+
 }

@@ -7,18 +7,19 @@ package tourma.data;
 
 import org.jdom2.Element;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class ObjectRankingNGTest {
-    
+
     public ObjectRankingNGTest() {
     }
 
@@ -44,12 +45,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testGetObject() {
         System.out.println("getObject");
-        ObjectRanking instance = null;
-        Comparable expResult = null;
-        Comparable result = instance.getObject();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        Coach c = new Coach("toto");
+        instance.setObject(c);
+        assertEquals(c.getName(), ((Coach) instance.getObject()).getName());
     }
 
     /**
@@ -58,12 +62,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testGetValue1() {
         System.out.println("getValue1");
-        ObjectRanking instance = null;
-        int expResult = 0;
-        int result = instance.getValue1();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue1(mValue);
+        assertEquals(mValue, instance.getValue1());
     }
 
     /**
@@ -72,12 +79,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testGetValue2() {
         System.out.println("getValue2");
-        ObjectRanking instance = null;
-        int expResult = 0;
-        int result = instance.getValue2();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue2(mValue);
+        assertEquals(mValue, instance.getValue2());
     }
 
     /**
@@ -86,12 +96,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testGetValue3() {
         System.out.println("getValue3");
-        ObjectRanking instance = null;
-        int expResult = 0;
-        int result = instance.getValue3();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue3(mValue);
+        assertEquals(mValue, instance.getValue3());
     }
 
     /**
@@ -100,12 +113,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testGetValue4() {
         System.out.println("getValue4");
-        ObjectRanking instance = null;
-        int expResult = 0;
-        int result = instance.getValue4();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue4(mValue);
+        assertEquals(mValue, instance.getValue4());
     }
 
     /**
@@ -114,12 +130,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testGetValue5() {
         System.out.println("getValue5");
-        ObjectRanking instance = null;
-        int expResult = 0;
-        int result = instance.getValue5();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue5(mValue);
+        assertEquals(mValue, instance.getValue5());
     }
 
     /**
@@ -128,13 +147,48 @@ public class ObjectRankingNGTest {
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        Object o = null;
-        ObjectRanking instance = null;
-        int expResult = 0;
-        int result = instance.compareTo(o);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        ObjectRanking instance2 = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        
+        assertTrue(instance.compareTo(instance2)==0);
+        instance2.setValue1(0);
+        assertTrue(instance.compareTo(instance2)<0);
+        instance2.setValue1(20);
+        assertTrue(instance.compareTo(instance2)>0);
+        instance2.setValue1(mValue1);
+        
+        assertTrue(instance.compareTo(instance2)==0);
+        instance2.setValue2(0);
+        assertTrue(instance.compareTo(instance2)<0);
+        instance2.setValue2(20);
+        assertTrue(instance.compareTo(instance2)>0);
+        instance2.setValue2(mValue2);
+        
+        assertTrue(instance.compareTo(instance2)==0);
+        instance2.setValue3(0);
+        assertTrue(instance.compareTo(instance2)<0);
+        instance2.setValue3(20);
+        assertTrue(instance.compareTo(instance2)>0);
+        instance2.setValue3(mValue3);
+        
+        assertTrue(instance.compareTo(instance2)==0);
+        instance2.setValue4(0);
+        assertTrue(instance.compareTo(instance2)<0);
+        instance2.setValue4(20);
+        assertTrue(instance.compareTo(instance2)>0);
+        instance2.setValue4(mValue4);
+        
+        assertTrue(instance.compareTo(instance2)==0);
+        instance2.setValue5(0);
+        assertTrue(instance.compareTo(instance2)<0);
+        instance2.setValue5(20);
+        assertTrue(instance.compareTo(instance2)>0);
+        instance2.setValue5(mValue5);
     }
 
     /**
@@ -143,12 +197,22 @@ public class ObjectRankingNGTest {
     @Test
     public void testHashCode() {
         System.out.println("hashCode");
-        ObjectRanking instance = null;
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Coach c=new Coach("toto");
+         int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(c, mValue1, mValue2, mValue3, mValue4, mValue5);
+        int result=instance.hashCode();
+        int hash = 5;
+        hash = 17 * hash + c.hashCode();
+        hash = 17 * hash + mValue1;
+        hash = 17 * hash + mValue2;
+        hash = 17 * hash + mValue3;
+        hash = 17 * hash + mValue4;
+        hash = 17 * hash + mValue5;
+        assertEquals(result, hash);
     }
 
     /**
@@ -157,13 +221,14 @@ public class ObjectRankingNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object o = null;
-        ObjectRanking instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(o);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        ObjectRanking instance2 = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        assertEquals(instance, instance2);
     }
 
     /**
@@ -172,25 +237,33 @@ public class ObjectRankingNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        ObjectRanking instance = null;
-        Element expResult = null;
+         int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        Coach c = new Coach("toto");
+        
+        instance.setObject(c);
+        
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String text=result.toString();
+        
+        assertEquals(text, "[Element: <Position/>]");
+      
     }
 
     /**
      * Test of setXMLElement method, of class ObjectRanking.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
         Element e = null;
         ObjectRanking instance = null;
         instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -199,11 +272,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testSetObject() {
         System.out.println("setObject");
-        Comparable mObject = null;
-        ObjectRanking instance = null;
-        instance.setObject(mObject);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        Coach c = new Coach("toto");
+        instance.setObject(c);
+        assertEquals(c.getName(), ((Coach) instance.getObject()).getName());
     }
 
     /**
@@ -212,11 +289,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testSetValue1() {
         System.out.println("setValue1");
-        int mValue1 = 0;
-        ObjectRanking instance = null;
-        instance.setValue1(mValue1);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue1(mValue);
+        assertEquals(mValue, instance.getValue1());
     }
 
     /**
@@ -225,11 +306,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testSetValue2() {
         System.out.println("setValue2");
-        int mValue2 = 0;
-        ObjectRanking instance = null;
-        instance.setValue2(mValue2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue2(mValue);
+        assertEquals(mValue, instance.getValue2());
     }
 
     /**
@@ -238,11 +323,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testSetValue3() {
         System.out.println("setValue3");
-        int mValue3 = 0;
-        ObjectRanking instance = null;
-        instance.setValue3(mValue3);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue3(mValue);
+        assertEquals(mValue, instance.getValue3());
     }
 
     /**
@@ -251,11 +340,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testSetValue4() {
         System.out.println("setValue4");
-        int mValue4 = 0;
-        ObjectRanking instance = null;
-        instance.setValue4(mValue4);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue4(mValue);
+        assertEquals(mValue, instance.getValue4());
     }
 
     /**
@@ -264,11 +357,15 @@ public class ObjectRankingNGTest {
     @Test
     public void testSetValue5() {
         System.out.println("setValue5");
-        int mValue5 = 0;
-        ObjectRanking instance = null;
-        instance.setValue5(mValue5);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue = 10;
+        int mValue1 = 1;
+        int mValue2 = 2;
+        int mValue3 = 3;
+        int mValue4 = 4;
+        int mValue5 = 5;
+        ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
+        instance.setValue5(mValue);
+        assertEquals(mValue, instance.getValue5());
     }
-    
+
 }

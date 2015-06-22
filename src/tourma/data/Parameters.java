@@ -1623,4 +1623,91 @@ public class Parameters implements XMLExport {
         return mUseLittleLoss;
     }
 
+     /**
+     * 
+     * @param obj
+     * @return 
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        
+        boolean result;
+        result = false;
+        if (obj instanceof Parameters) {
+            Parameters params=(Parameters) obj;
+            
+            result&=params.mBestResultsIndiv==this.mBestResultsIndiv;
+            result&=params.mBestResultsTeam==this.mBestResultsTeam;
+            result&=params.mClansMembersNumber==this.mClansMembersNumber;
+            result&=params.mGame==this.mGame;
+            
+            result&=params.mGapLargeVictory==this.mGapLargeVictory;
+            result&=params.mGapLittleLost==this.mGapLittleLost;
+            result&=params.mPointsConcedeed==this.mPointsConcedeed;
+            result&=params.mPointsIndivDraw==this.mPointsIndivDraw;
+            result&=params.mPointsIndivLargeVictory==this.mPointsIndivLargeVictory;
+            result&=params.mPointsIndivLittleLost==this.mPointsIndivLittleLost;
+            result&=params.mPointsIndivLost==this.mPointsIndivLost;
+            result&=params.mPointsIndivVictory==this.mPointsIndivVictory;
+            result&=params.mPointsRefused==this.mPointsRefused;
+            result&=params.mPointsTeamDraw==this.mPointsTeamDraw;
+            result&=params.mPointsTeamDrawBonus==this.mPointsTeamDrawBonus;
+            result&=params.mPointsTeamLost==this.mPointsTeamLost;
+            result&=params.mPointsTeamVictory==this.mPointsTeamVictory;
+            result&=params.mPointsTeamVictoryBonus==this.mPointsTeamVictoryBonus;
+            result&=params.mRankingIndiv1==this.mRankingIndiv1;
+            result&=params.mRankingIndiv2==this.mRankingIndiv2;
+            result&=params.mRankingIndiv3==this.mRankingIndiv3;
+            result&=params.mRankingIndiv4==this.mRankingIndiv4;
+            result&=params.mRankingIndiv5==this.mRankingIndiv5;
+            
+            result&=params.mRankingTeam1==this.mRankingTeam1;
+            result&=params.mRankingTeam2==this.mRankingTeam2;
+            result&=params.mRankingTeam3==this.mRankingTeam3;
+            result&=params.mRankingTeam4==this.mRankingTeam4;
+            result&=params.mRankingTeam5==this.mRankingTeam5;
+            
+            result&=params.mTeamMatesClansNumber==this.mTeamMatesClansNumber;
+            result&=params.mTeamMatesNumber==this.mTeamMatesNumber;
+            result&=params.mDate.equals(this.mDate);
+            result&=params.mPlace.equals(this.mPlace);
+            result&=params.mTournamentName.equals(this.mTournamentName);
+            result&=params.mTournamentOrga.equals(this.mTournamentOrga);
+            
+            result=params.mApplyToAnnexIndiv==this.mApplyToAnnexIndiv;
+            result&=params.mApplyToAnnexTeam==this.mApplyToAnnexTeam;
+            result&=params.mAvoidClansFirstMatch=this.mAvoidClansFirstMatch;
+            result&=params.mAvoidClansMatch==this.mAvoidClansMatch;
+            result&=params.mEnableClans==this.mEnableClans;
+            result&=params.mExceptBestAndWorstIndiv==this.mExceptBestAndWorstIndiv;
+            result&=params.mExceptBestAndWorstTeam==this.mExceptBestAndWorstTeam;
+            result&=params.mGroupsEnable==this.mGroupsEnable;
+            result&=params.mIndivPairingIndivBalanced==this.mIndivPairingIndivBalanced;
+            result&=params.mIndivPairingTeamBalanced==this.mIndivPairingTeamBalanced;
+            result&=params.mMultiRoster==this.mMultiRoster;
+            result&=params.mPortugal==this.mPortugal;
+            result&=params.mSubstitutes==this.mSubstitutes;
+            result&=params.mTableBonus==this.mTableBonus;
+            result&=params.mTableBonusPerRound==this.mTableBonusPerRound;
+            result&=params.mTeamTournament==this.mTeamTournament;
+            result&=params.mTeamVictoryOnly==this.mTeamVictoryOnly;
+            result&=params.mUseBestResultsIndiv==this.mUseBestResultsIndiv;
+            result&=params.mUseBestResultsTeam==this.mUseBestResultsTeam;
+            result&=params.mUseLargeVictory==this.mUseLargeVictory;
+            result&=params.mUseLittleLoss==this.mUseLittleLoss;
+            
+            result&=params.mTeamPairing==this.mTeamPairing;
+            result&=params.mTeamIndivPairing==this.mTeamIndivPairing;
+            
+            result&=Math.abs(params.mTableBonusCoef-this.mTableBonusCoef)<0.001;
+            
+            result&=params.mCriterias.size()==this.mCriterias.size();
+            for (Criteria c:mCriterias)
+            {
+                result&=params.mCriterias.contains(c);
+            }
+        } 
+        return result;
+    }
+    
 }

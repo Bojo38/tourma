@@ -7,18 +7,18 @@ package tourma.data;
 
 import org.jdom2.Element;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class MatchNGTest {
-    
+
     public MatchNGTest() {
     }
 
@@ -44,12 +44,14 @@ public class MatchNGTest {
     @Test
     public void testGetWinner() {
         System.out.println("getWinner");
-        Match instance = null;
-        Competitor expResult = null;
+        Match instance = new MatchImpl();
+        Competitor expResult = new Team("A");
+        instance.setCompetitor1(expResult);
+        instance.setCompetitor2(new Team("B"));
+        
+        instance.setWinner(expResult);
         Competitor result = instance.getWinner();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,12 +60,14 @@ public class MatchNGTest {
     @Test
     public void testGetLooser() {
         System.out.println("getLooser");
-        Match instance = null;
-        Competitor expResult = null;
-        Competitor result = instance.getLooser();
+        Match instance = new MatchImpl();
+        Competitor expResult = new Team("A");
+        instance.setCompetitor1(expResult);
+        instance.setCompetitor2(new Team("B"));
+        ((Match) instance).setLooser(expResult);
+        Competitor result = ((Match) instance).getLooser();
+
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -72,10 +76,17 @@ public class MatchNGTest {
     @Test
     public void testResetWL() {
         System.out.println("resetWL");
-        Match instance = null;
+        Match instance = new MatchImpl();
+        Competitor expResult = new Team("A");
+        instance.setCompetitor1(expResult);
+        instance.setCompetitor2(new Team("B"));
+        instance.setWinner(expResult);
+        Competitor result = instance.getWinner();
+        assertEquals(result, expResult);
         instance.resetWL();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         result = instance.getWinner();
+        assertEquals(result, null);
+
     }
 
     /**
@@ -84,12 +95,12 @@ public class MatchNGTest {
     @Test
     public void testGetCompetitor1() {
         System.out.println("getCompetitor1");
-        Match instance = null;
-        Competitor expResult = null;
+        Match instance = new MatchImpl();
+        Competitor expResult = new Coach("A");
+        instance.setCompetitor1(expResult);
+        instance.setCompetitor2(new Coach("B"));
         Competitor result = instance.getCompetitor1();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -98,11 +109,12 @@ public class MatchNGTest {
     @Test
     public void testSetCompetitor1() {
         System.out.println("setCompetitor1");
-        Competitor mCompetitor1 = null;
-        Match instance = null;
-        instance.setCompetitor1(mCompetitor1);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Match instance = new MatchImpl();
+        Competitor expResult = new Coach("A");
+        instance.setCompetitor1(expResult);
+        instance.setCompetitor2(new Coach("B"));
+        Competitor result = instance.getCompetitor1();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -111,12 +123,12 @@ public class MatchNGTest {
     @Test
     public void testGetCompetitor2() {
         System.out.println("getCompetitor2");
-        Match instance = null;
-        Competitor expResult = null;
+        Match instance = new MatchImpl();
+        Competitor expResult = new Coach("A");
+        instance.setCompetitor2(expResult);
+        instance.setCompetitor1(new Coach("B"));
         Competitor result = instance.getCompetitor2();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -125,11 +137,12 @@ public class MatchNGTest {
     @Test
     public void testSetCompetitor2() {
         System.out.println("setCompetitor2");
-        Competitor mCompetitor2 = null;
-        Match instance = null;
-        instance.setCompetitor2(mCompetitor2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Match instance = new MatchImpl();
+        Competitor expResult = new Coach("A");
+        instance.setCompetitor2(expResult);
+        instance.setCompetitor1(new Coach("B"));
+        Competitor result = instance.getCompetitor2();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -138,12 +151,10 @@ public class MatchNGTest {
     @Test
     public void testGetRound() {
         System.out.println("getRound");
-        Match instance = null;
-        Round expResult = null;
-        Round result = instance.getRound();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Round r=new Round();
+        Match instance = new MatchImpl();
+        instance.setRound(r);
+        assertEquals(r, instance.getRound());
     }
 
     /**
@@ -152,11 +163,10 @@ public class MatchNGTest {
     @Test
     public void testSetRound() {
         System.out.println("setRound");
-        Round mRound = null;
-        Match instance = null;
-        instance.setRound(mRound);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Round r=new Round();
+        Match instance = new MatchImpl();
+        instance.setRound(r);
+        assertEquals(r, instance.getRound());
     }
 
     /**
@@ -165,11 +175,14 @@ public class MatchNGTest {
     @Test
     public void testSetWinner() {
         System.out.println("setWinner");
-        Competitor mWinner = null;
-        Match instance = null;
-        instance.setWinner(mWinner);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         Match instance = new MatchImpl();
+        Competitor expResult = new Team("A");
+        instance.setCompetitor1(expResult);
+        instance.setCompetitor2(new Team("B"));
+        
+        instance.setWinner(expResult);
+        Competitor result = instance.getWinner();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -178,11 +191,14 @@ public class MatchNGTest {
     @Test
     public void testSetLooser() {
         System.out.println("setLooser");
-        Competitor mLooser = null;
-        Match instance = null;
-        instance.setLooser(mLooser);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Match instance = new MatchImpl();
+        Competitor expResult = new Team("A");
+        instance.setCompetitor1(expResult);
+        instance.setCompetitor2(new Team("B"));
+        ((Match) instance).setLooser(expResult);
+        Competitor result = ((Match) instance).getLooser();
+
+        assertEquals(result, expResult);
     }
 
     public class MatchImpl extends Match {
@@ -215,28 +231,24 @@ public class MatchNGTest {
     /**
      * Test of getXMLElementForDisplay method, of class Match.
      */
-    @Test
+    @Test(enabled = false)
     public void testGetXMLElementForDisplay() {
         System.out.println("getXMLElementForDisplay");
         Match instance = null;
         Element expResult = null;
         Element result = instance.getXMLElementForDisplay();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of setXMLElementForDisplay method, of class Match.
      */
-    @Test
+    @Test(enabled = false)
     public void testSetXMLElementForDisplay() {
         System.out.println("setXMLElementForDisplay");
         Element element = null;
         Match instance = null;
         instance.setXMLElementForDisplay(element);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-    
+
 }

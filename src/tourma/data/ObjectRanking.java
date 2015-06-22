@@ -174,8 +174,17 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
                 ic.setAttribute(new Attribute(StringConstants.CS_TEAMMATES, ""));
             }
 
-            ic.setAttribute(new Attribute(StringConstants.CS_CLAN, c.getClan().getName()));
-            ic.setAttribute(new Attribute(StringConstants.CS_ROSTER, c.getRoster().getName()));
+            if (c.getClan() != null) {
+                ic.setAttribute(new Attribute(StringConstants.CS_CLAN, c.getClan().getName()));
+            } else {
+                ic.setAttribute(new Attribute(StringConstants.CS_CLAN, StringConstants.CS_NONE));
+            }
+            if (c.getRoster() != null) {
+                ic.setAttribute(new Attribute(StringConstants.CS_ROSTER, c.getRoster().getName()));
+            } else {
+                ic.setAttribute(new Attribute(StringConstants.CS_ROSTER, StringConstants.CS_NONE));
+            }
+
             if ((Tournament.getTournament().getParams().isUseImage()) && (c.getPicture() != null)) {
                 Element image = new Element(StringConstants.CS_PICTURE);
                 if (c.getPicture() != null) {
@@ -267,11 +276,11 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
                 }
             }
         }
-        ic.setAttribute(new Attribute(StringConstants.CS_RANK+1, Integer.toString(getValue1())));
-        ic.setAttribute(new Attribute(StringConstants.CS_RANK+2, Integer.toString(getValue2())));
-        ic.setAttribute(new Attribute(StringConstants.CS_RANK+3, Integer.toString(getValue3())));
-        ic.setAttribute(new Attribute(StringConstants.CS_RANK+4, Integer.toString(getValue4())));
-        ic.setAttribute(new Attribute(StringConstants.CS_RANK+5, Integer.toString(getValue5())));
+        ic.setAttribute(new Attribute(StringConstants.CS_RANK + 1, Integer.toString(getValue1())));
+        ic.setAttribute(new Attribute(StringConstants.CS_RANK + 2, Integer.toString(getValue2())));
+        ic.setAttribute(new Attribute(StringConstants.CS_RANK + 3, Integer.toString(getValue3())));
+        ic.setAttribute(new Attribute(StringConstants.CS_RANK + 4, Integer.toString(getValue4())));
+        ic.setAttribute(new Attribute(StringConstants.CS_RANK + 5, Integer.toString(getValue5())));
 
         return ic;
     }
