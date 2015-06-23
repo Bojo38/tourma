@@ -123,7 +123,7 @@ public class CoachMatch extends Match {
                 equality &= v.getValue1() == this.mValues.get(crit).getValue1();
                 equality &= v.getValue2() == this.mValues.get(crit).getValue2();
             }
-            equality &= this.getRound() == cm.getRound();
+            //equality &= this.getRound() == cm.getRound();
 
             return equality;
 

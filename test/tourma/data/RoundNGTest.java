@@ -5,9 +5,13 @@
  */
 package tourma.data;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import org.jdom2.Element;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -15,12 +19,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.languages.Translate;
+
 /**
  *
  * @author WFMJ7631
  */
 public class RoundNGTest {
-    
+
     public RoundNGTest() {
     }
 
@@ -34,6 +40,7 @@ public class RoundNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/matchs.xml"));
     }
 
     @AfterMethod
@@ -46,12 +53,13 @@ public class RoundNGTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Round instance = new Round();
-        String expResult = "";
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        String expResult = Translate.translate(Translate.CS_Round_) + "1";
         String result = instance.toString();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,13 +68,13 @@ public class RoundNGTest {
     @Test
     public void testGetMatch() {
         System.out.println("getMatch");
-        int i = 0;
-        Round instance = new Round();
-        Match expResult = null;
-        Match result = instance.getMatch(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        for (int i = 0; i < instance.getMatchsCount(); i++) {
+            Assert.assertNotNull(instance.getMatch(i));
+        }
     }
 
     /**
@@ -75,12 +83,13 @@ public class RoundNGTest {
     @Test
     public void testGetMatchsCount() {
         System.out.println("getMatchsCount");
-        Round instance = new Round();
-        int expResult = 0;
-        int result = instance.getMatchsCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        for (int i = 0; i < instance.getMatchsCount(); i++) {
+            Assert.assertNotNull(instance.getMatch(i));
+        }
     }
 
     /**
@@ -89,11 +98,11 @@ public class RoundNGTest {
     @Test
     public void testAddMatch() {
         System.out.println("addMatch");
-        Match m = null;
         Round instance = new Round();
+        Match m = new CoachMatch(instance);
+        int nb = instance.getMatchsCount();
         instance.addMatch(m);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertEquals(nb + 1, instance.getMatchsCount());
     }
 
     /**
@@ -102,10 +111,19 @@ public class RoundNGTest {
     @Test
     public void testShuffleMatchs() {
         System.out.println("shuffleMatchs");
-        Round instance = new Round();
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int nb = instance.getMatchsCount();
+        for (int i = 0; i < instance.getMatchsCount(); i++) {
+            Assert.assertNotNull(instance.getMatch(i));
+        }
         instance.shuffleMatchs();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(nb, instance.getMatchsCount());
+        for (int i = 0; i < instance.getMatchsCount(); i++) {
+            Assert.assertNotNull(instance.getMatch(i));
+        }
     }
 
     /**
@@ -114,13 +132,22 @@ public class RoundNGTest {
     @Test
     public void testContainsMatch() {
         System.out.println("containsMatch");
-        Match m = null;
-        Round instance = new Round();
-        boolean expResult = false;
-        boolean result = instance.containsMatch(m);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int nb = instance.getMatchsCount();
+        for (int i = 0; i < instance.getMatchsCount(); i++) {
+            Assert.assertNotNull(instance.getMatch(i));
+        }
+        instance.shuffleMatchs();
+        assertEquals(nb, instance.getMatchsCount());
+        for (int i = 0; i < instance.getMatchsCount(); i++) {
+            Assert.assertTrue(instance.containsMatch(instance.getMatch(i)));
+        }
+
+        CoachMatch cm = new CoachMatch(instance);
+        Assert.assertFalse(instance.containsMatch(cm));
     }
 
     /**
@@ -129,10 +156,13 @@ public class RoundNGTest {
     @Test
     public void testClearMatchs() {
         System.out.println("clearMatchs");
-        Round instance = new Round();
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
         instance.clearMatchs();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int nb = instance.getMatchsCount();
+        Assert.assertEquals(nb, 0);
     }
 
     /**
@@ -141,12 +171,13 @@ public class RoundNGTest {
     @Test
     public void testGetCoachMatchs() {
         System.out.println("getCoachMatchs");
-        Round instance = new Round();
-        ArrayList expResult = null;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
         ArrayList result = instance.getCoachMatchs();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(result);
+        Assert.assertEquals(result.size(), instance.getMatchsCount());
     }
 
     /**
@@ -155,11 +186,15 @@ public class RoundNGTest {
     @Test
     public void testSetHour() {
         System.out.println("setHour");
-        String data = "";
-        Round instance = new Round();
-        instance.setHour(data);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        Date h = instance.getHour();
+        String d = "01/02/2003 04:05:06";
+        instance.setHour(d);
+        SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        assertEquals(d, format.format(instance.getHour()));
     }
 
     /**
@@ -168,10 +203,12 @@ public class RoundNGTest {
     @Test
     public void testSetCurrentHour() {
         System.out.println("setCurrentHour");
-        Round instance = new Round();
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
         instance.setCurrentHour();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(instance.getHour());
     }
 
     /**
@@ -180,12 +217,15 @@ public class RoundNGTest {
     @Test
     public void testGetHour() {
         System.out.println("getHour");
-        Round instance = new Round();
-        Date expResult = null;
-        Date result = instance.getHour();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        Date h = instance.getHour();
+        String d = "01/02/2003 04:05:06";
+        instance.setHour(d);
+        SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        assertEquals(d, format.format(instance.getHour()));
     }
 
     /**
@@ -194,12 +234,15 @@ public class RoundNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Round instance = new Round();
-        Element expResult = null;
+         if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);        
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Round instance2=new Round();
+        instance2.setXMLElement(result);
+        assertEquals(instance, instance2);
     }
 
     /**
@@ -208,11 +251,15 @@ public class RoundNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element round = null;
-        Round instance = new Round();
-        instance.setXMLElement(round);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);        
+        Element result = instance.getXMLElement();
+        
+        Round instance2=new Round();
+        instance2.setXMLElement(result);
+        assertEquals(instance, instance2);
     }
 
     /**
@@ -221,12 +268,14 @@ public class RoundNGTest {
     @Test
     public void testIsCup() {
         System.out.println("isCup");
-        Round instance = new Round();
+       if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
         boolean expResult = false;
+        instance.setCup(expResult);
         boolean result = instance.isCup();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -235,11 +284,14 @@ public class RoundNGTest {
     @Test
     public void testSetCup() {
         System.out.println("setCup");
-        boolean mCup = false;
-        Round instance = new Round();
-        instance.setCup(mCup);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        boolean expResult = false;
+        instance.setCup(expResult);
+        boolean result = instance.isCup();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -248,12 +300,14 @@ public class RoundNGTest {
     @Test
     public void testGetCupTour() {
         System.out.println("getCupTour");
-        Round instance = new Round();
-        int expResult = 0;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int expResult = 5;
+        instance.setCupTour(expResult);
         int result = instance.getCupTour();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -262,11 +316,14 @@ public class RoundNGTest {
     @Test
     public void testSetCupTour() {
         System.out.println("setCupTour");
-        int mCupTour = 0;
-        Round instance = new Round();
-        instance.setCupTour(mCupTour);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int expResult = 5;
+        instance.setCupTour(expResult);
+        int result = instance.getCupTour();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -275,12 +332,14 @@ public class RoundNGTest {
     @Test
     public void testGetCupMaxTour() {
         System.out.println("getCupMaxTour");
-        Round instance = new Round();
-        int expResult = 0;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int expResult = 7;
+        instance.setCupMaxTour(expResult);
         int result = instance.getCupMaxTour();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -289,11 +348,14 @@ public class RoundNGTest {
     @Test
     public void testSetCupMaxTour() {
         System.out.println("setCupMaxTour");
-        int mCupMaxTour = 0;
-        Round instance = new Round();
-        instance.setCupMaxTour(mCupMaxTour);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int expResult = 7;
+        instance.setCupMaxTour(expResult);
+        int result = instance.getCupMaxTour();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -302,12 +364,14 @@ public class RoundNGTest {
     @Test
     public void testIsLooserCup() {
         System.out.println("isLooserCup");
-        Round instance = new Round();
-        boolean expResult = false;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        boolean expResult = true;
+        instance.setLooserCup(expResult);
         boolean result = instance.isLooserCup();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -316,11 +380,14 @@ public class RoundNGTest {
     @Test
     public void testSetLooserCup() {
         System.out.println("setLooserCup");
-        boolean mLooserCup = false;
-        Round instance = new Round();
-        instance.setLooserCup(mLooserCup);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        boolean expResult = true;
+        instance.setLooserCup(expResult);
+        boolean result = instance.isLooserCup();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -329,11 +396,13 @@ public class RoundNGTest {
     @Test
     public void testRemoveMatch_int() {
         System.out.println("removeMatch");
-        int i = 0;
-        Round instance = new Round();
-        instance.removeMatch(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+          if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int nb=instance.getMatchsCount();
+        instance.removeMatch(0);
+        assertEquals(nb-1,instance.getMatchsCount());
     }
 
     /**
@@ -342,11 +411,14 @@ public class RoundNGTest {
     @Test
     public void testRemoveMatch_Match() {
         System.out.println("removeMatch");
-        Match i = null;
-        Round instance = new Round();
-        instance.removeMatch(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int nb=instance.getMatchsCount();
+        Match m=instance.getMatch(0);
+        instance.removeMatch(m);
+        assertEquals(nb-1,instance.getMatchsCount());
     }
 
     /**
@@ -355,12 +427,14 @@ public class RoundNGTest {
     @Test
     public void testGetMinBonus() {
         System.out.println("getMinBonus");
-        Round instance = new Round();
-        double expResult = 0.0;
+         if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        double expResult = 0.75;
+        instance.setMinBonus(expResult);
         double result = instance.getMinBonus();
-        assertEquals(result, expResult, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, expResult, 0.0001);
     }
 
     /**
@@ -369,12 +443,14 @@ public class RoundNGTest {
     @Test
     public void testGetMaxBonus() {
         System.out.println("getMaxBonus");
-        Round instance = new Round();
-        double expResult = 0.0;
+         if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        double expResult = 1.75;
+        instance.setMaxBonus(expResult);
         double result = instance.getMaxBonus();
-        assertEquals(result, expResult, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, expResult, 0.001);
     }
 
     /**
@@ -383,11 +459,14 @@ public class RoundNGTest {
     @Test
     public void testSetMinBonus() {
         System.out.println("setMinBonus");
-        double v = 0.0;
-        Round instance = new Round();
-        instance.setMinBonus(v);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        double expResult = 0.75;
+        instance.setMinBonus(expResult);
+        double result = instance.getMinBonus();
+        assertEquals(result, expResult, 0.0001);
     }
 
     /**
@@ -396,11 +475,14 @@ public class RoundNGTest {
     @Test
     public void testSetMaxBonus() {
         System.out.println("setMaxBonus");
-        double v = 0.0;
-        Round instance = new Round();
-        instance.setMaxBonus(v);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        double expResult = 1.75;
+        instance.setMaxBonus(expResult);
+        double result = instance.getMaxBonus();
+        assertEquals(result, expResult, 0.001);
     }
 
     /**
@@ -409,13 +491,30 @@ public class RoundNGTest {
     @Test
     public void testGetCoef() {
         System.out.println("getCoef");
-        Match m = null;
-        Round instance = new Round();
-        double expResult = 0.0;
-        double result = instance.getCoef(m);
-        assertEquals(result, expResult, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        Match mLast = instance.getMatch(0);
+        Match mFirst = instance.getMatch(instance.getMatchsCount()-1);
+        Match mMiddle = instance.getMatch(instance.getMatchsCount()/2);
+        
+        instance.setMaxBonus(2.0);
+        instance.setMinBonus(0.0);
+        
+        
+        double gap = instance.getMaxBonus() - instance.getMinBonus();
+        double steps = gap / instance.getMatchsCount();
+        double coefFirst = instance.getMinBonus() + steps * instance.getMatchsCount();
+        double coefMiddle = instance.getMinBonus() + steps * (instance.getMatchsCount()/2+1);
+        double coefLast = instance.getMinBonus() + steps * 1.0;
+        
+        double resultFirst = instance.getCoef(mFirst);
+        double resultLast = instance.getCoef(mLast);
+        double resultMiddle = instance.getCoef(mMiddle);
+        assertEquals(resultLast, coefLast, 0.0001);
+        assertEquals(resultMiddle, coefMiddle, 0.0001);
+        assertEquals(resultFirst, coefFirst, 0.0001);
     }
 
     /**
@@ -424,13 +523,16 @@ public class RoundNGTest {
     @Test
     public void testIndexOf() {
         System.out.println("indexOf");
-        Match m = null;
-        Round instance = new Round();
-        int expResult = 0;
-        int result = instance.indexOf(m);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);
+        int nb=instance.getMatchsCount();
+        Match m=instance.getMatch(0);        
+        assertEquals(0,instance.indexOf(m));
+        
+        instance.removeMatch(m);
+        assertEquals(-1,instance.indexOf(m));
     }
 
     /**
@@ -439,12 +541,15 @@ public class RoundNGTest {
     @Test
     public void testGetXMLElementForDisplay() {
         System.out.println("getXMLElementForDisplay");
-        Round instance = new Round();
-        Element expResult = null;
+         if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);        
         Element result = instance.getXMLElementForDisplay();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Round instance2=new Round();
+        instance2.setXMLElementForDisplay(result);
+        assertEquals(instance, instance2);
     }
 
     /**
@@ -453,11 +558,15 @@ public class RoundNGTest {
     @Test
     public void testSetXMLElementForDisplay() {
         System.out.println("setXMLElementForDisplay");
-        Element round = null;
-        Round instance = new Round();
-        instance.setXMLElementForDisplay(round);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in file");
+        }
+        Round instance = Tournament.getTournament().getRound(0);        
+        Element result = instance.getXMLElementForDisplay();
+        
+        Round instance2=new Round();
+        instance2.setXMLElementForDisplay(result);
+        assertEquals(instance, instance2);
     }
-    
+
 }

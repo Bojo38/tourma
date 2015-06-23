@@ -7,19 +7,20 @@ package tourma.data;
 
 import javax.swing.DefaultComboBoxModel;
 import org.jdom2.Element;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class RosterTypeNGTest {
-    
+
     public RosterTypeNGTest() {
     }
 
@@ -46,8 +47,7 @@ public class RosterTypeNGTest {
     public void testInitCollection_0args() {
         System.out.println("initCollection");
         RosterType.initCollection();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(RosterType.getRostersNamesCount() > 0);
     }
 
     /**
@@ -58,8 +58,10 @@ public class RosterTypeNGTest {
         System.out.println("initCollection");
         int game = 0;
         RosterType.initCollection(game);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(RosterType.getRostersNamesCount() > 0);
+        game = 1;
+        RosterType.initCollection(game);
+        Assert.assertTrue(RosterType.getRostersNamesCount() > 0);
     }
 
     /**
@@ -68,12 +70,11 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRosterName() {
         System.out.println("getRosterName");
-        String name = "";
-        String expResult = "";
+        RosterType.initCollection();
+        String name = "Amazone";
+        String expResult = "Amazones";
         String result = RosterType.getRosterName(name);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -82,12 +83,11 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRosterType_String() {
         System.out.println("getRosterType");
-        String r = "";
-        RosterType expResult = null;
+        RosterType.initCollection();
+        String r = "Amazones";
+        RosterType expResult = RosterType.getRosterType(0);
         RosterType result = RosterType.getRosterType(r);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -96,12 +96,11 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRosterType_int() {
         System.out.println("getRosterType");
-        int i = 0;
-        RosterType expResult = null;
-        RosterType result = RosterType.getRosterType(i);
+        RosterType.initCollection();
+        String r = "Amazones";
+        RosterType expResult = RosterType.getRosterType(0);
+        RosterType result = RosterType.getRosterType(r);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -110,11 +109,12 @@ public class RosterTypeNGTest {
     @Test
     public void testPutRosterType() {
         System.out.println("putRosterType");
-        String n = "";
-        RosterType r = null;
+        RosterType.initCollection();
+        String n = "Test";
+        RosterType r = new RosterType("Test");
         RosterType.putRosterType(n, r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType expResult = RosterType.getRosterType(n);
+        assertEquals(r, expResult);
     }
 
     /**
@@ -123,10 +123,11 @@ public class RosterTypeNGTest {
     @Test
     public void testAddRosterName() {
         System.out.println("addRosterName");
-        String n = "";
+        RosterType.initCollection();
+        String n = "Name";
+        int nb = RosterType.getRostersNamesCount();
         RosterType.addRosterName(n);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(nb + 1, RosterType.getRostersNamesCount());
     }
 
     /**
@@ -135,11 +136,11 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRostersNamesCount() {
         System.out.println("getRostersNamesCount");
-        int expResult = 0;
-        int result = RosterType.getRostersNamesCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType.initCollection();
+        String n = "Name";
+        int nb = RosterType.getRostersNamesCount();
+        RosterType.addRosterName(n);
+        assertEquals(nb + 1, RosterType.getRostersNamesCount());
     }
 
     /**
@@ -148,12 +149,13 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRostersName() {
         System.out.println("getRostersName");
-        int i = 0;
-        String expResult = "";
-        String result = RosterType.getRostersName(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType.initCollection();
+        for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
+            String name = RosterType.getRostersName(i);
+            RosterType rt = RosterType.getRosterType(i);
+
+            assertEquals(name, rt.getName());
+        }
     }
 
     /**
@@ -162,9 +164,9 @@ public class RosterTypeNGTest {
     @Test
     public void testNewRostersNames() {
         System.out.println("newRostersNames");
+        RosterType.initCollection();
         RosterType.newRostersNames();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(RosterType.getRostersNamesCount() == 0);
     }
 
     /**
@@ -173,9 +175,9 @@ public class RosterTypeNGTest {
     @Test
     public void testNewRostersTypes() {
         System.out.println("newRostersTypes");
+        RosterType.initCollection();
         RosterType.newRostersTypes();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertTrue(RosterType.getRosterType(0) == null);
     }
 
     /**
@@ -184,11 +186,12 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRostersNamesModel() {
         System.out.println("getRostersNamesModel");
-        DefaultComboBoxModel expResult = null;
-        DefaultComboBoxModel result = RosterType.getRostersNamesModel();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType.initCollection();
+        DefaultComboBoxModel<String> result = RosterType.getRostersNamesModel();
+        String[] arr = RosterType.getRostersNames();
+        for (int i = 0; i < arr.length; i++) {
+            assertEquals(arr[i], result.getElementAt(i));
+        }
     }
 
     /**
@@ -197,11 +200,11 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRostersNames() {
         System.out.println("getRostersNames");
-        String[] expResult = null;
+        RosterType.initCollection();
         String[] result = RosterType.getRostersNames();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < result.length; i++) {
+            assertEquals(result[i], RosterType.getRostersName(i));
+        }
     }
 
     /**
@@ -210,12 +213,15 @@ public class RosterTypeNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        RosterType instance = null;
-        Element expResult = null;
-        Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType.initCollection();
+
+        for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
+            RosterType instance = RosterType.getRosterType(i);
+            Element result = instance.getXMLElement();
+            RosterType rt = new RosterType("abc");
+            rt.setXMLElement(result);
+            assertEquals(instance.getName(), rt.getName());
+        }
     }
 
     /**
@@ -224,11 +230,15 @@ public class RosterTypeNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        RosterType instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType.initCollection();
+
+        for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
+            RosterType instance = RosterType.getRosterType(i);
+            Element result = instance.getXMLElement();
+            RosterType rt = new RosterType("abc");
+            rt.setXMLElement(result);
+            assertEquals(instance.getName(), rt.getName());
+        }
     }
 
     /**
@@ -237,12 +247,12 @@ public class RosterTypeNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        RosterType instance = null;
-        String expResult = "";
+        RosterType instance = new RosterType("abc");
+        String expResult = "Test";
+        instance.setName(expResult);
         String result = instance.getName();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -251,11 +261,11 @@ public class RosterTypeNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String mName = "";
-        RosterType instance = null;
-        instance.setName(mName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType instance = new RosterType("abc");
+        String expResult = "Test";
+        instance.setName(expResult);
+        String result = instance.getName();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -264,12 +274,10 @@ public class RosterTypeNGTest {
     @Test
     public void testTranslate() {
         System.out.println("translate");
-        String key = "";
-        String expResult = "";
+        String key = "AmazonKey";
+        String expResult = "Amazones";
         String result = RosterType.translate(key);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -278,12 +286,10 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRosterTranslation() {
         System.out.println("getRosterTranslation");
-        String source = "";
-        String expResult = "";
+        String source = "Amazones";
+        String expResult = "Amazons";
         String result = RosterType.getRosterTranslation(source);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-    
+
 }

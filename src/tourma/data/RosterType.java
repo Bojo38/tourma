@@ -288,7 +288,11 @@ public class RosterType implements XMLExport {
      * @return
      */
     public static RosterType getRosterType(int i) {
-        return (RosterType) mRosterTypes.values().toArray()[i];
+        if (i < mRosterTypes.size()) {
+            String name=mRostersNames.get(i);
+            return (RosterType) mRosterTypes.get(name);
+        }
+        return null;
     }
 
     /**

@@ -1,0 +1,316 @@
+<Tournament Version="3" RoundRobin="false">
+  <Roster Name="Amazones" />
+  <Roster Name="Bas-fonds" />
+  <Roster Name="Chaos" />
+  <Roster Name="Elfes" />
+  <Roster Name="Elfe Sylvain" />
+  <Roster Name="Elfe Noir" />
+  <Roster Name="Gobelins" />
+  <Roster Name="Halflings" />
+  <Roster Name="Haut-Elfes" />
+  <Roster Name="Homme Lézard" />
+  <Roster Name="Humains" />
+  <Roster Name="Khemri" />
+  <Roster Name="Démons de Khorne" />
+  <Roster Name="Morts-Vivants" />
+  <Roster Name="Nains" />
+  <Roster Name="Nain du Chaos" />
+  <Roster Name="Necromantiques" />
+  <Roster Name="Nordiques" />
+  <Roster Name="Pourris de Nurgle" />
+  <Roster Name="Ogres" />
+  <Roster Name="Orques" />
+  <Roster Name="Pacte Chaotique" />
+  <Roster Name="Skavens" />
+  <Roster Name="Slanns" />
+  <Roster Name="Vampires" />
+  <Parameters Organizer="Teste" Name="Indiv'TesT" Date="14/08/2013 07:53:24" Place="Indiv'TesT" Victory="1000" Large_Victory="1100" Draw="400" Lost="0" Refused="0" Conceeded="0" Little_Lost="100" Victory_Team="1000" Draw_Team="400" Lost_Team="0" Large_Victory_Gap="3" Little_Lost_Gap="1" Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Rank1_Team="1" Rank2_Team="2" Rank3_Team="3" Rank4_Team="4" Rank5_Team="5" ByTeam="false" TeamMates="3" TeamPairing="0" TeamIndivPairing="0" TeamVictoryPoints="0" TeamDrawPoints="0" TeamVictoryOnly="false" GroupEnable="false" Substitutes="false" GameType="1" ActvateClans="true" AvoidFirstMatch="true" AvoidMatch="false" ClanTeammatesNumber="3" MultiRoster="false" IndivBalanced="false" TeamBalanced="false" Portugal="false" Color="true" UseImage="false" UseLargeVictory="false" UseLittleLost="false" TableBonus="false" TableBonusPerRound="false" TableBonusCoef="1.0" UseBestResultIndiv="false" UseBestResultTeam="false" BestResultIndiv="5" BestReasultTeam="5" ApplyToAnnexTeam="false" ApplyToAnnexIndiv="false" ExceptBestAndWorstIndiv="false" ExceptBestAndWorstTeam="false">
+    <Criteria Criteria="Touchdowns" PointsFor="3" PointsAgainst="-3" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Sorties" PointsFor="2" PointsAgainst="-2" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Aggressions" PointsFor="1" PointsAgainst="-1" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Double As" PointsFor="1" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Passes" PointsFor="1" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Table Rase" PointsFor="50" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
+  </Parameters>
+  <Clan Name="Aucun" />
+  <Clan Name="Voyelles" />
+  <Clan Name="Lettres10" />
+  <Clan Name="Autres" />
+  <Clan Name="Nombres" />
+  <Group Name="Classic">
+    <Roster Name="Elfes" />
+    <Roster Name="Elfe Noir" />
+    <Roster Name="Haut-Elfes" />
+    <Roster Name="Humains" />
+    <Roster Name="Démons de Khorne" />
+    <Roster Name="Necromantiques" />
+  </Group>
+  <Group Name="Minus">
+    <Roster Name="Bas-fonds" />
+    <Roster Name="Gobelins" />
+    <Roster Name="Halflings" />
+    <Roster Name="Ogres" />
+  </Group>
+  <Group Name="Challenge">
+    <Roster Name="Chaos" />
+    <Roster Name="Pacte Chaotique" />
+    <Roster Name="Vampires" />
+    <Roster Name="Slanns" />
+    <Roster Name="Pourris de Nurgle" />
+    <Roster Name="Khemri" />
+  </Group>
+  <Group Name="Power">
+    <Roster Name="Amazones" />
+    <Roster Name="Elfe Sylvain" />
+    <Roster Name="Homme Lézard" />
+    <Roster Name="Morts-Vivants" />
+    <Roster Name="Nains" />
+    <Roster Name="Nain du Chaos" />
+    <Roster Name="Nordiques" />
+    <Roster Name="Orques" />
+    <Roster Name="Skavens" />
+  </Group>
+  <GroupModifierPoints Name="Classic">
+    <Group Name="Classic" Victory="0" Draw="0" Lost="0" />
+    <Group Name="Minus" Victory="0" Draw="0" Lost="0" />
+  </GroupModifierPoints>
+  <GroupModifierPoints Name="Minus" />
+  <GroupModifierPoints Name="Challenge" />
+  <GroupModifierPoints Name="Power" />
+  <pool Name="1">
+    <Coach Name="6" />
+    <Coach Name="X" />
+    <Coach Name="7" />
+    <Coach Name="D" />
+  </pool>
+  <pool Name="2">
+    <Coach Name="J" />
+    <Coach Name="C" />
+    <Coach Name="Q" />
+    <Coach Name="M" />
+  </pool>
+  <pool Name="3">
+    <Coach Name="B" />
+    <Coach Name="O" />
+    <Coach Name="A" />
+    <Coach Name="N" />
+  </pool>
+  <pool Name="4">
+    <Coach Name="V" />
+    <Coach Name="1" />
+    <Coach Name="Z" />
+    <Coach Name="5" />
+  </pool>
+  <pool Name="5">
+    <Coach Name="P" />
+    <Coach Name="I" />
+    <Coach Name="2" />
+    <Coach Name="F" />
+  </pool>
+  <pool Name="6">
+    <Coach Name="W" />
+    <Coach Name="9" />
+    <Coach Name="U" />
+    <Coach Name="E" />
+  </pool>
+  <pool Name="7">
+    <Coach Name="G" />
+    <Coach Name="4" />
+    <Coach Name="8" />
+    <Coach Name="H" />
+  </pool>
+  <pool Name="8">
+    <Coach Name="T" />
+    <Coach Name="R" />
+    <Coach Name="K" />
+    <Coach Name="L" />
+  </pool>
+  <pool Name="9">
+    <Coach Name="0" />
+    <Coach Name="3" />
+    <Coach Name="Y" />
+    <Coach Name="S" />
+  </pool>
+  <Coach Name="A" Team="A" Roster="Amazones" NAF="1" Rank="110" Clan="Voyelles" Active="true" Handicap="0" />
+  <Coach Name="B" Team="B" Roster="Bas-fonds" NAF="2" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="C" Team="C" Roster="Chaos" NAF="3" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="D" Team="D" Roster="Elfes" NAF="4" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="E" Team="E" Roster="Elfe Sylvain" NAF="5" Rank="110" Clan="Voyelles" Active="true" Handicap="0" />
+  <Coach Name="F" Team="F" Roster="Elfe Noir" NAF="6" Rank="110" Clan="Autres" Active="true" Handicap="0" />
+  <Coach Name="G" Team="G" Roster="Gobelins" NAF="7" Rank="110" Clan="Autres" Active="true" Handicap="0" />
+  <Coach Name="H" Team="H" Roster="Halflings" NAF="8" Rank="110" Clan="Autres" Active="true" Handicap="0" />
+  <Coach Name="I" Team="I" Roster="Haut-Elfes" NAF="9" Rank="110" Clan="Voyelles" Active="true" Handicap="0" />
+  <Coach Name="K" Team="K" Roster="Homme Lézard" NAF="10" Rank="110" Clan="Lettres10" Active="true" Handicap="0" />
+  <Coach Name="L" Team="L" Roster="Humains" NAF="11" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="M" Team="M" Roster="Khemri" NAF="12" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="N" Team="N" Roster="Démons de Khorne" NAF="13" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="O" Team="O" Roster="Morts-Vivants" NAF="14" Rank="110" Clan="Voyelles" Active="true" Handicap="0" />
+  <Coach Name="P" Team="P" Roster="Nains" NAF="15" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Q" Team="Q" Roster="Nain du Chaos" NAF="16" Rank="110" Clan="Autres" Active="true" Handicap="0" />
+  <Coach Name="R" Team="R" Roster="Necromantiques" NAF="17" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="S" Team="S" Roster="Nordiques" NAF="18" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="T" Team="T" Roster="Pourris de Nurgle" NAF="19" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="J" Team="J" Roster="Ogres" NAF="20" Rank="110" Clan="Autres" Active="true" Handicap="0" />
+  <Coach Name="U" Team="U" Roster="Orques" NAF="21" Rank="110" Clan="Voyelles" Active="true" Handicap="0" />
+  <Coach Name="V" Team="V" Roster="Pacte Chaotique" NAF="22" Rank="110" Clan="Autres" Active="true" Handicap="0" />
+  <Coach Name="W" Team="W" Roster="Skavens" NAF="23" Rank="110" Clan="Lettres10" Active="true" Handicap="0" />
+  <Coach Name="X" Team="X" Roster="Slanns" NAF="24" Rank="110" Clan="Lettres10" Active="true" Handicap="0" />
+  <Coach Name="Y" Team="Y" Roster="Vampires" NAF="25" Rank="110" Clan="Voyelles" Active="true" Handicap="0" />
+  <Coach Name="Z" Team="Z" Roster="Amazones" NAF="26" Rank="110" Clan="Lettres10" Active="true" Handicap="0" />
+  <Coach Name="1" Team="1" Roster="Bas-fonds" NAF="27" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Coach Name="2" Team="2" Roster="Chaos" NAF="28" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Coach Name="3" Team="3" Roster="Elfes" NAF="29" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Coach Name="4" Team="4" Roster="Elfe Sylvain" NAF="30" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Coach Name="5" Team="5" Roster="Elfe Noir" NAF="31" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Coach Name="6" Team="6" Roster="Gobelins" NAF="32" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Coach Name="7" Team="7" Roster="Halflings" NAF="33" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Coach Name="8" Team="8" Roster="Haut-Elfes" NAF="34" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Coach Name="9" Team="9" Roster="Homme Lézard" NAF="35" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="0" Team="0" Roster="Humains" NAF="36" Rank="110" Clan="Nombres" Active="true" Handicap="0" />
+  <Round Date="22/06/2015 18:27:15" LooserCup="false" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="6" Coach2="D" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="X" Coach2="7" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="J" Coach2="C" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Q" Coach2="M" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="A" Coach2="N" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="B" Coach2="O" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="5" Coach2="1" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Z" Coach2="V" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="I" Coach2="P" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="2" Coach2="F" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="U" Coach2="W" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="9" Coach2="E" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="8" Coach2="G" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="H" Coach2="4" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="R" Coach2="T" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="L" Coach2="K" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="S" Coach2="3" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Y" Coach2="0" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggressions" Value1="0" Value2="0" />
+      <Value Name="Double As" Value1="0" Value2="0" />
+      <Value Name="Passes" Value1="0" Value2="0" />
+      <Value Name="Table Rase" Value1="0" Value2="0" />
+    </Match>
+  </Round>
+</Tournament>

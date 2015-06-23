@@ -119,7 +119,7 @@ public final class Generation {
     private final static String CS_OddNumberOfActiveCoachs = "NOMBRE IMPAIR DE COACH ACTIFS";
     private final static String CS_DoYouWantATeamFirstPairing = "DoYouWantATeamFirstPairing";
     private final static String CS_FirstRound = "FirstRound";
-    private final static String CS_NumberByPool = "FirstRound";
+    private final static String CS_NumberByPool = "NumberByPool";
     private final static String CS_TheNumberOfTeamsIsNotAMultipleOfYourChoice = "LE NOMBRE D'ÉQUIPE N'EST PAS UN MULTIPLE DE VOTRE CHOIX";
     private final static String CS_DoYouWantToChooseRankTeam = "VOULEZ VOUS CHOISIR L'ÉQUIPE DU RANG {0} ?";
     private final static String CS_ChooseCompetitor = "CHOISISSEZ UN COACH";
