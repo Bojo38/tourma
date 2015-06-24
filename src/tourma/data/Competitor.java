@@ -146,7 +146,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param opponent
      * @param r
      */
-    public abstract void addMatchRoundRobin(Competitor opponent, Round r);
+    public abstract void addMatchRoundRobin(Competitor opponent, Round r,boolean complete);
 
     /**
      *

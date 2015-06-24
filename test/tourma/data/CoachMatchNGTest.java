@@ -31,7 +31,7 @@ public class CoachMatchNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        Tournament.getTournament().loadXML(new File("./test/coachMatch.xml"));
+
     }
 
     @AfterClass
@@ -40,6 +40,7 @@ public class CoachMatchNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/coachMatch.xml"));
     }
 
     @AfterMethod
@@ -75,7 +76,7 @@ public class CoachMatchNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-       if (Tournament.getTournament().getRoundsCount() == 0) {
+        if (Tournament.getTournament().getRoundsCount() == 0) {
             fail("No round in tournament");
         }
         ArrayList<CoachMatch> acm = Tournament.getTournament().getRound(0).getCoachMatchs();
@@ -328,8 +329,8 @@ public class CoachMatchNGTest {
         s.setTitular((Coach) instance.getCompetitor1());
         s.setSubstitute(sub);
         instance.setSubstitute1(s);
-
-        assertEquals(instance.getSubstitute1(), s);
+        Substitute res = instance.getSubstitute1();
+        Assert.assertTrue(res == s);
         instance.setSubstitute1(null);
     }
 
@@ -381,7 +382,8 @@ public class CoachMatchNGTest {
         s.setSubstitute(sub);
         instance.setSubstitute2(s);
 
-        assertEquals(instance.getSubstitute2(), s);
+        Substitute res = instance.getSubstitute2();
+        Assert.assertTrue(res == s);
         instance.setSubstitute2(null);
     }
 
@@ -640,7 +642,7 @@ public class CoachMatchNGTest {
     @Test
     public void testGetXMLElementForDisplay() {
         System.out.println("getXMLElementForDisplay");
-       if (Tournament.getTournament().getRoundsCount() == 0) {
+        if (Tournament.getTournament().getRoundsCount() == 0) {
             fail("No round in tournament");
         }
         ArrayList<CoachMatch> acm = Tournament.getTournament().getRound(0).getCoachMatchs();

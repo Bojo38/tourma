@@ -721,7 +721,7 @@ public final class Coach extends Competitor implements XMLExport {
      * @param r
      */
     @Override
-    public void addMatchRoundRobin(Competitor c, Round r) {
+    public void addMatchRoundRobin(Competitor c, Round r,boolean complete) {
         addMatch(c, r);
     }
 

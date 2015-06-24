@@ -658,12 +658,17 @@ public final class Generation {
             nbrounds = 2 * nbrounds;
         }
 
+        boolean complete = false;
+        if (c2part.get(0) instanceof Team) {
+            complete = (JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL (INCLUANT TOUS LES JOUEURS)?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+        }
         for (int i = 0; i < nbrounds; i++) {
             final Round r = new Round();
             r.setCurrentHour();
 
             for (int j = 0; j < c2part.size(); j++) {
-                c1part.get(j).addMatchRoundRobin(c2part.get(j), r);
+
+                c1part.get(j).addMatchRoundRobin(c2part.get(j), r, complete);
             }
 
             // Move coaches for round robin / ribbon method
@@ -824,10 +829,8 @@ public final class Generation {
                 if (!possible.isEmpty()) {
                     c2 = possible.get(0);
                     int index = 0;
-                    for (int i=0; i<datas2.size(); i++)
-                    {
-                        if (datas2.get(i).getObject().equals(c2))
-                        {
+                    for (int i = 0; i < datas2.size(); i++) {
+                        if (datas2.get(i).getObject().equals(c2)) {
                             datas2.remove(i);
                             break;
                         }

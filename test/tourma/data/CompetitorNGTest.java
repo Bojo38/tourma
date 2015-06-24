@@ -79,7 +79,7 @@ public class CompetitorNGTest {
         Competitor opponent = new CompetitorImpl();
         Round r = new Round();
         Competitor instance = new CompetitorImpl();
-        instance.addMatchRoundRobin(opponent, r);
+        instance.addMatchRoundRobin(opponent, r,true);
         Assert.assertTrue(instance.getMatchCount() == 1);
     }
 
@@ -412,7 +412,7 @@ public class CompetitorNGTest {
             mMatchs.add(m);
         }
 
-        public void addMatchRoundRobin(Competitor opponent, Round r) {
+        public void addMatchRoundRobin(Competitor opponent, Round r, boolean complete) {
             Match m = new CoachMatch(r);
             m.setCompetitor1(this);
             m.setCompetitor2(opponent);

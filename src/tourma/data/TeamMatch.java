@@ -456,4 +456,23 @@ public class TeamMatch extends Match {
         setXMLElement(match);
     }
 
+    @Override
+    public boolean equals(Object c) {
+        if (c instanceof TeamMatch) {
+            TeamMatch tm = (TeamMatch) c;
+            boolean equality = true;
+            if ((getCompetitor1() != null) && (getCompetitor2() != null)) {
+                equality &= (this.getCompetitor1().equals(tm.getCompetitor1()));
+                equality &= (this.getCompetitor2().equals(tm.getCompetitor2()));
+            }
+
+            for (int i = 0; i < mMatchs.size(); i++) {
+                equality &= mMatchs.get(i).equals(tm.getMatch(i));
+            }
+            return equality;
+        }
+        return false;
+
+    }
+
 }

@@ -7,6 +7,7 @@ package tourma.data;
 
 import org.jdom2.Element;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -154,7 +155,7 @@ public class MatchNGTest {
         Round r=new Round();
         Match instance = new MatchImpl();
         instance.setRound(r);
-        assertEquals(r, instance.getRound());
+        assertTrue(r== instance.getRound());
     }
 
     /**
@@ -166,7 +167,7 @@ public class MatchNGTest {
        Round r=new Round();
         Match instance = new MatchImpl();
         instance.setRound(r);
-        assertEquals(r, instance.getRound());
+        assertTrue(r== instance.getRound());
     }
 
     /**

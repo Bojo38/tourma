@@ -515,7 +515,7 @@ public class CoachNGTest {
         Round r = new Round();
         CoachMatch cm = new CoachMatch(r);
         int nb = instance.getMatchCount();
-        instance.addMatchRoundRobin(n, r);
+        instance.addMatchRoundRobin(n, r,true);
         assertEquals(1, r.getMatchsCount());
     }
 
