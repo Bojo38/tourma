@@ -755,17 +755,20 @@ public class TournamentNGTest {
         Tournament.getTournament().loadXML(new File("./test/tournaments/melting2015.xml"));
         Tournament instance = Tournament.getTournament();
         File f = new File("./testExportFBB.csv");
+        File f2 = new File("./testExportFBB.csv.PNG");
         instance.exportFBB(f);
         try {
             assertTrue(compareTwoFiles("./test/tournamentExportFBB.csv", "./testExportFBB.csv"));
         } catch (IOException ioe) {
             fail("exception catched");
         }
-        /*try {
+        try {
             Files.delete(f.toPath());
+             Files.delete(f2.toPath());
+            
         } catch (IOException ex) {
             Logger.getLogger(TournamentNGTest.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 
     /**
@@ -783,11 +786,11 @@ public class TournamentNGTest {
         } catch (IOException ioe) {
             fail("exception catched");
         }
-        /*try {
+        try {
             Files.delete(f.toPath());
         } catch (IOException ex) {
             Logger.getLogger(TournamentNGTest.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 
     /**
