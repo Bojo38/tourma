@@ -979,7 +979,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             int victories = 0;
             int loss = 0;
 
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 final Coach c = t.getCoach(j);
                 if (c.getMatchCount() > i) {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
@@ -1167,7 +1167,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             int victories = 0;
             int loss = 0;
 
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 final Coach c = t.getCoach(j);
                 if (c.getMatchCount() > i) {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
@@ -1301,7 +1301,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 default:
             }
         } else {
-            /*for (int i = 0; i < t.getCoachCount(); i++) {
+            /*for (int i = 0; i < t.getCoachsCount(); i++) {
             final Coach c = t.getCoach(i);
             //for (int j = 0; j < c.getMatchCount(); j++) {
             final CoachMatch m = (CoachMatch) c.getMatch(j);*/
@@ -1370,7 +1370,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     break;
                 case Parameters.C_RANKING_OPP_POINTS:
                 case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
-                    if (t.getCoachCount() > 0) {
+                    if (t.getCoachsCount() > 0) {
                         final Coach c = t.getCoach(0);
                         int i = 0;
                         if (mRoundOnly) {
@@ -1430,7 +1430,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return value;
 
         /*int value = 0;
-        for (int i = 0; i < t.getCoachCount(); i++) {
+        for (int i = 0; i < t.getCoachsCount(); i++) {
         final Coach c = t.getCoach(i);
         for (int j = 0; j < c.getMatchCount(); j++) {
         value += getValue(c, (CoachMatch) c.getMatch(j), crit, subtype);

@@ -53,11 +53,11 @@ public class IContainCoachsNGTest {
      * Test of getCoachCount method, of class IContainCoachs.
      */
     @Test(enabled=false)
-    public void testGetCoachCount() {
+    public void testgetCoachsCount() {
         System.out.println("getCoachCount");
         IContainCoachs instance = new IContainCoachsImpl();
         int expResult = 0;
-        int result = instance.getCoachCount();
+        int result = instance.getCoachsCount();
         assertEquals(result, expResult);
 
     }
@@ -113,7 +113,7 @@ public class IContainCoachsNGTest {
             return null;
         }
 
-        public int getCoachCount() {
+        public int getCoachsCount() {
             return 0;
         }
 

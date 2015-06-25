@@ -534,7 +534,7 @@ public class Tournament implements IContainCoachs {
      * @param g
      * @return
      */
-    public boolean containsGroups(Group g) {
+    public boolean containsGroup(Group g) {
         return mGroups.contains(g);
     }
 
@@ -961,7 +961,7 @@ public class Tournament implements IContainCoachs {
                 a.append(team);
                 for (Team mTeam : mTeams) {
                     if (mTeam.getName().equals(team)) {
-                        for (int k = 0; k < mTeam.getCoachCount(); k++) {
+                        for (int k = 0; k < mTeam.getCoachsCount(); k++) {
                             a.append(";");
                             a.append(mTeam.getCoach(k).getName());
                         }
@@ -1447,15 +1447,7 @@ public class Tournament implements IContainCoachs {
         return mPools.get(i);
     }
 
-    /**
-     * @return the mCoachs
-     */
-    @Override
-    public int getCoachCount() {
-        return mCoachs.size();
-    }
-
-    /**
+   /**
      * @param mParams the mParams to set
      */
     public void setParams(Parameters mParams) {

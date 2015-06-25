@@ -378,7 +378,7 @@ public class CoachNGTest {
         }
         Coach instance = Coach.getCoach("Lord Bojo");
 
-        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             Coach opp = Tournament.getTournament().getCoach(i);
             if (opp != instance) {
                 boolean found = false;
@@ -418,7 +418,7 @@ public class CoachNGTest {
         Coach instance = Coach.getCoach("Lord Bojo");
 
         ArrayList<Competitor> opponents = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             Coach opp = Tournament.getTournament().getCoach(i);
             opponents.add(opp);
         }
@@ -436,7 +436,7 @@ public class CoachNGTest {
             }
             Assert.assertFalse(result.contains(c2));
         }
-        assertEquals(result.size(), Tournament.getTournament().getCoachCount() - instance.getMatchCount() - 1);
+        assertEquals(result.size(), Tournament.getTournament().getCoachsCount() - instance.getMatchCount() - 1);
 
     }
 

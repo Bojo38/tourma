@@ -63,7 +63,7 @@ public final class JPNCategory extends javax.swing.JPanel {
             }
         }
 
-        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             Coach coach = Tournament.getTournament().getCoach(i);
             if (coach.containsCategory(g)) {
                 mEnableCoach = true;

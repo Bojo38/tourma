@@ -1278,7 +1278,7 @@ public final class JdgRoster extends javax.swing.JDialog {
          * Build Avilable Positions
          */
         ArrayList<String> coachs_name = new ArrayList<>();
-        for (i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+        for (i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             Coach c = Tournament.getTournament().getCoach(i);
             coachs_name.add(c.getName());
         }

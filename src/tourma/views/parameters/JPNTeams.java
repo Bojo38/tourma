@@ -113,7 +113,7 @@ public final class JPNTeams extends javax.swing.JPanel {
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveTeamActionPerformed
         final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
-        for (int i = 0; i < t.getCoachCount(); i++) {
+        for (int i = 0; i < t.getCoachsCount(); i++) {
             mTournament.removeCoach(t.getCoach(i));
         }
         t.clearCoachs();

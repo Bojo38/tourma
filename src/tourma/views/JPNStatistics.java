@@ -148,7 +148,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 hm.put(opp.getName(), 0);
             }
 
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 for (int k = 0; k < c.getMatchCount(); k++) {
                     Match mMatch = c.getMatch(k);

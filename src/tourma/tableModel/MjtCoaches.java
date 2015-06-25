@@ -47,7 +47,7 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public int getRowCount() {
-            return t.getCoachCount();
+            return t.getCoachsCount();
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
     @Override
     public Object getValueAt(final int row, final int col) {
         Object val = StringConstants.CS_NULL;
-        if (t.getCoachCount()> 0) {
+        if (t.getCoachsCount()> 0) {
             final Coach c = t.getCoach(row);
             switch (col) {
                 case 0:

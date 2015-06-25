@@ -1242,7 +1242,7 @@ public final class Generation {
      */
     public static ArrayList<ObjectRanking> subRanking(final Team team, final ArrayList<Round> rounds) {
         ArrayList<Coach> array = new ArrayList<>();
-        for (int i = 0; i < team.getCoachCount(); i++) {
+        for (int i = 0; i < team.getCoachsCount(); i++) {
             array.add(team.getCoach(i));
         }
         return subRanking(array, rounds);

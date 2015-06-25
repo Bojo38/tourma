@@ -209,7 +209,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
         if (getObject() instanceof Team) {
             final Team t = (Team) getObject();
             ic.setAttribute(new Attribute(StringConstants.CS_NAME, t.getName()));
-            for (int k = 0; k < t.getCoachCount(); k++) {
+            for (int k = 0; k < t.getCoachsCount(); k++) {
                 final Element c = new Element(StringConstants.CS_MEMBER);
                 c.setAttribute(StringConstants.CS_NAME, t.getCoach(k).getName());
                 ic.addContent(c);

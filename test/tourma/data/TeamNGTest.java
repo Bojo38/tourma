@@ -179,30 +179,30 @@ public class TeamNGTest {
         Team instance = Tournament.getTournament().getTeam(0);
         Team instance2 = Tournament.getTournament().getTeam(1);
 
-        for (int i = 0; i < instance.getCoachCount(); i++) {
+        for (int i = 0; i < instance.getCoachsCount(); i++) {
             instance.getCoach(i).setNafRank(200.0);
         }
-        for (int i = 0; i < instance2.getCoachCount(); i++) {
+        for (int i = 0; i < instance2.getCoachsCount(); i++) {
             instance2.getCoach(i).setNafRank(100.0);
         }
 
         int result = instance.compareTo(instance2);
         Assert.assertTrue(result > 0);
 
-        for (int i = 0; i < instance.getCoachCount(); i++) {
+        for (int i = 0; i < instance.getCoachsCount(); i++) {
             instance.getCoach(i).setNafRank(100.0);
         }
-        for (int i = 0; i < instance2.getCoachCount(); i++) {
+        for (int i = 0; i < instance2.getCoachsCount(); i++) {
             instance2.getCoach(i).setNafRank(200.0);
         }
 
         result = instance.compareTo(instance2);
         Assert.assertTrue(result < 0);
 
-        for (int i = 0; i < instance.getCoachCount(); i++) {
+        for (int i = 0; i < instance.getCoachsCount(); i++) {
             instance.getCoach(i).setNafRank(150.0);
         }
-        for (int i = 0; i < instance2.getCoachCount(); i++) {
+        for (int i = 0; i < instance2.getCoachsCount(); i++) {
             instance2.getCoach(i).setNafRank(150.0);
         }
 
@@ -336,7 +336,7 @@ public class TeamNGTest {
                 Match m = t.getMatch(1);
                 t.removeMatch(m);
             }
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 while (c.getMatchCount() > 1) {
                     Match m = c.getMatch(1);
@@ -384,7 +384,7 @@ public class TeamNGTest {
                 Match m = t.getMatch(1);
                 t.removeMatch(m);
             }
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 while (c.getMatchCount() > 1) {
                     Match m = c.getMatch(1);
@@ -423,7 +423,7 @@ public class TeamNGTest {
                 Match m = t.getMatch(1);
                 t.removeMatch(m);
             }
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 while (c.getMatchCount() > 1) {
                     Match m = c.getMatch(1);
@@ -450,7 +450,7 @@ public class TeamNGTest {
                 Match m = t.getMatch(0);
                 t.removeMatch(m);
             }
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 while (c.getMatchCount() > 0) {
                     Match m = c.getMatch(0);
@@ -496,7 +496,7 @@ public class TeamNGTest {
                 Match m = t.getMatch(1);
                 t.removeMatch(m);
             }
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 while (c.getMatchCount() > 1) {
                     Match m = c.getMatch(1);
@@ -524,7 +524,7 @@ public class TeamNGTest {
         Assert.assertEquals(nb2 + 1, instance2.getMatchCount());
 
         TeamMatch tm = (TeamMatch) instance.getMatch(instance.getMatchCount() - 1);
-        assertEquals(tm.getMatchCount(), instance.getCoachCount() * instance2.getCoachCount());
+        assertEquals(tm.getMatchCount(), instance.getCoachsCount() * instance2.getCoachsCount());
 
     }
 
@@ -550,7 +550,7 @@ public class TeamNGTest {
                 Match m = t.getMatch(1);
                 t.removeMatch(m);
             }
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 while (c.getMatchCount() > 1) {
                     Match m = c.getMatch(1);
@@ -633,7 +633,7 @@ public class TeamNGTest {
                 Match m = t.getMatch(1);
                 t.removeMatch(m);
             }
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 while (c.getMatchCount() > 1) {
                     Match m = c.getMatch(1);
@@ -649,7 +649,7 @@ public class TeamNGTest {
 
         Team instance = (Team) tm.getCompetitor1();
         HashMap<Team, Integer> result = instance.getTeamOppositionCount(opponents, new Round());
-        assertEquals(result.get((Team) tm.getCompetitor2()).intValue(), instance.getCoachCount());
+        assertEquals(result.get((Team) tm.getCompetitor2()).intValue(), instance.getCoachsCount());
         assertEquals(result.get((Team) tm2.getCompetitor2()).intValue(), 0);
 
     }
@@ -665,7 +665,7 @@ public class TeamNGTest {
         }
         Team instance = Tournament.getTournament().getTeam(0);
 
-        for (int i = 0; i < instance.getCoachCount(); i++) {
+        for (int i = 0; i < instance.getCoachsCount(); i++) {
             Assert.assertNotNull(instance.getCoach(i));
         }
     }
@@ -674,17 +674,17 @@ public class TeamNGTest {
      * Test of getCoachCount method, of class Team.
      */
     @Test
-    public void testGetCoachCount() {
+    public void testgetCoachsCount() {
         System.out.println("getCoachCount");
         if (Tournament.getTournament().getTeamsCount() == 0) {
             fail("No team in tournament");
         }
         Team instance = Tournament.getTournament().getTeam(0);
 
-        for (int i = 0; i < instance.getCoachCount(); i++) {
+        for (int i = 0; i < instance.getCoachsCount(); i++) {
             Assert.assertNotNull(instance.getCoach(i));
         }
-        assertEquals(instance.getCoachCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
+        assertEquals(instance.getCoachsCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
     }
 
     /**
@@ -698,11 +698,11 @@ public class TeamNGTest {
         }
         Team instance = Tournament.getTournament().getTeam(0);
 
-        for (int i = 0; i < instance.getCoachCount(); i++) {
+        for (int i = 0; i < instance.getCoachsCount(); i++) {
             Assert.assertTrue(instance.containsCoach(instance.getCoach(i)));
         }
 
-        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             Coach c = Tournament.getTournament().getCoach(i);
             if (c.getTeamMates().getName().equals(instance.getName())) {
                 Assert.assertTrue(instance.containsCoach(c));
@@ -721,9 +721,9 @@ public class TeamNGTest {
         System.out.println("addCoach");
         Coach c = new Coach("Test");
         Team instance = new Team("Test");
-        assertEquals(instance.getCoachCount(), 0);
+        assertEquals(instance.getCoachsCount(), 0);
         instance.addCoach(c);
-        assertEquals(instance.getCoachCount(), 1);
+        assertEquals(instance.getCoachsCount(), 1);
     }
 
     /**
@@ -734,11 +734,11 @@ public class TeamNGTest {
         System.out.println("removeCoach");
         Coach c = new Coach("Test");
         Team instance = new Team("Test");
-        assertEquals(instance.getCoachCount(), 0);
+        assertEquals(instance.getCoachsCount(), 0);
         instance.addCoach(c);
-        assertEquals(instance.getCoachCount(), 1);
+        assertEquals(instance.getCoachsCount(), 1);
         instance.removeCoach(0);
-        assertEquals(instance.getCoachCount(), 0);
+        assertEquals(instance.getCoachsCount(), 0);
 
     }
 
@@ -750,11 +750,11 @@ public class TeamNGTest {
         System.out.println("clearCoachs");
         Coach c = new Coach("Test");
         Team instance = new Team("Test");
-        assertEquals(instance.getCoachCount(), 0);
+        assertEquals(instance.getCoachsCount(), 0);
         instance.addCoach(c);
-        assertEquals(instance.getCoachCount(), 1);
+        assertEquals(instance.getCoachsCount(), 1);
         instance.clearCoachs();
-        assertEquals(instance.getCoachCount(), 0);
+        assertEquals(instance.getCoachsCount(), 0);
     }
 
     /**

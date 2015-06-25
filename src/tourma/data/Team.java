@@ -145,13 +145,13 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             for (Coach mCoach : mCoachs) {
                 rank += mCoach.getNafRank();
             }
-            rank /= getCoachCount();
+            rank /= getCoachsCount();
 
             double rankobj = 0;
             for (Coach mCoach : team.mCoachs) {
                 rankobj += mCoach.getNafRank();
             }
-            rankobj /= team.getCoachCount();
+            rankobj /= team.getCoachsCount();
 
             result = ((Double) rank).compareTo(rankobj);
         }
@@ -183,7 +183,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     public int getActivePlayerNumber() {
         int nb = 0;
 
-        for (int i = 0; i < getCoachCount(); i++) {
+        for (int i = 0; i < getCoachsCount(); i++) {
             if (getCoach(i).isActive()) {
                 nb++;
             }
@@ -419,7 +419,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         boolean have_played = false;
         for (Coach mCoach : mCoachs) {
             if (opponent instanceof Team) {
-                for (int k = 0; k < ((IContainCoachs) opponent).getCoachCount(); k++) {
+                for (int k = 0; k < ((IContainCoachs) opponent).getCoachsCount(); k++) {
                     for (int i = 0; i < mCoach.getMatchCount(); i++) {
                         Coach c = ((IContainCoachs) opponent).getCoach(k);
                         if ((mCoach.getMatch(i).getCompetitor1() == c) || (mCoach.getMatch(i).getCompetitor2() == c)) {
@@ -710,7 +710,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
      * @return the mCoachs
      */
     @Override
-    public int getCoachCount() {
+    public int getCoachsCount() {
         return mCoachs.size();
     }
 

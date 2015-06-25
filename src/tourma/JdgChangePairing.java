@@ -159,12 +159,12 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                         // Remove matchs from coachs
                         for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
                             CoachMatch cm = ((TeamMatch) m).getMatch(j);
-                            for (int k = 0; k < ((IContainCoachs) m.getCompetitor1()).getCoachCount(); k++) {
+                            for (int k = 0; k < ((IContainCoachs) m.getCompetitor1()).getCoachsCount(); k++) {
                                 Coach c = ((IContainCoachs) m.getCompetitor1()).getCoach(k);
                                 c.removeMatch(cm);
                             }
 
-                            for (int k = 0; k < ((IContainCoachs) m.getCompetitor2()).getCoachCount(); k++) {
+                            for (int k = 0; k < ((IContainCoachs) m.getCompetitor2()).getCoachsCount(); k++) {
                                 Coach c = ((IContainCoachs) m.getCompetitor2()).getCoach(k);
                                 c.removeMatch(cm);
                             }

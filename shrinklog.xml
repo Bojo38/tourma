@@ -6953,7 +6953,7 @@
 	<method signature="boolean containsTeam(tourma.data.Team)" class="tourma.data.Tournament" />
 	<method signature="void addRound(tourma.data.Round)" class="tourma.data.Tournament" />
 	<method signature="void removeRound(int)" class="tourma.data.Tournament" />
-	<method signature="int getCoachCount()" class="tourma.data.Tournament" />
+	<method signature="int getCoachsCount()" class="tourma.data.Tournament" />
 	<method signature="boolean containsCoach(tourma.data.Coach)" class="tourma.data.Tournament" />
 	<method signature="tourma.data.Parameters getParams()" class="tourma.data.Tournament" />
 	<method signature="int getCoachsCount()" class="tourma.data.Tournament" />
@@ -9978,7 +9978,7 @@
 	<method signature="void setQuality(float)" class="org.jfree.chart.encoders.KeypointPNGEncoderAdapter" />
 	<method signature="void encode(java.awt.image.BufferedImage,java.io.OutputStream)" class="org.jfree.chart.encoders.KeypointPNGEncoderAdapter" />
 	<class name="tourma.data.IContainCoachs" />
-	<method signature="int getCoachCount()" class="tourma.data.IContainCoachs" />
+	<method signature="int getCoachsCount()" class="tourma.data.IContainCoachs" />
 	<method signature="void addCoach(tourma.data.Coach)" class="tourma.data.IContainCoachs" />
 	<method signature="tourma.data.Coach getCoach(int)" class="tourma.data.IContainCoachs" />
 	<method signature="void removeCoach(int)" class="tourma.data.IContainCoachs" />
@@ -11081,7 +11081,7 @@
 	<method signature="void newTeamMap()" class="tourma.data.Team" />
 	<method signature="org.jdom2.Element getXMLElementForDisplay()" class="tourma.data.Team" />
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.Team" />
-	<method signature="int getCoachCount()" class="tourma.data.Team" />
+	<method signature="int getCoachsCount()" class="tourma.data.Team" />
 	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round)" class="tourma.data.Team" />
 	<method signature="tourma.data.Coach getCoach(int)" class="tourma.data.Team" />
 	<method signature="void &lt;init&gt;(java.lang.String)" class="tourma.data.Team" />

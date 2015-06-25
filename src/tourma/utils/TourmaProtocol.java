@@ -110,7 +110,7 @@ public class TourmaProtocol {
             switch (k) {
                 case INDIVIDUAL_RANK: {
                     ArrayList<Coach> coachs = new ArrayList<>();
-                    for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                         coachs.add(Tournament.getTournament().getCoach(i));
                     }
                     r = new Ranking(Ranking.CS_Individual,
@@ -165,7 +165,7 @@ public class TourmaProtocol {
                 break;
                 case INDIVIDUAL_ANNEX: {
                     ArrayList<Coach> coachs = new ArrayList<>();
-                    for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                         coachs.add(Tournament.getTournament().getCoach(i));
                     }
                     array = new ArrayList();
@@ -337,7 +337,7 @@ public class TourmaProtocol {
                         Group g = Tournament.getTournament().getGroup(cpt);
 
                         ArrayList<Coach> coachs = new ArrayList<>();
-                        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+                        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                             Coach coach = Tournament.getTournament().getCoach(i);
                             if (g.containsRoster(coach.getRoster())) {
                                 coachs.add(coach);
@@ -366,7 +366,7 @@ public class TourmaProtocol {
                         Category cat = Tournament.getTournament().getCategory(cpt);
 
                         ArrayList<Coach> coachs = new ArrayList<>();
-                        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+                        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                             Coach coach = Tournament.getTournament().getCoach(i);
                             if (coach.containsCategory(cat)) {
                                 coachs.add(coach);
@@ -395,7 +395,7 @@ public class TourmaProtocol {
                         Group g = Tournament.getTournament().getGroup(cpt);
 
                         ArrayList<Coach> coachs = new ArrayList<>();
-                        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+                        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                             Coach coach = Tournament.getTournament().getCoach(i);
                             if (g.containsRoster(coach.getRoster())) {
                                 coachs.add(coach);
@@ -469,7 +469,7 @@ public class TourmaProtocol {
                         Category cat = Tournament.getTournament().getCategory(cpt);
 
                         ArrayList<Coach> coachs = new ArrayList<>();
-                        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+                        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                             Coach coach = Tournament.getTournament().getCoach(i);
                             if (coach.containsCategory(cat)) {
                                 coachs.add(coach);

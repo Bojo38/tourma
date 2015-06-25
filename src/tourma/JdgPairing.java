@@ -77,14 +77,14 @@ public final class JdgPairing extends javax.swing.JDialog {
         mMatchs = new ArrayList<>();
 
         mItems1 = new ArrayList();
-        for (int i = 0; i < mTeam1.getCoachCount(); i++) {
+        for (int i = 0; i < mTeam1.getCoachsCount(); i++) {
             final Coach c = mTeam1.getCoach(i);
             mItems1.add(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName());
             mCoachs.put(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName(), c);
         }
 
         mItems2 = new ArrayList();
-        for (int i = 0; i < mTeam1.getCoachCount(); i++) {
+        for (int i = 0; i < mTeam1.getCoachsCount(); i++) {
             final Coach c = mTeam2.getCoach(i);
             mItems2.add(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName());
             mCoachs.put(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName(), c);
@@ -103,7 +103,7 @@ public final class JdgPairing extends javax.swing.JDialog {
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
 
-        jbtOK.setEnabled(mMatchs.size() == mTeam1.getCoachCount());
+        jbtOK.setEnabled(mMatchs.size() == mTeam1.getCoachsCount());
     }
 
     /**

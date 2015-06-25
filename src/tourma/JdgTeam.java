@@ -514,15 +514,15 @@ public final class JdgTeam extends javax.swing.JDialog {
         jtfNom.setText(mTeam.getName());
         jtbCoachs.setModel(new MjtCoaches(mTeam));
 
-        if (mTeam.getCoachCount() < mTour.getParams().getTeamMatesNumber()) {
+        if (mTeam.getCoachsCount() < mTour.getParams().getTeamMatesNumber()) {
             jbtOK.setEnabled(false);
         }
 
-        if (mTeam.getCoachCount() >= mTour.getParams().getTeamMatesNumber()) {
+        if (mTeam.getCoachsCount() >= mTour.getParams().getTeamMatesNumber()) {
             jbtOK.setEnabled(true);
         }
 
-        if ((mTeam.getCoachCount() == mTour.getParams().getTeamMatesNumber()) && (!mTour.getParams().isSubstitutes())) {
+        if ((mTeam.getCoachsCount() == mTour.getParams().getTeamMatesNumber()) && (!mTour.getParams().isSubstitutes())) {
             jbtAdd.setEnabled(false);
         } else {
             jbtAdd.setEnabled(true);
