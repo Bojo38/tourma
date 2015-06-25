@@ -120,7 +120,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void updateMenus() {
         if (jpnContent instanceof JPNRound) {
             Round r = ((JPNRound) jpnContent).getRound();
-            if (mTournament.indexOfRound(r) == mTournament.getRoundsCount() - 1) {
+            if (mTournament.getRoundIndex(r) == mTournament.getRoundsCount() - 1) {
                 jmiDelRound.setEnabled(true);
                 jmiGenerateNextRound.setEnabled(true);
                 jmiChangePairing.setEnabled(true);
@@ -1440,7 +1440,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 CoachMatch m = (CoachMatch) mMatch;
                 String tmp
                         = Translate.translate(CS_Round)
-                        + " " + (Tournament.getTournament().indexOfRound(m.getRound()) + 1);
+                        + " " + (Tournament.getTournament().getRoundIndex(m.getRound()) + 1);
                 tmp = tmp + " / " + m.getCompetitor1().getDecoratedName() + " " + Translate.translate(CS_ACCR_Versus) + " "
                         + m.getCompetitor2().getDecoratedName();
                 matchs_descr.add(tmp);
@@ -1603,7 +1603,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                 JPNRound jpnr = (JPNRound) jpnContent;
                 Round round = jpnr.getRound();
-                int round_number = mTournament.indexOfRound(round);
+                int round_number = mTournament.getRoundIndex(round);
 
                 /**
                  * Swiss possible ?
@@ -2028,7 +2028,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()));
+                fs = new JFullScreenIndivRank(Tournament.getTournament().getRoundIndex(jpnr.getRound()));
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2042,7 +2042,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenTeamRank(Tournament.getTournament().indexOfRound(jpnr.getRound()));
+                fs = new JFullScreenTeamRank(Tournament.getTournament().getRoundIndex(jpnr.getRound()));
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2056,7 +2056,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenClanRank(Tournament.getTournament().indexOfRound(jpnr.getRound()));
+                fs = new JFullScreenClanRank(Tournament.getTournament().getRoundIndex(jpnr.getRound()));
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2069,7 +2069,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), true);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2082,7 +2082,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), false);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2095,7 +2095,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true, true);
+                fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), true, true);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2108,7 +2108,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false, true);
+                fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), false, true);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2121,7 +2121,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true, false);
+                fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), true, false);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2134,7 +2134,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false, false);
+                fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), false, false);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2192,7 +2192,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()), JFullScreenIndivRank.C_GROUP);
+                fs = new JFullScreenIndivRank(Tournament.getTournament().getRoundIndex(jpnr.getRound()), JFullScreenIndivRank.C_GROUP);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2205,7 +2205,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true, C_GROUP);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), true, C_GROUP);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2218,7 +2218,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false, C_GROUP);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), false, C_GROUP);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2231,7 +2231,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()), JFullScreenIndivRank.C_CATEGORY);
+                fs = new JFullScreenIndivRank(Tournament.getTournament().getRoundIndex(jpnr.getRound()), JFullScreenIndivRank.C_CATEGORY);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2244,7 +2244,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true, JFullScreenIndivRank.C_CATEGORY);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), true, JFullScreenIndivRank.C_CATEGORY);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2257,7 +2257,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             if (jpnContent instanceof JPNRound) {
                 JPNRound jpnr = ((JPNRound) jpnContent);
-                fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false, JFullScreenIndivRank.C_CATEGORY);
+                fs = new JFullScreenIndivAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), false, JFullScreenIndivRank.C_CATEGORY);
                 fs.setVisible(true);
             }
         } catch (IOException ex) {
@@ -2272,7 +2272,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenTeamRank(Tournament.getTournament().indexOfRound(jpnr.getRound()),
+                        fs = new JFullScreenTeamRank(Tournament.getTournament().getRoundIndex(jpnr.getRound()),
                                 true);
                         fs.setVisible(true);
                     }
@@ -2284,7 +2284,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenIndivRank(Tournament.getTournament().indexOfRound(jpnr.getRound()),
+                        fs = new JFullScreenIndivRank(Tournament.getTournament().getRoundIndex(jpnr.getRound()),
                                 C_POOL);
                         fs.setVisible(true);
                     }
@@ -2302,7 +2302,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true,
+                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), true,
                                 true, true);
                         fs.setVisible(true);
                     }
@@ -2314,7 +2314,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), true,
+                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), true,
                                 C_POOL);
                         fs.setVisible(true);
                     }
@@ -2332,7 +2332,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false,
+                        fs = new JFullScreenClanTeamAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), false,
                                 true, true);
                         fs.setVisible(true);
                     }
@@ -2344,7 +2344,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 try {
                     if (jpnContent instanceof JPNRound) {
                         JPNRound jpnr = ((JPNRound) jpnContent);
-                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().indexOfRound(jpnr.getRound()), false,
+                        fs = new JFullScreenIndivAnnex(Tournament.getTournament().getRoundIndex(jpnr.getRound()), false,
                                 C_POOL);
                         fs.setVisible(true);
                     }

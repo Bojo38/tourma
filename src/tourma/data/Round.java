@@ -69,7 +69,7 @@ public class Round implements XMLExport {
 
     @Override
     public String toString() {
-        final int index = Tournament.getTournament().indexOfRound(this);
+        final int index = Tournament.getTournament().getRoundIndex(this);
         return Translate.translate(Translate.CS_Round_) + (index + 1);
     }
 

@@ -364,7 +364,7 @@ public final class Generation {
         filename.append(".xml");
         final File file = new File(filename.toString());
 
-        Tournament.getTournament().saveXML(file, false);
+        Tournament.getTournament().saveXML(file);
     }
 
     /**

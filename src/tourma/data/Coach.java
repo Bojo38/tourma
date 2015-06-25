@@ -457,7 +457,7 @@ public final class Coach extends Competitor implements XMLExport {
 
         if (this.getClan() != tour.getClan(0)) {
 
-            if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.indexOfRound(r) == 0) || (params.isAvoidClansMatch()))) {
+            if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundIndex(r) == 0) || (params.isAvoidClansMatch()))) {
 
                 int i = 0;
                 while (i < possible.size()) {

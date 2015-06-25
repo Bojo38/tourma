@@ -5,10 +5,17 @@
  */
 package tourma.data;
 
-import java.awt.image.RenderedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -219,7 +226,7 @@ public class TournamentNGTest {
     @Test
     public void testRemoveCategory_Category() {
         System.out.println("removeCategory");
-         Tournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         Assert.assertEquals(tour.getCategoriesCount(), 1);
         tour.loadXML(new File("./test/category.xml"));
         Assert.assertTrue(tour.getCategoriesCount() > 1);
@@ -234,7 +241,7 @@ public class TournamentNGTest {
     @Test
     public void testRemoveCategory_int() {
         System.out.println("removeCategory");
-         Tournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         Assert.assertEquals(tour.getCategoriesCount(), 1);
         tour.loadXML(new File("./test/category.xml"));
         Assert.assertTrue(tour.getCategoriesCount() > 1);
@@ -324,7 +331,7 @@ public class TournamentNGTest {
     @Test
     public void testRemoveTeam_int() {
         System.out.println("removeTeam");
-      Tournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         Assert.assertEquals(tour.getTeamsCount(), 0);
         tour.loadXML(new File("./test/team.xml"));
         Assert.assertTrue(tour.getTeamsCount() > 1);
@@ -354,12 +361,35 @@ public class TournamentNGTest {
     @Test
     public void testGetDisplayClans() {
         System.out.println("getDisplayClans");
-        Tournament instance = null;
-        ArrayList expResult = null;
-        ArrayList result = instance.getDisplayClans();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      Tournament tour = Tournament.getTournament();
+        Assert.assertEquals(tour.getClansCount(), 1);
+        tour.loadXML(new File("./test/clan.xml"));
+        Assert.assertTrue(tour.getClansCount() > 1);
+
+        for (int i = 0; i < tour.getClansCount(); i++) {
+            Clan cat=tour.getClan(i);
+            Assert.assertNotNull(cat);
+        }
+         Clan cat=tour.getClan(tour.getClansCount()-1);
+         assertTrue(tour.getDisplayClans().contains(cat));
+        for (int i=0; i<tour.getCoachsCount(); i++)
+        {
+            Coach c=tour.getCoach(i);
+            if (c.getClan().equals(cat))
+            {
+                c.setClan(tour.getClan(0));
+            }
+        }
+        for (int i=0; i<tour.getTeamsCount(); i++)
+        {
+            Team c=tour.getTeam(i);
+           if (c.getClan().equals(cat))
+            {
+                c.setClan(tour.getClan(0));
+            }         
+        }
+        
+        assertFalse(tour.getDisplayClans().contains(cat));
     }
 
     /**
@@ -368,12 +398,30 @@ public class TournamentNGTest {
     @Test
     public void testGetDisplayCategories() {
         System.out.println("getDisplayCategories");
-        Tournament instance = null;
-        ArrayList expResult = null;
-        ArrayList result = instance.getDisplayCategories();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Tournament tour = Tournament.getTournament();
+        Assert.assertEquals(tour.getCategoriesCount(), 1);
+        tour.loadXML(new File("./test/category.xml"));
+        Assert.assertTrue(tour.getCategoriesCount() > 1);
+
+        for (int i = 0; i < tour.getCategoriesCount(); i++) {
+            Category cat=tour.getCategory(i);
+            Assert.assertNotNull(cat);
+        }
+         Category cat=tour.getCategory(0);
+         assertTrue(tour.getDisplayCategories().contains(cat));
+        for (int i=0; i<tour.getCoachsCount(); i++)
+        {
+            Coach c=tour.getCoach(i);
+            c.delCategory(cat);            
+        }
+        for (int i=0; i<tour.getTeamsCount(); i++)
+        {
+            Team c=tour.getTeam(i);
+            c.delCategory(cat);            
+        }
+        
+        assertFalse(tour.getDisplayCategories().contains(cat));
+
     }
 
     /**
@@ -400,10 +448,10 @@ public class TournamentNGTest {
         Tournament.getTournament().loadXML(new File("./test/params.xml"));
         Tournament instance = Tournament.getTournament();
         Parameters expResult = new Parameters();
-        Assert.assertNotEquals(instance.getParams(),expResult);
+        Assert.assertNotEquals(instance.getParams(), expResult);
         instance.setParams(expResult);
         Parameters result = instance.getParams();
-        assertTrue(result== expResult);
+        assertTrue(result == expResult);
     }
 
     /**
@@ -427,7 +475,7 @@ public class TournamentNGTest {
     @Test
     public void testRemoveCoach_int() {
         System.out.println("removeCoach");
-       Tournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         Assert.assertEquals(tour.getCoachsCount(), 0);
         tour.loadXML(new File("./test/coach.xml"));
         Assert.assertTrue(tour.getCoachsCount() > 1);
@@ -473,7 +521,7 @@ public class TournamentNGTest {
     @Test
     public void testGetCoachsCount() {
         System.out.println("getCoachsCount");
-         Tournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         Assert.assertEquals(tour.getCoachsCount(), 0);
         tour.loadXML(new File("./test/coach.xml"));
         Assert.assertTrue(tour.getCoachsCount() > 1);
@@ -519,7 +567,7 @@ public class TournamentNGTest {
     @Test
     public void testRemoveGroup_Group() {
         System.out.println("removeGroup");
-       Tournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         Assert.assertEquals(tour.getGroupsCount(), 1);
         tour.loadXML(new File("./test/group.xml"));
         Assert.assertTrue(tour.getGroupsCount() > 1);
@@ -579,7 +627,7 @@ public class TournamentNGTest {
     @Test
     public void testGetGroup() {
         System.out.println("getGroup");
-       Tournament.getTournament().loadXML(new File("./test/group.xml"));
+        Tournament.getTournament().loadXML(new File("./test/group.xml"));
         Tournament tour = Tournament.getTournament();
         for (int i = 0; i < tour.getGroupsCount(); i++) {
             Assert.assertNotNull(tour.getGroup(i));
@@ -666,57 +714,14 @@ public class TournamentNGTest {
     @Test
     public void testSaveXML_File() {
         System.out.println("saveXML");
-        File file = null;
-        Tournament instance = null;
-        instance.saveXML(file);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of saveXML method, of class Tournament.
-     */
-    @Test
-    public void testSaveXML_File_boolean() {
-        System.out.println("saveXML");
-        File file = null;
-        boolean withRanking = false;
-        Tournament instance = null;
-        instance.saveXML(file, withRanking);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of generateCSVRanking method, of class Tournament.
-     */
-    @Test
-    public void testGenerateCSVRanking() {
-        System.out.println("generateCSVRanking");
-        int round = 0;
-        boolean withRoster = false;
-        boolean withNaf = false;
-        Tournament instance = null;
-        String expResult = "";
-        String result = instance.generateCSVRanking(round, withRoster, withNaf);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of generateRankingQRCode method, of class Tournament.
-     */
-    @Test
-    public void testGenerateRankingQRCode() {
-        System.out.println("generateRankingQRCode");
-        int round = 0;
-        Tournament instance = null;
-        RenderedImage expResult = null;
-        RenderedImage result = instance.generateRankingQRCode(round);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        Tournament instance = Tournament.getTournament();
+        instance.saveXML(new File("./testLoadSave.xml"));
+        try {
+            assertTrue(compareTwoFiles("./test/tournament.xml", "./testLoadSave.xml"));
+        } catch (IOException ioe) {
+            fail("exception catched");
+        }
     }
 
     /**
@@ -725,11 +730,20 @@ public class TournamentNGTest {
     @Test
     public void testExportFullFBB() {
         System.out.println("exportFullFBB");
-        File file = null;
-        Tournament instance = null;
-        instance.exportFullFBB(file);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        Tournament instance = Tournament.getTournament();
+        File f = new File("./testExportFullFBB.fbb_xml");
+        instance.exportFullFBB(f);
+        try {
+            assertTrue(compareTwoFiles("./test/tournamentExportFullFBB.fbb_xml", "./testExportFullFBB.fbb_xml"));
+        } catch (IOException ioe) {
+            fail("exception catched");
+        }
+        try {
+            Files.delete(f.toPath());
+        } catch (IOException ex) {
+            Logger.getLogger(TournamentNGTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -738,11 +752,20 @@ public class TournamentNGTest {
     @Test
     public void testExportFBB() {
         System.out.println("exportFBB");
-        File file = null;
-        Tournament instance = null;
-        instance.exportFBB(file);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/tournaments/melting2015.xml"));
+        Tournament instance = Tournament.getTournament();
+        File f = new File("./testExportFBB.csv");
+        instance.exportFBB(f);
+        try {
+            assertTrue(compareTwoFiles("./test/tournamentExportFBB.csv", "./testExportFBB.csv"));
+        } catch (IOException ioe) {
+            fail("exception catched");
+        }
+        /*try {
+            Files.delete(f.toPath());
+        } catch (IOException ex) {
+            Logger.getLogger(TournamentNGTest.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }
 
     /**
@@ -751,24 +774,20 @@ public class TournamentNGTest {
     @Test
     public void testExportNAF() {
         System.out.println("exportNAF");
-        File file = null;
-        Tournament instance = null;
-        instance.exportNAF(file);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of loadXMLv3 method, of class Tournament.
-     */
-    @Test
-    public void testLoadXMLv3() {
-        System.out.println("loadXMLv3");
-        Element racine = null;
-        Tournament instance = null;
-        instance.loadXMLv3(racine);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        Tournament instance = Tournament.getTournament();
+        File f = new File("./testExportNaf.xml");
+        instance.exportNAF(f);
+        try {
+            assertTrue(compareTwoFiles("./test/tournamentExportNaf.xml", "./testExportNaf.xml"));
+        } catch (IOException ioe) {
+            fail("exception catched");
+        }
+        /*try {
+            Files.delete(f.toPath());
+        } catch (IOException ex) {
+            Logger.getLogger(TournamentNGTest.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }
 
     /**
@@ -777,11 +796,43 @@ public class TournamentNGTest {
     @Test
     public void testLoadXML() {
         System.out.println("loadXML");
-        File file = null;
-        Tournament instance = null;
-        instance.loadXML(file);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        Tournament instance = Tournament.getTournament();
+        instance.saveXML(new File("./testLoadSave.xml"));
+        try {
+            assertTrue(compareTwoFiles("./test/tournament.xml", "./testLoadSave.xml"));
+        } catch (IOException ioe) {
+            fail("exception catched");
+        }
+
+    }
+
+    public boolean compareTwoFiles(String file1Path, String file2Path)
+            throws IOException {
+
+        File file1 = new File(file1Path);
+        File file2 = new File(file2Path);
+
+        BufferedReader br1 = new BufferedReader(new FileReader(file1));
+        BufferedReader br2 = new BufferedReader(new FileReader(file2));
+
+        String thisLine = null;
+        String thatLine = null;
+
+        List<String> list1 = new ArrayList<String>();
+        List<String> list2 = new ArrayList<String>();
+
+        while ((thisLine = br1.readLine()) != null) {
+            list1.add(thisLine);
+        }
+        while ((thatLine = br2.readLine()) != null) {
+            list2.add(thatLine);
+        }
+
+        br1.close();
+        br2.close();
+
+        return list1.equals(list2);
     }
 
     /**
@@ -790,12 +841,19 @@ public class TournamentNGTest {
     @Test
     public void testGetActiveCoachNumber() {
         System.out.println("getActiveCoachNumber");
-        Tournament instance = null;
-        int expResult = 0;
-        int result = instance.getActiveCoachNumber();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        Assert.assertEquals(tour.getCoachsCount(), 0);
+        tour.loadXML(new File("./test/coach.xml"));
+        Assert.assertTrue(tour.getCoachsCount() > 1);
+        int nb = tour.getCoachsCount();
+        for (int i = 0; i < tour.getCoachsCount(); i++) {
+            tour.getCoach(i).setActive(true);
+        }
+        assertEquals(nb, tour.getActiveCoachNumber());
+        for (int i = 0; i < tour.getCoachsCount(); i++) {
+            tour.getCoach(i).setActive(false);
+        }
+        assertEquals(0, tour.getActiveCoachNumber());
     }
 
     /**
@@ -804,12 +862,19 @@ public class TournamentNGTest {
     @Test
     public void testGetActiveCoaches() {
         System.out.println("getActiveCoaches");
-        Tournament instance = null;
-        ArrayList expResult = null;
-        ArrayList result = instance.getActiveCoaches();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      Tournament tour = Tournament.getTournament();
+        Assert.assertEquals(tour.getCoachsCount(), 0);
+        tour.loadXML(new File("./test/coach.xml"));
+        Assert.assertTrue(tour.getCoachsCount() > 1);
+        int nb = tour.getCoachsCount();
+        for (int i = 0; i < tour.getCoachsCount(); i++) {
+            tour.getCoach(i).setActive(true);
+        }
+        assertEquals(nb, tour.getActiveCoaches().size());
+        for (int i = 0; i < tour.getCoachsCount(); i++) {
+            tour.getCoach(i).setActive(false);
+        }
+        assertEquals(0, tour.getActiveCoaches().size());
     }
 
     /**
@@ -862,7 +927,7 @@ public class TournamentNGTest {
     @Test
     public void testGetPool() {
         System.out.println("getPool");
-         Tournament.getTournament().loadXML(new File("./test/pools.xml"));
+        Tournament.getTournament().loadXML(new File("./test/pools.xml"));
         Tournament tour = Tournament.getTournament();
         for (int i = 0; i < tour.getPoolCount(); i++) {
             Assert.assertNotNull(tour.getPool(i));
@@ -870,20 +935,19 @@ public class TournamentNGTest {
         }
     }
 
- 
     /**
      * Test of setParams method, of class Tournament.
      */
     @Test
     public void testSetParams() {
         System.out.println("setParams");
-         Tournament.getTournament().loadXML(new File("./test/params.xml"));
+        Tournament.getTournament().loadXML(new File("./test/params.xml"));
         Tournament instance = Tournament.getTournament();
         Parameters expResult = new Parameters();
-        Assert.assertNotEquals(instance.getParams(),expResult);
+        Assert.assertNotEquals(instance.getParams(), expResult);
         instance.setParams(expResult);
         Parameters result = instance.getParams();
-        assertTrue(result== expResult);
+        assertTrue(result == expResult);
     }
 
     /**
@@ -892,16 +956,16 @@ public class TournamentNGTest {
     @Test
     public void testIsRoundRobin() {
         System.out.println("isRoundRobin");
-       Tournament.getTournament().loadXML(new File("./test/params.xml"));
+        Tournament.getTournament().loadXML(new File("./test/params.xml"));
         Tournament instance = Tournament.getTournament();
         boolean expResult = false;
         instance.setRoundRobin(expResult);
         boolean result = instance.isRoundRobin();
-        assertTrue(result== expResult);
+        assertTrue(result == expResult);
         expResult = true;
         instance.setRoundRobin(expResult);
         result = instance.isRoundRobin();
-        assertTrue(result== expResult);
+        assertTrue(result == expResult);
     }
 
     /**
@@ -915,26 +979,11 @@ public class TournamentNGTest {
         boolean expResult = false;
         instance.setRoundRobin(expResult);
         boolean result = instance.isRoundRobin();
-        assertTrue(result== expResult);
+        assertTrue(result == expResult);
         expResult = true;
         instance.setRoundRobin(expResult);
         result = instance.isRoundRobin();
-        assertTrue(result== expResult);
-    }
-
-    /**
-     * Test of indexOfRound method, of class Tournament.
-     */
-    @Test
-    public void testIndexOfRound() {
-        System.out.println("indexOfRound");
-        Round r = null;
-        Tournament instance = null;
-        int expResult = 0;
-        int result = instance.indexOfRound(r);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result == expResult);
     }
 
     /**
@@ -958,7 +1007,7 @@ public class TournamentNGTest {
     @Test
     public void testRemoveRound_int() {
         System.out.println("removeRound");
-      Tournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         Assert.assertEquals(tour.getRoundsCount(), 0);
         tour.loadXML(new File("./test/tournament.xml"));
         Assert.assertTrue(tour.getRoundsCount() > 1);
@@ -979,7 +1028,7 @@ public class TournamentNGTest {
         Assert.assertTrue(tour.getRoundsCount() > 1);
 
         for (int i = 0; i < tour.getRoundsCount(); i++) {
-            Round r=tour.getRound(i);
+            Round r = tour.getRound(i);
             assertEquals(tour.getRoundIndex(r), i);
         }
     }
@@ -1004,7 +1053,7 @@ public class TournamentNGTest {
     @Test
     public void testGetTeam_int() {
         System.out.println("getTeam");
-         Tournament.getTournament().loadXML(new File("./test/coach.xml"));
+        Tournament.getTournament().loadXML(new File("./test/coach.xml"));
         Tournament tour = Tournament.getTournament();
         for (int i = 0; i < tour.getTeamsCount(); i++) {
             Assert.assertNotNull(tour.getTeam(i));
@@ -1069,7 +1118,7 @@ public class TournamentNGTest {
         Assert.assertTrue(tour.getTeamsCount() > 1);
 
         for (int i = 0; i < tour.getTeamsCount(); i++) {
-            Team r=tour.getTeam(i);
+            Team r = tour.getTeam(i);
             assertEquals(tour.getTeamIndex(r.getName()), i);
         }
     }
@@ -1140,7 +1189,7 @@ public class TournamentNGTest {
     @Test
     public void testGetGroup_int() {
         System.out.println("getGroup");
-         Tournament.getTournament().loadXML(new File("./test/group.xml"));
+        Tournament.getTournament().loadXML(new File("./test/group.xml"));
         Tournament tour = Tournament.getTournament();
         for (int i = 0; i < tour.getGroupsCount(); i++) {
             Assert.assertNotNull(tour.getGroup(i));
@@ -1154,13 +1203,13 @@ public class TournamentNGTest {
     @Test
     public void testGetGroup_Coach() {
         System.out.println("getGroup");
-        Coach C = null;
-        Tournament instance = null;
-        Group expResult = null;
-        Group result = instance.getGroup(C);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/group.xml"));
+        Tournament instance = Tournament.getTournament();
+        for (int i = 0; i < instance.getCoachsCount(); i++) {
+            Coach C = instance.getCoach(i);
+            Group result = instance.getGroup(C);
+            Assert.assertNotNull(result);
+        }
     }
 
     /**
@@ -1184,13 +1233,36 @@ public class TournamentNGTest {
     @Test
     public void testGetRankingTypes() {
         System.out.println("getRankingTypes");
-        boolean byTeam = false;
-        Tournament instance = null;
-        ArrayList expResult = null;
-        ArrayList result = instance.getRankingTypes(byTeam);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/params.xml"));
+
+        Tournament instance = Tournament.getTournament();
+        instance.getParams().setRankingIndiv1(Parameters.C_RANKING_NONE);
+        instance.getParams().setRankingIndiv2(Parameters.C_RANKING_NONE);
+        instance.getParams().setRankingIndiv3(Parameters.C_RANKING_NONE);
+        instance.getParams().setRankingIndiv4(Parameters.C_RANKING_NONE);
+        instance.getParams().setRankingIndiv5(Parameters.C_RANKING_NONE);
+        ArrayList result = instance.getRankingTypes(false);
+        for (Object i : result) {
+            if (i instanceof Integer) {
+                assertEquals(((Integer) i).intValue(), Parameters.C_RANKING_NONE);
+            } else {
+                fail("Ranking is not integer");
+            }
+        }
+
+        instance.getParams().setRankingTeam1(Parameters.C_RANKING_NONE);
+        instance.getParams().setRankingTeam2(Parameters.C_RANKING_NONE);
+        instance.getParams().setRankingTeam3(Parameters.C_RANKING_NONE);
+        instance.getParams().setRankingTeam4(Parameters.C_RANKING_NONE);
+        instance.getParams().setRankingTeam5(Parameters.C_RANKING_NONE);
+        result = instance.getRankingTypes(true);
+        for (Object i : result) {
+            if (i instanceof Integer) {
+                assertEquals(((Integer) i).intValue(), Parameters.C_RANKING_NONE);
+            } else {
+                fail("Ranking is not integer");
+            }
+        }
     }
 
     /**
@@ -1199,15 +1271,23 @@ public class TournamentNGTest {
     @Test
     public void testLoadRosters() {
         System.out.println("loadRosters");
-        Element racine = null;
-        Tournament instance = null;
-        instance.loadRosters(racine);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    private void assertNotNull(boolean result, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        final SAXBuilder sxb = new SAXBuilder();
 
+        try {
+            final org.jdom2.Document document = sxb.build(new File("./test/tournament.xml"));
+            final Element racine = document.getRootElement();
+            Tournament instance = Tournament.getTournament();
+            RosterType.newRostersNames();
+            RosterType.newRostersTypes();
+
+            assertTrue(RosterType.getRostersNamesCount() == 0);
+
+            instance.loadRosters(racine);
+
+            assertTrue(RosterType.getRostersNamesCount() > 0);
+        } catch (Exception e) {
+            fail("Exception catched");
+        }
+    }
 }

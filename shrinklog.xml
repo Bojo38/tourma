@@ -6947,7 +6947,7 @@
 	<method signature="boolean containsTeam(java.lang.String)" class="tourma.data.Tournament" />
 	<method signature="void clearCategories()" class="tourma.data.Tournament" />
 	<method signature="int getGroupsCount()" class="tourma.data.Tournament" />
-	<method signature="int indexOfRound(tourma.data.Round)" class="tourma.data.Tournament" />
+	<method signature="int getRoundIndex(tourma.data.Round)" class="tourma.data.Tournament" />
 	<method signature="void setRoundRobin(boolean)" class="tourma.data.Tournament" />
 	<method signature="boolean containsGroups(tourma.data.Group)" class="tourma.data.Tournament" />
 	<method signature="boolean containsTeam(tourma.data.Team)" class="tourma.data.Tournament" />
