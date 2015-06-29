@@ -86,12 +86,13 @@ public class PairNGTest {
     @Test
     public void testGetFirst() {
         System.out.println("getFirst");
-        Pair instance = null;
-        Object expResult = null;
+                String f="First";
+        String s="Second";
+        Pair instance = new Pair(f,s);
+        Object expResult = "First";
         Object result = instance.getFirst();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
