@@ -6,6 +6,8 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -14,17 +16,33 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.data.Clan;
+import tourma.data.Tournament;
+
 /**
  *
  * @author WFMJ7631
  */
 public class MjtRankingClanNGTest {
-    
+
+    static ArrayList<Clan> clans = new ArrayList<>();
+    static MjtRankingClan instance;
+    //static Criteria crit;
+
     public MjtRankingClanNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/clan.xml"));
+
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            clans.add(Tournament.getTournament().getClan(i));
+        }
+        //crit=Tournament.getTournament().getParams().getCriteria(0);
+        instance = new MjtRankingClan(Tournament.getTournament().getRoundsCount() - 1,
+                clans,
+                false);
     }
 
     @AfterClass
@@ -45,10 +63,8 @@ public class MjtRankingClanNGTest {
     @Test
     public void testSortDatas() {
         System.out.println("sortDatas");
-        MjtRankingClan instance = null;
+        assertEquals(instance.getRowCount(), clans.size());
         instance.sortDatas();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -57,12 +73,9 @@ public class MjtRankingClanNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        MjtRankingClan instance = null;
-        int expResult = 0;
+        int expResult = 2+Tournament.getTournament().getRankingTypes(false).size();
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -115,5 +128,5 @@ public class MjtRankingClanNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

@@ -95,7 +95,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * Sort teams data
      */
     @SuppressWarnings("unchecked")
-    protected void sortDatasTeam() {
+    private void sortDatasTeam() {
 
         final ArrayList<Team> teams = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
@@ -253,7 +253,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * Sort data Coach
      */
     @SuppressWarnings("unchecked")
-    protected void sortDatasCoach() {
+    private void sortDatasCoach() {
         final ArrayList<Coach> coaches = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coaches.add(Tournament.getTournament().getCoach(i));
