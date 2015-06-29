@@ -5,6 +5,7 @@
  */
 package tourma.utils;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -47,9 +48,7 @@ public class RankedNGTest {
         Ranked instance = new RankedImpl();
         int expResult = 0;
         int result = instance.getRowCount();
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, expResult);
     }
 
     /**
