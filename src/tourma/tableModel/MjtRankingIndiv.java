@@ -50,10 +50,10 @@ public final class MjtRankingIndiv extends MjtRanking {
 
         this(round,
                 Tournament.getTournament().getParams().getRankingIndiv1(),
-                Tournament.getTournament().getParams().getRankingIndiv1(),
-                Tournament.getTournament().getParams().getRankingIndiv1(),
-                Tournament.getTournament().getParams().getRankingIndiv1(),
-                Tournament.getTournament().getParams().getRankingIndiv1(),
+                Tournament.getTournament().getParams().getRankingIndiv2(),
+                Tournament.getTournament().getParams().getRankingIndiv3(),
+                Tournament.getTournament().getParams().getRankingIndiv4(),
+                Tournament.getTournament().getParams().getRankingIndiv5(),
                 coachs, teamTournament, round_only, false);
     }
 
