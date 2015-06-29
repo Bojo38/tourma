@@ -8,7 +8,9 @@ package tourma.tableModel;
 import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -115,18 +117,16 @@ public class MjtRankingClanNGTest {
     @Test
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
-        JTable table = null;
-        Object value = null;
-        boolean isSelected = false;
-        boolean hasFocus = false;
-        int row = 0;
-        int column = 0;
-        MjtRankingClan instance = null;
-        Component expResult = null;
-        Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        JTable table = new JTable();
+        table.setModel(instance);
+        for (int i=0; i<instance.getColumnCount(); i++)
+        {
+            for(int j=0; j<instance.getRowCount(); j++)
+            {
+                Component result = instance.getTableCellRendererComponent(table, instance.getValueAt(j, i), false, false, j, i);
+                Assert.assertTrue(result instanceof JLabel);
+            }
+        }
     }
 
 }
