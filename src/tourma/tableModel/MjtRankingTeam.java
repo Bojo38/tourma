@@ -41,7 +41,7 @@ public final class MjtRankingTeam extends MjtRanking {
      * @param v
      * @return
      */
-    public static int getTeamVND(final Team t, final ArrayList<CoachMatch> v) {
+    private static int getTeamVND(final Team t, final ArrayList<CoachMatch> v) {
         int value = 0;
 
         int nbVictory = 0;
@@ -86,7 +86,7 @@ public final class MjtRankingTeam extends MjtRanking {
      * @param v
      * @return
      */
-    public static int getTeamPoints(final Team t, final ArrayList<CoachMatch> v) {
+    private static int getTeamPoints(final Team t, final ArrayList<CoachMatch> v) {
         int value = 0;
 
         int nbVictory = 0;
