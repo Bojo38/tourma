@@ -6,25 +6,43 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.data.Team;
+import tourma.data.Tournament;
+import tourma.languages.Translate;
+import tourma.utility.StringConstants;
+
 /**
  *
  * @author WFMJ7631
  */
 public class MjtTeamsNGTest {
-    
+
+    static ArrayList<Team> teams = new ArrayList<>();
+    static MjtTeams instance;
+
     public MjtTeamsNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/team.xml"));
+
+        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+            teams.add(Tournament.getTournament().getTeam(i));
+        }
+        //crit=Tournament.getTournament().getParams().getCriteria(0);
+        instance = new MjtTeams(teams);
     }
 
     @AfterClass
@@ -45,12 +63,9 @@ public class MjtTeamsNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        MjtTeams instance = null;
-        int expResult = 0;
+        int expResult = 2 + Tournament.getTournament().getParams().getTeamMatesNumber();
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -59,12 +74,9 @@ public class MjtTeamsNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        MjtTeams instance = null;
-        int expResult = 0;
+        int expResult = teams.size();
         int result = instance.getRowCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -73,13 +85,21 @@ public class MjtTeamsNGTest {
     @Test
     public void testGetColumnName() {
         System.out.println("getColumnName");
-        int col = 0;
-        MjtTeams instance = null;
         String expResult = "";
-        String result = instance.getColumnName(col);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int col = 0; col < 9; col++) {
+            if (col == 0) {
+                expResult = StringConstants.CS_HASH;
+            } else {
+                if (col == 1) {
+                    expResult = Translate.translate(Translate.CS_Name);
+                } else {
+                    expResult = Translate.translate(Translate.CS_Coach) + (col - 1);
+                }
+            }
+            String result = instance.getColumnName(col);
+            assertEquals(result, expResult);
+        }
+
     }
 
     /**
@@ -88,14 +108,26 @@ public class MjtTeamsNGTest {
     @Test
     public void testGetValueAt() {
         System.out.println("getValueAt");
-        int row = 0;
-        int col = 0;
-        MjtTeams instance = null;
-        Object expResult = null;
-        Object result = instance.getValueAt(row, col);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Object expResult = "";
+        for (int i = 0; i < teams.size(); i++) {
+            Team c = teams.get(i);
+            for (int col = 0; col < 2+Tournament.getTournament().getParams().getTeamMatesNumber(); col++) {
+
+                switch (col) {
+                    case 0:
+                        expResult = i + 1;
+                        break;
+                    case 1:
+                        expResult = c.getName();
+                        break;                    
+                    default:
+                        expResult= c.getCoach(col-2).getName();
+                        break;
+                }
+                Object result = instance.getValueAt(i, col);
+                assertEquals(result, expResult);
+            }
+        }
     }
 
     /**
@@ -104,13 +136,19 @@ public class MjtTeamsNGTest {
     @Test
     public void testGetColumnClass() {
         System.out.println("getColumnClass");
-        int c = 0;
-        MjtTeams instance = null;
         Class expResult = null;
-        Class result = instance.getColumnClass(c);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int col = 0; col < 9; col++) {
+            switch (col) {
+                case 0:
+                    expResult = Integer.class;
+                    break;
+                default:
+                    expResult = String.class;
+                    break;
+            }
+            Class result = instance.getColumnClass(col);
+            assertEquals(result, expResult);
+        }
     }
 
     /**
@@ -119,14 +157,13 @@ public class MjtTeamsNGTest {
     @Test
     public void testIsCellEditable() {
         System.out.println("isCellEditable");
-        int row = 0;
-        int col = 0;
-        MjtTeams instance = null;
-        boolean expResult = false;
-        boolean result = instance.isCellEditable(row, col);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int row = 0; row < instance.getRowCount(); row++) {
+            for (int col = 0; col < instance.getColumnCount(); col++) {
+                boolean expResult = false;
+                boolean result = instance.isCellEditable(row, col);
+                assertEquals(result, expResult);
+            }
+        }
     }
 
     /**
@@ -135,18 +172,14 @@ public class MjtTeamsNGTest {
     @Test
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
-        JTable table = null;
-        Object value = null;
-        boolean isSelected = false;
-        boolean hasFocus = false;
-        int row = 0;
-        int column = 0;
-        MjtTeams instance = null;
-        Component expResult = null;
-        Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        JTable table = new JTable();
+        table.setModel(instance);
+        for (int i = 0; i < instance.getColumnCount(); i++) {
+            for (int j = 0; j < instance.getRowCount(); j++) {
+                Component result = instance.getTableCellRendererComponent(table, instance.getValueAt(j, i), false, false, j, i);
+                Assert.assertTrue(result instanceof JTextField);
+            }
+        }
     }
-    
+
 }
