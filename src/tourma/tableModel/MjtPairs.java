@@ -57,13 +57,13 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
                 result = Translate.translate(Translate.CS_Table);
                 break;
             case 1:
-                result = Translate.translate(Translate.CS_Clan)+" 1";
+                result = Translate.translate(Translate.CS_Team)+" 1";
                 break;
             case 2:
                 result = StringConstants.CS_NULL;
                 break;
             case 3:
-                result =  Translate.translate(Translate.CS_Clan)+" 2";
+                result =  Translate.translate(Translate.CS_Team)+" 2";
                 break;
             default:
         }
