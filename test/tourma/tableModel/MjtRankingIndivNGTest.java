@@ -40,7 +40,6 @@ public class MjtRankingIndivNGTest {
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coachs.add(Tournament.getTournament().getCoach(i));
         }
-        //crit=Tournament.getTournament().getParams().getCriteria(0);
         instance = new MjtRankingIndiv(Tournament.getTournament().getRoundsCount() - 1,
                 coachs,
                 false,false);

@@ -1369,6 +1369,7 @@ public class Tournament implements IContainCoachs {
      * @param file
      */
     public void loadXML(final java.io.File file) {
+        
         final SAXBuilder sxb = new SAXBuilder();
 
         try {
