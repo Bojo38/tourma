@@ -44,12 +44,10 @@ public class ExtensionFileFilterNGTest {
     @Test
     public void testGetDescription() {
         System.out.println("getDescription");
-        ExtensionFileFilter instance = null;
-        String expResult = "";
+        ExtensionFileFilter instance = new ExtensionFileFilter("Description", "extension");
+        String expResult = "Description";
         String result = instance.getDescription();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -73,11 +71,11 @@ public class ExtensionFileFilterNGTest {
     @Test
     public void testSetDescription() {
         System.out.println("setDescription");
-        String description = "";
-        ExtensionFileFilter instance = null;
-        instance.setDescription(description);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ExtensionFileFilter instance = new ExtensionFileFilter("Description", "extension");
+        String expResult = "Description2";
+        instance.setDescription(expResult);
+        String result = instance.getDescription();
+        assertEquals(result, expResult);
     }
     
 }

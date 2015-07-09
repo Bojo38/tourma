@@ -6,27 +6,49 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.io.File;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JTable;
-import static org.testng.Assert.fail;
+import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.data.Coach;
 import tourma.data.Competitor;
+import tourma.data.Tournament;
 
 /**
  *
  * @author WFMJ7631
  */
 public class MjtRankingManualNGTest {
-    
+
+    static ArrayList<Coach> coachs = new ArrayList<>();
+    static MjtRankingManual instance;
+
     public MjtRankingManualNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/coach.xml"));
+
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+            coachs.add(Tournament.getTournament().getCoach(i));
+        }
+        //crit=Tournament.getTournament().getParams().getCriteria(0);
+        instance = new MjtRankingManual(Tournament.getTournament().getRoundsCount() - 1,
+                Tournament.getTournament().getParams().getRankingIndiv1(),
+                Tournament.getTournament().getParams().getRankingIndiv2(),
+                Tournament.getTournament().getParams().getRankingIndiv3(),
+                Tournament.getTournament().getParams().getRankingIndiv4(),
+                Tournament.getTournament().getParams().getRankingIndiv5(),
+                coachs,
+                false);
     }
 
     @AfterClass
@@ -47,10 +69,8 @@ public class MjtRankingManualNGTest {
     @Test
     public void testSortDatas() {
         System.out.println("sortDatas");
-        MjtRankingManual instance = null;
+        assertEquals(instance.getRowCount(), coachs.size());
         instance.sortDatas();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -59,11 +79,14 @@ public class MjtRankingManualNGTest {
     @Test
     public void testAddData() {
         System.out.println("addData");
-        Competitor obj = null;
-        MjtRankingManual instance = null;
+        Competitor obj = new Coach("toto");
+        int nb = instance.getRowCount();
         instance.addData(obj);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(nb + 1, instance.getRowCount());
+
+        instance.delData(obj);
+        assertEquals(nb, instance.getRowCount());
+
     }
 
     /**
@@ -72,11 +95,20 @@ public class MjtRankingManualNGTest {
     @Test
     public void testAddDatas() {
         System.out.println("addDatas");
-        ArrayList<Competitor> objs = null;
-        MjtRankingManual instance = null;
+        ArrayList<Competitor> objs = new ArrayList<>();
+        for (Coach c:coachs)
+        {
+            objs.add((Competitor)(new Coach(c.getName()+"1")));
+        }
+        int nb=instance.getRowCount();
         instance.addDatas(objs);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int nbtot=coachs.size();
+        assertEquals(nbtot,instance.getRowCount());
+        for (Competitor c:objs)
+        {
+            instance.delData(c);
+        }
+        assertEquals(nb, instance.getRowCount());
     }
 
     /**
@@ -85,12 +117,9 @@ public class MjtRankingManualNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        MjtRankingManual instance = null;
         int expResult = 0;
         int result = instance.getColumnCount();
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, expResult);
     }
 
     /**
@@ -99,13 +128,10 @@ public class MjtRankingManualNGTest {
     @Test
     public void testGetColumnName() {
         System.out.println("getColumnName");
-        int col = 0;
-        MjtRankingManual instance = null;
         String expResult = "";
-        String result = instance.getColumnName(col);
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String result = instance.getColumnName(0);
+        assertEquals(result, expResult);
+
     }
 
     /**
@@ -114,14 +140,9 @@ public class MjtRankingManualNGTest {
     @Test
     public void testGetValueAt() {
         System.out.println("getValueAt");
-        int row = 0;
-        int col = 0;
-        MjtRankingManual instance = null;
-        Object expResult = null;
-        Object result = instance.getValueAt(row, col);
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Object expResult = "";
+        Object result = instance.getValueAt(0, 0);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -130,18 +151,14 @@ public class MjtRankingManualNGTest {
     @Test
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
-        JTable table = null;
-        Object value = null;
-        boolean isSelected = false;
-        boolean hasFocus = false;
-        int row = 0;
-        int column = 0;
-        MjtRankingManual instance = null;
-        Component expResult = null;
-        Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        JTable table = new JTable();
+        table.setModel(instance);
+        for (int i = 0; i < instance.getColumnCount(); i++) {
+            for (int j = 0; j < instance.getRowCount(); j++) {
+                Component result = instance.getTableCellRendererComponent(table, instance.getValueAt(j, i), false, false, j, i);
+                Assert.assertTrue(result instanceof JLabel);
+            }
+        }
     }
-    
+
 }

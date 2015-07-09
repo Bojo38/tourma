@@ -377,11 +377,11 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             result = false;
         } else {
             if (mTeamTournament) {
-                if ((col == 1) || (col == 2) || (col == 5) || (col == 6)) {
+                if ((col == 1) || (col == 2) || (col == 5) || (col == 6)|| (col == 0)) {
                     result = false;
                 }
             } else {
-                if ((col == 1) || (col == 4)) {
+                if ((col == 1) || (col == 4)|| (col == 0)) {
                     result = false;
                 }
             }

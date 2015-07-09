@@ -6,21 +6,23 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tourma.data.Criteria;
+
 /**
  *
  * @author WFMJ7631
  */
 public class MjtAnnexRankNGTest {
-    
+
     public MjtAnnexRankNGTest() {
     }
 
@@ -46,10 +48,8 @@ public class MjtAnnexRankNGTest {
     @Test
     public void testSortDatas() {
         System.out.println("sortDatas");
-        MjtAnnexRank instance = null;
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
         instance.sortDatas();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,12 +58,10 @@ public class MjtAnnexRankNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        MjtAnnexRank instance = null;
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
         int expResult = 0;
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -72,12 +70,10 @@ public class MjtAnnexRankNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        MjtAnnexRank instance = null;
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
         int expResult = 0;
         int result = instance.getRowCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -87,12 +83,10 @@ public class MjtAnnexRankNGTest {
     public void testGetColumnName() {
         System.out.println("getColumnName");
         int col = 0;
-        MjtAnnexRank instance = null;
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
         String expResult = "";
         String result = instance.getColumnName(col);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -103,12 +97,10 @@ public class MjtAnnexRankNGTest {
         System.out.println("getValueAt");
         int row = 0;
         int col = 0;
-        MjtAnnexRank instance = null;
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
         Object expResult = null;
         Object result = instance.getValueAt(row, col);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -123,12 +115,10 @@ public class MjtAnnexRankNGTest {
         boolean hasFocus = false;
         int row = 0;
         int column = 0;
-        MjtAnnexRank instance = null;
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
         Component expResult = null;
         Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue (result instanceof JLabel);
     }
 
     public class MjtAnnexRankImpl extends MjtAnnexRank {
@@ -159,12 +149,12 @@ public class MjtAnnexRankNGTest {
     @Test
     public void testGetDetail() {
         System.out.println("getDetail");
-        MjtAnnexRank instance = null;
-        String expResult = "";
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
+        String expResult = "Test";
+        instance.setDetail(expResult);
         String result = instance.getDetail();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -173,11 +163,11 @@ public class MjtAnnexRankNGTest {
     @Test
     public void testSetDetail() {
         System.out.println("setDetail");
-        String d = "";
-        MjtAnnexRank instance = null;
-        instance.setDetail(d);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
+        String expResult = "Test";
+        instance.setDetail(expResult);
+        String result = instance.getDetail();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -186,12 +176,11 @@ public class MjtAnnexRankNGTest {
     @Test
     public void testGetCriteria() {
         System.out.println("getCriteria");
-        MjtAnnexRank instance = null;
-        Criteria expResult = null;
+        MjtAnnexRank instance = new MjtAnnexRankImpl();
+        Criteria expResult = new Criteria("Test");
+        instance.setCriteria(expResult);
         Criteria result = instance.getCriteria();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-    
+
 }
