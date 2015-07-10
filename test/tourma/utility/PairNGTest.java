@@ -6,18 +6,18 @@
 package tourma.utility;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class PairNGTest {
-    
+
     public PairNGTest() {
     }
 
@@ -43,12 +43,13 @@ public class PairNGTest {
     @Test
     public void testHashCode() {
         System.out.println("hashCode");
-        Pair instance = null;
-        int expResult = 0;
+        String f = "First";
+        String s = "Second";
+        Pair instance = new Pair(f, s);
+        int expResult = (f.hashCode() + s.hashCode()) * s.hashCode() + f.hashCode();
+        
         int result = instance.hashCode();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -57,13 +58,24 @@ public class PairNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object other = null;
-        Pair instance = null;
-        boolean expResult = false;
+        
+        String f = "First";
+        String s = "Second";
+        Pair instance = new Pair(f, s);
+        
+        String fo = "First";
+        String so = "Second";
+        Pair other = new Pair(f, s);
+        
+        boolean expResult = true;
         boolean result = instance.equals(other);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        other.setFirst("Other");
+        expResult = false;
+        result = instance.equals(other);
+        assertEquals(result, expResult);
+        
     }
 
     /**
@@ -72,12 +84,12 @@ public class PairNGTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Pair instance = null;
-        String expResult = "";
+        String f = "First";
+        String s = "Second";
+        Pair instance = new Pair(f, s);
+        String expResult = "("+f+", "+s+")";
         String result = instance.toString();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -86,12 +98,13 @@ public class PairNGTest {
     @Test
     public void testGetFirst() {
         System.out.println("getFirst");
-        Pair instance = null;
-        Object expResult = null;
+        String f = "First";
+        String s = "Second";
+        Pair instance = new Pair(f, s);
+        Object expResult = "First";
         Object result = instance.getFirst();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -100,11 +113,14 @@ public class PairNGTest {
     @Test
     public void testSetFirst() {
         System.out.println("setFirst");
-        Object first = null;
-        Pair instance = null;
-        instance.setFirst(first);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String f = "First";
+        String f2 = "First2";
+        String s = "Second";
+        Pair instance = new Pair(f, s);
+        instance.setFirst(f2);
+        Object expResult = f2;
+        Object result = instance.getFirst();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -113,12 +129,14 @@ public class PairNGTest {
     @Test
     public void testGetSecond() {
         System.out.println("getSecond");
-        Pair instance = null;
-        Object expResult = null;
+        String f = "First";
+        String s = "Second";
+                String s2 = "Second2";
+        Pair instance = new Pair(f, s);
+        instance.setSecond(s2);
+        Object expResult = s2;
         Object result = instance.getSecond();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -127,11 +145,14 @@ public class PairNGTest {
     @Test
     public void testSetSecond() {
         System.out.println("setSecond");
-        Object second = null;
-        Pair instance = null;
-        instance.setSecond(second);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       String f = "First";
+        String s = "Second";
+                String s2 = "Second2";
+        Pair instance = new Pair(f, s);
+        instance.setSecond(s2);
+        Object expResult = s2;
+        Object result = instance.getSecond();
+        assertEquals(result, expResult);
     }
-    
+
 }

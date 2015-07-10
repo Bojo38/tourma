@@ -5,7 +5,10 @@
  */
 package tourma.utility;
 
-import static org.testng.Assert.fail;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -43,16 +46,50 @@ public class SuspendableNGTest {
     @Test
     public void testSetSuspended() {
         System.out.println("setSuspended");
-        boolean s = false;
-        Suspendable instance = new SuspendableImpl();
-        instance.setSuspended(s);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SuspendableImpl sus = new SuspendableImpl();
+        try {
+            System.out.println("sleep");
+            Date d = new Date();            
+            sus.start();
+            sus.join(2000);            
+            Date d2 = new Date();
+            long nb = d.getTime();
+            long nb2 = d2.getTime();
+            Assert.assertTrue(nb2 - nb > 1000);
+        } catch (InterruptedException ex) {
+            sus.notify();
+            Logger.getLogger(SleepingNGTest.class.getName()).log(Level.SEVERE, null, ex);
+            Assert.fail("Exception");
+        }
     }
 
-    public class SuspendableImpl implements Suspendable {
+     public class SuspendableImpl extends Thread implements Suspendable {
+
+        private boolean stop = false;
+        private boolean suspended = false;
+
+        public void Stop() {
+            stop = true;
+        }
 
         public void setSuspended(boolean s) {
+            suspended = s;
+        }
+
+        public void run() {
+            Sleeping sleeping = new Sleeping(this);
+
+            sleeping.sleep(1000, 0);
+            synchronized (this) {
+                suspended = true;
+                while (suspended) {
+                    try {
+                        wait();
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }
+
         }
     }
     
