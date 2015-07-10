@@ -7,7 +7,6 @@ package tourma.utility;
 
 import java.io.File;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -44,12 +43,10 @@ public class ExtensionFileFilterNGTest {
     @Test
     public void testGetDescription() {
         System.out.println("getDescription");
-        ExtensionFileFilter instance = null;
-        String expResult = "";
+        ExtensionFileFilter instance = new ExtensionFileFilter("Description","xml");
+        String expResult = "Description";
         String result = instance.getDescription();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,13 +55,17 @@ public class ExtensionFileFilterNGTest {
     @Test
     public void testAccept() {
         System.out.println("accept");
-        File file = null;
-        ExtensionFileFilter instance = null;
-        boolean expResult = false;
+        File file = new File("file.xml");
+        File file2 = new File("file.txt");
+        ExtensionFileFilter instance = new ExtensionFileFilter("Description","xml");
+
+        boolean expResult = true;
         boolean result = instance.accept(file);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        expResult = false;
+        result = instance.accept(file2);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -73,11 +74,11 @@ public class ExtensionFileFilterNGTest {
     @Test
     public void testSetDescription() {
         System.out.println("setDescription");
-        String description = "";
-        ExtensionFileFilter instance = null;
-        instance.setDescription(description);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ExtensionFileFilter instance = new ExtensionFileFilter("Description","xml");
+        String expResult = "Description2";
+        instance.setDescription(expResult);
+        String result = instance.getDescription();
+        assertEquals(result, expResult);
     }
     
 }
