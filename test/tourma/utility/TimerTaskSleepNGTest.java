@@ -6,7 +6,9 @@
 package tourma.utility;
 
 import java.util.Timer;
-import static org.testng.Assert.fail;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -18,7 +20,7 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class TimerTaskSleepNGTest {
-    
+
     public TimerTaskSleepNGTest() {
     }
 
@@ -44,11 +46,20 @@ public class TimerTaskSleepNGTest {
     @Test
     public void testSetTimer() {
         System.out.println("setTimer");
-        Timer t = null;
-        TimerTaskSleep instance = null;
-        instance.setTimer(t);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SuspendableImpl sus = new SuspendableImpl();
+        sus.setSuspended(true);
+        TimerTaskSleep task = new TimerTaskSleep(sus);
+        Timer timer = new Timer();
+        task.setTimer(timer);
+        timer.schedule(task, 1000);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TimerTaskSleepNGTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Assert.assertFalse(sus.getSuspended());
+
     }
 
     /**
@@ -57,10 +68,46 @@ public class TimerTaskSleepNGTest {
     @Test
     public void testRun() {
         System.out.println("run");
-        TimerTaskSleep instance = null;
-        instance.run();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SuspendableImpl sus = new SuspendableImpl();
+        sus.setSuspended(true);
+        TimerTaskSleep task = new TimerTaskSleep(sus);
+        task.setTimer(new Timer());
+        task.run();
+        
+        Assert.assertFalse(sus.getSuspended());
     }
-    
+
+    public class SuspendableImpl extends Thread implements Suspendable {
+
+        private boolean stop = false;
+        private boolean suspended = false;
+
+        public void Stop() {
+            stop = true;
+        }
+
+        public boolean getSuspended() {
+            return suspended;
+        }
+
+        public void setSuspended(boolean s) {
+            suspended = s;
+        }
+
+        public void run() {
+            Sleeping sleeping = new Sleeping(this);
+
+            sleeping.sleep(1000, 0);
+            synchronized (this) {
+                suspended = true;
+                while (suspended) {
+                    try {
+                        wait();
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }
+
+        }
+    }
 }
