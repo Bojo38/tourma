@@ -54,7 +54,7 @@ public class TimerTaskSleepNGTest {
         timer.schedule(task, 1000);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1500);
         } catch (InterruptedException ex) {
             Logger.getLogger(TimerTaskSleepNGTest.class.getName()).log(Level.SEVERE, null, ex);
         }
