@@ -5,6 +5,7 @@
  */
 package tourma.utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import static org.testng.Assert.assertEquals;
@@ -17,6 +18,7 @@ import org.testng.annotations.Test;
 import tourma.data.Competitor;
 import tourma.data.Match;
 import tourma.data.Team;
+import tourma.data.Tournament;
 /**
  *
  * @author WFMJ7631
@@ -36,6 +38,7 @@ public class BalancingNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+             Tournament.getTournament().loadXML(new File("./test/coach.xml"));
     }
 
     @AfterMethod
@@ -45,7 +48,7 @@ public class BalancingNGTest {
     /**
      * Test of balanceCoachMatchs method, of class Balancing.
      */
-    @Test
+    @Test(enabled=false)
     public void testBalanceCoachMatchs() {
         System.out.println("balanceCoachMatchs");
         ArrayList<Match> matchs = null;
@@ -57,7 +60,7 @@ public class BalancingNGTest {
     /**
      * Test of isRoundValid method, of class Balancing.
      */
-    @Test
+    @Test(enabled=false)
     public void testIsRoundValid() {
         System.out.println("isRoundValid");
         ArrayList<Match> matchs = null;
@@ -73,21 +76,20 @@ public class BalancingNGTest {
     /**
      * Test of getMinimumFromHash method, of class Balancing.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetMinimumFromHash() {
         System.out.println("getMinimumFromHash");
-        HashMap<Competitor, HashMap<Team, Integer>> hash = null;
+        HashMap<Competitor, HashMap<Team, Integer>> hash = new HashMap<>();
         int expResult = 0;
         int result = Balancing.getMinimumFromHash(hash);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of getMaximumFromHash method, of class Balancing.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetMaximumFromHash() {
         System.out.println("getMaximumFromHash");
         HashMap<Competitor, HashMap<Team, Integer>> hash = null;

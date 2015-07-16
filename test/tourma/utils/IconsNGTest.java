@@ -6,8 +6,7 @@
 package tourma.utils;
 
 import javax.swing.ImageIcon;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -44,11 +43,8 @@ public class IconsNGTest {
     @Test
     public void testGetDices() {
         System.out.println("getDices");
-        ImageIcon expResult = null;
         ImageIcon result = Icons.getDices();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -57,11 +53,8 @@ public class IconsNGTest {
     @Test
     public void testGetParams() {
         System.out.println("getParams");
-        ImageIcon expResult = null;
         ImageIcon result = Icons.getParams();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -70,11 +63,8 @@ public class IconsNGTest {
     @Test
     public void testGetStar() {
         System.out.println("getStar");
-        ImageIcon expResult = null;
         ImageIcon result = Icons.getStar();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -83,11 +73,8 @@ public class IconsNGTest {
     @Test
     public void testGetStats() {
         System.out.println("getStats");
-        ImageIcon expResult = null;
         ImageIcon result = Icons.getStats();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(result);
     }
     
 }

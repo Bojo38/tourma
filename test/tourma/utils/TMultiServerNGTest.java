@@ -40,7 +40,7 @@ public class TMultiServerNGTest {
     /**
      * Test of stopServer method, of class TMultiServer.
      */
-    @Test
+    @Test(enabled=false)
     public void testStopServer() {
         System.out.println("stopServer");
         TMultiServer instance = new TMultiServer();
@@ -52,7 +52,7 @@ public class TMultiServerNGTest {
     /**
      * Test of run method, of class TMultiServer.
      */
-    @Test
+    @Test(enabled=false)
     public void testRun() {
         System.out.println("run");
         TMultiServer instance = new TMultiServer();

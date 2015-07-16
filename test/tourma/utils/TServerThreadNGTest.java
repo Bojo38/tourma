@@ -40,7 +40,7 @@ public class TServerThreadNGTest {
     /**
      * Test of run method, of class TServerThread.
      */
-    @Test
+    @Test(enabled=false)
     public void testRun() {
         System.out.println("run");
         TServerThread instance = null;
