@@ -116,6 +116,7 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
         jsp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Matchs"))); // NOI18N
+        jpnMatchs.setName("jpnMatchs"); // NOI18N
 
         javax.swing.GroupLayout jpnMatchsLayout = new javax.swing.GroupLayout(jpnMatchs);
         jpnMatchs.setLayout(jpnMatchsLayout);
@@ -248,6 +249,7 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
             final JComboBox<Object> jcb = new JComboBox<>(playersNames.toArray());
             jcb.setSelectedIndex(i);
             jcb.addActionListener(this);
+            jcb.setName("jcb"+i);
             mPlayersSelected.add(jcb);
         }
 

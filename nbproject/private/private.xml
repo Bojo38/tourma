@@ -12,13 +12,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Perso/tourma/src/tourma/tableModel/MjtAnnexRankTeam.java</file>
-            <file>file:/C:/Perso/tourma/test/tourma/data/TournamentNGTest.java</file>
-            <file>file:/C:/Perso/tourma/src/tourma/tableModel/MjtRankingClan.java</file>
-            <file>file:/C:/Perso/tourma/src/tourma/tableModel/MjtAnnexRank.java</file>
-            <file>file:/C:/Perso/tourma/test/tourma/tableModel/MjtRankingClanNGTest.java</file>
-            <file>file:/C:/Perso/tourma/src/tourma/data/Tournament.java</file>
-            <file>file:/C:/Perso/tourma/test/tourma/tableModel/MjtAnnexRankClanNGTest.java</file>
+            <file>file:/C:/Perso/tourma/test/tourma/data/CoachNGTest.java</file>
+            <file>file:/C:/Perso/tourma/test/tourma/JdgChangePairingNGTest.java</file>
+            <file>file:/C:/Perso/tourma/test/teamma/views/JdgRosterNGTest.java</file>
         </group>
     </open-files>
 </project-private>
