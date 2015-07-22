@@ -6,25 +6,33 @@
 package tourma;
 
 import java.awt.Component;
+import java.io.File;
 import javax.swing.JTree;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.data.Tournament;
+import tourma.languages.Translate;
+
 /**
  *
  * @author WFMJ7631
  */
 public class MainTreeModelNGTest {
-    
+
     public MainTreeModelNGTest() {
     }
+
+    MainTreeModel mtm;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -36,6 +44,9 @@ public class MainTreeModelNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/team.xml"));
+        mtm = new MainTreeModel();
+
     }
 
     @AfterMethod
@@ -48,12 +59,10 @@ public class MainTreeModelNGTest {
     @Test
     public void testGetRoot() {
         System.out.println("getRoot");
-        MainTreeModel instance = new MainTreeModel();
-        Object expResult = null;
-        Object result = instance.getRoot();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Object result = mtm.getRoot();
+        assertTrue(result instanceof DefaultMutableTreeNode);
+        Object userObject = ((DefaultMutableTreeNode) result).getUserObject();
+        assertEquals((String) userObject, Tournament.getTournament().getParams().getTournamentName());
     }
 
     /**
@@ -62,14 +71,25 @@ public class MainTreeModelNGTest {
     @Test
     public void testGetChild() {
         System.out.println("getChild");
-        Object parent = null;
-        int index = 0;
-        MainTreeModel instance = new MainTreeModel();
-        Object expResult = null;
-        Object result = instance.getChild(parent, index);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int nbRounds = Tournament.getTournament().getRoundsCount();
+        for (int i = 0; i < mtm.getChildCount(mtm.getRoot()); i++) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) mtm.getChild(mtm.getRoot(), i);
+            if (i == 0) {
+                assertEquals(node.getUserObject(), Tournament.getTournament().getParams());
+            } else {
+                if (i == 1) {
+                    assertEquals(node.getUserObject(), Translate.translate("STATISTIQUES"));
+                } else {
+                    if (i < Tournament.getTournament().getRoundsCount() + 2) {
+                        assertEquals(node.getUserObject(), Tournament.getTournament().getRound(i-2));
+                    }
+                    else
+                    {
+                        assertEquals(node.getUserObject(), Translate.translate("CUP"));
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -78,13 +98,13 @@ public class MainTreeModelNGTest {
     @Test
     public void testGetChildCount() {
         System.out.println("getChildCount");
-        Object parent = null;
-        MainTreeModel instance = new MainTreeModel();
-        int expResult = 0;
-        int result = instance.getChildCount(parent);
+        int expResult = 2+Tournament.getTournament().getRoundsCount();
+        if (Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount()-1).isCup())
+        {
+            expResult++;
+        }
+        int result = mtm.getChildCount(mtm.getRoot());
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -93,19 +113,18 @@ public class MainTreeModelNGTest {
     @Test
     public void testIsLeaf() {
         System.out.println("isLeaf");
-        Object node = null;
-        MainTreeModel instance = new MainTreeModel();
-        boolean expResult = false;
-        boolean result = instance.isLeaf(node);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+
+        Assert.assertFalse(mtm.isLeaf(mtm.getRoot()));
+        
+        for (int i = 0; i < mtm.getChildCount(i); i++) {
+            Assert.assertTrue(mtm.isLeaf(mtm.getChild(mtm.getRoot(), i)));
+        }}
+        
 
     /**
      * Test of valueForPathChanged method, of class MainTreeModel.
      */
-    @Test
+    @Test(enabled=false)
     public void testValueForPathChanged() {
         System.out.println("valueForPathChanged");
         TreePath path = null;
@@ -122,23 +141,21 @@ public class MainTreeModelNGTest {
     @Test
     public void testGetIndexOfChild() {
         System.out.println("getIndexOfChild");
-        Object parent = null;
-        Object child = null;
-        MainTreeModel instance = new MainTreeModel();
-        int expResult = 0;
-        int result = instance.getIndexOfChild(parent, child);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        for (int i = 0; i < mtm.getChildCount(i); i++) {
+            Assert.assertEquals(mtm.getIndexOfChild(mtm.getRoot(),
+                    mtm.getChild(mtm.getRoot(), i)),i);
+        }
+
     }
 
     /**
      * Test of addTreeModelListener method, of class MainTreeModel.
      */
-    @Test
+    @Test(enabled=false)
     public void testAddTreeModelListener() {
         System.out.println("addTreeModelListener");
-        TreeModelListener l = null;
+        TreeModelListener l =null;
         MainTreeModel instance = new MainTreeModel();
         instance.addTreeModelListener(l);
         // TODO review the generated test code and remove the default call to fail.
@@ -148,7 +165,7 @@ public class MainTreeModelNGTest {
     /**
      * Test of removeTreeModelListener method, of class MainTreeModel.
      */
-    @Test
+    @Test(enabled=false)
     public void testRemoveTreeModelListener() {
         System.out.println("removeTreeModelListener");
         TreeModelListener l = null;
@@ -161,7 +178,7 @@ public class MainTreeModelNGTest {
     /**
      * Test of getTreeCellRendererComponent method, of class MainTreeModel.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetTreeCellRendererComponent() {
         System.out.println("getTreeCellRendererComponent");
         JTree tree = null;
@@ -185,12 +202,10 @@ public class MainTreeModelNGTest {
     @Test
     public void testGetParams() {
         System.out.println("getParams");
+        DefaultMutableTreeNode mParams = new DefaultMutableTreeNode(Tournament.getTournament().getParams());
         MainTreeModel instance = new MainTreeModel();
-        DefaultMutableTreeNode expResult = null;
-        DefaultMutableTreeNode result = instance.getParams();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setParams(mParams);
+        assertEquals(instance.getParams(), mParams);
     }
 
     /**
@@ -199,11 +214,10 @@ public class MainTreeModelNGTest {
     @Test
     public void testSetParams() {
         System.out.println("setParams");
-        DefaultMutableTreeNode mParams = null;
+        DefaultMutableTreeNode mParams = new DefaultMutableTreeNode(Tournament.getTournament().getParams());
         MainTreeModel instance = new MainTreeModel();
         instance.setParams(mParams);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getParams(), mParams);
     }
-    
+
 }
