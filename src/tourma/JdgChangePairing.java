@@ -95,6 +95,7 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
+        jbtOK.setName("ok"); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtOKActionPerformed(evt);
@@ -187,8 +188,15 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                 m.setCompetitor1(mPlayersTmp.get(2 * i));
                 m.setCompetitor2(mPlayersTmp.get(2 * i + 1));
 
-                m.getCompetitor1().removeMatch(m.getCompetitor1().getMatch(m.getCompetitor1().getMatchCount() - 1));
-                m.getCompetitor2().removeMatch(m.getCompetitor2().getMatch(m.getCompetitor2().getMatchCount() - 1));
+                Match tmp1=m.getCompetitor1().getMatch(m.getCompetitor1().getMatchCount() - 1);
+                m.getCompetitor1().removeMatch(tmp1);
+                Competitor c2=m.getCompetitor2();
+                if (c2==null)
+                {
+                    System.err.println("Null Coach detected");
+                }
+                Match tmp2=m.getCompetitor2().getMatch(m.getCompetitor2().getMatchCount() - 1);
+                m.getCompetitor2().removeMatch(tmp2);
 
                 m.getCompetitor1().addMatch(m);
                 m.getCompetitor2().addMatch(m);
@@ -205,14 +213,26 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
         Competitor oldCoach = null;
         Competitor newCoach;
 
-        newCoach = mPlayersTmp.get(jcb.getSelectedIndex());
-        for (int i = 0; i < mPlayersSelected.size(); i++) {
+        int newCoachIndex=jcb.getSelectedIndex();
+        int oldCoachIndex=mPlayersSelected.indexOf(jcb);
+        if (oldCoachIndex>=0)
+        {
+        newCoach = mPlayersTmp.get(newCoachIndex);
+        oldCoach = mPlayersTmp.get(oldCoachIndex);
+        /*for (int i = 0; i < mPlayersSelected.size(); i++) {
             if (mPlayersSelected.get(i) == jcb) {
                 oldCoach = mPlayersTmp.get(i);
+                oldCoachIndex=i;
+                break;
             }
-        }
+        }*/
 
-        for (int i = 0; i < mPlayersTmp.size(); i++) {
+        
+        mPlayersTmp.set(oldCoachIndex,newCoach);
+        
+        mPlayersTmp.set(newCoachIndex,oldCoach);
+        }
+        /*for (int i = 0; i < mPlayersTmp.size(); i++) {
             if (mPlayersTmp.get(i) == newCoach) {
                 mPlayersTmp.set(i, oldCoach);
             } else {
@@ -220,7 +240,7 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                     mPlayersTmp.set(i, newCoach);
                 }
             }
-        }
+        }*/
 
         update();
     }
@@ -235,29 +255,38 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
     /**
      * Update Panel
      */
-    public void update() {
+    protected void update() {
 
         final ArrayList<String> playersNames = new ArrayList<>();
         for (Competitor mPlayersTmp1 : mPlayersTmp) {
-            String name = mPlayersTmp1.getDecoratedName();
-            playersNames.add(name);
+            if (mPlayersTmp1 == null) {
+                System.err.println("Null coach detected");
+            } else {
+                String name = mPlayersTmp1.getDecoratedName();
+                playersNames.add(name);
+            }
         }
 
-        mPlayersSelected.clear();
-
-        for (int i = 0; i < mPlayers.size(); i++) {
-            final JComboBox<Object> jcb = new JComboBox<>(playersNames.toArray());
-            jcb.setSelectedIndex(i);
-            jcb.addActionListener(this);
-            jcb.setName("jcb"+i);
-            mPlayersSelected.add(jcb);
-        }
-
+        
         jpnMatchs.setBorder(javax.swing.BorderFactory.createTitledBorder(
                 Translate.translate(CS_Matchs)
         ));
 
         jpnMatchs.removeAll();
+        
+        mPlayersSelected.clear();
+
+        for (int i = 0; i < mPlayers.size(); i++) {
+            if (mPlayers.get(i) != null) {
+                final JComboBox<Object> jcb = new JComboBox<>(playersNames.toArray());
+                jcb.setSelectedIndex(i);
+                jcb.addActionListener(this);
+                jcb.setName("jcb" + i);
+                mPlayersSelected.add(jcb);
+            }
+        }
+
+        
         for (int i = 0; i < mPlayersSelected.size(); i++) {
             jpnMatchs.add(mPlayersSelected.get(i));
         }

@@ -6,6 +6,10 @@
 package tourma;
 
 import java.beans.PropertyChangeEvent;
+import java.io.File;
+import org.fest.swing.core.BasicRobot;
+import org.fest.swing.core.Robot;
+import org.fest.swing.fixture.FrameFixture;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -13,6 +17,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.data.Tournament;
 /**
  *
  * @author WFMJ7631
@@ -22,26 +27,44 @@ public class MainFrameNGTest {
     public MainFrameNGTest() {
     }
 
+    private FrameFixture window;
+    MainFrame frame;
+    private static Robot robot;
+    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
+        robot = BasicRobot.robotWithNewAwtHierarchy();
+        robot.settings().delayBetweenEvents(50);
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        robot.cleanUp();
     }
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/team.xml"));
+        this.frame = new MainFrame(0);
+        window = new FrameFixture(robot,frame);
+        window.show();
     }
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
     }
 
+    @Test(enabled=false)
+    public void testSomeMethod() {
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }     
+
     /**
      * Test of update method, of class MainFrame.
      */
-    @Test
+    @Test(enabled=false)
     public void testUpdate() {
         System.out.println("update");
         MainFrame instance = null;
@@ -53,7 +76,7 @@ public class MainFrameNGTest {
     /**
      * Test of updateTree method, of class MainFrame.
      */
-    @Test
+    @Test(enabled=false)
     public void testUpdateTree() {
         System.out.println("updateTree");
         MainFrame instance = null;
@@ -65,7 +88,7 @@ public class MainFrameNGTest {
     /**
      * Test of main method, of class MainFrame.
      */
-    @Test
+    @Test(enabled=false)
     public void testMain() {
         System.out.println("main");
         String[] args = null;
@@ -77,7 +100,7 @@ public class MainFrameNGTest {
     /**
      * Test of getMainFrame method, of class MainFrame.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetMainFrame_0args() {
         System.out.println("getMainFrame");
         MainFrame expResult = null;
@@ -90,7 +113,7 @@ public class MainFrameNGTest {
     /**
      * Test of getMainFrame method, of class MainFrame.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetMainFrame_int() {
         System.out.println("getMainFrame");
         int res = 0;
@@ -104,7 +127,7 @@ public class MainFrameNGTest {
     /**
      * Test of isRoundOnly method, of class MainFrame.
      */
-    @Test
+    @Test(enabled=false)
     public void testIsRoundOnly() {
         System.out.println("isRoundOnly");
         MainFrame instance = null;
@@ -118,7 +141,7 @@ public class MainFrameNGTest {
     /**
      * Test of isNafOnly method, of class MainFrame.
      */
-    @Test
+    @Test(enabled=false)
     public void testIsNafOnly() {
         System.out.println("isNafOnly");
         MainFrame instance = null;
@@ -132,7 +155,7 @@ public class MainFrameNGTest {
     /**
      * Test of propertyChange method, of class MainFrame.
      */
-    @Test
+    @Test(enabled=false)
     public void testPropertyChange() {
         System.out.println("propertyChange");
         PropertyChangeEvent evt = null;

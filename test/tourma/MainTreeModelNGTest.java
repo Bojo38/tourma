@@ -6,25 +6,32 @@
 package tourma;
 
 import java.awt.Component;
+import java.io.File;
 import javax.swing.JTree;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import teamma.languages.Translate;
+import tourma.data.Tournament;
+
 /**
  *
  * @author WFMJ7631
  */
 public class MainTreeModelNGTest {
-    
+
     public MainTreeModelNGTest() {
     }
+
+    MainTreeModel mtm;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -36,6 +43,9 @@ public class MainTreeModelNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/team.xml"));
+        mtm = new MainTreeModel();
+
     }
 
     @AfterMethod
@@ -48,12 +58,10 @@ public class MainTreeModelNGTest {
     @Test
     public void testGetRoot() {
         System.out.println("getRoot");
-        MainTreeModel instance = new MainTreeModel();
-        Object expResult = null;
-        Object result = instance.getRoot();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Object result = mtm.getRoot();
+        assertTrue(result instanceof DefaultMutableTreeNode);
+        Object userObject = ((DefaultMutableTreeNode) result).getUserObject();
+        assertEquals((String) userObject, Tournament.getTournament().getParams().getTournamentName());
     }
 
     /**
@@ -62,14 +70,16 @@ public class MainTreeModelNGTest {
     @Test
     public void testGetChild() {
         System.out.println("getChild");
-        Object parent = null;
-        int index = 0;
-        MainTreeModel instance = new MainTreeModel();
-        Object expResult = null;
-        Object result = instance.getChild(parent, index);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int nbRounds=Tournament.getTournament().getRoundsCount();
+        for (int i = 0; i < mtm.getChildCount(mtm.getRoot()); i++) {
+            DefaultMutableTreeNode node=(DefaultMutableTreeNode)mtm.getChild(mtm.getRoot(), i);
+            if (i==0)
+            {
+                assertEquals(node.getUserObject(),Translate.translate("PARAMÈTRES"));
+            }
+            Object result = instance.getChild(parent, index);
+            assertEquals(result, expResult);
+        }
     }
 
     /**
@@ -205,5 +215,5 @@ public class MainTreeModelNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }
