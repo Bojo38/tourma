@@ -42,7 +42,7 @@ public class MtRevisionsNGTest {
     /**
      * Test of getColumnCount method, of class MtRevisions.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
         MtRevisions instance = null;
@@ -56,7 +56,7 @@ public class MtRevisionsNGTest {
     /**
      * Test of getRowCount method, of class MtRevisions.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetRowCount() {
         System.out.println("getRowCount");
         MtRevisions instance = null;
@@ -70,7 +70,7 @@ public class MtRevisionsNGTest {
     /**
      * Test of getColumnName method, of class MtRevisions.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetColumnName() {
         System.out.println("getColumnName");
         int col = 0;
@@ -85,7 +85,7 @@ public class MtRevisionsNGTest {
     /**
      * Test of getValueAt method, of class MtRevisions.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetValueAt() {
         System.out.println("getValueAt");
         int row = 0;
@@ -101,7 +101,7 @@ public class MtRevisionsNGTest {
     /**
      * Test of getColumnClass method, of class MtRevisions.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetColumnClass() {
         System.out.println("getColumnClass");
         int c = 0;
@@ -116,7 +116,7 @@ public class MtRevisionsNGTest {
     /**
      * Test of isCellEditable method, of class MtRevisions.
      */
-    @Test
+    @Test(enabled=false)
     public void testIsCellEditable() {
         System.out.println("isCellEditable");
         int row = 0;
@@ -132,7 +132,7 @@ public class MtRevisionsNGTest {
     /**
      * Test of getTableCellRendererComponent method, of class MtRevisions.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
         JTable table = null;

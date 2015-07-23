@@ -129,10 +129,12 @@ public class MjtRankingClanNGTest {
     @Test
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
-        JTable table = new JTable();
+      JTable table = new JTable();
         table.setModel(instance);
-        for (int i = 0; i < instance.getColumnCount(); i++) {
-            for (int j = 0; j < instance.getRowCount(); j++) {
+        for (int i=0; i<instance.getColumnCount(); i++)
+        {
+            for(int j=0; j<instance.getRowCount(); j++)
+            {
                 Component result = instance.getTableCellRendererComponent(table, instance.getValueAt(j, i), false, false, j, i);
                 Assert.assertTrue(result instanceof JLabel);
             }

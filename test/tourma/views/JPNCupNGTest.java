@@ -5,12 +5,12 @@
  */
 package tourma.views;
 
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.fail;
 /**
  *
  * @author WFMJ7631
@@ -39,7 +39,7 @@ public class JPNCupNGTest {
     /**
      * Test of update method, of class JPNCup.
      */
-    @Test
+    @Test(enabled=false)
     public void testUpdate() {
         System.out.println("update");
         JPNCup instance = new JPNCup();

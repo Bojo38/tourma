@@ -46,7 +46,7 @@ public class JFullScreenNGTest {
     /**
      * Test of getLabelForObject method, of class JFullScreen.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetLabelForObject() {
         System.out.println("getLabelForObject");
         IWithNameAndPicture object = null;
@@ -65,7 +65,7 @@ public class JFullScreenNGTest {
     /**
      * Test of getGridbBagConstraints method, of class JFullScreen.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetGridbBagConstraints() {
         System.out.println("getGridbBagConstraints");
         int x = 0;
@@ -97,7 +97,7 @@ public class JFullScreenNGTest {
     /**
      * Test of clientLoop method, of class JFullScreen.
      */
-    @Test
+    @Test(enabled=false)
     public void testClientLoop() throws Exception {
         System.out.println("clientLoop");
         JFullScreen instance = new JFullScreenImpl();
@@ -109,7 +109,7 @@ public class JFullScreenNGTest {
     /**
      * Test of setStop method, of class JFullScreen.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetStop() {
         System.out.println("setStop");
         boolean s = false;
@@ -122,7 +122,7 @@ public class JFullScreenNGTest {
     /**
      * Test of keyPressed method, of class JFullScreen.
      */
-    @Test
+    @Test(enabled=false)
     public void testKeyPressed() {
         System.out.println("keyPressed");
         KeyEvent evt = null;
