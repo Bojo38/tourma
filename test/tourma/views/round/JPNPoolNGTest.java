@@ -40,7 +40,7 @@ public class JPNPoolNGTest {
     /**
      * Test of update method, of class JPNPool.
      */
-    @Test
+    @Test(enabled=false)
     public void testUpdate() {
         System.out.println("update");
         JPNPool instance = null;
@@ -52,7 +52,7 @@ public class JPNPoolNGTest {
     /**
      * Test of setRoundOnly method, of class JPNPool.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean r = false;

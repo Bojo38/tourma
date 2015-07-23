@@ -41,7 +41,7 @@ public class JPNRoundNGTest {
     /**
      * Test of getRound method, of class JPNRound.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetRound() {
         System.out.println("getRound");
         JPNRound instance = null;
@@ -55,7 +55,7 @@ public class JPNRoundNGTest {
     /**
      * Test of update method, of class JPNRound.
      */
-    @Test
+    @Test(enabled=false)
     public void testUpdate() {
         System.out.println("update");
         JPNRound instance = null;
@@ -67,7 +67,7 @@ public class JPNRoundNGTest {
     /**
      * Test of getMatchTableSelectedRow method, of class JPNRound.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetMatchTableSelectedRow() {
         System.out.println("getMatchTableSelectedRow");
         JPNRound instance = null;
@@ -81,7 +81,7 @@ public class JPNRoundNGTest {
     /**
      * Test of setRoundOnly method, of class JPNRound.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean roundonly = false;
@@ -94,7 +94,7 @@ public class JPNRoundNGTest {
     /**
      * Test of setNafOnly method, of class JPNRound.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetNafOnly() {
         System.out.println("setNafOnly");
         boolean nafonly = false;

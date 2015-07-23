@@ -40,7 +40,7 @@ public class JPNClanNGTest {
     /**
      * Test of setRoundOnly method, of class JPNClan.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean r = false;
@@ -53,7 +53,7 @@ public class JPNClanNGTest {
     /**
      * Test of update method, of class JPNClan.
      */
-    @Test
+    @Test(enabled=false)
     public void testUpdate() {
         System.out.println("update");
         JPNClan instance = null;

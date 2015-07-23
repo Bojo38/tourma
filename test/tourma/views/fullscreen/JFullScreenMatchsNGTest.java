@@ -42,7 +42,7 @@ public class JFullScreenMatchsNGTest {
     public void tearDownMethod() throws Exception {
     }
 
-    @Test
+    @Test(enabled=false)
     public void testSomeMethod() {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -51,7 +51,7 @@ public class JFullScreenMatchsNGTest {
     /**
      * Test of clientLoop method, of class JFullScreenMatchs.
      */
-    @Test
+    @Test(enabled=false)
     public void testClientLoop() throws Exception {
         System.out.println("clientLoop");
         JFullScreenMatchs instance = null;
@@ -63,7 +63,7 @@ public class JFullScreenMatchsNGTest {
     /**
      * Test of setStop method, of class JFullScreenMatchs.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetStop() {
         System.out.println("setStop");
         boolean s = false;
@@ -76,7 +76,7 @@ public class JFullScreenMatchsNGTest {
     /**
      * Test of keyPressed method, of class JFullScreenMatchs.
      */
-    @Test
+    @Test(enabled=false)
     public void testKeyPressed() {
         System.out.println("keyPressed");
         KeyEvent evt = null;
@@ -89,7 +89,7 @@ public class JFullScreenMatchsNGTest {
     /**
      * Test of createClashTeamPane method, of class JFullScreenMatchs.
      */
-    @Test
+    @Test(enabled=false)
     public void testCreateClashTeamPane() {
         System.out.println("createClashTeamPane");
         Team t = null;
@@ -106,7 +106,7 @@ public class JFullScreenMatchsNGTest {
     /**
      * Test of createClashCoachPane method, of class JFullScreenMatchs.
      */
-    @Test
+    @Test(enabled=false)
     public void testCreateClashCoachPane() {
         System.out.println("createClashCoachPane");
         Coach t = null;
