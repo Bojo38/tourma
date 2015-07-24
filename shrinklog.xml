@@ -396,6 +396,11 @@
 	<method signature="void &lt;init&gt;(int,int)" class="freemarker.cache.MruCacheStorage" />
 	<method signature="java.lang.Object get(java.lang.Object)" class="freemarker.cache.MruCacheStorage" />
 	<method signature="void remove(java.lang.Object)" class="freemarker.cache.MruCacheStorage" />
+	<class name="org.unbescape.javascript.JavaScriptEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.javascript.JavaScriptEscapeLevel" />
+	<method signature="org.unbescape.javascript.JavaScriptEscapeLevel valueOf(java.lang.String)" class="org.unbescape.javascript.JavaScriptEscapeLevel" />
+	<method signature="org.unbescape.javascript.JavaScriptEscapeLevel forLevel(int)" class="org.unbescape.javascript.JavaScriptEscapeLevel" />
+	<method signature="org.unbescape.javascript.JavaScriptEscapeLevel[] values()" class="org.unbescape.javascript.JavaScriptEscapeLevel" />
 	<class name="freemarker.template.SimpleDate" />
 	<method signature="void &lt;init&gt;(java.util.Date,int)" class="freemarker.template.SimpleDate" />
 	<method signature="void &lt;init&gt;(java.sql.Time)" class="freemarker.template.SimpleDate" />
@@ -1048,6 +1053,7 @@
 	<method signature="boolean isMatchsNotNull()" class="tourma.data.Competitor" />
 	<method signature="void clearCategory()" class="tourma.data.Competitor" />
 	<method signature="java.util.ArrayList getPossibleOpponents(java.util.ArrayList,tourma.data.Round)" class="tourma.data.Competitor" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Competitor" />
 	<method signature="boolean havePlayed(tourma.data.Competitor)" class="tourma.data.Competitor" />
 	<method signature="int getMatchCount()" class="tourma.data.Competitor" />
 	<method signature="void &lt;init&gt;()" class="tourma.data.Competitor" />
@@ -1059,15 +1065,16 @@
 	<method signature="tourma.data.Match getMatch(int)" class="tourma.data.Competitor" />
 	<method signature="tourma.data.Category getCategory(int)" class="tourma.data.Competitor" />
 	<method signature="void setColor(java.awt.Color)" class="tourma.data.Competitor" />
+	<method signature="int hashCode()" class="tourma.data.Competitor" />
 	<method signature="java.util.HashMap getTeamOppositionCount(java.util.ArrayList,tourma.data.Round)" class="tourma.data.Competitor" />
 	<method signature="void roundCheck(tourma.data.Round)" class="tourma.data.Competitor" />
 	<method signature="boolean containsCategory(tourma.data.Category)" class="tourma.data.Competitor" />
 	<method signature="java.lang.String getDecoratedName()" class="tourma.data.Competitor" />
+	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round,boolean)" class="tourma.data.Competitor" />
 	<method signature="int matchIndex(tourma.data.Match)" class="tourma.data.Competitor" />
 	<method signature="void addCategory(tourma.data.Category)" class="tourma.data.Competitor" />
 	<method signature="void setClan(tourma.data.Clan)" class="tourma.data.Competitor" />
 	<method signature="void removeMatch(tourma.data.Match)" class="tourma.data.Competitor" />
-	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round)" class="tourma.data.Competitor" />
 	<method signature="void clearMatchs()" class="tourma.data.Competitor" />
 	<method signature="java.awt.Color getColor()" class="tourma.data.Competitor" />
 	<method signature="java.lang.String toString()" class="tourma.data.Competitor" />
@@ -1815,10 +1822,6 @@
 	<class name="freemarker.ext.dom.XPathSupport" />
 	<method signature="freemarker.template.TemplateModel executeQuery(java.lang.Object,java.lang.String)" class="freemarker.ext.dom.XPathSupport" />
 	<class name="teamma.views.JdgSelectSkill" />
-	<method signature="void setColor(java.awt.Color)" class="teamma.views.JdgSelectSkill" />
-	<method signature="teamma.data.Player getPlayer()" class="teamma.views.JdgSelectSkill" />
-	<method signature="void setPlayer(teamma.data.Player)" class="teamma.views.JdgSelectSkill" />
-	<method signature="java.awt.Color getColor()" class="teamma.views.JdgSelectSkill" />
 	<method signature="void &lt;init&gt;(java.awt.Frame,boolean,teamma.data.Player)" class="teamma.views.JdgSelectSkill" />
 	<class name="org.jfree.data.xy.AbstractXYZDataset" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.data.xy.AbstractXYZDataset" />
@@ -2017,6 +2020,11 @@
 	<method signature="int countFeb29s(org.jfree.date.SerialDate,org.jfree.date.SerialDate)" class="org.jfree.date.SerialDateUtilities" />
 	<method signature="int dayCount30(org.jfree.date.SerialDate,org.jfree.date.SerialDate)" class="org.jfree.date.SerialDateUtilities" />
 	<method signature="int dayCount30ISDA(org.jfree.date.SerialDate,org.jfree.date.SerialDate)" class="org.jfree.date.SerialDateUtilities" />
+	<class name="org.unbescape.css.CssIdentifierEscapeType" />
+	<method signature="boolean getUseBackslashEscapes()" class="org.unbescape.css.CssIdentifierEscapeType" />
+	<method signature="boolean getUseCompactHexa()" class="org.unbescape.css.CssIdentifierEscapeType" />
+	<method signature="org.unbescape.css.CssIdentifierEscapeType valueOf(java.lang.String)" class="org.unbescape.css.CssIdentifierEscapeType" />
+	<method signature="org.unbescape.css.CssIdentifierEscapeType[] values()" class="org.unbescape.css.CssIdentifierEscapeType" />
 	<class name="org.apache.xerces.impl.xs.models.XSCMLeaf" />
 	<method signature="java.lang.String toString()" class="org.apache.xerces.impl.xs.models.XSCMLeaf" />
 	<method signature="void &lt;init&gt;(int,java.lang.Object,int,int)" class="org.apache.xerces.impl.xs.models.XSCMLeaf" />
@@ -2263,6 +2271,39 @@
 	<method signature="java.lang.String getAccessKey()" class="org.apache.html.dom.HTMLTextAreaElementImpl" />
 	<method signature="void &lt;init&gt;(org.apache.html.dom.HTMLDocumentImpl,java.lang.String)" class="org.apache.html.dom.HTMLTextAreaElementImpl" />
 	<method signature="int getRows()" class="org.apache.html.dom.HTMLTextAreaElementImpl" />
+	<class name="org.unbescape.uri.UriEscape" />
+	<method signature="void escapeUriPathSegment(char[],int,int,java.io.Writer)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String unescapeUriQueryParam(java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void unescapeUriFragmentId(char[],int,int,java.io.Writer,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String escapeUriFragmentId(java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String unescapeUriFragmentId(java.lang.String,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String unescapeUriPath(java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void escapeUriPath(char[],int,int,java.io.Writer,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String escapeUriPath(java.lang.String,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void escapeUriQueryParam(char[],int,int,java.io.Writer)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String unescapeUriPathSegment(java.lang.String,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void unescapeUriPathSegment(char[],int,int,java.io.Writer,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String escapeUriQueryParam(java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String escapeUriPathSegment(java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void unescapeUriQueryParam(char[],int,int,java.io.Writer)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void escapeUriFragmentId(char[],int,int,java.io.Writer)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void unescapeUriPath(char[],int,int,java.io.Writer)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String escapeUriPathSegment(java.lang.String,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void unescapeUriFragmentId(char[],int,int,java.io.Writer)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void escapeUriPathSegment(char[],int,int,java.io.Writer,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String unescapeUriPathSegment(java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void escapeUriQueryParam(char[],int,int,java.io.Writer,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void escapeUriPath(char[],int,int,java.io.Writer)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String escapeUriQueryParam(java.lang.String,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void unescapeUriPathSegment(char[],int,int,java.io.Writer)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String escapeUriPath(java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void unescapeUriPath(char[],int,int,java.io.Writer,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void escapeUriFragmentId(char[],int,int,java.io.Writer,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String unescapeUriQueryParam(java.lang.String,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String escapeUriFragmentId(java.lang.String,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="void unescapeUriQueryParam(char[],int,int,java.io.Writer,java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String unescapeUriFragmentId(java.lang.String)" class="org.unbescape.uri.UriEscape" />
+	<method signature="java.lang.String unescapeUriPath(java.lang.String,java.lang.String)" class="org.unbescape.uri.UriEscape" />
 	<class name="org.apache.xerces.impl.xs.XMLSchemaValidator" />
 	<method signature="java.lang.String[] getRecognizedProperties()" class="org.apache.xerces.impl.xs.XMLSchemaValidator" />
 	<method signature="void processingInstruction(java.lang.String,org.apache.xerces.xni.XMLString,org.apache.xerces.xni.Augmentations)" class="org.apache.xerces.impl.xs.XMLSchemaValidator" />
@@ -4401,6 +4442,7 @@
 	<method signature="int getIgor_cost()" class="teamma.data.RosterType" />
 	<method signature="int getPlayerTypeCount()" class="teamma.data.RosterType" />
 	<method signature="void setIgor(boolean)" class="teamma.data.RosterType" />
+	<method signature="void clearAvailableStarPlayerType()" class="teamma.data.RosterType" />
 	<method signature="void addAvailableStarPlayer(teamma.data.StarPlayer)" class="teamma.data.RosterType" />
 	<method signature="java.lang.String getImage()" class="teamma.data.RosterType" />
 	<method signature="void addPlayerType(teamma.data.PlayerType)" class="teamma.data.RosterType" />
@@ -4532,6 +4574,11 @@
 	<method signature="void &lt;init&gt;(java.lang.Comparable,org.jfree.text.TextBlock,org.jfree.text.TextBlockAnchor,org.jfree.ui.TextAnchor,double)" class="org.jfree.chart.axis.CategoryTick" />
 	<method signature="java.lang.Comparable getCategory()" class="org.jfree.chart.axis.CategoryTick" />
 	<method signature="org.jfree.text.TextBlockAnchor getLabelAnchor()" class="org.jfree.chart.axis.CategoryTick" />
+	<class name="org.unbescape.java.JavaEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.java.JavaEscapeLevel" />
+	<method signature="org.unbescape.java.JavaEscapeLevel[] values()" class="org.unbescape.java.JavaEscapeLevel" />
+	<method signature="org.unbescape.java.JavaEscapeLevel forLevel(int)" class="org.unbescape.java.JavaEscapeLevel" />
+	<method signature="org.unbescape.java.JavaEscapeLevel valueOf(java.lang.String)" class="org.unbescape.java.JavaEscapeLevel" />
 	<class name="org.w3c.dom.stylesheets.StyleSheet" />
 	<method signature="void setDisabled(boolean)" class="org.w3c.dom.stylesheets.StyleSheet" />
 	<method signature="java.lang.String getTitle()" class="org.w3c.dom.stylesheets.StyleSheet" />
@@ -4683,6 +4730,11 @@
 	<method signature="void abort()" class="org.w3c.dom.ls.LSParser" />
 	<class name="com.google.zxing.StringsResourceTranslator" />
 	<method signature="void main(java.lang.String[])" class="com.google.zxing.StringsResourceTranslator" />
+	<class name="org.unbescape.css.CssStringEscapeType" />
+	<method signature="boolean getUseBackslashEscapes()" class="org.unbescape.css.CssStringEscapeType" />
+	<method signature="org.unbescape.css.CssStringEscapeType[] values()" class="org.unbescape.css.CssStringEscapeType" />
+	<method signature="boolean getUseCompactHexa()" class="org.unbescape.css.CssStringEscapeType" />
+	<method signature="org.unbescape.css.CssStringEscapeType valueOf(java.lang.String)" class="org.unbescape.css.CssStringEscapeType" />
 	<class name="org.apache.xerces.xs.PSVIProvider" />
 	<method signature="org.apache.xerces.xs.ElementPSVI getElementPSVI()" class="org.apache.xerces.xs.PSVIProvider" />
 	<method signature="org.apache.xerces.xs.AttributePSVI getAttributePSVI(int)" class="org.apache.xerces.xs.PSVIProvider" />
@@ -5344,10 +5396,12 @@
 	<method signature="void setXMLElement(org.jdom2.Element)" class="tourma.data.CoachMatch" />
 	<method signature="tourma.data.Substitute getSubstitute1()" class="tourma.data.CoachMatch" />
 	<method signature="tourma.data.Substitute getSubstitute2()" class="tourma.data.CoachMatch" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.CoachMatch" />
 	<method signature="void setConcedeedBy1(boolean)" class="tourma.data.CoachMatch" />
 	<method signature="void setConcedeedBy2(boolean)" class="tourma.data.CoachMatch" />
 	<method signature="int getValueCount()" class="tourma.data.CoachMatch" />
 	<method signature="void setXMLElementForDisplay(org.jdom2.Element)" class="tourma.data.CoachMatch" />
+	<method signature="int hashCode()" class="tourma.data.CoachMatch" />
 	<method signature="boolean isRefusedBy2()" class="tourma.data.CoachMatch" />
 	<method signature="boolean isRefusedBy1()" class="tourma.data.CoachMatch" />
 	<method signature="void setSubstitute1(tourma.data.Substitute)" class="tourma.data.CoachMatch" />
@@ -5360,6 +5414,7 @@
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.CoachMatch" />
 	<method signature="tourma.data.Value getValue(tourma.data.Criteria)" class="tourma.data.CoachMatch" />
 	<method signature="void resetWL()" class="tourma.data.CoachMatch" />
+	<method signature="java.util.HashMap getValues()" class="tourma.data.CoachMatch" />
 	<method signature="void setRefusedBy2(boolean)" class="tourma.data.CoachMatch" />
 	<method signature="boolean isFullNaf()" class="tourma.data.CoachMatch" />
 	<method signature="void setRefusedBy1(boolean)" class="tourma.data.CoachMatch" />
@@ -5537,6 +5592,11 @@
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.labels.SymbolicXYItemLabelGenerator" />
 	<method signature="java.lang.String generateToolTip(org.jfree.data.xy.XYDataset,int,int)" class="org.jfree.chart.labels.SymbolicXYItemLabelGenerator" />
 	<method signature="java.lang.String generateLabel(org.jfree.data.xy.XYDataset,int,int)" class="org.jfree.chart.labels.SymbolicXYItemLabelGenerator" />
+	<class name="org.unbescape.xml.XmlEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.xml.XmlEscapeLevel" />
+	<method signature="org.unbescape.xml.XmlEscapeLevel forLevel(int)" class="org.unbescape.xml.XmlEscapeLevel" />
+	<method signature="org.unbescape.xml.XmlEscapeLevel[] values()" class="org.unbescape.xml.XmlEscapeLevel" />
+	<method signature="org.unbescape.xml.XmlEscapeLevel valueOf(java.lang.String)" class="org.unbescape.xml.XmlEscapeLevel" />
 	<class name="org.jfree.data.xy.YWithXInterval" />
 	<method signature="double getY()" class="org.jfree.data.xy.YWithXInterval" />
 	<method signature="double getXLow()" class="org.jfree.data.xy.YWithXInterval" />
@@ -5589,6 +5649,11 @@
 	<method signature="int getSize()" class="com.google.zxing.common.reedsolomon.GenericGF" />
 	<method signature="void &lt;init&gt;(int,int)" class="com.google.zxing.common.reedsolomon.GenericGF" />
 	<class name="javax.annotation.CheckForNull" />
+	<class name="org.unbescape.html.HtmlEscapeLevel" />
+	<method signature="org.unbescape.html.HtmlEscapeLevel forLevel(int)" class="org.unbescape.html.HtmlEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.html.HtmlEscapeLevel" />
+	<method signature="org.unbescape.html.HtmlEscapeLevel valueOf(java.lang.String)" class="org.unbescape.html.HtmlEscapeLevel" />
+	<method signature="org.unbescape.html.HtmlEscapeLevel[] values()" class="org.unbescape.html.HtmlEscapeLevel" />
 	<class name="org.xml.sax.helpers.NamespaceSupport" />
 	<method signature="void reset()" class="org.xml.sax.helpers.NamespaceSupport" />
 	<method signature="void popContext()" class="org.xml.sax.helpers.NamespaceSupport" />
@@ -6033,6 +6098,21 @@
 	<method signature="void indent()" class="org.apache.xml.serialize.IndentPrinter" />
 	<method signature="void unindent()" class="org.apache.xml.serialize.IndentPrinter" />
 	<class name="javax.annotation.ParametersAreNonnullByDefault" />
+	<class name="org.unbescape.css.CssEscape" />
+	<method signature="void escapeCssIdentifier(char[],int,int,java.io.Writer)" class="org.unbescape.css.CssEscape" />
+	<method signature="void unescapeCss(char[],int,int,java.io.Writer)" class="org.unbescape.css.CssEscape" />
+	<method signature="void escapeCssIdentifier(char[],int,int,java.io.Writer,org.unbescape.css.CssIdentifierEscapeType,org.unbescape.css.CssIdentifierEscapeLevel)" class="org.unbescape.css.CssEscape" />
+	<method signature="java.lang.String escapeCssString(java.lang.String)" class="org.unbescape.css.CssEscape" />
+	<method signature="void escapeCssIdentifierMinimal(char[],int,int,java.io.Writer)" class="org.unbescape.css.CssEscape" />
+	<method signature="java.lang.String escapeCssStringMinimal(java.lang.String)" class="org.unbescape.css.CssEscape" />
+	<method signature="void escapeCssString(char[],int,int,java.io.Writer)" class="org.unbescape.css.CssEscape" />
+	<method signature="void escapeCssStringMinimal(char[],int,int,java.io.Writer)" class="org.unbescape.css.CssEscape" />
+	<method signature="java.lang.String escapeCssIdentifierMinimal(java.lang.String)" class="org.unbescape.css.CssEscape" />
+	<method signature="java.lang.String escapeCssIdentifier(java.lang.String)" class="org.unbescape.css.CssEscape" />
+	<method signature="java.lang.String escapeCssString(java.lang.String,org.unbescape.css.CssStringEscapeType,org.unbescape.css.CssStringEscapeLevel)" class="org.unbescape.css.CssEscape" />
+	<method signature="java.lang.String escapeCssIdentifier(java.lang.String,org.unbescape.css.CssIdentifierEscapeType,org.unbescape.css.CssIdentifierEscapeLevel)" class="org.unbescape.css.CssEscape" />
+	<method signature="java.lang.String unescapeCss(java.lang.String)" class="org.unbescape.css.CssEscape" />
+	<method signature="void escapeCssString(char[],int,int,java.io.Writer,org.unbescape.css.CssStringEscapeType,org.unbescape.css.CssStringEscapeLevel)" class="org.unbescape.css.CssEscape" />
 	<class name="org.jfree.chart.urls.URLUtilities" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.urls.URLUtilities" />
 	<method signature="java.lang.String encode(java.lang.String,java.lang.String)" class="org.jfree.chart.urls.URLUtilities" />
@@ -6947,13 +7027,10 @@
 	<method signature="boolean containsTeam(java.lang.String)" class="tourma.data.Tournament" />
 	<method signature="void clearCategories()" class="tourma.data.Tournament" />
 	<method signature="int getGroupsCount()" class="tourma.data.Tournament" />
-	<method signature="int getRoundIndex(tourma.data.Round)" class="tourma.data.Tournament" />
 	<method signature="void setRoundRobin(boolean)" class="tourma.data.Tournament" />
-	<method signature="boolean containsGroups(tourma.data.Group)" class="tourma.data.Tournament" />
 	<method signature="boolean containsTeam(tourma.data.Team)" class="tourma.data.Tournament" />
 	<method signature="void addRound(tourma.data.Round)" class="tourma.data.Tournament" />
 	<method signature="void removeRound(int)" class="tourma.data.Tournament" />
-	<method signature="int getCoachsCount()" class="tourma.data.Tournament" />
 	<method signature="boolean containsCoach(tourma.data.Coach)" class="tourma.data.Tournament" />
 	<method signature="tourma.data.Parameters getParams()" class="tourma.data.Tournament" />
 	<method signature="int getCoachsCount()" class="tourma.data.Tournament" />
@@ -6967,10 +7044,10 @@
 	<method signature="void clearPools()" class="tourma.data.Tournament" />
 	<method signature="tourma.data.Clan getClan(int)" class="tourma.data.Tournament" />
 	<method signature="tourma.data.Tournament resetTournament()" class="tourma.data.Tournament" />
+	<method signature="boolean containsGroup(tourma.data.Group)" class="tourma.data.Tournament" />
 	<method signature="tourma.data.Pool getPool(int)" class="tourma.data.Tournament" />
 	<method signature="int getRoundIndex(tourma.data.Round)" class="tourma.data.Tournament" />
 	<method signature="java.util.ArrayList getDisplayCategories()" class="tourma.data.Tournament" />
-	<method signature="void saveXML(java.io.File,boolean)" class="tourma.data.Tournament" />
 	<method signature="int getTeamsCount()" class="tourma.data.Tournament" />
 	<method signature="tourma.data.Coach getCoach(java.lang.String)" class="tourma.data.Tournament" />
 	<method signature="void removeGroup(tourma.data.Group)" class="tourma.data.Tournament" />
@@ -7024,6 +7101,7 @@
 	<method signature="int getVictories(tourma.data.Team)" class="tourma.data.TeamMatch" />
 	<method signature="int getLoss(tourma.data.Team)" class="tourma.data.TeamMatch" />
 	<method signature="void addMatch(tourma.data.CoachMatch)" class="tourma.data.TeamMatch" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.TeamMatch" />
 	<method signature="int getMatchCount()" class="tourma.data.TeamMatch" />
 	<method signature="void clearMatchs()" class="tourma.data.TeamMatch" />
 	<method signature="tourma.data.CoachMatch getMatch(int)" class="tourma.data.TeamMatch" />
@@ -7627,6 +7705,21 @@
 	<method signature="java.lang.Object loadAndInstantiate(java.lang.String,java.lang.Class,java.lang.Class)" class="org.jfree.util.ObjectUtilities" />
 	<method signature="void setClassLoaderSource(java.lang.String)" class="org.jfree.util.ObjectUtilities" />
 	<method signature="int hashCode(java.lang.Object)" class="org.jfree.util.ObjectUtilities" />
+	<class name="org.unbescape.properties.PropertiesEscape" />
+	<method signature="void unescapeProperties(char[],int,int,java.io.Writer)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="java.lang.String escapePropertiesKey(java.lang.String,org.unbescape.properties.PropertiesKeyEscapeLevel)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="java.lang.String escapePropertiesKey(java.lang.String)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="java.lang.String escapePropertiesKeyMinimal(java.lang.String)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="void escapePropertiesKey(char[],int,int,java.io.Writer,org.unbescape.properties.PropertiesKeyEscapeLevel)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="java.lang.String escapePropertiesValueMinimal(java.lang.String)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="void escapePropertiesValue(char[],int,int,java.io.Writer)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="java.lang.String escapePropertiesValue(java.lang.String)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="void escapePropertiesValueMinimal(char[],int,int,java.io.Writer)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="void escapePropertiesValue(char[],int,int,java.io.Writer,org.unbescape.properties.PropertiesValueEscapeLevel)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="java.lang.String unescapeProperties(java.lang.String)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="java.lang.String escapePropertiesValue(java.lang.String,org.unbescape.properties.PropertiesValueEscapeLevel)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="void escapePropertiesKeyMinimal(char[],int,int,java.io.Writer)" class="org.unbescape.properties.PropertiesEscape" />
+	<method signature="void escapePropertiesKey(char[],int,int,java.io.Writer)" class="org.unbescape.properties.PropertiesEscape" />
 	<class name="com.google.zxing.maxicode.decoder.Decoder" />
 	<method signature="com.google.zxing.common.DecoderResult decode(com.google.zxing.common.BitMatrix)" class="com.google.zxing.maxicode.decoder.Decoder" />
 	<method signature="void &lt;init&gt;()" class="com.google.zxing.maxicode.decoder.Decoder" />
@@ -7678,6 +7771,9 @@
 	<method signature="void setDTDContentModelHandler(org.apache.xerces.xni.XMLDTDContentModelHandler)" class="org.apache.xerces.parsers.XML11Configuration" />
 	<method signature="org.apache.xerces.xni.parser.XMLEntityResolver getEntityResolver()" class="org.apache.xerces.parsers.XML11Configuration" />
 	<method signature="java.lang.Object getProperty(java.lang.String)" class="org.apache.xerces.parsers.XML11Configuration" />
+	<class name="org.unbescape.json.JsonEscapeType" />
+	<method signature="org.unbescape.json.JsonEscapeType[] values()" class="org.unbescape.json.JsonEscapeType" />
+	<method signature="org.unbescape.json.JsonEscapeType valueOf(java.lang.String)" class="org.unbescape.json.JsonEscapeType" />
 	<class name="org.apache.xerces.parsers.XMLDocumentParser" />
 	<method signature="void &lt;init&gt;(org.apache.xerces.util.SymbolTable)" class="org.apache.xerces.parsers.XMLDocumentParser" />
 	<method signature="void &lt;init&gt;()" class="org.apache.xerces.parsers.XMLDocumentParser" />
@@ -7732,6 +7828,15 @@
 	<class name="com.google.zxing.oned.UPCEANWriter" />
 	<method signature="void &lt;init&gt;()" class="com.google.zxing.oned.UPCEANWriter" />
 	<method signature="int getDefaultMargin()" class="com.google.zxing.oned.UPCEANWriter" />
+	<class name="org.unbescape.java.JavaEscape" />
+	<method signature="void escapeJavaMinimal(char[],int,int,java.io.Writer)" class="org.unbescape.java.JavaEscape" />
+	<method signature="void escapeJava(char[],int,int,java.io.Writer,org.unbescape.java.JavaEscapeLevel)" class="org.unbescape.java.JavaEscape" />
+	<method signature="void escapeJava(char[],int,int,java.io.Writer)" class="org.unbescape.java.JavaEscape" />
+	<method signature="java.lang.String unescapeJava(java.lang.String)" class="org.unbescape.java.JavaEscape" />
+	<method signature="java.lang.String escapeJavaMinimal(java.lang.String)" class="org.unbescape.java.JavaEscape" />
+	<method signature="java.lang.String escapeJava(java.lang.String,org.unbescape.java.JavaEscapeLevel)" class="org.unbescape.java.JavaEscape" />
+	<method signature="void unescapeJava(char[],int,int,java.io.Writer)" class="org.unbescape.java.JavaEscape" />
+	<method signature="java.lang.String escapeJava(java.lang.String)" class="org.unbescape.java.JavaEscape" />
 	<class name="org.apache.xerces.dom3.as.ASModel" />
 	<method signature="org.apache.xerces.dom3.as.ASNamedObjectMap getElementDeclarations()" class="org.apache.xerces.dom3.as.ASModel" />
 	<method signature="org.apache.xerces.dom3.as.ASNamedObjectMap getNotationDeclarations()" class="org.apache.xerces.dom3.as.ASModel" />
@@ -7847,9 +7952,9 @@
 	<method signature="void clearStarPlayers()" class="teamma.data.LRB" />
 	<method signature="void clearSkillTypes()" class="teamma.data.LRB" />
 	<method signature="int getRosterTypeCount()" class="teamma.data.LRB" />
-	<method signature="teamma.data.Skill getSkill(java.lang.String)" class="teamma.data.LRB" />
 	<method signature="void setAllowSpecialSkills(boolean)" class="teamma.data.LRB" />
 	<method signature="teamma.data.StarPlayer getStarPlayer(java.lang.String)" class="teamma.data.LRB" />
+	<method signature="teamma.data.Skill getSkill(java.lang.String,boolean)" class="teamma.data.LRB" />
 	<method signature="void addSkillType(teamma.data.SkillType)" class="teamma.data.LRB" />
 	<method signature="java.util.ArrayList getRosterTypeListAsString(boolean)" class="teamma.data.LRB" />
 	<method signature="int getStarPlayerCount()" class="teamma.data.LRB" />
@@ -8178,6 +8283,7 @@
 	<method signature="void addCriteria(tourma.data.Criteria)" class="tourma.data.Parameters" />
 	<method signature="int getCriteriaCount()" class="tourma.data.Parameters" />
 	<method signature="void setTournamentName(java.lang.String)" class="tourma.data.Parameters" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Parameters" />
 	<method signature="int getPointsTeamVictory()" class="tourma.data.Parameters" />
 	<method signature="void setTeamIndivPairing(tourma.data.EIndivPairing)" class="tourma.data.Parameters" />
 	<method signature="void setIndivPairingTeamBalanced(boolean)" class="tourma.data.Parameters" />
@@ -9528,6 +9634,21 @@
 	<method signature="void setPublicId(java.lang.String)" class="org.apache.xerces.dom.DOMInputImpl" />
 	<method signature="java.lang.String getBaseURI()" class="org.apache.xerces.dom.DOMInputImpl" />
 	<class name="org.jfree.data.xml.DatasetTags" />
+	<class name="org.unbescape.xml.XmlEscape" />
+	<method signature="void escapeXml10(char[],int,int,java.io.Writer)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="void escapeXml11(char[],int,int,java.io.Writer,org.unbescape.xml.XmlEscapeType,org.unbescape.xml.XmlEscapeLevel)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="void escapeXml10(char[],int,int,java.io.Writer,org.unbescape.xml.XmlEscapeType,org.unbescape.xml.XmlEscapeLevel)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="void escapeXml11(char[],int,int,java.io.Writer)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="java.lang.String unescapeXml(java.lang.String)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="void escapeXml11Minimal(char[],int,int,java.io.Writer)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="java.lang.String escapeXml11(java.lang.String,org.unbescape.xml.XmlEscapeType,org.unbescape.xml.XmlEscapeLevel)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="java.lang.String escapeXml10(java.lang.String,org.unbescape.xml.XmlEscapeType,org.unbescape.xml.XmlEscapeLevel)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="void escapeXml10Minimal(char[],int,int,java.io.Writer)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="void unescapeXml(char[],int,int,java.io.Writer)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="java.lang.String escapeXml11Minimal(java.lang.String)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="java.lang.String escapeXml10Minimal(java.lang.String)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="java.lang.String escapeXml10(java.lang.String)" class="org.unbescape.xml.XmlEscape" />
+	<method signature="java.lang.String escapeXml11(java.lang.String)" class="org.unbescape.xml.XmlEscape" />
 	<class name="org.apache.xerces.impl.xs.opti.TextImpl" />
 	<method signature="org.w3c.dom.Node getPreviousSibling()" class="org.apache.xerces.impl.xs.opti.TextImpl" />
 	<method signature="org.w3c.dom.Node getNextSibling()" class="org.apache.xerces.impl.xs.opti.TextImpl" />
@@ -9673,6 +9794,7 @@
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.Group" />
 	<method signature="void setXMLElementForPoints(org.jdom2.Element)" class="tourma.data.Group" />
 	<method signature="int getRosterCount()" class="tourma.data.Group" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Group" />
 	<method signature="boolean containsRoster(tourma.data.RosterType)" class="tourma.data.Group" />
 	<method signature="void removeRoster(tourma.data.RosterType)" class="tourma.data.Group" />
 	<method signature="void setName(java.lang.String)" class="tourma.data.Group" />
@@ -9771,6 +9893,7 @@
 	<method signature="void setXMLElement(org.jdom2.Element)" class="tourma.data.Criteria" />
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.Criteria" />
 	<method signature="int getPointsTeamAgainst()" class="tourma.data.Criteria" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Criteria" />
 	<method signature="void setPointsFor(int)" class="tourma.data.Criteria" />
 	<method signature="void setName(java.lang.String)" class="tourma.data.Criteria" />
 	<method signature="void setPointsAgainst(int)" class="tourma.data.Criteria" />
@@ -9969,6 +10092,9 @@
 	<method signature="void &lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String[],java.lang.String,double,double)" class="com.google.zxing.client.result.CalendarParsedResult" />
 	<method signature="java.lang.String getOrganizer()" class="com.google.zxing.client.result.CalendarParsedResult" />
 	<method signature="java.util.Date getStart()" class="com.google.zxing.client.result.CalendarParsedResult" />
+	<class name="org.unbescape.html.HtmlEscapeType" />
+	<method signature="org.unbescape.html.HtmlEscapeType[] values()" class="org.unbescape.html.HtmlEscapeType" />
+	<method signature="org.unbescape.html.HtmlEscapeType valueOf(java.lang.String)" class="org.unbescape.html.HtmlEscapeType" />
 	<class name="org.jfree.chart.encoders.KeypointPNGEncoderAdapter" />
 	<method signature="boolean isEncodingAlpha()" class="org.jfree.chart.encoders.KeypointPNGEncoderAdapter" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.encoders.KeypointPNGEncoderAdapter" />
@@ -9978,11 +10104,11 @@
 	<method signature="void setQuality(float)" class="org.jfree.chart.encoders.KeypointPNGEncoderAdapter" />
 	<method signature="void encode(java.awt.image.BufferedImage,java.io.OutputStream)" class="org.jfree.chart.encoders.KeypointPNGEncoderAdapter" />
 	<class name="tourma.data.IContainCoachs" />
-	<method signature="int getCoachsCount()" class="tourma.data.IContainCoachs" />
 	<method signature="void addCoach(tourma.data.Coach)" class="tourma.data.IContainCoachs" />
 	<method signature="tourma.data.Coach getCoach(int)" class="tourma.data.IContainCoachs" />
 	<method signature="void removeCoach(int)" class="tourma.data.IContainCoachs" />
 	<method signature="boolean containsCoach(tourma.data.Coach)" class="tourma.data.IContainCoachs" />
+	<method signature="int getCoachsCount()" class="tourma.data.IContainCoachs" />
 	<method signature="void clearCoachs()" class="tourma.data.IContainCoachs" />
 	<class name="edu.umd.cs.findbugs.annotations.DefaultAnnotation" />
 	<method signature="edu.umd.cs.findbugs.annotations.Confidence confidence()" class="edu.umd.cs.findbugs.annotations.DefaultAnnotation" />
@@ -10159,6 +10285,7 @@
 	<class name="tourma.data.Substitute" />
 	<method signature="tourma.data.CoachMatch getMatch()" class="tourma.data.Substitute" />
 	<method signature="void setSubstitute(tourma.data.Coach)" class="tourma.data.Substitute" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Substitute" />
 	<method signature="void setTitular(tourma.data.Coach)" class="tourma.data.Substitute" />
 	<method signature="void &lt;init&gt;()" class="tourma.data.Substitute" />
 	<method signature="void setXMLElement(org.jdom2.Element)" class="tourma.data.Substitute" />
@@ -11076,20 +11203,25 @@
 	<method signature="java.util.HashMap getTeamOppositionCount(java.util.ArrayList,tourma.data.Round)" class="tourma.data.Team" />
 	<method signature="void roundCheck(tourma.data.Round)" class="tourma.data.Team" />
 	<method signature="java.lang.String getDecoratedName()" class="tourma.data.Team" />
+	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round,boolean)" class="tourma.data.Team" />
 	<method signature="void addCoach(tourma.data.Coach)" class="tourma.data.Team" />
 	<method signature="java.util.ArrayList getActivePlayers()" class="tourma.data.Team" />
 	<method signature="void newTeamMap()" class="tourma.data.Team" />
 	<method signature="org.jdom2.Element getXMLElementForDisplay()" class="tourma.data.Team" />
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.Team" />
-	<method signature="int getCoachsCount()" class="tourma.data.Team" />
-	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round)" class="tourma.data.Team" />
 	<method signature="tourma.data.Coach getCoach(int)" class="tourma.data.Team" />
 	<method signature="void &lt;init&gt;(java.lang.String)" class="tourma.data.Team" />
 	<method signature="boolean containsCoach(tourma.data.Coach)" class="tourma.data.Team" />
 	<method signature="void putTeam(java.lang.String,tourma.data.Team)" class="tourma.data.Team" />
 	<method signature="boolean canPlay(tourma.data.Team,tourma.data.Round)" class="tourma.data.Team" />
+	<method signature="int getCoachsCount()" class="tourma.data.Team" />
 	<class name="freemarker.core.TemplateClassResolver" />
 	<method signature="java.lang.Class resolve(java.lang.String,freemarker.core.Environment,freemarker.template.Template)" class="freemarker.core.TemplateClassResolver" />
+	<class name="org.unbescape.csv.CsvEscape" />
+	<method signature="void unescapeCsv(char[],int,int,java.io.Writer)" class="org.unbescape.csv.CsvEscape" />
+	<method signature="void escapeCsv(char[],int,int,java.io.Writer)" class="org.unbescape.csv.CsvEscape" />
+	<method signature="java.lang.String unescapeCsv(java.lang.String)" class="org.unbescape.csv.CsvEscape" />
+	<method signature="java.lang.String escapeCsv(java.lang.String)" class="org.unbescape.csv.CsvEscape" />
 	<class name="org.jfree.data.RangeInfo" />
 	<method signature="double getRangeLowerBound(boolean)" class="org.jfree.data.RangeInfo" />
 	<method signature="double getRangeUpperBound(boolean)" class="org.jfree.data.RangeInfo" />
@@ -11099,6 +11231,7 @@
 	<method signature="java.lang.String getName()" class="tourma.data.Clan" />
 	<method signature="int hashCode()" class="tourma.data.Clan" />
 	<method signature="void setXMLElement(org.jdom2.Element)" class="tourma.data.Clan" />
+	<method signature="void delClan(java.lang.String)" class="tourma.data.Clan" />
 	<method signature="void newClanMap()" class="tourma.data.Clan" />
 	<method signature="void putClan(java.lang.String,tourma.data.Clan)" class="tourma.data.Clan" />
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.Clan" />
@@ -11796,6 +11929,7 @@
 	<method signature="void setCurrentHour()" class="tourma.data.Round" />
 	<method signature="int indexOf(tourma.data.Match)" class="tourma.data.Round" />
 	<method signature="boolean containsMatch(tourma.data.Match)" class="tourma.data.Round" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Round" />
 	<method signature="int getMatchsCount()" class="tourma.data.Round" />
 	<method signature="java.util.ArrayList getCoachMatchs()" class="tourma.data.Round" />
 	<method signature="void &lt;init&gt;()" class="tourma.data.Round" />
@@ -12122,6 +12256,15 @@
 	<method signature="void setDuration(org.jfree.data.time.TimePeriod)" class="org.jfree.data.gantt.Task" />
 	<method signature="void removeSubtask(org.jfree.data.gantt.Task)" class="org.jfree.data.gantt.Task" />
 	<method signature="void setDescription(java.lang.String)" class="org.jfree.data.gantt.Task" />
+	<class name="org.unbescape.javascript.JavaScriptEscape" />
+	<method signature="void escapeJavaScriptMinimal(char[],int,int,java.io.Writer)" class="org.unbescape.javascript.JavaScriptEscape" />
+	<method signature="void escapeJavaScript(char[],int,int,java.io.Writer,org.unbescape.javascript.JavaScriptEscapeType,org.unbescape.javascript.JavaScriptEscapeLevel)" class="org.unbescape.javascript.JavaScriptEscape" />
+	<method signature="void escapeJavaScript(char[],int,int,java.io.Writer)" class="org.unbescape.javascript.JavaScriptEscape" />
+	<method signature="void unescapeJavaScript(char[],int,int,java.io.Writer)" class="org.unbescape.javascript.JavaScriptEscape" />
+	<method signature="java.lang.String escapeJavaScriptMinimal(java.lang.String)" class="org.unbescape.javascript.JavaScriptEscape" />
+	<method signature="java.lang.String escapeJavaScript(java.lang.String,org.unbescape.javascript.JavaScriptEscapeType,org.unbescape.javascript.JavaScriptEscapeLevel)" class="org.unbescape.javascript.JavaScriptEscape" />
+	<method signature="java.lang.String escapeJavaScript(java.lang.String)" class="org.unbescape.javascript.JavaScriptEscape" />
+	<method signature="java.lang.String unescapeJavaScript(java.lang.String)" class="org.unbescape.javascript.JavaScriptEscape" />
 	<class name="com.toedter.calendar.demo.JCalendarDemo" />
 	<method signature="void propertyChange(java.beans.PropertyChangeEvent)" class="com.toedter.calendar.demo.JCalendarDemo" />
 	<method signature="void &lt;init&gt;()" class="com.toedter.calendar.demo.JCalendarDemo" />
@@ -13412,10 +13555,8 @@
 	<method signature="int getChildCount(java.lang.Object)" class="tourma.MainTreeModel" />
 	<method signature="void valueForPathChanged(javax.swing.tree.TreePath,java.lang.Object)" class="tourma.MainTreeModel" />
 	<class name="tourma.tableModel.MjtRankingTeam" />
-	<method signature="int getTeamPoints(tourma.data.Team,java.util.ArrayList)" class="tourma.tableModel.MjtRankingTeam" />
 	<method signature="java.awt.Component getTableCellRendererComponent(javax.swing.JTable,java.lang.Object,boolean,boolean,int,int)" class="tourma.tableModel.MjtRankingTeam" />
 	<method signature="java.lang.String getColumnName(int)" class="tourma.tableModel.MjtRankingTeam" />
-	<method signature="int getTeamVND(tourma.data.Team,java.util.ArrayList)" class="tourma.tableModel.MjtRankingTeam" />
 	<method signature="java.lang.Object getValueAt(int,int)" class="tourma.tableModel.MjtRankingTeam" />
 	<method signature="void &lt;init&gt;(boolean,int,java.util.ArrayList,boolean)" class="tourma.tableModel.MjtRankingTeam" />
 	<method signature="int getColumnCount()" class="tourma.tableModel.MjtRankingTeam" />
@@ -14144,6 +14285,7 @@
 	<method signature="java.awt.Component getTableCellRendererComponent(javax.swing.JTable,java.lang.Object,boolean,boolean,int,int)" class="tourma.tableModel.MjtAnnexRank" />
 	<method signature="int getRowCount()" class="tourma.tableModel.MjtAnnexRank" />
 	<method signature="java.lang.String getColumnName(int)" class="tourma.tableModel.MjtAnnexRank" />
+	<method signature="void setCriteria(tourma.data.Criteria)" class="tourma.tableModel.MjtAnnexRank" />
 	<method signature="java.lang.Object getValueAt(int,int)" class="tourma.tableModel.MjtAnnexRank" />
 	<method signature="int getColumnCount()" class="tourma.tableModel.MjtAnnexRank" />
 	<method signature="tourma.data.Criteria getCriteria()" class="tourma.tableModel.MjtAnnexRank" />
@@ -14944,6 +15086,7 @@
 	<method signature="void &lt;init&gt;()" class="org.jfree.data.general.DefaultKeyedValues2DDataset" />
 	<class name="tourma.data.GroupPoints" />
 	<method signature="void setDrawPoints(int)" class="tourma.data.GroupPoints" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.GroupPoints" />
 	<method signature="int getVictoryPoints()" class="tourma.data.GroupPoints" />
 	<method signature="int getLossPoints()" class="tourma.data.GroupPoints" />
 	<method signature="void &lt;init&gt;()" class="tourma.data.GroupPoints" />
@@ -15249,15 +15392,7 @@
 	<method signature="boolean equals(java.lang.Object)" class="org.jfree.chart.plot.SeriesRenderingOrder" />
 	<method signature="java.lang.String toString()" class="org.jfree.chart.plot.SeriesRenderingOrder" />
 	<class name="teamma.views.report.JdgPrintableRoster" />
-	<method signature="java.io.File getmFilename()" class="teamma.views.report.JdgPrintableRoster" />
-	<method signature="void setWithSkill(boolean)" class="teamma.views.report.JdgPrintableRoster" />
 	<method signature="void &lt;init&gt;(java.awt.Frame,boolean,teamma.data.Roster,tourma.data.Coach,boolean)" class="teamma.views.report.JdgPrintableRoster" />
-	<method signature="teamma.data.Roster getmRoster()" class="teamma.views.report.JdgPrintableRoster" />
-	<method signature="boolean isWithSkill()" class="teamma.views.report.JdgPrintableRoster" />
-	<method signature="void setmFilename(java.io.File)" class="teamma.views.report.JdgPrintableRoster" />
-	<method signature="void setmRoster(teamma.data.Roster)" class="teamma.views.report.JdgPrintableRoster" />
-	<method signature="void setmCoach(tourma.data.Coach)" class="teamma.views.report.JdgPrintableRoster" />
-	<method signature="tourma.data.Coach getmCoach()" class="teamma.views.report.JdgPrintableRoster" />
 	<class name="org.apache.xerces.dom.DeepNodeListImpl" />
 	<method signature="org.w3c.dom.Node item(int)" class="org.apache.xerces.dom.DeepNodeListImpl" />
 	<method signature="void &lt;init&gt;(org.apache.xerces.dom.NodeImpl,java.lang.String)" class="org.apache.xerces.dom.DeepNodeListImpl" />
@@ -15588,6 +15723,19 @@
 	<method signature="void &lt;init&gt;(int,int,int,java.lang.String,java.lang.String)" class="org.apache.xerces.stax.ImmutableLocation" />
 	<method signature="int getColumnNumber()" class="org.apache.xerces.stax.ImmutableLocation" />
 	<method signature="java.lang.String getPublicId()" class="org.apache.xerces.stax.ImmutableLocation" />
+	<class name="org.unbescape.html.HtmlEscape" />
+	<method signature="void unescapeHtml(char[],int,int,java.io.Writer)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="void escapeHtml5(char[],int,int,java.io.Writer)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="void escapeHtml(char[],int,int,java.io.Writer,org.unbescape.html.HtmlEscapeType,org.unbescape.html.HtmlEscapeLevel)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="void escapeHtml4(char[],int,int,java.io.Writer)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="java.lang.String escapeHtml(java.lang.String,org.unbescape.html.HtmlEscapeType,org.unbescape.html.HtmlEscapeLevel)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="void escapeHtml4Xml(char[],int,int,java.io.Writer)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="void escapeHtml5Xml(char[],int,int,java.io.Writer)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="java.lang.String escapeHtml5Xml(java.lang.String)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="java.lang.String escapeHtml4Xml(java.lang.String)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="java.lang.String unescapeHtml(java.lang.String)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="java.lang.String escapeHtml4(java.lang.String)" class="org.unbescape.html.HtmlEscape" />
+	<method signature="java.lang.String escapeHtml5(java.lang.String)" class="org.unbescape.html.HtmlEscape" />
 	<class name="org.jfree.chart.renderer.xy.DeviationRenderer$State" />
 	<method signature="void &lt;init&gt;(org.jfree.chart.plot.PlotRenderingInfo)" class="org.jfree.chart.renderer.xy.DeviationRenderer$State" />
 	<class name="freemarker.template.utility.StringUtil" />
@@ -15659,6 +15807,9 @@
 	<method signature="double getPieWRadius()" class="org.jfree.chart.plot.PiePlotState" />
 	<method signature="void setTotal(double)" class="org.jfree.chart.plot.PiePlotState" />
 	<method signature="void setLatestAngle(double)" class="org.jfree.chart.plot.PiePlotState" />
+	<class name="org.unbescape.javascript.JavaScriptEscapeType" />
+	<method signature="org.unbescape.javascript.JavaScriptEscapeType valueOf(java.lang.String)" class="org.unbescape.javascript.JavaScriptEscapeType" />
+	<method signature="org.unbescape.javascript.JavaScriptEscapeType[] values()" class="org.unbescape.javascript.JavaScriptEscapeType" />
 	<class name="org.apache.xerces.xni.parser.XMLErrorHandler" />
 	<method signature="void error(java.lang.String,java.lang.String,org.apache.xerces.xni.parser.XMLParseException)" class="org.apache.xerces.xni.parser.XMLErrorHandler" />
 	<method signature="void warning(java.lang.String,java.lang.String,org.apache.xerces.xni.parser.XMLParseException)" class="org.apache.xerces.xni.parser.XMLErrorHandler" />
@@ -17242,6 +17393,9 @@
 	<method signature="void startGeneralEntity(java.lang.String,org.apache.xerces.xni.XMLResourceIdentifier,java.lang.String,org.apache.xerces.xni.Augmentations)" class="org.apache.xerces.dom.DOMNormalizer" />
 	<method signature="void isCommentWF(org.w3c.dom.DOMErrorHandler,org.apache.xerces.dom.DOMErrorImpl,org.apache.xerces.dom.DOMLocatorImpl,java.lang.String,boolean)" class="org.apache.xerces.dom.DOMNormalizer" />
 	<method signature="void endGeneralEntity(java.lang.String,org.apache.xerces.xni.Augmentations)" class="org.apache.xerces.dom.DOMNormalizer" />
+	<class name="org.unbescape.xml.XmlEscapeType" />
+	<method signature="org.unbescape.xml.XmlEscapeType valueOf(java.lang.String)" class="org.unbescape.xml.XmlEscapeType" />
+	<method signature="org.unbescape.xml.XmlEscapeType[] values()" class="org.unbescape.xml.XmlEscapeType" />
 	<class name="org.apache.xerces.impl.XMLDocumentScannerImpl$DTDDispatcher" />
 	<method signature="boolean dispatch(boolean)" class="org.apache.xerces.impl.XMLDocumentScannerImpl$DTDDispatcher" />
 	<class name="freemarker.core.TextBlock" />
@@ -18232,6 +18386,15 @@
 	<method signature="void &lt;init&gt;(java.lang.String,int,javax.xml.stream.Location)" class="org.apache.xerces.stax.events.CharactersImpl" />
 	<method signature="void writeAsEncodedUnicode(java.io.Writer)" class="org.apache.xerces.stax.events.CharactersImpl" />
 	<method signature="java.lang.String getData()" class="org.apache.xerces.stax.events.CharactersImpl" />
+	<class name="org.unbescape.json.JsonEscape" />
+	<method signature="java.lang.String escapeJson(java.lang.String,org.unbescape.json.JsonEscapeType,org.unbescape.json.JsonEscapeLevel)" class="org.unbescape.json.JsonEscape" />
+	<method signature="void unescapeJson(char[],int,int,java.io.Writer)" class="org.unbescape.json.JsonEscape" />
+	<method signature="java.lang.String escapeJsonMinimal(java.lang.String)" class="org.unbescape.json.JsonEscape" />
+	<method signature="void escapeJson(char[],int,int,java.io.Writer,org.unbescape.json.JsonEscapeType,org.unbescape.json.JsonEscapeLevel)" class="org.unbescape.json.JsonEscape" />
+	<method signature="java.lang.String escapeJson(java.lang.String)" class="org.unbescape.json.JsonEscape" />
+	<method signature="java.lang.String unescapeJson(java.lang.String)" class="org.unbescape.json.JsonEscape" />
+	<method signature="void escapeJsonMinimal(char[],int,int,java.io.Writer)" class="org.unbescape.json.JsonEscape" />
+	<method signature="void escapeJson(char[],int,int,java.io.Writer)" class="org.unbescape.json.JsonEscape" />
 	<class name="org.jfree.chart.annotations.XYShapeAnnotation" />
 	<method signature="java.lang.Object clone()" class="org.jfree.chart.annotations.XYShapeAnnotation" />
 	<method signature="int hashCode()" class="org.jfree.chart.annotations.XYShapeAnnotation" />
@@ -19280,6 +19443,7 @@
 	<class name="tourma.data.Pool" />
 	<method signature="java.lang.String getName()" class="tourma.data.Pool" />
 	<method signature="java.util.ArrayList getCompetitors()" class="tourma.data.Pool" />
+	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Pool" />
 	<method signature="void &lt;init&gt;()" class="tourma.data.Pool" />
 	<method signature="void setName(java.lang.String)" class="tourma.data.Pool" />
 	<method signature="void setXMLElement(org.jdom2.Element)" class="tourma.data.Pool" />
@@ -19810,6 +19974,11 @@
 	<class name="javax.xml.transform.Templates" />
 	<method signature="java.util.Properties getOutputProperties()" class="javax.xml.transform.Templates" />
 	<method signature="javax.xml.transform.Transformer newTransformer()" class="javax.xml.transform.Templates" />
+	<class name="org.unbescape.properties.PropertiesValueEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.properties.PropertiesValueEscapeLevel" />
+	<method signature="org.unbescape.properties.PropertiesValueEscapeLevel[] values()" class="org.unbescape.properties.PropertiesValueEscapeLevel" />
+	<method signature="org.unbescape.properties.PropertiesValueEscapeLevel valueOf(java.lang.String)" class="org.unbescape.properties.PropertiesValueEscapeLevel" />
+	<method signature="org.unbescape.properties.PropertiesValueEscapeLevel forLevel(int)" class="org.unbescape.properties.PropertiesValueEscapeLevel" />
 	<class name="org.jfree.chart.axis.LogAxis" />
 	<method signature="void setTickUnit(org.jfree.chart.axis.NumberTickUnit)" class="org.jfree.chart.axis.LogAxis" />
 	<method signature="double getBase()" class="org.jfree.chart.axis.LogAxis" />
@@ -19993,6 +20162,11 @@
 	<method signature="void setMaxLength(int)" class="org.jfree.ui.LengthLimitingDocument" />
 	<method signature="void insertString(int,java.lang.String,javax.swing.text.AttributeSet)" class="org.jfree.ui.LengthLimitingDocument" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.ui.LengthLimitingDocument" />
+	<class name="org.unbescape.json.JsonEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.json.JsonEscapeLevel" />
+	<method signature="org.unbescape.json.JsonEscapeLevel[] values()" class="org.unbescape.json.JsonEscapeLevel" />
+	<method signature="org.unbescape.json.JsonEscapeLevel valueOf(java.lang.String)" class="org.unbescape.json.JsonEscapeLevel" />
+	<method signature="org.unbescape.json.JsonEscapeLevel forLevel(int)" class="org.unbescape.json.JsonEscapeLevel" />
 	<class name="freemarker.log.SLF4JLoggerFactory" />
 	<method signature="void &lt;init&gt;()" class="freemarker.log.SLF4JLoggerFactory" />
 	<method signature="freemarker.log.Logger getLogger(java.lang.String)" class="freemarker.log.SLF4JLoggerFactory" />
@@ -21221,6 +21395,11 @@
 	<method signature="double getYHighValue()" class="org.jfree.data.xy.YIntervalDataItem" />
 	<method signature="double getYLowValue()" class="org.jfree.data.xy.YIntervalDataItem" />
 	<method signature="java.lang.Double getX()" class="org.jfree.data.xy.YIntervalDataItem" />
+	<class name="org.unbescape.properties.PropertiesKeyEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.properties.PropertiesKeyEscapeLevel" />
+	<method signature="org.unbescape.properties.PropertiesKeyEscapeLevel valueOf(java.lang.String)" class="org.unbescape.properties.PropertiesKeyEscapeLevel" />
+	<method signature="org.unbescape.properties.PropertiesKeyEscapeLevel forLevel(int)" class="org.unbescape.properties.PropertiesKeyEscapeLevel" />
+	<method signature="org.unbescape.properties.PropertiesKeyEscapeLevel[] values()" class="org.unbescape.properties.PropertiesKeyEscapeLevel" />
 	<class name="org.jfree.chart.labels.ItemLabelPosition" />
 	<method signature="org.jfree.ui.TextAnchor getRotationAnchor()" class="org.jfree.chart.labels.ItemLabelPosition" />
 	<method signature="double getAngle()" class="org.jfree.chart.labels.ItemLabelPosition" />
@@ -22852,6 +23031,7 @@
 	<method signature="void &lt;init&gt;(java.lang.String)" class="org.jfree.chart.demo.PieChartDemo1" />
 	<class name="teamma.data.Skill" />
 	<method signature="void setmColor(java.awt.Color)" class="teamma.data.Skill" />
+	<method signature="void &lt;init&gt;(teamma.data.Skill)" class="teamma.data.Skill" />
 	<method signature="void setmName(java.lang.String)" class="teamma.data.Skill" />
 	<method signature="void setmCategory(teamma.data.SkillType)" class="teamma.data.Skill" />
 	<method signature="java.awt.Color getmColor()" class="teamma.data.Skill" />
@@ -23602,7 +23782,6 @@
 	<method signature="void setNaf(int)" class="tourma.data.Coach" />
 	<method signature="int getRank()" class="tourma.data.Coach" />
 	<method signature="java.util.ArrayList getPossibleOpponents(java.util.ArrayList,tourma.data.Round)" class="tourma.data.Coach" />
-	<method signature="boolean equals(java.lang.Object)" class="tourma.data.Coach" />
 	<method signature="boolean havePlayed(tourma.data.Competitor)" class="tourma.data.Coach" />
 	<method signature="java.lang.String getTeam()" class="tourma.data.Coach" />
 	<method signature="void setHandicap(int)" class="tourma.data.Coach" />
@@ -23621,17 +23800,16 @@
 	<method signature="int compareTo(java.lang.Object)" class="tourma.data.Coach" />
 	<method signature="int getNaf()" class="tourma.data.Coach" />
 	<method signature="void newCoachMap()" class="tourma.data.Coach" />
-	<method signature="int hashCode()" class="tourma.data.Coach" />
 	<method signature="int getHandicap()" class="tourma.data.Coach" />
 	<method signature="java.util.HashMap getTeamOppositionCount(java.util.ArrayList,tourma.data.Round)" class="tourma.data.Coach" />
 	<method signature="void putCoach(java.lang.String,tourma.data.Coach)" class="tourma.data.Coach" />
 	<method signature="void roundCheck(tourma.data.Round)" class="tourma.data.Coach" />
 	<method signature="java.lang.String getDecoratedName()" class="tourma.data.Coach" />
+	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round,boolean)" class="tourma.data.Coach" />
 	<method signature="void addComposition(teamma.data.Roster)" class="tourma.data.Coach" />
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.Coach" />
 	<method signature="boolean isActive()" class="tourma.data.Coach" />
 	<method signature="void removeComposition(int)" class="tourma.data.Coach" />
-	<method signature="void addMatchRoundRobin(tourma.data.Competitor,tourma.data.Round)" class="tourma.data.Coach" />
 	<method signature="java.lang.String getStringRoster()" class="tourma.data.Coach" />
 	<method signature="void &lt;init&gt;(java.lang.String)" class="tourma.data.Coach" />
 	<method signature="void setRank(int)" class="tourma.data.Coach" />
@@ -23947,14 +24125,15 @@
 	<method signature="int getSortedValue(int,int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getELOByCoach(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
 	<method signature="java.lang.String getDetail()" class="tourma.tableModel.MjtRanking" />
+	<method signature="int getCoachTablePoints(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getTeamTable(tourma.data.Team,tourma.data.TeamMatch)" class="tourma.tableModel.MjtRanking" />
-	<method signature="int getCoachTable(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getCoachNbMatchs(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getOppPointsByCoach(tourma.data.Coach,tourma.data.CoachMatch,boolean)" class="tourma.tableModel.MjtRanking" />
 	<method signature="tourma.data.ObjectRanking getSortedObject(int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getPointsByCoach(tourma.data.Coach,tourma.data.CoachMatch,boolean,boolean)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getValue(tourma.data.Coach,tourma.data.CoachMatch,tourma.data.Criteria,int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getRankingFromString(java.lang.String,java.util.ArrayList)" class="tourma.tableModel.MjtRanking" />
+	<method signature="int getValue(tourma.data.Team,tourma.data.TeamMatch,int,boolean)" class="tourma.tableModel.MjtRanking" />
 	<method signature="java.lang.String getRankingString(int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="boolean isCellEditable(int,int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getSubtypeByValue(int)" class="tourma.tableModel.MjtRanking" />
@@ -23965,12 +24144,14 @@
 	<method signature="int getValue(tourma.data.Coach,tourma.data.CoachMatch,int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="tourma.data.Criteria getCriteriaByValue(int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getOppELOByCoach(tourma.data.Coach,tourma.data.CoachMatch)" class="tourma.tableModel.MjtRanking" />
+	<method signature="int getPointsByTeam(tourma.data.Team,tourma.data.TeamMatch,boolean,boolean)" class="tourma.tableModel.MjtRanking" />
 	<method signature="void setDetail(java.lang.String)" class="tourma.tableModel.MjtRanking" />
 	<method signature="int getRound()" class="tourma.tableModel.MjtRanking" />
 	<method signature="void &lt;init&gt;(int,int,int,int,int,int,java.util.ArrayList,boolean)" class="tourma.tableModel.MjtRanking" />
 	<method signature="java.awt.Component getTableCellRendererComponent(javax.swing.JTable,java.lang.Object,boolean,boolean,int,int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="java.lang.Class getColumnClass(int)" class="tourma.tableModel.MjtRanking" />
 	<method signature="java.lang.Object getValueAt(int,int)" class="tourma.tableModel.MjtRanking" />
+	<method signature="int getVNDByTeam(tourma.data.Team,tourma.data.TeamMatch,boolean)" class="tourma.tableModel.MjtRanking" />
 	<class name="org.w3c.dom.html.HTMLTableCaptionElement" />
 	<method signature="void setAlign(java.lang.String)" class="org.w3c.dom.html.HTMLTableCaptionElement" />
 	<method signature="java.lang.String getAlign()" class="org.w3c.dom.html.HTMLTableCaptionElement" />
@@ -24406,7 +24587,6 @@
 	<class name="tourma.JdgChangePairing" />
 	<method signature="void &lt;init&gt;(java.awt.Frame,boolean,tourma.data.Round)" class="tourma.JdgChangePairing" />
 	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="tourma.JdgChangePairing" />
-	<method signature="void update()" class="tourma.JdgChangePairing" />
 	<class name="org.apache.xerces.impl.dv.dtd.XML11NMTOKENDatatypeValidator" />
 	<method signature="void &lt;init&gt;()" class="org.apache.xerces.impl.dv.dtd.XML11NMTOKENDatatypeValidator" />
 	<method signature="void validate(java.lang.String,org.apache.xerces.impl.dv.ValidationContext)" class="org.apache.xerces.impl.dv.dtd.XML11NMTOKENDatatypeValidator" />
@@ -24419,6 +24599,11 @@
 	<method signature="void setEntityState(org.apache.xerces.impl.validation.EntityState)" class="org.apache.xerces.impl.validation.ValidationManager" />
 	<method signature="void setGrammarFound(boolean)" class="org.apache.xerces.impl.validation.ValidationManager" />
 	<method signature="void setCachedDTD(boolean)" class="org.apache.xerces.impl.validation.ValidationManager" />
+	<class name="org.unbescape.css.CssStringEscapeLevel" />
+	<method signature="org.unbescape.css.CssStringEscapeLevel valueOf(java.lang.String)" class="org.unbescape.css.CssStringEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.css.CssStringEscapeLevel" />
+	<method signature="org.unbescape.css.CssStringEscapeLevel forLevel(int)" class="org.unbescape.css.CssStringEscapeLevel" />
+	<method signature="org.unbescape.css.CssStringEscapeLevel[] values()" class="org.unbescape.css.CssStringEscapeLevel" />
 	<class name="org.jfree.data.statistics.StatisticalCategoryDataset" />
 	<method signature="java.lang.Number getMeanValue(int,int)" class="org.jfree.data.statistics.StatisticalCategoryDataset" />
 	<method signature="java.lang.Number getStdDevValue(int,int)" class="org.jfree.data.statistics.StatisticalCategoryDataset" />
@@ -24631,6 +24816,11 @@
 	<method signature="org.jfree.base.modules.ModuleInfo[] getRequiredModules()" class="org.jfree.base.modules.AbstractModule" />
 	<method signature="java.lang.String toString()" class="org.jfree.base.modules.AbstractModule" />
 	<method signature="void setOptionalModules(org.jfree.base.modules.ModuleInfo[])" class="org.jfree.base.modules.AbstractModule" />
+	<class name="org.unbescape.css.CssIdentifierEscapeLevel" />
+	<method signature="int getEscapeLevel()" class="org.unbescape.css.CssIdentifierEscapeLevel" />
+	<method signature="org.unbescape.css.CssIdentifierEscapeLevel forLevel(int)" class="org.unbescape.css.CssIdentifierEscapeLevel" />
+	<method signature="org.unbescape.css.CssIdentifierEscapeLevel[] values()" class="org.unbescape.css.CssIdentifierEscapeLevel" />
+	<method signature="org.unbescape.css.CssIdentifierEscapeLevel valueOf(java.lang.String)" class="org.unbescape.css.CssIdentifierEscapeLevel" />
 	<class name="org.jfree.chart.renderer.RendererUtilities" />
 	<method signature="int findLiveItemsLowerBound(org.jfree.data.xy.XYDataset,int,double,double)" class="org.jfree.chart.renderer.RendererUtilities" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.renderer.RendererUtilities" />
@@ -24754,8 +24944,8 @@
 </entrypoints>
 
 <!-- WARNING:Unresolved external dependency: org.apache.xml.utils.PrefixResolver not found! -->
-<!-- writing shrinked C:\Perso\Tourma\store\TourMa.jar to C:\Perso\Tourma\store\yguard_temp_5127265827569942548.jar. -->
-<inOutPair in="C:\Perso\Tourma\store\TourMa.jar" out="C:\Perso\Tourma\store\yguard_temp_5127265827569942548.jar">
+<!-- writing shrinked C:\Perso\Tourma\store\TourMa.jar to C:\Perso\Tourma\store\yguard_temp_4148006577840914259.jar. -->
+<inOutPair in="C:\Perso\Tourma\store\TourMa.jar" out="C:\Perso\Tourma\store\yguard_temp_4148006577840914259.jar">
 	<removed-code>
 		<field name="serialVersionUID" class="com.bric.swing.ColorPicker" />
 		<field name="SELECTED_COLOR_PROPERTY" class="com.bric.swing.ColorPicker" />
@@ -29166,6 +29356,71 @@
 		<field name="serialVersionUID" class="org.jfree.util.WaitingImageObserver" />
 		<field name="serialVersionUID" class="org.netbeans.lib.awtextra.AbsoluteConstraints" />
 		<field name="serialVersionUID" class="org.netbeans.lib.awtextra.AbsoluteLayout" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.css.CssEscape" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.css.CssIdentifierEscapeUtil" />
+		<field name="ESCAPE_LEVELS_LEN" class="org.unbescape.css.CssIdentifierEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.css.CssIdentifierEscapeUtil" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.css.CssStringEscapeUtil" />
+		<field name="ESCAPE_LEVELS_LEN" class="org.unbescape.css.CssStringEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.css.CssStringEscapeUtil" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.css.CssUnescapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.css.CssUnescapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.csv.CsvEscape" />
+		<field name="DOUBLE_QUOTE" class="org.unbescape.csv.CsvEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.csv.CsvEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.html.Html4EscapeSymbolsInitializer" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.html.Html5EscapeSymbolsInitializer" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.html.HtmlEscape" />
+		<field name="NCRS_BY_CODEPOINT_LEN" class="org.unbescape.html.HtmlEscapeSymbols" />
+		<field name="MAX_ASCII_CHAR" class="org.unbescape.html.HtmlEscapeSymbols" />
+		<field name="NO_NCR" class="org.unbescape.html.HtmlEscapeSymbols" />
+		<field name="REFERENCE_PREFIX" class="org.unbescape.html.HtmlEscapeUtil" />
+		<field name="REFERENCE_NUMERIC_PREFIX2" class="org.unbescape.html.HtmlEscapeUtil" />
+		<field name="REFERENCE_HEXA_PREFIX3_UPPER" class="org.unbescape.html.HtmlEscapeUtil" />
+		<field name="REFERENCE_HEXA_PREFIX3_LOWER" class="org.unbescape.html.HtmlEscapeUtil" />
+		<field name="REFERENCE_SUFFIX" class="org.unbescape.html.HtmlEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.html.HtmlEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.java.JavaEscape" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.java.JavaEscapeUtil" />
+		<field name="ESCAPE_UHEXA_PREFIX2" class="org.unbescape.java.JavaEscapeUtil" />
+		<field name="ESCAPE_LEVELS_LEN" class="org.unbescape.java.JavaEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.java.JavaEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.javascript.JavaScriptEscape" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.javascript.JavaScriptEscapeUtil" />
+		<field name="ESCAPE_XHEXA_PREFIX2" class="org.unbescape.javascript.JavaScriptEscapeUtil" />
+		<field name="ESCAPE_UHEXA_PREFIX2" class="org.unbescape.javascript.JavaScriptEscapeUtil" />
+		<field name="ESCAPE_LEVELS_LEN" class="org.unbescape.javascript.JavaScriptEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.javascript.JavaScriptEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.json.JsonEscape" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.json.JsonEscapeUtil" />
+		<field name="ESCAPE_UHEXA_PREFIX2" class="org.unbescape.json.JsonEscapeUtil" />
+		<field name="ESCAPE_LEVELS_LEN" class="org.unbescape.json.JsonEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.json.JsonEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.properties.PropertiesEscape" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.properties.PropertiesKeyEscapeUtil" />
+		<field name="ESCAPE_LEVELS_LEN" class="org.unbescape.properties.PropertiesKeyEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.properties.PropertiesKeyEscapeUtil" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.properties.PropertiesUnescapeUtil" />
+		<field name="ESCAPE_UHEXA_PREFIX2" class="org.unbescape.properties.PropertiesUnescapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.properties.PropertiesUnescapeUtil" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.properties.PropertiesValueEscapeUtil" />
+		<field name="ESCAPE_LEVELS_LEN" class="org.unbescape.properties.PropertiesValueEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.properties.PropertiesValueEscapeUtil" />
+		<field name="DEFAULT_ENCODING" class="org.unbescape.uri.UriEscape" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.uri.UriEscape" />
+		<method signature="boolean isReserved(int)" class="org.unbescape.uri.UriEscapeUtil$UriEscapeType" />
+		<method signature="boolean isGenDelim(int)" class="org.unbescape.uri.UriEscapeUtil$UriEscapeType" />
+		<field name="ESCAPE_PREFIX" class="org.unbescape.uri.UriEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.uri.UriEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.xml.Xml10EscapeSymbolsInitializer" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.xml.Xml11EscapeSymbolsInitializer" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.xml.XmlEscape" />
+		<field name="LEVELS_LEN" class="org.unbescape.xml.XmlEscapeSymbols" />
+		<field name="REFERENCE_PREFIX" class="org.unbescape.xml.XmlEscapeUtil" />
+		<field name="REFERENCE_NUMERIC_PREFIX2" class="org.unbescape.xml.XmlEscapeUtil" />
+		<field name="REFERENCE_HEXA_PREFIX3" class="org.unbescape.xml.XmlEscapeUtil" />
+		<field name="REFERENCE_SUFFIX" class="org.unbescape.xml.XmlEscapeUtil" />
+		<method signature="void &lt;init&gt;()" class="org.unbescape.xml.XmlEscapeUtil" />
 		<field name="SEVERITY_WARNING" class="org.w3c.dom.DOMError" />
 		<field name="SEVERITY_ERROR" class="org.w3c.dom.DOMError" />
 		<field name="SEVERITY_FATAL_ERROR" class="org.w3c.dom.DOMError" />
@@ -29360,7 +29615,6 @@
 		<field name="CS_RosterTypeNotFound" class="teamma.data.LRB" />
 		<field name="CS_forThePlayer" class="teamma.data.LRB" />
 		<field name="CS_Starplayer" class="teamma.data.LRB" />
-		<method signature="java.util.ArrayList getRosterTypeListAsString()" class="teamma.data.LRB" />
 		<field name="CS_Plus1Movement" class="teamma.data.Player" />
 		<field name="CS_Minus1Movement" class="teamma.data.Player" />
 		<field name="CS_Plus1Strength" class="teamma.data.Player" />
@@ -29435,6 +29689,7 @@
 		<field name="CS_DoubleRoll" class="teamma.views.JdgSelectSkill" />
 		<field name="CS_Error" class="teamma.views.JdgSelectSkill" />
 		<field name="CS_NoSkillSelected" class="teamma.views.JdgSelectSkill" />
+		<method signature="void setPlayer(teamma.data.Player)" class="teamma.views.JdgSelectSkill" />
 		<field name="CS_title" class="teamma.views.report.JdgPrintableRoster" />
 		<field name="CS_numero" class="teamma.views.report.JdgPrintableRoster" />
 		<field name="CS_name" class="teamma.views.report.JdgPrintableRoster" />
@@ -29689,6 +29944,9 @@
 		<field name="C_STARTING_RANK" class="tourma.tableModel.MjtRanking" />
 		<field name="C_ELO_K" class="tourma.tableModel.MjtRanking" />
 		<method signature="void sortDatas()" class="tourma.tableModel.MjtRanking" />
+		<method signature="void delData(tourma.data.Competitor)" class="tourma.tableModel.MjtRankingManual" />
+		<method signature="int getTeamVND(tourma.data.Team,java.util.ArrayList)" class="tourma.tableModel.MjtRankingTeam" />
+		<method signature="int getTeamPoints(tourma.data.Team,java.util.ArrayList)" class="tourma.tableModel.MjtRankingTeam" />
 		<method signature="void writeObject(java.io.ObjectOutputStream)" class="tourma.tableModel.MjtTeams" />
 		<method signature="void readObject(java.io.ObjectInputStream)" class="tourma.tableModel.MjtTeams" />
 		<field name="CS_ROSTER" class="tourma.utility.StringConstants" />
@@ -30014,10 +30272,10 @@
 	</removed-code>
 	<removed-resources>
 	</removed-resources>
-<!-- 	shrinked C:\Perso\Tourma\store\TourMa.jar BY 10,07 %. -->
-<!-- 	size before: 10277 KB, size after: 9242 KB. -->
-<!-- 	removed 103 classes, 827 methods, 4324 fields, 0 resources. -->
-<!-- 	3736 classes remaining of 3839 total. -->
+<!-- 	shrinked C:\Perso\Tourma\store\TourMa.jar BY 10,30 %. -->
+<!-- 	size before: 10412 KB, size after: 9340 KB. -->
+<!-- 	removed 103 classes, 858 methods, 4361 fields, 0 resources. -->
+<!-- 	3794 classes remaining of 3897 total. -->
 </inOutPair>
 <!-- WARNING:Not all dependencies could be resolved. Please see the logfile for details. -->
 </yshrink>
