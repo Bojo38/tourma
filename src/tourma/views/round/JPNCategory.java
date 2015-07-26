@@ -10,7 +10,7 @@ import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
-import tourma.utils.TableFormat;
+import tourma.utils.display.TableFormat;
 import tourma.views.report.JdgRanking;
 
 /*

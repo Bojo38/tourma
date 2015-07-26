@@ -56,8 +56,14 @@ public class Group implements XMLExport {
         group.setAttribute(StringConstants.CS_NAME, this.getName());
         for (int j = 0; j < this.getRosterCount(); j++) {
             final Element roster = new Element(StringConstants.CS_ROSTER);
-            roster.setAttribute(StringConstants.CS_NAME, this.getRoster(j).getName());
-            group.addContent(roster);
+            if (this.getRoster(j) != null)  {
+                if (this.getRoster(j).getName() != null) {
+                    this.getRoster(j).setName("Unknown");
+                }
+                roster.setAttribute(StringConstants.CS_NAME, this.getRoster(j).getName());
+                group.addContent(roster);
+            }
+
         }
         return group;
     }
@@ -103,7 +109,7 @@ public class Group implements XMLExport {
         final Iterator<Element> gro = groups.iterator();
         while (gro.hasNext()) {
             try {
-                final Element g =  gro.next();
+                final Element g = gro.next();
                 String name = g.getAttributeValue(StringConstants.CS_NAME);
                 Group ge = Tournament.getTournament().getGroup(name);
                 GroupPoints gp = new GroupPoints();
@@ -136,12 +142,9 @@ public class Group implements XMLExport {
      * @return the mRosters
      */
     public RosterType getRoster(int i) {
-        if (i<mRosters.size())
-        {
-        return mRosters.get(i);
-        }
-        else
-        {
+        if (i < mRosters.size()) {
+            return mRosters.get(i);
+        } else {
             return null;
         }
     }
@@ -177,32 +180,30 @@ public class Group implements XMLExport {
         this.mRosters = new ArrayList<>();
     }
 
-     /**
-     * 
+    /**
+     *
      * @param obj
-     * @return 
+     * @return
      */
     @Override
     public boolean equals(final Object obj) {
-        
+
         boolean result;
         result = false;
         if (obj instanceof Group) {
-            Group g=(Group) obj;
-            result=this.getName().equals(g.getName());
-            result&=this.getRosterCount()==g.getRosterCount();
-            for (RosterType rt:mRosters)
-            {
-                result&=g.containsRoster(rt);
+            Group g = (Group) obj;
+            result = this.getName().equals(g.getName());
+            result &= this.getRosterCount() == g.getRosterCount();
+            for (RosterType rt : mRosters) {
+                result &= g.containsRoster(rt);
             }
-            for (Group og:opponentModificationPoints.keySet())
-            {
-                result&=getOpponentModificationPoints(og).equals(g.getOpponentModificationPoints(og)); ;
+            for (Group og : opponentModificationPoints.keySet()) {
+                result &= getOpponentModificationPoints(og).equals(g.getOpponentModificationPoints(og));;
             }
-        } 
+        }
         return result;
     }
-    
+
     /**
      * @param g
      * @return the opponentModificationPoints
@@ -221,20 +222,19 @@ public class Group implements XMLExport {
     }
 
     /**
-     * 
-     * @param g 
+     *
+     * @param g
      */
     public void delOpponentModificationPoints(Group g) {
         opponentModificationPoints.remove(g);
     }
-    
+
     /**
-     * 
+     *
      * @param rt
-     * @return 
+     * @return
      */
-    public boolean containsRoster(RosterType rt)
-    {
+    public boolean containsRoster(RosterType rt) {
         return mRosters.contains(rt);
     }
 }

@@ -36,7 +36,7 @@ import tourma.tableModel.MjtAnnexRankIndiv;
 import tourma.tableModel.MjtMatches;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.utility.StringConstants;
-import tourma.utils.TableFormat;
+import tourma.utils.display.TableFormat;
 import tourma.views.JPNCup;
 import tourma.views.report.JdgGlobal;
 import tourma.views.report.JdgRanking;

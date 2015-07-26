@@ -13,7 +13,7 @@ import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtTeams;
-import tourma.utils.TableFormat;
+import tourma.utils.display.TableFormat;
 
 /**
  *

@@ -80,6 +80,8 @@ public class Tournament implements IContainCoachs {
         return mSingleton;
     }
 
+    private String mDescription;
+
     /**
      *
      */
@@ -645,6 +647,10 @@ public class Tournament implements IContainCoachs {
         document.setAttribute(StringConstants.CS_VERSION, "3");
         document.setAttribute(StringConstants.CS_ROUNDROBIN, Boolean.toString(isRoundRobin()));
 
+        Element description = new Element(StringConstants.CS_DESCRIPTION);
+        description.setText(mDescription);
+        document.addContent(description);
+
         // Tounament data
         for (int i = 0; i
                 < RosterType.getRostersNamesCount(); i++) {
@@ -955,7 +961,7 @@ public class Tournament implements IContainCoachs {
         a.append(";\n");
 
         if (this.getParams().isTeamTournament()) {
-            final MjtRankingTeam rt = new MjtRankingTeam(getParams().isTeamVictoryOnly(), round ,
+            final MjtRankingTeam rt = new MjtRankingTeam(getParams().isTeamVictoryOnly(), round,
                     mTeams, false);
 
             for (int i = 0; i < rt.getRowCount(); i++) {
@@ -1069,14 +1075,14 @@ public class Tournament implements IContainCoachs {
             fw = new OutputStreamWriter(new FileOutputStream(file), Charset.defaultCharset());
             bw = new BufferedWriter(fw);
             writer = new PrintWriter(bw);
-            final String s = generateCSVRanking(mRounds.size()-1, true, true);
+            final String s = generateCSVRanking(mRounds.size() - 1, true, true);
             String s_tmp = s;
             while (s_tmp.length() > 0) {
                 writer.print(s_tmp.substring(0, Math.min(255, s_tmp.length() - 1)));
                 s_tmp = s_tmp.substring(Math.min(256, s_tmp.length()));
             }
 
-            final RenderedImage im = generateRankingQRCode(mRounds.size()-1);
+            final RenderedImage im = generateRankingQRCode(mRounds.size() - 1);
 
             try {
                 ImageIO.write(im, "PNG", new File(file.getAbsoluteFile() + ".PNG"));
@@ -1130,7 +1136,6 @@ public class Tournament implements IContainCoachs {
             }
         }
 
-       
         try {
             try (PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")))) {
                 writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -1139,8 +1144,8 @@ public class Tournament implements IContainCoachs {
                 writer.println(("<COACHES>"));
                 for (Coach mCoach : mCoachs) {
                     if (mCoach.getNaf() > 0) {
-                        String naf=Integer.toString(mCoach.getNaf());
-                        
+                        String naf = Integer.toString(mCoach.getNaf());
+
                         writer.println(("<COACH>"));
                         writer.println(java.text.MessageFormat.format("<NAME>{0}</NAME>", new Object[]{mCoach.getName()}));
                         writer.println(java.text.MessageFormat.format("<NUMBER>{0}</NUMBER>", new Object[]{naf}));
@@ -1242,6 +1247,11 @@ public class Tournament implements IContainCoachs {
             setRoundRobin(Boolean.parseBoolean(racine.getAttributeValue(StringConstants.CS_ROUNDROBIN)));
         } catch (Exception e) {
             setRoundRobin(false);
+        }
+
+        Element e = racine.getChild(StringConstants.CS_DESCRIPTION);
+        if (e != null) {
+            mDescription = e.getText();
         }
 
         loadRosters(racine);
@@ -1369,7 +1379,7 @@ public class Tournament implements IContainCoachs {
      * @param file
      */
     public void loadXML(final java.io.File file) {
-        
+
         final SAXBuilder sxb = new SAXBuilder();
 
         try {
@@ -1490,5 +1500,13 @@ public class Tournament implements IContainCoachs {
      */
     public void removeRound(int r) {
         mRounds.remove(r);
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String tmp) {
+        mDescription = tmp;
     }
 }

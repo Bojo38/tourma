@@ -186,5 +186,6 @@ public interface StringConstants {
     public static final String CS_TOURNAMENT="Tournament";
     public static final String CS_VERSION="Version";
     public static final String CS_ROUNDROBIN="RoundRobin";
+    public static final String CS_DESCRIPTION="Description";
 
 }

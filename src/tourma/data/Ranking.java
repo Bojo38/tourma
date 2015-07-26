@@ -20,7 +20,7 @@ import org.jdom2.Element;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
-import tourma.utils.Ranked;
+import tourma.utils.display.Ranked;
 
 /**
  *

@@ -40,8 +40,8 @@ import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtAnnexRankTeam;
-import tourma.utils.Ranked;
-import tourma.utils.TourmaProtocol;
+import tourma.utils.display.Ranked;
+import tourma.utils.display.TourmaProtocol;
 
 /**
  *

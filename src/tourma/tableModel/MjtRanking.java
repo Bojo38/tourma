@@ -29,7 +29,7 @@ import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
-import tourma.utils.Ranked;
+import tourma.utils.display.Ranked;
 
 /**
  *
