@@ -21,14 +21,17 @@ import tourma.data.Category;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
+import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
+import tourma.data.GroupPoints;
 import tourma.data.Match;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.Ranking;
+import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
@@ -75,11 +78,9 @@ public class WebServer extends NanoHTTPD {
         msg.append(createMenu());
         Map<String, String> parms = session.getParms();
         if (session.getUri().equals("/")) {
-            // @todo build home page   
             msg.append(createHome());
         } else {
             if (session.getUri().equals("/rules")) {
-                // @todo display rules page
                 msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_Rules))).append("</CENTER></h1>");
                 msg.append(createRules());
             } else {
@@ -88,7 +89,6 @@ public class WebServer extends NanoHTTPD {
                     msg.append(createStatistics());
                 } else {
                     if (session.getUri().startsWith("/round")) {
-                        // @todo display round page  
                         int nb = Integer.parseInt(session.getUri().replace("/round", ""));
                         msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(nb).append("</CENTER></h1>");
                         msg.append(createRound(nb));
@@ -384,8 +384,7 @@ public class WebServer extends NanoHTTPD {
                 + "            }\n"
                 + "\n"
                 + "        </STYLE>");
-        
-        
+
         return styles.toString();
     }
 
@@ -400,23 +399,388 @@ public class WebServer extends NanoHTTPD {
         return home;
     }
 
+    private final static String CS_Criterias = "Criterias";
+    private final static String CS_Individual_Points = "IndividualPoints";
+    private final static String CS_LargeVictory = "LargeVictory";
+    private final static String CS_LargeVictoryGap = "LargeVictoryGap";
+    private final static String CS_Victory = "Victory";
+    private final static String CS_TeamVictoryBonus = "TeamVictoryBonus";
+    private final static String CS_TeamDrawBonus = "TeamDrawBonus";
+    private final static String CS_Draw = "Draw";
+    private final static String CS_Lost = "Lost";
+    private final static String CS_LittleLost = "LittleLost";
+    private final static String CS_LittleLostGap = "LittleLostGap";
+    private final static String CS_Order = "Order";
+    private final static String CS_Options = "Options";
+    private final static String CS_ExceptBestAndWorst = "ExceptBestAndWorst";
+    private final static String CS_UseBestResults = "UseBestResults";
+    private final static String CS_ExceptBestAndWorstForAnnex = "ExceptBestAndWorstForAnnex";
+
+    private final static String CS_NumberOfPlayersForClan = "NumberOfPlayersForClan";
+    private final static String CS_AvoidFirstRoundMatchClan = "AvoidFirstRoundMatchClan";
+    private final static String CS_AvoidRoundMatchClan = "AvoidRoundMatchClan";
+    private final static String CS_Categories = "Categories";
+    private final static String CS_Groups="Groups";
+
+    /**
+     * @TODO @return
+     */
     protected String createRules() {
-        String rules = "";
+
+        StringBuilder rules = new StringBuilder("");
+
+        LOG.log(Level.FINE, "Create Rules");
+
+        Parameters params = Tournament.getTournament().getParams();
+
+        // Criterias
+        rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Criterias)) + "</center>");
+        rules.append("<table>");
+        rules.append("<th>");
+        rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Name)) + "</td>");
+        rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Points_Plus)) + "</td>");
+        rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Points_Minus)) + "</td>");
+        if (params.isTeamTournament()) {
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Points_Team_Plus)) + "</td>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Points_Team_Minus)) + "</td>");
+        }
+        rules.append("</th>");
+        for (int i = 0; i < params.getCriteriaCount(); i++) {
+            Criteria crit = params.getCriteria(i);
+            rules.append("<tr>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(crit.getName()) + "</td>");
+            rules.append("<td>" + crit.getPointsFor() + "</td>");
+            rules.append("<td>" + crit.getPointsAgainst() + "</td>");
+            if (params.isTeamTournament()) {
+                rules.append("<td>" + crit.getPointsTeamFor() + "</td>");
+                rules.append("<td>" + crit.getPointsTeamAgainst() + "</td>");
+            }
+            rules.append("</tr>");
+        }
+        rules.append("</table>");
 
         // Create individual
+        rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Individual_Points)) + "</center>");
+        rules.append("<table>");
+
+        // Victory
+        rules.append("<tr>");
+        rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Order)) + "</td>");
+        rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Ranking)) + "</td>");
+        rules.append("</tr>");
+        for (int i = 0; i < params.getIndivRankingNumber(); i++) {
+            rules.append("<tr><td>" + (i + 1) + "</td>");
+            int r = 0;
+            switch (i) {
+                case 0:
+                    r = params.getRankingIndiv1();
+                    break;
+                case 1:
+                    r = params.getRankingIndiv2();
+                    break;
+                case 2:
+                    r = params.getRankingIndiv3();
+                    break;
+                case 3:
+                    r = params.getRankingIndiv4();
+                    break;
+                case 4:
+                    r = params.getRankingIndiv5();
+                    break;
+            }
+
+            String s = MjtRanking.getRankingString(r);
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(s) + "</td></tr>");
+        }
+
+        rules.append("<tr>");
+        rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Options)) + "</td>");
+        rules.append("<td>" + StringEscapeUtils.escapeHtml4(" ") + "</td>");
+        rules.append("</tr>");
+
+        if (params.isUseBestResultIndiv()) {
+            rules.append("<tr>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_UseBestResults)) + "</td>");
+            rules.append("<td>" + params.getBestResultIndiv() + "</td>");
+            rules.append("</tr>");
+        }
+        if (params.isExceptBestAndWorstIndiv()) {
+            rules.append("<tr>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_ExceptBestAndWorst)) + "</td>");
+            rules.append("<td>" + "&nbsp;" + "</td>");
+            rules.append("</tr>");
+        }
+        if (params.isApplyToAnnexIndiv()) {
+            rules.append("<tr>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_ExceptBestAndWorstForAnnex)) + "</td>");
+            rules.append("<td>" + "&nbsp;" + "</td>");
+            rules.append("</tr>");
+        }
+
+        // Large Victory
+        if (params.isUseLargeVictory()) {
+            rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_LargeVictory)) + "</td>");
+            rules.append("<td>" + params.getPointsIndivLargeVictory() + "</td></tr>");
+
+            rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_LargeVictoryGap)) + "</td>");
+            rules.append("<td>" + params.getGapLargeVictory() + "</td></tr>");
+        }
+
+        // Victory
+        rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
+        rules.append("<td>" + params.getPointsIndivVictory() + "</td></tr>");
+
+        // Draw
+        rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw)) + "</td>");
+        rules.append("<td>" + params.getPointsIndivDraw() + "</td></tr>");
+
+        //Lost
+        rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Lost)) + "</td>");
+        rules.append("<td>" + params.getPointsIndivLost() + "</td></tr>");
+
+        if (params.isUseLittleLoss()) {
+            rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_LittleLost)) + "</td>");
+            rules.append("<td>" + params.getPointsIndivLittleLost() + "</td></tr>");
+
+            rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_LittleLostGap)) + "</td>");
+            rules.append("<td>" + params.getGapLittleLost() + "</td></tr>");
+        }
+
+        //Conceed
+        rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Conceeded)) + "</td>");
+        rules.append("<td>" + params.getPointsConcedeed() + "</td></tr>");
+
+        //Refuse
+        rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Refused)) + "</td>");
+        rules.append("<td>" + params.getPointsRefused() + "</td></tr>");
+
+        rules.append("</table>");
+
         // Create Team if Team
+        if (params.isTeamTournament()) {
+            rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Team)) + "</center>");
+            rules.append("<table>");
+
+            // Victory
+            rules.append("<tr>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Order)) + "</td>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Ranking)) + "</td>");
+            rules.append("</tr>");
+            for (int i = 0; i < params.getTeamRankingNumber(); i++) {
+                rules.append("<tr><td>" + (i + 1) + "</td>");
+                int r = 0;
+                switch (i) {
+                    case 0:
+                        r = params.getRankingTeam1();
+                        break;
+                    case 1:
+                        r = params.getRankingTeam2();
+                        break;
+                    case 2:
+                        r = params.getRankingTeam3();
+                        break;
+                    case 3:
+                        r = params.getRankingTeam4();
+                        break;
+                    case 4:
+                        r = params.getRankingTeam5();
+                        break;
+                }
+
+                String s = MjtRanking.getRankingString(r);
+                rules.append("<td>" + StringEscapeUtils.escapeHtml4(s) + "</td></tr>");
+            }
+
+            rules.append("<tr>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Options)) + "</td>");
+            rules.append("<td>" + StringEscapeUtils.escapeHtml4(" ") + "</td>");
+            rules.append("</tr>");
+
+            if (params.isUseBestResultTeam()) {
+                rules.append("<tr>");
+                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_UseBestResults)) + "</td>");
+                rules.append("<td>" + params.getBestResultTeam() + "</td>");
+                rules.append("</tr>");
+            }
+            if (params.isExceptBestAndWorstTeam()) {
+                rules.append("<tr>");
+                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_ExceptBestAndWorst)) + "</td>");
+                rules.append("<td>" + "&nbsp;" + "</td>");
+                rules.append("</tr>");
+            }
+            if (params.isApplyToAnnexTeam()) {
+                rules.append("<tr>");
+                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_ExceptBestAndWorstForAnnex)) + "</td>");
+                rules.append("<td>" + "&nbsp;" + "</td>");
+                rules.append("</tr>");
+            }
+
+            if (params.isTeamVictoryOnly()) {
+                // Victory
+                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
+                rules.append("<td>" + params.getPointsTeamVictory() + "</td></tr>");
+
+                // Draw
+                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw)) + "</td>");
+                rules.append("<td>" + params.getPointsTeamDraw() + "</td></tr>");
+
+                //Lost
+                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Lost)) + "</td>");
+                rules.append("<td>" + params.getPointsTeamLost() + "</td></tr>");
+
+            } else {
+                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_TeamVictoryBonus)) + "</td>");
+                rules.append("<td>" + params.getPointsTeamVictoryBonus() + "</td></tr>");
+
+                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_TeamDrawBonus)) + "</td>");
+                rules.append("<td>" + params.getPointsTeamDrawBonus() + "</td></tr>");
+            }
+
+            rules.append("</table>");
+        }
+
         // Create Clan if Clan
+        if (params.isEnableClans()) {
+            rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Clan)) + "</center>");
+
+            rules.append("<ul>");
+            rules.append("<li>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_NumberOfPlayersForClan)) + ": " + params.getClansMembersNumber() + "</li>");
+            rules.append("<li>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidFirstRoundMatchClan)) + ": " + params.isAvoidClansFirstMatch() + "</li>");
+            rules.append("<li>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidRoundMatchClan)) + ": " + params.isAvoidClansMatch() + "</li>");
+            rules.append("</ul>");
+
+            if (Tournament.getTournament().getClansCount() > 1) {
+
+                rules.append("<ul>");
+                for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+                    Clan c = Tournament.getTournament().getClan(i);
+                    rules.append(StringEscapeUtils.escapeHtml4(c.getName()) + ": ");
+                    rules.append("<ul>");
+                    if (params.isTeamTournament()) {
+                        for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
+                            Team t = Tournament.getTournament().getTeam(j);
+                            if (t.getClan() == c) {
+                                rules.append("<li>" + StringEscapeUtils.escapeHtml4(t.getName()) + "</li>");
+                            }
+                        }
+                    } else {
+                        for (int j = 0; j < Tournament.getTournament().getCoachsCount(); j++) {
+                            Coach t = Tournament.getTournament().getCoach(j);
+                            if (t.getClan() == c) {
+                                rules.append("<li>" + StringEscapeUtils.escapeHtml4(t.getName()) + "</li>");
+                            }
+                        }
+                    }
+                    rules.append("</ul>");
+                }
+                rules.append("</ul>");
+            }
+        }
+
         // Create Groups if groups
+        if ((Tournament.getTournament().getGroupsCount() > 1) && (!params.isMultiRoster())) {
+            rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Groups)) + "</center>");
+
+            rules.append("<ul>");
+            for (int i = 0; i < Tournament.getTournament().getGroupsCount(); i++) {
+                Group g = Tournament.getTournament().getGroup(i);
+                rules.append("<li>" + StringEscapeUtils.escapeHtml4(g.getName()) + ": ");
+                rules.append("<ul>");
+                for (int j = 0; j < g.getRosterCount(); j++) {
+                    RosterType rt = g.getRoster(j);
+                    rules.append("<li>" + StringEscapeUtils.escapeHtml4(rt.getName()) + "</li>");
+                }
+                rules.append("</ul>");
+                
+                // Tableaux de Bonus de groupes
+                rules.append("<table>");
+                rules.append("<th>");
+                rules.append("<td>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory))+"</td>");
+                rules.append("<td>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw))+"</td>");
+                rules.append("<td>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_Lost))+"</td>");
+                rules.append("</th>");
+                for (int j=0; j<Tournament.getTournament().getGroupsCount(); j++)
+                {
+                    Group opp=Tournament.getTournament().getGroup(j);
+                    if (opp!=g)
+                    {
+                        rules.append("<tr>");
+                        rules.append("<td>"+StringEscapeUtils.escapeHtml4(opp.getName())+"</td>");
+                        GroupPoints gp= g.getOpponentModificationPoints(opp);
+                        rules.append("<td>"+gp.getVictoryPoints()+"</td>");
+                        rules.append("<td>"+gp.getDrawPoints()+"</td>");
+                        rules.append("<td>"+gp.getLossPoints()+"</td>");
+                        rules.append("</tr>");
+                    }
+                }
+                rules.append("</table>");
+                
+                rules.append("</li>");
+            }
+            rules.append("</ul>");
+
+            
+            
+        }
+
         // Create Categories if categories
+        if (Tournament.getTournament().getCategoriesCount() > 0) {
+            rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Categories)) + "</center>");
+
+            rules.append("<ul>");
+            for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+                Category cat = Tournament.getTournament().getCategory(i);
+                rules.append("<li>" + StringEscapeUtils.escapeHtml4(cat.getName()) + ": ");
+                rules.append("<ul>");
+                for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
+                    Team c = Tournament.getTournament().getTeam(j);
+                    if (c.containsCategory(cat)) {
+                        rules.append("<li>" + StringEscapeUtils.escapeHtml4(c.getName()) + "</li>");
+                    }
+                }
+                for (int j = 0; j < Tournament.getTournament().getCoachsCount(); j++) {
+                    Coach c = Tournament.getTournament().getCoach(j);
+                    if (c.containsCategory(cat)) {
+                        rules.append("<li>" + StringEscapeUtils.escapeHtml4(c.getName()) + "</li>");
+                    }
+                }
+                rules.append("</ul>");
+                rules.append("</li>");
+            }
+            rules.append("</ul>");
+        }
+
         // Create Pool if Pool
-        return rules;
+        if (Tournament.getTournament().getPoolCount() > 0) {
+            rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Pool)) + "</center>");
+
+            rules.append("<ul>");
+            for (int i = 0; i < Tournament.getTournament().getPoolCount(); i++) {
+                Pool p = Tournament.getTournament().getPool(i);
+                rules.append("<li>" + StringEscapeUtils.escapeHtml4(p.getName()) + ": ");
+                rules.append("<ul>");
+                for (int j = 0; j < p.getCompetitorCount(); j++) {
+                    Competitor c = p.getCompetitor(j);
+                    rules.append("<li>" + StringEscapeUtils.escapeHtml4(c.getName()) + "</li>");
+                }
+                rules.append("</ul>");
+                rules.append("</li>");
+            }
+            rules.append("</ul>");
+        }
+
+        return rules.toString();
     }
 
+    /**
+     * @TODO @return
+     */
     protected String createStatistics() {
         String stats = "";
         return stats;
     }
 
+    // @TODO
     protected String createCup() {
         String stats = "";
         if (Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()) {
@@ -718,7 +1082,6 @@ public class WebServer extends NanoHTTPD {
     protected String createIndividualRanking(Round r, ArrayList<Coach> coachs, String rankName) {
         StringBuilder s = new StringBuilder();
 
-    
         MjtRankingIndiv ranking = new MjtRankingIndiv(Tournament.getTournament().getRoundIndex(r),
                 Tournament.getTournament().getParams().getRankingIndiv1(),
                 Tournament.getTournament().getParams().getRankingIndiv2(),
@@ -954,7 +1317,7 @@ public class WebServer extends NanoHTTPD {
     }
 
     protected String createTeamMatchs(Round r) {
-               StringBuilder s = new StringBuilder();
+        StringBuilder s = new StringBuilder();
 
         s.append("<STYLE type=\"text/css\">\n"
                 + "            td.tab_titre {\n"
@@ -1030,95 +1393,91 @@ public class WebServer extends NanoHTTPD {
 
         for (int j = 0; j < r.getMatchsCount(); j++) {
             Match m = r.getMatch(j);
-            if (m instanceof TeamMatch)
-            {
-                TeamMatch tm=(TeamMatch)m;
-                int val1=tm.getVictories((Team)tm.getCompetitor1());
-                int val2=tm.getVictories((Team)tm.getCompetitor2());
-            String style1 = "";
-            String style2 = "";
+            if (m instanceof TeamMatch) {
+                TeamMatch tm = (TeamMatch) m;
+                int val1 = tm.getVictories((Team) tm.getCompetitor1());
+                int val2 = tm.getVictories((Team) tm.getCompetitor2());
+                String style1 = "";
+                String style2 = "";
 
-            if (val1 == val2) {
-                style1 = "draw";
-                style2 = "draw";
-            } else {
-                if (val1 < val2) {
-                    style1 = "looser";
-                    style2 = "winner";
+                if (val1 == val2) {
+                    style1 = "draw";
+                    style2 = "draw";
                 } else {
-                    if (val1 > val2) {
-                        style2 = "looser";
-                        style1 = "winner";
+                    if (val1 < val2) {
+                        style1 = "looser";
+                        style2 = "winner";
                     } else {
-                        style1 = "draw";
-                        style2 = "draw";
+                        if (val1 > val2) {
+                            style2 = "looser";
+                            style1 = "winner";
+                        } else {
+                            style1 = "draw";
+                            style2 = "draw";
+                        }
+                    }
+
+                }
+                s.append("<tr>");
+                String bg = "background-color:#eeeeee;";
+                if (j % 2 == 0) {
+                    bg = "background-color:#ffffff;";
+                }
+                Team t1 = (Team) tm.getCompetitor1();
+                Team t2 = (Team) tm.getCompetitor2();
+
+                String img1 = "";
+                String img2 = "";
+
+                if (Tournament.getTournament().getParams().isUseImage()) {
+                    BufferedImage pic1 = null;
+                    BufferedImage pic2 = null;
+                    if ((pic1 == null) && (t1.getClan() != null)) {
+                        pic1 = t1.getClan().getPicture();
+                    }
+
+                    if ((pic2 == null) && (t2.getClan() != null)) {
+                        pic2 = t2.getClan().getPicture();
+                    }
+                    if (pic1 == null) {
+                        pic1 = t1.getPicture();
+                    }
+                    if (pic2 == null) {
+                        pic2 = t2.getPicture();
+                    }
+
+                    if (pic1 != null) {
+                        img1 = getPictureAsHTML(pic1, 16, 16);
+                    }
+                    if (pic2 != null) {
+                        img2 = getPictureAsHTML(pic2, 16, 16);
                     }
                 }
-
-            }
-            s.append("<tr>");
-            String bg = "background-color:#eeeeee;";
-            if (j % 2 == 0) {
-                bg = "background-color:#ffffff;";
-            }
-            Team t1 = (Team) tm.getCompetitor1();
-            Team t2 = (Team) tm.getCompetitor2();
-
-            String img1 = "";
-            String img2 = "";
-
-            if (Tournament.getTournament().getParams().isUseImage()) {
-                BufferedImage pic1 = null;
-                BufferedImage pic2 = null;
-                if ((pic1 == null) && (t1.getClan() != null)) {
-                    pic1 = t1.getClan().getPicture();
-                }
-
-                if ((pic2 == null) && (t2.getClan() != null)) {
-                    pic2 = t2.getClan().getPicture();
-                }
-                if (pic1 == null) {
-                    pic1 = t1.getPicture();
-                }
-                if (pic2 == null) {
-                    pic2 = t2.getPicture();
-                }
-
-                if (pic1 != null) {
-                    img1 = getPictureAsHTML(pic1, 16, 16);
-                }
-                if (pic2 != null) {
-                    img2 = getPictureAsHTML(pic2, 16, 16);
-                }
-            }
-            s.append(" <td class=\"tab_pos\" style=\"font-size:16px;" + bg + "\">" + (j + 1) + "</td>\n");
-            s.append(" <td class=\"" + style1 + "\" style=\"font-size:16px;text-align:right;" + bg + "\">" + img1 + StringEscapeUtils.escapeHtml4(t1.getDecoratedName()) + " </td>\n");
-            s.append("<td class=\"" + style1 + "\" style=\"font-size:14px;" + bg + "\">" + val1 + "</td>\n");
-            s.append("<td class=\"" + style1 + "\" style=\"font-size:14px;" + bg + "\">" + tm.getDraw(t1) + "</td>\n");
-            s.append("<td class=\"" + style2 + "\" style=\"font-size:14px;" + bg + "\">" + val2 + "</td>\n");
-            s.append("<td class=\"" + style2 + "\" style=\"font-size:16px;text-align:left;" + bg + "\">" + StringEscapeUtils.escapeHtml4(t2.getDecoratedName()) + img2 + "</td>\n");
-            for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
-                Criteria crit = Tournament.getTournament().getParams().getCriteria(k);
-                val1=0;
-                val2=0;
-                for (int l=0; l<tm.getMatchCount(); l++)
-                {
-                    CoachMatch cm=tm.getMatch(l);
-                    Value v = cm.getValue(crit);
-                    if (v.getValue1()>0)
-                    {
-                    val1+=v.getValue1();
-                    }
-                    if (v.getValue2()>0)
-                    {
-                    val2+=v.getValue2();
-                    }
-                }
+                s.append(" <td class=\"tab_pos\" style=\"font-size:16px;" + bg + "\">" + (j + 1) + "</td>\n");
+                s.append(" <td class=\"" + style1 + "\" style=\"font-size:16px;text-align:right;" + bg + "\">" + img1 + StringEscapeUtils.escapeHtml4(t1.getDecoratedName()) + " </td>\n");
                 s.append("<td class=\"" + style1 + "\" style=\"font-size:14px;" + bg + "\">" + val1 + "</td>\n");
+                s.append("<td class=\"" + style1 + "\" style=\"font-size:14px;" + bg + "\">" + tm.getDraw(t1) + "</td>\n");
                 s.append("<td class=\"" + style2 + "\" style=\"font-size:14px;" + bg + "\">" + val2 + "</td>\n");
+                s.append("<td class=\"" + style2 + "\" style=\"font-size:16px;text-align:left;" + bg + "\">" + StringEscapeUtils.escapeHtml4(t2.getDecoratedName()) + img2 + "</td>\n");
+                for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
+                    Criteria crit = Tournament.getTournament().getParams().getCriteria(k);
+                    val1 = 0;
+                    val2 = 0;
+                    for (int l = 0; l < tm.getMatchCount(); l++) {
+                        CoachMatch cm = tm.getMatch(l);
+                        Value v = cm.getValue(crit);
+                        if (v.getValue1() > 0) {
+                            val1 += v.getValue1();
+                        }
+                        if (v.getValue2() > 0) {
+                            val2 += v.getValue2();
+                        }
+                    }
+                    s.append("<td class=\"" + style1 + "\" style=\"font-size:14px;" + bg + "\">" + val1 + "</td>\n");
+                    s.append("<td class=\"" + style2 + "\" style=\"font-size:14px;" + bg + "\">" + val2 + "</td>\n");
+                }
+                s.append("</tr>");
             }
-            s.append("</tr>");
-        }
         }
         s.append("</tbody>\n"
                 + "        </table>");
@@ -1249,11 +1608,11 @@ public class WebServer extends NanoHTTPD {
     protected String createTeamCriteria(Round r, Criteria crit) {
         StringBuilder s = new StringBuilder();
 
-         ArrayList<Team> teams = new ArrayList<>();
+        ArrayList<Team> teams = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
             teams.add(Tournament.getTournament().getTeam(i));
         }
-        
+
         for (int subtype = 0; subtype < 3; subtype++) {
             MjtAnnexRankTeam ranking = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
                     Tournament.getTournament().getRoundIndex(r),
@@ -1312,7 +1671,6 @@ public class WebServer extends NanoHTTPD {
                 s.append("<td class=\"tab_result" + suffix + "\" style=\"" + bg + "\">" + (row + 1) + "</td>\n");
                 Team team = (Team) ranking.getSortedObject(row).getObject();
 
-
                 if (Tournament.getTournament().getClansCount() > 1) {
                     Clan c = team.getClan();
                     s.append("<td class=\"tab_result" + suffix + "\" style=\"" + bg + "\">"
@@ -1343,16 +1701,19 @@ public class WebServer extends NanoHTTPD {
         return s.toString();
     }
 
+    // @TODO
     protected String createClanRanking(Round r) {
         String s = "";
         return s;
     }
 
+    // @TODO
     protected String createClanCriteria(Round r, Criteria c) {
         String s = "";
         return s;
     }
 
+    // @TODO
     protected String createCategoryRanking(Round r, Category c) {
         String s = "";
         return s;
