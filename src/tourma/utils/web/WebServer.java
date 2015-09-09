@@ -6,6 +6,9 @@
 package tourma.utils.web;
 
 import fi.iki.elonen.NanoHTTPD;
+import java.awt.Component;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,8 +17,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JTabbedPane;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.xerces.impl.dv.util.Base64;
+import org.jfree.chart.ChartPanel;
 import tourma.MainTreeModel;
 import tourma.data.Category;
 import tourma.data.Clan;
@@ -45,6 +50,7 @@ import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.StringConstants;
+import tourma.views.JPNStatistics;
 
 /**
  *
@@ -194,6 +200,19 @@ public class WebServer extends NanoHTTPD {
         StringBuilder styles = new StringBuilder();
 
         styles.append("<style>");
+
+        styles.append("tr:nth-child(even) {\n"
+                + "    background-color: #EEEEEE;\n"
+                + "}"
+                + "tr:nth-child(odd) {\n"
+                + "    background-color: #FFFFFF;\n"
+                + "} "
+                + "table {border-width:1px; \n"
+                + " border-style:solid; \n"
+                + " border-color:black;\n"
+                + " width:50%;\n"
+                + "border-collapse:collapse;}\n"
+                + "td {border : 1px solid black }\n");
 
         styles.append("* {\n"
                 + "      margin: 0;\n"
@@ -420,7 +439,7 @@ public class WebServer extends NanoHTTPD {
     private final static String CS_AvoidFirstRoundMatchClan = "AvoidFirstRoundMatchClan";
     private final static String CS_AvoidRoundMatchClan = "AvoidRoundMatchClan";
     private final static String CS_Categories = "Categories";
-    private final static String CS_Groups="Groups";
+    private final static String CS_Groups = "Groups";
 
     /**
      * @TODO @return
@@ -437,7 +456,7 @@ public class WebServer extends NanoHTTPD {
         rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Criterias)) + "</center>");
         rules.append("<table>");
         rules.append("<th>");
-        rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Name)) + "</td>");
+        //rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Name)) + "</td>");
         rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Points_Plus)) + "</td>");
         rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Points_Minus)) + "</td>");
         if (params.isTeamTournament()) {
@@ -688,39 +707,39 @@ public class WebServer extends NanoHTTPD {
                 rules.append("<ul>");
                 for (int j = 0; j < g.getRosterCount(); j++) {
                     RosterType rt = g.getRoster(j);
-                    rules.append("<li>" + StringEscapeUtils.escapeHtml4(rt.getName()) + "</li>");
+                    if (rt.getName() != null) {
+                        rules.append("<li>" + StringEscapeUtils.escapeHtml4(rt.getName()) + "</li>");
+                    }
                 }
                 rules.append("</ul>");
-                
+
                 // Tableaux de Bonus de groupes
                 rules.append("<table>");
                 rules.append("<th>");
-                rules.append("<td>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory))+"</td>");
-                rules.append("<td>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw))+"</td>");
-                rules.append("<td>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_Lost))+"</td>");
+                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
+                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw)) + "</td>");
+                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Lost)) + "</td>");
                 rules.append("</th>");
-                for (int j=0; j<Tournament.getTournament().getGroupsCount(); j++)
-                {
-                    Group opp=Tournament.getTournament().getGroup(j);
-                    if (opp!=g)
-                    {
-                        rules.append("<tr>");
-                        rules.append("<td>"+StringEscapeUtils.escapeHtml4(opp.getName())+"</td>");
-                        GroupPoints gp= g.getOpponentModificationPoints(opp);
-                        rules.append("<td>"+gp.getVictoryPoints()+"</td>");
-                        rules.append("<td>"+gp.getDrawPoints()+"</td>");
-                        rules.append("<td>"+gp.getLossPoints()+"</td>");
-                        rules.append("</tr>");
+                for (int j = 0; j < Tournament.getTournament().getGroupsCount(); j++) {
+                    Group opp = Tournament.getTournament().getGroup(j);
+                    if (opp != g) {
+                        GroupPoints gp = g.getOpponentModificationPoints(opp);
+                        if (gp != null) {
+                            rules.append("<tr>");
+                            rules.append("<td>" + StringEscapeUtils.escapeHtml4(opp.getName()) + "</td>");
+                            rules.append("<td>" + gp.getVictoryPoints() + "</td>");
+                            rules.append("<td>" + gp.getDrawPoints() + "</td>");
+                            rules.append("<td>" + gp.getLossPoints() + "</td>");
+                            rules.append("</tr>");
+                        }
                     }
                 }
                 rules.append("</table>");
-                
+
                 rules.append("</li>");
             }
             rules.append("</ul>");
 
-            
-            
         }
 
         // Create Categories if categories
@@ -776,8 +795,47 @@ public class WebServer extends NanoHTTPD {
      * @TODO @return
      */
     protected String createStatistics() {
-        String stats = "";
-        return stats;
+        StringBuffer stats = new StringBuffer("");
+
+        JPNStatistics jpn = new JPNStatistics();
+        JTabbedPane jtp = jpn.getTabbedPane();
+        for (int i = 0; i < jtp.getTabCount(); i++) {
+            Component comp = jtp.getComponent(i);
+
+            if (comp instanceof ChartPanel) {
+                ChartPanel panel = (ChartPanel) comp;
+
+                Image img = panel.createImage(640, 480);
+                BufferedImage buf = toBufferedImage(img, 640, 480);
+                String img_str=this.getPictureAsHTML(buf, 640, 480);
+                stats.append(img_str);
+            }
+        }
+
+        return stats.toString();
+    }
+
+    /**
+     * Converts a given Image into a BufferedImage
+     *
+     * @param img The Image to be converted
+     * @return The converted BufferedImage
+     */
+    public static BufferedImage toBufferedImage(Image img, int width, int height) {
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        // Return the buffered image
+        return bimage;
     }
 
     // @TODO
@@ -1736,7 +1794,7 @@ public class WebServer extends NanoHTTPD {
 
     protected String getPictureAsHTML(BufferedImage pic, int width, int heigth) {
         String img = "";
-        if (Tournament.getTournament().getParams().isUseImage()) {
+    //    if (Tournament.getTournament().getParams().isUseImage()) {
             if (pic != null) {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 try {
@@ -1744,13 +1802,13 @@ public class WebServer extends NanoHTTPD {
                     ImageIO.write(pic, "png", baos);
                     baos.flush();
                     img += Base64.encode(baos.toByteArray());
-                    img += "\" height=\"24\"/>";
+                    img += "\" height=\""+heigth+"\"/>";
                 } catch (final IOException ioe) {
                     System.err.println(ioe.getLocalizedMessage());
                     img = "";
                 }
             }
-        }
+      //  }
         return img;
     }
 }

@@ -16,6 +16,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -82,6 +83,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private JList jlsBalancedIndiv = null;
     private final ArrayList<HashMap<String, Integer>> mHIndivBalanced = new ArrayList<>();
 
+    public JTabbedPane getTabbedPane()
+    {
+        return jtpStatistics;
+    }
+    
     /**
      * Creates new form JPNStatistics
      */
@@ -562,7 +568,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.5f);
 
+        
         final ChartPanel chartPanel = new ChartPanel(chart);
+    
+        chartPanel.setName("RosterPie");
+        
         jtpStatistics.addTab(Translate.translate(CS_Roster), chartPanel);
     }
 
