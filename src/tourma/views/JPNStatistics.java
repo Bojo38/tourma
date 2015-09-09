@@ -569,6 +569,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
         plot.setForegroundAlpha(0.5f);
 
         
+        
         final ChartPanel chartPanel = new ChartPanel(chart);
     
         chartPanel.setName("RosterPie");
@@ -639,7 +640,10 @@ public final class JPNStatistics extends javax.swing.JPanel {
      * Update panel
      */
     public void update() {
-        // not used
+        updateBalancedIndiv();
+        updateBalancedTeam();
+        updatePositions();
+        updateTeamPositions();
     }
 
     /**
@@ -905,7 +909,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     /**
      *
      */
-    private void updatePositions() {
+    public void updatePositions() {
         if (cpPositions != null) {
             jpnPositions.remove(cpPositions);
         }
@@ -948,7 +952,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     /**
      *
      */
-    private void updateBalancedTeam() {
+    public void updateBalancedTeam() {
         if (cpBalancedTeam != null) {
             jpnBalancedTeam.remove(cpBalancedTeam);
         }
@@ -1009,7 +1013,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     /**
      * Update individual positions graph
      */
-    private void updateBalancedIndiv() {
+    public void updateBalancedIndiv() {
         if (cpBalancedIndiv != null) {
             jpnBalancedIndiv.remove(cpBalancedIndiv);
         }
@@ -1065,7 +1069,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     /**
      * Update Teams positions graph
      */
-    private void updateTeamPositions() {
+    public void updateTeamPositions() {
         if (cpTeamPositions != null) {
             jpnTeamPositions.remove(cpTeamPositions);
         }
