@@ -7,6 +7,7 @@ package tourma.utils.web;
 
 import fi.iki.elonen.NanoHTTPD;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -17,6 +18,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.xerces.impl.dv.util.Base64;
@@ -798,23 +802,85 @@ public class WebServer extends NanoHTTPD {
         StringBuffer stats = new StringBuffer("");
 
         JPNStatistics jpn = new JPNStatistics();
+        jpn.setSize(640, 480);
         JTabbedPane jtp = jpn.getTabbedPane();
         for (int i = 0; i < jtp.getTabCount(); i++) {
             Component comp = jtp.getComponent(i);
 
             if (comp instanceof ChartPanel) {
                 ChartPanel panel = (ChartPanel) comp;
+                panel.setSize(640, 480);
+                BufferedImage buf = new BufferedImage(640, 480, BufferedImage.TYPE_INT_ARGB);
+                Graphics g = buf.createGraphics();
+                panel.print(g);
+                g.dispose();
 
-                Image img = panel.createImage(640, 480);
-                BufferedImage buf = toBufferedImage(img, 640, 480);
-                String img_str=this.getPictureAsHTML(buf, 640, 480);
+                //BufferedImage buf = toBufferedImage(img, 640, 480);
+                String img_str = this.getPictureAsHTML(buf, 640, 480);
                 stats.append(img_str);
+            }
+
+            if (comp instanceof JPanel) {
+                // Find JList, Select All then Find ChartPanel
+                JPanel pane = (JPanel) comp;
+                ChartPanel panel = null;
+                JList list = null;
+                for (int j = 0; j < pane.getComponentCount(); j++) {
+                    Component c = pane.getComponent(j);
+                    if (c instanceof JScrollPane) {
+                        for (int k = 0; k < ((JScrollPane) c).getViewport().getComponentCount(); k++) {
+                            Component c2 = ((JScrollPane) c).getViewport().getComponent(k);
+                            if (c2 instanceof JList) {
+                                list = (JList) c2;
+                            }
+
+                        }
+                    }
+                }
+
+                if (list != null) {
+
+                    int start = 0;
+                    int end = list.getModel().getSize() - 1;
+                    if (end >= 0) {
+                        list.setSelectionInterval(start, end);
+                    }
+
+                    jpn.updatePositions();
+                }
+                for (int j = 0; j < pane.getComponentCount(); j++) {
+                    Component c = pane.getComponent(j);
+                    if (c instanceof ChartPanel) {
+                        panel = (ChartPanel) c;
+                    }
+                }
+
+                if (panel != null) {
+                    panel.setSize(640, 480);
+                    BufferedImage buf = new BufferedImage(640, 480, BufferedImage.TYPE_INT_ARGB);
+                    Graphics g = buf.createGraphics();
+                    panel.print(g);
+                    g.dispose();
+
+                    //BufferedImage buf = toBufferedImage(img, 640, 480);
+                    String img_str = this.getPictureAsHTML(buf, 640, 480);
+                    stats.append(img_str);
+                }
             }
         }
 
         return stats.toString();
     }
 
+    /* public BufferedImage createImage(Component panel) {
+
+     int w = panel.getWidth();
+     int h = panel.getHeight();
+     BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+     Graphics2D g = bi.createGraphics();
+     panel.paint(g);
+     return bi;
+     }*/
     /**
      * Converts a given Image into a BufferedImage
      *
@@ -1794,21 +1860,21 @@ public class WebServer extends NanoHTTPD {
 
     protected String getPictureAsHTML(BufferedImage pic, int width, int heigth) {
         String img = "";
-    //    if (Tournament.getTournament().getParams().isUseImage()) {
-            if (pic != null) {
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                try {
-                    img = "<IMG SRC=\"data:image/png;base64,";
-                    ImageIO.write(pic, "png", baos);
-                    baos.flush();
-                    img += Base64.encode(baos.toByteArray());
-                    img += "\" height=\""+heigth+"\"/>";
-                } catch (final IOException ioe) {
-                    System.err.println(ioe.getLocalizedMessage());
-                    img = "";
-                }
+        //    if (Tournament.getTournament().getParams().isUseImage()) {
+        if (pic != null) {
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                img = "<IMG SRC=\"data:image/png;base64,";
+                ImageIO.write(pic, "png", baos);
+                baos.flush();
+                img += Base64.encode(baos.toByteArray());
+                img += "\" height=\"" + heigth + "\" >";
+            } catch (final IOException ioe) {
+                System.err.println(ioe.getLocalizedMessage());
+                img = "";
             }
-      //  }
+        }
+        //  }
         return img;
     }
 }
