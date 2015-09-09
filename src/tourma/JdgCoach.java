@@ -189,7 +189,13 @@ public final class JdgCoach extends javax.swing.JDialog {
         jcbRoster.setModel(RosterType.getRostersNamesModel());
         if (mCoach.getPicture() == null) {
             try {
-                mCoach.setPicture(ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.gif")));
+                java.net.URL url = getClass().getResource("/tourma/images/avatar/60001.png");
+                if (url != null) {
+                    BufferedImage buf = ImageIO.read(url);
+                    if (buf != null) {
+                        mCoach.setPicture(buf);
+                    }
+                }
             } catch (IOException ex) {
                 Logger.getLogger(JdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }

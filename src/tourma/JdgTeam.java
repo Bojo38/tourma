@@ -75,7 +75,13 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         if (mTeam.getPicture() == null) {
             try {
-                mTeam.setPicture(ImageIO.read(getClass().getResource("/tourma/images/flags/france.png")));
+                java.net.URL url = getClass().getResource("/tourma/images/flags/Country France.png");
+                if (url != null) {
+                    BufferedImage buf = ImageIO.read(url);
+                    if (buf != null) {
+                        mTeam.setPicture(buf);
+                    }
+                }
             } catch (IOException ex) {
                 Logger.getLogger(JdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -320,14 +326,14 @@ public final class JdgTeam extends javax.swing.JDialog {
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
-    
-    private final static String CS_EmptyTeamName="NOM DE L'ÉQUIPE VIDE";
-    
+
+    private final static String CS_EmptyTeamName = "NOM DE L'ÉQUIPE VIDE";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
         if (jtfNom.getText().equals(StringConstants.CS_NULL)) {
-            JOptionPane.showMessageDialog(this, 
+            JOptionPane.showMessageDialog(this,
                     Translate.translate(CS_EmptyTeamName)
             );
         } else {
@@ -379,9 +385,9 @@ public final class JdgTeam extends javax.swing.JDialog {
         return new ImageIcon(newimg);
     }
 
-    private static final String CS_SelectPicture="Select picture";
-    private static final String CS_Picture="Picture";
-    
+    private static final String CS_SelectPicture = "Select picture";
+    private static final String CS_Picture = "Picture";
+
     private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
         File folder;
         folder = new File(getClass().getResource("/tourma/images/flags").getFile());
@@ -441,8 +447,8 @@ public final class JdgTeam extends javax.swing.JDialog {
         jbtAvatar.setIcon(new ImageIcon(mTeam.getPicture()));
     }//GEN-LAST:event_jbtAvatarActionPerformed
 
-    private static final String CS_PleaseSelectCategory="PleaseSelectCategory";
-    
+    private static final String CS_PleaseSelectCategory = "PleaseSelectCategory";
+
     private void jbtAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCategoryActionPerformed
         ArrayList<String> cats = new ArrayList<>();
         cats.add(" ");
@@ -533,9 +539,9 @@ public final class JdgTeam extends javax.swing.JDialog {
             categoryListModel.addElement(mTeam.getCategory(i).getName());
         }
         jlsCategories.setModel(categoryListModel);
-        
-        jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount()>0);
-        jbtDelCategory.setEnabled(mTeam.getCategoryCount()>0);
+
+        jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 0);
+        jbtDelCategory.setEnabled(mTeam.getCategoryCount() > 0);
     }
     private static final Logger LOG = Logger.getLogger(JdgTeam.class.getName());
 
