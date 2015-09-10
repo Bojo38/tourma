@@ -572,6 +572,8 @@ public class Parameters implements XMLExport {
         params.setAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_INDIV, Boolean.toString(this.isExceptBestAndWorstIndiv()));
         params.setAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_TEAM, Boolean.toString(this.isExceptBestAndWorstTeam()));
 
+        params.setAttribute(StringConstants.CS_WEB_PORT,Integer.toString(_webport));
+        
         return params;
     }
 
@@ -749,6 +751,14 @@ public class Parameters implements XMLExport {
             }
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
+        }
+        
+        try{
+            this._webport=Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_PORT).getValue());
+        }
+        catch(NullPointerException npe5)
+        {
+            
         }
     }
 
@@ -1623,6 +1633,18 @@ public class Parameters implements XMLExport {
         return mUseLittleLoss;
     }
 
+    protected int _webport=80;
+    
+    public int getWebServerPort()
+    {
+        return _webport;
+    }
+    
+    public void setWebServerPort(int port)
+    {
+        _webport=port;
+    }
+    
      /**
      * 
      * @param obj
@@ -1709,5 +1731,6 @@ public class Parameters implements XMLExport {
         } 
         return result;
     }
+
     
 }

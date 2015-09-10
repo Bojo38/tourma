@@ -188,4 +188,5 @@ public interface StringConstants {
     public static final String CS_ROUNDROBIN="RoundRobin";
     public static final String CS_DESCRIPTION="Description";
 
+    public static final String CS_WEB_PORT="Web_port";
 }

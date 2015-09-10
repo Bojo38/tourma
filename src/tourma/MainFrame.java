@@ -287,6 +287,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiSubstitutePlayer = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
         jcxmiAsServer = new javax.swing.JCheckBoxMenuItem();
+        jmiEditWebPort = new javax.swing.JMenuItem();
         jmiEditDescription = new javax.swing.JMenuItem();
         jmnRound = new javax.swing.JMenu();
         jmiGenerateNextRound = new javax.swing.JMenuItem();
@@ -527,6 +528,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jcxmiAsServer);
+
+        jmiEditWebPort.setText(bundle.getString("EditWebPort")); // NOI18N
+        jmiEditWebPort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditWebPortActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiEditWebPort);
 
         jmiEditDescription.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Zoom.png"))); // NOI18N
         jmiEditDescription.setText(bundle.getString("EditDescription")); // NOI18N
@@ -2176,10 +2185,12 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                         web = new WebServer();
                     } catch (IOException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                     }
                     web.start();
                 } catch (IOException ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                 }
             } else {
                 synchronized (this) {
@@ -2419,6 +2430,24 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jpnr.update();
         }
     }//GEN-LAST:event_jckmiHideNonNafActionPerformed
+
+    public static String CS_EditWebPort="EditWebPort";
+    
+    private void jmiEditWebPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditWebPortActionPerformed
+        int port=Tournament.getTournament().getParams().getWebServerPort();
+        
+        Object obj=JOptionPane.showInputDialog(this,Translate.translate(CS_EditWebPort),port);
+        
+        if (obj instanceof String)
+        {
+            Tournament.getTournament().getParams().setWebServerPort(Integer.parseInt((String)obj));
+        }
+        
+        if (obj instanceof Integer)
+        {
+            Tournament.getTournament().getParams().setWebServerPort((Integer)obj);
+        }
+    }//GEN-LAST:event_jmiEditWebPortActionPerformed
 
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
@@ -2742,6 +2771,7 @@ private static final String CS_Matchs="Matchs";
     private javax.swing.JMenuItem jmiEditCoef;
     private javax.swing.JMenuItem jmiEditDescription;
     private javax.swing.JMenuItem jmiEditTeam;
+    private javax.swing.JMenuItem jmiEditWebPort;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
     private javax.swing.JMenuItem jmiExportFbb;
