@@ -14,6 +14,7 @@ import tourma.data.Category;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
+import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
@@ -29,9 +30,11 @@ import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
 import static tourma.languages.Translate.CS_Team;
+import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtAnnexRankIndiv;
 import tourma.tableModel.MjtAnnexRankTeam;
 import tourma.tableModel.MjtRanking;
+import tourma.tableModel.MjtRankingClan;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.StringConstants;
@@ -41,10 +44,10 @@ import tourma.utility.StringConstants;
  * @author WFMJ7631
  */
 public class WebRound {
-        private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
-        
-    public static String getHTML(int nb)
-    {
+
+    private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
+
+    public static String getHTML(int nb) {
         Round r = Tournament.getTournament().getRound(nb - 1);
         StringBuilder round = new StringBuilder();
         StringBuilder round2 = new StringBuilder();
@@ -219,8 +222,8 @@ public class WebRound {
         return round.toString();
 
     }
-    
-        protected static String createIndividualMatch(Round r) {
+
+    protected static String createIndividualMatch(Round r) {
         StringBuilder s = new StringBuilder();
 
         s.append("<br>");
@@ -859,7 +862,7 @@ public class WebRound {
         return s.toString();
     }
 
-    protected  static String createTeamCriteria(Round r, Criteria crit) {
+    protected static String createTeamCriteria(Round r, Criteria crit) {
         StringBuilder s = new StringBuilder();
 
         ArrayList<Team> teams = new ArrayList<>();
@@ -954,23 +957,174 @@ public class WebRound {
         return s.toString();
     }
 
-    
     // @TODO
     protected static String createClanRanking(Round r) {
-        String s = "";
-        return s;
+        StringBuilder s = new StringBuilder();
+
+        ArrayList<Clan> clans = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            clans.add(Tournament.getTournament().getClan(i));
+        }
+
+        MjtRankingClan ranking = new MjtRankingClan(Tournament.getTournament().getRoundIndex(r), clans, false);
+
+        s.append("<table\n"
+                + "             style = \"border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;\"\n"
+                + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
+                + "                > <tbody>\n"
+                + "                <tr>");
+
+        s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
+
+        s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Clan)) + "</ td>\n");
+
+        boolean bTeamVictoryOnly = Tournament.getTournament().getParams().isTeamVictoryOnly();
+
+        for (int j = 0; j < Tournament.getTournament().getParams().getIndivRankingNumber(); j++) {
+            int rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
+            String name = MjtRanking.getRankingString(rankingType);
+            if (rankingType == 0) {
+                break;
+            } else {
+                s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(name) + "</ td>\n");
+            }
+        }
+
+        s.append("</tr>");
+        for (int row = 0; row < ranking.getRowCount(); row++) {
+            String suffix = "";
+            s.append("<tr>");
+            if (row == 0) {
+                suffix = "_1";
+            }
+            if (row == ranking.getRowCount() - 1) {
+                suffix = "_last";
+            }
+            String bg = "background-color:#ffffff;";
+            if (row % 2 == 1) {
+                bg = "background-color:#eeeeee;";
+            }
+
+            s.append("<td class=\"tab_result" + suffix + "\" style=\"" + bg + "\">" + (row + 1) + "</td>\n");
+            Clan clan = (Clan) ranking.getSortedObject(row).getObject();
+
+            s.append("<td class=\"tab_result" + suffix + "\" style=\"" + bg + "\">"
+                    + WebPicture.getPictureAsHTML(clan.getPicture(), 20, 20)
+                    + StringEscapeUtils.escapeHtml4(clan.getName())
+                    + "</td>\n");
+
+            int nbRanking = 0;
+
+            nbRanking = Tournament.getTournament().getParams().getIndivRankingNumber();
+
+            for (int j = 0; j < nbRanking; j++) {
+                int rankingType = Parameters.C_RANKING_NONE;
+                rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
+                int value;
+                value = ranking.getSortedValue(row, j + 1);
+
+                String name = Integer.toString(value);
+                if (rankingType == 0) {
+                    break;
+                } else {
+                    s.append("<td class=\"tab_result" + suffix + "\" style=\"" + bg + "\">"
+                            + name
+                            + "</td>\n"
+                    );
+                }
+            }
+
+            s.append("</tr>");
+        }
+        s.append("</table>");
+        return s.toString();
     }
 
-    // @TODO
-    protected static String createClanCriteria(Round r, Criteria c) {
-        String s = "";
-        return s;
-    }
+    protected static String createClanCriteria(Round r, Criteria crit) {
+        StringBuilder s = new StringBuilder();
 
-    // @TODO
-    protected static String createCategoryRanking(Round r, Category c) {
-        String s = "";
-        return s;
+        ArrayList<Clan> clans = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            clans.add(Tournament.getTournament().getClan(i));
+        }
+
+        for (int subtype = 0; subtype < 3; subtype++) {
+            MjtAnnexRankClan ranking = new MjtAnnexRankClan(
+                    Tournament.getTournament().getRoundIndex(r),
+                    crit,
+                    subtype,
+                    clans,
+                    true,
+                    Tournament.getTournament().getParams().getRankingIndiv1(),
+                    Tournament.getTournament().getParams().getRankingIndiv2(),
+                    Tournament.getTournament().getParams().getRankingIndiv3(),
+                    Tournament.getTournament().getParams().getRankingIndiv4(),
+                    Tournament.getTournament().getParams().getRankingIndiv5(), false);
+
+            String subTypeName = "";
+            switch (subtype) {
+                case 0:
+                    subTypeName = "+";
+                    break;
+                case 1:
+                    subTypeName = "-";
+                    break;
+                case 2:
+                    subTypeName = "+/-";
+                    break;
+            }
+            String rank_name = crit.getName() + " " + subTypeName;
+            s.append(StringEscapeUtils.escapeHtml4(rank_name));
+
+            s.append("<table\n"
+                    + "             style = \"border-width:0px; width: 100%; margin-left: auto; margin-right: auto;text-align:center;\"\n"
+                    + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
+                    + "                > <tbody>\n"
+                    + "                <t >");
+
+            s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
+
+            s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team)) + "</ td>\n");
+
+            s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(rank_name) + "</ td>\n");
+
+            s.append("</tr>");
+            for (int row = 0; row < ranking.getRowCount(); row++) {
+                String suffix = "";
+                s.append("<tr>");
+                if (row == 0) {
+                    suffix = "_1";
+                }
+                if (row == ranking.getRowCount() - 1) {
+                    suffix = "_last";
+                }
+                String bg = "background-color:#ffffff;";
+                if (row % 2 == 1) {
+                    bg = "background-color:#eeeeee;";
+                }
+
+                s.append("<td class=\"tab_result" + suffix + "\" style=\"" + bg + "\">" + (row + 1) + "</td>\n");
+                Clan clan = (Clan) ranking.getSortedObject(row).getObject();
+
+                s.append("<td class=\"tab_result" + suffix + "\" style=\"" + bg + "\">"
+                        + WebPicture.getPictureAsHTML(clan.getPicture(), 20, 20)
+                        + StringEscapeUtils.escapeHtml4(clan.getName())
+                        + "</td>\n");
+
+                int value;
+
+                value = ((ObjectAnnexRanking) ranking.getSortedObject(row)).getValue();
+
+                String name = Integer.toString(value);
+                s.append("<td class=\"tab_result" + suffix + "\" style=\"" + bg + "\">"
+                        + name
+                        + "</td>\n"
+                );
+                s.append("</tr>");
+            }
+            s.append("</table>");
+        }
+        return s.toString();
     }
 
     protected static String createGroupRanking(Round r, Group g) {
@@ -983,9 +1137,69 @@ public class WebRound {
         return createIndividualRanking(r, coachs, Translate.translate(Ranking.CS_Group) + " " + g.getName());
     }
 
+    protected static String createCategoryRanking(Round r, Category cat) {
+        StringBuilder sb = new StringBuilder("");
+
+        // Find Coachs of the Category
+        ArrayList<Coach> coachs = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+            Coach c = Tournament.getTournament().getCoach(i);
+            if (c.containsCategory(cat)) {
+                coachs.add(c);
+            }
+        }
+        if (!coachs.isEmpty()) {
+            sb.append(createIndividualRanking(r, coachs, cat.getName()));
+        }
+
+        // Find Teams of the Category
+        ArrayList<Team> teams = new ArrayList<>();
+        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+            Team t = Tournament.getTournament().getTeam(i);
+            if (t.containsCategory(cat)) {
+                teams.add(t);
+            }
+        }
+        if (!teams.isEmpty()) {
+            sb.append(createTeamRanking(r, teams, cat.getName()));
+        }
+
+        return sb.toString();
+    }
+
     protected static String createPoolRanking(Round r, Pool p) {
-        String s = "";
-        return s;
+        StringBuilder sb = new StringBuilder("");
+
+        if ((Tournament.getTournament().getParams().isTeamTournament()) && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+            // Find Teams of the Pool
+            ArrayList<Team> teams = new ArrayList<>();
+            for (int i = 0; i < p.getCompetitorCount(); i++) {
+                Competitor comp = p.getCompetitor(i);
+                if (comp instanceof Team) {
+                    teams.add((Team) comp);
+                }
+            }
+            if (!teams.isEmpty()) {
+                sb.append(createTeamRanking(r, teams, p.getName()));
+            }
+
+        } else {
+
+            // Find Coachs of the Pool
+            ArrayList<Coach> coachs = new ArrayList<>();
+            for (int i = 0; i < p.getCompetitorCount(); i++) {
+                Competitor comp = p.getCompetitor(i);
+                if (comp instanceof Coach) {
+                    coachs.add((Coach) comp);
+                }
+            }
+            if (!coachs.isEmpty()) {
+                sb.append(createIndividualRanking(r, coachs, p.getName()));
+            }
+
+        }
+
+        return sb.toString();
     }
 
 }
