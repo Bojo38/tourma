@@ -1362,7 +1362,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     }
                 }
 
-                if (object.equals(MainTreeModel.CS_Cup)) {
+                if (object.equals(Translate.translate(MainTreeModel.CS_Cup))) {
                     jspSplit.remove(jpnContent);
                     JPNCup jpn = new JPNCup();
                     jspSplit.add(jpn, JSplitPane.RIGHT);

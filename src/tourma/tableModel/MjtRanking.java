@@ -286,6 +286,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         }
         final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
         final Value val = m.getValue(td);
+        if (val!=null)
+        {
         if (m.getCompetitor1() == c) {
             if (m.isConcedeedBy1()) {
                 if (withMainPoints) {
@@ -437,7 +439,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     }
                 }
             }
-        }
+        }}
         return value;
     }
 

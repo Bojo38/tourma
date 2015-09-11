@@ -69,6 +69,7 @@ public class WebServer extends NanoHTTPD {
                 }
             }
         }
+        
         /*if (parms.get("username") == null) {
          msg.append("<form action='?' method='get'>\n  <p>Your name: <input type='text' name='username'></p>\n" + "</form>\n");
          } else {

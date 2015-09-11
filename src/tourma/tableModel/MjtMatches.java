@@ -162,10 +162,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 2: {
                     String tmp = "";
                     if (m.isConcedeedBy1()) {
-                        tmp = "("+Translate.translate(Translate.CS_Conceeded)+") ";
+                        tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
                     }
                     if (m.isRefusedBy1()) {
-                        tmp = "("+Translate.translate(Translate.CS_Refused)+") ";
+                        tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
                     }
 
                     if (m.getRoster1() == null) {
@@ -200,10 +200,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 5: {
                     String tmp = "";
                     if (m.isConcedeedBy2()) {
-                        tmp = "("+Translate.translate(Translate.CS_Conceeded)+") ";
+                        tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
                     }
                     if (m.isRefusedBy2()) {
-                        tmp = "("+Translate.translate(Translate.CS_Refused)+") ";
+                        tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
                     }
                     if (m.getRoster2() == null) {
                         rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
@@ -239,10 +239,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 1: {
                     String tmp = "";
                     if (m.isConcedeedBy1()) {
-                        tmp = "("+Translate.translate(Translate.CS_Conceeded)+") ";
+                        tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
                     }
                     if (m.isRefusedBy1()) {
-                        tmp = "("+Translate.translate(Translate.CS_Refused)+") ";
+                        tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
                     }
                     if (m.getRoster1() == null) {
                         rosterName = ((Coach) m.getCompetitor1()).getRoster().getName();
@@ -276,10 +276,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 case 4: {
                     String tmp = "";
                     if (m.isConcedeedBy2()) {
-                        tmp = "("+Translate.translate(Translate.CS_Conceeded)+") ";;
+                        tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";;
                     }
                     if (m.isRefusedBy2()) {
-                        tmp = "("+Translate.translate(Translate.CS_Refused)+") ";;
+                        tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";;
                     }
                     if (m.getRoster2() == null) {
                         rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
@@ -377,11 +377,11 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             result = false;
         } else {
             if (mTeamTournament) {
-                if ((col == 1) || (col == 2) || (col == 5) || (col == 6)|| (col == 0)) {
+                if ((col == 1) || (col == 2) || (col == 5) || (col == 6) || (col == 0)) {
                     result = false;
                 }
             } else {
-                if ((col == 1) || (col == 4)|| (col == 0)) {
+                if ((col == 1) || (col == 4) || (col == 0)) {
                     result = false;
                 }
             }
@@ -433,15 +433,16 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                 bkg = new Color(220, 220, 220);
                             }
                         }
-                        //frg = new Color(255, 255, 255);
-                        if (val.getValue1() > val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                        }
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() > val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
 
-                        if (val.getValue1() == val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
                         }
-
                         break;
                     case 2:
                         if (useColor) {
@@ -451,13 +452,15 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                 bkg = new Color(220, 220, 220);
                             }
                         }
-                        //frg = new Color(255, 255, 255);
-                        if (val.getValue1() > val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                        }
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() > val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
 
-                        if (val.getValue1() == val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
                         }
                         if (m.isConcedeedBy1()) {
                             frg = new Color(50, 50, 50);
@@ -487,12 +490,14 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             }
                         }
 
-                        //frg = new Color(255, 255, 255);
-                        if (val.getValue1() < val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                        }
-                        if (val.getValue1() == val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() < val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
                         }
                         if (m.isConcedeedBy2()) {
                             frg = new Color(50, 50, 50);
@@ -510,13 +515,15 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             }
                         }
 
-                        // frg = new Color(255, 255, 255);
-                        if (val.getValue1() < val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                        }
+                        if (val != null) {
+                            // frg = new Color(255, 255, 255);
+                            if (val.getValue1() < val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
 
-                        if (val.getValue1() == val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
                         }
                         break;
                     default:
@@ -550,13 +557,15 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             }
                         }
 
-                        //frg = new Color(255, 255, 255);
-                        if (val.getValue1() > val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                        }
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() > val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
 
-                        if (val.getValue1() == val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
                         }
                         if (m.isConcedeedBy1()) {
                             frg = new Color(50, 50, 50);
@@ -592,12 +601,14 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             }
                         }
 
-                        //frg = new Color(255, 255, 255);
-                        if (val.getValue1() < val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                        }
-                        if (val.getValue1() == val.getValue2()) {
-                            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() < val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
                         }
                         if (m.isConcedeedBy2()) {
                             frg = new Color(50, 50, 50);
