@@ -19,10 +19,6 @@ import tourma.languages.Translate;
  */
 public class WebServer extends NanoHTTPD {
 
-
-
-    
-    
     public WebServer() throws IOException {
         super(Tournament.getTournament().getParams().getWebServerPort());
     }
@@ -173,9 +169,13 @@ public class WebServer extends NanoHTTPD {
                 + "table {border-width:1px; \n"
                 + " border-style:solid; \n"
                 + " border-color:black;\n"
-                + " width:50%;\n"
+                //+ " width:60%;\n"
                 + "border-collapse:collapse;}\n"
-                + "td {border : 1px solid black }\n");
+                + "td {"
+                + " border-width:1px; \n"
+                + " border-style:solid;\n"
+                + " border-color=black;\n"
+                + "text-align: center; }\n");
 
         styles.append("* {\n"
                 + "      margin: 0;\n"

@@ -29,8 +29,9 @@ import tourma.tableModel.MjtRanking;
  * @author WFMJ7631
  */
 public class WebRules {
-        private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
-        
+
+    private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
+
     private final static String CS_Criterias = "Criterias";
     private final static String CS_Individual_Points = "IndividualPoints";
     private final static String CS_LargeVictory = "LargeVictory";
@@ -54,8 +55,6 @@ public class WebRules {
     private final static String CS_Categories = "Categories";
     private final static String CS_Groups = "Groups";
 
-    
-
     public static String getHTML() {
 
         StringBuilder rules = new StringBuilder("");
@@ -65,7 +64,8 @@ public class WebRules {
         Parameters params = Tournament.getTournament().getParams();
 
         // Criterias
-        rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Criterias)) + "</center>");
+        rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Criterias)));
+
         rules.append("<table>");
         rules.append("<th>");
         //rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Name)) + "</td>");
@@ -90,6 +90,7 @@ public class WebRules {
         }
         rules.append("</table>");
 
+        rules.append("<br>");
         // Create individual
         rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Individual_Points)) + "</center>");
         rules.append("<table>");
@@ -189,6 +190,7 @@ public class WebRules {
 
         // Create Team if Team
         if (params.isTeamTournament()) {
+            rules.append("<br>");
             rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Team)) + "</center>");
             rules.append("<table>");
 
@@ -272,117 +274,127 @@ public class WebRules {
 
         // Create Clan if Clan
         if (params.isEnableClans()) {
+            rules.append("<br>");
             rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Clan)) + "</center>");
 
-            rules.append("<ul>");
-            rules.append("<li>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_NumberOfPlayersForClan)) + ": " + params.getClansMembersNumber() + "</li>");
-            rules.append("<li>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidFirstRoundMatchClan)) + ": " + params.isAvoidClansFirstMatch() + "</li>");
-            rules.append("<li>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidRoundMatchClan)) + ": " + params.isAvoidClansMatch() + "</li>");
-            rules.append("</ul>");
+            rules.append("<table>");
+            rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_NumberOfPlayersForClan)) + "</td><td>" + params.getClansMembersNumber() + "</td></tr>");
+            rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidFirstRoundMatchClan)) + "</td><td>" + params.isAvoidClansFirstMatch() + "</td></tr>");
+            rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidRoundMatchClan)) + "</td><td>" + params.isAvoidClansMatch() + "</td></tr>");
+            rules.append("</table>");
 
             if (Tournament.getTournament().getClansCount() > 1) {
 
-                rules.append("<ul>");
+                rules.append("<table>");
                 for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
                     Clan c = Tournament.getTournament().getClan(i);
                     rules.append(StringEscapeUtils.escapeHtml4(c.getName()) + ": ");
-                    rules.append("<ul>");
+                    rules.append("<table>");
                     if (params.isTeamTournament()) {
                         for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
                             Team t = Tournament.getTournament().getTeam(j);
                             if (t.getClan() == c) {
-                                rules.append("<li>" + StringEscapeUtils.escapeHtml4(t.getName()) + "</li>");
+                                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(t.getName()) + "</td></tr>");
                             }
                         }
                     } else {
                         for (int j = 0; j < Tournament.getTournament().getCoachsCount(); j++) {
                             Coach t = Tournament.getTournament().getCoach(j);
                             if (t.getClan() == c) {
-                                rules.append("<li>" + StringEscapeUtils.escapeHtml4(t.getName()) + "</li>");
+                                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(t.getName()) + "</td></tr>");
                             }
                         }
                     }
-                    rules.append("</ul>");
+                    rules.append("</table>");
                 }
-                rules.append("</ul>");
+                rules.append("</table>");
             }
         }
 
         // Create Groups if groups
         if ((Tournament.getTournament().getGroupsCount() > 1) && (!params.isMultiRoster())) {
+            rules.append("<br>");
             rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Groups)) + "</center>");
 
-            rules.append("<ul>");
+            rules.append("<table>");
             for (int i = 0; i < Tournament.getTournament().getGroupsCount(); i++) {
                 Group g = Tournament.getTournament().getGroup(i);
-                rules.append("<li>" + StringEscapeUtils.escapeHtml4(g.getName()) + ": ");
-                rules.append("<ul>");
+                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(g.getName()) + "</td>");
+                rules.append("<td>");
                 for (int j = 0; j < g.getRosterCount(); j++) {
                     RosterType rt = g.getRoster(j);
                     if (rt.getName() != null) {
-                        rules.append("<li>" + StringEscapeUtils.escapeHtml4(rt.getName()) + "</li>");
+                        rules.append(StringEscapeUtils.escapeHtml4(rt.getName()) + "<br>");
                     }
                 }
-                rules.append("</ul>");
+                rules.append("</td>");
 
                 // Tableaux de Bonus de groupes
-                rules.append("<table>");
-                rules.append("<th>");
-                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
-                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw)) + "</td>");
-                rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Lost)) + "</td>");
-                rules.append("</th>");
+                StringBuilder gpPoints = new StringBuilder("");
                 for (int j = 0; j < Tournament.getTournament().getGroupsCount(); j++) {
                     Group opp = Tournament.getTournament().getGroup(j);
                     if (opp != g) {
                         GroupPoints gp = g.getOpponentModificationPoints(opp);
                         if (gp != null) {
-                            rules.append("<tr>");
-                            rules.append("<td>" + StringEscapeUtils.escapeHtml4(opp.getName()) + "</td>");
-                            rules.append("<td>" + gp.getVictoryPoints() + "</td>");
-                            rules.append("<td>" + gp.getDrawPoints() + "</td>");
-                            rules.append("<td>" + gp.getLossPoints() + "</td>");
-                            rules.append("</tr>");
+                            gpPoints.append("<tr>");
+                            gpPoints.append("<td>" + StringEscapeUtils.escapeHtml4(opp.getName()) + "</td>");
+                            gpPoints.append("<td>" + gp.getVictoryPoints() + "</td>");
+                            gpPoints.append("<td>" + gp.getDrawPoints() + "</td>");
+                            gpPoints.append("<td>" + gp.getLossPoints() + "</td>");
+                            gpPoints.append("</tr>");
                         }
                     }
                 }
-                rules.append("</table>");
 
-                rules.append("</li>");
+                if (!gpPoints.toString().equals("")) {
+                    rules.append("<td><table>");
+                    rules.append("<th>");
+                    rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
+                    rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw)) + "</td>");
+                    rules.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Lost)) + "</td>");
+                    rules.append("</th>");
+                    rules.append(gpPoints.toString());
+                    rules.append("</table></td>");
+                }
+
+                rules.append("</tr>");
             }
-            rules.append("</ul>");
+            rules.append("</table>");
 
         }
 
         // Create Categories if categories
         if (Tournament.getTournament().getCategoriesCount() > 0) {
+            rules.append("<br>");
             rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Categories)) + "</center>");
 
-            rules.append("<ul>");
+            rules.append("<table>");
             for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
                 Category cat = Tournament.getTournament().getCategory(i);
-                rules.append("<li>" + StringEscapeUtils.escapeHtml4(cat.getName()) + ": ");
-                rules.append("<ul>");
+                rules.append("<tr><td>" + StringEscapeUtils.escapeHtml4(cat.getName()) + "</td>");
+                rules.append("<td>");
                 for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
                     Team c = Tournament.getTournament().getTeam(j);
                     if (c.containsCategory(cat)) {
-                        rules.append("<li>" + StringEscapeUtils.escapeHtml4(c.getName()) + "</li>");
+                        rules.append( StringEscapeUtils.escapeHtml4(c.getName()) + "<br>");
                     }
                 }
+                rules.append("</td><td>");
                 for (int j = 0; j < Tournament.getTournament().getCoachsCount(); j++) {
                     Coach c = Tournament.getTournament().getCoach(j);
                     if (c.containsCategory(cat)) {
-                        rules.append("<li>" + StringEscapeUtils.escapeHtml4(c.getName()) + "</li>");
+                        rules.append(StringEscapeUtils.escapeHtml4(c.getName()) + "<br>");
                     }
                 }
-                rules.append("</ul>");
-                rules.append("</li>");
+                rules.append("</td>");
+                rules.append("</tr>");
             }
             rules.append("</ul>");
         }
 
         // Create Pool if Pool
         if (Tournament.getTournament().getPoolCount() > 0) {
+            rules.append("<br>");
             rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Pool)) + "</center>");
 
             rules.append("<ul>");
@@ -400,6 +412,7 @@ public class WebRules {
             rules.append("</ul>");
         }
 
+        rules.append("</center>");
         return rules.toString();
     }
 }
