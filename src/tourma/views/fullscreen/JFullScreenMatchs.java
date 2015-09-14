@@ -50,7 +50,7 @@ import tourma.utility.Sleeping;
 import tourma.utility.StringConstants;
 import tourma.utility.Suspendable;
 import tourma.utils.ImageTreatment;
-import tourma.utils.TourmaProtocol;
+import tourma.utils.display.TourmaProtocol;
 
 /**
  *

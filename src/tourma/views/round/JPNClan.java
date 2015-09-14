@@ -23,7 +23,7 @@ import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtRankingClan;
-import tourma.utils.TableFormat;
+import tourma.utils.display.TableFormat;
 import tourma.views.report.JdgGlobal;
 import tourma.views.report.JdgRanking;
 

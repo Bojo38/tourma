@@ -201,8 +201,18 @@ public class TeamMatch extends Match {
     @Override
     public void setXMLElement(final Element match) {
 
-        final String c1 = match.getAttribute(StringConstants.CS_TEAM + 1).getValue();
-        final String c2 = match.getAttribute(StringConstants.CS_TEAM + 2).getValue();
+        String c1 = "";
+        String c2 = "";
+        if (match.getAttribute(StringConstants.CS_TEAM + 1) != null) {
+            c1 = match.getAttribute(StringConstants.CS_TEAM + 1).getValue();
+        } else {
+            c1 = match.getAttribute("team" + 1).getValue();
+        }
+        if (match.getAttribute(StringConstants.CS_TEAM + 1) != null) {
+            c2 = match.getAttribute(StringConstants.CS_TEAM + 2).getValue();
+        } else {
+            c2 = match.getAttribute("team" + 2).getValue();
+        }
         this.setCompetitor1(Team.getTeam(c1));
         this.setCompetitor2(Team.getTeam(c2));
 

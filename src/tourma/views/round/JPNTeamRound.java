@@ -28,7 +28,7 @@ import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankTeam;
 import tourma.tableModel.MjtMatchTeams;
 import tourma.tableModel.MjtRankingTeam;
-import tourma.utils.TableFormat;
+import tourma.utils.display.TableFormat;
 import tourma.views.report.JdgGlobal;
 import tourma.views.report.JdgRanking;
 import tourma.views.report.JdgRound;

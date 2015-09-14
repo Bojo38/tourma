@@ -33,7 +33,9 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileFilter;
@@ -59,7 +61,8 @@ import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
 import tourma.utils.NAF;
-import tourma.utils.TMultiServer;
+import tourma.utils.display.TMultiServer;
+import tourma.utils.web.WebServer;
 import tourma.views.JPNCup;
 import tourma.views.JPNStatistics;
 import tourma.views.fullscreen.JFullScreen;
@@ -282,9 +285,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jmiSubstitutePlayer = new javax.swing.JMenuItem();
-        jmiAddCoach = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
         jcxmiAsServer = new javax.swing.JCheckBoxMenuItem();
+        jmiEditWebPort = new javax.swing.JMenuItem();
+        jmiEditDescription = new javax.swing.JMenuItem();
         jmnRound = new javax.swing.JMenu();
         jmiGenerateNextRound = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
@@ -515,15 +519,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jmiSubstitutePlayer);
-
-        jmiAddCoach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png"))); // NOI18N
-        jmiAddCoach.setText(bundle.getString("AddCoach")); // NOI18N
-        jmiAddCoach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiAddCoachActionPerformed(evt);
-            }
-        });
-        jmnParameters.add(jmiAddCoach);
         jmnParameters.add(jSeparator15);
 
         jcxmiAsServer.setText(bundle.getString("AsServer")); // NOI18N
@@ -533,6 +528,23 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jcxmiAsServer);
+
+        jmiEditWebPort.setText(bundle.getString("EditWebPort")); // NOI18N
+        jmiEditWebPort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditWebPortActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiEditWebPort);
+
+        jmiEditDescription.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Zoom.png"))); // NOI18N
+        jmiEditDescription.setText(bundle.getString("EditDescription")); // NOI18N
+        jmiEditDescription.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditDescriptionActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiEditDescription);
 
         jMenuBar1.add(jmnParameters);
 
@@ -1350,7 +1362,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     }
                 }
 
-                if (object.equals(MainTreeModel.CS_Cup)) {
+                if (object.equals(Translate.translate(MainTreeModel.CS_Cup))) {
                     jspSplit.remove(jpnContent);
                     JPNCup jpn = new JPNCup();
                     jspSplit.add(jpn, JSplitPane.RIGHT);
@@ -1519,11 +1531,16 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jmiSubstitutePlayerActionPerformed
 
-    private void jmiAddCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddCoachActionPerformed
-        final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true);
-        w.setVisible(true);
-        update();
-    }//GEN-LAST:event_jmiAddCoachActionPerformed
+    private void jmiEditDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditDescriptionActionPerformed
+        JTextArea jta=new JTextArea(40,80);
+        jta.setText(Tournament.getTournament().getDescription());
+        
+        JScrollPane jsp=new JScrollPane(jta);
+        
+        JOptionPane.showInputDialog(this, jsp);
+        Tournament.getTournament().setDescription(jta.getText());
+        
+    }//GEN-LAST:event_jmiEditDescriptionActionPerformed
 
     private void jmiDelRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelRoundActionPerformed
         if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("ConfirmEraseCurrentRound"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("EraseRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -2143,6 +2160,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiFullScreenRankAnnexClan1ActionPerformed
 
     private TMultiServer server = null;
+    private WebServer web=null;
 
     private void jcxmiAsServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxmiAsServerActionPerformed
         if (jcxmiAsServer.isSelected()) {
@@ -2160,16 +2178,55 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 }
                 server.start();
             }
+            
+            if (web == null) {
+                try {
+                    try {
+                        web = new WebServer();
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
+                    }
+                    web.start();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
+            } else {
+                synchronized (this) {
+                    web.stop();
+                    try {
+                        web.wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                try {
+                    web.start();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } else {
             synchronized (this) {
                 server.stopServer();
                 try {
                     server.wait();
-                } catch (InterruptedException ex) {
+                } catch (InterruptedException|IllegalMonitorStateException ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             server = null;
+            
+            synchronized (this) {
+                web.stop();
+                try {
+                    web.wait();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            web = null;
 
         }
     }//GEN-LAST:event_jcxmiAsServerActionPerformed
@@ -2373,6 +2430,24 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jpnr.update();
         }
     }//GEN-LAST:event_jckmiHideNonNafActionPerformed
+
+    public static String CS_EditWebPort="EditWebPort";
+    
+    private void jmiEditWebPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditWebPortActionPerformed
+        int port=Tournament.getTournament().getParams().getWebServerPort();
+        
+        Object obj=JOptionPane.showInputDialog(this,Translate.translate(CS_EditWebPort),port);
+        
+        if (obj instanceof String)
+        {
+            Tournament.getTournament().getParams().setWebServerPort(Integer.parseInt((String)obj));
+        }
+        
+        if (obj instanceof Integer)
+        {
+            Tournament.getTournament().getParams().setWebServerPort((Integer)obj);
+        }
+    }//GEN-LAST:event_jmiEditWebPortActionPerformed
 
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
@@ -2684,7 +2759,6 @@ private static final String CS_Matchs="Matchs";
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
     private javax.swing.JCheckBoxMenuItem jcxmiAsServer;
     private javax.swing.JMenuItem jmiAbout;
-    private javax.swing.JMenuItem jmiAddCoach;
     private javax.swing.JMenuItem jmiAddFreeMatch;
     private javax.swing.JMenuItem jmiAideEnLigne;
     private javax.swing.JMenuItem jmiCancelConceedMatch;
@@ -2695,7 +2769,9 @@ private static final String CS_Matchs="Matchs";
     private javax.swing.JMenuItem jmiDelFreeMatch;
     private javax.swing.JMenuItem jmiDelRound;
     private javax.swing.JMenuItem jmiEditCoef;
+    private javax.swing.JMenuItem jmiEditDescription;
     private javax.swing.JMenuItem jmiEditTeam;
+    private javax.swing.JMenuItem jmiEditWebPort;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
     private javax.swing.JMenuItem jmiExportFbb;

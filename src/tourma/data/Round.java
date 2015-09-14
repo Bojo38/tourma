@@ -91,7 +91,7 @@ public class Round implements XMLExport {
 
     public double getCoef(Match m) {
         double coef;
-        int index = this.indexOf(m)+1;
+        int index = this.indexOf(m) + 1;
         double gap = this.getMaxBonus() - this.getMinBonus();
         double steps = gap / this.getMatchsCount();
         coef = this.getMinBonus() + steps * index;
@@ -224,7 +224,7 @@ public class Round implements XMLExport {
         round.setAttribute(StringConstants.CS_CUP, Boolean.toString(isCup()));
         round.setAttribute(StringConstants.CS_TOUR, Integer.toString(getCupTour()));
         round.setAttribute(StringConstants.CS_MAXTOUR, Integer.toString(getCupMaxTour()));
-        
+
         round.setAttribute(StringConstants.CS_MINCOEF, Double.toString(getMinBonus()));
         round.setAttribute(StringConstants.CS_MAXCOEF, Double.toString(getMaxBonus()));
 
@@ -431,29 +431,29 @@ public class Round implements XMLExport {
     }
 
     public boolean equals(final Object obj) {
-        
+
         boolean result;
         result = false;
         if (obj instanceof Round) {
-            Round r=(Round) obj;
-            result=this.mCup==r.mCup;
-            result&=this.mCupTour==r.mCupTour;
-            result&=this.mCupMaxTour==r.mCupMaxTour;
-            result&=this.mHour.toString().equals(r.mHour.toString());
-            result&=this.mLooserCup==r.mLooserCup;
-            result&=Math.abs(this.mMaxBonus-r.mMaxBonus)<0.0001;
-            result&=Math.abs(this.mMinBonus-r.mMinBonus)<0.0001;
-            result&=this.mMatchs.size()==r.mMatchs.size();
-            for (int i=0; i<this.mMatchs.size(); i++)
-            {
-                Match m=mMatchs.get(i);
-                Match mr=r.mMatchs.get(i);
-               
-                result&=m.equals(mr);
-                
-            }            
-        } 
+            Round r = (Round) obj;
+            result = this.mCup == r.mCup;
+            result &= this.mCupTour == r.mCupTour;
+            result &= this.mCupMaxTour == r.mCupMaxTour;
+            result &= this.mHour.toString().equals(r.mHour.toString());
+            result &= this.mLooserCup == r.mLooserCup;
+            result &= Math.abs(this.mMaxBonus - r.mMaxBonus) < 0.0001;
+            result &= Math.abs(this.mMinBonus - r.mMinBonus) < 0.0001;
+            result &= this.mMatchs.size() == r.mMatchs.size();
+            if (result) {
+                for (int i = 0; i < this.mMatchs.size(); i++) {
+                    Match m = mMatchs.get(i);
+                    Match mr = r.mMatchs.get(i);
+                    result &= m.equals(mr);
+
+                }
+            }
+        }
         return result;
     }
-    
+
 }

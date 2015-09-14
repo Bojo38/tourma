@@ -27,6 +27,7 @@ public class Translate {
     public final static String CS_Coach = "Coach";
     public final static String CS_Opponent = "Opponent";
     public final static String CS_Roster = "Roster";
+    public final static String CS_RosterName="RosterName";
     public final static String CS_Difference = "Difference";
     public final static String CS_NAF = "NAF";
     public final static String CS_Ranking = "Ranking";

@@ -7,7 +7,7 @@ import tourma.MainFrame;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtCoaches;
-import tourma.utils.TableFormat;
+import tourma.utils.display.TableFormat;
 
 /*
  * To change this template, choose Tools | Templates

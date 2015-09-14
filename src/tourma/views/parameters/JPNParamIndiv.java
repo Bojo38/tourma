@@ -454,20 +454,20 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jcxForAnnexRankingTooActionPerformed
 
-    private final static String CS_None = "None";
-    private final static String CS_Points = "Points";
-    private final static String CS_OpponentPoints = "POINTS ADVERSAIRES";
-    private final static String CS_ACCR_VictoryDrawLost = "V/N/D";
-    private final static String CS_ELO = "ELO";
-    private final static String CS_OpponentsElo = "OpponentsElo";
-    private final static String CS_MatchCount = "MatchCount";
-    private final static String CS_OpponentsPointsExceptOwnMatch = "POINTS ADVERSAIRES EXCEPT OWN MATCH";
-    private final static String CS_TablesPoints = "TablesPoints";
-    private final static String CS_PointsWithoutBonus = "Points sans bonus";
-    private final static String CS_BonusPoints = "Bonus Points";
-    private final static String CS_Player = "JOUEUR";
-    private final static String CS_Opponent = "ADVERSAIRE";
-    private final static String CS_Difference = "DIFFÉRENCE";
+    public final static String CS_None = "None";
+    public final static String CS_Points = "Points";
+    public final static String CS_OpponentPoints = "POINTS ADVERSAIRES";
+    public final static String CS_ACCR_VictoryDrawLost = "V/N/D";
+    public final static String CS_ELO = "ELO";
+    public final static String CS_OpponentsElo = "OpponentsElo";
+    public final static String CS_MatchCount = "MatchCount";
+    public final static String CS_OpponentsPointsExceptOwnMatch = "POINTS ADVERSAIRES EXCEPT OWN MATCH";
+    public final static String CS_TablesPoints = "TablesPoints";
+    public final static String CS_PointsWithoutBonus = "Points sans bonus";
+    public final static String CS_BonusPoints = "Bonus Points";
+    public final static String CS_Player = "JOUEUR";
+    public final static String CS_Opponent = "ADVERSAIRE";
+    public final static String CS_Difference = "DIFFÉRENCE";
 
     /**
      * Update Panel
