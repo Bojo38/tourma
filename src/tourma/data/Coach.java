@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -87,6 +88,7 @@ public final class Coach extends Competitor implements XMLExport {
 
         return sNullCoach;
     }
+    private int _PinCode = 0;
 
     /**
      *
@@ -142,6 +144,8 @@ public final class Coach extends Competitor implements XMLExport {
         super();
         mActive = true;
         mCompositions = new ArrayList<>();
+        Random random = new Random();
+        _PinCode = random.nextInt(10000);
     }
 
     /**
@@ -393,6 +397,14 @@ public final class Coach extends Competitor implements XMLExport {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
 
+        try {
+            this.setPinCode(Integer.parseInt(coach.getAttributeValue(StringConstants.CS_PINCODE)));
+        } catch (NullPointerException npe) {
+            _PinCode=0;
+        } catch (NumberFormatException npe) {
+            _PinCode=0;
+        }
+
     }
 
     /**
@@ -482,9 +494,9 @@ public final class Coach extends Competitor implements XMLExport {
         }
 
         if ((params.isTeamTournament()) && (params.getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
-            i=0;
+            i = 0;
             while (i < possible.size()) {
-                Team t=((Coach) possible.get(i)).getTeamMates();
+                Team t = ((Coach) possible.get(i)).getTeamMates();
                 if (t.containsCoach(this)) {
                     possible.remove(i);
                 } else {
@@ -721,7 +733,7 @@ public final class Coach extends Competitor implements XMLExport {
      * @param r
      */
     @Override
-    public void addMatchRoundRobin(Competitor c, Round r,boolean complete) {
+    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) {
         addMatch(c, r);
     }
 
@@ -1022,7 +1034,7 @@ public final class Coach extends Competitor implements XMLExport {
                             round.getMatch(i).setCompetitor2(c2_tmp);
                             round.getMatch(k).setCompetitor2(c2);
 
-              //              LOG.log(Level.FINER, "{0} vs {1} becomes {2} vs {3}", new Object[]{c1.getName(), c2.getName(), c1.getName(), c2_tmp.getName()});
+                            //              LOG.log(Level.FINER, "{0} vs {1} becomes {2} vs {3}", new Object[]{c1.getName(), c2.getName(), c1.getName(), c2_tmp.getName()});
                             //              LOG.log(Level.FINER, "And {0} vs {1} becomes {2} vs {3}", new Object[]{c1_tmp.getName(), c2_tmp.getName(), c1_tmp.getName(), c2.getName()});
                             break;
                         } else {
@@ -1035,7 +1047,7 @@ public final class Coach extends Competitor implements XMLExport {
                                 round.getMatch(i).setCompetitor2(c1_tmp);
                                 round.getMatch(k).setCompetitor1(c2);
 
-                //                LOG.log(Level.FINER, "{0} vs {1} becomes {2} vs {3}", new Object[]{c1.getName(), c2.getName(), c1.getName(), c1_tmp.getName()});
+                                //                LOG.log(Level.FINER, "{0} vs {1} becomes {2} vs {3}", new Object[]{c1.getName(), c2.getName(), c1.getName(), c1_tmp.getName()});
                                 //                LOG.log(Level.FINER, "And {0} vs {1} becomes {2} vs {3}", new Object[]{c1_tmp.getName(), c2_tmp.getName(), c2.getName(), c2_tmp.getName()});
                                 break;
                             }
@@ -1197,4 +1209,11 @@ public final class Coach extends Competitor implements XMLExport {
         this.mHandicap = mHandicap;
     }
 
+    public int getPinCode() {
+        return _PinCode;
+    }
+
+    public void setPinCode(int pin) {
+        _PinCode = pin;
+    }
 }

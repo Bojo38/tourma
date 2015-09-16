@@ -672,6 +672,7 @@ public class Parameters implements XMLExport {
                 }
 
                 this.setGroupsEnable(params.getAttribute(StringConstants.CS_GROUPENABLE).getBooleanValue());
+                this.setWebEdit(params.getAttribute(StringConstants.CS_WEBEDIT).getBooleanValue());
 
             } catch (NullPointerException ne) {
                 this.setGapLargeVictory(3);
@@ -1732,5 +1733,15 @@ public class Parameters implements XMLExport {
         return result;
     }
 
+    protected boolean mWebEdit=false;
     
+    public void setWebEdit(boolean WebEdit)
+    {
+        mWebEdit=WebEdit;
+    }
+    
+    public boolean isWebEdit()
+    {
+        return mWebEdit;
+    }
 }

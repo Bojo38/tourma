@@ -217,6 +217,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiFullScreenPool.setEnabled(false);
             jmiEditCoef.setEnabled(false);
         }
+        
+        jcxmiRemoteEdit.setSelected(Tournament.getTournament().getParams().isWebEdit());
+        
     }
 
     /**
@@ -289,6 +292,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jcxmiAsServer = new javax.swing.JCheckBoxMenuItem();
         jmiEditWebPort = new javax.swing.JMenuItem();
         jmiEditDescription = new javax.swing.JMenuItem();
+        jcxmiRemoteEdit = new javax.swing.JCheckBoxMenuItem();
         jmnRound = new javax.swing.JMenu();
         jmiGenerateNextRound = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
@@ -545,6 +549,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jmiEditDescription);
+
+        jcxmiRemoteEdit.setText(bundle.getString("RemoteMatchEdit")); // NOI18N
+        jcxmiRemoteEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxmiRemoteEditActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jcxmiRemoteEdit);
 
         jMenuBar1.add(jmnParameters);
 
@@ -2449,6 +2461,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jmiEditWebPortActionPerformed
 
+    private void jcxmiRemoteEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxmiRemoteEditActionPerformed
+        Tournament.getTournament().getParams().setWebEdit(jcxmiRemoteEdit.isSelected());
+    }//GEN-LAST:event_jcxmiRemoteEditActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -2758,6 +2774,7 @@ private static final String CS_Matchs="Matchs";
     private javax.swing.JCheckBoxMenuItem jcxUseColor;
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
     private javax.swing.JCheckBoxMenuItem jcxmiAsServer;
+    private javax.swing.JCheckBoxMenuItem jcxmiRemoteEdit;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAddFreeMatch;
     private javax.swing.JMenuItem jmiAideEnLigne;
