@@ -606,7 +606,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         if (!error) {
             try {
                 int pinCode=Integer.parseInt(jtfPinCode.getText());
-                if ((pinCode>1000)||(pinCode==0))
+                if ((pinCode>10000)||(pinCode==0))
                 {
                     error=true;
                     JOptionPane.showMessageDialog(this,"Invalid Pin Code","Pin Code Error",JOptionPane.ERROR_MESSAGE);

@@ -227,16 +227,12 @@ public final class Coach extends Competitor implements XMLExport {
                 if (getCategory(i).getName() != null) {
                     Element ec = new Element(StringConstants.CS_CATEGORY);
                     ec.setAttribute(StringConstants.CS_NAME, getCategory(i).getName());
+                    coach.addContent(ec);
                 }
             }
         }
-        /*if (this.getCategory() != null) {
-         coach.setAttribute(StringConstants.CS_CATEGORY, this.getCategory().getName());
-         } else {
-         coach.setAttribute(StringConstants.CS_CATEGORY, StringConstants.CS_None);
-         }*/
-        coach.setAttribute(StringConstants.CS_ACTIVE, Boolean.toString(this.isActive()));
 
+        coach.setAttribute(StringConstants.CS_ACTIVE, Boolean.toString(this.isActive()));
         coach.setAttribute(StringConstants.CS_HANDICAP, Integer.toString(this.getHandicap()));
 
         for (Roster mComposition : mCompositions) {
