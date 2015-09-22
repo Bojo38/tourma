@@ -37,11 +37,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
+import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 
 /**
@@ -176,9 +178,21 @@ public final class JdgRanking extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
-        final JFileChooser jfc = new JFileChooser();
+                final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("HTML", new String[]{"HTML", "html"});
+        jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            final File export = jfc.getSelectedFile();
+            StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
+            String ext = StringConstants.CS_NULL;
+            final int i = url2.toString().lastIndexOf('.');
+            if (i > 0 && i < url2.length() - 1) {
+                ext = url2.substring(i + 1).toLowerCase(Locale.getDefault());
+            }
+            if (!ext.equals("html")) {
+                url2 = url2.append(".html");
+            }
+
+            final File export = new File(url2.toString());
 
             OutputStreamWriter out = null;
             InputStreamReader in = null;

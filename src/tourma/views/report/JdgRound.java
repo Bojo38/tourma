@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Coach;
@@ -47,6 +48,7 @@ import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtMatchTeams;
+import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 
 /**
@@ -214,8 +216,20 @@ public final class JdgRound extends javax.swing.JDialog {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
         final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("HTML", new String[]{"HTML", "html"});
+        jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            final File export = jfc.getSelectedFile();
+            StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
+            String ext = StringConstants.CS_NULL;
+            final int i = url2.toString().lastIndexOf('.');
+            if (i > 0 && i < url2.length() - 1) {
+                ext = url2.substring(i + 1).toLowerCase(Locale.getDefault());
+            }
+            if (!ext.equals("html")) {
+                url2 = url2.append(".html");
+            }
+
+            final File export = new File(url2.toString());
 
             OutputStreamWriter out = null;
             InputStreamReader in = null;
@@ -309,9 +323,9 @@ public final class JdgRound extends javax.swing.JDialog {
                 }
 
                 if (match.getRoster2() == null) {
-                    m.put(ReportKeys.CS_Roster2,StringEscapeUtils.escapeHtml4( ((Coach) match.getCompetitor2()).getRoster().getName()));
+                    m.put(ReportKeys.CS_Roster2, StringEscapeUtils.escapeHtml4(((Coach) match.getCompetitor2()).getRoster().getName()));
                 } else {
-                    m.put(ReportKeys.CS_Roster2,StringEscapeUtils.escapeHtml4( match.getRoster2().getName()));
+                    m.put(ReportKeys.CS_Roster2, StringEscapeUtils.escapeHtml4(match.getRoster2().getName()));
                 }
 
                 if (!mTour.getParams().isTeamTournament()) {
@@ -382,7 +396,6 @@ public final class JdgRound extends javax.swing.JDialog {
         return address;
     }
 
-   
     private File createTeamReport() {
         File address = null;
         Writer out = null;
@@ -425,7 +438,7 @@ public final class JdgRound extends javax.swing.JDialog {
 
                 final HashMap<String, Object> m = new HashMap<>();
                 m.put(ReportKeys.CS_Numero, model.getValueAt(i, 0));
-                m.put(ReportKeys.CS_Team1, StringEscapeUtils.escapeHtml4((String)model.getValueAt(i, 1)));
+                m.put(ReportKeys.CS_Team1, StringEscapeUtils.escapeHtml4((String) model.getValueAt(i, 1)));
                 if (mResult) {
                     m.put(ReportKeys.CS_V1, model.getValueAt(i, 2));
                     m.put(ReportKeys.CS_N, model.getValueAt(i, 3));
@@ -435,7 +448,7 @@ public final class JdgRound extends javax.swing.JDialog {
                     m.put(ReportKeys.CS_N, StringConstants.CS_HTML_EMPTY);
                     m.put(ReportKeys.CS_V2, StringConstants.CS_HTML_EMPTY);
                 }
-                m.put(ReportKeys.CS_Team2, StringEscapeUtils.escapeHtml4((String)model.getValueAt(i, 5)));
+                m.put(ReportKeys.CS_Team2, StringEscapeUtils.escapeHtml4((String) model.getValueAt(i, 5)));
                 parMatches.add(m);
             }
 
