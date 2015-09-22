@@ -91,6 +91,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private File mFile = null;
 
     private final static String CS_TourMaXMLFile = "TourMaXMLFile";
+    private String currentPath;
 
     /**
      * Creates new form MainFrame
@@ -104,10 +105,13 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         this.setSize(800, 600);
         initComponents();
 
+        currentPath = MainFrame.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+
         if (res == 0) {
             jmiNouveauActionPerformed(null);
         } else {
             final JFileChooser jfc = new JFileChooser();
+            jfc.setCurrentDirectory(new File(currentPath));
             final FileFilter filter1 = new ExtensionFileFilter(
                     Translate.translate(CS_TourMaXMLFile),
                     new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
@@ -115,6 +119,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
             }
+            File f = jfc.getSelectedFile();
+            currentPath = f.getAbsolutePath();
+
         }
 
         update();
@@ -217,9 +224,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiFullScreenPool.setEnabled(false);
             jmiEditCoef.setEnabled(false);
         }
-        
+
         jcxmiRemoteEdit.setSelected(Tournament.getTournament().getParams().isWebEdit());
-        
+
     }
 
     /**
@@ -892,6 +899,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSaveAsActionPerformed
         final JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(currentPath));
         final FileFilter filter1 = new ExtensionFileFilter(
                 Translate.translate(CS_TourMaXMLFile),
                 new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
@@ -909,6 +917,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
             mFile = new File(url2.toString());
             Tournament.getTournament().saveXML(mFile);
+
+            currentPath = jfc.getSelectedFile().getAbsolutePath();
+
         }
     }//GEN-LAST:event_jmiSaveAsActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -922,6 +933,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiChargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChargerActionPerformed
         final JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(currentPath));
         final FileFilter filter1 = new ExtensionFileFilter(
                 Translate.translate(CS_TourMaXMLFile),
                 new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
@@ -932,6 +944,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     = jfc.getSelectedFile();
             updateTree();
             update();
+            currentPath = jfc.getSelectedFile().getAbsolutePath();
 
         }
     }//GEN-LAST:event_jmiChargerActionPerformed
@@ -972,12 +985,16 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportActionPerformed
         final JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(currentPath));
         final FileFilter filter1 = new ExtensionFileFilter(
                 Translate.translate(CS_NAFXMLFile),
                 new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().exportNAF(jfc.getSelectedFile());
+
+            currentPath = jfc.getSelectedFile().getAbsolutePath();
+
         }
     }//GEN-LAST:event_jmiExportActionPerformed
 
@@ -1067,6 +1084,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbbActionPerformed
         final JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(currentPath));
         final FileFilter filter1 = new ExtensionFileFilter(
                 Translate.translate(CS_FBBCSVFile),
                 new String[]{"CSV",
@@ -1074,11 +1092,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             Tournament.getTournament().exportFBB(jfc.getSelectedFile());
+
+            currentPath = jfc.getSelectedFile().getAbsolutePath();
+
         }
     }//GEN-LAST:event_jmiExportFbbActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbb1ActionPerformed
         final JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(currentPath));
         final FileFilter filter1 = new ExtensionFileFilter(
                 Translate.translate(CS_FBBXMLFile),
                 new String[]{"FBB_XML",
@@ -1544,14 +1566,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiSubstitutePlayerActionPerformed
 
     private void jmiEditDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditDescriptionActionPerformed
-        JTextArea jta=new JTextArea(40,80);
+        JTextArea jta = new JTextArea(40, 80);
         jta.setText(Tournament.getTournament().getDescription());
-        
-        JScrollPane jsp=new JScrollPane(jta);
-        
+
+        JScrollPane jsp = new JScrollPane(jta);
+
         JOptionPane.showInputDialog(this, jsp);
         Tournament.getTournament().setDescription(jta.getText());
-        
+
     }//GEN-LAST:event_jmiEditDescriptionActionPerformed
 
     private void jmiDelRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelRoundActionPerformed
@@ -1618,10 +1640,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }
 
-    private final static String CS_SwissRound="RONDE SUISSE";
-    private final static String CS_AcceleratedSwissRound="RONDE SUISSE ACCELERÉE";
-    private final static String CS_Animation="Animation";
-    
+    private final static String CS_SwissRound = "RONDE SUISSE";
+    private final static String CS_AcceleratedSwissRound = "RONDE SUISSE ACCELERÉE";
+    private final static String CS_Animation = "Animation";
+
     private void jmiGenerateNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateNextRoundActionPerformed
 
         if (areRulesValid()) {
@@ -1682,7 +1704,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 final JCheckBox jcxClash = new JCheckBox(Translate.translate(CS_Animation));
                 jpn.add(jcxClash, BorderLayout.SOUTH);
 
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn, 
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jpn,
                         Translate.translate(CS_Generation), JOptionPane.QUESTION_MESSAGE);
 
                 final int index = jcb.getSelectedIndex();
@@ -1733,10 +1755,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jckmiRoundOnlyActionPerformed
 
-    private static final String CS_FreeMatch="MATCH LIBRE";
-    private static final String CS_Error="ERROR";
-    private static final String CS_ImpossibleMatch="MATCH IMPOSSIBLE";
-    
+    private static final String CS_FreeMatch = "MATCH LIBRE";
+    private static final String CS_Error = "ERROR";
+    private static final String CS_ImpossibleMatch = "MATCH IMPOSSIBLE";
+
     private void jmiAddFreeMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddFreeMatchActionPerformed
 
         if (jpnContent instanceof JPNRound) {
@@ -1769,11 +1791,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     jpnQuestion.add(jcb1, BorderLayout.WEST);
                     jpnQuestion.add(jcb2, BorderLayout.EAST);
                     final JLabel jlb = new JLabel(
-                            " "+Translate.translate(CS_ACCR_Versus)+" "
+                            " " + Translate.translate(CS_ACCR_Versus) + " "
                     );
                     jpnQuestion.add(jlb, BorderLayout.CENTER);
 
-                    final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion, 
+                    final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion,
                             Translate.translate(CS_FreeMatch),
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
                     if (ret == JOptionPane.OK_OPTION) {
@@ -1793,8 +1815,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                             ValidMatch = true;
                         } else {
-                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), 
-                                    Translate.translate(CS_ImpossibleMatch), 
+                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
+                                    Translate.translate(CS_ImpossibleMatch),
                                     Translate.translate(CS_Error),
                                     JOptionPane.ERROR_MESSAGE);
                         }
@@ -1827,10 +1849,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     jpnQuestion.add(jcb1, BorderLayout.WEST);
                     jpnQuestion.add(jcb2, BorderLayout.EAST);
                     final JLabel jlb = new JLabel(
-                            " "+Translate.translate(CS_ACCR_Versus)+" ");
+                            " " + Translate.translate(CS_ACCR_Versus) + " ");
                     jpnQuestion.add(jlb, BorderLayout.CENTER);
 
-                    final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion, 
+                    final int ret = JOptionPane.showOptionDialog(MainFrame.getMainFrame(), jpnQuestion,
                             Translate.translate(CS_FreeMatch),
                             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
@@ -1845,7 +1867,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                             m.getCompetitor2().addMatch(m);
                             ValidMatch = true;
                         } else {
-                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), 
+                            JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
                                     Translate.translate(CS_ImpossibleMatch),
                                     Translate.translate(CS_Error), JOptionPane.ERROR_MESSAGE);
                         }
@@ -1905,14 +1927,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         mTournament.getParams().setPortugal(jcxPatchPortugal.isSelected());
     }//GEN-LAST:event_jcxPatchPortugalActionPerformed
 
-    private static final String CS_MatchAlreadyConceededOrRefused="MatchAlreadyConceededOrRefused";
-    private static final String CS_Cancel="Cancel";
-    private static final String CS_ConceedAMatch="ConceedAMatch";
-    private static final String CS_WhoConceedTheMatch="WhoConceedTheMatch";
-    private static final String CS_RefuseAMatch="RefuseAMatch";
-    private static final String CS_WhoRefuseMatch="WhoRefuseMatch";
-    
-    
+    private static final String CS_MatchAlreadyConceededOrRefused = "MatchAlreadyConceededOrRefused";
+    private static final String CS_Cancel = "Cancel";
+    private static final String CS_ConceedAMatch = "ConceedAMatch";
+    private static final String CS_WhoConceedTheMatch = "WhoConceedTheMatch";
+    private static final String CS_RefuseAMatch = "RefuseAMatch";
+    private static final String CS_WhoRefuseMatch = "WhoRefuseMatch";
+
+
     private void jmiConceedMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConceedMatchActionPerformed
         try {
             if (jpnContent instanceof JPNRound) {
@@ -1920,9 +1942,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 int nbMatch = jpnr.getMatchTableSelectedRow();
                 CoachMatch m = jpnr.getRound().getCoachMatchs().get(nbMatch);
                 if (m.isConcedeedBy1() || m.isConcedeedBy2() || m.isRefusedBy1() || m.isRefusedBy2()) {
-                    JOptionPane.showMessageDialog(null, 
+                    JOptionPane.showMessageDialog(null,
                             Translate.translate(CS_Error),
-                            Translate.translate(CS_MatchAlreadyConceededOrRefused), 
+                            Translate.translate(CS_MatchAlreadyConceededOrRefused),
                             JOptionPane.ERROR_MESSAGE);
                 } else {
                     Object[] options = new Object[3];
@@ -1930,9 +1952,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     options[1] = m.getCompetitor2();
                     options[2] = Translate.translate(CS_Cancel);
 
-                    Object option = JOptionPane.showInputDialog(null, 
+                    Object option = JOptionPane.showInputDialog(null,
                             Translate.translate(CS_ConceedAMatch),
-                            Translate.translate(CS_WhoConceedTheMatch), 
+                            Translate.translate(CS_WhoConceedTheMatch),
                             JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
 
                     if (option.equals(m.getCompetitor1())) {
@@ -1976,7 +1998,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 if (m.isConcedeedBy1() || m.isConcedeedBy2() || m.isRefusedBy1() || m.isRefusedBy2()) {
                     JOptionPane.showMessageDialog(null,
                             Translate.translate(CS_Error),
-                            Translate.translate(CS_MatchAlreadyConceededOrRefused), 
+                            Translate.translate(CS_MatchAlreadyConceededOrRefused),
                             JOptionPane.ERROR_MESSAGE);
                 } else {
                     Object[] options = new Object[3];
@@ -1984,8 +2006,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     options[1] = m.getCompetitor2();
                     options[2] = Translate.translate(CS_Cancel);
 
-                    Object option = JOptionPane.showInputDialog(null, 
-                            Translate.translate(CS_RefuseAMatch), 
+                    Object option = JOptionPane.showInputDialog(null,
+                            Translate.translate(CS_RefuseAMatch),
                             Translate.translate(CS_WhoRefuseMatch),
                             JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
 
@@ -2172,7 +2194,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiFullScreenRankAnnexClan1ActionPerformed
 
     private TMultiServer server = null;
-    private WebServer web=null;
+    private WebServer web = null;
 
     private void jcxmiAsServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxmiAsServerActionPerformed
         if (jcxmiAsServer.isSelected()) {
@@ -2190,7 +2212,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 }
                 server.start();
             }
-            
+
             if (web == null) {
                 try {
                     try {
@@ -2224,12 +2246,12 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 server.stopServer();
                 try {
                     server.wait();
-                } catch (InterruptedException|IllegalMonitorStateException ex) {
+                } catch (InterruptedException | IllegalMonitorStateException ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             server = null;
-            
+
             synchronized (this) {
                 web.stop();
                 try {
@@ -2443,21 +2465,19 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jckmiHideNonNafActionPerformed
 
-    public static String CS_EditWebPort="EditWebPort";
-    
+    public static String CS_EditWebPort = "EditWebPort";
+
     private void jmiEditWebPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditWebPortActionPerformed
-        int port=Tournament.getTournament().getParams().getWebServerPort();
-        
-        Object obj=JOptionPane.showInputDialog(this,Translate.translate(CS_EditWebPort),port);
-        
-        if (obj instanceof String)
-        {
-            Tournament.getTournament().getParams().setWebServerPort(Integer.parseInt((String)obj));
+        int port = Tournament.getTournament().getParams().getWebServerPort();
+
+        Object obj = JOptionPane.showInputDialog(this, Translate.translate(CS_EditWebPort), port);
+
+        if (obj instanceof String) {
+            Tournament.getTournament().getParams().setWebServerPort(Integer.parseInt((String) obj));
         }
-        
-        if (obj instanceof Integer)
-        {
-            Tournament.getTournament().getParams().setWebServerPort((Integer)obj);
+
+        if (obj instanceof Integer) {
+            Tournament.getTournament().getParams().setWebServerPort((Integer) obj);
         }
     }//GEN-LAST:event_jmiEditWebPortActionPerformed
 
@@ -2475,8 +2495,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     private NafTask task;
 
-    private static final String CS_Download="Download";
-    
+    private static final String CS_Download = "Download";
+
     class NafTask extends SwingWorker<Void, Void> {
 
         @Override
@@ -2489,8 +2509,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 for (int i = 0; (i < Tournament.getTournament().getCoachsCount()) && (!isCancelled()); i++) {
                     Coach c = Tournament.getTournament().getCoach(i);
                     progressMonitor.setNote(
-                            Translate.translate(CS_Download) + 
-                                    " " + c.getName());
+                            Translate.translate(CS_Download)
+                            + " " + c.getName());
                     c.setNafRank(NAF.getRanking(c.getName(), c));
                     progressMonitor.setProgress(i + 1);
                 }
@@ -2514,36 +2534,36 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }
 
-    private static final String CS_NewGame="NewGame";
-    private static final String CS_Open="Open";
-    private static final String CS_UseRosterEditor="UseRosterEditor";
-    private static final String CS_ClientViewer="ClientViewer";
-    private static final String CS_NewGameOrOpen="NewGameOrOpen";
-    private static final String CS_EnterRemoteTourmaServer="Enter remote server IP address";
-    private static final String CS_Exiting="Exiting";
-    private static final String CS_ConnectionImpossibleTo="Connection impossible to";
-    private static final String CS_ChooseFullScreen="ChooseFullScreen";
+    private static final String CS_NewGame = "NewGame";
+    private static final String CS_Open = "Open";
+    private static final String CS_UseRosterEditor = "UseRosterEditor";
+    private static final String CS_ClientViewer = "ClientViewer";
+    private static final String CS_NewGameOrOpen = "NewGameOrOpen";
+    private static final String CS_EnterRemoteTourmaServer = "Enter remote server IP address";
+    private static final String CS_Exiting = "Exiting";
+    private static final String CS_ConnectionImpossibleTo = "Connection impossible to";
+    private static final String CS_ChooseFullScreen = "ChooseFullScreen";
     /**
      * @param args the command line arguments
      */
-    
-    private static final String CS_IndividualRanking="Individual ranking";
-private static final String CS_IndividualAnnexRanking="Individual Annex rankings";
-private static final String CS_TeamRanking="Team ranking";
-private static final String CS_TeamAnnexRanking="Team Annex Ranking";
-private static final String CS_ClanRanking="Clan ranking";
-private static final String CS_ClanAnnexRanking="Clan Annex Ranking";
-private static final String CS_MatchsClash="Matchs Clash";
-private static final String CS_CategoryRanking="Categories Ranking";
-private static final String CS_CategoryAnnexRanking="Categories Annex Ranking";
-private static final String CS_GroupeRanking="Group Ranking";
-private static final String CS_GroupeAnnexRanking="Group Annex Ranking";
-private static final String CS_IndividualPoolRanking="Individual Pool Ranking";
-private static final String CS_IndividualPoolAnnexRanking="Individual Pool Annex Ranking";
-private static final String CS_TeamPoolRanking="Team Pool Ranking";
-private static final String CS_TeamPoolAnnexRanking="Team Pool Annex Ranking";
-private static final String CS_Matchs="Matchs";
-    
+
+    private static final String CS_IndividualRanking = "Individual ranking";
+    private static final String CS_IndividualAnnexRanking = "Individual Annex rankings";
+    private static final String CS_TeamRanking = "Team ranking";
+    private static final String CS_TeamAnnexRanking = "Team Annex Ranking";
+    private static final String CS_ClanRanking = "Clan ranking";
+    private static final String CS_ClanAnnexRanking = "Clan Annex Ranking";
+    private static final String CS_MatchsClash = "Matchs Clash";
+    private static final String CS_CategoryRanking = "Categories Ranking";
+    private static final String CS_CategoryAnnexRanking = "Categories Annex Ranking";
+    private static final String CS_GroupeRanking = "Group Ranking";
+    private static final String CS_GroupeAnnexRanking = "Group Annex Ranking";
+    private static final String CS_IndividualPoolRanking = "Individual Pool Ranking";
+    private static final String CS_IndividualPoolAnnexRanking = "Individual Pool Annex Ranking";
+    private static final String CS_TeamPoolRanking = "Team Pool Ranking";
+    private static final String CS_TeamPoolAnnexRanking = "Team Pool Annex Ranking";
+    private static final String CS_Matchs = "Matchs";
+
     public static void main(final String args[]) {
 
         try {
@@ -2557,13 +2577,13 @@ private static final String CS_Matchs="Matchs";
                     StartOptions.add(
                             Translate.translate(CS_Open));
                     StartOptions.add(
-                             Translate.translate(CS_UseRosterEditor));
-                    StartOptions.add( Translate.translate(CS_ClientViewer));
-                    final int res = JOptionPane.showOptionDialog(null, 
-                            Translate.translate(CS_NewGameOrOpen), 
+                            Translate.translate(CS_UseRosterEditor));
+                    StartOptions.add(Translate.translate(CS_ClientViewer));
+                    final int res = JOptionPane.showOptionDialog(null,
+                            Translate.translate(CS_NewGameOrOpen),
                             StringConstants.CS_NULL,
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(), 
-                             Translate.translate(CS_Open));
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, StartOptions.toArray(),
+                            Translate.translate(CS_Open));
 
                     if ((res == 0) || (res == 1)) {
                         MainFrame window = MainFrame.getMainFrame(res);
@@ -2578,7 +2598,7 @@ private static final String CS_Matchs="Matchs";
 
                     if (res == 3) {
 
-                        String address = (String) JOptionPane.showInputDialog(null, 
+                        String address = (String) JOptionPane.showInputDialog(null,
                                 Translate.translate(CS_EnterRemoteTourmaServer), "127.0.0.1");
 
                         try {
@@ -2586,9 +2606,9 @@ private static final String CS_Matchs="Matchs";
                             try {
                                 socket = new Socket(address, 2017);
                             } catch (ConnectException e) {
-                                JOptionPane.showMessageDialog(null, Translate.translate(CS_ConnectionImpossibleTo) +
-                                        " "+ address +". "+
-                                        Translate.translate(CS_Exiting));
+                                JOptionPane.showMessageDialog(null, Translate.translate(CS_ConnectionImpossibleTo)
+                                        + " " + address + ". "
+                                        + Translate.translate(CS_Exiting));
                                 System.exit(1);
                             }
 
@@ -2635,8 +2655,8 @@ private static final String CS_Matchs="Matchs";
                             );
                             jpn.add(jlb, BorderLayout.NORTH);
 
-                            JOptionPane.showMessageDialog(null, jpn, 
-                                    Translate.translate(CS_Generation), 
+                            JOptionPane.showMessageDialog(null, jpn,
+                                    Translate.translate(CS_Generation),
                                     JOptionPane.QUESTION_MESSAGE);
 
                             final int index = jcb.getSelectedIndex();
