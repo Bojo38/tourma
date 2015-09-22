@@ -68,6 +68,15 @@ public class Translate {
         if (sBundle == null) {
             sBundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
         }
-        return sBundle.getString(key);
+        String result=key;
+        try
+        {
+            result=sBundle.getString(key);
+        }
+        catch(Exception ex)
+        {
+            System.err.println(ex.getLocalizedMessage());
+        }
+        return result;
     }
 }
