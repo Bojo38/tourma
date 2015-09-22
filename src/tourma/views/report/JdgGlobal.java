@@ -192,7 +192,6 @@ public final class JdgGlobal extends javax.swing.JDialog {
             try {
                 in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
                 {
-
                     out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
                     int c = in.read();
                     while (c != -1) {
@@ -261,7 +260,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
             final Map root = new HashMap();
             root.put(
                     ReportKeys.CS_Nom,
-                    mTour.getParams().getTournamentName()
+                     mTour.getParams().getTournamentName()
                     + " - " + Translate.translate(CS_Round) + " " + mRoundNumber);
             String name;
             if (mClan) {

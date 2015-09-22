@@ -83,11 +83,10 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private JList jlsBalancedIndiv = null;
     private final ArrayList<HashMap<String, Integer>> mHIndivBalanced = new ArrayList<>();
 
-    public JTabbedPane getTabbedPane()
-    {
+    public JTabbedPane getTabbedPane() {
         return jtpStatistics;
     }
-    
+
     /**
      * Creates new form JPNStatistics
      */
@@ -502,6 +501,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
 
         for (int cpt = 0; cpt < RosterType.getRostersNamesCount(); cpt++) {
             String roster = RosterType.getRostersName(cpt);
+            System.out.println("Add " + roster);
             datas.setValue(roster, 0);
         }
 
@@ -516,26 +516,39 @@ public final class JPNStatistics extends javax.swing.JPanel {
                     RosterType r;
                     if (c == m.getCompetitor1()) {
                         r = m.getRoster1();
+                        if (r != null) {
+                            System.out.println(r.getName());
+                        }
                     } else {
                         r = m.getRoster2();
+                        if (r != null) {
+                            System.out.println(r.getName());
+                        }
                     }
                     if (r == null) {
                         r = c.getRoster();
+                        System.out.println(r.getName());
                     }
 
                     //if (!names.contains(r.getName())) {
                     names.add(r.getName());
+
                     //}
                 }
 
                 for (String rName : names) {
-                    final Number value = datas.getValue(rName);
-                    int v = 0;
-                    if (value != null) {
-                        v = value.intValue();
+                    try {
+                        final Number value = datas.getValue(rName);
+
+                        int v = 0;
+                        if (value != null) {
+                            v = value.intValue();
+                        }
+                        v++;
+                        datas.setValue(rName, v);
+                    } catch (NullPointerException npe) {
+
                     }
-                    v++;
-                    datas.setValue(rName, v);
                 }
             }
         }
@@ -568,12 +581,10 @@ public final class JPNStatistics extends javax.swing.JPanel {
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.5f);
 
-        
-        
         final ChartPanel chartPanel = new ChartPanel(chart);
-    
+
         chartPanel.setName("RosterPie");
-        
+
         jtpStatistics.addTab(Translate.translate(CS_Roster), chartPanel);
     }
 
@@ -640,10 +651,16 @@ public final class JPNStatistics extends javax.swing.JPanel {
      * Update panel
      */
     public void update() {
-        updateBalancedIndiv();
-        updateBalancedTeam();
+        if (mTournament.getParams().isTeamTournament()) {
+            updateTeamPositions();
+            if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
+                updateBalancedIndiv();
+                updateBalancedTeam();
+            }
+        }
+
         updatePositions();
-        updateTeamPositions();
+
     }
 
     /**
@@ -1036,7 +1053,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
         }
 
         JFreeChart chart = ChartFactory.createBarChart(
-                 Translate.translate(CS_OpponentsByCoach),
+                Translate.translate(CS_OpponentsByCoach),
                 Translate.translate(CS_Opponents),
                 Translate.translate(CS_MatchsCount),
                 datas, PlotOrientation.VERTICAL, true, true, true);

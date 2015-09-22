@@ -281,7 +281,7 @@ public final class JPNParameters extends javax.swing.JPanel {
 
         jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jpnParticipant.add(jPanel7, java.awt.BorderLayout.CENTER);
+        jpnParticipant.add(jPanel7, java.awt.BorderLayout.SOUTH);
 
         add(jpnParticipant);
     }// </editor-fold>//GEN-END:initComponents
