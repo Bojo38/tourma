@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -243,13 +244,13 @@ public final class JdgRanking extends javax.swing.JDialog {
 
             final Map root = new HashMap();
             root.put(ReportKeys.CS_Nom,
-                    mTour.getParams().getTournamentName() + " - " + 
-                            Translate.translate(CS_Round) + " " + mRoundNumber);
+                    StringEscapeUtils.escapeHtml4(mTour.getParams().getTournamentName() + " - " + 
+                            Translate.translate(CS_Round) + " " + mRoundNumber));
             root.put(ReportKeys.CS_Title, mTitle);
 
             final ArrayList titles = new ArrayList();
             for (int i = 0; i < mRanking.getColumnCount(); i++) {
-                titles.add(mRanking.getColumnName(i));
+                titles.add(StringEscapeUtils.escapeHtml4(mRanking.getColumnName(i)));
             }
             root.put(ReportKeys.CS_Titles, titles);
 
@@ -258,7 +259,15 @@ public final class JdgRanking extends javax.swing.JDialog {
                 final HashMap line = new HashMap();
                 final ArrayList cols = new ArrayList();
                 for (int j = 0; j < mRanking.getColumnCount(); j++) {
-                    cols.add(mRanking.getValueAt(i, j));
+                    Object obj=mRanking.getValueAt(i, j);
+                    if (obj instanceof String)
+                    {
+                        cols.add(StringEscapeUtils.escapeHtml4((String)obj));
+                    }
+                    else
+                    {
+                        cols.add(obj);
+                    }
                 }
                 line.put(ReportKeys.CS_Cols, cols);
                 lines.add(line);

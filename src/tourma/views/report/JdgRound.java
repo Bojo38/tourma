@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
@@ -277,7 +278,8 @@ public final class JdgRound extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate("round.html");
 
             final Map<String, Object> root = new HashMap<>();
-            root.put(ReportKeys.CS_Nom, mTour.getParams().getTournamentName() + StringConstants.CS_THICK + Translate.translate(CS_Round) + " " + mRoundNumber);
+            root.put(ReportKeys.CS_Nom,
+                    StringEscapeUtils.escapeHtml4(mTour.getParams().getTournamentName() + StringConstants.CS_THICK + Translate.translate(CS_Round) + " " + mRoundNumber));
             root.put(ReportKeys.CS_Table, mRound.getMatchsCount());
 
             final ArrayList<CoachMatch> matches = mRound.getCoachMatchs();
@@ -301,21 +303,21 @@ public final class JdgRound extends javax.swing.JDialog {
                 m.put(ReportKeys.CS_Numero, i + 1);
 
                 if (match.getRoster1() == null) {
-                    m.put(ReportKeys.CS_Roster1, ((Coach) match.getCompetitor1()).getRoster().getName());
+                    m.put(ReportKeys.CS_Roster1, StringEscapeUtils.escapeHtml4(((Coach) match.getCompetitor1()).getRoster().getName()));
                 } else {
-                    m.put(ReportKeys.CS_Roster1, match.getRoster1().getName());
+                    m.put(ReportKeys.CS_Roster1, StringEscapeUtils.escapeHtml4(match.getRoster1().getName()));
                 }
 
                 if (match.getRoster2() == null) {
-                    m.put(ReportKeys.CS_Roster2, ((Coach) match.getCompetitor2()).getRoster().getName());
+                    m.put(ReportKeys.CS_Roster2,StringEscapeUtils.escapeHtml4( ((Coach) match.getCompetitor2()).getRoster().getName()));
                 } else {
-                    m.put(ReportKeys.CS_Roster2, match.getRoster2().getName());
+                    m.put(ReportKeys.CS_Roster2,StringEscapeUtils.escapeHtml4( match.getRoster2().getName()));
                 }
 
                 if (!mTour.getParams().isTeamTournament()) {
-                    m.put(ReportKeys.CS_Coach1, match.getCompetitor1().getName());
+                    m.put(ReportKeys.CS_Coach1, StringEscapeUtils.escapeHtml4(match.getCompetitor1().getName()));
                 } else {
-                    m.put(ReportKeys.CS_Coach1, ((Coach) match.getCompetitor1()).getTeamMates().getName() + StringConstants.CS_THICK + match.getCompetitor1().getName());
+                    m.put(ReportKeys.CS_Coach1, StringEscapeUtils.escapeHtml4(((Coach) match.getCompetitor1()).getTeamMates().getName() + StringConstants.CS_THICK + match.getCompetitor1().getName()));
                 }
                 if (mResult) {
                     m.put(ReportKeys.CS_Score1, match.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1());
@@ -353,8 +355,8 @@ public final class JdgRound extends javax.swing.JDialog {
 
             root.put(ReportKeys.CS_Matches, parMatches);
 
-            root.put("TitleCoach", Translate.translate("TitleCoach"));
-            root.put("TitleScore", Translate.translate("TitleScore"));
+            root.put("TitleCoach", StringEscapeUtils.escapeHtml4(Translate.translate("TitleCoach")));
+            root.put("TitleScore", StringEscapeUtils.escapeHtml4(Translate.translate("TitleScore")));
 
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -396,7 +398,7 @@ public final class JdgRound extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate("team_round.html");
 
             final Map<String, Object> root = new HashMap<>();
-            root.put(ReportKeys.CS_Nom, mTour.getParams().getTournamentName() + StringConstants.CS_THICK + Translate.translate(CS_Round) + " " + mRoundNumber);
+            root.put(ReportKeys.CS_Nom, StringEscapeUtils.escapeHtml4(mTour.getParams().getTournamentName() + StringConstants.CS_THICK + Translate.translate(CS_Round) + " " + mRoundNumber));
             root.put(ReportKeys.CS_Tables, mRound.getMatchsCount());
 
             if (mResult) {
@@ -423,7 +425,7 @@ public final class JdgRound extends javax.swing.JDialog {
 
                 final HashMap<String, Object> m = new HashMap<>();
                 m.put(ReportKeys.CS_Numero, model.getValueAt(i, 0));
-                m.put(ReportKeys.CS_Team1, model.getValueAt(i, 1));
+                m.put(ReportKeys.CS_Team1, StringEscapeUtils.escapeHtml4((String)model.getValueAt(i, 1)));
                 if (mResult) {
                     m.put(ReportKeys.CS_V1, model.getValueAt(i, 2));
                     m.put(ReportKeys.CS_N, model.getValueAt(i, 3));
@@ -433,13 +435,13 @@ public final class JdgRound extends javax.swing.JDialog {
                     m.put(ReportKeys.CS_N, StringConstants.CS_HTML_EMPTY);
                     m.put(ReportKeys.CS_V2, StringConstants.CS_HTML_EMPTY);
                 }
-                m.put(ReportKeys.CS_Team2, model.getValueAt(i, 5));
+                m.put(ReportKeys.CS_Team2, StringEscapeUtils.escapeHtml4((String)model.getValueAt(i, 5)));
                 parMatches.add(m);
             }
 
-            root.put("TitleTeam", Translate.translate("TitleTeam"));
-            root.put("TitleV", Translate.translate("TitleV"));
-            root.put("TitleD", Translate.translate("TitleD"));
+            root.put("TitleTeam", StringEscapeUtils.escapeHtml4(Translate.translate("TitleTeam")));
+            root.put("TitleV", StringEscapeUtils.escapeHtml4(Translate.translate("TitleV")));
+            root.put("TitleD", StringEscapeUtils.escapeHtml4(Translate.translate("TitleD")));
             root.put(ReportKeys.CS_Matches, parMatches);
 
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());

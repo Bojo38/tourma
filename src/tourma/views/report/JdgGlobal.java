@@ -36,6 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Criteria;
 import tourma.data.Round;
@@ -260,8 +261,8 @@ public final class JdgGlobal extends javax.swing.JDialog {
             final Map root = new HashMap();
             root.put(
                     ReportKeys.CS_Nom,
-                     mTour.getParams().getTournamentName()
-                    + " - " + Translate.translate(CS_Round) + " " + mRoundNumber);
+                    StringEscapeUtils.escapeHtml3(mTour.getParams().getTournamentName()
+                            + " - " + Translate.translate(CS_Round) + " " + mRoundNumber));
             String name;
             if (mClan) {
                 name = Translate.translate(CS_ByClan);
@@ -273,11 +274,11 @@ public final class JdgGlobal extends javax.swing.JDialog {
                 }
             }
 
-            root.put(ReportKeys.CS_Title, name);
+            root.put(ReportKeys.CS_Title, StringEscapeUtils.escapeHtml3(name));
 
             final ArrayList titles = new ArrayList();
             for (int i = 0; i < mRanking.getColumnCount(); i++) {
-                titles.add(mRanking.getColumnName(i));
+                titles.add(StringEscapeUtils.escapeHtml3(mRanking.getColumnName(i)));
             }
             root.put(ReportKeys.CS_Titles, titles);
 
@@ -286,23 +287,28 @@ public final class JdgGlobal extends javax.swing.JDialog {
                 final HashMap line = new HashMap();
                 final ArrayList cols = new ArrayList();
                 for (int j = 0; j < mRanking.getColumnCount(); j++) {
-                    cols.add(mRanking.getValueAt(i, j));
+                    Object obj = mRanking.getValueAt(i, j);
+                    if (obj instanceof String) {
+                        cols.add(StringEscapeUtils.escapeHtml3((String) obj));
+                    } else {
+                        cols.add(obj);
+                    }
                 }
                 line.put(ReportKeys.CS_Cols, cols);
                 lines.add(line);
             }
             root.put(ReportKeys.CS_Lines, lines);
 
-            root.put(ReportKeys.CS_TitreMoreFor, Translate.translate(CS_TheMostFor));
-            root.put(ReportKeys.CS_TitreLessFor, Translate.translate(CS_TheLessFor));
-            root.put(ReportKeys.CS_TitreMoreAgainst, Translate.translate(CS_TheMoreAgainst));
-            root.put(ReportKeys.CS_TitreLessAgainst, Translate.translate(CS_TheLessAgainst));
+            root.put(ReportKeys.CS_TitreMoreFor, StringEscapeUtils.escapeHtml3(Translate.translate(CS_TheMostFor)));
+            root.put(ReportKeys.CS_TitreLessFor, StringEscapeUtils.escapeHtml3(Translate.translate(CS_TheLessFor)));
+            root.put(ReportKeys.CS_TitreMoreAgainst, StringEscapeUtils.escapeHtml3(Translate.translate(CS_TheMoreAgainst)));
+            root.put(ReportKeys.CS_TitreLessAgainst, StringEscapeUtils.escapeHtml3(Translate.translate(CS_TheLessAgainst)));
 
             final ArrayList criterias = new ArrayList();
             for (int i = 0; i < mTour.getParams().getCriteriaCount(); i++) {
                 final HashMap criteria = new HashMap();
                 final Criteria c = mTour.getParams().getCriteria(i);
-                criteria.put(ReportKeys.CS_Name, c.getName());
+                criteria.put(ReportKeys.CS_Name, StringEscapeUtils.escapeHtml3(c.getName()));
 
                 final MjtAnnexRank annexFor = mAnnexForRankings.get(c);
                 final MjtAnnexRank annexAgainst = mAnnexAgainstRankings.get(c);
@@ -314,8 +320,8 @@ public final class JdgGlobal extends javax.swing.JDialog {
                 criterias.add(criteria);
             }
             root.put(ReportKeys.CS_Criterias, criterias);
-            root.put("TitleCategory", Translate.translate("TitleCategory"));
-            
+            root.put("TitleCategory", StringEscapeUtils.escapeHtml3(Translate.translate("TitleCategory")));
+
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));
