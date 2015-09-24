@@ -61,21 +61,23 @@ public class WebServer extends NanoHTTPD {
                             msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup))).append("</CENTER></h1>");
                             msg.append(WebCup.getHTML());
                         } else {
-                            if (session.getUri().equals("/match_result")) {
-                                msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult))).append("</CENTER></h1>");
-                                msg.append(WebMatchResult.getHTML());
-                            } else {
-                                if (session.getUri().equals("/enter_match_result")) {
+                            if (Tournament.getTournament().getParams().isWebEdit()) {
+                                if (session.getUri().equals("/match_result")) {
                                     msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult))).append("</CENTER></h1>");
-                                    String name = parms.get("name");
-                                    String pin = parms.get("pin");
-                                    if ((name != null) && (pin != null)) {
-                                        msg.append(WebMatchResult.getHTML(name, pin));
-                                    }
+                                    msg.append(WebMatchResult.getHTML());
                                 } else {
-                                    if (session.getUri().equals("/test_match_result")) {
+                                    if (session.getUri().equals("/enter_match_result")) {
                                         msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult))).append("</CENTER></h1>");
-                                        msg.append(WebMatchResult.getHTML(parms));
+                                        String name = parms.get("name");
+                                        String pin = parms.get("pin");
+                                        if ((name != null) && (pin != null)) {
+                                            msg.append(WebMatchResult.getHTML(name, pin));
+                                        }
+                                    } else {
+                                        if (session.getUri().equals("/test_match_result")) {
+                                            msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult))).append("</CENTER></h1>");
+                                            msg.append(WebMatchResult.getHTML(parms));
+                                        }
                                     }
                                 }
                             }
@@ -114,7 +116,9 @@ public class WebServer extends NanoHTTPD {
             if (Tournament.getTournament().getRound(nbRounds - 1).isCup()) {
                 menu.append("<li><a href=\"/cup\" class=\"active\">").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup))).append("</a></li>");
             }
-            menu.append("<li><a href=\"/match_result\" class=\"active\">").append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult))).append("</a></li>");
+            if (Tournament.getTournament().getParams().isWebEdit()) {
+                menu.append("<li><a href=\"/match_result\" class=\"active\">").append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult))).append("</a></li>");
+            }
         }
 
         menu.append("</ul>");
