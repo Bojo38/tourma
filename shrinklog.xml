@@ -27420,8 +27420,8 @@
 </entrypoints>
 
 <!-- WARNING:Unresolved external dependency: org.apache.xml.utils.PrefixResolver not found! -->
-<!-- writing shrinked C:\Perso\Tourma\store\TourMa.jar to C:\Perso\Tourma\store\yguard_temp_6500373075892307401.jar. -->
-<inOutPair in="C:\Perso\Tourma\store\TourMa.jar" out="C:\Perso\Tourma\store\yguard_temp_6500373075892307401.jar">
+<!-- writing shrinked C:\Perso\Tourma\store\TourMa.jar to C:\Perso\Tourma\store\yguard_temp_2324954350934335634.jar. -->
+<inOutPair in="C:\Perso\Tourma\store\TourMa.jar" out="C:\Perso\Tourma\store\yguard_temp_2324954350934335634.jar">
 	<removed-code>
 		<field name="serialVersionUID" class="com.bric.swing.ColorPicker" />
 		<field name="SELECTED_COLOR_PROPERTY" class="com.bric.swing.ColorPicker" />
@@ -32981,7 +32981,7 @@
 	<removed-resources>
 	</removed-resources>
 <!-- 	shrinked C:\Perso\Tourma\store\TourMa.jar BY 10,93 %. -->
-<!-- 	size before: 10940 KB, size after: 9744 KB. -->
+<!-- 	size before: 10942 KB, size after: 9745 KB. -->
 <!-- 	removed 104 classes, 888 methods, 4562 fields, 0 resources. -->
 <!-- 	4049 classes remaining of 4153 total. -->
 </inOutPair>
