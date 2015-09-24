@@ -51,6 +51,28 @@ public class Criteria implements XMLExport {
         mPointsTeamAgainst = 0;
     }
 
+    
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        
+        boolean result;
+        result = false;
+        if (obj instanceof Criteria) {
+            Criteria crit=(Criteria) obj;
+            result=this.getName().equals(crit.getName());
+            result &=this.getPointsAgainst()==crit.getPointsAgainst();
+            result &=this.getPointsFor()==crit.getPointsFor();
+            result &=this.getPointsTeamFor()==crit.getPointsTeamFor();
+            result &=this.getPointsTeamAgainst()==crit.getPointsTeamAgainst();
+        } 
+        return result;
+    }
+    
     /**
      *
      * @return
@@ -61,8 +83,8 @@ public class Criteria implements XMLExport {
         String key=StringConstants.CS_CRITERIA;
         crit.setAttribute(key, this.getName());
         crit.setAttribute(StringConstants.CS_POINTS_FOR, Integer.toString(this.getPointsFor()));
-        crit.setAttribute(StringConstants.CS_POINTS_AGAINST, Integer.toString(this.getPointsTeamFor()));
-        crit.setAttribute(StringConstants.CS_TEAM_POINTS_FOR, Integer.toString(this.getPointsAgainst()));
+        crit.setAttribute(StringConstants.CS_POINTS_AGAINST, Integer.toString(this.getPointsAgainst()));
+        crit.setAttribute(StringConstants.CS_TEAM_POINTS_FOR, Integer.toString(this.getPointsTeamFor()));
         crit.setAttribute(StringConstants.CS_TEAM_POINTS_AGAINST, Integer.toString(this.getPointsTeamAgainst()));
         return crit;
     }

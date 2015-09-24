@@ -363,22 +363,19 @@ public class Parameters implements XMLExport {
     private int mBestResultsIndiv = 5;
     private int mBestResultsTeam = 5;
 
-    private boolean mExceptBestAndWorstIndiv=false;
-    private boolean mApplyToAnnexIndiv=false;
-    private boolean mExceptBestAndWorstTeam=false;
-    private boolean mApplyToAnnexTeam=false;
-    
+    private boolean mExceptBestAndWorstIndiv = false;
+    private boolean mApplyToAnnexIndiv = false;
+    private boolean mExceptBestAndWorstTeam = false;
+    private boolean mApplyToAnnexTeam = false;
 
-    
     /**
      * Parameters defautl constructor
      */
-    public Parameters()
-    {
+    public Parameters() {
         mTournamentName = StringConstants.CS_NULL;
         mTournamentOrga = StringConstants.CS_NULL;
         mCriterias = new ArrayList<>();
-        
+
         Criteria c = new Criteria(Translate.translate(CS_Touchdowns));
         c.setPointsFor(2);
         mCriterias.add(c);
@@ -386,42 +383,39 @@ public class Parameters implements XMLExport {
         c.setPointsFor(1);
         mCriterias.add(c);
     }
-    public boolean isApplyToAnnexIndiv()
-    {
+
+    public boolean isApplyToAnnexIndiv() {
         return mApplyToAnnexIndiv;
     }
-    
-    public void setApplyToAnnexIndiv(boolean b)
-    {
-        mApplyToAnnexIndiv=b;
+
+    public void setApplyToAnnexIndiv(boolean b) {
+        mApplyToAnnexIndiv = b;
     }
-    public boolean isExceptBestAndWorstIndiv()
-    {
+
+    public boolean isExceptBestAndWorstIndiv() {
         return mExceptBestAndWorstIndiv;
     }
-    
-    public void setExceptBestAndWorstIndiv(boolean b)
-    {
-        mExceptBestAndWorstIndiv=b;
+
+    public void setExceptBestAndWorstIndiv(boolean b) {
+        mExceptBestAndWorstIndiv = b;
     }
-    public boolean isApplyToAnnexTeam()
-    {
+
+    public boolean isApplyToAnnexTeam() {
         return mApplyToAnnexTeam;
     }
-    
-    public void setApplyToAnnexTeam(boolean b)
-    {
-        mApplyToAnnexTeam=b;
+
+    public void setApplyToAnnexTeam(boolean b) {
+        mApplyToAnnexTeam = b;
     }
-    public boolean isExceptBestAndWorstTeam()
-    {
+
+    public boolean isExceptBestAndWorstTeam() {
         return mExceptBestAndWorstTeam;
     }
-    
+
     public void setExceptBestAndWorstTeam(boolean b) {
-        mExceptBestAndWorstTeam=b;
+        mExceptBestAndWorstTeam = b;
     }
-    
+
     public boolean isUseBestResultIndiv() {
         return mUseBestResultsIndiv;
     }
@@ -492,17 +486,17 @@ public class Parameters implements XMLExport {
         params.setAttribute(StringConstants.CS_LARGE_VICTORY_GAP, Integer.toString(this.getGapLargeVictory()));
         params.setAttribute(StringConstants.CS_LITTLE_LOST_GAP, Integer.toString(this.getGapLittleLost()));
 
-        params.setAttribute(StringConstants.CS_RANK+1, Integer.toString(this.getRankingIndiv1()));
-        params.setAttribute(StringConstants.CS_RANK+2, Integer.toString(this.getRankingIndiv2()));
-        params.setAttribute(StringConstants.CS_RANK+3, Integer.toString(this.getRankingIndiv3()));
-        params.setAttribute(StringConstants.CS_RANK+4, Integer.toString(this.getRankingIndiv4()));
-        params.setAttribute(StringConstants.CS_RANK+5, Integer.toString(this.getRankingIndiv5()));
+        params.setAttribute(StringConstants.CS_RANK + 1, Integer.toString(this.getRankingIndiv1()));
+        params.setAttribute(StringConstants.CS_RANK + 2, Integer.toString(this.getRankingIndiv2()));
+        params.setAttribute(StringConstants.CS_RANK + 3, Integer.toString(this.getRankingIndiv3()));
+        params.setAttribute(StringConstants.CS_RANK + 4, Integer.toString(this.getRankingIndiv4()));
+        params.setAttribute(StringConstants.CS_RANK + 5, Integer.toString(this.getRankingIndiv5()));
 
-        params.setAttribute(StringConstants.CS_RANK+1+"_"+StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam1()));
-        params.setAttribute(StringConstants.CS_RANK+2+"_"+StringConstants.CS_TEAM, Integer.toString(this.gemRankingTeam2()));
-        params.setAttribute(StringConstants.CS_RANK+3+"_"+StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam3()));
-        params.setAttribute(StringConstants.CS_RANK+4+"_"+StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam4()));
-        params.setAttribute(StringConstants.CS_RANK+5+"_"+StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam5()));
+        params.setAttribute(StringConstants.CS_RANK + 1 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam1()));
+        params.setAttribute(StringConstants.CS_RANK + 2 + "_" + StringConstants.CS_TEAM, Integer.toString(this.gemRankingTeam2()));
+        params.setAttribute(StringConstants.CS_RANK + 3 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam3()));
+        params.setAttribute(StringConstants.CS_RANK + 4 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam4()));
+        params.setAttribute(StringConstants.CS_RANK + 5 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam5()));
 
         params.setAttribute(StringConstants.CS_BYTEAM, Boolean.toString(this.isTeamTournament()));
         params.setAttribute(StringConstants.CS_TEAMMATES, Integer.toString(this.getTeamMatesNumber()));
@@ -565,12 +559,14 @@ public class Parameters implements XMLExport {
 
         params.setAttribute(StringConstants.CS_BEST_RESULT_INDIV, Integer.toString(this.getBestResultIndiv()));
         params.setAttribute(StringConstants.CS_BEST_RESULT_TEAM, Integer.toString(this.getBestResultTeam()));
-        
+
         params.setAttribute(StringConstants.CS_APPLY_TO_ANNEX_TEAM, Boolean.toString(this.isApplyToAnnexTeam()));
         params.setAttribute(StringConstants.CS_APPLY_TO_ANNEX_INDIV, Boolean.toString(this.isApplyToAnnexIndiv()));
-        
+
         params.setAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_INDIV, Boolean.toString(this.isExceptBestAndWorstIndiv()));
         params.setAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_TEAM, Boolean.toString(this.isExceptBestAndWorstTeam()));
+
+        params.setAttribute(StringConstants.CS_WEB_PORT, Integer.toString(_webport));
 
         return params;
     }
@@ -602,12 +598,12 @@ public class Parameters implements XMLExport {
             }
             this.setPointsIndivLittleLost(params.getAttribute(StringConstants.CS_LITTLE_LOST).getIntValue());
 
-            Attribute r1 = params.getAttribute(StringConstants.CS_RANK+1);
+            Attribute r1 = params.getAttribute(StringConstants.CS_RANK + 1);
             this.setRankingIndiv1((r1.getIntValue()));
-            this.setRankingIndiv2((params.getAttribute(StringConstants.CS_RANK+2).getIntValue()));
-            this.setRankingIndiv3((params.getAttribute(StringConstants.CS_RANK+3).getIntValue()));
-            this.setRankingIndiv4((params.getAttribute(StringConstants.CS_RANK+4).getIntValue()));
-            this.setRankingIndiv5((params.getAttribute(StringConstants.CS_RANK+5).getIntValue()));
+            this.setRankingIndiv2((params.getAttribute(StringConstants.CS_RANK + 2).getIntValue()));
+            this.setRankingIndiv3((params.getAttribute(StringConstants.CS_RANK + 3).getIntValue()));
+            this.setRankingIndiv4((params.getAttribute(StringConstants.CS_RANK + 4).getIntValue()));
+            this.setRankingIndiv5((params.getAttribute(StringConstants.CS_RANK + 5).getIntValue()));
 
             try {
                 this.setGapLargeVictory(params.getAttribute(StringConstants.CS_LARGE_VICTORY_GAP).getIntValue());
@@ -684,11 +680,11 @@ public class Parameters implements XMLExport {
                 this.setPointsTeamVictory(params.getAttribute(StringConstants.CS_VICTORY_TEAM).getIntValue());
                 this.setPointsTeamDraw(params.getAttribute(StringConstants.CS_DRAW_TEAM).getIntValue());
                 this.setPointsTeamLost(params.getAttribute(StringConstants.CS_LOST_TEAM).getIntValue());
-                this.setRankingTeam1(params.getAttribute(StringConstants.CS_RANK+1+"_"+StringConstants.CS_TEAM).getIntValue());
-                this.setRankingTeam2(params.getAttribute(StringConstants.CS_RANK+2+"_"+StringConstants.CS_TEAM).getIntValue());
-                this.setRankingTeam3(params.getAttribute(StringConstants.CS_RANK+3+"_"+StringConstants.CS_TEAM).getIntValue());
-                this.setRankingTeam4(params.getAttribute(StringConstants.CS_RANK+4+"_"+StringConstants.CS_TEAM).getIntValue());
-                this.setRankingTeam5(params.getAttribute(StringConstants.CS_RANK+5+"_"+StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam1(params.getAttribute(StringConstants.CS_RANK + 1 + "_" + StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam2(params.getAttribute(StringConstants.CS_RANK + 2 + "_" + StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam3(params.getAttribute(StringConstants.CS_RANK + 3 + "_" + StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam4(params.getAttribute(StringConstants.CS_RANK + 4 + "_" + StringConstants.CS_TEAM).getIntValue());
+                this.setRankingTeam5(params.getAttribute(StringConstants.CS_RANK + 5 + "_" + StringConstants.CS_TEAM).getIntValue());
             } catch (NullPointerException ne2) {
                 JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
             }
@@ -717,7 +713,7 @@ public class Parameters implements XMLExport {
                 this.setUseBestResultTeam(params.getAttribute(StringConstants.CS_USE_BEST_RESULT_TEAM).getBooleanValue());
                 this.setBestResultIndiv(params.getAttribute(StringConstants.CS_BEST_RESULT_INDIV).getIntValue());
                 this.setBestResultTeam(params.getAttribute(StringConstants.CS_BEST_RESULT_TEAM).getIntValue());
-                
+
                 this.setApplyToAnnexIndiv(params.getAttribute(StringConstants.CS_APPLY_TO_ANNEX_INDIV).getBooleanValue());
                 this.setApplyToAnnexTeam(params.getAttribute(StringConstants.CS_APPLY_TO_ANNEX_TEAM).getBooleanValue());
                 this.setExceptBestAndWorstIndiv(params.getAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_INDIV).getBooleanValue());
@@ -742,13 +738,22 @@ public class Parameters implements XMLExport {
             this.clearCiterias();
 
             while (cr.hasNext()) {
-                final Element criteria =  cr.next();
+                final Element criteria = cr.next();
                 final Criteria crit = new Criteria(criteria.getAttributeValue(StringConstants.CS_NAME));
                 crit.setXMLElement(criteria);
                 this.addCriteria(crit);
             }
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
+        }
+
+        try {
+            this.setWebEdit(params.getAttribute(StringConstants.CS_WEBEDIT).getBooleanValue());
+            this._webport = Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_PORT).getValue());
+        } catch (NullPointerException npe5) {
+            this._webport = 80;
+        } catch (DataConversionException dce) {
+            this._webport = 80;
         }
     }
 
@@ -1623,4 +1628,109 @@ public class Parameters implements XMLExport {
         return mUseLittleLoss;
     }
 
+    protected int _webport = 80;
+
+    public int getWebServerPort() {
+        return _webport;
+    }
+
+    public void setWebServerPort(int port) {
+        _webport = port;
+    }
+
+    /**
+     *
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(final Object obj) {
+
+        boolean result;
+        result = false;
+        if (obj instanceof Parameters) {
+            Parameters params = (Parameters) obj;
+
+            result &= params.mBestResultsIndiv == this.mBestResultsIndiv;
+            result &= params.mBestResultsTeam == this.mBestResultsTeam;
+            result &= params.mClansMembersNumber == this.mClansMembersNumber;
+            result &= params.mGame == this.mGame;
+
+            result &= params.mGapLargeVictory == this.mGapLargeVictory;
+            result &= params.mGapLittleLost == this.mGapLittleLost;
+            result &= params.mPointsConcedeed == this.mPointsConcedeed;
+            result &= params.mPointsIndivDraw == this.mPointsIndivDraw;
+            result &= params.mPointsIndivLargeVictory == this.mPointsIndivLargeVictory;
+            result &= params.mPointsIndivLittleLost == this.mPointsIndivLittleLost;
+            result &= params.mPointsIndivLost == this.mPointsIndivLost;
+            result &= params.mPointsIndivVictory == this.mPointsIndivVictory;
+            result &= params.mPointsRefused == this.mPointsRefused;
+            result &= params.mPointsTeamDraw == this.mPointsTeamDraw;
+            result &= params.mPointsTeamDrawBonus == this.mPointsTeamDrawBonus;
+            result &= params.mPointsTeamLost == this.mPointsTeamLost;
+            result &= params.mPointsTeamVictory == this.mPointsTeamVictory;
+            result &= params.mPointsTeamVictoryBonus == this.mPointsTeamVictoryBonus;
+            result &= params.mRankingIndiv1 == this.mRankingIndiv1;
+            result &= params.mRankingIndiv2 == this.mRankingIndiv2;
+            result &= params.mRankingIndiv3 == this.mRankingIndiv3;
+            result &= params.mRankingIndiv4 == this.mRankingIndiv4;
+            result &= params.mRankingIndiv5 == this.mRankingIndiv5;
+
+            result &= params.mRankingTeam1 == this.mRankingTeam1;
+            result &= params.mRankingTeam2 == this.mRankingTeam2;
+            result &= params.mRankingTeam3 == this.mRankingTeam3;
+            result &= params.mRankingTeam4 == this.mRankingTeam4;
+            result &= params.mRankingTeam5 == this.mRankingTeam5;
+
+            result &= params.mTeamMatesClansNumber == this.mTeamMatesClansNumber;
+            result &= params.mTeamMatesNumber == this.mTeamMatesNumber;
+            result &= params.mDate.equals(this.mDate);
+            result &= params.mPlace.equals(this.mPlace);
+            result &= params.mTournamentName.equals(this.mTournamentName);
+            result &= params.mTournamentOrga.equals(this.mTournamentOrga);
+
+            result = params.mApplyToAnnexIndiv == this.mApplyToAnnexIndiv;
+            result &= params.mApplyToAnnexTeam == this.mApplyToAnnexTeam;
+            result &= params.mAvoidClansFirstMatch = this.mAvoidClansFirstMatch;
+            result &= params.mAvoidClansMatch == this.mAvoidClansMatch;
+            result &= params.mEnableClans == this.mEnableClans;
+            result &= params.mExceptBestAndWorstIndiv == this.mExceptBestAndWorstIndiv;
+            result &= params.mExceptBestAndWorstTeam == this.mExceptBestAndWorstTeam;
+            result &= params.mGroupsEnable == this.mGroupsEnable;
+            result &= params.mIndivPairingIndivBalanced == this.mIndivPairingIndivBalanced;
+            result &= params.mIndivPairingTeamBalanced == this.mIndivPairingTeamBalanced;
+            result &= params.mMultiRoster == this.mMultiRoster;
+            result &= params.mPortugal == this.mPortugal;
+            result &= params.mSubstitutes == this.mSubstitutes;
+            result &= params.mTableBonus == this.mTableBonus;
+            result &= params.mTableBonusPerRound == this.mTableBonusPerRound;
+            result &= params.mTeamTournament == this.mTeamTournament;
+            result &= params.mTeamVictoryOnly == this.mTeamVictoryOnly;
+            result &= params.mUseBestResultsIndiv == this.mUseBestResultsIndiv;
+            result &= params.mUseBestResultsTeam == this.mUseBestResultsTeam;
+            result &= params.mUseLargeVictory == this.mUseLargeVictory;
+            result &= params.mUseLittleLoss == this.mUseLittleLoss;
+
+            result &= params.mTeamPairing == this.mTeamPairing;
+            result &= params.mTeamIndivPairing == this.mTeamIndivPairing;
+
+            result &= Math.abs(params.mTableBonusCoef - this.mTableBonusCoef) < 0.001;
+
+            result &= params.mCriterias.size() == this.mCriterias.size();
+            for (Criteria c : mCriterias) {
+                result &= params.mCriterias.contains(c);
+            }
+        }
+        return result;
+    }
+
+    protected boolean mWebEdit = false;
+
+    public void setWebEdit(boolean WebEdit) {
+        mWebEdit = WebEdit;
+    }
+
+    public boolean isWebEdit() {
+        return mWebEdit;
+    }
 }

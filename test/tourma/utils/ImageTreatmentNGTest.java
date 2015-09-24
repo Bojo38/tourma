@@ -7,7 +7,6 @@ package tourma.utils;
 
 import javax.swing.ImageIcon;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -44,14 +43,12 @@ public class ImageTreatmentNGTest {
     @Test
     public void testResize() {
         System.out.println("resize");
-        ImageIcon image = null;
-        int heigth = 0;
-        int width = 0;
-        ImageIcon expResult = null;
+        ImageIcon image = Icons.getParams();
+        int heigth = image.getIconHeight()/2;
+        int width = image.getIconWidth()/2;
         ImageIcon result = ImageTreatment.resize(image, heigth, width);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result.getIconHeight(), image.getIconHeight()/2);
+        assertEquals(result.getIconWidth(), image.getIconWidth()/2);
     }
     
 }

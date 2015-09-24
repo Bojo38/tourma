@@ -5,22 +5,23 @@
  */
 package tourma.data;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.jdom2.Element;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class ParametersNGTest {
-    
+
     public ParametersNGTest() {
     }
 
@@ -34,6 +35,7 @@ public class ParametersNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/params.xml"));
     }
 
     @AfterMethod
@@ -46,12 +48,12 @@ public class ParametersNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Parameters instance = new Parameters();
-        Element expResult = null;
+        Parameters instance = Tournament.getTournament().getParams();
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Parameters instance2 = new Parameters();
+        instance2.setXMLElement(result);
+        assertEquals(instance, instance2);
     }
 
     /**
@@ -60,11 +62,12 @@ public class ParametersNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element params = null;
-        Parameters instance = new Parameters();
-        instance.setXMLElement(params);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        Element result = instance.getXMLElement();
+
+        Parameters instance2 = new Parameters();
+        instance2.setXMLElement(result);
+        assertEquals(instance, instance2);
     }
 
     /**
@@ -74,11 +77,9 @@ public class ParametersNGTest {
     public void testToString() {
         System.out.println("toString");
         Parameters instance = new Parameters();
-        String expResult = "";
+        String expResult = "Paramètres";
         String result = instance.toString();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -87,13 +88,27 @@ public class ParametersNGTest {
     @Test
     public void testGetTeamRankingType() {
         System.out.println("getTeamRankingType");
-        int j = 0;
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getTeamRankingType(j);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getIndivRankingType(0);
+        instance.setRankingIndiv1(Parameters.C_RANKING_POINTS);
+        val = instance.getIndivRankingType(0);
+        assertEquals(Parameters.C_RANKING_POINTS, val);
+
+        instance.setRankingIndiv2(Parameters.C_RANKING_NB_MATCHS);
+        val = instance.getIndivRankingType(1);
+        assertEquals(Parameters.C_RANKING_NB_MATCHS, val);
+
+        instance.setRankingIndiv3(Parameters.C_RANKING_VND);
+        val = instance.getIndivRankingType(2);
+        assertEquals(Parameters.C_RANKING_VND, val);
+
+        instance.setRankingIndiv4(Parameters.C_RANKING_ELO);
+        val = instance.getIndivRankingType(3);
+        assertEquals(Parameters.C_RANKING_ELO, val);
+
+        instance.setRankingIndiv5(Parameters.C_RANKING_ELO_OPP);
+        val = instance.getIndivRankingType(4);
+        assertEquals(Parameters.C_RANKING_ELO_OPP, val);
     }
 
     /**
@@ -102,13 +117,29 @@ public class ParametersNGTest {
     @Test
     public void testGetIndivRankingType() {
         System.out.println("getIndivRankingType");
-        int j = 0;
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getIndivRankingType(j);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+
+        int val = instance.getTeamRankingType(0);
+        instance.setRankingTeam1(Parameters.C_RANKING_POINTS);
+        val = instance.getTeamRankingType(0);
+        assertEquals(Parameters.C_RANKING_POINTS, val);
+
+        instance.setRankingTeam2(Parameters.C_RANKING_NB_MATCHS);
+        val = instance.getTeamRankingType(1);
+        assertEquals(Parameters.C_RANKING_NB_MATCHS, val);
+
+        instance.setRankingTeam3(Parameters.C_RANKING_VND);
+        val = instance.getTeamRankingType(2);
+        assertEquals(Parameters.C_RANKING_VND, val);
+
+        instance.setRankingTeam4(Parameters.C_RANKING_ELO);
+        val = instance.getTeamRankingType(3);
+        assertEquals(Parameters.C_RANKING_ELO, val);
+
+        instance.setRankingTeam5(Parameters.C_RANKING_ELO_OPP);
+        val = instance.getTeamRankingType(4);
+        assertEquals(Parameters.C_RANKING_ELO_OPP, val);
+
     }
 
     /**
@@ -118,11 +149,20 @@ public class ParametersNGTest {
     public void testGetIndivRankingNumber() {
         System.out.println("getIndivRankingNumber");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 5;
+        instance.setRankingIndiv1(Parameters.C_RANKING_POINTS);
+        instance.setRankingIndiv2(Parameters.C_RANKING_POINTS);
+        instance.setRankingIndiv3(Parameters.C_RANKING_POINTS);
+        instance.setRankingIndiv4(Parameters.C_RANKING_POINTS);
+        instance.setRankingIndiv5(Parameters.C_RANKING_POINTS);
         int result = instance.getIndivRankingNumber();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setRankingIndiv4(Parameters.C_RANKING_NONE);
+        instance.setRankingIndiv5(Parameters.C_RANKING_NONE);
+        expResult = 3;
+        result = instance.getIndivRankingNumber();
+        assertEquals(result, expResult);
+
     }
 
     /**
@@ -132,11 +172,20 @@ public class ParametersNGTest {
     public void testGetTeamRankingNumber() {
         System.out.println("getTeamRankingNumber");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 5;
+        instance.setRankingTeam1(Parameters.C_RANKING_ELO);
+        instance.setRankingTeam2(Parameters.C_RANKING_ELO);
+        instance.setRankingTeam3(Parameters.C_RANKING_ELO);
+        instance.setRankingTeam4(Parameters.C_RANKING_ELO);
+        instance.setRankingTeam5(Parameters.C_RANKING_ELO);
         int result = instance.getTeamRankingNumber();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = 3;
+        instance.setRankingTeam4(Parameters.C_RANKING_NONE);
+        instance.setRankingTeam5(Parameters.C_RANKING_NONE);
+        result = instance.getTeamRankingNumber();
+        assertEquals(result, expResult);
+
     }
 
     /**
@@ -145,12 +194,11 @@ public class ParametersNGTest {
     @Test
     public void testGetCriteriaCount() {
         System.out.println("getCriteriaCount");
+        Criteria c = new Criteria("T");
         Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getCriteriaCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int nb = instance.getCriteriaCount();
+        instance.addCriteria(c);
+        assertEquals(nb + 1, instance.getCriteriaCount());
     }
 
     /**
@@ -159,13 +207,11 @@ public class ParametersNGTest {
     @Test
     public void testGetCriteria() {
         System.out.println("getCriteria");
-        int i = 0;
+        Criteria c = new Criteria("T");
         Parameters instance = new Parameters();
-        Criteria expResult = null;
-        Criteria result = instance.getCriteria(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int nb = instance.getCriteriaCount();
+        instance.addCriteria(c);
+        assertEquals(c, instance.getCriteria(nb));
     }
 
     /**
@@ -174,10 +220,13 @@ public class ParametersNGTest {
     @Test
     public void testClearCiterias() {
         System.out.println("clearCiterias");
+        Criteria c = new Criteria("T");
         Parameters instance = new Parameters();
+        int nb = instance.getCriteriaCount();
+        instance.addCriteria(c);
+        assertEquals(nb + 1, instance.getCriteriaCount());
         instance.clearCiterias();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(0, instance.getCriteriaCount());
     }
 
     /**
@@ -186,11 +235,11 @@ public class ParametersNGTest {
     @Test
     public void testAddCriteria() {
         System.out.println("addCriteria");
-        Criteria c = null;
+        Criteria c = new Criteria("T");
         Parameters instance = new Parameters();
+        int nb = instance.getCriteriaCount();
         instance.addCriteria(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(nb + 1, instance.getCriteriaCount());
     }
 
     /**
@@ -199,11 +248,13 @@ public class ParametersNGTest {
     @Test
     public void testRemoveCriteria() {
         System.out.println("removeCriteria");
-        int c = 0;
+        Criteria c = new Criteria("T");
         Parameters instance = new Parameters();
-        instance.removeCriteria(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int nb = instance.getCriteriaCount();
+        instance.addCriteria(c);
+        assertEquals(nb + 1, instance.getCriteriaCount());
+        instance.removeCriteria(nb);
+        assertEquals(nb, instance.getCriteriaCount());
     }
 
     /**
@@ -214,10 +265,9 @@ public class ParametersNGTest {
         System.out.println("getGame");
         Parameters instance = new Parameters();
         int expResult = 0;
+        instance.setGame(expResult);
         int result = instance.getGame();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -226,11 +276,11 @@ public class ParametersNGTest {
     @Test
     public void testSetGame() {
         System.out.println("setGame");
-        int mGame = 0;
         Parameters instance = new Parameters();
-        instance.setGame(mGame);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 0;
+        instance.setGame(expResult);
+        int result = instance.getGame();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -240,11 +290,10 @@ public class ParametersNGTest {
     public void testGetPointsIndivVictory() {
         System.out.println("getPointsIndivVictory");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 584;
+        instance.setPointsIndivVictory(expResult);
         int result = instance.getPointsIndivVictory();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -253,11 +302,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsIndivVictory() {
         System.out.println("setPointsIndivVictory");
-        int mPointsIndivVictory = 0;
         Parameters instance = new Parameters();
-        instance.setPointsIndivVictory(mPointsIndivVictory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 584;
+        instance.setPointsIndivVictory(expResult);
+        int result = instance.getPointsIndivVictory();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -267,11 +316,11 @@ public class ParametersNGTest {
     public void testGetPointsIndivLargeVictory() {
         System.out.println("getPointsIndivLargeVictory");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 3512;
+        instance.setPointsIndivLargeVictory(expResult);
         int result = instance.getPointsIndivLargeVictory();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -280,11 +329,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsIndivLargeVictory() {
         System.out.println("setPointsIndivLargeVictory");
-        int mPointsIndivLargeVictory = 0;
         Parameters instance = new Parameters();
-        instance.setPointsIndivLargeVictory(mPointsIndivLargeVictory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 3512;
+        instance.setPointsIndivLargeVictory(expResult);
+        int result = instance.getPointsIndivLargeVictory();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -294,11 +343,10 @@ public class ParametersNGTest {
     public void testGetPointsIndivDraw() {
         System.out.println("getPointsIndivDraw");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 123;
+        instance.setPointsIndivDraw(expResult);
         int result = instance.getPointsIndivDraw();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -307,11 +355,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsIndivDraw() {
         System.out.println("setPointsIndivDraw");
-        int mPointsIndivDraw = 0;
         Parameters instance = new Parameters();
-        instance.setPointsIndivDraw(mPointsIndivDraw);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 123;
+        instance.setPointsIndivDraw(expResult);
+        int result = instance.getPointsIndivDraw();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -321,11 +369,10 @@ public class ParametersNGTest {
     public void testGetPointsIndivLittleLost() {
         System.out.println("getPointsIndivLittleLost");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 456;
+        instance.setPointsIndivLittleLost(expResult);
         int result = instance.getPointsIndivLittleLost();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -334,11 +381,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsIndivLittleLost() {
         System.out.println("setPointsIndivLittleLost");
-        int mPointsIndivLittleLost = 0;
         Parameters instance = new Parameters();
-        instance.setPointsIndivLittleLost(mPointsIndivLittleLost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 456;
+        instance.setPointsIndivLittleLost(expResult);
+        int result = instance.getPointsIndivLittleLost();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -348,11 +395,10 @@ public class ParametersNGTest {
     public void testGetPointsIndivLost() {
         System.out.println("getPointsIndivLost");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 789;
+        instance.setPointsIndivLost(expResult);
         int result = instance.getPointsIndivLost();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -361,11 +407,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsIndivLost() {
         System.out.println("setPointsIndivLost");
-        int mPointsIndivLost = 0;
         Parameters instance = new Parameters();
-        instance.setPointsIndivLost(mPointsIndivLost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 789;
+        instance.setPointsIndivLost(expResult);
+        int result = instance.getPointsIndivLost();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -375,11 +421,11 @@ public class ParametersNGTest {
     public void testGetPointsRefused() {
         System.out.println("getPointsRefused");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = -9812;
+        instance.setPointsRefused(expResult);
         int result = instance.getPointsRefused();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -388,11 +434,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsRefused() {
         System.out.println("setPointsRefused");
-        int mPointsRefused = 0;
         Parameters instance = new Parameters();
-        instance.setPointsRefused(mPointsRefused);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = -9812;
+        instance.setPointsRefused(expResult);
+        int result = instance.getPointsRefused();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -402,11 +448,10 @@ public class ParametersNGTest {
     public void testGetPointsConcedeed() {
         System.out.println("getPointsConcedeed");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = -1200;
+        instance.setPointsConcedeed(expResult);
         int result = instance.getPointsConcedeed();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -415,11 +460,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsConcedeed() {
         System.out.println("setPointsConcedeed");
-        int mPointsConcedeed = 0;
         Parameters instance = new Parameters();
-        instance.setPointsConcedeed(mPointsConcedeed);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = -1200;
+        instance.setPointsConcedeed(expResult);
+        int result = instance.getPointsConcedeed();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -430,10 +475,10 @@ public class ParametersNGTest {
         System.out.println("isTeamVictoryOnly");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setTeamVictoryOnly(expResult);
         boolean result = instance.isTeamVictoryOnly();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -442,11 +487,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTeamVictoryOnly() {
         System.out.println("setTeamVictoryOnly");
-        boolean mTeamVictoryOnly = false;
         Parameters instance = new Parameters();
-        instance.setTeamVictoryOnly(mTeamVictoryOnly);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setTeamVictoryOnly(expResult);
+        boolean result = instance.isTeamVictoryOnly();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -456,11 +501,10 @@ public class ParametersNGTest {
     public void testIsPortugal() {
         System.out.println("isPortugal");
         Parameters instance = new Parameters();
-        boolean expResult = false;
+        boolean expResult = true;
+        instance.setPortugal(expResult);
         boolean result = instance.isPortugal();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -469,11 +513,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPortugal() {
         System.out.println("setPortugal");
-        boolean mPortugal = false;
         Parameters instance = new Parameters();
-        instance.setPortugal(mPortugal);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = true;
+        instance.setPortugal(expResult);
+        boolean result = instance.isPortugal();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -483,11 +527,11 @@ public class ParametersNGTest {
     public void testGetGapLargeVictory() {
         System.out.println("getGapLargeVictory");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 3;
+        instance.setGapLargeVictory(3);
         int result = instance.getGapLargeVictory();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -496,11 +540,11 @@ public class ParametersNGTest {
     @Test
     public void testSetGapLargeVictory() {
         System.out.println("setGapLargeVictory");
-        int mGapLargeVictory = 0;
         Parameters instance = new Parameters();
-        instance.setGapLargeVictory(mGapLargeVictory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 3;
+        instance.setGapLargeVictory(3);
+        int result = instance.getGapLargeVictory();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -510,11 +554,10 @@ public class ParametersNGTest {
     public void testGetGapLittleLost() {
         System.out.println("getGapLittleLost");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 1;
+        instance.setGapLittleLost(expResult);
         int result = instance.getGapLittleLost();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -523,11 +566,11 @@ public class ParametersNGTest {
     @Test
     public void testSetGapLittleLost() {
         System.out.println("setGapLittleLost");
-        int mGapLittleLost = 0;
         Parameters instance = new Parameters();
-        instance.setGapLittleLost(mGapLittleLost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 1;
+        instance.setGapLittleLost(expResult);
+        int result = instance.getGapLittleLost();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -538,10 +581,9 @@ public class ParametersNGTest {
         System.out.println("isSubstitutes");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setSubstitutes(expResult);
         boolean result = instance.isSubstitutes();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -550,11 +592,11 @@ public class ParametersNGTest {
     @Test
     public void testSetSubstitutes() {
         System.out.println("setSubstitutes");
-        boolean mSubstitutes = false;
         Parameters instance = new Parameters();
-        instance.setSubstitutes(mSubstitutes);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setSubstitutes(expResult);
+        boolean result = instance.isSubstitutes();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -564,11 +606,11 @@ public class ParametersNGTest {
     public void testGetTournamentName() {
         System.out.println("getTournamentName");
         Parameters instance = new Parameters();
-        String expResult = "";
+        String expResult = "BlaBla";
+        instance.setTournamentName(expResult);
         String result = instance.getTournamentName();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -577,11 +619,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTournamentName() {
         System.out.println("setTournamentName");
-        String mTournamentName = "";
         Parameters instance = new Parameters();
-        instance.setTournamentName(mTournamentName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "BlaBla";
+        instance.setTournamentName(expResult);
+        String result = instance.getTournamentName();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -591,11 +633,10 @@ public class ParametersNGTest {
     public void testGetTournamentOrga() {
         System.out.println("getTournamentOrga");
         Parameters instance = new Parameters();
-        String expResult = "";
+        String expResult = "Moi";
+        instance.semTournamentOrga(expResult);
         String result = instance.getTournamentOrga();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -604,11 +645,11 @@ public class ParametersNGTest {
     @Test
     public void testSemTournamentOrga() {
         System.out.println("semTournamentOrga");
-        String mTournamentOrga = "";
         Parameters instance = new Parameters();
-        instance.semTournamentOrga(mTournamentOrga);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "Moi";
+        instance.semTournamentOrga(expResult);
+        String result = instance.getTournamentOrga();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -618,11 +659,10 @@ public class ParametersNGTest {
     public void testGetPlace() {
         System.out.println("getPlace");
         Parameters instance = new Parameters();
-        String expResult = "";
+        String expResult = "Ici";
+        instance.setPlace(expResult);
         String result = instance.getPlace();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -631,11 +671,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPlace() {
         System.out.println("setPlace");
-        String mPlace = "";
         Parameters instance = new Parameters();
-        instance.setPlace(mPlace);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "Ici";
+        instance.setPlace(expResult);
+        String result = instance.getPlace();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -644,13 +684,13 @@ public class ParametersNGTest {
     @Test
     public void testGetStringDate() {
         System.out.println("getStringDate");
-        SimpleDateFormat format = null;
         Parameters instance = new Parameters();
-        String expResult = "";
-        String result = instance.getStringDate(format);
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY HH:MM:SS");
+        String expResult = sdf.format(d);
+        String result = instance.getStringDate(sdf);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -660,11 +700,10 @@ public class ParametersNGTest {
     public void testGetDateTime() {
         System.out.println("getDateTime");
         Parameters instance = new Parameters();
-        long expResult = 0L;
+        Date d = new Date();
+        instance.setDate(d);
         long result = instance.getDateTime();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, d.getTime());
     }
 
     /**
@@ -673,11 +712,11 @@ public class ParametersNGTest {
     @Test
     public void testSetDate() {
         System.out.println("setDate");
-        Date mDate = null;
         Parameters instance = new Parameters();
-        instance.setDate(mDate);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Date d = new Date();
+        instance.setDate(d);
+        long result = instance.getDateTime();
+        assertEquals(result, d.getTime());
     }
 
     /**
@@ -686,12 +725,13 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingIndiv1() {
         System.out.println("getRankingIndiv1");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingIndiv1();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+
+        int val = instance.getRankingIndiv1();
+        instance.setRankingIndiv1(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv1();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
+
     }
 
     /**
@@ -700,11 +740,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingIndiv1() {
         System.out.println("setRankingIndiv1");
-        int mRankingIndiv1 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingIndiv1(mRankingIndiv1);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv1();
+        instance.setRankingIndiv1(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv1();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -713,12 +753,11 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingIndiv2() {
         System.out.println("getRankingIndiv2");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingIndiv2();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv2();
+        instance.setRankingIndiv2(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv2();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -727,11 +766,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingIndiv2() {
         System.out.println("setRankingIndiv2");
-        int mRankingIndiv2 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingIndiv2(mRankingIndiv2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv2();
+        instance.setRankingIndiv2(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv2();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -740,12 +779,11 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingIndiv3() {
         System.out.println("getRankingIndiv3");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingIndiv3();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv3();
+        instance.setRankingIndiv3(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv3();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -754,11 +792,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingIndiv3() {
         System.out.println("setRankingIndiv3");
-        int mRankingIndiv3 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingIndiv3(mRankingIndiv3);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv3();
+        instance.setRankingIndiv3(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv3();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -767,12 +805,11 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingIndiv4() {
         System.out.println("getRankingIndiv4");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingIndiv4();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv4();
+        instance.setRankingIndiv4(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv4();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -781,11 +818,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingIndiv4() {
         System.out.println("setRankingIndiv4");
-        int mRankingIndiv4 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingIndiv4(mRankingIndiv4);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv4();
+        instance.setRankingIndiv4(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv4();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -794,12 +831,11 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingIndiv5() {
         System.out.println("getRankingIndiv5");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingIndiv5();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv5();
+        instance.setRankingIndiv5(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv5();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -808,11 +844,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingIndiv5() {
         System.out.println("setRankingIndiv5");
-        int mRankingIndiv5 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingIndiv5(mRankingIndiv5);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingIndiv5();
+        instance.setRankingIndiv5(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingIndiv5();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -823,10 +859,10 @@ public class ParametersNGTest {
         System.out.println("isTeamTournament");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setTeamTournament(expResult);
         boolean result = instance.isTeamTournament();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -835,11 +871,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTeamTournament() {
         System.out.println("setTeamTournament");
-        boolean mTeamTournament = false;
         Parameters instance = new Parameters();
-        instance.setTeamTournament(mTeamTournament);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setTeamTournament(expResult);
+        boolean result = instance.isTeamTournament();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -850,10 +886,9 @@ public class ParametersNGTest {
         System.out.println("isMultiRoster");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setMultiRoster(expResult);
         boolean result = instance.isMultiRoster();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -862,11 +897,11 @@ public class ParametersNGTest {
     @Test
     public void testSetMultiRoster() {
         System.out.println("setMultiRoster");
-        boolean mMultiRoster = false;
         Parameters instance = new Parameters();
-        instance.setMultiRoster(mMultiRoster);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setMultiRoster(expResult);
+        boolean result = instance.isMultiRoster();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -876,11 +911,11 @@ public class ParametersNGTest {
     public void testGetTeamPairing() {
         System.out.println("getTeamPairing");
         Parameters instance = new Parameters();
-        ETeamPairing expResult = null;
+        ETeamPairing expResult = ETeamPairing.INDIVIDUAL_PAIRING;
+        instance.setTeamPairing(expResult);
         ETeamPairing result = instance.getTeamPairing();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -889,11 +924,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTeamPairing() {
         System.out.println("setTeamPairing");
-        ETeamPairing mTeamPairing = null;
         Parameters instance = new Parameters();
-        instance.setTeamPairing(mTeamPairing);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ETeamPairing expResult = ETeamPairing.INDIVIDUAL_PAIRING;
+        instance.setTeamPairing(expResult);
+        ETeamPairing result = instance.getTeamPairing();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -903,11 +938,11 @@ public class ParametersNGTest {
     public void testGetTeamIndivPairing() {
         System.out.println("getTeamIndivPairing");
         Parameters instance = new Parameters();
-        EIndivPairing expResult = null;
+        EIndivPairing expResult = EIndivPairing.RANDOM;
+        instance.setTeamIndivPairing(expResult);
         EIndivPairing result = instance.getTeamIndivPairing();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -916,11 +951,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTeamIndivPairing() {
         System.out.println("setTeamIndivPairing");
-        EIndivPairing mTeamIndivPairing = null;
         Parameters instance = new Parameters();
-        instance.setTeamIndivPairing(mTeamIndivPairing);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        EIndivPairing expResult = EIndivPairing.RANDOM;
+        instance.setTeamIndivPairing(expResult);
+        EIndivPairing result = instance.getTeamIndivPairing();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -930,11 +965,10 @@ public class ParametersNGTest {
     public void testGetTeamMatesNumber() {
         System.out.println("getTeamMatesNumber");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 3;
+        instance.setTeamMatesNumber(expResult);
         int result = instance.getTeamMatesNumber();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -943,11 +977,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTeamMatesNumber() {
         System.out.println("setTeamMatesNumber");
-        int mTeamMatesNumber = 0;
         Parameters instance = new Parameters();
-        instance.setTeamMatesNumber(mTeamMatesNumber);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 3;
+        instance.setTeamMatesNumber(expResult);
+        int result = instance.getTeamMatesNumber();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -957,11 +991,11 @@ public class ParametersNGTest {
     public void testGetClansMembersNumber() {
         System.out.println("getClansMembersNumber");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 3;
+        instance.setClansMembersNumber(expResult);
         int result = instance.getClansMembersNumber();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -970,11 +1004,11 @@ public class ParametersNGTest {
     @Test
     public void testSetClansMembersNumber() {
         System.out.println("setClansMembersNumber");
-        int mClansMembersNumber = 0;
         Parameters instance = new Parameters();
-        instance.setClansMembersNumber(mClansMembersNumber);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 3;
+        instance.setClansMembersNumber(expResult);
+        int result = instance.getClansMembersNumber();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -985,10 +1019,9 @@ public class ParametersNGTest {
         System.out.println("isIndivPairingTeamBalanced");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setIndivPairingTeamBalanced(expResult);
         boolean result = instance.isIndivPairingTeamBalanced();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -997,11 +1030,11 @@ public class ParametersNGTest {
     @Test
     public void testSetIndivPairingTeamBalanced() {
         System.out.println("setIndivPairingTeamBalanced");
-        boolean mIndivPairingTeamBalanced = false;
         Parameters instance = new Parameters();
-        instance.setIndivPairingTeamBalanced(mIndivPairingTeamBalanced);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setIndivPairingTeamBalanced(expResult);
+        boolean result = instance.isIndivPairingTeamBalanced();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1012,10 +1045,9 @@ public class ParametersNGTest {
         System.out.println("isIndivPairingIndivBalanced");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setIndivPairingIndivBalanced(expResult);
         boolean result = instance.isIndivPairingIndivBalanced();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1024,11 +1056,11 @@ public class ParametersNGTest {
     @Test
     public void testSetIndivPairingIndivBalanced() {
         System.out.println("setIndivPairingIndivBalanced");
-        boolean mIndivPairingIndivBalanced = false;
         Parameters instance = new Parameters();
-        instance.setIndivPairingIndivBalanced(mIndivPairingIndivBalanced);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setIndivPairingIndivBalanced(expResult);
+        boolean result = instance.isIndivPairingIndivBalanced();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1038,11 +1070,11 @@ public class ParametersNGTest {
     public void testGetPointsTeamVictory() {
         System.out.println("getPointsTeamVictory");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 4587;
+        instance.setPointsTeamVictory(expResult);
         int result = instance.getPointsTeamVictory();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1051,11 +1083,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsTeamVictory() {
         System.out.println("setPointsTeamVictory");
-        int mPointsTeamVictory = 0;
         Parameters instance = new Parameters();
-        instance.setPointsTeamVictory(mPointsTeamVictory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 4587;
+        instance.setPointsTeamVictory(expResult);
+        int result = instance.getPointsTeamVictory();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1065,11 +1097,11 @@ public class ParametersNGTest {
     public void testGetPointsTeamDraw() {
         System.out.println("getPointsTeamDraw");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 54;
+        instance.setPointsTeamDraw(expResult);
         int result = instance.getPointsTeamDraw();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1078,11 +1110,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsTeamDraw() {
         System.out.println("setPointsTeamDraw");
-        int mPointsTeamDraw = 0;
         Parameters instance = new Parameters();
-        instance.setPointsTeamDraw(mPointsTeamDraw);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 54;
+        instance.setPointsTeamDraw(expResult);
+        int result = instance.getPointsTeamDraw();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1092,11 +1124,11 @@ public class ParametersNGTest {
     public void testGetPointsTeamLost() {
         System.out.println("getPointsTeamLost");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = -1;
+        instance.setPointsTeamLost(expResult);
         int result = instance.getPointsTeamLost();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1105,11 +1137,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsTeamLost() {
         System.out.println("setPointsTeamLost");
-        int mPointsTeamLost = 0;
         Parameters instance = new Parameters();
-        instance.setPointsTeamLost(mPointsTeamLost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = -1;
+        instance.setPointsTeamLost(expResult);
+        int result = instance.getPointsTeamLost();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1118,12 +1150,11 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingTeam1() {
         System.out.println("getRankingTeam1");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingTeam1();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam1();
+        instance.setRankingTeam1(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam1();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1132,25 +1163,24 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingTeam1() {
         System.out.println("setRankingTeam1");
-        int mRankingTeam1 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingTeam1(mRankingTeam1);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam1();
+        instance.setRankingTeam1(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam1();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
      * Test of gemRankingTeam2 method, of class Parameters.
      */
     @Test
-    public void testGemRankingTeam2() {
-        System.out.println("gemRankingTeam2");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.gemRankingTeam2();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetRankingTeam2() {
+        System.out.println("getRankingTeam2");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam2();
+        instance.setRankingTeam2(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam2();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1159,11 +1189,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingTeam2() {
         System.out.println("setRankingTeam2");
-        int mRankingTeam2 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingTeam2(mRankingTeam2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam2();
+        instance.setRankingTeam2(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam2();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1172,12 +1202,11 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingTeam3() {
         System.out.println("getRankingTeam3");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingTeam3();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam3();
+        instance.setRankingTeam3(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam3();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1186,11 +1215,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingTeam3() {
         System.out.println("setRankingTeam3");
-        int mRankingTeam3 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingTeam3(mRankingTeam3);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam3();
+        instance.setRankingTeam3(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam3();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1199,12 +1228,11 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingTeam4() {
         System.out.println("getRankingTeam4");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingTeam4();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam4();
+        instance.setRankingTeam4(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam4();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1213,11 +1241,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingTeam4() {
         System.out.println("setRankingTeam4");
-        int mRankingTeam4 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingTeam4(mRankingTeam4);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam4();
+        instance.setRankingTeam4(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam4();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1226,12 +1254,11 @@ public class ParametersNGTest {
     @Test
     public void testGetRankingTeam5() {
         System.out.println("getRankingTeam5");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingTeam5();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam5();
+        instance.setRankingTeam5(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam5();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1240,11 +1267,11 @@ public class ParametersNGTest {
     @Test
     public void testSetRankingTeam5() {
         System.out.println("setRankingTeam5");
-        int mRankingTeam5 = 0;
-        Parameters instance = new Parameters();
-        instance.setRankingTeam5(mRankingTeam5);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Parameters instance = Tournament.getTournament().getParams();
+        int val = instance.getRankingTeam5();
+        instance.setRankingTeam5(Parameters.C_RANKING_POINTS);
+        val = instance.getRankingTeam5();
+        assertEquals(Parameters.C_RANKING_POINTS, val);
     }
 
     /**
@@ -1254,11 +1281,10 @@ public class ParametersNGTest {
     public void testGetPointsTeamVictoryBonus() {
         System.out.println("getPointsTeamVictoryBonus");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 9;
+        instance.setPointsTeamVictoryBonus(expResult);
         int result = instance.getPointsTeamVictoryBonus();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1267,11 +1293,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsTeamVictoryBonus() {
         System.out.println("setPointsTeamVictoryBonus");
-        int mPointsTeamVictoryBonus = 0;
         Parameters instance = new Parameters();
-        instance.setPointsTeamVictoryBonus(mPointsTeamVictoryBonus);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 9;
+        instance.setPointsTeamVictoryBonus(expResult);
+        int result = instance.getPointsTeamVictoryBonus();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1281,11 +1307,10 @@ public class ParametersNGTest {
     public void testGetPointsTeamDrawBonus() {
         System.out.println("getPointsTeamDrawBonus");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 5;
+        instance.setPointsTeamDrawBonus(expResult);
         int result = instance.getPointsTeamDrawBonus();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1294,11 +1319,11 @@ public class ParametersNGTest {
     @Test
     public void testSetPointsTeamDrawBonus() {
         System.out.println("setPointsTeamDrawBonus");
-        int mPointsTeamDrawBonus = 0;
         Parameters instance = new Parameters();
-        instance.setPointsTeamDrawBonus(mPointsTeamDrawBonus);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 5;
+        instance.setPointsTeamDrawBonus(expResult);
+        int result = instance.getPointsTeamDrawBonus();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1308,11 +1333,10 @@ public class ParametersNGTest {
     public void testIsGroupsEnable() {
         System.out.println("isGroupsEnable");
         Parameters instance = new Parameters();
-        boolean expResult = false;
+        boolean expResult = true;
+        instance.setGroupsEnable(expResult);
         boolean result = instance.isGroupsEnable();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1321,11 +1345,11 @@ public class ParametersNGTest {
     @Test
     public void testSetGroupsEnable() {
         System.out.println("setGroupsEnable");
-        boolean mGroupsEnable = false;
         Parameters instance = new Parameters();
-        instance.setGroupsEnable(mGroupsEnable);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = true;
+        instance.setGroupsEnable(expResult);
+        boolean result = instance.isGroupsEnable();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1335,11 +1359,10 @@ public class ParametersNGTest {
     public void testIsEnableClans() {
         System.out.println("isEnableClans");
         Parameters instance = new Parameters();
-        boolean expResult = false;
+        boolean expResult = true;
+        instance.setEnableClans(expResult);
         boolean result = instance.isEnableClans();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1348,11 +1371,11 @@ public class ParametersNGTest {
     @Test
     public void testSetEnableClans() {
         System.out.println("setEnableClans");
-        boolean mEnableClans = false;
         Parameters instance = new Parameters();
-        instance.setEnableClans(mEnableClans);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = true;
+        instance.setEnableClans(expResult);
+        boolean result = instance.isEnableClans();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1362,11 +1385,11 @@ public class ParametersNGTest {
     public void testIsAvoidClansFirstMatch() {
         System.out.println("isAvoidClansFirstMatch");
         Parameters instance = new Parameters();
-        boolean expResult = false;
+        boolean expResult = true;
+        instance.setAvoidClansFirstMatch(expResult);
         boolean result = instance.isAvoidClansFirstMatch();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1375,11 +1398,12 @@ public class ParametersNGTest {
     @Test
     public void testSetAvoidClansFirstMatch() {
         System.out.println("setAvoidClansFirstMatch");
-        boolean mAvoidClansFirstMatch = false;
         Parameters instance = new Parameters();
-        instance.setAvoidClansFirstMatch(mAvoidClansFirstMatch);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = true;
+        instance.setAvoidClansFirstMatch(expResult);
+        boolean result = instance.isAvoidClansFirstMatch();
+        assertEquals(result, expResult);
+
     }
 
     /**
@@ -1390,10 +1414,10 @@ public class ParametersNGTest {
         System.out.println("isAvoidClansMatch");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setAvoidClansMatch(expResult);
         boolean result = instance.isAvoidClansMatch();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1402,11 +1426,11 @@ public class ParametersNGTest {
     @Test
     public void testSetAvoidClansMatch() {
         System.out.println("setAvoidClansMatch");
-        boolean mAvoidClansMatch = false;
         Parameters instance = new Parameters();
-        instance.setAvoidClansMatch(mAvoidClansMatch);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setAvoidClansMatch(expResult);
+        boolean result = instance.isAvoidClansMatch();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1416,11 +1440,10 @@ public class ParametersNGTest {
     public void testGetTeamMatesClansNumber() {
         System.out.println("getTeamMatesClansNumber");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 3;
+        instance.setTeamMatesClansNumber(expResult);
         int result = instance.getTeamMatesClansNumber();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1429,11 +1452,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTeamMatesClansNumber() {
         System.out.println("setTeamMatesClansNumber");
-        int mTeamMatesClansNumber = 0;
         Parameters instance = new Parameters();
-        instance.setTeamMatesClansNumber(mTeamMatesClansNumber);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 3;
+        instance.setTeamMatesClansNumber(expResult);
+        int result = instance.getTeamMatesClansNumber();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1444,10 +1467,9 @@ public class ParametersNGTest {
         System.out.println("isUseColor");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setUseColor(expResult);
         boolean result = instance.isUseColor();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1456,11 +1478,12 @@ public class ParametersNGTest {
     @Test
     public void testSetUseColor() {
         System.out.println("setUseColor");
-        boolean useColor = false;
         Parameters instance = new Parameters();
-        instance.setUseColor(useColor);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setUseColor(expResult);
+        boolean result = instance.isUseColor();
+        assertEquals(result, expResult);
+
     }
 
     /**
@@ -1470,11 +1493,10 @@ public class ParametersNGTest {
     public void testIsUseImage() {
         System.out.println("isUseImage");
         Parameters instance = new Parameters();
-        boolean expResult = false;
+        boolean expResult = true;
+        instance.setUseImage(expResult);
         boolean result = instance.isUseImage();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1483,11 +1505,11 @@ public class ParametersNGTest {
     @Test
     public void testSetUseImage() {
         System.out.println("setUseImage");
-        boolean useImage = false;
         Parameters instance = new Parameters();
-        instance.setUseImage(useImage);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = true;
+        instance.setUseImage(expResult);
+        boolean result = instance.isUseImage();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1497,11 +1519,11 @@ public class ParametersNGTest {
     public void testIsApplyToAnnexIndiv() {
         System.out.println("isApplyToAnnexIndiv");
         Parameters instance = new Parameters();
-        boolean expResult = false;
+        boolean expResult = true;
+        instance.setApplyToAnnexIndiv(expResult);
         boolean result = instance.isApplyToAnnexIndiv();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1510,11 +1532,11 @@ public class ParametersNGTest {
     @Test
     public void testSetApplyToAnnexIndiv() {
         System.out.println("setApplyToAnnexIndiv");
-        boolean b = false;
         Parameters instance = new Parameters();
-        instance.setApplyToAnnexIndiv(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = true;
+        instance.setApplyToAnnexIndiv(expResult);
+        boolean result = instance.isApplyToAnnexIndiv();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1525,10 +1547,9 @@ public class ParametersNGTest {
         System.out.println("isExceptBestAndWorstIndiv");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setExceptBestAndWorstIndiv(expResult);
         boolean result = instance.isExceptBestAndWorstIndiv();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1537,11 +1558,11 @@ public class ParametersNGTest {
     @Test
     public void testSetExceptBestAndWorstIndiv() {
         System.out.println("setExceptBestAndWorstIndiv");
-        boolean b = false;
         Parameters instance = new Parameters();
-        instance.setExceptBestAndWorstIndiv(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setExceptBestAndWorstIndiv(expResult);
+        boolean result = instance.isExceptBestAndWorstIndiv();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1552,10 +1573,10 @@ public class ParametersNGTest {
         System.out.println("isApplyToAnnexTeam");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setApplyToAnnexTeam(expResult);
         boolean result = instance.isApplyToAnnexTeam();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1564,11 +1585,11 @@ public class ParametersNGTest {
     @Test
     public void testSetApplyToAnnexTeam() {
         System.out.println("setApplyToAnnexTeam");
-        boolean b = false;
         Parameters instance = new Parameters();
-        instance.setApplyToAnnexTeam(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setApplyToAnnexTeam(expResult);
+        boolean result = instance.isApplyToAnnexTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1579,10 +1600,10 @@ public class ParametersNGTest {
         System.out.println("isExceptBestAndWorstTeam");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setExceptBestAndWorstTeam(expResult);
         boolean result = instance.isExceptBestAndWorstTeam();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1591,11 +1612,11 @@ public class ParametersNGTest {
     @Test
     public void testSetExceptBestAndWorstTeam() {
         System.out.println("setExceptBestAndWorstTeam");
-        boolean b = false;
         Parameters instance = new Parameters();
-        instance.setExceptBestAndWorstTeam(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setExceptBestAndWorstTeam(expResult);
+        boolean result = instance.isExceptBestAndWorstTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1606,10 +1627,9 @@ public class ParametersNGTest {
         System.out.println("isUseBestResultIndiv");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setUseBestResultIndiv(expResult);
         boolean result = instance.isUseBestResultIndiv();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1620,10 +1640,9 @@ public class ParametersNGTest {
         System.out.println("isUseBestResultTeam");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setUseBestResultTeam(expResult);
         boolean result = instance.isUseBestResultTeam();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1632,11 +1651,11 @@ public class ParametersNGTest {
     @Test
     public void testSetUseBestResultIndiv() {
         System.out.println("setUseBestResultIndiv");
-        boolean b = false;
         Parameters instance = new Parameters();
-        instance.setUseBestResultIndiv(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setUseBestResultIndiv(expResult);
+        boolean result = instance.isUseBestResultIndiv();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1645,11 +1664,11 @@ public class ParametersNGTest {
     @Test
     public void testSetUseBestResultTeam() {
         System.out.println("setUseBestResultTeam");
-        boolean b = false;
         Parameters instance = new Parameters();
-        instance.setUseBestResultTeam(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setUseBestResultTeam(expResult);
+        boolean result = instance.isUseBestResultTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1659,11 +1678,12 @@ public class ParametersNGTest {
     public void testGetBestResultIndiv() {
         System.out.println("getBestResultIndiv");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 3;
+
+        instance.setBestResultIndiv(expResult);
         int result = instance.getBestResultIndiv();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1673,11 +1693,11 @@ public class ParametersNGTest {
     public void testGetBestResultTeam() {
         System.out.println("getBestResultTeam");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = 4;
+
+        instance.setBestResultTeam(expResult);
         int result = instance.getBestResultTeam();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1686,11 +1706,12 @@ public class ParametersNGTest {
     @Test
     public void testSetBestResultIndiv() {
         System.out.println("setBestResultIndiv");
-        int i = 0;
         Parameters instance = new Parameters();
-        instance.setBestResultIndiv(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 3;
+
+        instance.setBestResultIndiv(expResult);
+        int result = instance.getBestResultIndiv();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1699,11 +1720,12 @@ public class ParametersNGTest {
     @Test
     public void testSetBestResultTeam() {
         System.out.println("setBestResultTeam");
-        int i = 0;
         Parameters instance = new Parameters();
-        instance.setBestResultTeam(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 4;
+
+        instance.setBestResultTeam(expResult);
+        int result = instance.getBestResultTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1712,13 +1734,13 @@ public class ParametersNGTest {
     @Test
     public void testGetIndexOfCriteria() {
         System.out.println("getIndexOfCriteria");
-        Criteria c = null;
+        Criteria c = new Criteria("T");
         Parameters instance = new Parameters();
-        int expResult = 0;
+        int expResult = instance.getCriteriaCount();
+        instance.addCriteria(c);
         int result = instance.getIndexOfCriteria(c);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1729,10 +1751,10 @@ public class ParametersNGTest {
         System.out.println("isTableBonus");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setTableBonus(expResult);
         boolean result = instance.isTableBonus();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1743,10 +1765,9 @@ public class ParametersNGTest {
         System.out.println("isTableBonusPerRound");
         Parameters instance = new Parameters();
         boolean expResult = false;
-        boolean result = instance.isTableBonusPerRound();
+        instance.setTableBonus(expResult);
+        boolean result = instance.isTableBonus();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1756,11 +1777,10 @@ public class ParametersNGTest {
     public void testGetTableBonusCoef() {
         System.out.println("getTableBonusCoef");
         Parameters instance = new Parameters();
-        double expResult = 0.0;
+        double expResult = 0.9;
+        instance.setTableBonusCoef(expResult);
         double result = instance.getTableBonusCoef();
-        assertEquals(result, expResult, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, expResult, 0.0001);
     }
 
     /**
@@ -1769,11 +1789,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTableBonus() {
         System.out.println("setTableBonus");
-        boolean b = false;
         Parameters instance = new Parameters();
-        instance.setTableBonus(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double expResult = 0.9;
+        instance.setTableBonusCoef(expResult);
+        double result = instance.getTableBonusCoef();
+        assertEquals(result, expResult, 0.0001);
     }
 
     /**
@@ -1782,11 +1802,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTableBonusPerRound() {
         System.out.println("setTableBonusPerRound");
-        boolean b = false;
+        boolean b = false;        
         Parameters instance = new Parameters();
         instance.setTableBonusPerRound(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(b, instance.isTableBonusPerRound());
     }
 
     /**
@@ -1795,25 +1815,11 @@ public class ParametersNGTest {
     @Test
     public void testSetTableBonusCoef() {
         System.out.println("setTableBonusCoef");
-        double val = 0.0;
+        double val = 3.1;
         Parameters instance = new Parameters();
         instance.setTableBonusCoef(val);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getRankingTeam2 method, of class Parameters.
-     */
-    @Test
-    public void testGetRankingTeam2() {
-        System.out.println("getRankingTeam2");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        int result = instance.getRankingTeam2();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double result=instance.getTableBonusCoef();
+        assertEquals(val, result,0.0001);
     }
 
     /**
@@ -1822,11 +1828,11 @@ public class ParametersNGTest {
     @Test
     public void testSetUseLargeVictory() {
         System.out.println("setUseLargeVictory");
-        boolean use = false;
-        Parameters instance = new Parameters();
-        instance.setUseLargeVictory(use);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Parameters instance = new Parameters();
+        boolean expResult = false;
+        instance.setUseLargeVictory(expResult);
+        boolean result = instance.isUseLargeVictory();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1835,11 +1841,11 @@ public class ParametersNGTest {
     @Test
     public void testSetUseLittleLoss() {
         System.out.println("setUseLittleLoss");
-        boolean use = false;
         Parameters instance = new Parameters();
-        instance.setUseLittleLoss(use);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        instance.setUseLittleLoss(expResult);
+        boolean result = instance.isUseLittleLoss();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1850,10 +1856,9 @@ public class ParametersNGTest {
         System.out.println("isUseLargeVictory");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setUseLargeVictory(expResult);
         boolean result = instance.isUseLargeVictory();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1864,10 +1869,9 @@ public class ParametersNGTest {
         System.out.println("isUseLittleLoss");
         Parameters instance = new Parameters();
         boolean expResult = false;
+        instance.setUseLittleLoss(expResult);
         boolean result = instance.isUseLittleLoss();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-    
+
 }

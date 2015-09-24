@@ -53,7 +53,7 @@ public class Substitute implements XMLExport {
             String Sub = e.getAttributeValue(StringConstants.CS_SUBSTITUTE);
             String Tit = e.getAttributeValue(StringConstants.CS_TITULAR);
             setTitular(Coach.getCoach(Tit));
-            setSubstitute(Coach.getCoach(Sub));            
+            setSubstitute(Coach.getCoach(Sub));              
         }
     }
 
@@ -97,5 +97,19 @@ public class Substitute implements XMLExport {
      */
     public void setTitular(Coach mTitular) {
         this.mTitular = mTitular;
+    }
+    
+    
+     public boolean equals(Object c) {
+        if (c instanceof Substitute) {
+            Substitute s = (Substitute) c;
+            boolean equality = true; //(this.mMatch.equals(s.getMatch()));
+            equality &= this.mSubstitute.equals(s.getSubstitute());
+            equality &= this.mTitular.equals(s.getTitular());
+
+            return equality;
+
+        }
+        return false;
     }
 }

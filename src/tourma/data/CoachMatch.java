@@ -7,6 +7,7 @@ package tourma.data;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,6 +71,10 @@ public class CoachMatch extends Match {
      */
     private boolean concedeedBy2 = false;
 
+    public HashMap<Criteria, Value> getValues() {
+        return mValues;
+    }
+
     /**
      *
      * @param round
@@ -95,6 +100,50 @@ public class CoachMatch extends Match {
         setRound(round);
     }
 
+    @Override
+    public boolean equals(Object c) {
+        if (c instanceof CoachMatch) {
+            CoachMatch cm = (CoachMatch) c;
+            boolean equality = (this.concedeedBy1 == cm.concedeedBy1);
+            equality &= (this.concedeedBy2 == cm.concedeedBy2);
+            equality &= (this.refusedBy1 == cm.refusedBy1);
+            equality &= (this.refusedBy2 == cm.refusedBy2);
+            equality &= (this.mRoster1 == cm.mRoster1);
+            equality &= (this.mRoster2 == cm.mRoster2);
+            if ((getCompetitor1() != null) && (getCompetitor2() != null)) {
+                equality &= (this.getCompetitor1().equals(cm.getCompetitor1()));
+                equality &= (this.getCompetitor2().equals(cm.getCompetitor2()));
+            }
+
+            for (Criteria crit : this.mValues.keySet()) {
+                Value v = cm.getValue(crit);
+                if (v == null) {
+                    return false;
+                }
+                equality &= v.getValue1() == this.mValues.get(crit).getValue1();
+                equality &= v.getValue2() == this.mValues.get(crit).getValue2();
+            }
+            //equality &= this.getRound() == cm.getRound();
+
+            return equality;
+
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.mRoster1);
+        hash = 71 * hash + Objects.hashCode(this.mRoster2);
+        hash = 71 * hash + Objects.hashCode(this.mValues);
+        hash = 71 * hash + (this.refusedBy1 ? 1 : 0);
+        hash = 71 * hash + (this.refusedBy2 ? 1 : 0);
+        hash = 71 * hash + (this.concedeedBy1 ? 1 : 0);
+        hash = 71 * hash + (this.concedeedBy2 ? 1 : 0);
+        return hash;
+    }
+
     /**
      *
      * @return
@@ -102,29 +151,29 @@ public class CoachMatch extends Match {
     @Override
     public Element getXMLElement() {
         final Element match = new Element(StringConstants.CS_MATCH);
-        match.setAttribute(StringConstants.CS_COACH+1 , this.getCompetitor1().getName());
-        match.setAttribute(StringConstants.CS_COACH+2, this.getCompetitor2().getName());
+        match.setAttribute(StringConstants.CS_COACH + 1, this.getCompetitor1().getName());
+        match.setAttribute(StringConstants.CS_COACH + 2, this.getCompetitor2().getName());
 
-        match.setAttribute(StringConstants.CS_REFUSED_BY+1, Boolean.toString(isRefusedBy1()));
-        match.setAttribute(StringConstants.CS_REFUSED_BY+2, Boolean.toString(isRefusedBy2()));
-        match.setAttribute(StringConstants.CS_CONCEEDED_BY+1, Boolean.toString(isConcedeedBy1()));
-        match.setAttribute(StringConstants.CS_CONCEEDED_BY+2, Boolean.toString(isConcedeedBy2()));
+        match.setAttribute(StringConstants.CS_REFUSED_BY + 1, Boolean.toString(isRefusedBy1()));
+        match.setAttribute(StringConstants.CS_REFUSED_BY + 2, Boolean.toString(isRefusedBy2()));
+        match.setAttribute(StringConstants.CS_CONCEEDED_BY + 1, Boolean.toString(isConcedeedBy1()));
+        match.setAttribute(StringConstants.CS_CONCEEDED_BY + 2, Boolean.toString(isConcedeedBy2()));
 
         for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
             final Value val = this.getValue(Tournament.getTournament().getParams().getCriteria(k));
             final Element value = new Element(StringConstants.CS_VALUE);
             value.setAttribute(StringConstants.CS_NAME, val.getCriteria().getName());
-            value.setAttribute(StringConstants.CS_VALUE+1, Integer.toString(val.getValue1()));
-            value.setAttribute(StringConstants.CS_VALUE+2, Integer.toString(val.getValue2()));
+            value.setAttribute(StringConstants.CS_VALUE + 1, Integer.toString(val.getValue1()));
+            value.setAttribute(StringConstants.CS_VALUE + 2, Integer.toString(val.getValue2()));
 
             match.addContent(value);
         }
 
         if (this.getRoster1() != null) {
-            match.setAttribute(StringConstants.CS_ROSTER+1, this.getRoster1().getName());
+            match.setAttribute(StringConstants.CS_ROSTER + 1, this.getRoster1().getName());
         }
         if (this.getRoster2() != null) {
-            match.setAttribute(StringConstants.CS_ROSTER+2, this.getRoster2().getName());
+            match.setAttribute(StringConstants.CS_ROSTER + 2, this.getRoster2().getName());
         }
 
         if (getSubstitute1() != null) {
@@ -141,10 +190,11 @@ public class CoachMatch extends Match {
      * @param match
      */
     @Override
-    public void setXMLElement(final Element match) {
+    public void setXMLElement(final Element match
+    ) {
         try {
-            final String c1 = match.getAttribute(StringConstants.CS_COACH+1).getValue();
-            final String c2 = match.getAttribute(StringConstants.CS_COACH+2).getValue();
+            final String c1 = match.getAttribute(StringConstants.CS_COACH + 1).getValue();
+            final String c2 = match.getAttribute(StringConstants.CS_COACH + 2).getValue();
             this.setCompetitor1(Coach.getCoach(c1));
             this.setCompetitor2(Coach.getCoach(c2));
             if (this.getCompetitor1() == null) {
@@ -155,10 +205,10 @@ public class CoachMatch extends Match {
             }
 
             try {
-                setRefusedBy1(match.getAttribute(StringConstants.CS_REFUSED_BY+1).getBooleanValue());
-                setRefusedBy2(match.getAttribute(StringConstants.CS_REFUSED_BY+2).getBooleanValue());
-                setConcedeedBy1(match.getAttribute(StringConstants.CS_CONCEEDED_BY+1).getBooleanValue());
-                setConcedeedBy2(match.getAttribute(StringConstants.CS_CONCEEDED_BY+2).getBooleanValue());
+                setRefusedBy1(match.getAttribute(StringConstants.CS_REFUSED_BY + 1).getBooleanValue());
+                setRefusedBy2(match.getAttribute(StringConstants.CS_REFUSED_BY + 2).getBooleanValue());
+                setConcedeedBy1(match.getAttribute(StringConstants.CS_CONCEEDED_BY + 1).getBooleanValue());
+                setConcedeedBy2(match.getAttribute(StringConstants.CS_CONCEEDED_BY + 2).getBooleanValue());
             } catch (DataConversionException | NullPointerException e) {
                 LOG.log(Level.FINE, e.getLocalizedMessage());
                 setRefusedBy1(false);
@@ -187,7 +237,7 @@ public class CoachMatch extends Match {
             final Iterator<Element> v = values.iterator();
 
             while (v.hasNext()) {
-                final Element val =  v.next();
+                final Element val = v.next();
                 Criteria crit = null;
 
                 for (int cpt = 0; cpt < Tournament.getTournament().getParams().getCriteriaCount(); cpt++) {
@@ -199,17 +249,16 @@ public class CoachMatch extends Match {
                     }
                 }
                 final Value value = new Value(crit);
-                value.setValue1(val.getAttribute(StringConstants.CS_VALUE+1).getIntValue());
-                value.setValue2(val.getAttribute(StringConstants.CS_VALUE+2).getIntValue());
+                value.setValue1(val.getAttribute(StringConstants.CS_VALUE + 1).getIntValue());
+                value.setValue2(val.getAttribute(StringConstants.CS_VALUE + 2).getIntValue());
                 this.putValue(crit, value);
             }
 
-
-            Attribute att1 = match.getAttribute(StringConstants.CS_ROSTER+1);
+            Attribute att1 = match.getAttribute(StringConstants.CS_ROSTER + 1);
             if (att1 != null) {
                 this.setRoster1(RosterType.getRosterType(att1.getValue()));
             }
-            Attribute att2 = match.getAttribute(StringConstants.CS_ROSTER+2);
+            Attribute att2 = match.getAttribute(StringConstants.CS_ROSTER + 2);
             if (att2 != null) {
                 this.setRoster2(RosterType.getRosterType(att2.getValue()));
             }
@@ -505,7 +554,7 @@ public class CoachMatch extends Match {
             if (Coach.getCoach(coach1.getName()) == null) {
                 Tournament.getTournament().addCoach(coach1);
             }
-            
+
             Element c2 = elts.get(1);
             Coach coach2 = new Coach();
             coach2.setXMLElement(c2);
@@ -516,11 +565,10 @@ public class CoachMatch extends Match {
 
         setXMLElement(element);
     }
-    
-    public boolean isFullNaf()
-    {
-        Coach c1=(Coach)getCompetitor1();
-        Coach c2=(Coach)getCompetitor2();
-        return (c1.getNaf()>0)&&(c2.getNaf()>0);
+
+    public boolean isFullNaf() {
+        Coach c1 = (Coach) getCompetitor1();
+        Coach c2 = (Coach) getCompetitor2();
+        return (c1.getNaf() > 0) && (c2.getNaf() > 0);
     }
 }

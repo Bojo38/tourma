@@ -26,11 +26,11 @@ public final class MjtRankingManual extends MjtRanking {
             final int ranking_type3,
             final int ranking_type4,
             final int ranking_type5,
-            final ArrayList competitors,boolean round_only) {
+            final ArrayList competitors, boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, competitors, round_only);
         sortDatas();
     }
-    
+
     /**
      *
      */
@@ -42,27 +42,38 @@ public final class MjtRankingManual extends MjtRanking {
         addDatas(mObjects);
 
     }
-    
-    
-    protected void addData(Competitor obj)
-    {
-        if (!mObjects.contains(obj))
-        {
+
+    protected void addData(Competitor obj) {
+        if (!mObjects.contains(obj)) {
             mObjects.add(obj);
         }
-        ObjectRanking o=new ObjectRanking(obj, mDatas.size(),0,0,0,0);
+        ObjectRanking o = new ObjectRanking(obj, mDatas.size(), 0, 0, 0, 0);
         mDatas.add(o);
+
     }
-    
-    protected void addDatas(ArrayList<Competitor> objs)
-    {
-        for (Competitor obj: objs)
-        {
+
+    protected void delData(Competitor obj) {
+        if (mObjects.contains(obj)) {
+            mObjects.remove(obj);
+            for (Object o : mDatas) {
+                if (o instanceof ObjectRanking) {
+                    if (((ObjectRanking) o).getObject().equals(obj)) {
+                        mDatas.remove(o);
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
+
+    protected void addDatas(ArrayList<Competitor> objs) {
+        for (Competitor obj : objs) {
             addData(obj);
         }
 
     }
-    
+
     @Override
     public int getColumnCount() {
         return 0;
@@ -70,12 +81,12 @@ public final class MjtRankingManual extends MjtRanking {
 
     @Override
     public String getColumnName(final int col) {
-    return "";
+        return "";
     }
 
     @Override
     public Object getValueAt(final int row, final int col) {
-        Object object = "";        
+        Object object = "";
         return object;
     }
 

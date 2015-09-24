@@ -7,7 +7,6 @@ package tourma.data;
 
 import org.jdom2.Element;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -41,28 +40,25 @@ public class XMLExportNGTest {
     /**
      * Test of getXMLElement method, of class XMLExport.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
         XMLExport instance = new XMLExportImpl();
         Element expResult = null;
         Element result = instance.getXMLElement();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of setXMLElement method, of class XMLExport.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
         Element e = null;
         XMLExport instance = new XMLExportImpl();
         instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     public class XMLExportImpl implements XMLExport {

@@ -15,6 +15,25 @@ public class GroupPoints  {
     private int drawPoints=0;
     private int lossPoints=0;
 
+     /**
+     * 
+     * @param obj
+     * @return 
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        
+        boolean result;
+        result = false;
+        if (obj instanceof GroupPoints) {
+            GroupPoints gp=(GroupPoints) obj;
+            result=lossPoints==gp.getLossPoints();
+            result &=this.victoryPoints==gp.getVictoryPoints();
+            result &=this.drawPoints==gp.getDrawPoints();
+        } 
+        return result;
+    }
+    
     /**
      * @return the victoryPoints
      */

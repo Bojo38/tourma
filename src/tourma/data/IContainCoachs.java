@@ -21,7 +21,7 @@ public interface IContainCoachs {
      /**
      * @return the mCoachs
      */
-    public int getCoachCount();
+    public int getCoachsCount();
     
     
     /**

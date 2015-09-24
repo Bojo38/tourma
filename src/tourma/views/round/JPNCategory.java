@@ -10,7 +10,7 @@ import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
-import tourma.utils.TableFormat;
+import tourma.utils.display.TableFormat;
 import tourma.views.report.JdgRanking;
 
 /*
@@ -63,7 +63,7 @@ public final class JPNCategory extends javax.swing.JPanel {
             }
         }
 
-        for (int i = 0; i < Tournament.getTournament().getCoachCount(); i++) {
+        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             Coach coach = Tournament.getTournament().getCoach(i);
             if (coach.containsCategory(g)) {
                 mEnableCoach = true;

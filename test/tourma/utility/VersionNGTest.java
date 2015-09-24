@@ -5,8 +5,8 @@
  */
 package tourma.utility;
 
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -43,11 +43,8 @@ public class VersionNGTest {
     @Test
     public void testGetSingleton() {
         System.out.println("getSingleton");
-        Version expResult = null;
         Version result = Version.getSingleton();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -56,13 +53,11 @@ public class VersionNGTest {
     @Test
     public void testGetProperty() {
         System.out.println("getProperty");
-        String key = "";
-        Version instance = null;
-        String expResult = "";
+        String key = "name";
+        Version instance = Version.getSingleton();
+        String expResult = "TourMa";
         String result = instance.getProperty(key);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

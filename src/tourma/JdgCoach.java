@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -118,6 +119,8 @@ public final class JdgCoach extends javax.swing.JDialog {
         
         jcbRoster.setModel(RosterType.getRostersNamesModel());
         
+        jtfPinCode.setText(Integer.toString(mCoach.getPinCode()));
+        
         if (mCoach.getPicture() == null) {
             try {
                 BufferedImage img = ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.png"));
@@ -146,6 +149,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         mTeam = team;
         mTeamTournament = Tournament.getTournament().getParams().isTeamTournament();
         
+        jtfPinCode.setText(Integer.toString(mCoach.getPinCode()));
         jcbRoster.setModel(RosterType.getRostersNamesModel());
         mCoach.setRoster(new RosterType(jcbRoster.getSelectedIndex()));
         final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
@@ -259,6 +263,8 @@ public final class JdgCoach extends javax.swing.JDialog {
         jtfNom.setText(mCoach.getName());
         jcbRoster.setSelectedItem(mCoach.getRoster().getName());
         
+        jtfPinCode.setText(Integer.toString(mCoach.getPinCode()));
+        
         jckActive.setSelected(mCoach.isActive());
         
         jtfHandicap.setText(Integer.toString(mCoach.getHandicap()));
@@ -344,6 +350,8 @@ public final class JdgCoach extends javax.swing.JDialog {
         jtfHandicap = new javax.swing.JTextField();
         jbtDownloadFromNaf = new javax.swing.JButton();
         jlbNafRanking = new javax.swing.JLabel();
+        jbtPinCode = new javax.swing.JButton();
+        jtfPinCode = new javax.swing.JTextField();
         jbtAvatar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -451,7 +459,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         jPanel6.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setLayout(new java.awt.GridLayout(9, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(10, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText(bundle.getString("CoachNameKey")); // NOI18N
@@ -534,6 +542,16 @@ public final class JdgCoach extends javax.swing.JDialog {
         jlbNafRanking.setText("150");
         jPanel1.add(jlbNafRanking);
 
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
+        jbtPinCode.setText(bundle1.getString("PinCode")); // NOI18N
+        jbtPinCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtPinCodeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtPinCode);
+        jPanel1.add(jtfPinCode);
+
         jPanel6.add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jbtAvatar.setMnemonic('A');
@@ -586,6 +604,20 @@ public final class JdgCoach extends javax.swing.JDialog {
         }
         
         if (!error) {
+            try {
+                int pinCode=Integer.parseInt(jtfPinCode.getText());
+                if ((pinCode>10000)||(pinCode==0))
+                {
+                    error=true;
+                    JOptionPane.showMessageDialog(this,"Invalid Pin Code","Pin Code Error",JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    c.setPinCode(pinCode);
+                }
+            } catch (NumberFormatException e) {
+                c.setPinCode(0);
+            }
             
             c.setName(jtfNom.getText());
             c.setRoster(new RosterType(jcbRoster.getSelectedIndex()));
@@ -843,6 +875,12 @@ public final class JdgCoach extends javax.swing.JDialog {
         updatelist();
     }//GEN-LAST:event_jbtDelCategoryActionPerformed
 
+    private void jbtPinCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPinCodeActionPerformed
+        Random random=new Random();
+        int ran=random.nextInt(10000);
+        jtfPinCode.setText(Integer.toString(ran));
+    }//GEN-LAST:event_jbtPinCodeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -868,6 +906,7 @@ public final class JdgCoach extends javax.swing.JDialog {
     private javax.swing.JButton jbtDownloadFromNaf;
     private javax.swing.JButton jbtEditRoster;
     private javax.swing.JButton jbtOK;
+    private javax.swing.JButton jbtPinCode;
     private javax.swing.JComboBox jcbClan;
     private javax.swing.JComboBox jcbRoster;
     private javax.swing.JCheckBox jckActive;
@@ -881,6 +920,7 @@ public final class JdgCoach extends javax.swing.JDialog {
     private javax.swing.JTextField jtfHandicap;
     private javax.swing.JTextField jtfNAF;
     private javax.swing.JTextField jtfNom;
+    private javax.swing.JTextField jtfPinCode;
     private javax.swing.JTextField jtfRank;
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JdgCoach.class.getName());

@@ -72,7 +72,7 @@ public final class Balancing {
                     int max = 0;
                     Iterator<Team> it2 = map.keySet().iterator();
                     while (it2.hasNext()) {
-                        Team t =  it2.next();
+                        Team t = it2.next();
                         int nb = map.get(t);
                         if (nb < min) {
                             min = nb;
@@ -82,13 +82,13 @@ public final class Balancing {
                         }
                     }
                     if (max - min > 1) {
-                    // Find Opposing team maximum
+                        // Find Opposing team maximum
                         // Find Opposing team minimum
                         Team minTeam = null;
                         Team maxTeam = null;
                         it2 = map.keySet().iterator();
                         while (it2.hasNext()) {
-                            Team t =  it2.next();
+                            Team t = it2.next();
                             int nb = map.get(t);
                             if (nb == min) {
                                 minTeam = t;
@@ -132,7 +132,7 @@ public final class Balancing {
                                     int maxOpp = 0;
                                     Iterator<Team> itOpp = mapOpp.keySet().iterator();
                                     while (itOpp.hasNext()) {
-                                        Team t =  itOpp.next();
+                                        Team t = itOpp.next();
                                         int nb = mapOpp.get(t);
                                         if (nb < minOpp) {
                                             minOpp = nb;
@@ -146,7 +146,7 @@ public final class Balancing {
                                     //ArrayList<Team> maxTeams = new ArrayList<Team>();
                                     itOpp = mapOpp.keySet().iterator();
                                     while (itOpp.hasNext()) {
-                                        Team t =  itOpp.next();
+                                        Team t = itOpp.next();
                                         int nb = mapOpp.get(t);
                                         if (nb == minOpp) {
                                             minTeams.add(t);
@@ -157,7 +157,7 @@ public final class Balancing {
                                     }
 
                                     if (minTeams.contains(coach.getTeamMates())) {
-                                    // Test if opponent adversary is not
+                                        // Test if opponent adversary is not
                                         // from same team that the current coach
                                         Coach oppopp;
                                         if (opponent.getMatchCount() > 0) {
@@ -240,6 +240,43 @@ public final class Balancing {
      */
     static private void fillHashMap(ArrayList<Match> matchs, HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
             HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT, ArrayList<Team> teams) {
+        // @TODO
+        if (Tournament.getTournament().getTeamsCount() > 0) {
+            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                Coach c=Tournament.getTournament().getCoach(i);
+                for (int k=0; k<c.getMatchCount(); k++)
+                {
+                    CoachMatch cm=(CoachMatch)c.getMatch(k);
+                    Coach opp=null;
+                    if (cm.getCompetitor1()==c)
+                    {
+                        opp=(Coach)cm.getCompetitor2();
+                    }
+                    else
+                    {
+                        opp=(Coach)cm.getCompetitor1();
+                    }
+                    
+                    HashMap mapC=evaluationPreviousC.get(c);
+                    if (mapC==null)
+                    {
+                        mapC=new HashMap<>();
+                    }
+                    int nb=(Integer)mapC.get(opp.getTeamMates());
+                    nb++;
+                    mapC.put(opp.getTeamMates(), nb);
+                    
+                    HashMap mapT=evaluationPreviousC.get(c.getTeamMates());
+                    if (mapT==null)
+                    {
+                        mapT=new HashMap<>();
+                    }
+                    nb=(Integer)mapT.get(opp.getTeamMates());
+                    nb++;
+                    mapT.put(opp.getTeamMates(), nb);
+                }
+            }
+        }
     }
 
     /**
@@ -276,7 +313,7 @@ public final class Balancing {
             hash2 = hash.get(it.next());
             Iterator<Team> it2 = hash2.keySet().iterator();
             while (it2.hasNext()) {
-                Competitor en2 =it2.next();
+                Competitor en2 = it2.next();
                 if (en2 instanceof Team) {
                     Team t2 = (Team) en2;
                     int nb2 = hash2.get(t2);
@@ -300,10 +337,10 @@ public final class Balancing {
         int maximum2 = 0;
         while (it.hasNext()) {
             HashMap<Team, Integer> hash2;
-            hash2 = hash.get( it.next());
+            hash2 = hash.get(it.next());
             Iterator<Team> it2 = hash2.keySet().iterator();
             while (it2.hasNext()) {
-                Competitor en2 =  it2.next();
+                Competitor en2 = it2.next();
                 if (en2 instanceof Team) {
                     Team t2 = (Team) en2;
                     int nb2 = hash2.get(t2);

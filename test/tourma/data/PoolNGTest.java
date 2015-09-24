@@ -5,8 +5,9 @@
  */
 package tourma.data;
 
-import java.util.ArrayList;
+import java.io.File;
 import org.jdom2.Element;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -14,12 +15,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class PoolNGTest {
-    
+
     public PoolNGTest() {
     }
 
@@ -33,6 +35,7 @@ public class PoolNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/pools.xml"));
     }
 
     @AfterMethod
@@ -45,12 +48,16 @@ public class PoolNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Pool instance = new Pool();
-        Element expResult = null;
-        Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getPoolCount() == 0) {
+            fail("No pool in file");
+        }
+
+        Pool instance = Tournament.getTournament().getPool(0);
+        Element e = instance.getXMLElement();
+
+        Pool bis = new Pool();
+        bis.setXMLElement(e);
+        assertEquals(bis, instance);
     }
 
     /**
@@ -59,11 +66,16 @@ public class PoolNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element pool = null;
-        Pool instance = new Pool();
-        instance.setXMLElement(pool);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getPoolCount() == 0) {
+            fail("No pool in file");
+        }
+
+        Pool instance = Tournament.getTournament().getPool(0);
+        Element e = instance.getXMLElement();
+
+        Pool bis = new Pool();
+        bis.setXMLElement(e);
+        assertEquals(bis, instance);
     }
 
     /**
@@ -73,11 +85,10 @@ public class PoolNGTest {
     public void testGetName() {
         System.out.println("getName");
         Pool instance = new Pool();
-        String expResult = "";
+        String expResult = "Test";
+        instance.setName(expResult);
         String result = instance.getName();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -86,11 +97,11 @@ public class PoolNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String mName = "";
         Pool instance = new Pool();
-        instance.setName(mName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "Test";
+        instance.setName(expResult);
+        String result = instance.getName();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -99,13 +110,15 @@ public class PoolNGTest {
     @Test
     public void testGetCompetitor() {
         System.out.println("getCompetitor");
-        int i = 0;
-        Pool instance = new Pool();
-        Competitor expResult = null;
-        Competitor result = instance.getCompetitor(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getPoolCount() == 0) {
+            fail("No pool in file");
+        }
+
+        Pool instance = Tournament.getTournament().getPool(0);
+        for (int i = 0; i < instance.getCompetitorCount(); i++) {
+            Competitor expResult = instance.getCompetitor(i);
+            Assert.assertNotNull(expResult);
+        }
     }
 
     /**
@@ -114,11 +127,19 @@ public class PoolNGTest {
     @Test
     public void testAddCompetitor() {
         System.out.println("addCompetitor");
-        Competitor c = null;
-        Pool instance = new Pool();
+        if (Tournament.getTournament().getPoolCount() == 0) {
+            fail("No pool in file");
+        }
+
+        Pool instance = Tournament.getTournament().getPool(0);
+        for (int i = 0; i < instance.getCompetitorCount(); i++) {
+            Competitor expResult = instance.getCompetitor(i);
+            Assert.assertNotNull(expResult);
+        }
+        int nb = instance.getCompetitorCount();
+        Competitor c = new Coach("Toto");
         instance.addCompetitor(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(nb + 1, instance.getCompetitorCount());
     }
 
     /**
@@ -127,12 +148,19 @@ public class PoolNGTest {
     @Test
     public void testGetCompetitorCount() {
         System.out.println("getCompetitorCount");
-        Pool instance = new Pool();
-        int expResult = 0;
-        int result = instance.getCompetitorCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getPoolCount() == 0) {
+            fail("No pool in file");
+        }
+
+        Pool instance = Tournament.getTournament().getPool(0);
+        for (int i = 0; i < instance.getCompetitorCount(); i++) {
+            Competitor expResult = instance.getCompetitor(i);
+            Assert.assertNotNull(expResult);
+        }
+        int nb = instance.getCompetitorCount();
+        Competitor c = new Coach("Toto");
+        instance.addCompetitor(c);
+        assertEquals(nb + 1, instance.getCompetitorCount());
     }
 
     /**
@@ -141,12 +169,15 @@ public class PoolNGTest {
     @Test
     public void testGetCompetitors() {
         System.out.println("getCompetitors");
-        Pool instance = new Pool();
-        ArrayList expResult = null;
-        ArrayList result = instance.getCompetitors();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getPoolCount() == 0) {
+            fail("No pool in file");
+        }
+
+        Pool instance = Tournament.getTournament().getPool(0);
+        for (int i = 0; i < instance.getCompetitorCount(); i++) {
+            Competitor expResult = instance.getCompetitor(i);
+            Assert.assertEquals(expResult, instance.getCompetitors().get(i));
+        }
     }
-    
+
 }

@@ -40,7 +40,7 @@ public class JPNParamCategoriesNGTest {
     /**
      * Test of update method, of class JPNParamCategories.
      */
-    @Test
+    @Test(enabled=false)
     public void testUpdate() {
         System.out.println("update");
         JPNParamCategories instance = new JPNParamCategories();

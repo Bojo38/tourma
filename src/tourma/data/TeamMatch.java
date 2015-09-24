@@ -41,50 +41,63 @@ public class TeamMatch extends Match {
     @Override
     public Competitor getWinner() {
 
-        Tournament tour = Tournament.getTournament();
-        final Team team1 = (Team) getCompetitor1();
-        final Team team2 = (Team) getCompetitor2();
+        if (super.getWinner() != null) {
+            return super.getWinner();
+        } else {
+            Tournament tour = Tournament.getTournament();
+            final Team team1 = (Team) getCompetitor1();
+            final Team team2 = (Team) getCompetitor2();
 
-        Team winner;
+            Team winner;
+            Team looser;
 
-        int nbVictory = 0;
-        int nbLost = 0;
+            int nbVictory = 0;
+            int nbLost = 0;
 
-        Criteria td = tour.getParams().getCriteria(0);
-        for (CoachMatch m : mMatchs) {
-            if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
-                nbVictory++;
-            } else {
-                if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
-                    nbLost++;
+            Criteria td = tour.getParams().getCriteria(0);
+            for (CoachMatch m : mMatchs) {
+                if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
+                    nbVictory++;
+                } else {
+                    if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
+                        nbLost++;
+                    }
                 }
             }
-        }
 
-        if (team1 == Team.getNullTeam()) {
-            winner = team2;
-        } else {
-            if (team2 == Team.getNullTeam()) {
-                winner = team1;
+            if (team1 == Team.getNullTeam()) {
+                winner = team2;
+                looser = team1;
             } else {
-                if (nbVictory > nbLost) {
+                if (team2 == Team.getNullTeam()) {
                     winner = team1;
+                    looser = team2;
                 } else {
-                    if (nbVictory < nbLost) {
-                        winner = team2;
+                    if (nbVictory > nbLost) {
+                        winner = team1;
+                        looser = team2;
                     } else {
-                        Random ran = new Random();
-                        final int r = ran.nextInt() % 2;
-                        if (r == 0) {
-                            winner = team1;
-                        } else {
+                        if (nbVictory < nbLost) {
                             winner = team2;
+                            looser = team1;
+                        } else {
+                            Random ran = new Random();
+                            final int r = ran.nextInt() % 2;
+                            if (r == 0) {
+                                winner = team1;
+                                looser = team2;
+                            } else {
+                                winner = team2;
+                                looser = team1;
+                            }
                         }
                     }
                 }
             }
+            super.setWinner(winner);
+            super.setLooser(looser);
+            return winner;
         }
-        return winner;
     }
 
     /**
@@ -93,51 +106,63 @@ public class TeamMatch extends Match {
      */
     @Override
     public Competitor getLooser() {
-        Tournament tour = Tournament.getTournament();
-        final Team team1 = (Team) getCompetitor1();
-        final Team team2 = (Team) getCompetitor2();
+        if (super.getLooser() != null) {
+            return super.getLooser();
+        } else {
+            Tournament tour = Tournament.getTournament();
+            final Team team1 = (Team) getCompetitor1();
+            final Team team2 = (Team) getCompetitor2();
 
-        Team looser;
+            Team looser;
+            Team winner;
 
-        int nbVictory = 0;
-        int nbLost = 0;
+            int nbVictory = 0;
+            int nbLost = 0;
 
-        Criteria td = tour.getParams().getCriteria(0);
-        for (CoachMatch m : mMatchs) {
-            if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
-                nbVictory++;
-            } else {
-                if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
-                    nbLost++;
+            Criteria td = tour.getParams().getCriteria(0);
+            for (CoachMatch m : mMatchs) {
+                if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
+                    nbVictory++;
+                } else {
+                    if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
+                        nbLost++;
+                    }
                 }
             }
-        }
 
-        if (team1 == Team.getNullTeam()) {
-            looser = team1;
-        } else {
-            if (team2 == Team.getNullTeam()) {
-                looser = team2;
+            if (team1 == Team.getNullTeam()) {
+                looser = team1;
+                winner = team2;
             } else {
-                if (nbVictory > nbLost) {
+                if (team2 == Team.getNullTeam()) {
                     looser = team2;
+                    winner = team1;
                 } else {
-                    if (nbVictory < nbLost) {
-                        looser = team1;
+                    if (nbVictory > nbLost) {
+                        looser = team2;
+                        winner = team1;
                     } else {
-                        Random ran = new Random();
-                        final int r = ran.nextInt() % 2;
-                        if (r == 0) {
-                            looser = team2;
-                        } else {
+                        if (nbVictory < nbLost) {
                             looser = team1;
+                            winner = team2;
+                        } else {
+                            Random ran = new Random();
+                            final int r = ran.nextInt() % 2;
+                            if (r == 0) {
+                                looser = team2;
+                                winner = team1;
+                            } else {
+                                looser = team1;
+                                winner = team2;
+                            }
                         }
                     }
                 }
             }
+            super.setWinner(winner);
+            super.setLooser(looser);
+            return looser;
         }
-        return looser;
-
     }
 
     /**
@@ -147,8 +172,8 @@ public class TeamMatch extends Match {
     @Override
     public Element getXMLElement() {
         final Element match = new Element(StringConstants.CS_MATCH);
-        match.setAttribute(StringConstants.CS_TEAM+1, this.getCompetitor1().getName());
-        match.setAttribute(StringConstants.CS_TEAM+2, this.getCompetitor2().getName());
+        match.setAttribute(StringConstants.CS_TEAM + 1, this.getCompetitor1().getName());
+        match.setAttribute(StringConstants.CS_TEAM + 2, this.getCompetitor2().getName());
 
         for (CoachMatch mMatch : mMatchs) {
             Element subMatch = mMatch.getXMLElement();
@@ -176,8 +201,18 @@ public class TeamMatch extends Match {
     @Override
     public void setXMLElement(final Element match) {
 
-        final String c1 = match.getAttribute(StringConstants.CS_TEAM+1).getValue();
-        final String c2 = match.getAttribute(StringConstants.CS_TEAM+2).getValue();
+        String c1 = "";
+        String c2 = "";
+        if (match.getAttribute(StringConstants.CS_TEAM + 1) != null) {
+            c1 = match.getAttribute(StringConstants.CS_TEAM + 1).getValue();
+        } else {
+            c1 = match.getAttribute("team" + 1).getValue();
+        }
+        if (match.getAttribute(StringConstants.CS_TEAM + 1) != null) {
+            c2 = match.getAttribute(StringConstants.CS_TEAM + 2).getValue();
+        } else {
+            c2 = match.getAttribute("team" + 2).getValue();
+        }
         this.setCompetitor1(Team.getTeam(c1));
         this.setCompetitor2(Team.getTeam(c2));
 
@@ -416,7 +451,7 @@ public class TeamMatch extends Match {
             Team team1 = new Team();
             team1.setXMLElementForDisplay(t1);
             if (Team.getTeam(team1.getName()) == null) {
-                Tournament.getTournament().addTeam(team1);                
+                Tournament.getTournament().addTeam(team1);
             }
 
             Element t2 = elts.get(1);
@@ -429,6 +464,25 @@ public class TeamMatch extends Match {
         }
 
         setXMLElement(match);
+    }
+
+    @Override
+    public boolean equals(Object c) {
+        if (c instanceof TeamMatch) {
+            TeamMatch tm = (TeamMatch) c;
+            boolean equality = true;
+            if ((getCompetitor1() != null) && (getCompetitor2() != null)) {
+                equality &= (this.getCompetitor1().equals(tm.getCompetitor1()));
+                equality &= (this.getCompetitor2().equals(tm.getCompetitor2()));
+            }
+
+            for (int i = 0; i < mMatchs.size(); i++) {
+                equality &= mMatchs.get(i).equals(tm.getMatch(i));
+            }
+            return equality;
+        }
+        return false;
+
     }
 
 }

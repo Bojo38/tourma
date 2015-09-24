@@ -5,7 +5,10 @@
  */
 package tourma.data;
 
+import java.io.File;
+import java.util.ArrayList;
 import org.jdom2.Element;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -13,12 +16,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class TeamMatchNGTest {
-    
+
     public TeamMatchNGTest() {
     }
 
@@ -32,6 +36,7 @@ public class TeamMatchNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/teamMatch.xml"));
     }
 
     @AfterMethod
@@ -44,12 +49,33 @@ public class TeamMatchNGTest {
     @Test
     public void testGetWinner() {
         System.out.println("getWinner");
-        TeamMatch instance = null;
-        Competitor expResult = null;
-        Competitor result = instance.getWinner();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(1);
+            val.setValue2(0);
+        }
+        instance.resetWL();
+        Competitor comp = instance.getWinner();
+        assertEquals(comp, instance.getCompetitor1());
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(0);
+            val.setValue2(1);
+        }
+        instance.resetWL();
+        comp = instance.getWinner();
+        assertEquals(comp, instance.getCompetitor2());
     }
 
     /**
@@ -58,12 +84,33 @@ public class TeamMatchNGTest {
     @Test
     public void testGetLooser() {
         System.out.println("getLooser");
-        TeamMatch instance = null;
-        Competitor expResult = null;
-        Competitor result = instance.getLooser();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(1);
+            val.setValue2(0);
+        }
+        instance.resetWL();
+        Competitor comp = instance.getLooser();
+        assertEquals(comp, instance.getCompetitor2());
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(0);
+            val.setValue2(1);
+        }
+        instance.resetWL();
+        comp = instance.getLooser();
+        assertEquals(comp, instance.getCompetitor1());
     }
 
     /**
@@ -72,12 +119,20 @@ public class TeamMatchNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        TeamMatch instance = null;
-        Element expResult = null;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        Round r = instance.getRound();
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        TeamMatch cm = new TeamMatch(r);
+        cm.setXMLElement(result);
+        assertEquals(instance, cm);
     }
 
     /**
@@ -86,11 +141,21 @@ public class TeamMatchNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element match = null;
-        TeamMatch instance = null;
-        instance.setXMLElement(match);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("getXMLElement");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        Round r = instance.getRound();
+        Element result = instance.getXMLElement();
+
+        TeamMatch cm = new TeamMatch(r);
+        cm.setXMLElement(result);
+        assertEquals(instance, cm);
     }
 
     /**
@@ -99,13 +164,30 @@ public class TeamMatchNGTest {
     @Test
     public void testGetVictories() {
         System.out.println("getVictories");
-        Team t1 = null;
-        TeamMatch instance = null;
-        int expResult = 0;
-        int result = instance.getVictories(t1);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(1);
+            val.setValue2(0);
+        }        
+        assertEquals(instance.getVictories((Team)instance.getCompetitor1()),8);
+        
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(0);
+            val.setValue2(1);
+        }        
+        assertEquals(instance.getVictories((Team)instance.getCompetitor1()),0);
     }
 
     /**
@@ -114,13 +196,31 @@ public class TeamMatchNGTest {
     @Test
     public void testGetLoss() {
         System.out.println("getLoss");
-        Team t1 = null;
-        TeamMatch instance = null;
-        int expResult = 0;
-        int result = instance.getLoss(t1);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(1);
+            val.setValue2(0);
+        }
+        assertEquals(instance.getLoss((Team)instance.getCompetitor1()),0);
+        
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(0);
+            val.setValue2(1);
+        }
+        instance.resetWL();
+        assertEquals(instance.getLoss((Team)instance.getCompetitor1()),8);
     }
 
     /**
@@ -129,13 +229,30 @@ public class TeamMatchNGTest {
     @Test
     public void testGetDraw() {
         System.out.println("getDraw");
-        Team t1 = null;
-        TeamMatch instance = null;
-        int expResult = 0;
-        int result = instance.getDraw(t1);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(1);
+            val.setValue2(0);
+        }
+        assertEquals(instance.getDraw((Team)instance.getCompetitor1()),0);
+        
+        for (int i = 0; i < instance.getMatchCount(); i++) {
+            CoachMatch cm = instance.getMatch(i);
+            tourma.data.Value val = cm.getValue(td);
+            val.setValue1(1);
+            val.setValue2(1);
+        }
+        assertEquals(instance.getDraw((Team)instance.getCompetitor1()),8);
     }
 
     /**
@@ -144,12 +261,15 @@ public class TeamMatchNGTest {
     @Test
     public void testGetMatchCount() {
         System.out.println("getMatchCount");
-        TeamMatch instance = null;
-        int expResult = 0;
-        int result = instance.getMatchCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+        assertEquals(instance.getMatchCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
     }
 
     /**
@@ -158,13 +278,19 @@ public class TeamMatchNGTest {
     @Test
     public void testGetMatch() {
         System.out.println("getMatch");
-        int i = 0;
-        TeamMatch instance = null;
-        CoachMatch expResult = null;
-        CoachMatch result = instance.getMatch(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+        assertEquals(instance.getMatchCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
+
+        for (int i=0; i<instance.getMatchCount(); i++)
+        {
+            Assert.assertNotNull(instance.getMatch(i));
+        }
     }
 
     /**
@@ -173,10 +299,16 @@ public class TeamMatchNGTest {
     @Test
     public void testClearMatchs() {
         System.out.println("clearMatchs");
-        TeamMatch instance = null;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+        assertEquals(instance.getMatchCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
         instance.clearMatchs();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getMatchCount(), 0);
     }
 
     /**
@@ -185,13 +317,25 @@ public class TeamMatchNGTest {
     @Test
     public void testContainsMatch() {
         System.out.println("containsMatch");
-        CoachMatch c = null;
-        TeamMatch instance = null;
-        boolean expResult = false;
-        boolean result = instance.containsMatch(c);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+        assertEquals(instance.getMatchCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
+
+        for (int i=0; i<instance.getMatchCount(); i++)
+        {
+            Assert.assertTrue(instance.containsMatch(instance.getMatch(i)));
+        }
+        
+        TeamMatch instance2 = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(1);
+         for (int i=0; i<instance2.getMatchCount(); i++)
+        {
+            Assert.assertFalse(instance.containsMatch(instance2.getMatch(i)));
+        }
     }
 
     /**
@@ -200,11 +344,26 @@ public class TeamMatchNGTest {
     @Test
     public void testAddMatch() {
         System.out.println("addMatch");
-        CoachMatch c = null;
-        TeamMatch instance = null;
-        instance.addMatch(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+        assertEquals(instance.getMatchCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
+        ArrayList<CoachMatch> acm=new ArrayList<>();
+        for (int i=0; i<instance.getMatchCount(); i++)
+        {
+            acm.add(instance.getMatch(i));
+        }
+        instance.clearMatchs();
+        assertEquals(instance.getMatchCount(), 0);
+        for (CoachMatch cm:acm)
+        {
+            instance.addMatch(cm);
+        }
+        assertEquals(instance.getMatchCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
     }
 
     /**
@@ -213,12 +372,20 @@ public class TeamMatchNGTest {
     @Test
     public void testGetXMLElementForDisplay() {
         System.out.println("getXMLElementForDisplay");
-        TeamMatch instance = null;
-        Element expResult = null;
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        Round r = instance.getRound();
         Element result = instance.getXMLElementForDisplay();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        TeamMatch cm = new TeamMatch(r);
+        cm.setXMLElementForDisplay(result);
+        assertEquals(instance, cm);
     }
 
     /**
@@ -227,11 +394,20 @@ public class TeamMatchNGTest {
     @Test
     public void testSetXMLElementForDisplay() {
         System.out.println("setXMLElementForDisplay");
-        Element match = null;
-        TeamMatch instance = null;
-        instance.setXMLElementForDisplay(match);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if (Tournament.getTournament().getRoundsCount() == 0) {
+            fail("No round in tournament");
+        }
+        if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
+            fail("No match in round");
+        }
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+
+        Round r = instance.getRound();
+        Element result = instance.getXMLElementForDisplay();
+
+        TeamMatch cm = new TeamMatch(r);
+        cm.setXMLElementForDisplay(result);
+        assertEquals(instance, cm);
     }
-    
+
 }

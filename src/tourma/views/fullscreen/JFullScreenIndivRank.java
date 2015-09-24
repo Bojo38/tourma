@@ -36,8 +36,8 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
-import tourma.utils.Ranked;
-import tourma.utils.TourmaProtocol;
+import tourma.utils.display.Ranked;
+import tourma.utils.display.TourmaProtocol;
 
 /**
  *

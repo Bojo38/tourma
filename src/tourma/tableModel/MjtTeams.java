@@ -39,7 +39,7 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
 
         int nbCol = 2;
         for (int i = 0; i < mTeams.size(); i++) {
-            nbCol = Math.max(nbCol, mTeams.get(i).getCoachCount() + 2);
+            nbCol = Math.max(nbCol, mTeams.get(i).getCoachsCount() + 2);
         }
         return nbCol;
     }
@@ -79,8 +79,8 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
                     break;
                 default:
             }
-            if (t.getCoachCount() > 0) {
-                if (t.getCoachCount() > (col - 2)) {
+            if (t.getCoachsCount() > 0) {
+                if (t.getCoachsCount() > (col - 2)) {
                     if (col >= 2) {
                         object = t.getCoach(col - 2).getName();
                     }
@@ -127,7 +127,7 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
         }
 
         final Team t = mTeams.get(row);
-        if (t.getCoachCount() > column - 2) {
+        if (t.getCoachsCount() > column - 2) {
             if (column >= 2) {
                 final Coach c = t.getCoach(column - 2);
                 if (!c.isActive()) {

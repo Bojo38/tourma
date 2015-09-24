@@ -37,10 +37,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
+import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 
 /**
@@ -175,9 +178,21 @@ public final class JdgRanking extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
-        final JFileChooser jfc = new JFileChooser();
+                final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("HTML", new String[]{"HTML", "html"});
+        jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            final File export = jfc.getSelectedFile();
+            StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
+            String ext = StringConstants.CS_NULL;
+            final int i = url2.toString().lastIndexOf('.');
+            if (i > 0 && i < url2.length() - 1) {
+                ext = url2.substring(i + 1).toLowerCase(Locale.getDefault());
+            }
+            if (!ext.equals("html")) {
+                url2 = url2.append(".html");
+            }
+
+            final File export = new File(url2.toString());
 
             OutputStreamWriter out = null;
             InputStreamReader in = null;
@@ -243,13 +258,13 @@ public final class JdgRanking extends javax.swing.JDialog {
 
             final Map root = new HashMap();
             root.put(ReportKeys.CS_Nom,
-                    mTour.getParams().getTournamentName() + " - " + 
-                            Translate.translate(CS_Round) + " " + mRoundNumber);
+                    StringEscapeUtils.escapeHtml4(mTour.getParams().getTournamentName() + " - " + 
+                            Translate.translate(CS_Round) + " " + mRoundNumber));
             root.put(ReportKeys.CS_Title, mTitle);
 
             final ArrayList titles = new ArrayList();
             for (int i = 0; i < mRanking.getColumnCount(); i++) {
-                titles.add(mRanking.getColumnName(i));
+                titles.add(StringEscapeUtils.escapeHtml4(mRanking.getColumnName(i)));
             }
             root.put(ReportKeys.CS_Titles, titles);
 
@@ -258,7 +273,15 @@ public final class JdgRanking extends javax.swing.JDialog {
                 final HashMap line = new HashMap();
                 final ArrayList cols = new ArrayList();
                 for (int j = 0; j < mRanking.getColumnCount(); j++) {
-                    cols.add(mRanking.getValueAt(i, j));
+                    Object obj=mRanking.getValueAt(i, j);
+                    if (obj instanceof String)
+                    {
+                        cols.add(StringEscapeUtils.escapeHtml4((String)obj));
+                    }
+                    else
+                    {
+                        cols.add(obj);
+                    }
                 }
                 line.put(ReportKeys.CS_Cols, cols);
                 lines.add(line);

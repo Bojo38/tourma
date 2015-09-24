@@ -145,13 +145,13 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             for (Coach mCoach : mCoachs) {
                 rank += mCoach.getNafRank();
             }
-            rank /= getCoachCount();
+            rank /= getCoachsCount();
 
             double rankobj = 0;
-            for (Coach mCoach : mCoachs) {
+            for (Coach mCoach : team.mCoachs) {
                 rankobj += mCoach.getNafRank();
             }
-            rankobj /= team.getCoachCount();
+            rankobj /= team.getCoachsCount();
 
             result = ((Double) rank).compareTo(rankobj);
         }
@@ -183,7 +183,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     public int getActivePlayerNumber() {
         int nb = 0;
 
-        for (int i = 0; i < getCoachCount(); i++) {
+        for (int i = 0; i < getCoachsCount(); i++) {
             if (getCoach(i).isActive()) {
                 nb++;
             }
@@ -296,7 +296,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         final List<Element> cats = team.getChildren(StringConstants.CS_CATEGORY);
         final Iterator<Element> itCat = cats.iterator();
         while (itCat.hasNext()) {
-            Element cat =  itCat.next();
+            Element cat = itCat.next();
             Category category = Category.getCategory(cat.getAttributeValue(StringConstants.CS_NAME));
             this.addCategory(category);
         }
@@ -419,7 +419,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         boolean have_played = false;
         for (Coach mCoach : mCoachs) {
             if (opponent instanceof Team) {
-                for (int k = 0; k < ((IContainCoachs) opponent).getCoachCount(); k++) {
+                for (int k = 0; k < ((IContainCoachs) opponent).getCoachsCount(); k++) {
                     for (int i = 0; i < mCoach.getMatchCount(); i++) {
                         Coach c = ((IContainCoachs) opponent).getCoach(k);
                         if ((mCoach.getMatch(i).getCompetitor1() == c) || (mCoach.getMatch(i).getCompetitor2() == c)) {
@@ -496,13 +496,15 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
      * @param r
      */
     @Override
-    public void addMatchRoundRobin(Competitor c, Round r) {
-        final boolean complete = (JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL (INCLUANT TOUS LES JOUEURS)?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) {
         if (!complete) {
             addMatch(c, r);
         } else {
             Tournament tour = Tournament.getTournament();
             Parameters params = tour.getParams();
+            TeamMatch tm = new TeamMatch(r);
+            tm.setCompetitor1(this);
+            tm.setCompetitor2(c);
             for (int n = 0; n < params.getTeamMatesNumber(); n++) {
 
                 final ArrayList<Coach> t1players = this.getActivePlayers();
@@ -521,10 +523,18 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                         final Coach c1 = t1players.get(l);
                         final Coach c2 = t2players.get(l);
 
-                        c1.addMatch(c2, r);
+                        CoachMatch m = new CoachMatch(r);
+                        m.setCompetitor1(c1);
+                        m.setCompetitor2(c2);
+
+                        tm.addMatch(m);
                     }
+
                 }
             }
+            r.addMatch(tm);
+            this.mMatchs.add(tm);
+            c.mMatchs.add(tm);
         }
     }
 
@@ -662,8 +672,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         /// Add current Round
         if (current != null) {
             for (Coach coach : mCoachs) {
-                for (int j = 0; j < current.getMatchsCount(); j++) {
-                    CoachMatch m = (CoachMatch) current.getMatch(j);
+                ArrayList<CoachMatch> matchs=current.getCoachMatchs();
+                for (CoachMatch m : matchs){
                     Coach opp = null;
                     if (coach.getName().equals(m.getCompetitor1().getName())) {
                         opp = (Coach) m.getCompetitor2();
@@ -700,7 +710,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
      * @return the mCoachs
      */
     @Override
-    public int getCoachCount() {
+    public int getCoachsCount() {
         return mCoachs.size();
     }
 

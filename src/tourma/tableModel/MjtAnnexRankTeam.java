@@ -190,11 +190,11 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                 val = StringConstants.CS_HASH;
                 break;
             case 1:
-                val = Translate.translate(Translate.CS_Clan);
+                val = Translate.translate(Translate.CS_Team);
                 break;
             case 2:
                 if (mSubtype == 0) {
-                    val = mCriteria.getName() + " "+Translate.translate(Translate.CS_Coach);
+                    val = mCriteria.getName() + " "+Translate.translate(Translate.CS_Team);
                 } else {
                     if (mSubtype == 1) {
                         val = mCriteria.getName() + " "+Translate.translate(Translate.CS_Opponent);

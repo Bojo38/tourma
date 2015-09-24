@@ -6,7 +6,6 @@
 package tourma.data;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -43,12 +42,11 @@ public class ValueNGTest {
     @Test
     public void testGetCriteria() {
         System.out.println("getCriteria");
-        Value instance = null;
-        Criteria expResult = null;
-        Criteria result = instance.getCriteria();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria crit=new Criteria("Test");
+        Criteria crit2=new Criteria("Test2");
+        Value instance = new Value(crit);
+        instance.setCriteria(crit2);
+        assertEquals(crit2,instance.getCriteria());
     }
 
     /**
@@ -57,11 +55,11 @@ public class ValueNGTest {
     @Test
     public void testSetCriteria() {
         System.out.println("setCriteria");
-        Criteria mCriteria = null;
-        Value instance = null;
-        instance.setCriteria(mCriteria);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+               Criteria crit=new Criteria("Test");
+        Criteria crit2=new Criteria("Test2");
+        Value instance = new Value(crit);
+        instance.setCriteria(crit2);
+        assertEquals(crit2,instance.getCriteria());
     }
 
     /**
@@ -70,12 +68,11 @@ public class ValueNGTest {
     @Test
     public void testGetValue1() {
         System.out.println("getValue1");
-        Value instance = null;
-        int expResult = 0;
-        int result = instance.getValue1();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue1 = 19;
+        Criteria crit=new Criteria("Test");
+        Value instance = new Value(crit);
+        instance.setValue1(mValue1);
+        assertEquals(19,instance.getValue1());
     }
 
     /**
@@ -84,11 +81,11 @@ public class ValueNGTest {
     @Test
     public void testSetValue1() {
         System.out.println("setValue1");
-        int mValue1 = 0;
-        Value instance = null;
+        int mValue1 = 19;
+        Criteria crit=new Criteria("Test");
+        Value instance = new Value(crit);
         instance.setValue1(mValue1);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(19,instance.getValue1());
     }
 
     /**
@@ -97,12 +94,11 @@ public class ValueNGTest {
     @Test
     public void testGetValue2() {
         System.out.println("getValue2");
-        Value instance = null;
-        int expResult = 0;
-        int result = instance.getValue2();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int mValue2 = 19;
+        Criteria crit=new Criteria("Test");
+        Value instance = new Value(crit);
+        instance.setValue2(mValue2);
+        assertEquals(19,instance.getValue2());
     }
 
     /**
@@ -111,11 +107,11 @@ public class ValueNGTest {
     @Test
     public void testSetValue2() {
         System.out.println("setValue2");
-        int mValue2 = 0;
-        Value instance = null;
+        int mValue2 = 19;
+        Criteria crit=new Criteria("Test");
+        Value instance = new Value(crit);
         instance.setValue2(mValue2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(19,instance.getValue2());
     }
     
 }

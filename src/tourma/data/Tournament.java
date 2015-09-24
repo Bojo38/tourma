@@ -80,8 +80,7 @@ public class Tournament implements IContainCoachs {
         return mSingleton;
     }
 
-
-    
+    private String mDescription;
 
     /**
      *
@@ -403,6 +402,13 @@ public class Tournament implements IContainCoachs {
             }
         }
 
+        for (Team c : mTeams) {
+            for (int i = 0; i < c.getCategoryCount(); i++) {
+                Category cat = c.getCategory(i);
+                counts.put(cat, counts.get(cat) + 1);
+            }
+        }
+
         for (Category mCategorie : mCategories) {
             if (counts.get(mCategorie) > 0) {
                 categories.add(mCategorie);
@@ -534,7 +540,7 @@ public class Tournament implements IContainCoachs {
      * @param g
      * @return
      */
-    public boolean containsGroups(Group g) {
+    public boolean containsGroup(Group g) {
         return mGroups.contains(g);
     }
 
@@ -628,18 +634,22 @@ public class Tournament implements IContainCoachs {
     }
 
     /*    public ArrayList<Group> getGroups() {
-    return mGroups;
-    }*/
+     return mGroups;
+     }*/
     /**
      *
      * @param file
      * @param withRanking
      */
-    public void saveXML(final java.io.File file, final boolean withRanking) {
+    private void saveXML(final java.io.File file, final boolean withRanking) {
         final Element document = new Element(StringConstants.CS_TOURNAMENT);
 
         document.setAttribute(StringConstants.CS_VERSION, "3");
         document.setAttribute(StringConstants.CS_ROUNDROBIN, Boolean.toString(isRoundRobin()));
+
+        Element description = new Element(StringConstants.CS_DESCRIPTION);
+        description.setText(mDescription);
+        document.addContent(description);
 
         // Tounament data
         for (int i = 0; i
@@ -726,15 +736,15 @@ public class Tournament implements IContainCoachs {
                                             mTeams, false), getRankingTypes(true)));
                 }
                 if (getParams().isEnableClans()) {
-                    rankings.add(new Ranking(Ranking.CS_Clan, 
-                            Ranking.CS_General, 
-                            StringConstants.CS_NULL, 
+                    rankings.add(new Ranking(Ranking.CS_Clan,
+                            Ranking.CS_General,
+                            StringConstants.CS_NULL,
                             new MjtRankingClan(i,
-                                    this.getParams().getRankingIndiv1(), 
+                                    this.getParams().getRankingIndiv1(),
                                     this.getParams().getRankingIndiv2(),
-                                    this.getParams().getRankingIndiv3(), 
-                                    this.getParams().getRankingIndiv4(), 
-                                    this.getParams().getRankingIndiv5(), 
+                                    this.getParams().getRankingIndiv3(),
+                                    this.getParams().getRankingIndiv4(),
+                                    this.getParams().getRankingIndiv5(),
                                     this.getDisplayClans(), false),
                             getRankingTypes(false)));
 
@@ -756,11 +766,11 @@ public class Tournament implements IContainCoachs {
                                         g.getName(),
                                         StringConstants.CS_NULL,
                                         new MjtRankingIndiv(i,
-                                                this.getParams().getRankingIndiv1(), 
-                                                this.getParams().getRankingIndiv2(), 
-                                                this.getParams().getRankingIndiv3(), 
+                                                this.getParams().getRankingIndiv1(),
+                                                this.getParams().getRankingIndiv2(),
+                                                this.getParams().getRankingIndiv3(),
                                                 this.getParams().getRankingIndiv4(),
-                                                this.getParams().getRankingIndiv5(), 
+                                                this.getParams().getRankingIndiv5(),
                                                 list, false, false, false),
                                         getRankingTypes(false)));
                     }
@@ -771,29 +781,29 @@ public class Tournament implements IContainCoachs {
                     rankings.add(new Ranking(Ranking.CS_Individual,
                             criteria.getName(),
                             Ranking.CS_Positive,
-                            new MjtAnnexRankIndiv(i, 
-                                    criteria, 
+                            new MjtAnnexRankIndiv(i,
+                                    criteria,
                                     Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mCoachs, true, 
-                                    this.getParams().getRankingIndiv1(), 
-                                    this.getParams().getRankingIndiv2(), 
-                                    this.getParams().getRankingIndiv3(), 
-                                    this.getParams().getRankingIndiv4(), 
-                                    this.getParams().getRankingIndiv5(), 
-                                    getParams().isTeamTournament(), false), 
+                                    mCoachs, true,
+                                    this.getParams().getRankingIndiv1(),
+                                    this.getParams().getRankingIndiv2(),
+                                    this.getParams().getRankingIndiv3(),
+                                    this.getParams().getRankingIndiv4(),
+                                    this.getParams().getRankingIndiv5(),
+                                    getParams().isTeamTournament(), false),
                             getRankingTypes(false)));
                     rankings.add(new Ranking(Ranking.CS_Individual,
-                            criteria.getName(), 
+                            criteria.getName(),
                             Ranking.CS_Negative,
-                            new MjtAnnexRankIndiv(i, 
-                                    criteria, 
-                                    Parameters.C_RANKING_SUBTYPE_NEGATIVE, 
+                            new MjtAnnexRankIndiv(i,
+                                    criteria,
+                                    Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                     mCoachs, true,
-                                    this.getParams().getRankingIndiv1(), 
-                                    this.getParams().getRankingIndiv2(), 
-                                    this.getParams().getRankingIndiv3(), 
-                                    this.getParams().getRankingIndiv4(), 
-                                    this.getParams().getRankingIndiv5(), 
+                                    this.getParams().getRankingIndiv1(),
+                                    this.getParams().getRankingIndiv2(),
+                                    this.getParams().getRankingIndiv3(),
+                                    this.getParams().getRankingIndiv4(),
+                                    this.getParams().getRankingIndiv5(),
                                     getParams().isTeamTournament(), false),
                             getRankingTypes(false)));
 
@@ -805,62 +815,62 @@ public class Tournament implements IContainCoachs {
                                         new MjtAnnexRankTeam(i,
                                                 criteria,
                                                 Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                                mTeams, true, 
-                                                this.getParams().getRankingIndiv1(), 
-                                                this.getParams().getRankingIndiv2(), 
+                                                mTeams, true,
+                                                this.getParams().getRankingIndiv1(),
+                                                this.getParams().getRankingIndiv2(),
                                                 this.getParams().getRankingIndiv3(),
-                                                this.getParams().getRankingIndiv4(), 
-                                                this.getParams().getRankingIndiv5(), 
-                                                false), 
+                                                this.getParams().getRankingIndiv4(),
+                                                this.getParams().getRankingIndiv5(),
+                                                false),
                                         getRankingTypes(true)));
                         rankings.add(
                                 new Ranking(Ranking.CS_Positive,
-                                        criteria.getName(), 
-                                         Ranking.CS_Negative,
+                                        criteria.getName(),
+                                        Ranking.CS_Negative,
                                         new MjtAnnexRankTeam(i,
                                                 criteria,
                                                 Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                                mTeams, true, 
-                                                this.getParams().getRankingIndiv1(), 
-                                                this.getParams().getRankingIndiv2(), 
-                                                this.getParams().getRankingIndiv3(), 
+                                                mTeams, true,
+                                                this.getParams().getRankingIndiv1(),
+                                                this.getParams().getRankingIndiv2(),
+                                                this.getParams().getRankingIndiv3(),
                                                 this.getParams().getRankingIndiv4(),
-                                                this.getParams().getRankingIndiv5(), 
-                                                false), 
+                                                this.getParams().getRankingIndiv5(),
+                                                false),
                                         getRankingTypes(true)));
                     }
 
                     if (getParams().isEnableClans()) {
                         rankings.add(new Ranking(Ranking.CS_Clan,
-                                criteria.getName(), 
-                                Ranking.CS_Positive, 
+                                criteria.getName(),
+                                Ranking.CS_Positive,
                                 new MjtAnnexRankClan(i,
                                         criteria,
                                         Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                         mClans,
-                                        true, 
+                                        true,
                                         this.getParams().getRankingIndiv1(),
                                         this.getParams().getRankingIndiv2(),
-                                        this.getParams().getRankingIndiv3(), 
-                                        this.getParams().getRankingIndiv4(), 
-                                        this.getParams().getRankingIndiv5(), 
-                                        false), 
+                                        this.getParams().getRankingIndiv3(),
+                                        this.getParams().getRankingIndiv4(),
+                                        this.getParams().getRankingIndiv5(),
+                                        false),
                                 getRankingTypes(false)));
                         rankings.add(
                                 new Ranking(
                                         Ranking.CS_Clan,
                                         criteria.getName(),
                                         Ranking.CS_Negative,
-                                        new MjtAnnexRankClan(i, 
-                                                criteria, 
-                                                Parameters.C_RANKING_SUBTYPE_NEGATIVE, 
+                                        new MjtAnnexRankClan(i,
+                                                criteria,
+                                                Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                                 mClans, true,
-                                                this.getParams().getRankingIndiv1(), 
+                                                this.getParams().getRankingIndiv1(),
                                                 this.getParams().getRankingIndiv2(),
-                                                this.getParams().getRankingIndiv3(), 
-                                                this.getParams().getRankingIndiv4(), 
-                                                this.getParams().getRankingIndiv5(), 
-                                                false), 
+                                                this.getParams().getRankingIndiv3(),
+                                                this.getParams().getRankingIndiv4(),
+                                                this.getParams().getRankingIndiv5(),
+                                                false),
                                         getRankingTypes(false)));
                     }
                 }
@@ -951,7 +961,7 @@ public class Tournament implements IContainCoachs {
         a.append(";\n");
 
         if (this.getParams().isTeamTournament()) {
-            final MjtRankingTeam rt = new MjtRankingTeam(getParams().isTeamVictoryOnly(), round - 1,
+            final MjtRankingTeam rt = new MjtRankingTeam(getParams().isTeamVictoryOnly(), round,
                     mTeams, false);
 
             for (int i = 0; i < rt.getRowCount(); i++) {
@@ -961,7 +971,7 @@ public class Tournament implements IContainCoachs {
                 a.append(team);
                 for (Team mTeam : mTeams) {
                     if (mTeam.getName().equals(team)) {
-                        for (int k = 0; k < mTeam.getCoachCount(); k++) {
+                        for (int k = 0; k < mTeam.getCoachsCount(); k++) {
                             a.append(";");
                             a.append(mTeam.getCoach(k).getName());
                         }
@@ -1009,18 +1019,18 @@ public class Tournament implements IContainCoachs {
         QRCode qrcode;
         try {
             qrcode = Encoder.encode(s, ErrorCorrectionLevel.H);
-            
+
             final int magnify = 10; //The resolution of the QRCode 
             final byte[][] matrix = qrcode.getMatrix().getArray();
             final int size = qrcode.getMatrix().getWidth() * magnify;
-            
+
             //Make the BufferedImage that are to hold the QRCode 
             final BufferedImage im = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
             im.createGraphics();
             final Graphics2D g = (Graphics2D) im.getGraphics();
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, size * magnify, size * magnify);
-            
+
             //paint the image using the ByteMatrik 
             for (int h = 0; h < qrcode.getMatrix().getHeight(); h++) {
                 for (int w = 0; w < qrcode.getMatrix().getWidth(); w++) {
@@ -1065,14 +1075,14 @@ public class Tournament implements IContainCoachs {
             fw = new OutputStreamWriter(new FileOutputStream(file), Charset.defaultCharset());
             bw = new BufferedWriter(fw);
             writer = new PrintWriter(bw);
-            final String s = generateCSVRanking(mRounds.size(), true, true);
+            final String s = generateCSVRanking(mRounds.size() - 1, true, true);
             String s_tmp = s;
             while (s_tmp.length() > 0) {
                 writer.print(s_tmp.substring(0, Math.min(255, s_tmp.length() - 1)));
                 s_tmp = s_tmp.substring(Math.min(256, s_tmp.length()));
             }
 
-            final RenderedImage im = generateRankingQRCode(mRounds.size());
+            final RenderedImage im = generateRankingQRCode(mRounds.size() - 1);
 
             try {
                 ImageIO.write(im, "PNG", new File(file.getAbsoluteFile() + ".PNG"));
@@ -1127,16 +1137,18 @@ public class Tournament implements IContainCoachs {
         }
 
         try {
-            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.defaultCharset())))) {
+            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")))) {
                 writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
                 writer.println("<nafReport xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.bloodbowl.net' xsi:schemaLocation='http://www.bloodbowl.net ../../../test/naf.xsd'>");
                 writer.println(java.text.MessageFormat.format(("<ORGANISER>{0}</ORGANISER>"), new Object[]{getParams().getTournamentOrga()}));
                 writer.println(("<COACHES>"));
                 for (Coach mCoach : mCoachs) {
                     if (mCoach.getNaf() > 0) {
+                        String naf = Integer.toString(mCoach.getNaf());
+
                         writer.println(("<COACH>"));
                         writer.println(java.text.MessageFormat.format("<NAME>{0}</NAME>", new Object[]{mCoach.getName()}));
-                        writer.println(java.text.MessageFormat.format("<NUMBER>{0}</NUMBER>", new Object[]{mCoach.getNaf()}));
+                        writer.println(java.text.MessageFormat.format("<NUMBER>{0}</NUMBER>", new Object[]{naf}));
                         writer.println(java.text.MessageFormat.format("<TEAM>{0}</TEAM>", new Object[]{RosterType.getRosterTranslation(mCoach.getRoster().getName())}));
                         writer.println(("</COACH>"));
                     }
@@ -1230,11 +1242,16 @@ public class Tournament implements IContainCoachs {
      *
      * @param racine
      */
-    protected void loadXMLv3(final Element racine) {
+    private void loadXMLv3(final Element racine) {
         try {
             setRoundRobin(Boolean.parseBoolean(racine.getAttributeValue(StringConstants.CS_ROUNDROBIN)));
         } catch (Exception e) {
             setRoundRobin(false);
+        }
+
+        Element e = racine.getChild(StringConstants.CS_DESCRIPTION);
+        if (e != null) {
+            mDescription = e.getText();
         }
 
         loadRosters(racine);
@@ -1362,6 +1379,7 @@ public class Tournament implements IContainCoachs {
      * @param file
      */
     public void loadXML(final java.io.File file) {
+
         final SAXBuilder sxb = new SAXBuilder();
 
         try {
@@ -1448,14 +1466,6 @@ public class Tournament implements IContainCoachs {
     }
 
     /**
-     * @return the mCoachs
-     */
-    @Override
-    public int getCoachCount() {
-        return mCoachs.size();
-    }
-
-    /**
      * @param mParams the mParams to set
      */
     public void setParams(Parameters mParams) {
@@ -1479,15 +1489,6 @@ public class Tournament implements IContainCoachs {
     /**
      *
      * @param r
-     * @return
-     */
-    public int indexOfRound(Round r) {
-        return mRounds.indexOf(r);
-    }
-
-    /**
-     *
-     * @param r
      */
     public void removeRound(Round r) {
         mRounds.remove(r);
@@ -1499,5 +1500,13 @@ public class Tournament implements IContainCoachs {
      */
     public void removeRound(int r) {
         mRounds.remove(r);
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String tmp) {
+        mDescription = tmp;
     }
 }

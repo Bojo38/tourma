@@ -44,7 +44,7 @@ public class GenerationNGTest {
     /**
      * Test of nextRound method, of class Generation.
      */
-    @Test
+    @Test(enabled=false)
     public void testNextRound() {
         System.out.println("nextRound");
         Round round = null;
@@ -58,7 +58,7 @@ public class GenerationNGTest {
     /**
      * Test of generateFirstRoundFree method, of class Generation.
      */
-    @Test
+    @Test(enabled=false)
     public void testGenerateFirstRoundFree() {
         System.out.println("generateFirstRoundFree");
         Generation.generateFirstRoundFree();
@@ -69,7 +69,7 @@ public class GenerationNGTest {
     /**
      * Test of generateFirstRound method, of class Generation.
      */
-    @Test
+    @Test(enabled=false)
     public void testGenerateFirstRound() {
         System.out.println("generateFirstRound");
         int choice = 0;
@@ -81,7 +81,7 @@ public class GenerationNGTest {
     /**
      * Test of subRanking method, of class Generation.
      */
-    @Test
+    @Test(enabled=false)
     public void testSubRanking_Team_ArrayList() {
         System.out.println("subRanking");
         Team team = null;
@@ -96,7 +96,7 @@ public class GenerationNGTest {
     /**
      * Test of subRanking method, of class Generation.
      */
-    @Test
+    @Test(enabled=false)
     public void testSubRanking_ArrayList_ArrayList() {
         System.out.println("subRanking");
         ArrayList<Coach> coachs = null;

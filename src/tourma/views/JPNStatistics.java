@@ -16,6 +16,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -81,6 +82,10 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private final JPanel jpnBalancedIndiv = new JPanel(new BorderLayout());
     private JList jlsBalancedIndiv = null;
     private final ArrayList<HashMap<String, Integer>> mHIndivBalanced = new ArrayList<>();
+
+    public JTabbedPane getTabbedPane() {
+        return jtpStatistics;
+    }
 
     /**
      * Creates new form JPNStatistics
@@ -148,7 +153,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 hm.put(opp.getName(), 0);
             }
 
-            for (int j = 0; j < t.getCoachCount(); j++) {
+            for (int j = 0; j < t.getCoachsCount(); j++) {
                 Coach c = t.getCoach(j);
                 for (int k = 0; k < c.getMatchCount(); k++) {
                     Match mMatch = c.getMatch(k);
@@ -519,17 +524,23 @@ public final class JPNStatistics extends javax.swing.JPanel {
 
                     //if (!names.contains(r.getName())) {
                     names.add(r.getName());
+
                     //}
                 }
 
                 for (String rName : names) {
-                    final Number value = datas.getValue(rName);
-                    int v = 0;
-                    if (value != null) {
-                        v = value.intValue();
+                    try {
+                        final Number value = datas.getValue(rName);
+
+                        int v = 0;
+                        if (value != null) {
+                            v = value.intValue();
+                        }
+                        v++;
+                        datas.setValue(rName, v);
+                    } catch (NullPointerException npe) {
+
                     }
-                    v++;
-                    datas.setValue(rName, v);
                 }
             }
         }
@@ -563,6 +574,9 @@ public final class JPNStatistics extends javax.swing.JPanel {
         plot.setForegroundAlpha(0.5f);
 
         final ChartPanel chartPanel = new ChartPanel(chart);
+
+        chartPanel.setName("RosterPie");
+
         jtpStatistics.addTab(Translate.translate(CS_Roster), chartPanel);
     }
 
@@ -629,7 +643,16 @@ public final class JPNStatistics extends javax.swing.JPanel {
      * Update panel
      */
     public void update() {
-        // not used
+        if (mTournament.getParams().isTeamTournament()) {
+            updateTeamPositions();
+            if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
+                updateBalancedIndiv();
+                updateBalancedTeam();
+            }
+        }
+
+        updatePositions();
+
     }
 
     /**
@@ -895,7 +918,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     /**
      *
      */
-    private void updatePositions() {
+    public void updatePositions() {
         if (cpPositions != null) {
             jpnPositions.remove(cpPositions);
         }
@@ -938,7 +961,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     /**
      *
      */
-    private void updateBalancedTeam() {
+    public void updateBalancedTeam() {
         if (cpBalancedTeam != null) {
             jpnBalancedTeam.remove(cpBalancedTeam);
         }
@@ -999,7 +1022,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     /**
      * Update individual positions graph
      */
-    private void updateBalancedIndiv() {
+    public void updateBalancedIndiv() {
         if (cpBalancedIndiv != null) {
             jpnBalancedIndiv.remove(cpBalancedIndiv);
         }
@@ -1022,7 +1045,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
         }
 
         JFreeChart chart = ChartFactory.createBarChart(
-                 Translate.translate(CS_OpponentsByCoach),
+                Translate.translate(CS_OpponentsByCoach),
                 Translate.translate(CS_Opponents),
                 Translate.translate(CS_MatchsCount),
                 datas, PlotOrientation.VERTICAL, true, true, true);
@@ -1055,7 +1078,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     /**
      * Update Teams positions graph
      */
-    private void updateTeamPositions() {
+    public void updateTeamPositions() {
         if (cpTeamPositions != null) {
             jpnTeamPositions.remove(cpTeamPositions);
         }

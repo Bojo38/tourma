@@ -15,7 +15,7 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public abstract class Competitor implements Comparable<Object>,IWithNameAndPicture {
+public abstract class Competitor implements Comparable<Object>, IWithNameAndPicture {
 
     /**
      *
@@ -27,22 +27,35 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
         int red = random.nextInt(256);
         int green = random.nextInt(256);
         int blue = random.nextInt(256);
-        
+
         // mix the color
         if (mix != null) {
             red = (red + mix.getRed()) / 2;
             green = (green + mix.getGreen()) / 2;
             blue = (blue + mix.getBlue()) / 2;
         }
-        
+
         return new Color(red, green, blue);
+    }
+
+    @Override
+    public boolean equals(Object c) {
+        if (c instanceof Competitor) {
+            Competitor comp = (Competitor) c;
+            return getName().equals(comp.getName());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
     }
 
     /**
      *
      */
-    private final ArrayList<Category> mCategories=new ArrayList<>();
-    
+    private final ArrayList<Category> mCategories = new ArrayList<>();
 
     /**
      *
@@ -57,12 +70,12 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
     /**
      *
      */
-    private ArrayList<Match> mMatchs=new ArrayList<>();
+    protected ArrayList<Match> mMatchs = new ArrayList<>();
 
     /**
      *
      */
-    private BufferedImage picture=null;
+    private BufferedImage picture = null;
     /**
      * Clan
      */
@@ -99,7 +112,11 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
     }
 
     public Category getCategory(int i) {
-        return mCategories.get(i);
+        if (i < mCategories.size()) {
+            return mCategories.get(i);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -129,7 +146,8 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
      * @param opponent
      * @param r
      */
-    public abstract void addMatchRoundRobin(Competitor opponent, Round r);
+    public abstract void addMatchRoundRobin(Competitor opponent, Round r,boolean complete);
+
     /**
      *
      * @param opponent
@@ -163,7 +181,7 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
      * @param current
      * @return
      */
-    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current);    
+    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current);
 
     @Override
     public String toString() {
@@ -228,8 +246,7 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
     /**
      * @param mClan the mClan to set
      */
-    public void setClan(Clan mClan)
-    {
+    public void setClan(Clan mClan) {
         this.mClan = mClan;
     }
 
@@ -240,19 +257,18 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
     public Match getMatch(int i) {
         return mMatchs.get(i);
     }
-    
+
     /**
      *
-     * @return 
+     * @return
      */
-    public int getMatchCount()
-    {
+    public int getMatchCount() {
         return mMatchs.size();
     }
- 
+
     /**
      *
-     * @param m 
+     * @param m
      */
     public void addMatch(Match m) {
         mMatchs.add(m);
@@ -260,41 +276,43 @@ public abstract class Competitor implements Comparable<Object>,IWithNameAndPictu
 
     /**
      *
-     * @param m 
+     * @param m
      */
     public void removeMatch(Match m) {
-        mMatchs.remove(m);
+        if (mMatchs.contains(m)) {
+            mMatchs.remove(m);
+        }
     }
-    
+
     /**
      *
-     * @return 
+     * @return
      */
     public boolean isMatchsNotNull() {
-        return mMatchs!=null;
+        return mMatchs != null;
     }
-    
+
     /**
      * New match arrays
      */
     public void newMatchs() {
         this.mMatchs = new ArrayList<>();
     }
-    
+
     /**
-     * 
+     *
      * @param m
-     * @return 
+     * @return
      */
     public int matchIndex(Match m) {
         return mMatchs.indexOf(m);
     }
-    
+
     /**
-     *  clear the matchs array
+     * clear the matchs array
      */
     public void clearMatchs() {
         mMatchs.clear();
     }
-    
+
 }

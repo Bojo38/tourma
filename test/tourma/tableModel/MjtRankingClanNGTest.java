@@ -6,25 +6,45 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.data.Clan;
+import tourma.data.Tournament;
+import tourma.languages.Translate;
+import tourma.utility.StringConstants;
+
 /**
  *
  * @author WFMJ7631
  */
 public class MjtRankingClanNGTest {
-    
+
+    static ArrayList<Clan> clans = new ArrayList<>();
+    static MjtRankingClan instance;
+
     public MjtRankingClanNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/clan.xml"));
+
+        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+            clans.add(Tournament.getTournament().getClan(i));
+        }
+        //crit=Tournament.getTournament().getParams().getCriteria(0);
+        instance = new MjtRankingClan(Tournament.getTournament().getRoundsCount() - 1,
+                clans,
+                false);
     }
 
     @AfterClass
@@ -45,10 +65,14 @@ public class MjtRankingClanNGTest {
     @Test
     public void testSortDatas() {
         System.out.println("sortDatas");
-        MjtRankingClan instance = null;
+        assertEquals(instance.getRowCount(), clans.size());
         instance.sortDatas();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i=1; i<instance.getRowCount(); i++)
+        {
+            int val1=(Integer)instance.getValueAt(i-1, 2);
+            int val2=(Integer)instance.getValueAt(i, 2);
+            Assert.assertTrue(val1>=val2);
+        }
     }
 
     /**
@@ -57,12 +81,9 @@ public class MjtRankingClanNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        MjtRankingClan instance = null;
-        int expResult = 0;
+        int expResult = 2 + Tournament.getTournament().getRankingTypes(false).size();
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -71,13 +92,17 @@ public class MjtRankingClanNGTest {
     @Test
     public void testGetColumnName() {
         System.out.println("getColumnName");
-        int col = 0;
-        MjtRankingClan instance = null;
-        String expResult = "";
-        String result = instance.getColumnName(col);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String name = instance.getColumnName(0);
+        assertEquals(name, StringConstants.CS_HASH);
+
+        name = instance.getColumnName(1);
+        assertEquals(name, Translate.translate(Translate.CS_Clan));
+
+        ArrayList<Integer> rt = Tournament.getTournament().getRankingTypes(false);
+        for (int i = 0; i < rt.size(); i++) {
+            name = instance.getColumnName(2 + i);
+            assertEquals(name, MjtRanking.getRankingString(rt.get(i)));
+        }
     }
 
     /**
@@ -86,14 +111,16 @@ public class MjtRankingClanNGTest {
     @Test
     public void testGetValueAt() {
         System.out.println("getValueAt");
-        int row = 0;
-        int col = 0;
-        MjtRankingClan instance = null;
-        Object expResult = null;
-        Object result = instance.getValueAt(row, col);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < instance.getColumnCount(); i++) {
+            for (int j = 0; j < instance.getRowCount(); j++) {
+                Object obj = instance.getValueAt(j, i);
+                if (i == 1) {
+                    Assert.assertTrue(obj instanceof String);
+                } else {
+                    Assert.assertTrue(obj instanceof Integer);
+                }
+            }
+        }
     }
 
     /**
@@ -102,18 +129,16 @@ public class MjtRankingClanNGTest {
     @Test
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
-        JTable table = null;
-        Object value = null;
-        boolean isSelected = false;
-        boolean hasFocus = false;
-        int row = 0;
-        int column = 0;
-        MjtRankingClan instance = null;
-        Component expResult = null;
-        Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      JTable table = new JTable();
+        table.setModel(instance);
+        for (int i=0; i<instance.getColumnCount(); i++)
+        {
+            for(int j=0; j<instance.getRowCount(); j++)
+            {
+                Component result = instance.getTableCellRendererComponent(table, instance.getValueAt(j, i), false, false, j, i);
+                Assert.assertTrue(result instanceof JLabel);
+            }
+        }
     }
-    
+
 }

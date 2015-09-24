@@ -5,12 +5,12 @@
  */
 package tourma.views.round;
 
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.fail;
 /**
  *
  * @author WFMJ7631
@@ -39,7 +39,7 @@ public class JPNPoolRoundNGTest {
     /**
      * Test of update method, of class JPNPool.
      */
-    @Test
+    @Test(enabled=false)
     public void testUpdate() {
         System.out.println("update");
         JPNPool instance = null;
@@ -51,7 +51,7 @@ public class JPNPoolRoundNGTest {
     /**
      * Test of setRoundOnly method, of class JPNPool.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean r = false;

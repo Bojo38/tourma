@@ -5,7 +5,7 @@
  */
 package tourma.data;
 
-import static org.testng.Assert.fail;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -43,12 +43,10 @@ public class GroupPointsNGTest {
     @Test
     public void testGetVictoryPoints() {
         System.out.println("getVictoryPoints");
-        GroupPoints instance = new GroupPoints();
-        int expResult = 0;
-        int result = instance.getVictoryPoints();
-//        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         GroupPoints instance=new GroupPoints();
+        int value=30;
+        instance.setVictoryPoints(value);
+        assertEquals(instance.getVictoryPoints(),value);
     }
 
     /**
@@ -57,11 +55,10 @@ public class GroupPointsNGTest {
     @Test
     public void testSetVictoryPoints() {
         System.out.println("setVictoryPoints");
-        int victoryPoints = 0;
-        GroupPoints instance = new GroupPoints();
-        instance.setVictoryPoints(victoryPoints);
-        // TODO review the generated test code and remove the default call to fail.
-       fail("The test case is a prototype.");
+        GroupPoints instance=new GroupPoints();
+        int value=30;
+        instance.setVictoryPoints(value);
+        assertEquals(instance.getVictoryPoints(),value);
     }
 
     /**
@@ -70,12 +67,10 @@ public class GroupPointsNGTest {
     @Test
     public void testGetDrawPoints() {
         System.out.println("getDrawPoints");
-        GroupPoints instance = new GroupPoints();
-        int expResult = 0;
-        int result = instance.getDrawPoints();
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        GroupPoints instance=new GroupPoints();
+        int value=30;
+        instance.setDrawPoints(value);
+        assertEquals(instance.getDrawPoints(),value);
     }
 
     /**
@@ -84,11 +79,10 @@ public class GroupPointsNGTest {
     @Test
     public void testSetDrawPoints() {
         System.out.println("setDrawPoints");
-        int drawPoints = 0;
-        GroupPoints instance = new GroupPoints();
-        instance.setDrawPoints(drawPoints);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        GroupPoints instance=new GroupPoints();
+        int value=30;
+        instance.setDrawPoints(value);
+        assertEquals(instance.getDrawPoints(),value);
     }
 
     /**
@@ -97,12 +91,10 @@ public class GroupPointsNGTest {
     @Test
     public void testGetLossPoints() {
         System.out.println("getLossPoints");
-        GroupPoints instance = new GroupPoints();
-        int expResult = 0;
-        int result = instance.getLossPoints();
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         GroupPoints instance=new GroupPoints();
+        int value=15;
+        instance.setLossPoints(value);
+        assertEquals(instance.getLossPoints(),value);
     }
 
     /**
@@ -111,11 +103,10 @@ public class GroupPointsNGTest {
     @Test
     public void testSetLossPoints() {
         System.out.println("setLossPoints");
-        int lossPoints = 0;
-        GroupPoints instance = new GroupPoints();
-        instance.setLossPoints(lossPoints);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         GroupPoints instance=new GroupPoints();
+        int value=15;
+        instance.setLossPoints(value);
+        assertEquals(instance.getLossPoints(),value);
     }
     
 }

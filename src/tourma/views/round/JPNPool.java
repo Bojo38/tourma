@@ -30,7 +30,7 @@ import tourma.tableModel.MjtAnnexRankTeam;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
-import tourma.utils.TableFormat;
+import tourma.utils.display.TableFormat;
 import tourma.views.report.JdgGlobal;
 import tourma.views.report.JdgRanking;
 
@@ -73,7 +73,7 @@ public final class JPNPool extends javax.swing.JPanel {
 
                 final ArrayList<Coach> v = new ArrayList<>();
                 for (int j = 0; j < p.getCompetitorCount(); j++) {
-                    for (int k = 0; k < ((IContainCoachs) p.getCompetitor(j)).getCoachCount(); k++) {
+                    for (int k = 0; k < ((IContainCoachs) p.getCompetitor(j)).getCoachsCount(); k++) {
                         v.add(((IContainCoachs) p.getCompetitor(j)).getCoach(k));
                     }
                 }

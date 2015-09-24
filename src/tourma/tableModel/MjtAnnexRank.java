@@ -96,6 +96,11 @@ public abstract class MjtAnnexRank extends MjtRanking {
         return mCriteria;
     }
     
+    public void setCriteria(Criteria c)
+    {
+        mCriteria=c;
+    }
+    
     @Override
     abstract public String getColumnName(int col);
 

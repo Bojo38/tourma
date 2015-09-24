@@ -112,4 +112,26 @@ public class Pool implements XMLExport {
         return mCompetitors;
     }
 
+    
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        
+        boolean result;
+        result = false;
+        if (obj instanceof Pool) {
+            Pool p=(Pool) obj;
+            result=this.getName().equals(p.getName());
+            result&=this.getCompetitorCount()==p.getCompetitorCount();
+            for (Competitor c:mCompetitors)
+            {
+                result&=p.getCompetitors().contains(c);
+            }            
+        } 
+        return result;
+    }
 }

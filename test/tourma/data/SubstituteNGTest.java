@@ -5,20 +5,21 @@
  */
 package tourma.data;
 
+import java.io.File;
 import org.jdom2.Element;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class SubstituteNGTest {
-    
+
     public SubstituteNGTest() {
     }
 
@@ -44,12 +45,22 @@ public class SubstituteNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
+        Tournament.getTournament().loadXML(new File("./test/substitute.xml"));
         Substitute instance = new Substitute();
-        Element expResult = null;
+        Coach s = new Coach("Sub");
+        Coach.putCoach("Sub", s);
+        instance.setSubstitute(s);
+
+        
+        CoachMatch cm=Tournament.getTournament().getRound(0).getCoachMatchs().get(0);
+        instance.setTitular((Coach)cm.getCompetitor1());
+        
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Substitute s2=new Substitute();
+        s2.setXMLElement(result);
+        assertEquals(instance, s2);
+
     }
 
     /**
@@ -58,11 +69,21 @@ public class SubstituteNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
+      Tournament.getTournament().loadXML(new File("./test/substitute.xml"));
         Substitute instance = new Substitute();
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Coach s = new Coach("Sub");
+        Coach.putCoach("Sub", s);
+        instance.setSubstitute(s);
+
+        
+        CoachMatch cm=Tournament.getTournament().getRound(0).getCoachMatchs().get(0);
+        instance.setTitular((Coach)cm.getCompetitor1());
+        
+        Element result = instance.getXMLElement();
+        
+        Substitute s2=new Substitute();
+        s2.setXMLElement(result);
+        assertEquals(instance, s2);
     }
 
     /**
@@ -71,12 +92,10 @@ public class SubstituteNGTest {
     @Test
     public void testGetMatch() {
         System.out.println("getMatch");
+        CoachMatch mMatch = new CoachMatch(new Round());
         Substitute instance = new Substitute();
-        CoachMatch expResult = null;
-        CoachMatch result = instance.getMatch();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setMatch(mMatch);
+        assertEquals(mMatch, instance.getMatch());
     }
 
     /**
@@ -85,11 +104,10 @@ public class SubstituteNGTest {
     @Test
     public void testSetMatch() {
         System.out.println("setMatch");
-        CoachMatch mMatch = null;
+        CoachMatch mMatch = new CoachMatch(new Round());
         Substitute instance = new Substitute();
         instance.setMatch(mMatch);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(mMatch, instance.getMatch());
     }
 
     /**
@@ -99,11 +117,11 @@ public class SubstituteNGTest {
     public void testGetSubstitute() {
         System.out.println("getSubstitute");
         Substitute instance = new Substitute();
-        Coach expResult = null;
+        Coach expResult = new Coach("Sub");
+        instance.setSubstitute(expResult);
         Coach result = instance.getSubstitute();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -112,11 +130,11 @@ public class SubstituteNGTest {
     @Test
     public void testSetSubstitute() {
         System.out.println("setSubstitute");
-        Coach mSubstitute = null;
         Substitute instance = new Substitute();
-        instance.setSubstitute(mSubstitute);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Coach expResult = new Coach("Sub");
+        instance.setSubstitute(expResult);
+        Coach result = instance.getSubstitute();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -126,11 +144,10 @@ public class SubstituteNGTest {
     public void testGetTitular() {
         System.out.println("getTitular");
         Substitute instance = new Substitute();
-        Coach expResult = null;
+        Coach expResult = new Coach("Tit");
+        instance.setTitular(expResult);
         Coach result = instance.getTitular();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -139,11 +156,11 @@ public class SubstituteNGTest {
     @Test
     public void testSetTitular() {
         System.out.println("setTitular");
-        Coach mTitular = null;
         Substitute instance = new Substitute();
-        instance.setTitular(mTitular);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Coach expResult = new Coach("Tit");
+        instance.setTitular(expResult);
+        Coach result = instance.getTitular();
+        assertEquals(result, expResult);
     }
-    
+
 }
