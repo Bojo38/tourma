@@ -501,7 +501,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
 
         for (int cpt = 0; cpt < RosterType.getRostersNamesCount(); cpt++) {
             String roster = RosterType.getRostersName(cpt);
-            System.out.println("Add " + roster);
             datas.setValue(roster, 0);
         }
 
@@ -516,18 +515,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
                     RosterType r;
                     if (c == m.getCompetitor1()) {
                         r = m.getRoster1();
-                        if (r != null) {
-                            System.out.println(r.getName());
-                        }
                     } else {
                         r = m.getRoster2();
-                        if (r != null) {
-                            System.out.println(r.getName());
-                        }
                     }
                     if (r == null) {
                         r = c.getRoster();
-                        System.out.println(r.getName());
                     }
 
                     //if (!names.contains(r.getName())) {
