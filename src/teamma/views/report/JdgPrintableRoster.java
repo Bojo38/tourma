@@ -39,6 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringEscapeUtils;
 import teamma.data.Player;
 import teamma.data.Roster;
 import teamma.data.RosterType;
@@ -311,9 +312,9 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             
             if (getmCoach() != null) {
                 if (getmCoach().getTeam() != null) {
-                    root.put(CS_title, org.unbescape.html.HtmlEscape.escapeHtml5(getmCoach().getTeam()));
+                    root.put(CS_title, StringEscapeUtils.escapeHtml4(getmCoach().getTeam()));
                 } else {
-                    root.put(CS_title, org.unbescape.html.HtmlEscape.escapeHtml5(getmCoach().getName()));
+                    root.put(CS_title, StringEscapeUtils.escapeHtml4(getmCoach().getName()));
                 }
             } else {
                 root.put(CS_title, "?");
@@ -325,8 +326,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 Player p = getmRoster().getPlayer(i);
                 final HashMap<String, Object> player = new HashMap<>();
                 player.put(CS_numero, i + 1);
-                player.put(CS_name,  org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate(p.getName())));
-                player.put(CS_position, org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate(p.getPlayertype().getPosition())));
+                player.put(CS_name,  StringEscapeUtils.escapeHtml4(Translate.translate(p.getName())));
+                player.put(CS_position, StringEscapeUtils.escapeHtml4(Translate.translate(p.getPlayertype().getPosition())));
                 player.put(CS_movement, p.getPlayertype().getMovement());
                 player.put(CS_strength, p.getPlayertype().getStrength());
                 player.put(CS_agility, p.getPlayertype().getAgility());
@@ -335,7 +336,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 ArrayList<String> skills = new ArrayList<>();
                 for (int cpt = 0; cpt < p.getPlayertype().getSkillCount(); cpt++) {
                     Skill _skill = p.getPlayertype().getSkill(cpt);
-                    skills.add(org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate(_skill.getmName())));
+                    skills.add(StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())));
                 }
                 for (int cpt = 0; cpt < p.getSkillCount(); cpt++) {
                     Skill _skill = p.getSkill(cpt);
@@ -345,7 +346,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                     ctmp = ctmp + c.getRed() + ",";
                     ctmp = ctmp + c.getGreen() + ",";
                     ctmp = ctmp + c.getBlue() + ")";
-                    skills.add("<div style=\"color:" + ctmp + ";\">" + org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate(_skill.getmName())) + "</div>");
+                    skills.add("<div style=\"color:" + ctmp + ";\">" + StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())) + "</div>");
                 }
                 player.put(CS_skills, skills);
                 player.put(CS_cost, p.getValue(isWithSkill()));
@@ -371,8 +372,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 StarPlayer p = getmRoster().getChampion(cpt);
                 final HashMap<String, Object> player = new HashMap<>();
                 player.put(CS_numero, players.size() + 1);
-                player.put(CS_name,  org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate(p.getName())));
-                player.put(CS_position, org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate( p.getPosition())));
+                player.put(CS_name,  StringEscapeUtils.escapeHtml4(Translate.translate(p.getName())));
+                player.put(CS_position, StringEscapeUtils.escapeHtml4(Translate.translate( p.getPosition())));
                 player.put(CS_movement, p.getMovement());
                 player.put(CS_strength, p.getStrength());
                 player.put(CS_agility, p.getAgility());
@@ -381,7 +382,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 ArrayList<String> skills = new ArrayList<>();
                 for (int cpt2 = 0; cpt2 < p.getSkillCount(); cpt2++) {
                     Skill _skill = p.getSkill(cpt2);
-                    skills.add( org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate(_skill.getmName())));
+                    skills.add( StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())));
                 }
                 player.put(CS_skills, skills);
                 player.put(CS_cost, p.getCost());
@@ -461,6 +462,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 root.put(CS_bribe_cost, 0);
             }
 
+            
             root.put(CS_wizard, getmRoster().isWizard() ? 1 : 0);
             root.put(CS_wizard_price, RosterType.getWizard_cost());
             root.put(CS_wizard_cost, getmRoster().isWizard() ? RosterType.getWizard_cost() : 0);
@@ -484,35 +486,35 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             root.put(CS_rank, getmRoster().getValue(isWithSkill()) / 10000);
 
             // Pure translation
-            root.put("RosterTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("RosterTitle")));
-            root.put("NameTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("NameTitle")));
-            root.put("PositionTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("PositionTitle")));
-            root.put("MTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("MTitle")));
-            root.put("STitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("STitle")));
-            root.put("AgTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("AgTitle")));
-            root.put("ArTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("ArTitle")));
-            root.put("SkillsTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("SkillsTitle")));
-            root.put("CostTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("CostTitle")));
-            root.put("SRTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("SRTitle")));
-            root.put("DRTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("DRTitle")));
-            root.put("TeamNameTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("TeamNameTitle")));
-            root.put("ApothecaryTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("ApothecaryTitle")));
-            root.put("CoachNameTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("CoachNameTitle")));
-            root.put("AssistTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("AssistTitle")));
-            root.put("RaceTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("RaceTitle")));
-            root.put("CheerleadersTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("CheerleadersTitle")));
-            root.put("FanFactorTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("FanFactorTitle")));
-            root.put("ExtraRerollTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("ExtraRerollTitle")));
-            root.put("LocalApothecaryTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("LocalApothecaryTitle")));
-            root.put("IgorTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("IgorTitle")));
-            root.put("BribeTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("BribeTitle")));
-            root.put("WizardTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("WizardTitle")));
-            root.put("BabesTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("BabesTitle")));
-            root.put("ChefTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("ChefTitle")));
-            root.put("CardsTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("CardsTitle")));
-            root.put("TotalTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("TotalTitle")));
-            root.put("RerollTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("RerollTitle")));
-            root.put("RankTitle",org.unbescape.html.HtmlEscape.escapeHtml5(Translate.translate("RankTitle")));
+            root.put("RosterTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RosterTitle")));
+            root.put("NameTitle",StringEscapeUtils.escapeHtml4(Translate.translate("NameTitle")));
+            root.put("PositionTitle",StringEscapeUtils.escapeHtml4(Translate.translate("PositionTitle")));
+            root.put("MTitle",StringEscapeUtils.escapeHtml4(Translate.translate("MTitle")));
+            root.put("STitle",StringEscapeUtils.escapeHtml4(Translate.translate("STitle")));
+            root.put("AgTitle",StringEscapeUtils.escapeHtml4(Translate.translate("AgTitle")));
+            root.put("ArTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ArTitle")));
+            root.put("SkillsTitle",StringEscapeUtils.escapeHtml4(Translate.translate("SkillsTitle")));
+            root.put("CostTitle",StringEscapeUtils.escapeHtml4(Translate.translate("CostTitle")));
+            root.put("SRTitle",StringEscapeUtils.escapeHtml4(Translate.translate("SRTitle")));
+            root.put("DRTitle",StringEscapeUtils.escapeHtml4(Translate.translate("DRTitle")));
+            root.put("TeamNameTitle",StringEscapeUtils.escapeHtml4(Translate.translate("TeamNameTitle")));
+            root.put("ApothecaryTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ApothecaryTitle")));
+            root.put("CoachNameTitle",StringEscapeUtils.escapeHtml4(Translate.translate("CoachNameTitle")));
+            root.put("AssistTitle",StringEscapeUtils.escapeHtml4(Translate.translate("AssistTitle")));
+            root.put("RaceTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RaceTitle")));
+            root.put("CheerleadersTitle",StringEscapeUtils.escapeHtml4(Translate.translate("CheerleadersTitle")));
+            root.put("FanFactorTitle",StringEscapeUtils.escapeHtml4(Translate.translate("FanFactorTitle")));
+            root.put("ExtraRerollTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ExtraRerollTitle")));
+            root.put("LocalApothecaryTitle",StringEscapeUtils.escapeHtml4(Translate.translate("LocalApothecaryTitle")));
+            root.put("IgorTitle",StringEscapeUtils.escapeHtml4(Translate.translate("IgorTitle")));
+            root.put("BribeTitle",StringEscapeUtils.escapeHtml4(Translate.translate("BribeTitle")));
+            root.put("WizardTitle",StringEscapeUtils.escapeHtml4(Translate.translate("WizardTitle")));
+            root.put("BabesTitle",StringEscapeUtils.escapeHtml4(Translate.translate("BabesTitle")));
+            root.put("ChefTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ChefTitle")));
+            root.put("CardsTitle",StringEscapeUtils.escapeHtml4(Translate.translate("CardsTitle")));
+            root.put("TotalTitle",StringEscapeUtils.escapeHtml4(Translate.translate("TotalTitle")));
+            root.put("RerollTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RerollTitle")));
+            root.put("RankTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RankTitle")));
 
             
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());

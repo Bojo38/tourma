@@ -1205,20 +1205,20 @@ public final class JdgRoster extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private static final String CS_ChooseRoster="Choisissez le roster";
-            private static final String CS_RosterChoice="Choix du roster";
-            private static final String CS_RosterChoiceError="Erreur de choix du roster";
-    
+    private static final String CS_ChooseRoster = "Choisissez le roster";
+    private static final String CS_RosterChoice = "Choix du roster";
+    private static final String CS_RosterChoiceError = "Erreur de choix du roster";
+
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
 
         ArrayList<String> rosterlist = LRB.getLRB().getRosterTypeListAsString(true);
         String input = (String) JOptionPane.showInputDialog(this,
                 Translate.translate(CS_ChooseRoster),
-                 Translate.translate(CS_RosterChoice), JOptionPane.INFORMATION_MESSAGE,
+                Translate.translate(CS_RosterChoice), JOptionPane.INFORMATION_MESSAGE,
                 null, rosterlist.toArray(), rosterlist.get(0));
-        LOG.log(Level.INFO,"Roster chosen: "+input);
+        LOG.log(Level.INFO, "Roster chosen: " + input);
         if (input != null) {
-            RosterType rt = LRB.getLRB().getRosterType(input,true);
+            RosterType rt = LRB.getLRB().getRosterType(input, true);
             if (_coach != null) {
                 _coach.setRoster(tourma.data.RosterType.getRosterType(input));
             }
@@ -1232,7 +1232,7 @@ public final class JdgRoster extends javax.swing.JDialog {
                     jlbIcon.setIcon(image); // NOI18N
                 }
             } else {
-                JOptionPane.showMessageDialog(this, Translate.translate(CS_RosterChoiceError)+": " + input);
+                JOptionPane.showMessageDialog(this, Translate.translate(CS_RosterChoiceError) + ": " + input);
             }
 
             update();
@@ -1269,9 +1269,9 @@ public final class JdgRoster extends javax.swing.JDialog {
         update();
     }//GEN-LAST:event_jcbWithSkillsActionPerformed
 
-    private final static String CS_ChooseCoach="Choisissez le coach";
-    private final static String CS_CoachChoice="Choix du coach";
-    
+    private final static String CS_ChooseCoach = "Choisissez le coach";
+    private final static String CS_CoachChoice = "Choix du coach";
+
     private void jbtSelectCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelectCoachActionPerformed
         int i;
         /**
@@ -1300,7 +1300,7 @@ public final class JdgRoster extends javax.swing.JDialog {
     }//GEN-LAST:event_jlbIconActionPerformed
 
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
-        this.setVisible(false);        
+        this.setVisible(false);
     }//GEN-LAST:event_jbtOKActionPerformed
 
     private void jtbPlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbPlayersMouseClicked
@@ -1315,10 +1315,9 @@ public final class JdgRoster extends javax.swing.JDialog {
         jbtRemoveSkill.setEnabled(removable);
     }//GEN-LAST:event_jtbPlayersMouseClicked
 
-    
-    private final static String CS_SelectSkillToRemove="Select skill to remove";
-    private final static String CS_Skill="Skill";
-    
+    private final static String CS_SelectSkillToRemove = "Select skill to remove";
+    private final static String CS_Skill = "Skill";
+
     private void jbtRemoveSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveSkillActionPerformed
         int index = jtbPlayers.getSelectedRow();
         if (index > -1) {
@@ -1366,10 +1365,10 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jbtRemoveActionPerformed
 
-     private final static String CS_RosterTypeNotSelectedClieckOnRoster="Roster type not selected, please click on roster";
-    private final static String CS_ChooseKindOfplayer="Choisissez le type de joueur";
-    private final static String CS_PlayerChoice="Choix du joueur";
-     
+    private final static String CS_RosterTypeNotSelectedClieckOnRoster = "Roster type not selected, please click on roster";
+    private final static String CS_ChooseKindOfplayer = "Choisissez le type de joueur";
+    private final static String CS_PlayerChoice = "Choix du joueur";
+
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
         if (_data.getRoster() == null) {
             JOptionPane.showMessageDialog(this, Translate.translate(CS_RosterTypeNotSelectedClieckOnRoster));
@@ -1401,10 +1400,12 @@ public final class JdgRoster extends javax.swing.JDialog {
                     Translate.translate(CS_ChooseKindOfplayer),
                     Translate.translate(CS_PlayerChoice), JOptionPane.INFORMATION_MESSAGE,
                     null, positions.toArray(), positions.get(0));
-            PlayerType pt = _data.getRoster().getPlayerType(input,true);
-            Player p = new Player(pt);
+            if (input != null) {
+                PlayerType pt = _data.getRoster().getPlayerType(input, true);
+                Player p = new Player(pt);
 
-            _data.addPlayer(p);
+                _data.addPlayer(p);
+            }
         }
 
         update();
@@ -1477,10 +1478,10 @@ public final class JdgRoster extends javax.swing.JDialog {
             }
 
             String input = (String) JOptionPane.showInputDialog(this,
-                     Translate.translate(CS_ChooseKindOfplayer), Translate.translate(CS_PlayerChoice),
-                     JOptionPane.INFORMATION_MESSAGE,
+                    Translate.translate(CS_ChooseKindOfplayer), Translate.translate(CS_PlayerChoice),
+                    JOptionPane.INFORMATION_MESSAGE,
                     null, names.toArray(), "");
-            StarPlayer sp = _data.getRoster().getStarPlayer(input,true);
+            StarPlayer sp = _data.getRoster().getStarPlayer(input, true);
             _data.addChampion(sp);
         }
         update();
@@ -1572,15 +1573,14 @@ public final class JdgRoster extends javax.swing.JDialog {
         update();
     }//GEN-LAST:event_jbtImportActionPerformed
 
-    private static final String CS_Roster="Roster";
-    private static final String CS_Coach="Coach";
-    private static final String CS_RosterUnknown="Roster: Unknown";
-    private static final String CS_AssociateACoach="Associer un coach";
-    
-    
+    private static final String CS_Roster = "Roster";
+    private static final String CS_Coach = "Coach";
+    private static final String CS_RosterUnknown = "Roster: Unknown";
+    private static final String CS_AssociateACoach = "Associer un coach";
+
     private void update() {
         if (_data.getRoster() != null) {
-            jlbRosterType.setText(Translate.translate(CS_Roster)+ ": " + _data.getRoster().getName());
+            jlbRosterType.setText(Translate.translate(CS_Roster) + ": " + _data.getRoster().getName());
         } else {
             jlbRosterType.setText(Translate.translate(CS_RosterUnknown));
         }
@@ -1589,16 +1589,16 @@ public final class JdgRoster extends javax.swing.JDialog {
             jbtSelectCoach.setText(CS_AssociateACoach);
         } else {
             jbtSelectCoach.setText(_coach.getName());
-            jlbCoachName.setText(Translate.translate(CS_Coach)+ ": " + _coach.getName());
+            jlbCoachName.setText(Translate.translate(CS_Coach) + ": " + _coach.getName());
             if (_coach.getRoster() != null) {
                 if (_data.getRoster() == null) {
-                    _data.setRoster(LRB.getLRB().getRosterType(_coach.getRoster().getName(),true));
+                    _data.setRoster(LRB.getLRB().getRosterType(_coach.getRoster().getName(), true));
                 }
                 if (_data.getRoster() != null) {
                     jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data.getRoster().getImage())));
                 }
                 jlbTeamName.setText(_coach.getTeam());
-                jlbRosterType.setText(Translate.translate(CS_Roster)+ ": " + _data.getRoster().getName());
+                jlbRosterType.setText(Translate.translate(CS_Roster) + ": " + _data.getRoster().getName());
             }
             //_coach.mCompositions.add(_data);
             _coach.setRank(_data.getValue(false) / 10000);
