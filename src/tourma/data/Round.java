@@ -125,7 +125,35 @@ public class Round implements XMLExport {
     }
 
     public int indexOf(Match m) {
-        return mMatchs.indexOf(m);
+        for (int i=0; i<mMatchs.size(); i++)
+        {
+            Match match=mMatchs.get(i);
+            if (match instanceof TeamMatch)
+            {
+                if (m instanceof TeamMatch)
+                {
+                    if (m==match)
+                    {
+                        return i;
+                    }
+                }
+                if (m instanceof CoachMatch)
+                {
+                    if (((TeamMatch)match).containsMatch((CoachMatch)m))
+                    {
+                        return i;
+                    }
+                }
+            }
+            if (match instanceof CoachMatch)
+            {
+                if (match==m)
+                {
+                    return i;
+                }
+            }        
+        }
+        return 0;
     }
 
     /**
@@ -142,6 +170,25 @@ public class Round implements XMLExport {
      */
     public boolean containsMatch(Match m) {
         return mMatchs.contains(m);
+    }
+
+    public boolean containsCoachMatch(CoachMatch m) {
+        for (Match match : mMatchs) {
+            if (match instanceof CoachMatch) {
+                if (m == match) {
+                    return true;
+                }
+            } else {
+                if (match instanceof TeamMatch) {
+                    if (((TeamMatch) match).containsMatch(m)) 
+                    {
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return false;
     }
 
     /**
