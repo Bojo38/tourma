@@ -4,7 +4,7 @@
  */
 package tourma.views;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -45,7 +45,6 @@ public class GraphicalMatch extends javax.swing.JPanel {
      * @param width
      * @param odd
      */
-    @SuppressFBWarnings({"BC"})
     public GraphicalMatch(Match m, boolean odd,int width ) {
         initComponents();
         match = m;

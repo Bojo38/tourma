@@ -3,18 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Perso/Tourma/src/tourma/utils/TourmaProtocol.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/data/Team.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/data/Round.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/data/Coach.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/views/fullscreen/JFullScreenMatchs.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/data/RosterType.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/data/Tournament.java</file>
-            <file>file:/C:/Perso/Tourma/src/teamma/data/Player.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/utils/TServerThread.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/data/TeamMatch.java</file>
-            <file>file:/C:/Perso/Tourma/src/teamma/data/Roster.java</file>
-            <file>file:/C:/Perso/Tourma/src/tourma/views/system/JdgAbout.java</file>
+            <file>file:/C:/Perso/tourma/tourma/src/tourma/JdgTeam.java</file>
+            <file>file:/C:/Perso/tourma/tourma/src/tourma/views/fullscreen/JFullScreenMatchs.java</file>
+            <file>file:/C:/Perso/tourma/tourma/src/tourma/views/fullscreen/JFullScreen.java</file>
+            <file>file:/C:/Perso/tourma/tourma/src/tourma/JdgCoach.java</file>
+            <file>file:/C:/Perso/tourma/tourma/src/tourma/views/parameters/JPNParamClan.java</file>
         </group>
     </open-files>
 </project-private>

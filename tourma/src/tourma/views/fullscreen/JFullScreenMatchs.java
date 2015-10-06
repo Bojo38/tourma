@@ -4,7 +4,7 @@
  */
 package tourma.views.fullscreen;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -449,7 +449,7 @@ public final class JFullScreenMatchs extends JFullScreen {
      */
     private class Animation extends Thread {
 
-        @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD", justification = "Sleep is used for animation")
+
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
