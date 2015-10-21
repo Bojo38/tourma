@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Specification-Title: Ekit
+Specification-Version: 1.7b
+Implementation-Vendor: hexidec codec (www.hexidec.com) - Howard Kistler
+Main-Class: com/hexidec/ekit/Ekit
+Created-By: 1.3.0 (Sun Microsystems Inc.)

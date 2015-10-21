@@ -1572,18 +1572,22 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
          */
 
         EkitCore editor = new EkitCore();
-    
+   
         
-
-        
-         editor.setSize(160, 320);
-         editor.setMinimumSize(new Dimension(200,320));
-         editor.setPreferredSize(new Dimension(200,300));
+         editor.setSize(320, 320);
+         editor.setMinimumSize(new Dimension(320,320));
+         editor.setPreferredSize(new Dimension(320,300));
        
-       JPanel jsp = new JPanel(new VerticalLayout());
+         
+         
+       JPanel jsp = 
+               new JPanel(new VerticalLayout());
         //jsp.add(editor.getToolBarMain(true));
+       jsp.add(editor.getMenuBar());
         jsp.add(editor.getToolBarFormat(true));
         jsp.add(editor.getToolBarStyles(true));
+        jsp.add(editor.getToolBarMain(true));
+        
         jsp.add(editor);
         
 
@@ -1592,8 +1596,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         //JScrollPane jsp = new JScrollPane(html);
         JOptionPane.showInputDialog(this, jsp);
         Tournament.getTournament().setDescription(editor.getDocumentText());
-        System.out.println(editor.getDocumentBody());
-
     }//GEN-LAST:event_jmiEditDescriptionActionPerformed
 
     private void jmiDelRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelRoundActionPerformed
