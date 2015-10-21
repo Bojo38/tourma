@@ -10,7 +10,9 @@
  */
 package tourma;
 
+import com.hexidec.ekit.EkitCore;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -33,14 +35,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import org.jfree.ui.tabbedui.VerticalLayout;
 import teamma.data.LRB;
 import teamma.views.JdgRoster;
 import tourma.data.Coach;
@@ -1566,14 +1567,35 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiSubstitutePlayerActionPerformed
 
     private void jmiEditDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditDescriptionActionPerformed
-        JTextArea jta = new JTextArea(40, 80);
-        jta.setText(Tournament.getTournament().getDescription());
+        /*JTextArea jta = new JTextArea(40, 80);
+         jta.setText(Tournament.getTournament().getDescription());
+         */
 
-        JScrollPane jsp = new JScrollPane(jta);
+        EkitCore editor = new EkitCore();
+   
+        
+         editor.setSize(320, 320);
+         editor.setMinimumSize(new Dimension(320,320));
+         editor.setPreferredSize(new Dimension(320,300));
+       
+         
+         
+       JPanel jsp = 
+               new JPanel(new VerticalLayout());
+        //jsp.add(editor.getToolBarMain(true));
+       jsp.add(editor.getMenuBar());
+        jsp.add(editor.getToolBarFormat(true));
+        jsp.add(editor.getToolBarStyles(true));
+        jsp.add(editor.getToolBarMain(true));
+        
+        jsp.add(editor);
+        
 
+        editor.setDocumentText(Tournament.getTournament().getDescription());
+
+        //JScrollPane jsp = new JScrollPane(html);
         JOptionPane.showInputDialog(this, jsp);
-        Tournament.getTournament().setDescription(jta.getText());
-
+        Tournament.getTournament().setDescription(editor.getDocumentText());
     }//GEN-LAST:event_jmiEditDescriptionActionPerformed
 
     private void jmiDelRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelRoundActionPerformed
