@@ -1746,6 +1746,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 if (jcxClash.isSelected()) {
                     try {
                         JFullScreen fs = new JFullScreenMatchs(Tournament.getTournament().getRound(round_number + 1), true);
+                        fs.setVisible(true);
                     } catch (IOException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }

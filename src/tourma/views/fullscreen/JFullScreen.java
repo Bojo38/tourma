@@ -49,6 +49,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         this.setUndecorated(true);
         this.setState(JFrame.MAXIMIZED_BOTH);
 
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
