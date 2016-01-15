@@ -5,6 +5,7 @@
  */
 package tourma.utils.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
@@ -34,8 +35,8 @@ public class WebMatchResult {
         sb.append("<form action=\"/enter_match_result\">");
         sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_SelectYourName)) + ": " + "<select name=\"name\" size=\"1\" >");
         for (CoachMatch cm : r.getCoachMatchs()) {
-            sb.append("<option>" + cm.getCompetitor1().getName() + "</option>");
-            sb.append("<option>" + cm.getCompetitor2().getName() + "</option>");
+            sb.append("<option value="+cm.getCompetitor1().getName()+">" +  StringEscapeUtils.escapeHtml4(cm.getCompetitor1().getName()) + "</option>");
+            sb.append("<option value="+cm.getCompetitor2().getName()+">" + StringEscapeUtils.escapeHtml4(cm.getCompetitor2().getName()) + "</option>");
         }
         sb.append("</select>");
         sb.append("<br>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_ENTER_YOUR_PIN_CODE)) + ": " + "<input type=\"number\" name=\"pin\"/>");
@@ -46,6 +47,7 @@ public class WebMatchResult {
         return sb.toString();
     }
     public final static String CS_PIN_CODE = "PinCode";
+    public final static String CS_WRONG_PIN_CODE = "WrongPinCode";
     public final static String CS_COACH_NOT_FOUND = "CoachNotFound";
     public final static String CS_MATCH_NOT_FOUND_FOR = "MatchNotFoundFor";
     public final static String CS_ENTER_OPPONENT_PIN_CODE = "EnterOpponentPinCode";
@@ -54,9 +56,11 @@ public class WebMatchResult {
         StringBuilder sb = new StringBuilder("");
         sb.append("<center>");
         Coach coach = null;
+        
         // Check Coach Pin Code
         for (Coach c : Tournament.getTournament().getActiveCoaches()) {
-            if (c.getName().equals(name)) {
+            String cName=c.getName();
+            if (cName.equals(name)) {
                 int pin = Integer.parseInt(pinCode);
                 if (c.getPinCode() == pin) {
                     coach = c;
@@ -93,12 +97,14 @@ public class WebMatchResult {
                 if (coach == coachmatch.getCompetitor1()) {
                     sb.append("<th>");
                     sb.append("<td>");
-                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"competitor1\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "\" />");
+                    sb.append("<input type=\"hidden\" readonly=\"readonly\"  name=\"competitor1\" value=\"" + coachmatch.getCompetitor1().getName() + "\" />");
+                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display1\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "\" />");                    
                     sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_PIN_CODE) + ": "));
                     sb.append("<input type=\"password\" readonly=\"readonly\" name=\"pincode1\" value=\"" + pinCode + "\" />");
                     sb.append("</td>");
                     sb.append("<td>");
-                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"competitor2\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "\" />");
+                    sb.append("<input type=\"hidden\" readonly=\"readonly\" name=\"competitor2\" value=\"" + coachmatch.getCompetitor2().getName() + "\" />");
+                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display2\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "\" />");
                     sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_PIN_CODE) + ": "));
                     sb.append("<input type=\"password\" name=\"pincode2\" />");
                     sb.append("</td>");
@@ -106,12 +112,14 @@ public class WebMatchResult {
                 } else {
                     sb.append("<th>");
                     sb.append("<td>");
-                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"competitor1\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "\" />");
+                    sb.append("<input type=\"hidden\" readonly=\"readonly\"  name=\"competitor1\" value=\"" + coachmatch.getCompetitor1().getName() + "\" />");
+                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display1\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "\" />");
                     sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_PIN_CODE) + ": "));
                     sb.append("<input type=\"password\" name=\"pincode1\" />");
                     sb.append("</td>");
                     sb.append("<td>");
-                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"competitor2\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "\" />");
+                    sb.append("<input type=\"hidden\" readonly=\"readonly\" name=\"competitor2\" value=\"" + coachmatch.getCompetitor2().getName() + "\" />");
+                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display2\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "\" />");
                     sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_PIN_CODE) + ": "));
                     sb.append("<input type=\"password\" readonly=\"readonly\" name=\"pincode2\" value=\"" + pinCode + "\" />");
                     sb.append("</td>");
@@ -154,6 +162,7 @@ public class WebMatchResult {
 
         String competitor1 = parms.get("competitor1");
         String competitor2 = parms.get("competitor2");
+
         if ((competitor1 == null) || (competitor2 == null) || (pinCode1 == null) || (pinCode2 == null)) {
             sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_COACH_NOT_FOUND)));
             sb.append("<br>");
@@ -164,10 +173,11 @@ public class WebMatchResult {
 
             // Find Match && // Test Pin Code
             r = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
-            if (r == null) {
+               boolean wrong_pincode=false;
+               if (r == null) {
                 valid = false;
             } else {
-
+             
                 for (CoachMatch cm : r.getCoachMatchs()) {
                     if (cm != null) {
                         if ((cm.getCompetitor1().getName().equals(competitor1))
@@ -188,6 +198,10 @@ public class WebMatchResult {
                                 if ((coach1.getPinCode() == pin1) || (coach2.getPinCode() == pin2)) {
                                     coachmatch = cm;
                                 }
+                                else
+                                {
+                                    wrong_pincode=true;
+                                }
                                 }
                                 catch(NumberFormatException nfe)
                                 {
@@ -202,7 +216,14 @@ public class WebMatchResult {
 
             if (coachmatch == null) {
                 valid = false;
-                sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_MATCH_NOT_FOUND_FOR)) + " " + competitor1 + "/" + competitor2);
+                if (wrong_pincode)
+                {
+                    sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_WRONG_PIN_CODE)) + " " + StringEscapeUtils.escapeHtml4(competitor1) + "/" + StringEscapeUtils.escapeHtml4(competitor2));
+                }
+                else
+                {
+                    sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_MATCH_NOT_FOUND_FOR)) + " " + StringEscapeUtils.escapeHtml4(competitor1) + "/" + StringEscapeUtils.escapeHtml4(competitor2));
+                }
             } else {
                 // Enter Values
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {

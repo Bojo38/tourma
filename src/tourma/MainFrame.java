@@ -121,7 +121,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
             }
             File f = jfc.getSelectedFile();
-            currentPath = f.getAbsolutePath();
+            if (f!=null)
+            {
+                currentPath = f.getAbsolutePath();
+            }
 
         }
 

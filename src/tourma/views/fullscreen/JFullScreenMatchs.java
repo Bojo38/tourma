@@ -811,7 +811,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                 p.add(icon, BorderLayout.NORTH);
             }
 
-            if (t.getClan() != null) {
+            if ((t.getClan() != null)&&(!t.getClan().getName().equals(Translate.translate(Translate.CS_None)))) {
                 JLabel icon = new JLabel();
                 icon.setBackground(Color.WHITE);
                 if (Tournament.getTournament().getParams().isUseImage()) {
