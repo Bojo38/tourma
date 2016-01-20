@@ -6,6 +6,7 @@
 package tourma.utils.web;
 
 import fi.iki.elonen.NanoHTTPD;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -35,10 +36,16 @@ public class WebServer extends NanoHTTPD {
         msg.append("</script>");
 
         msg.append(createScript());
-
-        msg.append(createStyles());
-        msg.append("</header>");
-        msg.append("<body><h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Tournament.getTournament().getParams().getTournamentName())).append("</CENTER></h1>\n");
+        String color1=Tournament.getTournament().getParams().getStringColor1();
+        String color2=Tournament.getTournament().getParams().getStringColor2();
+        String forecolor=Tournament.getTournament().getParams().getStringForeColor();
+        String bordercolor=Tournament.getTournament().getParams().getStringBorderColor();
+        
+        msg.append(createStyles(color1,color2,bordercolor,forecolor));
+        //msg.append(createStyles("bd0e36","ed1144","5e071b","ffffff"));
+        //msg.append(createStyles());
+        msg.append("</header>");                
+        msg.append("<body><div class=\"title\"><h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Tournament.getTournament().getParams().getTournamentName())).append("</CENTER></h1></div>\n");
         msg.append(createMenu());
         Map<String, String> parms = session.getParms();
         if (session.getUri().equals("/")) {
@@ -53,9 +60,11 @@ public class WebServer extends NanoHTTPD {
                     msg.append(WebStatistics.getHTML());
                 } else {
                     if (session.getUri().startsWith("/round")) {
-                        int nb = Integer.parseInt(session.getUri().replace("/round", ""));
-                        msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(nb).append("</CENTER></h1>");
-                        msg.append(WebRound.getHTML(nb));
+                        String tmp=session.getUri().replace("/round", "");
+                        int index=tmp.indexOf("_");                        
+                        int nb = Integer.parseInt(tmp.substring(0, index));
+                        msg.append("<div class=\"title\"> <h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(nb).append("</CENTER></h1></div>");
+                        msg.append(WebRound.getHTML(nb,tmp.substring(index+1)));
                     } else {
                         if (session.getUri().equals("/cup")) {
                             msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup))).append("</CENTER></h1>");
@@ -101,7 +110,31 @@ public class WebServer extends NanoHTTPD {
 
     protected String createMenu() {
         StringBuilder menu = new StringBuilder();
-        // Add home
+        
+        menu.append("<div id='cssmenu'>");
+        menu.append("<ul>");
+        menu.append("<li><a href='/'><span>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_Home))+"</span></a></li>");
+        menu.append("<li><a href='/rules'><span>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_Rules))+"</span></a></li>");
+        menu.append("<li><a href='/stats'><span>"+StringEscapeUtils.escapeHtml4(Translate.translate(MainTreeModel.CS_Statistics))+"</span></a></li>");
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+        menu.append("<li><a href=\"/round").append(i + 1).append("\"><span>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(i + 1).append("</span></a>");
+        menu.append(WebRound.getMenu(i+1));
+        menu.append("</li>");
+        }        
+        int nbRounds = Tournament.getTournament().getRoundsCount();
+        if (nbRounds > 0) {
+            if (Tournament.getTournament().getRound(nbRounds - 1).isCup()) {
+                menu.append("<li><a href='/cup'><span>"+StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup))+"</span></a></li>");
+            }
+            if (Tournament.getTournament().getParams().isWebEdit()) {
+                menu.append("<li><a href='/match_result'><span>"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult))+"</span></a></li>");
+            }
+        }
+        
+        
+      menu.append("</ul></div>");
+        
+       /* // Add home
         menu.append("<nav>");
         menu.append("<ul>");
 
@@ -109,9 +142,9 @@ public class WebServer extends NanoHTTPD {
         menu.append("<li><a href=\"/rules\" class=\"active\">").append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_Rules))).append("</a></li>");
         menu.append("<li><a href=\"/stats\" class=\"active\">").append(StringEscapeUtils.escapeHtml4(Translate.translate(MainTreeModel.CS_Statistics))).append("</a></li>");
         for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
-            menu.append("<li><a href=\"/round").append(i + 1).append("\" class=\"active\">").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(i + 1).append("</a></li>");
+            menu.append("<li><a href=\"/round"+(i + 1)+"\" class=\"active\">").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(i + 1).append("</a></li>");
         }
-        int nbRounds = Tournament.getTournament().getRoundsCount();
+        nbRounds = Tournament.getTournament().getRoundsCount();
         if (nbRounds > 0) {
             if (Tournament.getTournament().getRound(nbRounds - 1).isCup()) {
                 menu.append("<li><a href=\"/cup\" class=\"active\">").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup))).append("</a></li>");
@@ -123,7 +156,7 @@ public class WebServer extends NanoHTTPD {
 
         menu.append("</ul>");
 
-        menu.append("</nav>");
+        menu.append("</nav>");*/
 
         return menu.toString();
     }
@@ -131,7 +164,7 @@ public class WebServer extends NanoHTTPD {
     protected String createScript() {
         StringBuilder script = new StringBuilder();
         // Add home
-        script.append("\n<script type=\"text/javascript\" >\n"
+        /*script.append("\n<script type=\"text/javascript\" >\n"
                 + "	// DOM ready\n"
                 + "	 $(function() {\n"
                 + "	   \n"
@@ -161,10 +194,37 @@ public class WebServer extends NanoHTTPD {
                 + "      });\n"
                 + "	 \n"
                 + "	 });\n"
-                + "	 </script>");
+                + "	 </script>");*/
 
         script.append("\n<script type=\"text/javascript\" >\n"
                 + "	jQuery(document).ready(function() {\n"
+                + ""
+                + "$('#cssmenu > ul > li ul').each(function(index, e){\n" +
+                "  var count = $(e).find('li').length;\n" +
+                "  var content = '<span class=\\\"cnt\\\">' + count + '</span>';\n" +
+                "  $(e).closest('li').children('a').append(content);\n" +
+                "});\n" +
+                "$('#cssmenu ul ul li:odd').addClass('odd');\n" +
+                "$('#cssmenu ul ul li:even').addClass('even');\n" +
+                "$('#cssmenu > ul > li > a').click(function() {\n" +
+                "  $('#cssmenu li').removeClass('active');\n" +
+                "  $(this).closest('li').addClass('active');	\n" +
+                "  var checkElement = $(this).next();\n" +
+                "  if((checkElement.is('ul')) && (checkElement.is(':visible'))) {\n" +
+                "    $(this).closest('li').removeClass('active');\n" +
+                "    checkElement.slideUp('normal');\n" +
+                "  }\n" +
+                "  if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {\n" +
+                "    $('#cssmenu ul ul:visible').slideUp('normal');\n" +
+                "    checkElement.slideDown('normal');\n" +
+                "  }\n" +
+                "  if($(this).closest('li').find('ul').children().length == 0) {\n" +
+                "    return true;\n" +
+                "  } else {\n" +
+                "    return false;	\n" +
+                "  }		\n" +
+                "});"
+         /*       + ""
                 + "	// Standard\n"
                 + "	jQuery('.tabs .tab-links a').on('click', function(e)  {\n"
                 + "		var currentAttrValue = jQuery(this).attr('href');\n"
@@ -173,19 +233,138 @@ public class WebServer extends NanoHTTPD {
                 + "		// Change/remove current tab to active\n"
                 + "		jQuery(this).parent('li').addClass('active').siblings().removeClass('active');\n"
                 + "		e.preventDefault();\n"
-                + "		});\n"
+                + "		});\n"*/
                 + "	});\n"
                 + "	</script>");
 
+        
+ 
+                
         return script.toString();
     }
 
-    protected String createStyles() {
+    protected String createStyles(String color1, String color2, String border_color,String forecolor) {
         StringBuilder styles = new StringBuilder();
 
         styles.append("<style>");
 
-        styles.append("tr:nth-child(even) {\n"
+        styles.append("@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,300);\n" +
+        "#cssmenu\n" +
+"{\n" +
+"  margin: 0;\n" +
+"  padding: 0;\n" +
+"  border: 0;\n" +
+"  list-style: none;\n" +
+"  font-weight: normal;\n" +
+"  text-decoration: none;\n" +
+"  line-height: 1;\n" +
+"  font-family: 'Open Sans', sans-serif;\n" +
+"  font-size: 14px;\n" +
+"  position: relative;\n" +
+"  float: left;\n" +
+"}\n" +
+"\n" +
+"#cssmenu ul,\n" +
+"#cssmenu li,\n" +
+"#cssmenu a {\n" +
+"  margin: 0;\n" +
+"  padding: 0;\n" +
+"  border: 0;\n" +
+"  list-style: none;\n" +
+"  font-weight: normal;\n" +
+"  text-decoration: none;\n" +
+"  line-height: 1;\n" +
+"  font-family: 'Open Sans', sans-serif;\n" +
+"  font-size: 14px;\n" +
+"  position: relative;\n" +
+"}\n" +
+        "#cssmenu a {\n" +
+        "  line-height: 1.3;\n" +
+        "}");
+        
+        styles.append("#cssmenu {\n" +
+"  width: 250px;\n" +
+"}\n" +
+"#cssmenu > ul > li > a {\n" +
+"  padding-right: 40px;\n" +
+"  font-size: 25px;\n" +
+"  font-weight: bold;\n" +
+"  display: block;\n" +
+"  background: #"+color1+";\n" +
+"  color: #ffffff;\n" +
+"  border-bottom: 1px solid #"+border_color+";\n" +
+"  text-transform: uppercase;\n" +
+"  position: relative;\n" +
+"}\n" +
+"#cssmenu > ul > li > a > span {\n" +
+"  background: #"+color2+";\n" +
+"  padding: 10px;\n" +
+"  display: block;\n" +
+"  font-size: 13px;\n" +
+"  font-weight: 300;\n" +
+"}\n" +
+"#cssmenu > ul > li > a:hover {\n" +
+"  text-decoration: none;\n" +
+"}\n" +
+"#cssmenu > ul > li.active {\n" +
+"  border-bottom: none;\n" +
+"}\n" +
+"#cssmenu > ul > li.active > a {\n" +
+"  color: #fff;\n" +
+"}\n" +
+"#cssmenu > ul > li.active > a span {\n" +
+"  background: #"+color1+";\n" +
+"}\n" +
+"#cssmenu span.cnt {\n" +
+"  position: absolute;\n" +
+"  top: 8px;\n" +
+"  right: 15px;\n" +
+"  padding: 0;\n" +
+"  margin: 0;\n" +
+"  background: none;\n" +
+"}");
+        
+        styles.append("#cssmenu ul ul {\n" +
+            "  display: none;\n" +
+            "}\n" +
+            "#cssmenu ul ul li {\n" +
+            "  border: 1px solid #e0e0e0;\n" +
+            "  border-top: 0;\n" +
+            "}\n" +
+            "#cssmenu ul ul a {\n" +
+            "  padding: 10px;\n" +
+            "  display: block;\n" +
+            "  color: #"+color2+";\n" +
+            "  font-size: 13px;\n" +
+            "}\n" +
+            "#cssmenu ul ul a:hover {\n" +
+            "  color: #"+color1+";\n" +
+            "}\n" +
+            "#cssmenu ul ul li.odd {\n" +
+            "  background: #f4f4f4;\n" +
+            "}\n" +
+            "#cssmenu ul ul li.even {\n" +
+            "  background: #fff;\n" +
+            "}");
+        
+        styles.append("\n.title {  display: block; font-weight: normal;\n" +
+"  text-decoration: none;\n" +
+"  line-height: 1;\n" +
+"  font-family: 'Open Sans', sans-serif;\n" +
+"  font-size: 20px;\n" +
+
+"  position: relative;\n" +
+"}");
+        
+        styles.append("\n.section {  display: block; font-weight: normal;\n" +
+"  text-decoration: none;\n" +
+"  line-height: 1;\n" +
+"  font-family: 'Open Sans', sans-serif;\n" +
+"  position: relative;\n"+
+                 "  float: left;" +
+"}");
+        
+ /*       styles.append("tr:nth-child(even) {\n"
                 + "    background-color: #EEEEEE;\n"
                 + "}"
                 + "tr:nth-child(odd) {\n"
@@ -246,14 +425,11 @@ public class WebServer extends NanoHTTPD {
                 + "      nav ul     { display: none; }\n"
                 + "      nav select { display: inline-block; }\n"
                 + "    }"
-                + "/*----- Tabs -----*/\n"
                 + ".tabs {\n"
                 + "    width:100%;\n"
                 + "    display:inline-block;\n"
                 + "}\n"
                 + " \n"
-                + "    /*----- Tab Links -----*/\n"
-                + "    /* Clearfix */\n"
                 + "    .tab-links:after {\n"
                 + "        display:block;\n"
                 + "        clear:both;\n"
@@ -285,7 +461,6 @@ public class WebServer extends NanoHTTPD {
                 + "        color:#333;\n"
                 + "    }\n"
                 + " \n"
-                + "    /*----- Content of Tabs -----*/\n"
                 + "    .tab-content {\n"
                 + "        padding:15px;\n"
                 + "        box-shadow:-1px 1px 1px rgba(0,0,0,0.15);\n"
@@ -300,7 +475,7 @@ public class WebServer extends NanoHTTPD {
                 + "        .tab.active {\n"
                 + "            display:block;\n"
                 + "        }");
-        styles.append("</style>");
+        styles.append("</style>");*/
 
         styles.append(" <STYLE type=\"text/css\">\n"
                 + "            div#titre {\n"
@@ -321,9 +496,9 @@ public class WebServer extends NanoHTTPD {
                 + "                padding: 7px 10px;\n"
                 + "                border-style: solid;\n"
                 + "                border-width: 1px;\n"
-                + "                border-color: #d9d9d9;\n"
-                + "                background-color: #333;\n"
-                + "                color: #cccccc;\n"
+                + "                border-color: #"+border_color+";\n"
+                + "                background-color: #"+color2+";\n"
+                + "                color: #"+forecolor+";\n"
                 + "                text-align:center;\n"
                 + "            }\n"
                 + "\n"
@@ -331,19 +506,18 @@ public class WebServer extends NanoHTTPD {
                 + "                padding: 7px 10px;\n"
                 + "                border-style: solid;\n"
                 + "                border-width: 1px;\n"
-                + "                border-color: #333;\n"
-                + "                background-color: #cccccc;\n"
-                + "                color: #444444;\n"
+                + "                border-color: #"+border_color+";\n"
+                + "                background-color: #"+color1+";\n"
+                + "                color: #"+border_color+"\n"
                 + "                text-align:center;\n"
                 + "            }\n"
                 + "\n"
                 + "            td.tab_pos_1 {\n"
                 + "                padding: 7px 10px;\n"
                 + "                border-style: solid;\n"
-                + "               border-width: 1px;\n"
-                + "                border-color: #333;\n"
-                + "                background-color: #cccccc;\n"
-                + "                color: #0000dd;\n"
+                + "                border-width: 1px;\n"
+                + "                border-color: #"+border_color+";\n"
+                + "                background-color: #"+color1+";\n"
                 + "                font-weight: 700;\n"
                 + "                text-align:center;\n"
                 + "            }\n"
@@ -352,29 +526,28 @@ public class WebServer extends NanoHTTPD {
                 + "                padding: 7px 10px;\n"
                 + "                border-style: solid;\n"
                 + "                border-width: 1px;\n"
-                + "                border-color: #333;\n"
-                + "                background-color: #cccccc;\n"
-                + "                color: #dd0000;\n"
+                + "                border-color:#"+border_color+";\n"
+                + "                background-color: #"+color1+";\n"
                 + "                font-weight: 700;\n"
                 + "                text-align:center;\n"
                 + "            }\n"
                 + "            td.tab_result {\n"
                 + "                padding: 7px 10px;\n"
                 + "                border-style: solid;\n"
-                + "               border-width: 1px;\n"
-                + "                border-color: #333;\n"
-                + "                background-color: #eeeeee;\n"
-                + "                color: #333;\n"
-                + "text-align:center;\n"
+                + "                border-width: 1px;\n"
+                + "                border-color: #"+border_color+";\n"
+                + "                background-color:#"+forecolor+";\n"
+                + "                color: #"+border_color+";\n"
+                + "                text-align:center;\n"
                 + "            }\n"
                 + "\n"
                 + "            td.tab_result_1 {\n"
                 + "                padding: 7px 10px;\n"
                 + "                border-style: solid;\n"
                 + "                border-width: 1px;\n"
-                + "                border-color: #333;\n"
-                + "                background-color: #eeeeee;\n"
-                + "                color: #0000dd;\n"
+                + "                border-color: #"+border_color+";\n"
+                + "                background-color: #"+color2+";\n"
+                + "                color: #"+border_color+";\n"
                 + "                font-weight: 700;\n"
                 + "                text-align:center;\n"
                 + "            }\n"
@@ -383,9 +556,9 @@ public class WebServer extends NanoHTTPD {
                 + "                padding: 7px 10px;\n"
                 + "                border-style: solid;\n"
                 + "                border-width: 1px;\n"
-                + "                border-color: #333;\n"
-                + "                background-color: #eeeeee;\n"
-                + "                color: #dd0000;\n"
+                + "                border-color: #"+border_color+";\n"
+                + "                background-color: #"+color2+";\n"
+                + "                color: #"+border_color+";\n"
                 + "                font-weight: 700;\n"
                 + "                text-align:center;\n"
                 + "            }\n"

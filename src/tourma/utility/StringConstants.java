@@ -14,7 +14,10 @@ public interface StringConstants {
      *
      */
     public static final String CS_ROSTER = "Roster";
-
+    public static final String CS_WEB_COLOR1 = "WebColor1";
+    public static final String CS_WEB_COLOR2 = "WebColor";
+    public static final String CS_WEB_FORECOLOR = "WebForeColor";
+    public static final String CS_WEB_BORDERCOLOR = "WebBorderColor";
     /**
      *
      */
@@ -95,13 +98,11 @@ public interface StringConstants {
     /**
      *
      */
-    
-
     /**
      *
      */
     public static final String CS_LANGUAGE_RESOURCE = "tourma/languages/language";
-    public static final String CS_PINCODE="PinCode";
+    public static final String CS_PINCODE = "PinCode";
     public static final String CS_GROUP = "Group";
     public static final String CS_PICTURE = "Picture";
     public static final String CS_NAF = "NAF";
@@ -147,7 +148,7 @@ public interface StringConstants {
     public static final String CS_TEAMDRAWPOINTS = "TeamDrawPoints";
     public static final String CS_TEAMVICTORYONLY = "TeamVictoryOnly";
     public static final String CS_GROUPENABLE = "GroupEnable";
-    public static final String CS_WEBEDIT="WebEdit";
+    public static final String CS_WEBEDIT = "WebEdit";
     public static final String CS_SUBSTITUTES = "Substitutes";
     public static final String CS_GAMETYPE = "GameType";
     public static final String CS_ACTVATECLANS = "ActvateClans";
@@ -184,10 +185,10 @@ public interface StringConstants {
     public static final String CS_INDEX = "Index";
     public static final String CS_TITULAR = "Titular";
     public static final String CS_SUBSTITUTE = "Substitute";
-    public static final String CS_TOURNAMENT="Tournament";
-    public static final String CS_VERSION="Version";
-    public static final String CS_ROUNDROBIN="RoundRobin";
-    public static final String CS_DESCRIPTION="Description";
+    public static final String CS_TOURNAMENT = "Tournament";
+    public static final String CS_VERSION = "Version";
+    public static final String CS_ROUNDROBIN = "RoundRobin";
+    public static final String CS_DESCRIPTION = "Description";
 
-    public static final String CS_WEB_PORT="Web_port";
+    public static final String CS_WEB_PORT = "Web_port";
 }
