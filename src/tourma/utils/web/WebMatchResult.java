@@ -35,8 +35,8 @@ public class WebMatchResult {
         sb.append("<form action=\"/enter_match_result\">");
         sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_SelectYourName)) + ": " + "<select name=\"name\" size=\"1\" >");
         for (CoachMatch cm : r.getCoachMatchs()) {
-            sb.append("<option value="+cm.getCompetitor1().getName()+">" +  StringEscapeUtils.escapeHtml4(cm.getCompetitor1().getName()) + "</option>");
-            sb.append("<option value="+cm.getCompetitor2().getName()+">" + StringEscapeUtils.escapeHtml4(cm.getCompetitor2().getName()) + "</option>");
+            sb.append("<option value=\""+cm.getCompetitor1().getName()+"\">" +  StringEscapeUtils.escapeHtml4(cm.getCompetitor1().getName()) + "</option>");
+            sb.append("<option value=\""+cm.getCompetitor2().getName()+"\">" + StringEscapeUtils.escapeHtml4(cm.getCompetitor2().getName()) + "</option>");
         }
         sb.append("</select>");
         sb.append("<br>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_ENTER_YOUR_PIN_CODE)) + ": " + "<input type=\"number\" name=\"pin\"/>");
