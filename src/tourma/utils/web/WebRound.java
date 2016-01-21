@@ -153,21 +153,21 @@ public class WebRound {
             Category cat = Tournament.getTournament().getCategory(nb_cat);
             round.append(createCategoryRanking(r, cat));
         }
-        
+
         if (command.startsWith("group")) {
             String tmp = command.replace("group", "");
             int nb_grp = Integer.parseInt(tmp);
             Group group = Tournament.getTournament().getGroup(nb_grp);
             round.append(createGroupRanking(r, group));
         }
-        
+
         if (command.startsWith("pool")) {
             String tmp = command.replace("pool", "");
             int nb_pool = Integer.parseInt(tmp);
             Pool p = Tournament.getTournament().getPool(nb_pool);
             round.append(createPoolRanking(r, p));
         }
-        
+
         return round.toString();
     }
 
@@ -470,13 +470,21 @@ public class WebRound {
                 false,
                 false);
 
-        s.append("<div class=\"title\">"+StringEscapeUtils.escapeHtml4(rankName)+"</dev>");
         s.append("<div class=\"section\"><table\n"
                 + "             style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                 + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
                 + "                > <tbody>\n"
                 + "                <tr>");
 
+        int nbCol = 4;
+        if (Tournament.getTournament().getParams().isTeamTournament()) {
+            nbCol++;
+        }
+        if (Tournament.getTournament().getClansCount() > 1) {
+            nbCol++;
+        }
+        nbCol += Tournament.getTournament().getParams().getIndivRankingNumber();
+        s.append("<tr><td class=\"tab_titre\" colspan=\"" + nbCol + "\">" + StringEscapeUtils.escapeHtml4(rankName) + "</td></tr>");
         s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
 
         if (Tournament.getTournament().getParams().isTeamTournament()) {
@@ -607,13 +615,18 @@ public class WebRound {
             s.append("<div class=\"section\">");
             String rank_name = crit.getName() + " " + subTypeName;
 
-            s.append("<div class=\"title\">" + StringEscapeUtils.escapeHtml4(rank_name) + "</div>");
-
+            //s.append("<div class=\"title\">" + StringEscapeUtils.escapeHtml4(rank_name) + "</div>");
             s.append("<table\n"
                     + "             style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                     + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
                     + "                > <tbody>\n"
                     + "                <t >");
+
+            int nbCol = Tournament.getTournament().getClansCount() > 1 ? 6 : 5;
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
+                nbCol++;
+            }
+            s.append("<tr><td class=\"tab_titre\" colspan=\"" + nbCol + "\">" + StringEscapeUtils.escapeHtml4(rank_name) + "</td><tr>");
 
             s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
 
@@ -875,8 +888,8 @@ public class WebRound {
                 Tournament.getTournament().getRoundIndex(r),
                 teams,
                 false);
-        
-        s.append("<div class=\"title\">"+StringEscapeUtils.escapeHtml4(rankName)+"</dev>");
+
+        s.append("<div class=\"title\">" + StringEscapeUtils.escapeHtml4(rankName) + "</dev>");
         s.append("<div class=\"section\"><table\n"
                 + "             style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                 + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
@@ -1011,7 +1024,7 @@ public class WebRound {
                     break;
             }
             String rank_name = crit.getName() + " " + subTypeName;
-            s.append("<div class=\"title\">" + StringEscapeUtils.escapeHtml4(rank_name) + "</div>");
+            //s.append("<div class=\"title\">" + StringEscapeUtils.escapeHtml4(rank_name) + "</div>");
 
             s.append("<div class=\"section\"><table\n"
                     + "             style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
@@ -1019,6 +1032,9 @@ public class WebRound {
                     + "                > <tbody>\n"
                     + "                <t >");
 
+            int nbCol = Tournament.getTournament().getClansCount() > 1 ? 4 : 3;
+
+            s.append("<tr><td class=\"tab_titre\" colspan=\"" + nbCol + "\">" + StringEscapeUtils.escapeHtml4(rank_name) + "</td><tr>");
             s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
 
             if (Tournament.getTournament().getClansCount() > 1) {
@@ -1087,27 +1103,48 @@ public class WebRound {
 
         MjtRankingClan ranking = new MjtRankingClan(Tournament.getTournament().getRoundIndex(r), clans, false);
 
-         s.append("<div class=\"title\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</div>");
-         
         s.append("<div class=\"section\"><table\n"
                 + "             style = \"border-width:0px;  margin-left: auto; margin-right: auto;text-align:center;\"\n"
                 + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
                 + "                > <tbody>\n"
                 + "                <tr>");
 
+        int nbCol = 2;
+        boolean bTeamVictoryOnly = Tournament.getTournament().getParams().isTeamVictoryOnly();
+
+        boolean indiv = true;
+        if (Tournament.getTournament().getParams().isTeamTournament() && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING && bTeamVictoryOnly) {
+            nbCol += Tournament.getTournament().getParams().getTeamRankingNumber();
+            indiv = false;
+        } else {
+            nbCol += Tournament.getTournament().getParams().getIndivRankingNumber();
+        }
+
+        s.append("<tr><td class=\"tab_titre\" colspan\"" + nbCol + "\" >" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</td></tr>");
+
         s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
 
         s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Clan)) + "</ td>\n");
 
-        boolean bTeamVictoryOnly = Tournament.getTournament().getParams().isTeamVictoryOnly();
-
-        for (int j = 0; j < Tournament.getTournament().getParams().getIndivRankingNumber(); j++) {
-            int rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
-            String name = MjtRanking.getRankingString(rankingType);
-            if (rankingType == 0) {
-                break;
-            } else {
-                s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(name) + "</ td>\n");
+        if (!indiv) {
+            for (int j = 0; j < Tournament.getTournament().getParams().getTeamRankingNumber(); j++) {
+                int rankingType = Tournament.getTournament().getParams().getTeamRankingType(j);
+                String name = MjtRanking.getRankingString(rankingType);
+                if (rankingType == 0) {
+                    break;
+                } else {
+                    s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(name) + "</ td>\n");
+                }
+            }
+        } else {
+            for (int j = 0; j < Tournament.getTournament().getParams().getIndivRankingNumber(); j++) {
+                int rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
+                String name = MjtRanking.getRankingString(rankingType);
+                if (rankingType == 0) {
+                    break;
+                } else {
+                    s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(name) + "</ td>\n");
+                }
             }
         }
 
@@ -1136,11 +1173,20 @@ public class WebRound {
 
             int nbRanking = 0;
 
-            nbRanking = Tournament.getTournament().getParams().getIndivRankingNumber();
+            if (!indiv) {
+                nbRanking = Tournament.getTournament().getParams().getTeamRankingNumber();
+            } else {
+                nbRanking = Tournament.getTournament().getParams().getIndivRankingNumber();
+            }
 
             for (int j = 0; j < nbRanking; j++) {
                 int rankingType = Parameters.C_RANKING_NONE;
-                rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
+                if (!indiv) {
+                    rankingType = Tournament.getTournament().getParams().getTeamRankingType(j);
+                } else {
+                    rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
+                }
+
                 int value;
                 value = ranking.getSortedValue(row, j + 1);
 
@@ -1195,14 +1241,14 @@ public class WebRound {
                     break;
             }
             String rank_name = crit.getName() + " " + subTypeName;
-            s.append("<div class=\"title\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)+" "+ rank_name) + "</div>");
 
             s.append("<div class=\"section\"><table\n"
                     + "             style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                     + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
                     + "                > <tbody>\n"
-                    + "                <t >");
+                    + "                <tr>");
 
+            s.append("<tr><td class=\"tab_titre\" colspan=\"3\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan) + " " + rank_name) + "</td><tr>");
             s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
 
             s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team)) + "</ td>\n");
