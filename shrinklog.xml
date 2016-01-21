@@ -16,6 +16,9 @@
 	<method signature="void addSubplotInfo(org.jfree.chart.plot.PlotRenderingInfo)" class="org.jfree.chart.plot.PlotRenderingInfo" />
 	<method signature="java.awt.geom.Rectangle2D getPlotArea()" class="org.jfree.chart.plot.PlotRenderingInfo" />
 	<class name="org.jfree.data.general.KeyedValues2DDataset" />
+	<class name="com.hexidec.ekit.action.ListAutomationAction" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.action.ListAutomationAction" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore,java.lang.String,javax.swing.text.html.HTML$Tag)" class="com.hexidec.ekit.action.ListAutomationAction" />
 	<class name="org.apache.xerces.impl.dv.xs.IDREFDV" />
 	<method signature="void checkExtraRules(java.lang.Object,org.apache.xerces.impl.dv.ValidationContext)" class="org.apache.xerces.impl.dv.xs.IDREFDV" />
 	<method signature="void &lt;init&gt;()" class="org.apache.xerces.impl.dv.xs.IDREFDV" />
@@ -409,6 +412,16 @@
 	<method signature="void &lt;init&gt;(java.sql.Date)" class="freemarker.template.SimpleDate" />
 	<method signature="java.util.Date getAsDate()" class="freemarker.template.SimpleDate" />
 	<method signature="int getDateType()" class="freemarker.template.SimpleDate" />
+	<class name="com.hexidec.ekit.EkitApplet" />
+	<method signature="void setDocumentText(java.lang.String)" class="com.hexidec.ekit.EkitApplet" />
+	<method signature="void start()" class="com.hexidec.ekit.EkitApplet" />
+	<method signature="void destroy()" class="com.hexidec.ekit.EkitApplet" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.EkitApplet" />
+	<method signature="java.lang.String getDocumentBody()" class="com.hexidec.ekit.EkitApplet" />
+	<method signature="void init()" class="com.hexidec.ekit.EkitApplet" />
+	<method signature="void stop()" class="com.hexidec.ekit.EkitApplet" />
+	<method signature="java.lang.String getDocumentText()" class="com.hexidec.ekit.EkitApplet" />
+	<method signature="java.lang.String getRTFDocument()" class="com.hexidec.ekit.EkitApplet" />
 	<class name="freemarker.core.ReturnInstruction$Return" />
 	<class name="org.apache.xerces.stax.events.CommentImpl" />
 	<method signature="java.lang.String getText()" class="org.apache.xerces.stax.events.CommentImpl" />
@@ -636,6 +649,13 @@
 	<method signature="void &lt;init&gt;(com.google.zxing.common.BitMatrix)" class="com.google.zxing.common.detector.WhiteRectangleDetector" />
 	<method signature="com.google.zxing.ResultPoint[] detect()" class="com.google.zxing.common.detector.WhiteRectangleDetector" />
 	<method signature="void &lt;init&gt;(com.google.zxing.common.BitMatrix,int,int,int)" class="com.google.zxing.common.detector.WhiteRectangleDetector" />
+	<class name="com.hexidec.ekit.component.SearchDialog" />
+	<method signature="java.lang.String getFindTerm()" class="com.hexidec.ekit.component.SearchDialog" />
+	<method signature="boolean getCaseSensitive()" class="com.hexidec.ekit.component.SearchDialog" />
+	<method signature="java.lang.String getReplaceTerm()" class="com.hexidec.ekit.component.SearchDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean,boolean,boolean,boolean)" class="com.hexidec.ekit.component.SearchDialog" />
+	<method signature="boolean getReplaceAll()" class="com.hexidec.ekit.component.SearchDialog" />
+	<method signature="boolean getStartAtTop()" class="com.hexidec.ekit.component.SearchDialog" />
 	<class name="org.apache.xerces.xni.grammars.XMLGrammarLoader" />
 	<method signature="void setEntityResolver(org.apache.xerces.xni.parser.XMLEntityResolver)" class="org.apache.xerces.xni.grammars.XMLGrammarLoader" />
 	<method signature="java.lang.String[] getRecognizedProperties()" class="org.apache.xerces.xni.grammars.XMLGrammarLoader" />
@@ -950,6 +970,11 @@
 	<method signature="java.util.Enumeration getAllPrefixes()" class="org.apache.xerces.util.NamespaceSupport" />
 	<method signature="boolean declarePrefix(java.lang.String,java.lang.String)" class="org.apache.xerces.util.NamespaceSupport" />
 	<method signature="java.lang.String getDeclaredPrefixAt(int)" class="org.apache.xerces.util.NamespaceSupport" />
+	<class name="com.hexidec.ekit.component.FontSelectorDialog" />
+	<method signature="java.lang.String getFontName()" class="com.hexidec.ekit.component.FontSelectorDialog" />
+	<method signature="void itemStateChanged(java.awt.event.ItemEvent)" class="com.hexidec.ekit.component.FontSelectorDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean,java.lang.String)" class="com.hexidec.ekit.component.FontSelectorDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean,java.lang.String,java.lang.String)" class="com.hexidec.ekit.component.FontSelectorDialog" />
 	<class name="org.jfree.chart.plot.dial.DialPointer" />
 	<method signature="java.lang.Object clone()" class="org.jfree.chart.plot.dial.DialPointer" />
 	<method signature="int hashCode()" class="org.jfree.chart.plot.dial.DialPointer" />
@@ -1451,6 +1476,10 @@
 	<method signature="boolean equals(java.lang.Object)" class="org.jfree.data.function.NormalDistributionFunction2D" />
 	<method signature="double getMean()" class="org.jfree.data.function.NormalDistributionFunction2D" />
 	<method signature="void &lt;init&gt;(double,double)" class="org.jfree.data.function.NormalDistributionFunction2D" />
+	<class name="com.hexidec.ekit.action.CustomAction" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.action.CustomAction" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore,java.lang.String,javax.swing.text.html.HTML$Tag,java.util.Hashtable)" class="com.hexidec.ekit.action.CustomAction" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore,java.lang.String,javax.swing.text.html.HTML$Tag)" class="com.hexidec.ekit.action.CustomAction" />
 	<class name="org.apache.commons.lang3.ClassUtils$Interfaces" />
 	<method signature="org.apache.commons.lang3.ClassUtils$Interfaces[] values()" class="org.apache.commons.lang3.ClassUtils$Interfaces" />
 	<method signature="org.apache.commons.lang3.ClassUtils$Interfaces valueOf(java.lang.String)" class="org.apache.commons.lang3.ClassUtils$Interfaces" />
@@ -2973,6 +3002,22 @@
 	<class name="org.jfree.ui.IntegerDocument" />
 	<method signature="void insertString(int,java.lang.String,javax.swing.text.AttributeSet)" class="org.jfree.ui.IntegerDocument" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.ui.IntegerDocument" />
+	<class name="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void print(javax.swing.text.PlainDocument)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void setDocument(javax.swing.text.PlainDocument)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void printHtmlString(java.lang.String)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void print(javax.swing.JEditorPane)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void setDocument(javax.swing.JEditorPane)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void pageDialog()" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void setScaleWidthToFit(boolean)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void setSize(java.awt.Dimension)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="int print(java.awt.Graphics,java.awt.print.PageFormat,int)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="javax.swing.text.Document getDocument()" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="boolean getScaleWidthToFit()" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void printHtmlString(java.lang.String,java.awt.Dimension)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void print(javax.swing.text.html.HTMLDocument)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
+	<method signature="void setDocument(javax.swing.text.html.HTMLDocument)" class="com.hexidec.ekit.thirdparty.print.DocumentRenderer" />
 	<class name="javax.xml.bind.helpers.NotIdentifiableEventImpl" />
 	<method signature="void &lt;init&gt;(int,java.lang.String,javax.xml.bind.ValidationEventLocator,java.lang.Throwable)" class="javax.xml.bind.helpers.NotIdentifiableEventImpl" />
 	<method signature="void &lt;init&gt;(int,java.lang.String,javax.xml.bind.ValidationEventLocator)" class="javax.xml.bind.helpers.NotIdentifiableEventImpl" />
@@ -3631,6 +3676,16 @@
 	<method signature="void balanceCoachMatchs(java.util.ArrayList)" class="tourma.utils.Balancing" />
 	<method signature="int getMinimumFromHash(java.util.HashMap)" class="tourma.utils.Balancing" />
 	<method signature="int getMaximumFromHash(java.util.HashMap)" class="tourma.utils.Balancing" />
+	<class name="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="boolean hasMoreWords()" class="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="void &lt;init&gt;(javax.swing.text.Document)" class="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="int getCurrentWordEnd()" class="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="java.lang.String nextWord()" class="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="int getCurrentWordPosition()" class="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="int getCurrentWordCount()" class="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="void replaceWord(java.lang.String)" class="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="boolean isNewSentance()" class="com.swabunga.spell.event.DocumentWordTokenizer" />
+	<method signature="java.lang.String getContext()" class="com.swabunga.spell.event.DocumentWordTokenizer" />
 	<class name="org.apache.xerces.impl.dtd.XMLNotationDecl" />
 	<method signature="void clear()" class="org.apache.xerces.impl.dtd.XMLNotationDecl" />
 	<method signature="void &lt;init&gt;()" class="org.apache.xerces.impl.dtd.XMLNotationDecl" />
@@ -5166,6 +5221,9 @@
 	<method signature="void &lt;init&gt;(org.apache.html.dom.HTMLDocumentImpl,java.lang.String)" class="org.apache.html.dom.HTMLIFrameElementImpl" />
 	<method signature="java.lang.String getFrameBorder()" class="org.apache.html.dom.HTMLIFrameElementImpl" />
 	<method signature="void setLongDesc(java.lang.String)" class="org.apache.html.dom.HTMLIFrameElementImpl" />
+	<class name="com.swabunga.spell.engine.GenericTransformator" />
+	<method signature="void &lt;init&gt;(java.io.File)" class="com.swabunga.spell.engine.GenericTransformator" />
+	<method signature="java.lang.String transform(java.lang.String)" class="com.swabunga.spell.engine.GenericTransformator" />
 	<class name="org.apache.xerces.parsers.CachingParserPool$SynchronizedGrammarPool" />
 	<method signature="void cacheGrammars(java.lang.String,org.apache.xerces.xni.grammars.Grammar[])" class="org.apache.xerces.parsers.CachingParserPool$SynchronizedGrammarPool" />
 	<method signature="void lockPool()" class="org.apache.xerces.parsers.CachingParserPool$SynchronizedGrammarPool" />
@@ -5793,6 +5851,16 @@
 	<method signature="void &lt;init&gt;()" class="net.java.dev.colorchooser.ColorChooserBeanInfo" />
 	<method signature="int getDefaultEventIndex()" class="net.java.dev.colorchooser.ColorChooserBeanInfo" />
 	<method signature="java.beans.BeanDescriptor getBeanDescriptor()" class="net.java.dev.colorchooser.ColorChooserBeanInfo" />
+	<class name="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="java.lang.String getImageSrc()" class="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="java.lang.String getImageWidth()" class="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="java.lang.String getImageHeight()" class="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="java.io.File browseForImage()" class="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String,boolean)" class="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="java.io.File getImageFile()" class="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="java.lang.String getImageAlt()" class="com.hexidec.ekit.component.ImageFileDialog" />
+	<method signature="java.lang.String getDecisionValue()" class="com.hexidec.ekit.component.ImageFileDialog" />
 	<class name="org.jfree.chart.plot.CombinedRangeXYPlot" />
 	<method signature="java.lang.String getPlotType()" class="org.jfree.chart.plot.CombinedRangeXYPlot" />
 	<method signature="void zoomDomainAxes(double,org.jfree.chart.plot.PlotRenderingInfo,java.awt.geom.Point2D)" class="org.jfree.chart.plot.CombinedRangeXYPlot" />
@@ -6068,9 +6136,19 @@
 	<method signature="javax.annotation.meta.When when()" class="javax.annotation.Syntax" />
 	<class name="freemarker.cache.StatefulTemplateLoader" />
 	<method signature="void resetState()" class="freemarker.cache.StatefulTemplateLoader" />
+	<class name="com.hexidec.ekit.component.ExtendedHTMLDocument" />
+	<method signature="void removeElements(javax.swing.text.Element,int,int)" class="com.hexidec.ekit.component.ExtendedHTMLDocument" />
+	<method signature="void &lt;init&gt;(javax.swing.text.html.StyleSheet)" class="com.hexidec.ekit.component.ExtendedHTMLDocument" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.component.ExtendedHTMLDocument" />
+	<method signature="void replaceAttributes(javax.swing.text.Element,javax.swing.text.AttributeSet,javax.swing.text.html.HTML$Tag)" class="com.hexidec.ekit.component.ExtendedHTMLDocument" />
+	<method signature="void &lt;init&gt;(javax.swing.text.AbstractDocument$Content,javax.swing.text.html.StyleSheet)" class="com.hexidec.ekit.component.ExtendedHTMLDocument" />
 	<class name="org.jfree.chart.renderer.xy.XYBarPainter" />
 	<method signature="void paintBar(java.awt.Graphics2D,org.jfree.chart.renderer.xy.XYBarRenderer,int,int,java.awt.geom.RectangularShape,org.jfree.ui.RectangleEdge)" class="org.jfree.chart.renderer.xy.XYBarPainter" />
 	<method signature="void paintBarShadow(java.awt.Graphics2D,org.jfree.chart.renderer.xy.XYBarRenderer,int,int,java.awt.geom.RectangularShape,org.jfree.ui.RectangleEdge,boolean)" class="org.jfree.chart.renderer.xy.XYBarPainter" />
+	<class name="com.hexidec.ekit.component.MutableFilter" />
+	<method signature="void &lt;init&gt;(java.lang.String[],java.lang.String)" class="com.hexidec.ekit.component.MutableFilter" />
+	<method signature="boolean accept(java.io.File)" class="com.hexidec.ekit.component.MutableFilter" />
+	<method signature="java.lang.String getDescription()" class="com.hexidec.ekit.component.MutableFilter" />
 	<class name="org.apache.commons.lang3.time.FastDatePrinter" />
 	<method signature="java.util.Locale getLocale()" class="org.apache.commons.lang3.time.FastDatePrinter" />
 	<method signature="java.util.TimeZone getTimeZone()" class="org.apache.commons.lang3.time.FastDatePrinter" />
@@ -6419,6 +6497,9 @@
 	<method signature="javax.xml.datatype.Duration getDuration()" class="org.apache.xerces.xs.datatypes.XSDateTime" />
 	<method signature="int getMonths()" class="org.apache.xerces.xs.datatypes.XSDateTime" />
 	<method signature="int getMinutes()" class="org.apache.xerces.xs.datatypes.XSDateTime" />
+	<class name="com.hexidec.ekit.component.ExtendedHTMLEditorKit$HTMLFactoryExtended" />
+	<method signature="javax.swing.text.View create(javax.swing.text.Element)" class="com.hexidec.ekit.component.ExtendedHTMLEditorKit$HTMLFactoryExtended" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.component.ExtendedHTMLEditorKit$HTMLFactoryExtended" />
 	<class name="org.jfree.chart.editor.DefaultChartEditorFactory" />
 	<method signature="org.jfree.chart.editor.ChartEditor createEditor(org.jfree.chart.JFreeChart)" class="org.jfree.chart.editor.DefaultChartEditorFactory" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.editor.DefaultChartEditorFactory" />
@@ -6990,6 +7071,12 @@
 	<method signature="java.lang.String getXSymbolicValue(int,int)" class="org.jfree.data.xy.XisSymbolic" />
 	<class name="org.apache.xerces.impl.dtd.models.ContentModelValidator" />
 	<method signature="int validate(org.apache.xerces.xni.QName[],int,int)" class="org.apache.xerces.impl.dtd.models.ContentModelValidator" />
+	<class name="com.hexidec.util.Translatrix" />
+	<method signature="void setBundleName(java.lang.String)" class="com.hexidec.util.Translatrix" />
+	<method signature="java.lang.String getTranslationString(java.lang.String)" class="com.hexidec.util.Translatrix" />
+	<method signature="void setLocale(java.util.Locale)" class="com.hexidec.util.Translatrix" />
+	<method signature="void setLocale(java.lang.String,java.lang.String)" class="com.hexidec.util.Translatrix" />
+	<method signature="void &lt;init&gt;(java.lang.String)" class="com.hexidec.util.Translatrix" />
 	<class name="org.w3c.dom.EntityReference" />
 	<class name="org.apache.xerces.stax.events.EndDocumentImpl" />
 	<method signature="void &lt;init&gt;(javax.xml.stream.Location)" class="org.apache.xerces.stax.events.EndDocumentImpl" />
@@ -7237,6 +7324,10 @@
 	<method signature="void setErrorHandler(org.apache.xerces.xni.parser.XMLErrorHandler)" class="org.apache.xerces.dom.DOMConfigurationImpl" />
 	<method signature="void setDTDContentModelHandler(org.apache.xerces.xni.XMLDTDContentModelHandler)" class="org.apache.xerces.dom.DOMConfigurationImpl" />
 	<method signature="org.apache.xerces.xni.parser.XMLEntityResolver getEntityResolver()" class="org.apache.xerces.dom.DOMConfigurationImpl" />
+	<class name="com.hexidec.ekit.component.ExtendedHTMLEditorKit" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.component.ExtendedHTMLEditorKit" />
+	<method signature="javax.swing.text.ViewFactory getViewFactory()" class="com.hexidec.ekit.component.ExtendedHTMLEditorKit" />
+	<method signature="javax.swing.text.Document createDefaultDocument()" class="com.hexidec.ekit.component.ExtendedHTMLEditorKit" />
 	<class name="org.apache.xerces.dom.TreeWalkerImpl" />
 	<method signature="org.w3c.dom.Node parentNode()" class="org.apache.xerces.dom.TreeWalkerImpl" />
 	<method signature="org.w3c.dom.Node nextNode()" class="org.apache.xerces.dom.TreeWalkerImpl" />
@@ -7276,6 +7367,8 @@
 	<method signature="java.lang.String hex(int)" class="org.apache.commons.lang3.text.translate.CharSequenceTranslator" />
 	<method signature="int translate(java.lang.CharSequence,int,java.io.Writer)" class="org.apache.commons.lang3.text.translate.CharSequenceTranslator" />
 	<method signature="org.apache.commons.lang3.text.translate.CharSequenceTranslator with(org.apache.commons.lang3.text.translate.CharSequenceTranslator[])" class="org.apache.commons.lang3.text.translate.CharSequenceTranslator" />
+	<class name="com.swabunga.spell.engine.Transformator" />
+	<method signature="java.lang.String transform(java.lang.String)" class="com.swabunga.spell.engine.Transformator" />
 	<class name="com.google.zxing.client.result.ResultParser" />
 	<method signature="com.google.zxing.client.result.ParsedResult parseResult(com.google.zxing.Result)" class="com.google.zxing.client.result.ResultParser" />
 	<method signature="com.google.zxing.client.result.ParsedResult parse(com.google.zxing.Result)" class="com.google.zxing.client.result.ResultParser" />
@@ -7451,6 +7544,13 @@
 	<method signature="void setBaseSeriesVisible(boolean,boolean)" class="org.jfree.chart.renderer.xy.XYItemRenderer" />
 	<method signature="void setBaseNegativeItemLabelPosition(org.jfree.chart.labels.ItemLabelPosition,boolean)" class="org.jfree.chart.renderer.xy.XYItemRenderer" />
 	<method signature="java.awt.Font getSeriesItemLabelFont(int)" class="org.jfree.chart.renderer.xy.XYItemRenderer" />
+	<class name="com.hexidec.ekit.EkitCoreSpell" />
+	<method signature="void &lt;init&gt;(boolean,java.lang.String,java.net.URL,boolean,boolean,boolean,boolean,java.lang.String,java.lang.String,boolean,boolean,java.lang.String,boolean)" class="com.hexidec.ekit.EkitCoreSpell" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.EkitCoreSpell" />
+	<method signature="void spellingError(com.swabunga.spell.event.SpellCheckEvent)" class="com.hexidec.ekit.EkitCoreSpell" />
+	<method signature="void checkDocumentSpelling(javax.swing.text.Document)" class="com.hexidec.ekit.EkitCoreSpell" />
+	<method signature="void &lt;init&gt;(boolean)" class="com.hexidec.ekit.EkitCoreSpell" />
+	<method signature="void &lt;init&gt;(boolean,java.lang.String,java.lang.String,java.lang.String,javax.swing.text.StyledDocument,java.net.URL,boolean,boolean,boolean,boolean,java.lang.String,java.lang.String,boolean,boolean,boolean,boolean,java.lang.String,boolean)" class="com.hexidec.ekit.EkitCoreSpell" />
 	<class name="org.apache.xerces.impl.xs.util.XSNamedMap4Types" />
 	<method signature="org.apache.xerces.xs.XSObject itemByName(java.lang.String,java.lang.String)" class="org.apache.xerces.impl.xs.util.XSNamedMap4Types" />
 	<method signature="void &lt;init&gt;(java.lang.String[],org.apache.xerces.util.SymbolHash[],int,short)" class="org.apache.xerces.impl.xs.util.XSNamedMap4Types" />
@@ -7804,6 +7904,17 @@
 	<class name="edu.umd.cs.findbugs.annotations.package-info" />
 	<class name="freemarker.debug.DebuggerClient" />
 	<method signature="freemarker.debug.Debugger getDebugger(java.net.InetAddress,int,java.lang.String)" class="freemarker.debug.DebuggerClient" />
+	<class name="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="void dispose()" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="java.lang.String getCode(java.lang.String)" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="java.util.LinkedList getWords(java.lang.String)" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="void &lt;init&gt;(java.io.File)" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="void addWord(java.lang.String)" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="boolean isCorrect(java.lang.String)" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="void &lt;init&gt;(java.io.Reader)" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="java.util.LinkedList getSuggestions(java.lang.String,int)" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="void &lt;init&gt;(java.lang.String)" class="com.swabunga.spell.engine.SpellDictionary" />
+	<method signature="void &lt;init&gt;(java.io.File,java.io.File)" class="com.swabunga.spell.engine.SpellDictionary" />
 	<class name="tourma.views.report.ReportKeys" />
 	<method signature="void &lt;init&gt;()" class="tourma.views.report.ReportKeys" />
 	<class name="org.apache.xerces.impl.xs.traversers.XSAttributeChecker" />
@@ -8856,6 +8967,17 @@
 	<method signature="java.lang.String getVersion()" class="org.apache.html.dom.HTMLHtmlElementImpl" />
 	<method signature="void setVersion(java.lang.String)" class="org.apache.html.dom.HTMLHtmlElementImpl" />
 	<method signature="void &lt;init&gt;(org.apache.html.dom.HTMLDocumentImpl,java.lang.String)" class="org.apache.html.dom.HTMLHtmlElementImpl" />
+	<class name="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="void replaceWord(java.lang.String,boolean)" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="java.lang.String getWordContext()" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="int getWordContextPosition()" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="java.lang.String getReplaceWord()" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="short getAction()" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="void ignoreWord(boolean)" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="java.util.List getSuggestions()" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="void cancel()" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="void addToDictionary(java.lang.String)" class="com.swabunga.spell.event.SpellCheckEvent" />
+	<method signature="java.lang.String getInvalidWord()" class="com.swabunga.spell.event.SpellCheckEvent" />
 	<class name="org.jdom2.Document" />
 	<method signature="java.util.List getNamespacesInherited()" class="org.jdom2.Document" />
 	<method signature="boolean hasRootElement()" class="org.jdom2.Document" />
@@ -9159,6 +9281,10 @@
 	<class name="org.jfree.chart.plot.GreyPalette" />
 	<method signature="void initialize()" class="org.jfree.chart.plot.GreyPalette" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.plot.GreyPalette" />
+	<class name="com.hexidec.ekit.component.ImageFileChooser" />
+	<method signature="void &lt;init&gt;(java.io.File)" class="com.hexidec.ekit.component.ImageFileChooser" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.component.ImageFileChooser" />
+	<method signature="void &lt;init&gt;(java.lang.String)" class="com.hexidec.ekit.component.ImageFileChooser" />
 	<class name="org.w3c.dom.NamedNodeMap" />
 	<method signature="org.w3c.dom.Node item(int)" class="org.w3c.dom.NamedNodeMap" />
 	<method signature="org.w3c.dom.Node setNamedItem(org.w3c.dom.Node)" class="org.w3c.dom.NamedNodeMap" />
@@ -9683,6 +9809,11 @@
 	<method signature="java.lang.String reportError(org.apache.xerces.xni.XMLLocator,java.lang.String,java.lang.String,java.lang.Object[],short,java.lang.Exception)" class="org.apache.xerces.impl.XMLErrorReporter" />
 	<method signature="org.apache.xerces.util.MessageFormatter getMessageFormatter(java.lang.String)" class="org.apache.xerces.impl.XMLErrorReporter" />
 	<method signature="void setFeature(java.lang.String,boolean)" class="org.apache.xerces.impl.XMLErrorReporter" />
+	<class name="com.hexidec.ekit.component.PropertiesDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String[],java.lang.String[],java.lang.String,boolean)" class="com.hexidec.ekit.component.PropertiesDialog" />
+	<method signature="java.lang.String getFieldValue(java.lang.String)" class="com.hexidec.ekit.component.PropertiesDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String[],java.lang.String[],java.lang.String[],java.lang.String,boolean)" class="com.hexidec.ekit.component.PropertiesDialog" />
+	<method signature="java.lang.String getDecisionValue()" class="com.hexidec.ekit.component.PropertiesDialog" />
 	<class name="org.jfree.data.function.PowerFunction2D" />
 	<method signature="int hashCode()" class="org.jfree.data.function.PowerFunction2D" />
 	<method signature="double getValue(double)" class="org.jfree.data.function.PowerFunction2D" />
@@ -9905,6 +10036,7 @@
 	<method signature="void setVersion(com.google.zxing.qrcode.decoder.Version)" class="com.google.zxing.qrcode.encoder.QRCode" />
 	<method signature="void setMatrix(com.google.zxing.qrcode.encoder.ByteMatrix)" class="com.google.zxing.qrcode.encoder.QRCode" />
 	<class name="tourma.JdgCoach" />
+	<method signature="java.util.List getImagesResources(java.lang.String)" class="tourma.JdgCoach" />
 	<method signature="void &lt;init&gt;(java.awt.Frame,boolean,tourma.data.Coach)" class="tourma.JdgCoach" />
 	<method signature="void &lt;init&gt;(java.awt.Frame,boolean,tourma.data.Team)" class="tourma.JdgCoach" />
 	<method signature="void &lt;init&gt;(java.awt.Frame,boolean)" class="tourma.JdgCoach" />
@@ -10150,6 +10282,9 @@
 	<method signature="void setDrawable(org.jfree.ui.Drawable)" class="org.jfree.ui.DrawablePanel" />
 	<method signature="boolean isOpaque()" class="org.jfree.ui.DrawablePanel" />
 	<method signature="org.jfree.ui.Drawable getDrawable()" class="org.jfree.ui.DrawablePanel" />
+	<class name="com.hexidec.ekit.action.StylesAction" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.action.StylesAction" />
+	<method signature="void &lt;init&gt;(javax.swing.JComboBox)" class="com.hexidec.ekit.action.StylesAction" />
 	<class name="org.jfree.chart.renderer.OutlierListCollection" />
 	<method signature="void setHighFarOut(boolean)" class="org.jfree.chart.renderer.OutlierListCollection" />
 	<method signature="java.util.Iterator iterator()" class="org.jfree.chart.renderer.OutlierListCollection" />
@@ -10658,6 +10793,10 @@
 	<class name="org.jfree.ui.about.resources.AboutResources_es" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.ui.about.resources.AboutResources_es" />
 	<method signature="java.lang.Object[][] getContents()" class="org.jfree.ui.about.resources.AboutResources_es" />
+	<class name="com.hexidec.ekit.component.UnicodeDialog" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.component.UnicodeDialog" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore,java.lang.String,boolean,int)" class="com.hexidec.ekit.component.UnicodeDialog" />
+	<method signature="void init(int)" class="com.hexidec.ekit.component.UnicodeDialog" />
 	<class name="org.jdom2.xpath.jaxen.JDOMXPath" />
 	<method signature="java.lang.Number numberValueOf(java.lang.Object)" class="org.jdom2.xpath.jaxen.JDOMXPath" />
 	<method signature="void addNamespace(org.jdom2.Namespace)" class="org.jdom2.xpath.jaxen.JDOMXPath" />
@@ -10691,6 +10830,9 @@
 	<method signature="int getItemCount(int)" class="org.jfree.data.xy.XYBarDataset" />
 	<method signature="double getYValue(int,int)" class="org.jfree.data.xy.XYBarDataset" />
 	<method signature="java.lang.Number getEndY(int,int)" class="org.jfree.data.xy.XYBarDataset" />
+	<class name="com.hexidec.ekit.action.AlignAction" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.action.AlignAction" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore,java.lang.String,int)" class="com.hexidec.ekit.action.AlignAction" />
 	<class name="com.google.zxing.common.CharacterSetECI" />
 	<method signature="com.google.zxing.common.CharacterSetECI getCharacterSetECIByValue(int)" class="com.google.zxing.common.CharacterSetECI" />
 	<method signature="com.google.zxing.common.CharacterSetECI getCharacterSetECIByName(java.lang.String)" class="com.google.zxing.common.CharacterSetECI" />
@@ -10970,6 +11112,13 @@
 	<method signature="void setMaxIcon(javax.swing.Icon)" class="org.jfree.chart.renderer.category.MinMaxCategoryRenderer" />
 	<method signature="void setDrawLines(boolean)" class="org.jfree.chart.renderer.category.MinMaxCategoryRenderer" />
 	<method signature="javax.swing.Icon getMaxIcon()" class="org.jfree.chart.renderer.category.MinMaxCategoryRenderer" />
+	<class name="com.swabunga.spell.engine.Configuration" />
+	<method signature="boolean getBoolean(java.lang.String)" class="com.swabunga.spell.engine.Configuration" />
+	<method signature="void setBoolean(java.lang.String,boolean)" class="com.swabunga.spell.engine.Configuration" />
+	<method signature="void &lt;init&gt;()" class="com.swabunga.spell.engine.Configuration" />
+	<method signature="com.swabunga.spell.engine.Configuration getConfiguration()" class="com.swabunga.spell.engine.Configuration" />
+	<method signature="int getInteger(java.lang.String)" class="com.swabunga.spell.engine.Configuration" />
+	<method signature="void setInteger(java.lang.String,int)" class="com.swabunga.spell.engine.Configuration" />
 	<class name="org.jfree.chart.labels.XYToolTipGenerator" />
 	<method signature="java.lang.String generateToolTip(org.jfree.data.xy.XYDataset,int,int)" class="org.jfree.chart.labels.XYToolTipGenerator" />
 	<class name="org.jdom2.input.sax.AbstractReaderXSDFactory" />
@@ -11065,6 +11214,15 @@
 	<method signature="void &lt;init&gt;(java.lang.String,java.text.DateFormat,java.text.NumberFormat)" class="org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator" />
 	<method signature="boolean equals(java.lang.Object)" class="org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator" />
+	<class name="com.swabunga.spell.event.SpellChecker" />
+	<method signature="void dispose()" class="com.swabunga.spell.event.SpellChecker" />
+	<method signature="void &lt;init&gt;(com.swabunga.spell.engine.SpellDictionary)" class="com.swabunga.spell.event.SpellChecker" />
+	<method signature="int checkSpelling(com.swabunga.spell.event.WordTokenizer)" class="com.swabunga.spell.event.SpellChecker" />
+	<method signature="void reset()" class="com.swabunga.spell.event.SpellChecker" />
+	<method signature="void &lt;init&gt;(com.swabunga.spell.engine.SpellDictionary,int)" class="com.swabunga.spell.event.SpellChecker" />
+	<method signature="void addSpellCheckListener(com.swabunga.spell.event.SpellCheckListener)" class="com.swabunga.spell.event.SpellChecker" />
+	<method signature="void removeSpellCheckListener(com.swabunga.spell.event.SpellCheckListener)" class="com.swabunga.spell.event.SpellChecker" />
+	<method signature="java.lang.String checkString(java.lang.String)" class="com.swabunga.spell.event.SpellChecker" />
 	<class name="org.jfree.data.xy.DefaultHighLowDataset" />
 	<method signature="double getVolumeValue(int,int)" class="org.jfree.data.xy.DefaultHighLowDataset" />
 	<method signature="java.lang.Number getLow(int,int)" class="org.jfree.data.xy.DefaultHighLowDataset" />
@@ -11690,6 +11848,13 @@
 	<method signature="void &lt;init&gt;(java.lang.String,tourma.data.Criteria,tourma.data.Tournament,java.util.ArrayList,java.util.ArrayList,tourma.data.Round,boolean,boolean)" class="tourma.views.round.JPNAnnexRanking" />
 	<method signature="void setRoundOnly(boolean)" class="tourma.views.round.JPNAnnexRanking" />
 	<class name="org.apache.commons.lang3.ObjectUtils$Null" />
+	<class name="com.swabunga.spell.engine.Word" />
+	<method signature="java.lang.String getWord()" class="com.swabunga.spell.engine.Word" />
+	<method signature="void &lt;init&gt;()" class="com.swabunga.spell.engine.Word" />
+	<method signature="int getScore()" class="com.swabunga.spell.engine.Word" />
+	<method signature="java.lang.String toString()" class="com.swabunga.spell.engine.Word" />
+	<method signature="int compare(java.lang.Object,java.lang.Object)" class="com.swabunga.spell.engine.Word" />
+	<method signature="void &lt;init&gt;(java.lang.String,int)" class="com.swabunga.spell.engine.Word" />
 	<class name="org.jdom2.output.Format$TextMode" />
 	<method signature="org.jdom2.output.Format$TextMode[] values()" class="org.jdom2.output.Format$TextMode" />
 	<method signature="org.jdom2.output.Format$TextMode valueOf(java.lang.String)" class="org.jdom2.output.Format$TextMode" />
@@ -12184,6 +12349,8 @@
 	<class name="org.w3c.dom.html.HTMLPreElement" />
 	<method signature="void setWidth(int)" class="org.w3c.dom.html.HTMLPreElement" />
 	<method signature="int getWidth()" class="org.w3c.dom.html.HTMLPreElement" />
+	<class name="com.swabunga.spell.event.SpellCheckListener" />
+	<method signature="void spellingError(com.swabunga.spell.event.SpellCheckEvent)" class="com.swabunga.spell.event.SpellCheckListener" />
 	<class name="org.apache.xerces.dom.PSVIDocumentImpl" />
 	<method signature="org.w3c.dom.DOMImplementation getImplementation()" class="org.apache.xerces.dom.PSVIDocumentImpl" />
 	<method signature="void &lt;init&gt;()" class="org.apache.xerces.dom.PSVIDocumentImpl" />
@@ -12758,8 +12925,9 @@
 	<class name="javax.xml.xpath.XPathFunctionResolver" />
 	<method signature="javax.xml.xpath.XPathFunction resolveFunction(javax.xml.namespace.QName,int)" class="javax.xml.xpath.XPathFunctionResolver" />
 	<class name="tourma.JdgTeam" />
-	<method signature="void &lt;init&gt;(java.awt.Frame,boolean)" class="tourma.JdgTeam" />
+	<method signature="java.util.List getImagesResources(java.lang.String)" class="tourma.JdgTeam" />
 	<method signature="void &lt;init&gt;(java.awt.Frame,boolean,tourma.data.Team)" class="tourma.JdgTeam" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,boolean)" class="tourma.JdgTeam" />
 	<class name="freemarker.core.Configurable" />
 	<method signature="java.lang.String getURLEscapingCharset()" class="freemarker.core.Configurable" />
 	<method signature="void setSetting(java.lang.String,java.lang.String)" class="freemarker.core.Configurable" />
@@ -12919,6 +13087,7 @@
 	<method signature="void setMaxBonus(double)" class="tourma.data.Round" />
 	<method signature="void setCupTour(int)" class="tourma.data.Round" />
 	<method signature="double getCoef(tourma.data.Match)" class="tourma.data.Round" />
+	<method signature="boolean containsCoachMatch(tourma.data.CoachMatch)" class="tourma.data.Round" />
 	<method signature="org.jdom2.Element getXMLElementForDisplay()" class="tourma.data.Round" />
 	<method signature="org.jdom2.Element getXMLElement()" class="tourma.data.Round" />
 	<method signature="boolean isLooserCup()" class="tourma.data.Round" />
@@ -13148,6 +13317,72 @@
 	<method signature="void setHSB(float,float,float)" class="com.bric.swing.ColorPicker" />
 	<method signature="void setRGBControlsVisible(boolean)" class="com.bric.swing.ColorPicker" />
 	<method signature="java.awt.Color showDialog(java.awt.Container,java.awt.Color)" class="com.bric.swing.ColorPicker" />
+	<class name="com.hexidec.ekit.EkitCore" />
+	<method signature="void dispose()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JTextPane getTextPane()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void writeOutBase64(java.lang.String,java.io.File)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JToolBar getToolBarMain(boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void purgeUndos()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="java.awt.Frame getFrame()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void handleDocumentChange(javax.swing.event.DocumentEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JMenuBar getCustomMenuBar(java.util.Vector)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void setEnterKeyIsBreak(boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void removeEmptyListElement(javax.swing.text.Element)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void writeOutRTF(javax.swing.text.StyledDocument,java.io.File)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void loadDocument(java.io.File,javax.swing.text.html.HTMLEditorKit$ParserCallback)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void removeUpdate(javax.swing.event.DocumentEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="int getCaretPosition()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void keyTyped(java.awt.event.KeyEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void writeOutFragment(javax.swing.text.html.HTMLDocument,java.lang.String,java.io.File)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void changedUpdate(javax.swing.event.DocumentEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void initializeSingleToolbar(java.lang.String)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="java.lang.String getAppName()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void refreshOnUpdate()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void keyReleased(java.awt.event.KeyEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void setFrame(java.awt.Frame)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="java.io.File getCurrentFile()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JTextArea getSourcePane()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="java.lang.String getFontNameFromSelector()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JToolBar getToolBarFormat(boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="java.lang.String getDocumentText()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void saveDocument()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void checkDocumentSpelling(javax.swing.text.Document)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void setSourceDocument(javax.swing.text.StyledDocument)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="java.lang.String getDocumentSubText(java.lang.String)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void serializeIn()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void setDocumentText(java.lang.String)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void keyPressed(java.awt.event.KeyEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void insertListStyle(javax.swing.text.Element)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void writeOutFragment(javax.swing.text.html.HTMLDocument,java.lang.String)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void serializeOut(javax.swing.text.html.HTMLDocument)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void loadDocument(java.io.File)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void insertUnicodeChar(java.lang.String)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="com.hexidec.ekit.component.ExtendedHTMLDocument getExtendedHtmlDoc()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="java.lang.String getDocumentBody()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void focusLost(java.awt.event.FocusEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JMenuBar getMenuBar()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JToolBar getToolBar(boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void insertURLImage()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void initializeMultiToolbars(java.lang.String)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void removeEmptyLists()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void &lt;init&gt;(boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void registerDocument(com.hexidec.ekit.component.ExtendedHTMLDocument)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void writeOut(javax.swing.text.html.HTMLDocument,java.io.File)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JToolBar customizeToolBar(int,java.util.Vector,boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="boolean getEnterKeyIsBreak()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="java.lang.String getRTFDocument()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void &lt;init&gt;(boolean,java.lang.String,java.lang.String,java.lang.String,javax.swing.text.StyledDocument,java.net.URL,boolean,boolean,boolean,boolean,java.lang.String,java.lang.String,boolean,boolean,boolean,boolean,java.lang.String,boolean,boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void setCaretPosition(int)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void insertUpdate(javax.swing.event.DocumentEvent)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void &lt;init&gt;(boolean,java.lang.String,java.net.URL,boolean,boolean,boolean,boolean,java.lang.String,java.lang.String,boolean,boolean,boolean,java.lang.String,boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void writeOutRTF(javax.swing.text.StyledDocument)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void registerDocumentStyles()" class="com.hexidec.ekit.EkitCore" />
+	<method signature="javax.swing.JToolBar getToolBarStyles(boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void &lt;init&gt;(boolean,java.lang.String,java.lang.String,java.lang.String,javax.swing.text.StyledDocument,java.net.URL,boolean,boolean,boolean,boolean,java.lang.String,java.lang.String,boolean,boolean,boolean,boolean,java.lang.String,boolean)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void writeOutBase64(java.lang.String)" class="com.hexidec.ekit.EkitCore" />
+	<method signature="void focusGained(java.awt.event.FocusEvent)" class="com.hexidec.ekit.EkitCore" />
 	<class name="tourma.views.round.JPNGroup" />
 	<method signature="void update()" class="tourma.views.round.JPNGroup" />
 	<method signature="void &lt;init&gt;(tourma.data.Tournament,tourma.data.Group,int)" class="tourma.views.round.JPNGroup" />
@@ -13478,6 +13713,18 @@
 	<method signature="int getTotalECCodewords()" class="com.google.zxing.qrcode.decoder.Version$ECBlocks" />
 	<method signature="int getNumBlocks()" class="com.google.zxing.qrcode.decoder.Version$ECBlocks" />
 	<method signature="int getECCodewordsPerBlock()" class="com.google.zxing.qrcode.decoder.Version$ECBlocks" />
+	<class name="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void show(com.swabunga.spell.event.SpellCheckEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void windowClosed(java.awt.event.WindowEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void windowClosing(java.awt.event.WindowEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void windowActivated(java.awt.event.WindowEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Dialog,java.lang.String,boolean)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void windowDeiconified(java.awt.event.WindowEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void windowIconified(java.awt.event.WindowEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void windowDeactivated(java.awt.event.WindowEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
+	<method signature="void windowOpened(java.awt.event.WindowEvent)" class="com.swabunga.spell.swing.JSpellDialog" />
 	<class name="org.jfree.ui.InsetsChooserPanel" />
 	<method signature="void removeNotify()" class="org.jfree.ui.InsetsChooserPanel" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.ui.InsetsChooserPanel" />
@@ -15614,6 +15861,10 @@
 	<method signature="void reset()" class="com.google.zxing.datamatrix.DataMatrixReader" />
 	<method signature="void &lt;init&gt;()" class="com.google.zxing.datamatrix.DataMatrixReader" />
 	<method signature="com.google.zxing.Result decode(com.google.zxing.BinaryBitmap,java.util.Map)" class="com.google.zxing.datamatrix.DataMatrixReader" />
+	<class name="com.hexidec.ekit.component.SimpleInfoDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean,java.lang.String,int)" class="com.hexidec.ekit.component.SimpleInfoDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean,java.lang.String)" class="com.hexidec.ekit.component.SimpleInfoDialog" />
+	<method signature="java.lang.String getDecisionValue()" class="com.hexidec.ekit.component.SimpleInfoDialog" />
 	<class name="org.jfree.chart.renderer.xy.XYStepAreaRenderer" />
 	<method signature="void drawItem(java.awt.Graphics2D,org.jfree.chart.renderer.xy.XYItemRendererState,java.awt.geom.Rectangle2D,org.jfree.chart.plot.PlotRenderingInfo,org.jfree.chart.plot.XYPlot,org.jfree.chart.axis.ValueAxis,org.jfree.chart.axis.ValueAxis,org.jfree.data.xy.XYDataset,int,int,org.jfree.chart.plot.CrosshairState,int)" class="org.jfree.chart.renderer.xy.XYStepAreaRenderer" />
 	<method signature="boolean isOutline()" class="org.jfree.chart.renderer.xy.XYStepAreaRenderer" />
@@ -15907,6 +16158,11 @@
 	<method signature="float distance(com.google.zxing.ResultPoint,com.google.zxing.ResultPoint)" class="com.google.zxing.ResultPoint" />
 	<method signature="java.lang.String toString()" class="com.google.zxing.ResultPoint" />
 	<method signature="void &lt;init&gt;(float,float)" class="com.google.zxing.ResultPoint" />
+	<class name="com.hexidec.component.EkitStandardParserCallback" />
+	<method signature="void reportCB()" class="com.hexidec.component.EkitStandardParserCallback" />
+	<method signature="void handleError(java.lang.String,int)" class="com.hexidec.component.EkitStandardParserCallback" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.component.EkitStandardParserCallback" />
+	<method signature="java.util.HashMap getTheErrors()" class="com.hexidec.component.EkitStandardParserCallback" />
 	<class name="org.jfree.util.SortedConfigurationWriter" />
 	<method signature="void &lt;init&gt;()" class="org.jfree.util.SortedConfigurationWriter" />
 	<method signature="void save(java.io.OutputStream,org.jfree.util.Configuration)" class="org.jfree.util.SortedConfigurationWriter" />
@@ -17633,6 +17889,13 @@
 	<method signature="java.lang.Object clone()" class="org.jfree.util.AbstractObjectList" />
 	<method signature="void clear()" class="org.jfree.util.AbstractObjectList" />
 	<method signature="boolean equals(java.lang.Object)" class="org.jfree.util.AbstractObjectList" />
+	<class name="com.hexidec.util.Base64Codec" />
+	<method signature="byte[] decodeBytes(byte[])" class="com.hexidec.util.Base64Codec" />
+	<method signature="java.lang.String encode(byte[])" class="com.hexidec.util.Base64Codec" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.util.Base64Codec" />
+	<method signature="java.lang.String encode(java.lang.String)" class="com.hexidec.util.Base64Codec" />
+	<method signature="java.lang.String decode(java.lang.String)" class="com.hexidec.util.Base64Codec" />
+	<method signature="byte[] decodeBytes(java.lang.String)" class="com.hexidec.util.Base64Codec" />
 	<class name="org.jfree.data.xy.XYIntervalDataItem" />
 	<method signature="double getYValue()" class="org.jfree.data.xy.XYIntervalDataItem" />
 	<method signature="double getXLowValue()" class="org.jfree.data.xy.XYIntervalDataItem" />
@@ -17959,6 +18222,23 @@
 	<method signature="double getUpperBound()" class="org.jfree.data.Range" />
 	<method signature="org.jfree.data.Range expand(org.jfree.data.Range,double,double)" class="org.jfree.data.Range" />
 	<method signature="void &lt;init&gt;(double,double)" class="org.jfree.data.Range" />
+	<class name="com.swabunga.spell.event.WordTokenizer" />
+	<method signature="boolean hasMoreWords()" class="com.swabunga.spell.event.WordTokenizer" />
+	<method signature="int getCurrentWordEnd()" class="com.swabunga.spell.event.WordTokenizer" />
+	<method signature="java.lang.String nextWord()" class="com.swabunga.spell.event.WordTokenizer" />
+	<method signature="int getCurrentWordPosition()" class="com.swabunga.spell.event.WordTokenizer" />
+	<method signature="int getCurrentWordCount()" class="com.swabunga.spell.event.WordTokenizer" />
+	<method signature="void replaceWord(java.lang.String)" class="com.swabunga.spell.event.WordTokenizer" />
+	<method signature="boolean isNewSentance()" class="com.swabunga.spell.event.WordTokenizer" />
+	<method signature="java.lang.String getContext()" class="com.swabunga.spell.event.WordTokenizer" />
+	<class name="com.swabunga.spell.swing.JSpellForm" />
+	<method signature="void setSpellEvent(com.swabunga.spell.event.SpellCheckEvent)" class="com.swabunga.spell.swing.JSpellForm" />
+	<method signature="void valueChanged(javax.swing.event.ListSelectionEvent)" class="com.swabunga.spell.swing.JSpellForm" />
+	<method signature="void addActionListener(java.awt.event.ActionListener)" class="com.swabunga.spell.swing.JSpellForm" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.swabunga.spell.swing.JSpellForm" />
+	<method signature="void &lt;init&gt;()" class="com.swabunga.spell.swing.JSpellForm" />
+	<method signature="void main(java.lang.String[])" class="com.swabunga.spell.swing.JSpellForm" />
+	<method signature="void removeActionListener(java.awt.event.ActionListener)" class="com.swabunga.spell.swing.JSpellForm" />
 	<class name="org.jfree.chart.needle.PointerNeedle" />
 	<method signature="java.lang.Object clone()" class="org.jfree.chart.needle.PointerNeedle" />
 	<method signature="int hashCode()" class="org.jfree.chart.needle.PointerNeedle" />
@@ -18794,6 +19074,9 @@
 	<method signature="org.w3c.dom.NodeList getElementsByTagName(java.lang.String)" class="org.apache.xerces.dom.CoreDocumentImpl" />
 	<method signature="void setStrictErrorChecking(boolean)" class="org.apache.xerces.dom.CoreDocumentImpl" />
 	<method signature="org.w3c.dom.Document getOwnerDocument()" class="org.apache.xerces.dom.CoreDocumentImpl" />
+	<class name="com.hexidec.ekit.action.SetFontFamilyAction" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.action.SetFontFamilyAction" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore,java.lang.String)" class="com.hexidec.ekit.action.SetFontFamilyAction" />
 	<class name="org.jfree.data.xy.XYZDataset" />
 	<method signature="java.lang.Number getZ(int,int)" class="org.jfree.data.xy.XYZDataset" />
 	<method signature="double getZValue(int,int)" class="org.jfree.data.xy.XYZDataset" />
@@ -18851,6 +19134,13 @@
 	<method signature="int getIndex(java.lang.String)" class="org.xml.sax.Attributes" />
 	<method signature="java.lang.String getType(java.lang.String,java.lang.String)" class="org.xml.sax.Attributes" />
 	<method signature="java.lang.String getValue(java.lang.String,java.lang.String)" class="org.xml.sax.Attributes" />
+	<class name="com.hexidec.ekit.component.ImageURLDialog" />
+	<method signature="java.lang.String getImageWidth()" class="com.hexidec.ekit.component.ImageURLDialog" />
+	<method signature="java.lang.String getImageHeight()" class="com.hexidec.ekit.component.ImageURLDialog" />
+	<method signature="java.lang.String getImageUrl()" class="com.hexidec.ekit.component.ImageURLDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean)" class="com.hexidec.ekit.component.ImageURLDialog" />
+	<method signature="java.lang.String getImageAlt()" class="com.hexidec.ekit.component.ImageURLDialog" />
+	<method signature="java.lang.String getDecisionValue()" class="com.hexidec.ekit.component.ImageURLDialog" />
 	<class name="fi.iki.elonen.NanoHTTPD$DefaultAsyncRunner" />
 	<method signature="void closeAll()" class="fi.iki.elonen.NanoHTTPD$DefaultAsyncRunner" />
 	<method signature="void &lt;init&gt;()" class="fi.iki.elonen.NanoHTTPD$DefaultAsyncRunner" />
@@ -20470,6 +20760,24 @@
 	<method signature="org.apache.xerces.xs.XSModel loadURI(java.lang.String)" class="org.apache.xerces.impl.xs.XMLSchemaLoader" />
 	<method signature="org.apache.xerces.xni.parser.XMLEntityResolver getEntityResolver()" class="org.apache.xerces.impl.xs.XMLSchemaLoader" />
 	<method signature="java.lang.Object getProperty(java.lang.String)" class="org.apache.xerces.impl.xs.XMLSchemaLoader" />
+	<class name="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="java.awt.Shape modelToView(int,java.awt.Shape,javax.swing.text.Position$Bias)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void mouseClicked(java.awt.event.MouseEvent)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void paint(java.awt.Graphics,java.awt.Shape)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void setParent(javax.swing.text.View)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="boolean imageUpdate(java.awt.Image,int,int,int,int,int)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void mouseReleased(java.awt.event.MouseEvent)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="float getAlignment(int)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void &lt;init&gt;(javax.swing.text.Element)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void mouseEntered(java.awt.event.MouseEvent)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="float getPreferredSpan(int)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void mouseMoved(java.awt.event.MouseEvent)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="int viewToModel(float,float,java.awt.Shape,javax.swing.text.Position$Bias[])" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void mouseDragged(java.awt.event.MouseEvent)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void mouseExited(java.awt.event.MouseEvent)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void changedUpdate(javax.swing.event.DocumentEvent,java.awt.Shape,javax.swing.text.ViewFactory)" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="javax.swing.text.AttributeSet getAttributes()" class="com.hexidec.ekit.component.RelativeImageView" />
+	<method signature="void mousePressed(java.awt.event.MouseEvent)" class="com.hexidec.ekit.component.RelativeImageView" />
 	<class name="org.apache.commons.lang3.text.translate.EntityArrays" />
 	<method signature="java.lang.String[][] HTML40_EXTENDED_UNESCAPE()" class="org.apache.commons.lang3.text.translate.EntityArrays" />
 	<method signature="java.lang.String[][] BASIC_ESCAPE()" class="org.apache.commons.lang3.text.translate.EntityArrays" />
@@ -21624,6 +21932,13 @@
 	<method signature="void addValue(java.lang.Comparable,double)" class="org.jfree.data.DefaultKeyedValues" />
 	<method signature="void removeValue(java.lang.Comparable)" class="org.jfree.data.DefaultKeyedValues" />
 	<method signature="void setValue(java.lang.Comparable,java.lang.Number)" class="org.jfree.data.DefaultKeyedValues" />
+	<class name="com.hexidec.ekit.component.JButtonNoFocus" />
+	<method signature="void &lt;init&gt;(javax.swing.Icon)" class="com.hexidec.ekit.component.JButtonNoFocus" />
+	<method signature="boolean isFocusable()" class="com.hexidec.ekit.component.JButtonNoFocus" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.component.JButtonNoFocus" />
+	<method signature="void &lt;init&gt;(javax.swing.Action)" class="com.hexidec.ekit.component.JButtonNoFocus" />
+	<method signature="void &lt;init&gt;(java.lang.String)" class="com.hexidec.ekit.component.JButtonNoFocus" />
+	<method signature="void &lt;init&gt;(java.lang.String,javax.swing.Icon)" class="com.hexidec.ekit.component.JButtonNoFocus" />
 	<class name="org.w3c.dom.html.HTMLTableSectionElement" />
 	<method signature="void setAlign(java.lang.String)" class="org.w3c.dom.html.HTMLTableSectionElement" />
 	<method signature="void setChOff(java.lang.String)" class="org.w3c.dom.html.HTMLTableSectionElement" />
@@ -21644,6 +21959,10 @@
 	<method signature="java.lang.String getColor()" class="org.apache.html.dom.HTMLBaseFontElementImpl" />
 	<method signature="void &lt;init&gt;(org.apache.html.dom.HTMLDocumentImpl,java.lang.String)" class="org.apache.html.dom.HTMLBaseFontElementImpl" />
 	<method signature="java.lang.String getFace()" class="org.apache.html.dom.HTMLBaseFontElementImpl" />
+	<class name="com.hexidec.ekit.component.UserInputDialog" />
+	<method signature="java.lang.String getInputText()" class="com.hexidec.ekit.component.UserInputDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean,java.lang.String)" class="com.hexidec.ekit.component.UserInputDialog" />
+	<method signature="void &lt;init&gt;(java.awt.Frame,java.lang.String,boolean,java.lang.String,java.lang.String)" class="com.hexidec.ekit.component.UserInputDialog" />
 	<class name="freemarker.core.DebugBreak" />
 	<method signature="void &lt;init&gt;(freemarker.core.TemplateElement)" class="freemarker.core.DebugBreak" />
 	<method signature="java.lang.String getCanonicalForm()" class="freemarker.core.DebugBreak" />
@@ -21743,6 +22062,13 @@
 	<method signature="void &lt;init&gt;()" class="org.apache.xerces.util.SAXLocatorWrapper" />
 	<method signature="int getColumnNumber()" class="org.apache.xerces.util.SAXLocatorWrapper" />
 	<method signature="java.lang.String getXMLVersion()" class="org.apache.xerces.util.SAXLocatorWrapper" />
+	<class name="com.swabunga.spell.engine.PropertyConfiguration" />
+	<method signature="boolean getBoolean(java.lang.String)" class="com.swabunga.spell.engine.PropertyConfiguration" />
+	<method signature="void save()" class="com.swabunga.spell.engine.PropertyConfiguration" />
+	<method signature="void setBoolean(java.lang.String,boolean)" class="com.swabunga.spell.engine.PropertyConfiguration" />
+	<method signature="void &lt;init&gt;()" class="com.swabunga.spell.engine.PropertyConfiguration" />
+	<method signature="int getInteger(java.lang.String)" class="com.swabunga.spell.engine.PropertyConfiguration" />
+	<method signature="void setInteger(java.lang.String,int)" class="com.swabunga.spell.engine.PropertyConfiguration" />
 	<class name="org.jfree.ui.Size2D" />
 	<method signature="void setWidth(double)" class="org.jfree.ui.Size2D" />
 	<method signature="void setHeight(double)" class="org.jfree.ui.Size2D" />
@@ -22743,6 +23069,18 @@
 	<method signature="int hashCode()" class="org.jfree.util.SortOrder" />
 	<method signature="boolean equals(java.lang.Object)" class="org.jfree.util.SortOrder" />
 	<method signature="java.lang.String toString()" class="org.jfree.util.SortOrder" />
+	<class name="com.hexidec.ekit.Ekit" />
+	<method signature="void windowClosed(java.awt.event.WindowEvent)" class="com.hexidec.ekit.Ekit" />
+	<method signature="void windowClosing(java.awt.event.WindowEvent)" class="com.hexidec.ekit.Ekit" />
+	<method signature="void windowActivated(java.awt.event.WindowEvent)" class="com.hexidec.ekit.Ekit" />
+	<method signature="void windowDeiconified(java.awt.event.WindowEvent)" class="com.hexidec.ekit.Ekit" />
+	<method signature="void &lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,java.net.URL,boolean,boolean,boolean,boolean,java.lang.String,java.lang.String,boolean,boolean,boolean,boolean,boolean)" class="com.hexidec.ekit.Ekit" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.Ekit" />
+	<method signature="void windowIconified(java.awt.event.WindowEvent)" class="com.hexidec.ekit.Ekit" />
+	<method signature="void main(java.lang.String[])" class="com.hexidec.ekit.Ekit" />
+	<method signature="void windowDeactivated(java.awt.event.WindowEvent)" class="com.hexidec.ekit.Ekit" />
+	<method signature="void windowOpened(java.awt.event.WindowEvent)" class="com.hexidec.ekit.Ekit" />
+	<method signature="void usage()" class="com.hexidec.ekit.Ekit" />
 	<class name="org.apache.wml.dom.WMLElementImpl" />
 	<method signature="java.lang.String getXmlLang()" class="org.apache.wml.dom.WMLElementImpl" />
 	<method signature="void setXmlLang(java.lang.String)" class="org.apache.wml.dom.WMLElementImpl" />
@@ -23118,6 +23456,10 @@
 	<method signature="double getYValue(int,int)" class="org.jfree.data.xy.YIntervalSeriesCollection" />
 	<method signature="java.lang.Number getEndY(int,int)" class="org.jfree.data.xy.YIntervalSeriesCollection" />
 	<method signature="void removeAllSeries()" class="org.jfree.data.xy.YIntervalSeriesCollection" />
+	<class name="com.hexidec.ekit.component.JComboBoxNoFocus" />
+	<method signature="boolean isFocusable()" class="com.hexidec.ekit.component.JComboBoxNoFocus" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.component.JComboBoxNoFocus" />
+	<method signature="void &lt;init&gt;(java.util.Vector)" class="com.hexidec.ekit.component.JComboBoxNoFocus" />
 	<class name="org.jfree.chart.block.AbstractBlock" />
 	<method signature="void setPadding(org.jfree.ui.RectangleInsets)" class="org.jfree.chart.block.AbstractBlock" />
 	<method signature="org.jfree.ui.RectangleInsets getPadding()" class="org.jfree.chart.block.AbstractBlock" />
@@ -24767,6 +25109,9 @@
 	<method signature="void &lt;init&gt;()" class="org.jfree.data.xy.DefaultWindDataset" />
 	<method signature="int getItemCount(int)" class="org.jfree.data.xy.DefaultWindDataset" />
 	<method signature="java.lang.Number getWindDirection(int,int)" class="org.jfree.data.xy.DefaultWindDataset" />
+	<class name="com.hexidec.ekit.action.FormatAction" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.action.FormatAction" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore,java.lang.String,javax.swing.text.html.HTML$Tag)" class="com.hexidec.ekit.action.FormatAction" />
 	<class name="org.apache.html.dom.HTMLStyleElementImpl" />
 	<method signature="void setDisabled(boolean)" class="org.apache.html.dom.HTMLStyleElementImpl" />
 	<method signature="java.lang.String getMedia()" class="org.apache.html.dom.HTMLStyleElementImpl" />
@@ -25262,6 +25607,13 @@
 	<method signature="void setRange(double,double)" class="org.jfree.chart.plot.JThermometer" />
 	<method signature="void setValueLocation(int)" class="org.jfree.chart.plot.JThermometer" />
 	<method signature="void setForeground(java.awt.Color)" class="org.jfree.chart.plot.JThermometer" />
+	<class name="com.hexidec.ekit.component.JToggleButtonNoFocus" />
+	<method signature="void &lt;init&gt;(javax.swing.Icon)" class="com.hexidec.ekit.component.JToggleButtonNoFocus" />
+	<method signature="boolean isFocusable()" class="com.hexidec.ekit.component.JToggleButtonNoFocus" />
+	<method signature="void &lt;init&gt;()" class="com.hexidec.ekit.component.JToggleButtonNoFocus" />
+	<method signature="void &lt;init&gt;(javax.swing.Action)" class="com.hexidec.ekit.component.JToggleButtonNoFocus" />
+	<method signature="void &lt;init&gt;(java.lang.String)" class="com.hexidec.ekit.component.JToggleButtonNoFocus" />
+	<method signature="void &lt;init&gt;(java.lang.String,javax.swing.Icon)" class="com.hexidec.ekit.component.JToggleButtonNoFocus" />
 	<class name="org.jdom2.internal.ReflectionConstructor" />
 	<method signature="java.lang.Object construct(java.lang.String,java.lang.Class)" class="org.jdom2.internal.ReflectionConstructor" />
 	<method signature="void &lt;init&gt;()" class="org.jdom2.internal.ReflectionConstructor" />
@@ -26068,6 +26420,19 @@
 	<method signature="java.lang.String getDateTime()" class="org.w3c.dom.html.HTMLModElement" />
 	<method signature="void setDateTime(java.lang.String)" class="org.w3c.dom.html.HTMLModElement" />
 	<method signature="void setCite(java.lang.String)" class="org.w3c.dom.html.HTMLModElement" />
+	<class name="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="void removeTag(javax.swing.text.Element,boolean)" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="int[] getPositions(javax.swing.text.Element,java.lang.String,boolean,java.lang.String)" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="javax.swing.text.Element getListItemParent()" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="java.lang.String[] getUniString(int)" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="void delete()" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="javax.swing.text.SimpleAttributeSet removeAttributeByKey(javax.swing.text.SimpleAttributeSet,java.lang.String)" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="javax.swing.text.SimpleAttributeSet removeAttribute(javax.swing.text.SimpleAttributeSet,javax.swing.text.SimpleAttributeSet)" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="void insertListElement(java.lang.String)" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="boolean checkParentsTag(javax.swing.text.html.HTML$Tag)" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore)" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="javax.swing.text.Element getListItemContainer()" class="com.hexidec.ekit.component.HTMLUtilities" />
+	<method signature="javax.swing.text.html.HTML$Tag getHTMLTag(javax.swing.text.Element)" class="com.hexidec.ekit.component.HTMLUtilities" />
 	<class name="org.jfree.chart.axis.CyclicNumberAxis" />
 	<method signature="void setAdvanceLinePaint(java.awt.Paint)" class="org.jfree.chart.axis.CyclicNumberAxis" />
 	<method signature="void &lt;init&gt;(double)" class="org.jfree.chart.axis.CyclicNumberAxis" />
@@ -26354,6 +26719,12 @@
 	<class name="org.xml.sax.helpers.XMLReaderFactory" />
 	<method signature="org.xml.sax.XMLReader createXMLReader(java.lang.String)" class="org.xml.sax.helpers.XMLReaderFactory" />
 	<method signature="org.xml.sax.XMLReader createXMLReader()" class="org.xml.sax.helpers.XMLReaderFactory" />
+	<class name="com.hexidec.ekit.component.UserInputAnchorDialog" />
+	<method signature="void actionPerformed(java.awt.event.ActionEvent)" class="com.hexidec.ekit.component.UserInputAnchorDialog" />
+	<method signature="java.lang.String getInputText()" class="com.hexidec.ekit.component.UserInputAnchorDialog" />
+	<method signature="void init()" class="com.hexidec.ekit.component.UserInputAnchorDialog" />
+	<method signature="void &lt;init&gt;(com.hexidec.ekit.EkitCore,java.lang.String,boolean,java.lang.String)" class="com.hexidec.ekit.component.UserInputAnchorDialog" />
+	<method signature="void setAnchor(java.lang.String)" class="com.hexidec.ekit.component.UserInputAnchorDialog" />
 	<class name="org.apache.commons.lang3.concurrent.MultiBackgroundInitializer$MultiBackgroundInitializerResults" />
 	<method signature="boolean isException(java.lang.String)" class="org.apache.commons.lang3.concurrent.MultiBackgroundInitializer$MultiBackgroundInitializerResults" />
 	<method signature="java.util.Set initializerNames()" class="org.apache.commons.lang3.concurrent.MultiBackgroundInitializer$MultiBackgroundInitializerResults" />
@@ -26804,6 +27175,18 @@
 	<method signature="int getEscapeLevel()" class="org.unbescape.css.CssStringEscapeLevel" />
 	<method signature="org.unbescape.css.CssStringEscapeLevel forLevel(int)" class="org.unbescape.css.CssStringEscapeLevel" />
 	<method signature="org.unbescape.css.CssStringEscapeLevel[] values()" class="org.unbescape.css.CssStringEscapeLevel" />
+	<class name="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="boolean hasMoreWords()" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="int getCurrentWordEnd()" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="int getCurrentWordCount()" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="void replaceWord(java.lang.String)" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="java.lang.String getFinalText()" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="java.lang.String nextWord()" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="void main(java.lang.String[])" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="int getCurrentWordPosition()" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="void &lt;init&gt;(java.lang.String)" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="boolean isNewSentance()" class="com.swabunga.spell.event.StringWordTokenizer" />
+	<method signature="java.lang.String getContext()" class="com.swabunga.spell.event.StringWordTokenizer" />
 	<class name="org.apache.commons.lang3.builder.ToStringStyle" />
 	<method signature="void append(java.lang.StringBuffer,java.lang.String,int[],java.lang.Boolean)" class="org.apache.commons.lang3.builder.ToStringStyle" />
 	<method signature="void append(java.lang.StringBuffer,java.lang.String,java.lang.Object[],java.lang.Boolean)" class="org.apache.commons.lang3.builder.ToStringStyle" />
@@ -27414,14 +27797,18 @@
 	<method signature="void &lt;init&gt;(org.apache.html.dom.HTMLDocumentImpl,java.lang.String)" class="org.apache.html.dom.HTMLParagraphElementImpl" />
 	<class name="org.apache.xerces.dom.DeferredNode" />
 	<method signature="int getNodeIndex()" class="org.apache.xerces.dom.DeferredNode" />
+	<class name="com.swabunga.spell.engine.EditDistance" />
+	<method signature="void &lt;init&gt;()" class="com.swabunga.spell.engine.EditDistance" />
+	<method signature="void main(java.lang.String[])" class="com.swabunga.spell.engine.EditDistance" />
+	<method signature="int getDistance(java.lang.String,java.lang.String)" class="com.swabunga.spell.engine.EditDistance" />
 	<class name="org.jfree.ui.about.AboutPanel" />
 	<method signature="void &lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.awt.Image)" class="org.jfree.ui.about.AboutPanel" />
 	<method signature="void &lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,java.lang.String)" class="org.jfree.ui.about.AboutPanel" />
 </entrypoints>
 
 <!-- WARNING:Unresolved external dependency: org.apache.xml.utils.PrefixResolver not found! -->
-<!-- writing shrinked C:\Perso\Tourma\store\TourMa.jar to C:\Perso\Tourma\store\yguard_temp_2324954350934335634.jar. -->
-<inOutPair in="C:\Perso\Tourma\store\TourMa.jar" out="C:\Perso\Tourma\store\yguard_temp_2324954350934335634.jar">
+<!-- writing shrinked C:\Perso\Tourma\store\TourMa.jar to C:\Perso\Tourma\store\yguard_temp_8392037972537300468.jar. -->
+<inOutPair in="C:\Perso\Tourma\store\TourMa.jar" out="C:\Perso\Tourma\store\yguard_temp_8392037972537300468.jar">
 	<removed-code>
 		<field name="serialVersionUID" class="com.bric.swing.ColorPicker" />
 		<field name="SELECTED_COLOR_PROPERTY" class="com.bric.swing.ColorPicker" />
@@ -27664,6 +28051,158 @@
 		<field name="TYPE_INFO_MASK_PATTERN" class="com.google.zxing.qrcode.encoder.MatrixUtil" />
 		<method signature="void &lt;init&gt;()" class="com.google.zxing.qrcode.encoder.MatrixUtil" />
 		<field name="NUM_MASK_PATTERNS" class="com.google.zxing.qrcode.encoder.QRCode" />
+		<field name="jcmbColorSelector" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_FILE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_EDIT" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_VIEW" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_FONT" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_FORMAT" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_INSERT" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_TABLE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_FORMS" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_SEARCH" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_TOOLS" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_HELP" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_MENU_DEBUG" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_SEP" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_NEW" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_NEWSTYLED" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_OPEN" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_SAVE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_PRINT" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_CUT" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_COPY" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_PASTE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_PASTEX" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_UNDO" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_REDO" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_BOLD" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_ITALIC" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_UNDERLINE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_STRIKE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_SUPER" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_SUB" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_ULIST" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_OLIST" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_ALIGNL" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_ALIGNC" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_ALIGNR" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_ALIGNJ" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_UNICODE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_UNIMATH" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_FIND" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_ANCHOR" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_SOURCE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_STYLES" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_FONTS" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_INSTABLE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_EDITTABLE" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_EDITCELL" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_INSERTROW" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_INSERTCOL" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_DELETEROW" class="com.hexidec.ekit.EkitCore" />
+		<field name="KEY_TOOL_DELETECOL" class="com.hexidec.ekit.EkitCore" />
+		<field name="TOOLBAR_DEFAULT_MULTI" class="com.hexidec.ekit.EkitCore" />
+		<field name="TOOLBAR_DEFAULT_SINGLE" class="com.hexidec.ekit.EkitCore" />
+		<field name="TOOLBAR_SINGLE" class="com.hexidec.ekit.EkitCore" />
+		<field name="TOOLBAR_MAIN" class="com.hexidec.ekit.EkitCore" />
+		<field name="TOOLBAR_FORMAT" class="com.hexidec.ekit.EkitCore" />
+		<field name="TOOLBAR_STYLES" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_NEW" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_NEW_STYLED" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_OPEN_HTML" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_OPEN_CSS" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_OPEN_BASE64" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_SAVE" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_SAVE_AS" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_SAVE_BODY" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_SAVE_RTF" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_SAVE_BASE64" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_PRINT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_SERIALIZE_OUT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DOC_SERIALIZE_IN" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_EXIT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_SEARCH_FIND" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_SEARCH_FIND_AGAIN" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_SEARCH_REPLACE" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_CLIP_CUT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_CLIP_COPY" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_CLIP_PASTE" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_CLIP_PASTE_PLAIN" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TOGGLE_TOOLBAR_SINGLE" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TOGGLE_TOOLBAR_MAIN" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TOGGLE_TOOLBAR_FORMAT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TOGGLE_TOOLBAR_STYLES" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TOGGLE_SOURCE_VIEW" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TABLE_INSERT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TABLE_EDIT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TABLE_CELL_EDIT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TABLE_ROW_INSERT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TABLE_ROW_DELETE" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TABLE_COLUMN_INSERT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_TABLE_COLUMN_DELETE" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_BREAK" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_NBSP" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_HR" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_IMAGE_LOCAL" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_IMAGE_URL" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_UNICODE_CHAR" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_UNICODE_MATH" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_UNICODE_DRAW" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_UNICODE_DING" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_UNICODE_SIGS" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_INSERT_UNICODE_SPEC" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_INSERT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_TEXTFIELD" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_TEXTAREA" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_CHECKBOX" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_RADIO" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_PASSWORD" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_BUTTON" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_SUBMIT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_FORM_RESET" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_ENTER_PARAGRAPH" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_ENTER_BREAK" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_SPELLCHECK" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_HELP_ABOUT" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DEBUG_DESCRIBE_DOC" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DEBUG_DESCRIBE_CSS" class="com.hexidec.ekit.EkitCore" />
+		<field name="CMD_DEBUG_CURRENT_TAGS" class="com.hexidec.ekit.EkitCore" />
+		<method signature="void insertTableCell()" class="com.hexidec.ekit.EkitCore" />
+		<method signature="void loadDocument(java.io.File,java.lang.String)" class="com.hexidec.ekit.EkitCore" />
+		<field name="sListType" class="com.hexidec.ekit.action.ListAutomationAction" />
+		<field name="previewWidth" class="com.hexidec.ekit.component.ImageFileChooserPreview" />
+		<field name="previewHeight" class="com.hexidec.ekit.component.ImageFileChooserPreview" />
+		<field name="TOP" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="TEXTTOP" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="MIDDLE" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="ABSMIDDLE" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="CENTER" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="BOTTOM" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="IMAGE_CACHE_PROPERTY" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="PENDING_IMAGE_SRC" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="MISSING_IMAGE_SRC" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="DEFAULT_WIDTH" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="DEFAULT_HEIGHT" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="DEFAULT_BORDER" class="com.hexidec.ekit.component.RelativeImageView" />
+		<method signature="java.awt.Color getHighlightColor()" class="com.hexidec.ekit.component.RelativeImageView" />
+		<field name="ERROR" class="com.hexidec.ekit.component.SimpleInfoDialog" />
+		<field name="INFO" class="com.hexidec.ekit.component.SimpleInfoDialog" />
+		<field name="WARNING" class="com.hexidec.ekit.component.SimpleInfoDialog" />
+		<field name="QUESTION" class="com.hexidec.ekit.component.SimpleInfoDialog" />
+		<field name="PLAIN" class="com.hexidec.ekit.component.SimpleInfoDialog" />
+		<field name="UNICODE_BASE" class="com.hexidec.ekit.component.UnicodeDialog" />
+		<field name="UNICODE_SIGS" class="com.hexidec.ekit.component.UnicodeDialog" />
+		<field name="UNICODE_SPEC" class="com.hexidec.ekit.component.UnicodeDialog" />
+		<field name="UNICODE_MATH" class="com.hexidec.ekit.component.UnicodeDialog" />
+		<field name="UNICODE_DRAW" class="com.hexidec.ekit.component.UnicodeDialog" />
+		<field name="UNICODE_DING" class="com.hexidec.ekit.component.UnicodeDialog" />
+		<field name="UNICODEBLOCKSIZE" class="com.hexidec.ekit.component.UnicodeDialog" />
+		<field name="CMDCHANGEBLOCK" class="com.hexidec.ekit.component.UnicodeDialog" />
+		<field name="BASE64PAD" class="com.hexidec.util.Base64Codec" />
+		<field name="LINEFEED" class="com.hexidec.util.Base64Codec" />
+		<field name="CARRIAGE" class="com.hexidec.util.Base64Codec" />
+		<field name="LINEMAX" class="com.hexidec.util.Base64Codec" />
 		<field name="ENCODE_ALPHA" class="com.keypoint.PngEncoder" />
 		<field name="NO_ALPHA" class="com.keypoint.PngEncoder" />
 		<field name="FILTER_NONE" class="com.keypoint.PngEncoder" />
@@ -27671,6 +28210,40 @@
 		<field name="FILTER_UP" class="com.keypoint.PngEncoder" />
 		<field name="FILTER_LAST" class="com.keypoint.PngEncoder" />
 		<method signature="int writeInt2(int,int)" class="com.keypoint.PngEncoder" />
+		<field name="EDIT_DEL1" class="com.swabunga.spell.engine.Configuration" />
+		<field name="EDIT_DEL2" class="com.swabunga.spell.engine.Configuration" />
+		<field name="EDIT_SWAP" class="com.swabunga.spell.engine.Configuration" />
+		<field name="EDIT_SUB" class="com.swabunga.spell.engine.Configuration" />
+		<field name="EDIT_SIMILAR" class="com.swabunga.spell.engine.Configuration" />
+		<field name="EDIT_MIN" class="com.swabunga.spell.engine.Configuration" />
+		<field name="EDIT_MAX" class="com.swabunga.spell.engine.Configuration" />
+		<field name="SPELL_THRESHOLD" class="com.swabunga.spell.engine.Configuration" />
+		<field name="SPELL_IGNOREUPPERCASE" class="com.swabunga.spell.engine.Configuration" />
+		<field name="SPELL_IGNOREMIXEDCASE" class="com.swabunga.spell.engine.Configuration" />
+		<field name="SPELL_IGNOREINTERNETADDRESSES" class="com.swabunga.spell.engine.Configuration" />
+		<field name="SPELL_IGNOREDIGITWORDS" class="com.swabunga.spell.engine.Configuration" />
+		<field name="SPELL_IGNOREMULTIPLEWORDS" class="com.swabunga.spell.engine.Configuration" />
+		<field name="SPELL_IGNORESENTANCECAPITALIZATION" class="com.swabunga.spell.engine.Configuration" />
+		<field name="STARTMULTI" class="com.swabunga.spell.engine.GenericTransformator" />
+		<field name="ENDMULTI" class="com.swabunga.spell.engine.GenericTransformator" />
+		<field name="INITIAL_CAPACITY" class="com.swabunga.spell.engine.SpellDictionary" />
+		<field name="IGNORE" class="com.swabunga.spell.event.SpellCheckEvent" />
+		<field name="IGNOREALL" class="com.swabunga.spell.event.SpellCheckEvent" />
+		<field name="REPLACE" class="com.swabunga.spell.event.SpellCheckEvent" />
+		<field name="REPLACEALL" class="com.swabunga.spell.event.SpellCheckEvent" />
+		<field name="ADDTODICT" class="com.swabunga.spell.event.SpellCheckEvent" />
+		<field name="CANCEL" class="com.swabunga.spell.event.SpellCheckEvent" />
+		<field name="INITIAL" class="com.swabunga.spell.event.SpellCheckEvent" />
+		<field name="SPELLCHECK_OK" class="com.swabunga.spell.event.SpellChecker" />
+		<field name="SPELLCHECK_CANCEL" class="com.swabunga.spell.event.SpellChecker" />
+		<field name="IGNORE_CMD" class="com.swabunga.spell.swing.JSpellForm" />
+		<field name="IGNOREALL_CMD" class="com.swabunga.spell.swing.JSpellForm" />
+		<field name="ADD_CMD" class="com.swabunga.spell.swing.JSpellForm" />
+		<field name="REPLACE_CMD" class="com.swabunga.spell.swing.JSpellForm" />
+		<field name="REPLACEALL_CMD" class="com.swabunga.spell.swing.JSpellForm" />
+		<field name="CANCEL_CMD" class="com.swabunga.spell.swing.JSpellForm" />
+		<field name="SUGGESTIONS_RES" class="com.swabunga.spell.swing.JSpellForm" />
+		<field name="INVALIDWORD_RES" class="com.swabunga.spell.swing.JSpellForm" />
 		<field name="serialVersionUID" class="com.toedter.calendar.JCalendar" />
 		<field name="serialVersionUID" class="com.toedter.calendar.JDateChooser$1" />
 		<field name="serialVersionUID" class="com.toedter.calendar.JDateChooser$2" />
@@ -32980,10 +33553,10 @@
 	</removed-code>
 	<removed-resources>
 	</removed-resources>
-<!-- 	shrinked C:\Perso\Tourma\store\TourMa.jar BY 10,93 %. -->
-<!-- 	size before: 10942 KB, size after: 9745 KB. -->
-<!-- 	removed 104 classes, 888 methods, 4562 fields, 0 resources. -->
-<!-- 	4049 classes remaining of 4153 total. -->
+<!-- 	shrinked C:\Perso\Tourma\store\TourMa.jar BY 10,88 %. -->
+<!-- 	size before: 11335 KB, size after: 10101 KB. -->
+<!-- 	removed 104 classes, 891 methods, 4745 fields, 0 resources. -->
+<!-- 	4122 classes remaining of 4226 total. -->
 </inOutPair>
 <!-- WARNING:Not all dependencies could be resolved. Please see the logfile for details. -->
 </yshrink>

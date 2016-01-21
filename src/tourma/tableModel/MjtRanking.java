@@ -102,7 +102,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     public static int getCoachTablePoints(final Coach c, final CoachMatch m) {
         for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
             Round r = Tournament.getTournament().getRound(i);
-            if (r.containsMatch(m)) {
+            if (r.containsCoachMatch(m)) {
                 // No point for first round
                 if (i == 0) {
                     return 0;

@@ -27,6 +27,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -64,7 +65,8 @@ public final class JFullScreenMatchs extends JFullScreen {
 
     public JFullScreenMatchs(Socket s) throws IOException {
         this(s,false);
-        
+        this.setState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     public JFullScreenMatchs(Socket s, boolean clash) throws IOException {
@@ -73,6 +75,8 @@ public final class JFullScreenMatchs extends JFullScreen {
         loopStop = false;
         this.clash = clash;
         semStart.release();
+        this.setState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
         @Override
@@ -472,6 +476,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             buildPanel(r);
         }
         //this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     private Font getCoachMatchFont(CoachMatch cm, Competitor comp, Font winner, Font looser, Font draw, Font def) {
@@ -806,7 +811,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                 p.add(icon, BorderLayout.NORTH);
             }
 
-            if (t.getClan() != null) {
+            if ((t.getClan() != null)&&(!t.getClan().getName().equals(Translate.translate(Translate.CS_None)))) {
                 JLabel icon = new JLabel();
                 icon.setBackground(Color.WHITE);
                 if (Tournament.getTournament().getParams().isUseImage()) {

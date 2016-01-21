@@ -10,7 +10,10 @@
  */
 package tourma;
 
+import com.bric.swing.ColorPicker;
+import com.hexidec.ekit.EkitCore;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -27,20 +30,21 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import net.java.dev.colorchooser.ColorChooser;
+import org.jfree.ui.tabbedui.VerticalLayout;
 import teamma.data.LRB;
 import teamma.views.JdgRoster;
 import tourma.data.Coach;
@@ -120,7 +124,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 Tournament.getTournament().loadXML(jfc.getSelectedFile());
             }
             File f = jfc.getSelectedFile();
-            currentPath = f.getAbsolutePath();
+            if (f!=null)
+            {
+                currentPath = f.getAbsolutePath();
+            }
 
         }
 
@@ -297,6 +304,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiSubstitutePlayer = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
         jcxmiAsServer = new javax.swing.JCheckBoxMenuItem();
+        jmiEditColors = new javax.swing.JMenuItem();
         jmiEditWebPort = new javax.swing.JMenuItem();
         jmiEditDescription = new javax.swing.JMenuItem();
         jcxmiRemoteEdit = new javax.swing.JCheckBoxMenuItem();
@@ -539,6 +547,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jcxmiAsServer);
+
+        jmiEditColors.setText(bundle.getString("WebColors")); // NOI18N
+        jmiEditColors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditColorsActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiEditColors);
 
         jmiEditWebPort.setText(bundle.getString("EditWebPort")); // NOI18N
         jmiEditWebPort.addActionListener(new java.awt.event.ActionListener() {
@@ -1566,14 +1582,35 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiSubstitutePlayerActionPerformed
 
     private void jmiEditDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditDescriptionActionPerformed
-        JTextArea jta = new JTextArea(40, 80);
-        jta.setText(Tournament.getTournament().getDescription());
+        /*JTextArea jta = new JTextArea(40, 80);
+         jta.setText(Tournament.getTournament().getDescription());
+         */
 
-        JScrollPane jsp = new JScrollPane(jta);
+        EkitCore editor = new EkitCore();
+   
+        
+         editor.setSize(320, 320);
+         editor.setMinimumSize(new Dimension(320,320));
+         editor.setPreferredSize(new Dimension(320,300));
+       
+         
+         
+       JPanel jsp = 
+               new JPanel(new VerticalLayout());
+        //jsp.add(editor.getToolBarMain(true));
+       jsp.add(editor.getMenuBar());
+        jsp.add(editor.getToolBarFormat(true));
+        jsp.add(editor.getToolBarStyles(true));
+        jsp.add(editor.getToolBarMain(true));
+        
+        jsp.add(editor);
+        
 
+        editor.setDocumentText(Tournament.getTournament().getDescription());
+
+        //JScrollPane jsp = new JScrollPane(html);
         JOptionPane.showInputDialog(this, jsp);
-        Tournament.getTournament().setDescription(jta.getText());
-
+        Tournament.getTournament().setDescription(editor.getDocumentText());
     }//GEN-LAST:event_jmiEditDescriptionActionPerformed
 
     private void jmiDelRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelRoundActionPerformed
@@ -1724,6 +1761,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 if (jcxClash.isSelected()) {
                     try {
                         JFullScreen fs = new JFullScreenMatchs(Tournament.getTournament().getRound(round_number + 1), true);
+                        fs.setVisible(true);
                     } catch (IOException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -2485,6 +2523,42 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         Tournament.getTournament().getParams().setWebEdit(jcxmiRemoteEdit.isSelected());
     }//GEN-LAST:event_jcxmiRemoteEditActionPerformed
 
+    private void jmiEditColorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditColorsActionPerformed
+        
+        ColorChooser jccColor1=new ColorChooser();
+        jccColor1.setColor(Tournament.getTournament().getParams().getColor1());
+        ColorChooser jccColor2=new ColorChooser();
+        jccColor2.setColor(Tournament.getTournament().getParams().getColor2());
+        ColorChooser jccBorderColor=new ColorChooser();
+        jccBorderColor.setColor(Tournament.getTournament().getParams().getBorderColor());
+        ColorChooser jccForeColor=new ColorChooser();
+        jccForeColor.setColor(Tournament.getTournament().getParams().getForeColor());
+        
+        JLabel jlbColor1=new JLabel("Couleur 1");
+        JLabel jlbColor2=new JLabel("Couleur 2");
+        JLabel jlbForeColor=new JLabel("Couleur Ecriture");
+        JLabel jlbBorderColor=new JLabel("Couleur Bordure");
+        
+        JPanel jpn=new JPanel(new GridLayout(4,2));
+        
+        jpn.add(jlbColor1);
+        jpn.add(jccColor1);
+        jpn.add(jlbColor2);
+        jpn.add(jccColor2);
+        jpn.add(jlbBorderColor);
+        jpn.add(jccBorderColor);
+        jpn.add(jlbForeColor);
+        jpn.add(jccForeColor);
+        
+        JOptionPane.showConfirmDialog(this, jpn,"Couleurs",JOptionPane.OK_OPTION);
+        
+        Tournament.getTournament().getParams().setColor1(jccColor1.getColor());
+        Tournament.getTournament().getParams().setColor2(jccColor2.getColor());
+        Tournament.getTournament().getParams().setBorderColor(jccBorderColor.getColor());
+        Tournament.getTournament().getParams().setForeColor(jccForeColor.getColor());
+        
+    }//GEN-LAST:event_jmiEditColorsActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -2806,6 +2880,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiDelFreeMatch;
     private javax.swing.JMenuItem jmiDelRound;
     private javax.swing.JMenuItem jmiEditCoef;
+    private javax.swing.JMenuItem jmiEditColors;
     private javax.swing.JMenuItem jmiEditDescription;
     private javax.swing.JMenuItem jmiEditTeam;
     private javax.swing.JMenuItem jmiEditWebPort;

@@ -67,6 +67,9 @@ public final class JdgAbout extends javax.swing.JDialog {
         jlbJDomC.setText(Version.getSingleton().getProperty(copyright.getString("JDOM_COPYRIGHT")));
         jlbJFreeChart.setText(Version.getSingleton().getProperty(copyright.getString("JFREECHART")));
         jlbJFreeChartC.setText(Version.getSingleton().getProperty(copyright.getString("JFREECHART_COPYRIGHT")));
+                jlbEkit.setText(Version.getSingleton().getProperty(copyright.getString("EKIT")));
+        jlbEkit1.setText(Version.getSingleton().getProperty(copyright.getString("EKIT_COPYRIGHT")));
+
     }
 
     /**
@@ -89,6 +92,8 @@ public final class JdgAbout extends javax.swing.JDialog {
         jlbJCommonC = new javax.swing.JLabel();
         jlbJFreeChart = new javax.swing.JLabel();
         jlbJFreeChartC = new javax.swing.JLabel();
+        jlbEkit = new javax.swing.JLabel();
+        jlbEkit1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jlbNom = new javax.swing.JLabel();
@@ -156,6 +161,16 @@ public final class JdgAbout extends javax.swing.JDialog {
         jlbJFreeChartC.setText("JFreeChart"); // NOI18N
         jPanel2.add(jlbJFreeChartC);
 
+        jlbEkit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jlbEkit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbEkit.setText("Ekit"); // NOI18N
+        jPanel2.add(jlbEkit);
+
+        jlbEkit1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jlbEkit1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbEkit1.setText("Ekit\n"); // NOI18N
+        jPanel2.add(jlbEkit1);
+
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel3.setLayout(new java.awt.BorderLayout());
@@ -208,6 +223,8 @@ public final class JdgAbout extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel jlbDate;
+    private javax.swing.JLabel jlbEkit;
+    private javax.swing.JLabel jlbEkit1;
     private javax.swing.JLabel jlbFreeMarker;
     private javax.swing.JLabel jlbFreeMarkerC;
     private javax.swing.JLabel jlbJCommon;

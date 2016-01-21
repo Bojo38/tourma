@@ -17,12 +17,18 @@ import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Random;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -294,7 +300,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         
         if (coach.getPicture() == null) {
             try {
-                coach.setPicture(ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.gif")));
+                coach.setPicture(ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.png")));
             } catch (IOException ex) {
                 Logger.getLogger(JdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -776,64 +782,121 @@ public final class JdgCoach extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtDelActionPerformed
 
     private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
-        File folder;
-        folder = new File(getClass().getResource("/tourma/images/avatar").getFile());
-        File[] listOfFiles = folder.listFiles();
-        
-        Object[] objects = new Object[listOfFiles.length + 1];
-        
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                String path = listOfFiles[i].getAbsolutePath();
-                ImageIcon icon = new ImageIcon(path);
-                objects[i] = ImageTreatment.resize(icon, 80, 80);
-            } else if (listOfFiles[i].isDirectory()) {
-                LOG.log(Level.INFO, "{0} {1}",
-                        new Object[]{"DIRECTORY",
-                            listOfFiles[i].getName()});
+        try {
+            List<ImageIcon> listOfFiles = getImagesResources("/tourma/images/avatar");
+
+            Object[] objects = new Object[listOfFiles.size() + 1];
+            for (int i = 0; i < listOfFiles.size(); i++) {
+                if (listOfFiles.get(i) != null) {
+                    objects[i] = resize(listOfFiles.get(i), 80, 80);
+                }
             }
-        }
-        
-        ImageIcon empty = new ImageIcon();
-        objects[listOfFiles.length] = empty;
-        
-        JComboBox combo = new JComboBox(objects);
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel l = new JLabel(Translate.translate(CS_SelectPicture));
-        panel.add(l, BorderLayout.NORTH);
-        panel.add(combo, BorderLayout.CENTER);
-        
-        combo.setSelectedItem(empty);
-        
-        JOptionPane.showConfirmDialog(null, panel, null, JOptionPane.YES_OPTION);
-        
-        if (combo.getSelectedItem() == empty) {
-            final JFileChooser jfc = new JFileChooser();
-            final FileFilter filter1 = new ExtensionFileFilter(
-                    Translate.translate(CS_Picture),
-                    new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
-            jfc.setFileFilter(filter1);
-            if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
-                icon = ImageTreatment.resize(icon, 80, 80);
+
+            ImageIcon empty = new ImageIcon();
+            objects[listOfFiles.size()] = empty;
+
+            JComboBox combo = new JComboBox(objects);
+            JPanel panel = new JPanel(new BorderLayout());
+            JLabel l = new JLabel(("Select picture"));
+            panel.add(l, BorderLayout.NORTH);
+            panel.add(combo, BorderLayout.CENTER);
+
+            combo.setSelectedItem(empty);
+
+            JOptionPane.showConfirmDialog(null, panel, null, JOptionPane.YES_OPTION);
+
+            if (combo.getSelectedItem() == empty) {
+                final JFileChooser jfc = new JFileChooser();
+                final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Picture"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+                jfc.setFileFilter(filter1);
+                if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
+                    icon = ImageTreatment.resize(icon, 80, 80);
+                    this.mCoach.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
+                    Graphics g = this.mCoach.getPicture().createGraphics();
+                    // paint the Icon to the BufferedImage.
+                    icon.paintIcon(null, g, 0, 0);
+                    g.dispose();
+                }
+            } else {
+                ImageIcon icon = (ImageIcon) combo.getSelectedItem();
                 this.mCoach.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
                 Graphics g = this.mCoach.getPicture().createGraphics();
                 // paint the Icon to the BufferedImage.
                 icon.paintIcon(null, g, 0, 0);
                 g.dispose();
             }
-        } else {
-            ImageIcon icon = (ImageIcon) combo.getSelectedItem();
-            this.mCoach.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
-            Graphics g = this.mCoach.getPicture().createGraphics();
-            // paint the Icon to the BufferedImage.
-            icon.paintIcon(null, g, 0, 0);
-            g.dispose();
+
+            jbtAvatar.setIcon(new ImageIcon(mCoach.getPicture()));
+        } catch (IOException ex) {
+            LOG.log(Level.WARNING,ex.getLocalizedMessage());
         }
-        
-        jbtAvatar.setIcon(new ImageIcon(mCoach.getPicture()));
     }//GEN-LAST:event_jbtAvatarActionPerformed
     
+     public List<ImageIcon> getImagesResources(final String path) throws IOException {
+        final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        ArrayList<ImageIcon> list = new ArrayList<>();
+        final File jarFile = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+        if (jarFile == null) {
+            System.out.println("Jarfile is null: " + getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+        } else {
+            System.out.println("Open JAR File: " + getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+        }
+
+        if (jarFile.isFile()) {  // Run with JAR file
+            final JarFile jar = new JarFile(jarFile);
+            final Enumeration<JarEntry> entries = jar.entries(); //gives ALL entries in jar
+            while (entries.hasMoreElements()) {
+                final String name = entries.nextElement().getName();
+                //System.out.println("Open JAR File: "+name);
+                String pathToTest;
+                if (path.startsWith("/")) {
+                    pathToTest = path.subSequence(1, path.length()).toString();
+                } else {
+                    pathToTest = path;
+                }
+                // System.out.println("Tests "+name+" starts with "+pathToTest);
+                if (name.startsWith(pathToTest + "/")) { //filter according to the path
+                    BufferedImage bi = ImageIO.read(getClass().getResource("/tourma/images/flags/Country France.png"));
+                    bi = ImageIO.read(getClass().getResource("/" + name));
+                    if (bi == null) {
+                        System.out.println("/" + name + " returns a null image");
+                    } else {
+                        ImageIcon ii = new ImageIcon(bi);
+                        list.add(ii);
+                    }
+                }
+            }
+            jar.close();
+        } else { // Run with IDE
+            try {
+                final URL url = getClass().getResource(path).toURI().toURL();
+                if (url != null) {
+                    try {
+                        final File apps = new File(url.toURI());
+                        for (File app : apps.listFiles()) {
+                            ImageIcon icon = new ImageIcon(app.getAbsolutePath());
+                            list.add(icon);
+                        }
+                    } catch (URISyntaxException ex) {
+                        // never happens
+                    }
+                }
+            } catch (URISyntaxException ex) {
+                LOG.log(Level.WARNING, ex.getLocalizedMessage());
+            }
+        }
+        return list;
+    }
+
+    private ImageIcon resize(ImageIcon image, int heigth, int width) {
+        Image img = image.getImage();
+        Image newimg = img.getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(newimg);
+    }
+
+            
+        
     private final static String CS_PleaseSelectCategory = "PleaseSelectCategory";
 
     private void jbtAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCategoryActionPerformed

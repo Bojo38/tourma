@@ -1,0 +1,196 @@
+==========================
+PARAM Tags
+==========================
+
+PARAM tags occur within APPLET tags in an HTML page.
+Some are standard HTML, and some are custom tags recognized only by Ekit.
+
+
+PARAM Tag Structure
+--------------------------
+
+PARAM tags are constructed like so:
+
+    <PARAM NAME="pname" VALUE="pvalue">
+
+pname is the name of the parameter the tage represents.
+pvalue is the value of that parameter.
+
+For example, every APPLET tag has a paramter named "CODE",
+the value of which is the class file of the applet itself.
+For Ekit, this PARAM tag normally looks like this:
+
+    <PARAM NAME="CODE" VALUE="com.hexidec.ekit.EkitApplet.class">
+
+
+Standard PARAM Tags
+--------------------------
+
+CODEBASE - Directory or URL of the applet class.
+
+    <PARAM NAME="CODEBASE" VALUE=".">
+
+CODE - Applet class file.
+
+    <PARAM NAME="CODE" VALUE="com.hexidec.ekit.EkitApplet.class">
+
+ARCHIVE - Applet jar file.
+
+    <PARAM NAME="ARCHIVE" VALUE="ekitapplet.jar">
+
+NAME - Name of applet.
+
+    <PARAM NAME="NAME" VALUE="Ekit">
+
+TYPE - Java class type.
+
+    <PARAM NAME="TYPE" VALUE="application/x-java-applet;version=1.4">
+
+MAYSCRIPT - Whether the applet may access JavaScript.
+
+    <PARAM NAME="MAYSCRIPT" VALUE="true">
+
+SCRIPTABLE - Whether JavaScript may access the applet.
+
+    <PARAM NAME="SCRIPTABLE" VALUE="true">
+
+
+Ekit PARAM Tags
+--------------------------
+
+DOCUMENT - The HTML document to preload into Ekit.
+           Document is either in HTML or Base64 format.
+
+    <PARAM NAME="DOCUMENT" VALUE="<HTML><HEAD>...">
+
+BASE64 - Whether or not the DOCUMENT is Base64 encoded.
+
+    <PARAM NAME="BASE64" VALUE="false">
+
+STYLESHEET - CSS style sheet to preload into Ekit.
+
+    <PARAM NAME="STYLESHEET" VALUE="ekit.css">
+
+LANGCODE - Base language encoding to use in Ekit.
+
+    <PARAM NAME="LANGCODE" VALUE="en">
+
+LANGCOUNTRY - Local language encoding to use in Ekit.
+
+    <PARAM NAME="LANGCOUNTRY" VALUE="US">
+
+note: LANGCODE and LANGCOUNTRY combine to form the standard Unicode language
+      encoding descriptor. In the example above, the resulting language code
+      is "en_US", or American English.
+
+TOOLBAR - Whether or not to show the toolbar(s).
+
+    <PARAM NAME="TOOLBAR" VALUE="true">
+
+TOOLBARMULTI - Whether or not to use multiple "themed" toolbars.
+
+    <PARAM NAME="TOOLBARMULTI" VALUE="true">
+
+TOOLBARSEQ - A series of code keys that describe the tool buttons to show on
+             the toolbars. See the "Toolbar Sequence" section below for
+             more information.
+
+    <PARAM NAME="TOOLBARSEQ" VALUE="NW|OP|SV|...">
+
+SOURCEVIEW - Whether or not to start the applet is Source View/Edit mode.
+
+    <PARAM NAME="SOURCEVIEW" VALUE="false">
+
+EXCLUSIVE - Whether or not to use "exclusive" mode.
+            This mode, when active, only allows the Document or Source window
+            to be visible at once. Otherwise, the two may be shown together.
+            Exlcusive mode is much faster, as the applet does not have to
+            maintain document state simultaneously in two visible windows.
+
+    <PARAM NAME="EXCLUSIVE" VALUE="true">
+
+SPELLCHECK - Whether or not to load spellchecker.
+             It is recommended you don't load this unless you need it, as it
+             can slow the applet down, take up much more memory, and may
+             cause problems on some systems.
+
+    <PARAM NAME="SPELLCHECK" VALUE="true">
+
+MENUICONS - Whether or not to show icons on menus.
+
+    <PARAM NAME="MENUICONS" VALUE="true">
+
+MENU_* - Whether or not to show specific menus.
+         The example below shows all the currently defined menu choices.
+
+    <PARAM NAME="MENU_EDIT" VALUE="true">
+    <PARAM NAME="MENU_VIEW" VALUE="true">
+    <PARAM NAME="MENU_FONT" VALUE="true">
+    <PARAM NAME="MENU_FORMAT" VALUE="true">
+    <PARAM NAME="MENU_INSERT" VALUE="true">
+    <PARAM NAME="MENU_TABLE" VALUE="true">
+    <PARAM NAME="MENU_FORMS" VALUE="true">
+    <PARAM NAME="MENU_SEARCH" VALUE="true">
+    <PARAM NAME="MENU_TOOLS" VALUE="true">
+    <PARAM NAME="MENU_HELP" VALUE="true">
+
+ENTERBREAK - Whether the ENTER key inserts a <P> tag (default) or <BR> tag
+
+	<PARAM NAME="ENTERBREAK" VALUE="true">
+
+
+Toolbar Sequence
+--------------------------
+
+You can customize what tools appear on the toolbar(s) by specifying a 
+toolbar sequence string and assigning it to the TOOLBARSEQ PARAM tag.
+
+The toolbar sequence is a series of two-letter "keys" that signify the tool,
+separated by the | (pipe) character. Whole toolbars are separated by the
+* (asterisk) character.
+
+Here are the keys for the tools available in the current release of Ekit:
+
+    AC = Align Center
+    AJ = Align Justified
+    AL = Align Left
+    AR = Align Right
+    BL = Bold
+    CP = Copy
+    CT = Cut
+    FN = Find
+    FO = Font Selector
+    LK = Hyperlink Insertion
+    IT = Italic
+    NW = New
+    OP = Open
+    OL = Ordered List
+    PS = Paste
+    PX = Paste Unformatted
+    RE = Redo
+    SV = Save
+    SR = Show/Hide Source
+    SK = Strikethrough
+    ST = Styles Selector
+    SB = Subscript
+    SU = Superscript
+    UD = Underline
+    UN = Undo
+    UL = Unordered List
+    UC = Unicode Insertion
+    UM = Unicode Math Insertion
+    SP = (separator)
+
+Here is an example toolbar sequence:
+
+    NW|OP|SV|SP|CT|CP|PS|*|ST|FO
+
+This sequence will create two toolbars. The first will have the New (NW),
+Open (OP), and Save (SV) tools, then a separator (SP), and then the Cut (CT),
+Copy (CP), and Paste (PS) tools. Then a new toolbar is started, as signified
+by the * character. The second toolbar will have the Styles (ST) and Font (FO)
+selectors.
+
+Up to three distinct toolbars can be created this way. However, if the multiple
+toolbar PARAM tag (TOOLBARMULTI) is set to "false", all the tools will be added
+to a single toolbar, and all * characters will be ignored in the sequence.
