@@ -231,6 +231,14 @@ public class Tournament implements IContainCoachs {
      * @param c
      */
     public void removeCategory(Category c) {
+
+        for (Coach coach : mCoachs) {
+            coach.delCategory(c);
+        }
+        for (Team team : mTeams) {
+            team.delCategory(c);
+        }
+
         mCategories.remove(c);
     }
 
@@ -239,7 +247,9 @@ public class Tournament implements IContainCoachs {
      * @param c
      */
     public void removeCategory(int c) {
-        mCategories.remove(c);
+
+        removeCategory(mCategories.get(c));
+
     }
 
     /**
