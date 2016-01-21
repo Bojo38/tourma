@@ -567,12 +567,13 @@ public class Parameters implements XMLExport {
         params.setAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_INDIV, Boolean.toString(this.isExceptBestAndWorstIndiv()));
         params.setAttribute(StringConstants.CS_EXCEPT_BEST_AND_WORST_TEAM, Boolean.toString(this.isExceptBestAndWorstTeam()));
 
+        params.setAttribute(StringConstants.CS_WEBEDIT, Boolean.toString(mWebEdit));
         params.setAttribute(StringConstants.CS_WEB_PORT, Integer.toString(_webport));
-        
-         params.setAttribute(StringConstants.CS_WEB_COLOR1, Integer.toString(mColor1.getRGB()));
-          params.setAttribute(StringConstants.CS_WEB_COLOR2, Integer.toString(mColor2.getRGB()));
-           params.setAttribute(StringConstants.CS_WEB_FORECOLOR, Integer.toString(mForeColor.getRGB()));
-            params.setAttribute(StringConstants.CS_WEB_BORDERCOLOR, Integer.toString(mBorderColor.getRGB()));
+
+        params.setAttribute(StringConstants.CS_WEB_COLOR1, Integer.toString(mColor1.getRGB()));
+        params.setAttribute(StringConstants.CS_WEB_COLOR2, Integer.toString(mColor2.getRGB()));
+        params.setAttribute(StringConstants.CS_WEB_FORECOLOR, Integer.toString(mForeColor.getRGB()));
+        params.setAttribute(StringConstants.CS_WEB_BORDERCOLOR, Integer.toString(mBorderColor.getRGB()));
 
         return params;
     }
@@ -756,12 +757,12 @@ public class Parameters implements XMLExport {
         try {
             this.setWebEdit(params.getAttribute(StringConstants.CS_WEBEDIT).getBooleanValue());
             this._webport = Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_PORT).getValue());
-            
-            this.mColor1=new Color(Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_COLOR1).getValue()));
-            this.mColor2=new Color(Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_COLOR2).getValue()));
-            this.mForeColor=new Color(Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_FORECOLOR).getValue()));
-            this.mBorderColor=new Color(Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_BORDERCOLOR).getValue()));
-            
+
+            this.mColor1 = new Color(Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_COLOR1).getValue()));
+            this.mColor2 = new Color(Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_COLOR2).getValue()));
+            this.mForeColor = new Color(Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_FORECOLOR).getValue()));
+            this.mBorderColor = new Color(Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_BORDERCOLOR).getValue()));
+
         } catch (NullPointerException npe5) {
             this._webport = 80;
         } catch (DataConversionException dce) {
@@ -1738,10 +1739,10 @@ public class Parameters implements XMLExport {
 
     protected boolean mWebEdit = false;
 
-    protected Color mColor1=new Color(153, 153, 153);
-    protected Color mColor2=new Color(187, 187, 187);
-    protected Color mBorderColor=new Color(51, 51, 51);
-    protected Color mForeColor=new Color(255, 255, 255);
+    protected Color mColor1 = new Color(153, 153, 153);
+    protected Color mColor2 = new Color(187, 187, 187);
+    protected Color mBorderColor = new Color(51, 51, 51);
+    protected Color mForeColor = new Color(255, 255, 255);
 
     public void setWebEdit(boolean WebEdit) {
         mWebEdit = WebEdit;
@@ -1751,52 +1752,52 @@ public class Parameters implements XMLExport {
         return mWebEdit;
     }
 
-     public String getStringColor1() {
+    public String getStringColor1() {
 
-        return String.format("%02X",mColor1.getRed())+String.format("%02X",mColor1.getGreen())+String.format("%02X",mColor1.getBlue());
+        return String.format("%02X", mColor1.getRed()) + String.format("%02X", mColor1.getGreen()) + String.format("%02X", mColor1.getBlue());
     }
-    
+
     public String getStringColor2() {
-        return String.format("%02X",mColor2.getRed())+String.format("%02X",mColor2.getGreen())+String.format("%02X",mColor2.getBlue());
+        return String.format("%02X", mColor2.getRed()) + String.format("%02X", mColor2.getGreen()) + String.format("%02X", mColor2.getBlue());
     }
-    
+
     public String getStringBorderColor() {
-       return String.format("%02X", mBorderColor.getRed())+String.format("%02X",mBorderColor.getGreen())+String.format("%02X",mBorderColor.getBlue());
+        return String.format("%02X", mBorderColor.getRed()) + String.format("%02X", mBorderColor.getGreen()) + String.format("%02X", mBorderColor.getBlue());
     }
-        
+
     public String getStringForeColor() {
-        return String.format("%02X",mForeColor.getRed())+String.format("%02X",mForeColor.getGreen())+String.format("%02X",mForeColor.getBlue());
+        return String.format("%02X", mForeColor.getRed()) + String.format("%02X", mForeColor.getGreen()) + String.format("%02X", mForeColor.getBlue());
     }
-    
+
     public Color getColor1() {
         return mColor1;
     }
-    
+
     public Color getColor2() {
         return mColor2;
     }
-    
+
     public Color getBorderColor() {
         return mBorderColor;
     }
-        
+
     public Color getForeColor() {
         return mForeColor;
     }
-    
+
     public void setColor1(Color c) {
-        mColor1=c;
+        mColor1 = c;
     }
-    
+
     public void setColor2(Color c) {
-        mColor2=c;
+        mColor2 = c;
     }
-    
+
     public void setBorderColor(Color c) {
-        mBorderColor=c;
+        mBorderColor = c;
     }
-        
+
     public void setForeColor(Color c) {
-        mForeColor=c;
+        mForeColor = c;
     }
 }
