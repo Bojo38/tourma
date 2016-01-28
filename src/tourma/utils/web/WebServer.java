@@ -8,6 +8,7 @@ package tourma.utils.web;
 import fi.iki.elonen.NanoHTTPD;
 import java.awt.Color;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainTreeModel;
@@ -26,6 +27,20 @@ public class WebServer extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
+        
+        
+        Map<String, String> files = new HashMap<String, String>();
+        Method method = session.getMethod();
+        if (Method.PUT.equals(method) || Method.POST.equals(method)) {
+            try {
+                session.parseBody(files);
+            } catch (IOException ioe) {
+                return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, "SERVER INTERNAL ERROR: IOException: " + ioe.getMessage());
+            } catch (ResponseException re) {
+                return newFixedLengthResponse(re.getStatus(), NanoHTTPD.MIME_PLAINTEXT, re.getMessage());
+            }
+        }
+        
         StringBuilder msg = new StringBuilder();
         msg.append("<html><header><title>").append(Tournament.getTournament().getParams().getTournamentName()).append("</title>");
         msg.append("<script  type=\"text/javascript\">");

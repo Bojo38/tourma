@@ -32,7 +32,7 @@ public class WebMatchResult {
         Round r = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
 
         sb.append("<center>");
-        sb.append("<form action=\"/enter_match_result\">");
+        sb.append("<form action=\"/enter_match_result\" method=\"POST\">");
         sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_SelectYourName)) + ": " + "<select name=\"name\" size=\"1\" >");
         for (CoachMatch cm : r.getCoachMatchs()) {
             sb.append("<option value=\""+cm.getCompetitor1().getName()+"\">" +  StringEscapeUtils.escapeHtml4(cm.getCompetitor1().getName()) + "</option>");
@@ -92,34 +92,38 @@ public class WebMatchResult {
                 // Display Match Form
 
                 sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round)) + " " + (Tournament.getTournament().getRoundIndex(r) + 1));
-                sb.append("<form action=\"/test_match_result\">");
+                sb.append("<form action=\"/test_match_result\" method=\"POST\">");
                 sb.append("<table>");
                 if (coach == coachmatch.getCompetitor1()) {
                     sb.append("<th>");
-                    sb.append("<td>");
+                    sb.append("<td class=\"tab_titre\">");
                     sb.append("<input type=\"hidden\" readonly=\"readonly\"  name=\"competitor1\" value=\"" + coachmatch.getCompetitor1().getName() + "\" />");
-                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display1\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "\" />");                    
+                    //sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display1\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "\" /><br>");                    
+                    sb.append(StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "<br>");
                     sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_PIN_CODE) + ": "));
                     sb.append("<input type=\"password\" readonly=\"readonly\" name=\"pincode1\" value=\"" + pinCode + "\" />");
                     sb.append("</td>");
-                    sb.append("<td>");
+                    sb.append("<td class=\"tab_titre\">");
                     sb.append("<input type=\"hidden\" readonly=\"readonly\" name=\"competitor2\" value=\"" + coachmatch.getCompetitor2().getName() + "\" />");
-                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display2\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "\" />");
+                    //sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display2\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "\" /><br>");
+                    sb.append(StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName())+"<br>");
                     sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_PIN_CODE) + ": "));
                     sb.append("<input type=\"password\" name=\"pincode2\" />");
                     sb.append("</td>");
                     sb.append("</th>");
                 } else {
                     sb.append("<th>");
-                    sb.append("<td>");
+                    sb.append("<td  class=\"tab_titre\">");
                     sb.append("<input type=\"hidden\" readonly=\"readonly\"  name=\"competitor1\" value=\"" + coachmatch.getCompetitor1().getName() + "\" />");
-                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display1\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "\" />");
+                    //sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display1\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "\" />");
+                    sb.append(StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor1().getName()) + "<br>");
                     sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_PIN_CODE) + ": "));
                     sb.append("<input type=\"password\" name=\"pincode1\" />");
                     sb.append("</td>");
-                    sb.append("<td>");
+                    sb.append("<td  class=\"tab_titre\">");
                     sb.append("<input type=\"hidden\" readonly=\"readonly\" name=\"competitor2\" value=\"" + coachmatch.getCompetitor2().getName() + "\" />");
-                    sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display2\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "\" />");
+                    //sb.append("<input type=\"text\" readonly=\"readonly\" name=\"display2\" value=\"" + StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "\" />");
+                    sb.append(StringEscapeUtils.escapeHtml4(coachmatch.getCompetitor2().getName()) + "<br>");
                     sb.append(StringEscapeUtils.escapeHtml4(Translate.translate(CS_PIN_CODE) + ": "));
                     sb.append("<input type=\"password\" readonly=\"readonly\" name=\"pincode2\" value=\"" + pinCode + "\" />");
                     sb.append("</td>");
@@ -128,10 +132,10 @@ public class WebMatchResult {
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                     Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
                     sb.append("<tr>");
-                    sb.append("<td>" + StringEscapeUtils.escapeHtml4(crit.getName()) + "</td>");
+                    sb.append("<td  class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(crit.getName()) + "</td>");
 
-                    sb.append("<td><input type=\"number\" name=\"" + StringEscapeUtils.escapeHtml4(crit.getName()) + "1\"/></td>");
-                    sb.append("<td><input type=\"number\" name=\"" + StringEscapeUtils.escapeHtml4(crit.getName()) + "2\"/></td>");
+                    sb.append("<td  class=\"tab_result\"><input type=\"number\" name=\"" + StringEscapeUtils.escapeHtml4(crit.getName()) + "1\"/></td>");
+                    sb.append("<td  class=\"tab_result\"><input type=\"number\" name=\"" + StringEscapeUtils.escapeHtml4(crit.getName()) + "2\"/></td>");
                     sb.append("</tr>");
                 }
                 sb.append("</table>");
