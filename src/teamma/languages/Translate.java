@@ -27,7 +27,7 @@ public class Translate {
         }
         catch(Exception e)
         {
-            tmp=key;
+            tmp="?"+key;
         }
         return tmp;
     }
