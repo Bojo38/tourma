@@ -57,7 +57,7 @@ public class Group implements XMLExport {
         for (int j = 0; j < this.getRosterCount(); j++) {
             final Element roster = new Element(StringConstants.CS_ROSTER);
             if (this.getRoster(j) != null)  {
-                if (this.getRoster(j).getName() != null) {
+                if (this.getRoster(j).getName() == null) {
                     this.getRoster(j).setName("Unknown");
                 }
                 roster.setAttribute(StringConstants.CS_NAME, this.getRoster(j).getName());
