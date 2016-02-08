@@ -1179,7 +1179,9 @@ public class Tournament implements IContainCoachs {
                             }
                             writer.println(("<PLAYERRECORD>"));
                             writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{p.getName()}));
-                            writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{p.getNaf()}));
+                            String nafID=Integer.toString(p.getNaf());
+                            nafID=nafID.replace(" ", "");
+                            writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), nafID));
                             writer.println(java.text.MessageFormat.format(("<TEAMRATING>{0}</TEAMRATING>"), new Object[]{p.getRank()}));
                             writer.println(java.text.MessageFormat.format(("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[]{m.getValue(critTd).getValue1()}));
                             writer.println(java.text.MessageFormat.format(("<BADLYHURT>{0}</BADLYHURT>"), new Object[]{m.getValue(critInj).getValue1()}));
@@ -1197,7 +1199,9 @@ public class Tournament implements IContainCoachs {
                             }
                             writer.println(("<PLAYERRECORD>"));
                             writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{p.getName()}));
-                            writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{p.getNaf()}));
+                            nafID=Integer.toString(p.getNaf());
+                            nafID=nafID.replace(" ", "");
+                            writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), nafID));
                             writer.println(java.text.MessageFormat.format(("<TEAMRATING>{0}</TEAMRATING>"), new Object[]{p.getRank()}));
                             writer.println(java.text.MessageFormat.format(("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[]{m.getValue(critTd).getValue2()}));
                             writer.println(java.text.MessageFormat.format(("<BADLYHURT>{0}</BADLYHURT>"), new Object[]{m.getValue(critInj).getValue2()}));
