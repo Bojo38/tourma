@@ -753,8 +753,6 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         boolean balanced = true;
         ArrayList<Team> teams = new ArrayList<>();
 
-        //System.out.println("Testing "+this.getName()+" vs "+opp.getName());
-        
         if (this == opp) {
             return false;
         }
@@ -767,24 +765,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                 teams.add(team);
             }
         }
-        /*for (int i = 0; i < round.getMatchsCount(); i++) {
-            Match mMatch = round.getMatch(i);
-            if (mMatch instanceof CoachMatch) {
-                CoachMatch m = (CoachMatch) mMatch;
-                Coach c1 = (Coach) m.getCompetitor1();
-                Coach c2 = (Coach) m.getCompetitor2();
-                if (c1.getTeamMates() != this) {
-                    if (!teams.contains(c1.getTeamMates())) {
-                        teams.add(c1.getTeamMates());
-                    }
-                }
-                if (c2.getTeamMates() != this) {
-                    if (!teams.contains(c2.getTeamMates())) {
-                        teams.add(c2.getTeamMates());
-                    }
-                }
-            }
-        }*/
+        
 
         HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
 
@@ -806,12 +787,6 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         }
 
         int nb = hash.get(opp);
-
-        /*if (maximum==2)
-        {
-            System.out.println("");
-        }*/
-        
         
         it2 = hash.keySet().iterator();
         while (it2.hasNext()) {
@@ -819,10 +794,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             if (en2 instanceof Team) {
                 Team t2 = (Team) en2;
                 int nb2 = hash.get(t2);
-                //System.out.println(this.getName()+" vs "+t2.getName()+" "+nb2);
             }
         }
-        //System.out.println("");
         
         if ((maximum == nb) && (maximum - minimum > 1)) {
             balanced = false;
