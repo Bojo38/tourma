@@ -750,8 +750,8 @@ public final class Coach extends Competitor implements XMLExport {
         if ((tour.getParams().isTeamTournament())
                 && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
 
-            System.out.println(this.getName()+"("+this.getTeamMates().getName()+") vs "+opp.getName()+"("+opp.getTeamMates().getName()+")");
-            
+            System.out.println(this.getName() + "(" + this.getTeamMates().getName() + ") vs " + opp.getName() + "(" + opp.getTeamMates().getName() + ")");
+
             if (tour.getParams().isIndivPairingTeamBalanced()) {
                 balanced = this.getTeamMates().isBalanced(opp.getTeamMates(), round);
             }
@@ -903,7 +903,7 @@ public final class Coach extends Competitor implements XMLExport {
                 }
             }
         }
-        
+
         // Same team
         /*if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
             if (Opponent.getTeamMates() != Team.getNullTeam()) {
@@ -1006,7 +1006,6 @@ public final class Coach extends Competitor implements XMLExport {
                 }
             }
         }*/
-
         return canMatch;
     }
 
@@ -1022,7 +1021,7 @@ public final class Coach extends Competitor implements XMLExport {
         Tournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();
 
-        int balancingTries = 100;
+        int balancingTries = 500;
         int triesThreshold = 10;
         boolean totallyBalanced = false;
         while ((!totallyBalanced) && (balancingTries > 0)) {
@@ -1067,13 +1066,13 @@ public final class Coach extends Competitor implements XMLExport {
                     while (k >= 0) {
                         //for (int k = i - 1; k >= 0; k--) {
 
-                        Match m1=round.getMatch(i);
-                        Match m2=round.getMatch(k);
-                        
+                        Match m1 = round.getMatch(i);
+                        Match m2 = round.getMatch(k);
+
                         // Get previous match opponent
                         Coach c1_tmp = (Coach) m2.getCompetitor1();
                         Coach c2_tmp = (Coach) m2.getCompetitor2();
-                        
+
                         c1 = (Coach) m1.getCompetitor1();
                         c2 = (Coach) m1.getCompetitor2();
 
@@ -1085,14 +1084,11 @@ public final class Coach extends Competitor implements XMLExport {
                             m1.setCompetitor2(c2_tmp);
                             m2.setCompetitor2(c2);
 
-                            if (!isBalanced(c2_tmp, round)||!c1_tmp.isBalanced(c2, round))
-                            {
+                            if (!isBalanced(c2_tmp, round) || !c1_tmp.isBalanced(c2, round)) {
                                 m1.setCompetitor2(c2);
                                 m2.setCompetitor2(c2_tmp);
-                                canMatch=false;
-                            }
-                            else
-                            { 
+                                canMatch = false;
+                            } else {
                                 System.err.println("Swap done");
                                 break;
                             }
@@ -1105,13 +1101,10 @@ public final class Coach extends Competitor implements XMLExport {
                                 m1.setCompetitor2(c1_tmp);
                                 m2.setCompetitor1(c2);
 
-                                if (!isBalanced(c1_tmp, round)||!c2_tmp.isBalanced(c2, round))
-                                {
+                                if (!isBalanced(c1_tmp, round) || !c2_tmp.isBalanced(c2, round)) {
                                     m1.setCompetitor2(c2);
                                     m2.setCompetitor1(c1_tmp);
-                                }
-                                else
-                                {     
+                                } else {
                                     System.err.println("Swap done");
                                     break;
                                 }
@@ -1147,22 +1140,23 @@ public final class Coach extends Competitor implements XMLExport {
                 }
             }
 
-            totallyBalanced=true;
+            totallyBalanced = true;
             for (int i = round.getMatchsCount() - 1; i > 0; i--) {
                 Match current = round.getMatch(i);
                 Coach c1 = (Coach) current.getCompetitor1();
                 Coach c2 = (Coach) current.getCompetitor2();
                 boolean have_played = c1.havePlayed(c2);
                 boolean balanced = c1.isBalanced(c2, round);
-                
-                totallyBalanced&=(!have_played)&balanced;
-                
+
+                totallyBalanced &= (!have_played) & balanced;
+
                 if (!totallyBalanced)
-                {
+                {   
+                    System.err.println("Round not balanced: "+c1.getName()+"("+c1.getTeamMates()+") vs "+c1.getName()+"("+c1.getTeamMates()+")");
                     break;
                 }
             }
-            
+
             /*if ((tour.getParams().isTeamTournament())
                     && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
                 //Match cm = round.getMatch(0);
@@ -1190,14 +1184,18 @@ public final class Coach extends Competitor implements XMLExport {
                     }
                 } 
             }*/
-
             if ((!totallyBalanced)
                     && (balancingTries == 0)) {
-                
+
                 int answer = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), Translate.translate(CS_MESSAGE1), Translate.translate(CS_MESSAGE2), JOptionPane.YES_NO_OPTION);
                 if (answer == JOptionPane.YES_OPTION) {
                     balancingTries = 1000;
                 }
+            }
+            
+            if (!totallyBalanced)
+            {
+                System.out.println("")
             }
         }
     }

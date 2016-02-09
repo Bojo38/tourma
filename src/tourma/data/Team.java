@@ -672,8 +672,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         /// Add current Round
         if (current != null) {
             for (Coach coach : mCoachs) {
-                ArrayList<CoachMatch> matchs=current.getCoachMatchs();
-                for (CoachMatch m : matchs){
+                ArrayList<CoachMatch> matchs = current.getCoachMatchs();
+                for (CoachMatch m : matchs) {
                     Coach opp = null;
                     if (coach.getName().equals(m.getCompetitor1().getName())) {
                         opp = (Coach) m.getCompetitor2();
@@ -746,6 +746,88 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     @Override
     public void clearCoachs() {
         this.mCoachs.clear();
+    }
+
+    public boolean isBalanced(Team opp, Round round) {
+
+        boolean balanced = true;
+        ArrayList<Team> teams = new ArrayList<>();
+
+        //System.out.println("Testing "+this.getName()+" vs "+opp.getName());
+        
+        if (this == opp) {
+            return false;
+        }
+
+        for (int i=0; i<Tournament.getTournament().getTeamsCount(); i++)
+        {
+            Team team=Tournament.getTournament().getTeam(i);
+            if (team!=this)
+            {
+                teams.add(team);
+            }
+        }
+        /*for (int i = 0; i < round.getMatchsCount(); i++) {
+            Match mMatch = round.getMatch(i);
+            if (mMatch instanceof CoachMatch) {
+                CoachMatch m = (CoachMatch) mMatch;
+                Coach c1 = (Coach) m.getCompetitor1();
+                Coach c2 = (Coach) m.getCompetitor2();
+                if (c1.getTeamMates() != this) {
+                    if (!teams.contains(c1.getTeamMates())) {
+                        teams.add(c1.getTeamMates());
+                    }
+                }
+                if (c2.getTeamMates() != this) {
+                    if (!teams.contains(c2.getTeamMates())) {
+                        teams.add(c2.getTeamMates());
+                    }
+                }
+            }
+        }*/
+
+        HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
+
+        Iterator<Team> it2 = hash.keySet().iterator();
+        int minimum = 65535;
+        int maximum = 0;
+        while (it2.hasNext()) {
+            Competitor en2 = it2.next();
+            if (en2 instanceof Team) {
+                Team t2 = (Team) en2;
+                int nb2 = hash.get(t2);
+                if (nb2 < minimum) {
+                    minimum = nb2;
+                }
+                if (nb2 > maximum) {
+                    maximum = nb2;
+                }
+            }
+        }
+
+        int nb = hash.get(opp);
+
+        /*if (maximum==2)
+        {
+            System.out.println("");
+        }*/
+        
+        
+        it2 = hash.keySet().iterator();
+        while (it2.hasNext()) {
+            Competitor en2 = it2.next();
+            if (en2 instanceof Team) {
+                Team t2 = (Team) en2;
+                int nb2 = hash.get(t2);
+                //System.out.println(this.getName()+" vs "+t2.getName()+" "+nb2);
+            }
+        }
+        //System.out.println("");
+        
+        if ((maximum == nb) && (maximum - minimum > 1)) {
+            balanced = false;
+        }
+        return balanced;
     }
 
 }
