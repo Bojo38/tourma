@@ -337,8 +337,16 @@ public final class Generation {
                 for (int i = 0; i < r.getMatchsCount(); i++) {
                     final Match m = r.getMatch(i);
 
-                    //m.getCompetitor1().addMatch(m);
-                    //m.getCompetitor2().addMatch(m);
+                    Competitor c1=m.getCompetitor1();
+                    if (!c1.containsMatch(m))
+                    { c1.addMatch(m);
+                    
+                    }
+                    Competitor c2=m.getCompetitor2();
+                    if (!c2.containsMatch(m))
+                    { c2.addMatch(m);
+                    
+                    }
                     if (m instanceof TeamMatch) {
                         for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
                             CoachMatch cm = ((TeamMatch) m).getMatch(j);
@@ -560,8 +568,12 @@ public final class Generation {
             Competitor c = shuffle.get(0);
             shuffle.remove(c);
             ArrayList<Competitor> possible = c.getPossibleOpponents(shuffle, r);
+            Competitor opp=possible.get(0);
             c.addMatch(possible.get(0), r);
             shuffle.remove(possible.get(0));
+            
+            c.roundCheck(r);
+            opp.roundCheck(r);
         }
 
         tour.addRound(r);

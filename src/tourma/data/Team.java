@@ -672,8 +672,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         /// Add current Round
         if (current != null) {
             for (Coach coach : mCoachs) {
-                ArrayList<CoachMatch> matchs=current.getCoachMatchs();
-                for (CoachMatch m : matchs){
+                ArrayList<CoachMatch> matchs = current.getCoachMatchs();
+                for (CoachMatch m : matchs) {
                     Coach opp = null;
                     if (coach.getName().equals(m.getCompetitor1().getName())) {
                         opp = (Coach) m.getCompetitor2();
@@ -746,6 +746,61 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     @Override
     public void clearCoachs() {
         this.mCoachs.clear();
+    }
+
+    public boolean isBalanced(Team opp, Round round) {
+
+        boolean balanced = true;
+        ArrayList<Team> teams = new ArrayList<>();
+
+        if (this == opp) {
+            return false;
+        }
+
+        for (int i=0; i<Tournament.getTournament().getTeamsCount(); i++)
+        {
+            Team team=Tournament.getTournament().getTeam(i);
+            if (team!=this)
+            {
+                teams.add(team);
+            }
+        }
+        
+
+        HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
+
+        Iterator<Team> it2 = hash.keySet().iterator();
+        int minimum = 65535;
+        int maximum = 0;
+        while (it2.hasNext()) {
+            Competitor en2 = it2.next();
+            if (en2 instanceof Team) {
+                Team t2 = (Team) en2;
+                int nb2 = hash.get(t2);
+                if (nb2 < minimum) {
+                    minimum = nb2;
+                }
+                if (nb2 > maximum) {
+                    maximum = nb2;
+                }
+            }
+        }
+
+        int nb = hash.get(opp);
+        
+        it2 = hash.keySet().iterator();
+        while (it2.hasNext()) {
+            Competitor en2 = it2.next();
+            if (en2 instanceof Team) {
+                Team t2 = (Team) en2;
+                int nb2 = hash.get(t2);
+            }
+        }
+        
+        if ((maximum == nb) && (maximum - minimum > 1)) {
+            balanced = false;
+        }
+        return balanced;
     }
 
 }

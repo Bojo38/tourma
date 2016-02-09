@@ -287,10 +287,8 @@ public final class Coach extends Competitor implements XMLExport {
                         rosters.add(((CoachMatch) m).getRoster1());
                     } else {
                     }
-                } else {
-                    if (!rosters.contains(this.mRoster)) {
-                        rosters.add(this.getRoster());
-                    }
+                } else if (!rosters.contains(this.mRoster)) {
+                    rosters.add(this.getRoster());
                 }
             }
 
@@ -299,10 +297,8 @@ public final class Coach extends Competitor implements XMLExport {
                     if (!rosters.contains(((CoachMatch) m).getRoster2())) {
                         rosters.add(((CoachMatch) m).getRoster2());
                     }
-                } else {
-                    if (!rosters.contains(this.mRoster)) {
-                        rosters.add(this.getRoster());
-                    }
+                } else if (!rosters.contains(this.mRoster)) {
+                    rosters.add(this.getRoster());
                 }
             }
         }
@@ -396,9 +392,9 @@ public final class Coach extends Competitor implements XMLExport {
         try {
             this.setPinCode(Integer.parseInt(coach.getAttributeValue(StringConstants.CS_PINCODE)));
         } catch (NullPointerException npe) {
-            _PinCode=0;
+            _PinCode = 0;
         } catch (NumberFormatException npe) {
-            _PinCode=0;
+            _PinCode = 0;
         }
 
     }
@@ -501,6 +497,11 @@ public final class Coach extends Competitor implements XMLExport {
             }
 
             ArrayList<Team> oppteam = getPossibleTeams(r, null);
+
+            if (oppteam.isEmpty()) {
+                System.err.println("Empry possible opposing team");
+            }
+
             ArrayList<Competitor> balanced = new ArrayList<>(possible);
 
             // Keep only the players in possible list who are in team
@@ -509,9 +510,11 @@ public final class Coach extends Competitor implements XMLExport {
 
             if (params.isIndivPairingTeamBalanced()) {
                 for (Competitor buffer1 : buffer) {
-                    Coach c = (Coach) buffer1;
-                    if (!oppteam.contains(c.getTeamMates())) {
-                        balanced.remove(c);
+                    if (buffer1 instanceof Coach) {
+                        Coach c = (Coach) buffer1;
+                        if (!oppteam.contains(c.getTeamMates())) {
+                            balanced.remove(c);
+                        }
                     }
                 }
             }
@@ -534,6 +537,7 @@ public final class Coach extends Competitor implements XMLExport {
                     balanced = indivbalanced;
                 } else {
                     LOG.log(Level.FINER, LOG_INDIV_EMPTY);
+                    System.err.println(LOG_INDIV_EMPTY);
                 }
             }
 
@@ -541,6 +545,7 @@ public final class Coach extends Competitor implements XMLExport {
                 possible = balanced;
             } else {
                 LOG.log(Level.FINER, LOG_BALANCED_EMPTY);
+                System.err.println(LOG_BALANCED_EMPTY);
             }
         }
 
@@ -653,8 +658,28 @@ public final class Coach extends Competitor implements XMLExport {
             }
         }
 
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+            Round round = Tournament.getTournament().getRound(i);
+            for (CoachMatch m : round.getCoachMatchs()) {
+                Coach opp = null;
+                if (this == m.getCompetitor1()) {
+                    opp = (Coach) m.getCompetitor2();
+                }
+                if (this == m.getCompetitor2()) {
+                    opp = (Coach) m.getCompetitor1();
+                }
+                if (opp != null) {
+                    Team Other = opp.getTeamMates();
+                    if (map.get(Other) != null) {
+                        int nb = map.get(Other);
+                        nb += 1;
+                        map.put(Other, nb);
+                    }
+                }
+            }
+        }
         // Compute the number of match per opponent
-        for (int i = 0; i < getMatchCount(); i++) {
+        /*for (int i = 0; i < getMatchCount(); i++) {
             Match mMatch = getMatch(i);
             CoachMatch m = (CoachMatch) mMatch;
             Coach opp;
@@ -664,13 +689,12 @@ public final class Coach extends Competitor implements XMLExport {
                 opp = (Coach) m.getCompetitor1();
             }
             Team Other = opp.getTeamMates();
-            int nb = 0;
             if (map.get(Other) != null) {
-                nb = map.get(Other);
+                int nb = map.get(Other);
+                nb += 1;
+                map.put(Other, nb);
             }
-            nb += 1;
-            map.put(Other, nb);
-        }
+        }*/
 
         if (r != null) {
             for (int i = 0; i < r.getCoachMatchs().size(); i++) {
@@ -689,9 +713,10 @@ public final class Coach extends Competitor implements XMLExport {
                     int nb = 0;
                     if (map.get(Other) != null) {
                         nb = map.get(Other);
+                        nb += 1;
+                        map.put(Other, nb);
                     }
-                    nb += 1;
-                    map.put(Other, nb);
+
                 }
             }
         }
@@ -739,12 +764,83 @@ public final class Coach extends Competitor implements XMLExport {
      * @param round
      * @return
      */
-    private boolean isBalanced(Coach opp, Round round) {
+    public boolean isBalanced(Coach opp, Round round) {
+        Tournament tour = Tournament.getTournament();
+        boolean balanced = true;
+        if ((tour.getParams().isTeamTournament())
+                && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
 
+            //System.out.println(this.getName() + "(" + this.getTeamMates().getName() + ") vs " + opp.getName() + "(" + opp.getTeamMates().getName() + ")");
+            if (tour.getParams().isIndivPairingTeamBalanced()) {
+                balanced = this.getTeamMates().isBalanced(opp.getTeamMates(), round);
+            }
+
+            if (tour.getParams().isIndivPairingIndivBalanced()) {
+                balanced = balanced & this.isBalanced(opp.getTeamMates(), round);
+            }
+        }
+        return balanced;
+    }
+
+    public void printBalanced(Round round) {
+        Tournament tour = Tournament.getTournament();
+
+        if ((tour.getParams().isTeamTournament())
+                && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+
+            /*if (tour.getParams().isIndivPairingTeamBalanced()) {
+                balanced = this.getTeamMates().isBalanced(opp.getTeamMates(), round);
+            }*/
+            if (tour.getParams().isIndivPairingIndivBalanced()) {
+
+                ArrayList<Team> teams = new ArrayList<>();
+
+                for (int i = 0; i < round.getMatchsCount(); i++) {
+                    Match mMatch = round.getMatch(i);
+                    CoachMatch m = (CoachMatch) mMatch;
+                    Coach c1 = (Coach) m.getCompetitor1();
+                    Coach c2 = (Coach) m.getCompetitor2();
+                    if (c1.getTeamMates() != this.getTeamMates()) {
+                        if (!teams.contains(c1.getTeamMates())) {
+                            teams.add(c1.getTeamMates());
+                        }
+                    }
+                    if (c2.getTeamMates() != this.getTeamMates()) {
+                        if (!teams.contains(c2.getTeamMates())) {
+                            teams.add(c2.getTeamMates());
+                        }
+                    }
+                }
+
+                HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
+
+                Iterator<Team> it2 = hash.keySet().iterator();
+                int minimum = 65535;
+                int maximum = 0;
+                while (it2.hasNext()) {
+                    Competitor en2 = it2.next();
+                    if (en2 instanceof Team) {
+                        Team t2 = (Team) en2;
+                        int nb2 = hash.get(t2);
+                        if (nb2 < minimum) {
+                            minimum = nb2;
+                        }
+                        if (nb2 > maximum) {
+                            maximum = nb2;
+                        }
+                    }
+                }
+
+                System.out.println(this.getName() + " Max: " + maximum + " Min: " + minimum);
+            }
+        }
+    }
+
+    private boolean isBalanced(Team opp, Round round) {
         boolean balanced = true;
         ArrayList<Team> teams = new ArrayList<>();
 
-        if (this.getTeamMates() == opp.getTeamMates()) {
+        if (this.getTeamMates() == opp) {
             return false;
         }
 
@@ -784,7 +880,7 @@ public final class Coach extends Competitor implements XMLExport {
             }
         }
 
-        int nb = hash.get(opp.getTeamMates());
+        int nb = hash.get(opp);
 
         if ((maximum == nb) && (maximum - minimum > 1)) {
             balanced = false;
@@ -797,7 +893,8 @@ public final class Coach extends Competitor implements XMLExport {
      * @param round
      * @return
      */
-    ArrayList<Team> getMinimumTeamsBalanced(Round round) {
+    ArrayList<Team> getMinimumTeamsBalanced(Round round
+    ) {
 
         ArrayList<Team> possible = new ArrayList<>();
 
@@ -881,7 +978,7 @@ public final class Coach extends Competitor implements XMLExport {
         }
 
         // Same team
-        if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+        /*if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
             if (Opponent.getTeamMates() != Team.getNullTeam()) {
                 if (getTeamMates() == Opponent.getTeamMates()) {
                     canMatch = false;
@@ -945,6 +1042,27 @@ public final class Coach extends Competitor implements XMLExport {
                     }
                 }
 
+                if (!mTeamMates.containsCoach(opponentOpponent)) {
+                    if (Opponent != null) {
+                        if (Opponent.getTeamMates() != null) {
+                            if (hash.get(Opponent.getTeamMates()) != null) {
+                                int nb = hash.get(Opponent.getTeamMates());
+
+                                if ((maximum == nb) && (maximum - minimum > 1)) {
+                                    canMatch = false;
+                                }
+                            } else {
+                                System.err.println("Opponent balancing count is null");
+                                canMatch = false;
+                            }
+                        } else {
+                            System.err.println("Opponent team is null");
+                        }
+                    } else {
+                        System.err.println("Opponent is null");
+                    }
+                }
+
                 // Check if team is balanced, by One. If yes, the opponent can  
                 // be among teammates opponents or among minimum times encountered teams
                 if (maximum - minimum == 1) {
@@ -960,8 +1078,7 @@ public final class Coach extends Competitor implements XMLExport {
                     canMatch = false;
                 }
             }
-        }
-
+        }*/
         return canMatch;
     }
 
@@ -977,10 +1094,12 @@ public final class Coach extends Competitor implements XMLExport {
         Tournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();
 
-        int balancingTries = 10000;
+        int balancingTries = 100000;
         int triesThreshold = 10;
         boolean totallyBalanced = false;
         while ((!totallyBalanced) && (balancingTries > 0)) {
+
+            System.out.println("Retry");
             totallyBalanced = true;
             balancingTries--;
 
@@ -989,105 +1108,125 @@ public final class Coach extends Competitor implements XMLExport {
             }
             //LOG.log(Level.FINER, "Remaining tries: {0}", balancingTries);
 
-            boolean balanced;
             for (int i = round.getMatchsCount() - 1; i > 0; i--) {
 
                 Match current = round.getMatch(i);
-                final Coach c1 = (Coach) current.getCompetitor1();
-                final Coach c2 = (Coach) current.getCompetitor2();
+                Coach c1 = (Coach) current.getCompetitor1();
+                Coach c2 = (Coach) current.getCompetitor2();
                 boolean have_played = c1.havePlayed(c2);
 
-                balanced = true;
-                boolean loop = false;
-                if ((tour.getParams().isTeamTournament())
-                        && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
-                    if ((tour.getParams().isIndivPairingTeamBalanced()) || (tour.getParams().isIndivPairingIndivBalanced())) {
-                        balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
-                        if (!balanced) {
-                            //               LOG.log(Level.FINER, "{0} is not balanced", c1.getName());
-                            totallyBalanced = false;
-                        }
-                    }
-                }
+                boolean balanced = c1.isBalanced(c2, round);
 
                 if ((have_played) || (!balanced)) {
                     //ArrayList<Competitor> possible = new ArrayList<>();
                     int k = i - 1;
                     while (k >= 0) {
-                    //for (int k = i - 1; k >= 0; k--) {
+                        //for (int k = i - 1; k >= 0; k--) {
+
+                        Match m1 = round.getMatch(i);
+                        Match m2 = round.getMatch(k);
 
                         // Get previous match opponent
-                        Coach c1_tmp = (Coach) round.getMatch(k).getCompetitor1();
-                        Coach c2_tmp = (Coach) round.getMatch(k).getCompetitor2();
+                        Coach c1_tmp = (Coach) m2.getCompetitor1();
+                        Coach c2_tmp = (Coach) m2.getCompetitor2();
+
+                        c1 = (Coach) m1.getCompetitor1();
+                        c2 = (Coach) m1.getCompetitor2();
 
                         //LOG.log(Level.FINER,"Testing " + c1_tmp.mName + " vs " + c2_tmp.mName);
                         boolean canMatch = c1.canMatch(c2_tmp, c1_tmp, c2, round);
-                        if (loop) {
-                            canMatch = canMatch && c2.canMatch(c1_tmp, c2_tmp, c1, round);
-                        }
+                        //canMatch = canMatch && c2.canMatch(c1_tmp, c2_tmp, c1, round);
 
                         if (canMatch) {
-                            round.getMatch(i).setCompetitor2(c2_tmp);
-                            round.getMatch(k).setCompetitor2(c2);
+                            m1.setCompetitor2(c2_tmp);
+                            m2.setCompetitor2(c2);
 
-                            //              LOG.log(Level.FINER, "{0} vs {1} becomes {2} vs {3}", new Object[]{c1.getName(), c2.getName(), c1.getName(), c2_tmp.getName()});
-                            //              LOG.log(Level.FINER, "And {0} vs {1} becomes {2} vs {3}", new Object[]{c1_tmp.getName(), c2_tmp.getName(), c1_tmp.getName(), c2.getName()});
-                            break;
-                        } else {
-                            canMatch = c1.canMatch(c1_tmp, c2_tmp, c2, round);
-                            if (loop) {
-                                canMatch = canMatch && c2.canMatch(c2_tmp, c1_tmp, c1, round);
-                            }
-
-                            if (canMatch) {
-                                round.getMatch(i).setCompetitor2(c1_tmp);
-                                round.getMatch(k).setCompetitor1(c2);
-
-                                //                LOG.log(Level.FINER, "{0} vs {1} becomes {2} vs {3}", new Object[]{c1.getName(), c2.getName(), c1.getName(), c1_tmp.getName()});
-                                //                LOG.log(Level.FINER, "And {0} vs {1} becomes {2} vs {3}", new Object[]{c1_tmp.getName(), c2_tmp.getName(), c2.getName(), c2_tmp.getName()});
+                            if (!c1.isBalanced(c2_tmp, round) || !c1_tmp.isBalanced(c2, round)) {
+                                m1.setCompetitor2(c2);
+                                m2.setCompetitor2(c2_tmp);
+                                canMatch = false;
+                                totallyBalanced=false;
+                            } else {
+                                System.err.println("Swap done");
                                 break;
                             }
                         }
+                        if (!canMatch) {
+                            canMatch = c1.canMatch(c1_tmp, c2_tmp, c2, round);
+                            //canMatch = canMatch && c2.canMatch(c2_tmp, c1_tmp, c1, round);
 
-                        if (k == 0) {
-                            if ((tour.getParams().isTeamTournament())
-                                    && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
-                                if ((tour.getParams().isIndivPairingTeamBalanced()) || (tour.getParams().isIndivPairingIndivBalanced())) {
-                                    balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
-                                    if (!balanced) {
-                                        //                      LOG.log(Level.FINER, "{0} is still not balanced, loop", c1.getName());
-                                        if (!loop) {
-                                            k = round.getMatchsCount() - 1;
-                                            loop = true;
-                                        }
-                                    }
+                            if (canMatch) {
+                                m1.setCompetitor2(c1_tmp);
+                                m2.setCompetitor1(c2);
+
+                                if (!c1.isBalanced(c1_tmp, round) || !c2_tmp.isBalanced(c2, round)) {
+                                    m1.setCompetitor2(c2);
+                                    m2.setCompetitor1(c1_tmp);
+                                    totallyBalanced=false;
+                                } else {
+                                    System.err.println("Swap done");
+                                    break;
                                 }
                             }
                         }
+
                         k--;
                     }
                 }
             }
 
-            if ((tour.getParams().isTeamTournament())
-                    && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
-                Match cm = round.getMatch(0);
-                if ((tour.getParams().isIndivPairingTeamBalanced()) || (tour.getParams().isIndivPairingIndivBalanced())) {
-                    Coach c1 = (Coach) cm.getCompetitor1();
-                    Coach c2 = (Coach) cm.getCompetitor2();
-                    balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
-                    if (!balanced) {
-                        LOG.log(Level.FINER, "{0} is not balanced", c1.getName());
-                        totallyBalanced = false;
-                    }
+            //totallyBalanced = true;
+            for (int i = round.getMatchsCount() - 1; i >= 0; i--) {
+                Match current = round.getMatch(i);
+                Coach c1 = (Coach) current.getCompetitor1();
+                Coach c2 = (Coach) current.getCompetitor2();
+                boolean have_played = c1.havePlayed(c2);
+                boolean balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
+
+                totallyBalanced = totallyBalanced && (!have_played) && balanced;
+
+                if (!totallyBalanced) {
+                    System.err.println("Round not balanced: " + c1.getName() + "(" + c1.getTeamMates() + ") vs " + c2.getName() + "(" + c2.getTeamMates() + ")");
+                    break;
                 }
             }
 
-            if ((!totallyBalanced)
-                    && (balancingTries == 0)) {
+            if ((!totallyBalanced) && (balancingTries == 0)) {
+
                 int answer = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), Translate.translate(CS_MESSAGE1), Translate.translate(CS_MESSAGE2), JOptionPane.YES_NO_OPTION);
                 if (answer == JOptionPane.YES_OPTION) {
-                    balancingTries = 10000;
+                    balancingTries = 100000;
+                }
+            }
+
+            if (!totallyBalanced) {
+                System.err.println("Not Balanced");
+                
+                Random ran=new Random();
+                int index=ran.nextInt(round.getMatchsCount()-1)+1;
+                
+                Coach c1=(Coach) round.getMatch(0).getCompetitor1();
+                Coach c2=(Coach) round.getMatch(0).getCompetitor2();
+                Coach c1_tmp=(Coach) round.getMatch(index).getCompetitor1();
+                Coach c2_tmp=(Coach) round.getMatch(index).getCompetitor2();
+                round.getMatch(0).setCompetitor2(c1_tmp);
+                round.getMatch(index).setCompetitor1(c2);
+                
+                Match m =round.getMatch(0);
+                round.removeMatch(m);
+                round.addMatch(m);
+              
+                
+            } else {
+                System.out.println("Balanced");
+
+                for (int i = round.getMatchsCount() - 1; i >= 0; i--) {
+                    Match current = round.getMatch(i);
+                    Coach c1 = (Coach) current.getCompetitor1();
+                    Coach c2 = (Coach) current.getCompetitor2();
+
+                    c1.printBalanced(round);
+                    c2.printBalanced(round);
                 }
             }
         }

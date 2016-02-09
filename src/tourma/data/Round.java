@@ -4,8 +4,10 @@
  */
 package tourma.data;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -265,6 +267,11 @@ public class Round implements XMLExport {
     public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(StringConstants.CS_ROUND);
+        if (mHour==null)
+        {
+            Calendar cal=Calendar.getInstance();
+            mHour=cal.getTime();
+        }
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
         round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
