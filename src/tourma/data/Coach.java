@@ -1099,7 +1099,7 @@ public final class Coach extends Competitor implements XMLExport {
         boolean totallyBalanced = false;
         while ((!totallyBalanced) && (balancingTries > 0)) {
 
-            System.out.println("Retry");
+            //System.out.println("Retry");
             totallyBalanced = true;
             balancingTries--;
 
@@ -1147,7 +1147,7 @@ public final class Coach extends Competitor implements XMLExport {
                                 canMatch = false;
                                 totallyBalanced=false;
                             } else {
-                                System.err.println("Swap done");
+                                //System.err.println("Swap done");
                                 break;
                             }
                         }
@@ -1164,7 +1164,7 @@ public final class Coach extends Competitor implements XMLExport {
                                     m2.setCompetitor1(c1_tmp);
                                     totallyBalanced=false;
                                 } else {
-                                    System.err.println("Swap done");
+                                    //System.err.println("Swap done");
                                     break;
                                 }
                             }
@@ -1186,7 +1186,7 @@ public final class Coach extends Competitor implements XMLExport {
                 totallyBalanced = totallyBalanced && (!have_played) && balanced;
 
                 if (!totallyBalanced) {
-                    System.err.println("Round not balanced: " + c1.getName() + "(" + c1.getTeamMates() + ") vs " + c2.getName() + "(" + c2.getTeamMates() + ")");
+                    //System.err.println("Round not balanced: " + c1.getName() + "(" + c1.getTeamMates() + ") vs " + c2.getName() + "(" + c2.getTeamMates() + ")");
                     break;
                 }
             }
@@ -1200,7 +1200,7 @@ public final class Coach extends Competitor implements XMLExport {
             }
 
             if (!totallyBalanced) {
-                System.err.println("Not Balanced");
+                //System.err.println("Not Balanced");
                 
                 Random ran=new Random();
                 int index=ran.nextInt(round.getMatchsCount()-1)+1;
@@ -1217,7 +1217,7 @@ public final class Coach extends Competitor implements XMLExport {
                 round.addMatch(m);
               
                 
-            } else {
+            } /*else {
                 System.out.println("Balanced");
 
                 for (int i = round.getMatchsCount() - 1; i >= 0; i--) {
@@ -1228,7 +1228,7 @@ public final class Coach extends Competitor implements XMLExport {
                     c1.printBalanced(round);
                     c2.printBalanced(round);
                 }
-            }
+            }*/
         }
     }
 
