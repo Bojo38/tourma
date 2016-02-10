@@ -7,7 +7,7 @@ package tourma.utils.web;
 
 import java.util.ArrayList;
 import org.apache.commons.lang3.StringEscapeUtils;
-import teamma.languages.Translate;
+import tourma.languages.Translate;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
@@ -46,11 +46,13 @@ public class WebCup {
             final Round r = rounds_with_cup.get(i);
 
             // Add Title for the Round
-            sb.append("<CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Round)) + " " + (i + 1) + "</CENTER>");
+            sb.append("<br><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Round)) + " " + (i + 1) + "</CENTER>");
+            sb.append("<div id=\"maintable"+i+"\" class=\"section\">");
             if (r.isLooserCup()) {
                 sb.append("<BR><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_MainTable)) + " " + (i + 1) + "</CENTER>");
             }
-            sb.append("<table>");
+            sb.append("<table style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
+                + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
             // Add Title Line            
             sb.append(getHTMLHeader());
 
@@ -69,12 +71,15 @@ public class WebCup {
             }
 
             sb.append("</table>");
+            sb.append("</div>");
             if (r.isLooserCup()) {
                 if (r.getCupTour() > 0) {
                     nb_looseMatch = nb_looseMatch / 2 + nb_match;
 
+                    sb.append("<div id=\"loosertable"+i+"\" class=\"section\">");
                     sb.append("<BR><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_LooserTable)) + " " + (i + 1) + "</CENTER>");
-                    sb.append("<table>");
+                    sb.append("<table style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
+                + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
 
                     // Add Title Line  
                     sb.append(getHTMLHeader());
@@ -96,6 +101,7 @@ public class WebCup {
                         // Draw line between the previous matches end this one
                     }
                     sb.append("</table>");
+                    sb.append("</div>");
                 }
             }
         }
@@ -106,18 +112,18 @@ public class WebCup {
         StringBuilder sb = new StringBuilder("");
         Criteria td = Tournament.getTournament().getParams().getCriteria(0);
         sb.append("<tr>");
-        sb.append("<td>" + (index + 1) + "</td>");
+        sb.append("<td class=\"tab_titre\">" + (index + 1) + "</td>");
 
-        sb.append("<td>" + StringEscapeUtils.escapeHtml4(m.getCompetitor1().getName()) + " 1</td>");
+        sb.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(m.getCompetitor1().getName()) + "</td>");
         if (m instanceof TeamMatch) {
-            sb.append("<td>" + ((TeamMatch) m).getVictories((Team) m.getCompetitor1()) + "</td>");
-            sb.append("<td>" + ((TeamMatch) m).getDraw((Team) m.getCompetitor1()) + "</td>");
-            sb.append("<td>" + ((TeamMatch) m).getVictories((Team) m.getCompetitor2()) + "</td>");
+            sb.append("<td class=\"tab_result\">" + ((TeamMatch) m).getVictories((Team) m.getCompetitor1()) + "</td>");
+            sb.append("<td class=\"tab_result\">" + ((TeamMatch) m).getDraw((Team) m.getCompetitor1()) + "</td>");
+            sb.append("<td class=\"tab_result\">" + ((TeamMatch) m).getVictories((Team) m.getCompetitor2()) + "</td>");
         } else {
-            sb.append("<td>" + ((CoachMatch) m).getValue(td).getValue1() + "</td>");
-            sb.append("<td>" + ((CoachMatch) m).getValue(td).getValue2() + "</td>");
+            sb.append("<td class=\"tab_result\">" + ((((CoachMatch) m).getValue(td).getValue1()==-1)?"&nbsp;":Integer.toString(((CoachMatch) m).getValue(td).getValue1())) + "</td>");
+            sb.append("<td class=\"tab_result\">" + ((((CoachMatch) m).getValue(td).getValue2()==-1)?"&nbsp;":Integer.toString(((CoachMatch) m).getValue(td).getValue2())) + "</td>");
         }
-        sb.append("<td>" + StringEscapeUtils.escapeHtml4(m.getCompetitor2().getName()) + " 2</td>");
+        sb.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(m.getCompetitor2().getName()) + "</td>");
 
         sb.append("</tr>");
         return sb.toString();
@@ -126,20 +132,20 @@ public class WebCup {
     static protected String getHTMLHeader() {
         StringBuilder sb = new StringBuilder("");
         sb.append("<tr>");
-        sb.append("<td>#</td>");
+        sb.append("<td class=\"tab_titre\" >#</td>");
 
         Criteria td = Tournament.getTournament().getParams().getCriteria(0);
         if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Team)) + " 1</td>");
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(CS_Victory) + " 1</td>");
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(CS_Draw) + "</td>");
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(CS_Victory) + " 2</td>");
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Team)) + " 2</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Team)) + " 1</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(CS_Victory) + " 1</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(CS_Draw) + "</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(CS_Victory) + " 2</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Team)) + " 2</td>");
         } else {
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Coach)) + " 1</td>");
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(td.getName()) + " 1</td>");
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(td.getName()) + " 2</td>");
-            sb.append("<td>" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Coach)) + " 2</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Coach)) + " 1</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(td.getName()) + " 1</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(td.getName()) + " 2</td>");
+            sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Coach)) + " 2</td>");
         }
 
         sb.append("</tr>");

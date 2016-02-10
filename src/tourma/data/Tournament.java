@@ -231,6 +231,14 @@ public class Tournament implements IContainCoachs {
      * @param c
      */
     public void removeCategory(Category c) {
+
+        for (Coach coach : mCoachs) {
+            coach.delCategory(c);
+        }
+        for (Team team : mTeams) {
+            team.delCategory(c);
+        }
+
         mCategories.remove(c);
     }
 
@@ -239,7 +247,9 @@ public class Tournament implements IContainCoachs {
      * @param c
      */
     public void removeCategory(int c) {
-        mCategories.remove(c);
+
+        removeCategory(mCategories.get(c));
+
     }
 
     /**
@@ -1121,7 +1131,7 @@ public class Tournament implements IContainCoachs {
      * @param file
      */
     public void exportNAF(final java.io.File file) {
-        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("YYYY-MM-dd HH:MM"), Locale.getDefault());
 
         Criteria critTd = null;
         Criteria critInj = null;
@@ -1139,71 +1149,62 @@ public class Tournament implements IContainCoachs {
         try {
             try (PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")))) {
                 writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                writer.println("<nafReport xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.bloodbowl.net' xsi:schemaLocation='http://www.bloodbowl.net ../../../test/naf.xsd'>");
-                writer.println(java.text.MessageFormat.format(("<ORGANISER>{0}</ORGANISER>"), new Object[]{getParams().getTournamentOrga()}));
-                writer.println(("<COACHES>"));
+                writer.println("<nafReport xmlns:blo=\"http://www.bloodbowl.net\">");
+                writer.println(java.text.MessageFormat.format(("<organiser>{0}</organiser>"), new Object[]{getParams().getTournamentOrga()}));
+                writer.println(("<coaches>"));
                 for (Coach mCoach : mCoachs) {
                     if (mCoach.getNaf() > 0) {
                         String naf = Integer.toString(mCoach.getNaf());
 
-                        writer.println(("<COACH>"));
-                        writer.println(java.text.MessageFormat.format("<NAME>{0}</NAME>", new Object[]{mCoach.getName()}));
-                        writer.println(java.text.MessageFormat.format("<NUMBER>{0}</NUMBER>", new Object[]{naf}));
-                        writer.println(java.text.MessageFormat.format("<TEAM>{0}</TEAM>", new Object[]{RosterType.getRosterTranslation(mCoach.getRoster().getName())}));
-                        writer.println(("</COACH>"));
+                        writer.println(("<coach>"));
+                        writer.println(java.text.MessageFormat.format("<name>{0}</name>", new Object[]{mCoach.getName()}));
+                        writer.println(java.text.MessageFormat.format("<number>{0}</number>", new Object[]{naf}));
+                        writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{RosterType.getRosterTranslation(mCoach.getRoster().getName())}));
+                        writer.println(("</coach>"));
                     }
                 }
-                writer.println(("</COACHES>"));
+                writer.println(("</coaches>"));
 
                 for (Round mRound : mRounds) {
                     for (int j = 0; j < mRound.getMatchsCount(); j++) {
                         if ((((Coach) mRound.getMatch(j).getCompetitor1()).getNaf() > 0) && (((Coach) mRound.getMatch(j).getCompetitor2()).getNaf() > 0)) {
-                            writer.println(("<GAME>"));
+                            writer.println(("<game>"));
                             final CoachMatch m = mRound.getCoachMatchs().get(j);
-                            writer.println(java.text.MessageFormat.format("<TIMESTAMP>{0}</TIMESTAMP>", new Object[]{format.format(mRound.getHour())}));
+                            writer.println(java.text.MessageFormat.format("<timeStamp>{0}</timeStamp>", new Object[]{format.format(mRound.getHour())}));
                             Coach p;
                             if (m.getSubstitute1() == null) {
                                 p = (Coach) m.getCompetitor1();
                             } else {
                                 p = m.getSubstitute1().getSubstitute();
                             }
-                            writer.println(("<PLAYERRECORD>"));
-                            writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{p.getName()}));
-                            writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{p.getNaf()}));
-                            writer.println(java.text.MessageFormat.format(("<TEAMRATING>{0}</TEAMRATING>"), new Object[]{p.getRank()}));
-                            writer.println(java.text.MessageFormat.format(("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[]{m.getValue(critTd).getValue1()}));
-                            writer.println(java.text.MessageFormat.format(("<BADLYHURT>{0}</BADLYHURT>"), new Object[]{m.getValue(critInj).getValue1()}));
-                            if (m.getRoster1() != null) {
-                                writer.println(java.text.MessageFormat.format(("<TEAM>{0}</TEAM>"), new Object[]{RosterType.getRosterTranslation(m.getRoster1().getName())}));
-                            }
-                            writer.println(("<SERIOUSLYINJURED>0</SERIOUSLYINJURED>"));
-                            writer.println(("<DEAD>0</DEAD>"));
-                            writer.println(("<WINNINGS>0</WINNINGS>"));
-                            writer.println(("</PLAYERRECORD>"));
+                            writer.println(("<playerRecord>"));
+                            writer.println(java.text.MessageFormat.format(("<name>{0}</name>"), new Object[]{p.getName()}));
+                            String nafID=Integer.toString(p.getNaf());
+                            nafID=nafID.replace(" ", "");
+                            writer.println(java.text.MessageFormat.format(("<number>{0}</number>"), nafID));
+                            writer.println(java.text.MessageFormat.format(("<teamRating>{0}</teamRating>"), new Object[]{p.getRank()}));
+                            writer.println(java.text.MessageFormat.format(("<touchDowns>{0}</touchDowns>"), new Object[]{m.getValue(critTd).getValue1()}));
+                            writer.println(java.text.MessageFormat.format(("<badlyHurt>{0}</badlyHurt>"), new Object[]{m.getValue(critInj).getValue1()}));
+                            writer.println(("</playerRecord>"));
                             if (m.getSubstitute2() == null) {
                                 p = (Coach) m.getCompetitor2();
                             } else {
                                 p = m.getSubstitute2().getSubstitute();
                             }
-                            writer.println(("<PLAYERRECORD>"));
-                            writer.println(java.text.MessageFormat.format(("<NAME>{0}</NAME>"), new Object[]{p.getName()}));
-                            writer.println(java.text.MessageFormat.format(("<NUMBER>{0}</NUMBER>"), new Object[]{p.getNaf()}));
-                            writer.println(java.text.MessageFormat.format(("<TEAMRATING>{0}</TEAMRATING>"), new Object[]{p.getRank()}));
-                            writer.println(java.text.MessageFormat.format(("<TOUCHDOWNS>{0}</TOUCHDOWNS>"), new Object[]{m.getValue(critTd).getValue2()}));
-                            writer.println(java.text.MessageFormat.format(("<BADLYHURT>{0}</BADLYHURT>"), new Object[]{m.getValue(critInj).getValue2()}));
-                            if (m.getRoster2() != null) {
-                                writer.println(java.text.MessageFormat.format(("<TEAM>{0}</TEAM>"), new Object[]{RosterType.getRosterTranslation(m.getRoster2().getName())}));
-                            }
-                            writer.println(("<SERIOUSLYINJURED>0</SERIOUSLYINJURED>"));
-                            writer.println(("<DEAD>0</DEAD>"));
-                            writer.println(("<WINNINGS>0</WINNINGS>"));
-                            writer.println(("</PLAYERRECORD>"));
-                            writer.println(("<GATE>2</GATE>"));
-                            writer.println(("</GAME>"));
+                            writer.println(("<playerRecord>"));
+                            writer.println(java.text.MessageFormat.format(("<name>{0}</name>"), new Object[]{p.getName()}));
+                            nafID=Integer.toString(p.getNaf());
+                            nafID=nafID.replace(" ", "");
+                            writer.println(java.text.MessageFormat.format(("<number>{0}</number>"), nafID));
+                            writer.println(java.text.MessageFormat.format(("<teamRating>{0}</teamRating>"), new Object[]{p.getRank()}));
+                            writer.println(java.text.MessageFormat.format(("<touchDowns>{0}</touchDowns>"), new Object[]{m.getValue(critTd).getValue2()}));
+                            writer.println(java.text.MessageFormat.format(("<badlyHurt>{0}</badlyHurt>"), new Object[]{m.getValue(critInj).getValue2()}));
+                            writer.println(("</playerRecord>"));
+                            writer.println(("</game>"));
                         }
                     }
                 }
-                writer.println(("</NAFREPORT>"));
+                writer.println(("</nafReport>"));
             }
 
         } catch (IOException e) {

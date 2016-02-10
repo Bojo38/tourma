@@ -1,23 +1,23 @@
 <Tournament Version="3" RoundRobin="false">
-  <Roster Name="Amazones" />
+   <Roster Name="Amazones" />
   <Roster Name="Bas-fonds" />
   <Roster Name="Chaos" />
   <Roster Name="Elfes" />
-  <Roster Name="Elfe Sylvain" />
-  <Roster Name="Elfe Noir" />
+  <Roster Name="Elfes sylvains" />
+  <Roster Name="Elfes noirs" />
   <Roster Name="Gobelins" />
   <Roster Name="Halflings" />
   <Roster Name="Haut-Elfes" />
-  <Roster Name="Homme Lézard" />
+  <Roster Name="Hommes-Lézards" />
   <Roster Name="Humains" />
   <Roster Name="Khemri" />
   <Roster Name="Démons de Khorne" />
   <Roster Name="Morts-Vivants" />
   <Roster Name="Nains" />
-  <Roster Name="Nain du Chaos" />
+  <Roster Name="Nains du chaos" />
   <Roster Name="Necromantiques" />
   <Roster Name="Nordiques" />
-  <Roster Name="Pourris de Nurgle" />
+  <Roster Name="Pouris de Nurgle" />
   <Roster Name="Ogres" />
   <Roster Name="Orques" />
   <Roster Name="Pacte Chaotique" />
@@ -29,6 +29,39 @@
     <Criteria Criteria="Sorties" PointsFor="1" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
     <Criteria Criteria="Aggressions" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
   </Parameters>
+  <Group Name="Classic">
+    <Roster Name="Elfes" />
+    <Roster Name="Elfes noirs" />
+    <Roster Name="Nains" />
+    <Roster Name="Nains du chaos" />
+    <Roster Name="Necromantiques" />
+    <Roster Name="Orques" />
+    <Roster Name="Skavens" />
+  </Group>
+  <Group Name="Power">
+    <Roster Name="Amazones" />
+    <Roster Name="Elfes sylvains" />
+    <Roster Name="Hommes-Lézards" />
+    <Roster Name="Nordiques" />
+    <Roster Name="Haut-Elfes" />
+    <Roster Name="Morts-Vivants" />
+  </Group>
+  <Group Name="Challenge">
+    <Roster Name="Chaos" />
+    <Roster Name="Pouris de Nurgle" />
+    <Roster Name="Khemri" />
+    <Roster Name="Pacte Chaotique" />
+    <Roster Name="Slanns" />
+    <Roster Name="Démons de Khorne" />
+    <Roster Name="Humains" />
+    <Roster Name="Vampires" />
+  </Group>
+  <Group Name="Minus">
+    <Roster Name="Bas-fonds" />
+    <Roster Name="Gobelins" />
+    <Roster Name="Halflings" />
+    <Roster Name="Ogres" />
+  </Group>
   <Clan Name="Aucun" />
   <Clan Name="AinPacte">
     <Picture>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</Picture>

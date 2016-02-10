@@ -449,6 +449,9 @@ public class RosterType implements XMLExport {
         if (source.equals(translate("VampireKey"))) {
             result = translate("VAMPIRES");
         }
+        if (source.equals(translate("KhorneKey"))||source.equals(translate("KhornesDaemonsKey"))) {
+            result = translate("UNKNOWN");
+        }
         return result;
     }
 

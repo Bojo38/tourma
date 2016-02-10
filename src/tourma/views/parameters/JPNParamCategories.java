@@ -163,16 +163,19 @@ public final class JPNParamCategories extends javax.swing.JPanel {
     private void jbtRemoveCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCategoryActionPerformed
         final int index = jlsCategories.getSelectedIndex();
 
-        if (index > 0) {
+        if (index >= 0) {
             Category cat = mTournament.getCategory(index);
             Category.delCategory(cat.getName());
             mTournament.removeCategory(index);
+            jlsCategories.setSelectedIndex(index-1);
         }
         update();
     }//GEN-LAST:event_jbtRemoveCategoryActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jlsCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlsCategoriesMouseClicked
+        int index=jlsCategories.getSelectedIndex();
         update();
+        jlsCategories.setSelectedIndex(index);
     }//GEN-LAST:event_jlsCategoriesMouseClicked
 
     /**
@@ -182,7 +185,7 @@ public final class JPNParamCategories extends javax.swing.JPanel {
 
         final int selectedCategory = jlsCategories.getSelectedIndex();
         final DefaultListModel coachListModel = new DefaultListModel();
-        if (selectedCategory >= 0) {
+        if ((selectedCategory >= 0)&&(mTournament.getCategoriesCount()>selectedCategory)) {
             final String categName = mTournament.getCategory(selectedCategory).getName();
             Category cat = Category.getCategory(categName);
             for (int i = 0; i < mTournament.getCoachsCount(); i++) {
@@ -196,7 +199,7 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         if (Tournament.getTournament().getParams().isTeamTournament()) {
             jlsTeamList.setEnabled(true);
             final DefaultListModel teamListModel = new DefaultListModel();
-            if (selectedCategory >= 0) {
+            if ((selectedCategory >= 0) &&(mTournament.getCategoriesCount()>selectedCategory)) {
                 final String categName = mTournament.getCategory(selectedCategory).getName();
                 Category cat = Category.getCategory(categName);
                 for (int i = 0; i < mTournament.getTeamsCount(); i++) {

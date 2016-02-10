@@ -315,4 +315,9 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         mMatchs.clear();
     }
 
+    public boolean containsMatch(Match m)
+    {
+        return mMatchs.contains(m);
+    }
+    
 }

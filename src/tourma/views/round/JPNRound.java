@@ -114,7 +114,7 @@ public final class JPNRound extends javax.swing.JPanel {
         if (mTournament.getCategoriesCount() > 0) {
             for (int i = 0; i < mTournament.getCategoriesCount(); i++) {
                 final Category c = mTournament.getCategory(i);
-                if (!c.getName().equals(StringConstants.CS_NONE)) {
+                if (!c.getName().equals(Translate.translate(CS_None))) {
                     final JPNCategory jpnCategory = new JPNCategory(t, c, mRoundNumber);
                     jtpGlobal.addTab(
                             Translate.translate(CS_Category) + " " + c.getName(),

@@ -1338,16 +1338,17 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     labels.add(Translate.translate(CS_FreeRound));
                     Options.add(Generation.GEN_FREE);
 
+                    /*
+                    OPTION NON CONCLUANTE
+                    
                     if (Tournament.getTournament().getParams().isTeamTournament()) {
                         if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
-                            /**
-                             * Balanced Options
-                             */
+                      // Balanced Options
                             labels.add(
                                     Translate.translate(CS_RandomAndBalancing));
                             Options.add(Generation.GEN_BALANCED);
                         }
-                    }
+                    }*/
 
                     final JPanel jpn = new JPanel(new BorderLayout());
                     final JComboBox jcb = new JComboBox(labels.toArray());
