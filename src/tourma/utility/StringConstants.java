@@ -59,6 +59,7 @@ public interface StringConstants {
      *
      */
     public static final String CS_CUP = "Cup";
+    public static final String CS_THIRDPLACE="ThirdPlace";
 
     /**
      *

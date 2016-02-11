@@ -1380,6 +1380,7 @@ public final class Generation {
                 }
 
                 genCup(round, r, _third_place);
+                r.setThirdPlace(_third_place);
 
                 r.setCup(true);
                 r.setCupMaxTour(round.getCupMaxTour());
