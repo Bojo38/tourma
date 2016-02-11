@@ -24,6 +24,7 @@ import tourma.data.Tournament;
 public class WebCup {
 
     protected static String CS_MainTable = "MainTable";
+    protected static String CS_ThirdPlace="ThirdPlace";
     protected static String CS_Victory = "Victory";
     protected static String CS_Draw = "Draw";
     protected static String CS_LooserTable = "LooserTable";
@@ -32,7 +33,6 @@ public class WebCup {
         StringBuilder sb = new StringBuilder("");
         final ArrayList<Round> rounds_with_cup = new ArrayList<>();
 
-        
         for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
             Round round = Tournament.getTournament().getRound(i);
             if (round.isCup()) {
@@ -40,19 +40,19 @@ public class WebCup {
             }
         }
 
-        int nb_looseMatch = 0;        
+        int nb_looseMatch = 0;
 
         for (int i = 0; i < rounds_with_cup.size(); i++) {
             final Round r = rounds_with_cup.get(i);
 
-            // Add Title for the Round
+            // Add Title for the Round            
+            sb.append("<div id=\"maintable" + i + "\" class=\"section\">");
             sb.append("<br><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Round)) + " " + (i + 1) + "</CENTER>");
-            sb.append("<div id=\"maintable"+i+"\" class=\"section\">");
             if (r.isLooserCup()) {
                 sb.append("<BR><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_MainTable)) + " " + (i + 1) + "</CENTER>");
             }
             sb.append("<table style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
-                + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
+                    + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
             // Add Title Line            
             sb.append(getHTMLHeader());
 
@@ -72,14 +72,34 @@ public class WebCup {
 
             sb.append("</table>");
             sb.append("</div>");
+
+            if (r.isThirdPlace()) {
+                sb.append("<div id=\"maintable" + (++i) + "\" class=\"section\">");
+                sb.append("<BR><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_ThirdPlace)) + "</CENTER>");
+                sb.append("<table style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
+                        + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
+                // Add Title Line            
+                sb.append(getHTMLHeader());
+
+                //final Tournament tour = Tournament.getTournament();
+                Match m;
+                m = r.getMatch(nb_match);
+
+                sb.append(getHTMLLine(m, nb_match));
+                nb_match++;
+
+                sb.append("</table>");
+                sb.append("</div>");
+            }
+
             if (r.isLooserCup()) {
                 if (r.getCupTour() > 0) {
                     nb_looseMatch = nb_looseMatch / 2 + nb_match;
 
-                    sb.append("<div id=\"loosertable"+i+"\" class=\"section\">");
+                    sb.append("<div id=\"loosertable" + i + "\" class=\"section\">");
                     sb.append("<BR><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_LooserTable)) + " " + (i + 1) + "</CENTER>");
                     sb.append("<table style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
-                + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
+                            + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
 
                     // Add Title Line  
                     sb.append(getHTMLHeader());
@@ -120,8 +140,8 @@ public class WebCup {
             sb.append("<td class=\"tab_result\">" + ((TeamMatch) m).getDraw((Team) m.getCompetitor1()) + "</td>");
             sb.append("<td class=\"tab_result\">" + ((TeamMatch) m).getVictories((Team) m.getCompetitor2()) + "</td>");
         } else {
-            sb.append("<td class=\"tab_result\">" + ((((CoachMatch) m).getValue(td).getValue1()==-1)?"&nbsp;":Integer.toString(((CoachMatch) m).getValue(td).getValue1())) + "</td>");
-            sb.append("<td class=\"tab_result\">" + ((((CoachMatch) m).getValue(td).getValue2()==-1)?"&nbsp;":Integer.toString(((CoachMatch) m).getValue(td).getValue2())) + "</td>");
+            sb.append("<td class=\"tab_result\">" + ((((CoachMatch) m).getValue(td).getValue1() == -1) ? "&nbsp;" : Integer.toString(((CoachMatch) m).getValue(td).getValue1())) + "</td>");
+            sb.append("<td class=\"tab_result\">" + ((((CoachMatch) m).getValue(td).getValue2() == -1) ? "&nbsp;" : Integer.toString(((CoachMatch) m).getValue(td).getValue2())) + "</td>");
         }
         sb.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(m.getCompetitor2().getName()) + "</td>");
 

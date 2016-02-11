@@ -95,7 +95,7 @@ public final class JPNCup extends javax.swing.JPanel {
             int nb_match = (int) Math.pow(2, remaining_tour - 1) / 2;
             if (nb_match == 0) {
                 nb_match = 1;
-            }
+            }            
             final int last_gap = gap;
             gap = total_high / nb_match;
             last_offset = offset;
@@ -104,11 +104,11 @@ public final class JPNCup extends javax.swing.JPanel {
             final int h = 50;
             int x = i * 200 + 5;
 
+            
             //final Tournament tour = Tournament.getTournament();
             for (int j = 0; j < nb_match; j++) {
                 Match m;
                 m = r.getMatch(j);
-
                 
                 final JPNMatch match = new JPNMatch(m, true);
                 match.setSize(175, 50);
@@ -118,6 +118,21 @@ public final class JPNCup extends javax.swing.JPanel {
                                                 
             }
 
+             if (r.isThirdPlace())
+            {
+                Match m;
+                m = r.getMatch(nb_match);
+                
+                
+                final JPNMatch match = new JPNMatch(m, true);
+                match.setSize(175, 50);
+                //int y = j * gap + offset * 75 / 2 + 5;                
+                final int y = (nb_match -1) * gap + offset+55;
+                jpnCup.add(match, new org.netbeans.lib.awtextra.AbsoluteConstraints(x-50, y, w, h));
+                nb_match++;
+            }
+           
+            
             if (r.isLooserCup()) {
                 if (r.getCupTour() > 0) {
                     nb_looseMatch = nb_looseMatch / 2 + nb_match;
