@@ -56,6 +56,8 @@ public class WebRules {
     private final static String CS_Categories = "Categories";
     private final static String CS_Groups = "Groups";
 
+    private final static String CS_MatchAdditional="Match additional points";
+    
     public static String getHTML() {
 
         StringBuilder rules = new StringBuilder("");
@@ -306,8 +308,8 @@ public class WebRules {
             rules.append("</td></tr>");
 
             rules.append("<tr><td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_NumberOfPlayersForClan)) + "</td><td class=\"tab_result\">" + params.getClansMembersNumber() + "</td></tr>");
-            rules.append("<tr><td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidFirstRoundMatchClan)) + "</td><td class=\"tab_result\">" + params.isAvoidClansFirstMatch() + "</td></tr>");
-            rules.append("<tr><td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidRoundMatchClan)) + "</td><td class=\"tab_result\">" + params.isAvoidClansMatch() + "</td></tr>");
+            rules.append("<tr><td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidFirstRoundMatchClan)) + "</td><td class=\"tab_result\">" + Translate.translate(Boolean.toString(params.isAvoidClansFirstMatch())) + "</td></tr>");
+            rules.append("<tr><td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_AvoidRoundMatchClan)) + "</td><td class=\"tab_result\">" + Translate.translate(Boolean.toString(params.isAvoidClansMatch())) + "</td></tr>");
             //rules.append("</table>");
 
             if (Tournament.getTournament().getClansCount() > 1) {
@@ -404,7 +406,7 @@ public class WebRules {
 
                 rules.append("<td><table  style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                         + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
-                rules.append("<tr><td class=\"tab_titre\" colspan=\"4\">Match additional points</td></tr>");
+                rules.append("<tr><td class=\"tab_titre\" colspan=\"4\">"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_MatchAdditional)) +"</td></tr>");
                 rules.append("<tr><td class=\"tab_titre\">&nbsp</td>");
                 rules.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
                 rules.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw)) + "</td>");
