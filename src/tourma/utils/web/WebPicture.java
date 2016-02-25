@@ -19,8 +19,14 @@ import tourma.data.Tournament;
 public class WebPicture {
 
     public static String getPictureAsHTML(BufferedImage pic, int width, int heigth) {
+        
+        return getPictureAsHTML(pic,width,heigth,Tournament.getTournament().getParams().isUseImage());
+        
+    }
+    
+    public static String getPictureAsHTML(BufferedImage pic, int width, int heigth,boolean use_image) {
         String img = "";
-        if (Tournament.getTournament().getParams().isUseImage()) {
+        if (use_image) {
             if (pic != null) {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 try {

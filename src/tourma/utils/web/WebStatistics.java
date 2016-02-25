@@ -41,7 +41,7 @@ public class WebStatistics {
                 g.dispose();
 
                 //BufferedImage buf = toBufferedImage(img, 640, 480);
-                String img_str = WebPicture.getPictureAsHTML(buf, 640, 480);
+                String img_str = WebPicture.getPictureAsHTML(buf, 640, 480,true);
                 stats.append(img_str);
             }
 
@@ -88,7 +88,7 @@ public class WebStatistics {
                     g.dispose();
 
                     //BufferedImage buf = toBufferedImage(img, 640, 480);
-                    String img_str = WebPicture.getPictureAsHTML(buf, 640, 480);
+                    String img_str = WebPicture.getPictureAsHTML(buf, 640, 480,true);
                     stats.append(img_str);
                 }
             }
