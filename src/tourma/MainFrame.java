@@ -2277,7 +2277,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 try {
                     web.start();
                 } catch (IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
@@ -2286,7 +2286,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 try {
                     server.wait();
                 } catch (InterruptedException | IllegalMonitorStateException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             server = null;
@@ -2295,8 +2295,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 web.stop();
                 try {
                     web.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException | IllegalMonitorStateException ex) {
+                    //Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             web = null;

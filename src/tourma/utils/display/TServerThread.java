@@ -22,6 +22,11 @@ public class TServerThread extends Thread {
 
     private Socket _socket;
 
+    public Socket getSocket()
+    {
+        return _socket;
+    }
+    
     public TServerThread(Socket socket) {
         _socket = socket;
     }
