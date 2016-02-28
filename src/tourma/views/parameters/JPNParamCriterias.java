@@ -5,6 +5,7 @@
 package tourma.views.parameters;
 
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.Round;
@@ -171,7 +172,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
 
     private void jspCoefStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspCoefStateChanged
        Tournament.getTournament().getParams().setTableBonusCoef((Double)jspCoef.getValue());
-       update();
+        update();
     }//GEN-LAST:event_jspCoefStateChanged
 
     /**
