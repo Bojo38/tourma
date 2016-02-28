@@ -37,6 +37,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.UnknownKeyException;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYSeries;
@@ -406,6 +407,8 @@ public final class JPNStatistics extends javax.swing.JPanel {
                         name2 = m.getRoster2().getName();
                     }
 
+                    try
+                    {
                     double t = total.get(name2).intValue();
                     t += 1.0;
                     total.put(name2, t);
@@ -437,6 +440,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
                         d = draw.get(name1);
                         d++;
                         draw.put(name1, d);
+                    }
+                    }
+                    catch (NullPointerException npe)
+                    {
+                        System.err.println("Unknown roster: "+name2+" or "+name1);
                     }
                 }
             }
@@ -541,6 +549,11 @@ public final class JPNStatistics extends javax.swing.JPanel {
                     } catch (NullPointerException npe) {
 
                     }
+                    catch (UnknownKeyException uke)
+                    {
+                        System.out.println("Unknown roster: "+uke.getLocalizedMessage());
+                    }
+                        
                 }
             }
         }

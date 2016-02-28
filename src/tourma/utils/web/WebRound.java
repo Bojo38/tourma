@@ -1106,8 +1106,7 @@ public class WebRound {
         s.append("<div class=\"section\"><table\n"
                 + "             style = \"border-width:0px;  margin-left: auto; margin-right: auto;text-align:center;\"\n"
                 + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
-                + "                > <tbody>\n"
-                + "                <tr>");
+                + "                > ");
 
         int nbCol = 2;
         boolean bTeamVictoryOnly = Tournament.getTournament().getParams().isTeamVictoryOnly();
@@ -1120,7 +1119,7 @@ public class WebRound {
             nbCol += Tournament.getTournament().getParams().getIndivRankingNumber();
         }
 
-        s.append("<tr><td class=\"tab_titre\" colspan\"" + nbCol + "\" >" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</td></tr>");
+        s.append("<tr><td class=\"tab_titre\" colspan=\"" + nbCol + "\" >" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</td></tr>");
 
         s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
 

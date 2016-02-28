@@ -811,7 +811,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                 p.add(icon, BorderLayout.NORTH);
             }
 
-            if ((t.getClan() != null)&&(!t.getClan().getName().equals(Translate.translate(Translate.CS_None)))) {
+            if (t.getClan() != null) {
                 JLabel icon = new JLabel();
                 icon.setBackground(Color.WHITE);
                 if (Tournament.getTournament().getParams().isUseImage()) {
@@ -823,7 +823,15 @@ public final class JFullScreenMatchs extends JFullScreen {
                         icon.setPreferredSize(new Dimension(line_height, line_height));
                     }
                 }
-                icon.setText(t.getClan().getName());
+                if (!t.getClan().getName().equals(Translate.translate(Translate.CS_None)))
+                {
+                    icon.setText(t.getClan().getName());
+                }
+                else
+                {
+                    icon.setForeground(Color.white);
+                    icon.setText(Translate.translate(Translate.CS_None));
+                }
                 icon.setFont(getOptimalFont(width / 5, line_height, t.getClan().getName()));
                 icon.setHorizontalAlignment(JLabel.CENTER);
                 icon.setHorizontalTextPosition(right ? JLabel.LEADING : JLabel.TRAILING);

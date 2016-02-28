@@ -58,6 +58,7 @@ public class Round implements XMLExport {
      *
      */
     private boolean mLooserCup = false;
+    private boolean mThirdPlace = false;
 
     private double mMinBonus = 1.0;
     private double mMaxBonus = 1.0;
@@ -275,6 +276,7 @@ public class Round implements XMLExport {
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
         round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
+        round.setAttribute(StringConstants.CS_THIRDPLACE, Boolean.toString(isThirdPlace()));
         round.setAttribute(StringConstants.CS_CUP, Boolean.toString(isCup()));
         round.setAttribute(StringConstants.CS_TOUR, Integer.toString(getCupTour()));
         round.setAttribute(StringConstants.CS_MAXTOUR, Integer.toString(getCupMaxTour()));
@@ -300,6 +302,7 @@ public class Round implements XMLExport {
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
         round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
+        round.setAttribute(StringConstants.CS_THIRDPLACE, Boolean.toString(isThirdPlace()));
         round.setAttribute(StringConstants.CS_CUP, Boolean.toString(isCup()));
         round.setAttribute(StringConstants.CS_TOUR, Integer.toString(getCupTour()));
         round.setAttribute(StringConstants.CS_MAXTOUR, Integer.toString(getCupMaxTour()));
@@ -336,6 +339,7 @@ public class Round implements XMLExport {
             setCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_CUP)));
             setCupTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_TOUR)));
             setCupMaxTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_MAXTOUR)));
+            setThirdPlace(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_THIRDPLACE)));
         } catch (NumberFormatException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
@@ -380,6 +384,7 @@ public class Round implements XMLExport {
             setCupMaxTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_MAXTOUR)));
             setMinBonus(Double.parseDouble(round.getAttributeValue(StringConstants.CS_MINCOEF)));
             setMaxBonus(Double.parseDouble(round.getAttributeValue(StringConstants.CS_MAXCOEF)));
+            setThirdPlace(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_THIRDPLACE)));
         } catch (NumberFormatException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
@@ -510,4 +515,14 @@ public class Round implements XMLExport {
         return result;
     }
 
+    public boolean isThirdPlace()
+    {
+        return mThirdPlace;
+    }
+    
+    public void setThirdPlace(boolean b)
+    {        
+        mThirdPlace=b;
+    }
+    
 }
