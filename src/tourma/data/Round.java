@@ -396,6 +396,7 @@ public class Round implements XMLExport {
         }
         while (i < roundIndex) {
             Tournament.getTournament().addRound(new Round());
+            i++;
         }
 
         final List<Element> matchs = round.getChildren(StringConstants.CS_MATCH);
