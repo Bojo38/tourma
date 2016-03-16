@@ -46,8 +46,8 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.setUndecorated(true);
-        this.setState(JFrame.MAXIMIZED_BOTH);
+  //      this.setUndecorated(true);
+  //      this.setState(JFrame.MAXIMIZED_BOTH);
 
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
         initComponents();
@@ -65,8 +65,8 @@ public abstract class JFullScreen extends javax.swing.JFrame {
      */
     public JFullScreen() {
         super();
-        this.setUndecorated(true);
-        this.setState(JFrame.MAXIMIZED_BOTH);
+//        this.setUndecorated(true);
+//        this.setState(JFrame.MAXIMIZED_BOTH);
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);

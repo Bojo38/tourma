@@ -155,9 +155,9 @@ public final class Ranking implements XMLExport, Ranked {
             this.mType = e.getAttributeValue(StringConstants.CS_TYPE);
             this.mValueType = e.getAttributeValue(StringConstants.CS_ORDER);
 
-            if (getName().equals(Translate.translate(CS_Individual_Annex))
-                    || getName().equals(Translate.translate(CS_Team_Annex))
-                    || getName().equals(Translate.translate(CS_Clan_Annex))) {
+            if (getName().equals(CS_Individual_Annex)
+                    || getName().equals(CS_Team_Annex)
+                    || getName().equals(CS_Clan_Annex)) {
                 mCriteria = new Criteria(mType);
                 annex = true;
             }
