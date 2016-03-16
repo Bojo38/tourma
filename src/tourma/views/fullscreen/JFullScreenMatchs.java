@@ -65,8 +65,8 @@ public final class JFullScreenMatchs extends JFullScreen {
 
     public JFullScreenMatchs(Socket s) throws IOException {
         this(s,false);
-        this.setState(JFrame.MAXIMIZED_BOTH);
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+//        this.setState(JFrame.MAXIMIZED_BOTH);
+//        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     public JFullScreenMatchs(Socket s, boolean clash) throws IOException {
@@ -75,8 +75,8 @@ public final class JFullScreenMatchs extends JFullScreen {
         loopStop = false;
         this.clash = clash;
         semStart.release();
-        this.setState(JFrame.MAXIMIZED_BOTH);
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+  //      this.setState(JFrame.MAXIMIZED_BOTH);
+  //      setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
         @Override
