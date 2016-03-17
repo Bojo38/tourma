@@ -176,8 +176,15 @@ public final class MjtRankingIndiv extends MjtRanking {
                 for (int i = 0; i < tour.getPool(0).getCompetitorCount(); i++) {
                     final ArrayList<Coach> rank = new ArrayList<>();
                     for (int j = 0; j < nbPool; j++) {
+                        try
+                        {
                         final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
                         rank.add((Coach) obj.getObject());
+                        }
+                        catch (IndexOutOfBoundsException ioob)
+                        {
+                            
+                        }
                     }
                     final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
 
