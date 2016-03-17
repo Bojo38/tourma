@@ -458,7 +458,7 @@ public class WebServer extends NanoHTTPD {
     protected String createHome() {
         String home = Tournament.getTournament().getDescription();
         if (home != null) {
-            home = StringEscapeUtils.escapeHtml4(home);
+//            home = StringEscapeUtils.escapeHtml4(home);
             return home;
         } else {
             return "&nbsp;";
