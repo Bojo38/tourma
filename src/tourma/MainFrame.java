@@ -1607,11 +1607,13 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jsp.add(editor);
         
 
-        editor.setDocumentText(Tournament.getTournament().getDescription());
+        String text="<html><header></header><body>"+Tournament.getTournament().getDescription()+"</body>";
+        editor.setDocumentText(text);
 
         //JScrollPane jsp = new JScrollPane(html);
         JOptionPane.showInputDialog(this, jsp);
-        Tournament.getTournament().setDescription(editor.getDocumentText());
+        String body=editor.getDocumentBody();
+        Tournament.getTournament().setDescription(body);
     }//GEN-LAST:event_jmiEditDescriptionActionPerformed
 
     private void jmiDelRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDelRoundActionPerformed
