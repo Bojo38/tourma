@@ -1,1 +1,7 @@
-{"name":"TourMa","tagline":"Fantasy Football Tournament Manager","body":"# tourma\r\n\r\nTOURnament MAnager for Fantasy Football tournaments.\r\n\r\nTo use it, just download the released JAR file. \r\n\r\nFor more instructions, have a look to the wiki pages.\r\n","google":"","note":"Don't delete this file! It's used internally to help with page regeneration."}
+{
+  "name": "TourMa",
+  "tagline": "Fantasy Football Tournament Manager",
+  "body": "# tourma\r\n\r\nTOURnament MAnager for Fantasy Football tournaments.\r\n\r\nTo use it, just download the released JAR file. \r\n\r\nFor more instructions, have a look to the wiki pages.\r\n",
+  "google": "",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
