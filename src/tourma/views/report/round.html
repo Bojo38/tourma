@@ -70,7 +70,7 @@
                 text-align:center;
             }
         </style>
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
     </head>
     <body>
         <#setting locale="fr_FR">
@@ -80,7 +80,7 @@
         <br>
         <table
             style="border-width:0px; width: 100%; text-align: left; margin-left: auto; margin-right: auto;text-align:center;"
-            border="1" cellpadding="0" cellspacing="0">
+            border="1" cellpadding="5" cellspacing="0">
             <tbody>
                 <tr>
                     <td class="tab_titre">#</td>
@@ -120,13 +120,14 @@
                     <td class="${style2}" style="font-size:16px;${backgroud}">${match.coach2} (${match.roster2})</td>
                     <#list match.values as value>
                     <td class="${style1}" style="font-size:14px;${backgroud}">${value.value1}</td>
-                    <td class="${style2}" style="font-size:14px;${backgroud}">${value.value2}</td>
+                    <td class="${style2}" style="font-size:14px;$${backgroud}">${value.value2}</td>
                     </#list>
                 </tr>
 
                 </#list>
             </tbody>
         </table>
+        </br>
 
 
 
