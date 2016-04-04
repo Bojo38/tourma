@@ -154,7 +154,7 @@ public final class JdgRanking extends javax.swing.JDialog {
         jPanel1.add(jbtExport);
 
         jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
-        jbtExportPDF.setText(bundle.getString("HTMLExport")); // NOI18N
+        jbtExportPDF.setText(bundle.getString("PDFExport")); // NOI18N
         jbtExportPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtExportPDFActionPerformed(evt);
@@ -276,7 +276,7 @@ public final class JdgRanking extends javax.swing.JDialog {
 
                     s=s.substring(s.indexOf("<html>"));
 
-                    HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Global Report");
+                    HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Ranking Report");
                 }
 
             } catch (IOException e) {
