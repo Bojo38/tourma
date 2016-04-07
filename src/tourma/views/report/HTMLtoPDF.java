@@ -11,6 +11,7 @@ import java.io.StringReader;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import java.io.File;
@@ -23,9 +24,14 @@ import tourma.data.Tournament;
  */
 public class HTMLtoPDF {
 
-    public static void exportToPDF(FileOutputStream output, String source, String title) {
+    public static void exportToPDF(FileOutputStream output, String source, String title)
+    {
+        exportToPDF(output,source,title,PageSize.A4);
+    }
+    
+    public static void exportToPDF(FileOutputStream output, String source, String title, Rectangle size) {
         try {
-            Document document = new Document(PageSize.A4);
+            Document document = new Document(size);
             PdfWriter pdfWriter = PdfWriter.getInstance(document, output);
             document.open();
             document.addAuthor(Tournament.getTournament().getParams().getTournamentOrga());

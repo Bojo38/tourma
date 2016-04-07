@@ -10,6 +10,7 @@
  */
 package teamma.views.report;
 
+import com.itextpdf.text.PageSize;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -39,6 +40,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import teamma.data.Player;
 import teamma.data.Roster;
@@ -49,7 +51,9 @@ import teamma.data.StarPlayer;
 import teamma.languages.Translate;
 import tourma.MainFrame;
 import tourma.data.Coach;
+import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
+import tourma.views.report.HTMLtoPDF;
 import tourma.views.report.ReportKeys;
 
 /**
@@ -104,6 +108,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         jbtOK = new javax.swing.JButton();
         jbtPrint = new javax.swing.JButton();
         jbtExport = new javax.swing.JButton();
+        jbtExportPDF = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jepHTML = new javax.swing.JEditorPane();
 
@@ -139,6 +144,16 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jbtExport);
+
+        jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtExportPDF.setText(bundle1.getString("PDFExport")); // NOI18N
+        jbtExportPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExportPDFActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtExportPDF);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
@@ -225,10 +240,75 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jbtExportActionPerformed
+
+    private void jbtExportPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportPDFActionPerformed
+
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("PDF", new String[]{"PDF", "pdf"});
+        jfc.setFileFilter(filter1);
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
+            String ext = StringConstants.CS_NULL;
+            final int i = url2.toString().lastIndexOf('.');
+            if (i > 0 && i < url2.length() - 1) {
+                ext = url2.substring(i + 1).toLowerCase(Locale.getDefault());
+            }
+            if (!ext.equals("pdf")) {
+                url2 = url2.append(".pdf");
+            }
+
+            final File export = new File(url2.toString());
+
+            OutputStreamWriter out = null;
+            InputStreamReader in = null;
+            try {
+                in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
+                {
+                    //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
+                    StringBuilder sb=new StringBuilder();
+                    int c = in.read();
+                    while (c != -1) {
+                        sb.append((char)c);
+                        c = in.read();
+                    }
+
+                    String s=sb.toString();
+
+                    s=s.substring(s.indexOf("<html>"));
+
+                    HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, this.getName(),PageSize.A4.rotate());
+                }
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
+                    }
+                }
+
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
+                    }
+                }
+            }
+        }
+
+        //        http://www.rgagnon.com/javadetails/java-html-to-pdf-using-itext.html
+
+    }//GEN-LAST:event_jbtExportPDFActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtExport;
+    private javax.swing.JButton jbtExportPDF;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtPrint;
     private javax.swing.JEditorPane jepHTML;

@@ -162,7 +162,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
         jPanel1.add(jbtExport);
 
         jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
-        jbtExportPDF.setText(bundle.getString("HTMLExport")); // NOI18N
+        jbtExportPDF.setText(bundle.getString("PDFExport")); // NOI18N
         jbtExportPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtExportPDFActionPerformed(evt);
