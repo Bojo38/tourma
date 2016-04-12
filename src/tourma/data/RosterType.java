@@ -95,6 +95,7 @@ public class RosterType implements XMLExport {
         mRostersNames.add(translate("SkavenKey"));
         mRostersNames.add(translate("SlannKey"));
         mRostersNames.add(translate("VampireKey"));
+        mRostersNames.add(translate("BretonianKey"));
 
         mRosterTypes.clear();
         mRosterTypes.put(translate("AmazonKey"), new RosterType(translate("AmazonKey")));
@@ -122,6 +123,7 @@ public class RosterType implements XMLExport {
         mRosterTypes.put(translate("SkavenKey"), new RosterType(translate("SkavenKey")));
         mRosterTypes.put(translate("SlannKey"), new RosterType(translate("SlannKey")));
         mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));
+        mRosterTypes.put(translate("BretonianKey"), new RosterType(translate("BretonianKey")));
     }
 
     /**
@@ -261,6 +263,9 @@ public class RosterType implements XMLExport {
                 break;
             case "Vampire":
                 result = translate("VampireKey");
+                break;
+            case "Bretonnien":
+                result = translate("BretonianKey");
                 break;
         }
         return result;

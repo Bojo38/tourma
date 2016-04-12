@@ -1211,14 +1211,14 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
 
-        ArrayList<String> rosterlist = LRB.getLRB().getRosterTypeListAsString(true);
+        ArrayList<String> rosterlist = LRB.getLRB().getRosterTypeListAsString(false);
         String input = (String) JOptionPane.showInputDialog(this,
                 Translate.translate(CS_ChooseRoster),
                 Translate.translate(CS_RosterChoice), JOptionPane.INFORMATION_MESSAGE,
                 null, rosterlist.toArray(), rosterlist.get(0));
         LOG.log(Level.INFO, "Roster chosen: " + input);
         if (input != null) {
-            RosterType rt = LRB.getLRB().getRosterType(input, true);
+            RosterType rt = LRB.getLRB().getRosterType(input, false);
             if (_coach != null) {
                 _coach.setRoster(tourma.data.RosterType.getRosterType(input));
             }
