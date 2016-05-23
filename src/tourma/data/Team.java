@@ -610,7 +610,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                         if (canMatch) {
                             //Switch Team
                             round.getMatch(i).setCompetitor2(t1_tmp);
-                            round.getMatch(k).setCompetitor2(t2);
+                            round.getMatch(k).setCompetitor1(t2);
 
                             // Switch coachs into matchs 
                             for (int j = 0; j < tour.getParams().getTeamMatesNumber(); j++) {
