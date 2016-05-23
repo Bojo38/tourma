@@ -47,6 +47,11 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         return false;
     }
 
+    public String getRawName()
+    {
+        return mName;
+    }
+    
     @Override
     public int hashCode() {
         return getName().hashCode();
