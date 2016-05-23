@@ -1133,6 +1133,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             i = mRound;
         }
 
+        boolean found = false;
+
         while (i <= mRound) {
             //for (int i = 0; i <= mRound; i++) {
             int victories = 0;
@@ -1143,6 +1145,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 if (c.getMatchCount() > i) {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
                     if (includeCurrent && tm.containsMatch(m)) {
+                        found = true;
                         final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
                         final Value val = m.getValue(crit);
                         if (m.getCompetitor1() == c) {
@@ -1159,13 +1162,16 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     }
                 }
             }
-            if (victories > loss) {
-                countTeamVictories++;
-            } else if (victories < loss) {
-                countTeamLoss++;
-            } else {
-                countTeamDraw++;
+            if (found) {
+                if (victories > loss) {
+                    countTeamVictories++;
+                } else if (victories < loss) {
+                    countTeamLoss++;
+                } else {
+                    countTeamDraw++;
+                }
             }
+            found = false;
             i++;
         }
 
