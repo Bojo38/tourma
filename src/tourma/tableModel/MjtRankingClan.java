@@ -30,7 +30,6 @@ import tourma.utils.ImageTreatment;
 @SuppressWarnings("serial")
 public final class MjtRankingClan extends MjtRanking {
 
-
     /**
      *
      * @param round
@@ -108,11 +107,11 @@ public final class MjtRankingClan extends MjtRanking {
                 final Team t = teams.get(k);
 
                 if (t.getClan() == clans.get(i)) {
-                    int value1 ;
-                    int value2 ;
-                    int value3 ;
-                    int value4 ;
-                    int value5 ;
+                    int value1;
+                    int value2;
+                    int value3;
+                    int value4;
+                    int value5;
 
                     int j = 0;
 
@@ -140,12 +139,15 @@ public final class MjtRankingClan extends MjtRanking {
                         //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
                         //final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
 
-                        aValue1.add(getValueByRankingType(mRankingType1, t, tm));
-                        aValue2.add(getValueByRankingType(mRankingType2, t, tm));
-                        aValue3.add(getValueByRankingType(mRankingType3, t, tm));
-                        aValue4.add(getValueByRankingType(mRankingType4, t, tm));
-                        aValue5.add(getValueByRankingType(mRankingType5, t, tm));
-
+                        if (tm == null) {
+                            System.out.println("Error");
+                        } else {
+                            aValue1.add(getValueByRankingType(mRankingType1, t, tm));
+                            aValue2.add(getValueByRankingType(mRankingType2, t, tm));
+                            aValue3.add(getValueByRankingType(mRankingType3, t, tm));
+                            aValue4.add(getValueByRankingType(mRankingType4, t, tm));
+                            aValue5.add(getValueByRankingType(mRankingType5, t, tm));
+                        }
                         j++;
                     }
 
@@ -165,19 +167,17 @@ public final class MjtRankingClan extends MjtRanking {
                         while (aValue5.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
                             removeMinValue(aValue5);
                         }
-                    } else {
-                        if (Tournament.getTournament().getParams().isExceptBestAndWorstTeam()) {
-                            removeMaxValue(aValue1);
-                            removeMinValue(aValue1);
-                            removeMaxValue(aValue2);
-                            removeMinValue(aValue2);
-                            removeMaxValue(aValue3);
-                            removeMinValue(aValue3);
-                            removeMaxValue(aValue4);
-                            removeMinValue(aValue4);
-                            removeMaxValue(aValue5);
-                            removeMinValue(aValue5);
-                        }
+                    } else if (Tournament.getTournament().getParams().isExceptBestAndWorstTeam()) {
+                        removeMaxValue(aValue1);
+                        removeMinValue(aValue1);
+                        removeMaxValue(aValue2);
+                        removeMinValue(aValue2);
+                        removeMaxValue(aValue3);
+                        removeMinValue(aValue3);
+                        removeMaxValue(aValue4);
+                        removeMinValue(aValue4);
+                        removeMaxValue(aValue5);
+                        removeMinValue(aValue5);
                     }
                     value1 = getValueFromArray(mRankingType1, aValue1);
                     value2 = getValueFromArray(mRankingType2, aValue2);
@@ -251,11 +251,11 @@ public final class MjtRankingClan extends MjtRanking {
                 final Coach c = coaches.get(k);
 
                 if (c.getClan() == clans.get(i)) {
-                    int value1 ;
-                    int value2 ;
-                    int value3 ;
-                    int value4 ;
-                    int value5 ;
+                    int value1;
+                    int value2;
+                    int value3;
+                    int value4;
+                    int value5;
 
                     ArrayList<Integer> aValue1 = new ArrayList<>();
                     ArrayList<Integer> aValue2 = new ArrayList<>();
@@ -298,19 +298,17 @@ public final class MjtRankingClan extends MjtRanking {
                         while (aValue5.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
                             removeMinValue(aValue5);
                         }
-                    } else {
-                        if (Tournament.getTournament().getParams().isExceptBestAndWorstIndiv()) {
-                            removeMaxValue(aValue1);
-                            removeMinValue(aValue1);
-                            removeMaxValue(aValue2);
-                            removeMinValue(aValue2);
-                            removeMaxValue(aValue3);
-                            removeMinValue(aValue3);
-                            removeMaxValue(aValue4);
-                            removeMinValue(aValue4);
-                            removeMaxValue(aValue5);
-                            removeMinValue(aValue5);
-                        }
+                    } else if (Tournament.getTournament().getParams().isExceptBestAndWorstIndiv()) {
+                        removeMaxValue(aValue1);
+                        removeMinValue(aValue1);
+                        removeMaxValue(aValue2);
+                        removeMinValue(aValue2);
+                        removeMaxValue(aValue3);
+                        removeMinValue(aValue3);
+                        removeMaxValue(aValue4);
+                        removeMinValue(aValue4);
+                        removeMaxValue(aValue5);
+                        removeMinValue(aValue5);
                     }
 
                     value1 = getValueFromArray(mRankingType1, aValue1);

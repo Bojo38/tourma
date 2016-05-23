@@ -740,7 +740,7 @@ public class Tournament implements IContainCoachs {
                                 getRankingTypes(false)));
                 if (this.getParams().isTeamTournament()) {
                     rankings.add(
-                            new Ranking(StringConstants.CS_TEAM, Ranking.CS_Individual,
+                            new Ranking(Ranking.CS_Team, Ranking.CS_General,
                                     StringConstants.CS_NULL,
                                     new MjtRankingTeam(this.getParams().isTeamVictoryOnly(), i,
                                             mTeams, false), getRankingTypes(true)));
@@ -834,7 +834,7 @@ public class Tournament implements IContainCoachs {
                                                 false),
                                         getRankingTypes(true)));
                         rankings.add(
-                                new Ranking(Ranking.CS_Positive,
+                                new Ranking(Ranking.CS_Team,
                                         criteria.getName(),
                                         Ranking.CS_Negative,
                                         new MjtAnnexRankTeam(i,

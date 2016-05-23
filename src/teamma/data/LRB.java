@@ -437,7 +437,8 @@ public final class LRB {
             if (rt != null) {
                 if (rt.getName() != null) {
                     if (translate) {
-                        if (name.equals(Translate.translate(rt.getName()))) {
+                        String tr=Translate.translate(rt.getName());
+                        if (name.equals(tr)) {
                             return rt;
                         }
                     } else {

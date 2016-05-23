@@ -218,7 +218,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     @Override
     public Element getXMLElement() {
         final Element team = new Element(StringConstants.CS_TEAM);
-        team.setAttribute(StringConstants.CS_NAME, this.getName());
+        team.setAttribute(StringConstants.CS_NAME, super.getName());
 
         if (this.getClan() != null) {
             team.setAttribute(StringConstants.CS_CLAN, this.getClan().getName());
@@ -610,13 +610,13 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                         if (canMatch) {
                             //Switch Team
                             round.getMatch(i).setCompetitor2(t1_tmp);
-                            round.getMatch(k).setCompetitor2(t2);
+                            round.getMatch(k).setCompetitor1(t2);
 
                             // Switch coachs into matchs 
                             for (int j = 0; j < tour.getParams().getTeamMatesNumber(); j++) {
                                 Match m = ((TeamMatch) round.getMatch(i)).getMatch(j);
                                 Match m_tmp = ((TeamMatch) round.getMatch(k)).getMatch(j);
-                                Coach c1_tmp = (Coach) m_tmp.getCompetitor2();
+                                Coach c1_tmp = (Coach) m_tmp.getCompetitor1();
                                 Coach c2 = (Coach) m.getCompetitor2();
                                 m.setCompetitor2(c1_tmp);
                                 m_tmp.setCompetitor1(c2);

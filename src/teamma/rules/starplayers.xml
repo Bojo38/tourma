@@ -168,6 +168,7 @@ and open the template in the editor.
         <team>ElfKey</team>
         <team>HighElfKey</team>
         <team>WoodElfKey</team>
+        <team>BretonianKey</team>
     </starplayer>
     
     <starplayer>
@@ -286,6 +287,7 @@ and open the template in the editor.
         </skills>
         <cost>320000</cost>
         <team>HumanKey</team>
+        <team>BretonianKey</team>
     </starplayer>
     
     <starplayer>
@@ -678,6 +680,7 @@ and open the template in the editor.
         <team>VampireKey</team>
         <team>WoodElfKey</team>
         <team>KhornesDaemonsKey</team>
+        <team>BretonianKey</team>
     </starplayer>
     
     <starplayer>
@@ -1076,6 +1079,7 @@ and open the template in the editor.
         <team>AmazonKey</team>
         <team>HalflingKey</team>
         <team>WoodElfKey</team>
+        <team>BretonianKey</team>
     </starplayer>
     <starplayer>
         <name>Zara The Slayer</name>
@@ -1101,6 +1105,7 @@ and open the template in the editor.
         <team>HalflingKey</team>
         <team>HighElfKey</team>
         <team>WoodElfKey</team>
+        <team>BretonianKey</team>
     </starplayer>
     <starplayer>
         <name>Mighty Zug</name>
@@ -1116,6 +1121,7 @@ and open the template in the editor.
         </skills>
         <cost>260000</cost>
         <team>HumanKey</team>
+        <team>BretonianKey</team>
     </starplayer>
     <starplayer>
         <name>Zzharg Madeye</name>

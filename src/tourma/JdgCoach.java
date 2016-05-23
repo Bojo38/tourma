@@ -759,7 +759,7 @@ public final class JdgCoach extends javax.swing.JDialog {
                 JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.getRostersNames(), RosterType.getRostersNames()[0]);
         
-        teamma.data.RosterType rt = teamma.data.LRB.getLRB().getRosterType(input, true);
+        teamma.data.RosterType rt = teamma.data.LRB.getLRB().getRosterType(input, false);
         
         if (rt != null) {
             teamma.data.Roster compo = new teamma.data.Roster();

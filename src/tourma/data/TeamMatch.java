@@ -172,8 +172,11 @@ public class TeamMatch extends Match {
     @Override
     public Element getXMLElement() {
         final Element match = new Element(StringConstants.CS_MATCH);
-        match.setAttribute(StringConstants.CS_TEAM + 1, this.getCompetitor1().getName());
-        match.setAttribute(StringConstants.CS_TEAM + 2, this.getCompetitor2().getName());
+        Competitor cmp1=this.getCompetitor1();
+        Competitor cmp2=this.getCompetitor2();
+        
+        match.setAttribute(StringConstants.CS_TEAM + 1, cmp1.getRawName());
+        match.setAttribute(StringConstants.CS_TEAM + 2, cmp2.getRawName());
 
         for (CoachMatch mMatch : mMatchs) {
             Element subMatch = mMatch.getXMLElement();
