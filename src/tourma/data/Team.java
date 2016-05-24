@@ -447,10 +447,28 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
 
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
 
+        int i = 0;
+        while (i < possible.size()) {
+            if (possible.get(i).havePlayed(this)) {
+                possible.remove(i);
+                i--;
+            }
+            i++;
+        }
+        
+        if (possible.isEmpty()) {
+            if (params.isEnableClans()) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NoRemainingTeam"));
+            }
+            possible = new ArrayList<>(opponents);
+        }
+        
         if (this.getClan() != null) {
             if (this.getClan() != tour.getClan(0)) {
-                if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundsCount() == 0) || (params.isAvoidClansMatch()))) {
-                    int i = 0;
+                if (params.isEnableClans() &&
+                        ((params.isAvoidClansFirstMatch() && tour.getRoundsCount() == 0) || params.isAvoidClansMatch())
+                        ) {
+                    i = 0;
                     while (i < possible.size()) {
                         if (possible.get(i).getClan().getName().equals(this.getClan().getName())) {
                             possible.remove(i);
@@ -461,19 +479,11 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                 }
             }
         }
-
-        int i = 0;
-        while (i < possible.size()) {
-            if (possible.get(i).havePlayed(this)) {
-                possible.remove(i);
-                i--;
-            }
-            i++;
-        }
+       
 
         if (possible.isEmpty()) {
             if (params.isEnableClans()) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanTeamKey"));
             }
             possible = new ArrayList<>(opponents);
         }
@@ -551,8 +561,11 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         boolean same_clan = false;
         if (params.isEnableClans()) {
             if ((getClan() != null) && (opponent.getClan() != null)) {
-                if ((params.isAvoidClansFirstMatch() && (Tournament.getTournament().getRoundsCount() == 0))
-                        || (params.isAvoidClansMatch())) {
+                if (
+                        (params.isAvoidClansFirstMatch() && (Tournament.getTournament().getRoundsCount() == 0))
+                        || (params.isAvoidClansMatch()
+                        )
+                    ) {
                     if (getClan().equals(opponent.getClan())) {
                         same_clan = true;
                     }
