@@ -301,7 +301,21 @@ public final class MjtRankingIndiv extends MjtRanking {
                     cl = col - 1;
                 }
                 if (col == 1) {
-                    object = ((Coach) obj.getObject()).getTeamMates().getName();
+                    if (((Coach) obj.getObject())!=null)
+                    {
+                        if (((Coach) obj.getObject()).getTeamMates()!=null)
+                        {
+                            object = ((Coach) obj.getObject()).getTeamMates().getName();
+                        }
+                        else
+                        {
+                            object="";
+                        }
+                    }
+                    else
+                    {
+                        object="";
+                    }
                 }
             }
 
