@@ -11,6 +11,7 @@
 package tourma.views.round;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import tourma.data.Category;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.ETeamPairing;
 import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.Pool;
@@ -484,6 +486,93 @@ public final class JPNRound extends javax.swing.JPanel {
     }
 
     private void jtbMatchesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbMatchesMouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON3) {
+            if (jtbMatches.getSelectedRow() >= 0) {
+                CoachMatch cm = mRound.getCoachMatchs().get(jtbMatches.getSelectedRow());
+                Coach c = null;
+                Coach opp = null;
+                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                    if (jtbMatches.getSelectedColumn() == 2) {
+                        c = (Coach) cm.getCompetitor1();
+                        opp = (Coach) cm.getCompetitor2();
+                    }
+                    if (jtbMatches.getSelectedColumn() == 5) {
+                        c = (Coach) cm.getCompetitor2();
+                        opp = (Coach) cm.getCompetitor1();
+                    }
+                } else {
+                    if (jtbMatches.getSelectedColumn() == 1) {
+                        c = (Coach) cm.getCompetitor1();
+                        opp = (Coach) cm.getCompetitor2();
+                    }
+                    if (jtbMatches.getSelectedColumn() == 4) {
+                        c = (Coach) cm.getCompetitor2();
+                        opp = (Coach) cm.getCompetitor1();
+                    }
+                }
+                if (c != null) {
+                    int option = JOptionPane.showConfirmDialog(this, "Voulez vous échanger l'appariement de ce coach ?", "Appariement", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (option == JOptionPane.YES_OPTION) {
+
+                        ArrayList<Coach> coachs = new ArrayList<>();
+                        if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                            for (int i = 0; i < opp.getTeamMates().getCoachsCount(); i++) {
+                                coachs.add(opp.getTeamMates().getCoach(i));
+                            }
+                        } else {
+                            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                                if (Tournament.getTournament().getCoach(i) != c) {
+                                    coachs.add(Tournament.getTournament().getCoach(i));
+                                }
+                            }
+                        }
+
+                        ArrayList<String> coachNames = new ArrayList<>();
+                        for (int i = 0; i < coachs.size(); i++) {
+                            coachNames.add(coachs.get(i).getName());
+                        }
+                        Object obj = JOptionPane.showOptionDialog(this, "Choisissez le nouvel adersaire de " + c.getName(), "Pairing", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, coachNames.toArray(), opp.getName());
+
+                        int index = (Integer) (obj);
+                        Coach newOpp = coachs.get(index);
+
+                        opp.removeMatch(cm);
+
+                        CoachMatch cm2 = null;
+                        for (int i = 0; i < mRound.getCoachMatchs().size(); i++) {
+                            cm2 = mRound.getCoachMatchs().get(i);
+                            if (cm2.getCompetitor1() == newOpp) {
+                                newOpp.removeMatch(cm2);
+                                opp.addMatch(cm2);
+                                cm2.setCompetitor1(opp);
+                                if (cm.getCompetitor1() == c) {
+                                    cm.setCompetitor2(newOpp);
+                                }
+                                if (cm.getCompetitor2() == c) {
+                                    cm.setCompetitor1(newOpp);
+                                }
+
+                                break;
+                            }
+                            if (cm2.getCompetitor2() == newOpp) {
+                                newOpp.removeMatch(cm2);
+                                opp.addMatch(cm2);
+                                cm2.setCompetitor2(opp);
+                                if (cm.getCompetitor1() == c) {
+                                    cm.setCompetitor2(newOpp);
+                                }
+                                if (cm.getCompetitor2() == c) {
+                                    cm.setCompetitor1(newOpp);
+                                }
+                                break;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
         if (evt.getClickCount() == 2) {
             if (mTournament.getParams().isMultiRoster()) {
                 int col = jtbMatches.getSelectedColumn();
@@ -538,31 +627,45 @@ public final class JPNRound extends javax.swing.JPanel {
             CoachMatch match = this.mRound.getCoachMatchs().get(matchIndex);
             boolean c1 = false;
             int critIndex = -1;
-            int col=jtbMatches.getSelectedColumn();
+            int col = jtbMatches.getSelectedColumn();
             switch (col) {
+                case 2:
+                    if (!Tournament.getTournament().getParams().isTeamTournament()) {
+                        c1 = true;
+                        critIndex = 0;
+                    }
+                    break;
                 case 3:
-                    c1 = true;
-                    critIndex = 0;
+                    if (Tournament.getTournament().getParams().isTeamTournament()) {
+                        c1 = true;
+                        critIndex = 0;
+                    } else {
+                        c1 = false;
+                        critIndex = 0;
+                    }
                     break;
                 case 4:
-                    c1 = false;
-                    critIndex = 0;
+                    if (Tournament.getTournament().getParams().isTeamTournament()) {
+                        c1 = false;
+                        critIndex = 0;
+                    }
                     break;
                 default:
-                    if (col >= 7) {
-                        c1=(col%2==1);
-                        critIndex=(col-5)/2;
-                    }                   
+                    if (((Tournament.getTournament().getParams().isTeamTournament())&&(col >= 7))||
+                            (((!Tournament.getTournament().getParams().isTeamTournament())&&(col >= 5)))) {
+                        c1 = (col % 2 == 1);
+                        if (Tournament.getTournament().getParams().isTeamTournament()) {
+                            critIndex = (col - 5) / 2;
+                        } else {
+                            critIndex = (col - 3) / 2;
+                        }
+                    }
             }
-            if (critIndex>=0)
-            {
-                Value mv= match.getValues().get(Tournament.getTournament().getParams().getCriteria(critIndex));
-                if (c1)
-                {
+            if (critIndex >= 0) {
+                Value mv = match.getValues().get(Tournament.getTournament().getParams().getCriteria(critIndex));
+                if (c1) {
                     mv.setValue1(0);
-                }
-                else
-                {
+                } else {
                     mv.setValue2(0);
                 }
             }
