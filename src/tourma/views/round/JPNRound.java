@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * JPNRound.java
  *
  * Created on 11 mai 2010, 14:13:53
@@ -30,6 +30,7 @@ import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.Value;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankIndiv;
@@ -86,14 +87,14 @@ public final class JPNRound extends javax.swing.JPanel {
             jtpGlobal.addTab(
                     Translate.translate(CS_ByTeam),
                     new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png"
-                            )), mJpnTeamRound);
+                    )), mJpnTeamRound);
         }
         if (mTournament.getParams().isEnableClans()) {
             mJpnClanRound = new JPNClan(r, t);
             jtpGlobal.addTab(
                     Translate.translate(CS_ByClan),
                     new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png"
-                            )), mJpnClanRound);
+                    )), mJpnClanRound);
         }
 
         if (mTournament.getGroupsCount() > 1) {
@@ -223,30 +224,20 @@ public final class JPNRound extends javax.swing.JPanel {
             if (panel instanceof JPNGroup) {
                 ((JPNGroup) panel).setRoundOnly(mRoundOnly);
                 ((JPNGroup) panel).update();
-            } else {
-                if (panel instanceof JPNTeamRound) {
-                    ((JPNTeamRound) panel).setRoundOnly(mRoundOnly);
-                    ((JPNTeamRound) panel).update();
-                } else {
-                    if (panel instanceof JPNClan) {
-                        ((JPNClan) panel).setRoundOnly(mRoundOnly);
-                        ((JPNClan) panel).update();
-                    } else {
-                        if (panel instanceof JPNPool) {
-                            ((JPNPool) panel).setRoundOnly(mRoundOnly);
-                            ((JPNPool) panel).update();
-                        } else {
-                            if (panel instanceof JPNCategory) {
-                                ((JPNCategory) panel).setRoundOnly(mRoundOnly);
-                                ((JPNCategory) panel).update();
-                            } else {
-                                if (panel instanceof JPNCup) {
-                                    ((JPNCup) panel).update();
-                                }
-                            }
-                        }
-                    }
-                }
+            } else if (panel instanceof JPNTeamRound) {
+                ((JPNTeamRound) panel).setRoundOnly(mRoundOnly);
+                ((JPNTeamRound) panel).update();
+            } else if (panel instanceof JPNClan) {
+                ((JPNClan) panel).setRoundOnly(mRoundOnly);
+                ((JPNClan) panel).update();
+            } else if (panel instanceof JPNPool) {
+                ((JPNPool) panel).setRoundOnly(mRoundOnly);
+                ((JPNPool) panel).update();
+            } else if (panel instanceof JPNCategory) {
+                ((JPNCategory) panel).setRoundOnly(mRoundOnly);
+                ((JPNCategory) panel).update();
+            } else if (panel instanceof JPNCup) {
+                ((JPNCup) panel).update();
             }
         }
 
@@ -306,6 +297,11 @@ public final class JPNRound extends javax.swing.JPanel {
         jtbMatches.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtbMatchesMouseClicked(evt);
+            }
+        });
+        jtbMatches.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbMatchesKeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(jtbMatches);
@@ -510,7 +506,7 @@ public final class JPNRound extends javax.swing.JPanel {
                     jpn.setLayout(new BorderLayout());
 
                     JLabel jlb = new JLabel(
-                            Translate.translate(CS_ChooseARosterFor)+" "
+                            Translate.translate(CS_ChooseARosterFor) + " "
                             + coach.getName());
 
                     jpn.add(jlb, BorderLayout.NORTH);
@@ -533,6 +529,46 @@ public final class JPNRound extends javax.swing.JPanel {
         }
         MainFrame.getMainFrame().update();
     }//GEN-LAST:event_jtbMatchesMouseClicked
+
+    private void jtbMatchesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbMatchesKeyPressed
+        // First detect value to set
+        // Get Match
+        int matchIndex = jtbMatches.getSelectedRow();
+        if (matchIndex >= 0) {
+            CoachMatch match = this.mRound.getCoachMatchs().get(matchIndex);
+            boolean c1 = false;
+            int critIndex = -1;
+            int col=jtbMatches.getSelectedColumn();
+            switch (col) {
+                case 3:
+                    c1 = true;
+                    critIndex = 0;
+                    break;
+                case 4:
+                    c1 = false;
+                    critIndex = 0;
+                    break;
+                default:
+                    if (col >= 7) {
+                        c1=(col%2==1);
+                        critIndex=(col-5)/2;
+                    }                   
+            }
+            if (critIndex>=0)
+            {
+                Value mv= match.getValues().get(Tournament.getTournament().getParams().getCriteria(critIndex));
+                if (c1)
+                {
+                    mv.setValue1(0);
+                }
+                else
+                {
+                    mv.setValue2(0);
+                }
+            }
+        }
+    }//GEN-LAST:event_jtbMatchesKeyPressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;

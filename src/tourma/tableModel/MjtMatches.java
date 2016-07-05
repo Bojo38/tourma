@@ -394,6 +394,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
 
+        
         jlb.setEditable(false);
 
         boolean useColor = Tournament.getTournament().getParams().isUseColor();
