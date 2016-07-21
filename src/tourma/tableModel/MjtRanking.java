@@ -1133,16 +1133,19 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             i = mRound;
         }
 
+        boolean matchFound = false;
         while (i <= mRound) {
             //for (int i = 0; i <= mRound; i++) {
             int victories = 0;
             int loss = 0;
 
             for (int j = 0; j < t.getCoachsCount(); j++) {
+                matchFound = false;
                 final Coach c = t.getCoach(j);
                 if (c.getMatchCount() > i) {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
                     if (includeCurrent && tm.containsMatch(m)) {
+                        matchFound = true;
                         final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
                         final Value val = m.getValue(crit);
                         if (m.getCompetitor1() == c) {
@@ -1159,12 +1162,14 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     }
                 }
             }
-            if (victories > loss) {
-                countTeamVictories++;
-            } else if (victories < loss) {
-                countTeamLoss++;
-            } else {
-                countTeamDraw++;
+            if (matchFound) {
+                if (victories > loss) {
+                    countTeamVictories++;
+                } else if (victories < loss) {
+                    countTeamLoss++;
+                } else {
+                    countTeamDraw++;
+                }
             }
             i++;
         }
@@ -1323,14 +1328,22 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 }
             }
             switch (rankingType) {
-                case Parameters.C_RANKING_POINTS:
-                    value += (getVNDByTeam(t, tm, true) / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                    value += ((getVNDByTeam(t, tm, true) % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
-                    break;
-                case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
-                    value += (getVNDByTeam(t, tm, true) / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                    value += ((getVNDByTeam(t, tm, true) % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
-                    break;
+                case Parameters.C_RANKING_POINTS: {
+                    int VND = getVNDByTeam(t, tm, true);
+                    int nbVictory = (VND / 1000000);
+                    int nbDraw = (VND % 1000000) / 1000;
+                    value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                    value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                }
+                break;
+                case Parameters.C_RANKING_POINTS_WITHOUT_BONUS: {
+                    int VND = getVNDByTeam(t, tm, true);
+                    int nbVictory = (VND / 1000000);
+                    int nbDraw = (VND % 1000000) / 1000;
+                    value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                    value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                }
+                break;
                 case Parameters.C_RANKING_OPP_POINTS:
                 case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
                     if (t.getCoachsCount() > 0) {
