@@ -11,6 +11,7 @@
 package tourma.views.round;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
@@ -531,43 +532,52 @@ public final class JPNRound extends javax.swing.JPanel {
                         for (int i = 0; i < coachs.size(); i++) {
                             coachNames.add(coachs.get(i).getName());
                         }
-                        Object obj = JOptionPane.showOptionDialog(this, "Choisissez le nouvel adersaire de " + c.getName(), "Pairing", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, coachNames.toArray(), opp.getName());
 
-                        int index = (Integer) (obj);
-                        Coach newOpp = coachs.get(index);
+                        JComboBox jcbCoaches = new JComboBox(coachNames.toArray());
+                        jcbCoaches.setSelectedItem(opp.getName());
+                        JLabel jlbMessage = new JLabel("Choisissez le nouvel adersaire de " + c.getName());
+                        JPanel jpnMessage = new JPanel(new FlowLayout());
+                        jpnMessage.add(jlbMessage);
+                        jpnMessage.add(jcbCoaches);
 
-                        opp.removeMatch(cm);
+                        int result = JOptionPane.showConfirmDialog(this,jpnMessage, "Pairing", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-                        CoachMatch cm2 = null;
-                        for (int i = 0; i < mRound.getCoachMatchs().size(); i++) {
-                            cm2 = mRound.getCoachMatchs().get(i);
-                            if (cm2.getCompetitor1() == newOpp) {
-                                newOpp.removeMatch(cm2);
-                                opp.addMatch(cm2);
-                                cm2.setCompetitor1(opp);
-                                if (cm.getCompetitor1() == c) {
-                                    cm.setCompetitor2(newOpp);
+                        if (result == JOptionPane.OK_OPTION) {
+                            Coach newOpp = coachs.get(jcbCoaches.getSelectedIndex());
+
+                            opp.removeMatch(cm);
+
+                            CoachMatch cm2 = null;
+                            for (int i = 0; i < mRound.getCoachMatchs().size(); i++) {
+                                cm2 = mRound.getCoachMatchs().get(i);
+                                if (cm2.getCompetitor1() == newOpp) {
+                                    newOpp.removeMatch(cm2);
+                                    opp.addMatch(cm2);
+                                    cm2.setCompetitor1(opp);
+                                    if (cm.getCompetitor1() == c) {
+                                        cm.setCompetitor2(newOpp);
+                                    }
+                                    if (cm.getCompetitor2() == c) {
+                                        cm.setCompetitor1(newOpp);
+                                    }
+
+                                    break;
                                 }
-                                if (cm.getCompetitor2() == c) {
-                                    cm.setCompetitor1(newOpp);
+                                if (cm2.getCompetitor2() == newOpp) {
+                                    newOpp.removeMatch(cm2);
+                                    opp.addMatch(cm2);
+                                    cm2.setCompetitor2(opp);
+                                    if (cm.getCompetitor1() == c) {
+                                        cm.setCompetitor2(newOpp);
+                                    }
+                                    if (cm.getCompetitor2() == c) {
+                                        cm.setCompetitor1(newOpp);
+                                    }
+                                    break;
                                 }
-
-                                break;
                             }
-                            if (cm2.getCompetitor2() == newOpp) {
-                                newOpp.removeMatch(cm2);
-                                opp.addMatch(cm2);
-                                cm2.setCompetitor2(opp);
-                                if (cm.getCompetitor1() == c) {
-                                    cm.setCompetitor2(newOpp);
-                                }
-                                if (cm.getCompetitor2() == c) {
-                                    cm.setCompetitor1(newOpp);
-                                }
-                                break;
-                            }
+
                         }
-
                     }
                 }
             }
@@ -651,8 +661,8 @@ public final class JPNRound extends javax.swing.JPanel {
                     }
                     break;
                 default:
-                    if (((Tournament.getTournament().getParams().isTeamTournament())&&(col >= 7))||
-                            (((!Tournament.getTournament().getParams().isTeamTournament())&&(col >= 5)))) {
+                    if (((Tournament.getTournament().getParams().isTeamTournament()) && (col >= 7))
+                            || (((!Tournament.getTournament().getParams().isTeamTournament()) && (col >= 5)))) {
                         c1 = (col % 2 == 1);
                         if (Tournament.getTournament().getParams().isTeamTournament()) {
                             critIndex = (col - 5) / 2;
