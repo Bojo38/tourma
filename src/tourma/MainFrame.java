@@ -13,10 +13,16 @@ package tourma;
 import com.bric.swing.ColorPicker;
 import com.hexidec.ekit.EkitCore;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.SplashScreen;
 import java.awt.Toolkit;
+import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -2641,13 +2647,158 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private static final String CS_TeamPoolAnnexRanking = "Team Pool Annex Ranking";
     private static final String CS_Matchs = "Matchs";
 
+    
+        /**
+     * Display a (very) basic progress bar
+     * @param pct how much of the progress bar to display 0-100
+     */
+    public static void splashProgress(int pct)
+    {
+        if (mySplash != null && mySplash.isVisible())
+        {
+            splashGraphics.setPaint(Color.LIGHT_GRAY);
+            splashGraphics.fill(splashProgressArea);
+            
+            // draw an outline
+            splashGraphics.setPaint(Color.BLUE);
+            splashGraphics.draw(splashProgressArea);
+
+            // Calculate the width corresponding to the correct percentage
+            int x = (int) splashProgressArea.getMinX();
+            int y = (int) splashProgressArea.getMinY();
+            int wid = (int) splashProgressArea.getWidth();
+            int hgt = (int) splashProgressArea.getHeight();
+
+            int doneWidth = Math.round(pct*wid/100.f);
+            doneWidth = Math.max(0, Math.min(doneWidth, wid-1));  // limit 0-width
+
+            // fill the done part one pixel smaller than the outline
+            splashGraphics.setPaint(Color.CYAN);
+            splashGraphics.fillRect(x, y+1, doneWidth, hgt-1);
+            
+            x = (int) splashThanksTo.getMinX();
+            y = (int) splashThanksTo.getMinY();
+            wid = (int) splashThanksTo.getWidth();
+            hgt = (int) splashThanksTo.getHeight();
+
+            doneWidth = Math.round(pct*wid/100.f);
+            doneWidth = Math.max(0, Math.min(doneWidth, wid-1));  // limit 0-width
+
+            // fill the done part one pixel smaller than the outline
+            splashGraphics.setPaint(Color.WHITE);
+            splashGraphics.fillRect(x, y+1, doneWidth, hgt-1);
+
+            // erase the last status text
+            splashGraphics.setPaint(Color.LIGHT_GRAY);
+            splashGraphics.fill(splashTextArea);
+
+            // draw the text
+            splashGraphics.setPaint(Color.BLACK);
+            splashGraphics.drawString(Translate.translate("GREETINGS0"), (int)(splashThanksTo.getX() + 10),(int)(splashThanksTo.getY() + 15));
+            splashGraphics.drawString(Translate.translate("GREETINGS1"), (int)(splashThanksTo.getX() + 10),(int)(splashThanksTo.getY() + 15+splashGraphics.getFontMetrics().getHeight()));
+            splashGraphics.drawString(Translate.translate("GREETINGS2"), (int)(splashThanksTo.getX() + 10),(int)(splashThanksTo.getY() + 15+splashGraphics.getFontMetrics().getHeight()*2));
+            splashGraphics.drawString(Translate.translate("GREETINGS3"), (int)(splashThanksTo.getX() + 10),(int)(splashThanksTo.getY() + 15+splashGraphics.getFontMetrics().getHeight()*3));
+            splashGraphics.drawString(Translate.translate("GREETINGS4"), (int)(splashThanksTo.getX() + 10),(int)(splashThanksTo.getY() + 15+splashGraphics.getFontMetrics().getHeight()*4));
+            splashGraphics.drawString(Translate.translate("GREETINGS5"), (int)(splashThanksTo.getX() + 10),(int)(splashThanksTo.getY() + 15+splashGraphics.getFontMetrics().getHeight()*5));
+            
+            // make sure it's displayed
+            mySplash.update();
+        }
+    }
+    
+       /**
+     * just a stub to simulate a long initialization task that updates
+     * the text and progress parts of the status in the Splash
+     */
+    private static void appInit()
+    {
+        for(int i=1;i<=2;i++)
+        {
+            int pctDone = i * 2;
+            splashText("Initialization");
+            splashProgress(pctDone);
+            try
+            {
+                Thread.sleep(500);
+            }
+            catch (InterruptedException ex)
+            {
+                // ignore it
+            }
+        }
+    }
+    /**
+     * Display text in status area of Splash.  Note: no validation it will fit.
+     * @param str - text to be displayed
+     */
+    public static void splashText(String str)
+    {
+        if (mySplash != null && mySplash.isVisible())
+        {   // important to check here so no other methods need to know if there
+            // really is a Splash being displayed
+
+            // erase the last status text
+            splashGraphics.setPaint(Color.LIGHT_GRAY);
+            splashGraphics.fill(splashTextArea);
+
+            // draw the text
+            splashGraphics.setPaint(Color.BLACK);
+            splashGraphics.drawString(str, (int)(splashTextArea.getX() + 10),(int)(splashTextArea.getY() + 15));
+
+            // make sure it's displayed
+            mySplash.update();
+        }
+    }
+    
+    /**
+     * Prepare the global variables for the other splash functions
+     */
+    private static void splashInit()
+    {
+        mySplash = SplashScreen.getSplashScreen();
+        if (mySplash != null)
+        {   // if there are any problems displaying the splash this will be null
+            Dimension ssDim = mySplash.getSize();
+            int height = ssDim.height;
+            int width = ssDim.width;
+            // stake out some area for our status information
+            splashTextArea = new Rectangle2D.Double(15., height*0.88, width * .45, 32.);
+            splashProgressArea = new Rectangle2D.Double(width * .55, height*.92, width*.4, 12 );
+            splashThanksTo = new Rectangle2D.Double(width * .05, height*.45, width*.9, 200 );
+
+            // create the Graphics environment for drawing status info
+            splashGraphics = mySplash.createGraphics();
+            font = new Font("Dialog", Font.PLAIN, 14);
+            splashGraphics.setFont(font);
+            
+            splashGraphics.fill(splashThanksTo);
+            
+            // initialize the status info
+            splashText("Start");
+            splashProgress(0);
+        }
+    }
+    
+    private static SplashScreen mySplash=null;
+    private static Rectangle2D splashTextArea=null;
+    private static Rectangle2D splashProgressArea=null;
+    private static Rectangle2D splashThanksTo=null;
+    private static Graphics2D splashGraphics=null;
+    private static Font font=null;
+    
     public static void main(final String args[]) {
 
+        splashInit();
+
+        appInit();
+        
+        if (mySplash != null)   // check if we really had a spash screen
+            mySplash.close();   // if so we're now done with it
+                
         try {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
                 @Override
                 public void run() {
-
                     final ArrayList<String> StartOptions = new ArrayList<>();
                     StartOptions.add(
                             Translate.translate(CS_NewGame));
