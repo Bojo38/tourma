@@ -14,6 +14,7 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import java.awt.Dimension;
 import tourma.*;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
@@ -88,6 +89,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        this.setPreferredSize(new Dimension(800,600));
+        
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
@@ -107,8 +110,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
     private void update() {
         if (!mByTeam) {
             try {
-                File filename = createIndivLabels(mPreFilled);
-                jepHTML.setPage(filename.toURI().toURL());
+                mFilename = createIndivLabels(mPreFilled);
+                jepHTML.setPage(mFilename.toURI().toURL());
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
             }
@@ -159,8 +162,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                 if (prefilled) {
                     match.put("coach1", cm.getCompetitor1().getName());
                     match.put("coach2", cm.getCompetitor2().getName());
-                    match.put("roster1", ((Coach) cm.getCompetitor1()).getRoster());
-                    match.put("roster2", ((Coach) cm.getCompetitor2()).getRoster());
+                    match.put("roster1", ((Coach) cm.getCompetitor1()).getRoster().getName());
+                    match.put("roster2", ((Coach) cm.getCompetitor2()).getRoster().getName());
                 } else {
                     match.put("coach1", "&nbsp;");
                     match.put("coach2", "&nbsp;");
@@ -301,6 +304,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
 
                     s = s.substring(s.indexOf("<html>"));
 
+                    
                     HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Global Report");
                 }
 
