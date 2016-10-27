@@ -29,7 +29,12 @@ public class HTMLtoPDF {
         exportToPDF(output,source,title,PageSize.A4);
     }
     
-    public static void exportToPDF(FileOutputStream output, String source, String title, Rectangle size) {
+    public static void exportToPDF(FileOutputStream output, String source, String title, Rectangle size) 
+    {
+        exportToPDF(output,source,title,size,false);
+    }
+    
+    public static void exportToPDF(FileOutputStream output, String source, String title, Rectangle size,boolean excludeCutTable) {
         try {
             Document document = new Document(size);
             PdfWriter pdfWriter = PdfWriter.getInstance(document, output);
@@ -41,8 +46,9 @@ public class HTMLtoPDF {
             document.addTitle(title);
 
             XMLWorkerHelper worker = XMLWorkerHelper.getInstance();
-
+            
             worker.parseXHtml(pdfWriter, document, new StringReader(source));
+            
             document.close();
         } catch (DocumentException | IOException e) {
             e.printStackTrace();

@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <STYLE type="text/css">
+            div#titre {
+                text-align: center;
+                font-size: 28px;
+            }
+
+            div#soustitre {
+                text-align: center;
+                font-size: 20px;
+            }
+
+            td
+            {
+                font-size:12px;
+            }
+            td.tab_titre {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px 1px 0px 0px;
+                border-color: #d9d9d9;
+                background-color: #444444;
+                color: #cccccc;
+                text-align:center;
+                font-size:14px;
+            }
+
+            td.tab_pos {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px 1px 0px 0px;
+                border-color: #000000;
+                background-color: #ffffff;
+                color: #000000;
+                text-align:center;
+            }
+
+            td.winner {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px 1px 0px 0px ;
+                border-color: rgb(68,68,68) rgb(68,68,68);
+                background-color: #eeeeee;
+                color: rgb(0,0,88);
+                font-weight: 700;
+                text-align:center;
+            }
+
+            td.looser {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px 1px 0px 0px ;
+                border-color:  #444444;
+                background-color: #eeeeee;
+                color: #880000;
+                text-align:center;
+            }
+
+            td.draw {
+                padding: 7px 10px;
+                border-style: solid;
+                border-width: 1px 1px 0px 0px ;
+                border-color:  #444444;
+                background-color: #eeeeee;
+                color: #444444;
+                font-style: italic;
+                text-align:center;
+            }
+
+                table { page-break-inside:avoid }
+                //tr    { page-break-inside:avoid; page-break-after:auto }
+                //td    { page-break-inside:avoid; page-break-after:auto }
+                //thead { display:table-header-group }
+                //tfoot { display:table-footer-group }
+        </style>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
+    </head>
+    <body>
+        <#setting locale="fr_FR">
+        <#setting number_format="0.##">
+        <!--
+                <div id="titre">${nom}</div>
+                <br></br>-->        
+        <#list team_matches as team_match>
+        <table
+            style="border-width:0px; width: 100%; text-align: left; margin-left: auto; margin-right: auto;text-align:center;"
+            border="1" cellpadding="5" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td class="tab_pos">#</td>
+                    <td class="tab_pos" >${TitleTeam} 1</td>
+                    <td class="tab_pos" >${TitleCoach} 1</td>
+                    <td class="tab_pos" colspan="2">&nbsp;</td>
+                    <td class="tab_pos" >${TitleCoach} 2</td>
+                    <td class="tab_pos" >${TitleTeam} 2</td>
+                </tr>
+                <#list team_match.matches as match>
+                <tr>
+                    <#if match.coachindex==0>
+                    <td class="tab_pos" style="font-size:16px;" rowspan="${nb_rows_team}">${team_match.numero}</td>
+                    <td class="tab_pos" style="font-size:16px;" rowspan="${nb_rows_team}">${team_match.team1}</td>
+                    </#if>
+                    <td class="tab_pos" style="font-size:16px;" rowspan="${nb_rows}">${match.coach1}<br/>${match.roster1} </td>
+                    <td class="tab_pos" style="font-size:16px;" colspan="2">${match.firstcriterianame}</td>
+                    <td class="tab_pos" style="font-size:16px;" rowspan="${nb_rows}">${match.coach1}<br/>${match.roster2} </td>
+                    <#if match.coachindex==0>
+                    <td class="tab_pos" style="font-size:16px;" rowspan="${nb_rows_team}">${team_match.team2}</td>
+                    </#if>
+                </tr>
+                <tr>
+                    <td class="tab_pos" style="font-size:10px;" >${match.firstcriteriavalue1} </td>
+                    <td class="tab_pos" style="font-size:10px;" >${match.firstcriteriavalue2} </td>
+                </tr>
+
+                <#list match.criterias as criteria>
+                <tr>
+                    <td colspan="2" class="tab_pos" style="font-size:10px;">${criteria.nom}</td>
+                </tr>
+                <tr>
+                    <td  class="tab_pos">${criteria.value1}</td>
+                    <td  class="tab_pos">${criteria.value2}</td>
+                </tr>
+                </#list>
+                </#list>
+
+            </tbody>
+        </table>
+        &nbsp;
+        <br/>
+        </#list>
+
+        <div align="right">
+            <small>
+                generated by TourMa © ${dateGeneration}.
+            </small>
+        </div>
+    </body>
+</html>
