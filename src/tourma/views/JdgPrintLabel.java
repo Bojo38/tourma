@@ -46,6 +46,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
@@ -89,8 +90,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        this.setPreferredSize(new Dimension(800,600));
-        
+        this.setPreferredSize(new Dimension(800, 600));
+
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
@@ -105,6 +106,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
 
         mRoundNumber = mTour.getRoundIndex(round) + 1;
         update();
+        GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
+
     }
 
     private void update() {
@@ -116,7 +119,12 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
             }
         } else {
-            //createTeamTabels();
+            try {
+                mFilename = createTeamLabels(mPreFilled);
+                jepHTML.setPage(mFilename.toURI().toURL());
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
+            }
         }
     }
 
@@ -192,6 +200,127 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                 matches.add(match);
             }
             root.put(ReportKeys.CS_Matches, matches);
+
+            final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
+            final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));
+            address = File.createTempFile(
+                    StringConstants.CS_RESULT + " " + format.format(new Date()), ".tmp");
+            address.deleteOnExit();
+            out = new OutputStreamWriter(new FileOutputStream(address), Charset.defaultCharset());
+            temp.process(root, out);
+            out.flush();
+
+        } catch (IOException | TemplateException | URISyntaxException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+                }
+
+            }
+        }
+
+        return address;
+    }
+
+    @SuppressWarnings("unchecked")
+    private File createTeamLabels(boolean prefilled) {
+
+        File address = null;
+        Writer out = null;
+        try {
+            final Configuration cfg = new Configuration();
+            final URI uri = getClass().getResource("/tourma/views/report").toURI();
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
+                cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
+            } else {
+                cfg.setDirectoryForTemplateLoading(new File(uri));
+            }
+            cfg.setObjectWrapper(new DefaultObjectWrapper());
+            final Template temp = cfg.getTemplate("teamLabels.html");
+
+            final ArrayList<Round> rounds;
+            rounds = new ArrayList<>();
+            for (int i = 0; i < mTour.getRoundsCount() && i < mRoundNumber; i++) {
+                rounds.add(mTour.getRound(i));
+            }
+
+            final Map root = new HashMap();
+            root.put(
+                    ReportKeys.CS_Nom,
+                    StringEscapeUtils.escapeHtml3(mTour.getParams().getTournamentName()
+                            + " - " + Translate.translate(CS_Round) + " " + mRoundNumber));
+
+            root.put("TitleCoach", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Coach)));
+            root.put("TitleTeam", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Team)));
+
+            int nb_rows = Tournament.getTournament().getParams().getCriteriaCount() * 2;
+            
+            root.put("nb_rows", nb_rows);
+            int nb_rows_team=Tournament.getTournament().getParams().getCriteriaCount() * 2 * Tournament.getTournament().getParams().getTeamMatesNumber();
+            root.put("nb_rows_team", nb_rows_team);
+            final ArrayList team_matches = new ArrayList();
+            for (int i = 0; i < mRound.getMatchsCount(); i++) {
+                Match m = mRound.getMatch(i);
+                if (m instanceof TeamMatch) {
+                    TeamMatch tm = (TeamMatch) m;
+                    Map team_match=new HashMap();
+                    ArrayList matches = new ArrayList();
+                    for (int j = 0; j < tm.getMatchCount(); j++) {
+                        CoachMatch cm = tm.getMatch(j);
+
+                        final Map match = new HashMap();
+                        team_match.put("numero", i + 1);
+
+                        match.put("coachindex", j);
+                        if (prefilled) {
+                            match.put("coach1", cm.getCompetitor1().getName());
+                            match.put("coach2", cm.getCompetitor2().getName());
+                            match.put("roster1", ((Coach) cm.getCompetitor1()).getRoster().getName());
+                            match.put("roster2", ((Coach) cm.getCompetitor2()).getRoster().getName());
+
+                            team_match.put("team1", tm.getCompetitor1().getName());
+                            team_match.put("team2", tm.getCompetitor2().getName());
+
+                        } else {
+                            team_match.put("team1", "&nbsp;");
+                            team_match.put("team2", "&nbsp;");
+                            match.put("coach1", "&nbsp;");
+                            match.put("coach2", "&nbsp;");
+                            match.put("roster1", "&nbsp;");
+                            match.put("roster2", "&nbsp;");
+                        }
+                        ArrayList crits = new ArrayList();
+                        for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
+                            final Map crit = new HashMap();
+                            Criteria criteria = Tournament.getTournament().getParams().getCriteria(k);
+                            if (k == 0) {
+                                match.put("firstcriterianame", criteria.getName());
+                            } else {
+                                crit.put("nom", criteria.getName());
+                            }
+                            if (k == 0) {
+                                match.put("firstcriteriavalue1", "&nbsp;");
+                                match.put("firstcriteriavalue2", "&nbsp;");
+                            } else {
+                                crit.put("value1", "&nbsp;");
+                                crit.put("value2", "&nbsp;");
+                                crits.add(crit);
+                            }
+                        }
+                        match.put("criterias", crits);
+                        matches.add(match) ;                      
+                    }
+                    team_match.put("matches",matches);                    
+                    team_matches.add(team_match);
+                }
+                
+            }
+            root.put(ReportKeys.CS_TeamMatches, team_matches);
 
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -304,7 +433,6 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
 
                     s = s.substring(s.indexOf("<html>"));
 
-                    
                     HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Global Report");
                 }
 
