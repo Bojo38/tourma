@@ -219,11 +219,11 @@ public final class MjtRankingTeam extends MjtRanking {
                     // test if match is in round
 
                     if (bFound) {
-                        aValue1.add(getValueByRankingType(mRankingType1, t, tm));
-                        aValue2.add(getValueByRankingType(mRankingType2, t, tm));
-                        aValue3.add(getValueByRankingType(mRankingType3, t, tm));
-                        aValue4.add(getValueByRankingType(mRankingType4, t, tm));
-                        aValue5.add(getValueByRankingType(mRankingType5, t, tm));
+                        aValue1.add(tm.getValue(1, t));
+                        aValue2.add(tm.getValue(2, t));
+                        aValue3.add(tm.getValue(3, t));
+                        aValue4.add(tm.getValue(4, t));
+                        aValue5.add(tm.getValue(5, t));
                     }
 
                 }

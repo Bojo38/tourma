@@ -67,6 +67,14 @@ public class Tournament implements IContainCoachs {
         return mSingleton;
     }
 
+    public void recomputeAll()
+    {
+        for (int i=0; i<this.mRounds.size(); i++)
+        {
+            mRounds.get(i).recomputeMatchs();
+        }
+    }
+    
     /**
      *
      * @return

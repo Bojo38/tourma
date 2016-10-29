@@ -354,6 +354,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 }
             }
             m.resetWL();
+            m.recomputeValues();
         }
         fireTableDataChanged();
     }

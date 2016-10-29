@@ -104,11 +104,11 @@ public final class MjtRankingIndiv extends MjtRanking {
                         }
                         // test if match is in round
                         if (bFound) {
-                            aValue1.add(getValueByRankingType(mRankingType1, c, m));
-                            aValue2.add(getValueByRankingType(mRankingType2, c, m));
-                            aValue3.add(getValueByRankingType(mRankingType3, c, m));
-                            aValue4.add(getValueByRankingType(mRankingType4, c, m));
-                            aValue5.add(getValueByRankingType(mRankingType5, c, m));
+                            aValue1.add(m.getValue(1,c));
+                            aValue2.add(m.getValue(2,c));
+                            aValue3.add(m.getValue(3,c));
+                            aValue4.add(m.getValue(4,c));
+                            aValue5.add(m.getValue(5,c));                            
                         }
                     }
 

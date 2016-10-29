@@ -173,7 +173,8 @@ public final class Generation {
     public static void nextRound(final Round round, final int choice, final int roundnumber) {
 
         Round r = null;
-
+        Tournament.getTournament().recomputeAll();
+        
         switch (choice) {
             case GEN_SWISS:
                 r = nextRoundSwiss(round, roundnumber);
@@ -1281,11 +1282,16 @@ public final class Generation {
             for (int k = 0; k < c.getMatchCount(); k++) {
                 final CoachMatch m = (CoachMatch) c.getMatch(k);
                 if (rounds.contains(m.getRound())) {
-                    value1 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv1());
+                    value1=m.getValue(1, c);
+                    value2=m.getValue(2, c);
+                    value3=m.getValue(3, c);
+                    value4=m.getValue(4, c);
+                    value5=m.getValue(5, c);
+                    /*value1 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv1());
                     value2 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv2());
                     value3 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv3());
                     value4 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv4());
-                    value5 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv5());
+                    value5 += MjtRankingIndiv.getValue(c, m, params.getRankingIndiv5());*/
                 }
             }
             final ObjectRanking obj = new ObjectRanking(c, value1, value2, value3, value4, value5);
