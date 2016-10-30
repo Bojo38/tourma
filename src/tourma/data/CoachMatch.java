@@ -626,19 +626,24 @@ public class CoachMatch extends Match {
         this.c1value1 = recomputeValue(1, mCompetitor1);
         this.c2value1 = recomputeValue(1, mCompetitor2);
         this.c1value2 = recomputeValue(2, mCompetitor1);
-        this.c2value2 = recomputeValue(2, mCompetitor1);
-        this.c2value3 = recomputeValue(3, mCompetitor1);
+        this.c2value2 = recomputeValue(2, mCompetitor2);
+        this.c1value3 = recomputeValue(3, mCompetitor1);
         this.c2value3 = recomputeValue(3, mCompetitor2);
         this.c1value4 = recomputeValue(4, mCompetitor1);
         this.c2value4 = recomputeValue(4, mCompetitor2);
         this.c1value5 = recomputeValue(4, mCompetitor1);
         this.c2value5 = recomputeValue(5, mCompetitor2);
+        this.values_computed=true;
     }
 
     protected int recomputeValue(int index, Competitor c) {
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
-        valueType = Tournament.getTournament().getParams().getIndivRankingType(index);
+        valueType = Tournament.getTournament().getParams().getIndivRankingType(index-1);
+        if (valueType==Parameters.C_RANKING_VND)
+        {
+            value = getValue((Coach) c, valueType);
+        }
         value = getValue((Coach) c, valueType);
         return value;
     }

@@ -380,26 +380,31 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     private void jcbRank1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1ActionPerformed
         mTournament.getParams().setRankingIndiv1(jcbRank1.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcbRank1ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2ActionPerformed
         mTournament.getParams().setRankingIndiv2(jcbRank2.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcbRank2ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3ActionPerformed
         mTournament.getParams().setRankingIndiv3(jcbRank3.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcbRank3ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4ActionPerformed
         mTournament.getParams().setRankingIndiv4(jcbRank4.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcbRank4ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5ActionPerformed
         mTournament.getParams().setRankingIndiv5(jcbRank5.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcbRank5ActionPerformed
 
     private void jtffRefusedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffRefusedFocusLost
