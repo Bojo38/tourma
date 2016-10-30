@@ -16,6 +16,7 @@ import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import tourma.MainFrame;
+import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 
 /**
@@ -631,20 +632,51 @@ public class CoachMatch extends Match {
         this.c2value3 = recomputeValue(3, mCompetitor2);
         this.c1value4 = recomputeValue(4, mCompetitor1);
         this.c2value4 = recomputeValue(4, mCompetitor2);
-        this.c1value5 = recomputeValue(4, mCompetitor1);
+        this.c1value5 = recomputeValue(5, mCompetitor1);
         this.c2value5 = recomputeValue(5, mCompetitor2);
-        this.values_computed=true;
+        this.values_computed = true;
     }
 
+        /**
+     *
+     * @param valueType
+     * @return
+     */
+    public static int getSubtypeByValue(final int valueType) {
+        int subType = -1;
+        if (valueType > Parameters.C_MAX_RANKING) {
+            final int value = valueType - Parameters.C_MAX_RANKING - 1;
+            subType = value % 3;
+        }
+        return subType;
+    }
+
+    /**
+     *
+     * @param valueType
+     * @return
+     */
+    public static Criteria getCriteriaByValue(final int valueType) {
+        Criteria criteria = null;
+
+        if (valueType > Parameters.C_MAX_RANKING) {
+            final int value = valueType - Parameters.C_MAX_RANKING - 1;
+            criteria = Tournament.getTournament().getParams().getCriteria(value / 3);
+        }
+        return criteria;
+    }
+    
     protected int recomputeValue(int index, Competitor c) {
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
-        valueType = Tournament.getTournament().getParams().getIndivRankingType(index-1);
-        if (valueType==Parameters.C_RANKING_VND)
-        {
+        valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
+        if (valueType < Parameters.C_MAX_RANKING) {           
             value = getValue((Coach) c, valueType);
         }
-        value = getValue((Coach) c, valueType);
+        else
+        {            
+            value=getValue(MjtRanking.getCriteriaByValue(valueType), MjtRanking.getSubtypeByValue(valueType), c);
+        }
         return value;
     }
 
@@ -661,7 +693,7 @@ public class CoachMatch extends Match {
 
         switch (valueType) {
             case Parameters.C_RANKING_POINTS:
-                value = getPointsByCoach(c, this,true, true);
+                value = getPointsByCoach(c, this, true, true);
                 break;
             case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
                 value = getPointsByCoach(c, this, true, false);
