@@ -39,9 +39,9 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
 
     @Override
     public int getColumnCount() {
-        int result = 3;
+        int result = 4;
         if (mParams.isTeamTournament()) {
-            result = 5;
+            result = 6;
         }
         return result;
     }
@@ -65,10 +65,20 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                 result = Translate.translate(Translate.CS_Points_Minus);
                 break;
             case 3:
+                if (mParams.isTeamTournament())
+                {
                 result = Translate.translate(Translate.CS_Points_Team_Plus);
+                }
+                else
+                {
+                    result = Translate.translate(Translate.CS_Critical_Value_Threshold);
+                }
                 break;
             case 4:
                 result = Translate.translate(Translate.CS_Points_Team_Minus);
+                break;
+            case 5:
+                result = Translate.translate(Translate.CS_Critical_Value_Threshold);
                 break;
             default:
         }
@@ -90,10 +100,20 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                 result = mParams.getCriteria(row).getPointsAgainst();
                 break;
             case 3:
+                if (mParams.isTeamTournament())
+                {
                 result = mParams.getCriteria(row).getPointsTeamFor();
+                }
+                else
+                {
+                    result = mParams.getCriteria(row).getCriticalThreshold();
+                }
                 break;
             case 4:
                 result = mParams.getCriteria(row).getPointsTeamAgainst();
+                break;
+            case 5:
+                result = mParams.getCriteria(row).getCriticalThreshold();
                 break;
             default:
         }
@@ -129,18 +149,22 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                     case 1:
                         val=Integer.parseInt(tmp);
                         c.setPointsFor(val);
+                        Tournament.getTournament().recomputeAll();
                         break;
                     case 2:
                         val=Integer.parseInt(tmp);
                         c.setPointsAgainst(val);
+                        Tournament.getTournament().recomputeAll();
                         break;
                     case 3:
                         val=Integer.parseInt(tmp);
                         c.setPointsTeamFor(val);
+                        Tournament.getTournament().recomputeAll();
                         break;
                     case 4:
                         val=Integer.parseInt(tmp);
                         c.setPointsTeamAgainst(val);
+                        Tournament.getTournament().recomputeAll();
                         break;
                     default:
                 }

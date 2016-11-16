@@ -103,6 +103,10 @@ public class CoachMatch extends Match {
 
     @Override
     public boolean equals(Object c) {
+        if (this==c)
+        {
+            return true;
+        }
         if (c instanceof CoachMatch) {
             CoachMatch cm = (CoachMatch) c;
             boolean equality = (this.concedeedBy1 == cm.concedeedBy1);

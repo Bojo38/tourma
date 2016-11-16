@@ -39,6 +39,7 @@ public class Translate {
     public final static String CS_Points_Plus = "POINTS +";
     public final static String CS_Points_Minus = "POINTS -";
     public final static String CS_Points_Team_Plus = "POINTS EQUIPE +";
+    public final static String CS_Critical_Value_Threshold="CRITICAL VALUE_THRESHOLD";
     public final static String CS_Points_Team_Minus = "POINTS EQUIPE -";
     public final static String CS_Table = "Table";
     public final static String CS_Score = "Score";
