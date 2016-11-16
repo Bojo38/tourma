@@ -142,11 +142,11 @@ public final class MjtRankingClan extends MjtRanking {
                         if (tm == null) {
                             System.out.println("Error");
                         } else {
-                            aValue1.add(getValueByRankingType(mRankingType1, t, tm));
-                            aValue2.add(getValueByRankingType(mRankingType2, t, tm));
-                            aValue3.add(getValueByRankingType(mRankingType3, t, tm));
-                            aValue4.add(getValueByRankingType(mRankingType4, t, tm));
-                            aValue5.add(getValueByRankingType(mRankingType5, t, tm));
+                            aValue1.add(tm.getValue(1, t));
+                            aValue2.add(tm.getValue(2, t));
+                            aValue3.add(tm.getValue(3, t));
+                            aValue4.add(tm.getValue(4, t));
+                            aValue5.add(tm.getValue(5, t));
                         }
                         j++;
                     }
@@ -273,11 +273,16 @@ public final class MjtRankingClan extends MjtRanking {
                         //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
                         final CoachMatch m = (CoachMatch) c.getMatch(j);
 
-                        aValue1.add(getValueByRankingType(mRankingType1, c, m));
+                        aValue1.add(m.getValue(1,c));
+                        aValue1.add(m.getValue(2,c));
+                        aValue1.add(m.getValue(3,c));
+                        aValue1.add(m.getValue(4,c));
+                        aValue1.add(m.getValue(5,c));
+                        /*aValue1.add(getValueByRankingType(mRankingType1, c, m));
                         aValue2.add(getValueByRankingType(mRankingType2, c, m));
                         aValue3.add(getValueByRankingType(mRankingType3, c, m));
                         aValue4.add(getValueByRankingType(mRankingType4, c, m));
-                        aValue5.add(getValueByRankingType(mRankingType5, c, m));
+                        aValue5.add(getValueByRankingType(mRankingType5, c, m));*/
 
                         j++;
                     }

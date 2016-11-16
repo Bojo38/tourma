@@ -104,11 +104,11 @@ public final class MjtRankingIndiv extends MjtRanking {
                         }
                         // test if match is in round
                         if (bFound) {
-                            aValue1.add(getValueByRankingType(mRankingType1, c, m));
-                            aValue2.add(getValueByRankingType(mRankingType2, c, m));
-                            aValue3.add(getValueByRankingType(mRankingType3, c, m));
-                            aValue4.add(getValueByRankingType(mRankingType4, c, m));
-                            aValue5.add(getValueByRankingType(mRankingType5, c, m));
+                            aValue1.add(m.getValue(1,c));
+                            aValue2.add(m.getValue(2,c));
+                            aValue3.add(m.getValue(3,c));
+                            aValue4.add(m.getValue(4,c));
+                            aValue5.add(m.getValue(5,c));                            
                         }
                     }
 
@@ -290,6 +290,16 @@ public final class MjtRankingIndiv extends MjtRanking {
         return result;
     }
 
+    public String convertVND(int value)
+    {
+        String vnd="";
+        int nb_vict=value/1000000;
+        int nb_draw=(value%1000000)/1000;
+        int nb_loss=(value%1000000)%1000;
+        vnd=Integer.toString(nb_vict)+"/"+Integer.toString(nb_draw)+"/"+Integer.toString(nb_loss);
+        return vnd;
+    }
+    
     @Override
     public Object getValueAt(final int row, final int col) {
         Object object = "";
@@ -325,19 +335,54 @@ public final class MjtRankingIndiv extends MjtRanking {
                     object = ((Coach) obj.getObject()).getStringRoster();
                     break;
                 case 4:
+                    if (Tournament.getTournament().getParams().getIndivRankingType(0)==Parameters.C_RANKING_VND)
+                    {
+                     object=convertVND(obj.getValue1());   
+                    }
+                    else
+                    {
                     object = obj.getValue1();
+                    }
                     break;
                 case 5:
+                    if (Tournament.getTournament().getParams().getIndivRankingType(1)==Parameters.C_RANKING_VND)
+                    {
+                     object=convertVND(obj.getValue2());   
+                    }
+                    else
+                    {
                     object = obj.getValue2();
+                    }
                     break;
                 case 6:
+                    if (Tournament.getTournament().getParams().getIndivRankingType(2)==Parameters.C_RANKING_VND)
+                    {
+                     object=convertVND(obj.getValue3());   
+                    }
+                    else
+                    {
                     object = obj.getValue3();
+                    }
                     break;
                 case 7:
+                    if (Tournament.getTournament().getParams().getIndivRankingType(3)==Parameters.C_RANKING_VND)
+                    {
+                     object=convertVND(obj.getValue4());   
+                    }
+                    else
+                    {
                     object = obj.getValue4();
+                    }
                     break;
                 case 8:
+                    if (Tournament.getTournament().getParams().getIndivRankingType(4)==Parameters.C_RANKING_VND)
+                    {
+                     object=convertVND(obj.getValue5());   
+                    }
+                    else
+                    {
                     object = obj.getValue5();
+                    }
                     break;
                 default:
             }

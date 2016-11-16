@@ -58,40 +58,32 @@ public class TeamMatch extends Match {
             for (CoachMatch m : mMatchs) {
                 if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
                     nbVictory++;
-                } else {
-                    if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
-                        nbLost++;
-                    }
+                } else if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
+                    nbLost++;
                 }
             }
 
             if (team1 == Team.getNullTeam()) {
                 winner = team2;
                 looser = team1;
+            } else if (team2 == Team.getNullTeam()) {
+                winner = team1;
+                looser = team2;
+            } else if (nbVictory > nbLost) {
+                winner = team1;
+                looser = team2;
+            } else if (nbVictory < nbLost) {
+                winner = team2;
+                looser = team1;
             } else {
-                if (team2 == Team.getNullTeam()) {
+                Random ran = new Random();
+                final int r = ran.nextInt() % 2;
+                if (r == 0) {
                     winner = team1;
                     looser = team2;
                 } else {
-                    if (nbVictory > nbLost) {
-                        winner = team1;
-                        looser = team2;
-                    } else {
-                        if (nbVictory < nbLost) {
-                            winner = team2;
-                            looser = team1;
-                        } else {
-                            Random ran = new Random();
-                            final int r = ran.nextInt() % 2;
-                            if (r == 0) {
-                                winner = team1;
-                                looser = team2;
-                            } else {
-                                winner = team2;
-                                looser = team1;
-                            }
-                        }
-                    }
+                    winner = team2;
+                    looser = team1;
                 }
             }
             super.setWinner(winner);
@@ -123,40 +115,32 @@ public class TeamMatch extends Match {
             for (CoachMatch m : mMatchs) {
                 if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
                     nbVictory++;
-                } else {
-                    if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
-                        nbLost++;
-                    }
+                } else if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
+                    nbLost++;
                 }
             }
 
             if (team1 == Team.getNullTeam()) {
                 looser = team1;
                 winner = team2;
+            } else if (team2 == Team.getNullTeam()) {
+                looser = team2;
+                winner = team1;
+            } else if (nbVictory > nbLost) {
+                looser = team2;
+                winner = team1;
+            } else if (nbVictory < nbLost) {
+                looser = team1;
+                winner = team2;
             } else {
-                if (team2 == Team.getNullTeam()) {
+                Random ran = new Random();
+                final int r = ran.nextInt() % 2;
+                if (r == 0) {
                     looser = team2;
                     winner = team1;
                 } else {
-                    if (nbVictory > nbLost) {
-                        looser = team2;
-                        winner = team1;
-                    } else {
-                        if (nbVictory < nbLost) {
-                            looser = team1;
-                            winner = team2;
-                        } else {
-                            Random ran = new Random();
-                            final int r = ran.nextInt() % 2;
-                            if (r == 0) {
-                                looser = team2;
-                                winner = team1;
-                            } else {
-                                looser = team1;
-                                winner = team2;
-                            }
-                        }
-                    }
+                    looser = team1;
+                    winner = team2;
                 }
             }
             super.setWinner(winner);
@@ -172,9 +156,9 @@ public class TeamMatch extends Match {
     @Override
     public Element getXMLElement() {
         final Element match = new Element(StringConstants.CS_MATCH);
-        Competitor cmp1=this.getCompetitor1();
-        Competitor cmp2=this.getCompetitor2();
-        
+        Competitor cmp1 = this.getCompetitor1();
+        Competitor cmp2 = this.getCompetitor2();
+
         match.setAttribute(StringConstants.CS_TEAM + 1, cmp1.getRawName());
         match.setAttribute(StringConstants.CS_TEAM + 2, cmp2.getRawName());
 
@@ -261,12 +245,10 @@ public class TeamMatch extends Match {
 
         if (t1 == getCompetitor1()) {
             team2 = (Team) getCompetitor2();
+        } else if (t1 == getCompetitor2()) {
+            team2 = (Team) getCompetitor1();
         } else {
-            if (t1 == getCompetitor2()) {
-                team2 = (Team) getCompetitor1();
-            } else {
-                team2 = null;
-            }
+            team2 = null;
         }
 
         if (team2 == Team.getNullTeam()) {
@@ -284,10 +266,8 @@ public class TeamMatch extends Match {
             for (CoachMatch m : mMatchs) {
                 if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
                     nbVictory++;
-                } else {
-                    if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
-                        nbLost++;
-                    }
+                } else if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
+                    nbLost++;
                 }
             }
 
@@ -314,12 +294,10 @@ public class TeamMatch extends Match {
 
         if (t1 == getCompetitor1()) {
             team2 = (Team) getCompetitor2();
+        } else if (t1 == getCompetitor2()) {
+            team2 = (Team) getCompetitor1();
         } else {
-            if (t1 == getCompetitor2()) {
-                team2 = (Team) getCompetitor1();
-            } else {
-                team2 = null;
-            }
+            team2 = null;
         }
 
         if (team2 == Team.getNullTeam()) {
@@ -331,12 +309,10 @@ public class TeamMatch extends Match {
 
         if (t1 == getCompetitor1()) {
             team2 = (Team) getCompetitor2();
+        } else if (t1 == getCompetitor2()) {
+            team2 = (Team) getCompetitor1();
         } else {
-            if (t1 == getCompetitor2()) {
-                team2 = (Team) getCompetitor1();
-            } else {
-                team2 = null;
-            }
+            team2 = null;
         }
 
         if (team2 != null) {
@@ -347,10 +323,8 @@ public class TeamMatch extends Match {
             for (CoachMatch m : mMatchs) {
                 if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
                     nbVictory++;
-                } else {
-                    if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
-                        nbLost++;
-                    }
+                } else if (m.getValue(td).getValue1() < m.getValue(td).getValue2()) {
+                    nbLost++;
                 }
             }
 
@@ -377,12 +351,10 @@ public class TeamMatch extends Match {
 
         if (t1 == getCompetitor1()) {
             team2 = (Team) getCompetitor2();
+        } else if (t1 == getCompetitor2()) {
+            team2 = (Team) getCompetitor1();
         } else {
-            if (t1 == getCompetitor2()) {
-                team2 = (Team) getCompetitor1();
-            } else {
-                team2 = null;
-            }
+            team2 = null;
         }
 
         if (team2 == Team.getNullTeam()) {
@@ -486,6 +458,533 @@ public class TeamMatch extends Match {
         }
         return false;
 
+    }
+
+    public int getPointsByTeam(final Team t, TeamMatch tm, boolean withMainPoints, boolean withBonus) {
+
+        int value = 0;
+        int countTeamVictories = 0;
+        int countTeamLoss = 0;
+        int countTeamDraw = 0;
+
+        int i = 0;
+        /*if (mRoundOnly) {
+            i = mRound;
+        }
+
+        while (i <= mRound) {*/
+        //for (int i = 0; i <= mRound; i++) {
+        int victories = 0;
+        int loss = 0;
+        boolean matchFound = false;
+        for (int j = 0; j < t.getCoachsCount(); j++) {
+            final Coach c = t.getCoach(j);
+            if (c.getMatchCount() > i) {
+                final CoachMatch m = (CoachMatch) c.getMatch(i);
+                if (tm != null) {
+                    if (tm.containsMatch(m)) {
+                        matchFound = true;
+                        final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+                        final Value val = m.getValue(crit);
+                        if (m.getCompetitor1() == c) {
+                            if (val.getValue1() > val.getValue2()) {
+                                victories++;
+                            } else if (val.getValue1() < val.getValue2()) {
+                                loss++;
+                            }
+                        } else if (val.getValue1() < val.getValue2()) {
+                            victories++;
+                        } else if (val.getValue1() > val.getValue2()) {
+                            loss++;
+                        }
+                        if (withBonus) {
+                            int bonus = 0;
+                            for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
+                                final Criteria criteria = Tournament.getTournament().getParams().getCriteria(k);
+                                bonus += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamFor();
+                                bonus += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamAgainst();
+                            }
+                            if (Tournament.getTournament().getParams().isTableBonus()) {
+                                double coef = Tournament.getTournament().getParams().getTableBonusCoef();
+                                bonus += Math.round(CoachMatch.getCoachTablePoints(c, m) * coef);
+                            }
+
+                            if (Tournament.getTournament().getParams().isTableBonusPerRound()) {
+                                // Find Round
+                                Round round = Tournament.getTournament().getRound(i);
+
+                                if (round != null) {
+                                    if (round.getMatchsCount() > 0) {
+                                        double fBonus = bonus * round.getCoef(m);
+                                        bonus = (int) Math.round(fBonus);
+                                    }
+
+                                }
+                            }
+                            value += bonus;
+                        }
+
+                    }
+                } else {
+                    System.err.println("Error detected, Team is null");
+                }
+            }
+
+        }
+        if (matchFound) {
+            if (victories > loss) {
+                countTeamVictories++;
+            } else if (victories < loss) {
+                countTeamLoss++;
+            } else {
+                countTeamDraw++;
+            }
+        }
+        matchFound = false;
+        victories = 0;
+        loss = 0;
+        /* i++;
+        }*/
+        if (withMainPoints) {
+            value += countTeamVictories * Tournament.getTournament().getParams().getPointsTeamVictory();
+            value += countTeamLoss * Tournament.getTournament().getParams().getPointsTeamLost();
+            value += countTeamDraw * Tournament.getTournament().getParams().getPointsTeamDraw();
+        }
+
+        return value;
+    }
+
+    public static final int C_STARTING_RANK = 1000;
+    /**
+     *
+     */
+    public static final int C_ELO_K = 256;
+
+    int getELOByTeam(final Team t, TeamMatch tm, int roundIndex) {
+        int value;
+
+        int nbVic = tm.getVictories(t);
+        int nbDraw = tm.getVictories(t);
+
+        int lastTeamRank = C_STARTING_RANK;
+        int lastOppRank = C_STARTING_RANK;
+
+        Team opp = null;
+        if (tm.getCompetitor1() == t) {
+            opp = (Team) tm.getCompetitor2();
+
+        }
+        if (tm.getCompetitor2() == t) {
+            opp = (Team) tm.getCompetitor1();
+        }
+        if (roundIndex >= 0) {
+            // Find Previous Match for current player
+
+            if (roundIndex > 0) {
+                lastTeamRank = getELOByTeam(t, tm, roundIndex - 1);
+            }
+
+            // Find Previous Match for oponnent player
+            if (roundIndex > 0) {
+                lastOppRank = getELOByTeam(opp, tm, roundIndex - 1);
+            }
+        }
+
+        double tmp = ((lastOppRank - lastTeamRank) / (double) 400);
+        double EA = 1 / (1 + Math.pow(10.0, tmp));
+
+        // Compute real score
+        // Victory is 1000
+        // All bonuses to 1
+        double SA = 0;
+        if (nbVic > nbDraw) {
+            SA = 1000;
+        }
+        if (nbVic < nbDraw) {
+            SA = 0;
+        }
+        if (nbVic == nbDraw) {
+            SA = 500;
+        }
+
+        // Add/Remove Bonuses
+        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            for (int j = 0; j < tm.getMatchCount(); j++) {
+                CoachMatch m = tm.getMatch(j);
+                Value val = m.getValue(crit);
+                if (tm.getCompetitor1() == t) {
+                    SA += val.getValue1();
+                    SA -= val.getValue2();
+                }
+                if (tm.getCompetitor2() == t) {
+                    SA -= val.getValue1();
+                    SA += val.getValue2();
+                }
+            }
+        }
+        value = Math.round((float) (lastTeamRank + C_ELO_K * (SA - EA)));
+
+        return value;
+    }
+
+    public int getVNDByTeam(final Team t, TeamMatch tm, boolean includeCurrent) {
+
+        int value = 0;
+        int countTeamVictories = 0;
+        int countTeamLoss = 0;
+        int countTeamDraw = 0;
+
+        int i = 0;
+        /*if (mRoundOnly) {
+            i = mRound;
+        }*/
+
+        boolean matchFound = false;
+        //while (i <= mRound) {
+        //for (int i = 0; i <= mRound; i++) {
+        int victories = 0;
+        int loss = 0;
+
+        for (int j = 0; j < t.getCoachsCount(); j++) {
+            matchFound = false;
+            final Coach c = t.getCoach(j);
+            if (c.getMatchCount() > i) {
+                final CoachMatch m = (CoachMatch) c.getMatch(i);
+                if (includeCurrent && tm.containsMatch(m)) {
+                    matchFound = true;
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+                    final Value val = m.getValue(crit);
+                    if (m.getCompetitor1() == c) {
+                        if (val.getValue1() > val.getValue2()) {
+                            victories++;
+                        } else if (val.getValue1() < val.getValue2()) {
+                            loss++;
+                        }
+                    } else if (val.getValue1() < val.getValue2()) {
+                        victories++;
+                    } else if (val.getValue1() > val.getValue2()) {
+                        loss++;
+                    }
+                }
+            }
+        }
+        if (matchFound) {
+            if (victories > loss) {
+                countTeamVictories++;
+            } else if (victories < loss) {
+                countTeamLoss++;
+            } else {
+                countTeamDraw++;
+            }
+        }
+        /*  i++;
+        }*/
+
+        value += countTeamVictories * 1000000;
+        value += countTeamLoss * 1;
+        value += countTeamDraw * 1000;
+        return value;
+    }
+
+    int getOppPointsByTeam(final Team t, TeamMatch tm, boolean includeCurrent) {
+
+        int index = 0;
+        TeamMatch tmp_m = (TeamMatch) t.getMatch(index);
+        while (tmp_m != tm) {
+            index++;
+            tmp_m = (TeamMatch) t.getMatch(index);
+        }
+
+        int value = 0;
+        Competitor opponent;
+        if (tm.getCompetitor1() == t) {
+            opponent = tm.getCompetitor2();
+        } else {
+            opponent = tm.getCompetitor1();
+        }
+
+        if (((Team) opponent) != null) {
+            if (opponent.isMatchsNotNull()) {
+                for (int i = 0; i < opponent.getMatchCount(); i++) {
+                    TeamMatch om = (TeamMatch) opponent.getMatch(i);
+                    if ((includeCurrent) || ((!includeCurrent) && (om != tm))) {
+                        value += getPointsByTeam((Team) opponent, om, true, true);
+                    }
+                    if (om == tm) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return value;
+    }
+
+    int getOppELOByTeam(final Team t, TeamMatch tm, int roundIndex) {
+        int value;
+        Competitor opponent;
+        if (tm.getCompetitor1() == t) {
+            opponent = tm.getCompetitor2();
+        } else {
+            opponent = tm.getCompetitor1();
+        }
+        value = getELOByTeam((Team) opponent, tm, roundIndex);
+
+        return value;
+    }
+
+    public int getTeamTable(final Team t, TeamMatch tm) {
+
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+            Round r = Tournament.getTournament().getRound(i);
+            if (r.containsMatch(tm)) {
+                // No point for first round
+                if (i == 0) {
+                    return 0;
+                } else {
+                    int maxvalue = r.getMatchsCount();
+                    return maxvalue - r.indexOf(tm);
+                }
+            }
+        }
+        return 0;
+
+    }
+
+    int getTeamNbMatch(final Team t, TeamMatch tm) {
+        int index = t.matchIndex(tm);
+        return index + 1;
+    }
+
+    public int getValue(final Team t, final int rankingType, boolean teamVictory) {
+        int value = 0;
+
+        int roundIndex = -1;
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+            Round r = Tournament.getTournament().getRound(i);
+            if (r.containsMatch(this)) {
+                roundIndex = i;
+                break;
+            }
+        }
+
+        // Find opposing team in using first Coach
+        if (teamVictory) {
+            switch (rankingType) {
+                case Parameters.C_RANKING_POINTS:
+                    value = getPointsByTeam(t, this, true, true);
+                    break;
+                case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
+                    value = getPointsByTeam(t, this, true, false);
+                    break;
+                case Parameters.C_RANKING_BONUS_POINTS:
+                    value = getPointsByTeam(t, this, false, true);
+                    break;
+                case Parameters.C_RANKING_NONE:
+                    value = 0;
+                    break;
+                case Parameters.C_RANKING_OPP_POINTS:
+                    value = getOppPointsByTeam(t, this, true);
+                    break;
+                case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
+                    value = getOppPointsByTeam(t, this, false);
+                    break;
+                case Parameters.C_RANKING_VND:
+                    value = getVNDByTeam(t, this, true);
+                    break;
+                case Parameters.C_RANKING_ELO:
+                    value = getELOByTeam(t, this, roundIndex);
+                    break;
+                case Parameters.C_RANKING_ELO_OPP:
+                    value = getOppELOByTeam(t, this, roundIndex);
+                    break;
+                case Parameters.C_RANKING_NB_MATCHS:
+                    value = getTeamNbMatch(t, this);
+                    break;
+                case Parameters.C_RANKING_TABLES:
+                    value = getTeamTable(t, this);
+                    break;
+                default:
+            }
+        } else {
+            /*for (int i = 0; i < t.getCoachsCount(); i++) {
+            final Coach c = t.getCoach(i);
+            //for (int j = 0; j < c.getMatchCount(); j++) {
+            final CoachMatch m = (CoachMatch) c.getMatch(j);*/
+            for (int i = 0; i < getMatchCount(); i++) {
+                CoachMatch cm = getMatch(i);
+                Coach c = null;
+                Coach c1 = (Coach) cm.getCompetitor1();
+                Coach c2 = (Coach) cm.getCompetitor2();
+                if (c1.getTeamMates() == t) {
+                    c = c1;
+                }
+                if (c2.getTeamMates() == t) {
+                    c = c2;
+                }
+                if (c != null) {
+                    switch (rankingType) {
+                        case Parameters.C_RANKING_POINTS:
+                            value += CoachMatch.getPointsByCoach(c, cm, true, true);
+                            break;
+                        case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
+                            value += CoachMatch.getPointsByCoach(c, cm, true, false);
+                            break;
+                        case Parameters.C_RANKING_BONUS_POINTS:
+                            value += CoachMatch.getPointsByCoach(c, cm, false, true);
+                            break;
+                        case Parameters.C_RANKING_NONE:
+                            value += 0;
+                            break;
+                        case Parameters.C_RANKING_OPP_POINTS:
+                            value += CoachMatch.getOppPointsByCoach(c, cm, true);
+                            break;
+                        case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
+                            value += CoachMatch.getOppPointsByCoach(c, cm, false);
+                            break;
+                        case Parameters.C_RANKING_VND:
+                            value += CoachMatch.getVNDByCoach(c, cm);
+                            break;
+                        case Parameters.C_RANKING_ELO:
+                            value += CoachMatch.getELOByCoach(c, cm);
+                            break;
+                        case Parameters.C_RANKING_ELO_OPP:
+                            value += CoachMatch.getOppELOByCoach(c, cm);
+                            break;
+                        case Parameters.C_RANKING_NB_MATCHS:
+                            value += CoachMatch.getCoachNbMatchs(c, cm);
+                            break;
+                        case Parameters.C_RANKING_TABLES:
+                            if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+                                value = getTeamTable(t, this);
+                            } else {
+                                value += CoachMatch.getCoachTablePoints(c, cm);
+                            }
+                            break;
+                        default:
+                    }
+                }
+            }
+            switch (rankingType) {
+                case Parameters.C_RANKING_POINTS: {
+                    int VND = getVNDByTeam(t, this, true);
+                    int nbVictory = (VND / 1000000);
+                    int nbDraw = (VND % 1000000) / 1000;
+                    value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                    value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                }
+                break;
+                case Parameters.C_RANKING_POINTS_WITHOUT_BONUS: {
+                    int VND = getVNDByTeam(t, this, true);
+                    int nbVictory = (VND / 1000000);
+                    int nbDraw = (VND % 1000000) / 1000;
+                    value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                    value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                }
+                break;
+                case Parameters.C_RANKING_OPP_POINTS:
+                case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
+                    if (t.getCoachsCount() > 0) {
+                        final Coach c = t.getCoach(0);
+                        int i = 0;
+                        /*if (mRoundOnly) {
+                            i = mRound;
+                        }
+
+                        while (i <= mRound) {*/
+                        //for (int i = 0; i <= mRound; i++) {
+                        if (c.getMatchCount() > i) {
+                            final CoachMatch m = (CoachMatch) c.getMatch(i);
+                            if (m.getCompetitor1() == null) {
+                                m.setCompetitor1(Coach.getNullCoach());
+                            }
+                            if (m.getCompetitor2() == null) {
+                                m.setCompetitor2(Coach.getNullCoach());
+                            }
+                            if (m.getCompetitor1() == c) {
+                                long tmp = getVNDByTeam(((Coach) m.getCompetitor2()).getTeamMates(), this, rankingType != Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS);
+                                value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                                value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                            } else {
+                                long tmp = getVNDByTeam(((Coach) m.getCompetitor1()).getTeamMates(), this, rankingType != Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS);
+                                value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                                value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                            }
+                        }
+                        /*     i++;
+                        }*/
+                    }
+                    break;
+                default:
+            }
+        }
+        return value;
+    }
+
+    int getValue(final Team t, TeamMatch tm, final Criteria crit, final int subtype) {
+        int value = 0;
+        for (int i = 0; i < tm.getMatchCount(); i++) {
+            CoachMatch cm = tm.getMatch(i);
+
+            Coach c = null;
+
+            Coach c1 = (Coach) cm.getCompetitor1();
+            Coach c2 = (Coach) cm.getCompetitor2();
+
+            if (c1.getTeamMates() == t) {
+                c = c1;
+            }
+            if (c2.getTeamMates() == t) {
+                c = c2;
+            }
+            if (c != null) {
+                value += cm.getValue(crit, subtype, c);
+            }
+        }
+        return value;
+
+    }
+
+    public int getValue(Criteria crit, int subtype, Competitor c) {
+        int value = 0;
+        if (c == mCompetitor1) {
+            for (int i = 0; i < this.getMatchCount(); i++) {
+                CoachMatch cm = getMatch(i);
+                value += cm.getValue(crit, subtype, cm.getCompetitor1());
+            }
+        }
+        if (c == mCompetitor2) {
+            for (int i = 0; i < this.getMatchCount(); i++) {
+                CoachMatch cm = getMatch(i);
+                value += cm.getValue(crit, subtype, cm.getCompetitor2());
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Recalculate the values fot this match
+     */
+    public void recomputeValues() {
+        this.c1value1 = recomputeValue(1, mCompetitor1);
+        this.c2value1 = recomputeValue(1, mCompetitor2);
+        this.c1value2 = recomputeValue(2, mCompetitor1);
+        this.c2value2 = recomputeValue(2, mCompetitor1);
+        this.c2value3 = recomputeValue(3, mCompetitor1);
+        this.c2value3 = recomputeValue(3, mCompetitor2);
+        this.c1value4 = recomputeValue(4, mCompetitor1);
+        this.c2value4 = recomputeValue(4, mCompetitor2);
+        this.c1value5 = recomputeValue(4, mCompetitor1);
+        this.c2value5 = recomputeValue(5, mCompetitor2);
+    }
+
+    protected int recomputeValue(int index, Competitor c) {
+        int value = 0;
+        int valueType = Parameters.C_RANKING_NONE;
+        valueType = Tournament.getTournament().getParams().getTeamRankingType(index);
+        value = getValue((Team) c, valueType, Tournament.getTournament().getParams().isTeamVictoryOnly());
+        return value;
     }
 
 }

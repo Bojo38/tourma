@@ -318,11 +318,25 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 switch (col) {
                     case 3:
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        if (tmp.equals(""))
+                        {
+                            val.setValue1(-1);
+                        }
+                        else
+                        {
                         val.setValue1(Integer.parseInt(tmp));
+                        }
                         break;
                     case 4:
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        if (tmp.equals(""))
+                        {
+                            val.setValue2(-1);
+                        }
+                        else
+                        {
                         val.setValue2(Integer.parseInt(tmp));
+                        }
                         break;
                     default:
                         final int index = (col - 5) / 2;
@@ -337,11 +351,25 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 switch (col) {
                     case 2:
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        if (tmp.equals(""))
+                        {
+                            val.setValue1(-1);
+                        }
+                        else
+                        {
                         val.setValue1(Integer.parseInt(tmp));
+                        }
                         break;
                     case 3:
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        if (tmp.equals(""))
+                        {
+                            val.setValue2(-1);
+                        }
+                        else
+                        {
                         val.setValue2(Integer.parseInt(tmp));
+                        }
                         break;
                     default:
                         final int index = (col - 3) / 2;
@@ -354,6 +382,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 }
             }
             m.resetWL();
+            m.recomputeValues();
         }
         fireTableDataChanged();
     }
@@ -394,7 +423,6 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
 
-        
         jlb.setEditable(false);
 
         boolean useColor = Tournament.getTournament().getParams().isUseColor();
@@ -443,6 +471,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             if (val.getValue1() == val.getValue2()) {
                                 jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
                             }
+
                         }
                         break;
                     case 2:
@@ -469,15 +498,43 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (m.isRefusedBy1()) {
                             frg = new Color(150, 50, 50);
                         }
+
                         break;
                     case 3:
-                    case 4:
                         if (useColor) {
                             bkg = new Color(250, 200, 200);
                         } else {
                             if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
+                        }
+
+                        if (val.getValue1() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
+                            if (useColor) {
+                                bkg = Color.RED;
+                            } else {
+                                bkg = Color.DARK_GRAY;
+                            }
+                            frg = Color.WHITE;
+                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                        }
+                        break;
+                    case 4:
+                       if (useColor) {
+                            bkg = new Color(200, 200, 250);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        if (val.getValue2() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
+                            if (useColor) {
+                                bkg = Color.BLUE;
+                            } else {
+                                bkg = Color.DARK_GRAY;
+                            }
+                            frg = Color.WHITE;
+                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
 
                         break;
@@ -509,7 +566,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         break;
                     case 6:
                         if (useColor) {
-                            bkg = new Color(150, 150, 250);
+                            bkg = new Color(150, 150, 220);
                         } else {
                             if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
@@ -537,6 +594,32 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         } else {
                             if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        int CritIndex = (column - 5) / 2;
+                        int ValIndex = (column - 5) % 2;
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
+                        Value v = m.getValue(crit);
+                        if (ValIndex == 0) {
+                            if (v.getValue1() > crit.getCriticalThreshold()) {
+                                if (useColor) {
+                                    bkg = Color.RED;
+                                } else {
+                                    bkg = Color.DARK_GRAY;
+                                }
+                                frg = Color.WHITE;
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+                        }
+                        if (ValIndex == 1) {
+                            if (v.getValue2() > crit.getCriticalThreshold()) {
+                                if (useColor) {
+                                    bkg = Color.BLUE;
+                                } else {
+                                    bkg = Color.DARK_GRAY;
+                                }
+                                frg = Color.WHITE;
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                             }
                         }
                 }
@@ -574,6 +657,15 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         if (m.isRefusedBy1()) {
                             frg = new Color(150, 50, 50);
                         }
+                        if (val.getValue1() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
+                            if (useColor) {
+                                bkg = Color.RED;
+                            } else {
+                                bkg = Color.DARK_GRAY;
+                            }
+                            frg = Color.WHITE;
+                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                        }
                         break;
                     case 2:
                         if (useColor) {
@@ -582,6 +674,15 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
                             }
+                        }
+                        if (val.getValue2() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
+                            if (useColor) {
+                                bkg = Color.BLUE;
+                            } else {
+                                bkg = Color.DARK_GRAY;
+                            }
+                            frg = Color.WHITE;
+                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                         }
                         break;
                     case 3:
@@ -629,6 +730,32 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         } else {
                             if (row % 2 != 0) {
                                 bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        int CritIndex = (column - 3) / 2;
+                        int ValIndex = (column - 3) % 2;
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
+                        Value v = m.getValue(crit);
+                        if (ValIndex == 0) {
+                            if (v.getValue1() > crit.getCriticalThreshold()) {
+                                if (useColor) {
+                                    bkg = Color.RED;
+                                } else {
+                                    bkg = Color.DARK_GRAY;
+                                }
+                                frg = Color.WHITE;
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+                        }
+                        if (ValIndex == 1) {
+                            if (v.getValue2() > crit.getCriticalThreshold()) {
+                                if (useColor) {
+                                    bkg = Color.BLUE;
+                                } else {
+                                    bkg = Color.DARK_GRAY;
+                                }
+                                frg = Color.WHITE;
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                             }
                         }
                 }

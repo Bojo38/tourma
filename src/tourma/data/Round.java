@@ -525,5 +525,13 @@ public class Round implements XMLExport {
     {        
         mThirdPlace=b;
     }
+
+    public void recomputeMatchs()
+    {
+        for (int i=0; i<mMatchs.size(); i++)
+        {
+            mMatchs.get(i).recomputeValues();
+        }
+    }
     
 }

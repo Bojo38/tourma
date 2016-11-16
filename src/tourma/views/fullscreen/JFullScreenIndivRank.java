@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -76,7 +77,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
     }
 
     @Override
-    protected void clientLoop() throws InterruptedException {
+    protected void clientLoop(int screen) throws InterruptedException {
 
         semStart.acquire();
 
@@ -84,7 +85,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
 
@@ -150,7 +151,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                             }
                             buildPanel(rs);
                             semAnimate.release();
-                            this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+                           gd.setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -294,7 +295,34 @@ public final class JFullScreenIndivRank extends JFullScreen {
         } catch (FontFormatException ex) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+       GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        int screen=0;
+        if (gs.length>1)
+        {
+            Integer options[]=new Integer[gs.length];
+            for (int i=0; i<gs.length; i++)
+            {
+                options[i]=i;
+            }
+            Object val=JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
+            if (val instanceof Integer)
+            {
+                screen=((Integer)val).intValue();
+            }
+        }
+        if( screen > -1 && screen < gs.length )
+        {
+            gs[screen].setFullScreenWindow( this );            
+        }
+        else if( gs.length > 0 )
+        {
+            gs[0].setFullScreenWindow( this );
+        }
+        else
+        {
+            throw new RuntimeException( "No Screens Found" );
+        }
     }
 
     private void buildPanel(ArrayList<Ranked> rankeds) throws FontFormatException {

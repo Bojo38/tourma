@@ -690,8 +690,8 @@ public final class JPNStatistics extends javax.swing.JPanel {
             for (CoachMatch cm : acm) {
                 if ((cm.getCompetitor1() != Coach.getNullCoach()) && (cm.getCompetitor2() != Coach.getNullCoach())) {
 
-                    double p1 = MjtRanking.getPointsByCoach((Coach) cm.getCompetitor1(), cm, true, true);
-                    double p2 = MjtRanking.getPointsByCoach((Coach) cm.getCompetitor2(), cm, true, true);
+                    double p1 = cm.getPointsByCoach((Coach) cm.getCompetitor1(), cm, true, true);
+                    double p2 = cm.getPointsByCoach((Coach) cm.getCompetitor2(), cm, true, true);
 
                     double avg_value = 0.0;
                     double avg_opp_value = 0.0;

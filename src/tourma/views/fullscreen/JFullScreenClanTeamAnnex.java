@@ -72,7 +72,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
     }
 
     @Override
-    protected void clientLoop() throws InterruptedException {
+    protected void clientLoop(int screen) throws InterruptedException {
         // Synchronized the end of constructor with the client thread
         semStart.acquire();
 
@@ -123,7 +123,8 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                                 buildPanel(rs);
                             }
                             semAnimate.release();
-                            this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+                            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
+                            gd.setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);

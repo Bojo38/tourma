@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -80,13 +81,13 @@ public final class JFullScreenMatchs extends JFullScreen {
     }
 
         @Override
-    protected void clientLoop()throws InterruptedException {
+    protected void clientLoop(int screen)throws InterruptedException {
         semStart.acquire();
         try {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
 
@@ -132,9 +133,9 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                             if (clash) {
                                 this.round = r;
-                                buildClash();
+                                buildClash(screen);
                             } else {
-                                buildPanel(r);
+                                buildPanel(r,screen);
                             }
                             semAnimate.release();
 
@@ -169,7 +170,7 @@ public final class JFullScreenMatchs extends JFullScreen {
         semStart.release();
     }
 
-    private void buildClash() {
+    private void buildClash(int screen) {
         Font font;
 
         JPanel jpn = new JPanel();
@@ -184,7 +185,7 @@ public final class JFullScreenMatchs extends JFullScreen {
 
     JPanel jpn = new JPanel();
 
-    private void buildPanel(Round r) {
+    private void buildPanel(Round r,int display) {
 
         Font font;
 
@@ -200,7 +201,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             font = this.getFont();
         }
 
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[display];
         int width = gd.getDisplayMode().getWidth();
         int height = gd.getDisplayMode().getHeight();
 
@@ -465,18 +466,56 @@ public final class JFullScreenMatchs extends JFullScreen {
     @SuppressWarnings("LeakingThisInConstructor")
     public JFullScreenMatchs(Round r, boolean clash) throws IOException {
         super();
+        
         initComponents();
 
+        
+        
         this.clash = clash;
         round = r;
 
-        if (clash) {
-            buildClash();
-        } else {
-            buildPanel(r);
+        
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        int screen=0;
+        if (gs.length>1)
+        {
+            Integer options[]=new Integer[gs.length];
+            for (int i=0; i<gs.length; i++)
+            {
+                options[i]=i;
+            }
+            Object val=JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
+            if (val instanceof Integer)
+            {
+                screen=((Integer)val).intValue();
+            }
         }
+        if( screen > -1 && screen < gs.length )
+        {
+            gs[screen].setFullScreenWindow( this );            
+        }
+        else if( gs.length > 0 )
+        {
+            gs[0].setFullScreenWindow( this );
+        }
+        else
+        {
+            throw new RuntimeException( "No Screens Found" );
+        }
+        
+        
+        
+        if (clash) {
+            buildClash(screen);
+        } else {
+            buildPanel(r,screen);
+        }
+        
         //this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        //setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        
+        
     }
 
     private Font getCoachMatchFont(CoachMatch cm, Competitor comp, Font winner, Font looser, Font draw, Font def) {

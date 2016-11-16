@@ -7,6 +7,8 @@ package tourma.views.fullscreen;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
@@ -17,8 +19,10 @@ import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ScrollPaneConstants;
 import tourma.data.Coach;
 import tourma.data.IWithNameAndPicture;
@@ -31,12 +35,12 @@ import tourma.utils.ImageTreatment;
  *
  * @author WFMJ7631
  */
-public abstract class JFullScreen extends javax.swing.JFrame {
+public abstract class JFullScreen extends javax.swing.JDialog {
 
     protected Socket socket;
     protected ClientLoop cl;
     protected Semaphore semStart = new Semaphore(1);
-    
+
     private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
 
     public JFullScreen(Socket s) throws IOException {
@@ -46,17 +50,31 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             Logger.getLogger(JFullScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
-  //      this.setUndecorated(true);
-  //      this.setState(JFrame.MAXIMIZED_BOTH);
+        //      this.setUndecorated(true);
+        //      this.setState(JFrame.MAXIMIZED_BOTH);
 
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        //setExtendedState();
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
 
         socket = s;
 
-        cl = new ClientLoop(this);
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        int screen = 0;
+        if (gs.length > 1) {
+            Integer options[] = new Integer[gs.length];
+            for (int i = 0; i < gs.length; i++) {
+                options[i] = i;
+            }
+            Object val = JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (val instanceof Integer) {
+                screen = ((Integer) val).intValue();
+            }
+        }
+
+        cl = new ClientLoop(this, screen);
         cl.start();
     }
 
@@ -65,8 +83,11 @@ public abstract class JFullScreen extends javax.swing.JFrame {
      */
     public JFullScreen() {
         super();
-//        this.setUndecorated(true);
-//        this.setState(JFrame.MAXIMIZED_BOTH);
+        
+        this.setUndecorated(true);
+        //this.setState(JDialog.);
+        this.setAlwaysOnTop(true);
+        
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
@@ -137,7 +158,9 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         jpnContent = new javax.swing.JPanel();
         jpnNorth = new javax.swing.JPanel();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
+        setAutoRequestFocus(false);
         setName("FullScreen Tourma"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -199,7 +222,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
                 int value = jscrp.getVerticalScrollBar().getValue();
                 value += 1;
                 if (value <= lastValue) {
-                   synchronized (this) {
+                    synchronized (this) {
                         suspended = true;
 
                         spleeping.sleep(8000, 0);
@@ -223,7 +246,7 @@ public abstract class JFullScreen extends javax.swing.JFrame {
                                 Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                    }                     
+                    }
                     try {
                         semAnimate.acquire();
                     } catch (InterruptedException ex) {
@@ -255,16 +278,18 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         }
     }
 
-    protected abstract void clientLoop() throws InterruptedException;
+    protected abstract void clientLoop(int screen) throws InterruptedException;
 
     protected abstract void setStop(boolean s);
 
     protected class ClientLoop extends Thread {
 
         JFullScreen parentFrame;
+        int _screen;
 
-        ClientLoop(JFullScreen fs) {
+        ClientLoop(JFullScreen fs, int screen) {
             parentFrame = fs;
+            screen = screen;
         }
 
         public void setStop(boolean s) {
@@ -272,15 +297,11 @@ public abstract class JFullScreen extends javax.swing.JFrame {
         }
 
         public void run() {
-            try{
-            parentFrame.clientLoop();
-            }
-            catch (InterruptedException ie)
-            {
-                LOG.log(Level.INFO,"Sleep interrupted, probably before exiting");
-            }
-            finally
-            {
+            try {
+                parentFrame.clientLoop(_screen);
+            } catch (InterruptedException ie) {
+                LOG.log(Level.INFO, "Sleep interrupted, probably before exiting");
+            } finally {
                 semAnimate.release();
             }
         }

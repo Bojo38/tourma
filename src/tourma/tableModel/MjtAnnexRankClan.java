@@ -155,13 +155,13 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         }
                         // test if match is in round
                         if (bFound) {
-                            aValue.add(getValue(t, tm, mCriteria, mSubtype));
+                            aValue.add(tm.getValue( mCriteria, mSubtype,t));
 
-                            aValue1.add(getValueByRankingType(mRankingType1, t, tm));
-                            aValue2.add(getValueByRankingType(mRankingType2, t, tm));
-                            aValue3.add(getValueByRankingType(mRankingType3, t, tm));
-                            aValue4.add(getValueByRankingType(mRankingType4, t, tm));
-                            aValue5.add(getValueByRankingType(mRankingType5, t, tm));
+                            aValue1.add(tm.getValue(1, t));
+                            aValue2.add(tm.getValue(2, t));
+                            aValue3.add(tm.getValue(3, t));
+                            aValue4.add(tm.getValue(4, t));
+                            aValue5.add(tm.getValue(5, t));                            
                         }
 
                     }
@@ -312,13 +312,18 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         }
                         // test if match is in round
                         if (bFound) {
-                            aValue.add(getValue(c, m, mCriteria, mSubtype));
+                            aValue.add(m.getValue(mCriteria, mSubtype,c));
 
-                            aValue1.add(getValueByRankingType(mRankingType1, c, m));
+                            aValue1.add(m.getValue(1, c));
+                            aValue3.add(m.getValue(2, c));
+                            aValue3.add(m.getValue(3, c));
+                            aValue4.add(m.getValue(4, c));
+                            aValue5.add(m.getValue(5, c));
+                            /*aValue1.add(getValueByRankingType(mRankingType1, c, m));
                             aValue2.add(getValueByRankingType(mRankingType2, c, m));
                             aValue3.add(getValueByRankingType(mRankingType3, c, m));
                             aValue4.add(getValueByRankingType(mRankingType4, c, m));
-                            aValue5.add(getValueByRankingType(mRankingType5, c, m));
+                            aValue5.add(getValueByRankingType(mRankingType5, c, m));*/
                         }
 
                     }

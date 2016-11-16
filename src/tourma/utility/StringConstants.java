@@ -123,6 +123,7 @@ public interface StringConstants {
     public static final String CS_POINTS_AGAINST = "PointsAgainst";
     public static final String CS_TEAM_POINTS_FOR = "PointsTeamFor";
     public static final String CS_TEAM_POINTS_AGAINST = "PointsTeamAgainst";
+    public static final String CS_CRITICAL_THRESHOLD="CriticalValueThreshold";
     public static final String CS_GROUP_MODIFIER_POINTS = "GroupModifierPoints";
     public static final String CS_VICTORY = "Victory";
     public static final String CS_LARGE_VICTORY = "Large_Victory";

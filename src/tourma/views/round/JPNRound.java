@@ -600,9 +600,25 @@ public final class JPNRound extends javax.swing.JPanel {
             if (critIndex >= 0) {
                 Value mv = match.getValues().get(Tournament.getTournament().getParams().getCriteria(critIndex));
                 if (c1) {
-                    mv.setValue1(0);
+                    int v=mv.getValue1();
+                    if (critIndex==0)
+                    {
+                        if (v==-1)
+                        {
+                            mv.setValue1(0);
+                        }
+                    }
+                    //mv.setValue1(0);
                 } else {
-                    mv.setValue2(0);
+                    int v=mv.getValue2();
+                    if (critIndex==0)
+                    {
+                        if (v==-1)
+                        {
+                            mv.setValue2(0);
+                        }
+                    }
+                    //mv.setValue2(0);
                 }
             }
         }

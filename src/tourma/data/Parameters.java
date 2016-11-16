@@ -1800,4 +1800,6 @@ public class Parameters implements XMLExport {
     public void setForeColor(Color c) {
         mForeColor = c;
     }
+    
+    
 }

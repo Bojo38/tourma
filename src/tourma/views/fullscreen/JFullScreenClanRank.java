@@ -55,13 +55,13 @@ public final class JFullScreenClanRank extends JFullScreen {
     }
 
     @Override
-    protected void clientLoop() throws InterruptedException {
+    protected void clientLoop(int screen) throws InterruptedException {
         semStart.acquire();
         try {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
 
@@ -102,7 +102,7 @@ public final class JFullScreenClanRank extends JFullScreen {
                             buildPanel(r);
 
                             semAnimate.release();
-                            this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+                            gd.setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -167,14 +167,14 @@ public final class JFullScreenClanRank extends JFullScreen {
         this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
         repaint();
     }
-    
-    private static final String CS_Clan="Clan";
-    private static final String CS_Members="Members";
+
+    private static final String CS_Clan = "Clan";
+    private static final String CS_Members = "Members";
 
     private void buildPanel(Ranked ranked) throws FontFormatException {
 
         Font font;
-        
+
         JPanel jpn = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
         jpn.setLayout(gbl);
@@ -204,7 +204,7 @@ public final class JFullScreenClanRank extends JFullScreen {
         } else {
             nbCols = Tournament.getTournament().getParams().getIndivRankingNumber() + 3;
         }
-        
+
         ArrayList<Integer> rankings = new ArrayList<>();
         for (int i = 0; i < nbCols - 3; i++) {
             if (Tournament.getTournament().getParams().isTeamTournament()) {
@@ -243,7 +243,7 @@ public final class JFullScreenClanRank extends JFullScreen {
         index += 5;
 
         for (int j = 0; j < rankings.size(); j++) {
-            int rankingType = (Integer)rankings.get(j);
+            int rankingType = (Integer) rankings.get(j);
             String name = MjtRanking.getRankingString(rankingType);
             if (rankingType == 0) {
                 break;
@@ -311,9 +311,8 @@ public final class JFullScreenClanRank extends JFullScreen {
             jpn.add(jlbMembers, getGridbBagConstraints(index, clanIndex + 1, 1, 5));
             index += 5;
 
-
-        for (int j = 0; j < rankings.size(); j++) {
-            int rankingType = (Integer)rankings.get(j);
+            for (int j = 0; j < rankings.size(); j++) {
+                int rankingType = (Integer) rankings.get(j);
                 int value;
                 value = ranked.getSortedValue(i, j + 1);
 
