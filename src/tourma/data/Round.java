@@ -534,4 +534,19 @@ public class Round implements XMLExport {
         }
     }
     
+    public boolean allMatchesEntered()
+    {
+        // Shall check if all the matches hav been filled, conceeded or refused
+        for (int i=0; i<getMatchsCount(); i++)
+        {
+            Match m=getMatch(i);
+            if (!m.isEntered())
+            {
+                return false;
+            }
+        }
+        return true;
+        
+    }
+    
 }

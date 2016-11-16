@@ -103,8 +103,7 @@ public class CoachMatch extends Match {
 
     @Override
     public boolean equals(Object c) {
-        if (this==c)
-        {
+        if (this == c) {
             return true;
         }
         if (c instanceof CoachMatch) {
@@ -641,7 +640,7 @@ public class CoachMatch extends Match {
         this.values_computed = true;
     }
 
-        /**
+    /**
      *
      * @param valueType
      * @return
@@ -669,17 +668,15 @@ public class CoachMatch extends Match {
         }
         return criteria;
     }
-    
+
     protected int recomputeValue(int index, Competitor c) {
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
         valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
-        if (valueType < Parameters.C_MAX_RANKING) {           
+        if (valueType < Parameters.C_MAX_RANKING) {
             value = getValue((Coach) c, valueType);
-        }
-        else
-        {            
-            value=getValue(MjtRanking.getCriteriaByValue(valueType), MjtRanking.getSubtypeByValue(valueType), c);
+        } else {
+            value = getValue(MjtRanking.getCriteriaByValue(valueType), MjtRanking.getSubtypeByValue(valueType), c);
         }
         return value;
     }
@@ -1181,5 +1178,18 @@ public class CoachMatch extends Match {
             }
         }
         return value;
+    }
+
+    public boolean isEntered() {
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Value v = getValue(td);
+
+        if (this.isConcedeedBy1() || isConcedeedBy2() || isRefusedBy1() || isConcedeedBy2()) {
+            return true;
+        }
+        if ((v.getValue1() == -1) || (v.getValue2() == -1)) {
+            return false;
+        }
+        return true;
     }
 }

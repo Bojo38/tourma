@@ -987,4 +987,15 @@ public class TeamMatch extends Match {
         return value;
     }
 
+    public boolean isEntered() {
+        for (int i=0; i<getMatchCount(); i++)
+        {
+            CoachMatch cm=getMatch(i);
+            if (!cm.isEntered())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

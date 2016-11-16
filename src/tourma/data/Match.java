@@ -237,4 +237,6 @@ public abstract class Match implements XMLExport {
     public abstract Element getXMLElementForDisplay();
 
     public abstract void setXMLElementForDisplay(Element element);
+    
+    public abstract boolean isEntered();
 }

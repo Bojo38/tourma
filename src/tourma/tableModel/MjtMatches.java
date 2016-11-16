@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
@@ -385,6 +386,8 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             m.recomputeValues();
         }
         fireTableDataChanged();
+        MainFrame.getMainFrame().updateMenus();
+        
     }
 
     @Override

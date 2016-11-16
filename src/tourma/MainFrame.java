@@ -140,12 +140,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         update();
     }
     
-    private void updateMenus() {
+    public void updateMenus() {
         if (jpnContent instanceof JPNRound) {
             Round r = ((JPNRound) jpnContent).getRound();
             if (mTournament.getRoundIndex(r) == mTournament.getRoundsCount() - 1) {
                 jmiDelRound.setEnabled(true);
-                jmiGenerateNextRound.setEnabled(true);
+                
+                jmiGenerateNextRound.setEnabled(r.allMatchesEntered());
+                
                 jmiChangePairing.setEnabled(true);
                 jmiAddFreeMatch.setEnabled(true);
                 jmiDelFreeMatch.setEnabled(true);
