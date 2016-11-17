@@ -30,6 +30,10 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamPicker;
 import com.github.sarxos.webcam.WebcamResolution;
 import java.awt.BorderLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -134,7 +138,13 @@ public final class JdgOpticalCapture extends javax.swing.JDialog implements Webc
 
         jPanel6.setLayout(new java.awt.BorderLayout());
 
+        jpnSnap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Camera.png"))); // NOI18N
         jpnSnap.setText(bundle.getString("Capture")); // NOI18N
+        jpnSnap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpnSnapActionPerformed(evt);
+            }
+        });
         jPanel6.add(jpnSnap, java.awt.BorderLayout.NORTH);
         jPanel6.add(jpnDetectedMatch, java.awt.BorderLayout.CENTER);
 
@@ -165,6 +175,21 @@ public final class JdgOpticalCapture extends javax.swing.JDialog implements Webc
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtNextActionPerformed
 
+    private void jpnSnapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpnSnapActionPerformed
+        if (webcam!=null)
+        {
+        BufferedImage image = webcam.getImage();
+	// save image to PNG file
+        try{
+	ImageIO.write(image, "PNG", new File("test.png"));
+        }
+        catch(IOException ioe)
+        {
+            JOptionPane.showMessageDialog(this,ioe.getLocalizedMessage(), "Exception",JOptionPane.ERROR_MESSAGE);
+        }
+        }
+    }//GEN-LAST:event_jpnSnapActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel2;
@@ -187,17 +212,17 @@ public final class JdgOpticalCapture extends javax.swing.JDialog implements Webc
 
     @Override
     public void webcamOpen(WebcamEvent we) {
-        System.out.println("webcam open");
+        //System.out.println("webcam open");
     }
 
     @Override
     public void webcamClosed(WebcamEvent we) {
-        System.out.println("webcam closed");
+        //System.out.println("webcam closed");
     }
 
     @Override
     public void webcamDisposed(WebcamEvent we) {
-        System.out.println("webcam disposed");
+        //System.out.println("webcam disposed");
     }
 
     @Override
@@ -229,13 +254,13 @@ public final class JdgOpticalCapture extends javax.swing.JDialog implements Webc
 
     @Override
     public void windowDeiconified(WindowEvent e) {
-        System.out.println("webcam viewer resumed");
+        //System.out.println("webcam viewer resumed");
         panel.resume();
     }
 
     @Override
     public void windowIconified(WindowEvent e) {
-        System.out.println("webcam viewer paused");
+        //System.out.println("webcam viewer paused");
         panel.pause();
     }
 
@@ -261,7 +286,7 @@ public final class JdgOpticalCapture extends javax.swing.JDialog implements Webc
                 webcam.setViewSize(WebcamResolution.VGA.getSize());
                 webcam.addWebcamListener(this);
 
-                System.out.println("selected " + webcam.getName());
+                //System.out.println("selected " + webcam.getName());
 
                 panel = new WebcamPanel(webcam, false);
                 panel.setFPSDisplayed(true);

@@ -345,6 +345,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jbtOpticalCapture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Camera.png"))); // NOI18N
         jbtOpticalCapture.setText(bundle.getString("OpticalCaptureKey")); // NOI18N
         jbtOpticalCapture.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
