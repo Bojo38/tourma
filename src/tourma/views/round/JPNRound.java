@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import tourma.JdgCoach;
+import tourma.JdgOpticalCapture;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
@@ -268,6 +269,7 @@ public final class JPNRound extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbMatches = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        jbtOpticalCapture = new javax.swing.JButton();
         jbtShowMatches = new javax.swing.JButton();
         jbtShowResults = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
@@ -342,6 +344,14 @@ public final class JPNRound extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jtbMatches);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jbtOpticalCapture.setText(bundle.getString("OpticalCaptureKey")); // NOI18N
+        jbtOpticalCapture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtOpticalCaptureActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtOpticalCapture);
 
         jbtShowMatches.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtShowMatches.setText(bundle.getString("ShowMatchsKey")); // NOI18N
@@ -799,6 +809,11 @@ public final class JPNRound extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jmiChangeRosterForThisRoundActionPerformed
 
+    private void jbtOpticalCaptureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOpticalCaptureActionPerformed
+        JdgOpticalCapture jdg=new JdgOpticalCapture(MainFrame.getMainFrame(),true, mRound);
+        jdg.setVisible(true);
+    }//GEN-LAST:event_jbtOpticalCaptureActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -810,6 +825,7 @@ public final class JPNRound extends javax.swing.JPanel {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton jbtGeneralIndiv;
     private javax.swing.JButton jbtGlobal;
+    private javax.swing.JButton jbtOpticalCapture;
     private javax.swing.JButton jbtShowMatches;
     private javax.swing.JButton jbtShowResults;
     private javax.swing.JMenuItem jmiChangePairing;
