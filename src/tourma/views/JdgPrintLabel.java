@@ -17,6 +17,8 @@ import freemarker.template.TemplateException;
 import java.awt.Dimension;
 import tourma.*;
 import java.awt.DisplayMode;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -105,15 +107,32 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         mPreFilled = preFilled;
 
         mRoundNumber = mTour.getRoundIndex(round) + 1;
+
+        try
+        {
+        final URI uri = getClass().getResource("/tourma/resources/inconsolata.ttf").toURI();
+        Font font = Font.createFont(Font.TRUETYPE_FONT, new File(uri)).deriveFont(12f);   
+        jepHTML.setFont(font);
+        }
+        catch(FontFormatException|IOException|URISyntaxException ffe)
+        {
+             JOptionPane.showMessageDialog(this, ffe.getLocalizedMessage());
+        }
+
         update();
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
 
     }
 
+    
+
     private void update() {
         if (!mByTeam) {
             try {
                 mFilename = createIndivLabels(mPreFilled);
+                Font f=jepHTML.getFont();
+                System.out.println("Used font: "+f.getName());
+//                jepHTML.
                 jepHTML.setPage(mFilename.toURI().toURL());
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
@@ -142,6 +161,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
             }
             cfg.setObjectWrapper(new DefaultObjectWrapper());
+            
             final Template temp = cfg.getTemplate("indivLabels.html");
 
             final ArrayList<Round> rounds;
@@ -159,7 +179,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
             root.put("TitleCoach", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Coach)));
 
             int nb_rows = 0;
-            root.put("nb_rows", Tournament.getTournament().getParams().getCriteriaCount() * 2);
+            root.put("nb_rows", Tournament.getTournament().getParams().getCriteriaCount() * 2 + 2);
             final ArrayList matches = new ArrayList();
             for (int i = 0; i < mRound.getCoachMatchs().size(); i++) {
                 CoachMatch cm = mRound.getCoachMatchs().get(i);
@@ -187,13 +207,26 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                     } else {
                         crit.put("nom", criteria.getName());
                     }
-                    if (j == 0) {
-                        match.put("firstcriteriavalue1", "&nbsp;");
-                        match.put("firstcriteriavalue2", "&nbsp;");
+
+                    if (prefilled) {
+                        String prefilledScore = "&nbsp;0&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;Z&nbsp;";
+                        if (j == 0) {
+                            match.put("firstcriteriavalue1", prefilledScore);
+                            match.put("firstcriteriavalue2", prefilledScore);
+                        } else {
+                            crit.put("value1", prefilledScore);
+                            crit.put("value2", prefilledScore);
+                            crits.add(crit);
+                        }
                     } else {
-                        crit.put("value1", "&nbsp;");
-                        crit.put("value2", "&nbsp;");
-                        crits.add(crit);
+                        if (j == 0) {
+                            match.put("firstcriteriavalue1", "&nbsp;");
+                            match.put("firstcriteriavalue2", "&nbsp;");
+                        } else {
+                            crit.put("value1", "&nbsp;");
+                            crit.put("value2", "&nbsp;");
+                            crits.add(crit);
+                        }
                     }
                 }
                 match.put("criterias", crits);
@@ -207,6 +240,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
             address = File.createTempFile(
                     StringConstants.CS_RESULT + " " + format.format(new Date()), ".tmp");
             address.deleteOnExit();
+
             out = new OutputStreamWriter(new FileOutputStream(address), Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
@@ -258,17 +292,17 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
             root.put("TitleCoach", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Coach)));
             root.put("TitleTeam", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Team)));
 
-            int nb_rows = Tournament.getTournament().getParams().getCriteriaCount() * 2;
-            
+            int nb_rows = Tournament.getTournament().getParams().getCriteriaCount();
+
             root.put("nb_rows", nb_rows);
-            int nb_rows_team=Tournament.getTournament().getParams().getCriteriaCount() * 2 * Tournament.getTournament().getParams().getTeamMatesNumber();
+            int nb_rows_team = (Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3) * Tournament.getTournament().getParams().getTeamMatesNumber();
             root.put("nb_rows_team", nb_rows_team);
             final ArrayList team_matches = new ArrayList();
             for (int i = 0; i < mRound.getMatchsCount(); i++) {
                 Match m = mRound.getMatch(i);
                 if (m instanceof TeamMatch) {
                     TeamMatch tm = (TeamMatch) m;
-                    Map team_match=new HashMap();
+                    Map team_match = new HashMap();
                     ArrayList matches = new ArrayList();
                     for (int j = 0; j < tm.getMatchCount(); j++) {
                         CoachMatch cm = tm.getMatch(j);
@@ -303,22 +337,34 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                             } else {
                                 crit.put("nom", criteria.getName());
                             }
-                            if (k == 0) {
-                                match.put("firstcriteriavalue1", "&nbsp;");
-                                match.put("firstcriteriavalue2", "&nbsp;");
+                            if (prefilled) {
+                                String prefilledScore = "&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;&nbsp;Z&nbsp;";
+                                if (k == 0) {
+                                    match.put("firstcriteriavalue1", prefilledScore);
+                                    match.put("firstcriteriavalue2", prefilledScore);
+                                } else {
+                                    crit.put("value1", prefilledScore);
+                                    crit.put("value2", prefilledScore);
+                                    crits.add(crit);
+                                }
                             } else {
-                                crit.put("value1", "&nbsp;");
-                                crit.put("value2", "&nbsp;");
-                                crits.add(crit);
+                                if (k == 0) {
+                                    match.put("firstcriteriavalue1", "&nbsp;");
+                                    match.put("firstcriteriavalue2", "&nbsp;");
+                                } else {
+                                    crit.put("value1", "&nbsp;");
+                                    crit.put("value2", "&nbsp;");
+                                    crits.add(crit);
+                                }
                             }
                         }
                         match.put("criterias", crits);
-                        matches.add(match) ;                      
+                        matches.add(match);
                     }
-                    team_match.put("matches",matches);                    
+                    team_match.put("matches", matches);
                     team_matches.add(team_match);
                 }
-                
+
             }
             root.put(ReportKeys.CS_TeamMatches, team_matches);
 
@@ -387,6 +433,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         jepHTML.setEditable(false);
+        jepHTML.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
         jScrollPane1.setViewportView(jepHTML);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);

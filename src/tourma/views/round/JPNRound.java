@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import tourma.JdgCoach;
-import tourma.JdgOpticalCapture;
+import tourma.views.JdgOpticalCapture;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;

@@ -50,6 +50,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import net.java.dev.colorchooser.ColorChooser;
+import org.apache.log4j.BasicConfigurator;
 import org.jfree.ui.tabbedui.VerticalLayout;
 import teamma.data.LRB;
 import teamma.views.JdgRoster;
@@ -2615,7 +2616,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
             // Display PDF template with print button
             if (jdg != null) {
-                jdg.setVisible(true);
+                //jdg.setVisible(true);
             }
         }
         
@@ -2763,9 +2764,12 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
      * and progress parts of the status in the Splash
      */
     private static void appInit() {
+        splashText("Initalize logger");
+        BasicConfigurator.configure();
+        splashProgress(1);
         for (int i = 1; i <= 2; i++) {
-            int pctDone = i * 2;
-            splashText("Initialization");
+            int pctDone = i * 2;            
+            splashText("Initalization");
             splashProgress(pctDone);
             try {
                 Thread.sleep(500);
@@ -2773,6 +2777,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 // ignore it
             }
         }
+        
     }
 
     /**

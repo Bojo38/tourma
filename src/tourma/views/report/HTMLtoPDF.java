@@ -5,18 +5,42 @@
  */
 package tourma.views.report;
 
+import com.itextpdf.text.BaseColor;
 import java.io.FileOutputStream;
 import java.io.StringReader;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactoryImp;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
+
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import tourma.data.Tournament;
+
+
+class defaultFontProvider extends FontFactoryImp {
+
+    private String _default;
+
+    public defaultFontProvider(String def) {
+        _default = def;
+    }
+
+    public Font getFont(String fontName, String encoding, boolean embedded, float size, int style, BaseColor color, boolean cached) {
+        if (fontName == null || size == 0) {
+            fontName = _default;
+        }
+
+        return super.getFont(fontName, encoding, embedded, size, style, color, cached);
+    }
+    }
 
 /**
  *
@@ -46,7 +70,6 @@ public class HTMLtoPDF {
             document.addTitle(title);
 
             XMLWorkerHelper worker = XMLWorkerHelper.getInstance();
-            
             worker.parseXHtml(pdfWriter, document, new StringReader(source));
             
             document.close();

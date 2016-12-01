@@ -90,42 +90,40 @@
             border="1" cellpadding="5" cellspacing="0">
             <tbody>
                 <tr>
-                    <td class="tab_pos">#</td>
-                    <td class="tab_pos" >${TitleTeam} 1</td>
-                    <td class="tab_pos" >${TitleCoach} 1</td>
-                    <td class="tab_pos" colspan="2">&nbsp;</td>
-                    <td class="tab_pos" >${TitleCoach} 2</td>
-                    <td class="tab_pos" >${TitleTeam} 2</td>
+                    <td class="tab_pos" >#</td>
+                    <td class="tab_pos" colspan="10">${TitleTeam} 1</td>
+                    <td class="tab_pos" colspan="10">${TitleTeam} 2</td>
                 </tr>
+                
+                <tr>
+                    <td class="tab_pos" style="font-size:16px;" rowspan="${nb_rows_team}">${team_match.numero}</td>
+                    <td class="tab_pos" style="font-size:16px;" colspan="10">${team_match.team1} </td>                    
+                    <td class="tab_pos" style="font-size:16px;" colspan="10">${team_match.team2}</td>
+                </tr>
+
                 <#list team_match.matches as match>
                 <tr>
-                    <#if match.coachindex==0>
-                    <td class="tab_pos" style="font-size:16px;" rowspan="${nb_rows_team}">${team_match.numero}</td>
-                    <td class="tab_pos" style="font-size:12px;" rowspan="${nb_rows_team}">${team_match.team1}</td>
-                    </#if>
-                    <td class="tab_pos" style="font-size:12px;" rowspan="${nb_rows}">${match.coach1}<br/>${match.roster1} </td>
-                    <td class="tab_pos" style="font-size:10px;" colspan="2">${match.firstcriterianame}</td>
-                    <td class="tab_pos" style="font-size:12px;" rowspan="${nb_rows}">${match.coach2}<br/>${match.roster2} </td>
-                    <#if match.coachindex==0>
-                    <td class="tab_pos" style="font-size:12px;" rowspan="${nb_rows_team}">${team_match.team2}</td>
-                    </#if>
+                    <td colspan="20" style="font-size:4px;" class="tab_pos"> &nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="tab_pos" style="font-size:8px;" >${match.firstcriteriavalue1} </td>
-                    <td class="tab_pos" style="font-size:8px;" >${match.firstcriteriavalue2} </td>
+                    <td class="tab_pos" style="font-size:10px;" colspan="10" >${match.coach1} - ${match.roster1} </td>
+                    <td class="tab_pos" style="font-size:10px;" colspan="10">${match.coach2} - ${match.roster2} </td>
+                </tr>
+                <tr>
+                    <td class="tab_pos" style="font-size:10px;" colspan="9">${match.firstcriteriavalue1} </td>
+                    <td class="tab_pos" style="font-size:10px;" colspan="2">${match.firstcriterianame}</td>
+                    <td class="tab_pos" style="font-size:10px;" colspan="9">${match.firstcriteriavalue2} </td>
                 </tr>
 
                 <#list match.criterias as criteria>
                 <tr>
-                    <td colspan="2" class="tab_pos" style="font-size:8px;">${criteria.nom}</td>
+                    <td  class="tab_pos" style="font-size:10px;" colspan="9">${criteria.value1}</td>
+                    <td colspan="2" class="tab_pos" style="font-size:10px;">${criteria.nom}</td>
+                    <td  class="tab_pos" style="font-size:10px;" colspan="9">${criteria.value2}</td>
                 </tr>
-                <tr>
-                    <td  class="tab_pos" style="font-size:8px;" >${criteria.value1}</td>
-                    <td  class="tab_pos" style="font-size:8px;" >${criteria.value2}</td>
-                </tr>
+                
                 </#list>
                 </#list>
-
             </tbody>
         </table>
         &nbsp;
