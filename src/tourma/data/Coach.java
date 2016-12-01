@@ -1,0 +1,1354 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tourma.data;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+import org.apache.xerces.impl.dv.util.Base64;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
+import teamma.data.Roster;
+import tourma.MainFrame;
+import tourma.languages.Translate;
+import tourma.utility.StringConstants;
+
+/**
+ * This class contains data relative to coach
+ *
+ * @author Frederic Berger
+ */
+public final class Coach extends Competitor implements XMLExport {
+
+    /**
+     *
+     */
+    private static Coach sNullCoach = null;
+    private static final String CS_MESSAGE1 = "CoachMessage1";
+    private static final String CS_MESSAGE2 = "CoachMessage2";
+
+    /**
+     *
+     */
+    private static HashMap<String, Coach> sCoachMap = new HashMap<>();
+    private final static Object myLock = new Object();
+    private static final Logger LOG = Logger.getLogger(Coach.class.getName());
+
+    /**
+     *
+     * @param s
+     * @return
+     */
+    public static Coach getCoach(String s) {
+        return sCoachMap.get(s);
+    }
+
+    /**
+     * new Coach map
+     */
+    public static void newCoachMap() {
+        sCoachMap = new HashMap<>();
+    }
+
+    /**
+     *
+     * @param s
+     * @param c
+     */
+    public static void putCoach(String s, Coach c) {
+        sCoachMap.put(s, c);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Coach getNullCoach() {
+        synchronized (Coach.myLock) {
+            if (sNullCoach == null) {
+                sNullCoach = new Coach(StringConstants.CS_NONE);
+                sNullCoach.setTeamMates(Team.getNullTeam());
+            }
+            /*if ((Team.getNullTeam() != null) && ((sNullCoach.getTeam() == null))) {
+             sNullCoach.setTeamMates(Team.getNullTeam());
+             }*/
+        }
+
+        return sNullCoach;
+    }
+    private int _PinCode = 0;
+
+    /**
+     *
+     */
+    private String mTeam;
+
+    /**
+     *
+     */
+    private RosterType mRoster;
+
+    /**
+     *
+     */
+    private int mNaf;
+
+    /**
+     *
+     */
+    private int mRank;
+
+    /**
+     *
+     */
+    private boolean mActive = true;
+
+    /**
+     *
+     */
+    private Team mTeamMates = null;
+
+    /**
+     *
+     */
+    private final ArrayList<teamma.data.Roster> mCompositions;
+
+    /**
+     *
+     */
+    private double mNafRank = 150.0;
+
+    /**
+     *
+     */
+    private int mHandicap = 0;
+    private final String LOG_INDIV_EMPTY = "Individual balanced empty, using only team balanced";
+    private final String LOG_BALANCED_EMPTY = "Balanced empty, using only possible";
+
+    /**
+     * New Coach constructor
+     */
+    public Coach() {
+        super();
+        mActive = true;
+        mCompositions = new ArrayList<>();
+        Random random = new Random();
+        _PinCode = random.nextInt(10000);
+    }
+
+    /**
+     *
+     * @param name
+     */
+    public Coach(final String name) {
+        super(name);
+        mActive = false;
+        mTeam = StringConstants.CS_NONE;
+        mCompositions = new ArrayList<>();
+        mRoster = new RosterType(StringConstants.CS_NONE);
+        mTeamMates = null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getCompositionCount() {
+        return mCompositions.size();
+    }
+
+    /**
+     *
+     * @param i
+     * @return
+     */
+    public teamma.data.Roster getComposition(int i) {
+        return mCompositions.get(i);
+    }
+
+    /**
+     *
+     * @param r
+     */
+    public void addComposition(teamma.data.Roster r) {
+        mCompositions.add(r);
+    }
+
+    /**
+     *
+     * @param i
+     */
+    public void removeComposition(int i) {
+        mCompositions.remove(i);
+    }
+
+    @Override
+    public int compareTo(final Object obj) {
+        int result = -1;
+
+        if (obj instanceof Coach) {
+            result = ((Double) getNafRank()).compareTo(((Coach) obj).getNafRank());
+            if (result == 0) {
+                result = getName().compareTo(((IWithNameAndPicture) obj).getName());
+            }
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public Element getXMLElement() {
+
+        final Element coach = new Element(StringConstants.CS_COACH);
+        coach.setAttribute(StringConstants.CS_NAME, this.getName());
+        coach.setAttribute(StringConstants.CS_TEAM, this.getTeam());
+        coach.setAttribute(StringConstants.CS_ROSTER, this.getRoster().getName());
+        coach.setAttribute(StringConstants.CS_NAF, Integer.toString(this.getNaf()));
+        coach.setAttribute(StringConstants.CS_RANK, Integer.toString(this.getRank()));
+        coach.setAttribute(StringConstants.CS_CLAN, this.getClan().getName());
+
+        for (int i = 0; i < getCategoryCount(); i++) {
+            if (getCategory(i) != null) {
+                if (getCategory(i).getName() != null) {
+                    Element ec = new Element(StringConstants.CS_CATEGORY);
+                    ec.setAttribute(StringConstants.CS_NAME, getCategory(i).getName());
+                    coach.addContent(ec);
+                }
+            }
+        }
+
+        coach.setAttribute(StringConstants.CS_ACTIVE, Boolean.toString(this.isActive()));
+        coach.setAttribute(StringConstants.CS_HANDICAP, Integer.toString(this.getHandicap()));
+
+        for (Roster mComposition : mCompositions) {
+            final Element compo = mComposition.getXMLElement();
+            coach.addContent(compo);
+        }
+
+        Element image = new Element(StringConstants.CS_PICTURE);
+
+        if (getPicture() != null) {
+            try {
+                String encodedImage;
+                try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                    ImageIO.write(getPicture(), "png", baos);
+                    baos.flush();
+                    //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
+                    encodedImage = Base64.encode(baos.toByteArray());
+                    baos.close();
+                    // should be inside a finally block
+                }
+                image.addContent(encodedImage);
+                coach.addContent(image);
+            } catch (IOException e) {
+            }
+        }
+
+        return coach;
+    }
+
+    /**
+     *
+     * @return
+     */
+    /* @Override
+     public String getName() {
+     return mName;
+     }*/
+    /**
+     *
+     * @return
+     */
+    public String getStringRoster() {
+        if (this.getMatchCount() == 0) {
+            return getRoster().getName();
+        }
+        ArrayList<RosterType> rosters = new ArrayList<>();
+        for (int i = 0; i < getMatchCount(); i++) {
+            Match m = getMatch(i);
+            if (this == m.getCompetitor1()) {
+                if (((CoachMatch) m).getRoster1() != null) {
+                    if (!rosters.contains(((CoachMatch) m).getRoster1())) {
+                        rosters.add(((CoachMatch) m).getRoster1());
+                    } else {
+                    }
+                } else if (!rosters.contains(this.mRoster)) {
+                    rosters.add(this.getRoster());
+                }
+            }
+
+            if (this == m.getCompetitor2()) {
+                if (((CoachMatch) m).getRoster2() != null) {
+                    if (!rosters.contains(((CoachMatch) m).getRoster2())) {
+                        rosters.add(((CoachMatch) m).getRoster2());
+                    }
+                } else if (!rosters.contains(this.mRoster)) {
+                    rosters.add(this.getRoster());
+                }
+            }
+        }
+
+        StringBuilder buf = new StringBuilder(32);
+        for (int i = 0; i < rosters.size(); i++) {
+            if (i > 0) {
+                buf.append(" / ");
+            }
+            buf.append(rosters.get(i).getName());
+        }
+
+        return buf.toString();
+    }
+
+    /**
+     *
+     * @param coach
+     */
+    @Override
+    public void setXMLElement(final Element coach) {
+        try {
+            this.setName(coach.getAttributeValue(StringConstants.CS_NAME));
+            this.setTeam(coach.getAttributeValue(StringConstants.CS_TEAM));
+            String rName = coach.getAttributeValue(StringConstants.CS_ROSTER);
+            String rosterName = RosterType.getRosterName(rName);
+            RosterType tmpRoster = RosterType.getRosterType(rosterName);
+            if (tmpRoster == null) {
+                tmpRoster = new RosterType(rName);
+            }
+            this.setRoster(tmpRoster);
+
+            this.setNaf(coach.getAttribute(StringConstants.CS_NAF).getIntValue());
+            this.setRank(coach.getAttribute(StringConstants.CS_RANK).getIntValue());
+            this.setClan(Clan.getClan(coach.getAttributeValue(StringConstants.CS_CLAN)));
+
+            if (coach.getAttributeValue(StringConstants.CS_CATEGORY) != null) {
+                this.addCategory(Category.getCategory(coach.getAttributeValue(StringConstants.CS_CATEGORY)));
+            }
+            final List<Element> cats = coach.getChildren(StringConstants.CS_CATEGORY);
+            final Iterator<Element> itCat = cats.iterator();
+            while (itCat.hasNext()) {
+                Element cat = itCat.next();
+                Category category = Category.getCategory(cat.getAttributeValue(StringConstants.CS_NAME));
+                this.addCategory(category);
+            }
+
+            Coach.sCoachMap.put(getName(), this);
+
+            try {
+                this.setActive(coach.getAttribute(StringConstants.CS_ACTIVE).getBooleanValue());
+                this.setHandicap(coach.getAttribute(StringConstants.CS_HANDICAP).getIntValue());
+            } catch (NullPointerException npe) {
+                // Do nothing
+            }
+
+            if (this.getClan() == null) {
+                if (Tournament.getTournament().getClansCount() == 0) {
+                    Tournament.getTournament().addClan(new Clan(Translate.translate(Translate.CS_None)));
+                }
+                this.setClan(Tournament.getTournament().getClan(0));
+            }
+
+            final List<Element> compos = coach.getChildren(StringConstants.CS_COMPOSITION);
+            final Iterator<Element> itC = compos.iterator();
+            while (itC.hasNext()) {
+                Element compo = itC.next();
+                teamma.data.Roster c = new teamma.data.Roster();
+                c.setXMLElement(compo);
+                this.mCompositions.add(c);
+            }
+
+        } catch (DataConversionException dce) {
+            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
+        }
+
+        try {
+            Element image = coach.getChild(StringConstants.CS_PICTURE);
+            if (image != null) {
+                String encodedImage = image.getText();
+                if (!encodedImage.isEmpty()) {
+                    //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
+                    byte[] bytes = Base64.decode(encodedImage);
+                    setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
+                }
+            }
+        } catch (IOException e) {
+            LOG.log(Level.FINE, e.getLocalizedMessage());
+        }
+
+        try {
+            this.setPinCode(Integer.parseInt(coach.getAttributeValue(StringConstants.CS_PINCODE)));
+        } catch (NullPointerException npe) {
+            _PinCode = 0;
+        } catch (NumberFormatException npe) {
+            _PinCode = 0;
+        }
+
+    }
+
+    /**
+     *
+     * @param opponent
+     * @param r
+     */
+    @Override
+    public void addMatch(Competitor opponent, Round r) {
+        CoachMatch m = new CoachMatch(r);
+        m.setCompetitor1(this);
+        m.setCompetitor2(opponent);
+        r.addMatch(m);
+    }
+
+    /**
+     *
+     * @param opponent
+     * @param r
+     * @return
+     */
+    public CoachMatch createMatch(Competitor opponent, Round r) {
+        CoachMatch m = new CoachMatch(r);
+        m.setCompetitor1(this);
+        m.setCompetitor2(opponent);
+        return m;
+    }
+
+    /**
+     *
+     * @param opponent
+     * @return
+     */
+    @Override
+    public boolean havePlayed(Competitor opponent) {
+        boolean have_played = false;
+        for (int i = 0; i < getMatchCount(); i++) {
+            Match mMatch = getMatch(i);
+            if ((mMatch.getCompetitor1() == opponent) || (mMatch.getCompetitor2() == opponent)) {
+                have_played = true;
+                break;
+            }
+        }
+        return have_played;
+    }
+
+    /*
+     * @Override*/
+    /**
+     *
+     * @param opponents
+     * @param r
+     * @return
+     */
+    @Override
+    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
+
+        Tournament tour = Tournament.getTournament();
+
+        Parameters params = tour.getParams();
+        ArrayList<Competitor> possible = new ArrayList<>(opponents);
+
+        if (this.getClan() != tour.getClan(0)) {
+
+            if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundIndex(r) == 0) || (params.isAvoidClansMatch()))) {
+
+                int i = 0;
+                while (i < possible.size()) {
+
+                    if (possible.get(i).getClan().getName().equals(this.getClan().getName())) {
+                        possible.remove(i);
+                    } else {
+                        i++;
+                    }
+                }
+            }
+        }
+
+        int i = 0;
+
+        while (i < possible.size()) {
+            if (possible.get(i).havePlayed(this)) {
+                possible.remove(i);
+            } else {
+                i++;
+            }
+        }
+
+        if ((params.isTeamTournament()) && (params.getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+            i = 0;
+            while (i < possible.size()) {
+                Team t = ((Coach) possible.get(i)).getTeamMates();
+                if (t.containsCoach(this)) {
+                    possible.remove(i);
+                } else {
+                    i++;
+                }
+            }
+
+            ArrayList<Team> oppteam = getPossibleTeams(r, null);
+
+            if (oppteam.isEmpty()) {
+                System.err.println("Empry possible opposing team");
+            }
+
+            ArrayList<Competitor> balanced = new ArrayList<>(possible);
+
+            // Keep only the players in possible list who are in team
+            // which are still in the map
+            ArrayList<Competitor> buffer = new ArrayList<>(balanced);
+
+            if (params.isIndivPairingTeamBalanced()) {
+                for (Competitor buffer1 : buffer) {
+                    if (buffer1 instanceof Coach) {
+                        Coach c = (Coach) buffer1;
+                        if (!oppteam.contains(c.getTeamMates())) {
+                            balanced.remove(c);
+                        }
+                    }
+                }
+            }
+
+            if (params.isIndivPairingIndivBalanced()) {
+                ArrayList<Competitor> indivbalanced = new ArrayList<>(balanced);
+
+                // Keep only the players in possible list who are in team
+                // which are still in the map
+                buffer = new ArrayList<>(indivbalanced);
+                for (Competitor buffer1 : buffer) {
+                    Coach c = (Coach) buffer1;
+                    ArrayList<Team> oppteam2 = c.getPossibleTeams(r, null);
+                    if (!oppteam2.contains(this.mTeamMates)) {
+                        indivbalanced.remove(c);
+                    }
+                }
+
+                if (!indivbalanced.isEmpty()) {
+                    balanced = indivbalanced;
+                } else {
+                    LOG.log(Level.FINER, LOG_INDIV_EMPTY);
+                    System.err.println(LOG_INDIV_EMPTY);
+                }
+            }
+
+            if (!balanced.isEmpty()) {
+                possible = balanced;
+            } else {
+                LOG.log(Level.FINER, LOG_BALANCED_EMPTY);
+                System.err.println(LOG_BALANCED_EMPTY);
+            }
+        }
+
+        if (possible.isEmpty()) {
+            if (params.isEnableClans()) {
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
+            }
+            possible = new ArrayList<>(opponents);
+        }
+        return possible;
+    }
+
+    /**
+     *
+     * @param current
+     * @param currentOpponent
+     * @return
+     */
+    private ArrayList<Team> getPossibleTeams(Round current, Coach currentOpponent) {
+
+        ArrayList<Team> teams = new ArrayList<>();
+        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
+            teams.add(Tournament.getTournament().getTeam(cpt));
+        }
+
+        ArrayList<Team> oppteam = new ArrayList<>(teams);
+        oppteam.remove(this.getTeamMates());
+
+        HashMap<Team, Integer> map;
+
+        if (Tournament.getTournament().getParams().isIndivPairingTeamBalanced()) {
+
+            map = this.getTeamMates().getTeamOppositionCount(oppteam, current);
+
+            // Compute the minimum
+            int minimum = getMinimumFromHash(new HashMap<Competitor, Integer>(map));
+
+            for (Entry<Team, Integer> en : map.entrySet()) {
+                int nb = en.getValue();
+                if (currentOpponent != null) {
+                    if (en.getKey().equals(currentOpponent.getTeamMates())) {
+                        nb--;
+                    }
+                }
+
+                if (nb > minimum) {
+                    oppteam.remove(en.getKey());
+                }
+
+            }
+        }
+
+        if (Tournament.getTournament().getParams().isIndivPairingIndivBalanced()) {
+            // compute the number of matches between the coach and the other teams
+            map = getTeamOppositionCount(oppteam, current);
+            // Build opponents map
+
+            // Compute the minimum
+            int minimum = getMinimumFromHash(new HashMap<Competitor, Integer>(map));
+
+            for (Entry<Team, Integer> en : map.entrySet()) {
+                int nb = en.getValue();
+                if (currentOpponent != null) {
+                    if (en.getKey().equals(currentOpponent.getTeamMates())) {
+                        nb--;
+                    }
+                }
+                if (nb > minimum) {
+                    oppteam.remove(en.getKey());
+                }
+            }
+        }
+
+        return oppteam;
+    }
+
+    /**
+     *
+     * @param hash
+     * @return
+     */
+    private int getMinimumFromHash(HashMap<Competitor, Integer> hash) {
+        Iterator<Entry<Competitor, Integer>> it2 = hash.entrySet().iterator();
+        int minimum2 = 65535;
+        while (it2.hasNext()) {
+            Entry<Competitor, Integer> en2 = it2.next();
+            int nb2 = en2.getValue();
+            if (nb2 < minimum2) {
+                minimum2 = nb2;
+            }
+        }
+        return minimum2;
+    }
+
+    /**
+     *
+     * @param teams
+     * @param r
+     * @return
+     */
+    @Override
+    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round r) {
+
+        HashMap<Team, Integer> map = new HashMap<>();
+
+        // Build opponents map
+        for (Team t : teams) {
+            if (!t.getName().equals(mTeamMates.getName())) {
+                map.put(t, 0);
+            }
+        }
+
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+            Round round = Tournament.getTournament().getRound(i);
+            for (CoachMatch m : round.getCoachMatchs()) {
+                Coach opp = null;
+                if (this == m.getCompetitor1()) {
+                    opp = (Coach) m.getCompetitor2();
+                }
+                if (this == m.getCompetitor2()) {
+                    opp = (Coach) m.getCompetitor1();
+                }
+                if (opp != null) {
+                    Team Other = opp.getTeamMates();
+                    if (map.get(Other) != null) {
+                        int nb = map.get(Other);
+                        nb += 1;
+                        map.put(Other, nb);
+                    }
+                }
+            }
+        }
+        // Compute the number of match per opponent
+        /*for (int i = 0; i < getMatchCount(); i++) {
+            Match mMatch = getMatch(i);
+            CoachMatch m = (CoachMatch) mMatch;
+            Coach opp;
+            if (this == m.getCompetitor1()) {
+                opp = (Coach) m.getCompetitor2();
+            } else {
+                opp = (Coach) m.getCompetitor1();
+            }
+            Team Other = opp.getTeamMates();
+            if (map.get(Other) != null) {
+                int nb = map.get(Other);
+                nb += 1;
+                map.put(Other, nb);
+            }
+        }*/
+
+        if (r != null) {
+            for (int i = 0; i < r.getCoachMatchs().size(); i++) {
+                CoachMatch cm = r.getCoachMatchs().get(i);
+
+                Coach opp = null;
+                if (this == cm.getCompetitor1()) {
+                    opp = (Coach) cm.getCompetitor2();
+                }
+                if (this == cm.getCompetitor2()) {
+                    opp = (Coach) cm.getCompetitor1();
+                }
+                if (opp != null) {
+                    Team Other = opp.getTeamMates();
+
+                    int nb = 0;
+                    if (map.get(Other) != null) {
+                        nb = map.get(Other);
+                        nb += 1;
+                        map.put(Other, nb);
+                    }
+
+                }
+            }
+        }
+
+        return map;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String getDecoratedName() {
+        String tmp = getName();
+        Tournament tour = Tournament.getTournament();
+        ArrayList<Clan> clans;
+        Parameters params = tour.getParams();
+        if (params.isEnableClans()) {
+            if (getClan() != null) {
+                tmp = getName() + " / " + getClan().getName();
+            }
+        }
+        if (params.isTeamTournament()) {
+            if (getTeamMates() != null) {
+                tmp = getName() + " / " + getTeamMates().getName();
+            }
+
+        }
+        return tmp;
+    }
+
+    /**
+     *
+     * @param c
+     * @param r
+     */
+    @Override
+    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) {
+        addMatch(c, r);
+    }
+
+    /**
+     *
+     * @param opp
+     * @param round
+     * @return
+     */
+    public boolean isBalanced(Coach opp, Round round) {
+        Tournament tour = Tournament.getTournament();
+        boolean balanced = true;
+        if ((tour.getParams().isTeamTournament())
+                && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+
+            //System.out.println(this.getName() + "(" + this.getTeamMates().getName() + ") vs " + opp.getName() + "(" + opp.getTeamMates().getName() + ")");
+            if (tour.getParams().isIndivPairingTeamBalanced()) {
+                balanced = this.getTeamMates().isBalanced(opp.getTeamMates(), round);
+            }
+
+            if (tour.getParams().isIndivPairingIndivBalanced()) {
+                balanced = balanced & this.isBalanced(opp.getTeamMates(), round);
+            }
+        }
+        return balanced;
+    }
+
+    public void printBalanced(Round round) {
+        Tournament tour = Tournament.getTournament();
+
+        if ((tour.getParams().isTeamTournament())
+                && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+
+            /*if (tour.getParams().isIndivPairingTeamBalanced()) {
+                balanced = this.getTeamMates().isBalanced(opp.getTeamMates(), round);
+            }*/
+            if (tour.getParams().isIndivPairingIndivBalanced()) {
+
+                ArrayList<Team> teams = new ArrayList<>();
+
+                for (int i = 0; i < round.getMatchsCount(); i++) {
+                    Match mMatch = round.getMatch(i);
+                    CoachMatch m = (CoachMatch) mMatch;
+                    Coach c1 = (Coach) m.getCompetitor1();
+                    Coach c2 = (Coach) m.getCompetitor2();
+                    if (c1.getTeamMates() != this.getTeamMates()) {
+                        if (!teams.contains(c1.getTeamMates())) {
+                            teams.add(c1.getTeamMates());
+                        }
+                    }
+                    if (c2.getTeamMates() != this.getTeamMates()) {
+                        if (!teams.contains(c2.getTeamMates())) {
+                            teams.add(c2.getTeamMates());
+                        }
+                    }
+                }
+
+                HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
+
+                Iterator<Team> it2 = hash.keySet().iterator();
+                int minimum = 65535;
+                int maximum = 0;
+                while (it2.hasNext()) {
+                    Competitor en2 = it2.next();
+                    if (en2 instanceof Team) {
+                        Team t2 = (Team) en2;
+                        int nb2 = hash.get(t2);
+                        if (nb2 < minimum) {
+                            minimum = nb2;
+                        }
+                        if (nb2 > maximum) {
+                            maximum = nb2;
+                        }
+                    }
+                }
+
+                System.out.println(this.getName() + " Max: " + maximum + " Min: " + minimum);
+            }
+        }
+    }
+
+    private boolean isBalanced(Team opp, Round round) {
+        boolean balanced = true;
+        ArrayList<Team> teams = new ArrayList<>();
+
+        if (this.getTeamMates() == opp) {
+            return false;
+        }
+
+        for (int i = 0; i < round.getMatchsCount(); i++) {
+            Match mMatch = round.getMatch(i);
+            CoachMatch m = (CoachMatch) mMatch;
+            Coach c1 = (Coach) m.getCompetitor1();
+            Coach c2 = (Coach) m.getCompetitor2();
+            if (c1.getTeamMates() != this.getTeamMates()) {
+                if (!teams.contains(c1.getTeamMates())) {
+                    teams.add(c1.getTeamMates());
+                }
+            }
+            if (c2.getTeamMates() != this.getTeamMates()) {
+                if (!teams.contains(c2.getTeamMates())) {
+                    teams.add(c2.getTeamMates());
+                }
+            }
+        }
+
+        HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
+
+        Iterator<Team> it2 = hash.keySet().iterator();
+        int minimum = 65535;
+        int maximum = 0;
+        while (it2.hasNext()) {
+            Competitor en2 = it2.next();
+            if (en2 instanceof Team) {
+                Team t2 = (Team) en2;
+                int nb2 = hash.get(t2);
+                if (nb2 < minimum) {
+                    minimum = nb2;
+                }
+                if (nb2 > maximum) {
+                    maximum = nb2;
+                }
+            }
+        }
+
+        int nb = hash.get(opp);
+
+        if ((maximum == nb) && (maximum - minimum > 1)) {
+            balanced = false;
+        }
+        return balanced;
+    }
+
+    /**
+     *
+     * @param round
+     * @return
+     */
+    ArrayList<Team> getMinimumTeamsBalanced(Round round
+    ) {
+
+        ArrayList<Team> possible = new ArrayList<>();
+
+        ArrayList<Team> teams = new ArrayList<>();
+        for (int i = 0; i < round.getMatchsCount(); i++) {
+            Match mMatch = round.getMatch(i);
+            CoachMatch m = (CoachMatch) mMatch;
+            Coach c1 = (Coach) m.getCompetitor1();
+            Coach c2 = (Coach) m.getCompetitor2();
+            if (c1.getTeamMates() != this.getTeamMates()) {
+                if (!teams.contains(c2.getTeamMates())) {
+                    teams.add(c2.getTeamMates());
+                }
+            }
+            if (c2.getTeamMates() != this.getTeamMates()) {
+                if (!teams.contains(c1.getTeamMates())) {
+                    teams.add(c1.getTeamMates());
+                }
+            }
+        }
+
+        HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
+
+        Iterator<Entry<Team, Integer>> it2 = hash.entrySet().iterator();
+        int minimum = 65535;
+        int maximum = 0;
+        while (it2.hasNext()) {
+            Entry<Team, Integer> en2 = it2.next();
+            if (en2.getKey() instanceof Team) {
+                int nb2 = en2.getValue();
+                if (nb2 < minimum) {
+                    minimum = nb2;
+                }
+                if (nb2 > maximum) {
+                    maximum = nb2;
+                }
+            }
+        }
+
+        it2 = hash.entrySet().iterator();
+        while (it2.hasNext()) {
+            Entry<Team, Integer> en2 = it2.next();
+            int nb2 = en2.getValue();
+            if (nb2 == minimum) {
+                possible.add(en2.getKey());
+            }
+        }
+
+        return possible;
+    }
+
+    /**
+     *
+     * @param Opponent
+     * @param opponentOpponent
+     * @param currentOpp
+     * @param current
+     * @return
+     */
+    private boolean canMatch(Coach Opponent, Coach opponentOpponent, Coach currentOpp, Round current) {
+        boolean canMatch;
+
+        // Already played
+        boolean have_played = havePlayed(Opponent);
+
+        Tournament tour = Tournament.getTournament();
+        canMatch = !have_played;
+
+        // Same clan 
+        if ((tour.getParams().isEnableClans()) && (tour.getParams().isAvoidClansMatch())) {
+            if (!Opponent.getClan().getName().equals(StringConstants.CS_NONE)) {
+                if (getClan() == Opponent.getClan()) {
+                    canMatch = false;
+                }
+            }
+            if ((!opponentOpponent.getClan().getName().equals(StringConstants.CS_NONE)) && (!currentOpp.getClan().getName().equals(StringConstants.CS_NONE))) {
+                if (opponentOpponent.getClan() == currentOpp.getClan()) {
+                    canMatch = false;
+                }
+            }
+        }
+
+        // Same team
+        /*if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+            if (Opponent.getTeamMates() != Team.getNullTeam()) {
+                if (getTeamMates() == Opponent.getTeamMates()) {
+                    canMatch = false;
+                }
+            }
+            if ((!opponentOpponent.getTeamMates().getName().equals(StringConstants.CS_NONE)) && (!currentOpp.getTeamMates().getName().equals(StringConstants.CS_NONE))) {
+                if (opponentOpponent.getTeamMates() == currentOpp.getTeamMates()) {
+                    canMatch = false;
+                }
+            }
+        }
+
+        // Balancing pairing
+        if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+
+            ArrayList<Team> teams = new ArrayList<>();
+            for (int i = 0; i < current.getMatchsCount(); i++) {
+                Match mMatch = current.getMatch(i);
+                CoachMatch m = (CoachMatch) mMatch;
+                Coach c1 = (Coach) m.getCompetitor1();
+                Coach c2 = (Coach) m.getCompetitor2();
+                if (c1.getTeamMates() != this.getTeamMates()) {
+                    if (!teams.contains(c2.getTeamMates())) {
+                        teams.add(c2.getTeamMates());
+                    }
+                }
+                if (c2.getTeamMates() != this.getTeamMates()) {
+                    if (!teams.contains(c1.getTeamMates())) {
+                        teams.add(c1.getTeamMates());
+                    }
+                }
+            }
+            teams.remove(getTeamMates());
+
+            // Team balancing
+            if (tour.getParams().isIndivPairingTeamBalanced()) {
+                HashMap<Team, Integer> hash = getTeamMates().getTeamOppositionCount(teams, current);
+
+                Iterator<Team> it2 = hash.keySet().iterator();
+                int minimum = 65535;
+                int maximum = 0;
+                while (it2.hasNext()) {
+                    Competitor en2 = it2.next();
+                    if (en2 instanceof Team) {
+                        Team t2 = (Team) en2;
+                        int nb2 = hash.get(t2);
+                        if (nb2 < minimum) {
+                            minimum = nb2;
+                        }
+                        if (nb2 > maximum) {
+                            maximum = nb2;
+                        }
+                    }
+                }
+
+                // Check if team is perfectly balanced. If yes, the opponent can only 
+                // be among teammates opponents
+                if (maximum - minimum == 0) {
+                    if (!mTeamMates.containsCoach(opponentOpponent)) {
+                        canMatch = false;
+                    }
+                }
+
+                if (!mTeamMates.containsCoach(opponentOpponent)) {
+                    if (Opponent != null) {
+                        if (Opponent.getTeamMates() != null) {
+                            if (hash.get(Opponent.getTeamMates()) != null) {
+                                int nb = hash.get(Opponent.getTeamMates());
+
+                                if ((maximum == nb) && (maximum - minimum > 1)) {
+                                    canMatch = false;
+                                }
+                            } else {
+                                System.err.println("Opponent balancing count is null");
+                                canMatch = false;
+                            }
+                        } else {
+                            System.err.println("Opponent team is null");
+                        }
+                    } else {
+                        System.err.println("Opponent is null");
+                    }
+                }
+
+                // Check if team is balanced, by One. If yes, the opponent can  
+                // be among teammates opponents or among minimum times encountered teams
+                if (maximum - minimum == 1) {
+                    if (!mTeamMates.containsCoach(opponentOpponent)) {
+                        // search for minimum teams
+                        if (hash.get(Opponent.getTeamMates()) > minimum) {
+                            canMatch = false;
+                        }
+                    }
+                }
+
+                if (maximum - minimum > 1) {
+                    canMatch = false;
+                }
+            }
+        }*/
+        return canMatch;
+    }
+
+    /**
+     * This method arrange matchs to avoid double meet and balanced matches
+     *
+     * @param round
+     */
+    @Override
+    @SuppressWarnings("empty-statement")
+    public void roundCheck(Round round) {
+
+        Tournament tour = Tournament.getTournament();
+        //ArrayList<Match> matchs = round.getMatchs();
+
+        int balancingTries = 100000;
+        int triesThreshold = 10;
+        boolean totallyBalanced = false;
+        while ((!totallyBalanced) && (balancingTries > 0)) {
+
+            //System.out.println("Retry");
+            totallyBalanced = true;
+            balancingTries--;
+
+            if (balancingTries % triesThreshold == 0) {
+                round.shuffleMatchs();
+            }
+            //LOG.log(Level.FINER, "Remaining tries: {0}", balancingTries);
+
+            for (int i = round.getMatchsCount() - 1; i > 0; i--) {
+
+                Match current = round.getMatch(i);
+                Coach c1 = (Coach) current.getCompetitor1();
+                Coach c2 = (Coach) current.getCompetitor2();
+                boolean have_played = c1.havePlayed(c2);
+
+                boolean balanced = c1.isBalanced(c2, round);
+
+                if ((have_played) || (!balanced)) {
+                    //ArrayList<Competitor> possible = new ArrayList<>();
+                    int k = i - 1;
+                    while (k >= 0) {
+                        //for (int k = i - 1; k >= 0; k--) {
+
+                        Match m1 = round.getMatch(i);
+                        Match m2 = round.getMatch(k);
+
+                        // Get previous match opponent
+                        Coach c1_tmp = (Coach) m2.getCompetitor1();
+                        Coach c2_tmp = (Coach) m2.getCompetitor2();
+
+                        c1 = (Coach) m1.getCompetitor1();
+                        c2 = (Coach) m1.getCompetitor2();
+
+                        //LOG.log(Level.FINER,"Testing " + c1_tmp.mName + " vs " + c2_tmp.mName);
+                        boolean canMatch = c1.canMatch(c2_tmp, c1_tmp, c2, round);
+                        //canMatch = canMatch && c2.canMatch(c1_tmp, c2_tmp, c1, round);
+
+                        if (canMatch) {
+                            m1.setCompetitor2(c2_tmp);
+                            m2.setCompetitor2(c2);
+
+                            if (!c1.isBalanced(c2_tmp, round) || !c1_tmp.isBalanced(c2, round)) {
+                                m1.setCompetitor2(c2);
+                                m2.setCompetitor2(c2_tmp);
+                                canMatch = false;
+                                totallyBalanced=false;
+                            } else {
+                                //System.err.println("Swap done");
+                                break;
+                            }
+                        }
+                        if (!canMatch) {
+                            canMatch = c1.canMatch(c1_tmp, c2_tmp, c2, round);
+                            //canMatch = canMatch && c2.canMatch(c2_tmp, c1_tmp, c1, round);
+
+                            if (canMatch) {
+                                m1.setCompetitor2(c1_tmp);
+                                m2.setCompetitor1(c2);
+
+                                if (!c1.isBalanced(c1_tmp, round) || !c2_tmp.isBalanced(c2, round)) {
+                                    m1.setCompetitor2(c2);
+                                    m2.setCompetitor1(c1_tmp);
+                                    totallyBalanced=false;
+                                } else {
+                                    //System.err.println("Swap done");
+                                    break;
+                                }
+                            }
+                        }
+
+                        k--;
+                    }
+                }
+            }
+
+            //totallyBalanced = true;
+            for (int i = round.getMatchsCount() - 1; i >= 0; i--) {
+                Match current = round.getMatch(i);
+                Coach c1 = (Coach) current.getCompetitor1();
+                Coach c2 = (Coach) current.getCompetitor2();
+                boolean have_played = c1.havePlayed(c2);
+                boolean balanced = c1.isBalanced(c2, round) && c2.isBalanced(c1, round);
+
+                totallyBalanced = totallyBalanced && (!have_played) && balanced;
+
+                if (!totallyBalanced) {
+                    //System.err.println("Round not balanced: " + c1.getName() + "(" + c1.getTeamMates() + ") vs " + c2.getName() + "(" + c2.getTeamMates() + ")");
+                    break;
+                }
+            }
+
+            if ((!totallyBalanced) && (balancingTries == 0)) {
+
+                int answer = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), Translate.translate(CS_MESSAGE1), Translate.translate(CS_MESSAGE2), JOptionPane.YES_NO_OPTION);
+                if (answer == JOptionPane.YES_OPTION) {
+                    balancingTries = 100000;
+                }
+            }
+
+            if (!totallyBalanced) {
+                //System.err.println("Not Balanced");
+                
+                Random ran=new Random();
+                int index=ran.nextInt(round.getMatchsCount()-1)+1;
+                
+                Coach c1=(Coach) round.getMatch(0).getCompetitor1();
+                Coach c2=(Coach) round.getMatch(0).getCompetitor2();
+                Coach c1_tmp=(Coach) round.getMatch(index).getCompetitor1();
+                Coach c2_tmp=(Coach) round.getMatch(index).getCompetitor2();
+                round.getMatch(0).setCompetitor2(c1_tmp);
+                round.getMatch(index).setCompetitor1(c2);
+                
+                Match m =round.getMatch(0);
+                round.removeMatch(m);
+                round.addMatch(m);
+              
+                
+            } /*else {
+                System.out.println("Balanced");
+
+                for (int i = round.getMatchsCount() - 1; i >= 0; i--) {
+                    Match current = round.getMatch(i);
+                    Coach c1 = (Coach) current.getCompetitor1();
+                    Coach c2 = (Coach) current.getCompetitor2();
+
+                    c1.printBalanced(round);
+                    c2.printBalanced(round);
+                }
+            }*/
+        }
+    }
+
+    /**
+     * @return the mTeam
+     */
+    public String getTeam() {
+        return mTeam;
+    }
+
+    /**
+     * @param mTeam the mTeam to set
+     */
+    public void setTeam(String mTeam) {
+        this.mTeam = mTeam;
+    }
+
+    /**
+     * @return the mRoster
+     */
+    public RosterType getRoster() {
+        return mRoster;
+    }
+
+    /**
+     * @param mRoster the mRoster to set
+     */
+    public void setRoster(RosterType mRoster) {
+        this.mRoster = mRoster;
+    }
+
+    /**
+     * @return the mNaf
+     */
+    public int getNaf() {
+        return mNaf;
+    }
+
+    /**
+     * @param mNaf the mNaf to set
+     */
+    public void setNaf(int mNaf) {
+        this.mNaf = mNaf;
+    }
+
+    /**
+     * @return the mRank
+     */
+    public int getRank() {
+        return mRank;
+    }
+
+    /**
+     * @param mRank the mRank to set
+     */
+    public void setRank(int mRank) {
+        this.mRank = mRank;
+    }
+
+    /**
+     * @return the mActive
+     */
+    public boolean isActive() {
+        return mActive;
+    }
+
+    /**
+     * @param mActive the mActive to set
+     */
+    public void setActive(boolean mActive) {
+        this.mActive = mActive;
+    }
+
+    /**
+     * @return the mTeamMates
+     */
+    public Team getTeamMates() {
+        return mTeamMates;
+    }
+
+    /**
+     * @param mTeamMates the mTeamMates to set
+     */
+    public void setTeamMates(Team mTeamMates) {
+        this.mTeamMates = mTeamMates;
+    }
+
+    /**
+     * @return the mNafRank
+     */
+    public double getNafRank() {
+        return mNafRank;
+    }
+
+    /**
+     * @param mNafRank the mNafRank to set
+     */
+    public void setNafRank(double mNafRank) {
+        this.mNafRank = mNafRank;
+    }
+
+    /**
+     * @return the mHandicap
+     */
+    public int getHandicap() {
+        return mHandicap;
+    }
+
+    /**
+     * @param mHandicap the mHandicap to set
+     */
+    public void setHandicap(int mHandicap) {
+        this.mHandicap = mHandicap;
+    }
+
+    public int getPinCode() {
+        return _PinCode;
+    }
+
+    public void setPinCode(int pin) {
+        _PinCode = pin;
+    }
+}
