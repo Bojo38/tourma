@@ -5,7 +5,6 @@
  */
 package tourma.utils.display;
 
-import tourma.utils.display.TourmaProtocol;
 import org.testng.Assert;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;

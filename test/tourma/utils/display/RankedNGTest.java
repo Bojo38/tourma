@@ -5,7 +5,6 @@
  */
 package tourma.utils.display;
 
-import tourma.utils.display.Ranked;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
