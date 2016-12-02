@@ -40,6 +40,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
+import tourma.data.ITournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
@@ -53,7 +54,7 @@ import tourma.utility.StringConstants;
 public final class JdgRanking extends javax.swing.JDialog {
 
     private int mRoundNumber;
-    private Tournament mTour;
+    private ITournament mTour;
     //private boolean mResult;
     //private int mRankType;
     private int mType = 0;
@@ -78,7 +79,7 @@ public final class JdgRanking extends javax.swing.JDialog {
      * @param roundNumber
      * @param ranking
      */
-    public JdgRanking(final java.awt.Frame parent, final boolean modal, final String title, final int roundNumber, final Tournament tour, final MjtRanking ranking, final int type) {
+    public JdgRanking(final java.awt.Frame parent, final boolean modal, final String title, final int roundNumber, final ITournament tour, final MjtRanking ranking, final int type) {
         super(parent, modal);
         initComponents();
 

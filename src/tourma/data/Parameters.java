@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Parameters implements XMLExport {
+public class Parameters implements XMLExport, Serializable {
 
     /**
      *

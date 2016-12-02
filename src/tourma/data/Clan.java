@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -22,7 +23,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Clan implements Comparable<Object>, XMLExport,IWithNameAndPicture {
+public class Clan implements Comparable<Object>, XMLExport,IWithNameAndPicture, Serializable {
 
     /**
      * 

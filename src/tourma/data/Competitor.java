@@ -6,6 +6,7 @@ package tourma.data;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -15,7 +16,7 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public abstract class Competitor implements Comparable<Object>, IWithNameAndPicture {
+public abstract class Competitor implements Comparable<Object>, IWithNameAndPicture, Serializable {
 
     /**
      *

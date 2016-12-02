@@ -8,6 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.Category;
+import tourma.data.ITournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -18,7 +19,7 @@ import tourma.utility.StringConstants;
  */
 public final class JPNParamCategories extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private final ITournament mTournament;
 
     /**
      * Creates new form JPNParamCategory

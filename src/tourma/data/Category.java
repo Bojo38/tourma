@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -15,7 +16,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Category implements Comparable<Object>, XMLExport {
+public class Category implements Comparable<Object>, XMLExport, Serializable {
 
     /**
      *

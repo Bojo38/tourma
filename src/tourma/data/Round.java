@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Round implements XMLExport {
+public class Round implements XMLExport, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Round.class.getName());
 

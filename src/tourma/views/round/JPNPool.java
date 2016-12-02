@@ -18,6 +18,7 @@ import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.IContainCoachs;
+import tourma.data.ITournament;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.Round;
@@ -43,7 +44,7 @@ public final class JPNPool extends javax.swing.JPanel {
     private static final long serialVersionUID = 20L;
 
     private final Round mRound;
-    private final Tournament mTournament;
+    private final ITournament mTournament;
     private final Pool mPool;
 
     /**
@@ -58,7 +59,7 @@ public final class JPNPool extends javax.swing.JPanel {
      * @param t
      * @param p
      */
-    public JPNPool(final Round r, final Tournament t, final Pool p) {
+    public JPNPool(final Round r, final ITournament t, final Pool p) {
         mPool = p;
         initComponents();
         mRound = r;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
+import tourma.data.ITournament;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -29,7 +30,7 @@ import tourma.views.report.JdgRanking;
  */
 public final class JPNCategory extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private final ITournament mTournament;
     private final Category mCategory;
     private final int mRoundNumber;
 
@@ -47,15 +48,15 @@ public final class JPNCategory extends javax.swing.JPanel {
      * @param g
      * @param roundNumber
      */
-    public JPNCategory(final Tournament t, final Category g, final int roundNumber) {
+    public JPNCategory(final ITournament t, final Category g, final int roundNumber) {
         initComponents();
         mTournament = t;
         mCategory = g;
         mRoundNumber = roundNumber;
 
-        if (Tournament.getTournament().getParams().isTeamTournament()) {
-            for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-                Team team = Tournament.getTournament().getTeam(i);
+        if (t.getParams().isTeamTournament()) {
+            for (int i = 0; i < t.getTeamsCount(); i++) {
+                Team team = t.getTeam(i);
                 if (team.containsCategory(g)) {
                     mEnableTeam = true;
                     break;
@@ -63,8 +64,8 @@ public final class JPNCategory extends javax.swing.JPanel {
             }
         }
 
-        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            Coach coach = Tournament.getTournament().getCoach(i);
+        for (int i = 0; i < t.getCoachsCount(); i++) {
+            Coach coach = t.getCoach(i);
             if (coach.containsCategory(g)) {
                 mEnableCoach = true;
                 break;

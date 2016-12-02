@@ -15,6 +15,7 @@ import java.util.HashMap;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.ITournament;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -34,7 +35,7 @@ import tourma.views.report.JdgRanking;
 public final class JPNClan extends javax.swing.JPanel {
 
     private final Round mRound;
-    private final Tournament mTournament;
+    private final ITournament mTournament;
 //    private final JTable mJtbTeamMatch = null;
 
     /**
@@ -47,23 +48,23 @@ public final class JPNClan extends javax.swing.JPanel {
      * @param r
      * @param t
      */
-    public JPNClan(final Round r, final Tournament t) {
+    public JPNClan(final Round r, final ITournament t) {
         initComponents();
         mRound = r;
         mTournament = t;
 
         ArrayList<Team> teams = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                teams.add(Tournament.getTournament().getTeam(cpt));
+            for (int cpt = 0; cpt < t.getTeamsCount(); cpt++) {
+                teams.add(t.getTeam(cpt));
             }
             
             ArrayList<Coach> coachs = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount() ;cpt++) {
-                coachs.add(Tournament.getTournament().getCoach(cpt));
+            for (int cpt = 0; cpt < t.getCoachsCount() ;cpt++) {
+                coachs.add(t.getCoach(cpt));
             }
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
             final Criteria criteria = mTournament.getParams().getCriteria(i);
-            final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, Tournament.getTournament(),coachs,teams, mRound, true, false);
+            final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, t,coachs,teams, mRound, true, false);
             jtpAnnexRank.add(criteria.getName(), jpn);
         }
 

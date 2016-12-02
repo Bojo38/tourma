@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Criteria;
+import tourma.data.ITournament;
 import tourma.data.Parameters;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -25,14 +26,14 @@ import tourma.utility.StringConstants;
 public class MjtCriterias extends AbstractTableModel implements TableCellRenderer {
     private static final String CS_CriteriaAlreadyExists = "CriteriaAlreadyExists0";
 
-    private final Tournament mTour;
+    private final ITournament mTour;
     private final Parameters mParams;
 
     /**
      *
      * @param tour
      */
-    public MjtCriterias(final Tournament tour) {
+    public MjtCriterias(final ITournament tour) {
         mParams = tour.getParams();
         mTour = tour;
     }

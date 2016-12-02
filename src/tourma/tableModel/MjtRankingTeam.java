@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.ITournament;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
@@ -270,7 +271,7 @@ public final class MjtRankingTeam extends MjtRanking {
 
         Collections.sort(mDatas);
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule

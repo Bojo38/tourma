@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -16,7 +17,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class RosterType implements XMLExport {
+public class RosterType implements XMLExport, Serializable {
 
     private static ResourceBundle sBundle = null;
 

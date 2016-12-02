@@ -42,6 +42,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.EIndivPairing;
+import tourma.data.ITournament;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -65,7 +66,7 @@ public final class JFullScreenMatchs extends JFullScreen {
     private boolean clash = false;
 
     public JFullScreenMatchs(Socket s) throws IOException {
-        this(s,false);
+        this(s, false);
 //        this.setState(JFrame.MAXIMIZED_BOTH);
 //        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
@@ -76,12 +77,12 @@ public final class JFullScreenMatchs extends JFullScreen {
         loopStop = false;
         this.clash = clash;
         semStart.release();
-  //      this.setState(JFrame.MAXIMIZED_BOTH);
-  //      setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        //      this.setState(JFrame.MAXIMIZED_BOTH);
+        //      setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
-        @Override
-    protected void clientLoop(int screen)throws InterruptedException {
+    @Override
+    protected void clientLoop(int screen) throws InterruptedException {
         semStart.acquire();
         try {
 
@@ -123,22 +124,26 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
                             }
 
-                            Document doc = sb.build(new StringReader(buffer));
-                            Tournament.getTournament().loadRosters(doc.getRootElement());
-                            Element element = doc.getRootElement().getChild(StringConstants.CS_PARAMETERS);
-                            Tournament.getTournament().getParams().setXMLElement(element);
-                            element = doc.getRootElement().getChild(StringConstants.CS_ROUND);
-                            r = new Round();
-                            r.setXMLElementForDisplay(element);
+                            ITournament tour = Tournament.getTournament();
+                            if (tour instanceof Tournament) {
 
-                            if (clash) {
-                                this.round = r;
-                                buildClash(screen);
-                            } else {
-                                buildPanel(r,screen);
+                                Document doc = sb.build(new StringReader(buffer));
+                                ((Tournament) tour).loadRosters(doc.getRootElement());
+                                Element element = doc.getRootElement().getChild(StringConstants.CS_PARAMETERS);
+                                ((Tournament) tour).getParams().setXMLElement(element);
+                                element = doc.getRootElement().getChild(StringConstants.CS_ROUND);
+
+                                r = new Round();
+                                r.setXMLElementForDisplay(element);
+
+                                if (clash) {
+                                    this.round = r;
+                                    buildClash(screen);
+                                } else {
+                                    buildPanel(r, screen);
+                                }
+                                semAnimate.release();
                             }
-                            semAnimate.release();
-
                             this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
@@ -185,7 +190,7 @@ public final class JFullScreenMatchs extends JFullScreen {
 
     JPanel jpn = new JPanel();
 
-    private void buildPanel(Round r,int display) {
+    private void buildPanel(Round r, int display) {
 
         Font font;
 
@@ -466,56 +471,41 @@ public final class JFullScreenMatchs extends JFullScreen {
     @SuppressWarnings("LeakingThisInConstructor")
     public JFullScreenMatchs(Round r, boolean clash) throws IOException {
         super();
-        
+
         initComponents();
 
-        
-        
         this.clash = clash;
         round = r;
 
-        
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
-        int screen=0;
-        if (gs.length>1)
-        {
-            Integer options[]=new Integer[gs.length];
-            for (int i=0; i<gs.length; i++)
-            {
-                options[i]=i;
+        int screen = 0;
+        if (gs.length > 1) {
+            Integer options[] = new Integer[gs.length];
+            for (int i = 0; i < gs.length; i++) {
+                options[i] = i;
             }
-            Object val=JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
-            if (val instanceof Integer)
-            {
-                screen=((Integer)val).intValue();
+            Object val = JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (val instanceof Integer) {
+                screen = ((Integer) val).intValue();
             }
         }
-        if( screen > -1 && screen < gs.length )
-        {
-            gs[screen].setFullScreenWindow( this );            
+        if (screen > -1 && screen < gs.length) {
+            gs[screen].setFullScreenWindow(this);
+        } else if (gs.length > 0) {
+            gs[0].setFullScreenWindow(this);
+        } else {
+            throw new RuntimeException("No Screens Found");
         }
-        else if( gs.length > 0 )
-        {
-            gs[0].setFullScreenWindow( this );
-        }
-        else
-        {
-            throw new RuntimeException( "No Screens Found" );
-        }
-        
-        
-        
+
         if (clash) {
             buildClash(screen);
         } else {
-            buildPanel(r,screen);
+            buildPanel(r, screen);
         }
-        
+
         //this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
         //setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        
-        
     }
 
     private Font getCoachMatchFont(CoachMatch cm, Competitor comp, Font winner, Font looser, Font draw, Font def) {
@@ -556,8 +546,7 @@ public final class JFullScreenMatchs extends JFullScreen {
     private JFullScreenMatchs.Animation clashAnim;
 
     @Override
-    protected void keyPressed(KeyEvent evt)
-    {
+    protected void keyPressed(KeyEvent evt) {
         LOG.log(Level.FINE, "KeyPressed: " + evt.getKeyChar());
         if (evt.getKeyCode() == KeyEvent.VK_S) {
             if (animationStarted) {
@@ -632,7 +621,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             }
         }
     }
-        //public Animation animation;
+    //public Animation animation;
 
     private JFullScreenMatchs me = this;
 
@@ -862,12 +851,9 @@ public final class JFullScreenMatchs extends JFullScreen {
                         icon.setPreferredSize(new Dimension(line_height, line_height));
                     }
                 }
-                if (!t.getClan().getName().equals(Translate.translate(Translate.CS_None)))
-                {
+                if (!t.getClan().getName().equals(Translate.translate(Translate.CS_None))) {
                     icon.setText(t.getClan().getName());
-                }
-                else
-                {
+                } else {
                     icon.setForeground(Color.white);
                     icon.setText(Translate.translate(Translate.CS_None));
                 }
@@ -920,9 +906,9 @@ public final class JFullScreenMatchs extends JFullScreen {
             suspended = s;
         }
 
-        private static final String CS_Round="Round";
-        private static final String CS_Table="Table";
-        
+        private static final String CS_Round = "Round";
+        private static final String CS_Table = "Table";
+
         @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD", justification = "Sleep is used for animation")
         @Override
         @SuppressWarnings("SleepWhileInLoop")
@@ -978,12 +964,12 @@ public final class JFullScreenMatchs extends JFullScreen {
                             jlbTitle1 = new JLabel();
                             int line_height = (height * 1 / 10);
                             jlbTitle1.setFont(getFont().deriveFont((float) line_height));
-                            jlbTitle1.setText(Translate.translate(CS_Round)+" " + (Tournament.getTournament().getRoundIndex(round) + 1));
+                            jlbTitle1.setText(Translate.translate(CS_Round) + " " + (Tournament.getTournament().getRoundIndex(round) + 1));
 
                             jlbTitle2 = new JLabel();
                             line_height = (height * 1 / 20);
                             jlbTitle2.setFont(getFont().deriveFont((float) line_height));
-                            jlbTitle2.setText(Translate.translate(CS_Table)+" " + (i + 1));
+                            jlbTitle2.setText(Translate.translate(CS_Table) + " " + (i + 1));
 
                             jpnContent.add(jlbTitle1);
                             jpnContent.add(jlbTitle2);
@@ -1081,5 +1067,4 @@ public final class JFullScreenMatchs extends JFullScreen {
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
 
-    
 }

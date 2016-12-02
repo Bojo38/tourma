@@ -28,6 +28,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
+import tourma.data.ITournament;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.RosterType;
@@ -57,7 +58,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
     private final Round mRound;
     private final int mRoundNumber;
-    private final Tournament mTournament;
+    private final ITournament mTournament;
     private JPNTeamRound mJpnTeamRound = null;
     private JPNClan mJpnClanRound = null;
     private boolean mRoundOnly = false;
@@ -80,7 +81,7 @@ public final class JPNRound extends javax.swing.JPanel {
      * @param r
      * @param t
      */
-    public JPNRound(final int roundNumber, final Round r, final Tournament t) {
+    public JPNRound(final int roundNumber, final Round r, final ITournament t) {
         initComponents();
         mRound = r;
         mTournament = t;
@@ -140,16 +141,16 @@ public final class JPNRound extends javax.swing.JPanel {
         }
 
         ArrayList<Team> teams = new ArrayList<>();
-        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-            teams.add(Tournament.getTournament().getTeam(cpt));
+        for (int cpt = 0; cpt < t.getTeamsCount(); cpt++) {
+            teams.add(t.getTeam(cpt));
         }
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
             final Criteria criteria = mTournament.getParams().getCriteria(i);
             final ArrayList<Coach> coaches = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
-                coaches.add(Tournament.getTournament().getCoach(cpt));
+            for (int cpt = 0; cpt < t.getCoachsCount(); cpt++) {
+                coaches.add(t.getCoach(cpt));
             }
-            final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, Tournament.getTournament(), coaches, teams, mRound, false, false);
+            final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, t, coaches, teams, mRound, false, false);
             jtpAnnexRankings.add(criteria.getName(), jpn);
         }
 

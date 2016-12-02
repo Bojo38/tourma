@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Criteria;
+import tourma.data.ITournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 
@@ -18,7 +19,7 @@ import tourma.languages.Translate;
  */
 public class JPNParamIndiv extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private final ITournament mTournament;
 
     /**
      * Creates new form JPNParamIndiv

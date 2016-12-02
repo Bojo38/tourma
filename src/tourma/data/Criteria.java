@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.DataConversionException;
@@ -15,7 +16,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Criteria implements XMLExport {
+public class Criteria implements XMLExport, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Criteria.class.getName());
 

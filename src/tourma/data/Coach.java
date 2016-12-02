@@ -7,6 +7,7 @@ package tourma.data;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,7 +31,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public final class Coach extends Competitor implements XMLExport {
+public final class Coach extends Competitor implements XMLExport, Serializable {
 
     /**
      *
@@ -454,7 +455,7 @@ public final class Coach extends Competitor implements XMLExport {
     @Override
     public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
 
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
 
         Parameters params = tour.getParams();
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
@@ -731,7 +732,7 @@ public final class Coach extends Competitor implements XMLExport {
     @Override
     public String getDecoratedName() {
         String tmp = getName();
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         ArrayList<Clan> clans;
         Parameters params = tour.getParams();
         if (params.isEnableClans()) {
@@ -765,7 +766,7 @@ public final class Coach extends Competitor implements XMLExport {
      * @return
      */
     public boolean isBalanced(Coach opp, Round round) {
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         boolean balanced = true;
         if ((tour.getParams().isTeamTournament())
                 && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
@@ -783,7 +784,7 @@ public final class Coach extends Competitor implements XMLExport {
     }
 
     public void printBalanced(Round round) {
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
 
         if ((tour.getParams().isTeamTournament())
                 && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
@@ -960,7 +961,7 @@ public final class Coach extends Competitor implements XMLExport {
         // Already played
         boolean have_played = havePlayed(Opponent);
 
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         canMatch = !have_played;
 
         // Same clan 
@@ -1091,7 +1092,7 @@ public final class Coach extends Competitor implements XMLExport {
     @SuppressWarnings("empty-statement")
     public void roundCheck(Round round) {
 
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();
 
         int balancingTries = 100000;

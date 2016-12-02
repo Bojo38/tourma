@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +16,7 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class Pool implements XMLExport {
+public class Pool implements XMLExport, Serializable {
     private static final Logger LOG = Logger.getLogger(Pool.class.getName());
 
 

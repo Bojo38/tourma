@@ -5,11 +5,13 @@
 
 package tourma.data;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Administrateur
  */
-public class Value {
+public class Value implements Serializable {
         /**
      * Name of the criteria
      */

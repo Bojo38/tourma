@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +17,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class TeamMatch extends Match {
+public class TeamMatch extends Match implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(TeamMatch.class.getName());
 
@@ -44,7 +45,7 @@ public class TeamMatch extends Match {
         if (super.getWinner() != null) {
             return super.getWinner();
         } else {
-            Tournament tour = Tournament.getTournament();
+            ITournament tour = Tournament.getTournament();
             final Team team1 = (Team) getCompetitor1();
             final Team team2 = (Team) getCompetitor2();
 
@@ -101,7 +102,7 @@ public class TeamMatch extends Match {
         if (super.getLooser() != null) {
             return super.getLooser();
         } else {
-            Tournament tour = Tournament.getTournament();
+            ITournament tour = Tournament.getTournament();
             final Team team1 = (Team) getCompetitor1();
             final Team team2 = (Team) getCompetitor2();
 
@@ -237,7 +238,7 @@ public class TeamMatch extends Match {
      * @return
      */
     public int getVictories(Team t1) {
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
 
@@ -286,7 +287,7 @@ public class TeamMatch extends Match {
      * @return
      */
     public int getLoss(Team t1) {
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
 
@@ -343,7 +344,7 @@ public class TeamMatch extends Match {
      * @return
      */
     public int getDraw(Team t1) {
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
 

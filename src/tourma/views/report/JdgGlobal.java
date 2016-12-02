@@ -40,6 +40,7 @@ import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Criteria;
+import tourma.data.ITournament;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -57,7 +58,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
     private static final long serialVersionUID = 12L;
 
     private int mRoundNumber;
-    private Tournament mTour;
+    private ITournament mTour;
 //    private boolean mResult;
     private File mFilename = null;
     private MjtRanking mRanking;
@@ -84,7 +85,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
      * @param annexAgainstRankings
      * @param clan
      */
-    public JdgGlobal(final java.awt.Frame parent, final boolean modal, final int roundNumber, final Tournament tour, final MjtRanking model, final HashMap<Criteria, MjtAnnexRank> annexForRankings, final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings, final boolean clan, final boolean team) {
+    public JdgGlobal(final java.awt.Frame parent, final boolean modal, final int roundNumber, final ITournament tour, final MjtRanking model, final HashMap<Criteria, MjtAnnexRank> annexForRankings, final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings, final boolean clan, final boolean team) {
         super(parent, modal);
         initComponents();
         //_round = round;

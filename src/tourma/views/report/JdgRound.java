@@ -42,6 +42,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
+import tourma.data.ITournament;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -59,7 +60,7 @@ public final class JdgRound extends javax.swing.JDialog {
 
     private Round mRound;
     private int mRoundNumber;
-    private Tournament mTour;
+    private ITournament mTour;
     private boolean mResult;
     private boolean mTeam = false;
     private ArrayList<Team> mTeams1;
@@ -79,7 +80,7 @@ public final class JdgRound extends javax.swing.JDialog {
      * @param result
      * @param team
      */
-    public JdgRound(final java.awt.Frame parent, final boolean modal, final Round round, final int roundNumber, final Tournament tour, final boolean result, final boolean team) {
+    public JdgRound(final java.awt.Frame parent, final boolean modal, final Round round, final int roundNumber, final ITournament tour, final boolean result, final boolean team) {
         super(parent, modal);
         initComponents();
         mRound = round;
@@ -118,7 +119,7 @@ public final class JdgRound extends javax.swing.JDialog {
      * @param roundNumber
      * @param tour
      */
-    public JdgRound(final java.awt.Frame parent, final boolean modal, final ArrayList<Team> teams1, final ArrayList<Team> teams2, final int roundNumber, final Tournament tour) {
+    public JdgRound(final java.awt.Frame parent, final boolean modal, final ArrayList<Team> teams1, final ArrayList<Team> teams2, final int roundNumber, final ITournament tour) {
         super(parent, modal);
         initComponents();
 

@@ -4,13 +4,14 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import org.jdom2.Element;
 
 /**
  *
  * @author WFMJ7631
  */
-public abstract class Match implements XMLExport {
+public abstract class Match implements XMLExport, Serializable {
 
     /**
      *

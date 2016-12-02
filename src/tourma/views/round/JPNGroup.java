@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
+import tourma.data.ITournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
@@ -27,7 +28,7 @@ import tourma.views.report.JdgRanking;
  */
 public final class JPNGroup extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private final ITournament mTournament;
     private final Group mGroup;
     private final int mRoundNumber;
 
@@ -43,7 +44,7 @@ public final class JPNGroup extends javax.swing.JPanel {
      * @param g
      * @param roundNumber
      */
-    public JPNGroup(final Tournament t, final Group g, final int roundNumber) {
+    public JPNGroup(final ITournament t, final Group g, final int roundNumber) {
         initComponents();
         mTournament = t;
         mGroup = g;

@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +24,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class CoachMatch extends Match {
+public class CoachMatch extends Match implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(CoachMatch.class.getName());
 

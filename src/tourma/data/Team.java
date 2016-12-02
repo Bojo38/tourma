@@ -7,6 +7,7 @@ package tourma.data;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ import tourma.utils.Generation;
  *
  * @author Frederic Berger
  */
-public class Team extends Competitor implements XMLExport, IContainCoachs {
+public class Team extends Competitor implements XMLExport, IContainCoachs, Serializable {
 
     /**
      *
@@ -339,7 +340,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
      */
     @Override
     public void addMatch(Competitor opponent, Round r) {
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
 
         final ArrayList<Round> vs = new ArrayList<>();
         for (int i = 0; i < tour.getRoundsCount(); i++) {
@@ -442,7 +443,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     @Override
     public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
 
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         Parameters params = tour.getParams();
 
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
@@ -500,7 +501,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         if (!complete) {
             addMatch(c, r);
         } else {
-            Tournament tour = Tournament.getTournament();
+            ITournament tour = Tournament.getTournament();
             Parameters params = tour.getParams();
             TeamMatch tm = new TeamMatch(r);
             tm.setCompetitor1(this);
@@ -569,7 +570,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     @Override
     public void roundCheck(Round round) {
 
-        Tournament tour = Tournament.getTournament();
+        ITournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();
 
         for (int i = round.getMatchsCount() - 1; i > 0; i--) {

@@ -5,11 +5,13 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+
 /**
  *
  * @author WFMJ7631
  */
-public class GroupPoints  {
+public class GroupPoints implements Serializable  {
     
     private int victoryPoints=0;
     private int drawPoints=0;

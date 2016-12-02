@@ -25,6 +25,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileFilter;
 import tourma.data.Clan;
+import tourma.data.ITournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.ExtensionFileFilter;
@@ -65,7 +66,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         }
     }
 
-    private final Tournament mTournament;
+    private final ITournament mTournament;
 
     /**
      * Creates new form JPNParamClan

@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -12,7 +13,7 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class Substitute implements XMLExport {
+public class Substitute implements XMLExport, Serializable {
     private static final Logger LOG = Logger.getLogger(Substitute.class.getName());
 
     /**

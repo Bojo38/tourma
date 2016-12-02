@@ -19,7 +19,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,20 +51,21 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Tournament implements IContainCoachs {
+public class Tournament implements IContainCoachs,ITournament, Serializable {
 
     /**
      *
      */
-    private static Tournament mSingleton;
+    private static ITournament mSingleton;
     private static final Object myLock = new Object();
     private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
 
+    
     /**
      *
      * @return
      */
-    public static Tournament resetTournament() {
+    public static ITournament resetTournament() {
         mSingleton = new Tournament();
         return mSingleton;
     }
@@ -79,7 +82,7 @@ public class Tournament implements IContainCoachs {
      *
      * @return
      */
-    public static Tournament getTournament() {
+    public static ITournament getTournament() {
         synchronized (Tournament.myLock) {
             if (mSingleton == null) {
                 mSingleton = new Tournament();
@@ -1518,5 +1521,22 @@ public class Tournament implements IContainCoachs {
 
     public void setDescription(String tmp) {
         mDescription = tmp;
+    }
+        
+    public Tournament getTournamentInstance() throws RemoteException
+    {
+        if (mSingleton instanceof Tournament)
+        {
+            return (Tournament)mSingleton;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    public static void setTournament(ITournament tour)
+    {
+        mSingleton=tour;
     }
 }

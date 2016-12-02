@@ -7,6 +7,7 @@ package tourma.data;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +27,7 @@ import tourma.utils.display.Ranked;
  *
  * @author WFMJ7631
  */
-public final class Ranking implements XMLExport, Ranked {
+public final class Ranking implements XMLExport, Ranked, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Ranking.class.getName());
     public static final String CS_Individual_Annex = "INDIVIDUAL_ANNEX";

@@ -30,6 +30,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
+import tourma.data.ITournament;
 import tourma.data.Match;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
@@ -209,7 +210,7 @@ public final class Generation {
         final Round r = new Round();
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
         tour.clearRounds();
         tour.addRound(r);
     }
@@ -219,19 +220,19 @@ public final class Generation {
      * @param choice
      */
     public static void generateFirstRound(final int choice) {
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
         final Parameters params = tour.getParams();
 
         final ArrayList<Coach> coachs = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            Coach c = Tournament.getTournament().getCoach(i);
+        for (int i = 0; i < tour.getCoachsCount(); i++) {
+            Coach c = tour.getCoach(i);
             coachs.add(c);
             c.clearMatchs();
         }
         //final ArrayList<Round> rounds = tour.getRounds();
         ArrayList<Team> vteams = new ArrayList<>();
-        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-            Team t = Tournament.getTournament().getTeam(cpt);
+        for (int cpt = 0; cpt < tour.getTeamsCount(); cpt++) {
+            Team t = tour.getTeam(cpt);
             vteams.add(t);
             t.clearMatchs();
         }
@@ -373,7 +374,11 @@ public final class Generation {
         filename.append(".xml");
         final File file = new File(filename.toString());
 
-        Tournament.getTournament().saveXML(file);
+         final ITournament tour = Tournament.getTournament();
+         if (tour instanceof Tournament)
+         {
+            ((Tournament)tour).saveXML(file);
+         }
     }
 
     /**
@@ -382,7 +387,7 @@ public final class Generation {
      */
     private static void generateFirstRoundPool(ArrayList competitors) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         tour.clearPools();
 
@@ -487,7 +492,7 @@ public final class Generation {
      */
     private static void generateFirstRoundManual(ArrayList competitors) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         tour.setRoundRobin(false);
         @SuppressWarnings("unchecked")
@@ -547,7 +552,7 @@ public final class Generation {
      */
     private static void generateFirstRoundOrder(ArrayList competitors, final boolean random, final boolean naf) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         tour.setRoundRobin(false);
         final Round r = new Round();
@@ -649,7 +654,7 @@ public final class Generation {
      */
     private static void generateFirstRoundRobin(ArrayList competitors) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         tour.setRoundRobin(false);
         //final Calendar cal = Calendar.getInstance();
@@ -702,7 +707,7 @@ public final class Generation {
      */
     private static void generateFirstRoundCup(ArrayList competitors) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         // Analyze number of players
         final int nb_comps = competitors.size();
@@ -777,7 +782,7 @@ public final class Generation {
     @SuppressWarnings("unchecked")
     private static Round genSwiss(final ArrayList competitors, final ArrayList<ObjectRanking> datas, final Round r) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
         final ArrayList<ObjectRanking> datas_tmp = new ArrayList<>(datas);
@@ -826,7 +831,7 @@ public final class Generation {
 
                 ArrayList<Competitor> opponents = new ArrayList<>();
                 for (int i = 0; i < datas2.size(); i++) {
-                    if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+                    if (tour.getParams().isTeamTournament() && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
                         Coach opp = (Coach) datas2.get(i).getObject();
                         Coach self = (Coach) c1;
                         if (self.getTeamMates() != opp.getTeamMates()) {
@@ -851,7 +856,7 @@ public final class Generation {
                     //datas2.remove(index);
                 } else {
 
-                    if (((Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)))
+                    if (((tour.getParams().isTeamTournament() && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)))
                             && (opponents.size() % 2 == 0)) {
                         int nbMatchs = c1.getMatchCount();
                         // Remove Find possible opponent in previous allocated Match
@@ -924,7 +929,7 @@ public final class Generation {
     @SuppressWarnings("unchecked")
     private static Round genQSwiss(final ArrayList competitors, final MjtRanking datas, Round r2) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         Round r = new Round();
         r.setCurrentHour();
@@ -1223,7 +1228,7 @@ public final class Generation {
      * @param r
      */
     private static void finalGenerationStep(final Round round, final Round r) {
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
         if (round != null) {
             int i = 0;
             while (i < tour.getRoundsCount()) {
@@ -1309,7 +1314,7 @@ public final class Generation {
      */
     private static Round nextRoundQSwiss(final Round round, final int roundnumber) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         MjtRanking datas;
         // First: Create ranking
@@ -1322,14 +1327,14 @@ public final class Generation {
             if (tour.getParams().isTeamTournament()) {
                 if (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
                     final ArrayList<Coach> coaches = new ArrayList<>();
-                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                        coaches.add(Tournament.getTournament().getCoach(i));
+                    for (int i = 0; i < tour.getCoachsCount(); i++) {
+                        coaches.add(tour.getCoach(i));
                     }
                     genQSwiss(coaches, datas, r);
                 } else {
                     ArrayList<Team> teams = new ArrayList<>();
-                    for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                        teams.add(Tournament.getTournament().getTeam(cpt));
+                    for (int cpt = 0; cpt < tour.getTeamsCount(); cpt++) {
+                        teams.add(tour.getTeam(cpt));
                     }
                     Generation.genQSwiss(teams, datas, r);
                 }
@@ -1341,8 +1346,8 @@ public final class Generation {
                     r = null;
                 } else {
                     final ArrayList<Coach> coaches = new ArrayList<>();
-                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                        coaches.add(Tournament.getTournament().getCoach(i));
+                    for (int i = 0; i < tour.getCoachsCount(); i++) {
+                        coaches.add(tour.getCoach(i));
                     }
                     Generation.genQSwiss(coaches, datas, r);
                 }
@@ -1365,7 +1370,7 @@ public final class Generation {
     @SuppressWarnings("unchecked")
     private static Round nextRoundCup(final Round round, final int roundnumber) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
         Round r = new Round();
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
@@ -1447,7 +1452,7 @@ public final class Generation {
                 final int nb = (int) Math.pow(2, cup_max_tour);
 
                 boolean useCategories = false;
-                if (Tournament.getTournament().getCategoriesCount() > 1) {
+                if (tour.getCategoriesCount() > 1) {
                     useCategories = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
                             Translate.translate(CS_DoYouWantToUseCategoriesForTheCup),
                             Translate.translate(Translate.CS_Cup),
@@ -1460,8 +1465,8 @@ public final class Generation {
                     ArrayList<Category> cats = new ArrayList<>();
                     JPanel jpn = new JPanel(new BorderLayout());
                     DefaultListModel<Category> model2 = new DefaultListModel<>();
-                    for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
-                        Category cat = Tournament.getTournament().getCategory(i);
+                    for (int i = 0; i <tour.getCategoriesCount(); i++) {
+                        Category cat = tour.getCategory(i);
                         cats.add(cat);
                         model2.addElement(cat);
                     }
@@ -1741,7 +1746,7 @@ public final class Generation {
      * @param matchs
      */
     private static void buildUntilRound(final Round round, final ArrayList<Round> v, final ArrayList<CoachMatch> matchs) {
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
         if (round != null) {
             for (int i = 0; i < tour.getRoundsCount(); i++) {
                 if (tour.getRound(i).getHour().before(round.getHour())) {
@@ -1766,7 +1771,7 @@ public final class Generation {
      */
     private static Round nextRoundSwiss(final Round round, final int roundnumber) {
 
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         MjtRanking datas;
         // First: Create ranking
@@ -1781,14 +1786,14 @@ public final class Generation {
             if (tour.getParams().isTeamTournament()) {
                 if (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
                     final ArrayList<Coach> coaches = new ArrayList<>();
-                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                        coaches.add(Tournament.getTournament().getCoach(i));
+                    for (int i = 0; i <tour.getCoachsCount(); i++) {
+                        coaches.add(tour.getCoach(i));
                     }
                     genSwiss(coaches, datas, r);
                 } else {
                     ArrayList<Team> tmp_teams = new ArrayList<>();
-                    for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                        tmp_teams.add(Tournament.getTournament().getTeam(cpt));
+                    for (int cpt = 0; cpt <tour.getTeamsCount(); cpt++) {
+                        tmp_teams.add(tour.getTeam(cpt));
                     }
                     genSwiss(tmp_teams, datas, r);
                 }
@@ -1800,8 +1805,8 @@ public final class Generation {
                     r = null;
                 } else {
                     final ArrayList<Coach> coaches = new ArrayList<>();
-                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                        coaches.add(Tournament.getTournament().getCoach(i));
+                    for (int i = 0; i < tour.getCoachsCount(); i++) {
+                        coaches.add(tour.getCoach(i));
                     }
                     genSwiss(coaches, datas, r);
                 }
@@ -1816,24 +1821,25 @@ public final class Generation {
     }
 
     private static MjtRanking getSortedRankingDataCategories(int roundNumber, List<Category> categories, int mix, int nbPlayers) {
-        // First, collect coachs by categories      
+        // First, collect coachs by categories  
+        final ITournament tour=Tournament.getTournament();
         ArrayList<ArrayList<Competitor>> acomps = new ArrayList<>();
         for (Object obj : categories) {
             if (obj instanceof Category) {
                 Category cat = (Category) obj;
                 ArrayList<Competitor> comps = new ArrayList<>();
 
-                if (Tournament.getTournament().getParams().isTeamTournament()
-                        && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
-                    for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-                        Team t = Tournament.getTournament().getTeam(i);
+                if (tour.getParams().isTeamTournament()
+                        && tour.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+                    for (int i = 0; i < tour.getTeamsCount(); i++) {
+                        Team t = tour.getTeam(i);
                         if (t.containsCategory(cat)) {
                             comps.add(t);
                         }
                     }
                 } else {
-                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                        Coach c = Tournament.getTournament().getCoach(i);
+                    for (int i = 0; i <tour.getCoachsCount(); i++) {
+                        Coach c = tour.getCoach(i);
                         if (c.containsCategory(cat)) {
                             comps.add(c);
                         }
@@ -1965,12 +1971,12 @@ public final class Generation {
     }
 
     private static MjtRanking getSortedRankingData(final int roundnumber) {
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
         MjtRanking ranking;
         if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() != ETeamPairing.INDIVIDUAL_PAIRING)) {
             ArrayList<Team> tmp_teams = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                tmp_teams.add(Tournament.getTournament().getTeam(cpt));
+            for (int cpt = 0; cpt < tour.getTeamsCount(); cpt++) {
+                tmp_teams.add(tour.getTeam(cpt));
             }
             ranking = new MjtRankingTeam(tour.getParams().isTeamVictoryOnly(), roundnumber,
                     tmp_teams, false);
@@ -1978,8 +1984,8 @@ public final class Generation {
         } else {
             final boolean forPool = (tour.getPoolCount() > 0) && (!tour.getRound(roundnumber).isCup());
             final ArrayList<Coach> coaches = new ArrayList<>();
-            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                Coach coach = Tournament.getTournament().getCoach(i);
+            for (int i = 0; i < tour.getCoachsCount(); i++) {
+                Coach coach = tour.getCoach(i);
                 coaches.add(coach);
             }
             ranking = new MjtRankingIndiv(roundnumber,
@@ -1996,7 +2002,7 @@ public final class Generation {
 
     private static MjtRanking getSortedRankingData(final Pool p, final int roundnumber) {
         MjtRanking ranking;
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
         if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() != ETeamPairing.INDIVIDUAL_PAIRING)) {
             ranking = new MjtRankingTeam(tour.getParams().isTeamVictoryOnly(), roundnumber, p.getCompetitors(), false);
         } else {
@@ -2030,7 +2036,7 @@ public final class Generation {
      * @return
      */
     private static Round nextRoundRandom(final Round round) {
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         Round r = new Round();
         r.clearMatchs();
@@ -2041,8 +2047,8 @@ public final class Generation {
                     Generation.genRandom(tour.getActiveCoaches(), r);
                 } else {
                     ArrayList<Team> tmp_teams = new ArrayList<>();
-                    for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                        tmp_teams.add(Tournament.getTournament().getTeam(cpt));
+                    for (int cpt = 0; cpt < tour.getTeamsCount(); cpt++) {
+                        tmp_teams.add(tour.getTeam(cpt));
                     }
                     Generation.genRandom(tmp_teams, r);
                 }
@@ -2069,7 +2075,7 @@ public final class Generation {
      * @return
      */
     private static Round nextRoundBalanced() {
-        final Tournament tour = Tournament.getTournament();
+        final ITournament tour = Tournament.getTournament();
 
         Round r = new Round();
         if (tour.getPoolCount() == 0) {
