@@ -5,10 +5,12 @@
 package tourma.data;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -16,7 +18,7 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class Pool implements XMLExport, Serializable {
+public class Pool implements IXMLExport, Serializable {
     private static final Logger LOG = Logger.getLogger(Pool.class.getName());
 
 
@@ -35,7 +37,7 @@ public class Pool implements XMLExport, Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement() throws RemoteException{
         final Element pool = new Element(StringConstants.CS_POOL);
         pool.setAttribute(StringConstants.CS_NAME, this.getName());
         for (Competitor mCompetitor : mCompetitors) {
@@ -51,7 +53,7 @@ public class Pool implements XMLExport, Serializable {
      * @param pool
      */
     @Override
-    public void setXMLElement(final Element pool) {
+    public void setXMLElement(final Element pool) throws RemoteException{
         setName(pool.getAttributeValue(StringConstants.CS_NAME));
         
         mCompetitors.clear();
@@ -72,14 +74,14 @@ public class Pool implements XMLExport, Serializable {
     /**
      * @return the mName
      */
-    public String getName() {
+    public String getName() throws RemoteException{
         return mName;
     }
 
     /**
      * @param mName the mName to set
      */
-    public void setName(String mName) {
+    public void setName(String mName) throws RemoteException{
         this.mName = mName;
     }
 
@@ -87,21 +89,21 @@ public class Pool implements XMLExport, Serializable {
      * @param i
      * @return the mCompetitors
      */
-    public Competitor getCompetitor(int i) {
+    public Competitor getCompetitor(int i) throws RemoteException{
         return mCompetitors.get(i);
     }
     
     /**
      * @param c
      */
-    public void addCompetitor(Competitor c) {
+    public void addCompetitor(Competitor c) throws RemoteException{
          mCompetitors.add(c);
     }
     
     /**
      * @return the mCompetitors
      */
-    public int getCompetitorCount() {
+    public int getCompetitorCount() throws RemoteException{
         return mCompetitors.size();
     }
     
@@ -109,7 +111,7 @@ public class Pool implements XMLExport, Serializable {
      * @return the mCompetitors
      */
     @SuppressWarnings("ReturnOfCollectionOrArrayField")
-    public ArrayList<Competitor> getCompetitors(){
+    public ArrayList<Competitor> getCompetitors()throws RemoteException{
         return mCompetitors;
     }
 
@@ -124,6 +126,8 @@ public class Pool implements XMLExport, Serializable {
         
         boolean result;
         result = false;
+        try
+        {
         if (obj instanceof Pool) {
             Pool p=(Pool) obj;
             result=this.getName().equals(p.getName());
@@ -132,7 +136,12 @@ public class Pool implements XMLExport, Serializable {
             {
                 result&=p.getCompetitors().contains(c);
             }            
-        } 
+        }
+        }
+        catch (RemoteException re)
+        {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+        }
         return result;
     }
 }

@@ -17,7 +17,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class RosterType implements XMLExport, Serializable {
+public class RosterType implements IXMLExport, Serializable {
 
     private static ResourceBundle sBundle = null;
 

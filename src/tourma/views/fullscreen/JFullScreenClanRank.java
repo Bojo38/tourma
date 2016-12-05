@@ -32,8 +32,8 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingClan;
-import tourma.utils.display.Ranked;
 import tourma.utils.display.TourmaProtocol;
+import tourma.utils.display.IRanked;
 
 /**
  *
@@ -171,7 +171,7 @@ public final class JFullScreenClanRank extends JFullScreen {
     private static final String CS_Clan = "Clan";
     private static final String CS_Members = "Members";
 
-    private void buildPanel(Ranked ranked) throws FontFormatException {
+    private void buildPanel(IRanked ranked) throws FontFormatException {
 
         Font font;
 

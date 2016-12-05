@@ -23,7 +23,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Clan implements Comparable<Object>, XMLExport,IWithNameAndPicture, Serializable {
+public class Clan implements Comparable<Object>, IXMLExport,IWithNameAndPicture, Serializable {
 
     /**
      * 

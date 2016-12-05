@@ -37,8 +37,8 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
-import tourma.utils.display.Ranked;
 import tourma.utils.display.TourmaProtocol;
+import tourma.utils.display.IRanked;
 
 /**
  *
@@ -133,7 +133,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                                 Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             Document doc = sb.build(new StringReader(buffer));
-                            ArrayList<Ranked> rs = new ArrayList<>();
+                            ArrayList<IRanked> rs = new ArrayList<>();
                             Element element = doc.getRootElement();
                             if (this.indivRankType == C_GENERAL) {                               
                                 r = new Ranking(element);
@@ -220,7 +220,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
         try {
             round = r;
 
-            ArrayList<Ranked> rankeds = new ArrayList<>();
+            ArrayList<IRanked> rankeds = new ArrayList<>();
             //final boolean forPool = (Tournament.getTournament().getPoolCount() > 0) && (!Tournament.getTournament().getRound(r).isCup());
             if (indivRankType == C_GENERAL) {
                 final ArrayList<Coach> coaches = new ArrayList<>();
@@ -325,7 +325,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
         }
     }
 
-    private void buildPanel(ArrayList<Ranked> rankeds) throws FontFormatException {
+    private void buildPanel(ArrayList<IRanked> rankeds) throws FontFormatException {
 
         Font font;
 
@@ -371,7 +371,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
 
         for (int cpt = 0; cpt < rankeds.size(); cpt++) {
 
-            Ranked ranked = rankeds.get(cpt);
+            IRanked ranked = rankeds.get(cpt);
 
             // Number
             JLabel jlbTNum = new JLabel("#");

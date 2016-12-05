@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -26,7 +28,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Round implements XMLExport, Serializable {
+public class Round implements IXMLExport, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Round.class.getName());
 
@@ -73,27 +75,35 @@ public class Round implements XMLExport, Serializable {
 
     @Override
     public String toString() {
+        try
+        {
         final int index = Tournament.getTournament().getRoundIndex(this);
         return Translate.translate(Translate.CS_Round_) + (index + 1);
+        }
+        catch (RemoteException re)
+        {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+        }
+        return "";
     }
 
-    public double getMinBonus() {
+    public double getMinBonus() throws RemoteException{
         return mMinBonus;
     }
 
-    public double getMaxBonus() {
+    public double getMaxBonus() throws RemoteException{
         return mMaxBonus;
     }
 
-    public void setMinBonus(double v) {
+    public void setMinBonus(double v) throws RemoteException{
         mMinBonus = v;
     }
 
-    public void setMaxBonus(double v) {
+    public void setMaxBonus(double v) throws RemoteException{
         mMaxBonus = v;
     }
 
-    public double getCoef(Match m) {
+    public double getCoef(Match m) throws RemoteException{
         double coef;
         int index = this.indexOf(m) + 1;
         double gap = this.getMaxBonus() - this.getMinBonus();
@@ -107,7 +117,7 @@ public class Round implements XMLExport, Serializable {
      * @param i
      * @return
      */
-    public Match getMatch(int i) {
+    public Match getMatch(int i) throws RemoteException{
         return mMatchs.get(i);
     }
 
@@ -116,7 +126,7 @@ public class Round implements XMLExport, Serializable {
      *
      * @return
      */
-    public int getMatchsCount() {
+    public int getMatchsCount() throws RemoteException{
         return mMatchs.size();
     }
 
@@ -124,11 +134,11 @@ public class Round implements XMLExport, Serializable {
      *
      * @param m
      */
-    public void addMatch(Match m) {
+    public void addMatch(Match m) throws RemoteException{
         mMatchs.add(m);
     }
 
-    public int indexOf(Match m) {
+    public int indexOf(Match m) throws RemoteException{
         for (int i=0; i<mMatchs.size(); i++)
         {
             Match match=mMatchs.get(i);
@@ -163,7 +173,7 @@ public class Round implements XMLExport, Serializable {
     /**
      * Shuffle the matchs
      */
-    public void shuffleMatchs() {
+    public void shuffleMatchs() throws RemoteException{
         Collections.shuffle(mMatchs);
     }
 
@@ -172,11 +182,11 @@ public class Round implements XMLExport, Serializable {
      * @param m
      * @return
      */
-    public boolean containsMatch(Match m) {
+    public boolean containsMatch(Match m) throws RemoteException{
         return mMatchs.contains(m);
     }
 
-    public boolean containsCoachMatch(CoachMatch m) {
+    public boolean containsCoachMatch(CoachMatch m) throws RemoteException{
         for (Match match : mMatchs) {
             if (match instanceof CoachMatch) {
                 if (m == match) {
@@ -198,7 +208,7 @@ public class Round implements XMLExport, Serializable {
     /**
      * Clear The match Array
      */
-    public void clearMatchs() {
+    public void clearMatchs() throws RemoteException{
         mMatchs.clear();
     }
 
@@ -206,7 +216,7 @@ public class Round implements XMLExport, Serializable {
      *
      * @return
      */
-    public ArrayList<CoachMatch> getCoachMatchs() {
+    public ArrayList<CoachMatch> getCoachMatchs() throws RemoteException{
         ArrayList<CoachMatch> tmp;
         tmp = new ArrayList<>();
         if (mMatchs.size() > 0) {
@@ -234,7 +244,7 @@ public class Round implements XMLExport, Serializable {
      *
      * @param data
      */
-    public void setHour(String data) {
+    public void setHour(String data) throws RemoteException{
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         try {
             mHour = format.parse(data);
@@ -246,7 +256,7 @@ public class Round implements XMLExport, Serializable {
     /**
      * Set round hour as current one
      */
-    public void setCurrentHour() {
+    public void setCurrentHour() throws RemoteException{
         final Calendar cal = Calendar.getInstance();
         mHour = cal.getTime();
     }
@@ -257,7 +267,7 @@ public class Round implements XMLExport, Serializable {
      */
     @SuppressWarnings("ReturnOfDateField")
     //@SuppressFBWarnings({"",""})
-    public Date getHour() {
+    public Date getHour() throws RemoteException{
         return (Date) mHour.clone();
     }
 
@@ -266,7 +276,7 @@ public class Round implements XMLExport, Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement() throws RemoteException{
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(StringConstants.CS_ROUND);
         if (mHour==null)
@@ -297,7 +307,7 @@ public class Round implements XMLExport, Serializable {
      *
      * @return
      */
-    public Element getXMLElementForDisplay() {
+    public Element getXMLElementForDisplay() throws RemoteException{
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(StringConstants.CS_ROUND);
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
@@ -324,7 +334,7 @@ public class Round implements XMLExport, Serializable {
      * @param round
      */
     @Override
-    public void setXMLElement(final Element round) {
+    public void setXMLElement(final Element round) throws RemoteException{
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
         final String date = round.getAttributeValue(StringConstants.CS_DATE);
@@ -367,7 +377,7 @@ public class Round implements XMLExport, Serializable {
      *
      * @param round
      */
-    public void setXMLElementForDisplay(final Element round) {
+    public void setXMLElementForDisplay(final Element round) throws RemoteException{
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
         final String date = round.getAttributeValue(StringConstants.CS_DATE);
@@ -422,56 +432,56 @@ public class Round implements XMLExport, Serializable {
     /**
      * @return the mCup
      */
-    public boolean isCup() {
+    public boolean isCup() throws RemoteException{
         return mCup;
     }
 
     /**
      * @param mCup the mCup to set
      */
-    public void setCup(boolean mCup) {
+    public void setCup(boolean mCup)throws RemoteException {
         this.mCup = mCup;
     }
 
     /**
      * @return the mCupTour
      */
-    public int getCupTour() {
+    public int getCupTour() throws RemoteException{
         return mCupTour;
     }
 
     /**
      * @param mCupTour the mCupTour to set
      */
-    public void setCupTour(int mCupTour) {
+    public void setCupTour(int mCupTour) throws RemoteException{
         this.mCupTour = mCupTour;
     }
 
     /**
      * @return the mCupMaxTour
      */
-    public int getCupMaxTour() {
+    public int getCupMaxTour() throws RemoteException{
         return mCupMaxTour;
     }
 
     /**
      * @param mCupMaxTour the mCupMaxTour to set
      */
-    public void setCupMaxTour(int mCupMaxTour) {
+    public void setCupMaxTour(int mCupMaxTour)throws RemoteException {
         this.mCupMaxTour = mCupMaxTour;
     }
 
     /**
      * @return the mLooserCup
      */
-    public boolean isLooserCup() {
+    public boolean isLooserCup() throws RemoteException{
         return mLooserCup;
     }
 
     /**
      * @param mLooserCup the mLooserCup to set
      */
-    public void setLooserCup(boolean mLooserCup) {
+    public void setLooserCup(boolean mLooserCup)throws RemoteException {
         this.mLooserCup = mLooserCup;
     }
 
@@ -479,7 +489,7 @@ public class Round implements XMLExport, Serializable {
      *
      * @param i
      */
-    public void removeMatch(int i) {
+    public void removeMatch(int i) throws RemoteException{
         mMatchs.remove(i);
     }
 
@@ -487,7 +497,7 @@ public class Round implements XMLExport, Serializable {
      *
      * @param i
      */
-    public void removeMatch(Match i) {
+    public void removeMatch(Match i) throws RemoteException{
         mMatchs.remove(i);
     }
 
@@ -517,17 +527,17 @@ public class Round implements XMLExport, Serializable {
         return result;
     }
 
-    public boolean isThirdPlace()
+    public boolean isThirdPlace()throws RemoteException
     {
         return mThirdPlace;
     }
     
-    public void setThirdPlace(boolean b)
+    public void setThirdPlace(boolean b)throws RemoteException
     {        
         mThirdPlace=b;
     }
 
-    public void recomputeMatchs()
+    public void recomputeMatchs()throws RemoteException
     {
         for (int i=0; i<mMatchs.size(); i++)
         {
@@ -535,7 +545,7 @@ public class Round implements XMLExport, Serializable {
         }
     }
     
-    public boolean allMatchesEntered()
+    public boolean allMatchesEntered()throws RemoteException
     {
         // Shall check if all the matches hav been filled, conceeded or refused
         for (int i=0; i<getMatchsCount(); i++)

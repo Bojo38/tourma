@@ -40,8 +40,8 @@ import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtAnnexRankTeam;
-import tourma.utils.display.Ranked;
 import tourma.utils.display.TourmaProtocol;
+import tourma.utils.display.IRanked;
 
 /**
  *
@@ -111,7 +111,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                             if (!buffer.equals("")) {
                                 Document doc = sb.build(new StringReader(buffer));
                                 Element element = doc.getRootElement();
-                                ArrayList<Ranked> rs = new ArrayList<>();
+                                ArrayList<IRanked> rs = new ArrayList<>();
 
                                 List<Element> elements = element.getChildren();
                                 Iterator<Element> it = elements.iterator();
@@ -193,7 +193,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
         try {
 
             if (team) {
-                ArrayList<Ranked> rs = new ArrayList<>();
+                ArrayList<IRanked> rs = new ArrayList<>();
 
                 if (!pool) {
                     final ArrayList<Team> teams = new ArrayList<>();
@@ -256,7 +256,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                     clans.add(Tournament.getTournament().getClan(cpt));
                 }
 
-                ArrayList<Ranked> rs = new ArrayList<>();
+                ArrayList<IRanked> rs = new ArrayList<>();
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                     Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
 
@@ -284,7 +284,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
     private final static String CS_Team="Team";
     private final static String CS_Pool="Pool";
 
-    private void buildPanel(ArrayList<Ranked> rankeds) throws FontFormatException {
+    private void buildPanel(ArrayList<IRanked> rankeds) throws FontFormatException {
 
         JPanel jpn = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
@@ -312,9 +312,9 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
         int line = 0;
 
         for (int i = 0; i < rankeds.size() / 3; i++) {
-            Ranked ranked0 = rankeds.get(3 * i);
-            Ranked ranked1 = rankeds.get(3 * i + 1);
-            Ranked ranked2 = rankeds.get(3 * i + 2);
+            IRanked ranked0 = rankeds.get(3 * i);
+            IRanked ranked1 = rankeds.get(3 * i + 1);
+            IRanked ranked2 = rankeds.get(3 * i + 2);
 
             Criteria crit;
             if (ranked0 instanceof MjtAnnexRank) {

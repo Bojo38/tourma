@@ -16,7 +16,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Category implements Comparable<Object>, XMLExport, Serializable {
+public class Category implements Comparable<Object>, IXMLExport, Serializable {
 
     /**
      *

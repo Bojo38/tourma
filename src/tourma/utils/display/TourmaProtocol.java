@@ -20,7 +20,6 @@ import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
-import tourma.data.XMLExport;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtAnnexRankIndiv;
@@ -29,6 +28,7 @@ import tourma.tableModel.MjtRankingClan;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.StringConstants;
+import tourma.data.IXMLExport;
 
 /**
  *
@@ -584,7 +584,7 @@ public class TourmaProtocol {
             if (array != null) {
                 Element main = new Element(Ranking.CS_array);
                 for (int i = 0; i < array.size(); i++) {
-                    Element element = ((XMLExport) array.get(i)).getXMLElement();
+                    Element element = ((IXMLExport) array.get(i)).getXMLElement();
                     main.addContent(element);
                 }
                 XMLOutputter outp = new XMLOutputter();

@@ -35,8 +35,8 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingTeam;
-import tourma.utils.display.Ranked;
 import tourma.utils.display.TourmaProtocol;
+import tourma.utils.display.IRanked;
 
 /**
  *
@@ -108,7 +108,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
                             }
 
                             Document doc = sb.build(new StringReader(buffer));
-                            ArrayList<Ranked> rs = new ArrayList<>();
+                            ArrayList<IRanked> rs = new ArrayList<>();
                             Element element = doc.getRootElement();
                             if (!forPool) {
                                 r = new Ranking(element);
@@ -166,7 +166,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
     private final static String CS_Pool="Pool";
     private final static String CS_Team="Team";
     
-    private void buildPanel(ArrayList<Ranked> rankeds,int screen) throws FontFormatException {
+    private void buildPanel(ArrayList<IRanked> rankeds,int screen) throws FontFormatException {
 
         Font font;
 
@@ -202,7 +202,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
 
         int line = 0;
         for (int cpt = 0; cpt < rankeds.size(); cpt++) {
-            Ranked ranked = rankeds.get(cpt);
+            IRanked ranked = rankeds.get(cpt);
             // Number
             JLabel jlbTNum = new JLabel("#");
             jlbTNum.setFont(f1);
@@ -368,7 +368,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
         
         try {
             round = r;
-            ArrayList<Ranked> rankeds = new ArrayList<>();
+            ArrayList<IRanked> rankeds = new ArrayList<>();
 
             if (!pool) {
                 ArrayList<Team> teams = new ArrayList<>();

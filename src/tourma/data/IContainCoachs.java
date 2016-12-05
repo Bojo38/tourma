@@ -5,6 +5,8 @@
  */
 package tourma.data;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author WFMJ7631
@@ -16,12 +18,12 @@ public interface IContainCoachs {
      * @param i
      * @return 
      */
-     public Coach getCoach(int i);
+     public Coach getCoach(int i) throws RemoteException;
     
      /**
      * @return the mCoachs
      */
-    public int getCoachsCount();
+    public int getCoachsCount() throws RemoteException;
     
     
     /**
@@ -29,22 +31,22 @@ public interface IContainCoachs {
      * @param c
      * @return 
      */
-    public boolean containsCoach(Coach c);
+    public boolean containsCoach(Coach c) throws RemoteException;
     
     /**
      * 
      * @param c 
      */
-    public void addCoach(Coach c);
+    public void addCoach(Coach c) throws RemoteException;
     
     /**
      * 
      * @param i
      */
-    public void removeCoach(int i);
+    public void removeCoach(int i) throws RemoteException;
     
     /**
      * Clear the Coach list
      */
-   public void clearCoachs();
+   public void clearCoachs() throws RemoteException;
 }

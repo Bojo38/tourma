@@ -16,7 +16,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Criteria implements XMLExport, Serializable {
+public class Criteria implements IXMLExport, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Criteria.class.getName());
 

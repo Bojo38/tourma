@@ -5,7 +5,9 @@
 package tourma.data;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -42,13 +44,15 @@ public class ObjectAnnexRanking extends ObjectRanking {
      *
      * @return
      */
-    public int getValue() {
+    public int getValue() throws RemoteException {
         return mValue;
     }
 
     @Override
     public int compareTo(final Object o) {
         int result = -65535;
+        try
+        {
         if (o instanceof ObjectAnnexRanking) {
             if (((ObjectAnnexRanking) o).getValue() == getValue()) {
                 result = super.compareTo(o);
@@ -56,15 +60,24 @@ public class ObjectAnnexRanking extends ObjectRanking {
                 result = ((ObjectAnnexRanking) o).getValue() - getValue();
             }
         }
+        }
+        catch(RemoteException re)
+        {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+        }
         return result;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof ObjectAnnexRanking) {
-            if (super.equals(o)) {
-                return (((ObjectAnnexRanking) o).getValue() == getValue());
+        try {
+            if (o instanceof ObjectAnnexRanking) {
+                if (super.equals(o)) {
+                    return (((ObjectAnnexRanking) o).getValue() == getValue());
+                }
             }
+        } catch (RemoteException re) {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
         return false;
     }
@@ -85,16 +98,16 @@ public class ObjectAnnexRanking extends ObjectRanking {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement() throws RemoteException {
         final Element ic = super.getXMLElement();
 
         ic.setAttribute(new Attribute(StringConstants.CS_VALUE, Integer.toString(getValue())));
 
-        ic.removeAttribute(StringConstants.CS_RANK+1);
-        ic.removeAttribute(StringConstants.CS_RANK+2);
-        ic.removeAttribute(StringConstants.CS_RANK+3);
-        ic.removeAttribute(StringConstants.CS_RANK+4);
-        ic.removeAttribute(StringConstants.CS_RANK+5);
+        ic.removeAttribute(StringConstants.CS_RANK + 1);
+        ic.removeAttribute(StringConstants.CS_RANK + 2);
+        ic.removeAttribute(StringConstants.CS_RANK + 3);
+        ic.removeAttribute(StringConstants.CS_RANK + 4);
+        ic.removeAttribute(StringConstants.CS_RANK + 5);
         return ic;
     }
 
@@ -103,14 +116,14 @@ public class ObjectAnnexRanking extends ObjectRanking {
      * @param e
      */
     @Override
-    public void setXMLElement(final Element e) {
+    public void setXMLElement(final Element e) throws RemoteException {
         super.setXMLElement(e);
     }
 
     /**
      * @param mValue the mValue to set
      */
-    public void setValue(int mValue) {
+    public void setValue(int mValue) throws RemoteException {
         this.mValue = mValue;
     }
 }

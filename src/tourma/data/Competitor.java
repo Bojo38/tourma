@@ -7,9 +7,11 @@ package tourma.data;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import tourma.utility.StringConstants;
 
 /**
@@ -41,21 +43,30 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
 
     @Override
     public boolean equals(Object c) {
-        if (c instanceof Competitor) {
-            Competitor comp = (Competitor) c;
-            return getName().equals(comp.getName());
+        try {
+            if (c instanceof Competitor) {
+                Competitor comp = (Competitor) c;
+                return getName().equals(comp.getName());
+            }
+            return false;
+        } catch (RemoteException re) {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage() );
         }
         return false;
     }
 
-    public String getRawName()
-    {
+    public String getRawName() {
         return mName;
     }
-    
+
     @Override
     public int hashCode() {
-        return getName().hashCode();
+        try {
+            return getName().hashCode();
+        } catch (RemoteException re) {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+        }
+        return 0;
     }
 
     /**
@@ -109,15 +120,15 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         mMatchs = new ArrayList<>();
     }
 
-    public boolean containsCategory(Category cat) {
+    public boolean containsCategory(Category cat) throws RemoteException {
         return mCategories.contains(cat);
     }
 
-    public int getCategoryCount() {
+    public int getCategoryCount() throws RemoteException {
         return mCategories.size();
     }
 
-    public Category getCategory(int i) {
+    public Category getCategory(int i) throws RemoteException {
         if (i < mCategories.size()) {
             return mCategories.get(i);
         } else {
@@ -128,15 +139,15 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
     /**
      * @param mCategory the mCategory to set
      */
-    public void addCategory(Category mCategory) {
+    public void addCategory(Category mCategory) throws RemoteException {
         mCategories.add(mCategory);
     }
 
-    public void delCategory(Category mCategory) {
+    public void delCategory(Category mCategory) throws RemoteException {
         mCategories.remove(mCategory);
     }
 
-    public void clearCategory() {
+    public void clearCategory() throws RemoteException {
         mCategories.clear();
     }
 
@@ -145,21 +156,21 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param opponent
      * @param r
      */
-    public abstract void addMatch(Competitor opponent, Round r);
+    public abstract void addMatch(Competitor opponent, Round r) throws RemoteException;
 
     /**
      *
      * @param opponent
      * @param r
      */
-    public abstract void addMatchRoundRobin(Competitor opponent, Round r,boolean complete);
+    public abstract void addMatchRoundRobin(Competitor opponent, Round r, boolean complete) throws RemoteException;
 
     /**
      *
      * @param opponent
      * @return
      */
-    public abstract boolean havePlayed(Competitor opponent);
+    public abstract boolean havePlayed(Competitor opponent) throws RemoteException;
 
     /**
      *
@@ -167,19 +178,19 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param r
      * @return
      */
-    public abstract ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r);
+    public abstract ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) throws RemoteException;
 
     /**
      *
      * @return
      */
-    public abstract String getDecoratedName();
+    public abstract String getDecoratedName() throws RemoteException;
 
     /**
      *
      * @param r
      */
-    public abstract void roundCheck(Round r);
+    public abstract void roundCheck(Round r) throws RemoteException;
 
     /**
      *
@@ -187,11 +198,16 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param current
      * @return
      */
-    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current);
+    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current) throws RemoteException;
 
     @Override
     public String toString() {
-        return getName();
+        try {
+            return getName();
+        } catch (RemoteException re) {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+        }
+        return "";
     }
 
     /**
@@ -199,7 +215,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @return
      */
     @Override
-    public String getName() {
+    public String getName() throws RemoteException {
         return mName;
     }
 
@@ -216,7 +232,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param mName the mName to set
      */
     @Override
-    public void setName(String mName) {
+    public void setName(String mName) throws RemoteException {
         this.mName = mName;
     }
 
@@ -238,14 +254,14 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param picture the picture to set
      */
     @Override
-    public void setPicture(BufferedImage picture) {
+    public void setPicture(BufferedImage picture) throws RemoteException {
         this.picture = picture;
     }
 
     /**
      * @return the mClan
      */
-    public Clan getClan() {
+    public Clan getClan() throws RemoteException {
         return mClan;
     }
 
@@ -321,9 +337,8 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         mMatchs.clear();
     }
 
-    public boolean containsMatch(Match m)
-    {
+    public boolean containsMatch(Match m) {
         return mMatchs.contains(m);
     }
-    
+
 }

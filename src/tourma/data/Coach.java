@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,7 +32,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public final class Coach extends Competitor implements XMLExport, Serializable {
+public final class Coach extends Competitor implements IXMLExport, Serializable {
 
     /**
      *
@@ -76,7 +77,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      *
      * @return
      */
-    public static Coach getNullCoach() {
+    public static Coach getNullCoach() throws RemoteException{
         synchronized (Coach.myLock) {
             if (sNullCoach == null) {
                 sNullCoach = new Coach(StringConstants.CS_NONE);
@@ -202,7 +203,11 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
         if (obj instanceof Coach) {
             result = ((Double) getNafRank()).compareTo(((Coach) obj).getNafRank());
             if (result == 0) {
-                result = getName().compareTo(((IWithNameAndPicture) obj).getName());
+                try {
+                    result = getName().compareTo(((IWithNameAndPicture) obj).getName());
+                } catch (RemoteException re) {
+                    JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+                }
             }
         }
         return result;
@@ -213,7 +218,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement() throws RemoteException {
 
         final Element coach = new Element(StringConstants.CS_COACH);
         coach.setAttribute(StringConstants.CS_NAME, this.getName());
@@ -275,7 +280,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      *
      * @return
      */
-    public String getStringRoster() {
+    public String getStringRoster() throws RemoteException{
         if (this.getMatchCount() == 0) {
             return getRoster().getName();
         }
@@ -320,7 +325,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @param coach
      */
     @Override
-    public void setXMLElement(final Element coach) {
+    public void setXMLElement(final Element coach) throws RemoteException {
         try {
             this.setName(coach.getAttributeValue(StringConstants.CS_NAME));
             this.setTeam(coach.getAttributeValue(StringConstants.CS_TEAM));
@@ -406,7 +411,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @param r
      */
     @Override
-    public void addMatch(Competitor opponent, Round r) {
+    public void addMatch(Competitor opponent, Round r) throws RemoteException {
         CoachMatch m = new CoachMatch(r);
         m.setCompetitor1(this);
         m.setCompetitor2(opponent);
@@ -419,7 +424,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @param r
      * @return
      */
-    public CoachMatch createMatch(Competitor opponent, Round r) {
+    public CoachMatch createMatch(Competitor opponent, Round r) throws RemoteException {
         CoachMatch m = new CoachMatch(r);
         m.setCompetitor1(this);
         m.setCompetitor2(opponent);
@@ -432,7 +437,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @return
      */
     @Override
-    public boolean havePlayed(Competitor opponent) {
+    public boolean havePlayed(Competitor opponent) throws RemoteException{
         boolean have_played = false;
         for (int i = 0; i < getMatchCount(); i++) {
             Match mMatch = getMatch(i);
@@ -453,7 +458,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @return
      */
     @Override
-    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
+    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) throws RemoteException {
 
         ITournament tour = Tournament.getTournament();
 
@@ -565,7 +570,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @param currentOpponent
      * @return
      */
-    private ArrayList<Team> getPossibleTeams(Round current, Coach currentOpponent) {
+    private ArrayList<Team> getPossibleTeams(Round current, Coach currentOpponent) throws RemoteException {
 
         ArrayList<Team> teams = new ArrayList<>();
         for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
@@ -648,7 +653,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @return
      */
     @Override
-    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round r) {
+    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round r) throws RemoteException {
 
         HashMap<Team, Integer> map = new HashMap<>();
 
@@ -730,7 +735,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @return
      */
     @Override
-    public String getDecoratedName() {
+    public String getDecoratedName() throws RemoteException {
         String tmp = getName();
         ITournament tour = Tournament.getTournament();
         ArrayList<Clan> clans;
@@ -755,7 +760,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @param r
      */
     @Override
-    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) {
+    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) throws RemoteException {
         addMatch(c, r);
     }
 
@@ -765,7 +770,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @param round
      * @return
      */
-    public boolean isBalanced(Coach opp, Round round) {
+    public boolean isBalanced(Coach opp, Round round) throws RemoteException {
         ITournament tour = Tournament.getTournament();
         boolean balanced = true;
         if ((tour.getParams().isTeamTournament())
@@ -783,7 +788,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
         return balanced;
     }
 
-    public void printBalanced(Round round) {
+    public void printBalanced(Round round) throws RemoteException {
         ITournament tour = Tournament.getTournament();
 
         if ((tour.getParams().isTeamTournament())
@@ -837,7 +842,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
         }
     }
 
-    private boolean isBalanced(Team opp, Round round) {
+    private boolean isBalanced(Team opp, Round round) throws RemoteException {
         boolean balanced = true;
         ArrayList<Team> teams = new ArrayList<>();
 
@@ -895,7 +900,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @return
      */
     ArrayList<Team> getMinimumTeamsBalanced(Round round
-    ) {
+    ) throws RemoteException {
 
         ArrayList<Team> possible = new ArrayList<>();
 
@@ -955,7 +960,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      * @param current
      * @return
      */
-    private boolean canMatch(Coach Opponent, Coach opponentOpponent, Coach currentOpp, Round current) {
+    private boolean canMatch(Coach Opponent, Coach opponentOpponent, Coach currentOpp, Round current) throws RemoteException {
         boolean canMatch;
 
         // Already played
@@ -1090,7 +1095,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
      */
     @Override
     @SuppressWarnings("empty-statement")
-    public void roundCheck(Round round) {
+    public void roundCheck(Round round) throws RemoteException {
 
         ITournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();
@@ -1146,7 +1151,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
                                 m1.setCompetitor2(c2);
                                 m2.setCompetitor2(c2_tmp);
                                 canMatch = false;
-                                totallyBalanced=false;
+                                totallyBalanced = false;
                             } else {
                                 //System.err.println("Swap done");
                                 break;
@@ -1163,7 +1168,7 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
                                 if (!c1.isBalanced(c1_tmp, round) || !c2_tmp.isBalanced(c2, round)) {
                                     m1.setCompetitor2(c2);
                                     m2.setCompetitor1(c1_tmp);
-                                    totallyBalanced=false;
+                                    totallyBalanced = false;
                                 } else {
                                     //System.err.println("Swap done");
                                     break;
@@ -1202,23 +1207,23 @@ public final class Coach extends Competitor implements XMLExport, Serializable {
 
             if (!totallyBalanced) {
                 //System.err.println("Not Balanced");
-                
-                Random ran=new Random();
-                int index=ran.nextInt(round.getMatchsCount()-1)+1;
-                
-                Coach c1=(Coach) round.getMatch(0).getCompetitor1();
-                Coach c2=(Coach) round.getMatch(0).getCompetitor2();
-                Coach c1_tmp=(Coach) round.getMatch(index).getCompetitor1();
-                Coach c2_tmp=(Coach) round.getMatch(index).getCompetitor2();
+
+                Random ran = new Random();
+                int index = ran.nextInt(round.getMatchsCount() - 1) + 1;
+
+                Coach c1 = (Coach) round.getMatch(0).getCompetitor1();
+                Coach c2 = (Coach) round.getMatch(0).getCompetitor2();
+                Coach c1_tmp = (Coach) round.getMatch(index).getCompetitor1();
+                Coach c2_tmp = (Coach) round.getMatch(index).getCompetitor2();
                 round.getMatch(0).setCompetitor2(c1_tmp);
                 round.getMatch(index).setCompetitor1(c2);
-                
-                Match m =round.getMatch(0);
+
+                Match m = round.getMatch(0);
                 round.removeMatch(m);
                 round.addMatch(m);
-              
-                
-            } /*else {
+
+            }
+            /*else {
                 System.out.println("Balanced");
 
                 for (int i = round.getMatchsCount() - 1; i >= 0; i--) {

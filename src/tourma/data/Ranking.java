@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,13 +22,13 @@ import org.jdom2.Element;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
-import tourma.utils.display.Ranked;
+import tourma.utils.display.IRanked;
 
 /**
  *
  * @author WFMJ7631
  */
-public final class Ranking implements XMLExport, Ranked, Serializable {
+public final class Ranking implements IXMLExport, IRanked, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Ranking.class.getName());
     public static final String CS_Individual_Annex = "INDIVIDUAL_ANNEX";
@@ -77,7 +78,7 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
      * @param rank
      * @param rankings
      */
-    public Ranking(final String name, final String type, final String valueType, final MjtRanking rank, ArrayList<Integer> rankings) {
+    public Ranking(final String name, final String type, final String valueType, final MjtRanking rank, ArrayList<Integer> rankings)  {
         mRank = rank;
         mName = name;
         mType = type;
@@ -85,18 +86,18 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
         mRankings = new ArrayList<>(rankings);
     }
 
-    public Ranking(Element e) {
+    public Ranking(Element e) throws RemoteException{
         this.setXMLElement(e);
     }
 
-    public Criteria getCriteria() {
+    public Criteria getCriteria() throws RemoteException{
         if (mCriteria == null) {
             mCriteria = new Criteria("???");
         }
         return mCriteria;
     }
 
-    public void setCriteria(Criteria c) {
+    public void setCriteria(Criteria c) throws RemoteException{
         mCriteria = c;
     }
 
@@ -105,7 +106,7 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement() throws RemoteException{
 
         final Element rank = new Element(StringConstants.CS_RANKING);
         rank.setAttribute(new Attribute(StringConstants.CS_NAME, getName()));
@@ -130,9 +131,9 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
             Element ic;
             Object obj = getRank().getSortedObject(k);
             if (obj instanceof ObjectAnnexRanking) {
-                ic = ((XMLExport) obj).getXMLElement();
+                ic = ((IXMLExport) obj).getXMLElement();
             } else {
-                ic = ((XMLExport) obj).getXMLElement();
+                ic = ((IXMLExport) obj).getXMLElement();
             }
             ic.setAttribute(new Attribute(StringConstants.CS_POS, Integer.toString(k + 1)));
             rank.addContent(ic);
@@ -146,7 +147,7 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
      * @param e
      */
     @Override
-    public void setXMLElement(final Element e) {
+    public void setXMLElement(final Element e) throws RemoteException{
 
         mObjectsRanked = new ArrayList<>();
         boolean annex = false;
@@ -378,7 +379,7 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
 
     }
 
-    public int getRankingNumber() {
+    public int getRankingNumber() throws RemoteException{
         return mRankings.size();
     }
 
@@ -392,64 +393,64 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
     /**
      * @param mRank the mRank to set
      */
-    public void setRank(MjtRanking mRank) {
+    public void setRank(MjtRanking mRank) throws RemoteException{
         this.mRank = mRank;
     }
 
     /**
      * @return the mName
      */
-    public String getName() {
+    public String getName() throws RemoteException{
         return mName;
     }
 
     @Override
-    public String getDetail() {
+    public String getDetail() throws RemoteException{
         return mType;
     }
 
     @Override
-    public void setDetail(String d) {
+    public void setDetail(String d) throws RemoteException{
         mType = d;
     }
 
     /**
      * @param mName the mName to set
      */
-    public void setName(String mName) {
+    public void setName(String mName) throws RemoteException{
         this.mName = mName;
     }
 
     /**
      * @return the mType
      */
-    public String getType() {
+    public String getType() throws RemoteException{
         return mType;
     }
 
     /**
      * @param mType the mType to set
      */
-    public void setType(String mType) {
+    public void setType(String mType) throws RemoteException{
         this.mType = mType;
     }
 
     /**
      * @return the mValueType
      */
-    public String getValueType() {
+    public String getValueType() throws RemoteException{
         return mValueType;
     }
 
     /**
      * @param mValueType the mValueType to set
      */
-    public void setValueType(String mValueType) {
+    public void setValueType(String mValueType) throws RemoteException{
         this.mValueType = mValueType;
     }
 
     @Override
-    public int getRowCount() {
+    public int getRowCount() throws RemoteException{
         if (mObjectsRanked != null) {
             return mObjectsRanked.size();
         } else {
@@ -459,7 +460,7 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
     }
 
     @Override
-    public ObjectRanking getSortedObject(int i) {
+    public ObjectRanking getSortedObject(int i) throws RemoteException{
         if (mObjectsRanked != null) {
             if (mObjectsRanked.size() > i) {
                 return mObjectsRanked.get(i);
@@ -472,7 +473,7 @@ public final class Ranking implements XMLExport, Ranked, Serializable {
     }
 
     @Override
-    public int getSortedValue(int i, int valIndex) {
+    public int getSortedValue(int i, int valIndex) throws RemoteException{
         if (mObjectsRanked != null) {
             if (mObjectsRanked.size() > i) {
                 switch (valIndex) {

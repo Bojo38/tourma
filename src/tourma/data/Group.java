@@ -5,12 +5,14 @@
 package tourma.data;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -19,7 +21,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Group implements XMLExport, Serializable {
+public class Group implements IXMLExport, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Group.class.getName());
 
@@ -52,12 +54,12 @@ public class Group implements XMLExport, Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement() throws RemoteException {
         final Element group = new Element(StringConstants.CS_GROUP);
         group.setAttribute(StringConstants.CS_NAME, this.getName());
         for (int j = 0; j < this.getRosterCount(); j++) {
             final Element roster = new Element(StringConstants.CS_ROSTER);
-            if (this.getRoster(j) != null)  {
+            if (this.getRoster(j) != null) {
                 if (this.getRoster(j).getName() == null) {
                     this.getRoster(j).setName("Unknown");
                 }
@@ -69,7 +71,7 @@ public class Group implements XMLExport, Serializable {
         return group;
     }
 
-    public Element getXMLElementForPoints() {
+    public Element getXMLElementForPoints() throws RemoteException {
         final Element group = new Element(StringConstants.CS_GROUP_MODIFIER_POINTS);
         group.setAttribute(StringConstants.CS_NAME, this.getName());
 
@@ -90,7 +92,7 @@ public class Group implements XMLExport, Serializable {
      * @param group
      */
     @Override
-    public void setXMLElement(final Element group) {
+    public void setXMLElement(final Element group) throws RemoteException {
         setName(group.getAttributeValue(StringConstants.CS_NAME));
 
         final List<Element> rosters = group.getChildren(StringConstants.CS_ROSTER);
@@ -104,7 +106,7 @@ public class Group implements XMLExport, Serializable {
         }
     }
 
-    public void setXMLElementForPoints(final Element group) {
+    public void setXMLElementForPoints(final Element group) throws RemoteException {
 
         final List<Element> groups = group.getChildren(StringConstants.CS_GROUP);
         final Iterator<Element> gro = groups.iterator();
@@ -127,14 +129,14 @@ public class Group implements XMLExport, Serializable {
     /**
      * @return the mName
      */
-    public String getName() {
+    public String getName() throws RemoteException {
         return mName;
     }
 
     /**
      * @param mName the mName to set
      */
-    public void setName(String mName) {
+    public void setName(String mName) throws RemoteException {
         this.mName = mName;
     }
 
@@ -142,7 +144,7 @@ public class Group implements XMLExport, Serializable {
      * @param i
      * @return the mRosters
      */
-    public RosterType getRoster(int i) {
+    public RosterType getRoster(int i) throws RemoteException {
         if (i < mRosters.size()) {
             return mRosters.get(i);
         } else {
@@ -154,7 +156,7 @@ public class Group implements XMLExport, Serializable {
      *
      * @return
      */
-    public int getRosterCount() {
+    public int getRosterCount() throws RemoteException {
         return mRosters.size();
     }
 
@@ -162,7 +164,7 @@ public class Group implements XMLExport, Serializable {
      *
      * @param rt
      */
-    public void addRoster(RosterType rt) {
+    public void addRoster(RosterType rt) throws RemoteException {
         mRosters.add(rt);
     }
 
@@ -170,14 +172,14 @@ public class Group implements XMLExport, Serializable {
      *
      * @param rt
      */
-    public void removeRoster(RosterType rt) {
+    public void removeRoster(RosterType rt) throws RemoteException {
         mRosters.remove(rt);
     }
 
     /**
      * New roster array
      */
-    public void newRosters() {
+    public void newRosters() throws RemoteException {
         this.mRosters = new ArrayList<>();
     }
 
@@ -191,25 +193,31 @@ public class Group implements XMLExport, Serializable {
 
         boolean result;
         result = false;
-        if (obj instanceof Group) {
-            Group g = (Group) obj;
-            result = this.getName().equals(g.getName());
-            result &= this.getRosterCount() == g.getRosterCount();
-            for (RosterType rt : mRosters) {
-                result &= g.containsRoster(rt);
+        try {
+
+            if (obj instanceof Group) {
+                Group g = (Group) obj;
+                result = this.getName().equals(g.getName());
+                result &= this.getRosterCount() == g.getRosterCount();
+                for (RosterType rt : mRosters) {
+                    result &= g.containsRoster(rt);
+                }
+                for (Group og : opponentModificationPoints.keySet()) {
+                    result &= getOpponentModificationPoints(og).equals(g.getOpponentModificationPoints(og));;
+                }
             }
-            for (Group og : opponentModificationPoints.keySet()) {
-                result &= getOpponentModificationPoints(og).equals(g.getOpponentModificationPoints(og));;
-            }
+        } catch (RemoteException re) {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
         return result;
+
     }
 
     /**
      * @param g
      * @return the opponentModificationPoints
      */
-    public GroupPoints getOpponentModificationPoints(Group g) {
+    public GroupPoints getOpponentModificationPoints(Group g) throws RemoteException {
         return opponentModificationPoints.get(g);
     }
 
@@ -218,7 +226,7 @@ public class Group implements XMLExport, Serializable {
      * @param g
      * @param gp
      */
-    public void setOpponentModificationPoints(Group g, GroupPoints gp) {
+    public void setOpponentModificationPoints(Group g, GroupPoints gp) throws RemoteException {
         opponentModificationPoints.put(g, gp);
     }
 
@@ -226,7 +234,7 @@ public class Group implements XMLExport, Serializable {
      *
      * @param g
      */
-    public void delOpponentModificationPoints(Group g) {
+    public void delOpponentModificationPoints(Group g) throws RemoteException {
         opponentModificationPoints.remove(g);
     }
 
@@ -235,7 +243,7 @@ public class Group implements XMLExport, Serializable {
      * @param rt
      * @return
      */
-    public boolean containsRoster(RosterType rt) {
+    public boolean containsRoster(RosterType rt) throws RemoteException {
         return mRosters.contains(rt);
     }
 }

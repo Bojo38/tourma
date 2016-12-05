@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.awt.image.BufferedImage;
+import java.rmi.RemoteException;
 
 /**
  *
@@ -16,23 +17,23 @@ public interface IWithNameAndPicture {
      *
      * @return
      */
-    public String getName();
+    public String getName()throws RemoteException;
 
     /**
      *
      * @param name
      */
-    public void setName(String name);
+    public void setName(String name)throws RemoteException;
 
     /**
      *
      * @return
      */
-    public BufferedImage getPicture();     
+    public BufferedImage getPicture()throws RemoteException;     
 
     /**
      *
      * @param p
      */
-    public void setPicture(BufferedImage p);
+    public void setPicture(BufferedImage p)throws RemoteException;
 }

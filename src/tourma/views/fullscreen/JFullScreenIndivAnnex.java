@@ -38,12 +38,12 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankIndiv;
-import tourma.utils.display.Ranked;
 import tourma.utils.display.TourmaProtocol;
 import static tourma.views.fullscreen.JFullScreenIndivRank.C_CATEGORY;
 import static tourma.views.fullscreen.JFullScreenIndivRank.C_GENERAL;
 import static tourma.views.fullscreen.JFullScreenIndivRank.C_GROUP;
 import static tourma.views.fullscreen.JFullScreenIndivRank.C_POOL;
+import tourma.utils.display.IRanked;
 
 /**
  *
@@ -111,7 +111,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
 
                             Document doc = sb.build(new StringReader(buffer));
                             Element element = doc.getRootElement();
-                            ArrayList<Ranked> rs = new ArrayList<>();
+                            ArrayList<IRanked> rs = new ArrayList<>();
 
                             List<Element> elements = element.getChildren();
                             Iterator<Element> it = elements.iterator();
@@ -222,7 +222,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
         this.indivRankType = type;
         try {
             round = r;
-            ArrayList<Ranked> rs = new ArrayList<>();
+            ArrayList<IRanked> rs = new ArrayList<>();
             if (indivRankType != C_POOL) {
                 final ArrayList<Coach> coaches = new ArrayList<>();
                 for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
@@ -289,7 +289,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
     private final static String CS_Clan="Clan";
     private final static String CS_Coach="Coach";
 
-    private void buildPanel(ArrayList<Ranked> rankeds,int screen) throws FontFormatException {
+    private void buildPanel(ArrayList<IRanked> rankeds,int screen) throws FontFormatException {
 
         JPanel jpn = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
@@ -319,9 +319,9 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
         int line = 0;
 
         for (int i = 0; i < rankeds.size() / 3; i++) {
-            Ranked ranked0 = rankeds.get(3 * i);
-            Ranked ranked1 = rankeds.get(3 * i + 1);
-            Ranked ranked2 = rankeds.get(3 * i + 2);
+            IRanked ranked0 = rankeds.get(3 * i);
+            IRanked ranked1 = rankeds.get(3 * i + 1);
+            IRanked ranked2 = rankeds.get(3 * i + 2);
 
             Criteria crit;
             if (ranked0 instanceof MjtAnnexRank) {

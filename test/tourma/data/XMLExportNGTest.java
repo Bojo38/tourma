@@ -38,12 +38,12 @@ public class XMLExportNGTest {
     }
 
     /**
-     * Test of getXMLElement method, of class XMLExport.
+     * Test of getXMLElement method, of class IXMLExport.
      */
     @Test(enabled=false)
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        XMLExport instance = new XMLExportImpl();
+        IXMLExport instance = new XMLExportImpl();
         Element expResult = null;
         Element result = instance.getXMLElement();
         assertEquals(result, expResult);
@@ -51,17 +51,17 @@ public class XMLExportNGTest {
     }
 
     /**
-     * Test of setXMLElement method, of class XMLExport.
+     * Test of setXMLElement method, of class IXMLExport.
      */
     @Test(enabled=false)
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
         Element e = null;
-        XMLExport instance = new XMLExportImpl();
+        IXMLExport instance = new XMLExportImpl();
         instance.setXMLElement(e);
     }
 
-    public class XMLExportImpl implements XMLExport {
+    public class XMLExportImpl implements IXMLExport {
 
         public Element getXMLElement() {
             return null;

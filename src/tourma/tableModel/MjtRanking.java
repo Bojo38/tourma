@@ -29,14 +29,14 @@ import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
-import tourma.utils.display.Ranked;
+import tourma.utils.display.IRanked;
 
 /**
  *
  * @author Frederic Berger
  */
 @SuppressWarnings("serial")
-abstract public class MjtRanking extends AbstractTableModel implements TableCellRenderer, Ranked {
+abstract public class MjtRanking extends AbstractTableModel implements TableCellRenderer, IRanked {
 
         /**
      *
@@ -228,7 +228,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     @SuppressWarnings("ProtectedField")
     protected int mRankingType5;
     /**
-     * Ranked datas
+     * IRanked datas
      */
     @SuppressWarnings("ProtectedField")
     protected ArrayList mDatas = new ArrayList();

@@ -65,12 +65,12 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public static ITournament resetTournament() {
+    public static ITournament resetTournament() throws RemoteException{
         mSingleton = new Tournament();
         return mSingleton;
     }
 
-    public void recomputeAll()
+    public void recomputeAll()throws RemoteException
     {
         for (int i=0; i<this.mRounds.size(); i++)
         {
@@ -82,7 +82,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public static ITournament getTournament() {
+    public static ITournament getTournament() throws RemoteException{
         synchronized (Tournament.myLock) {
             if (mSingleton == null) {
                 mSingleton = new Tournament();
@@ -136,7 +136,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      */
     private final ArrayList<Group> mGroups;
 
-    private Tournament() {
+    private Tournament() throws RemoteException {
         mParams = new Parameters();
         mRounds = new ArrayList<>();
         mCoachs = new ArrayList<>();
@@ -156,7 +156,12 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         }
     }
 
-    public int getRoundIndex(Round round) {
+    public Parameters getParams() throws RemoteException
+    {
+        return mParams;
+    }
+    
+    public int getRoundIndex(Round round) throws RemoteException{
         if (this.mRounds != null) {
             return mRounds.indexOf(round);
         } else {
@@ -168,7 +173,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public int getClansCount() {
+    public int getClansCount() throws RemoteException{
         return mClans.size();
     }
 
@@ -177,7 +182,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param i
      * @return
      */
-    public Clan getClan(int i) {
+    public Clan getClan(int i) throws RemoteException{
         return mClans.get(i);
     }
 
@@ -185,7 +190,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param c
      */
-    public void addClan(Clan c) {
+    public void addClan(Clan c) throws RemoteException{
         mClans.add(c);
     }
 
@@ -193,22 +198,24 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param c
      */
-    public void removeClan(Clan c) {
+    public void removeClan(Clan c) throws RemoteException{
         mClans.remove(c);
     }
 
     /**
      *
      * @param c
+     * @throws java.rmi.RemoteException
      */
-    public void removeClan(int c) {
+    @Override
+    public void removeClan(int c)throws RemoteException {
         mClans.remove(c);
     }
 
     /**
      * Clear the Clans array
      */
-    public void clearClans() {
+    public void clearClans() throws RemoteException{
         mClans.clear();
     }
 
@@ -216,7 +223,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public int getCategoriesCount() {
+    public int getCategoriesCount() throws RemoteException{
         return mCategories.size();
     }
 
@@ -225,7 +232,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param i
      * @return
      */
-    public Category getCategory(int i) {
+    public Category getCategory(int i) throws RemoteException{
         return mCategories.get(i);
     }
 
@@ -233,7 +240,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param c
      */
-    public void addCategory(Category c) {
+    public void addCategory(Category c) throws RemoteException{
         mCategories.add(c);
     }
 
@@ -241,7 +248,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param c
      */
-    public void removeCategory(Category c) {
+    public void removeCategory(Category c) throws RemoteException{
 
         for (Coach coach : mCoachs) {
             coach.delCategory(c);
@@ -257,7 +264,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param c
      */
-    public void removeCategory(int c) {
+    public void removeCategory(int c) throws RemoteException{
 
         removeCategory(mCategories.get(c));
 
@@ -266,7 +273,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
     /**
      * Clear the Clans array
      */
-    public void clearCategories() {
+    public void clearCategories() throws RemoteException{
         mCategories.clear();
     }
 
@@ -274,7 +281,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public int getTeamsCount() {
+    public int getTeamsCount() throws RemoteException{
         return mTeams.size();
     }
 
@@ -283,7 +290,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param i
      * @return
      */
-    public Team getTeam(int i) {
+    public Team getTeam(int i) throws RemoteException{
         return mTeams.get(i);
     }
 
@@ -291,7 +298,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param c
      */
-    public void addTeam(Team c) {
+    public void addTeam(Team c) throws RemoteException{
         mTeams.add(c);
         Team.putTeam(c.getName(), c);
     }
@@ -300,7 +307,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param c
      */
-    public void removeTeam(Team c) {
+    public void removeTeam(Team c) throws RemoteException{
         mTeams.remove(c);
     }
 
@@ -309,11 +316,11 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param t
      * @return
      */
-    public boolean containsTeam(Team t) {
+    public boolean containsTeam(Team t) throws RemoteException{
         return mTeams.contains(t);
     }
 
-    public boolean containsTeam(String name) {
+    public boolean containsTeam(String name)throws RemoteException{
         for (int i = 0; i < mTeams.size(); i++) {
             if (mTeams.get(i).getName().equals(name)) {
                 return true;
@@ -322,7 +329,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         return false;
     }
 
-    public boolean containsCoach(String name) {
+    public boolean containsCoach(String name) throws RemoteException{
         for (int i = 0; i < mCoachs.size(); i++) {
             if (mCoachs.get(i).getName().equals(name)) {
                 return true;
@@ -331,7 +338,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         return false;
     }
 
-    public int getTeamIndex(String name) {
+    public int getTeamIndex(String name) throws RemoteException{
         for (int i = 0; i < mTeams.size(); i++) {
             if (mTeams.get(i).getName().equals(name)) {
                 return i;
@@ -340,7 +347,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         return -1;
     }
 
-    public Team getTeam(String name) {
+    public Team getTeam(String name) throws RemoteException{
         for (int i = 0; i < mTeams.size(); i++) {
             if (mTeams.get(i).getName().equals(name)) {
                 return mTeams.get(i);
@@ -349,7 +356,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         return null;
     }
 
-    public Coach getCoach(String name) {
+    public Coach getCoach(String name) throws RemoteException{
         for (int i = 0; i < mCoachs.size(); i++) {
             if (mCoachs.get(i).getName().equals(name)) {
                 return mCoachs.get(i);
@@ -362,14 +369,14 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param c
      */
-    public void removeTeam(int c) {
+    public void removeTeam(int c) throws RemoteException{
         mTeams.remove(c);
     }
 
     /**
      * Clear the Team array
      */
-    public void clearTeams() {
+    public void clearTeams() throws RemoteException{
         mTeams.clear();
     }
 
@@ -377,7 +384,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public ArrayList<Clan> getDisplayClans() {
+    public ArrayList<Clan> getDisplayClans() throws RemoteException{
 
         // Remove clans which do not have members
         final HashMap<Clan, Integer> counts = new HashMap<>();
@@ -385,7 +392,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
             counts.put(mClan, 0);
         }
         final ArrayList<Clan> clans = new ArrayList<>();
-        if (getParams().isTeamTournament()) {
+        if (mParams.isTeamTournament()) {
             for (Team c : mTeams) {
                 counts.put(c.getClan(), counts.get(c.getClan()) + 1);
             }
@@ -408,7 +415,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public ArrayList<Category> getDisplayCategories() {
+    public ArrayList<Category> getDisplayCategories() throws RemoteException{
 
         final HashMap<Category, Integer> counts = new HashMap<>();
         for (Category mCategorie : mCategories) {
@@ -439,24 +446,18 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         return categories;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Parameters getParams() {
-        return mParams;
-    }
+  
 
     /**
      *
      * @return
      */
     @Override
-    public boolean containsCoach(Coach c) {
+    public boolean containsCoach(Coach c) throws RemoteException{
         return mCoachs.contains(c);
     }
 
-    public boolean containsClan(String c) {
+    public boolean containsClan(String c)throws RemoteException {
         for (Clan cl : mClans) {
             if (cl.getName().equals(c)) {
                 return true;
@@ -465,7 +466,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         return false;
     }
 
-    public Clan getClan(String name) {
+    public Clan getClan(String name)throws RemoteException {
         for (Clan cl : mClans) {
             if (cl.getName().equals(name)) {
                 return cl;
@@ -478,7 +479,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param i
      */
-    public void removeCoach(Coach i) {
+    public void removeCoach(Coach i) throws RemoteException{
         mCoachs.remove(i);
 
     }
@@ -488,7 +489,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param i
      */
     @Override
-    public void removeCoach(int i) {
+    public void removeCoach(int i) throws RemoteException{
         mCoachs.remove(i);
 
     }
@@ -497,7 +498,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      */
     @Override
-    public void clearCoachs() {
+    public void clearCoachs() throws RemoteException{
         mCoachs.clear();
 
     }
@@ -507,7 +508,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param c
      */
     @Override
-    public void addCoach(Coach c) {
+    public void addCoach(Coach c) throws RemoteException{
         mCoachs.add(c);
         Coach.putCoach(c.getName(), c);
     }
@@ -516,7 +517,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public int getCoachsCount() {
+    public int getCoachsCount() throws RemoteException{
         return mCoachs.size();
 
     }
@@ -527,7 +528,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @return
      */
     @Override
-    public Coach getCoach(int i) {
+    public Coach getCoach(int i) throws RemoteException{
         return mCoachs.get(i);
 
     }
@@ -536,7 +537,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param g
      */
-    public void addGroup(Group g) {
+    public void addGroup(Group g) throws RemoteException{
         mGroups.add(g);
     }
 
@@ -544,7 +545,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param g
      */
-    public void removeGroup(Group g) {
+    public void removeGroup(Group g) throws RemoteException{
         mGroups.remove(g);
     }
 
@@ -552,7 +553,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param g
      */
-    public void removeGroup(int g) {
+    public void removeGroup(int g) throws RemoteException{
         mGroups.remove(g);
     }
 
@@ -561,7 +562,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param g
      * @return
      */
-    public boolean containsGroup(Group g) {
+    public boolean containsGroup(Group g) throws RemoteException{
         return mGroups.contains(g);
     }
 
@@ -569,7 +570,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * Clear the groups array
      */
-    public void clearGroups() {
+    public void clearGroups() throws RemoteException{
         mGroups.clear();
     }
 
@@ -578,11 +579,11 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param i
      * @return
      */
-    public Group getGroup(int i) {
+    public Group getGroup(int i) throws RemoteException{
         return mGroups.get(i);
     }
 
-    public Group getGroup(Coach C) {
+    public Group getGroup(Coach C)throws RemoteException {
         for (Group g : mGroups) {
             if (g.containsRoster(C.getRoster())) {
                 return g;
@@ -596,7 +597,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param n
      * @return
      */
-    public Group getGroup(String n) {
+    public Group getGroup(String n) throws RemoteException{
         for (int i = 0; i < mGroups.size(); i++) {
             Group g = mGroups.get(i);
             if (g.getName().equals(n)) {
@@ -610,7 +611,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public int getGroupsCount() {
+    public int getGroupsCount() throws RemoteException{
         return mGroups.size();
     }
 
@@ -618,7 +619,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public int getRoundsCount() {
+    public int getRoundsCount() throws RemoteException{
         return mRounds.size();
     }
 
@@ -627,7 +628,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param i
      * @return
      */
-    public Round getRound(int i) {
+    public Round getRound(int i)throws RemoteException{
         return mRounds.get(i);
     }
 
@@ -642,7 +643,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param r
      */
-    public void addRound(Round r) {
+    public void addRound(Round r) throws RemoteException{
         mRounds.add(r);
     }
 
@@ -650,7 +651,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param file
      */
-    public void saveXML(final java.io.File file) {
+    public void saveXML(final java.io.File file) throws RemoteException{
         this.saveXML(file, false);
     }
 
@@ -662,7 +663,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param file
      * @param withRanking
      */
-    private void saveXML(final java.io.File file, final boolean withRanking) {
+    private void saveXML(final java.io.File file, final boolean withRanking) throws RemoteException{
         final Element document = new Element(StringConstants.CS_TOURNAMENT);
 
         document.setAttribute(StringConstants.CS_VERSION, "3");
@@ -681,7 +682,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         }
 
         // Save parameters
-        final Element params = getParams().getXMLElement();
+        final Element params = mParams.getXMLElement();
         document.addContent(params);
 
         // Save Clans
@@ -742,35 +743,35 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
                                 Ranking.CS_General,
                                 StringConstants.CS_NULL,
                                 new MjtRankingIndiv(i,
-                                        this.getParams().getRankingIndiv1(),
-                                        this.getParams().getRankingIndiv2(),
-                                        this.getParams().getRankingIndiv3(),
-                                        this.getParams().getRankingIndiv4(),
-                                        this.getParams().getRankingIndiv5(),
+                                        this.mParams.getRankingIndiv1(),
+                                        this.mParams.getRankingIndiv2(),
+                                        this.mParams.getRankingIndiv3(),
+                                        this.mParams.getRankingIndiv4(),
+                                        this.mParams.getRankingIndiv5(),
                                         mCoachs, false, false, forPool),
                                 getRankingTypes(false)));
-                if (this.getParams().isTeamTournament()) {
+                if (this.mParams.isTeamTournament()) {
                     rankings.add(
                             new Ranking(Ranking.CS_Team, Ranking.CS_General,
                                     StringConstants.CS_NULL,
-                                    new MjtRankingTeam(this.getParams().isTeamVictoryOnly(), i,
+                                    new MjtRankingTeam(this.mParams.isTeamVictoryOnly(), i,
                                             mTeams, false), getRankingTypes(true)));
                 }
-                if (getParams().isEnableClans()) {
+                if (mParams.isEnableClans()) {
                     rankings.add(new Ranking(Ranking.CS_Clan,
                             Ranking.CS_General,
                             StringConstants.CS_NULL,
                             new MjtRankingClan(i,
-                                    this.getParams().getRankingIndiv1(),
-                                    this.getParams().getRankingIndiv2(),
-                                    this.getParams().getRankingIndiv3(),
-                                    this.getParams().getRankingIndiv4(),
-                                    this.getParams().getRankingIndiv5(),
+                                    this.mParams.getRankingIndiv1(),
+                                    this.mParams.getRankingIndiv2(),
+                                    this.mParams.getRankingIndiv3(),
+                                    this.mParams.getRankingIndiv4(),
+                                    this.mParams.getRankingIndiv5(),
                                     this.getDisplayClans(), false),
                             getRankingTypes(false)));
 
                 }
-                if (getParams().isGroupsEnable()) {
+                if (mParams.isGroupsEnable()) {
                     for (Group g : mGroups) {
                         final ArrayList<Coach> list = new ArrayList<>();
                         for (int k = 0; k < mCoachs.size(); k++) {
@@ -787,18 +788,18 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
                                         g.getName(),
                                         StringConstants.CS_NULL,
                                         new MjtRankingIndiv(i,
-                                                this.getParams().getRankingIndiv1(),
-                                                this.getParams().getRankingIndiv2(),
-                                                this.getParams().getRankingIndiv3(),
-                                                this.getParams().getRankingIndiv4(),
-                                                this.getParams().getRankingIndiv5(),
+                                                this.mParams.getRankingIndiv1(),
+                                                this.mParams.getRankingIndiv2(),
+                                                this.mParams.getRankingIndiv3(),
+                                                this.mParams.getRankingIndiv4(),
+                                                this.mParams.getRankingIndiv5(),
                                                 list, false, false, false),
                                         getRankingTypes(false)));
                     }
                 }
                 // Annex ranking
-                for (int j = 0; j < getParams().getCriteriaCount(); j++) {
-                    final Criteria criteria = getParams().getCriteria(j);
+                for (int j = 0; j < mParams.getCriteriaCount(); j++) {
+                    final Criteria criteria = mParams.getCriteria(j);
                     rankings.add(new Ranking(Ranking.CS_Individual,
                             criteria.getName(),
                             Ranking.CS_Positive,
@@ -806,12 +807,12 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
                                     criteria,
                                     Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                     mCoachs, true,
-                                    this.getParams().getRankingIndiv1(),
-                                    this.getParams().getRankingIndiv2(),
-                                    this.getParams().getRankingIndiv3(),
-                                    this.getParams().getRankingIndiv4(),
-                                    this.getParams().getRankingIndiv5(),
-                                    getParams().isTeamTournament(), false),
+                                    this.mParams.getRankingIndiv1(),
+                                    this.mParams.getRankingIndiv2(),
+                                    this.mParams.getRankingIndiv3(),
+                                    this.mParams.getRankingIndiv4(),
+                                    this.mParams.getRankingIndiv5(),
+                                    mParams.isTeamTournament(), false),
                             getRankingTypes(false)));
                     rankings.add(new Ranking(Ranking.CS_Individual,
                             criteria.getName(),
@@ -820,15 +821,15 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
                                     criteria,
                                     Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                     mCoachs, true,
-                                    this.getParams().getRankingIndiv1(),
-                                    this.getParams().getRankingIndiv2(),
-                                    this.getParams().getRankingIndiv3(),
-                                    this.getParams().getRankingIndiv4(),
-                                    this.getParams().getRankingIndiv5(),
-                                    getParams().isTeamTournament(), false),
+                                    this.mParams.getRankingIndiv1(),
+                                    this.mParams.getRankingIndiv2(),
+                                    this.mParams.getRankingIndiv3(),
+                                    this.mParams.getRankingIndiv4(),
+                                    this.mParams.getRankingIndiv5(),
+                                    mParams.isTeamTournament(), false),
                             getRankingTypes(false)));
 
-                    if (getParams().isTeamTournament()) {
+                    if (mParams.isTeamTournament()) {
                         rankings.add(
                                 new Ranking(Ranking.CS_Team,
                                         criteria.getName(),
@@ -837,11 +838,11 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
                                                 criteria,
                                                 Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                                 mTeams, true,
-                                                this.getParams().getRankingIndiv1(),
-                                                this.getParams().getRankingIndiv2(),
-                                                this.getParams().getRankingIndiv3(),
-                                                this.getParams().getRankingIndiv4(),
-                                                this.getParams().getRankingIndiv5(),
+                                                this.mParams.getRankingIndiv1(),
+                                                this.mParams.getRankingIndiv2(),
+                                                this.mParams.getRankingIndiv3(),
+                                                this.mParams.getRankingIndiv4(),
+                                                this.mParams.getRankingIndiv5(),
                                                 false),
                                         getRankingTypes(true)));
                         rankings.add(
@@ -852,16 +853,16 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
                                                 criteria,
                                                 Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                                 mTeams, true,
-                                                this.getParams().getRankingIndiv1(),
-                                                this.getParams().getRankingIndiv2(),
-                                                this.getParams().getRankingIndiv3(),
-                                                this.getParams().getRankingIndiv4(),
-                                                this.getParams().getRankingIndiv5(),
+                                                this.mParams.getRankingIndiv1(),
+                                                this.mParams.getRankingIndiv2(),
+                                                this.mParams.getRankingIndiv3(),
+                                                this.mParams.getRankingIndiv4(),
+                                                this.mParams.getRankingIndiv5(),
                                                 false),
                                         getRankingTypes(true)));
                     }
 
-                    if (getParams().isEnableClans()) {
+                    if (mParams.isEnableClans()) {
                         rankings.add(new Ranking(Ranking.CS_Clan,
                                 criteria.getName(),
                                 Ranking.CS_Positive,
@@ -870,11 +871,11 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
                                         Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                         mClans,
                                         true,
-                                        this.getParams().getRankingIndiv1(),
-                                        this.getParams().getRankingIndiv2(),
-                                        this.getParams().getRankingIndiv3(),
-                                        this.getParams().getRankingIndiv4(),
-                                        this.getParams().getRankingIndiv5(),
+                                        this.mParams.getRankingIndiv1(),
+                                        this.mParams.getRankingIndiv2(),
+                                        this.mParams.getRankingIndiv3(),
+                                        this.mParams.getRankingIndiv4(),
+                                        this.mParams.getRankingIndiv5(),
                                         false),
                                 getRankingTypes(false)));
                         rankings.add(
@@ -886,11 +887,11 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
                                                 criteria,
                                                 Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                                 mClans, true,
-                                                this.getParams().getRankingIndiv1(),
-                                                this.getParams().getRankingIndiv2(),
-                                                this.getParams().getRankingIndiv3(),
-                                                this.getParams().getRankingIndiv4(),
-                                                this.getParams().getRankingIndiv5(),
+                                                this.mParams.getRankingIndiv1(),
+                                                this.mParams.getRankingIndiv2(),
+                                                this.mParams.getRankingIndiv3(),
+                                                this.mParams.getRankingIndiv4(),
+                                                this.mParams.getRankingIndiv5(),
                                                 false),
                                         getRankingTypes(false)));
                     }
@@ -927,39 +928,39 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         }
     }
 
-    public ArrayList<Integer> getRankingTypes(boolean byTeam) {
+    public ArrayList<Integer> getRankingTypes(boolean byTeam) throws RemoteException {
         ArrayList<Integer> rankingTypes = new ArrayList<>();
         if (!byTeam) {
-            if (this.getParams().getRankingIndiv1() != 0) {
-                rankingTypes.add(getParams().getRankingIndiv1());
+            if (this.mParams.getRankingIndiv1() != 0) {
+                rankingTypes.add(mParams.getRankingIndiv1());
             }
-            if (this.getParams().getRankingIndiv2() != 0) {
-                rankingTypes.add(getParams().getRankingIndiv2());
+            if (this.mParams.getRankingIndiv2() != 0) {
+                rankingTypes.add(mParams.getRankingIndiv2());
             }
-            if (this.getParams().getRankingIndiv3() != 0) {
-                rankingTypes.add(getParams().getRankingIndiv3());
+            if (this.mParams.getRankingIndiv3() != 0) {
+                rankingTypes.add(mParams.getRankingIndiv3());
             }
-            if (this.getParams().getRankingIndiv4() != 0) {
-                rankingTypes.add(getParams().getRankingIndiv4());
+            if (this.mParams.getRankingIndiv4() != 0) {
+                rankingTypes.add(mParams.getRankingIndiv4());
             }
-            if (this.getParams().getRankingIndiv5() != 0) {
-                rankingTypes.add(getParams().getRankingIndiv5());
+            if (this.mParams.getRankingIndiv5() != 0) {
+                rankingTypes.add(mParams.getRankingIndiv5());
             }
         } else {
-            if (this.getParams().getRankingTeam1() != 0) {
-                rankingTypes.add(getParams().getRankingTeam1());
+            if (this.mParams.getRankingTeam1() != 0) {
+                rankingTypes.add(mParams.getRankingTeam1());
             }
-            if (this.getParams().getRankingTeam2() != 0) {
-                rankingTypes.add(getParams().getRankingTeam2());
+            if (this.mParams.getRankingTeam2() != 0) {
+                rankingTypes.add(mParams.getRankingTeam2());
             }
-            if (this.getParams().getRankingTeam3() != 0) {
-                rankingTypes.add(getParams().getRankingTeam3());
+            if (this.mParams.getRankingTeam3() != 0) {
+                rankingTypes.add(mParams.getRankingTeam3());
             }
-            if (this.getParams().getRankingTeam4() != 0) {
-                rankingTypes.add(getParams().getRankingTeam4());
+            if (this.mParams.getRankingTeam4() != 0) {
+                rankingTypes.add(mParams.getRankingTeam4());
             }
-            if (this.getParams().getRankingTeam5() != 0) {
-                rankingTypes.add(getParams().getRankingTeam5());
+            if (this.mParams.getRankingTeam5() != 0) {
+                rankingTypes.add(mParams.getRankingTeam5());
             }
         }
         return rankingTypes;
@@ -972,17 +973,17 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param withNaf
      * @return
      */
-    protected String generateCSVRanking(final int round, final boolean withRoster, final boolean withNaf) {
-        final StringBuilder a = new StringBuilder(this.getParams().getTournamentName());
+    protected String generateCSVRanking(final int round, final boolean withRoster, final boolean withNaf) throws RemoteException{
+        final StringBuilder a = new StringBuilder(this.mParams.getTournamentName());
         a.append(";");
-        a.append(this.getParams().getStringDate(new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault())));
+        a.append(this.mParams.getStringDate(new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault())));
         a.append(";");
-        a.append(this.getParams().isTeamTournament());
+        a.append(this.mParams.isTeamTournament());
         a.append("\n");
         a.append(";\n");
 
-        if (this.getParams().isTeamTournament()) {
-            final MjtRankingTeam rt = new MjtRankingTeam(getParams().isTeamVictoryOnly(), round,
+        if (this.mParams.isTeamTournament()) {
+            final MjtRankingTeam rt = new MjtRankingTeam(mParams.isTeamVictoryOnly(), round,
                     mTeams, false);
 
             for (int i = 0; i < rt.getRowCount(); i++) {
@@ -1005,7 +1006,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         }
 
         final boolean forPool = (mPools.size() > 0) && (!mRounds.get(round).isCup());
-        final MjtRankingIndiv ri = new MjtRankingIndiv(round, getParams().getRankingIndiv1(), getParams().getRankingIndiv2(), getParams().getRankingIndiv3(), getParams().getRankingIndiv4(), getParams().getRankingIndiv5(),
+        final MjtRankingIndiv ri = new MjtRankingIndiv(round, mParams.getRankingIndiv1(), mParams.getRankingIndiv2(), mParams.getRankingIndiv3(), mParams.getRankingIndiv4(), mParams.getRankingIndiv5(),
                 mCoachs, false, false, forPool);
         for (int i = 0; i < ri.getRowCount(); i++) {
             final String coach = (String) ri.getValueAt(i, 2);
@@ -1034,7 +1035,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param round
      * @return
      */
-    public RenderedImage generateRankingQRCode(final int round) {
+    public RenderedImage generateRankingQRCode(final int round) throws RemoteException{
         RenderedImage image;
         final String s = generateCSVRanking(round, false, false);
         QRCode qrcode;
@@ -1080,7 +1081,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param file
      */
-    public void exportFullFBB(final java.io.File file) {
+    public void exportFullFBB(final java.io.File file) throws RemoteException{
         this.saveXML(file, true);
     }
 
@@ -1088,7 +1089,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param file
      */
-    public void exportFBB(final java.io.File file) {
+    public void exportFBB(final java.io.File file) throws RemoteException{
         PrintWriter writer = null;
         BufferedWriter bw = null;
         OutputStreamWriter fw = null;
@@ -1147,8 +1148,8 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         Criteria critTd = null;
         Criteria critInj = null;
 
-        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            final Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+        for (int i = 0; i < mParams.getCriteriaCount(); i++) {
+            final Criteria crit =mParams.getCriteria(i);
             if (i == 0) {
                 critTd = crit;
             }
@@ -1161,7 +1162,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
             try (PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")))) {
                 writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
                 writer.println("<nafReport xmlns:blo=\"http://www.bloodbowl.net\">");
-                writer.println(java.text.MessageFormat.format(("<organiser>{0}</organiser>"), new Object[]{getParams().getTournamentOrga()}));
+                writer.println(java.text.MessageFormat.format(("<organiser>{0}</organiser>"), new Object[]{mParams.getTournamentOrga()}));
                 writer.println(("<coaches>"));
                 for (Coach mCoach : mCoachs) {
                     if (mCoach.getNaf() > 0) {
@@ -1255,7 +1256,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @param racine
      */
-    private void loadXMLv3(final Element racine) {
+    private void loadXMLv3(final Element racine) throws RemoteException{
         try {
             setRoundRobin(Boolean.parseBoolean(racine.getAttributeValue(StringConstants.CS_ROUNDROBIN)));
         } catch (Exception e) {
@@ -1271,7 +1272,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
 
         /* Parameters */
         final Element params = racine.getChild(StringConstants.CS_PARAMETERS);
-        getParams().setXMLElement(params);
+        mParams.setXMLElement(params);
 
         /* Groups */
         try {

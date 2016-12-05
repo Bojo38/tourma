@@ -51,193 +51,193 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public interface ITournament extends Remote, IContainCoachs{
+public interface ITournament extends Remote, IContainCoachs {
         
-    public void recomputeAll();
+    public void recomputeAll() throws RemoteException;
   
-    public int getRoundIndex(Round round);
+    public int getRoundIndex(Round round) throws RemoteException;
 
     /**
      *
      * @return
      */
-    public int getClansCount();
+    public int getClansCount() throws RemoteException;
 
     /**
      *
      * @param i
      * @return
      */
-    public Clan getClan(int i);
+    public Clan getClan(int i) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void addClan(Clan c);
+    public void addClan(Clan c) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void removeClan(Clan c);
+    public void removeClan(Clan c) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void removeClan(int c);
+    public void removeClan(int c) throws RemoteException;
 
     /**
      * Clear the Clans array
      */
-    public void clearClans() ;
+    public void clearClans() throws RemoteException;
 
     /**
      *
      * @return
      */
-    public int getCategoriesCount();
+    public int getCategoriesCount() throws RemoteException;
 
     /**
      *
      * @param i
      * @return
      */
-    public Category getCategory(int i);
+    public Category getCategory(int i) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void addCategory(Category c);
+    public void addCategory(Category c) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void removeCategory(Category c);
+    public void removeCategory(Category c) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void removeCategory(int c);
+    public void removeCategory(int c) throws RemoteException;
     /**
      * Clear the Clans array
      */
-    public void clearCategories();
+    public void clearCategories() throws RemoteException;
     /**
      *
      * @return
      */
-    public int getTeamsCount();
+    public int getTeamsCount() throws RemoteException;
 
     /**
      *
      * @param i
      * @return
      */
-    public Team getTeam(int i);
+    public Team getTeam(int i) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void addTeam(Team c) ;
+    public void addTeam(Team c) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void removeTeam(Team c) ;
+    public void removeTeam(Team c) throws RemoteException;
 
     /**
      *
      * @param t
      * @return
      */
-    public boolean containsTeam(Team t);
+    public boolean containsTeam(Team t) throws RemoteException;
 
-    public boolean containsTeam(String name) ;
+    public boolean containsTeam(String name) throws RemoteException;
 
-    public boolean containsCoach(String name);
+    public boolean containsCoach(String name) throws RemoteException;
 
-    public int getTeamIndex(String name);
+    public int getTeamIndex(String name) throws RemoteException;
 
-    public Team getTeam(String name) ;
+    public Team getTeam(String name) throws RemoteException;
 
-    public Coach getCoach(String name) ;
+    public Coach getCoach(String name) throws RemoteException;
 
     /**
      *
      * @param c
      */
-    public void removeTeam(int c);
+    public void removeTeam(int c) throws RemoteException;
     /**
      * Clear the Team array
      */
-    public void clearTeams() ;
+    public void clearTeams() throws RemoteException;
 
     /**
      *
      * @return
      */
-    public ArrayList<Clan> getDisplayClans() ;
+    public ArrayList<Clan> getDisplayClans() throws RemoteException;
 
     /**
      *
      * @return
      */
-    public ArrayList<Category> getDisplayCategories();
+    public ArrayList<Category> getDisplayCategories() throws RemoteException;
 
     /**
      *
      * @return
      */
-    public Parameters getParams();
+    public Parameters getParams() throws RemoteException;
 
     /**
      *
      * @return
      */
 
-    public boolean containsCoach(Coach c);
+    public boolean containsCoach(Coach c) throws RemoteException;
 
-    public boolean containsClan(String c);
+    public boolean containsClan(String c) throws RemoteException;
 
-    public Clan getClan(String name) ;
+    public Clan getClan(String name) throws RemoteException;
 
     /**
      *
      * @param i
      */
-    public void removeCoach(Coach i) ;
+    public void removeCoach(Coach i) throws RemoteException;
     /**
      *
      * @param i
      */
 
-    public void removeCoach(int i);
+    public void removeCoach(int i) throws RemoteException;
 
     /**
      *
      */
 
-    public void clearCoachs();
+    public void clearCoachs() throws RemoteException;
 
     /**
      *
      * @param c
      */
 
-    public void addCoach(Coach c) ;
+    public void addCoach(Coach c) throws RemoteException;
 
     /**
      *
      * @return
      */
-    public int getCoachsCount() ;
+    public int getCoachsCount()throws RemoteException;
 
     /**
      *
@@ -245,88 +245,88 @@ public interface ITournament extends Remote, IContainCoachs{
      * @return
      */
 
-    public Coach getCoach(int i) ;
+    public Coach getCoach(int i) throws RemoteException;
 
     /**
      *
      * @param g
      */
-    public void addGroup(Group g);
+    public void addGroup(Group g) throws RemoteException;
 
     /**
      *
      * @param g
      */
-    public void removeGroup(Group g);
+    public void removeGroup(Group g) throws RemoteException ;
 
     /**
      *
      * @param g
      */
-    public void removeGroup(int g);
+    public void removeGroup(int g)throws RemoteException;
 
     /**
      *
      * @param g
      * @return
      */
-    public boolean containsGroup(Group g);
+    public boolean containsGroup(Group g) throws RemoteException;
 
     /**
      *
      * Clear the groups array
      */
-    public void clearGroups();
+    public void clearGroups() throws RemoteException;
 
     /**
      *
      * @param i
      * @return
      */
-    public Group getGroup(int i);
+    public Group getGroup(int i) throws RemoteException;
 
-    public Group getGroup(Coach C);
+    public Group getGroup(Coach C) throws RemoteException;
 
     /**
      *
      * @param n
      * @return
      */
-    public Group getGroup(String n);
+    public Group getGroup(String n) throws RemoteException;
 
     /**
      *
      * @return
      */
-    public int getGroupsCount();
+    public int getGroupsCount() throws RemoteException;
 
     /**
      *
      * @return
      */
-    public int getRoundsCount();
+    public int getRoundsCount() throws RemoteException;
 
     /**
      *
      * @param i
      * @return
      */
-    public Round getRound(int i);
+    public Round getRound(int i) throws RemoteException;
 
     /**
      * clear the round aarray
      */
-    public void clearRounds();
+    public void clearRounds() throws RemoteException;
 
     /**
      *
      * @param r
      */
-    public void addRound(Round r);
+    public void addRound(Round r) throws RemoteException;
 
    
 
-    public ArrayList<Integer> getRankingTypes(boolean byTeam) ;
+    public ArrayList<Integer> getRankingTypes(boolean byTeam) throws RemoteException;
 
   
 
@@ -334,66 +334,66 @@ public interface ITournament extends Remote, IContainCoachs{
      *
      * @return
      */
-    public int getActiveCoachNumber() ;
+    public int getActiveCoachNumber() throws RemoteException;
 
     /**
      *
      * @return
      */
-    public ArrayList<Coach> getActiveCoaches() ;
+    public ArrayList<Coach> getActiveCoaches() throws RemoteException;
 
     /**
      *
      * @return
      */
-    public int getPoolCount() ;
+    public int getPoolCount()throws RemoteException ;
     /**
      *
      * @param p
      */
-    public void addPool(Pool p);
+    public void addPool(Pool p) throws RemoteException;
 
     /**
      * Clear the Pool array
      */
-    public void clearPools();
+    public void clearPools() throws RemoteException;
 
     /**
      *
      * @param i
      * @return
      */
-    public Pool getPool(int i) ;
+    public Pool getPool(int i) throws RemoteException;
 
     /**
      * @param mParams the mParams to set
      */
-    public void setParams(Parameters mParams);
+    public void setParams(Parameters mParams) throws RemoteException;
 
     /**
      * @return the mRoundRobin
      */
-    public boolean isRoundRobin();
+    public boolean isRoundRobin() throws RemoteException;
 
     /**
      * @param mRoundRobin the mRoundRobin to set
      */
-    public void setRoundRobin(boolean mRoundRobin) ;
+    public void setRoundRobin(boolean mRoundRobin) throws RemoteException;
 
     /**
      *
      * @param r
      */
-    public void removeRound(Round r) ;
+    public void removeRound(Round r)throws RemoteException ;
 
     /**
      *
      * @param r
      */
-    public void removeRound(int r);
+    public void removeRound(int r)throws RemoteException;
     
 
-    public String getDescription();
+    public String getDescription()throws RemoteException;
 
-    public void setDescription(String tmp) ;
+    public void setDescription(String tmp) throws RemoteException;
 }

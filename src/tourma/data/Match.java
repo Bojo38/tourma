@@ -5,13 +5,14 @@
 package tourma.data;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import org.jdom2.Element;
 
 /**
  *
  * @author WFMJ7631
  */
-public abstract class Match implements XMLExport, Serializable {
+public abstract class Match implements IXMLExport, Serializable {
 
     /**
      *
@@ -50,7 +51,7 @@ public abstract class Match implements XMLExport, Serializable {
      *
      * @return
      */
-    public Competitor getWinner() {
+    public Competitor getWinner() throws RemoteException{
         return mWinner;
     }
 
@@ -58,14 +59,14 @@ public abstract class Match implements XMLExport, Serializable {
      *
      * @return
      */
-    public Competitor getLooser() {
+    public Competitor getLooser() throws RemoteException{
         return mLooser;
     }
 
     /**
      * Reset Winner/Looser
      */
-    public void resetWL() {
+    public void resetWL() throws RemoteException{
         setWinner(null);
         setLooser(null);
     }
@@ -73,56 +74,56 @@ public abstract class Match implements XMLExport, Serializable {
     /**
      * @return the mCompetitor1
      */
-    public Competitor getCompetitor1() {
+    public Competitor getCompetitor1() throws RemoteException{
         return mCompetitor1;
     }
 
     /**
      * @param mCompetitor1 the mCompetitor1 to set
      */
-    public void setCompetitor1(Competitor mCompetitor1) {
+    public void setCompetitor1(Competitor mCompetitor1) throws RemoteException{
         this.mCompetitor1 = mCompetitor1;
     }
 
     /**
      * @return the mCompetitor2
      */
-    public Competitor getCompetitor2() {
+    public Competitor getCompetitor2() throws RemoteException{
         return mCompetitor2;
     }
 
     /**
      * @param mCompetitor2 the mCompetitor2 to set
      */
-    public void setCompetitor2(Competitor mCompetitor2) {
+    public void setCompetitor2(Competitor mCompetitor2) throws RemoteException{
         this.mCompetitor2 = mCompetitor2;
     }
 
     /**
      * @return the mRound
      */
-    public Round getRound() {
+    public Round getRound() throws RemoteException{
         return mRound;
     }
 
     /**
      * @param mRound the mRound to set
      */
-    public void setRound(Round mRound) {
+    public void setRound(Round mRound) throws RemoteException{
         this.mRound = mRound;
     }
 
     /**
      * @param mWinner the mWinner to set
      */
-    public void setWinner(Competitor mWinner) {
+    public void setWinner(Competitor mWinner) throws RemoteException{
         this.mWinner = mWinner;
     }
 
     /**
      * @param mLooser the mLooser to set
      */
-    public void setLooser(Competitor mLooser) {
+    public void setLooser(Competitor mLooser) throws RemoteException{
         this.mLooser = mLooser;
     }
 
@@ -179,7 +180,7 @@ public abstract class Match implements XMLExport, Serializable {
     /**
      * Recalculate the values fot this match
      */
-    public abstract void recomputeValues();
+    public abstract void recomputeValues()throws RemoteException;
 
     /**
      * Returns the curent value for display
@@ -187,7 +188,7 @@ public abstract class Match implements XMLExport, Serializable {
      * @param index Index of the value (1..5)
      * @return an integer
      */
-    public int getValue(int indexvalue, Competitor c) {
+    public int getValue(int indexvalue, Competitor c) throws RemoteException{
         int value = 0;
         if (!values_computed) {
             recomputeValues();
@@ -233,11 +234,11 @@ public abstract class Match implements XMLExport, Serializable {
         return value;
     }
     
-    public abstract int getValue(Criteria crit, int subtype,Competitor c);
+    public abstract int getValue(Criteria crit, int subtype,Competitor c)throws RemoteException;
 
-    public abstract Element getXMLElementForDisplay();
+    public abstract Element getXMLElementForDisplay()throws RemoteException;
 
-    public abstract void setXMLElementForDisplay(Element element);
+    public abstract void setXMLElementForDisplay(Element element)throws RemoteException;
     
-    public abstract boolean isEntered();
+    public abstract boolean isEntered()throws RemoteException;
 }

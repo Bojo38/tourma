@@ -5,7 +5,6 @@
  */
 package tourma.utils.display;
 
-import tourma.utils.display.Ranked;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -14,6 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tourma.data.ObjectRanking;
+import tourma.utils.display.IRanked;
 
 /**
  *
@@ -41,25 +41,25 @@ public class RankedNGTest {
     }
 
     /**
-     * Test of getRowCount method, of class Ranked.
+     * Test of getRowCount method, of class IRanked.
      */
     @Test(enabled=false)
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        Ranked instance = new RankedImpl();
+        IRanked instance = new RankedImpl();
         int expResult = 0;
         int result = instance.getRowCount();
         assertEquals(result, expResult);
     }
 
     /**
-     * Test of getSortedObject method, of class Ranked.
+     * Test of getSortedObject method, of class IRanked.
      */
     @Test(enabled=false)
     public void testGetSortedObject() {
         System.out.println("getSortedObject");
         int i = 0;
-        Ranked instance = new RankedImpl();
+        IRanked instance = new RankedImpl();
         ObjectRanking expResult = null;
         ObjectRanking result = instance.getSortedObject(i);
         //assertEquals(result, expResult);
@@ -68,14 +68,14 @@ public class RankedNGTest {
     }
 
     /**
-     * Test of getSortedValue method, of class Ranked.
+     * Test of getSortedValue method, of class IRanked.
      */
     @Test(enabled=false)
     public void testGetSortedValue() {
         System.out.println("getSortedValue");
         int i = 0;
         int valIndex = 0;
-        Ranked instance = new RankedImpl();
+        IRanked instance = new RankedImpl();
         int expResult = 0;
         int result = instance.getSortedValue(i, valIndex);
         //assertEquals(result, expResult);
@@ -84,12 +84,12 @@ public class RankedNGTest {
     }
 
     /**
-     * Test of getDetail method, of class Ranked.
+     * Test of getDetail method, of class IRanked.
      */
     @Test(enabled=false)
     public void testGetDetail() {
         System.out.println("getDetail");
-        Ranked instance = new RankedImpl();
+        IRanked instance = new RankedImpl();
         String expResult = "";
         String result = instance.getDetail();
         //assertEquals(result, expResult);
@@ -98,19 +98,19 @@ public class RankedNGTest {
     }
 
     /**
-     * Test of setDetail method, of class Ranked.
+     * Test of setDetail method, of class IRanked.
      */
     @Test(enabled=false)
     public void testSetDetail() {
         System.out.println("setDetail");
         String s = "";
-        Ranked instance = new RankedImpl();
+        IRanked instance = new RankedImpl();
         instance.setDetail(s);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
-    public class RankedImpl implements Ranked {
+    public class RankedImpl implements IRanked {
 
         public int getRowCount() {
             return 0;

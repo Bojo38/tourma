@@ -28,7 +28,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Parameters implements XMLExport, Serializable {
+public class Parameters implements IXMLExport, Serializable {
 
     /**
      *

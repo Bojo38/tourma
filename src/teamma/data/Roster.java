@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.jdom2.Element;
-import tourma.data.XMLExport;
+import tourma.data.IXMLExport;
 
 /**
  *
  * @author WFMJ7631
  */
-public class Roster implements XMLExport {
+public class Roster implements IXMLExport {
 
 
     private final static String CS_Roster = "Roster";

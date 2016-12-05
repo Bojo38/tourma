@@ -6,9 +6,11 @@ package tourma.data;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -18,7 +20,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class ObjectRanking implements Comparable<Object>, XMLExport {
+public class ObjectRanking implements Comparable<Object>, IXMLExport {
 
     private static final Logger LOG = Logger.getLogger(ObjectRanking.class.getName());
 
@@ -51,7 +53,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      *
      * @return
      */
-    public Comparable<Object> getObject() {
+    public Comparable<Object> getObject() throws RemoteException {
         return mObject;
     }
 
@@ -59,7 +61,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      *
      * @return
      */
-    public int getValue1() {
+    public int getValue1() throws RemoteException{
         return mValue1;
     }
 
@@ -67,7 +69,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      *
      * @return
      */
-    public int getValue2() {
+    public int getValue2() throws RemoteException{
         return mValue2;
     }
 
@@ -75,7 +77,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      *
      * @return
      */
-    public int getValue3() {
+    public int getValue3() throws RemoteException{
         return mValue3;
     }
 
@@ -83,7 +85,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      *
      * @return
      */
-    public int getValue4() {
+    public int getValue4() throws RemoteException{
         return mValue4;
     }
 
@@ -91,13 +93,15 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      *
      * @return
      */
-    public int getValue5() {
+    public int getValue5() throws RemoteException{
         return mValue5;
     }
 
     @Override
     public int compareTo(final Object o) {
         int value = -65535;
+        try
+        {
         if (o instanceof ObjectRanking) {
             if (((ObjectRanking) o).getValue1() == getValue1()) {
                 if (((ObjectRanking) o).getValue2() == getValue2()) {
@@ -118,6 +122,11 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
             } else {
                 value = ((ObjectRanking) o).getValue1() - getValue1();
             }
+        }
+        }
+        catch(RemoteException re)
+        {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
         return value;
     }
@@ -145,12 +154,19 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      */
     @Override
     public boolean equals(Object o) {
+        try
+        {
         if (o instanceof ObjectRanking) {
             return (((ObjectRanking) o).getValue5() == getValue5())
                     && (((ObjectRanking) o).getValue4() == getValue4())
                     && (((ObjectRanking) o).getValue1() == getValue1())
                     && (((ObjectRanking) o).getValue2() == getValue2())
                     && (((ObjectRanking) o).getValue3() == getValue3());
+        }
+        }
+        catch(RemoteException re)
+        {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
         return false;
     }
@@ -160,7 +176,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement() throws RemoteException{
         final Element ic = new Element(StringConstants.CS_POSITION);
         //ic.setAttribute(new Attribute("pos", Integer.toString(index)));
 
@@ -290,49 +306,49 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
      * @param e
      */
     @Override
-    public void setXMLElement(final Element e) {
+    public void setXMLElement(final Element e) throws RemoteException{
         // Method only for implementing interface
     }
 
     /**
      * @param mObject the mObject to set
      */
-    public void setObject(Comparable<Object> mObject) {
+    public void setObject(Comparable<Object> mObject) throws RemoteException{
         this.mObject = mObject;
     }
 
     /**
      * @param mValue1 the mValue1 to set
      */
-    public void setValue1(int mValue1) {
+    public void setValue1(int mValue1) throws RemoteException{
         this.mValue1 = mValue1;
     }
 
     /**
      * @param mValue2 the mValue2 to set
      */
-    public void setValue2(int mValue2) {
+    public void setValue2(int mValue2) throws RemoteException{
         this.mValue2 = mValue2;
     }
 
     /**
      * @param mValue3 the mValue3 to set
      */
-    public void setValue3(int mValue3) {
+    public void setValue3(int mValue3) throws RemoteException{
         this.mValue3 = mValue3;
     }
 
     /**
      * @param mValue4 the mValue4 to set
      */
-    public void setValue4(int mValue4) {
+    public void setValue4(int mValue4) throws RemoteException{
         this.mValue4 = mValue4;
     }
 
     /**
      * @param mValue5 the mValue5 to set
      */
-    public void setValue5(int mValue5) {
+    public void setValue5(int mValue5) throws RemoteException{
         this.mValue5 = mValue5;
     }
 }

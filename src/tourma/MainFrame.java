@@ -34,12 +34,15 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -132,22 +135,23 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         if (res == 0) {
             jmiNouveauActionPerformed(null);
         } else {
-            final JFileChooser jfc = new JFileChooser();
-            jfc.setCurrentDirectory(new File(currentPath));
-            final FileFilter filter1 = new ExtensionFileFilter(
-                    Translate.translate(CS_TourMaXMLFile),
-                    new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
-            jfc.setFileFilter(filter1);
-            if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                if (mTournament instanceof Tournament) {
-                    ((Tournament) mTournament).loadXML(jfc.getSelectedFile());
+            if (res == 1) {
+                final JFileChooser jfc = new JFileChooser();
+                jfc.setCurrentDirectory(new File(currentPath));
+                final FileFilter filter1 = new ExtensionFileFilter(
+                        Translate.translate(CS_TourMaXMLFile),
+                        new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
+                jfc.setFileFilter(filter1);
+                if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    if (mTournament instanceof Tournament) {
+                        ((Tournament) mTournament).loadXML(jfc.getSelectedFile());
+                    }
+                }
+                File f = jfc.getSelectedFile();
+                if (f != null) {
+                    currentPath = f.getAbsolutePath();
                 }
             }
-            File f = jfc.getSelectedFile();
-            if (f != null) {
-                currentPath = f.getAbsolutePath();
-            }
-
         }
 
         update();
@@ -998,12 +1002,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             if (mTournament instanceof Tournament) {
                 ((Tournament) mTournament).loadXML(jfc.getSelectedFile());
-                mFile= jfc.getSelectedFile();
+                mFile = jfc.getSelectedFile();
                 updateTree();
                 update();
                 currentPath = jfc.getSelectedFile().getAbsolutePath();
             }
-           
 
         }
     }//GEN-LAST:event_jmiChargerActionPerformed
@@ -1170,11 +1173,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             final File f = jfc.getSelectedFile();
             if (f.getName().endsWith(".fbb_xml")) {
                 if (mTournament instanceof Tournament) {
-                ((Tournament) mTournament).exportFullFBB(f);
+                    ((Tournament) mTournament).exportFullFBB(f);
                 }
             } else {
                 if (mTournament instanceof Tournament) {
-                ((Tournament) mTournament).exportFullFBB(new File(f.getAbsolutePath() + ".fbb_xml"));
+                    ((Tournament) mTournament).exportFullFBB(new File(f.getAbsolutePath() + ".fbb_xml"));
                 }
             }
         }
@@ -2794,24 +2797,17 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         try {
             splashText("Initization of RMi Registry");
             splashProgress(1);
-            try {
-                LocateRegistry.createRegistry(1099);
-            } catch (RemoteException re) {
-                System.out.println(re.getLocalizedMessage());
-            }
+            
+            ITournament tour=Tournament.getTournament();
+            ITournament stub = (ITournament) UnicastRemoteObject.exportObject(tour, 0);          
 
-            splashText("Initization of Security Manager");
-            splashProgress(2);
-            /*if (System.getSecurityManager() == null) {
-                System.setSecurityManager(new RMISecurityManager());
-            }*/
 
             splashText("Binding Tournament");
-            splashProgress(3);
-            ITournament tour = Tournament.getTournament();
-            String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/TourMa";
-            Naming.rebind(url, tour);
-        } catch (RemoteException | MalformedURLException | UnknownHostException e) {
+            splashProgress(2);
+            Registry registry = LocateRegistry.getRegistry();
+            registry.bind("TourMa", stub);
+            
+        } catch (RemoteException |AlreadyBoundException e) {
             System.out.println(e.getLocalizedMessage());
         }
 
@@ -2928,13 +2924,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                                 Translate.translate(CS_EnterRemoteTourmaServer), "127.0.0.1");
 
                         try {
-                            System.setProperty("java.rmi.server.hostname", address);
-                            Remote r = Naming.lookup("rmi://" + address + "/TourMa");
+                            //System.setProperty("java.rmi.server.hostname", address);
+                            Registry registry=LocateRegistry.getRegistry(address);
+                            ITournament r = (ITournament) registry.lookup("TourMa");
+                            //Remote r = Naming.lookup("rmi://" + address + "/TourMa");
                             if (r instanceof ITournament) {
                                 Tournament.setTournament(((ITournament) r));
                             }
 
-                        } catch (RemoteException | MalformedURLException | NotBoundException e) {
+                        } catch (RemoteException | NotBoundException e) {
                             System.out.println(e.getLocalizedMessage());
                         }
 

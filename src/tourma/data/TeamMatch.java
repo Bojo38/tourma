@@ -5,11 +5,13 @@
 package tourma.data;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -40,7 +42,7 @@ public class TeamMatch extends Match implements Serializable {
      * @return
      */
     @Override
-    public Competitor getWinner() {
+    public Competitor getWinner() throws RemoteException{
 
         if (super.getWinner() != null) {
             return super.getWinner();
@@ -98,7 +100,7 @@ public class TeamMatch extends Match implements Serializable {
      * @return
      */
     @Override
-    public Competitor getLooser() {
+    public Competitor getLooser() throws RemoteException{
         if (super.getLooser() != null) {
             return super.getLooser();
         } else {
@@ -155,7 +157,7 @@ public class TeamMatch extends Match implements Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement() throws RemoteException{
         final Element match = new Element(StringConstants.CS_MATCH);
         Competitor cmp1 = this.getCompetitor1();
         Competitor cmp2 = this.getCompetitor2();
@@ -171,7 +173,7 @@ public class TeamMatch extends Match implements Serializable {
     }
 
     @Override
-    public Element getXMLElementForDisplay() {
+    public Element getXMLElementForDisplay() throws RemoteException{
         Element match = getXMLElement();
 
         Element t1 = ((Team) this.getCompetitor1()).getXMLElementForDisplay();
@@ -187,7 +189,7 @@ public class TeamMatch extends Match implements Serializable {
      * @param match
      */
     @Override
-    public void setXMLElement(final Element match) {
+    public void setXMLElement(final Element match) throws RemoteException{
 
         String c1 = "";
         String c2 = "";
@@ -237,7 +239,7 @@ public class TeamMatch extends Match implements Serializable {
      * @param t1
      * @return
      */
-    public int getVictories(Team t1) {
+    public int getVictories(Team t1) throws RemoteException{
         ITournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
@@ -286,7 +288,7 @@ public class TeamMatch extends Match implements Serializable {
      * @param t1
      * @return
      */
-    public int getLoss(Team t1) {
+    public int getLoss(Team t1) throws RemoteException{
         ITournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
@@ -343,7 +345,7 @@ public class TeamMatch extends Match implements Serializable {
      * @param t1
      * @return
      */
-    public int getDraw(Team t1) {
+    public int getDraw(Team t1) throws RemoteException{
         ITournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
@@ -382,7 +384,7 @@ public class TeamMatch extends Match implements Serializable {
     /**
      * @return the mMatchs count
      */
-    public int getMatchCount() {
+    public int getMatchCount() throws RemoteException{
         return mMatchs.size();
     }
 
@@ -390,14 +392,14 @@ public class TeamMatch extends Match implements Serializable {
      * @param i
      * @return the mMatchs
      */
-    public CoachMatch getMatch(int i) {
+    public CoachMatch getMatch(int i) throws RemoteException{
         return mMatchs.get(i);
     }
 
     /**
      * Clear the match list
      */
-    public void clearMatchs() {
+    public void clearMatchs()throws RemoteException {
         mMatchs.clear();
     }
 
@@ -406,7 +408,7 @@ public class TeamMatch extends Match implements Serializable {
      * @param c
      * @return
      */
-    public boolean containsMatch(CoachMatch c) {
+    public boolean containsMatch(CoachMatch c) throws RemoteException{
         return mMatchs.contains(c);
     }
 
@@ -414,12 +416,12 @@ public class TeamMatch extends Match implements Serializable {
      *
      * @param c
      */
-    public void addMatch(CoachMatch c) {
+    public void addMatch(CoachMatch c) throws RemoteException{
         mMatchs.add(c);
     }
 
     @Override
-    public void setXMLElementForDisplay(Element match) {
+    public void setXMLElementForDisplay(Element match) throws RemoteException{
 
         List<Element> elts = match.getChildren(StringConstants.CS_TEAM);
         if (elts.size() == 2) {
@@ -444,6 +446,8 @@ public class TeamMatch extends Match implements Serializable {
 
     @Override
     public boolean equals(Object c) {
+        try
+        {
         if (c instanceof TeamMatch) {
             TeamMatch tm = (TeamMatch) c;
             boolean equality = true;
@@ -457,11 +461,16 @@ public class TeamMatch extends Match implements Serializable {
             }
             return equality;
         }
+        }
+        catch (RemoteException re)
+        {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+        }
         return false;
 
     }
 
-    public int getPointsByTeam(final Team t, TeamMatch tm, boolean withMainPoints, boolean withBonus) {
+    public int getPointsByTeam(final Team t, TeamMatch tm, boolean withMainPoints, boolean withBonus) throws RemoteException{
 
         int value = 0;
         int countTeamVictories = 0;
@@ -561,7 +570,7 @@ public class TeamMatch extends Match implements Serializable {
      */
     public static final int C_ELO_K = 256;
 
-    int getELOByTeam(final Team t, TeamMatch tm, int roundIndex) {
+    int getELOByTeam(final Team t, TeamMatch tm, int roundIndex) throws RemoteException{
         int value;
 
         int nbVic = tm.getVictories(t);
@@ -629,7 +638,7 @@ public class TeamMatch extends Match implements Serializable {
         return value;
     }
 
-    public int getVNDByTeam(final Team t, TeamMatch tm, boolean includeCurrent) {
+    public int getVNDByTeam(final Team t, TeamMatch tm, boolean includeCurrent) throws RemoteException{
 
         int value = 0;
         int countTeamVictories = 0;
@@ -688,7 +697,7 @@ public class TeamMatch extends Match implements Serializable {
         return value;
     }
 
-    int getOppPointsByTeam(final Team t, TeamMatch tm, boolean includeCurrent) {
+    int getOppPointsByTeam(final Team t, TeamMatch tm, boolean includeCurrent)throws RemoteException {
 
         int index = 0;
         TeamMatch tmp_m = (TeamMatch) t.getMatch(index);
@@ -722,7 +731,7 @@ public class TeamMatch extends Match implements Serializable {
         return value;
     }
 
-    int getOppELOByTeam(final Team t, TeamMatch tm, int roundIndex) {
+    int getOppELOByTeam(final Team t, TeamMatch tm, int roundIndex) throws RemoteException{
         int value;
         Competitor opponent;
         if (tm.getCompetitor1() == t) {
@@ -735,7 +744,7 @@ public class TeamMatch extends Match implements Serializable {
         return value;
     }
 
-    public int getTeamTable(final Team t, TeamMatch tm) {
+    public int getTeamTable(final Team t, TeamMatch tm) throws RemoteException{
 
         for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
             Round r = Tournament.getTournament().getRound(i);
@@ -753,12 +762,12 @@ public class TeamMatch extends Match implements Serializable {
 
     }
 
-    int getTeamNbMatch(final Team t, TeamMatch tm) {
+    int getTeamNbMatch(final Team t, TeamMatch tm)throws RemoteException {
         int index = t.matchIndex(tm);
         return index + 1;
     }
 
-    public int getValue(final Team t, final int rankingType, boolean teamVictory) {
+    public int getValue(final Team t, final int rankingType, boolean teamVictory)throws RemoteException {
         int value = 0;
 
         int roundIndex = -1;
@@ -923,7 +932,7 @@ public class TeamMatch extends Match implements Serializable {
         return value;
     }
 
-    int getValue(final Team t, TeamMatch tm, final Criteria crit, final int subtype) {
+    int getValue(final Team t, TeamMatch tm, final Criteria crit, final int subtype) throws RemoteException{
         int value = 0;
         for (int i = 0; i < tm.getMatchCount(); i++) {
             CoachMatch cm = tm.getMatch(i);
@@ -947,7 +956,7 @@ public class TeamMatch extends Match implements Serializable {
 
     }
 
-    public int getValue(Criteria crit, int subtype, Competitor c) {
+    public int getValue(Criteria crit, int subtype, Competitor c)throws RemoteException {
         int value = 0;
         if (c == mCompetitor1) {
             for (int i = 0; i < this.getMatchCount(); i++) {
@@ -967,7 +976,7 @@ public class TeamMatch extends Match implements Serializable {
     /**
      * Recalculate the values fot this match
      */
-    public void recomputeValues() {
+    public void recomputeValues() throws RemoteException{
         this.c1value1 = recomputeValue(1, mCompetitor1);
         this.c2value1 = recomputeValue(1, mCompetitor2);
         this.c1value2 = recomputeValue(2, mCompetitor1);
@@ -980,7 +989,7 @@ public class TeamMatch extends Match implements Serializable {
         this.c2value5 = recomputeValue(5, mCompetitor2);
     }
 
-    protected int recomputeValue(int index, Competitor c) {
+    protected int recomputeValue(int index, Competitor c) throws RemoteException{
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
         valueType = Tournament.getTournament().getParams().getTeamRankingType(index);
@@ -988,7 +997,7 @@ public class TeamMatch extends Match implements Serializable {
         return value;
     }
 
-    public boolean isEntered() {
+    public boolean isEntered()throws RemoteException {
         for (int i=0; i<getMatchCount(); i++)
         {
             CoachMatch cm=getMatch(i);
