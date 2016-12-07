@@ -7,6 +7,7 @@ package tourma.utils;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.io.File;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -146,9 +147,10 @@ public final class Generation {
      *
      * @param round
      */
-    private static void applyPortugal(final Round round) {
-        if (Tournament.getTournament().getParams().isPortugal()) {
-            Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+    private static void applyPortugal(final Round round) throws RemoteException {
+        Parameters params=Tournament.getTournament().getParams();
+        if (params.isPortugal()) {
+            Criteria td = params.getCriteria(0);
             ArrayList<CoachMatch> acm = round.getCoachMatchs();
             for (int i = 0; i < acm.size(); i++) {
                 CoachMatch cm = acm.get(i);
@@ -171,7 +173,7 @@ public final class Generation {
      * @param choice
      * @param roundnumber
      */
-    public static void nextRound(final Round round, final int choice, final int roundnumber) {
+    public static void nextRound(final Round round, final int choice, final int roundnumber) throws RemoteException {
 
         Round r = null;
         Tournament.getTournament().recomputeAll();
@@ -206,7 +208,7 @@ public final class Generation {
     /**
      * Generate the first round with free pairing
      */
-    public static void generateFirstRoundFree() {
+    public static void generateFirstRoundFree() throws RemoteException{
         final Round r = new Round();
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
@@ -219,7 +221,7 @@ public final class Generation {
      *
      * @param choice
      */
-    public static void generateFirstRound(final int choice) {
+    public static void generateFirstRound(final int choice) throws RemoteException{
         final ITournament tour = Tournament.getTournament();
         final Parameters params = tour.getParams();
 
@@ -364,8 +366,9 @@ public final class Generation {
         saveTemporaryTournament();
     }
 
-    private static void saveTemporaryTournament() {
-        final StringBuffer filename = new StringBuffer(Tournament.getTournament().getParams().getTournamentName());
+    private static void saveTemporaryTournament() throws RemoteException{
+        Parameters params=Tournament.getTournament().getParams();
+        final StringBuffer filename = new StringBuffer(params.getTournamentName());
         filename.append(".");
         filename.append(Tournament.getTournament().getRoundsCount());
         final Date date = new Date();
@@ -385,7 +388,7 @@ public final class Generation {
      *
      * @param competitors
      */
-    private static void generateFirstRoundPool(ArrayList competitors) {
+    private static void generateFirstRoundPool(ArrayList competitors) throws RemoteException{
 
         final ITournament tour = Tournament.getTournament();
 
@@ -490,7 +493,7 @@ public final class Generation {
      *
      * @param competitors ArrayList including competitors (Coachs or Teams)
      */
-    private static void generateFirstRoundManual(ArrayList competitors) {
+    private static void generateFirstRoundManual(ArrayList competitors)throws RemoteException {
 
         final ITournament tour = Tournament.getTournament();
 
@@ -550,7 +553,7 @@ public final class Generation {
      * @param random
      * @param naf
      */
-    private static void generateFirstRoundOrder(ArrayList competitors, final boolean random, final boolean naf) {
+    private static void generateFirstRoundOrder(ArrayList competitors, final boolean random, final boolean naf) throws RemoteException {
 
         final ITournament tour = Tournament.getTournament();
 
@@ -603,7 +606,7 @@ public final class Generation {
      * @param competitors
      * @param r
      */
-    private static void genBalanced(ArrayList competitors, Round r) {
+    private static void genBalanced(ArrayList competitors, Round r) throws RemoteException{
 
         /*        final Tournament tour = Tournament.getTournament();
          final ArrayList<Round> rounds = tour.getRounds();
@@ -652,7 +655,7 @@ public final class Generation {
      *
      * @param competitors
      */
-    private static void generateFirstRoundRobin(ArrayList competitors) {
+    private static void generateFirstRoundRobin(ArrayList competitors) throws RemoteException{
 
         final ITournament tour = Tournament.getTournament();
 
@@ -705,7 +708,7 @@ public final class Generation {
      *
      * @param competitors
      */
-    private static void generateFirstRoundCup(ArrayList competitors) {
+    private static void generateFirstRoundCup(ArrayList competitors)throws RemoteException {
 
         final ITournament tour = Tournament.getTournament();
 
@@ -758,7 +761,7 @@ public final class Generation {
      * @param r
      * @return
      */
-    private static Round genSwiss(final ArrayList competitors, final MjtRanking datas, final Round r) {
+    private static Round genSwiss(final ArrayList competitors, final MjtRanking datas, final Round r)throws RemoteException {
 
         final ArrayList<ObjectRanking> datas_tmp = new ArrayList<>();
 
@@ -780,7 +783,7 @@ public final class Generation {
      * @return new round
      */
     @SuppressWarnings("unchecked")
-    private static Round genSwiss(final ArrayList competitors, final ArrayList<ObjectRanking> datas, final Round r) {
+    private static Round genSwiss(final ArrayList competitors, final ArrayList<ObjectRanking> datas, final Round r)throws RemoteException {
 
         final ITournament tour = Tournament.getTournament();
         //final Calendar cal = Calendar.getInstance();
@@ -927,7 +930,7 @@ public final class Generation {
      * @return
      */
     @SuppressWarnings("unchecked")
-    private static Round genQSwiss(final ArrayList competitors, final MjtRanking datas, Round r2) {
+    private static Round genQSwiss(final ArrayList competitors, final MjtRanking datas, Round r2)throws RemoteException {
 
         final ITournament tour = Tournament.getTournament();
 
@@ -1051,7 +1054,7 @@ public final class Generation {
      * @param r
      * @return
      */
-    private static Round genRandom(final ArrayList competitors, final Round r) {
+    private static Round genRandom(final ArrayList competitors, final Round r)throws RemoteException {
 
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
@@ -1079,15 +1082,16 @@ public final class Generation {
      * @param r
      * @param third_place
      */
-    private static void genCup(final Round round, final Round r, final boolean third_place) {
+    private static void genCup(final Round round, final Round r, final boolean third_place) throws RemoteException{
         //final ArrayList<Match> matchs = new ArrayList<>(round.getMatchs());
+        Parameters params=Tournament.getTournament().getParams();
         int nb_match = (int) Math.pow(2, round.getCupMaxTour() - round.getCupTour() - 1);
 
         final ArrayList<Competitor> _winners = new ArrayList<>();
         final ArrayList<Competitor> _loosers = new ArrayList<>();
 
         Competitor nullElt;
-        if ((Tournament.getTournament().getParams().isTeamTournament()) && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+        if ((params.isTeamTournament()) && (params.getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
             nullElt = Team.getNullTeam();
         } else {
             nullElt = Coach.getNullCoach();
@@ -1196,7 +1200,7 @@ public final class Generation {
      * @param datas
      * @param nbPlayers
      */
-    private static void genCupFirst(final Round r, final MjtRanking datas, final int nbPlayers) {
+    private static void genCupFirst(final Round r, final MjtRanking datas, final int nbPlayers)throws RemoteException {
         final int nb_match = nbPlayers / 2;
         final ArrayList<Competitor> comps = new ArrayList<>();
         Competitor nullElt;
@@ -1227,7 +1231,7 @@ public final class Generation {
      * @param round
      * @param r
      */
-    private static void finalGenerationStep(final Round round, final Round r) {
+    private static void finalGenerationStep(final Round round, final Round r) throws RemoteException{
         final ITournament tour = Tournament.getTournament();
         if (round != null) {
             int i = 0;
@@ -1258,7 +1262,7 @@ public final class Generation {
      * @param rounds
      * @return
      */
-    public static ArrayList<ObjectRanking> subRanking(final Team team, final ArrayList<Round> rounds) {
+    public static ArrayList<ObjectRanking> subRanking(final Team team, final ArrayList<Round> rounds) throws RemoteException{
         ArrayList<Coach> array = new ArrayList<>();
         for (int i = 0; i < team.getCoachsCount(); i++) {
             array.add(team.getCoach(i));
@@ -1272,7 +1276,7 @@ public final class Generation {
      * @param rounds
      * @return
      */
-    public static ArrayList<ObjectRanking> subRanking(final ArrayList<Coach> coachs, final ArrayList<Round> rounds) {
+    public static ArrayList<ObjectRanking> subRanking(final ArrayList<Coach> coachs, final ArrayList<Round> rounds) throws RemoteException{
 
         final Parameters params = Tournament.getTournament().getParams();
 
@@ -1312,7 +1316,7 @@ public final class Generation {
      * @param roundnumber
      * @return
      */
-    private static Round nextRoundQSwiss(final Round round, final int roundnumber) {
+    private static Round nextRoundQSwiss(final Round round, final int roundnumber) throws RemoteException{
 
         final ITournament tour = Tournament.getTournament();
 
@@ -1368,7 +1372,7 @@ public final class Generation {
      * @return
      */
     @SuppressWarnings("unchecked")
-    private static Round nextRoundCup(final Round round, final int roundnumber) {
+    private static Round nextRoundCup(final Round round, final int roundnumber) throws RemoteException{
 
         final ITournament tour = Tournament.getTournament();
         Round r = new Round();
@@ -1745,7 +1749,7 @@ public final class Generation {
      * @param v
      * @param matchs
      */
-    private static void buildUntilRound(final Round round, final ArrayList<Round> v, final ArrayList<CoachMatch> matchs) {
+    private static void buildUntilRound(final Round round, final ArrayList<Round> v, final ArrayList<CoachMatch> matchs) throws RemoteException{
         final ITournament tour = Tournament.getTournament();
         if (round != null) {
             for (int i = 0; i < tour.getRoundsCount(); i++) {
@@ -1769,7 +1773,7 @@ public final class Generation {
      * @param roundnumber
      * @return
      */
-    private static Round nextRoundSwiss(final Round round, final int roundnumber) {
+    private static Round nextRoundSwiss(final Round round, final int roundnumber) throws RemoteException{
 
         final ITournament tour = Tournament.getTournament();
 
@@ -1820,7 +1824,7 @@ public final class Generation {
         return r;
     }
 
-    private static MjtRanking getSortedRankingDataCategories(int roundNumber, List<Category> categories, int mix, int nbPlayers) {
+    private static MjtRanking getSortedRankingDataCategories(int roundNumber, List<Category> categories, int mix, int nbPlayers)throws RemoteException {
         // First, collect coachs by categories  
         final ITournament tour=Tournament.getTournament();
         ArrayList<ArrayList<Competitor>> acomps = new ArrayList<>();
@@ -1970,7 +1974,7 @@ public final class Generation {
         return mjt;
     }
 
-    private static MjtRanking getSortedRankingData(final int roundnumber) {
+    private static MjtRanking getSortedRankingData(final int roundnumber) throws RemoteException{
         final ITournament tour = Tournament.getTournament();
         MjtRanking ranking;
         if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() != ETeamPairing.INDIVIDUAL_PAIRING)) {
@@ -2000,7 +2004,7 @@ public final class Generation {
         return ranking;
     }
 
-    private static MjtRanking getSortedRankingData(final Pool p, final int roundnumber) {
+    private static MjtRanking getSortedRankingData(final Pool p, final int roundnumber) throws RemoteException{
         MjtRanking ranking;
         final ITournament tour = Tournament.getTournament();
         if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() != ETeamPairing.INDIVIDUAL_PAIRING)) {
@@ -2023,7 +2027,7 @@ public final class Generation {
      *
      * @return
      */
-    private static Round nextRoundFree() {
+    private static Round nextRoundFree() throws RemoteException{
         final Round r = new Round();
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
@@ -2035,7 +2039,7 @@ public final class Generation {
      * @param round
      * @return
      */
-    private static Round nextRoundRandom(final Round round) {
+    private static Round nextRoundRandom(final Round round) throws RemoteException{
         final ITournament tour = Tournament.getTournament();
 
         Round r = new Round();
@@ -2074,7 +2078,7 @@ public final class Generation {
      *
      * @return
      */
-    private static Round nextRoundBalanced() {
+    private static Round nextRoundBalanced() throws RemoteException{
         final ITournament tour = Tournament.getTournament();
 
         Round r = new Round();

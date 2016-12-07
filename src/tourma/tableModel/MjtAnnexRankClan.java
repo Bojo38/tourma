@@ -5,6 +5,7 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -59,6 +60,12 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
             final int ranking_type5,
             final boolean round_only) {
         super(round, criteria, subtype, clans, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+        try {
+            sortDatas();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
+
     }
 
     /**
@@ -71,7 +78,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * @param round_only
      */
     @SuppressWarnings("unchecked")
-    public MjtAnnexRankClan(final int round, final Criteria criteria, final int subtype, boolean full, final ArrayList clans, final boolean round_only) {
+    public MjtAnnexRankClan(final int round, final Criteria criteria, final int subtype, boolean full, final ArrayList clans, final boolean round_only) throws RemoteException {
 
         this(round, criteria, subtype, clans, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                 round_only);
@@ -80,13 +87,17 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void sortDatas() {
+    protected void sortDatas() throws RemoteException {
         mDatas.clear();
         mDatas = new ArrayList<>();
-        if (Tournament.getTournament().getParams().isTeamTournament()) {
-            sortDatasTeam();
-        } else {
-            sortDatasCoach();
+        try {
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
+                sortDatasTeam();
+            } else {
+                sortDatasCoach();
+            }
+        } catch (RemoteException re) {
+            System.out.println(re.getLocalizedMessage());
         }
         Collections.sort(mDatas);
     }
@@ -95,7 +106,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * Sort teams data
      */
     @SuppressWarnings("unchecked")
-    private void sortDatasTeam() {
+    private void sortDatasTeam() throws RemoteException {
 
         final ArrayList<Team> teams = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
@@ -120,11 +131,11 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
             for (Team t : teams) {
                 if (t.getClan() == clan) {
                     int value = 0;
-                    int value1 ;
-                    int value2 ;
+                    int value1;
+                    int value2;
                     int value3;
-                    int value4 ;
-                    int value5 ;
+                    int value4;
+                    int value5;
 
                     ArrayList<Integer> aValue = new ArrayList<>();
                     ArrayList<Integer> aValue1 = new ArrayList<>();
@@ -155,23 +166,22 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         }
                         // test if match is in round
                         if (bFound) {
-                            aValue.add(tm.getValue( mCriteria, mSubtype,t));
+                            aValue.add(tm.getValue(mCriteria, mSubtype, t));
 
                             aValue1.add(tm.getValue(1, t));
                             aValue2.add(tm.getValue(2, t));
                             aValue3.add(tm.getValue(3, t));
                             aValue4.add(tm.getValue(4, t));
-                            aValue5.add(tm.getValue(5, t));                            
+                            aValue5.add(tm.getValue(5, t));
                         }
 
                     }
-                   
 
                     if (Tournament.getTournament().getParams().isApplyToAnnexTeam()) {
                         removeMaxValue(aValue);
                         removeMinValue(aValue);
                     }
-                     for (Integer i : aValue) {
+                    for (Integer i : aValue) {
                         value += i;
                     }
 
@@ -253,7 +263,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * Sort data Coach
      */
     @SuppressWarnings("unchecked")
-    private void sortDatasCoach() {
+    private void sortDatasCoach() throws RemoteException {
         final ArrayList<Coach> coaches = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coaches.add(Tournament.getTournament().getCoach(i));
@@ -278,10 +288,10 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                 if (c.getClan() == clan) {
                     int value = 0;
                     int value1;
-                    int value2 ;
-                    int value3 ;
-                    int value4 ;
-                    int value5 ;
+                    int value2;
+                    int value3;
+                    int value4;
+                    int value5;
 
                     ArrayList<Integer> aValue = new ArrayList<>();
                     ArrayList<Integer> aValue1 = new ArrayList<>();
@@ -312,7 +322,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         }
                         // test if match is in round
                         if (bFound) {
-                            aValue.add(m.getValue(mCriteria, mSubtype,c));
+                            aValue.add(m.getValue(mCriteria, mSubtype, c));
 
                             aValue1.add(m.getValue(1, c));
                             aValue3.add(m.getValue(2, c));
@@ -327,16 +337,15 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                         }
 
                     }
-                   
 
                     if (Tournament.getTournament().getParams().isApplyToAnnexIndiv()) {
                         removeMaxValue(aValue);
                         removeMinValue(aValue);
                     }
-                     for (Integer i : aValue) {
+                    for (Integer i : aValue) {
                         value += i;
                     }
-                    
+
                     if (Tournament.getTournament().getParams().isUseBestResultIndiv()) {
                         while (aValue1.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
                             removeMinValue(aValue1);
@@ -422,7 +431,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
         String result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result =  StringConstants.CS_HASH;
+                result = StringConstants.CS_HASH;
                 break;
             case 1:
                 result = Translate.translate(Translate.CS_Clan);
@@ -441,17 +450,21 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
 
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
         String result = StringConstants.CS_NULL;
-        switch (col) {
-            case 0:
-                result = Integer.toString(row + 1);
-                break;
-            case 1:
-                result = ((IWithNameAndPicture) obj.getObject()).getName();
-                break;
-            case 2:
-                result = Integer.toString(obj.getValue());
-                break;
-            default:
+        try {
+            switch (col) {
+                case 0:
+                    result = Integer.toString(row + 1);
+                    break;
+                case 1:
+                    result = ((IWithNameAndPicture) obj.getObject()).getName();
+                    break;
+                case 2:
+                    result = Integer.toString(obj.getValue());
+                    break;
+                default:
+            }
+        } catch (RemoteException re) {
+            System.out.println(re.getLocalizedMessage());
         }
         return result;
     }
@@ -460,14 +473,18 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        if (Tournament.getTournament().getParams().isUseImage()) {
-            if (column == 1) {
-                Clan t = (Clan) mObjects.get(row);
-                if (t.getPicture() != null) {
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.getPicture()), 30, 30);
-                    obj.setIcon(icon);
+        try {
+            if (Tournament.getTournament().getParams().isUseImage()) {
+                if (column == 1) {
+                    Clan t = (Clan) mObjects.get(row);
+                    if (t.getPicture() != null) {
+                        ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.getPicture()), 30, 30);
+                        obj.setIcon(icon);
+                    }
                 }
             }
+        } catch (RemoteException re) {
+            System.out.println(re.getLocalizedMessage());
         }
 
         return obj;

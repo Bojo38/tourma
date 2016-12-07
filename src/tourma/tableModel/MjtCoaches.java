@@ -7,6 +7,7 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -22,37 +23,51 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 @SuppressWarnings("serial")
-public class MjtCoaches extends AbstractTableModel implements TableCellRenderer {   
+public class MjtCoaches extends AbstractTableModel implements TableCellRenderer {
 
-    private IContainCoachs t=null;
-    
+    private IContainCoachs t = null;
+
     /**
-     * 
-     * @param container 
+     *
+     * @param container
      */
-     public MjtCoaches(IContainCoachs container) {
+    public MjtCoaches(IContainCoachs container) {
         t = container;
     }
 
-     
     @Override
     public int getColumnCount() {
 
         int result = 8;
+        try
+        {
         if (Tournament.getTournament().getParams().isEnableClans()) {
             result = 9;
+        }
+        }
+        catch(RemoteException re)
+        {
+            re.printStackTrace();
         }
         return result;
     }
 
     @Override
     public int getRowCount() {
-            return t.getCoachsCount();
+        try
+        {
+        return t.getCoachsCount();
+        }
+        catch (RemoteException re)
+        {
+            re.printStackTrace();
+            return 0;
+        }
     }
 
     @Override
     public String getColumnName(final int col) {
-        String val = StringConstants.CS_NULL      ;
+        String val = StringConstants.CS_NULL;
         switch (col) {
             case 0:
                 val = StringConstants.CS_HASH;
@@ -89,53 +104,53 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
     @Override
     public Object getValueAt(final int row, final int col) {
         Object val = StringConstants.CS_NULL;
-        if (t.getCoachsCount()> 0) {
-            final Coach c = t.getCoach(row);
-            switch (col) {
-                case 0:
-                    val = row + 1;
-                    break;
-                case 1:
-                    val = c.getName();
-                    break;
-                case 2:
-                    val = c.getTeam();
-                    break;
-                case 3:
-                    if (c.getRoster()!=null)
-                    {
-                    val = c.getRoster().getName();
-                    }
-                    else
-                    {
-                        val=Translate.translate(Translate.CS_Unknown);
-                    }
-                    break;
-                case 4:
-                    val = c.getNaf();
-                    break;
-                case 5:
-                    val = c.getRank();
-                    break;
-                case 7:
-                    val = Double.toString(c.getNafRank());
-                    break;
-                case 8:
-                    val = c.getClan().getName();
-                    break;
-                case 6:
-                    if (c.isActive()) {
-                        val = Translate.translate(Translate.CS_Active);
-                    } else {
-                        val = Translate.translate(Translate.CS_Inactive);
-                    }
-                    break;
-                default:
+        try {
+            if (t.getCoachsCount() > 0) {
+                final Coach c = t.getCoach(row);
+                switch (col) {
+                    case 0:
+                        val = row + 1;
+                        break;
+                    case 1:
+                        val = c.getName();
+                        break;
+                    case 2:
+                        val = c.getTeam();
+                        break;
+                    case 3:
+                        if (c.getRoster() != null) {
+                            val = c.getRoster().getName();
+                        } else {
+                            val = Translate.translate(Translate.CS_Unknown);
+                        }
+                        break;
+                    case 4:
+                        val = c.getNaf();
+                        break;
+                    case 5:
+                        val = c.getRank();
+                        break;
+                    case 7:
+                        val = Double.toString(c.getNafRank());
+                        break;
+                    case 8:
+                        val = c.getClan().getName();
+                        break;
+                    case 6:
+                        if (c.isActive()) {
+                            val = Translate.translate(Translate.CS_Active);
+                        } else {
+                            val = Translate.translate(Translate.CS_Inactive);
+                        }
+                        break;
+                    default:
+                }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-        if (val==null)
-        {
-            val=StringConstants.CS_NULL;
+        if (val == null) {
+            val = StringConstants.CS_NULL;
         }
         return val;
     }
@@ -171,13 +186,15 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
         if (value instanceof Integer) {
             jlb.setText(Integer.toString((Integer) value));
         }
-
-        final Coach c = t.getCoach(row);
-        if (!c.isActive()) {
-            jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+        try {
+            final Coach c = t.getCoach(row);
+            if (!c.isActive()) {
+                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+            }
+            jlb.setHorizontalAlignment(JTextField.CENTER);
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-        jlb.setHorizontalAlignment(JTextField.CENTER);
-
         if (isSelected) {
             jlb.setBackground(Color.LIGHT_GRAY);
         } else {

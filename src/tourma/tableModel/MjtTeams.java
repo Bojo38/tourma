@@ -7,6 +7,7 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -38,8 +39,12 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
     public int getColumnCount() {
 
         int nbCol = 2;
-        for (int i = 0; i < mTeams.size(); i++) {
-            nbCol = Math.max(nbCol, mTeams.get(i).getCoachsCount() + 2);
+        try {
+            for (int i = 0; i < mTeams.size(); i++) {
+                nbCol = Math.max(nbCol, mTeams.get(i).getCoachsCount() + 2);
+            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         return nbCol;
     }
@@ -68,24 +73,28 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
     @Override
     public Object getValueAt(final int row, final int col) {
         Object object = StringConstants.CS_NULL;
-        if (mTeams.size() > 0) {
-            final Team t = mTeams.get(row);
-            switch (col) {
-                case 0:
-                    object = row + 1;
-                    break;
-                case 1:
-                    object = t.getName();
-                    break;
-                default:
-            }
-            if (t.getCoachsCount() > 0) {
-                if (t.getCoachsCount() > (col - 2)) {
-                    if (col >= 2) {
-                        object = t.getCoach(col - 2).getName();
+        try {
+            if (mTeams.size() > 0) {
+                final Team t = mTeams.get(row);
+                switch (col) {
+                    case 0:
+                        object = row + 1;
+                        break;
+                    case 1:
+                        object = t.getName();
+                        break;
+                    default:
+                }
+                if (t.getCoachsCount() > 0) {
+                    if (t.getCoachsCount() > (col - 2)) {
+                        if (col >= 2) {
+                            object = t.getCoach(col - 2).getName();
+                        }
                     }
                 }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         return object;
     }
@@ -127,13 +136,17 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
         }
 
         final Team t = mTeams.get(row);
-        if (t.getCoachsCount() > column - 2) {
-            if (column >= 2) {
-                final Coach c = t.getCoach(column - 2);
-                if (!c.isActive()) {
-                    jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+        try {
+            if (t.getCoachsCount() > column - 2) {
+                if (column >= 2) {
+                    final Coach c = t.getCoach(column - 2);
+                    if (!c.isActive()) {
+                        jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                    }
                 }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         jlb.setHorizontalAlignment(JTextField.CENTER);
 
@@ -144,8 +157,8 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
         }
         return jlb;
     }
-    
-      private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

@@ -8,6 +8,7 @@ package tourma.utils.web;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import javax.imageio.ImageIO;
 import org.apache.xerces.impl.dv.util.Base64;
 import tourma.data.Tournament;
@@ -19,12 +20,16 @@ import tourma.data.Tournament;
 public class WebPicture {
 
     public static String getPictureAsHTML(BufferedImage pic, int width, int heigth) {
-        
-        return getPictureAsHTML(pic,width,heigth,Tournament.getTournament().getParams().isUseImage());
-        
+
+        try {
+            return getPictureAsHTML(pic, width, heigth, Tournament.getTournament().getParams().isUseImage());
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
+        return "";
     }
-    
-    public static String getPictureAsHTML(BufferedImage pic, int width, int heigth,boolean use_image) {
+
+    public static String getPictureAsHTML(BufferedImage pic, int width, int heigth, boolean use_image) {
         String img = "";
         if (use_image) {
             if (pic != null) {

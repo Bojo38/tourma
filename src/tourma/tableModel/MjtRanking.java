@@ -7,6 +7,7 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -38,7 +39,7 @@ import tourma.utils.display.IRanked;
 @SuppressWarnings("serial")
 abstract public class MjtRanking extends AbstractTableModel implements TableCellRenderer, IRanked {
 
-        /**
+    /**
      *
      * @param valueType
      * @return
@@ -62,12 +63,15 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
 
         if (valueType > Parameters.C_MAX_RANKING) {
             final int value = valueType - Parameters.C_MAX_RANKING - 1;
-            criteria = Tournament.getTournament().getParams().getCriteria(value / 3);
+            try {
+                Parameters params = Tournament.getTournament().getParams();
+                criteria = params.getCriteria(value / 3);
+            } catch (RemoteException re) {
+                System.out.println(re.getLocalizedMessage());
+            }
         }
         return criteria;
     }
-
-  
 
     public static int getRankingFromString(String ranking, ArrayList<String> criterias) {
 
@@ -282,7 +286,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return value;
     }*/
 
-    /*protected int getValueByRankingType(int rt, Team t, TeamMatch tm) {
+ /*protected int getValueByRankingType(int rt, Team t, TeamMatch tm) {
         int value;
         final Criteria c1 = getCriteriaByValue(rt);
         final int subType1 = getSubtypeByValue(rt);
@@ -294,7 +298,6 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         }
         return value;
     }*/
-
     protected int getValueFromArray(int rt, ArrayList<Integer> av) {
         int value = 0;
 
@@ -340,8 +343,6 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         }
     }
 
-    
-
     /**
      *
      * @return
@@ -358,21 +359,26 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     @Override
     public int getSortedValue(int index, int valIndex) {
         ObjectRanking obj = (ObjectRanking) mDatas.get(index);
-        switch (valIndex) {
+        try {
+            switch (valIndex) {
 
-            case 1:
-                return obj.getValue1();
-            case 2:
-                return obj.getValue2();
-            case 3:
-                return obj.getValue3();
-            case 4:
-                return obj.getValue4();
-            case 5:
-                return obj.getValue5();
-            default:
-                return 0;
+                case 1:
+                    return obj.getValue1();
+                case 2:
+                    return obj.getValue2();
+                case 3:
+                    return obj.getValue3();
+                case 4:
+                    return obj.getValue4();
+                case 5:
+                    return obj.getValue5();
+                default:
+                    return 0;
+            }
+        } catch (RemoteException re) {
+            System.out.println(re.getLocalizedMessage());
         }
+        return 0;
     }
 
     /**
@@ -389,7 +395,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     /**
      * Abstract sortDatas
      */
-    protected abstract void sortDatas();
+    protected abstract void sortDatas() throws RemoteException;
 
     @Override
     public abstract int getColumnCount();
@@ -404,9 +410,6 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     public int getRowCount() {
         return mDatas.size();
     }
-
-   
-
 
     @Override
     public Class getColumnClass(final int c) {
@@ -431,7 +434,14 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         jlb.setOpaque(true);
         jlb.setBackground(new Color(255, 255, 255));
         jlb.setForeground(new Color(0, 0, 0));
-        boolean useColor = Tournament.getTournament().getParams().isUseColor();
+        boolean useColor = false;
+
+        try {
+            useColor = Tournament.getTournament().getParams().isUseColor();
+        } catch (RemoteException re) {
+            useColor = false;
+        }
+
         if (!useColor) {
             if (row % 2 != 0) {
                 jlb.setBackground(new Color(220, 220, 220));

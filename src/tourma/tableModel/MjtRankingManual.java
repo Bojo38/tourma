@@ -5,6 +5,7 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -55,13 +56,17 @@ public final class MjtRankingManual extends MjtRanking {
     protected void delData(Competitor obj) {
         if (mObjects.contains(obj)) {
             mObjects.remove(obj);
-            for (Object o : mDatas) {
-                if (o instanceof ObjectRanking) {
-                    if (((ObjectRanking) o).getObject().equals(obj)) {
-                        mDatas.remove(o);
-                        break;
+            try {
+                for (Object o : mDatas) {
+                    if (o instanceof ObjectRanking) {
+                        if (((ObjectRanking) o).getObject().equals(obj)) {
+                            mDatas.remove(o);
+                            break;
+                        }
                     }
                 }
+            } catch (RemoteException re) {
+                re.printStackTrace();
             }
         }
 
