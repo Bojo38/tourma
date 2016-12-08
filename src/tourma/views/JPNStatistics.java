@@ -6,6 +6,7 @@ package tourma.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.rmi.RemoteException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +68,7 @@ import tourma.tableModel.MjtRankingTeam;
  */
 public final class JPNStatistics extends javax.swing.JPanel {
 
-    private final ITournament mTournament;
+    private ITournament mTournament;
     private final ArrayList<HashMap<String, Integer>> mHpositions = new ArrayList<>();
     private final ArrayList<HashMap<String, Integer>> mHTeampositions = new ArrayList<>();
     private ChartPanel cpPositions = null;
@@ -93,21 +94,24 @@ public final class JPNStatistics extends javax.swing.JPanel {
      * Creates new form JPNStatistics
      */
     public JPNStatistics() {
-        mTournament = Tournament.getTournament();
-        initComponents();
+        try {
+            mTournament = Tournament.getTournament();
+            initComponents();
 
-        addRosterPie();
-        if (mTournament.getGroupsCount() > 1) {
-            addGroupPie();
-        }
-        if (mTournament.getParams().isTeamTournament()) {
-            addTeamPositions();
-            if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
-                addTeamBalanced();
-                addIndivBalanced();
+            addRosterPie();
+            if (mTournament.getGroupsCount() > 1) {
+                addGroupPie();
             }
+            if (mTournament.getParams().isTeamTournament()) {
+                addTeamPositions();
+                if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
+                    addTeamBalanced();
+                    addIndivBalanced();
+                }
+            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-
         addWinLoss();
         addCounterPerRoster();
         addPointsAverage();
@@ -122,59 +126,62 @@ public final class JPNStatistics extends javax.swing.JPanel {
      */
     private void addTeamBalanced() {
 
-        ArrayList<Team> teams = new ArrayList<>();
-        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-            teams.add(Tournament.getTournament().getTeam(cpt));
-        }
-        DefaultListModel model = new DefaultListModel();
-        for (Team team : teams) {
-            model.addElement(team.getName());
-        }
-        JScrollPane jspBalancedTeam = new JScrollPane();
-        jlsBalancedTeam = new JList(model);
-        jlsBalancedTeam.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        jspBalancedTeam.getViewport().add(jlsBalancedTeam);
-
-        jpnBalancedTeam.add(jspBalancedTeam, BorderLayout.WEST);
-
-        // creation des callbacks
-        jlsBalancedTeam.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                updateBalancedTeam();
+        try{ 
+            ArrayList<Team> teams = new ArrayList<>();
+            for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
+                teams.add(Tournament.getTournament().getTeam(cpt));
             }
-        });
-
-        // creation des listes de données
-        for (int i = 0; i < mTournament.getTeamsCount(); i++) {
-            Team t = mTournament.getTeam(i);
-
-            HashMap<String, Integer> hm = new HashMap<>();
-            for (int j = 0; j < mTournament.getTeamsCount(); j++) {
-                Team opp = mTournament.getTeam(j);
-                hm.put(opp.getName(), 0);
+            DefaultListModel model = new DefaultListModel();
+            for (Team team : teams) {
+                model.addElement(team.getName());
             }
+            JScrollPane jspBalancedTeam = new JScrollPane();
+            jlsBalancedTeam = new JList(model);
+            jlsBalancedTeam.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            jspBalancedTeam.getViewport().add(jlsBalancedTeam);
 
-            for (int j = 0; j < t.getCoachsCount(); j++) {
-                Coach c = t.getCoach(j);
-                for (int k = 0; k < c.getMatchCount(); k++) {
-                    Match mMatch = c.getMatch(k);
-                    CoachMatch m = (CoachMatch) mMatch;
-                    Coach opp;
-                    if (m.getCompetitor1() == c) {
-                        opp = (Coach) m.getCompetitor2();
-                    } else {
-                        opp = (Coach) m.getCompetitor1();
-                    }
-                    Team other = opp.getTeamMates();
-                    int nb = hm.get(other.getName());
-                    nb += 1;
-                    hm.put(other.getName(), nb);
+            jpnBalancedTeam.add(jspBalancedTeam, BorderLayout.WEST);
+
+            // creation des callbacks
+            jlsBalancedTeam.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    updateBalancedTeam();
                 }
-            }
-            mHTeamBalanced.add(hm);
-        }
+            });
 
+            // creation des listes de données
+            for (int i = 0; i < mTournament.getTeamsCount(); i++) {
+                Team t = mTournament.getTeam(i);
+
+                HashMap<String, Integer> hm = new HashMap<>();
+                for (int j = 0; j < mTournament.getTeamsCount(); j++) {
+                    Team opp = mTournament.getTeam(j);
+                    hm.put(opp.getName(), 0);
+                }
+
+                for (int j = 0; j < t.getCoachsCount(); j++) {
+                    Coach c = t.getCoach(j);
+                    for (int k = 0; k < c.getMatchCount(); k++) {
+                        Match mMatch = c.getMatch(k);
+                        CoachMatch m = (CoachMatch) mMatch;
+                        Coach opp;
+                        if (m.getCompetitor1() == c) {
+                            opp = (Coach) m.getCompetitor2();
+                        } else {
+                            opp = (Coach) m.getCompetitor1();
+                        }
+                        Team other = opp.getTeamMates();
+                        int nb = hm.get(other.getName());
+                        nb += 1;
+                        hm.put(other.getName(), nb);
+                    }
+                }
+                mHTeamBalanced.add(hm);
+            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         // update positions
         updateBalancedTeam();
 
@@ -190,57 +197,60 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private void addIndivBalanced() {
 
         final ArrayList<Coach> coachs = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            coachs.add(Tournament.getTournament().getCoach(i));
-        }
-        DefaultListModel model = new DefaultListModel();
-        for (Coach coach : coachs) {
-            model.addElement(coach.getName());
-        }
-
-        JScrollPane jspBalancedIndiv = new JScrollPane();
-        jlsBalancedIndiv = new JList(model);
-        jlsBalancedIndiv.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        jspBalancedIndiv.getViewport().add(jlsBalancedIndiv);
-
-        jpnBalancedIndiv.add(jspBalancedIndiv, BorderLayout.WEST);
-
-        // creation des callbacks
-        jlsBalancedIndiv.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                updateBalancedIndiv();
+        try {
+            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                coachs.add(Tournament.getTournament().getCoach(i));
             }
-        });
-
-        // creation des listes de données
-        for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-            Coach c = mTournament.getCoach(i);
-
-            HashMap<String, Integer> hm = new HashMap<>();
-            for (int j = 0; j < mTournament.getTeamsCount(); j++) {
-                Team opp = mTournament.getTeam(j);
-                hm.put(opp.getName(), 0);
+            DefaultListModel model = new DefaultListModel();
+            for (Coach coach : coachs) {
+                model.addElement(coach.getName());
             }
 
-            for (int j = 0; j < c.getMatchCount(); j++) {
-                Match mMatch = c.getMatch(j);
-                CoachMatch m = (CoachMatch) mMatch;
-                Coach opp;
-                if (m.getCompetitor1() == c) {
-                    opp = (Coach) m.getCompetitor2();
-                } else {
-                    opp = (Coach) m.getCompetitor1();
+            JScrollPane jspBalancedIndiv = new JScrollPane();
+            jlsBalancedIndiv = new JList(model);
+            jlsBalancedIndiv.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            jspBalancedIndiv.getViewport().add(jlsBalancedIndiv);
+
+            jpnBalancedIndiv.add(jspBalancedIndiv, BorderLayout.WEST);
+
+            // creation des callbacks
+            jlsBalancedIndiv.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    updateBalancedIndiv();
                 }
-                Team other = opp.getTeamMates();
-                int nb = hm.get(other.getName());
-                nb += 1;
-                hm.put(other.getName(), nb);
+            });
+
+            // creation des listes de données
+            for (int i = 0; i < mTournament.getCoachsCount(); i++) {
+                Coach c = mTournament.getCoach(i);
+
+                HashMap<String, Integer> hm = new HashMap<>();
+                for (int j = 0; j < mTournament.getTeamsCount(); j++) {
+                    Team opp = mTournament.getTeam(j);
+                    hm.put(opp.getName(), 0);
+                }
+
+                for (int j = 0; j < c.getMatchCount(); j++) {
+                    Match mMatch = c.getMatch(j);
+                    CoachMatch m = (CoachMatch) mMatch;
+                    Coach opp;
+                    if (m.getCompetitor1() == c) {
+                        opp = (Coach) m.getCompetitor2();
+                    } else {
+                        opp = (Coach) m.getCompetitor1();
+                    }
+                    Team other = opp.getTeamMates();
+                    int nb = hm.get(other.getName());
+                    nb += 1;
+                    hm.put(other.getName(), nb);
+                }
+
+                mHIndivBalanced.add(hm);
             }
-
-            mHIndivBalanced.add(hm);
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-
         // update positions
         updateBalancedIndiv();
 
@@ -260,106 +270,110 @@ public final class JPNStatistics extends javax.swing.JPanel {
      *
      */
     private void addCounterPerRoster() {
-        for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            Criteria crit = mTournament.getParams().getCriteria(i);
-            final HashMap<String, Double> plus = new HashMap<>();
-            final HashMap<String, Double> minus = new HashMap<>();
-            final HashMap<String, Double> total = new HashMap<>();
+        try {
+            for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
+                Criteria crit = mTournament.getParams().getCriteria(i);
+                final HashMap<String, Double> plus = new HashMap<>();
+                final HashMap<String, Double> minus = new HashMap<>();
+                final HashMap<String, Double> total = new HashMap<>();
 
-            for (int j = 0; j < RosterType.getRostersNamesCount(); j++) {
-                String roster = RosterType.getRostersName(j);
-                plus.put(roster, 0.0);
-                minus.put(roster, 0.0);
-                total.put(roster, 0.0);
-            }
+                for (int j = 0; j < RosterType.getRostersNamesCount(); j++) {
+                    String roster = RosterType.getRostersName(j);
+                    plus.put(roster, 0.0);
+                    minus.put(roster, 0.0);
+                    total.put(roster, 0.0);
+                }
 
-            for (int j = 0; j < mTournament.getRoundsCount(); j++) {
-                final Round r = mTournament.getRound(j);
-                for (int k = 0; k < r.getCoachMatchs().size(); k++) {
-                    final CoachMatch m = r.getCoachMatchs().get(k);
-                    if ((m.getCompetitor1() != Coach.getNullCoach()) && (m.getCompetitor2() != Coach.getNullCoach())) {
-                        final Value values = m.getValue(crit);
+                for (int j = 0; j < mTournament.getRoundsCount(); j++) {
+                    final Round r = mTournament.getRound(j);
+                    for (int k = 0; k < r.getCoachMatchs().size(); k++) {
+                        final CoachMatch m = r.getCoachMatchs().get(k);
+                        if ((m.getCompetitor1() != Coach.getNullCoach()) && (m.getCompetitor2() != Coach.getNullCoach())) {
+                            final Value values = m.getValue(crit);
 
-                        String name1;
-                        String name2;
-                        if (m.getRoster1() == null) {
-                            name1 = ((Coach) m.getCompetitor1()).getRoster().getName();
-                        } else {
-                            name1 = m.getRoster1().getName();
+                            String name1;
+                            String name2;
+                            if (m.getRoster1() == null) {
+                                name1 = ((Coach) m.getCompetitor1()).getRoster().getName();
+                            } else {
+                                name1 = m.getRoster1().getName();
+                            }
+
+                            if (m.getRoster2() == null) {
+                                name2 = ((Coach) m.getCompetitor2()).getRoster().getName();
+                            } else {
+                                name2 = m.getRoster2().getName();
+                            }
+
+                            double pt = plus.get(name1);
+                            double tot = total.get(name1);
+                            double mt = minus.get(name1);
+                            pt += values.getValue1();
+                            mt -= values.getValue2();
+                            tot += 1.0;
+
+                            plus.put(name1, pt);
+                            minus.put(name1, mt);
+                            total.put(name1, tot);
+
+                            pt = plus.get(name2);
+                            mt = minus.get(name2);
+                            tot = total.get(name2);
+                            pt += values.getValue2();
+                            mt -= values.getValue1();
+                            tot += 1.0;
+
+                            plus.put(name2, pt);
+                            minus.put(name2, mt);
+                            total.put(name2, tot);
                         }
-
-                        if (m.getRoster2() == null) {
-                            name2 = ((Coach) m.getCompetitor2()).getRoster().getName();
-                        } else {
-                            name2 = m.getRoster2().getName();
-                        }
-
-                        double pt = plus.get(name1);
-                        double tot = total.get(name1);
-                        double mt = minus.get(name1);
-                        pt += values.getValue1();
-                        mt -= values.getValue2();
-                        tot += 1.0;
-
-                        plus.put(name1, pt);
-                        minus.put(name1, mt);
-                        total.put(name1, tot);
-
-                        pt = plus.get(name2);
-                        mt = minus.get(name2);
-                        tot = total.get(name2);
-                        pt += values.getValue2();
-                        mt -= values.getValue1();
-                        tot += 1.0;
-
-                        plus.put(name2, pt);
-                        minus.put(name2, mt);
-                        total.put(name2, tot);
                     }
                 }
-            }
 
-            final DefaultCategoryDataset datas = new DefaultCategoryDataset();
+                final DefaultCategoryDataset datas = new DefaultCategoryDataset();
 
-            for (int cpt = 0; cpt < RosterType.getRostersNamesCount(); cpt++) {
-                String roster = RosterType.getRostersName(cpt);
-                final double pt = plus.get(roster);
-                final double mt = minus.get(roster);
-                final double tot = total.get(roster);
-                if (((pt != 0) || (mt != 0)) && (tot != 0)) {
-                    datas.addValue(pt / tot,
-                            Translate.translate(CS_Done),
-                            roster);
-                    datas.addValue(mt / tot,
-                            Translate.translate(CS_DoneAgainst),
-                            roster);
+                for (int cpt = 0; cpt < RosterType.getRostersNamesCount(); cpt++) {
+                    String roster = RosterType.getRostersName(cpt);
+                    final double pt = plus.get(roster);
+                    final double mt = minus.get(roster);
+                    final double tot = total.get(roster);
+                    if (((pt != 0) || (mt != 0)) && (tot != 0)) {
+                        datas.addValue(pt / tot,
+                                Translate.translate(CS_Done),
+                                roster);
+                        datas.addValue(mt / tot,
+                                Translate.translate(CS_DoneAgainst),
+                                roster);
+                    }
                 }
+
+                final JFreeChart chart = ChartFactory.createStackedBarChart(
+                        Translate.translate(CS_ValueByRoster),
+                        Translate.translate(CS_Roster),
+                        Translate.translate(CS_Number),
+                        datas, PlotOrientation.HORIZONTAL, true, true, false);
+
+                final CategoryPlot plot = chart.getCategoryPlot();
+                final BarRenderer br = (BarRenderer) plot.getRenderer();
+                br.setBaseItemLabelsVisible(true, true);
+                br.setSeriesPaint(0, new Color(0, 184, 0));
+                br.setSeriesPaint(1, new Color(184, 0, 184));
+                br.setBarPainter(new StandardBarPainter());
+
+                final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
+                barrenderer.setDrawBarOutline(false);
+                barrenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+                barrenderer.setBaseItemLabelsVisible(true);
+                barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+                barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+                barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
+                        "{0}/{1}: {2}", NumberFormat.getInstance()));
+
+                final ChartPanel chartPanel = new ChartPanel(chart);
+                jtpStatistics.addTab(crit.getName(), chartPanel);
             }
-
-            final JFreeChart chart = ChartFactory.createStackedBarChart(
-                    Translate.translate(CS_ValueByRoster),
-                    Translate.translate(CS_Roster),
-                    Translate.translate(CS_Number),
-                    datas, PlotOrientation.HORIZONTAL, true, true, false);
-
-            final CategoryPlot plot = chart.getCategoryPlot();
-            final BarRenderer br = (BarRenderer) plot.getRenderer();
-            br.setBaseItemLabelsVisible(true, true);
-            br.setSeriesPaint(0, new Color(0, 184, 0));
-            br.setSeriesPaint(1, new Color(184, 0, 184));
-            br.setBarPainter(new StandardBarPainter());
-
-            final BarRenderer barrenderer = (BarRenderer) plot.getRenderer();
-            barrenderer.setDrawBarOutline(false);
-            barrenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-            barrenderer.setBaseItemLabelsVisible(true);
-            barrenderer.setBasePositiveItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
-            barrenderer.setBaseNegativeItemLabelPosition(new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER));
-            barrenderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
-                    "{0}/{1}: {2}", NumberFormat.getInstance()));
-
-            final ChartPanel chartPanel = new ChartPanel(chart);
-            jtpStatistics.addTab(crit.getName(), chartPanel);
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
     }
 
@@ -386,69 +400,70 @@ public final class JPNStatistics extends javax.swing.JPanel {
             total.put(roster, 0.0);
         }
 
-        final Criteria Td = mTournament.getParams().getCriteria(0);
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            final Round r = mTournament.getRound(i);
-            for (int j = 0; j < r.getCoachMatchs().size(); j++) {
-                final CoachMatch m = r.getCoachMatchs().get(j);
-                if ((m.getCompetitor1() != Coach.getNullCoach()) && (m.getCompetitor2() != Coach.getNullCoach())) {
-                    final Value values = m.getValue(Td);
+        try {
+            final Criteria Td = mTournament.getParams().getCriteria(0);
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                final Round r = mTournament.getRound(i);
+                for (int j = 0; j < r.getCoachMatchs().size(); j++) {
+                    final CoachMatch m = r.getCoachMatchs().get(j);
+                    if ((m.getCompetitor1() != Coach.getNullCoach()) && (m.getCompetitor2() != Coach.getNullCoach())) {
+                        final Value values = m.getValue(Td);
 
-                    String name1;
-                    String name2;
-                    if (m.getRoster1() == null) {
-                        name1 = ((Coach) m.getCompetitor1()).getRoster().getName();
-                    } else {
-                        name1 = m.getRoster1().getName();
-                    }
+                        String name1;
+                        String name2;
+                        if (m.getRoster1() == null) {
+                            name1 = ((Coach) m.getCompetitor1()).getRoster().getName();
+                        } else {
+                            name1 = m.getRoster1().getName();
+                        }
 
-                    if (m.getRoster2() == null) {
-                        name2 = ((Coach) m.getCompetitor2()).getRoster().getName();
-                    } else {
-                        name2 = m.getRoster2().getName();
-                    }
+                        if (m.getRoster2() == null) {
+                            name2 = ((Coach) m.getCompetitor2()).getRoster().getName();
+                        } else {
+                            name2 = m.getRoster2().getName();
+                        }
 
-                    try
-                    {
-                    double t = total.get(name2).intValue();
-                    t += 1.0;
-                    total.put(name2, t);
-                    t = total.get(name1).intValue();
-                    t += 1.0;
-                    total.put(name1, t);
-                    if (values.getValue1() > values.getValue2()) {
-                        double v = victories.get(name1);
-                        double l = loss.get(name2);
-                        v++;
-                        l++;
-                        victories.put(name1, v);
-                        loss.put(name2, l);
-                    }
-                    if (values.getValue1() < values.getValue2()) {
-                        double v = victories.get(name2);
-                        double l = loss.get(name1);
-                        v++;
-                        l++;
+                        try {
+                            double t = total.get(name2).intValue();
+                            t += 1.0;
+                            total.put(name2, t);
+                            t = total.get(name1).intValue();
+                            t += 1.0;
+                            total.put(name1, t);
+                            if (values.getValue1() > values.getValue2()) {
+                                double v = victories.get(name1);
+                                double l = loss.get(name2);
+                                v++;
+                                l++;
+                                victories.put(name1, v);
+                                loss.put(name2, l);
+                            }
+                            if (values.getValue1() < values.getValue2()) {
+                                double v = victories.get(name2);
+                                double l = loss.get(name1);
+                                v++;
+                                l++;
 
-                        victories.put(name2, v);
-                        loss.put(name1, l);
-                    }
-                    if (values.getValue1() == values.getValue2()) {
-                        double d = draw.get(name2);
-                        d++;
-                        draw.put(name2, d);
+                                victories.put(name2, v);
+                                loss.put(name1, l);
+                            }
+                            if (values.getValue1() == values.getValue2()) {
+                                double d = draw.get(name2);
+                                d++;
+                                draw.put(name2, d);
 
-                        d = draw.get(name1);
-                        d++;
-                        draw.put(name1, d);
-                    }
-                    }
-                    catch (NullPointerException npe)
-                    {
-                        System.err.println("Unknown roster: "+name2+" or "+name1);
+                                d = draw.get(name1);
+                                d++;
+                                draw.put(name1, d);
+                            }
+                        } catch (NullPointerException npe) {
+                            System.err.println("Unknown roster: " + name2 + " or " + name1);
+                        }
                     }
                 }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         final DefaultCategoryDataset datas = new DefaultCategoryDataset();
 
@@ -513,67 +528,68 @@ public final class JPNStatistics extends javax.swing.JPanel {
             datas.setValue(roster, 0);
         }
 
-        for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-            final Coach c = mTournament.getCoach(i);
-            if (c != Coach.getNullCoach()) {
-                ArrayList<String> names = new ArrayList<>();
-                for (int j = 0; j < c.getMatchCount(); j++) {
-                    Match mMatch = c.getMatch(j);
+        try {
+            for (int i = 0; i < mTournament.getCoachsCount(); i++) {
+                final Coach c = mTournament.getCoach(i);
+                if (c != Coach.getNullCoach()) {
+                    ArrayList<String> names = new ArrayList<>();
+                    for (int j = 0; j < c.getMatchCount(); j++) {
+                        Match mMatch = c.getMatch(j);
 
-                    CoachMatch m = (CoachMatch) mMatch;
-                    RosterType r;
-                    if (c == m.getCompetitor1()) {
-                        r = m.getRoster1();
-                    } else {
-                        r = m.getRoster2();
-                    }
-                    if (r == null) {
-                        r = c.getRoster();
-                    }
-
-                    //if (!names.contains(r.getName())) {
-                    names.add(r.getName());
-
-                    //}
-                }
-
-                for (String rName : names) {
-                    try {
-                        final Number value = datas.getValue(rName);
-
-                        int v = 0;
-                        if (value != null) {
-                            v = value.intValue();
+                        CoachMatch m = (CoachMatch) mMatch;
+                        RosterType r;
+                        if (c == m.getCompetitor1()) {
+                            r = m.getRoster1();
+                        } else {
+                            r = m.getRoster2();
                         }
-                        v++;
-                        datas.setValue(rName, v);
-                    } catch (NullPointerException npe) {
+                        if (r == null) {
+                            r = c.getRoster();
+                        }
+
+                        //if (!names.contains(r.getName())) {
+                        names.add(r.getName());
+
+                        //}
+                    }
+
+                    for (String rName : names) {
+                        try {
+                            final Number value = datas.getValue(rName);
+
+                            int v = 0;
+                            if (value != null) {
+                                v = value.intValue();
+                            }
+                            v++;
+                            datas.setValue(rName, v);
+                        } catch (NullPointerException npe) {
+
+                        } catch (UnknownKeyException uke) {
+                            System.out.println("Unknown roster: " + uke.getLocalizedMessage());
+                        }
 
                     }
-                    catch (UnknownKeyException uke)
-                    {
-                        System.out.println("Unknown roster: "+uke.getLocalizedMessage());
+                }
+            }
+
+            int i = 0;
+            while (i < datas.getItemCount()) {
+                final Number value = datas.getValue(i);
+                if (value.intValue() == 0) {
+                    datas.remove(datas.getKey(i));
+                } else {
+                    if (!Tournament.getTournament().getParams().isMultiRoster()) {
+                        double d = value.doubleValue();
+                        d /= Tournament.getTournament().getRoundsCount();
+                        datas.setValue(datas.getKey(i), d);
                     }
-                        
+                    i++;
                 }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-
-        int i = 0;
-        while (i < datas.getItemCount()) {
-            final Number value = datas.getValue(i);
-            if (value.intValue() == 0) {
-                datas.remove(datas.getKey(i));
-            } else {
-                if (!Tournament.getTournament().getParams().isMultiRoster()) {
-                    double d = value.doubleValue();
-                    d /= Tournament.getTournament().getRoundsCount();
-                    datas.setValue(datas.getKey(i), d);
-                }
-                i++;
-            }
-        }
-
         final JFreeChart chart = ChartFactory.createPieChart(
                 Translate.translate(CS_Roster),
                 datas, true, true, false);
@@ -603,30 +619,33 @@ public final class JPNStatistics extends javax.swing.JPanel {
 
         final DefaultPieDataset datas = new DefaultPieDataset();
 
-        for (int i = 0; i < mTournament.getGroupsCount(); i++) {
-            int value = 0;
-            Group g = mTournament.getGroup(i);
-            for (int j = 0; j < mTournament.getCoachsCount(); j++) {
-                final Coach c = mTournament.getCoach(j);
-                if (c != Coach.getNullCoach()) {
-                    for (int k = 0; k < g.getRosterCount(); k++) {
-                        RosterType mRoster = g.getRoster(k);
+        try {
+            for (int i = 0; i < mTournament.getGroupsCount(); i++) {
+                int value = 0;
+                Group g = mTournament.getGroup(i);
+                for (int j = 0; j < mTournament.getCoachsCount(); j++) {
+                    final Coach c = mTournament.getCoach(j);
+                    if (c != Coach.getNullCoach()) {
+                        for (int k = 0; k < g.getRosterCount(); k++) {
+                            RosterType mRoster = g.getRoster(k);
 
-                        if (c.getRoster() != null) {
-                            if (mRoster.getName().equals(c.getRoster().getName())) {
-                                value++;
+                            if (c.getRoster() != null) {
+                                if (mRoster.getName().equals(c.getRoster().getName())) {
+                                    value++;
+                                }
                             }
                         }
+
                     }
 
                 }
-
+                if (value > 0) {
+                    datas.setValue(mTournament.getGroup(i).getName(), value);
+                }
             }
-            if (value > 0) {
-                datas.setValue(mTournament.getGroup(i).getName(), value);
-            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-
         int i = 0;
         while (i < datas.getItemCount()) {
             final Number value = datas.getValue(i);
@@ -657,14 +676,17 @@ public final class JPNStatistics extends javax.swing.JPanel {
      * Update panel
      */
     public void update() {
-        if (mTournament.getParams().isTeamTournament()) {
-            updateTeamPositions();
-            if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
-                updateBalancedIndiv();
-                updateBalancedTeam();
+        try {
+            if (mTournament.getParams().isTeamTournament()) {
+                updateTeamPositions();
+                if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
+                    updateBalancedIndiv();
+                    updateBalancedTeam();
+                }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-
         updatePositions();
 
     }
@@ -685,68 +707,71 @@ public final class JPNStatistics extends javax.swing.JPanel {
             count.put(roster, 0.0);
         }
 
-        // Récupération des matchs
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            ArrayList<CoachMatch> acm = mTournament.getRound(i).getCoachMatchs();
-            for (CoachMatch cm : acm) {
-                if ((cm.getCompetitor1() != Coach.getNullCoach()) && (cm.getCompetitor2() != Coach.getNullCoach())) {
+        try {
+            // Récupération des matchs
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                ArrayList<CoachMatch> acm = mTournament.getRound(i).getCoachMatchs();
+                for (CoachMatch cm : acm) {
+                    if ((cm.getCompetitor1() != Coach.getNullCoach()) && (cm.getCompetitor2() != Coach.getNullCoach())) {
 
-                    double p1 = cm.getPointsByCoach((Coach) cm.getCompetitor1(), cm, true, true);
-                    double p2 = cm.getPointsByCoach((Coach) cm.getCompetitor2(), cm, true, true);
+                        double p1 = cm.getPointsByCoach((Coach) cm.getCompetitor1(), cm, true, true);
+                        double p2 = cm.getPointsByCoach((Coach) cm.getCompetitor2(), cm, true, true);
 
-                    double avg_value = 0.0;
-                    double avg_opp_value = 0.0;
-                    double count_value = 0.0;
-                    Coach c1 = (Coach) cm.getCompetitor1();
-                    Coach c2 = (Coach) cm.getCompetitor2();
+                        double avg_value = 0.0;
+                        double avg_opp_value = 0.0;
+                        double count_value = 0.0;
+                        Coach c1 = (Coach) cm.getCompetitor1();
+                        Coach c2 = (Coach) cm.getCompetitor2();
 
-                    if (c1 != null) {
-                        if (c1.getRoster() != null) {
-                            if (c1.getRoster().getName() != null) {
-                                avg_value = avg.get(c1.getRoster().getName());
-                                avg_opp_value = avg_opp.get(c1.getRoster().getName());
-                                count_value = count.get(c1.getRoster().getName());
+                        if (c1 != null) {
+                            if (c1.getRoster() != null) {
+                                if (c1.getRoster().getName() != null) {
+                                    avg_value = avg.get(c1.getRoster().getName());
+                                    avg_opp_value = avg_opp.get(c1.getRoster().getName());
+                                    count_value = count.get(c1.getRoster().getName());
+                                }
                             }
                         }
-                    }
 
-                    avg_value = (avg_value * count_value + p1) / (count_value + 1.0);
-                    avg_opp_value = (avg_opp_value * count_value + p2) / (count_value + 1.0);
-                    count_value += 1;
+                        avg_value = (avg_value * count_value + p1) / (count_value + 1.0);
+                        avg_opp_value = (avg_opp_value * count_value + p2) / (count_value + 1.0);
+                        count_value += 1;
 
-                    if (c1 != null) {
-                        if (c1.getRoster() != null) {
-                            avg.put(c1.getRoster().getName(), avg_value);
-                            avg_opp.put(c1.getRoster().getName(), avg_opp_value);
-                            count.put(c1.getRoster().getName(), count_value);
-                        }
-                    }
-
-                    if (c2 != null) {
-                        if (c2.getRoster() != null) {
-                            if (c2.getRoster().getName() != null) {
-                                avg_value = avg.get(c2.getRoster().getName());
-                                avg_opp_value = avg_opp.get(c2.getRoster().getName());
-                                count_value = count.get(c2.getRoster().getName());
+                        if (c1 != null) {
+                            if (c1.getRoster() != null) {
+                                avg.put(c1.getRoster().getName(), avg_value);
+                                avg_opp.put(c1.getRoster().getName(), avg_opp_value);
+                                count.put(c1.getRoster().getName(), count_value);
                             }
                         }
-                    }
 
-                    avg_value = (avg_value * count_value + p2) / (count_value + 1.0);
-                    avg_opp_value = (avg_opp_value * count_value + p1) / (count_value + 1.0);
-                    count_value += 1;
+                        if (c2 != null) {
+                            if (c2.getRoster() != null) {
+                                if (c2.getRoster().getName() != null) {
+                                    avg_value = avg.get(c2.getRoster().getName());
+                                    avg_opp_value = avg_opp.get(c2.getRoster().getName());
+                                    count_value = count.get(c2.getRoster().getName());
+                                }
+                            }
+                        }
 
-                    if (c2 != null) {
-                        if (c2.getRoster() != null) {
-                            avg.put(c2.getRoster().getName(), avg_value);
-                            avg_opp.put(c2.getRoster().getName(), avg_opp_value);
-                            count.put(c2.getRoster().getName(), count_value);
+                        avg_value = (avg_value * count_value + p2) / (count_value + 1.0);
+                        avg_opp_value = (avg_opp_value * count_value + p1) / (count_value + 1.0);
+                        count_value += 1;
+
+                        if (c2 != null) {
+                            if (c2.getRoster() != null) {
+                                avg.put(c2.getRoster().getName(), avg_value);
+                                avg_opp.put(c2.getRoster().getName(), avg_opp_value);
+                                count.put(c2.getRoster().getName(), count_value);
+                            }
                         }
                     }
                 }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-
         // Affichage du graphique
         final DefaultCategoryDataset datas = new DefaultCategoryDataset();
 
@@ -805,54 +830,57 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private void addPositions() {
         // creation et partage du panel
 
-        // creation de la list de checkbox
-        final ArrayList<Coach> coach = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            coach.add(Tournament.getTournament().getCoach(i));
-        }
-        DefaultListModel model = new DefaultListModel();
-        for (Coach coach1 : coach) {
-            model.addElement(coach1.getName());
-        }
-        JScrollPane jsp = new JScrollPane();
-        jlsPositions = new JList(model);
-        jlsPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        jsp.getViewport().add(jlsPositions);
-
-        jpnPositions.add(jsp, BorderLayout.WEST);
-
-        // creation des callbacks
-        jlsPositions.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                updatePositions();
+        try {
+            // creation de la list de checkbox
+            final ArrayList<Coach> coach = new ArrayList<>();
+            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                coach.add(Tournament.getTournament().getCoach(i));
             }
-        });
-
-        // creation des listes de données
-        int column_name = 2;
-        if (mTournament.getParams().isTeamTournament()) {
-            column_name = 3;
-        }
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            //Round r = mTournament.getRound(i);
-            MjtRankingIndiv ranking = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    coach, mTournament.getParams().isTeamTournament(),
-                    false,
-                    false);
-
-            ArrayList<String> coach_names = new ArrayList<>();
-            int count = ranking.getRowCount();
-            for (int j = 0; j < count; j++) {
-                coach_names.add((String) ranking.getValueAt(j, column_name));
+            DefaultListModel model = new DefaultListModel();
+            for (Coach coach1 : coach) {
+                model.addElement(coach1.getName());
             }
-            HashMap<String, Integer> hm = new HashMap<>();
-            for (Coach c : coach) {
-                hm.put(c.getName(), coach_names.indexOf(c.getName()));
-            }
-            mHpositions.add(hm);
-        }
+            JScrollPane jsp = new JScrollPane();
+            jlsPositions = new JList(model);
+            jlsPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            jsp.getViewport().add(jlsPositions);
 
+            jpnPositions.add(jsp, BorderLayout.WEST);
+
+            // creation des callbacks
+            jlsPositions.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    updatePositions();
+                }
+            });
+
+            // creation des listes de données
+            int column_name = 2;
+            if (mTournament.getParams().isTeamTournament()) {
+                column_name = 3;
+            }
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                //Round r = mTournament.getRound(i);
+                MjtRankingIndiv ranking = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                        coach, mTournament.getParams().isTeamTournament(),
+                        false,
+                        false);
+
+                ArrayList<String> coach_names = new ArrayList<>();
+                int count = ranking.getRowCount();
+                for (int j = 0; j < count; j++) {
+                    coach_names.add((String) ranking.getValueAt(j, column_name));
+                }
+                HashMap<String, Integer> hm = new HashMap<>();
+                for (Coach c : coach) {
+                    hm.put(c.getName(), coach_names.indexOf(c.getName()));
+                }
+                mHpositions.add(hm);
+            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         // update positions
         updatePositions();
 
@@ -866,59 +894,62 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private void addTeamPositions() {
         // creation et partage du panel
 
-        // creation de la list de checkbox
-        ArrayList<Team> team = new ArrayList<>();
-        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-            team.add(Tournament.getTournament().getTeam(cpt));
-        }
-
-        DefaultListModel model = new DefaultListModel();
-        for (Team team1 : team) {
-            model.addElement(team1.getName());
-        }
-        JScrollPane jsp = new JScrollPane();
-        jlsTeamPositions = new JList(model);
-        jlsTeamPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        jsp.getViewport().add(jlsTeamPositions);
-
-        jpnTeamPositions.add(jsp, BorderLayout.WEST);
-
-        // creation des callbacks
-        jlsTeamPositions.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                updateTeamPositions();
+        try {
+            // creation de la list de checkbox
+            ArrayList<Team> team = new ArrayList<>();
+            for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
+                team.add(Tournament.getTournament().getTeam(cpt));
             }
-        });
 
-        // creation des listes de données
-        int column_name = 1;
-        if (mTournament.getParams().isTeamTournament()) {
-            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-
-                ArrayList<Team> teams = new ArrayList<>();
-                for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                    teams.add(Tournament.getTournament().getTeam(cpt));
-                }
-                MjtRankingTeam ranking = new MjtRankingTeam(
-                        mTournament.getParams().isTeamVictoryOnly(),
-                        i,
-                        teams,
-                        false);
-
-                ArrayList<String> team_names = new ArrayList<>();
-                int count = ranking.getRowCount();
-                for (int j = 0; j < count; j++) {
-                    team_names.add((String) ranking.getValueAt(j, column_name));
-                }
-                HashMap<String, Integer> hm = new HashMap<>();
-                for (Team c : team) {
-                    hm.put(c.getName(), team_names.indexOf(c.getName()));
-                }
-                mHTeampositions.add(hm);
+            DefaultListModel model = new DefaultListModel();
+            for (Team team1 : team) {
+                model.addElement(team1.getName());
             }
-        }
+            JScrollPane jsp = new JScrollPane();
+            jlsTeamPositions = new JList(model);
+            jlsTeamPositions.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            jsp.getViewport().add(jlsTeamPositions);
 
+            jpnTeamPositions.add(jsp, BorderLayout.WEST);
+
+            // creation des callbacks
+            jlsTeamPositions.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    updateTeamPositions();
+                }
+            });
+
+            // creation des listes de données
+            int column_name = 1;
+            if (mTournament.getParams().isTeamTournament()) {
+                for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+
+                    ArrayList<Team> teams = new ArrayList<>();
+                    for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
+                        teams.add(Tournament.getTournament().getTeam(cpt));
+                    }
+                    MjtRankingTeam ranking = new MjtRankingTeam(
+                            mTournament.getParams().isTeamVictoryOnly(),
+                            i,
+                            teams,
+                            false);
+
+                    ArrayList<String> team_names = new ArrayList<>();
+                    int count = ranking.getRowCount();
+                    for (int j = 0; j < count; j++) {
+                        team_names.add((String) ranking.getValueAt(j, column_name));
+                    }
+                    HashMap<String, Integer> hm = new HashMap<>();
+                    for (Team c : team) {
+                        hm.put(c.getName(), team_names.indexOf(c.getName()));
+                    }
+                    mHTeampositions.add(hm);
+                }
+            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         // update positions
         updateTeamPositions();
 

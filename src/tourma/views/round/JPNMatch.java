@@ -6,6 +6,7 @@ package tourma.views.round;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import java.util.logging.Logger;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
@@ -24,106 +25,108 @@ public class JPNMatch extends javax.swing.JPanel {
 
     /**
      * Creates new form JPNMatch
+     *
      * @param m
      * @param winner
      */
     public JPNMatch(final Match m, final boolean winner) {
         initComponents();
+        try {
+            if (Tournament.getTournament().getParams().isUseColor()) {
+                jlbPlayer1.setBackground(m.getCompetitor1().getColor());
+                jlbPlayer2.setBackground(m.getCompetitor2().getColor());
 
-        if (Tournament.getTournament().getParams().isUseColor()) {
-            jlbPlayer1.setBackground(m.getCompetitor1().getColor());
-            jlbPlayer2.setBackground(m.getCompetitor2().getColor());
-
-            jPanel2.setBackground(m.getCompetitor1().getColor());
-            jPanel4.setBackground(m.getCompetitor2().getColor());
-        } else {
-            jlbPlayer1.setBackground(Color.WHITE);
-            jlbPlayer2.setBackground(Color.LIGHT_GRAY);
-
-            jPanel2.setBackground(Color.WHITE);
-            jPanel4.setBackground(Color.LIGHT_GRAY);
-        }
-
-        if (m instanceof CoachMatch) {
-
-            final Value v = ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0));
-            if ((v.getValue1() == -1) || (v.getValue2() == -1)) {
-                jlbScore1.setText("");
-                jlbScore2.setText("");
+                jPanel2.setBackground(m.getCompetitor1().getColor());
+                jPanel4.setBackground(m.getCompetitor2().getColor());
             } else {
+                jlbPlayer1.setBackground(Color.WHITE);
+                jlbPlayer2.setBackground(Color.LIGHT_GRAY);
 
-                if (m.getWinner() == m.getCompetitor1()) {
-                    jlbPlayer1.setFont(jlbPlayer1.getFont().deriveFont(Font.BOLD));
-                    jlbPlayer2.setFont(jlbPlayer2.getFont().deriveFont(Font.PLAIN));
-                }
-
-                if (m.getWinner() == m.getCompetitor2()) {
-                    jlbPlayer2.setFont(jlbPlayer1.getFont().deriveFont(Font.BOLD));
-                    jlbPlayer1.setFont(jlbPlayer2.getFont().deriveFont(Font.PLAIN));
-                }
-                jlbScore1.setText(Integer.toString(v.getValue1()));
-                jlbScore2.setText(Integer.toString(v.getValue2()));
-
+                jPanel2.setBackground(Color.WHITE);
+                jPanel4.setBackground(Color.LIGHT_GRAY);
             }
-        }
 
-        if (m instanceof TeamMatch) {
-            int nbVictories = ((TeamMatch) m).getVictories((Team) m.getCompetitor1());
-            int nbDraw = ((TeamMatch) m).getDraw((Team) m.getCompetitor1());
-            int nbLoss = ((TeamMatch) m).getVictories((Team) m.getCompetitor2());
+            if (m instanceof CoachMatch) {
 
-            if (nbVictories + nbLoss + nbDraw != Tournament.getTournament().getParams().getTeamMatesNumber()) {
-                jlbScore1.setText("");
-                jlbScore2.setText("");
-                jlbTag.setText("#");
+                final Value v = ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0));
+                if ((v.getValue1() == -1) || (v.getValue2() == -1)) {
+                    jlbScore1.setText("");
+                    jlbScore2.setText("");
+                } else {
+
+                    if (m.getWinner() == m.getCompetitor1()) {
+                        jlbPlayer1.setFont(jlbPlayer1.getFont().deriveFont(Font.BOLD));
+                        jlbPlayer2.setFont(jlbPlayer2.getFont().deriveFont(Font.PLAIN));
+                    }
+
+                    if (m.getWinner() == m.getCompetitor2()) {
+                        jlbPlayer2.setFont(jlbPlayer1.getFont().deriveFont(Font.BOLD));
+                        jlbPlayer1.setFont(jlbPlayer2.getFont().deriveFont(Font.PLAIN));
+                    }
+                    jlbScore1.setText(Integer.toString(v.getValue1()));
+                    jlbScore2.setText(Integer.toString(v.getValue2()));
+
+                }
+            }
+
+            if (m instanceof TeamMatch) {
+                int nbVictories = ((TeamMatch) m).getVictories((Team) m.getCompetitor1());
+                int nbDraw = ((TeamMatch) m).getDraw((Team) m.getCompetitor1());
+                int nbLoss = ((TeamMatch) m).getVictories((Team) m.getCompetitor2());
+
+                if (nbVictories + nbLoss + nbDraw != Tournament.getTournament().getParams().getTeamMatesNumber()) {
+                    jlbScore1.setText("");
+                    jlbScore2.setText("");
+                    jlbTag.setText("#");
+                } else {
+                    jlbTag.setText("");
+                    if (m.getWinner() == m.getCompetitor1()) {
+                        Font f = jlbPlayer1.getFont();
+                        Font fb = f.deriveFont(Font.ITALIC | Font.BOLD);
+                        jlbPlayer1.setFont(fb);
+                        jlbPlayer2.setFont(f);
+                        jlbPlayer2.setForeground(Color.DARK_GRAY);
+                        jlbScore1.setFont(fb);
+                        jlbScore2.setFont(f);
+                        jlbScore2.setForeground(Color.DARK_GRAY);
+                    }
+
+                    if (m.getWinner() == m.getCompetitor2()) {
+                        Font f = jlbPlayer2.getFont();
+                        Font fb = f.deriveFont(Font.ITALIC | Font.BOLD);
+                        jlbPlayer2.setFont(fb);
+                        jlbPlayer1.setFont(f);
+                        jlbPlayer1.setForeground(Color.DARK_GRAY);
+                        jlbScore2.setFont(fb);
+                        jlbScore1.setFont(f);
+                        jlbScore1.setForeground(Color.DARK_GRAY);
+                    }
+
+                    jlbScore1.setText(Integer.toString(nbVictories));
+                    jlbScore2.setText(Integer.toString(nbLoss));
+
+                }
+            }
+
+            if ((m.getCompetitor1() != Coach.getNullCoach()) && (m.getCompetitor1() != Team.getNullTeam())) {
+                jlbPlayer1.setText(m.getCompetitor1().getName());
             } else {
-                jlbTag.setText("");
-                if (m.getWinner() == m.getCompetitor1()) {
-                    Font f = jlbPlayer1.getFont();
-                    Font fb = f.deriveFont(Font.ITALIC | Font.BOLD);
-                    jlbPlayer1.setFont(fb);
-                    jlbPlayer2.setFont(f);
-                    jlbPlayer2.setForeground(Color.DARK_GRAY);
-                    jlbScore1.setFont(fb);
-                    jlbScore2.setFont(f);
-                    jlbScore2.setForeground(Color.DARK_GRAY);
-                }
-
-                if (m.getWinner() == m.getCompetitor2()) {
-                    Font f = jlbPlayer2.getFont();
-                    Font fb = f.deriveFont(Font.ITALIC | Font.BOLD);
-                    jlbPlayer2.setFont(fb);
-                    jlbPlayer1.setFont(f);
-                    jlbPlayer1.setForeground(Color.DARK_GRAY);
-                    jlbScore2.setFont(fb);
-                    jlbScore1.setFont(f);
-                    jlbScore1.setForeground(Color.DARK_GRAY);
-                }
-
-                jlbScore1.setText(Integer.toString(nbVictories));
-                jlbScore2.setText(Integer.toString(nbLoss));
-
+                jlbPlayer1.setText(StringConstants.CS_NULL);
             }
-        }
+            if ((m.getCompetitor2() != Coach.getNullCoach()) && (m.getCompetitor2() != Team.getNullTeam())) {
+                jlbPlayer2.setText(m.getCompetitor2().getName());
+            } else {
+                jlbPlayer2.setText(StringConstants.CS_NULL);
+            }
 
-        if ((m.getCompetitor1() != Coach.getNullCoach()) && (m.getCompetitor1() != Team.getNullTeam())) {
-            jlbPlayer1.setText(m.getCompetitor1().getName());
-        } else {
-            jlbPlayer1.setText(StringConstants.CS_NULL);
+            if (!winner) {
+                jPanel1.setBackground(Color.LIGHT_GRAY);
+                this.setBackground(Color.LIGHT_GRAY);
+            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-        if ((m.getCompetitor2() != Coach.getNullCoach()) && (m.getCompetitor2() != Team.getNullTeam())) {
-            jlbPlayer2.setText(m.getCompetitor2().getName());
-        } else {
-            jlbPlayer2.setText(StringConstants.CS_NULL);
-        }
-
-        if (!winner) {
-            jPanel1.setBackground(Color.LIGHT_GRAY);
-            this.setBackground(Color.LIGHT_GRAY);
-        }
-
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -244,7 +247,7 @@ public class JPNMatch extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNMatch.class.getName());
 
-/* private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+    /* private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

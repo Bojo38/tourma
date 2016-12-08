@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * jdgRoundReport.java
  *
  * Created on 28 juin 2010, 10:52:47
@@ -27,6 +27,7 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,10 +68,11 @@ public final class JdgRanking extends javax.swing.JDialog {
     private String mTitle;
     private MjtRanking mRanking;
 
-    private final static String CS_Round="Round";
-    
+    private final static String CS_Round = "Round";
+
     /**
      * Creates new form jdgRoundReport
+     *
      * @param parent
      * @param type
      * @param modal
@@ -92,9 +94,13 @@ public final class JdgRanking extends javax.swing.JDialog {
         mTour = tour;
         //_rankType = RankType;
         mType = type;
-        this.setTitle(
-                tour.getParams().getTournamentName()
-                + " - " + Translate.translate(CS_Round) + " " + roundNumber);
+        try {
+            this.setTitle(
+                    tour.getParams().getTournamentName()
+                    + " - " + Translate.translate(CS_Round) + " " + roundNumber);
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         try {
             jepHTML.setContentType("html");
             mFilename = createReport();
@@ -189,7 +195,7 @@ public final class JdgRanking extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
-                final JFileChooser jfc = new JFileChooser();
+        final JFileChooser jfc = new JFileChooser();
         final FileFilter filter1 = new ExtensionFileFilter("HTML", new String[]{"HTML", "html"});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -208,13 +214,13 @@ public final class JdgRanking extends javax.swing.JDialog {
             OutputStreamWriter out = null;
             InputStreamReader in = null;
             try {
-                in = new InputStreamReader(new FileInputStream(mFilename),Charset.defaultCharset());
+                in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
                 {
-                    out = new OutputStreamWriter(new FileOutputStream(export),Charset.defaultCharset());
-                    int c= in.read();
-                    while (c  != -1) {
+                    out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
+                    int c = in.read();
+                    while (c != -1) {
                         out.write(c);
-                        c= in.read();
+                        c = in.read();
                     }
                 }
             } catch (FileNotFoundException fnf) {
@@ -226,7 +232,7 @@ public final class JdgRanking extends javax.swing.JDialog {
                     try {
                         in.close();
                     } catch (IOException e) {
-                        LOG.log(Level.INFO,e.getLocalizedMessage());
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
                     }
                 }
 
@@ -234,7 +240,7 @@ public final class JdgRanking extends javax.swing.JDialog {
                     try {
                         out.close();
                     } catch (IOException e) {
-                        LOG.log(Level.INFO,e.getLocalizedMessage());
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
                     }
                 }
             }
@@ -266,16 +272,16 @@ public final class JdgRanking extends javax.swing.JDialog {
                 in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
                 {
                     //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
-                    StringBuilder sb=new StringBuilder();
+                    StringBuilder sb = new StringBuilder();
                     int c = in.read();
                     while (c != -1) {
-                        sb.append((char)c);
+                        sb.append((char) c);
                         c = in.read();
                     }
 
-                    String s=sb.toString();
+                    String s = sb.toString();
 
-                    s=s.substring(s.indexOf("<html>"));
+                    s = s.substring(s.indexOf("<html>"));
 
                     HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Ranking Report");
                 }
@@ -319,7 +325,7 @@ public final class JdgRanking extends javax.swing.JDialog {
     private File createReport() {
         File address = null;
 
-        Writer out=null;
+        Writer out = null;
         try {
 
             final Configuration cfg = new Configuration();
@@ -334,8 +340,8 @@ public final class JdgRanking extends javax.swing.JDialog {
 
             final Map root = new HashMap();
             root.put(ReportKeys.CS_Nom,
-                    StringEscapeUtils.escapeHtml4(mTour.getParams().getTournamentName() + " - " + 
-                            Translate.translate(CS_Round) + " " + mRoundNumber));
+                    StringEscapeUtils.escapeHtml4(mTour.getParams().getTournamentName() + " - "
+                            + Translate.translate(CS_Round) + " " + mRoundNumber));
             root.put(ReportKeys.CS_Title, mTitle);
 
             final ArrayList titles = new ArrayList();
@@ -349,13 +355,10 @@ public final class JdgRanking extends javax.swing.JDialog {
                 final HashMap line = new HashMap();
                 final ArrayList cols = new ArrayList();
                 for (int j = 0; j < mRanking.getColumnCount(); j++) {
-                    Object obj=mRanking.getValueAt(i, j);
-                    if (obj instanceof String)
-                    {
-                        cols.add(StringEscapeUtils.escapeHtml4((String)obj));
-                    }
-                    else
-                    {
+                    Object obj = mRanking.getValueAt(i, j);
+                    if (obj instanceof String) {
+                        cols.add(StringEscapeUtils.escapeHtml4((String) obj));
+                    } else {
                         cols.add(obj);
                     }
                 }
@@ -371,7 +374,7 @@ public final class JdgRanking extends javax.swing.JDialog {
                     StringConstants.CS_RESULT + " "
                     + format.format(new Date()), ".tmp");
             address.deleteOnExit();
-            out = new OutputStreamWriter(new FileOutputStream(address),Charset.defaultCharset());
+            out = new OutputStreamWriter(new FileOutputStream(address), Charset.defaultCharset());
             temp.process(root, out);
             out.flush();
 
@@ -390,5 +393,5 @@ public final class JdgRanking extends javax.swing.JDialog {
         return address;
     }
     private static final Logger LOG = Logger.getLogger(JdgRanking.class.getName());
-    
+
 }

@@ -4,6 +4,7 @@
  */
 package tourma.views.parameters;
 
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -19,13 +20,18 @@ import tourma.languages.Translate;
  */
 public final class JPNParamTeam extends javax.swing.JPanel {
 
-    private final ITournament mTournament;
+    private ITournament mTournament;
 
     /**
      * Creates new form JPNParamTeam
      */
     public JPNParamTeam() {
-        mTournament = Tournament.getTournament();
+        mTournament = null;
+        try {
+            mTournament = Tournament.getTournament();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         initComponents();
     }
 
@@ -286,13 +292,23 @@ public final class JPNParamTeam extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jrbTeamVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTeamVictoryActionPerformed
-        mTournament.getParams().setTeamVictoryOnly(jrbTeamVictory.isSelected());
-        update();
+        try {
+            mTournament.getParams().setTeamVictoryOnly(jrbTeamVictory.isSelected());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jrbTeamVictoryActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jrbCoachPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCoachPointsActionPerformed
-        mTournament.getParams().setTeamVictoryOnly(!jrbCoachPoints.isSelected());
-        update();
+        try {
+            mTournament.getParams().setTeamVictoryOnly(!jrbCoachPoints.isSelected());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jrbCoachPointsActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffVictoryTeamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffVictoryTeamFocusLost
@@ -300,8 +316,11 @@ public final class JPNParamTeam extends javax.swing.JPanel {
             jtffVictoryTeam.commitEdit();
             final int points = ((Number) jtffVictoryTeam.getValue()).intValue();
             mTournament.getParams().setPointsTeamVictory(points);
+            mTournament.recomputeAll();
         } catch (ParseException e) {
             jtffVictoryTeam.setValue(jtffVictoryTeam.getValue());
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         update();
     }//GEN-LAST:event_jtffVictoryTeamFocusLost
@@ -311,8 +330,11 @@ public final class JPNParamTeam extends javax.swing.JPanel {
             jtffDrawTeam.commitEdit();
             final int points = ((Number) jtffDrawTeam.getValue()).intValue();
             mTournament.getParams().setPointsTeamDraw(points);
+            mTournament.recomputeAll();
         } catch (ParseException e) {
             jtffDrawTeam.setValue(jtffDrawTeam.getValue());
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         update();
     }//GEN-LAST:event_jtffDrawTeamFocusLost
@@ -322,35 +344,64 @@ public final class JPNParamTeam extends javax.swing.JPanel {
             jtffLostTeam.commitEdit();
             final int points = ((Number) jtffLostTeam.getValue()).intValue();
             mTournament.getParams().setPointsTeamLost(points);
+            mTournament.recomputeAll();
         } catch (ParseException e) {
             jtffLostTeam.setValue(jtffLostTeam.getValue());
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         update();
     }//GEN-LAST:event_jtffLostTeamFocusLost
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank1TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1TeamActionPerformed
-        mTournament.getParams().setRankingTeam1(jcbRank1Team.getSelectedIndex());
-        update();
+        try {
+            mTournament.getParams().setRankingTeam1(jcbRank1Team.getSelectedIndex());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jcbRank1TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank2TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2TeamActionPerformed
-        mTournament.getParams().setRankingTeam2(jcbRank2Team.getSelectedIndex());
-        update();
+        try {
+            mTournament.getParams().setRankingTeam2(jcbRank2Team.getSelectedIndex());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jcbRank2TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank3TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3TeamActionPerformed
-        mTournament.getParams().setRankingTeam3(jcbRank3Team.getSelectedIndex());
-        update();
+        try {
+            mTournament.getParams().setRankingTeam3(jcbRank3Team.getSelectedIndex());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jcbRank3TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank4TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4TeamActionPerformed
-        mTournament.getParams().setRankingTeam4(jcbRank4Team.getSelectedIndex());
-        update();
+        try {
+            mTournament.getParams().setRankingTeam4(jcbRank4Team.getSelectedIndex());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jcbRank4TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank5TeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5TeamActionPerformed
-        mTournament.getParams().setRankingTeam5(jcbRank5Team.getSelectedIndex());
-        update();
+        try {
+            mTournament.getParams().setRankingTeam5(jcbRank5Team.getSelectedIndex());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
+
     }//GEN-LAST:event_jcbRank5TeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtffTeamVictoryBonusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffTeamVictoryBonusFocusLost
@@ -358,8 +409,11 @@ public final class JPNParamTeam extends javax.swing.JPanel {
             jtffTeamVictoryBonus.commitEdit();
             final int points = ((Number) jtffTeamVictoryBonus.getValue()).intValue();
             mTournament.getParams().setPointsTeamVictoryBonus(points);
+            mTournament.recomputeAll();
         } catch (ParseException e) {
             jtffTeamVictoryBonus.setValue(jtffTeamVictoryBonus.getValue());
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         update();
     }//GEN-LAST:event_jtffTeamVictoryBonusFocusLost
@@ -369,45 +423,76 @@ public final class JPNParamTeam extends javax.swing.JPanel {
             jtffTeamDrawBonus.commitEdit();
             final int points = ((Number) jtffTeamDrawBonus.getValue()).intValue();
             mTournament.getParams().setPointsTeamDrawBonus(points);
+            mTournament.recomputeAll();
         } catch (ParseException e) {
             jtffTeamDrawBonus.setValue(jtffTeamDrawBonus.getValue());
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         update();
     }//GEN-LAST:event_jtffTeamDrawBonusFocusLost
 
     private void jcxTeamBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxTeamBalanceActionPerformed
 
-        if ((mTournament.getParams().isTeamTournament()) && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
-            mTournament.getParams().setIndivPairingTeamBalanced(jcxTeamBalance.isSelected());
+        try {
+            if ((mTournament.getParams().isTeamTournament()) && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+                mTournament.getParams().setIndivPairingTeamBalanced(jcxTeamBalance.isSelected());
+            }
+            update();
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-        update();
     }//GEN-LAST:event_jcxTeamBalanceActionPerformed
 
     private void jcxIndividualBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxIndividualBalanceActionPerformed
-        if ((mTournament.getParams().isTeamTournament()) && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
-            mTournament.getParams().setIndivPairingIndivBalanced(jcxIndividualBalance.isSelected());
+        try {
+            if ((mTournament.getParams().isTeamTournament()) && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+                mTournament.getParams().setIndivPairingIndivBalanced(jcxIndividualBalance.isSelected());
+            }
+            update();
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-        update();
     }//GEN-LAST:event_jcxIndividualBalanceActionPerformed
 
     private void jcxBestResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxBestResultActionPerformed
-        mTournament.getParams().setUseBestResultTeam(jcxBestResult.isSelected());
-        update();
+        try {
+            mTournament.getParams().setUseBestResultTeam(jcxBestResult.isSelected());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jcxBestResultActionPerformed
 
     private void jspBestResultsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspBestResultsStateChanged
-        mTournament.getParams().setBestResultTeam((Integer) jspBestResults.getValue());
-        update();
+        try {
+            mTournament.getParams().setBestResultTeam((Integer) jspBestResults.getValue());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jspBestResultsStateChanged
 
     private void jcxExceptBestAndWorstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxExceptBestAndWorstActionPerformed
-        mTournament.getParams().setExceptBestAndWorstTeam(jcxExceptBestAndWorst.isSelected());
-        update();
+        try {
+            mTournament.getParams().setExceptBestAndWorstTeam(jcxExceptBestAndWorst.isSelected());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jcxExceptBestAndWorstActionPerformed
 
     private void jcxForAnnexRankingTooActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxForAnnexRankingTooActionPerformed
-        mTournament.getParams().setApplyToAnnexTeam(jcxForAnnexRankingToo.isSelected());
-        update();
+        try {
+            mTournament.getParams().setApplyToAnnexTeam(jcxForAnnexRankingToo.isSelected());
+            update();
+            mTournament.recomputeAll();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
     }//GEN-LAST:event_jcxForAnnexRankingTooActionPerformed
 
     private final static String CS_None = "None";
@@ -430,136 +515,140 @@ public final class JPNParamTeam extends javax.swing.JPanel {
      */
     public void update() {
 
-        final boolean teamMatches = mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING);
-        final boolean IndivMatches = mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING);
+        try {
+            final boolean teamMatches = mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING);
+            final boolean IndivMatches = mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING);
 
-        jtffDrawTeam.setValue(mTournament.getParams().getPointsTeamDraw());
-        jtffLostTeam.setValue(mTournament.getParams().getPointsTeamLost());
+            jtffDrawTeam.setValue(mTournament.getParams().getPointsTeamDraw());
+            jtffLostTeam.setValue(mTournament.getParams().getPointsTeamLost());
 
-        jtffVictoryTeam.setValue(mTournament.getParams().getPointsTeamVictory());
+            jtffVictoryTeam.setValue(mTournament.getParams().getPointsTeamVictory());
 
-        jrbCoachPoints.setEnabled(teamMatches);
-        jrbTeamVictory.setEnabled(teamMatches);
+            jrbCoachPoints.setEnabled(teamMatches);
+            jrbTeamVictory.setEnabled(teamMatches);
 
-        jtffTeamVictoryBonus.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
+            jtffTeamVictoryBonus.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
 
-        jtffTeamDrawBonus.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
-        jlbVictoryPoints.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
-        jlbVictoryPoints1.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
+            jtffTeamDrawBonus.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
+            jlbVictoryPoints.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
+            jlbVictoryPoints1.setEnabled(teamMatches && (!mTournament.getParams().isTeamVictoryOnly()));
 
-        jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jtffLostTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jtffLostTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
 
-        jtffVictoryTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jtffVictoryTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jtffDrawTeam.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
 
-        jcxIndividualBalance.setEnabled(IndivMatches);
-        jcxTeamBalance.setEnabled(IndivMatches);
+            jcxIndividualBalance.setEnabled(IndivMatches);
+            jcxTeamBalance.setEnabled(IndivMatches);
 
-        jspBestResults.setEnabled(mTournament.getParams().isUseBestResultTeam());
-        jspBestResults.setValue(mTournament.getParams().getBestResultTeam());
+            jspBestResults.setEnabled(mTournament.getParams().isUseBestResultTeam());
+            jspBestResults.setValue(mTournament.getParams().getBestResultTeam());
 
-        jcxBestResult.setSelected(mTournament.getParams().isUseBestResultTeam());
-        jcxExceptBestAndWorst.setEnabled(!mTournament.getParams().isUseBestResultTeam());
+            jcxBestResult.setSelected(mTournament.getParams().isUseBestResultTeam());
+            jcxExceptBestAndWorst.setEnabled(!mTournament.getParams().isUseBestResultTeam());
 
-        jcxExceptBestAndWorst.setSelected(mTournament.getParams().isExceptBestAndWorstTeam());
-        jcxForAnnexRankingToo.setSelected(mTournament.getParams().isApplyToAnnexTeam());
+            jcxExceptBestAndWorst.setSelected(mTournament.getParams().isExceptBestAndWorstTeam());
+            jcxForAnnexRankingToo.setSelected(mTournament.getParams().isApplyToAnnexTeam());
 
-        jLabel23.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jLabel24.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jLabel25.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jLabel26.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jLabel27.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jLabel28.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jLabel29.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jLabel30.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jLabel23.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jLabel24.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jLabel25.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jLabel26.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jLabel27.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jLabel28.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jLabel29.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jLabel30.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
 
-        jrbCoachPoints.setSelected(!mTournament.getParams().isTeamVictoryOnly());
-        jrbTeamVictory.setSelected(mTournament.getParams().isTeamVictoryOnly());
-        jtffTeamVictoryBonus.setValue(mTournament.getParams().getPointsTeamVictoryBonus());
-        jtffTeamDrawBonus.setValue(mTournament.getParams().getPointsTeamDrawBonus());
+            jrbCoachPoints.setSelected(!mTournament.getParams().isTeamVictoryOnly());
+            jrbTeamVictory.setSelected(mTournament.getParams().isTeamVictoryOnly());
+            jtffTeamVictoryBonus.setValue(mTournament.getParams().getPointsTeamVictoryBonus());
+            jtffTeamDrawBonus.setValue(mTournament.getParams().getPointsTeamDrawBonus());
 
-        final ArrayList<String> rankChoices = new ArrayList<>();
-        rankChoices.add(Translate.translate(CS_None));
-        rankChoices.add(Translate.translate(CS_Points));
-        rankChoices.add(Translate.translate(CS_OpponentPoints));
-        rankChoices.add(Translate.translate(CS_ACCR_VictoryDrawLost));
-        rankChoices.add(Translate.translate(CS_ELO));
-        rankChoices.add(Translate.translate(CS_OpponentsElo));
-        rankChoices.add(Translate.translate(CS_MatchCount));
-        rankChoices.add(Translate.translate(CS_OpponentsPointsExceptOwnMatch));
-        rankChoices.add(Translate.translate(CS_TablesPoints));
-        rankChoices.add(Translate.translate(CS_PointsWithoutBonus));
-        rankChoices.add(Translate.translate(CS_BonusPoints));
-        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            final Criteria criteria = Tournament.getTournament().getParams().getCriteria(i);
-            rankChoices.add(criteria.getName() + " "+Translate.translate(CS_Player));
-            rankChoices.add(criteria.getName() + " "+Translate.translate(CS_Opponent));
-            rankChoices.add(criteria.getName() + " "+Translate.translate(CS_Difference));
+            final ArrayList<String> rankChoices = new ArrayList<>();
+            rankChoices.add(Translate.translate(CS_None));
+            rankChoices.add(Translate.translate(CS_Points));
+            rankChoices.add(Translate.translate(CS_OpponentPoints));
+            rankChoices.add(Translate.translate(CS_ACCR_VictoryDrawLost));
+            rankChoices.add(Translate.translate(CS_ELO));
+            rankChoices.add(Translate.translate(CS_OpponentsElo));
+            rankChoices.add(Translate.translate(CS_MatchCount));
+            rankChoices.add(Translate.translate(CS_OpponentsPointsExceptOwnMatch));
+            rankChoices.add(Translate.translate(CS_TablesPoints));
+            rankChoices.add(Translate.translate(CS_PointsWithoutBonus));
+            rankChoices.add(Translate.translate(CS_BonusPoints));
+            for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                final Criteria criteria = Tournament.getTournament().getParams().getCriteria(i);
+                rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Player));
+                rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Opponent));
+                rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Difference));
+            }
+
+            jcxIndividualBalance.setSelected(mTournament.getParams().isIndivPairingIndivBalanced());
+            jcxTeamBalance.setSelected(mTournament.getParams().isIndivPairingTeamBalanced());
+
+            jcbRank1Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+            jcbRank2Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+            jcbRank3Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+            jcbRank4Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+            jcbRank5Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
+
+            jcbRank1Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jcbRank2Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jcbRank3Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jcbRank4Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+            jcbRank5Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+
+            jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
+            jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
+            jcbRank3Team.removeActionListener(jcbRank3Team.getActionListeners()[0]);
+            jcbRank4Team.removeActionListener(jcbRank4Team.getActionListeners()[0]);
+            jcbRank5Team.removeActionListener(jcbRank5Team.getActionListeners()[0]);
+
+            jcbRank1Team.setSelectedIndex(mTournament.getParams().getRankingTeam1());
+            jcbRank2Team.setSelectedIndex(mTournament.getParams().gemRankingTeam2());
+            jcbRank3Team.setSelectedIndex(mTournament.getParams().getRankingTeam3());
+            jcbRank4Team.setSelectedIndex(mTournament.getParams().getRankingTeam4());
+            jcbRank5Team.setSelectedIndex(mTournament.getParams().getRankingTeam5());
+
+            jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(final java.awt.event.ActionEvent evt) {
+                    jcbRank1TeamActionPerformed(evt);
+                }
+            });
+
+            jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(final java.awt.event.ActionEvent evt) {
+                    jcbRank2TeamActionPerformed(evt);
+                }
+            });
+
+            jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(final java.awt.event.ActionEvent evt) {
+                    jcbRank3TeamActionPerformed(evt);
+                }
+            });
+
+            jcbRank4Team.addActionListener(
+                    new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(final java.awt.event.ActionEvent evt) {
+                    jcbRank4TeamActionPerformed(evt);
+                }
+            });
+
+            jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(final java.awt.event.ActionEvent evt) {
+                    jcbRank5TeamActionPerformed(evt);
+                }
+            });
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-
-        jcxIndividualBalance.setSelected(mTournament.getParams().isIndivPairingIndivBalanced());
-        jcxTeamBalance.setSelected(mTournament.getParams().isIndivPairingTeamBalanced());
-
-        jcbRank1Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
-        jcbRank2Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
-        jcbRank3Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
-        jcbRank4Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
-        jcbRank5Team.setModel(new DefaultComboBoxModel(rankChoices.toArray()));
-
-        jcbRank1Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jcbRank2Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jcbRank3Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jcbRank4Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-        jcbRank5Team.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
-
-        jcbRank1Team.removeActionListener(jcbRank1Team.getActionListeners()[0]);
-        jcbRank2Team.removeActionListener(jcbRank2Team.getActionListeners()[0]);
-        jcbRank3Team.removeActionListener(jcbRank3Team.getActionListeners()[0]);
-        jcbRank4Team.removeActionListener(jcbRank4Team.getActionListeners()[0]);
-        jcbRank5Team.removeActionListener(jcbRank5Team.getActionListeners()[0]);
-
-        jcbRank1Team.setSelectedIndex(mTournament.getParams().getRankingTeam1());
-        jcbRank2Team.setSelectedIndex(mTournament.getParams().gemRankingTeam2());
-        jcbRank3Team.setSelectedIndex(mTournament.getParams().getRankingTeam3());
-        jcbRank4Team.setSelectedIndex(mTournament.getParams().getRankingTeam4());
-        jcbRank5Team.setSelectedIndex(mTournament.getParams().getRankingTeam5());
-
-        jcbRank1Team.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                jcbRank1TeamActionPerformed(evt);
-            }
-        });
-
-        jcbRank2Team.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                jcbRank2TeamActionPerformed(evt);
-            }
-        });
-
-        jcbRank3Team.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                jcbRank3TeamActionPerformed(evt);
-            }
-        });
-
-        jcbRank4Team.addActionListener(
-                new java.awt.event.ActionListener() {
-                    @Override
-                    public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                        jcbRank4TeamActionPerformed(evt);
-                    }
-                });
-
-        jcbRank5Team.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                jcbRank5TeamActionPerformed(evt);
-            }
-        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel23;

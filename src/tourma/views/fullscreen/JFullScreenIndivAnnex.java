@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -68,7 +69,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
     }
 
     @Override
-    protected void clientLoop(int screen ) throws InterruptedException {
+    protected void clientLoop(int screen) throws InterruptedException {
         semStart.acquire();
 
         try {
@@ -120,7 +121,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                                 r = new Ranking(el);
                                 rs.add(r);
                             }
-                            buildPanel(rs,screen);
+                            buildPanel(rs, screen);
 
                             semAnimate.release();
                             GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
@@ -193,31 +194,23 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
         initComponents();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
-        int screen=0;
-        if (gs.length>1)
-        {
-            Integer options[]=new Integer[gs.length];
-            for (int i=0; i<gs.length; i++)
-            {
-                options[i]=i;
+        int screen = 0;
+        if (gs.length > 1) {
+            Integer options[] = new Integer[gs.length];
+            for (int i = 0; i < gs.length; i++) {
+                options[i] = i;
             }
-            Object val=JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
-            if (val instanceof Integer)
-            {
-                screen=((Integer)val).intValue();
+            Object val = JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (val instanceof Integer) {
+                screen = ((Integer) val).intValue();
             }
         }
-        if( screen > -1 && screen < gs.length )
-        {
-            gs[screen].setFullScreenWindow( this );            
-        }
-        else if( gs.length > 0 )
-        {
-            gs[0].setFullScreenWindow( this );
-        }
-        else
-        {
-            throw new RuntimeException( "No Screens Found" );
+        if (screen > -1 && screen < gs.length) {
+            gs[screen].setFullScreenWindow(this);
+        } else if (gs.length > 0) {
+            gs[0].setFullScreenWindow(this);
+        } else {
+            throw new RuntimeException("No Screens Found");
         }
         this.indivRankType = type;
         try {
@@ -274,7 +267,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                     }
                 }
             }
-            buildPanel(rs,screen);
+            buildPanel(rs, screen);
 
         } catch (FontFormatException ex) {
             Logger.getLogger(JFullScreenIndivRank.class
@@ -283,13 +276,13 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
 
         this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
     }
-    
-    private final static String CS_Pool="Pool";
-    private final static String CS_Team="Team";
-    private final static String CS_Clan="Clan";
-    private final static String CS_Coach="Coach";
 
-    private void buildPanel(ArrayList<IRanked> rankeds,int screen) throws FontFormatException {
+    private final static String CS_Pool = "Pool";
+    private final static String CS_Team = "Team";
+    private final static String CS_Clan = "Clan";
+    private final static String CS_Coach = "Coach";
+
+    private void buildPanel(ArrayList<IRanked> rankeds, int screen) throws FontFormatException {
 
         JPanel jpn = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
@@ -319,376 +312,382 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
         int line = 0;
 
         for (int i = 0; i < rankeds.size() / 3; i++) {
-            IRanked ranked0 = rankeds.get(3 * i);
-            IRanked ranked1 = rankeds.get(3 * i + 1);
-            IRanked ranked2 = rankeds.get(3 * i + 2);
+            try {
+                IRanked ranked0 = rankeds.get(3 * i);
+                IRanked ranked1 = rankeds.get(3 * i + 1);
+                IRanked ranked2 = rankeds.get(3 * i + 2);
 
-            Criteria crit;
-            if (ranked0 instanceof MjtAnnexRank) {
-                crit = ((MjtAnnexRank) ranked0).getCriteria();
-            } else {
-                if (ranked0 instanceof Ranking) {
-                    crit = ((Ranking) ranked0).getCriteria();
+                Criteria crit;
+                if (ranked0 instanceof MjtAnnexRank) {
+                    crit = ((MjtAnnexRank) ranked0).getCriteria();
                 } else {
-                    crit = new Criteria("???");
-                }
-            }
-
-            int column = 0;
-            // Title
-
-            JLabel titleNumber = new JLabel("#");
-            titleNumber.setHorizontalAlignment(JLabel.CENTER);
-            titleNumber.setBackground(Color.BLACK);
-            titleNumber.setForeground(Color.WHITE);
-            titleNumber.setOpaque(true);
-            jpn.add(titleNumber, getGridbBagConstraints(column, line, 1, 1));
-            column++;
-
-            if (indivRankType == C_POOL) {
-                JLabel titlePool = new JLabel(Translate.translate(CS_Pool));
-                titlePool.setHorizontalAlignment(JLabel.CENTER);
-                titlePool.setBackground(Color.BLACK);
-                titlePool.setForeground(Color.WHITE);
-                titlePool.setOpaque(true);
-                jpn.add(titlePool, getGridbBagConstraints(column, line, 1, 1));
-                column++;
-            }
-
-            if (Tournament.getTournament().getParams().isTeamTournament()) {
-                JLabel titleTeam = new JLabel(Translate.translate(CS_Team));
-                titleTeam.setHorizontalAlignment(JLabel.CENTER);
-                titleTeam.setBackground(Color.BLACK);
-                titleTeam.setForeground(Color.WHITE);
-                titleTeam.setOpaque(true);
-                jpn.add(titleTeam, getGridbBagConstraints(column, line, 1, 5));
-                column += 5;
-            }
-
-            if (Tournament.getTournament().getClansCount() > 1) {
-                JLabel titleTeam = new JLabel(Translate.translate(CS_Clan));
-                titleTeam.setHorizontalAlignment(JLabel.CENTER);
-                titleTeam.setBackground(Color.BLACK);
-                titleTeam.setForeground(Color.WHITE);
-                titleTeam.setOpaque(true);
-                jpn.add(titleTeam, getGridbBagConstraints(column, line, 1, 5));
-                column += 5;
-            }
-
-            JLabel titleCoach = new JLabel(Translate.translate(CS_Clan));
-            titleCoach.setHorizontalAlignment(JLabel.CENTER);
-            titleCoach.setBackground(Color.BLACK);
-            titleCoach.setForeground(Color.WHITE);
-            titleCoach.setOpaque(true);
-            jpn.add(titleCoach, getGridbBagConstraints(column, line, 1, 5));
-            column += 5;
-
-            JLabel titleValue = new JLabel("+ " + crit.getName());
-            titleValue.setHorizontalAlignment(JLabel.CENTER);
-            titleValue.setBackground(Color.BLACK);
-            titleValue.setForeground(Color.WHITE);
-            titleValue.setOpaque(true);
-            jpn.add(titleValue, getGridbBagConstraints(column, line, 1, 5));
-            column += 5;
-
-            JLabel emptyT = new JLabel("");
-            emptyT.setBackground(Color.WHITE);
-            emptyT.setOpaque(true);
-            jpn.add(emptyT, getGridbBagConstraints(column, line, 1, 1));
-            column++;
-
-            JLabel titleNumber2 = new JLabel("#");
-            titleNumber2.setHorizontalAlignment(JLabel.CENTER);
-            titleNumber2.setBackground(Color.BLACK);
-            titleNumber2.setForeground(Color.WHITE);
-            titleNumber2.setOpaque(true);
-            jpn.add(titleNumber2, getGridbBagConstraints(column, line, 1, 1));
-            column++;
-
-            if (indivRankType == C_POOL) {
-                JLabel titlePool = new JLabel(Translate.translate(CS_Pool));
-                titlePool.setHorizontalAlignment(JLabel.CENTER);
-                titlePool.setBackground(Color.BLACK);
-                titlePool.setForeground(Color.WHITE);
-                titlePool.setOpaque(true);
-                jpn.add(titlePool, getGridbBagConstraints(column, line, 1, 1));
-                column++;
-            }
-
-            if (Tournament.getTournament().getParams().isTeamTournament()) {
-                JLabel titleTeam2 = new JLabel(Translate.translate(CS_Team));
-                titleTeam2.setHorizontalAlignment(JLabel.CENTER);
-                titleTeam2.setBackground(Color.BLACK);
-                titleTeam2.setForeground(Color.WHITE);
-                titleTeam2.setOpaque(true);
-                jpn.add(titleTeam2, getGridbBagConstraints(column, line, 1, 5));
-                column += 5;
-            }
-
-            if (Tournament.getTournament().getClansCount() > 1) {
-                JLabel titleTeam2 = new JLabel(Translate.translate(CS_Clan));
-                titleTeam2.setHorizontalAlignment(JLabel.CENTER);
-                titleTeam2.setBackground(Color.BLACK);
-                titleTeam2.setForeground(Color.WHITE);
-                titleTeam2.setOpaque(true);
-                jpn.add(titleTeam2, getGridbBagConstraints(column, line, 1, 5));
-                column += 5;
-            }
-
-            JLabel titleCoach2 = new JLabel(Translate.translate(CS_Coach));
-            titleCoach2.setHorizontalAlignment(JLabel.CENTER);
-            titleCoach2.setBackground(Color.BLACK);
-            titleCoach2.setForeground(Color.WHITE);
-            titleCoach2.setOpaque(true);
-            jpn.add(titleCoach2, getGridbBagConstraints(column, line, 1, 5));
-            column += 5;
-
-            JLabel titleValue2 = new JLabel("- " + crit.getName());
-            titleValue2.setHorizontalAlignment(JLabel.CENTER);
-            titleValue2.setBackground(Color.BLACK);
-            titleValue2.setForeground(Color.WHITE);
-            titleValue2.setOpaque(true);
-            jpn.add(titleValue2, getGridbBagConstraints(column, line, 1, 5));
-            column += 5;
-
-            JLabel emptyT3 = new JLabel("");
-            emptyT3.setBackground(Color.WHITE);
-            emptyT3.setOpaque(true);
-            jpn.add(emptyT3, getGridbBagConstraints(column, line, 1, 1));
-            column++;
-
-            JLabel titleNumber3 = new JLabel("#");
-            titleNumber3.setHorizontalAlignment(JLabel.CENTER);
-            titleNumber3.setBackground(Color.BLACK);
-            titleNumber3.setForeground(Color.WHITE);
-            titleNumber3.setOpaque(true);
-            jpn.add(titleNumber3, getGridbBagConstraints(column, line, 1, 1));
-            column++;
-
-            if (indivRankType == C_POOL) {
-                JLabel titlePool = new JLabel(Translate.translate(CS_Pool));
-                titlePool.setHorizontalAlignment(JLabel.CENTER);
-                titlePool.setBackground(Color.BLACK);
-                titlePool.setForeground(Color.WHITE);
-                titlePool.setOpaque(true);
-                jpn.add(titlePool, getGridbBagConstraints(column, line, 1, 1));
-                column++;
-            }
-
-            if (Tournament.getTournament().getParams().isTeamTournament()) {
-                JLabel titleTeam3 = new JLabel(Translate.translate(CS_Team));
-                titleTeam3.setHorizontalAlignment(JLabel.CENTER);
-                titleTeam3.setBackground(Color.BLACK);
-                titleTeam3.setForeground(Color.WHITE);
-                titleTeam3.setOpaque(true);
-                jpn.add(titleTeam3, getGridbBagConstraints(column, line, 1, 5));
-                column += 5;
-            }
-
-            if (Tournament.getTournament().getClansCount() > 1) {
-                JLabel titleTeam3 = new JLabel(Translate.translate(CS_Clan));
-                titleTeam3.setHorizontalAlignment(JLabel.CENTER);
-                titleTeam3.setBackground(Color.BLACK);
-                titleTeam3.setForeground(Color.WHITE);
-                titleTeam3.setOpaque(true);
-                jpn.add(titleTeam3, getGridbBagConstraints(column, line, 1, 5));
-                column += 5;
-            }
-
-            JLabel titleCoach3 = new JLabel(Translate.translate(CS_Coach));
-            titleCoach3.setHorizontalAlignment(JLabel.CENTER);
-            titleCoach3.setBackground(Color.BLACK);
-            titleCoach3.setForeground(Color.WHITE);
-            titleCoach3.setOpaque(true);
-            jpn.add(titleCoach3, getGridbBagConstraints(column, line, 1, 5));
-            column += 5;
-
-            JLabel titleValue3 = new JLabel("+/- " + crit.getName());
-            titleValue3.setHorizontalAlignment(JLabel.CENTER);
-            titleValue3.setBackground(Color.BLACK);
-            titleValue3.setForeground(Color.WHITE);
-            titleValue3.setOpaque(true);
-            jpn.add(titleValue3, getGridbBagConstraints(column, line, 1, 5));
-            column += 5;
-
-            line++;
-
-            int line_pos = line;
-            int line_diff = line;
-            int line_neg = line;
-            int nb_col = column;
-
-            for (int j = 0; j < ranked0.getRowCount(); j++) {
-                Color bkg = new Color(255, 255, 255);
-                if (j % 2 == 0) {
-                    bkg = new Color(220, 220, 220);
-                }
-                column = 0;
-                ObjectRanking obj = ranked0.getSortedObject(j);
-                if (obj instanceof ObjectAnnexRanking) {
-                    ObjectAnnexRanking annex = (ObjectAnnexRanking) obj;
-                    Coach coach = (Coach) annex.getObject();
-
-                    JLabel number = new JLabel("" + (j + 1));
-                    number.setBackground(bkg);
-                    number.setOpaque(true);
-                    jpn.add(number, getGridbBagConstraints(column, line_pos, 1, 1));
-                    column++;
-
-                    if (indivRankType == C_POOL) {
-                        JLabel pool = new JLabel(ranked0.getDetail());
-                        pool.setBackground(bkg);
-                        pool.setOpaque(true);
-                        jpn.add(pool, getGridbBagConstraints(column, line_pos, 1, 1));
-                        column++;
+                    if (ranked0 instanceof Ranking) {
+                        crit = ((Ranking) ranked0).getCriteria();
+                    } else {
+                        crit = new Criteria("???");
                     }
-
-                    if (Tournament.getTournament().getParams().isTeamTournament()) {
-                        JLabel team = getLabelForObject(coach.getTeamMates(), computed_height, computed_width, f, bkg);
-                        jpn.add(team, getGridbBagConstraints(column, line_pos, 1, 5));
-                        column += 5;
-                    }
-
-                    if (Tournament.getTournament().getClansCount() > 1) {
-                        JLabel team = getLabelForObject(coach.getClan(), computed_height, computed_width, f, bkg);
-                        jpn.add(team, getGridbBagConstraints(column, line_pos, 1, 5));
-                        column += 5;
-                    }
-
-                    JLabel lcoach = getLabelForObject(coach, computed_height, computed_width, f, bkg);
-                    jpn.add(lcoach, getGridbBagConstraints(column, line_pos, 1, 5));
-                    column += 5;
-
-                    JLabel value = new JLabel(crit.getName() + ": + " + annex.getValue());
-                    value.setFont(f);
-                    value.setOpaque(true);
-                    value.setBackground(bkg);
-                    jpn.add(value, getGridbBagConstraints(column, line_pos, 1, 5));
-                    column += 5;
-
-                    line_pos++;
                 }
-            }
 
-            for (int j = 0; j < ranked1.getRowCount(); j++) {
-                Color bkg = new Color(255, 255, 255);
-                if (j % 2 == 0) {
-                    bkg = new Color(220, 220, 220);
-                }
-                column = nb_col / 3;
+                int column = 0;
+                // Title
 
-                JLabel empty = new JLabel("");
-                empty.setBackground(Color.WHITE);
-                empty.setOpaque(true);
-                jpn.add(empty, getGridbBagConstraints(column, line_neg, 1, 1));
-                column++;
-
-                ObjectRanking obj = ranked1.getSortedObject(j);
-                if (obj instanceof ObjectAnnexRanking) {
-                    ObjectAnnexRanking annex = (ObjectAnnexRanking) obj;
-                    Coach coach = (Coach) annex.getObject();
-
-                    JLabel number = new JLabel("" + (j + 1));
-                    number.setBackground(bkg);
-                    number.setOpaque(true);
-                    jpn.add(number, getGridbBagConstraints(column, line_neg, 1, 1));
-                    column++;
-
-                    if (indivRankType == C_POOL) {
-                        JLabel pool = new JLabel(ranked1.getDetail());
-                        pool.setBackground(bkg);
-                        pool.setOpaque(true);
-                        jpn.add(pool, getGridbBagConstraints(column, line_neg, 1, 1));
-                        column++;
-                    }
-
-                    if (Tournament.getTournament().getParams().isTeamTournament()) {
-                        JLabel team = getLabelForObject(coach.getTeamMates(), computed_height, computed_width, f, bkg);
-                        jpn.add(team, getGridbBagConstraints(column, line_neg, 1, 5));
-                        column += 5;
-                    }
-
-                    if (Tournament.getTournament().getClansCount() > 1) {
-                        JLabel team = getLabelForObject(coach.getClan(), computed_height, computed_width, f, bkg);
-                        jpn.add(team, getGridbBagConstraints(column, line_neg, 1, 5));
-                        column += 5;
-                    }
-
-                    JLabel lcoach = getLabelForObject(coach, computed_height, computed_width, f, bkg);
-                    jpn.add(lcoach, getGridbBagConstraints(column, line_neg, 1, 5));
-                    column += 5;
-
-                    JLabel value = new JLabel(crit.getName() + ": - " + annex.getValue());
-                    value.setFont(f);
-                    value.setOpaque(true);
-                    value.setBackground(bkg);
-                    jpn.add(value, getGridbBagConstraints(column, line_neg, 1, 5));
-                    column += 5;
-
-                    line_neg++;
-                }
-            }
-
-            for (int j = 0; j < ranked2.getRowCount(); j++) {
-                Color bkg = new Color(255, 255, 255);
-                if (j % 2 == 0) {
-                    bkg = new Color(220, 220, 220);
-                }
-                column = 2 * nb_col / 3;
-
-                JLabel empty = new JLabel("");
-                empty.setBackground(Color.WHITE);
-                empty.setOpaque(true);
-                jpn.add(empty, getGridbBagConstraints(column, line_diff, 1, 1));
+                JLabel titleNumber = new JLabel("#");
+                titleNumber.setHorizontalAlignment(JLabel.CENTER);
+                titleNumber.setBackground(Color.BLACK);
+                titleNumber.setForeground(Color.WHITE);
+                titleNumber.setOpaque(true);
+                jpn.add(titleNumber, getGridbBagConstraints(column, line, 1, 1));
                 column++;
 
                 if (indivRankType == C_POOL) {
-                    JLabel pool = new JLabel(ranked2.getDetail());
-                    pool.setBackground(bkg);
-                    pool.setOpaque(true);
-                    jpn.add(pool, getGridbBagConstraints(column, line_diff, 1, 1));
+                    JLabel titlePool = new JLabel(Translate.translate(CS_Pool));
+                    titlePool.setHorizontalAlignment(JLabel.CENTER);
+                    titlePool.setBackground(Color.BLACK);
+                    titlePool.setForeground(Color.WHITE);
+                    titlePool.setOpaque(true);
+                    jpn.add(titlePool, getGridbBagConstraints(column, line, 1, 1));
                     column++;
                 }
 
-                ObjectRanking obj = ranked2.getSortedObject(j);
-                if (obj instanceof ObjectAnnexRanking) {
-                    ObjectAnnexRanking annex = (ObjectAnnexRanking) obj;
-                    Coach coach = (Coach) annex.getObject();
+                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                    JLabel titleTeam = new JLabel(Translate.translate(CS_Team));
+                    titleTeam.setHorizontalAlignment(JLabel.CENTER);
+                    titleTeam.setBackground(Color.BLACK);
+                    titleTeam.setForeground(Color.WHITE);
+                    titleTeam.setOpaque(true);
+                    jpn.add(titleTeam, getGridbBagConstraints(column, line, 1, 5));
+                    column += 5;
+                }
 
-                    JLabel number = new JLabel("" + (j + 1));
-                    number.setBackground(bkg);
-                    number.setOpaque(true);
-                    jpn.add(number, getGridbBagConstraints(column, line_diff, 1, 1));
+                if (Tournament.getTournament().getClansCount() > 1) {
+                    JLabel titleTeam = new JLabel(Translate.translate(CS_Clan));
+                    titleTeam.setHorizontalAlignment(JLabel.CENTER);
+                    titleTeam.setBackground(Color.BLACK);
+                    titleTeam.setForeground(Color.WHITE);
+                    titleTeam.setOpaque(true);
+                    jpn.add(titleTeam, getGridbBagConstraints(column, line, 1, 5));
+                    column += 5;
+                }
+
+                JLabel titleCoach = new JLabel(Translate.translate(CS_Clan));
+                titleCoach.setHorizontalAlignment(JLabel.CENTER);
+                titleCoach.setBackground(Color.BLACK);
+                titleCoach.setForeground(Color.WHITE);
+                titleCoach.setOpaque(true);
+                jpn.add(titleCoach, getGridbBagConstraints(column, line, 1, 5));
+                column += 5;
+
+                JLabel titleValue = new JLabel("+ " + crit.getName());
+                titleValue.setHorizontalAlignment(JLabel.CENTER);
+                titleValue.setBackground(Color.BLACK);
+                titleValue.setForeground(Color.WHITE);
+                titleValue.setOpaque(true);
+                jpn.add(titleValue, getGridbBagConstraints(column, line, 1, 5));
+                column += 5;
+
+                JLabel emptyT = new JLabel("");
+                emptyT.setBackground(Color.WHITE);
+                emptyT.setOpaque(true);
+                jpn.add(emptyT, getGridbBagConstraints(column, line, 1, 1));
+                column++;
+
+                JLabel titleNumber2 = new JLabel("#");
+                titleNumber2.setHorizontalAlignment(JLabel.CENTER);
+                titleNumber2.setBackground(Color.BLACK);
+                titleNumber2.setForeground(Color.WHITE);
+                titleNumber2.setOpaque(true);
+                jpn.add(titleNumber2, getGridbBagConstraints(column, line, 1, 1));
+                column++;
+
+                if (indivRankType == C_POOL) {
+                    JLabel titlePool = new JLabel(Translate.translate(CS_Pool));
+                    titlePool.setHorizontalAlignment(JLabel.CENTER);
+                    titlePool.setBackground(Color.BLACK);
+                    titlePool.setForeground(Color.WHITE);
+                    titlePool.setOpaque(true);
+                    jpn.add(titlePool, getGridbBagConstraints(column, line, 1, 1));
+                    column++;
+                }
+
+                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                    JLabel titleTeam2 = new JLabel(Translate.translate(CS_Team));
+                    titleTeam2.setHorizontalAlignment(JLabel.CENTER);
+                    titleTeam2.setBackground(Color.BLACK);
+                    titleTeam2.setForeground(Color.WHITE);
+                    titleTeam2.setOpaque(true);
+                    jpn.add(titleTeam2, getGridbBagConstraints(column, line, 1, 5));
+                    column += 5;
+                }
+
+                if (Tournament.getTournament().getClansCount() > 1) {
+                    JLabel titleTeam2 = new JLabel(Translate.translate(CS_Clan));
+                    titleTeam2.setHorizontalAlignment(JLabel.CENTER);
+                    titleTeam2.setBackground(Color.BLACK);
+                    titleTeam2.setForeground(Color.WHITE);
+                    titleTeam2.setOpaque(true);
+                    jpn.add(titleTeam2, getGridbBagConstraints(column, line, 1, 5));
+                    column += 5;
+                }
+
+                JLabel titleCoach2 = new JLabel(Translate.translate(CS_Coach));
+                titleCoach2.setHorizontalAlignment(JLabel.CENTER);
+                titleCoach2.setBackground(Color.BLACK);
+                titleCoach2.setForeground(Color.WHITE);
+                titleCoach2.setOpaque(true);
+                jpn.add(titleCoach2, getGridbBagConstraints(column, line, 1, 5));
+                column += 5;
+
+                JLabel titleValue2 = new JLabel("- " + crit.getName());
+                titleValue2.setHorizontalAlignment(JLabel.CENTER);
+                titleValue2.setBackground(Color.BLACK);
+                titleValue2.setForeground(Color.WHITE);
+                titleValue2.setOpaque(true);
+                jpn.add(titleValue2, getGridbBagConstraints(column, line, 1, 5));
+                column += 5;
+
+                JLabel emptyT3 = new JLabel("");
+                emptyT3.setBackground(Color.WHITE);
+                emptyT3.setOpaque(true);
+                jpn.add(emptyT3, getGridbBagConstraints(column, line, 1, 1));
+                column++;
+
+                JLabel titleNumber3 = new JLabel("#");
+                titleNumber3.setHorizontalAlignment(JLabel.CENTER);
+                titleNumber3.setBackground(Color.BLACK);
+                titleNumber3.setForeground(Color.WHITE);
+                titleNumber3.setOpaque(true);
+                jpn.add(titleNumber3, getGridbBagConstraints(column, line, 1, 1));
+                column++;
+
+                if (indivRankType == C_POOL) {
+                    JLabel titlePool = new JLabel(Translate.translate(CS_Pool));
+                    titlePool.setHorizontalAlignment(JLabel.CENTER);
+                    titlePool.setBackground(Color.BLACK);
+                    titlePool.setForeground(Color.WHITE);
+                    titlePool.setOpaque(true);
+                    jpn.add(titlePool, getGridbBagConstraints(column, line, 1, 1));
+                    column++;
+                }
+
+                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                    JLabel titleTeam3 = new JLabel(Translate.translate(CS_Team));
+                    titleTeam3.setHorizontalAlignment(JLabel.CENTER);
+                    titleTeam3.setBackground(Color.BLACK);
+                    titleTeam3.setForeground(Color.WHITE);
+                    titleTeam3.setOpaque(true);
+                    jpn.add(titleTeam3, getGridbBagConstraints(column, line, 1, 5));
+                    column += 5;
+                }
+
+                if (Tournament.getTournament().getClansCount() > 1) {
+                    JLabel titleTeam3 = new JLabel(Translate.translate(CS_Clan));
+                    titleTeam3.setHorizontalAlignment(JLabel.CENTER);
+                    titleTeam3.setBackground(Color.BLACK);
+                    titleTeam3.setForeground(Color.WHITE);
+                    titleTeam3.setOpaque(true);
+                    jpn.add(titleTeam3, getGridbBagConstraints(column, line, 1, 5));
+                    column += 5;
+                }
+
+                JLabel titleCoach3 = new JLabel(Translate.translate(CS_Coach));
+                titleCoach3.setHorizontalAlignment(JLabel.CENTER);
+                titleCoach3.setBackground(Color.BLACK);
+                titleCoach3.setForeground(Color.WHITE);
+                titleCoach3.setOpaque(true);
+                jpn.add(titleCoach3, getGridbBagConstraints(column, line, 1, 5));
+                column += 5;
+
+                JLabel titleValue3 = new JLabel("+/- " + crit.getName());
+                titleValue3.setHorizontalAlignment(JLabel.CENTER);
+                titleValue3.setBackground(Color.BLACK);
+                titleValue3.setForeground(Color.WHITE);
+                titleValue3.setOpaque(true);
+                jpn.add(titleValue3, getGridbBagConstraints(column, line, 1, 5));
+                column += 5;
+
+                line++;
+
+                int line_pos = line;
+                int line_diff = line;
+                int line_neg = line;
+                int nb_col = column;
+
+                for (int j = 0; j < ranked0.getRowCount(); j++) {
+                    Color bkg = new Color(255, 255, 255);
+                    if (j % 2 == 0) {
+                        bkg = new Color(220, 220, 220);
+                    }
+                    column = 0;
+                    ObjectRanking obj = ranked0.getSortedObject(j);
+                    if (obj instanceof ObjectAnnexRanking) {
+                        ObjectAnnexRanking annex = (ObjectAnnexRanking) obj;
+                        Coach coach = (Coach) annex.getObject();
+
+                        JLabel number = new JLabel("" + (j + 1));
+                        number.setBackground(bkg);
+                        number.setOpaque(true);
+                        jpn.add(number, getGridbBagConstraints(column, line_pos, 1, 1));
+                        column++;
+
+                        if (indivRankType == C_POOL) {
+                            JLabel pool = new JLabel(ranked0.getDetail());
+                            pool.setBackground(bkg);
+                            pool.setOpaque(true);
+                            jpn.add(pool, getGridbBagConstraints(column, line_pos, 1, 1));
+                            column++;
+                        }
+
+                        if (Tournament.getTournament().getParams().isTeamTournament()) {
+                            JLabel team = getLabelForObject(coach.getTeamMates(), computed_height, computed_width, f, bkg);
+                            jpn.add(team, getGridbBagConstraints(column, line_pos, 1, 5));
+                            column += 5;
+                        }
+
+                        if (Tournament.getTournament().getClansCount() > 1) {
+                            JLabel team = getLabelForObject(coach.getClan(), computed_height, computed_width, f, bkg);
+                            jpn.add(team, getGridbBagConstraints(column, line_pos, 1, 5));
+                            column += 5;
+                        }
+
+                        JLabel lcoach = getLabelForObject(coach, computed_height, computed_width, f, bkg);
+                        jpn.add(lcoach, getGridbBagConstraints(column, line_pos, 1, 5));
+                        column += 5;
+
+                        JLabel value = new JLabel(crit.getName() + ": + " + annex.getValue());
+                        value.setFont(f);
+                        value.setOpaque(true);
+                        value.setBackground(bkg);
+                        jpn.add(value, getGridbBagConstraints(column, line_pos, 1, 5));
+                        column += 5;
+
+                        line_pos++;
+                    }
+                }
+
+                for (int j = 0; j < ranked1.getRowCount(); j++) {
+                    Color bkg = new Color(255, 255, 255);
+                    if (j % 2 == 0) {
+                        bkg = new Color(220, 220, 220);
+                    }
+                    column = nb_col / 3;
+
+                    JLabel empty = new JLabel("");
+                    empty.setBackground(Color.WHITE);
+                    empty.setOpaque(true);
+                    jpn.add(empty, getGridbBagConstraints(column, line_neg, 1, 1));
                     column++;
 
-                    if (Tournament.getTournament().getParams().isTeamTournament()) {
-                        JLabel team = getLabelForObject(coach.getTeamMates(), computed_height, computed_width, f, bkg);
-                        jpn.add(team, getGridbBagConstraints(column, line_diff, 1, 5));
+                    ObjectRanking obj = ranked1.getSortedObject(j);
+                    if (obj instanceof ObjectAnnexRanking) {
+                        ObjectAnnexRanking annex = (ObjectAnnexRanking) obj;
+                        Coach coach = (Coach) annex.getObject();
+
+                        JLabel number = new JLabel("" + (j + 1));
+                        number.setBackground(bkg);
+                        number.setOpaque(true);
+                        jpn.add(number, getGridbBagConstraints(column, line_neg, 1, 1));
+                        column++;
+
+                        if (indivRankType == C_POOL) {
+                            JLabel pool = new JLabel(ranked1.getDetail());
+                            pool.setBackground(bkg);
+                            pool.setOpaque(true);
+                            jpn.add(pool, getGridbBagConstraints(column, line_neg, 1, 1));
+                            column++;
+                        }
+
+                        if (Tournament.getTournament().getParams().isTeamTournament()) {
+                            JLabel team = getLabelForObject(coach.getTeamMates(), computed_height, computed_width, f, bkg);
+                            jpn.add(team, getGridbBagConstraints(column, line_neg, 1, 5));
+                            column += 5;
+                        }
+
+                        if (Tournament.getTournament().getClansCount() > 1) {
+                            JLabel team = getLabelForObject(coach.getClan(), computed_height, computed_width, f, bkg);
+                            jpn.add(team, getGridbBagConstraints(column, line_neg, 1, 5));
+                            column += 5;
+                        }
+
+                        JLabel lcoach = getLabelForObject(coach, computed_height, computed_width, f, bkg);
+                        jpn.add(lcoach, getGridbBagConstraints(column, line_neg, 1, 5));
                         column += 5;
-                    }
 
-                    if (Tournament.getTournament().getClansCount() > 1) {
-                        JLabel team = getLabelForObject(coach.getClan(), computed_height, computed_width, f, bkg);
-                        jpn.add(team, getGridbBagConstraints(column, line_diff, 1, 5));
+                        JLabel value = new JLabel(crit.getName() + ": - " + annex.getValue());
+                        value.setFont(f);
+                        value.setOpaque(true);
+                        value.setBackground(bkg);
+                        jpn.add(value, getGridbBagConstraints(column, line_neg, 1, 5));
                         column += 5;
+
+                        line_neg++;
                     }
-
-                    JLabel lcoach = getLabelForObject(coach, computed_height, computed_width, f, bkg);
-                    jpn.add(lcoach, getGridbBagConstraints(column, line_diff, 1, 5));
-                    column += 5;
-
-                    JLabel value = new JLabel(crit.getName() + ": +/- " + annex.getValue());
-                    value.setFont(f);
-                    value.setOpaque(true);
-                    value.setBackground(bkg);
-                    jpn.add(value, getGridbBagConstraints(column, line_diff, 1, 5));
-                    column += 5;
-
-                    line_diff++;
                 }
+
+                for (int j = 0; j < ranked2.getRowCount(); j++) {
+                    Color bkg = new Color(255, 255, 255);
+                    if (j % 2 == 0) {
+                        bkg = new Color(220, 220, 220);
+                    }
+                    column = 2 * nb_col / 3;
+
+                    JLabel empty = new JLabel("");
+                    empty.setBackground(Color.WHITE);
+                    empty.setOpaque(true);
+                    jpn.add(empty, getGridbBagConstraints(column, line_diff, 1, 1));
+                    column++;
+
+                    if (indivRankType == C_POOL) {
+                        JLabel pool = new JLabel(ranked2.getDetail());
+                        pool.setBackground(bkg);
+                        pool.setOpaque(true);
+                        jpn.add(pool, getGridbBagConstraints(column, line_diff, 1, 1));
+                        column++;
+                    }
+
+                    ObjectRanking obj = ranked2.getSortedObject(j);
+                    if (obj instanceof ObjectAnnexRanking) {
+                        ObjectAnnexRanking annex = (ObjectAnnexRanking) obj;
+                        Coach coach = (Coach) annex.getObject();
+
+                        JLabel number = new JLabel("" + (j + 1));
+                        number.setBackground(bkg);
+                        number.setOpaque(true);
+                        jpn.add(number, getGridbBagConstraints(column, line_diff, 1, 1));
+                        column++;
+
+                        if (Tournament.getTournament().getParams().isTeamTournament()) {
+                            JLabel team = getLabelForObject(coach.getTeamMates(), computed_height, computed_width, f, bkg);
+                            jpn.add(team, getGridbBagConstraints(column, line_diff, 1, 5));
+                            column += 5;
+                        }
+
+                        if (Tournament.getTournament().getClansCount() > 1) {
+                            JLabel team = getLabelForObject(coach.getClan(), computed_height, computed_width, f, bkg);
+                            jpn.add(team, getGridbBagConstraints(column, line_diff, 1, 5));
+                            column += 5;
+                        }
+
+                        JLabel lcoach = getLabelForObject(coach, computed_height, computed_width, f, bkg);
+                        jpn.add(lcoach, getGridbBagConstraints(column, line_diff, 1, 5));
+                        column += 5;
+
+                        JLabel value = new JLabel(crit.getName() + ": +/- " + annex.getValue());
+                        value.setFont(f);
+                        value.setOpaque(true);
+                        value.setBackground(bkg);
+                        jpn.add(value, getGridbBagConstraints(column, line_diff, 1, 5));
+                        column += 5;
+
+                        line_diff++;
+                    }
+
+                }
+                line = Math.max(line_pos, line_neg);
+                line = Math.max(line, line_diff);
+            } catch (RemoteException re) {
+                re.printStackTrace();
             }
-            line = Math.max(line_pos, line_neg);
-            line = Math.max(line, line_diff);
+
         }
 
         jscrp.setViewportView(jpn);

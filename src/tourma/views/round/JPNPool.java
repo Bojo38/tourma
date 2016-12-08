@@ -3,13 +3,14 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * JPNPool.java
  *
  * Created on 20 juil. 2010, 10:47:49
  */
 package tourma.views.round;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import tourma.MainFrame;
@@ -64,26 +65,29 @@ public final class JPNPool extends javax.swing.JPanel {
         initComponents();
         mRound = r;
         mTournament = t;
+        try {
+            for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
+                final Criteria criteria = mTournament.getParams().getCriteria(i);
+                if (!mTournament.getParams().isTeamTournament()) {
+                    final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, p.getCompetitors(), new ArrayList<Team>());
+                    jtpAnnexRank.add(criteria.getName(), jpn);
+                } else {
 
-        for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criteria criteria = mTournament.getParams().getCriteria(i);
-            if (!mTournament.getParams().isTeamTournament()) {
-                final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, p.getCompetitors(), new ArrayList<Team>());
-                jtpAnnexRank.add(criteria.getName(), jpn);
-            } else {
-
-                final ArrayList<Coach> v = new ArrayList<>();
-                for (int j = 0; j < p.getCompetitorCount(); j++) {
-                    for (int k = 0; k < ((IContainCoachs) p.getCompetitor(j)).getCoachsCount(); k++) {
-                        v.add(((IContainCoachs) p.getCompetitor(j)).getCoach(k));
+                    final ArrayList<Coach> v = new ArrayList<>();
+                    for (int j = 0; j < p.getCompetitorCount(); j++) {
+                        for (int k = 0; k < ((IContainCoachs) p.getCompetitor(j)).getCoachsCount(); k++) {
+                            v.add(((IContainCoachs) p.getCompetitor(j)).getCoach(k));
+                        }
                     }
-                }
-                JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, true, v, p.getCompetitors());
-                jtpAnnexRank.add(criteria.getName(), jpn);
+                    JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, true, v, p.getCompetitors());
+                    jtpAnnexRank.add(criteria.getName(), jpn);
 
-                jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, v, p.getCompetitors());
-                jtpAnnexRank.add(criteria.getName(), jpn);
+                    jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, v, p.getCompetitors());
+                    jtpAnnexRank.add(criteria.getName(), jpn);
+                }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         update();
     }
@@ -165,110 +169,118 @@ public final class JPNPool extends javax.swing.JPanel {
  @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralPoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralPoolActionPerformed
 
-     final ArrayList<Round> v = new ArrayList<>();
-     for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-         if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
-             v.add(mTournament.getRound(i));
-         }
-     }
-     v.add(mRound);
-
-     for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-         if (mRound == mTournament.getRound(i)) {
-
-             MjtRanking model;
-             if ((mTournament.getParams().isTeamTournament())
-                     && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-                 model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mPool.getCompetitors(), mRoundOnly);
-             } else {
-                 model = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+     try {
+         final ArrayList<Round> v = new ArrayList<>();
+         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+             if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
+                 v.add(mTournament.getRound(i));
              }
-             final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
-                     Translate.translate(CS_GeneralByPool),
-                     i + 1, mTournament, model, 0);
-             jdg.setVisible(true);
          }
+         v.add(mRound);
+
+         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+             if (mRound == mTournament.getRound(i)) {
+
+                 MjtRanking model;
+                 if ((mTournament.getParams().isTeamTournament())
+                         && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                     model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mPool.getCompetitors(), mRoundOnly);
+                 } else {
+                     model = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+                 }
+                 final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
+                         Translate.translate(CS_GeneralByPool),
+                         i + 1, mTournament, model, 0);
+                 jdg.setVisible(true);
+             }
+         }
+     } catch (RemoteException re) {
+         re.printStackTrace();
      }
 }//GEN-LAST:event_jbtGeneralPoolActionPerformed
-    private static final String CS_GeneralByPool="GENERAL PAR POOL";
-    
+    private static final String CS_GeneralByPool = "GENERAL PAR POOL";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGlobalPoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalPoolActionPerformed
-        final ArrayList<Round> v = new ArrayList<>();
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
-                v.add(mTournament.getRound(i));
+        try {
+            final ArrayList<Round> v = new ArrayList<>();
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
+                    v.add(mTournament.getRound(i));
+                }
             }
-        }
-        v.add(mRound);
+            v.add(mRound);
 
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            if (mRound == mTournament.getRound(i)) {
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                if (mRound == mTournament.getRound(i)) {
 
-                MjtRanking model;
-                if ((mTournament.getParams().isTeamTournament())
-                        && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-                    model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mPool.getCompetitors(), mRoundOnly);
-                } else {
-                    model = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false);
-                }
-
-                ArrayList<Team> teams = new ArrayList<>();
-                ArrayList<Coach> coachs = new ArrayList<>();
-
-                for (Competitor c : mPool.getCompetitors()) {
-                    if (c instanceof Team) {
-                        teams.add((Team) c);
-                    }
-                    if (c instanceof Coach) {
-                        coachs.add((Coach) c);
-                    }
-                }
-
-                final HashMap<Criteria, MjtAnnexRank> annexForRankings = new HashMap<>();
-                final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
-                for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
-                    final Criteria crit = mTournament.getParams().getCriteria(j);
-                    MjtAnnexRank annexPos;
-                    MjtAnnexRank annexNeg;
+                    MjtRanking model;
                     if ((mTournament.getParams().isTeamTournament())
                             && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-                        annexPos
-                                = new MjtAnnexRankTeam(mTournament.getParams().isTeamVictoryOnly(),
-                                        v.size() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                        teams, true, mRoundOnly);
-                        annexNeg
-                                = new MjtAnnexRankTeam(mTournament.getParams().isTeamVictoryOnly(),
-                                        v.size() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                        teams, true, mRoundOnly);
+                        model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mPool.getCompetitors(), mRoundOnly);
                     } else {
-                        annexPos
-                                = new MjtAnnexRankIndiv(v.size() - 1, crit,
-                                        Parameters.C_RANKING_SUBTYPE_POSITIVE, coachs, true,
-                                        mTournament.getParams().getRankingIndiv1(),
-                                        mTournament.getParams().getRankingIndiv2(),
-                                        mTournament.getParams().getRankingIndiv3(),
-                                        mTournament.getParams().getRankingIndiv4(),
-                                        mTournament.getParams().getRankingIndiv5(),
-                                        mTournament.getParams().isTeamTournament(), mRoundOnly);
-                        annexNeg
-                                = new MjtAnnexRankIndiv(v.size() - 1, crit,
-                                        Parameters.C_RANKING_SUBTYPE_NEGATIVE, coachs, true,
-                                        mTournament.getParams().getRankingIndiv1(),
-                                        mTournament.getParams().getRankingIndiv2(),
-                                        mTournament.getParams().getRankingIndiv3(),
-                                        mTournament.getParams().getRankingIndiv4(),
-                                        mTournament.getParams().getRankingIndiv5(),
-                                        mTournament.getParams().isTeamTournament(), mRoundOnly);
+                        model = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false);
                     }
-                    annexForRankings.put(crit, annexPos);
-                    annexAgainstRankings.put(crit, annexNeg);
-                }
 
-                final JdgGlobal jdg = new JdgGlobal(MainFrame.getMainFrame(), true, i + 1, mTournament, model, annexForRankings, annexAgainstRankings, false, false);
-                jdg.setVisible(true);
-                break;
+                    ArrayList<Team> teams = new ArrayList<>();
+                    ArrayList<Coach> coachs = new ArrayList<>();
+
+                    for (Competitor c : mPool.getCompetitors()) {
+                        if (c instanceof Team) {
+                            teams.add((Team) c);
+                        }
+                        if (c instanceof Coach) {
+                            coachs.add((Coach) c);
+                        }
+                    }
+
+                    final HashMap<Criteria, MjtAnnexRank> annexForRankings = new HashMap<>();
+                    final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
+                    for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
+                        final Criteria crit = mTournament.getParams().getCriteria(j);
+                        MjtAnnexRank annexPos;
+                        MjtAnnexRank annexNeg;
+                        if ((mTournament.getParams().isTeamTournament())
+                                && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                            annexPos
+                                    = new MjtAnnexRankTeam(mTournament.getParams().isTeamVictoryOnly(),
+                                            v.size() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                            teams, true, mRoundOnly);
+                            annexNeg
+                                    = new MjtAnnexRankTeam(mTournament.getParams().isTeamVictoryOnly(),
+                                            v.size() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                            teams, true, mRoundOnly);
+                        } else {
+                            annexPos
+                                    = new MjtAnnexRankIndiv(v.size() - 1, crit,
+                                            Parameters.C_RANKING_SUBTYPE_POSITIVE, coachs, true,
+                                            mTournament.getParams().getRankingIndiv1(),
+                                            mTournament.getParams().getRankingIndiv2(),
+                                            mTournament.getParams().getRankingIndiv3(),
+                                            mTournament.getParams().getRankingIndiv4(),
+                                            mTournament.getParams().getRankingIndiv5(),
+                                            mTournament.getParams().isTeamTournament(), mRoundOnly);
+                            annexNeg
+                                    = new MjtAnnexRankIndiv(v.size() - 1, crit,
+                                            Parameters.C_RANKING_SUBTYPE_NEGATIVE, coachs, true,
+                                            mTournament.getParams().getRankingIndiv1(),
+                                            mTournament.getParams().getRankingIndiv2(),
+                                            mTournament.getParams().getRankingIndiv3(),
+                                            mTournament.getParams().getRankingIndiv4(),
+                                            mTournament.getParams().getRankingIndiv5(),
+                                            mTournament.getParams().isTeamTournament(), mRoundOnly);
+                        }
+                        annexForRankings.put(crit, annexPos);
+                        annexAgainstRankings.put(crit, annexNeg);
+                    }
+
+                    final JdgGlobal jdg = new JdgGlobal(MainFrame.getMainFrame(), true, i + 1, mTournament, model, annexForRankings, annexAgainstRankings, false, false);
+                    jdg.setVisible(true);
+                    break;
+                }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
     }//GEN-LAST:event_jbtGlobalPoolActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -288,41 +300,45 @@ public final class JPNPool extends javax.swing.JPanel {
      */
     public void update() {
 
-        int r_index = 0;
-        final ArrayList<Round> v = new ArrayList<>();
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
-                v.add(mTournament.getRound(i));
+        try {
+            int r_index = 0;
+            final ArrayList<Round> v = new ArrayList<>();
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
+                    v.add(mTournament.getRound(i));
+                }
+                if (mTournament.getRound(i) == mRound) {
+                    r_index = i;
+                }
             }
-            if (mTournament.getRound(i) == mRound) {
-                r_index = i;
+            v.add(mRound);
+
+            if ((mTournament.getParams().isTeamTournament())
+                    && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                MjtRankingTeam mRankingTeam;
+                mRankingTeam = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mPool.getCompetitors(), mRoundOnly);
+                jtbRankingPool.setModel(mRankingTeam);
+                jtbRankingPool.setDefaultRenderer(String.class, mRankingTeam);
+                jtbRankingPool.setDefaultRenderer(Integer.class, mRankingTeam);
+
+                TableFormat.setColumnSize(jtbRankingPool);
+            } else {
+                MjtRankingIndiv mRankingIndiv;
+                mRankingIndiv = new MjtRankingIndiv(r_index, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+                jtbRankingPool.setModel(mRankingIndiv);
+                jtbRankingPool.setDefaultRenderer(String.class, mRankingIndiv);
+                jtbRankingPool.setDefaultRenderer(Integer.class, mRankingIndiv);
+                TableFormat.setColumnSize(jtbRankingPool);
             }
+
+            for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
+                ((JPNAnnexRanking) jtpAnnexRank.getComponent(i)).update();
+            }
+
+            jtbRankingPool.setRowHeight(25);
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
-        v.add(mRound);
-
-        if ((mTournament.getParams().isTeamTournament())
-                && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-            MjtRankingTeam mRankingTeam;
-            mRankingTeam = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mPool.getCompetitors(), mRoundOnly);
-            jtbRankingPool.setModel(mRankingTeam);
-            jtbRankingPool.setDefaultRenderer(String.class, mRankingTeam);
-            jtbRankingPool.setDefaultRenderer(Integer.class, mRankingTeam);
-
-            TableFormat.setColumnSize(jtbRankingPool);
-        } else {
-            MjtRankingIndiv mRankingIndiv;
-            mRankingIndiv = new MjtRankingIndiv(r_index, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false);
-            jtbRankingPool.setModel(mRankingIndiv);
-            jtbRankingPool.setDefaultRenderer(String.class, mRankingIndiv);
-            jtbRankingPool.setDefaultRenderer(Integer.class, mRankingIndiv);
-            TableFormat.setColumnSize(jtbRankingPool);
-        }
-
-        for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
-            ((JPNAnnexRanking) jtpAnnexRank.getComponent(i)).update();
-        }
-
-        jtbRankingPool.setRowHeight(25);
     }
 
     /**

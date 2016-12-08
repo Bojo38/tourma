@@ -1,5 +1,6 @@
 package tourma.views.round;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Category;
@@ -19,7 +20,7 @@ import tourma.views.report.JdgRanking;
  * and open the template in the editor.
  */
 
-/*
+ /*
  * JPNCategory.java
  *
  * Created on 21 mai 2011, 23:18:17
@@ -54,22 +55,26 @@ public final class JPNCategory extends javax.swing.JPanel {
         mCategory = g;
         mRoundNumber = roundNumber;
 
-        if (t.getParams().isTeamTournament()) {
-            for (int i = 0; i < t.getTeamsCount(); i++) {
-                Team team = t.getTeam(i);
-                if (team.containsCategory(g)) {
-                    mEnableTeam = true;
+        try {
+            if (t.getParams().isTeamTournament()) {
+                for (int i = 0; i < t.getTeamsCount(); i++) {
+                    Team team = t.getTeam(i);
+                    if (team.containsCategory(g)) {
+                        mEnableTeam = true;
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 0; i < t.getCoachsCount(); i++) {
+                Coach coach = t.getCoach(i);
+                if (coach.containsCategory(g)) {
+                    mEnableCoach = true;
                     break;
                 }
             }
-        }
-
-        for (int i = 0; i < t.getCoachsCount(); i++) {
-            Coach coach = t.getCoach(i);
-            if (coach.containsCategory(g)) {
-                mEnableCoach = true;
-                break;
-            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
 
         if (!mEnableCoach) {
@@ -163,55 +168,63 @@ public final class JPNCategory extends javax.swing.JPanel {
     public void update() {
 
         if (mEnableCoach) {
-            final ArrayList<Coach> al = new ArrayList<>();
+            try {
+                final ArrayList<Coach> al = new ArrayList<>();
 
-            for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-                final Coach c = mTournament.getCoach(i);
-                if (c.containsCategory(mCategory)) {
-                    al.add(c);
+                for (int i = 0; i < mTournament.getCoachsCount(); i++) {
+                    final Coach c = mTournament.getCoach(i);
+                    if (c.containsCategory(mCategory)) {
+                        al.add(c);
+                    }
                 }
+
+                final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                        al, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+                jtbCategory.setModel(tableModel);
+                jtbCategory.setDefaultRenderer(String.class, tableModel);
+                jtbCategory.setDefaultRenderer(Integer.class, tableModel);
+
+                jtbCategory.setRowHeight(25);
+                TableFormat.setColumnSize(jtbCategory);
+            } catch (RemoteException re) {
+                re.printStackTrace();
             }
-
-            final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    al, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
-            jtbCategory.setModel(tableModel);
-            jtbCategory.setDefaultRenderer(String.class, tableModel);
-            jtbCategory.setDefaultRenderer(Integer.class, tableModel);
-
-            jtbCategory.setRowHeight(25);
-            TableFormat.setColumnSize(jtbCategory);
         }
         if (mEnableTeam) {
-            final ArrayList<Team> al = new ArrayList<>();
+            try {
+                final ArrayList<Team> al = new ArrayList<>();
 
-            for (int i = 0; i < mTournament.getTeamsCount(); i++) {
-                final Team t = mTournament.getTeam(i);
-                if (t.containsCategory(mCategory)) {
-                    al.add(t);
+                for (int i = 0; i < mTournament.getTeamsCount(); i++) {
+                    final Team t = mTournament.getTeam(i);
+                    if (t.containsCategory(mCategory)) {
+                        al.add(t);
+                    }
                 }
+
+                final MjtRankingTeam tableModel = new MjtRankingTeam(
+                        mTournament.getParams().isTeamTournament(),
+                        mRoundNumber,
+                        al,
+                        mRoundOnly);
+                jtbTeam.setModel(tableModel);
+                jtbTeam.setDefaultRenderer(String.class, tableModel);
+                jtbTeam.setDefaultRenderer(Integer.class, tableModel);
+
+                jtbTeam.setRowHeight(25);
+                TableFormat.setColumnSize(jtbTeam);
+            } catch (RemoteException re) {
+                re.printStackTrace();
             }
-
-            final MjtRankingTeam tableModel = new MjtRankingTeam(
-                    mTournament.getParams().isTeamTournament(),
-                    mRoundNumber,
-                    al,
-                    mRoundOnly);
-            jtbTeam.setModel(tableModel);
-            jtbTeam.setDefaultRenderer(String.class, tableModel);
-            jtbTeam.setDefaultRenderer(Integer.class, tableModel);
-
-            jtbTeam.setRowHeight(25);
-            TableFormat.setColumnSize(jtbTeam);
         }
     }
 
-    private final static String CS_GeneralByCategory="GENERAL PAR CATEGORIE";
-    
+    private final static String CS_GeneralByCategory = "GENERAL PAR CATEGORIE";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
         final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
-                Translate.translate(CS_GeneralByCategory) + ": " 
-                        + mCategory.getName(), mRoundNumber, mTournament, (MjtRanking) jtbCategory.getModel(), 0);
+                Translate.translate(CS_GeneralByCategory) + ": "
+                + mCategory.getName(), mRoundNumber, mTournament, (MjtRanking) jtbCategory.getModel(), 0);
         jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -29,6 +29,7 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,7 +73,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
     private final Round mRound;
     private final boolean mByTeam;
     private final boolean mPreFilled;
-    private ITournament mTour = Tournament.getTournament();
+    private ITournament mTour;
     private int mRoundNumber = 0;
 
     private final static String CS_ACCR_Versus = "VS";
@@ -91,6 +92,12 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        try{
+            mTour=Tournament.getTournament();
+        
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         this.setPreferredSize(new Dimension(800, 600));
 
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -105,7 +112,11 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         mByTeam = byTeam;
         mPreFilled = preFilled;
 
+        try{
         mRoundNumber = mTour.getRoundIndex(round) + 1;
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         update();
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
 

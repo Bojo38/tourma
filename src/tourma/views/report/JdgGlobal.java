@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * jdgRoundReport.java
  *
  * Created on 28 juin 2010, 10:52:47
@@ -26,6 +26,7 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -99,10 +100,15 @@ public final class JdgGlobal extends javax.swing.JDialog {
         mAnnexForRankings = annexForRankings;
         mAnnexAgainstRankings = annexAgainstRankings;
 
-        this.setTitle(
-                tour.getParams().getTournamentName()
-                + " - "
-                + Translate.translate(CS_Round) + " " + roundNumber);
+        try {
+            this.setTitle(
+                    tour.getParams().getTournamentName()
+                    + " - "
+                    + Translate.translate(CS_Round) + " " + roundNumber);
+
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         try {
             jepHTML.setContentType("html");
             mFilename = createReport();
@@ -197,7 +203,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
-                final JFileChooser jfc = new JFileChooser();
+        final JFileChooser jfc = new JFileChooser();
         final FileFilter filter1 = new ExtensionFileFilter("HTML", new String[]{"HTML", "html"});
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -249,7 +255,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtExportActionPerformed
 
     private void jbtExportPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportPDFActionPerformed
-        
+
         final JFileChooser jfc = new JFileChooser();
         final FileFilter filter1 = new ExtensionFileFilter("PDF", new String[]{"PDF", "pdf"});
         jfc.setFileFilter(filter1);
@@ -272,17 +278,17 @@ public final class JdgGlobal extends javax.swing.JDialog {
                 in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
                 {
                     //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
-                    StringBuilder sb=new StringBuilder();
+                    StringBuilder sb = new StringBuilder();
                     int c = in.read();
                     while (c != -1) {
-                        sb.append((char)c);
+                        sb.append((char) c);
                         c = in.read();
                     }
-                    
-                    String s=sb.toString();
-                    
-                    s=s.substring(s.indexOf("<html>"));
-                    
+
+                    String s = sb.toString();
+
+                    s = s.substring(s.indexOf("<html>"));
+
                     HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Global Report");
                 }
 
@@ -306,9 +312,9 @@ public final class JdgGlobal extends javax.swing.JDialog {
                 }
             }
         }
-        
+
 //        http://www.rgagnon.com/javadetails/java-html-to-pdf-using-itext.html
-        
+
     }//GEN-LAST:event_jbtExportPDFActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
