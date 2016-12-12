@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -1277,20 +1278,24 @@ public final class JdgRoster extends javax.swing.JDialog {
         /**
          * Build Avilable Positions
          */
-        ArrayList<String> coachs_name = new ArrayList<>();
-        for (i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            Coach c = Tournament.getTournament().getCoach(i);
-            coachs_name.add(c.getName());
-        }
+        try {
+            ArrayList<String> coachs_name = new ArrayList<>();
+            for (i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                Coach c = Tournament.getTournament().getCoach(i);
+                coachs_name.add(c.getName());
+            }
 
-        String input = (String) JOptionPane.showInputDialog(this,
-                Translate.translate(CS_ChooseCoach), Translate.translate(CS_CoachChoice), JOptionPane.INFORMATION_MESSAGE,
-                null, coachs_name.toArray(), coachs_name.get(0));
-        if (!input.isEmpty()) {
-            Coach c = Tournament.getTournament().getCoach(input);
-            c.addComposition(_data);
-            _coach = c;
-            _coach.setRank(_data.getValue(false) / 10000);
+            String input = (String) JOptionPane.showInputDialog(this,
+                    Translate.translate(CS_ChooseCoach), Translate.translate(CS_CoachChoice), JOptionPane.INFORMATION_MESSAGE,
+                    null, coachs_name.toArray(), coachs_name.get(0));
+            if (!input.isEmpty()) {
+                Coach c = Tournament.getTournament().getCoach(input);
+                c.addComposition(_data);
+                _coach = c;
+                _coach.setRank(_data.getValue(false) / 10000);
+            }
+        } catch (RemoteException re) {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
 
     }//GEN-LAST:event_jbtSelectCoachActionPerformed
@@ -1585,27 +1590,31 @@ public final class JdgRoster extends javax.swing.JDialog {
             jlbRosterType.setText(Translate.translate(CS_RosterUnknown));
         }
 
-        if (_coach == null) {
-            jbtSelectCoach.setText(CS_AssociateACoach);
-        } else {
-            jbtSelectCoach.setText(_coach.getName());
-            jlbCoachName.setText(Translate.translate(CS_Coach) + ": " + _coach.getName());
-            if (_coach.getRoster() != null) {
-                if (_data.getRoster() == null) {
-                    _data.setRoster(LRB.getLRB().getRosterType(_coach.getRoster().getName(), true));
+        try {
+            if (_coach == null) {
+                jbtSelectCoach.setText(CS_AssociateACoach);
+            } else {
+                jbtSelectCoach.setText(_coach.getName());
+
+                jlbCoachName.setText(Translate.translate(CS_Coach) + ": " + _coach.getName());
+                if (_coach.getRoster() != null) {
+                    if (_data.getRoster() == null) {
+                        _data.setRoster(LRB.getLRB().getRosterType(_coach.getRoster().getName(), true));
+                    }
+                    if (_data.getRoster() != null) {
+                        jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data.getRoster().getImage())));
+                    }
+                    jlbTeamName.setText(_coach.getTeam());
+                    jlbRosterType.setText(Translate.translate(CS_Roster) + ": " + _data.getRoster().getName());
                 }
-                if (_data.getRoster() != null) {
-                    jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data.getRoster().getImage())));
-                }
-                jlbTeamName.setText(_coach.getTeam());
-                jlbRosterType.setText(Translate.translate(CS_Roster) + ": " + _data.getRoster().getName());
+                //_coach.mCompositions.add(_data);
+                _coach.setRank(_data.getValue(false) / 10000);
             }
-            //_coach.mCompositions.add(_data);
-            _coach.setRank(_data.getValue(false) / 10000);
+
+            jbtSelectCoach.setEnabled(Tournament.getTournament().getActiveCoachNumber() > 0);
+        } catch (RemoteException re) {
+            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
-
-        jbtSelectCoach.setEnabled(Tournament.getTournament().getActiveCoachNumber() > 0);
-
         jbtAdd.setEnabled(_data.getChampionCount() + _data.getPlayerCount() < 16);
         jbtRemove.setEnabled(_data.getPlayerCount() > 0);
 

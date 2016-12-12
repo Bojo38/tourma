@@ -250,7 +250,7 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                 if (column == 1) {
                     Team t = (Team) mObjects.get(row);
                     if (t.getPicture() != null) {
-                        ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.getPicture()), 30, 30);
+                        ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
                         obj.setIcon(icon);
                     }
                 }

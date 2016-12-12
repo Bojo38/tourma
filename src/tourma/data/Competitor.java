@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import tourma.utility.StringConstants;
 
@@ -92,7 +93,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
     /**
      *
      */
-    private BufferedImage picture = null;
+    private ImageIcon picture = null;
     /**
      * Clan
      */
@@ -224,7 +225,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @return
      */
     @Override
-    public BufferedImage getPicture() {
+    public ImageIcon getPicture() {
         return picture;
     }
 
@@ -254,7 +255,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param picture the picture to set
      */
     @Override
-    public void setPicture(BufferedImage picture) throws RemoteException {
+    public void setPicture(ImageIcon picture) throws RemoteException {
         this.picture = picture;
     }
 

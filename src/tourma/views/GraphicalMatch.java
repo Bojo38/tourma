@@ -81,12 +81,12 @@ public class GraphicalMatch extends javax.swing.JPanel {
                     ClanIcon2.setLocation(width - computed_width - 1, 1);
                     Clan clan1 = (cm.getCompetitor1()).getClan();
                     if (clan1.getPicture() != null) {
-                        ClanIcon1.setIcon(ImageTreatment.resize(new ImageIcon(clan1.getPicture()), computed_height, computed_height));
+                        ClanIcon1.setIcon(ImageTreatment.resize(clan1.getPicture(), computed_height, computed_height));
                     }
                     ClanIcon1.setText(clan1.getName());
                     Clan clan2 = (cm.getCompetitor2()).getClan();
                     if (clan2.getPicture() != null) {
-                        ClanIcon2.setIcon(ImageTreatment.resize(new ImageIcon(clan2.getPicture()), computed_height, computed_height));
+                        ClanIcon2.setIcon(ImageTreatment.resize(clan2.getPicture(), computed_height, computed_height));
                     }
                     ClanIcon2.setText(clan2.getName());
                     ClanIcon1.setOpaque(true);
@@ -102,11 +102,11 @@ public class GraphicalMatch extends javax.swing.JPanel {
                 CoachIcon2.setSize(computed_width, computed_height);
                 CoachIcon2.setLocation(width - xOffset - computed_width - 1, 1);
                 if (cm.getCompetitor1().getPicture() != null) {
-                    CoachIcon1.setIcon(ImageTreatment.resize(new ImageIcon(cm.getCompetitor1().getPicture()), computed_height, computed_height));
+                    CoachIcon1.setIcon(ImageTreatment.resize(cm.getCompetitor1().getPicture(), computed_height, computed_height));
                 }
                 CoachIcon1.setText(cm.getCompetitor1().getName());
                 if (cm.getCompetitor2().getPicture() != null) {
-                    CoachIcon2.setIcon(ImageTreatment.resize(new ImageIcon(cm.getCompetitor2().getPicture()), computed_height, computed_height));
+                    CoachIcon2.setIcon(ImageTreatment.resize(cm.getCompetitor2().getPicture(), computed_height, computed_height));
                 }
                 CoachIcon2.setText(cm.getCompetitor2().getName());
                 CoachIcon1.setBackground(bkg);

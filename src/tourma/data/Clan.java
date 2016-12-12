@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,6 +15,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -81,7 +83,7 @@ public class Clan implements Comparable<Object>, IXMLExport,IWithNameAndPicture,
     /**
      * 
      */
-    private BufferedImage picture;
+    private ImageIcon picture;
     /**
      * Constructor by name
      *
@@ -148,7 +150,11 @@ public class Clan implements Comparable<Object>, IXMLExport,IWithNameAndPicture,
             Element image=new Element(StringConstants.CS_PICTURE);
             String encodedImage;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                ImageIO.write(picture, "png", baos);
+                BufferedImage bi=new BufferedImage(getPicture().getIconWidth(),getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                            Graphics g = bi.createGraphics();
+                            getPicture().paintIcon(null, g, 0,0);
+                            g.dispose();
+                ImageIO.write(bi, "png", baos);
                 baos.flush();
                 //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
                 encodedImage=Base64.encode(baos.toByteArray());
@@ -178,7 +184,10 @@ public class Clan implements Comparable<Object>, IXMLExport,IWithNameAndPicture,
             String encodedImage = image.getText();
             //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
             byte[] bytes=Base64.decode(encodedImage);
-            picture = ImageIO.read(new ByteArrayInputStream(bytes));
+            BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+                    ImageIcon ii = new ImageIcon(bi);
+                    setPicture(ii);
+            
         } catch (IOException e2) {
         }
         catch (NullPointerException e1)
@@ -201,7 +210,7 @@ public class Clan implements Comparable<Object>, IXMLExport,IWithNameAndPicture,
      * @return 
      */
     @Override
-    public BufferedImage getPicture() {
+    public ImageIcon getPicture() {
         return picture;
     }
     
@@ -210,7 +219,7 @@ public class Clan implements Comparable<Object>, IXMLExport,IWithNameAndPicture,
      * @param p
      */
     @Override
-    public void setPicture(BufferedImage p) {
+    public void setPicture(ImageIcon p) {
         picture=p;
     }
     

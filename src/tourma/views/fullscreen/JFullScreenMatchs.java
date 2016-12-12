@@ -351,7 +351,7 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                     JLabel v = new JLabel("");
                     if ((tm.getCompetitor1().getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
-                        v.setIcon(ImageTreatment.resize(new ImageIcon(tm.getCompetitor1().getPicture()), computed_height, computed_height));
+                        v.setIcon(ImageTreatment.resize(tm.getCompetitor1().getPicture(), computed_height, computed_height));
                     }
                     v.setFont(f1);
                     v.setOpaque(true);
@@ -370,7 +370,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                     JLabel l = new JLabel("");
                     l.setFont(f1);
                     if ((tm.getCompetitor2().getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
-                        l.setIcon(ImageTreatment.resize(new ImageIcon(tm.getCompetitor2().getPicture()), computed_height, computed_height));
+                        l.setIcon(ImageTreatment.resize(tm.getCompetitor2().getPicture(), computed_height, computed_height));
                     }
                     l.setHorizontalTextPosition(JLabel.LEFT);
                     l.setBackground(bkg);
@@ -670,14 +670,14 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                 if (Tournament.getTournament().getParams().isUseImage()) {
                     if (t.getPicture() != null) {
-                        BufferedImage pict = t.getPicture();
+                        ImageIcon pict = t.getPicture();
                         JLabel icon = new JLabel();
-                        icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height * nbPlayers / 2, pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight()));
+                        icon.setIcon(ImageTreatment.resize(pict, line_height * nbPlayers / 2, pict.getIconWidth() * (line_height * nbPlayers / 2) / pict.getIconHeight()));
                         icon.setBackground(Color.WHITE);
                         icon.setOpaque(true);
                         icon.setHorizontalAlignment(JLabel.CENTER);
                         p.add(icon, BorderLayout.NORTH);
-                        c_height += pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight();
+                        c_height += pict.getIconWidth() * (line_height * nbPlayers / 2) / pict.getIconHeight();
                     }
                 }
 
@@ -702,8 +702,8 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                         JLabel icon = new JLabel();
                         if ((c.getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
-                            BufferedImage pict = t.getPicture();
-                            icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height * nbPlayers / 2, pict.getWidth() * (line_height * nbPlayers / 2) / pict.getHeight()));
+                            ImageIcon pict = t.getPicture();
+                            icon.setIcon(ImageTreatment.resize(pict, line_height * nbPlayers / 2, pict.getIconWidth() * (line_height * nbPlayers / 2) / pict.getIconHeight()));
                             p_width = line_height * nbPlayers / 2;
                         } else {
                             icon.setText(" ");
@@ -737,7 +737,7 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                         max_width = Math.max(max_width, p_width);
                         if ((c.getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
-                            c_height += Math.max(jlbCoach.getPreferredSize().height, c.getPicture().getWidth() * (line_height * nbPlayers / 2) / c.getPicture().getHeight());
+                            c_height += Math.max(jlbCoach.getPreferredSize().height, c.getPicture().getIconWidth() * (line_height * nbPlayers / 2) / c.getPicture().getIconHeight());
                         } else {
                             c_height += jlbCoach.getPreferredSize().height;
                         }
@@ -821,10 +821,10 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                 if (Tournament.getTournament().getParams().isUseImage()) {
                     if (t.getPicture() != null) {
-                        BufferedImage pict = t.getPicture();
+                        ImageIcon pict = t.getPicture();
                         JLabel icon = new JLabel();
                         icon.setBackground(Color.WHITE);
-                        icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), pict.getWidth() * (line_height) / pict.getHeight(), line_height));
+                        icon.setIcon(ImageTreatment.resize(pict, pict.getIconWidth() * (line_height) / pict.getIconHeight(), line_height));
                         p.add(icon, right ? BorderLayout.EAST : BorderLayout.WEST);
                         mwidth += icon.getWidth();
                         mheight = Math.max(mheight, icon.getHeight());
@@ -836,8 +836,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                     icon.setBackground(Color.WHITE);
                     if (Tournament.getTournament().getParams().isUseImage()) {
                         if (t.getTeamMates().getPicture() != null) {
-                            BufferedImage pict = t.getTeamMates().getPicture();
-                            icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height, pict.getWidth() * (line_height) / pict.getHeight()));
+                            ImageIcon pict = t.getTeamMates().getPicture();
+                            icon.setIcon(ImageTreatment.resize(pict, line_height, pict.getIconWidth() * (line_height) / pict.getIconHeight()));
                         } else {
                             icon.setText(" ");
                             icon.setPreferredSize(new Dimension(line_height, line_height));
@@ -858,8 +858,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                     icon.setBackground(Color.WHITE);
                     if (Tournament.getTournament().getParams().isUseImage()) {
                         if (t.getClan().getPicture() != null) {
-                            BufferedImage pict = t.getClan().getPicture();
-                            icon.setIcon(ImageTreatment.resize(new ImageIcon(pict), line_height, pict.getWidth() * (line_height) / pict.getHeight()));
+                            ImageIcon pict = t.getClan().getPicture();
+                            icon.setIcon(ImageTreatment.resize(pict, line_height, pict.getIconWidth() * (line_height) / pict.getIconHeight()));
                         } else {
                             icon.setText(" ");
                             icon.setPreferredSize(new Dimension(line_height, line_height));

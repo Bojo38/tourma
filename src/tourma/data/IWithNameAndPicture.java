@@ -6,6 +6,7 @@ package tourma.data;
 
 import java.awt.image.BufferedImage;
 import java.rmi.RemoteException;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -29,11 +30,11 @@ public interface IWithNameAndPicture {
      *
      * @return
      */
-    public BufferedImage getPicture()throws RemoteException;     
+    public ImageIcon getPicture()throws RemoteException;     
 
     /**
      *
      * @param p
      */
-    public void setPicture(BufferedImage p)throws RemoteException;
+    public void setPicture(ImageIcon p)throws RemoteException;
 }

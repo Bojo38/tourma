@@ -4,6 +4,8 @@
  */
 package tourma.data;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Element;
@@ -141,27 +144,24 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public int compareTo(final Object obj) {
         int result = -1;
-        try
-        {
-        if (obj instanceof Team) {
-            Team team = (Team) obj;
-            double rank = 0.0;
-            for (Coach mCoach : mCoachs) {
-                rank += mCoach.getNafRank();
-            }
-            rank /= getCoachsCount();
+        try {
+            if (obj instanceof Team) {
+                Team team = (Team) obj;
+                double rank = 0.0;
+                for (Coach mCoach : mCoachs) {
+                    rank += mCoach.getNafRank();
+                }
+                rank /= getCoachsCount();
 
-            double rankobj = 0;
-            for (Coach mCoach : team.mCoachs) {
-                rankobj += mCoach.getNafRank();
-            }
-            rankobj /= team.getCoachsCount();
+                double rankobj = 0;
+                for (Coach mCoach : team.mCoachs) {
+                    rankobj += mCoach.getNafRank();
+                }
+                rankobj /= team.getCoachsCount();
 
-            result = ((Double) rank).compareTo(rankobj);
-        }
-        }
-        catch (RemoteException re)
-        {
+                result = ((Double) rank).compareTo(rankobj);
+            }
+        } catch (RemoteException re) {
             JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
         return result;
@@ -254,7 +254,11 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
             String encodedImage;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 if (getPicture() != null) {
-                    ImageIO.write(getPicture(), "png", baos);
+                    BufferedImage bi = new BufferedImage(getPicture().getIconWidth(), getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    getPicture().paintIcon(null, g, 0, 0);
+                    g.dispose();
+                    ImageIO.write(bi, "png", baos);
                     baos.flush();
                     encodedImage = Base64.encode(baos.toByteArray());
                     image.addContent(encodedImage);
@@ -319,7 +323,9 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
             if (image != null) {
                 String encodedImage = image.getText();
                 byte[] bytes = Base64.decode(encodedImage);
-                setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
+                BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+                ImageIcon ii = new ImageIcon(bi);
+                setPicture(ii);
             }
         } catch (IOException e) {
         }

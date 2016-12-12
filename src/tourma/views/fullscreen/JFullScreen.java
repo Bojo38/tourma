@@ -110,7 +110,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
         JLabel l = new JLabel();
         try {
             if ((object.getPicture() != null) && (Tournament.getTournament().getParams().isUseImage())) {
-                l.setIcon(ImageTreatment.resize(new ImageIcon(object.getPicture()), height, height));
+                l.setIcon(ImageTreatment.resize(object.getPicture(), height, height));
             } else {
                 if (!(object instanceof Coach)) {
                     l.setIcon(new ImageIcon(new BufferedImage(height, height, BufferedImage.TYPE_4BYTE_ABGR)));

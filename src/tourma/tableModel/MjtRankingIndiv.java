@@ -392,7 +392,7 @@ public final class MjtRankingIndiv extends MjtRanking {
                 if ((column == 1) && mTeamTournament) {
                     Coach c = (Coach) mObjects.get(row);
                     if (c.getTeamMates().getPicture() != null) {
-                        ImageIcon icon = ImageTreatment.resize(new ImageIcon(c.getTeamMates().getPicture()), 30, 30);
+                        ImageIcon icon = ImageTreatment.resize(c.getTeamMates().getPicture(), 30, 30);
                         obj.setIcon(icon);
                         obj.setOpaque(true);
                         return obj;

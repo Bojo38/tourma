@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.data.Category;
 import tourma.data.Clan;
@@ -408,8 +409,8 @@ public class WebRound {
                 String img2 = "";
 
                 if (Tournament.getTournament().getParams().isUseImage()) {
-                    BufferedImage pic1 = null;
-                    BufferedImage pic2 = null;
+                    ImageIcon pic1 = null;
+                    ImageIcon pic2 = null;
                     if (Tournament.getTournament().getParams().isTeamTournament()) {
                         if (c1.getTeamMates() != null) {
                             pic1 = c1.getTeamMates().getPicture();
@@ -840,8 +841,8 @@ public class WebRound {
                     String img2 = "";
 
                     if (Tournament.getTournament().getParams().isUseImage()) {
-                        BufferedImage pic1 = null;
-                        BufferedImage pic2 = null;
+                        ImageIcon pic1 = null;
+                        ImageIcon pic2 = null;
                         if ((pic1 == null) && (t1.getClan() != null)) {
                             pic1 = t1.getClan().getPicture();
                         }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -282,7 +283,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
                         RosterType rt = new RosterType(StringConstants.CS_ROSTER);
                         c.setRoster(rt);
                         if (bi != null) {
-                            c.setPicture(bi);
+                            c.setPicture(new ImageIcon(bi));
                         }
 
                     } else {
@@ -295,7 +296,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
                                 Tournament.getTournament().addClan(cl);
                             }
                             if (bi != null) {
-                                cl.setPicture(bi);
+                                cl.setPicture(new ImageIcon(bi));
                             }
                             List<Element> members = obj.getChildren(StringConstants.CS_MEMBER);
                             Iterator<Element> itm = members.iterator();
@@ -336,7 +337,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
                                 Team t = new Team();
                                 t.setName(name);
                                 if (bi != null) {
-                                    t.setPicture(bi);
+                                    t.setPicture(new ImageIcon(bi));
                                 }
                                 if (annex) {
                                     so = new ObjectAnnexRanking(t, value, value1, value2, value3, value4, value5);

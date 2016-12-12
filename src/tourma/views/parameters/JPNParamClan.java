@@ -394,19 +394,11 @@ public final class JPNParamClan extends javax.swing.JPanel {
                         ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
                         icon = ImageTreatment.resize(icon, 80, 80);
 
-                        c.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
-                        Graphics g = c.getPicture().createGraphics();
-                        // paint the Icon to the BufferedImage.
-                        icon.paintIcon(null, g, 0, 0);
-                        g.dispose();
+                        c.setPicture(icon);
                     }
                 } else {
                     ImageIcon icon = (ImageIcon) combo.getSelectedItem();
-                    c.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
-                    Graphics g = c.getPicture().createGraphics();
-                    // paint the Icon to the BufferedImage.
-                    icon.paintIcon(null, g, 0, 0);
-                    g.dispose();
+                    c.setPicture(icon);
                 }
             } catch (RemoteException re) {
                 re.printStackTrace();

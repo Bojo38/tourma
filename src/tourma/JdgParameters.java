@@ -7,6 +7,7 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.rmi.RemoteException;
 import tourma.data.EIndivPairing;
 import tourma.data.ETeamPairing;
 import tourma.data.Parameters;
@@ -23,6 +24,7 @@ public final class JdgParameters extends javax.swing.JDialog {
 
     /**
      * Creates new form JdgParameters
+     *
      * @param parent
      * @param modal
      */
@@ -30,20 +32,21 @@ public final class JdgParameters extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
 
         this.setSize(640, 480);
 
-            final int screenWidth = dmode.getWidth();
-            final int screenHeight = dmode.getHeight();
-            this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+        final int screenWidth = dmode.getWidth();
+        final int screenHeight = dmode.getHeight();
+        this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
-
-        mParams = Tournament.getTournament().getParams();
-
+        try {
+            mParams = Tournament.getTournament().getParams();
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         // Load current parameters
 
         if (mParams.getGame() == RosterType.C_BLOOD_BOWL) {
@@ -51,7 +54,6 @@ public final class JdgParameters extends javax.swing.JDialog {
         } else {
             jrbDreadBall.setSelected(true);
         }
-
 
         if (mParams.isTeamTournament()) {
             jrbTeam.setSelected(true);
@@ -528,8 +530,8 @@ public final class JdgParameters extends javax.swing.JDialog {
             jpnIndivTeamRanking.setEnabled(false);
         }
     }
-   
-private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

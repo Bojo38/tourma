@@ -219,7 +219,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                 TeamMatch tm = (TeamMatch) mRound.getMatch(row);
                 if (tm.getCompetitor1().getPicture() != null) {
                     JLabel obj = new JLabel();
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(tm.getCompetitor1().getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(tm.getCompetitor1().getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setText((String) value);
                     obj.setOpaque(true);
@@ -231,7 +231,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                 TeamMatch tm = (TeamMatch) mRound.getMatch(row);
                 if (tm.getCompetitor2().getPicture() != null) {
                     JLabel obj = new JLabel();
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(tm.getCompetitor2().getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(tm.getCompetitor2().getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setText((String) value);
                     obj.setOpaque(true);

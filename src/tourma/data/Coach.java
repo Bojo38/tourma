@@ -4,6 +4,8 @@
  */
 package tourma.data;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.DataConversionException;
@@ -77,7 +80,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      *
      * @return
      */
-    public static Coach getNullCoach() throws RemoteException{
+    public static Coach getNullCoach() throws RemoteException {
         synchronized (Coach.myLock) {
             if (sNullCoach == null) {
                 sNullCoach = new Coach(StringConstants.CS_NONE);
@@ -252,7 +255,11 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
             try {
                 String encodedImage;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                    ImageIO.write(getPicture(), "png", baos);
+                    BufferedImage bi = new BufferedImage(getPicture().getIconWidth(), getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    getPicture().paintIcon(null, g, 0, 0);
+                    g.dispose();
+                    ImageIO.write(bi, "png", baos);
                     baos.flush();
                     //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
                     encodedImage = Base64.encode(baos.toByteArray());
@@ -280,7 +287,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      *
      * @return
      */
-    public String getStringRoster() throws RemoteException{
+    public String getStringRoster() throws RemoteException {
         if (this.getMatchCount() == 0) {
             return getRoster().getName();
         }
@@ -388,7 +395,9 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
                 if (!encodedImage.isEmpty()) {
                     //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
                     byte[] bytes = Base64.decode(encodedImage);
-                    setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
+                    BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+                    ImageIcon ii = new ImageIcon(bi);
+                    setPicture(ii);
                 }
             }
         } catch (IOException e) {
@@ -437,7 +446,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @return
      */
     @Override
-    public boolean havePlayed(Competitor opponent) throws RemoteException{
+    public boolean havePlayed(Competitor opponent) throws RemoteException {
         boolean have_played = false;
         for (int i = 0; i < getMatchCount(); i++) {
             Match mMatch = getMatch(i);

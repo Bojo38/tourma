@@ -472,7 +472,7 @@ public final class MjtRankingClan extends MjtRanking {
                 if (column == 1) {
                     Clan t = (Clan) mObjects.get(row);
                     if (t.getPicture() != null) {
-                        ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.getPicture()), 30, 30);
+                        ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
                         obj.setIcon(icon);
                         obj.setHorizontalAlignment(JLabel.CENTER);
                         obj.setOpaque(true);
