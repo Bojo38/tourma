@@ -5,6 +5,7 @@
 package teamma.data;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +16,7 @@ import tourma.data.IXMLExport;
  *
  * @author WFMJ7631
  */
-public class Roster implements IXMLExport {
+public class Roster implements IXMLExport, Serializable{
 
 
     private final static String CS_Roster = "Roster";

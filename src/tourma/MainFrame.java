@@ -71,9 +71,10 @@ import tourma.data.CoachMatch;
 import tourma.data.ETeamPairing;
 import static tourma.data.ETeamPairing.TEAM_PAIRING;
 import tourma.data.Group;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Parameters;
+import tourma.rmi.RMITournament;
 import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Substitute;
@@ -81,6 +82,7 @@ import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
+import tourma.rmi.RMIThread;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.Generation;
@@ -112,7 +114,7 @@ import tourma.views.system.JdgRevisions;
 //@com.yworks.util.annotation.Obfuscation ( exclude = true, applyToMembers = true )
 public final class MainFrame extends javax.swing.JFrame implements PropertyChangeListener {
 
-    private ITournament mTournament;
+    private Tournament mTournament;
     private File mFile = null;
 
     private final static String CS_TourMaXMLFile = "TourMaXMLFile";
@@ -1460,7 +1462,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void jtrPanelsValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jtrPanelsValueChanged
 
         TreePath path;
-        if (evt != null) {
+            if (evt != null) {
             path = evt.getNewLeadSelectionPath();
         } else {
             path = jtrPanels.getPathForRow(1);
@@ -2975,8 +2977,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             splashProgress(1);
 
             //System.setProperty("java.rmi.server.hostname","192.168.127.1"); 
-            ITournament tour = Tournament.getTournament();
-            ITournament stub = (ITournament) UnicastRemoteObject.exportObject(tour, 0);
+            RMITournament tour = RMITournament.getInstance();
+            RMITournament stub = (RMITournament) UnicastRemoteObject.exportObject(tour, 0);
 
             splashText("Binding Tournament");
             splashProgress(2);
@@ -3099,22 +3101,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                         String address = (String) JOptionPane.showInputDialog(null,
                                 Translate.translate(CS_EnterRemoteTourmaServer), "127.0.0.1");
 
-                        try {
-                            //System.setProperty("java.rmi.server.hostname", address);
-                            Registry registry = LocateRegistry.getRegistry(address);
-                            ITournament r = (ITournament) registry.lookup("TourMa");
-                            //Remote r = Naming.lookup("rmi://" + address + "/TourMa");
-                            if (r instanceof ITournament) {
-                                Tournament.setTournament(((ITournament) r));
-                            }
-
-                        } catch (RemoteException | NotBoundException e) {
-                            System.out.println(e.getLocalizedMessage());
-                        }
+                        RMIThread rmi=new RMIThread(address);
+                        Thread thread=new Thread(rmi);
+                        thread.start();
 
                         MainFrame window = MainFrame.getMainFrame(res);
                         window.setVisible(true);
 
+                        rmi.stop();
+                        
                         /*try {
                             
                             Socket socket = null;

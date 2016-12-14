@@ -40,7 +40,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 import tourma.data.Category;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -57,7 +57,7 @@ public final class JdgTeam extends javax.swing.JDialog {
 
     private boolean mTeamTournament;
     private Team mTeam;
-    private ITournament mTour;
+    private Tournament mTour;
 
     /**
      *

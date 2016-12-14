@@ -50,7 +50,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.RosterType;
 import tourma.data.Round;
@@ -68,7 +68,7 @@ import tourma.tableModel.MjtRankingTeam;
  */
 public final class JPNStatistics extends javax.swing.JPanel {
 
-    private ITournament mTournament;
+    private Tournament mTournament;
     private final ArrayList<HashMap<String, Integer>> mHpositions = new ArrayList<>();
     private final ArrayList<HashMap<String, Integer>> mHTeampositions = new ArrayList<>();
     private ChartPanel cpPositions = null;

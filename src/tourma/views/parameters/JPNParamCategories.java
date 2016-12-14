@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.Category;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -20,7 +20,7 @@ import tourma.utility.StringConstants;
  */
 public final class JPNParamCategories extends javax.swing.JPanel {
 
-    private ITournament mTournament;
+    private Tournament mTournament;
 
     /**
      * Creates new form JPNParamCategory

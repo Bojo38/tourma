@@ -51,7 +51,7 @@ public abstract class Match implements IXMLExport, Serializable {
      *
      * @return
      */
-    public Competitor getWinner() throws RemoteException{
+    public Competitor getWinner() throws RemoteException {
         return mWinner;
     }
 
@@ -59,14 +59,14 @@ public abstract class Match implements IXMLExport, Serializable {
      *
      * @return
      */
-    public Competitor getLooser() throws RemoteException{
+    public Competitor getLooser() throws RemoteException {
         return mLooser;
     }
 
     /**
      * Reset Winner/Looser
      */
-    public void resetWL() throws RemoteException{
+    public void resetWL() throws RemoteException {
         setWinner(null);
         setLooser(null);
     }
@@ -74,56 +74,72 @@ public abstract class Match implements IXMLExport, Serializable {
     /**
      * @return the mCompetitor1
      */
-    public Competitor getCompetitor1() throws RemoteException{
+    public Competitor getCompetitor1() throws RemoteException {
         return mCompetitor1;
+    }
+
+    public boolean equals(final Object obj) {
+        boolean result = false;
+        if (obj instanceof Match) {
+            Match m = (Match) obj;
+            result = true;
+            try {
+                result &= (mCompetitor1 == m.getCompetitor1());
+                result &= (mCompetitor2 == m.getCompetitor2());
+            } catch (RemoteException re) {
+                result=false;
+                re.printStackTrace();
+            }
+        }
+        return result;
     }
 
     /**
      * @param mCompetitor1 the mCompetitor1 to set
      */
-    public void setCompetitor1(Competitor mCompetitor1) throws RemoteException{
+    public void setCompetitor1(Competitor mCompetitor1) throws RemoteException {
         this.mCompetitor1 = mCompetitor1;
     }
 
     /**
      * @return the mCompetitor2
      */
-    public Competitor getCompetitor2() throws RemoteException{
+    public Competitor getCompetitor2() throws RemoteException {
         return mCompetitor2;
     }
 
     /**
      * @param mCompetitor2 the mCompetitor2 to set
      */
-    public void setCompetitor2(Competitor mCompetitor2) throws RemoteException{
+    public void setCompetitor2(Competitor mCompetitor2) throws RemoteException {
         this.mCompetitor2 = mCompetitor2;
     }
 
     /**
      * @return the mRound
      */
-    public Round getRound() throws RemoteException{
+    public Round getRound() throws RemoteException {
         return mRound;
     }
 
     /**
      * @param mRound the mRound to set
      */
-    public void setRound(Round mRound) throws RemoteException{
+    public void setRound(Round mRound) throws RemoteException {
         this.mRound = mRound;
     }
 
     /**
      * @param mWinner the mWinner to set
      */
-    public void setWinner(Competitor mWinner) throws RemoteException{
+    public void setWinner(Competitor mWinner) throws RemoteException {
         this.mWinner = mWinner;
     }
 
     /**
      * @param mLooser the mLooser to set
      */
-    public void setLooser(Competitor mLooser) throws RemoteException{
+    public void setLooser(Competitor mLooser) throws RemoteException {
         this.mLooser = mLooser;
     }
 
@@ -180,7 +196,7 @@ public abstract class Match implements IXMLExport, Serializable {
     /**
      * Recalculate the values fot this match
      */
-    public abstract void recomputeValues()throws RemoteException;
+    public abstract void recomputeValues() throws RemoteException;
 
     /**
      * Returns the curent value for display
@@ -188,7 +204,7 @@ public abstract class Match implements IXMLExport, Serializable {
      * @param index Index of the value (1..5)
      * @return an integer
      */
-    public int getValue(int indexvalue, Competitor c) throws RemoteException{
+    public int getValue(int indexvalue, Competitor c) throws RemoteException {
         int value = 0;
         if (!values_computed) {
             recomputeValues();
@@ -233,12 +249,12 @@ public abstract class Match implements IXMLExport, Serializable {
         }
         return value;
     }
-    
-    public abstract int getValue(Criteria crit, int subtype,Competitor c)throws RemoteException;
 
-    public abstract Element getXMLElementForDisplay()throws RemoteException;
+    public abstract int getValue(Criteria crit, int subtype, Competitor c) throws RemoteException;
 
-    public abstract void setXMLElementForDisplay(Element element)throws RemoteException;
-    
-    public abstract boolean isEntered()throws RemoteException;
+    public abstract Element getXMLElementForDisplay() throws RemoteException;
+
+    public abstract void setXMLElementForDisplay(Element element) throws RemoteException;
+
+    public abstract boolean isEntered() throws RemoteException;
 }

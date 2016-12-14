@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -31,7 +31,7 @@ import tourma.views.report.JdgRanking;
  */
 public final class JPNCategory extends javax.swing.JPanel {
 
-    private final ITournament mTournament;
+    private final Tournament mTournament;
     private final Category mCategory;
     private final int mRoundNumber;
 
@@ -49,7 +49,7 @@ public final class JPNCategory extends javax.swing.JPanel {
      * @param g
      * @param roundNumber
      */
-    public JPNCategory(final ITournament t, final Category g, final int roundNumber) {
+    public JPNCategory(final Tournament t, final Category g, final int roundNumber) {
         initComponents();
         mTournament = t;
         mCategory = g;

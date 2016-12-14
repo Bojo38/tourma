@@ -51,12 +51,12 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Tournament implements IContainCoachs,ITournament, Serializable {
+public class Tournament implements IContainCoachs,Serializable {
 
     /**
      *
      */
-    private static ITournament mSingleton;
+    private static Tournament mSingleton;
     private static final Object myLock = new Object();
     private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
 
@@ -65,7 +65,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public static ITournament resetTournament() throws RemoteException{
+    public static Tournament resetTournament() throws RemoteException{
         mSingleton = new Tournament();
         return mSingleton;
     }
@@ -82,7 +82,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      *
      * @return
      */
-    public static ITournament getTournament() throws RemoteException{
+    public static Tournament getTournament() throws RemoteException{
         synchronized (Tournament.myLock) {
             if (mSingleton == null) {
                 mSingleton = new Tournament();
@@ -207,8 +207,7 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
      * @param c
      * @throws java.rmi.RemoteException
      */
-    @Override
-    public void removeClan(int c)throws RemoteException {
+        public void removeClan(int c)throws RemoteException {
         mClans.remove(c);
     }
 
@@ -1536,7 +1535,14 @@ public class Tournament implements IContainCoachs,ITournament, Serializable {
         }
     }
     
-    public static void setTournament(ITournament tour)
+    // To do : Fill all data from tour (Data from server)
+    public static void PullTournament(Tournament tour)
+    {
+        mSingleton=tour;
+    }
+    
+    // To Do : Fill only coach/team/match data from tour (Data From client)
+    public static void PushTournament(Tournament tour)
     {
         mSingleton=tour;
     }

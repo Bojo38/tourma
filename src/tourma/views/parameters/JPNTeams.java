@@ -10,7 +10,7 @@ import tourma.JdgCoach;
 import tourma.JdgTeam;
 import tourma.MainFrame;
 import tourma.data.ETeamPairing;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -23,7 +23,7 @@ import tourma.utils.display.TableFormat;
  */
 public final class JPNTeams extends javax.swing.JPanel {
 
-    private ITournament mTournament;
+    private Tournament mTournament;
 
     /**
      * Creates new form JPNTeams

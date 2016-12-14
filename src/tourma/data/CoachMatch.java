@@ -559,7 +559,24 @@ public class CoachMatch extends Match implements Serializable {
      * @return
      */
     public Value getValue(Criteria c) throws RemoteException{
-        return mValues.get(c);
+        Value val= mValues.get(c);
+        if (val!=null)
+        {
+            return val;
+        }
+        else
+        {
+            // Find criteria ny name
+            String criteria=c.getName();
+            
+            for (Criteria crit : this.mValues.keySet()) {
+                if (crit.getName().equals(criteria))
+                {
+                    return mValues.get(crit);
+                }
+            }
+        }
+        return null;
     }
 
     /**

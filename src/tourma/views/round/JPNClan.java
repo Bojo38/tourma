@@ -16,7 +16,7 @@ import java.util.HashMap;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -36,7 +36,7 @@ import tourma.views.report.JdgRanking;
 public final class JPNClan extends javax.swing.JPanel {
 
     private final Round mRound;
-    private final ITournament mTournament;
+    private final Tournament mTournament;
 //    private final JTable mJtbTeamMatch = null;
 
     /**
@@ -50,7 +50,7 @@ public final class JPNClan extends javax.swing.JPanel {
      * @param r
      * @param t
      */
-    public JPNClan(final Round r, final ITournament t) {
+    public JPNClan(final Round r, final Tournament t) {
         initComponents();
         mRound = r;
         mTournament = t;

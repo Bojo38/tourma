@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import tourma.JdgCoach;
 import tourma.MainFrame;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtCoaches;
@@ -21,7 +21,7 @@ import tourma.utils.display.TableFormat;
  */
 public final class JPNParameters extends javax.swing.JPanel {
 
-    private ITournament mTournament;
+    private Tournament mTournament;
     private final JPNParamGroup mJpnGroup;
     private final JPNParamCategories mJpnCategories;
     private final JPNParamClan mJpnClan;

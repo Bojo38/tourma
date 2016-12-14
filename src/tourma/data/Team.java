@@ -358,7 +358,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      */
     @Override
     public void addMatch(Competitor opponent, Round r) throws RemoteException {
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
 
         final ArrayList<Round> vs = new ArrayList<>();
         for (int i = 0; i < tour.getRoundsCount(); i++) {
@@ -461,7 +461,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) throws RemoteException {
 
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         Parameters params = tour.getParams();
 
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
@@ -519,7 +519,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
         if (!complete) {
             addMatch(c, r);
         } else {
-            ITournament tour = Tournament.getTournament();
+            Tournament tour = Tournament.getTournament();
             Parameters params = tour.getParams();
             TeamMatch tm = new TeamMatch(r);
             tm.setCompetitor1(this);
@@ -588,7 +588,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public void roundCheck(Round round) throws RemoteException {
 
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();
 
         for (int i = round.getMatchsCount() - 1; i > 0; i--) {

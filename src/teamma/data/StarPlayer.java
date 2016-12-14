@@ -4,6 +4,7 @@
  */
 package teamma.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author WFMJ7631
  */
-public class StarPlayer {
+public class StarPlayer implements Serializable{
     private static final Logger LOG = Logger.getLogger(StarPlayer.class.getName());
 
     /**

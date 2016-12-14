@@ -4,6 +4,7 @@
  */
 package teamma.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import teamma.languages.Translate;
@@ -12,7 +13,7 @@ import teamma.languages.Translate;
  *
  * @author WFMJ7631
  */
-public class RosterType {
+public class RosterType implements Serializable {
 
     /**
      *

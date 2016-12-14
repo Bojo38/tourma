@@ -29,7 +29,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.RosterType;
@@ -59,7 +59,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
     private final Round mRound;
     private final int mRoundNumber;
-    private final ITournament mTournament;
+    private final Tournament mTournament;
     private JPNTeamRound mJpnTeamRound = null;
     private JPNClan mJpnClanRound = null;
     private boolean mRoundOnly = false;
@@ -82,7 +82,7 @@ public final class JPNRound extends javax.swing.JPanel {
      * @param r
      * @param t
      */
-    public JPNRound(final int roundNumber, final Round r, final ITournament t) {
+    public JPNRound(final int roundNumber, final Round r, final Tournament t) {
         initComponents();
         mRound = r;
         mTournament = t;

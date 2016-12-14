@@ -12,7 +12,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.Group;
 import tourma.data.GroupPoints;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -23,7 +23,7 @@ import tourma.languages.Translate;
  */
 public final class JPNParamGroup extends javax.swing.JPanel {
 
-    private ITournament mTournament;
+    private Tournament mTournament;
 
     /**
      * Creates new form JPNParamGroup

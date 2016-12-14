@@ -469,7 +469,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
     @Override
     public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) throws RemoteException {
 
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
 
         Parameters params = tour.getParams();
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
@@ -746,7 +746,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
     @Override
     public String getDecoratedName() throws RemoteException {
         String tmp = getName();
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         ArrayList<Clan> clans;
         Parameters params = tour.getParams();
         if (params.isEnableClans()) {
@@ -780,7 +780,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @return
      */
     public boolean isBalanced(Coach opp, Round round) throws RemoteException {
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         boolean balanced = true;
         if ((tour.getParams().isTeamTournament())
                 && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
@@ -798,7 +798,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
     }
 
     public void printBalanced(Round round) throws RemoteException {
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
 
         if ((tour.getParams().isTeamTournament())
                 && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
@@ -975,7 +975,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
         // Already played
         boolean have_played = havePlayed(Opponent);
 
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         canMatch = !have_played;
 
         // Same clan 
@@ -1106,7 +1106,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
     @SuppressWarnings("empty-statement")
     public void roundCheck(Round round) throws RemoteException {
 
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();
 
         int balancingTries = 100000;

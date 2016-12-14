@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -37,7 +37,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
     private String mName = "";
     private Criteria mCriteria = null;
-    private ITournament mTour = null;
+    private Tournament mTour = null;
     private Round mRound = null;
     private boolean mClan;
     private boolean mTeam;
@@ -61,7 +61,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
      * @param round
      * @param clan
      */
-    public JPNAnnexRanking(final String name, final Criteria criteria, final ITournament tour, final ArrayList<Coach> coachs, final ArrayList<Team> teams, final Round round, final boolean clan, final boolean team) {
+    public JPNAnnexRanking(final String name, final Criteria criteria, final Tournament tour, final ArrayList<Coach> coachs, final ArrayList<Team> teams, final Round round, final boolean clan, final boolean team) {
         this(name, criteria, tour, round, clan, team, coachs, teams);
     }
 
@@ -89,7 +89,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
      * @param v
      * @param t
      */
-    public JPNAnnexRanking(final String name, final Criteria criteria, final ITournament tour, final Round round, final boolean clan, final boolean team, final ArrayList v, final ArrayList t) {
+    public JPNAnnexRanking(final String name, final Criteria criteria, final Tournament tour, final Round round, final boolean clan, final boolean team, final ArrayList v, final ArrayList t) {
         initComponents();
         mName = name;
         mCriteria = criteria;
@@ -103,7 +103,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
         try {
             int roundnumber = 0;
-            while (round != tour.getRound(roundnumber)) {
+            while (!round.equals(tour.getRound(roundnumber))) {
                 roundnumber++;
             }
 

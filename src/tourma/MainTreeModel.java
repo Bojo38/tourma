@@ -16,7 +16,7 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import tourma.data.Round;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -32,7 +32,7 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
      *
      */
     private ArrayList<TreeModelListener> mListeners;
-    private ITournament mTournament;
+    private Tournament mTournament;
     private DefaultMutableTreeNode mRoot;
     /**
      *

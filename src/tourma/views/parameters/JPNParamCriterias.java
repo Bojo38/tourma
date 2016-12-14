@@ -9,7 +9,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
@@ -22,7 +22,7 @@ import tourma.tableModel.MjtCriterias;
  */
 public final class JPNParamCriterias extends javax.swing.JPanel {
 
-    private ITournament mTournament;
+    private Tournament mTournament;
 
     /**
      * Creates new form JPNParamCriterias

@@ -5,12 +5,13 @@
 package teamma.data;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  *
  * @author WFMJ7631
  */
-public class Skill {
+public class Skill implements Serializable{
 
 /**
  * 

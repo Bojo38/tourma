@@ -46,6 +46,13 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
      */
     public MjtAnnexRankTeam(final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only) {
         super(round, criteria, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+        try{
+        sortDatas();
+        }
+        catch(RemoteException re)
+        {
+            re.printStackTrace();
+        }
     }
 
     /**

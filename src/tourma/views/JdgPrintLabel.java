@@ -47,7 +47,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -73,7 +73,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
     private final Round mRound;
     private final boolean mByTeam;
     private final boolean mPreFilled;
-    private ITournament mTour;
+    private Tournament mTour;
     private int mRoundNumber = 0;
 
     private final static String CS_ACCR_Versus = "VS";

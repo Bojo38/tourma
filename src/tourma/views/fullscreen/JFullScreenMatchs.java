@@ -43,7 +43,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.EIndivPairing;
-import tourma.data.ITournament;
+import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -125,7 +125,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
                             }
 
-                            ITournament tour = Tournament.getTournament();
+                            Tournament tour = Tournament.getTournament();
                             if (tour instanceof Tournament) {
 
                                 Document doc = sb.build(new StringReader(buffer));

@@ -47,7 +47,7 @@ public class TeamMatch extends Match implements Serializable {
         if (super.getWinner() != null) {
             return super.getWinner();
         } else {
-            ITournament tour = Tournament.getTournament();
+            Tournament tour = Tournament.getTournament();
             final Team team1 = (Team) getCompetitor1();
             final Team team2 = (Team) getCompetitor2();
 
@@ -104,7 +104,7 @@ public class TeamMatch extends Match implements Serializable {
         if (super.getLooser() != null) {
             return super.getLooser();
         } else {
-            ITournament tour = Tournament.getTournament();
+            Tournament tour = Tournament.getTournament();
             final Team team1 = (Team) getCompetitor1();
             final Team team2 = (Team) getCompetitor2();
 
@@ -240,7 +240,7 @@ public class TeamMatch extends Match implements Serializable {
      * @return
      */
     public int getVictories(Team t1) throws RemoteException{
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
 
@@ -289,7 +289,7 @@ public class TeamMatch extends Match implements Serializable {
      * @return
      */
     public int getLoss(Team t1) throws RemoteException{
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
 
@@ -346,7 +346,7 @@ public class TeamMatch extends Match implements Serializable {
      * @return
      */
     public int getDraw(Team t1) throws RemoteException{
-        ITournament tour = Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         final Team team1 = t1;
         Team team2;
 
