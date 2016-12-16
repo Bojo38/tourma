@@ -53,6 +53,6 @@ import tourma.utility.StringConstants;
  */
 public interface ITournament extends Remote {
         
-    public Tournament getTournament();
-    public void setTournament(Tournament object);
+    public Tournament getTournament() throws RemoteException ;
+    public void setTournament(Tournament object) throws RemoteException ;
 }

@@ -11,6 +11,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tourma.data.ITournament;
 import tourma.data.Tournament;
 
 /**
@@ -20,10 +21,10 @@ import tourma.data.Tournament;
 public class RMIThread implements Runnable {
 
     String mHostAddress;
-    boolean mStop=false;
+    static boolean mStop=false;
     int period = 30; // 30 seconds
 
-    public void stop()
+    public static void stop()
     {
         mStop=true;
     }
@@ -35,17 +36,18 @@ public class RMIThread implements Runnable {
     @Override
     public void run() {
         try {
-            //System.setProperty("java.rmi.server.hostname", address);
+            //System.setProperty("java.rmi.sewrver.hostname", address);
             Registry registry = LocateRegistry.getRegistry(mHostAddress);
-            RMITournament r = (RMITournament) registry.lookup("TourMa");
+            ITournament r = (ITournament) registry.lookup("TourMa");
             //Remote r = Naming.lookup("rmi://" + address + "/TourMa");
-            if (r instanceof RMITournament) {
+            if (r instanceof ITournament) {
                 Tournament.PullTournament(r.getTournament());
             }
 
             
             while (!mStop)
             {
+                Tournament.PullTournament(r.getTournament());
                 r.setTournament(Tournament.getTournament());
                 try {
                     Thread.sleep(period*1000);

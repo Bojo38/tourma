@@ -60,6 +60,15 @@ public class Tournament implements IContainCoachs,Serializable {
     private static final Object myLock = new Object();
     private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
 
+    private boolean isClient=false;
+
+    public boolean isClient() {
+        return isClient;
+    }
+
+    public void setIsClient(boolean isClient) {
+        this.isClient = isClient;
+    }
     
     /**
      *
@@ -1523,27 +1532,31 @@ public class Tournament implements IContainCoachs,Serializable {
         mDescription = tmp;
     }
         
-    public Tournament getTournamentInstance() 
-    {
-        if (mSingleton instanceof Tournament)
-        {
-            return (Tournament)mSingleton;
-        }
-        else
-        {
-            return null;
-        }
-    }
     
     // To do : Fill all data from tour (Data from server)
     public static void PullTournament(Tournament tour)
-    {
+    {        
+        // The data comes from server, please copy all parameters
+        
+        // Find Rosters, copy the properties
+        // Find teams, copy the properties
+        // Find coachs, copy the properties
+        // Find Clans, copy the properties
+        // Find Groups, copy the properties
+        // Find Round, copy the  properties
+        // Find Matchs, copy the properties        
         mSingleton=tour;
     }
     
     // To Do : Fill only coach/team/match data from tour (Data From client)
     public static void PushTournament(Tournament tour)
     {
-        mSingleton=tour;
+        // Find teams, copy the properties
+        // Find coachs, copy the properties
+        // Find Clans, copy the properties
+        // Find Groups, copy the properties
+        // Find Round, copy the  properties
+        // Find Matchs, copy the properties
+        //mSingleton=tour;
     }
 }

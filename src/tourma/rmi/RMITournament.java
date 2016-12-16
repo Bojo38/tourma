@@ -15,28 +15,25 @@ import tourma.data.Tournament;
  *
  * @author WFMJ7631
  */
-public class RMITournament implements ITournament{
+public class RMITournament implements ITournament {
 
-    private static RMITournament mSingleton=null;
-    
-    public static RMITournament getInstance()
-    {
-        if (mSingleton==null)
-        {
-            mSingleton=new RMITournament();
+    private static RMITournament mSingleton = null;
+
+    public static RMITournament getInstance() {
+        if (mSingleton == null) {
+            mSingleton = new RMITournament();
         }
         return mSingleton;
     }
-    
-    @Override
-    public Tournament getTournament() {
-
-            return Tournament.getTournament();
-    }
 
     @Override
-    public void setTournament(Tournament object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Tournament getTournament() throws RemoteException {
+        return Tournament.getTournament();
     }
 
+    @Override
+    public void setTournament(Tournament object) throws RemoteException {
+        Tournament.PushTournament(object);
     }
+
+}

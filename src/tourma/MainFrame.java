@@ -36,6 +36,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
+import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.Remote;
@@ -71,6 +72,7 @@ import tourma.data.CoachMatch;
 import tourma.data.ETeamPairing;
 import static tourma.data.ETeamPairing.TEAM_PAIRING;
 import tourma.data.Group;
+import tourma.data.ITournament;
 import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Parameters;
@@ -2897,9 +2899,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             splashText("Initization of RMi Registry");
             splashProgress(1);
 
-            //System.setProperty("java.rmi.server.hostname","192.168.127.1"); 
             RMITournament tour = RMITournament.getInstance();
-            RMITournament stub = (RMITournament) UnicastRemoteObject.exportObject(tour, 0);
+            ITournament stub = (ITournament) UnicastRemoteObject.exportObject(tour, 0);
 
             splashText("Binding Tournament");
             splashProgress(2);
@@ -3022,14 +3023,21 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                         String address = (String) JOptionPane.showInputDialog(null,
                                 Translate.translate(CS_EnterRemoteTourmaServer), "127.0.0.1");
 
+                        try {
+                            UnicastRemoteObject.unexportObject(RMITournament.getInstance(), true);
+                        } catch (NoSuchObjectException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
                         RMIThread rmi = new RMIThread(address);
                         Thread thread = new Thread(rmi);
                         thread.start();
 
+                        Tournament.getTournament().setIsClient(true);
+
                         MainFrame window = MainFrame.getMainFrame(res);
                         window.setVisible(true);
 
-                        rmi.stop();
 
                         /*try {
                             
@@ -3167,6 +3175,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
             );
 
+            RMIThread.stop();
+
         } catch (InterruptedException ex) {
             Logger.getLogger(MainFrame.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -3175,6 +3185,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             Logger.getLogger(MainFrame.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     private static MainFrame mSingleton;
