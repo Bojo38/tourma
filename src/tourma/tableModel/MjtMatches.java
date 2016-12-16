@@ -55,12 +55,8 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         if (mNafOnly) {
             for (int i = 0; i < matchs.size(); i++) {
                 CoachMatch m = matchs.get(i);
-                try {
-                    if (m.isFullNaf()) {
-                        mMatchs.add(m);
-                    }
-                } catch (RemoteException re) {
-                    re.printStackTrace();
+                if (m.isFullNaf()) {
+                    mMatchs.add(m);
                 }
 
             }
@@ -72,14 +68,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
     @Override
     public int getColumnCount() {
         int res = 0;
-        try {
-            if (mTeamTournament) {
-                res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5;
-            } else {
-                res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3;
-            }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+        if (mTeamTournament) {
+            res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5;
+        } else {
+            res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3;
         }
 
         return res;
@@ -119,16 +111,12 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     result = Translate.translate(Translate.CS_Team) + " 2";
                     break;
                 default:
-                    try {
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
-                        final int ind = (col - 5) % 2;
-                        if (ind == 0) {
-                            result = crit.getName() + " 1";
-                        } else {
-                            result = crit.getName() + " 2";
-                        }
-                    } catch (RemoteException re) {
-                        re.printStackTrace();
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
+                    final int ind = (col - 5) % 2;
+                    if (ind == 0) {
+                        result = crit.getName() + " 1";
+                    } else {
+                        result = crit.getName() + " 2";
                     }
             }
         } else {
@@ -149,15 +137,11 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     result = Translate.translate(Translate.CS_Coach) + " 2";
                     break;
                 default:
-                    try {
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
-                        if ((col - 3) % 2 > 0) {
-                            result = crit.getName() + " 2";
-                        } else {
-                            result = crit.getName() + " 1";
-                        }
-                    } catch (RemoteException re) {
-                        re.printStackTrace();
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                    if ((col - 3) % 2 > 0) {
+                        result = crit.getName() + " 2";
+                    } else {
+                        result = crit.getName() + " 1";
                     }
             }
         }
@@ -171,163 +155,159 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         Value val;
         int index;
         String rosterName;
-        try {
-            if (mTeamTournament) {
-                switch (col) {
-                    case 0:
-                        obj = row + 1;
-                        break;
-                    case 1:
-                        obj = ((Coach) m.getCompetitor1()).getTeamMates().getName();
-                        break;
-                    case 2: {
-                        String tmp = "";
-                        if (m.isConcedeedBy1()) {
-                            tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
-                        }
-                        if (m.isRefusedBy1()) {
-                            tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
-                        }
+        if (mTeamTournament) {
+            switch (col) {
+                case 0:
+                    obj = row + 1;
+                    break;
+                case 1:
+                    obj = ((Coach) m.getCompetitor1()).getTeamMates().getName();
+                    break;
+                case 2: {
+                    String tmp = "";
+                    if (m.isConcedeedBy1()) {
+                        tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
+                    }
+                    if (m.isRefusedBy1()) {
+                        tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
+                    }
 
-                        if (m.getRoster1() == null) {
-                            rosterName = ((Coach) m.getCompetitor1()).getRoster().getName();
-                        } else {
-                            rosterName = m.getRoster1().getName();
-                        }
-                        if (m.getSubstitute1() != null) {
-                            tmp += m.getCompetitor1().getName() + "/" + m.getSubstitute1().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
-                        } else {
-                            tmp += m.getCompetitor1().getName() + StringConstants.CS_THICK + rosterName;
-                        }
-                        obj = tmp;
+                    if (m.getRoster1() == null) {
+                        rosterName = ((Coach) m.getCompetitor1()).getRoster().getName();
+                    } else {
+                        rosterName = m.getRoster1().getName();
                     }
-                    break;
-                    case 3:
-                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                        if (val.getValue1() != -1) {
-                            obj = val.getValue1();
-                        } else {
-                            obj = StringConstants.CS_NULL;
-                        }
-                        break;
-                    case 4:
-                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                        if (val.getValue2() != -1) {
-                            obj = val.getValue2();
-                        } else {
-                            obj = StringConstants.CS_NULL;
-                        }
-                        break;
-                    case 5: {
-                        String tmp = "";
-                        if (m.isConcedeedBy2()) {
-                            tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
-                        }
-                        if (m.isRefusedBy2()) {
-                            tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
-                        }
-                        if (m.getRoster2() == null) {
-                            rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
-                        } else {
-                            rosterName = m.getRoster2().getName();
-                        }
-                        if (m.getSubstitute2() != null) {
-                            tmp += m.getCompetitor2().getName() + "/" + m.getSubstitute2().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
-                        } else {
-                            tmp += m.getCompetitor2().getName() + StringConstants.CS_THICK + rosterName;
-                        }
-                        obj = tmp;
+                    if (m.getSubstitute1() != null) {
+                        tmp += m.getCompetitor1().getName() + "/" + m.getSubstitute1().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
+                    } else {
+                        tmp += m.getCompetitor1().getName() + StringConstants.CS_THICK + rosterName;
                     }
-                    break;
-                    case 6:
-                        obj = ((Coach) m.getCompetitor2()).getTeamMates().getName();
-                        break;
-                    default:
-                        index = (col - 5) / 2;
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria(index);
-                        val = m.getValue(crit);
-                        if ((col - 5) % 2 == 0) {
-                            obj = val.getValue1();
-                        } else {
-                            obj = val.getValue2();
-                        }
+                    obj = tmp;
                 }
-            } else {
-                switch (col) {
-                    case 0:
-                        obj = row + 1;
-                        break;
-                    case 1: {
-                        String tmp = "";
-                        if (m.isConcedeedBy1()) {
-                            tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
-                        }
-                        if (m.isRefusedBy1()) {
-                            tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
-                        }
-                        if (m.getRoster1() == null) {
-                            rosterName = ((Coach) m.getCompetitor1()).getRoster().getName();
-                        } else {
-                            rosterName = m.getRoster1().getName();
-                        }
-                        if (m.getSubstitute1() != null) {
-                            tmp += m.getCompetitor1().getName() + "/" + m.getSubstitute1().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
-                        } else {
-                            tmp += m.getCompetitor1().getName() + StringConstants.CS_THICK + rosterName;
-                        }
-                        obj = tmp;
+                break;
+                case 3:
+                    val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                    if (val.getValue1() != -1) {
+                        obj = val.getValue1();
+                    } else {
+                        obj = StringConstants.CS_NULL;
                     }
                     break;
-                    case 2:
-                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                        if (val.getValue1() != -1) {
-                            obj = val.getValue1();
-                        } else {
-                            obj = StringConstants.CS_NULL;
-                        }
-                        break;
-                    case 3:
-                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                        if (val.getValue2() != -1) {
-                            obj = val.getValue2();
-                        } else {
-                            obj = StringConstants.CS_NULL;
-                        }
-                        break;
-                    case 4: {
-                        String tmp = "";
-                        if (m.isConcedeedBy2()) {
-                            tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";;
-                        }
-                        if (m.isRefusedBy2()) {
-                            tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";;
-                        }
-                        if (m.getRoster2() == null) {
-                            rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
-                        } else {
-                            rosterName = m.getRoster2().getName();
-                        }
-                        if (m.getSubstitute2() != null) {
-                            tmp += m.getCompetitor2().getName() + "/" + m.getSubstitute2().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
-                        } else {
-                            tmp += m.getCompetitor2().getName() + StringConstants.CS_THICK + rosterName;
-                        }
-                        obj = tmp;
+                case 4:
+                    val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                    if (val.getValue2() != -1) {
+                        obj = val.getValue2();
+                    } else {
+                        obj = StringConstants.CS_NULL;
                     }
                     break;
-                    default:
-                        index = (col - 3) / 2;
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria(index);
-                        val = m.getValue(crit);
-                        if ((col - 3) % 2 == 0) {
-                            obj = val.getValue1();
-                        } else {
-                            obj = val.getValue2();
-                        }
+                case 5: {
+                    String tmp = "";
+                    if (m.isConcedeedBy2()) {
+                        tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
+                    }
+                    if (m.isRefusedBy2()) {
+                        tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
+                    }
+                    if (m.getRoster2() == null) {
+                        rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
+                    } else {
+                        rosterName = m.getRoster2().getName();
+                    }
+                    if (m.getSubstitute2() != null) {
+                        tmp += m.getCompetitor2().getName() + "/" + m.getSubstitute2().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
+                    } else {
+                        tmp += m.getCompetitor2().getName() + StringConstants.CS_THICK + rosterName;
+                    }
+                    obj = tmp;
                 }
+                break;
+                case 6:
+                    obj = ((Coach) m.getCompetitor2()).getTeamMates().getName();
+                    break;
+                default:
+                    index = (col - 5) / 2;
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(index);
+                    val = m.getValue(crit);
+                    if ((col - 5) % 2 == 0) {
+                        obj = val.getValue1();
+                    } else {
+                        obj = val.getValue2();
+                    }
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+        } else {
+            switch (col) {
+                case 0:
+                    obj = row + 1;
+                    break;
+                case 1: {
+                    String tmp = "";
+                    if (m.isConcedeedBy1()) {
+                        tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";
+                    }
+                    if (m.isRefusedBy1()) {
+                        tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";
+                    }
+                    if (m.getRoster1() == null) {
+                        rosterName = ((Coach) m.getCompetitor1()).getRoster().getName();
+                    } else {
+                        rosterName = m.getRoster1().getName();
+                    }
+                    if (m.getSubstitute1() != null) {
+                        tmp += m.getCompetitor1().getName() + "/" + m.getSubstitute1().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
+                    } else {
+                        tmp += m.getCompetitor1().getName() + StringConstants.CS_THICK + rosterName;
+                    }
+                    obj = tmp;
+                }
+                break;
+                case 2:
+                    val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                    if (val.getValue1() != -1) {
+                        obj = val.getValue1();
+                    } else {
+                        obj = StringConstants.CS_NULL;
+                    }
+                    break;
+                case 3:
+                    val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                    if (val.getValue2() != -1) {
+                        obj = val.getValue2();
+                    } else {
+                        obj = StringConstants.CS_NULL;
+                    }
+                    break;
+                case 4: {
+                    String tmp = "";
+                    if (m.isConcedeedBy2()) {
+                        tmp = "(" + Translate.translate(Translate.CS_Conceeded) + ") ";;
+                    }
+                    if (m.isRefusedBy2()) {
+                        tmp = "(" + Translate.translate(Translate.CS_Refused) + ") ";;
+                    }
+                    if (m.getRoster2() == null) {
+                        rosterName = ((Coach) m.getCompetitor2()).getRoster().getName();
+                    } else {
+                        rosterName = m.getRoster2().getName();
+                    }
+                    if (m.getSubstitute2() != null) {
+                        tmp += m.getCompetitor2().getName() + "/" + m.getSubstitute2().getSubstitute().getName() + StringConstants.CS_THICK + rosterName;
+                    } else {
+                        tmp += m.getCompetitor2().getName() + StringConstants.CS_THICK + rosterName;
+                    }
+                    obj = tmp;
+                }
+                break;
+                default:
+                    index = (col - 3) / 2;
+                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(index);
+                    val = m.getValue(crit);
+                    if ((col - 3) % 2 == 0) {
+                        obj = val.getValue1();
+                    } else {
+                        obj = val.getValue2();
+                    }
+            }
         }
         return obj;
     }
@@ -338,67 +318,63 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             Value val;
             String tmp = value.toString();
             final CoachMatch m = mMatchs.get(row);
-            try {
-                if (mTeamTournament) {
-                    switch (col) {
-                        case 3:
-                            val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                            if (tmp.equals("")) {
-                                val.setValue1(-1);
-                            } else {
-                                val.setValue1(Integer.parseInt(tmp));
-                            }
-                            break;
-                        case 4:
-                            val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                            if (tmp.equals("")) {
-                                val.setValue2(-1);
-                            } else {
-                                val.setValue2(Integer.parseInt(tmp));
-                            }
-                            break;
-                        default:
-                            final int index = (col - 5) / 2;
-                            val = m.getValue(Tournament.getTournament().getParams().getCriteria(index));
-                            if ((col - 5) % 2 == 0) {
-                                val.setValue1(Integer.parseInt(tmp));
-                            } else {
-                                val.setValue2(Integer.parseInt(tmp));
-                            }
-                    }
-                } else {
-                    switch (col) {
-                        case 2:
-                            val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                            if (tmp.equals("")) {
-                                val.setValue1(-1);
-                            } else {
-                                val.setValue1(Integer.parseInt(tmp));
-                            }
-                            break;
-                        case 3:
-                            val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                            if (tmp.equals("")) {
-                                val.setValue2(-1);
-                            } else {
-                                val.setValue2(Integer.parseInt(tmp));
-                            }
-                            break;
-                        default:
-                            final int index = (col - 3) / 2;
-                            val = m.getValue(Tournament.getTournament().getParams().getCriteria(index));
-                            if ((col - 3) % 2 == 0) {
-                                val.setValue1(Integer.parseInt(tmp));
-                            } else {
-                                val.setValue2(Integer.parseInt(tmp));
-                            }
-                    }
+            if (mTeamTournament) {
+                switch (col) {
+                    case 3:
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        if (tmp.equals("")) {
+                            val.setValue1(-1);
+                        } else {
+                            val.setValue1(Integer.parseInt(tmp));
+                        }
+                        break;
+                    case 4:
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        if (tmp.equals("")) {
+                            val.setValue2(-1);
+                        } else {
+                            val.setValue2(Integer.parseInt(tmp));
+                        }
+                        break;
+                    default:
+                        final int index = (col - 5) / 2;
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(index));
+                        if ((col - 5) % 2 == 0) {
+                            val.setValue1(Integer.parseInt(tmp));
+                        } else {
+                            val.setValue2(Integer.parseInt(tmp));
+                        }
                 }
-                m.resetWL();
-                m.recomputeValues();
-            } catch (RemoteException re) {
-                re.printStackTrace();
+            } else {
+                switch (col) {
+                    case 2:
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        if (tmp.equals("")) {
+                            val.setValue1(-1);
+                        } else {
+                            val.setValue1(Integer.parseInt(tmp));
+                        }
+                        break;
+                    case 3:
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+                        if (tmp.equals("")) {
+                            val.setValue2(-1);
+                        } else {
+                            val.setValue2(Integer.parseInt(tmp));
+                        }
+                        break;
+                    default:
+                        final int index = (col - 3) / 2;
+                        val = m.getValue(Tournament.getTournament().getParams().getCriteria(index));
+                        if ((col - 3) % 2 == 0) {
+                            val.setValue1(Integer.parseInt(tmp));
+                        } else {
+                            val.setValue2(Integer.parseInt(tmp));
+                        }
+                }
             }
+            m.resetWL();
+            m.recomputeValues();
         }
         fireTableDataChanged();
         MainFrame.getMainFrame().updateMenus();
@@ -445,11 +421,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
         boolean useColor = false;
 
-        try {
-            useColor = Tournament.getTournament().getParams().isUseColor();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        useColor = Tournament.getTournament().getParams().isUseColor();
 
         if (value instanceof String) {
             jlb.setText((String) value);
@@ -467,74 +439,165 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         } else {
             Value val = null;
             CoachMatch m = mMatchs.get(row);
-            try {
-                val = mMatchs.get(row).getValue(Tournament.getTournament().getParams().getCriteria(0));
-                if (mTeamTournament) {
+            val = mMatchs.get(row).getValue(Tournament.getTournament().getParams().getCriteria(0));
+            if (mTeamTournament) {
 
-                    switch (column) {
-                        case 0:
-                            if (!useColor) {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
+                switch (column) {
+                    case 0:
+                        if (!useColor) {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
                             }
-                            break;
-                        case 1:
+                        }
+                        break;
+                    case 1:
+                        if (useColor) {
+                            bkg = new Color(200, 150, 150);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() > val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
+
+                        }
+                        break;
+                    case 2:
+                        if (useColor) {
+                            bkg = new Color(200, 150, 150);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() > val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
+                        }
+                        if (m.isConcedeedBy1()) {
+                            frg = new Color(50, 50, 50);
+                        }
+                        if (m.isRefusedBy1()) {
+                            frg = new Color(150, 50, 50);
+                        }
+
+                        break;
+                    case 3:
+                        if (useColor) {
+                            bkg = new Color(250, 200, 200);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+
+                        if (val.getValue1() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
                             if (useColor) {
-                                bkg = new Color(200, 150, 150);
+                                bkg = Color.RED;
                             } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
+                                bkg = Color.DARK_GRAY;
                             }
-                            if (val != null) {
-                                //frg = new Color(255, 255, 255);
-                                if (val.getValue1() > val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-
-                                if (val.getValue1() == val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
-                                }
-
+                            frg = Color.WHITE;
+                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                        }
+                        break;
+                    case 4:
+                        if (useColor) {
+                            bkg = new Color(200, 200, 250);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
                             }
-                            break;
-                        case 2:
+                        }
+                        if (val.getValue2() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
                             if (useColor) {
-                                bkg = new Color(200, 150, 150);
+                                bkg = Color.BLUE;
                             } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
+                                bkg = Color.DARK_GRAY;
                             }
-                            if (val != null) {
-                                //frg = new Color(255, 255, 255);
-                                if (val.getValue1() > val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
+                            frg = Color.WHITE;
+                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                        }
 
-                                if (val.getValue1() == val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
-                                }
+                        break;
+
+                    case 5:
+                        if (useColor) {
+                            bkg = new Color(150, 150, 220);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
                             }
-                            if (m.isConcedeedBy1()) {
-                                frg = new Color(50, 50, 50);
+                        }
+
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() < val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                             }
-                            if (m.isRefusedBy1()) {
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
+                        }
+                        if (m.isConcedeedBy2()) {
+                            frg = new Color(50, 50, 50);
+                        }
+                        if (m.isRefusedBy2()) {
+                            frg = new Color(150, 50, 50);
+                        }
+                        break;
+                    case 6:
+                        if (useColor) {
+                            bkg = new Color(150, 150, 220);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+
+                        if (val != null) {
+                            // frg = new Color(255, 255, 255);
+                            if (val.getValue1() < val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
+                        }
+                        break;
+                    default:
+                        if (useColor) {
+                            if (column % 2 > 0) {
                                 frg = new Color(150, 50, 50);
-                            }
-
-                            break;
-                        case 3:
-                            if (useColor) {
-                                bkg = new Color(250, 200, 200);
                             } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
+                                frg = new Color(50, 50, 150);
                             }
-
-                            if (val.getValue1() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        int CritIndex = (column - 5) / 2;
+                        int ValIndex = (column - 5) % 2;
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
+                        Value v = m.getValue(crit);
+                        if (ValIndex == 0) {
+                            if (v.getValue1() > crit.getCriticalThreshold()) {
                                 if (useColor) {
                                     bkg = Color.RED;
                                 } else {
@@ -543,16 +606,9 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                 frg = Color.WHITE;
                                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                             }
-                            break;
-                        case 4:
-                            if (useColor) {
-                                bkg = new Color(200, 200, 250);
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-                            if (val.getValue2() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
+                        }
+                        if (ValIndex == 1) {
+                            if (v.getValue2() > crit.getCriticalThreshold()) {
                                 if (useColor) {
                                     bkg = Color.BLUE;
                                 } else {
@@ -561,232 +617,144 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                 frg = Color.WHITE;
                                 jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                             }
-
-                            break;
-
-                        case 5:
-                            if (useColor) {
-                                bkg = new Color(150, 150, 220);
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-
-                            if (val != null) {
-                                //frg = new Color(255, 255, 255);
-                                if (val.getValue1() < val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-                                if (val.getValue1() == val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
-                                }
-                            }
-                            if (m.isConcedeedBy2()) {
-                                frg = new Color(50, 50, 50);
-                            }
-                            if (m.isRefusedBy2()) {
-                                frg = new Color(150, 50, 50);
-                            }
-                            break;
-                        case 6:
-                            if (useColor) {
-                                bkg = new Color(150, 150, 220);
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-
-                            if (val != null) {
-                                // frg = new Color(255, 255, 255);
-                                if (val.getValue1() < val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-
-                                if (val.getValue1() == val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
-                                }
-                            }
-                            break;
-                        default:
-                            if (useColor) {
-                                if (column % 2 > 0) {
-                                    frg = new Color(150, 50, 50);
-                                } else {
-                                    frg = new Color(50, 50, 150);
-                                }
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-                            int CritIndex = (column - 5) / 2;
-                            int ValIndex = (column - 5) % 2;
-                            Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
-                            Value v = m.getValue(crit);
-                            if (ValIndex == 0) {
-                                if (v.getValue1() > crit.getCriticalThreshold()) {
-                                    if (useColor) {
-                                        bkg = Color.RED;
-                                    } else {
-                                        bkg = Color.DARK_GRAY;
-                                    }
-                                    frg = Color.WHITE;
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-                            }
-                            if (ValIndex == 1) {
-                                if (v.getValue2() > crit.getCriticalThreshold()) {
-                                    if (useColor) {
-                                        bkg = Color.BLUE;
-                                    } else {
-                                        bkg = Color.DARK_GRAY;
-                                    }
-                                    frg = Color.WHITE;
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-                            }
-                    }
-                } else {
-                    switch (column) {
-                        case 0:
-                            if (!useColor) {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-                            break;
-                        case 1:
-                            if (useColor) {
-                                bkg = new Color(200, 150, 150);
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-
-                            if (val != null) {
-                                //frg = new Color(255, 255, 255);
-                                if (val.getValue1() > val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-
-                                if (val.getValue1() == val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
-                                }
-                            }
-                            if (m.isConcedeedBy1()) {
-                                frg = new Color(50, 50, 50);
-                            }
-                            if (m.isRefusedBy1()) {
-                                frg = new Color(150, 50, 50);
-                            }
-                            if (val.getValue1() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
-                                if (useColor) {
-                                    bkg = Color.RED;
-                                } else {
-                                    bkg = Color.DARK_GRAY;
-                                }
-                                frg = Color.WHITE;
-                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                            }
-                            break;
-                        case 2:
-                            if (useColor) {
-                                bkg = new Color(250, 200, 200);
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-                            if (val.getValue2() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
-                                if (useColor) {
-                                    bkg = Color.BLUE;
-                                } else {
-                                    bkg = Color.DARK_GRAY;
-                                }
-                                frg = Color.WHITE;
-                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                            }
-                            break;
-                        case 3:
-                            if (useColor) {
-                                bkg = new Color(200, 200, 250);
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-                            break;
-                        case 4:
-                            if (useColor) {
-                                bkg = new Color(150, 150, 200);
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-
-                            if (val != null) {
-                                //frg = new Color(255, 255, 255);
-                                if (val.getValue1() < val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-                                if (val.getValue1() == val.getValue2()) {
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
-                                }
-                            }
-                            if (m.isConcedeedBy2()) {
-                                frg = new Color(50, 50, 50);
-                            }
-                            if (m.isRefusedBy2()) {
-                                frg = new Color(150, 50, 50);
-                            }
-                            break;
-
-                        default:
-                            if (useColor) {
-                                if (column % 2 > 0) {
-                                    frg = new Color(150, 50, 50);
-                                } else {
-                                    frg = new Color(50, 50, 150);
-                                }
-                            } else {
-                                if (row % 2 != 0) {
-                                    bkg = new Color(220, 220, 220);
-                                }
-                            }
-                            int CritIndex = (column - 3) / 2;
-                            int ValIndex = (column - 3) % 2;
-                            Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
-                            Value v = m.getValue(crit);
-                            if (ValIndex == 0) {
-                                if (v.getValue1() > crit.getCriticalThreshold()) {
-                                    if (useColor) {
-                                        bkg = Color.RED;
-                                    } else {
-                                        bkg = Color.DARK_GRAY;
-                                    }
-                                    frg = Color.WHITE;
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-                            }
-                            if (ValIndex == 1) {
-                                if (v.getValue2() > crit.getCriticalThreshold()) {
-                                    if (useColor) {
-                                        bkg = Color.BLUE;
-                                    } else {
-                                        bkg = Color.DARK_GRAY;
-                                    }
-                                    frg = Color.WHITE;
-                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
-                                }
-                            }
-                    }
+                        }
                 }
-            } catch (RemoteException re) {
-                re.printStackTrace();
+            } else {
+                switch (column) {
+                    case 0:
+                        if (!useColor) {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        break;
+                    case 1:
+                        if (useColor) {
+                            bkg = new Color(200, 150, 150);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() > val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
+                        }
+                        if (m.isConcedeedBy1()) {
+                            frg = new Color(50, 50, 50);
+                        }
+                        if (m.isRefusedBy1()) {
+                            frg = new Color(150, 50, 50);
+                        }
+                        if (val.getValue1() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
+                            if (useColor) {
+                                bkg = Color.RED;
+                            } else {
+                                bkg = Color.DARK_GRAY;
+                            }
+                            frg = Color.WHITE;
+                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                        }
+                        break;
+                    case 2:
+                        if (useColor) {
+                            bkg = new Color(250, 200, 200);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        if (val.getValue2() > Tournament.getTournament().getParams().getCriteria(0).getCriticalThreshold()) {
+                            if (useColor) {
+                                bkg = Color.BLUE;
+                            } else {
+                                bkg = Color.DARK_GRAY;
+                            }
+                            frg = Color.WHITE;
+                            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                        }
+                        break;
+                    case 3:
+                        if (useColor) {
+                            bkg = new Color(200, 200, 250);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (useColor) {
+                            bkg = new Color(150, 150, 200);
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+
+                        if (val != null) {
+                            //frg = new Color(255, 255, 255);
+                            if (val.getValue1() < val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+                            if (val.getValue1() == val.getValue2()) {
+                                jlb.setFont(jlb.getFont().deriveFont(Font.ITALIC));
+                            }
+                        }
+                        if (m.isConcedeedBy2()) {
+                            frg = new Color(50, 50, 50);
+                        }
+                        if (m.isRefusedBy2()) {
+                            frg = new Color(150, 50, 50);
+                        }
+                        break;
+
+                    default:
+                        if (useColor) {
+                            if (column % 2 > 0) {
+                                frg = new Color(150, 50, 50);
+                            } else {
+                                frg = new Color(50, 50, 150);
+                            }
+                        } else {
+                            if (row % 2 != 0) {
+                                bkg = new Color(220, 220, 220);
+                            }
+                        }
+                        int CritIndex = (column - 3) / 2;
+                        int ValIndex = (column - 3) % 2;
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
+                        Value v = m.getValue(crit);
+                        if (ValIndex == 0) {
+                            if (v.getValue1() > crit.getCriticalThreshold()) {
+                                if (useColor) {
+                                    bkg = Color.RED;
+                                } else {
+                                    bkg = Color.DARK_GRAY;
+                                }
+                                frg = Color.WHITE;
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+                        }
+                        if (ValIndex == 1) {
+                            if (v.getValue2() > crit.getCriticalThreshold()) {
+                                if (useColor) {
+                                    bkg = Color.BLUE;
+                                } else {
+                                    bkg = Color.DARK_GRAY;
+                                }
+                                frg = Color.WHITE;
+                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+                            }
+                        }
+                }
             }
         }
 
@@ -796,40 +764,36 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
         jlb.setHorizontalAlignment(JTextField.CENTER);
 
-        try {
-            if (Tournament.getTournament()
-                    .getParams().isUseImage()) {
-                if ((column == 1) && (Tournament.getTournament().getParams().isTeamTournament())) {
+        if (Tournament.getTournament()
+                .getParams().isUseImage()) {
+            if ((column == 1) && (Tournament.getTournament().getParams().isTeamTournament())) {
 
-                    CoachMatch m = mMatchs.get(row);
-                    if (((Coach) m.getCompetitor1()).getTeamMates().getPicture() != null) {
-                        JLabel obj = new JLabel();
-                        ImageIcon icon = ImageTreatment.resize(((Coach) m.getCompetitor1()).getTeamMates().getPicture(), 30, 30);
-                        obj.setIcon(icon);
-                        obj.setText((String) value);
-                        obj.setOpaque(true);
-                        obj.setBackground(bkg);
-                        return obj;
-                    }
-                }
-
-                if ((column == 6) && (Tournament.getTournament().getParams().isTeamTournament())) {
-
-                    CoachMatch m = mMatchs.get(row);
-                    if (((Coach) m.getCompetitor2()).getTeamMates().getPicture() != null) {
-                        JLabel obj = new JLabel();
-                        ImageIcon icon = ImageTreatment.resize(((Coach) m.getCompetitor2()).getTeamMates().getPicture(), 30, 30);
-                        obj.setIcon(icon);
-                        obj.setText((String) value);
-                        obj.setOpaque(true);
-                        obj.setBackground(bkg);
-                        return obj;
-                    }
+                CoachMatch m = mMatchs.get(row);
+                if (((Coach) m.getCompetitor1()).getTeamMates().getPicture() != null) {
+                    JLabel obj = new JLabel();
+                    ImageIcon icon = ImageTreatment.resize(((Coach) m.getCompetitor1()).getTeamMates().getPicture(), 30, 30);
+                    obj.setIcon(icon);
+                    obj.setText((String) value);
+                    obj.setOpaque(true);
+                    obj.setBackground(bkg);
+                    return obj;
                 }
             }
-        } catch (RemoteException re) {
-                re.printStackTrace();
+
+            if ((column == 6) && (Tournament.getTournament().getParams().isTeamTournament())) {
+
+                CoachMatch m = mMatchs.get(row);
+                if (((Coach) m.getCompetitor2()).getTeamMates().getPicture() != null) {
+                    JLabel obj = new JLabel();
+                    ImageIcon icon = ImageTreatment.resize(((Coach) m.getCompetitor2()).getTeamMates().getPicture(), 30, 30);
+                    obj.setIcon(icon);
+                    obj.setText((String) value);
+                    obj.setOpaque(true);
+                    obj.setBackground(bkg);
+                    return obj;
+                }
             }
+        }
 
         return jlb;
     }

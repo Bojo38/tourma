@@ -90,15 +90,11 @@ public final class JdgRound extends javax.swing.JDialog {
         mResult = result;
         mTeam = team;
 
-        try {
-            this.setTitle(tour.getParams().getTournamentName()
-                    + " -" + StringConstants.CS_THICK
-                    + Translate.translate(CS_Round)
-                    + " "
-                    + roundNumber);
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        this.setTitle(tour.getParams().getTournamentName()
+                + " -" + StringConstants.CS_THICK
+                + Translate.translate(CS_Round)
+                + " "
+                + roundNumber);
         try {
             jepHTML.setContentType("html");
 
@@ -133,11 +129,7 @@ public final class JdgRound extends javax.swing.JDialog {
         mRoundNumber = roundNumber;
         mTour = tour;
 
-        try {
             this.setTitle(tour.getParams().getTournamentName() + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + roundNumber);
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         try {
             jepHTML.setContentType("HTML");
             File f;

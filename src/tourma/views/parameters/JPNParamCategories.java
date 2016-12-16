@@ -27,11 +27,8 @@ public final class JPNParamCategories extends javax.swing.JPanel {
      */
     public JPNParamCategories() {
         mTournament = null;
-        try {
+
             mTournament = Tournament.getTournament();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         initComponents();
     }
 
@@ -142,11 +139,7 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         if (categoryName != null) {
             if (!categoryName.equals(StringConstants.CS_NULL)) {
                 Category cat = new Category(categoryName);
-                try {
                     mTournament.addCategory(cat);
-                } catch (RemoteException re) {
-                    re.printStackTrace();
-                }
                 Category.putCategory(categoryName, cat);
             }
         }
@@ -159,14 +152,10 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         final String categoryName = (String) jlsCategories.getSelectedValue();
         final String newCategoryName = JOptionPane.showInputDialog(this, enterCategoryName, categoryName);
         if (!newCategoryName.equals(StringConstants.CS_NULL)) {
-            try {
                 Category cat = mTournament.getCategory(jlsCategories.getSelectedIndex());
                 cat.setmName(newCategoryName);
                 Category.delCategory(categoryName);
                 Category.putCategory(newCategoryName, cat);
-            } catch (RemoteException re) {
-                re.printStackTrace();
-            }
         }
         update();
     }//GEN-LAST:event_jbtEditCategoryActionPerformed
@@ -178,14 +167,10 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         final int index = jlsCategories.getSelectedIndex();
 
         if (index >= 0) {
-            try {
                 Category cat = mTournament.getCategory(index);
                 Category.delCategory(cat.getName());
                 mTournament.removeCategory(index);
                 jlsCategories.setSelectedIndex(index - 1);
-            } catch (RemoteException re) {
-                re.printStackTrace();
-            }
         }
         update();
     }//GEN-LAST:event_jbtRemoveCategoryActionPerformed
@@ -203,7 +188,6 @@ public final class JPNParamCategories extends javax.swing.JPanel {
 
         final int selectedCategory = jlsCategories.getSelectedIndex();
         final DefaultListModel coachListModel = new DefaultListModel();
-        try {
             if ((selectedCategory >= 0) && (mTournament.getCategoriesCount() > selectedCategory)) {
                 final String categName = mTournament.getCategory(selectedCategory).getName();
                 Category cat = Category.getCategory(categName);
@@ -214,12 +198,8 @@ public final class JPNParamCategories extends javax.swing.JPanel {
                 }
             }
 
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         jlsCoachList.setModel(coachListModel);
 
-        try {
             if (Tournament.getTournament().getParams().isTeamTournament()) {
                 jlsTeamList.setEnabled(true);
                 final DefaultListModel teamListModel = new DefaultListModel();
@@ -245,9 +225,6 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         }
 
         jlsCategories.setModel(listModel);
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel13;

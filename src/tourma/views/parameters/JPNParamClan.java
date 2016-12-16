@@ -49,14 +49,10 @@ public final class JPNParamClan extends javax.swing.JPanel {
         public Component getListCellRendererComponent(JList<? extends Clan> list, Clan value, int index, boolean isSelected, boolean cellHasFocus) {
 
             JLabel label = new JLabel(value.getName());
-            try {
-                if (mTournament.getParams().isUseImage()) {
-                    if (value.getName() != null) {
-                        label.setIcon(ImageTreatment.resize(new ImageIcon(value.getName()), 30, 30));
-                    }
+            if (mTournament.getParams().isUseImage()) {
+                if (value.getName() != null) {
+                    label.setIcon(ImageTreatment.resize(new ImageIcon(value.getName()), 30, 30));
                 }
-            } catch (RemoteException re) {
-                re.printStackTrace();
             }
             label.setSize(100, 30);
             label.setOpaque(true);
@@ -78,11 +74,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
      */
     public JPNParamClan() {
         mTournament = null;
-        try {
-            mTournament = Tournament.getTournament();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        mTournament = Tournament.getTournament();
         initComponents();
         jlsClans.setCellRenderer(new JLSCellRenderer());
     }
@@ -265,51 +257,33 @@ public final class JPNParamClan extends javax.swing.JPanel {
         jbtEditClan.setEnabled(clansEnable);
         jlsClans.setEnabled(clansEnable);
 
-        try {
-            mTournament.getParams().setEnableClans(clansEnable);
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        mTournament.getParams().setEnableClans(clansEnable);
         update();
     }//GEN-LAST:event_jcxActivatesClansActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jspClanMembersStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspClanMembersStateChanged
-        try {
-            mTournament.getParams().setTeamMatesClansNumber((Integer) jspClanMembers.getValue());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        mTournament.getParams().setTeamMatesClansNumber((Integer) jspClanMembers.getValue());
+
     }//GEN-LAST:event_jspClanMembersStateChanged
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAvoidFirstMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidFirstMatchActionPerformed
-        try {
-            mTournament.getParams().setAvoidClansFirstMatch(jcxAvoidFirstMatch.isSelected());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        mTournament.getParams().setAvoidClansFirstMatch(jcxAvoidFirstMatch.isSelected());
+
     }//GEN-LAST:event_jcxAvoidFirstMatchActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAvoidMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAvoidMatchActionPerformed
-        try {
-            mTournament.getParams().setAvoidClansMatch(jcxAvoidMatch.isSelected());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        mTournament.getParams().setAvoidClansMatch(jcxAvoidMatch.isSelected());
     }//GEN-LAST:event_jcxAvoidMatchActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddClanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddClanActionPerformed
 
-        try {
-            final String enterClanName
-                    = Translate.translate(CS_EnterClanNameKey);
-            final String clanName = JOptionPane.showInputDialog(this, enterClanName);
-            if (clanName != null) {
-                if (!clanName.equals(StringConstants.CS_NULL)) {
-                    mTournament.addClan(new Clan(clanName));
-                }
+        final String enterClanName
+                = Translate.translate(CS_EnterClanNameKey);
+        final String clanName = JOptionPane.showInputDialog(this, enterClanName);
+        if (clanName != null) {
+            if (!clanName.equals(StringConstants.CS_NULL)) {
+                mTournament.addClan(new Clan(clanName));
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
         update();
     }//GEN-LAST:event_jbtAddClanActionPerformed
@@ -321,12 +295,8 @@ public final class JPNParamClan extends javax.swing.JPanel {
         final String enterClanName = Translate.translate(CS_EnterClanNameKey);
         final String clanName = jlsClans.getSelectedValue().toString();
         final String newClanName = JOptionPane.showInputDialog(this, enterClanName, clanName);
-        try {
-            if (!clanName.equals(StringConstants.CS_NULL)) {
-                mTournament.getClan(jlsClans.getSelectedIndex()).setName(newClanName);
-            }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+        if (!clanName.equals(StringConstants.CS_NULL)) {
+            mTournament.getClan(jlsClans.getSelectedIndex()).setName(newClanName);
         }
         update();
     }//GEN-LAST:event_jbtEditClanActionPerformed
@@ -335,11 +305,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         final int index = jlsClans.getSelectedIndex();
 
         if (index > 0) {
-            try {
-                mTournament.removeClan(index);
-            } catch (RemoteException re) {
-                re.printStackTrace();
-            }
+            mTournament.removeClan(index);
         }
         update();
     }//GEN-LAST:event_jbtRemoveClanActionPerformed
@@ -383,25 +349,21 @@ public final class JPNParamClan extends javax.swing.JPanel {
 
             JOptionPane.showConfirmDialog(null, panel, null, JOptionPane.YES_OPTION);
 
-            try {
-                Clan c = mTournament.getClan(jlsClans.getSelectedIndex());
-                if (combo.getSelectedItem() == empty) {
-                    final JFileChooser jfc = new JFileChooser();
-                    final FileFilter filter1 = new ExtensionFileFilter(
-                            Translate.translate(CS_Picture), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
-                    jfc.setFileFilter(filter1);
-                    if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                        ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
-                        icon = ImageTreatment.resize(icon, 80, 80);
+            Clan c = mTournament.getClan(jlsClans.getSelectedIndex());
+            if (combo.getSelectedItem() == empty) {
+                final JFileChooser jfc = new JFileChooser();
+                final FileFilter filter1 = new ExtensionFileFilter(
+                        Translate.translate(CS_Picture), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+                jfc.setFileFilter(filter1);
+                if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
+                    icon = ImageTreatment.resize(icon, 80, 80);
 
-                        c.setPicture(icon);
-                    }
-                } else {
-                    ImageIcon icon = (ImageIcon) combo.getSelectedItem();
                     c.setPicture(icon);
                 }
-            } catch (RemoteException re) {
-                re.printStackTrace();
+            } else {
+                ImageIcon icon = (ImageIcon) combo.getSelectedItem();
+                c.setPicture(icon);
             }
             update();
         }
@@ -412,27 +374,24 @@ public final class JPNParamClan extends javax.swing.JPanel {
         final int selectedClan = jlsClans.getSelectedIndex();
         final DefaultListModel memberListModel = new DefaultListModel();
         if (selectedClan >= 0) {
-            try {
-                final String clanName = mTournament.getClan(selectedClan).getName();
-                if (mTournament.getParams().isTeamTournament()) {
-                    for (int i = 0; i < mTournament.getTeamsCount(); i++) {
-                        if (mTournament.getTeam(i).getClan() != null) {
-                            if (clanName.equals(mTournament.getTeam(i).getClan().getName())) {
-                                memberListModel.addElement(mTournament.getTeam(i).getName());
-                            }
-                        }
-                    }
-                } else {
-                    for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-                        if (mTournament.getCoach(i).getClan() != null) {
-                            if (clanName.equals(mTournament.getCoach(i).getClan().getName())) {
-                                memberListModel.addElement(mTournament.getCoach(i).getName());
-                            }
+
+            final String clanName = mTournament.getClan(selectedClan).getName();
+            if (mTournament.getParams().isTeamTournament()) {
+                for (int i = 0; i < mTournament.getTeamsCount(); i++) {
+                    if (mTournament.getTeam(i).getClan() != null) {
+                        if (clanName.equals(mTournament.getTeam(i).getClan().getName())) {
+                            memberListModel.addElement(mTournament.getTeam(i).getName());
                         }
                     }
                 }
-            } catch (RemoteException re) {
-                re.printStackTrace();
+            } else {
+                for (int i = 0; i < mTournament.getCoachsCount(); i++) {
+                    if (mTournament.getCoach(i).getClan() != null) {
+                        if (clanName.equals(mTournament.getCoach(i).getClan().getName())) {
+                            memberListModel.addElement(mTournament.getCoach(i).getName());
+                        }
+                    }
+                }
             }
         }
         jlsCoachList.setModel(memberListModel);
@@ -443,41 +402,37 @@ public final class JPNParamClan extends javax.swing.JPanel {
      */
     public void update() {
 
-        try {
-            jbtEditClanIcon.setVisible(mTournament.getParams().isUseImage());
+        jbtEditClanIcon.setVisible(mTournament.getParams().isUseImage());
 
-            final boolean clansEnable = (mTournament.getParams().isEnableClans());
+        final boolean clansEnable = (mTournament.getParams().isEnableClans());
 
-            jlbActivateClans.setEnabled(true);
-            jlbAvoidClansMembersMatch.setEnabled(clansEnable);
-            jlbClansMembersNUmbers.setEnabled(clansEnable);
-            jlbTeamMatesNumber.setEnabled(clansEnable);
+        jlbActivateClans.setEnabled(true);
+        jlbAvoidClansMembersMatch.setEnabled(clansEnable);
+        jlbClansMembersNUmbers.setEnabled(clansEnable);
+        jlbTeamMatesNumber.setEnabled(clansEnable);
 
-            jspClanMembers.setEnabled(clansEnable);
-            jcxAvoidFirstMatch.setEnabled(clansEnable);
-            jcxAvoidMatch.setEnabled(clansEnable);
+        jspClanMembers.setEnabled(clansEnable);
+        jcxAvoidFirstMatch.setEnabled(clansEnable);
+        jcxAvoidMatch.setEnabled(clansEnable);
 
-            jbtAddClan.setEnabled(clansEnable);
-            jbtRemoveClan.setEnabled(clansEnable);
-            jbtEditClan.setEnabled(clansEnable);
-            jbtEditClanIcon.setEnabled(clansEnable);
-            jlsClans.setEnabled(clansEnable);
+        jbtAddClan.setEnabled(clansEnable);
+        jbtRemoveClan.setEnabled(clansEnable);
+        jbtEditClan.setEnabled(clansEnable);
+        jbtEditClanIcon.setEnabled(clansEnable);
+        jlsClans.setEnabled(clansEnable);
 
-            jcxActivatesClans.setSelected(clansEnable);
-            jcxAvoidFirstMatch.setSelected(mTournament.getParams().isAvoidClansFirstMatch());
-            jcxAvoidMatch.setSelected(mTournament.getParams().isAvoidClansMatch());
-            jspClanMembers.setValue(mTournament.getParams().getTeamMatesClansNumber());
+        jcxActivatesClans.setSelected(clansEnable);
+        jcxAvoidFirstMatch.setSelected(mTournament.getParams().isAvoidClansFirstMatch());
+        jcxAvoidMatch.setSelected(mTournament.getParams().isAvoidClansMatch());
+        jspClanMembers.setValue(mTournament.getParams().getTeamMatesClansNumber());
 
-            updateSublist();
-            final DefaultListModel listModel = new DefaultListModel();
-            for (int i = 0; i < mTournament.getClansCount(); i++) {
-                //JLabel label = new JLabel(mTournament.getClan(i).getName());
-                listModel.addElement(mTournament.getClan(i));
-            }
-            jlsClans.setModel(listModel);
-        } catch (RemoteException re) {
-            re.printStackTrace();
+        updateSublist();
+        final DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < mTournament.getClansCount(); i++) {
+            //JLabel label = new JLabel(mTournament.getClan(i).getName());
+            listModel.addElement(mTournament.getClan(i));
         }
+        jlsClans.setModel(listModel);
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

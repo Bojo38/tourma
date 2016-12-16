@@ -23,26 +23,19 @@ public class WebPicture {
 
     public static String getPictureAsHTML(ImageIcon pic, int width, int heigth) {
 
-        try {
-            BufferedImage bi = new BufferedImage(pic.getIconWidth(), pic.getIconHeight(), BufferedImage.TYPE_INT_RGB);
-            Graphics g = bi.createGraphics();
-            pic.paintIcon(null, g, 0, 0);
-            g.dispose();
-            return getPictureAsHTML(bi, width, heigth, Tournament.getTournament().getParams().isUseImage());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
-        return "";
+        BufferedImage bi = new BufferedImage(pic.getIconWidth(), pic.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics g = bi.createGraphics();
+        pic.paintIcon(null, g, 0, 0);
+        g.dispose();
+        return getPictureAsHTML(bi, width, heigth, Tournament.getTournament().getParams().isUseImage());
+
+
     }
 
     public static String getPictureAsHTML(BufferedImage pic, int width, int heigth) {
 
-        try {
-            return getPictureAsHTML(pic, width, heigth, Tournament.getTournament().getParams().isUseImage());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
-        return "";
+        return getPictureAsHTML(pic, width, heigth, Tournament.getTournament().getParams().isUseImage());
+
     }
 
     public static String getPictureAsHTML(BufferedImage pic, int width, int heigth, boolean use_image) {

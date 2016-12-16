@@ -69,20 +69,16 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
         mPlayersSelected = new ArrayList<>();
         mPlayers = new ArrayList<>();
 
-        try {
-            for (int i = 0; i < mRound.getMatchsCount(); i++) {
-                final Match m = mRound.getMatch(i);
-                mPlayers.add(m.getCompetitor1());
-                mPlayers.add(m.getCompetitor2());
-            }
-
-            mPlayersTmp = mPlayers;
-
-            final GridLayout lay = new GridLayout(mRound.getMatchsCount(), 2);
-            jpnMatchs.setLayout(lay);
-        } catch (RemoteException re) {
-            re.printStackTrace();
+        for (int i = 0; i < mRound.getMatchsCount(); i++) {
+            final Match m = mRound.getMatch(i);
+            mPlayers.add(m.getCompetitor1());
+            mPlayers.add(m.getCompetitor2());
         }
+
+        mPlayersTmp = mPlayers;
+
+        final GridLayout lay = new GridLayout(mRound.getMatchsCount(), 2);
+        jpnMatchs.setLayout(lay);
         update();
     }
 
@@ -154,60 +150,56 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                 JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
 
-            try {
-                for (int i = 0; i < mRound.getMatchsCount(); i++) {
-                    Match m = mRound.getMatch(i);
+            for (int i = 0; i < mRound.getMatchsCount(); i++) {
+                Match m = mRound.getMatch(i);
 
-                    if (m instanceof TeamMatch) {
-                        Team t1 = (Team) mPlayersTmp.get(2 * i);
-                        Team t2 = (Team) mPlayersTmp.get(2 * i + 1);
-                        if ((m.getCompetitor1() != t1)
-                                || (m.getCompetitor2() != t2)) {
-                            // Remove matchs from coachs
-                            for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
-                                CoachMatch cm = ((TeamMatch) m).getMatch(j);
-                                for (int k = 0; k < ((IContainCoachs) m.getCompetitor1()).getCoachsCount(); k++) {
-                                    Coach c = ((IContainCoachs) m.getCompetitor1()).getCoach(k);
-                                    c.removeMatch(cm);
-                                }
-
-                                for (int k = 0; k < ((IContainCoachs) m.getCompetitor2()).getCoachsCount(); k++) {
-                                    Coach c = ((IContainCoachs) m.getCompetitor2()).getCoach(k);
-                                    c.removeMatch(cm);
-                                }
+                if (m instanceof TeamMatch) {
+                    Team t1 = (Team) mPlayersTmp.get(2 * i);
+                    Team t2 = (Team) mPlayersTmp.get(2 * i + 1);
+                    if ((m.getCompetitor1() != t1)
+                            || (m.getCompetitor2() != t2)) {
+                        // Remove matchs from coachs
+                        for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
+                            CoachMatch cm = ((TeamMatch) m).getMatch(j);
+                            for (int k = 0; k < ((IContainCoachs) m.getCompetitor1()).getCoachsCount(); k++) {
+                                Coach c = ((IContainCoachs) m.getCompetitor1()).getCoach(k);
+                                c.removeMatch(cm);
                             }
 
-                            ((TeamMatch) m).clearMatchs();
-                            JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true,
-                                    t1, t2, mRound, (TeamMatch) m);
-                            jdg.setVisible(true);
-
-                            for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
-                                CoachMatch cm = ((TeamMatch) m).getMatch(j);
-                                cm.getCompetitor1().addMatch(cm);
-                                cm.getCompetitor2().addMatch(cm);
+                            for (int k = 0; k < ((IContainCoachs) m.getCompetitor2()).getCoachsCount(); k++) {
+                                Coach c = ((IContainCoachs) m.getCompetitor2()).getCoach(k);
+                                c.removeMatch(cm);
                             }
                         }
+
+                        ((TeamMatch) m).clearMatchs();
+                        JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true,
+                                t1, t2, mRound, (TeamMatch) m);
+                        jdg.setVisible(true);
+
+                        for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
+                            CoachMatch cm = ((TeamMatch) m).getMatch(j);
+                            cm.getCompetitor1().addMatch(cm);
+                            cm.getCompetitor2().addMatch(cm);
+                        }
                     }
-
-                    m.setCompetitor1(mPlayersTmp.get(2 * i));
-                    m.setCompetitor2(mPlayersTmp.get(2 * i + 1));
-
-                    Match tmp1 = m.getCompetitor1().getMatch(m.getCompetitor1().getMatchCount() - 1);
-                    m.getCompetitor1().removeMatch(tmp1);
-                    Competitor c2 = m.getCompetitor2();
-                    if (c2 == null) {
-                        System.err.println("Null Coach detected");
-                    }
-                    Match tmp2 = m.getCompetitor2().getMatch(m.getCompetitor2().getMatchCount() - 1);
-                    m.getCompetitor2().removeMatch(tmp2);
-
-                    m.getCompetitor1().addMatch(m);
-                    m.getCompetitor2().addMatch(m);
-
                 }
-            } catch (RemoteException re) {
-                re.printStackTrace();
+
+                m.setCompetitor1(mPlayersTmp.get(2 * i));
+                m.setCompetitor2(mPlayersTmp.get(2 * i + 1));
+
+                Match tmp1 = m.getCompetitor1().getMatch(m.getCompetitor1().getMatchCount() - 1);
+                m.getCompetitor1().removeMatch(tmp1);
+                Competitor c2 = m.getCompetitor2();
+                if (c2 == null) {
+                    System.err.println("Null Coach detected");
+                }
+                Match tmp2 = m.getCompetitor2().getMatch(m.getCompetitor2().getMatchCount() - 1);
+                m.getCompetitor2().removeMatch(tmp2);
+
+                m.getCompetitor1().addMatch(m);
+                m.getCompetitor2().addMatch(m);
+
             }
 
             this.setVisible(false);
@@ -267,12 +259,10 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
             if (mPlayersTmp1 == null) {
                 System.err.println("Null coach detected");
             } else {
-                try {
-                    String name = mPlayersTmp1.getDecoratedName();
-                    playersNames.add(name);
-                } catch (RemoteException re) {
-                    re.printStackTrace();
-                }
+
+                String name = mPlayersTmp1.getDecoratedName();
+                playersNames.add(name);
+
             }
         }
 

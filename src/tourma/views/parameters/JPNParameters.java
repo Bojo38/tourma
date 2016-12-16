@@ -42,11 +42,9 @@ public final class JPNParameters extends javax.swing.JPanel {
      */
     public JPNParameters() {
         mTournament = null;
-        try {
+        
             mTournament = Tournament.getTournament();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
         initComponents();
 
         mJpnIndiv = new JPNParamIndiv();
@@ -109,7 +107,7 @@ public final class JPNParameters extends javax.swing.JPanel {
      */
     public void update() {
 
-        try {
+        
             final boolean bTourStarted = mTournament.getRoundsCount() > 0;
 
             updateTables(bTourStarted);
@@ -144,9 +142,7 @@ public final class JPNParameters extends javax.swing.JPanel {
             jtfPlace.setText(mTournament.getParams().getPlace());
 
             MainFrame.getMainFrame().update();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
     }
 
     /**
@@ -296,19 +292,14 @@ public final class JPNParameters extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
-        try {
             mTournament.getParams().setTournamentName(jtfTournamentName.getText() + evt.getKeyChar());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
     }//GEN-LAST:event_jtfTournamentNameKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
-        try {
+        
             mTournament.getParams().semTournamentOrga(jtfOrgas.getText() + evt.getKeyChar());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
     }//GEN-LAST:event_jtfOrgasKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
@@ -319,41 +310,33 @@ public final class JPNParameters extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAddActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        try {
+        
             mTournament.removeCoach(jtbCoachs.getSelectedRow());
             update();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
     }//GEN-LAST:event_jbtRemoveActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
 
-        try {
+        
             if (jtbCoachs.getSelectedRow() >= 0) {
                 final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoach(jtbCoachs.getSelectedRow()));
                 w.setVisible(true);
                 update();
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
     }//GEN-LAST:event_jbtModifyActionPerformed
 
     private void jtfOrgasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOrgasActionPerformed
-        try {
+        
             mTournament.getParams().semTournamentOrga(jtfOrgas.getText());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
     }//GEN-LAST:event_jtfOrgasActionPerformed
 
     private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
-        try {
+        
             mTournament.getParams().setPlace(jtfPlace.getText() + evt.getKeyChar());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
     }//GEN-LAST:event_jtfPlaceKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

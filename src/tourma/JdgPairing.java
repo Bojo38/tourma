@@ -70,30 +70,27 @@ public final class JdgPairing extends javax.swing.JDialog {
         mTeam2 = team2;
         mCoachs = new HashMap<>();
         teamMatch = teammatch;
-        try {
-            this.setTitle(team1.getName()
-                    + " " + Translate.translate(CS_ACCR_Versus) + " "
-                    + team2.getName());
+        this.setTitle(team1.getName()
+                + " " + Translate.translate(CS_ACCR_Versus) + " "
+                + team2.getName());
 
-            mRound = round;
-            mMatchs = new ArrayList<>();
+        mRound = round;
+        mMatchs = new ArrayList<>();
 
-            mItems1 = new ArrayList();
-            for (int i = 0; i < mTeam1.getCoachsCount(); i++) {
-                final Coach c = mTeam1.getCoach(i);
-                mItems1.add(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName());
-                mCoachs.put(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName(), c);
-            }
-
-            mItems2 = new ArrayList();
-            for (int i = 0; i < mTeam1.getCoachsCount(); i++) {
-                final Coach c = mTeam2.getCoach(i);
-                mItems2.add(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName());
-                mCoachs.put(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName(), c);
-            }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+        mItems1 = new ArrayList();
+        for (int i = 0; i < mTeam1.getCoachsCount(); i++) {
+            final Coach c = mTeam1.getCoach(i);
+            mItems1.add(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName());
+            mCoachs.put(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName(), c);
         }
+
+        mItems2 = new ArrayList();
+        for (int i = 0; i < mTeam1.getCoachsCount(); i++) {
+            final Coach c = mTeam2.getCoach(i);
+            mItems2.add(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName());
+            mCoachs.put(c.getName() + StringConstants.CS_THICK + c.getTeam() + StringConstants.CS_THICK + c.getRoster().getName(), c);
+        }
+
         update();
     }
 
@@ -106,11 +103,7 @@ public final class JdgPairing extends javax.swing.JDialog {
         jtbMatches.setDefaultRenderer(String.class, model);
         jtbMatches.setDefaultRenderer(Integer.class, model);
 
-        try {
-            jbtOK.setEnabled(mMatchs.size() == mTeam1.getCoachsCount());
-        } catch (RemoteException re) {
-            re.printStackTrace();;
-        }
+        jbtOK.setEnabled(mMatchs.size() == mTeam1.getCoachsCount());
     }
 
     /**
@@ -212,31 +205,25 @@ public final class JdgPairing extends javax.swing.JDialog {
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-    try {
-        for (CoachMatch mMatch : mMatchs) {
-            teamMatch.addMatch(mMatch);
-        }
-    } catch (RemoteException re) {
-        re.printStackTrace();;
+    for (CoachMatch mMatch : mMatchs) {
+        teamMatch.addMatch(mMatch);
     }
+
     this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
         if (mItems1.size() > 0) {
-            try {
-                final CoachMatch m = new CoachMatch(mRound);
-                String name1 = (String) jcbTeam1.getSelectedItem();
-                String name2 = (String) jcbTeam2.getSelectedItem();
-                m.setCompetitor1(mCoachs.get(name1));
-                m.setCompetitor2(mCoachs.get(name2));
-                mMatchs.add(m);
-                mItems1.remove(jcbTeam1.getSelectedIndex());
-                mItems2.remove(jcbTeam2.getSelectedIndex());
-            } catch (RemoteException re) {
-                re.printStackTrace();
-            }
+            final CoachMatch m = new CoachMatch(mRound);
+            String name1 = (String) jcbTeam1.getSelectedItem();
+            String name2 = (String) jcbTeam2.getSelectedItem();
+            m.setCompetitor1(mCoachs.get(name1));
+            m.setCompetitor2(mCoachs.get(name2));
+            mMatchs.add(m);
+            mItems1.remove(jcbTeam1.getSelectedIndex());
+            mItems2.remove(jcbTeam2.getSelectedIndex());
+
         }
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
@@ -244,15 +231,11 @@ public final class JdgPairing extends javax.swing.JDialog {
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
 
         if (jtbMatches.getSelectedRow() >= 0) {
-            try {
-                final CoachMatch m = mMatchs.get(jtbMatches.getSelectedRow());
-                mItems1.add(m.getCompetitor1().getName() + StringConstants.CS_THICK + ((Coach) m.getCompetitor1()).getTeam() + StringConstants.CS_THICK + ((Coach) m.getCompetitor1()).getRoster().getName());
-                mItems2.add(m.getCompetitor2().getName() + StringConstants.CS_THICK + ((Coach) m.getCompetitor2()).getTeam() + StringConstants.CS_THICK + ((Coach) m.getCompetitor2()).getRoster().getName());
-                mMatchs.remove(jtbMatches.getSelectedRow());
+            final CoachMatch m = mMatchs.get(jtbMatches.getSelectedRow());
+            mItems1.add(m.getCompetitor1().getName() + StringConstants.CS_THICK + ((Coach) m.getCompetitor1()).getTeam() + StringConstants.CS_THICK + ((Coach) m.getCompetitor1()).getRoster().getName());
+            mItems2.add(m.getCompetitor2().getName() + StringConstants.CS_THICK + ((Coach) m.getCompetitor2()).getTeam() + StringConstants.CS_THICK + ((Coach) m.getCompetitor2()).getRoster().getName());
+            mMatchs.remove(jtbMatches.getSelectedRow());
 
-            } catch (RemoteException re) {
-                re.printStackTrace();
-            }
         }
         update();
     }//GEN-LAST:event_jbtRemoveActionPerformed
@@ -263,16 +246,14 @@ public final class JdgPairing extends javax.swing.JDialog {
         Collections.shuffle(mItems2);
 
         while ((mItems1.size() > 0) && (mItems2.size() > 0)) {
-            try {
-                final CoachMatch m = new CoachMatch(mRound);
-                m.setCompetitor1(mCoachs.get(mItems1.get(0)));
-                m.setCompetitor2(mCoachs.get(mItems2.get(0)));
-                mMatchs.add(m);
-                mItems1.remove(0);
-                mItems2.remove(0);
-            } catch (RemoteException re) {
-                re.printStackTrace();
-            }
+
+            final CoachMatch m = new CoachMatch(mRound);
+            m.setCompetitor1(mCoachs.get(mItems1.get(0)));
+            m.setCompetitor2(mCoachs.get(mItems2.get(0)));
+            mMatchs.add(m);
+            mItems1.remove(0);
+            mItems2.remove(0);
+
         }
         update();
     }//GEN-LAST:event_jbtRandomActionPerformed

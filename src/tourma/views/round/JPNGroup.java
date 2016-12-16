@@ -109,59 +109,55 @@ public final class JPNGroup extends javax.swing.JPanel {
      * Update panel
      */
     public void update() {
-        try {
-            final ArrayList<Coach> ArrayList = new ArrayList<>();
 
-            for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-                final Coach c = mTournament.getCoach(i);
-                for (int j = 0; j < mGroup.getRosterCount(); j++) {
-                    if (mGroup.getRoster(j) != null) {
-                        if (mGroup.getRoster(j).getName() != null) {
-                            if (c != null) {
-                                if (c.getRoster() != null) {
-                                    if (mGroup.getRoster(j).getName().equals(c.getRoster().getName())) {
-                                        ArrayList.add(c);
-                                        break;
-                                    }
-                                } else {
-                                    System.err.println("Null roster detected");
+        final ArrayList<Coach> ArrayList = new ArrayList<>();
+
+        for (int i = 0; i < mTournament.getCoachsCount(); i++) {
+            final Coach c = mTournament.getCoach(i);
+            for (int j = 0; j < mGroup.getRosterCount(); j++) {
+                if (mGroup.getRoster(j) != null) {
+                    if (mGroup.getRoster(j).getName() != null) {
+                        if (c != null) {
+                            if (c.getRoster() != null) {
+                                if (mGroup.getRoster(j).getName().equals(c.getRoster().getName())) {
+                                    ArrayList.add(c);
+                                    break;
                                 }
                             } else {
-                                System.err.println("Null coach");
+                                System.err.println("Null roster detected");
                             }
                         } else {
-                            System.err.println("Null group name detected");
+                            System.err.println("Null coach");
                         }
                     } else {
-                        System.err.println("Null group roster detected");
+                        System.err.println("Null group name detected");
                     }
+                } else {
+                    System.err.println("Null group roster detected");
                 }
             }
-
-            final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    ArrayList, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
-            jtbGroup.setModel(tableModel);
-            jtbGroup.setDefaultRenderer(String.class, tableModel);
-            jtbGroup.setDefaultRenderer(Integer.class, tableModel);
-
-            jtbGroup.setRowHeight(25);
-            TableFormat.setColumnSize(jtbGroup);
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
+
+        final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                ArrayList, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+        jtbGroup.setModel(tableModel);
+        jtbGroup.setDefaultRenderer(String.class, tableModel);
+        jtbGroup.setDefaultRenderer(Integer.class, tableModel);
+
+        jtbGroup.setRowHeight(25);
+        TableFormat.setColumnSize(jtbGroup);
+
     }
 
     private static final String CS_Group = "GENERAL PAR GROUPE";
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
-        try {
-            final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
-                    Translate.translate(CS_Group) + ": " + mGroup.getName(), mRoundNumber, mTournament, (MjtRanking) jtbGroup.getModel(), 0);
-            jdg.setVisible(true);
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+
+        final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
+                Translate.translate(CS_Group) + ": " + mGroup.getName(), mRoundNumber, mTournament, (MjtRanking) jtbGroup.getModel(), 0);
+        jdg.setVisible(true);
+
 }//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

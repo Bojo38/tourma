@@ -52,7 +52,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      *
      * @return
      */
-    public static Team getNullTeam() throws RemoteException {
+    public static Team getNullTeam() {
 
         synchronized (Team.myLock) {
             if (sNullTeam == null) {
@@ -75,14 +75,14 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     /**
      * @param asNullTeam the sNullTeam to set
      */
-    public static void setNullTeam(Team asNullTeam) throws RemoteException {
+    public static void setNullTeam(Team asNullTeam) {
         sNullTeam = asNullTeam;
     }
 
     /**
      * Renew Hashmap of teams
      */
-    public static void newTeamMap() throws RemoteException {
+    public static void newTeamMap() {
         sTeamMap = new HashMap<>();
     }
 
@@ -91,7 +91,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param n
      * @param t
      */
-    public static void putTeam(String n, Team t) throws RemoteException {
+    public static void putTeam(String n, Team t) {
         sTeamMap.put(n, t);
     }
 
@@ -100,7 +100,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param n
      * @return
      */
-    public static Team getTeam(String n) throws RemoteException {
+    public static Team getTeam(String n) {
         return sTeamMap.get(n);
     }
     /**
@@ -131,7 +131,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public String getName() throws RemoteException {
+    public String getName() {
         String text = super.getName();
         if (Tournament.getTournament().getParams().isEnableClans()) {
             if (getClan() != null) {
@@ -144,41 +144,36 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public int compareTo(final Object obj) {
         int result = -1;
-        try {
-            if (obj instanceof Team) {
-                Team team = (Team) obj;
-                double rank = 0.0;
-                for (Coach mCoach : mCoachs) {
-                    rank += mCoach.getNafRank();
-                }
-                rank /= getCoachsCount();
-
-                double rankobj = 0;
-                for (Coach mCoach : team.mCoachs) {
-                    rankobj += mCoach.getNafRank();
-                }
-                rankobj /= team.getCoachsCount();
-
-                result = ((Double) rank).compareTo(rankobj);
+        if (obj instanceof Team) {
+            Team team = (Team) obj;
+            double rank = 0.0;
+            for (Coach mCoach : mCoachs) {
+                rank += mCoach.getNafRank();
             }
-        } catch (RemoteException re) {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+            rank /= getCoachsCount();
+
+            double rankobj = 0;
+            for (Coach mCoach : team.mCoachs) {
+                rankobj += mCoach.getNafRank();
+            }
+            rankobj /= team.getCoachsCount();
+
+            result = ((Double) rank).compareTo(rankobj);
         }
+
         return result;
     }
 
     @Override
     public boolean equals(Object o) {
-        try {
-            if (o instanceof Team) {
-                Team t = (Team) o;
-                if (t.getName().equals(this.getName())) {
-                    return true;
-                }
+
+        if (o instanceof Team) {
+            Team t = (Team) o;
+            if (t.getName().equals(this.getName())) {
+                return true;
             }
-        } catch (RemoteException re) {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
+
         return false;
     }
 
@@ -193,7 +188,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      *
      * @return
      */
-    public int getActivePlayerNumber() throws RemoteException {
+    public int getActivePlayerNumber() {
         int nb = 0;
 
         for (int i = 0; i < getCoachsCount(); i++) {
@@ -208,7 +203,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      *
      * @return
      */
-    public ArrayList<Coach> getActivePlayers() throws RemoteException {
+    public ArrayList<Coach> getActivePlayers() {
         final ArrayList<Coach> v = new ArrayList<>();
         if (this == getNullTeam()) {
             for (int i = 0; i < Tournament.getTournament().getParams().getTeamMatesNumber(); i++) {
@@ -229,7 +224,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public Element getXMLElement() throws RemoteException {
+    public Element getXMLElement() {
         final Element team = new Element(StringConstants.CS_TEAM);
         team.setAttribute(StringConstants.CS_NAME, super.getName());
 
@@ -273,7 +268,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
         return team;
     }
 
-    public Element getXMLElementForDisplay() throws RemoteException {
+    public Element getXMLElementForDisplay() {
         final Element team = this.getXMLElement();
 
         // Remove all Coachs
@@ -292,7 +287,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param team
      */
     @Override
-    public void setXMLElement(final Element team) throws RemoteException {
+    public void setXMLElement(final Element team) {
         this.setName(team.getAttributeValue(StringConstants.CS_NAME));
         final List<Element> coachs2 = team.getChildren(StringConstants.CS_COACH);
         final Iterator<Element> m = coachs2.iterator();
@@ -337,7 +332,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
         }
     }
 
-    public void setXMLElementForDisplay(final Element team) throws RemoteException {
+    public void setXMLElementForDisplay(final Element team) {
 
         List<Element> childs = team.getChildren(StringConstants.CS_COACH);
         Iterator<Element> it = childs.iterator();
@@ -357,7 +352,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param r
      */
     @Override
-    public void addMatch(Competitor opponent, Round r) throws RemoteException {
+    public void addMatch(Competitor opponent, Round r) {
         Tournament tour = Tournament.getTournament();
 
         final ArrayList<Round> vs = new ArrayList<>();
@@ -434,7 +429,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public boolean havePlayed(Competitor opponent) throws RemoteException {
+    public boolean havePlayed(Competitor opponent) {
         boolean have_played = false;
         for (Coach mCoach : mCoachs) {
             if (opponent instanceof Team) {
@@ -459,7 +454,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) throws RemoteException {
+    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
 
         Tournament tour = Tournament.getTournament();
         Parameters params = tour.getParams();
@@ -505,7 +500,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public String getDecoratedName() throws RemoteException {
+    public String getDecoratedName() {
         return getName();
     }
 
@@ -515,7 +510,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param r
      */
     @Override
-    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) throws RemoteException {
+    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) {
         if (!complete) {
             addMatch(c, r);
         } else {
@@ -563,7 +558,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param r
      * @return
      */
-    public boolean canPlay(Team opponent, Round r) throws RemoteException {
+    public boolean canPlay(Team opponent, Round r) {
         boolean have_played = this.havePlayed(opponent);
         Parameters params = Tournament.getTournament().getParams();
 
@@ -586,7 +581,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param round
      */
     @Override
-    public void roundCheck(Round round) throws RemoteException {
+    public void roundCheck(Round round) {
 
         Tournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();
@@ -655,7 +650,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current) throws RemoteException {
+    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current) {
 
         HashMap<Team, Integer> map = new HashMap<>();
 
@@ -721,7 +716,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return the mCoachs
      */
     @Override
-    public Coach getCoach(int i) throws RemoteException {
+    public Coach getCoach(int i) {
         return mCoachs.get(i);
     }
 
@@ -729,7 +724,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return the mCoachs
      */
     @Override
-    public int getCoachsCount() throws RemoteException {
+    public int getCoachsCount() {
         return mCoachs.size();
     }
 
@@ -739,7 +734,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public boolean containsCoach(Coach c) throws RemoteException {
+    public boolean containsCoach(Coach c) {
         return mCoachs.contains(c);
     }
 
@@ -748,7 +743,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param c
      */
     @Override
-    public void addCoach(Coach c) throws RemoteException {
+    public void addCoach(Coach c) {
         mCoachs.add(c);
     }
 
@@ -756,18 +751,18 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      *
      */
     @Override
-    public void removeCoach(int i) throws RemoteException {
+    public void removeCoach(int i) {
         mCoachs.remove(i);
     }
 
     /**
      */
     @Override
-    public void clearCoachs() throws RemoteException {
+    public void clearCoachs() {
         this.mCoachs.clear();
     }
 
-    public boolean isBalanced(Team opp, Round round) throws RemoteException {
+    public boolean isBalanced(Team opp, Round round) {
 
         boolean balanced = true;
         ArrayList<Team> teams = new ArrayList<>();

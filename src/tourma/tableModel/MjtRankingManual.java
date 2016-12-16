@@ -56,18 +56,16 @@ public final class MjtRankingManual extends MjtRanking {
     protected void delData(Competitor obj) {
         if (mObjects.contains(obj)) {
             mObjects.remove(obj);
-            try {
-                for (Object o : mDatas) {
-                    if (o instanceof ObjectRanking) {
-                        if (((ObjectRanking) o).getObject().equals(obj)) {
-                            mDatas.remove(o);
-                            break;
-                        }
+
+            for (Object o : mDatas) {
+                if (o instanceof ObjectRanking) {
+                    if (((ObjectRanking) o).getObject().equals(obj)) {
+                        mDatas.remove(o);
+                        break;
                     }
                 }
-            } catch (RemoteException re) {
-                re.printStackTrace();
             }
+
         }
 
     }

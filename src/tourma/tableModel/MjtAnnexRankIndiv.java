@@ -44,20 +44,13 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
     public MjtAnnexRankIndiv(final int round, final Criteria criteria, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
         super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
         mTeamTournament = teamTournament;
-                try
-        {
         sortDatas();
-        }
-        catch(RemoteException re)
-        {
-            re.printStackTrace();
-        }
 
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void sortDatas() throws RemoteException {
+    protected void sortDatas() {
         mDatas.clear();
         mDatas = new ArrayList<>();
         @SuppressWarnings("unchecked")
@@ -206,28 +199,25 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
     public Object getValueAt(final int row, final int col) {
 
         Object val = StringConstants.CS_NULL;
-        try {
-            final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
-            switch (col) {
-                case 0:
-                    val = row + 1;
-                    break;
-                case 1:
-                    val = ((Coach) obj.getObject()).getTeam();
-                    break;
-                case 2:
-                    val = ((Competitor) obj.getObject()).getDecoratedName();
-                    break;
-                case 3:
-                    val = ((Coach) obj.getObject()).getStringRoster();
-                    break;
-                case 4:
-                    val = obj.getValue();
-                    break;
-                default:
-            }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+
+        final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
+        switch (col) {
+            case 0:
+                val = row + 1;
+                break;
+            case 1:
+                val = ((Coach) obj.getObject()).getTeam();
+                break;
+            case 2:
+                val = ((Competitor) obj.getObject()).getDecoratedName();
+                break;
+            case 3:
+                val = ((Coach) obj.getObject()).getStringRoster();
+                break;
+            case 4:
+                val = obj.getValue();
+                break;
+            default:
         }
         return val;
 

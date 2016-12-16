@@ -102,12 +102,8 @@ public final class JdgSelectNumber extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
-        try {
             mTournament.getParams().setTeamMatesNumber((Integer) jspCoachNumber.getValue());
             mTournament.getParams().setSubstitutes(jckSubstitutes.isSelected());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         this.setVisible(false);
     }//GEN-LAST:event_jbtOKActionPerformed
 

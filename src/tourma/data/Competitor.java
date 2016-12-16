@@ -44,16 +44,13 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
 
     @Override
     public boolean equals(Object c) {
-        try {
-            if (c instanceof Competitor) {
-                Competitor comp = (Competitor) c;
-                return getName().equals(comp.getName());
-            }
-            return false;
-        } catch (RemoteException re) {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage() );
+
+        if (c instanceof Competitor) {
+            Competitor comp = (Competitor) c;
+            return getName().equals(comp.getName());
         }
         return false;
+
     }
 
     public String getRawName() {
@@ -62,12 +59,9 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
 
     @Override
     public int hashCode() {
-        try {
-            return getName().hashCode();
-        } catch (RemoteException re) {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
-        }
-        return 0;
+
+        return getName().hashCode();
+
     }
 
     /**
@@ -121,15 +115,15 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         mMatchs = new ArrayList<>();
     }
 
-    public boolean containsCategory(Category cat) throws RemoteException {
+    public boolean containsCategory(Category cat) {
         return mCategories.contains(cat);
     }
 
-    public int getCategoryCount() throws RemoteException {
+    public int getCategoryCount() {
         return mCategories.size();
     }
 
-    public Category getCategory(int i) throws RemoteException {
+    public Category getCategory(int i) {
         if (i < mCategories.size()) {
             return mCategories.get(i);
         } else {
@@ -140,15 +134,15 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
     /**
      * @param mCategory the mCategory to set
      */
-    public void addCategory(Category mCategory) throws RemoteException {
+    public void addCategory(Category mCategory) {
         mCategories.add(mCategory);
     }
 
-    public void delCategory(Category mCategory) throws RemoteException {
+    public void delCategory(Category mCategory) {
         mCategories.remove(mCategory);
     }
 
-    public void clearCategory() throws RemoteException {
+    public void clearCategory() {
         mCategories.clear();
     }
 
@@ -157,21 +151,21 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param opponent
      * @param r
      */
-    public abstract void addMatch(Competitor opponent, Round r) throws RemoteException;
+    public abstract void addMatch(Competitor opponent, Round r);
 
     /**
      *
      * @param opponent
      * @param r
      */
-    public abstract void addMatchRoundRobin(Competitor opponent, Round r, boolean complete) throws RemoteException;
+    public abstract void addMatchRoundRobin(Competitor opponent, Round r, boolean complete);
 
     /**
      *
      * @param opponent
      * @return
      */
-    public abstract boolean havePlayed(Competitor opponent) throws RemoteException;
+    public abstract boolean havePlayed(Competitor opponent);
 
     /**
      *
@@ -179,19 +173,19 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param r
      * @return
      */
-    public abstract ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) throws RemoteException;
+    public abstract ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r);
 
     /**
      *
      * @return
      */
-    public abstract String getDecoratedName() throws RemoteException;
+    public abstract String getDecoratedName();
 
     /**
      *
      * @param r
      */
-    public abstract void roundCheck(Round r) throws RemoteException;
+    public abstract void roundCheck(Round r);
 
     /**
      *
@@ -199,16 +193,13 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param current
      * @return
      */
-    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current) throws RemoteException;
+    public abstract HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current);
 
     @Override
     public String toString() {
-        try {
-            return getName();
-        } catch (RemoteException re) {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
-        }
-        return "";
+
+        return getName();
+
     }
 
     /**
@@ -216,7 +207,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @return
      */
     @Override
-    public String getName() throws RemoteException {
+    public String getName() {
         return mName;
     }
 
@@ -233,7 +224,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param mName the mName to set
      */
     @Override
-    public void setName(String mName) throws RemoteException {
+    public void setName(String mName) {
         this.mName = mName;
     }
 
@@ -255,14 +246,14 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param picture the picture to set
      */
     @Override
-    public void setPicture(ImageIcon picture) throws RemoteException {
+    public void setPicture(ImageIcon picture) {
         this.picture = picture;
     }
 
     /**
      * @return the mClan
      */
-    public Clan getClan() throws RemoteException {
+    public Clan getClan() {
         return mClan;
     }
 

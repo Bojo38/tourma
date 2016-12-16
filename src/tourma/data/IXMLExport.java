@@ -17,11 +17,11 @@ public interface IXMLExport {
      *
      * @return
      */
-    public Element getXMLElement() throws RemoteException;
+    public Element getXMLElement() ;
 
     /**
      *
      * @param e
      */
-    public void setXMLElement(final Element e) throws RemoteException;
+    public void setXMLElement(final Element e) ;
 }

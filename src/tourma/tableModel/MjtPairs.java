@@ -74,7 +74,7 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
     @Override
     public Object getValueAt(final int row, final int col) {
         Object val = StringConstants.CS_NULL;
-        try{
+
         switch (col) {
             case 0:
                 val = row + 1;
@@ -89,11 +89,6 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
                 val = mTeams2.get(row).getName();
                 break;
             default:
-        }
-        }
-        catch(RemoteException re)
-        {
-            re.printStackTrace();
         }
         return val;
     }

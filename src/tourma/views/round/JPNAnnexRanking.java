@@ -101,27 +101,24 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
         mCoachs = v;
         mTeams = t;
 
-        try {
-            int roundnumber = 0;
-            while (!round.equals(tour.getRound(roundnumber))) {
-                roundnumber++;
-            }
+        int roundnumber = 0;
+        while (!round.equals(tour.getRound(roundnumber))) {
+            roundnumber++;
+        }
 
-            if (clan) {
-                jbtPositive.setText(name + "(" + Translate.translate(CS_Clan) + ")");
+        if (clan) {
+            jbtPositive.setText(name + "(" + Translate.translate(CS_Clan) + ")");
+            jbtNegative.setText(name + "(" + Translate.translate(CS_Opponents) + ")");
+        } else {
+            if (team) {
+                jbtPositive.setText(name + "(" + Translate.translate(CS_Team) + ")");
                 jbtNegative.setText(name + "(" + Translate.translate(CS_Opponents) + ")");
             } else {
-                if (team) {
-                    jbtPositive.setText(name + "(" + Translate.translate(CS_Team) + ")");
-                    jbtNegative.setText(name + "(" + Translate.translate(CS_Opponents) + ")");
-                } else {
-                    jbtPositive.setText(name + "(" + Translate.translate(CS_Coach) + ")");
-                    jbtNegative.setText(name + "(" + Translate.translate(CS_Opponents) + ")");
-                }
+                jbtPositive.setText(name + "(" + Translate.translate(CS_Coach) + ")");
+                jbtNegative.setText(name + "(" + Translate.translate(CS_Opponents) + ")");
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
+
         update();
     }
 
@@ -219,79 +216,74 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtPositiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPositiveActionPerformed
-        try {
-            for (int i = 0; i < mTour.getRoundsCount(); i++) {
-                if (mRound == mTour.getRound(i)) {
-                    MjtAnnexRank model;
-                    if (mClan) {
-                        model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                    } else {
-                        if (mTeam) {
-                            model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
 
-                        } else {
-                            model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
-                        }
-                    }
-                    final StringBuffer a = new StringBuffer(mCriteria.getName());
-                    if (mClan) {
-                        a.append(" " + Translate.translate(CS_ByTheClan));
+        for (int i = 0; i < mTour.getRoundsCount(); i++) {
+            if (mRound == mTour.getRound(i)) {
+                MjtAnnexRank model;
+                if (mClan) {
+                    model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                            mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                } else {
+                    if (mTeam) {
+                        model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+
                     } else {
-                        if (mTeam) {
-                            a.append(" " + Translate.translate(CS_ByTheTeam));
-                        } else {
-                            a.append(" " + Translate.translate(CS_ByTheCoach));
-                        }
+                        model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                     }
-                    final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
-                    jdg.setVisible(true);
-                    break;
                 }
+                final StringBuffer a = new StringBuffer(mCriteria.getName());
+                if (mClan) {
+                    a.append(" " + Translate.translate(CS_ByTheClan));
+                } else {
+                    if (mTeam) {
+                        a.append(" " + Translate.translate(CS_ByTheTeam));
+                    } else {
+                        a.append(" " + Translate.translate(CS_ByTheCoach));
+                    }
+                }
+                final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
+                jdg.setVisible(true);
+                break;
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
+
     }//GEN-LAST:event_jbtPositiveActionPerformed
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtNegativeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNegativeActionPerformed
-        try {
-            for (int i = 0; i < mTour.getRoundsCount(); i++) {
-                if (mRound == mTour.getRound(i)) {
-                    MjtAnnexRank model;
-                    if (mClan) {
-                        model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+        for (int i = 0; i < mTour.getRoundsCount(); i++) {
+            if (mRound == mTour.getRound(i)) {
+                MjtAnnexRank model;
+                if (mClan) {
+                    model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                            mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                } else {
+                    if (mTeam) {
+                        model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                     } else {
-                        if (mTeam) {
-                            model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                    mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                        } else {
-                            model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                    mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
-                        }
+                        model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                     }
-
-                    final StringBuffer a = new StringBuffer(mCriteria.getName());
-                    if (mClan) {
-                        a.append(" " + Translate.translate(CS_AgainstTheClan));
-                    } else {
-                        if (mTeam) {
-                            a.append(" " + Translate.translate(CS_AgainstTheTeam));
-                        } else {
-                            a.append(" " + Translate.translate(CS_AgainstTheCoach));
-                        }
-                    }
-                    final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
-                    jdg.setVisible(true);
-                    break;
                 }
+
+                final StringBuffer a = new StringBuffer(mCriteria.getName());
+                if (mClan) {
+                    a.append(" " + Translate.translate(CS_AgainstTheClan));
+                } else {
+                    if (mTeam) {
+                        a.append(" " + Translate.translate(CS_AgainstTheTeam));
+                    } else {
+                        a.append(" " + Translate.translate(CS_AgainstTheCoach));
+                    }
+                }
+                final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, a.toString(), i + 1, mTour, model, 0);
+                jdg.setVisible(true);
+                break;
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
+
     }//GEN-LAST:event_jbtNegativeActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -311,62 +303,59 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
      */
     public void update() {
 
-        try {
-            if (mRound != null) {
-                final ArrayList<Round> v = new ArrayList<>();
-                for (int i = 0; i < mTour.getRoundsCount(); i++) {
-                    if (mTour.getRound(i).getHour().before(mRound.getHour())) {
-                        v.add(mTour.getRound(i));
-                    }
+        if (mRound != null) {
+            final ArrayList<Round> v = new ArrayList<>();
+            for (int i = 0; i < mTour.getRoundsCount(); i++) {
+                if (mTour.getRound(i).getHour().before(mRound.getHour())) {
+                    v.add(mTour.getRound(i));
                 }
-                v.add(mRound);
-
-                MjtAnnexRank modelPos;
-                MjtAnnexRank modelNeg;
-
-                if (mClan) {
-                    modelPos
-                            = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                    modelNeg
-                            = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                    mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                } else {
-                    if (mTeam) {
-                        modelPos
-                                = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                        mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                        modelNeg
-                                = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                        mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                    } else {
-                        modelPos
-                                = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
-                        modelNeg
-                                = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
-                    }
-                }
-                jtbNegative.setModel(modelNeg);
-                jtbPositive.setModel(modelPos);
-
-                jtbNegative.setDefaultRenderer(String.class, modelNeg);
-                jtbNegative.setDefaultRenderer(Integer.class, modelNeg);
-
-                jtbPositive.setDefaultRenderer(String.class, modelPos);
-                jtbPositive.setDefaultRenderer(Integer.class, modelPos);
-
-                TableFormat.setColumnSize(jtbPositive);
-                TableFormat.setColumnSize(jtbNegative);
-
-                jtbPositive.setRowHeight(25);
-                jtbNegative.setRowHeight(25);
-
-                jtbPositive.setAutoCreateRowSorter(true);
-                jtbNegative.setAutoCreateRowSorter(true);
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+            v.add(mRound);
+
+            MjtAnnexRank modelPos;
+            MjtAnnexRank modelNeg;
+
+            if (mClan) {
+                modelPos
+                        = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                modelNeg
+                        = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+            } else {
+                if (mTeam) {
+                    modelPos
+                            = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                    mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                    modelNeg
+                            = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                    mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                } else {
+                    modelPos
+                            = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+                    modelNeg
+                            = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+                }
+            }
+            jtbNegative.setModel(modelNeg);
+            jtbPositive.setModel(modelPos);
+
+            jtbNegative.setDefaultRenderer(String.class, modelNeg);
+            jtbNegative.setDefaultRenderer(Integer.class, modelNeg);
+
+            jtbPositive.setDefaultRenderer(String.class, modelPos);
+            jtbPositive.setDefaultRenderer(Integer.class, modelPos);
+
+            TableFormat.setColumnSize(jtbPositive);
+            TableFormat.setColumnSize(jtbNegative);
+
+            jtbPositive.setRowHeight(25);
+            jtbNegative.setRowHeight(25);
+
+            jtbPositive.setAutoCreateRowSorter(true);
+            jtbNegative.setAutoCreateRowSorter(true);
         }
+
     }
     private static final Logger LOG = Logger.getLogger(JPNAnnexRanking.class.getName());
 

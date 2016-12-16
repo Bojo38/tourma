@@ -80,7 +80,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      *
      * @return
      */
-    public static Coach getNullCoach() throws RemoteException {
+    public static Coach getNullCoach()  {
         synchronized (Coach.myLock) {
             if (sNullCoach == null) {
                 sNullCoach = new Coach(StringConstants.CS_NONE);
@@ -221,7 +221,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @return
      */
     @Override
-    public Element getXMLElement() throws RemoteException {
+    public Element getXMLElement()  {
 
         final Element coach = new Element(StringConstants.CS_COACH);
         coach.setAttribute(StringConstants.CS_NAME, this.getName());
@@ -287,7 +287,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      *
      * @return
      */
-    public String getStringRoster() throws RemoteException {
+    public String getStringRoster()  {
         if (this.getMatchCount() == 0) {
             return getRoster().getName();
         }
@@ -332,7 +332,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @param coach
      */
     @Override
-    public void setXMLElement(final Element coach) throws RemoteException {
+    public void setXMLElement(final Element coach)  {
         try {
             this.setName(coach.getAttributeValue(StringConstants.CS_NAME));
             this.setTeam(coach.getAttributeValue(StringConstants.CS_TEAM));
@@ -420,7 +420,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @param r
      */
     @Override
-    public void addMatch(Competitor opponent, Round r) throws RemoteException {
+    public void addMatch(Competitor opponent, Round r)  {
         CoachMatch m = new CoachMatch(r);
         m.setCompetitor1(this);
         m.setCompetitor2(opponent);
@@ -433,7 +433,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @param r
      * @return
      */
-    public CoachMatch createMatch(Competitor opponent, Round r) throws RemoteException {
+    public CoachMatch createMatch(Competitor opponent, Round r)  {
         CoachMatch m = new CoachMatch(r);
         m.setCompetitor1(this);
         m.setCompetitor2(opponent);
@@ -446,7 +446,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @return
      */
     @Override
-    public boolean havePlayed(Competitor opponent) throws RemoteException {
+    public boolean havePlayed(Competitor opponent)  {
         boolean have_played = false;
         for (int i = 0; i < getMatchCount(); i++) {
             Match mMatch = getMatch(i);
@@ -467,7 +467,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @return
      */
     @Override
-    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) throws RemoteException {
+    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r)  {
 
         Tournament tour = Tournament.getTournament();
 
@@ -579,7 +579,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @param currentOpponent
      * @return
      */
-    private ArrayList<Team> getPossibleTeams(Round current, Coach currentOpponent) throws RemoteException {
+    private ArrayList<Team> getPossibleTeams(Round current, Coach currentOpponent)  {
 
         ArrayList<Team> teams = new ArrayList<>();
         for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
@@ -662,7 +662,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @return
      */
     @Override
-    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round r) throws RemoteException {
+    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round r)  {
 
         HashMap<Team, Integer> map = new HashMap<>();
 
@@ -744,7 +744,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @return
      */
     @Override
-    public String getDecoratedName() throws RemoteException {
+    public String getDecoratedName()  {
         String tmp = getName();
         Tournament tour = Tournament.getTournament();
         ArrayList<Clan> clans;
@@ -769,7 +769,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @param r
      */
     @Override
-    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) throws RemoteException {
+    public void addMatchRoundRobin(Competitor c, Round r, boolean complete)  {
         addMatch(c, r);
     }
 
@@ -779,7 +779,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @param round
      * @return
      */
-    public boolean isBalanced(Coach opp, Round round) throws RemoteException {
+    public boolean isBalanced(Coach opp, Round round)  {
         Tournament tour = Tournament.getTournament();
         boolean balanced = true;
         if ((tour.getParams().isTeamTournament())
@@ -797,7 +797,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
         return balanced;
     }
 
-    public void printBalanced(Round round) throws RemoteException {
+    public void printBalanced(Round round)  {
         Tournament tour = Tournament.getTournament();
 
         if ((tour.getParams().isTeamTournament())
@@ -851,7 +851,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
         }
     }
 
-    private boolean isBalanced(Team opp, Round round) throws RemoteException {
+    private boolean isBalanced(Team opp, Round round)  {
         boolean balanced = true;
         ArrayList<Team> teams = new ArrayList<>();
 
@@ -909,7 +909,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @return
      */
     ArrayList<Team> getMinimumTeamsBalanced(Round round
-    ) throws RemoteException {
+    )  {
 
         ArrayList<Team> possible = new ArrayList<>();
 
@@ -969,7 +969,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      * @param current
      * @return
      */
-    private boolean canMatch(Coach Opponent, Coach opponentOpponent, Coach currentOpp, Round current) throws RemoteException {
+    private boolean canMatch(Coach Opponent, Coach opponentOpponent, Coach currentOpp, Round current)  {
         boolean canMatch;
 
         // Already played
@@ -1104,7 +1104,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      */
     @Override
     @SuppressWarnings("empty-statement")
-    public void roundCheck(Round round) throws RemoteException {
+    public void roundCheck(Round round)  {
 
         Tournament tour = Tournament.getTournament();
         //ArrayList<Match> matchs = round.getMatchs();

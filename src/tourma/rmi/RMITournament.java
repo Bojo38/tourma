@@ -6,6 +6,8 @@
 package tourma.rmi;
 
 import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tourma.data.ITournament;
 import tourma.data.Tournament;
 
@@ -28,7 +30,8 @@ public class RMITournament implements ITournament{
     
     @Override
     public Tournament getTournament() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+            return Tournament.getTournament();
     }
 
     @Override

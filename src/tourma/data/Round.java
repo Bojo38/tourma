@@ -75,35 +75,27 @@ public class Round implements IXMLExport, Serializable {
 
     @Override
     public String toString() {
-        try
-        {
         final int index = Tournament.getTournament().getRoundIndex(this);
         return Translate.translate(Translate.CS_Round_) + (index + 1);
-        }
-        catch (RemoteException re)
-        {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
-        }
-        return "";
     }
 
-    public double getMinBonus() throws RemoteException{
+    public double getMinBonus() {
         return mMinBonus;
     }
 
-    public double getMaxBonus() throws RemoteException{
+    public double getMaxBonus() {
         return mMaxBonus;
     }
 
-    public void setMinBonus(double v) throws RemoteException{
+    public void setMinBonus(double v) {
         mMinBonus = v;
     }
 
-    public void setMaxBonus(double v) throws RemoteException{
+    public void setMaxBonus(double v) {
         mMaxBonus = v;
     }
 
-    public double getCoef(Match m) throws RemoteException{
+    public double getCoef(Match m) {
         double coef;
         int index = this.indexOf(m) + 1;
         double gap = this.getMaxBonus() - this.getMinBonus();
@@ -117,7 +109,7 @@ public class Round implements IXMLExport, Serializable {
      * @param i
      * @return
      */
-    public Match getMatch(int i) throws RemoteException{
+    public Match getMatch(int i) {
         return mMatchs.get(i);
     }
 
@@ -126,7 +118,7 @@ public class Round implements IXMLExport, Serializable {
      *
      * @return
      */
-    public int getMatchsCount() throws RemoteException{
+    public int getMatchsCount() {
         return mMatchs.size();
     }
 
@@ -134,11 +126,11 @@ public class Round implements IXMLExport, Serializable {
      *
      * @param m
      */
-    public void addMatch(Match m) throws RemoteException{
+    public void addMatch(Match m) {
         mMatchs.add(m);
     }
 
-    public int indexOf(Match m) throws RemoteException{
+    public int indexOf(Match m) {
         for (int i=0; i<mMatchs.size(); i++)
         {
             Match match=mMatchs.get(i);
@@ -173,7 +165,7 @@ public class Round implements IXMLExport, Serializable {
     /**
      * Shuffle the matchs
      */
-    public void shuffleMatchs() throws RemoteException{
+    public void shuffleMatchs() {
         Collections.shuffle(mMatchs);
     }
 
@@ -182,11 +174,11 @@ public class Round implements IXMLExport, Serializable {
      * @param m
      * @return
      */
-    public boolean containsMatch(Match m) throws RemoteException{
+    public boolean containsMatch(Match m) {
         return mMatchs.contains(m);
     }
 
-    public boolean containsCoachMatch(CoachMatch m) throws RemoteException{
+    public boolean containsCoachMatch(CoachMatch m) {
         for (Match match : mMatchs) {
             if (match instanceof CoachMatch) {
                 if (m == match) {
@@ -208,7 +200,7 @@ public class Round implements IXMLExport, Serializable {
     /**
      * Clear The match Array
      */
-    public void clearMatchs() throws RemoteException{
+    public void clearMatchs() {
         mMatchs.clear();
     }
 
@@ -216,7 +208,7 @@ public class Round implements IXMLExport, Serializable {
      *
      * @return
      */
-    public ArrayList<CoachMatch> getCoachMatchs() throws RemoteException{
+    public ArrayList<CoachMatch> getCoachMatchs() {
         ArrayList<CoachMatch> tmp;
         tmp = new ArrayList<>();
         if (mMatchs.size() > 0) {
@@ -244,7 +236,7 @@ public class Round implements IXMLExport, Serializable {
      *
      * @param data
      */
-    public void setHour(String data) throws RemoteException{
+    public void setHour(String data) {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         try {
             mHour = format.parse(data);
@@ -256,7 +248,7 @@ public class Round implements IXMLExport, Serializable {
     /**
      * Set round hour as current one
      */
-    public void setCurrentHour() throws RemoteException{
+    public void setCurrentHour() {
         final Calendar cal = Calendar.getInstance();
         mHour = cal.getTime();
     }
@@ -267,7 +259,7 @@ public class Round implements IXMLExport, Serializable {
      */
     @SuppressWarnings("ReturnOfDateField")
     //@SuppressFBWarnings({"",""})
-    public Date getHour() throws RemoteException{
+    public Date getHour() {
         return (Date) mHour.clone();
     }
 
@@ -276,7 +268,7 @@ public class Round implements IXMLExport, Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() throws RemoteException{
+    public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(StringConstants.CS_ROUND);
         if (mHour==null)
@@ -307,7 +299,7 @@ public class Round implements IXMLExport, Serializable {
      *
      * @return
      */
-    public Element getXMLElementForDisplay() throws RemoteException{
+    public Element getXMLElementForDisplay() {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(StringConstants.CS_ROUND);
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
@@ -334,7 +326,7 @@ public class Round implements IXMLExport, Serializable {
      * @param round
      */
     @Override
-    public void setXMLElement(final Element round) throws RemoteException{
+    public void setXMLElement(final Element round) {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
         final String date = round.getAttributeValue(StringConstants.CS_DATE);
@@ -377,7 +369,7 @@ public class Round implements IXMLExport, Serializable {
      *
      * @param round
      */
-    public void setXMLElementForDisplay(final Element round) throws RemoteException{
+    public void setXMLElementForDisplay(final Element round) {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
         final String date = round.getAttributeValue(StringConstants.CS_DATE);
@@ -432,56 +424,56 @@ public class Round implements IXMLExport, Serializable {
     /**
      * @return the mCup
      */
-    public boolean isCup() throws RemoteException{
+    public boolean isCup() {
         return mCup;
     }
 
     /**
      * @param mCup the mCup to set
      */
-    public void setCup(boolean mCup)throws RemoteException {
+    public void setCup(boolean mCup) {
         this.mCup = mCup;
     }
 
     /**
      * @return the mCupTour
      */
-    public int getCupTour() throws RemoteException{
+    public int getCupTour() {
         return mCupTour;
     }
 
     /**
      * @param mCupTour the mCupTour to set
      */
-    public void setCupTour(int mCupTour) throws RemoteException{
+    public void setCupTour(int mCupTour) {
         this.mCupTour = mCupTour;
     }
 
     /**
      * @return the mCupMaxTour
      */
-    public int getCupMaxTour() throws RemoteException{
+    public int getCupMaxTour() {
         return mCupMaxTour;
     }
 
     /**
      * @param mCupMaxTour the mCupMaxTour to set
      */
-    public void setCupMaxTour(int mCupMaxTour)throws RemoteException {
+    public void setCupMaxTour(int mCupMaxTour) {
         this.mCupMaxTour = mCupMaxTour;
     }
 
     /**
      * @return the mLooserCup
      */
-    public boolean isLooserCup() throws RemoteException{
+    public boolean isLooserCup() {
         return mLooserCup;
     }
 
     /**
      * @param mLooserCup the mLooserCup to set
      */
-    public void setLooserCup(boolean mLooserCup)throws RemoteException {
+    public void setLooserCup(boolean mLooserCup) {
         this.mLooserCup = mLooserCup;
     }
 
@@ -489,7 +481,7 @@ public class Round implements IXMLExport, Serializable {
      *
      * @param i
      */
-    public void removeMatch(int i) throws RemoteException{
+    public void removeMatch(int i) {
         mMatchs.remove(i);
     }
 
@@ -497,7 +489,7 @@ public class Round implements IXMLExport, Serializable {
      *
      * @param i
      */
-    public void removeMatch(Match i) throws RemoteException{
+    public void removeMatch(Match i) {
         mMatchs.remove(i);
     }
 
@@ -527,17 +519,17 @@ public class Round implements IXMLExport, Serializable {
         return result;
     }
 
-    public boolean isThirdPlace()throws RemoteException
+    public boolean isThirdPlace()
     {
         return mThirdPlace;
     }
     
-    public void setThirdPlace(boolean b)throws RemoteException
+    public void setThirdPlace(boolean b)
     {        
         mThirdPlace=b;
     }
 
-    public void recomputeMatchs()throws RemoteException
+    public void recomputeMatchs()
     {
         for (int i=0; i<mMatchs.size(); i++)
         {
@@ -545,7 +537,7 @@ public class Round implements IXMLExport, Serializable {
         }
     }
     
-    public boolean allMatchesEntered()throws RemoteException
+    public boolean allMatchesEntered()
     {
         // Shall check if all the matches hav been filled, conceeded or refused
         for (int i=0; i<getMatchsCount(); i++)

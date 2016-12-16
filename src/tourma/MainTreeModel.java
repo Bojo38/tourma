@@ -53,7 +53,7 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
 
     MainTreeModel() {
         mListeners = new ArrayList<>();
-        try {
+
             mTournament = Tournament.getTournament();
             mRounds = new ArrayList<>();
 
@@ -94,9 +94,7 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
                 mRoot.add(mCup);
                 mCup.setUserObject(Translate.translate(CS_Cup));
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+
     }
 
     @Override

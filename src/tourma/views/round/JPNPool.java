@@ -65,30 +65,27 @@ public final class JPNPool extends javax.swing.JPanel {
         initComponents();
         mRound = r;
         mTournament = t;
-        try {
-            for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-                final Criteria criteria = mTournament.getParams().getCriteria(i);
-                if (!mTournament.getParams().isTeamTournament()) {
-                    final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, p.getCompetitors(), new ArrayList<Team>());
-                    jtpAnnexRank.add(criteria.getName(), jpn);
-                } else {
+        for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
+            final Criteria criteria = mTournament.getParams().getCriteria(i);
+            if (!mTournament.getParams().isTeamTournament()) {
+                final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, p.getCompetitors(), new ArrayList<Team>());
+                jtpAnnexRank.add(criteria.getName(), jpn);
+            } else {
 
-                    final ArrayList<Coach> v = new ArrayList<>();
-                    for (int j = 0; j < p.getCompetitorCount(); j++) {
-                        for (int k = 0; k < ((IContainCoachs) p.getCompetitor(j)).getCoachsCount(); k++) {
-                            v.add(((IContainCoachs) p.getCompetitor(j)).getCoach(k));
-                        }
+                final ArrayList<Coach> v = new ArrayList<>();
+                for (int j = 0; j < p.getCompetitorCount(); j++) {
+                    for (int k = 0; k < ((IContainCoachs) p.getCompetitor(j)).getCoachsCount(); k++) {
+                        v.add(((IContainCoachs) p.getCompetitor(j)).getCoach(k));
                     }
-                    JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, true, v, p.getCompetitors());
-                    jtpAnnexRank.add(criteria.getName(), jpn);
-
-                    jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, v, p.getCompetitors());
-                    jtpAnnexRank.add(criteria.getName(), jpn);
                 }
+                JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, true, v, p.getCompetitors());
+                jtpAnnexRank.add(criteria.getName(), jpn);
+
+                jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, v, p.getCompetitors());
+                jtpAnnexRank.add(criteria.getName(), jpn);
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
+
         update();
     }
 
@@ -169,40 +166,36 @@ public final class JPNPool extends javax.swing.JPanel {
  @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralPoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralPoolActionPerformed
 
-     try {
-         final ArrayList<Round> v = new ArrayList<>();
-         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-             if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
-                 v.add(mTournament.getRound(i));
-             }
+     final ArrayList<Round> v = new ArrayList<>();
+     for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+         if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
+             v.add(mTournament.getRound(i));
          }
-         v.add(mRound);
-
-         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-             if (mRound == mTournament.getRound(i)) {
-
-                 MjtRanking model;
-                 if ((mTournament.getParams().isTeamTournament())
-                         && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-                     model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mPool.getCompetitors(), mRoundOnly);
-                 } else {
-                     model = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false);
-                 }
-                 final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
-                         Translate.translate(CS_GeneralByPool),
-                         i + 1, mTournament, model, 0);
-                 jdg.setVisible(true);
-             }
-         }
-     } catch (RemoteException re) {
-         re.printStackTrace();
      }
+     v.add(mRound);
+
+     for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+         if (mRound == mTournament.getRound(i)) {
+
+             MjtRanking model;
+             if ((mTournament.getParams().isTeamTournament())
+                     && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                 model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mPool.getCompetitors(), mRoundOnly);
+             } else {
+                 model = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+             }
+             final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
+                     Translate.translate(CS_GeneralByPool),
+                     i + 1, mTournament, model, 0);
+             jdg.setVisible(true);
+         }
+     }
+
 }//GEN-LAST:event_jbtGeneralPoolActionPerformed
     private static final String CS_GeneralByPool = "GENERAL PAR POOL";
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGlobalPoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalPoolActionPerformed
-        try {
             final ArrayList<Round> v = new ArrayList<>();
             for (int i = 0; i < mTournament.getRoundsCount(); i++) {
                 if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
@@ -279,9 +272,7 @@ public final class JPNPool extends javax.swing.JPanel {
                     break;
                 }
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+     
     }//GEN-LAST:event_jbtGlobalPoolActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -300,7 +291,7 @@ public final class JPNPool extends javax.swing.JPanel {
      */
     public void update() {
 
-        try {
+     
             int r_index = 0;
             final ArrayList<Round> v = new ArrayList<>();
             for (int i = 0; i < mTournament.getRoundsCount(); i++) {
@@ -336,9 +327,7 @@ public final class JPNPool extends javax.swing.JPanel {
             }
 
             jtbRankingPool.setRowHeight(25);
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+     
     }
 
     /**

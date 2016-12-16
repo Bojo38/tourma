@@ -42,13 +42,9 @@ public final class JdgParameters extends javax.swing.JDialog {
         final int screenHeight = dmode.getHeight();
         this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
-        try {
-            mParams = Tournament.getTournament().getParams();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
-        // Load current parameters
+        mParams = Tournament.getTournament().getParams();
 
+        // Load current parameters
         if (mParams.getGame() == RosterType.C_BLOOD_BOWL) {
             jrbBloodBowl.setSelected(true);
         } else {

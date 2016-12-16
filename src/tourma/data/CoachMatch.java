@@ -82,7 +82,7 @@ public class CoachMatch extends Match implements Serializable {
      *
      * @param round
      */
-    public CoachMatch(Round round)  throws RemoteException{
+    public CoachMatch(Round round)  {
         super(round);
         mValues = new HashMap<>();
 
@@ -109,10 +109,7 @@ public class CoachMatch extends Match implements Serializable {
         if (this == c) {
             return true;
         }
-        
-        try
-        {
-             
+
         if (c instanceof CoachMatch) {
             CoachMatch cm = (CoachMatch) c;
             boolean equality = (this.concedeedBy1 == cm.concedeedBy1);
@@ -139,11 +136,7 @@ public class CoachMatch extends Match implements Serializable {
             return equality;
 
         }
-        }
-        catch (RemoteException re)
-        {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
-        }
+
         return false;
     }
 
@@ -165,7 +158,7 @@ public class CoachMatch extends Match implements Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() throws RemoteException{
+    public Element getXMLElement() {
         final Element match = new Element(StringConstants.CS_MATCH);
         match.setAttribute(StringConstants.CS_COACH + 1, this.getCompetitor1().getName());
         match.setAttribute(StringConstants.CS_COACH + 2, this.getCompetitor2().getName());
@@ -207,7 +200,7 @@ public class CoachMatch extends Match implements Serializable {
      */
     @Override
     public void setXMLElement(final Element match
-    )throws RemoteException {
+    ) {
         try {
             final String c1 = match.getAttribute(StringConstants.CS_COACH + 1).getValue();
             final String c2 = match.getAttribute(StringConstants.CS_COACH + 2).getValue();
@@ -304,7 +297,7 @@ public class CoachMatch extends Match implements Serializable {
      * @return
      */
     @Override
-    public Competitor getWinner() throws RemoteException{
+    public Competitor getWinner() {
         if (super.getWinner() == null) {
             if (getCompetitor1() == Coach.getNullCoach()) {
                 super.setWinner(getCompetitor2());
@@ -349,7 +342,7 @@ public class CoachMatch extends Match implements Serializable {
      * @return
      */
     @Override
-    public Competitor getLooser() throws RemoteException{
+    public Competitor getLooser() {
         if (super.getLooser() == null) {
             if (getCompetitor1() == Coach.getNullCoach()) {
                 super.setWinner(getCompetitor2());
@@ -394,7 +387,7 @@ public class CoachMatch extends Match implements Serializable {
      *
      */
     @Override
-    public void resetWL() throws RemoteException{
+    public void resetWL() {
         super.setWinner(null);
         super.setLooser(null);
     }
@@ -409,109 +402,109 @@ public class CoachMatch extends Match implements Serializable {
     /**
      * @param mRoster1 the mRoster1 to set
      */
-    public void setRoster1(RosterType mRoster1) throws RemoteException{
+    public void setRoster1(RosterType mRoster1) {
         this.mRoster1 = mRoster1;
     }
 
     /**
      * @return the mRoster2
      */
-    public RosterType getRoster2() throws RemoteException{
+    public RosterType getRoster2() {
         return mRoster2;
     }
 
     /**
      * @param mRoster2 the mRoster2 to set
      */
-    public void setRoster2(RosterType mRoster2) throws RemoteException{
+    public void setRoster2(RosterType mRoster2) {
         this.mRoster2 = mRoster2;
     }
 
     /**
      * @return the mSubstitute1
      */
-    public Substitute getSubstitute1() throws RemoteException{
+    public Substitute getSubstitute1() {
         return mSubstitute1;
     }
 
     /**
      * @param mSubstitute1 the mSubstitute1 to set
      */
-    public void setSubstitute1(Substitute mSubstitute1) throws RemoteException{
+    public void setSubstitute1(Substitute mSubstitute1) {
         this.mSubstitute1 = mSubstitute1;
     }
 
     /**
      * @return the mSubstitute2
      */
-    public Substitute getSubstitute2() throws RemoteException{
+    public Substitute getSubstitute2() {
         return mSubstitute2;
     }
 
     /**
      * @param mSubstitute2 the mSubstitute2 to set
      */
-    public void setSubstitute2(Substitute mSubstitute2) throws RemoteException{
+    public void setSubstitute2(Substitute mSubstitute2) {
         this.mSubstitute2 = mSubstitute2;
     }
 
     /**
      * @return the refusedBy1
      */
-    public boolean isRefusedBy1() throws RemoteException{
+    public boolean isRefusedBy1() {
         return refusedBy1;
     }
 
     /**
      * @param refusedBy1 the refusedBy1 to set
      */
-    public void setRefusedBy1(boolean refusedBy1) throws RemoteException{
+    public void setRefusedBy1(boolean refusedBy1) {
         this.refusedBy1 = refusedBy1;
     }
 
     /**
      * @return the refusedBy2
      */
-    public boolean isRefusedBy2() throws RemoteException{
+    public boolean isRefusedBy2() {
         return refusedBy2;
     }
 
     /**
      * @param refusedBy2 the refusedBy2 to set
      */
-    public void setRefusedBy2(boolean refusedBy2) throws RemoteException{
+    public void setRefusedBy2(boolean refusedBy2) {
         this.refusedBy2 = refusedBy2;
     }
 
     /**
      * @return the concedeedBy1
      */
-    public boolean isConcedeedBy1() throws RemoteException{
+    public boolean isConcedeedBy1() {
         return concedeedBy1;
     }
 
     /**
      * @param concedeedBy1 the concedeedBy1 to set
      */
-    public void setConcedeedBy1(boolean concedeedBy1) throws RemoteException{
+    public void setConcedeedBy1(boolean concedeedBy1) {
         this.concedeedBy1 = concedeedBy1;
     }
 
     /**
      * @return the concedeedBy2
      */
-    public boolean isConcedeedBy2() throws RemoteException{
+    public boolean isConcedeedBy2() {
         return concedeedBy2;
     }
 
     /**
      * @param concedeedBy2 the concedeedBy2 to set
      */
-    public void setConcedeedBy2(boolean concedeedBy2) throws RemoteException{
+    public void setConcedeedBy2(boolean concedeedBy2) {
         this.concedeedBy2 = concedeedBy2;
     }
 
-    private static int getGroupModifier(Coach c, CoachMatch m) throws RemoteException{
+    private static int getGroupModifier(Coach c, CoachMatch m) {
         int value = 0;
         if (Tournament.getTournament().getGroupsCount() > 1) {
             final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
@@ -558,7 +551,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param c
      * @return
      */
-    public Value getValue(Criteria c) throws RemoteException{
+    public Value getValue(Criteria c) {
         Value val= mValues.get(c);
         if (val!=null)
         {
@@ -583,7 +576,7 @@ public class CoachMatch extends Match implements Serializable {
      *
      * @return
      */
-    public int getValueCount() throws RemoteException{
+    public int getValueCount() {
         return mValues.size();
     }
 
@@ -592,7 +585,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param c
      * @param v
      */
-    public void putValue(Criteria c, Value v) throws RemoteException{
+    public void putValue(Criteria c, Value v) {
         mValues.put(c, v);
     }
 
@@ -600,12 +593,12 @@ public class CoachMatch extends Match implements Serializable {
      *
      * @param c
      */
-    public void removeValue(Criteria c) throws RemoteException{
+    public void removeValue(Criteria c) {
         mValues.remove(c);
     }
 
     @Override
-    public Element getXMLElementForDisplay() throws RemoteException{
+    public Element getXMLElementForDisplay() {
         Element match = getXMLElement();
         Element c1 = ((IXMLExport) getCompetitor1()).getXMLElement();
         Element c2 = ((IXMLExport) getCompetitor2()).getXMLElement();
@@ -615,7 +608,7 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     @Override
-    public void setXMLElementForDisplay(Element element) throws RemoteException{
+    public void setXMLElementForDisplay(Element element) {
 
         List<Element> elts = element.getChildren(StringConstants.CS_COACH);
         if (elts.size() == 2) {
@@ -637,7 +630,7 @@ public class CoachMatch extends Match implements Serializable {
         setXMLElement(element);
     }
 
-    public boolean isFullNaf() throws RemoteException{
+    public boolean isFullNaf() {
         Coach c1 = (Coach) getCompetitor1();
         Coach c2 = (Coach) getCompetitor2();
         return (c1.getNaf() > 0) && (c2.getNaf() > 0);
@@ -655,7 +648,7 @@ public class CoachMatch extends Match implements Serializable {
     /**
      * Recalculate the values fot this match
      */
-    public void recomputeValues() throws RemoteException{
+    public void recomputeValues() {
         this.c1value1 = recomputeValue(1, mCompetitor1);
         this.c2value1 = recomputeValue(1, mCompetitor2);
         this.c1value2 = recomputeValue(2, mCompetitor1);
@@ -674,7 +667,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param valueType
      * @return
      */
-    public static int getSubtypeByValue(final int valueType) throws RemoteException{
+    public static int getSubtypeByValue(final int valueType) {
         int subType = -1;
         if (valueType > Parameters.C_MAX_RANKING) {
             final int value = valueType - Parameters.C_MAX_RANKING - 1;
@@ -688,7 +681,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param valueType
      * @return
      */
-    public static Criteria getCriteriaByValue(final int valueType) throws RemoteException{
+    public static Criteria getCriteriaByValue(final int valueType) {
         Criteria criteria = null;
 
         if (valueType > Parameters.C_MAX_RANKING) {
@@ -698,7 +691,7 @@ public class CoachMatch extends Match implements Serializable {
         return criteria;
     }
 
-    protected int recomputeValue(int index, Competitor c) throws RemoteException{
+    protected int recomputeValue(int index, Competitor c) {
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
         valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
@@ -718,7 +711,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param valueType
      * @return
      */
-    public int getValue(final Coach c, final int valueType) throws RemoteException{
+    public int getValue(final Coach c, final int valueType) {
         int value;
 
         switch (valueType) {
@@ -800,7 +793,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param includeCurrent
      * @return
      */
-    public static int getOppPointsByCoach(final Coach c, final CoachMatch m, boolean includeCurrent) throws RemoteException{
+    public static int getOppPointsByCoach(final Coach c, final CoachMatch m, boolean includeCurrent) {
         int index = 0;
         CoachMatch tmp_m = (CoachMatch) c.getMatch(index);
         while (tmp_m != m) {
@@ -839,12 +832,12 @@ public class CoachMatch extends Match implements Serializable {
      * @param m
      * @return
      */
-    public static int getCoachNbMatchs(final Coach c, final CoachMatch m) throws RemoteException{
+    public static int getCoachNbMatchs(final Coach c, final CoachMatch m) {
         int index = c.matchIndex(m);
         return index + 1;
     }
 
-    public static int getCoachTablePoints(final Coach c, final CoachMatch m) throws RemoteException{
+    public static int getCoachTablePoints(final Coach c, final CoachMatch m) {
         for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
             Round r = Tournament.getTournament().getRound(i);
             if (r.containsCoachMatch(m)) {
@@ -866,7 +859,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param m
      * @return
      */
-    public static int getOppELOByCoach(final Coach c, final CoachMatch m) throws RemoteException{
+    public static int getOppELOByCoach(final Coach c, final CoachMatch m) {
         int value;
         Competitor opponent;
         if (m.getCompetitor1() == c) {
@@ -885,7 +878,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param m
      * @return
      */
-    public static int getVNDByCoach(final Coach c, final CoachMatch m) throws RemoteException{
+    public static int getVNDByCoach(final Coach c, final CoachMatch m) {
         int value = 0;
         final Value val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
         if (val.getValue1() >= 0) {
@@ -921,7 +914,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param m
      * @return
      */
-    public static int getELOByCoach(final Coach c, final CoachMatch m) throws RemoteException{
+    public static int getELOByCoach(final Coach c, final CoachMatch m) {
         int value = 0;
 
         Value val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
@@ -1018,7 +1011,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param withBonusPOints
      * @return
      */
-    public static int getPointsByCoach(final Coach c, final CoachMatch m, final boolean withMainPoints, final boolean withBonusPOints) throws RemoteException{
+    public static int getPointsByCoach(final Coach c, final CoachMatch m, final boolean withMainPoints, final boolean withBonusPOints) {
         int value = 0;
         if (withMainPoints) {
             if (c.matchIndex(m) == 0) {
@@ -1175,7 +1168,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param c Competitor
      * @return Integer
      */
-    public int getValue(Criteria crit, int subtype, Competitor c) throws RemoteException{
+    public int getValue(Criteria crit, int subtype, Competitor c) {
         int value = 0;
         Value v = getValue(crit);
         if (v != null) {
@@ -1209,7 +1202,7 @@ public class CoachMatch extends Match implements Serializable {
         return value;
     }
 
-    public boolean isEntered() throws RemoteException{
+    public boolean isEntered() {
         Criteria td = Tournament.getTournament().getParams().getCriteria(0);
         Value v = getValue(td);
 

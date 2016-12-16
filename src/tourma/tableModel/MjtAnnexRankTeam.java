@@ -46,13 +46,7 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
      */
     public MjtAnnexRankTeam(final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only) {
         super(round, criteria, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
-        try{
         sortDatas();
-        }
-        catch(RemoteException re)
-        {
-            re.printStackTrace();
-        }
     }
 
     /**
@@ -65,29 +59,24 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
      * @param full
      * @param round_only
      */
-    public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) throws RemoteException{
+    public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) {
 
         super(round, criteria, subtype, teams, full, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(), round_only);
-
-        try {
-            Parameters params = Tournament.getTournament().getParams();
-            if (!teamVictory) {
-                this.mRankingType1 = params.getRankingIndiv1();
-                this.mRankingType2 = params.getRankingIndiv2();
-                this.mRankingType3 = params.getRankingIndiv3();
-                this.mRankingType4 = params.getRankingIndiv4();
-                this.mRankingType5 = params.getRankingIndiv5();
-            }
-            sortDatas();
-        } catch (RemoteException re) {
-            re.printStackTrace();
+        Parameters params = Tournament.getTournament().getParams();
+        if (!teamVictory) {
+            this.mRankingType1 = params.getRankingIndiv1();
+            this.mRankingType2 = params.getRankingIndiv2();
+            this.mRankingType3 = params.getRankingIndiv3();
+            this.mRankingType4 = params.getRankingIndiv4();
+            this.mRankingType5 = params.getRankingIndiv5();
         }
+        sortDatas();
 
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void sortDatas() throws RemoteException {
+    protected void sortDatas() {
         mDatas.clear();
         mDatas = new ArrayList<>();
         @SuppressWarnings("unchecked")
@@ -251,19 +240,14 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-        try {
-            if (Tournament.getTournament().getParams().isUseImage()) {
-                if (column == 1) {
-                    Team t = (Team) mObjects.get(row);
-                    if (t.getPicture() != null) {
-                        ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
-                        obj.setIcon(icon);
-                    }
+        if (Tournament.getTournament().getParams().isUseImage()) {
+            if (column == 1) {
+                Team t = (Team) mObjects.get(row);
+                if (t.getPicture() != null) {
+                    ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
+                    obj.setIcon(icon);
                 }
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
 
         return obj;

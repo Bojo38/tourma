@@ -55,26 +55,22 @@ public final class JPNCategory extends javax.swing.JPanel {
         mCategory = g;
         mRoundNumber = roundNumber;
 
-        try {
-            if (t.getParams().isTeamTournament()) {
-                for (int i = 0; i < t.getTeamsCount(); i++) {
-                    Team team = t.getTeam(i);
-                    if (team.containsCategory(g)) {
-                        mEnableTeam = true;
-                        break;
-                    }
-                }
-            }
-
-            for (int i = 0; i < t.getCoachsCount(); i++) {
-                Coach coach = t.getCoach(i);
-                if (coach.containsCategory(g)) {
-                    mEnableCoach = true;
+        if (t.getParams().isTeamTournament()) {
+            for (int i = 0; i < t.getTeamsCount(); i++) {
+                Team team = t.getTeam(i);
+                if (team.containsCategory(g)) {
+                    mEnableTeam = true;
                     break;
                 }
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+        }
+
+        for (int i = 0; i < t.getCoachsCount(); i++) {
+            Coach coach = t.getCoach(i);
+            if (coach.containsCategory(g)) {
+                mEnableCoach = true;
+                break;
+            }
         }
 
         if (!mEnableCoach) {
@@ -168,53 +164,47 @@ public final class JPNCategory extends javax.swing.JPanel {
     public void update() {
 
         if (mEnableCoach) {
-            try {
-                final ArrayList<Coach> al = new ArrayList<>();
+            final ArrayList<Coach> al = new ArrayList<>();
 
-                for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-                    final Coach c = mTournament.getCoach(i);
-                    if (c.containsCategory(mCategory)) {
-                        al.add(c);
-                    }
+            for (int i = 0; i < mTournament.getCoachsCount(); i++) {
+                final Coach c = mTournament.getCoach(i);
+                if (c.containsCategory(mCategory)) {
+                    al.add(c);
                 }
-
-                final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                        al, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
-                jtbCategory.setModel(tableModel);
-                jtbCategory.setDefaultRenderer(String.class, tableModel);
-                jtbCategory.setDefaultRenderer(Integer.class, tableModel);
-
-                jtbCategory.setRowHeight(25);
-                TableFormat.setColumnSize(jtbCategory);
-            } catch (RemoteException re) {
-                re.printStackTrace();
             }
+
+            final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                    al, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+            jtbCategory.setModel(tableModel);
+            jtbCategory.setDefaultRenderer(String.class, tableModel);
+            jtbCategory.setDefaultRenderer(Integer.class, tableModel);
+
+            jtbCategory.setRowHeight(25);
+            TableFormat.setColumnSize(jtbCategory);
+
         }
         if (mEnableTeam) {
-            try {
-                final ArrayList<Team> al = new ArrayList<>();
+            final ArrayList<Team> al = new ArrayList<>();
 
-                for (int i = 0; i < mTournament.getTeamsCount(); i++) {
-                    final Team t = mTournament.getTeam(i);
-                    if (t.containsCategory(mCategory)) {
-                        al.add(t);
-                    }
+            for (int i = 0; i < mTournament.getTeamsCount(); i++) {
+                final Team t = mTournament.getTeam(i);
+                if (t.containsCategory(mCategory)) {
+                    al.add(t);
                 }
-
-                final MjtRankingTeam tableModel = new MjtRankingTeam(
-                        mTournament.getParams().isTeamTournament(),
-                        mRoundNumber,
-                        al,
-                        mRoundOnly);
-                jtbTeam.setModel(tableModel);
-                jtbTeam.setDefaultRenderer(String.class, tableModel);
-                jtbTeam.setDefaultRenderer(Integer.class, tableModel);
-
-                jtbTeam.setRowHeight(25);
-                TableFormat.setColumnSize(jtbTeam);
-            } catch (RemoteException re) {
-                re.printStackTrace();
             }
+
+            final MjtRankingTeam tableModel = new MjtRankingTeam(
+                    mTournament.getParams().isTeamTournament(),
+                    mRoundNumber,
+                    al,
+                    mRoundOnly);
+            jtbTeam.setModel(tableModel);
+            jtbTeam.setDefaultRenderer(String.class, tableModel);
+            jtbTeam.setDefaultRenderer(Integer.class, tableModel);
+
+            jtbTeam.setRowHeight(25);
+            TableFormat.setColumnSize(jtbTeam);
+
         }
     }
 

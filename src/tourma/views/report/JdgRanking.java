@@ -94,13 +94,9 @@ public final class JdgRanking extends javax.swing.JDialog {
         mTour = tour;
         //_rankType = RankType;
         mType = type;
-        try {
             this.setTitle(
                     tour.getParams().getTournamentName()
                     + " - " + Translate.translate(CS_Round) + " " + roundNumber);
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         try {
             jepHTML.setContentType("html");
             mFilename = createReport();

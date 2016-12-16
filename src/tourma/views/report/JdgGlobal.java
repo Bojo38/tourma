@@ -100,15 +100,13 @@ public final class JdgGlobal extends javax.swing.JDialog {
         mAnnexForRankings = annexForRankings;
         mAnnexAgainstRankings = annexAgainstRankings;
 
-        try {
+        
             this.setTitle(
                     tour.getParams().getTournamentName()
                     + " - "
                     + Translate.translate(CS_Round) + " " + roundNumber);
 
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        
         try {
             jepHTML.setContentType("html");
             mFilename = createReport();

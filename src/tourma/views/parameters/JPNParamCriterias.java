@@ -28,11 +28,8 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
      * Creates new form JPNParamCriterias
      */
     public JPNParamCriterias() {
-        try {
+
             mTournament = Tournament.getTournament();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         initComponents();
     }
 
@@ -136,7 +133,6 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
-        try {
             final int nb = Tournament.getTournament().getParams().getCriteriaCount();
             final Criteria c = new Criteria(
                     Translate.translate(CS_Criteria)
@@ -149,14 +145,10 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
                     m.putValue(c, new Value(c));
                 }
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         update();
     }//GEN-LAST:event_jbtAddCriteriaActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
-        try {
             if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < mTournament.getParams().getCriteriaCount())) {
                 final Criteria crit = mTournament.getParams().getCriteria(jtbCriteria.getSelectedRow());
                 for (int i = 0; i < mTournament.getRoundsCount(); i++) {
@@ -168,36 +160,21 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
                 }
                 mTournament.getParams().removeCriteria(jtbCriteria.getSelectedRow());
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         repaint();
     }//GEN-LAST:event_jbtRemoveCriteriaActionPerformed
 
     private void jcxTableCoefPerRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxTableCoefPerRoundActionPerformed
-        try {
             Tournament.getTournament().getParams().setTableBonusPerRound(jcxTableCoefPerRound.isSelected());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         update();
     }//GEN-LAST:event_jcxTableCoefPerRoundActionPerformed
 
     private void jcxTableBonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxTableBonusActionPerformed
-        try {
             Tournament.getTournament().getParams().setTableBonus(jcxTableBonus.isSelected());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         update();
     }//GEN-LAST:event_jcxTableBonusActionPerformed
 
     private void jspCoefStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspCoefStateChanged
-        try {
             Tournament.getTournament().getParams().setTableBonusCoef((Double) jspCoef.getValue());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
         update();
     }//GEN-LAST:event_jspCoefStateChanged
 
@@ -205,7 +182,6 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
      * Update Panel
      */
     public void update() {
-        try {
             final boolean bTourStarted = mTournament.getRoundsCount() > 0;
             jtbCriteria.setModel(new MjtCriterias(mTournament));
             jbtAddCriteria.setEnabled(!bTourStarted);
@@ -217,9 +193,6 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
             jspCoef.setValue(Tournament.getTournament().getParams().getTableBonusCoef());
             jspCoef.setEnabled(mTournament.getParams().isTableBonus());
             jlbCoef.setEnabled(mTournament.getParams().isTableBonus());
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

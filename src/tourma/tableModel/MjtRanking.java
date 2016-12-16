@@ -63,12 +63,9 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
 
         if (valueType > Parameters.C_MAX_RANKING) {
             final int value = valueType - Parameters.C_MAX_RANKING - 1;
-            try {
-                Parameters params = Tournament.getTournament().getParams();
-                criteria = params.getCriteria(value / 3);
-            } catch (RemoteException re) {
-                System.out.println(re.getLocalizedMessage());
-            }
+
+            Parameters params = Tournament.getTournament().getParams();
+            criteria = params.getCriteria(value / 3);
         }
         return criteria;
     }
@@ -359,26 +356,23 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     @Override
     public int getSortedValue(int index, int valIndex) {
         ObjectRanking obj = (ObjectRanking) mDatas.get(index);
-        try {
-            switch (valIndex) {
 
-                case 1:
-                    return obj.getValue1();
-                case 2:
-                    return obj.getValue2();
-                case 3:
-                    return obj.getValue3();
-                case 4:
-                    return obj.getValue4();
-                case 5:
-                    return obj.getValue5();
-                default:
-                    return 0;
-            }
-        } catch (RemoteException re) {
-            System.out.println(re.getLocalizedMessage());
+        switch (valIndex) {
+
+            case 1:
+                return obj.getValue1();
+            case 2:
+                return obj.getValue2();
+            case 3:
+                return obj.getValue3();
+            case 4:
+                return obj.getValue4();
+            case 5:
+                return obj.getValue5();
+            default:
+                return 0;
         }
-        return 0;
+        
     }
 
     /**
@@ -436,11 +430,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         jlb.setForeground(new Color(0, 0, 0));
         boolean useColor = false;
 
-        try {
-            useColor = Tournament.getTournament().getParams().isUseColor();
-        } catch (RemoteException re) {
-            useColor = false;
-        }
+        useColor = Tournament.getTournament().getParams().isUseColor();
 
         if (!useColor) {
             if (row % 2 != 0) {

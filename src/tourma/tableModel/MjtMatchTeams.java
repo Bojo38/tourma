@@ -49,11 +49,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
     @Override
     public int getRowCount() {
-        try {
-            return mRound.getMatchsCount();
-        } catch (RemoteException re) {
-            return 0;
-        }
+        return mRound.getMatchsCount();
     }
 
     @Override
@@ -86,41 +82,37 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
     @Override
     public Object getValueAt(final int row, final int col) {
         Object obj = StringConstants.CS_NULL;
-        try {
-            if (mTeams.size() > 0) {
+        if (mTeams.size() > 0) {
 
-                final TeamMatch m = (TeamMatch) mRound.getMatch(row);
-                Team team1 = (Team) m.getCompetitor1();
-                Team team2 = (Team) m.getCompetitor2();
+            final TeamMatch m = (TeamMatch) mRound.getMatch(row);
+            Team team1 = (Team) m.getCompetitor1();
+            Team team2 = (Team) m.getCompetitor2();
 
-                int nbVictory = m.getVictories(team1);
-                int nbLost = m.getLoss(team1);
-                int nbDraw = m.getDraw(team1);
+            int nbVictory = m.getVictories(team1);
+            int nbLost = m.getLoss(team1);
+            int nbDraw = m.getDraw(team1);
 
-                switch (col) {
-                    case 0:
-                        obj = row + 1;
-                        break;
-                    case 1:
-                        obj = team1.getName();
-                        break;
-                    case 2:
-                        obj = nbVictory;
-                        break;
-                    case 3:
-                        obj = nbDraw;
-                        break;
-                    case 4:
-                        obj = nbLost;
-                        break;
-                    case 5:
-                        obj = team2.getName();
-                        break;
-                    default:
-                }
+            switch (col) {
+                case 0:
+                    obj = row + 1;
+                    break;
+                case 1:
+                    obj = team1.getName();
+                    break;
+                case 2:
+                    obj = nbVictory;
+                    break;
+                case 3:
+                    obj = nbDraw;
+                    break;
+                case 4:
+                    obj = nbLost;
+                    break;
+                case 5:
+                    obj = team2.getName();
+                    break;
+                default:
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
         return obj;
     }
@@ -157,11 +149,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
         boolean useColor = false;
 
-        try {
-            useColor = Tournament.getTournament().getParams().isUseColor();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        useColor = Tournament.getTournament().getParams().isUseColor();
         Color bkg = new Color(255, 255, 255);
         Color frg = new Color(0, 0, 0);
         if (!useColor) {
@@ -212,8 +200,6 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
             }
         }
 
-        try
-        {
         if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
                 TeamMatch tm = (TeamMatch) mRound.getMatch(row);
@@ -240,11 +226,6 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                     return obj;
                 }
             }
-        }
-        }
-        catch (RemoteException re)
-        {
-            re.printStackTrace();
         }
 
         jlb.setBackground(bkg);

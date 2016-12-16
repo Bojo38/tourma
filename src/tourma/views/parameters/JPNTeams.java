@@ -30,11 +30,9 @@ public final class JPNTeams extends javax.swing.JPanel {
      */
     public JPNTeams() {
         mTournament = null;
-        try {
-            mTournament = Tournament.getTournament();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+
+        mTournament = Tournament.getTournament();
+
         initComponents();
     }
 
@@ -119,17 +117,15 @@ public final class JPNTeams extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAddTeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveTeamActionPerformed
-        try {
-            final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
-            for (int i = 0; i < t.getCoachsCount(); i++) {
-                mTournament.removeCoach(t.getCoach(i));
-            }
-            t.clearCoachs();
-            mTournament.removeTeam(t);
-            update();
-        } catch (RemoteException re) {
-            re.printStackTrace();
+
+        final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
+        for (int i = 0; i < t.getCoachsCount(); i++) {
+            mTournament.removeCoach(t.getCoach(i));
         }
+        t.clearCoachs();
+        mTournament.removeTeam(t);
+        update();
+
     }//GEN-LAST:event_jbtRemoveTeamActionPerformed
 
     private static final String CS_ByTeam = "ByTeam";
@@ -141,56 +137,51 @@ public final class JPNTeams extends javax.swing.JPanel {
      */
     public void update() {
 
-        try {
-            final boolean bTourStarted = mTournament.getRoundsCount() > 0;
+        final boolean bTourStarted = mTournament.getRoundsCount() > 0;
 
-            jbtAddTeam.setEnabled(!bTourStarted);
-            jbtRemoveTeam.setEnabled(!bTourStarted);
+        jbtAddTeam.setEnabled(!bTourStarted);
+        jbtRemoveTeam.setEnabled(!bTourStarted);
 
-            if (mTournament.getParams().isTeamTournament()) {
-                String text;
-                if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
-                    text = Translate.translate(CS_Single);
-                } else {
-                    text = Translate.translate(CS_ByTeam);
-                }
-                jlbDetails.setText(
-                        Translate.translate(CS_Membersnumber)
-                        + ": " + mTournament.getParams().getTeamMatesNumber()
-                        + "(" + text + ")");
+        if (mTournament.getParams().isTeamTournament()) {
+            String text;
+            if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
+                text = Translate.translate(CS_Single);
+            } else {
+                text = Translate.translate(CS_ByTeam);
             }
-
-            ArrayList<Team> teams = new ArrayList<>();
-            for (int cpt = 0; cpt < mTournament.getTeamsCount(); cpt++) {
-                teams.add(mTournament.getTeam(cpt));
-            }
-            final MjtTeams teamModel = new MjtTeams(teams);
-            jtbTeam.setModel(teamModel);
-            TableFormat.setColumnSize(jtbTeam);
-            jtbTeam.setDefaultRenderer(String.class, teamModel);
-            jtbTeam.setDefaultRenderer(Integer.class, teamModel);
-        } catch (RemoteException re) {
-            re.printStackTrace();
+            jlbDetails.setText(
+                    Translate.translate(CS_Membersnumber)
+                    + ": " + mTournament.getParams().getTeamMatesNumber()
+                    + "(" + text + ")");
         }
+
+        ArrayList<Team> teams = new ArrayList<>();
+        for (int cpt = 0; cpt < mTournament.getTeamsCount(); cpt++) {
+            teams.add(mTournament.getTeam(cpt));
+        }
+        final MjtTeams teamModel = new MjtTeams(teams);
+        jtbTeam.setModel(teamModel);
+        TableFormat.setColumnSize(jtbTeam);
+        jtbTeam.setDefaultRenderer(String.class, teamModel);
+        jtbTeam.setDefaultRenderer(Integer.class, teamModel);
+
     }
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
-        try {
-            if (mTournament.getTeamsCount() > jtbTeam.getSelectedRow()) {
-                final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
-                if (jtbTeam.getSelectedColumn() == 1) {
-                    final JdgTeam jdg = new JdgTeam(MainFrame.getMainFrame(), true, t);
-                    jdg.setVisible(true);
-                } else if (jtbTeam.getSelectedColumn() > 1) {
-                    final JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, t.getCoach(jtbTeam.getSelectedColumn() - 2));
-                    jdg.setVisible(true);
-                }
-                update();
+
+        if (mTournament.getTeamsCount() > jtbTeam.getSelectedRow()) {
+            final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
+            if (jtbTeam.getSelectedColumn() == 1) {
+                final JdgTeam jdg = new JdgTeam(MainFrame.getMainFrame(), true, t);
+                jdg.setVisible(true);
+            } else if (jtbTeam.getSelectedColumn() > 1) {
+                final JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, t.getCoach(jtbTeam.getSelectedColumn() - 2));
+                jdg.setVisible(true);
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+            update();
         }
+
     }//GEN-LAST:event_jbtModifyTeamActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel3;

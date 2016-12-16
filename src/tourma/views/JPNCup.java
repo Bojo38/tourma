@@ -62,7 +62,7 @@ public final class JPNCup extends javax.swing.JPanel {
         final ArrayList<Round> rounds_with_cup = new ArrayList<>();
         //final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
         boolean bLooserCup = false;
-        try {
+
             for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
                 Round round = Tournament.getTournament().getRound(i);
                 if (round.isCup()) {
@@ -160,9 +160,6 @@ public final class JPNCup extends javax.swing.JPanel {
                     }
                 }
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
     }
     private static final Logger LOG = Logger.getLogger(JPNCup.class.getName());
 }

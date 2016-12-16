@@ -87,18 +87,18 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
         mRankings = new ArrayList<>(rankings);
     }
 
-    public Ranking(Element e) throws RemoteException{
+    public Ranking(Element e) {
         this.setXMLElement(e);
     }
 
-    public Criteria getCriteria() throws RemoteException{
+    public Criteria getCriteria() {
         if (mCriteria == null) {
             mCriteria = new Criteria("???");
         }
         return mCriteria;
     }
 
-    public void setCriteria(Criteria c) throws RemoteException{
+    public void setCriteria(Criteria c) {
         mCriteria = c;
     }
 
@@ -107,7 +107,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement() throws RemoteException{
+    public Element getXMLElement() {
 
         final Element rank = new Element(StringConstants.CS_RANKING);
         rank.setAttribute(new Attribute(StringConstants.CS_NAME, getName()));
@@ -148,7 +148,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
      * @param e
      */
     @Override
-    public void setXMLElement(final Element e) throws RemoteException{
+    public void setXMLElement(final Element e) {
 
         mObjectsRanked = new ArrayList<>();
         boolean annex = false;
@@ -380,7 +380,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
 
     }
 
-    public int getRankingNumber() throws RemoteException{
+    public int getRankingNumber() {
         return mRankings.size();
     }
 
@@ -394,64 +394,64 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
     /**
      * @param mRank the mRank to set
      */
-    public void setRank(MjtRanking mRank) throws RemoteException{
+    public void setRank(MjtRanking mRank) {
         this.mRank = mRank;
     }
 
     /**
      * @return the mName
      */
-    public String getName() throws RemoteException{
+    public String getName() {
         return mName;
     }
 
     @Override
-    public String getDetail() throws RemoteException{
+    public String getDetail() {
         return mType;
     }
 
     @Override
-    public void setDetail(String d) throws RemoteException{
+    public void setDetail(String d) {
         mType = d;
     }
 
     /**
      * @param mName the mName to set
      */
-    public void setName(String mName) throws RemoteException{
+    public void setName(String mName) {
         this.mName = mName;
     }
 
     /**
      * @return the mType
      */
-    public String getType() throws RemoteException{
+    public String getType() {
         return mType;
     }
 
     /**
      * @param mType the mType to set
      */
-    public void setType(String mType) throws RemoteException{
+    public void setType(String mType) {
         this.mType = mType;
     }
 
     /**
      * @return the mValueType
      */
-    public String getValueType() throws RemoteException{
+    public String getValueType() {
         return mValueType;
     }
 
     /**
      * @param mValueType the mValueType to set
      */
-    public void setValueType(String mValueType) throws RemoteException{
+    public void setValueType(String mValueType) {
         this.mValueType = mValueType;
     }
 
     @Override
-    public int getRowCount() throws RemoteException{
+    public int getRowCount() {
         if (mObjectsRanked != null) {
             return mObjectsRanked.size();
         } else {
@@ -461,7 +461,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
     }
 
     @Override
-    public ObjectRanking getSortedObject(int i) throws RemoteException{
+    public ObjectRanking getSortedObject(int i) {
         if (mObjectsRanked != null) {
             if (mObjectsRanked.size() > i) {
                 return mObjectsRanked.get(i);
@@ -474,7 +474,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
     }
 
     @Override
-    public int getSortedValue(int i, int valIndex) throws RemoteException{
+    public int getSortedValue(int i, int valIndex) {
         if (mObjectsRanked != null) {
             if (mObjectsRanked.size() > i) {
                 switch (valIndex) {

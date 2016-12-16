@@ -44,15 +44,13 @@ public class ObjectAnnexRanking extends ObjectRanking {
      *
      * @return
      */
-    public int getValue() throws RemoteException {
+    public int getValue()  {
         return mValue;
     }
 
     @Override
     public int compareTo(final Object o) {
         int result = -65535;
-        try
-        {
         if (o instanceof ObjectAnnexRanking) {
             if (((ObjectAnnexRanking) o).getValue() == getValue()) {
                 result = super.compareTo(o);
@@ -60,25 +58,16 @@ public class ObjectAnnexRanking extends ObjectRanking {
                 result = ((ObjectAnnexRanking) o).getValue() - getValue();
             }
         }
-        }
-        catch(RemoteException re)
-        {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
-        }
         return result;
     }
 
     @Override
     public boolean equals(Object o) {
-        try {
             if (o instanceof ObjectAnnexRanking) {
                 if (super.equals(o)) {
                     return (((ObjectAnnexRanking) o).getValue() == getValue());
                 }
             }
-        } catch (RemoteException re) {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
-        }
         return false;
     }
 
@@ -98,7 +87,7 @@ public class ObjectAnnexRanking extends ObjectRanking {
      * @return
      */
     @Override
-    public Element getXMLElement() throws RemoteException {
+    public Element getXMLElement()  {
         final Element ic = super.getXMLElement();
 
         ic.setAttribute(new Attribute(StringConstants.CS_VALUE, Integer.toString(getValue())));
@@ -116,14 +105,14 @@ public class ObjectAnnexRanking extends ObjectRanking {
      * @param e
      */
     @Override
-    public void setXMLElement(final Element e) throws RemoteException {
+    public void setXMLElement(final Element e)  {
         super.setXMLElement(e);
     }
 
     /**
      * @param mValue the mValue to set
      */
-    public void setValue(int mValue) throws RemoteException {
+    public void setValue(int mValue)  {
         this.mValue = mValue;
     }
 }

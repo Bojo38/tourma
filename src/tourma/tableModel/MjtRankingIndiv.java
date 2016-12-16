@@ -47,7 +47,7 @@ public final class MjtRankingIndiv extends MjtRanking {
         sortDatas();
     }
 
-    public MjtRankingIndiv(final int round, final ArrayList coachs, boolean teamTournament, final boolean round_only) throws RemoteException {
+    public MjtRankingIndiv(final int round, final ArrayList coachs, boolean teamTournament, final boolean round_only) {
 
         this(round,
                 Tournament.getTournament().getParams().getRankingIndiv1(),
@@ -68,135 +68,120 @@ public final class MjtRankingIndiv extends MjtRanking {
 
         final ArrayList<Round> rounds = new ArrayList<>();
 
-        try {
-            if (mRoundOnly) {
-                rounds.add(Tournament.getTournament().getRound(mRound));
-            } else {
-                for (int l = 0; (l <= mRound); l++) {
-                    rounds.add(Tournament.getTournament().getRound(l));
-                }
+        if (mRoundOnly) {
+            rounds.add(Tournament.getTournament().getRound(mRound));
+        } else {
+            for (int l = 0; (l <= mRound); l++) {
+                rounds.add(Tournament.getTournament().getRound(l));
             }
+        }
 
-            for (int i = 0; i < mObjects.size(); i++) {
-                final Coach c = (Coach) mObjects.get(i);
-                if (c.isActive()) {
-                    int value1 = 0;
-                    int value2 = 0;
-                    int value3 = 0;
-                    int value4 = 0;
-                    int value5 = 0;
+        for (int i = 0; i < mObjects.size(); i++) {
+            final Coach c = (Coach) mObjects.get(i);
+            if (c.isActive()) {
+                int value1 = 0;
+                int value2 = 0;
+                int value3 = 0;
+                int value4 = 0;
+                int value5 = 0;
 
-                    ArrayList<Integer> aValue1 = new ArrayList<>();
-                    ArrayList<Integer> aValue2 = new ArrayList<>();
-                    ArrayList<Integer> aValue3 = new ArrayList<>();
-                    ArrayList<Integer> aValue4 = new ArrayList<>();
-                    ArrayList<Integer> aValue5 = new ArrayList<>();
+                ArrayList<Integer> aValue1 = new ArrayList<>();
+                ArrayList<Integer> aValue2 = new ArrayList<>();
+                ArrayList<Integer> aValue3 = new ArrayList<>();
+                ArrayList<Integer> aValue4 = new ArrayList<>();
+                ArrayList<Integer> aValue5 = new ArrayList<>();
 
-                    if (c.getMatchCount() > 0) {
+                if (c.getMatchCount() > 0) {
 
-                        for (int j = 0; j <= c.getMatchCount() - 1; j++) {
+                    for (int j = 0; j <= c.getMatchCount() - 1; j++) {
 
-                            final CoachMatch m = (CoachMatch) c.getMatch(j);
-                            boolean bFound = false;
-                            for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
-                                final Round r = rounds.get(l);
-                                if (r.getCoachMatchs().contains(m)) {
-                                    bFound = true;
-                                }
-                            }
-                            // test if match is in round
-                            if (bFound) {
-                                aValue1.add(m.getValue(1, c));
-                                aValue2.add(m.getValue(2, c));
-                                aValue3.add(m.getValue(3, c));
-                                aValue4.add(m.getValue(4, c));
-                                aValue5.add(m.getValue(5, c));
+                        final CoachMatch m = (CoachMatch) c.getMatch(j);
+                        boolean bFound = false;
+                        for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
+                            final Round r = rounds.get(l);
+                            if (r.getCoachMatchs().contains(m)) {
+                                bFound = true;
                             }
                         }
-
-                        if (Tournament.getTournament().getParams().isUseBestResultIndiv()) {
-                            while (aValue1.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
-                                removeMinValue(aValue1);
-                            }
-                            while (aValue2.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
-                                removeMinValue(aValue2);
-                            }
-                            while (aValue3.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
-                                removeMinValue(aValue3);
-                            }
-                            while (aValue4.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
-                                removeMinValue(aValue4);
-                            }
-                            while (aValue5.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
-                                removeMinValue(aValue5);
-                            }
-                        } else {
-                            if (Tournament.getTournament().getParams().isExceptBestAndWorstIndiv()) {
-                                removeMaxValue(aValue1);
-                                removeMinValue(aValue1);
-                                removeMaxValue(aValue2);
-                                removeMinValue(aValue2);
-                                removeMaxValue(aValue3);
-                                removeMinValue(aValue3);
-                                removeMaxValue(aValue4);
-                                removeMinValue(aValue4);
-                                removeMaxValue(aValue5);
-                                removeMinValue(aValue5);
-                            }
+                        // test if match is in round
+                        if (bFound) {
+                            aValue1.add(m.getValue(1, c));
+                            aValue2.add(m.getValue(2, c));
+                            aValue3.add(m.getValue(3, c));
+                            aValue4.add(m.getValue(4, c));
+                            aValue5.add(m.getValue(5, c));
                         }
-
-                        value1 = getValueFromArray(mRankingType1, aValue1);
-                        value2 = getValueFromArray(mRankingType2, aValue2);
-                        value3 = getValueFromArray(mRankingType3, aValue3);
-                        value4 = getValueFromArray(mRankingType4, aValue4);
-                        value5 = getValueFromArray(mRankingType5, aValue5);
                     }
-                    mDatas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
+
+                    if (Tournament.getTournament().getParams().isUseBestResultIndiv()) {
+                        while (aValue1.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue1);
+                        }
+                        while (aValue2.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue2);
+                        }
+                        while (aValue3.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue3);
+                        }
+                        while (aValue4.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue4);
+                        }
+                        while (aValue5.size() > Tournament.getTournament().getParams().getBestResultIndiv()) {
+                            removeMinValue(aValue5);
+                        }
+                    } else {
+                        if (Tournament.getTournament().getParams().isExceptBestAndWorstIndiv()) {
+                            removeMaxValue(aValue1);
+                            removeMinValue(aValue1);
+                            removeMaxValue(aValue2);
+                            removeMinValue(aValue2);
+                            removeMaxValue(aValue3);
+                            removeMinValue(aValue3);
+                            removeMaxValue(aValue4);
+                            removeMinValue(aValue4);
+                            removeMaxValue(aValue5);
+                            removeMinValue(aValue5);
+                        }
+                    }
+
+                    value1 = getValueFromArray(mRankingType1, aValue1);
+                    value2 = getValueFromArray(mRankingType2, aValue2);
+                    value3 = getValueFromArray(mRankingType3, aValue3);
+                    value4 = getValueFromArray(mRankingType4, aValue4);
+                    value5 = getValueFromArray(mRankingType5, aValue5);
                 }
+                mDatas.add(new ObjectRanking(c, value1, value2, value3, value4, value5));
             }
+        }
 
-            Collections.sort(mDatas);
+        Collections.sort(mDatas);
 
-            final Tournament tour = Tournament.getTournament();
+        final Tournament tour = Tournament.getTournament();
 
-            // On ajuste le tri par poule si nécessaire pour que
-            // l'écart minimum entre 2 membres de la même poule
-            // soit le nombre de joueurs de la poule
-            if ((mForPool) && (!tour.getParams().isTeamTournament())) {
-                if (mObjects.size() > tour.getPool(0).getCompetitorCount()) {
-                    final int nbPool = tour.getPoolCount();
-                    Pool p;
-                    final ArrayList<MjtRankingIndiv> pRank = new ArrayList<>();
-                    for (int j = 0; j < nbPool; j++) {
-                        p = tour.getPool(j);
-                        final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.getCompetitors(), mTeamTournament, mRoundOnly, false);
-                        pRank.add(mjtr);
-                    }
+        // On ajuste le tri par poule si nécessaire pour que
+        // l'écart minimum entre 2 membres de la même poule
+        // soit le nombre de joueurs de la poule
+        if ((mForPool) && (!tour.getParams().isTeamTournament())) {
+            if (mObjects.size() > tour.getPool(0).getCompetitorCount()) {
+                final int nbPool = tour.getPoolCount();
+                Pool p;
+                final ArrayList<MjtRankingIndiv> pRank = new ArrayList<>();
+                for (int j = 0; j < nbPool; j++) {
+                    p = tour.getPool(j);
+                    final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.getCompetitors(), mTeamTournament, mRoundOnly, false);
+                    pRank.add(mjtr);
+                }
 
-                    final ArrayList datas = new ArrayList();
+                final ArrayList datas = new ArrayList();
 
-                    for (int i = 0; i < tour.getPool(0).getCompetitorCount(); i++) {
-                        final ArrayList<Coach> rank = new ArrayList<>();
-                        for (int j = 0; j < nbPool; j++) {
-                            try {
-                                final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
-                                rank.add((Coach) obj.getObject());
-                            } catch (IndexOutOfBoundsException ioob) {
-
-                            }
-                        }
-                        final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
-
-                        for (int j = 0; j < mjtr.mDatas.size(); j++) {
-                            datas.add(mjtr.mDatas.get(j));
-                        }
-                    }
-
+                for (int i = 0; i < tour.getPool(0).getCompetitorCount(); i++) {
                     final ArrayList<Coach> rank = new ArrayList<>();
-                    for (int i = 0; i < tour.getCoachsCount(); i++) {
+                    for (int j = 0; j < nbPool; j++) {
+                        try {
+                            final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
+                            rank.add((Coach) obj.getObject());
+                        } catch (IndexOutOfBoundsException ioob) {
 
-                        if (!tour.getCoach(i).isActive()) {
-                            rank.add(tour.getCoach(i));
                         }
                     }
                     final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
@@ -204,37 +189,44 @@ public final class MjtRankingIndiv extends MjtRanking {
                     for (int j = 0; j < mjtr.mDatas.size(); j++) {
                         datas.add(mjtr.mDatas.get(j));
                     }
-
-                    mDatas = datas;
                 }
+
+                final ArrayList<Coach> rank = new ArrayList<>();
+                for (int i = 0; i < tour.getCoachsCount(); i++) {
+
+                    if (!tour.getCoach(i).isActive()) {
+                        rank.add(tour.getCoach(i));
+                    }
+                }
+                final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
+
+                for (int j = 0; j < mjtr.mDatas.size(); j++) {
+                    datas.add(mjtr.mDatas.get(j));
+                }
+
+                mDatas = datas;
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
     }
 
     @Override
     public int getColumnCount() {
         int result = 9;
-        try {
-            Parameters params = Tournament.getTournament().getParams();
-            if (params.getRankingIndiv5() == 0) {
+        Parameters params = Tournament.getTournament().getParams();
+        if (params.getRankingIndiv5() == 0) {
+            result--;
+            if (params.getRankingIndiv4() == 0) {
                 result--;
-                if (params.getRankingIndiv4() == 0) {
+                if (params.getRankingIndiv3() == 0) {
                     result--;
-                    if (params.getRankingIndiv3() == 0) {
+                    if (params.getRankingIndiv2() == 0) {
                         result--;
-                        if (params.getRankingIndiv2() == 0) {
+                        if (params.getRankingIndiv1() == 0) {
                             result--;
-                            if (params.getRankingIndiv1() == 0) {
-                                result--;
-                            }
                         }
                     }
                 }
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
         if (mTeamTournament) {
             result++;
@@ -386,21 +378,16 @@ public final class MjtRankingIndiv extends MjtRanking {
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-        try {
-            if (Tournament.getTournament().getParams().isUseImage()) {
-                if ((column == 1) && mTeamTournament) {
-                    Coach c = (Coach) mObjects.get(row);
-                    if (c.getTeamMates().getPicture() != null) {
-                        ImageIcon icon = ImageTreatment.resize(c.getTeamMates().getPicture(), 30, 30);
-                        obj.setIcon(icon);
-                        obj.setOpaque(true);
-                        return obj;
-                    }
+        if (Tournament.getTournament().getParams().isUseImage()) {
+            if ((column == 1) && mTeamTournament) {
+                Coach c = (Coach) mObjects.get(row);
+                if (c.getTeamMates().getPicture() != null) {
+                    ImageIcon icon = ImageTreatment.resize(c.getTeamMates().getPicture(), 30, 30);
+                    obj.setIcon(icon);
+                    obj.setOpaque(true);
+                    return obj;
                 }
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
         }
         return obj;
     }

@@ -36,13 +36,8 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
      * @param tour
      */
     public MjtCriterias(final Tournament tour) {
-        
-        try {
-            mParams = tour.getParams();
-        } catch (RemoteException re) {
-            re.printStackTrace();            
-            mParams=new Parameters();
-        }
+
+        mParams = tour.getParams();
         mTour = tour;
     }
 
@@ -141,38 +136,35 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                         Translate.translate(CS_CriteriaAlreadyExists), JOptionPane.ERROR_MESSAGE);
 
             } else {
-                try {
-                    String tmp = value.toString();
-                    final Criteria c = mParams.getCriteria(row);
-                    int val;
-                    switch (col) {
-                        case 0:
-                            c.setName(tmp);
-                            break;
-                        case 1:
-                            val = Integer.parseInt(tmp);
-                            c.setPointsFor(val);
-                            Tournament.getTournament().recomputeAll();
-                            break;
-                        case 2:
-                            val = Integer.parseInt(tmp);
-                            c.setPointsAgainst(val);
-                            Tournament.getTournament().recomputeAll();
-                            break;
-                        case 3:
-                            val = Integer.parseInt(tmp);
-                            c.setPointsTeamFor(val);
-                            Tournament.getTournament().recomputeAll();
-                            break;
-                        case 4:
-                            val = Integer.parseInt(tmp);
-                            c.setPointsTeamAgainst(val);
-                            Tournament.getTournament().recomputeAll();
-                            break;
-                        default:
-                    }
-                } catch (RemoteException re) {
-                    re.printStackTrace();
+
+                String tmp = value.toString();
+                final Criteria c = mParams.getCriteria(row);
+                int val;
+                switch (col) {
+                    case 0:
+                        c.setName(tmp);
+                        break;
+                    case 1:
+                        val = Integer.parseInt(tmp);
+                        c.setPointsFor(val);
+                        Tournament.getTournament().recomputeAll();
+                        break;
+                    case 2:
+                        val = Integer.parseInt(tmp);
+                        c.setPointsAgainst(val);
+                        Tournament.getTournament().recomputeAll();
+                        break;
+                    case 3:
+                        val = Integer.parseInt(tmp);
+                        c.setPointsTeamFor(val);
+                        Tournament.getTournament().recomputeAll();
+                        break;
+                    case 4:
+                        val = Integer.parseInt(tmp);
+                        c.setPointsTeamAgainst(val);
+                        Tournament.getTournament().recomputeAll();
+                        break;
+                    default:
                 }
             }
         }
@@ -192,12 +184,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
 
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        try {
-            return mTour.getRoundsCount() <= 0;
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
-        return false;
+        return mTour.getRoundsCount() <= 0;
     }
 
     @Override

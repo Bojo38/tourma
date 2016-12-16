@@ -60,11 +60,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
             final int ranking_type5,
             final boolean round_only) {
         super(round, criteria, subtype, clans, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
-        try {
-            sortDatas();
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+        sortDatas();
 
     }
 
@@ -78,7 +74,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * @param round_only
      */
     @SuppressWarnings("unchecked")
-    public MjtAnnexRankClan(final int round, final Criteria criteria, final int subtype, boolean full, final ArrayList clans, final boolean round_only) throws RemoteException {
+    public MjtAnnexRankClan(final int round, final Criteria criteria, final int subtype, boolean full, final ArrayList clans, final boolean round_only) {
 
         this(round, criteria, subtype, clans, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                 round_only);
@@ -87,17 +83,13 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void sortDatas() throws RemoteException {
+    protected void sortDatas() {
         mDatas.clear();
         mDatas = new ArrayList<>();
-        try {
-            if (Tournament.getTournament().getParams().isTeamTournament()) {
-                sortDatasTeam();
-            } else {
-                sortDatasCoach();
-            }
-        } catch (RemoteException re) {
-            System.out.println(re.getLocalizedMessage());
+        if (Tournament.getTournament().getParams().isTeamTournament()) {
+            sortDatasTeam();
+        } else {
+            sortDatasCoach();
         }
         Collections.sort(mDatas);
     }
@@ -106,7 +98,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * Sort teams data
      */
     @SuppressWarnings("unchecked")
-    private void sortDatasTeam() throws RemoteException {
+    private void sortDatasTeam() {
 
         final ArrayList<Team> teams = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
@@ -263,7 +255,7 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
      * Sort data Coach
      */
     @SuppressWarnings("unchecked")
-    private void sortDatasCoach() throws RemoteException {
+    private void sortDatasCoach() {
         final ArrayList<Coach> coaches = new ArrayList<>();
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coaches.add(Tournament.getTournament().getCoach(i));
@@ -473,18 +465,14 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        try {
-            if (Tournament.getTournament().getParams().isUseImage()) {
-                if (column == 1) {
-                    Clan t = (Clan) mObjects.get(row);
-                    if (t.getPicture() != null) {
-                        ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
-                        obj.setIcon(icon);
-                    }
+        if (Tournament.getTournament().getParams().isUseImage()) {
+            if (column == 1) {
+                Clan t = (Clan) mObjects.get(row);
+                if (t.getPicture() != null) {
+                    ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
+                    obj.setIcon(icon);
                 }
             }
-        } catch (RemoteException re) {
-            System.out.println(re.getLocalizedMessage());
         }
 
         return obj;

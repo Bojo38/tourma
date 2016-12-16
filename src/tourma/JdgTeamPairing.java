@@ -180,15 +180,12 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtOKActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelectActionPerformed
-        try {
             if (jtPairs.getSelectedRow() >= 0) {
                 final JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true, mTeams1.get(jtPairs.getSelectedRow()), mTeams2.get(jtPairs.getSelectedRow()), mRound, (TeamMatch) mRound.getMatch(jtPairs.getSelectedRow()));
                 jdg.setVisible(true);
                 mPairsDone.add(jtPairs.getSelectedRow(), true);
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+   
         update();
 }//GEN-LAST:event_jbtSelectActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -196,7 +193,6 @@ public class JdgTeamPairing extends javax.swing.JDialog {
 
         if (jtPairs.getSelectedRow() >= 0) {
             mPairsDone.add(jtPairs.getSelectedRow(), false);
-            try {
                 final Team t1 = mTeams1.get(jtPairs.getSelectedRow());
                 int i = 0;
                 while (i < mRound.getMatchsCount()) {
@@ -208,9 +204,7 @@ public class JdgTeamPairing extends javax.swing.JDialog {
                         i++;
                     }
                 }
-            } catch (RemoteException re) {
-                re.printStackTrace();
-            }
+   
         }
         update();
 }//GEN-LAST:event_jbtRemoveActionPerformed
@@ -218,7 +212,7 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     private void jbtSeeMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSeeMatchesActionPerformed
 
         int nb = 1;
-        try {
+   
             for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
                 if (Tournament.getTournament().getRound(i).getHour().before(mRound.getHour())) {
                     nb++;
@@ -226,9 +220,7 @@ public class JdgTeamPairing extends javax.swing.JDialog {
             }
             final JdgRound jdg = new JdgRound(MainFrame.getMainFrame(), true, mTeams1, mTeams2, nb, Tournament.getTournament());
             jdg.setVisible(true);
-        } catch (RemoteException re) {
-            re.printStackTrace();
-        }
+   
     }//GEN-LAST:event_jbtSeeMatchesActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel2;

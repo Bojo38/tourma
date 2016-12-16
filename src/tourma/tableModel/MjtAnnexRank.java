@@ -77,7 +77,7 @@ public abstract class MjtAnnexRank extends MjtRanking {
      * this function sort the data relative to current object.
      */
     @Override
-    abstract protected void sortDatas() throws RemoteException;
+    abstract protected void sortDatas() ;
 
     @Override
     abstract public int getColumnCount();
@@ -116,14 +116,7 @@ public abstract class MjtAnnexRank extends MjtRanking {
         
         boolean useColor = false;
         
-        try
-        {
             useColor=Tournament.getTournament().getParams().isUseColor();
-        }
-        catch (RemoteException re)
-        {
-            useColor=false;
-        }
 
         if (value instanceof String) {
             jlb.setText((String) value);

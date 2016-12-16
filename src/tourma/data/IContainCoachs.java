@@ -18,12 +18,12 @@ public interface IContainCoachs {
      * @param i
      * @return 
      */
-     public Coach getCoach(int i) throws RemoteException;
+     public Coach getCoach(int i) ;
     
      /**
      * @return the mCoachs
      */
-    public int getCoachsCount() throws RemoteException;
+    public int getCoachsCount() ;
     
     
     /**
@@ -31,22 +31,22 @@ public interface IContainCoachs {
      * @param c
      * @return 
      */
-    public boolean containsCoach(Coach c) throws RemoteException;
+    public boolean containsCoach(Coach c) ;
     
     /**
      * 
      * @param c 
      */
-    public void addCoach(Coach c) throws RemoteException;
+    public void addCoach(Coach c) ;
     
     /**
      * 
      * @param i
      */
-    public void removeCoach(int i) throws RemoteException;
+    public void removeCoach(int i) ;
     
     /**
      * Clear the Coach list
      */
-   public void clearCoachs() throws RemoteException;
+   public void clearCoachs() ;
 }

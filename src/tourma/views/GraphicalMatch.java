@@ -67,63 +67,59 @@ public class GraphicalMatch extends javax.swing.JPanel {
         GridBagLayout gbl = new GridBagLayout();
         this.setLayout(gbl);
 
-        try {
-            if (match instanceof CoachMatch) {
-                CoachMatch cm = (CoachMatch) match;
+        if (match instanceof CoachMatch) {
+            CoachMatch cm = (CoachMatch) match;
 
-                if (Tournament.getTournament().getClansCount() > 1) {
-                    JLabel ClanIcon1 = new JLabel();
-                    ClanIcon1.setSize(computed_width, computed_height);
-                    xOffset = computed_width;
-                    ClanIcon1.setLocation(1, 1);
-                    JLabel ClanIcon2 = new JLabel();
-                    ClanIcon2.setSize(computed_width, computed_height);
-                    ClanIcon2.setLocation(width - computed_width - 1, 1);
-                    Clan clan1 = (cm.getCompetitor1()).getClan();
-                    if (clan1.getPicture() != null) {
-                        ClanIcon1.setIcon(ImageTreatment.resize(clan1.getPicture(), computed_height, computed_height));
-                    }
-                    ClanIcon1.setText(clan1.getName());
-                    Clan clan2 = (cm.getCompetitor2()).getClan();
-                    if (clan2.getPicture() != null) {
-                        ClanIcon2.setIcon(ImageTreatment.resize(clan2.getPicture(), computed_height, computed_height));
-                    }
-                    ClanIcon2.setText(clan2.getName());
-                    ClanIcon1.setOpaque(true);
-                    ClanIcon1.setBackground(bkg);
-                    ClanIcon2.setOpaque(true);
-                    ClanIcon2.setBackground(bkg);
+            if (Tournament.getTournament().getClansCount() > 1) {
+                JLabel ClanIcon1 = new JLabel();
+                ClanIcon1.setSize(computed_width, computed_height);
+                xOffset = computed_width;
+                ClanIcon1.setLocation(1, 1);
+                JLabel ClanIcon2 = new JLabel();
+                ClanIcon2.setSize(computed_width, computed_height);
+                ClanIcon2.setLocation(width - computed_width - 1, 1);
+                Clan clan1 = (cm.getCompetitor1()).getClan();
+                if (clan1.getPicture() != null) {
+                    ClanIcon1.setIcon(ImageTreatment.resize(clan1.getPicture(), computed_height, computed_height));
                 }
-
-                JLabel CoachIcon1 = new JLabel();
-                CoachIcon1.setSize(computed_width, computed_height);
-                CoachIcon1.setLocation(xOffset + 1, 1);
-                JLabel CoachIcon2 = new JLabel();
-                CoachIcon2.setSize(computed_width, computed_height);
-                CoachIcon2.setLocation(width - xOffset - computed_width - 1, 1);
-                if (cm.getCompetitor1().getPicture() != null) {
-                    CoachIcon1.setIcon(ImageTreatment.resize(cm.getCompetitor1().getPicture(), computed_height, computed_height));
+                ClanIcon1.setText(clan1.getName());
+                Clan clan2 = (cm.getCompetitor2()).getClan();
+                if (clan2.getPicture() != null) {
+                    ClanIcon2.setIcon(ImageTreatment.resize(clan2.getPicture(), computed_height, computed_height));
                 }
-                CoachIcon1.setText(cm.getCompetitor1().getName());
-                if (cm.getCompetitor2().getPicture() != null) {
-                    CoachIcon2.setIcon(ImageTreatment.resize(cm.getCompetitor2().getPicture(), computed_height, computed_height));
-                }
-                CoachIcon2.setText(cm.getCompetitor2().getName());
-                CoachIcon1.setBackground(bkg);
-                CoachIcon1.setOpaque(true);
-                CoachIcon2.setBackground(bkg);
-                CoachIcon2.setOpaque(true);
-                this.add(CoachIcon1);
-                this.add(CoachIcon2);
-
+                ClanIcon2.setText(clan2.getName());
+                ClanIcon1.setOpaque(true);
+                ClanIcon1.setBackground(bkg);
+                ClanIcon2.setOpaque(true);
+                ClanIcon2.setBackground(bkg);
             }
-            if (match instanceof TeamMatch) {
-                TeamMatch tm;
-                tm = (TeamMatch) match;
-                this.setSize(80 * tm.getMatchCount() + 80, 400);
+
+            JLabel CoachIcon1 = new JLabel();
+            CoachIcon1.setSize(computed_width, computed_height);
+            CoachIcon1.setLocation(xOffset + 1, 1);
+            JLabel CoachIcon2 = new JLabel();
+            CoachIcon2.setSize(computed_width, computed_height);
+            CoachIcon2.setLocation(width - xOffset - computed_width - 1, 1);
+            if (cm.getCompetitor1().getPicture() != null) {
+                CoachIcon1.setIcon(ImageTreatment.resize(cm.getCompetitor1().getPicture(), computed_height, computed_height));
             }
-        } catch (RemoteException re) {
-            re.printStackTrace();
+            CoachIcon1.setText(cm.getCompetitor1().getName());
+            if (cm.getCompetitor2().getPicture() != null) {
+                CoachIcon2.setIcon(ImageTreatment.resize(cm.getCompetitor2().getPicture(), computed_height, computed_height));
+            }
+            CoachIcon2.setText(cm.getCompetitor2().getName());
+            CoachIcon1.setBackground(bkg);
+            CoachIcon1.setOpaque(true);
+            CoachIcon2.setBackground(bkg);
+            CoachIcon2.setOpaque(true);
+            this.add(CoachIcon1);
+            this.add(CoachIcon2);
+
+        }
+        if (match instanceof TeamMatch) {
+            TeamMatch tm;
+            tm = (TeamMatch) match;
+            this.setSize(80 * tm.getMatchCount() + 80, 400);
         }
         this.setPreferredSize(new Dimension(width, computed_height));
         this.setSize(new Dimension(width, computed_height));

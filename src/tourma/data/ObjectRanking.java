@@ -56,7 +56,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      *
      * @return
      */
-    public Comparable<Object> getObject() throws RemoteException {
+    public Comparable<Object> getObject() {
         return mObject;
     }
 
@@ -64,7 +64,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      *
      * @return
      */
-    public int getValue1() throws RemoteException {
+    public int getValue1() {
         return mValue1;
     }
 
@@ -72,7 +72,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      *
      * @return
      */
-    public int getValue2() throws RemoteException {
+    public int getValue2() {
         return mValue2;
     }
 
@@ -80,7 +80,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      *
      * @return
      */
-    public int getValue3() throws RemoteException {
+    public int getValue3() {
         return mValue3;
     }
 
@@ -88,7 +88,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      *
      * @return
      */
-    public int getValue4() throws RemoteException {
+    public int getValue4() {
         return mValue4;
     }
 
@@ -96,38 +96,35 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      *
      * @return
      */
-    public int getValue5() throws RemoteException {
+    public int getValue5() {
         return mValue5;
     }
 
     @Override
     public int compareTo(final Object o) {
         int value = -65535;
-        try {
-            if (o instanceof ObjectRanking) {
-                if (((ObjectRanking) o).getValue1() == getValue1()) {
-                    if (((ObjectRanking) o).getValue2() == getValue2()) {
-                        if (((ObjectRanking) o).getValue3() == getValue3()) {
-                            if (((ObjectRanking) o).getValue4() == getValue4()) {
-                                value = ((ObjectRanking) o).getValue5() - getValue5();
-                            } else {
-                                value = ((ObjectRanking) o).getValue4() - getValue4();
-                            }
+        if (o instanceof ObjectRanking) {
+            if (((ObjectRanking) o).getValue1() == getValue1()) {
+                if (((ObjectRanking) o).getValue2() == getValue2()) {
+                    if (((ObjectRanking) o).getValue3() == getValue3()) {
+                        if (((ObjectRanking) o).getValue4() == getValue4()) {
+                            value = ((ObjectRanking) o).getValue5() - getValue5();
                         } else {
-                            value = ((ObjectRanking) o).getValue3() - getValue3();
+                            value = ((ObjectRanking) o).getValue4() - getValue4();
                         }
-
                     } else {
-                        value = ((ObjectRanking) o).getValue2() - getValue2();
+                        value = ((ObjectRanking) o).getValue3() - getValue3();
                     }
 
                 } else {
-                    value = ((ObjectRanking) o).getValue1() - getValue1();
+                    value = ((ObjectRanking) o).getValue2() - getValue2();
                 }
+
+            } else {
+                value = ((ObjectRanking) o).getValue1() - getValue1();
             }
-        } catch (RemoteException re) {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
         }
+
         return value;
     }
 
@@ -154,17 +151,14 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      */
     @Override
     public boolean equals(Object o) {
-        try {
-            if (o instanceof ObjectRanking) {
-                return (((ObjectRanking) o).getValue5() == getValue5())
-                        && (((ObjectRanking) o).getValue4() == getValue4())
-                        && (((ObjectRanking) o).getValue1() == getValue1())
-                        && (((ObjectRanking) o).getValue2() == getValue2())
-                        && (((ObjectRanking) o).getValue3() == getValue3());
-            }
-        } catch (RemoteException re) {
-            JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+        if (o instanceof ObjectRanking) {
+            return (((ObjectRanking) o).getValue5() == getValue5())
+                    && (((ObjectRanking) o).getValue4() == getValue4())
+                    && (((ObjectRanking) o).getValue1() == getValue1())
+                    && (((ObjectRanking) o).getValue2() == getValue2())
+                    && (((ObjectRanking) o).getValue3() == getValue3());
         }
+
         return false;
     }
 
@@ -173,7 +167,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      * @return
      */
     @Override
-    public Element getXMLElement() throws RemoteException {
+    public Element getXMLElement() {
         final Element ic = new Element(StringConstants.CS_POSITION);
         //ic.setAttribute(new Attribute("pos", Integer.toString(index)));
 
@@ -315,49 +309,49 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
      * @param e
      */
     @Override
-    public void setXMLElement(final Element e) throws RemoteException {
+    public void setXMLElement(final Element e) {
         // Method only for implementing interface
     }
 
     /**
      * @param mObject the mObject to set
      */
-    public void setObject(Comparable<Object> mObject) throws RemoteException {
+    public void setObject(Comparable<Object> mObject) {
         this.mObject = mObject;
     }
 
     /**
      * @param mValue1 the mValue1 to set
      */
-    public void setValue1(int mValue1) throws RemoteException {
+    public void setValue1(int mValue1) {
         this.mValue1 = mValue1;
     }
 
     /**
      * @param mValue2 the mValue2 to set
      */
-    public void setValue2(int mValue2) throws RemoteException {
+    public void setValue2(int mValue2) {
         this.mValue2 = mValue2;
     }
 
     /**
      * @param mValue3 the mValue3 to set
      */
-    public void setValue3(int mValue3) throws RemoteException {
+    public void setValue3(int mValue3) {
         this.mValue3 = mValue3;
     }
 
     /**
      * @param mValue4 the mValue4 to set
      */
-    public void setValue4(int mValue4) throws RemoteException {
+    public void setValue4(int mValue4) {
         this.mValue4 = mValue4;
     }
 
     /**
      * @param mValue5 the mValue5 to set
      */
-    public void setValue5(int mValue5) throws RemoteException {
+    public void setValue5(int mValue5) {
         this.mValue5 = mValue5;
     }
 }
