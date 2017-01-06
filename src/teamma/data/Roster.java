@@ -123,6 +123,42 @@ public class Roster implements IXMLExport, Serializable{
         _champions = new ArrayList<>();
     }
 
+    public void pull(Roster roster)
+    {
+        this._apothecary=roster._apothecary;
+        this._assistants=roster._assistants;
+        this._bloodweiserbabes=roster._bloodweiserbabes;
+        this._cards=roster._cards;        
+        this._cheerleaders=roster._cheerleaders;
+        this._chef=roster._chef;
+        this._corruptions=roster._corruptions;
+        this._extrarerolls=roster._extrarerolls;
+        this._fanfactor=roster._fanfactor;
+        this._igor=roster._igor;
+        this._localapothecary=roster._localapothecary;
+        this._rerolls=roster._rerolls;
+        this._wizard=roster._wizard;
+        
+        this._roster=LRB.getLRB().getRosterType(roster.getRoster().getName());
+        
+        this._players.clear();
+        for (int i=0; i<roster.getPlayerCount(); i++)
+        {
+            PlayerType pt=LRB.getLRB().getRosterType(roster.getRoster().getName()).getPlayerType(roster.getPlayer(i).getName(),false);
+            Player p=new Player(pt);
+            p.pull(roster.getPlayer(i));
+            _players.add(p);
+        }
+        
+        this._champions.clear();
+        for (int i=0; i<roster.getChampionCount(); i++)
+        {
+            StarPlayer sp=LRB.getLRB().getStarPlayer(roster.getChampion(i).getName());
+            _champions.add(sp);
+        }
+                
+    }
+    
     /**
      *
      * @param bWithSkill

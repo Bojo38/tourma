@@ -47,6 +47,11 @@ public abstract class Match implements IXMLExport, Serializable {
         mRound = round;
     }
 
+    public abstract int getUID();
+
+    public abstract void setUID(int UID);
+    
+    public abstract void pull(Match match);
     /**
      *
      * @return

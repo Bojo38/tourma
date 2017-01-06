@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -34,6 +35,24 @@ import tourma.utils.Generation;
  * @author Frederic Berger
  */
 public class Team extends Competitor implements IXMLExport, IContainCoachs, Serializable {
+
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void pull(Team t)
+    {
+       super.pull(t);
+      this.UID=t.getUID();
+
+    }
+    
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     /**
      *

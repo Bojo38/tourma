@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.Element;
@@ -19,6 +20,17 @@ import tourma.utility.StringConstants;
  * @author WFMJ7631
  */
 public class Pool implements IXMLExport, Serializable {
+
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     private static final Logger LOG = Logger.getLogger(Pool.class.getName());
 

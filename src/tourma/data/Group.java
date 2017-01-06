@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,6 +23,16 @@ import tourma.utility.StringConstants;
  * @author Administrateur
  */
 public class Group implements IXMLExport, Serializable {
+    protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     private static final Logger LOG = Logger.getLogger(Group.class.getName());
 
@@ -40,6 +51,61 @@ public class Group implements IXMLExport, Serializable {
      */
     private final HashMap<Group, GroupPoints> opponentModificationPoints = new HashMap<>();
 
+    public void pull(Group group)
+    {
+        this.UID=group.UID;
+        this.mName=group.mName;
+        for (RosterType rt:group.mRosters)
+        {
+            RosterType roster=RosterType.getRosterType(rt.getName());
+            if (roster!=null)
+            {
+                boolean bFound=false;
+                for (RosterType local:mRosters)
+                {
+                    if (local.getUID()==roster.getUID())
+                    {
+                        bFound=true;
+                        break;
+                    }
+                    if (!bFound)
+                    {
+                        mRosters.add(roster);
+                    }
+                }
+            }
+        }
+        if (mRosters.size()!=group.getRosterCount())
+        {
+            pull(group);
+        }                
+    }
+    
+    public void pullOpponentGroupModifierPoints(Group group)
+    {
+        for (Group opponent:group.opponentModificationPoints.keySet())
+        {
+            // find corresponding local group
+            Group localOpp=Tournament.getTournament().getGroup(opponent.getName());
+            
+            
+            if (localOpp!=null)
+            {
+                GroupPoints gp=this.opponentModificationPoints.get(localOpp);
+                if (gp==null)
+                {
+                    gp=new GroupPoints();                    
+                }
+                gp.pull(group.opponentModificationPoints.get(opponent));
+                
+                opponentModificationPoints.put(localOpp, gp);
+                
+                // pull points modifiers
+            }
+        }
+        
+    }
+    
     /**
      *
      * @param name

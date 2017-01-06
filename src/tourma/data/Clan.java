@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -27,6 +28,24 @@ import tourma.utility.StringConstants;
  */
 public class Clan implements Comparable<Object>, IXMLExport,IWithNameAndPicture, Serializable {
 
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
+    public void pull(Clan clan)
+    {
+        this.UID=clan.UID;
+        this.mName=clan.mName;
+        this.picture=clan.picture;              
+    }
+    
     /**
      * 
      */

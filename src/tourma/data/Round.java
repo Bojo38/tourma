@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,6 +32,17 @@ import tourma.utility.StringConstants;
 public class Round implements IXMLExport, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Round.class.getName());
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     /**
      *
@@ -104,6 +116,42 @@ public class Round implements IXMLExport, Serializable {
         return coef;
     }
 
+    public void pull(Round round) {
+        this.UID = round.UID;
+        this.mCup = round.mCup;
+        this.mCupMaxTour = round.mCupMaxTour;
+        this.mHour = round.mHour;
+        this.mLooserCup = round.mLooserCup;
+        this.mMaxBonus = round.mMaxBonus;
+        this.mMinBonus = round.mMinBonus;
+        this.mThirdPlace = round.mThirdPlace;
+
+        for (Match match : round.mMatchs) {
+            boolean bFound = false;
+            for (Match local : mMatchs) {
+                if (match.getUID() == local.getUID()) {
+                    local.pull(match);
+                    bFound = true;
+                    break;
+                }
+            }
+
+            if (!bFound) {
+                Match local=null;
+                if (match instanceof TeamMatch) {
+                    local = new TeamMatch(this);
+                }
+                if (match instanceof CoachMatch) {
+                    local = new CoachMatch(this);
+                }
+                if (local != null) {
+                    local.pull(match);
+                    mMatchs.add(local);
+                }
+            }
+        }
+    }
+
     /**
      *
      * @param i
@@ -131,33 +179,25 @@ public class Round implements IXMLExport, Serializable {
     }
 
     public int indexOf(Match m) {
-        for (int i=0; i<mMatchs.size(); i++)
-        {
-            Match match=mMatchs.get(i);
-            if (match instanceof TeamMatch)
-            {
-                if (m instanceof TeamMatch)
-                {
-                    if (m==match)
-                    {
+        for (int i = 0; i < mMatchs.size(); i++) {
+            Match match = mMatchs.get(i);
+            if (match instanceof TeamMatch) {
+                if (m instanceof TeamMatch) {
+                    if (m == match) {
                         return i;
                     }
                 }
-                if (m instanceof CoachMatch)
-                {
-                    if (((TeamMatch)match).containsMatch((CoachMatch)m))
-                    {
+                if (m instanceof CoachMatch) {
+                    if (((TeamMatch) match).containsMatch((CoachMatch) m)) {
                         return i;
                     }
                 }
             }
-            if (match instanceof CoachMatch)
-            {
-                if (match==m)
-                {
+            if (match instanceof CoachMatch) {
+                if (match == m) {
                     return i;
                 }
-            }        
+            }
         }
         return 0;
     }
@@ -186,8 +226,7 @@ public class Round implements IXMLExport, Serializable {
                 }
             } else {
                 if (match instanceof TeamMatch) {
-                    if (((TeamMatch) match).containsMatch(m)) 
-                    {
+                    if (((TeamMatch) match).containsMatch(m)) {
                         return true;
                     }
                 }
@@ -271,10 +310,9 @@ public class Round implements IXMLExport, Serializable {
     public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(StringConstants.CS_ROUND);
-        if (mHour==null)
-        {
-            Calendar cal=Calendar.getInstance();
-            mHour=cal.getTime();
+        if (mHour == null) {
+            Calendar cal = Calendar.getInstance();
+            mHour = cal.getTime();
         }
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
@@ -519,37 +557,30 @@ public class Round implements IXMLExport, Serializable {
         return result;
     }
 
-    public boolean isThirdPlace()
-    {
+    public boolean isThirdPlace() {
         return mThirdPlace;
     }
-    
-    public void setThirdPlace(boolean b)
-    {        
-        mThirdPlace=b;
+
+    public void setThirdPlace(boolean b) {
+        mThirdPlace = b;
     }
 
-    public void recomputeMatchs()
-    {
-        for (int i=0; i<mMatchs.size(); i++)
-        {
+    public void recomputeMatchs() {
+        for (int i = 0; i < mMatchs.size(); i++) {
             mMatchs.get(i).recomputeValues();
         }
     }
-    
-    public boolean allMatchesEntered()
-    {
+
+    public boolean allMatchesEntered() {
         // Shall check if all the matches hav been filled, conceeded or refused
-        for (int i=0; i<getMatchsCount(); i++)
-        {
-            Match m=getMatch(i);
-            if (!m.isEntered())
-            {
+        for (int i = 0; i < getMatchsCount(); i++) {
+            Match m = getMatch(i);
+            if (!m.isEntered()) {
                 return false;
             }
         }
         return true;
-        
+
     }
-    
+
 }

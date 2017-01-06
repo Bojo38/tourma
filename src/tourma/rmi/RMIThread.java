@@ -41,13 +41,13 @@ public class RMIThread implements Runnable {
             ITournament r = (ITournament) registry.lookup("TourMa");
             //Remote r = Naming.lookup("rmi://" + address + "/TourMa");
             if (r instanceof ITournament) {
-                Tournament.PullTournament(r.getTournament());
+                Tournament.pull(r.getTournament());
             }
 
             
             while (!mStop)
             {
-                Tournament.PullTournament(r.getTournament());
+                Tournament.pull(r.getTournament());
                 r.setTournament(Tournament.getTournament());
                 try {
                     Thread.sleep(period*1000);

@@ -33,7 +33,7 @@ public class RMITournament implements ITournament {
 
     @Override
     public void setTournament(Tournament object) throws RemoteException {
-        Tournament.PushTournament(object);
+        Tournament.push(object);
     }
 
 }

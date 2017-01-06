@@ -6,13 +6,33 @@
 package tourma.data;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
  * @author Administrateur
  */
 public class Value implements Serializable {
-        /**
+
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
+    public void pull(Value value)
+    {
+        this.UID=value.UID;
+        this.mValue1=value.mValue1;
+        this.mValue2=value.mValue2;
+    }
+    
+    /**
      * Name of the criteria
      */
     private Criteria mCriteria;

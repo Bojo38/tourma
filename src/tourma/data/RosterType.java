@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import org.jdom2.Element;
@@ -18,6 +19,17 @@ import tourma.utility.StringConstants;
  * @author Administrateur
  */
 public class RosterType implements IXMLExport, Serializable {
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     private static ResourceBundle sBundle = null;
 
@@ -41,6 +53,43 @@ public class RosterType implements IXMLExport, Serializable {
      *
      */
     private static ArrayList<String> mRostersNames = new ArrayList<>();
+
+    public static HashMap<String, RosterType> getRosters() {
+        return mRosterTypes;
+    }
+
+    public static void pull(HashMap<String, RosterType> types) {
+        for (RosterType type : types.values()) {
+            RosterType rt = mRosterTypes.get(type.getName());
+            if (rt == null) {
+                // Search by UID
+                boolean bFound = false;
+
+                for (RosterType t : mRosterTypes.values()) {
+                    if (t.getUID() == type.getUID()) {
+                        t.mName = type.getName();
+                        bFound = true;
+                        break;
+                    }
+                }
+
+                if (!bFound) {
+                    RosterType r = new RosterType(type.getName());
+                    r.UID = type.getUID();
+                    mRosterTypes.put(type.getName(), type);
+                }
+
+            } else {
+                rt.setUID(type.getUID());
+            }
+        }
+        
+        if (mRosterTypes.size()!=types.size())
+        {
+            mRosterTypes.clear();
+            pull(types);
+        }
+    }
 
     /**
      *
@@ -295,7 +344,7 @@ public class RosterType implements IXMLExport, Serializable {
      */
     public static RosterType getRosterType(int i) {
         if (i < mRosterTypes.size()) {
-            String name=mRostersNames.get(i);
+            String name = mRostersNames.get(i);
             return (RosterType) mRosterTypes.get(name);
         }
         return null;
@@ -455,7 +504,7 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("VampireKey"))) {
             result = translate("VAMPIRES");
         }
-        if (source.equals(translate("KhorneKey"))||source.equals(translate("KhornesDaemonsKey"))) {
+        if (source.equals(translate("KhorneKey")) || source.equals(translate("KhornesDaemonsKey"))) {
             result = translate("UNKNOWN");
         }
         return result;
