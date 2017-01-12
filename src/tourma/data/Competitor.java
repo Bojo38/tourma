@@ -74,6 +74,40 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         }
         
     }
+    
+    
+    public void push (Competitor comp) {
+        this.setName(comp.getName());
+        this.setColor(comp.getColor());
+        this.setPicture(comp.getPicture());
+        if (comp.getClan() != null) {
+            Clan clan = Clan.getClan(comp.getClan().getName());
+            this.setClan(clan);
+        }
+        
+        for (Category category:comp.mCategories)
+        {
+            // Find local instance of Category
+            for (int i=0; i<Tournament.getTournament().getCategoriesCount(); i++)
+            {
+                Category local=Tournament.getTournament().getCategory(i);
+                if (local.getUID()==category.getUID())
+                {
+                    // Test if category already contained
+                    if (!mCategories.contains(local))
+                    {
+                        mCategories.add(local);
+                    }
+                }
+            }
+            if (comp.mCategories.size()!=mCategories.size())
+            {
+                mCategories.clear();
+                pull(comp);
+            }
+        }
+        
+    }
 
     @Override
     public boolean equals(Object c) {

@@ -46,6 +46,13 @@ public class Clan implements Comparable<Object>, IXMLExport,IWithNameAndPicture,
         this.picture=clan.picture;              
     }
     
+    public void push(Clan clan)
+    {
+        this.UID=clan.UID;
+        this.mName=clan.mName;
+        this.picture=clan.picture;              
+    }
+    
     /**
      * 
      */

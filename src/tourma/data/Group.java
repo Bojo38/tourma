@@ -23,8 +23,9 @@ import tourma.utility.StringConstants;
  * @author Administrateur
  */
 public class Group implements IXMLExport, Serializable {
-    protected static AtomicInteger sGenUID=new AtomicInteger(0);
-    protected int UID=sGenUID.incrementAndGet();
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
 
     public int getUID() {
         return UID;
@@ -51,61 +52,51 @@ public class Group implements IXMLExport, Serializable {
      */
     private final HashMap<Group, GroupPoints> opponentModificationPoints = new HashMap<>();
 
-    public void pull(Group group)
-    {
-        this.UID=group.UID;
-        this.mName=group.mName;
-        for (RosterType rt:group.mRosters)
-        {
-            RosterType roster=RosterType.getRosterType(rt.getName());
-            if (roster!=null)
-            {
-                boolean bFound=false;
-                for (RosterType local:mRosters)
-                {
-                    if (local.getUID()==roster.getUID())
-                    {
-                        bFound=true;
+    public void pull(Group group) {
+        this.UID = group.UID;
+        this.mName = group.mName;
+        for (RosterType rt : group.mRosters) {
+            RosterType roster = RosterType.getRosterType(rt.getName());
+            if (roster != null) {
+                boolean bFound = false;
+                for (RosterType local : mRosters) {
+                    if (local.getUID() == roster.getUID()) {
+                        bFound = true;
                         break;
                     }
-                    if (!bFound)
-                    {
-                        mRosters.add(roster);
-                    }
                 }
+                if (!bFound) {
+                    mRosters.add(roster);
+                }
+
             }
         }
-        if (mRosters.size()!=group.getRosterCount())
-        {
+        if (mRosters.size() != group.getRosterCount()) {
+            mRosters.clear();
             pull(group);
-        }                
+        }
     }
-    
-    public void pullOpponentGroupModifierPoints(Group group)
-    {
-        for (Group opponent:group.opponentModificationPoints.keySet())
-        {
+
+    public void pullOpponentGroupModifierPoints(Group group) {
+        for (Group opponent : group.opponentModificationPoints.keySet()) {
             // find corresponding local group
-            Group localOpp=Tournament.getTournament().getGroup(opponent.getName());
-            
-            
-            if (localOpp!=null)
-            {
-                GroupPoints gp=this.opponentModificationPoints.get(localOpp);
-                if (gp==null)
-                {
-                    gp=new GroupPoints();                    
+            Group localOpp = Tournament.getTournament().getGroup(opponent.getName());
+
+            if (localOpp != null) {
+                GroupPoints gp = this.opponentModificationPoints.get(localOpp);
+                if (gp == null) {
+                    gp = new GroupPoints();
                 }
                 gp.pull(group.opponentModificationPoints.get(opponent));
-                
+
                 opponentModificationPoints.put(localOpp, gp);
-                
+
                 // pull points modifiers
             }
         }
-        
+
     }
-    
+
     /**
      *
      * @param name
@@ -120,7 +111,7 @@ public class Group implements IXMLExport, Serializable {
      * @return
      */
     @Override
-    public Element getXMLElement()  {
+    public Element getXMLElement() {
         final Element group = new Element(StringConstants.CS_GROUP);
         group.setAttribute(StringConstants.CS_NAME, this.getName());
         for (int j = 0; j < this.getRosterCount(); j++) {
@@ -137,7 +128,7 @@ public class Group implements IXMLExport, Serializable {
         return group;
     }
 
-    public Element getXMLElementForPoints()  {
+    public Element getXMLElementForPoints() {
         final Element group = new Element(StringConstants.CS_GROUP_MODIFIER_POINTS);
         group.setAttribute(StringConstants.CS_NAME, this.getName());
 
@@ -195,14 +186,14 @@ public class Group implements IXMLExport, Serializable {
     /**
      * @return the mName
      */
-    public String getName()  {
+    public String getName() {
         return mName;
     }
 
     /**
      * @param mName the mName to set
      */
-    public void setName(String mName)  {
+    public void setName(String mName) {
         this.mName = mName;
     }
 
@@ -210,7 +201,7 @@ public class Group implements IXMLExport, Serializable {
      * @param i
      * @return the mRosters
      */
-    public RosterType getRoster(int i)  {
+    public RosterType getRoster(int i) {
         if (i < mRosters.size()) {
             return mRosters.get(i);
         } else {
@@ -222,7 +213,7 @@ public class Group implements IXMLExport, Serializable {
      *
      * @return
      */
-    public int getRosterCount()  {
+    public int getRosterCount() {
         return mRosters.size();
     }
 
@@ -230,7 +221,7 @@ public class Group implements IXMLExport, Serializable {
      *
      * @param rt
      */
-    public void addRoster(RosterType rt)  {
+    public void addRoster(RosterType rt) {
         mRosters.add(rt);
     }
 
@@ -238,14 +229,14 @@ public class Group implements IXMLExport, Serializable {
      *
      * @param rt
      */
-    public void removeRoster(RosterType rt)  {
+    public void removeRoster(RosterType rt) {
         mRosters.remove(rt);
     }
 
     /**
      * New roster array
      */
-    public void newRosters()  {
+    public void newRosters() {
         this.mRosters = new ArrayList<>();
     }
 
@@ -259,17 +250,17 @@ public class Group implements IXMLExport, Serializable {
 
         boolean result;
         result = false;
-            if (obj instanceof Group) {
-                Group g = (Group) obj;
-                result = this.getName().equals(g.getName());
-                result &= this.getRosterCount() == g.getRosterCount();
-                for (RosterType rt : mRosters) {
-                    result &= g.containsRoster(rt);
-                }
-                for (Group og : opponentModificationPoints.keySet()) {
-                    result &= getOpponentModificationPoints(og).equals(g.getOpponentModificationPoints(og));;
-                }
+        if (obj instanceof Group) {
+            Group g = (Group) obj;
+            result = this.getName().equals(g.getName());
+            result &= this.getRosterCount() == g.getRosterCount();
+            for (RosterType rt : mRosters) {
+                result &= g.containsRoster(rt);
             }
+            for (Group og : opponentModificationPoints.keySet()) {
+                result &= getOpponentModificationPoints(og).equals(g.getOpponentModificationPoints(og));;
+            }
+        }
 
         return result;
 
@@ -279,7 +270,7 @@ public class Group implements IXMLExport, Serializable {
      * @param g
      * @return the opponentModificationPoints
      */
-    public GroupPoints getOpponentModificationPoints(Group g)  {
+    public GroupPoints getOpponentModificationPoints(Group g) {
         return opponentModificationPoints.get(g);
     }
 
@@ -288,7 +279,7 @@ public class Group implements IXMLExport, Serializable {
      * @param g
      * @param gp
      */
-    public void setOpponentModificationPoints(Group g, GroupPoints gp)  {
+    public void setOpponentModificationPoints(Group g, GroupPoints gp) {
         opponentModificationPoints.put(g, gp);
     }
 
@@ -296,7 +287,7 @@ public class Group implements IXMLExport, Serializable {
      *
      * @param g
      */
-    public void delOpponentModificationPoints(Group g)  {
+    public void delOpponentModificationPoints(Group g) {
         opponentModificationPoints.remove(g);
     }
 
@@ -305,7 +296,8 @@ public class Group implements IXMLExport, Serializable {
      * @param rt
      * @return
      */
-    public boolean containsRoster(RosterType rt)  {
+    public boolean containsRoster(RosterType rt) {
         return mRosters.contains(rt);
     }
+
 }

@@ -51,7 +51,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Tournament implements IContainCoachs,Serializable {
+public class Tournament implements IContainCoachs, Serializable {
 
     /**
      *
@@ -60,7 +60,7 @@ public class Tournament implements IContainCoachs,Serializable {
     private static final Object myLock = new Object();
     private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
 
-    private boolean isClient=false;
+    private boolean isClient = false;
 
     public boolean isClient() {
         return isClient;
@@ -69,7 +69,7 @@ public class Tournament implements IContainCoachs,Serializable {
     public void setIsClient(boolean isClient) {
         this.isClient = isClient;
     }
-    
+
     /**
      *
      * @return
@@ -79,14 +79,12 @@ public class Tournament implements IContainCoachs,Serializable {
         return mSingleton;
     }
 
-    public void recomputeAll()
-    {
-        for (int i=0; i<this.mRounds.size(); i++)
-        {
+    public void recomputeAll() {
+        for (int i = 0; i < this.mRounds.size(); i++) {
             mRounds.get(i).recomputeMatchs();
         }
     }
-    
+
     /**
      *
      * @return
@@ -145,7 +143,11 @@ public class Tournament implements IContainCoachs,Serializable {
      */
     private final ArrayList<Group> mGroups;
 
-    private Tournament()  {
+    private Tournament() {
+        
+        RosterType.initCollection();
+        getRosterType();
+        
         mParams = new Parameters();
         mRounds = new ArrayList<>();
         mCoachs = new ArrayList<>();
@@ -165,11 +167,10 @@ public class Tournament implements IContainCoachs,Serializable {
         }
     }
 
-    public Parameters getParams() 
-    {
+    public Parameters getParams() {
         return mParams;
     }
-    
+
     public int getRoundIndex(Round round) {
         if (this.mRounds != null) {
             return mRounds.indexOf(round);
@@ -216,7 +217,7 @@ public class Tournament implements IContainCoachs,Serializable {
      * @param c
      * @throws java.rmi.RemoteException
      */
-        public void removeClan(int c) {
+    public void removeClan(int c) {
         mClans.remove(c);
     }
 
@@ -328,7 +329,7 @@ public class Tournament implements IContainCoachs,Serializable {
         return mTeams.contains(t);
     }
 
-    public boolean containsTeam(String name){
+    public boolean containsTeam(String name) {
         for (int i = 0; i < mTeams.size(); i++) {
             if (mTeams.get(i).getName().equals(name)) {
                 return true;
@@ -453,8 +454,6 @@ public class Tournament implements IContainCoachs,Serializable {
 
         return categories;
     }
-
-  
 
     /**
      *
@@ -636,7 +635,7 @@ public class Tournament implements IContainCoachs,Serializable {
      * @param i
      * @return
      */
-    public Round getRound(int i){
+    public Round getRound(int i) {
         return mRounds.get(i);
     }
 
@@ -936,7 +935,7 @@ public class Tournament implements IContainCoachs,Serializable {
         }
     }
 
-    public ArrayList<Integer> getRankingTypes(boolean byTeam)  {
+    public ArrayList<Integer> getRankingTypes(boolean byTeam) {
         ArrayList<Integer> rankingTypes = new ArrayList<>();
         if (!byTeam) {
             if (this.mParams.getRankingIndiv1() != 0) {
@@ -1157,7 +1156,7 @@ public class Tournament implements IContainCoachs,Serializable {
         Criteria critInj = null;
 
         for (int i = 0; i < mParams.getCriteriaCount(); i++) {
-            final Criteria crit =mParams.getCriteria(i);
+            final Criteria crit = mParams.getCriteria(i);
             if (i == 0) {
                 critTd = crit;
             }
@@ -1186,9 +1185,9 @@ public class Tournament implements IContainCoachs,Serializable {
                 writer.println(("</coaches>"));
 
                 for (Round mRound : mRounds) {
-                    ArrayList<CoachMatch> matches=mRound.getCoachMatchs();
+                    ArrayList<CoachMatch> matches = mRound.getCoachMatchs();
                     for (int j = 0; j < matches.size(); j++) {
-                        CoachMatch cm=matches.get(j);
+                        CoachMatch cm = matches.get(j);
                         if ((((Coach) cm.getCompetitor1()).getNaf() > 0) && (((Coach) cm.getCompetitor2()).getNaf() > 0)) {
                             writer.println(("<game>"));
                             writer.println(java.text.MessageFormat.format("<timeStamp>{0}</timeStamp>", new Object[]{format.format(mRound.getHour())}));
@@ -1200,8 +1199,8 @@ public class Tournament implements IContainCoachs,Serializable {
                             }
                             writer.println(("<playerRecord>"));
                             writer.println(java.text.MessageFormat.format(("<name>{0}</name>"), new Object[]{p.getName()}));
-                            String nafID=Integer.toString(p.getNaf());
-                            nafID=nafID.replace(" ", "");
+                            String nafID = Integer.toString(p.getNaf());
+                            nafID = nafID.replace(" ", "");
                             writer.println(java.text.MessageFormat.format(("<number>{0}</number>"), nafID));
                             writer.println(java.text.MessageFormat.format(("<teamRating>{0}</teamRating>"), new Object[]{p.getRank()}));
                             writer.println(java.text.MessageFormat.format(("<touchDowns>{0}</touchDowns>"), new Object[]{cm.getValue(critTd).getValue1()}));
@@ -1214,8 +1213,8 @@ public class Tournament implements IContainCoachs,Serializable {
                             }
                             writer.println(("<playerRecord>"));
                             writer.println(java.text.MessageFormat.format(("<name>{0}</name>"), new Object[]{p.getName()}));
-                            nafID=Integer.toString(p.getNaf());
-                            nafID=nafID.replace(" ", "");
+                            nafID = Integer.toString(p.getNaf());
+                            nafID = nafID.replace(" ", "");
                             writer.println(java.text.MessageFormat.format(("<number>{0}</number>"), nafID));
                             writer.println(java.text.MessageFormat.format(("<teamRating>{0}</teamRating>"), new Object[]{p.getRank()}));
                             writer.println(java.text.MessageFormat.format(("<touchDowns>{0}</touchDowns>"), new Object[]{cm.getValue(critTd).getValue2()}));
@@ -1531,255 +1530,315 @@ public class Tournament implements IContainCoachs,Serializable {
     public void setDescription(String tmp) {
         mDescription = tmp;
     }
-        
-    
+
     // To do : Fill all data from tour (Data from server)
-    public static void pull(Tournament tour)
-    {        
+    public static void pull(Tournament tour) {
         // The data comes from server, please copy all parameters
-        
+
+        getTournament().mDescription = tour.mDescription;
+        getTournament().mRoundRobin = tour.mRoundRobin;
+
         // Find Parameters, copy the properties
         getTournament().getParams().pull(tour.getParams());
-        
+
         // Find Rosters, copy the properties
         RosterType.pull(tour.getRosterType());
-        
+
         // Find Clans, copy the properties
         getTournament().pullClans(tour.mClans);
-        
+
         // Find Groups, copy the properties
         getTournament().pullGroups(tour.mGroups);
-        
+
         // Find Categories, copy the properties
         getTournament().pullCategories(tour.mCategories);
-        
+
         // Find teams, copy the properties
         getTournament().pullTeams(tour.mTeams);
-        
+
         // Find coachs, copy the properties
         getTournament().pullCoachs(tour.mCoachs);
-                        
+
         // Find Round, copy the  properties
         getTournament().pullRounds(tour.mRounds);
-                
+
         // Update  Screen
-        MainFrame.getMainFrame().update();        
+        MainFrame.getMainFrame().update();
     }
-    
-    public void pullRounds(ArrayList<Round> rounds)
-    {
-        for (Round round:rounds)
-        {
-            boolean bFound=false;
-            for (Round local:mRounds)
-            {
-                if (round.getUID()==local.getUID())
-                {
+
+    public void pullRounds(ArrayList<Round> rounds) {
+        for (Round round : rounds) {
+            boolean bFound = false;
+            for (Round local : mRounds) {
+                if (round.getUID() == local.getUID()) {
                     local.pull(round);
-                    bFound=true;
+                    bFound = true;
                     break;
                 }
             }
-            
-            if (!bFound)
-            {
-                Round local=new Round();
+
+            if (!bFound) {
+                Round local = new Round();
                 local.pull(round);
                 mRounds.add(local);
                 // Coaches and matches are synchronized later
             }
         }
     }
-    
-    public void pullClans(ArrayList<Clan> clans)
-    {
-        for (Clan clan:clans)
-        {
-            boolean bFound=false;
-            for (Clan local:mClans)
-            {
-                if (clan.getUID()==local.getUID())
-                {
+
+    public void pullClans(ArrayList<Clan> clans) {
+        for (Clan clan : clans) {
+            boolean bFound = false;
+            for (Clan local : mClans) {
+                if (clan.getUID() == local.getUID()) {
                     local.pull(clan);
-                    bFound=true;
+                    bFound = true;
                     break;
                 }
             }
-            
-            if (!bFound)
-            {
-                Clan local=new Clan(clan.getName());
+
+            if (!bFound) {
+                Clan local = new Clan(clan.getName());
                 local.pull(clan);
                 mClans.add(local);
                 // Coaches and matches are synchronized later
             }
         }
-        
-        if (clans.size()!=mClans.size())
-        {
+
+        if (clans.size() != mClans.size()) {
             mClans.clear();
             pullClans(clans);
         }
     }
-    
-    public void pullCategories(ArrayList<Category> categories)
-    {
-        for (Category category:categories)
-        {
-            boolean bFound=false;
-            for (Category local:mCategories)
-            {
-                if (category.getUID()==local.getUID())
-                {
+
+    public void pullCategories(ArrayList<Category> categories) {
+        for (Category category : categories) {
+            boolean bFound = false;
+            for (Category local : mCategories) {
+                if (category.getUID() == local.getUID()) {
                     local.pull(category);
-                    bFound=true;
+                    bFound = true;
                     break;
                 }
             }
-            
-            if (!bFound)
-            {
-                Category local=new Category(category.getName());
+
+            if (!bFound) {
+                Category local = new Category(category.getName());
                 local.pull(category);
                 mCategories.add(local);
                 // Coaches and matches are synchronized later
             }
         }
-        
-        if (categories.size()!=mCategories.size())
-        {
+
+        if (categories.size() != mCategories.size()) {
             mCategories.clear();
             pullCategories(categories);
         }
     }
-    
-    public void pullTeams(ArrayList<Team> teams)
-    {
-        for (Team team:teams)
-        {
-            boolean bFound=false;
-            for (Team local:mTeams)
-            {
-                if (team.getUID()==local.getUID())
-                {
+
+    public void pullTeams(ArrayList<Team> teams) {
+        for (Team team : teams) {
+            boolean bFound = false;
+            for (Team local : mTeams) {
+                if (team.getUID() == local.getUID()) {
                     local.pull(team);
-                    bFound=true;
+                    bFound = true;
                     break;
                 }
             }
-            
-            if (!bFound)
-            {
-                Team local=new Team(team.getName());
+
+            if (!bFound) {
+                Team local = new Team(team.getName());
                 local.pull(team);
                 mTeams.add(local);
                 // Coaches and matches are synchronized later
             }
         }
-        
-        if (teams.size()!=mTeams.size())
-        {
+
+        if (teams.size() != mTeams.size()) {
             mTeams.clear();
             pullTeams(teams);
         }
     }
-    
-    
-    public void pullCoachs(ArrayList<Coach> coachs)
-    {
-        for (Coach coach:coachs)
-        {
-            boolean bFound=false;
-            for (Coach local:mCoachs)
-            {
-                if (coach.getUID()==local.getUID())
-                {
+
+    public void pullCoachs(ArrayList<Coach> coachs) {
+        for (Coach coach : coachs) {
+            boolean bFound = false;
+            for (Coach local : mCoachs) {
+                if (coach.getUID() == local.getUID()) {
                     local.pull(coach);
-                    bFound=true;
+                    bFound = true;
                     break;
                 }
             }
-            
-            if (!bFound)
-            {
-                Coach local=new Coach(coach.getName());
+
+            if (!bFound) {
+                Coach local = new Coach(coach.getName());
                 local.pull(coach);
                 mCoachs.add(local);
                 // matches are synchronized later
             }
         }
-        
-        if (coachs.size()!=mCoachs.size())
-        {
+
+        if (coachs.size() != mCoachs.size()) {
             mCoachs.clear();
             pullCoachs(coachs);
         }
     }
-    
-    public void pullGroups(ArrayList<Group> groups)
-    {
-        for (Group group:groups)
-        {
-            boolean bFound=false;
-            for (Group local:mGroups)
-            {
-                if (group.getUID()==local.getUID())
-                {
+
+    public void pullGroups(ArrayList<Group> groups) {
+        for (Group group : groups) {
+            boolean bFound = false;
+            for (Group local : mGroups) {
+                if (group.getUID() == local.getUID()) {
                     local.pull(group);
-                    bFound=true;
+                    bFound = true;
                     break;
                 }
             }
-            
-            if (!bFound)
-            {
-                Group local=new Group(group.getName());
+
+            if (!bFound) {
+                Group local = new Group(group.getName());
                 local.pull(group);
-                
+
                 mGroups.add(local);
                 // Coaches and matches are synchronized later
             }
         }
-        
-        if (groups.size()!=mGroups.size())
-        {
+
+        if (groups.size() != mGroups.size()) {
             mGroups.clear();
             pullGroups(groups);
         }
-        
+
         // Update Groups opponent modifier points
-        for (Group local:mGroups)
-        {
-            for (Group group:groups)
-            {
-                if (local.getUID()==group.getUID())
-                {
+        for (Group local : mGroups) {
+            for (Group group : groups) {
+                if (local.getUID() == group.getUID()) {
                     local.pullOpponentGroupModifierPoints(group);
                 }
             }
-
-
         }
     }
 
     
-    public HashMap<String,RosterType> getRosterType()
-    {
-        return RosterType.getRosters();
+    private HashMap<String, RosterType> mRosterTypes=null;
+    public HashMap<String, RosterType> getRosterType() {
+        if (mRosterTypes==null)
+        {
+            mRosterTypes=RosterType.getRosters();
+        }
+        return mRosterTypes;
     }
-    
-    
+
     // To Do : Fill only coach/team/match data from tour (Data From client)
-    public static void push(Tournament tour)
-    {
-        // Find teams, copy the properties
-        // Find coachs, copy the properties
-        // Find Clans, copy the properties
-        // Find Groups, copy the properties
+    public static void push(Tournament tour) {
+        // Find Clans, copy the properties        
+        getTournament().pushClans(tour.mClans);
+
+        // Find Teams, copy the properties
+        getTournament().pushTeams(tour.mTeams);
+
+        // Find Coachs, copy the properties
+        getTournament().pushCoachs(tour.mCoachs);
+
         // Find Round, copy the  properties
-        // Find Matchs, copy the properties
-        
-        // Update Screen
-        MainFrame.getMainFrame().update();
+        getTournament().pushRounds(tour.mRounds);
     }
+
+    public void pushClans(ArrayList<Clan> clans) {
+        for (Clan clan : clans) {
+            boolean bFound = false;
+            for (Clan local : mClans) {
+                if (clan.getUID() == local.getUID()) {
+                    local.push(clan);
+                    bFound = true;
+                    break;
+                }
+            }
+
+            if (!bFound) {
+                Clan local = new Clan(clan.getName());
+                local.push(clan);
+                mClans.add(local);
+                // Coaches and matches are synchronized later
+            }
+        }
+
+        if (clans.size() != mClans.size()) {
+            mClans.clear();
+            pushClans(clans);
+        }
+    }
+
+    public void pushTeams(ArrayList<Team> teams) {
+        for (Team team : teams) {
+            boolean bFound = false;
+            for (Team local : mTeams) {
+                if (team.getUID() == local.getUID()) {
+                    local.push(team);
+                    bFound = true;
+                    break;
+                }
+            }
+
+            if (!bFound) {
+                Team local = new Team(team.getName());
+                local.push(team);
+                mTeams.add(local);
+                // Coaches and matches are synchronized later
+            }
+        }
+
+        if (teams.size() != mTeams.size()) {
+            mTeams.clear();
+            pushTeams(teams);
+        }
+    }
+
+    public void pushCoachs(ArrayList<Coach> coachs) {
+        for (Coach coach : coachs) {
+            boolean bFound = false;
+            for (Coach local : mCoachs) {
+                if (coach.getUID() == local.getUID()) {
+                    local.push(coach);
+                    bFound = true;
+                    break;
+                }
+            }
+
+            if (!bFound) {
+                Coach local = new Coach(coach.getName());
+                local.push(coach);
+                mCoachs.add(local);
+                // matches are synchronized later
+            }
+        }
+
+        if (coachs.size() != mCoachs.size()) {
+            mCoachs.clear();
+            pushCoachs(coachs);
+        }
+    }
+
+    public void pushRounds(ArrayList<Round> rounds) {
+        for (Round round : rounds) {
+            boolean bFound = false;
+            for (Round local : mRounds) {
+                if (round.getUID() == local.getUID()) {
+                    local.push(round);
+                    bFound = true;
+                    break;
+                }
+            }
+
+            /*if (!bFound) {
+                Round local = new Round();
+                local.pull(round);
+                mRounds.add(local);
+                // Coaches and matches are synchronized later
+            }*/ 
+        }
+    }
+    
 }

@@ -50,6 +50,13 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
 
     }
     
+    public void push(Team t)
+    {
+       super.push(t);
+      this.UID=t.getUID();
+
+    }
+    
     public void setUID(int UID) {
         this.UID = UID;
     }

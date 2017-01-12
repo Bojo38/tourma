@@ -110,6 +110,39 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     }
     
+    public void push(Coach c)
+    {
+       super.push(c);
+      this.UID=c.getUID();
+      
+      this._PinCode=c._PinCode;
+      this.mActive=c.mActive;
+      this.mHandicap=c.mHandicap;
+      this.mNaf=c.mNaf;
+      this.mNafRank=c.mNafRank;
+      this.mRank=c.mRank;
+      this.mTeam=c.mTeam;
+      
+      //RosterType
+      this.mRoster=RosterType.getRosterType(c.getRoster().getName());
+      
+      //Teammates
+      this.mTeamMates=Tournament.getTournament().getTeam(c.getTeamMates().getName());
+      
+      //Compositions
+      mCompositions.clear();
+      
+      for (int i=0; i< c.getCompositionCount(); i++)
+      {
+          teamma.data.Roster roster=new teamma.data.Roster();
+          roster.pull(c.getComposition(i));
+          mCompositions.add(roster);
+      }
+      
+      
+
+    }
+    
     /**
      *
      * @param s

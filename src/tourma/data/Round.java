@@ -151,6 +151,35 @@ public class Round implements IXMLExport, Serializable {
             }
         }
     }
+    
+    public void push(Round round) {
+        this.UID = round.UID;
+
+        for (Match match : round.mMatchs) {
+            boolean bFound = false;
+            for (Match local : mMatchs) {
+                if (match.getUID() == local.getUID()) {
+                    local.push(match);
+                    bFound = true;
+                    break;
+                }
+            }
+
+            /*if (!bFound) {
+                Match local=null;
+                if (match instanceof TeamMatch) {
+                    local = new TeamMatch(this);
+                }
+                if (match instanceof CoachMatch) {
+                    local = new CoachMatch(this);
+                }
+                if (local != null) {
+                    local.pull(match);
+                    mMatchs.add(local);
+                }
+            }*/
+        }
+    }
 
     /**
      *

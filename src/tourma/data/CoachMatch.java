@@ -125,6 +125,93 @@ public class CoachMatch extends Match implements Serializable {
             }
         }
     }
+    
+    public void push(Match match) {
+        if (match instanceof CoachMatch) {
+            CoachMatch coachmatch = (CoachMatch) match;
+            this.UID = coachmatch.UID;
+            this.c1value1 = coachmatch.c1value1;
+            this.c1value2 = coachmatch.c1value2;
+            this.c1value3 = coachmatch.c1value3;
+            this.c1value4 = coachmatch.c1value4;
+            this.c1value5 = coachmatch.c1value5;
+            this.c1value1 = coachmatch.c1value1;
+            this.c2value2 = coachmatch.c2value2;
+            this.c2value3 = coachmatch.c2value3;
+            this.c2value4 = coachmatch.c2value4;
+            this.c2value5 = coachmatch.c2value5;
+            this.concedeedBy1 = coachmatch.concedeedBy1;
+            this.concedeedBy2 = coachmatch.concedeedBy2;
+
+            this.mCompetitor1 = Tournament.getTournament().getCoach(coachmatch.getCompetitor1().getName());
+            this.mCompetitor2 = Tournament.getTournament().getCoach(coachmatch.getCompetitor2().getName());
+
+            this.mRoster1 = RosterType.getRosterType(coachmatch.getRoster1().getName());
+            this.mRoster2 = RosterType.getRosterType(coachmatch.getRoster2().getName());
+            if (coachmatch.mSubstitute1 != null) {
+                this.mSubstitute1 = new Substitute();
+                this.mSubstitute1.UID = coachmatch.mSubstitute1.UID;
+                this.mSubstitute1.setMatch(this);
+                this.mSubstitute1.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getSubstitute().getName()));
+                this.mSubstitute1.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getTitular().getName()));
+            } else {
+                this.mSubstitute1 = null;
+            }
+
+            if (coachmatch.mSubstitute2 != null) {
+                this.mSubstitute2 = new Substitute();
+                this.mSubstitute2.UID = coachmatch.mSubstitute2.UID;
+                this.mSubstitute2.setMatch(this);
+                this.mSubstitute2.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getSubstitute().getName()));
+                this.mSubstitute2.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getTitular().getName()));
+            } else {
+                this.mSubstitute2 = null;
+            }
+
+            for (Criteria crit : coachmatch.mValues.keySet()) {
+                Criteria criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
+                if (criteria == null) {
+                    criteria = new Criteria(crit.getName());
+                    criteria.pull(crit);
+                    Tournament.getTournament().getParams().addCriteria(criteria);
+                }
+                Value val = this.mValues.get(criteria);
+                if (val == null) {
+                    val = new Value(criteria);
+                }
+                val.pull(coachmatch.mValues.get(crit));
+            }
+
+            this.refusedBy1 = coachmatch.refusedBy1;
+            this.refusedBy2 = coachmatch.refusedBy2;
+            this.values_computed = coachmatch.values_computed;
+
+            // add Match to competitor
+            boolean bFound = false;
+            for (int i = 0; i < mCompetitor1.getMatchCount(); i++) {
+                Match m = mCompetitor1.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            /*if (!bFound) {
+                mCompetitor1.addMatch(this);
+            }*/
+
+            bFound = false;
+            for (int i = 0; i < mCompetitor2.getMatchCount(); i++) {
+                Match m = mCompetitor2.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            /*if (!bFound) {
+                mCompetitor2.addMatch(this);
+            }*/
+        }
+    }
 
     private static final Logger LOG = Logger.getLogger(CoachMatch.class.getName());
 

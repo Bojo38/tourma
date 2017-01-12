@@ -52,6 +52,7 @@ public abstract class Match implements IXMLExport, Serializable {
     public abstract void setUID(int UID);
     
     public abstract void pull(Match match);
+    public abstract void push(Match match);
     /**
      *
      * @return

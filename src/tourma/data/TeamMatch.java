@@ -175,6 +175,73 @@ public class TeamMatch extends Match implements Serializable {
         }
     }
     
+    public void push(Match match) {
+        if (match instanceof TeamMatch) {
+            TeamMatch teammatch = (TeamMatch) match;
+            this.UID = teammatch.UID;
+            this.c1value1 = teammatch.c1value1;
+            this.c1value2 = teammatch.c1value2;
+            this.c1value3 = teammatch.c1value3;
+            this.c1value4 = teammatch.c1value4;
+            this.c1value5 = teammatch.c1value5;
+            this.c1value1 = teammatch.c1value1;
+            this.c2value2 = teammatch.c2value2;
+            this.c2value3 = teammatch.c2value3;
+            this.c2value4 = teammatch.c2value4;
+            this.c2value5 = teammatch.c2value5;
+
+            this.mCompetitor1 = Tournament.getTournament().getTeam(teammatch.getCompetitor1().getName());
+            this.mCompetitor2 = Tournament.getTournament().getTeam(teammatch.getCompetitor2().getName());
+
+            // Manage CoachMatches
+            for(CoachMatch cm:teammatch.mMatchs)
+            {
+                boolean bFound = false;
+                for (CoachMatch coachmatch:mMatchs)
+                {
+                    if (cm.getUID()==coachmatch.getUID())
+                    {
+                        bFound=true;
+                        coachmatch.push(cm);
+                        break;
+                    }
+                }
+                
+                /*if (!bFound)
+                {
+                    CoachMatch coachmatch=new CoachMatch(this.getRound());
+                    coachmatch.pull(cm);
+                    mMatchs.add(coachmatch);
+                }*/
+            }
+            
+            // add Match to competitor
+            boolean bFound = false;
+            for (int i = 0; i < mCompetitor1.getMatchCount(); i++) {
+                Match m = mCompetitor1.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            /*if (!bFound) {
+                mCompetitor1.addMatch(this);
+            }*/
+
+            bFound = false;
+            for (int i = 0; i < mCompetitor2.getMatchCount(); i++) {
+                Match m = mCompetitor2.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            /*if (!bFound) {
+                mCompetitor2.addMatch(this);
+            }*/
+        }
+    }
+    
     /**
      *
      * @return

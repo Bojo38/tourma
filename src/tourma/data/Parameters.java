@@ -80,16 +80,17 @@ public class Parameters implements IXMLExport, Serializable {
             Criteria crit=params.getCriteria(i);
             for (Criteria c:mCriterias)
             {
-                if (crit.getUID()==c.UID)
+                if ((crit.getUID()==c.UID)||(crit.getName().equals(c.getName())))
                 {
-                            bFound=true;
-                            c.pull(crit);
+                    bFound=true;
+                    c.pull(crit);
                 }
             }
             if (!bFound)
             {
                 Criteria c=new Criteria(crit.getName());
                 c.pull(crit);
+                mCriterias.add(c);
             }
         }
         

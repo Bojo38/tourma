@@ -41,32 +41,32 @@ public class Criteria implements IXMLExport, Serializable {
         this.mPointsTeamFor=crit.mPointsTeamFor;
     }
     
-    private static final Logger LOG = Logger.getLogger(Criteria.class.getName());
+    protected static final Logger LOG = Logger.getLogger(Criteria.class.getName());
 
     /**
      * Name of the criteria
      */
-    private String mName;
+    protected String mName;
     /**
      * Points for
      */
-    private int mPointsFor;
+    protected int mPointsFor;
     /**
      * Points against
      */
-    private int mPointsAgainst;
+    protected int mPointsAgainst;
     /**
      * Team Points for
      */
-    private int mPointsTeamFor;
+    protected int mPointsTeamFor;
     /**
      * Team Points against
      */
-    private int mPointsTeamAgainst;
+    protected int mPointsTeamAgainst;
     /**
      * Threshold above which the value may be erroneous.
      */
-    private int mCriticalValueThreshold;
+    protected int mCriticalValueThreshold;
 
     /**
      *
