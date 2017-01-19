@@ -36,27 +36,27 @@ import tourma.utils.Generation;
  */
 public class Team extends Competitor implements IXMLExport, IContainCoachs, Serializable {
 
-        protected static AtomicInteger sGenUID=new AtomicInteger(0);
-    protected int UID=sGenUID.incrementAndGet();
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
 
     public int getUID() {
         return UID;
     }
 
-    public void pull(Team t)
-    {
-       super.pull(t);
-      this.UID=t.getUID();
+    public void pull(Team t) {
+        super.pull(t);
+        this.UID = t.getUID();
 
     }
-    
-    public void push(Team t)
-    {
-       super.push(t);
-      this.UID=t.getUID();
+
+    public void push(Team t) {
+        super.push(t);
+        if (t.isUpdated()) {
+            this.UID = t.getUID();
+        }
 
     }
-    
+
     public void setUID(int UID) {
         this.UID = UID;
     }
@@ -771,6 +771,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public void addCoach(Coach c) {
         mCoachs.add(c);
+        updated=true;
     }
 
     /**
@@ -779,6 +780,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public void removeCoach(int i) {
         mCoachs.remove(i);
+        updated=true;
     }
 
     /**
@@ -786,6 +788,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public void clearCoachs() {
         this.mCoachs.clear();
+        updated=true;
     }
 
     public boolean isBalanced(Team opp, Round round) {

@@ -101,10 +101,12 @@ public class Round implements IXMLExport, Serializable {
 
     public void setMinBonus(double v) {
         mMinBonus = v;
+        updated=true;
     }
 
     public void setMaxBonus(double v) {
         mMaxBonus = v;
+        updated=true;
     }
 
     public double getCoef(Match m) {
@@ -137,7 +139,7 @@ public class Round implements IXMLExport, Serializable {
             }
 
             if (!bFound) {
-                Match local=null;
+                Match local = null;
                 if (match instanceof TeamMatch) {
                     local = new TeamMatch(this);
                 }
@@ -151,21 +153,45 @@ public class Round implements IXMLExport, Serializable {
             }
         }
     }
-    
-    public void push(Round round) {
-        this.UID = round.UID;
 
-        for (Match match : round.mMatchs) {
-            boolean bFound = false;
-            for (Match local : mMatchs) {
-                if (match.getUID() == local.getUID()) {
-                    local.push(match);
-                    bFound = true;
-                    break;
-                }
+    public boolean isUpdated() {
+        
+        for (Match m:mMatchs)
+        {
+            if (m.isUpdated())
+            {
+                updated=true;
+                break;
             }
+        }
+        
+        return updated;
+    }
 
-            /*if (!bFound) {
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+        for (Match m:mMatchs)
+        {
+            m.setUpdated(updated);
+        }
+    }
+    protected boolean updated = false;
+
+    public void push(Round round) {
+        if (round.isUpdated()) {
+            this.UID = round.UID;
+
+            for (Match match : round.mMatchs) {
+                boolean bFound = false;
+                for (Match local : mMatchs) {
+                    if (match.getUID() == local.getUID()) {
+                        local.push(match);
+                        bFound = true;
+                        break;
+                    }
+                }
+
+                /*if (!bFound) {
                 Match local=null;
                 if (match instanceof TeamMatch) {
                     local = new TeamMatch(this);
@@ -178,6 +204,7 @@ public class Round implements IXMLExport, Serializable {
                     mMatchs.add(local);
                 }
             }*/
+            }
         }
     }
 
@@ -205,6 +232,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void addMatch(Match m) {
         mMatchs.add(m);
+        updated=true;
     }
 
     public int indexOf(Match m) {
@@ -270,6 +298,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void clearMatchs() {
         mMatchs.clear();
+        updated=true;
     }
 
     /**
@@ -311,6 +340,7 @@ public class Round implements IXMLExport, Serializable {
         } catch (ParseException ex) {
             Logger.getLogger(Round.class.getName()).log(Level.SEVERE, null, ex);
         }
+        updated=true;
     }
 
     /**
@@ -319,6 +349,7 @@ public class Round implements IXMLExport, Serializable {
     public void setCurrentHour() {
         final Calendar cal = Calendar.getInstance();
         mHour = cal.getTime();
+        updated=true;
     }
 
     /**
@@ -500,6 +531,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void setCup(boolean mCup) {
         this.mCup = mCup;
+        updated=true;
     }
 
     /**
@@ -514,6 +546,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void setCupTour(int mCupTour) {
         this.mCupTour = mCupTour;
+        updated=true;
     }
 
     /**
@@ -528,6 +561,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void setCupMaxTour(int mCupMaxTour) {
         this.mCupMaxTour = mCupMaxTour;
+        updated=true;
     }
 
     /**
@@ -542,6 +576,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void setLooserCup(boolean mLooserCup) {
         this.mLooserCup = mLooserCup;
+        updated=true;
     }
 
     /**
@@ -550,6 +585,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void removeMatch(int i) {
         mMatchs.remove(i);
+        updated=true;
     }
 
     /**
@@ -558,6 +594,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void removeMatch(Match i) {
         mMatchs.remove(i);
+        updated=true;
     }
 
     public boolean equals(final Object obj) {
@@ -592,6 +629,7 @@ public class Round implements IXMLExport, Serializable {
 
     public void setThirdPlace(boolean b) {
         mThirdPlace = b;
+        updated=true;
     }
 
     public void recomputeMatchs() {

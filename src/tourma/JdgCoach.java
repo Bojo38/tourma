@@ -732,6 +732,7 @@ public final class JdgCoach extends javax.swing.JDialog {
             teamma.data.Roster rost = mCoach.getComposition(i);
             if (rost != null) {
                 model.addElement(rost.getRoster().getName());
+                mCoach.setUpdated(true);
             }
         }
         jlsCompositions.setModel(model);
@@ -741,6 +742,7 @@ public final class JdgCoach extends javax.swing.JDialog {
             for (int i = 0; i < this.mCoach.getCategoryCount(); i++) {
                 Category cat = mCoach.getCategory(i);
                 categoryListModel.addElement(cat.getName());
+                mCoach.setUpdated(true);
             }
             jlsCategories.setModel(categoryListModel);
         }
@@ -764,6 +766,7 @@ public final class JdgCoach extends javax.swing.JDialog {
             teamma.data.Roster compo = new teamma.data.Roster();
             compo.setRoster(rt);
             mCoach.addComposition(compo);
+            mCoach.setUpdated(true);
             updatelist();
         } else {
             JOptionPane.showMessageDialog(this,
@@ -895,6 +898,7 @@ public final class JdgCoach extends javax.swing.JDialog {
             Category cat = Tournament.getTournament().getCategory(i);
             if (!mCoach.containsCategory(cat)) {
                 cats.add(cat.getName());
+                
             }
         }
         @SuppressWarnings("unchecked")
@@ -908,6 +912,7 @@ public final class JdgCoach extends javax.swing.JDialog {
             String name = cats.get(jcb.getSelectedIndex());
             Category cat = Category.getCategory(name);
             mCoach.addCategory(cat);
+            mCoach.setUpdated(true);
         }
         updatelist();
 
@@ -921,7 +926,7 @@ public final class JdgCoach extends javax.swing.JDialog {
                 String name = (String) o;
                 Category cat = Category.getCategory(name);
                 mCoach.delCategory(cat);
-
+                mCoach.setUpdated(true);
             }
         }
 

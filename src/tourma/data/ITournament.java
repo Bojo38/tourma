@@ -54,5 +54,6 @@ import tourma.utility.StringConstants;
 public interface ITournament extends Remote {
         
     public Tournament getTournament() throws RemoteException ;
+    public HashMap<String,RosterType> getRosterTypes() throws RemoteException ;
     public void setTournament(Tournament object) throws RemoteException ;
 }

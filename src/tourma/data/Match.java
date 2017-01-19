@@ -14,6 +14,15 @@ import org.jdom2.Element;
  */
 public abstract class Match implements IXMLExport, Serializable {
 
+    public boolean isUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+    }
+    protected boolean updated = false;
+
     /**
      *
      */
@@ -50,14 +59,16 @@ public abstract class Match implements IXMLExport, Serializable {
     public abstract int getUID();
 
     public abstract void setUID(int UID);
-    
+
     public abstract void pull(Match match);
+
     public abstract void push(Match match);
+
     /**
      *
      * @return
      */
-    public Competitor getWinner()  {
+    public Competitor getWinner() {
         return mWinner;
     }
 
@@ -65,22 +76,23 @@ public abstract class Match implements IXMLExport, Serializable {
      *
      * @return
      */
-    public Competitor getLooser()  {
+    public Competitor getLooser() {
         return mLooser;
     }
 
     /**
      * Reset Winner/Looser
      */
-    public void resetWL()  {
+    public void resetWL() {
         setWinner(null);
         setLooser(null);
+        updated=true;
     }
 
     /**
      * @return the mCompetitor1
      */
-    public Competitor getCompetitor1()  {
+    public Competitor getCompetitor1() {
         return mCompetitor1;
     }
 
@@ -89,8 +101,8 @@ public abstract class Match implements IXMLExport, Serializable {
         if (obj instanceof Match) {
             Match m = (Match) obj;
             result = true;
-                result &= (mCompetitor1 == m.getCompetitor1());
-                result &= (mCompetitor2 == m.getCompetitor2());
+            result &= (mCompetitor1 == m.getCompetitor1());
+            result &= (mCompetitor2 == m.getCompetitor2());
         }
         return result;
     }
@@ -98,50 +110,54 @@ public abstract class Match implements IXMLExport, Serializable {
     /**
      * @param mCompetitor1 the mCompetitor1 to set
      */
-    public void setCompetitor1(Competitor mCompetitor1)  {
+    public void setCompetitor1(Competitor mCompetitor1) {
         this.mCompetitor1 = mCompetitor1;
+        updated=true;
     }
 
     /**
      * @return the mCompetitor2
      */
-    public Competitor getCompetitor2()  {
+    public Competitor getCompetitor2() {
         return mCompetitor2;
     }
 
     /**
      * @param mCompetitor2 the mCompetitor2 to set
      */
-    public void setCompetitor2(Competitor mCompetitor2)  {
+    public void setCompetitor2(Competitor mCompetitor2) {
         this.mCompetitor2 = mCompetitor2;
+        updated=true;
     }
 
     /**
      * @return the mRound
      */
-    public Round getRound()  {
+    public Round getRound() {
         return mRound;
     }
 
     /**
      * @param mRound the mRound to set
      */
-    public void setRound(Round mRound)  {
+    public void setRound(Round mRound) {
         this.mRound = mRound;
+        updated=true;
     }
 
     /**
      * @param mWinner the mWinner to set
      */
-    public void setWinner(Competitor mWinner)  {
+    public void setWinner(Competitor mWinner) {
         this.mWinner = mWinner;
     }
 
     /**
      * @param mLooser the mLooser to set
      */
-    public void setLooser(Competitor mLooser)  {
+    public void setLooser(Competitor mLooser) {
         this.mLooser = mLooser;
+        updated=true;
     }
 
     /**
@@ -197,7 +213,7 @@ public abstract class Match implements IXMLExport, Serializable {
     /**
      * Recalculate the values fot this match
      */
-    public abstract void recomputeValues() ;
+    public abstract void recomputeValues();
 
     /**
      * Returns the curent value for display
@@ -205,7 +221,7 @@ public abstract class Match implements IXMLExport, Serializable {
      * @param index Index of the value (1..5)
      * @return an integer
      */
-    public int getValue(int indexvalue, Competitor c)  {
+    public int getValue(int indexvalue, Competitor c) {
         int value = 0;
         if (!values_computed) {
             recomputeValues();
@@ -251,11 +267,11 @@ public abstract class Match implements IXMLExport, Serializable {
         return value;
     }
 
-    public abstract int getValue(Criteria crit, int subtype, Competitor c) ;
+    public abstract int getValue(Criteria crit, int subtype, Competitor c);
 
-    public abstract Element getXMLElementForDisplay() ;
+    public abstract Element getXMLElementForDisplay();
 
-    public abstract void setXMLElementForDisplay(Element element) ;
+    public abstract void setXMLElementForDisplay(Element element);
 
-    public abstract boolean isEntered() ;
+    public abstract boolean isEntered();
 }

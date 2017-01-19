@@ -1107,7 +1107,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-
+        RMIThread.stop();
         if (JOptionPane.showConfirmDialog(this,
                 Translate.translate(CS_DoYouWantToSave),
                 Translate.translate(CS_Exit),
@@ -3174,8 +3174,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 }
             }
             );
-
-            RMIThread.stop();
 
         } catch (InterruptedException ex) {
             Logger.getLogger(MainFrame.class

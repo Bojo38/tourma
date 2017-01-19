@@ -6,9 +6,12 @@
 package tourma.rmi;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tourma.data.ITournament;
+import tourma.data.RosterType;
 import tourma.data.Tournament;
 
 /**
@@ -34,6 +37,12 @@ public class RMITournament implements ITournament {
     @Override
     public void setTournament(Tournament object) throws RemoteException {
         Tournament.push(object);
+        object.resetUpdated();
+    }
+
+    @Override
+    public HashMap<String,RosterType> getRosterTypes() throws RemoteException {
+        return RosterType.getRosters();
     }
 
 }

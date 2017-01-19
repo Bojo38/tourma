@@ -144,10 +144,10 @@ public class Tournament implements IContainCoachs, Serializable {
     private final ArrayList<Group> mGroups;
 
     private Tournament() {
-        
+
         RosterType.initCollection();
         getRosterType();
-        
+
         mParams = new Parameters();
         mRounds = new ArrayList<>();
         mCoachs = new ArrayList<>();
@@ -202,6 +202,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void addClan(Clan c) {
         mClans.add(c);
+        clansUpdated=true;
     }
 
     /**
@@ -210,6 +211,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeClan(Clan c) {
         mClans.remove(c);
+        clansUpdated=true;
     }
 
     /**
@@ -219,6 +221,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeClan(int c) {
         mClans.remove(c);
+        clansUpdated=true;
     }
 
     /**
@@ -226,6 +229,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void clearClans() {
         mClans.clear();
+        clansUpdated=true;
     }
 
     /**
@@ -318,6 +322,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeTeam(Team c) {
         mTeams.remove(c);
+        teamsUpdated=true;
     }
 
     /**
@@ -380,6 +385,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeTeam(int c) {
         mTeams.remove(c);
+        teamsUpdated=true;
     }
 
     /**
@@ -488,7 +494,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeCoach(Coach i) {
         mCoachs.remove(i);
-
+         coachsUpdated=true;
     }
 
     /**
@@ -498,6 +504,7 @@ public class Tournament implements IContainCoachs, Serializable {
     @Override
     public void removeCoach(int i) {
         mCoachs.remove(i);
+        coachsUpdated=true;
 
     }
 
@@ -518,6 +525,7 @@ public class Tournament implements IContainCoachs, Serializable {
     public void addCoach(Coach c) {
         mCoachs.add(c);
         Coach.putCoach(c.getName(), c);
+        coachsUpdated=true;
     }
 
     /**
@@ -1513,6 +1521,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeRound(Round r) {
         mRounds.remove(r);
+        roundsUpdated=true;
     }
 
     /**
@@ -1521,6 +1530,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeRound(int r) {
         mRounds.remove(r);
+        roundsUpdated=true;
     }
 
     public String getDescription() {
@@ -1542,8 +1552,7 @@ public class Tournament implements IContainCoachs, Serializable {
         getTournament().getParams().pull(tour.getParams());
 
         // Find Rosters, copy the properties
-        RosterType.pull(tour.getRosterType());
-
+        //RosterType.pull(tour.getRosterType());
         // Find Clans, copy the properties
         getTournament().pullClans(tour.mClans);
 
@@ -1721,12 +1730,11 @@ public class Tournament implements IContainCoachs, Serializable {
         }
     }
 
-    
-    private HashMap<String, RosterType> mRosterTypes=null;
+    private HashMap<String, RosterType> mRosterTypes = null;
+
     public HashMap<String, RosterType> getRosterType() {
-        if (mRosterTypes==null)
-        {
-            mRosterTypes=RosterType.getRosters();
+        if (mRosterTypes == null) {
+            mRosterTypes = RosterType.getRosters();
         }
         return mRosterTypes;
     }
@@ -1734,19 +1742,63 @@ public class Tournament implements IContainCoachs, Serializable {
     // To Do : Fill only coach/team/match data from tour (Data From client)
     public static void push(Tournament tour) {
         // Find Clans, copy the properties        
-        getTournament().pushClans(tour.mClans);
+        if (tour.clansUpdated) {
+            getTournament().pushClans(tour.mClans);
+        }
 
         // Find Teams, copy the properties
-        getTournament().pushTeams(tour.mTeams);
-
+        if (tour.teamsUpdated) {
+            getTournament().pushTeams(tour.mTeams);
+        }
         // Find Coachs, copy the properties
-        getTournament().pushCoachs(tour.mCoachs);
-
+        if (tour.coachsUpdated) {
+            getTournament().pushCoachs(tour.mCoachs);
+        }
         // Find Round, copy the  properties
-        getTournament().pushRounds(tour.mRounds);
+        if (tour.roundsUpdated) {
+            getTournament().pushRounds(tour.mRounds);
+        }
     }
 
+    protected boolean clansUpdated = false;
+    protected boolean coachsUpdated = false;
+    protected boolean teamsUpdated = false;
+
+    public boolean isClansUpdated() {
+        return clansUpdated;
+    }
+
+    public void setClansUpdated(boolean clansUpdated) {
+        this.clansUpdated = clansUpdated;
+    }
+
+    public boolean isCoachsUpdated() {
+        return coachsUpdated;
+    }
+
+    public void setCoachsUpdated(boolean coachsUpdated) {
+        this.coachsUpdated = coachsUpdated;
+    }
+
+    public boolean isTeamsUpdated() {
+        return teamsUpdated;
+    }
+
+    public void setTeamsUpdated(boolean teamsUpdated) {
+        this.teamsUpdated = teamsUpdated;
+    }
+
+    public boolean isRoundsUpdated() {
+        return roundsUpdated;
+    }
+
+    public void setRoundsUpdated(boolean roundsUpdated) {
+        this.roundsUpdated = roundsUpdated;
+    }
+    protected boolean roundsUpdated = false;
+
     public void pushClans(ArrayList<Clan> clans) {
+
         for (Clan clan : clans) {
             boolean bFound = false;
             for (Clan local : mClans) {
@@ -1837,8 +1889,36 @@ public class Tournament implements IContainCoachs, Serializable {
                 local.pull(round);
                 mRounds.add(local);
                 // Coaches and matches are synchronized later
-            }*/ 
+            }*/
         }
     }
-    
+
+    public void resetUpdated()
+    {
+        this.clansUpdated=false;
+        this.coachsUpdated=false;
+        this.teamsUpdated=false;
+        this.roundsUpdated=false;
+        
+        for (Round r:mRounds)
+        {
+            r.setUpdated(false);
+        }
+        
+        for (Coach c:mCoachs)
+        {
+            c.setUpdated(false);
+        }
+        
+        for (Team t:mTeams)
+        {
+            t.setUpdated(false);
+        }
+        
+        for (Clan c:mClans)
+        {
+            c.setUpdated(false);
+        }
+                
+    }
 }

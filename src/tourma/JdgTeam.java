@@ -483,10 +483,12 @@ public final class JdgTeam extends javax.swing.JDialog {
                     ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
                     icon = resize(icon, 80, 80);
                     this.mTeam.setPicture(icon);
+                    mTeam.setUpdated(true);
                 }
             } else {
                 ImageIcon icon = (ImageIcon) combo.getSelectedItem();
                 this.mTeam.setPicture(icon);
+                mTeam.setUpdated(true);
             }
 
             jbtAvatar.setIcon(mTeam.getPicture());
@@ -515,6 +517,7 @@ public final class JdgTeam extends javax.swing.JDialog {
             String name = cats.get(jcb.getSelectedIndex());
             Category cat = Category.getCategory(name);
             mTeam.addCategory(cat);
+            mTeam.setUpdated(true);
         }
 
         update();
@@ -530,7 +533,7 @@ public final class JdgTeam extends javax.swing.JDialog {
                 String name = (String) o;
                 Category cat = Category.getCategory(name);
                 mTeam.delCategory(cat);
-
+                mTeam.setUpdated(true);
             }
         }
 

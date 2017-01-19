@@ -76,7 +76,7 @@ public class RosterType implements IXMLExport, Serializable {
                 if (!bFound) {
                     RosterType r = new RosterType(type.getName());
                     r.UID = type.getUID();
-                    mRosterTypes.put(type.getName(), type);
+                    mRosterTypes.put(type.getName(), r);
                 }
 
             } else {

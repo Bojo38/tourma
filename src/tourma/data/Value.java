@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tourma.data;
 
 import java.io.Serializable;
@@ -14,8 +13,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Value implements Serializable {
 
-        protected static AtomicInteger sGenUID=new AtomicInteger(0);
-    protected int UID=sGenUID.incrementAndGet();
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public boolean isUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+    }
+    protected boolean updated = false;
 
     public int getUID() {
         return UID;
@@ -25,13 +33,24 @@ public class Value implements Serializable {
         this.UID = UID;
     }
 
-    public void pull(Value value)
-    {
-        this.UID=value.UID;
-        this.mValue1=value.mValue1;
-        this.mValue2=value.mValue2;
+    public void pull(Value value) {
+        this.UID = value.UID;
+        this.mValue1 = value.mValue1;
+        this.mValue2 = value.mValue2;
     }
-    
+
+    public void push(Value value) {
+        if (value.isUpdated()) {
+            this.UID = value.UID;
+            if (value.mValue1 > -1) {
+                this.mValue1 = value.mValue1;
+            }
+            if (value.mValue2 > -1) {
+                this.mValue2 = value.mValue2;
+            }
+        }
+    }
+
     /**
      * Name of the criteria
      */
@@ -49,9 +68,8 @@ public class Value implements Serializable {
      *
      * @param criteria
      */
-    public Value(final Criteria criteria)
-    {
-        mCriteria=criteria;
+    public Value(final Criteria criteria) {
+        mCriteria = criteria;
     }
 
     /**
@@ -66,6 +84,7 @@ public class Value implements Serializable {
      */
     public void setCriteria(Criteria mCriteria) {
         this.mCriteria = mCriteria;
+        updated=true;
     }
 
     /**
@@ -79,6 +98,7 @@ public class Value implements Serializable {
      * @param mValue1 the mValue1 to set
      */
     public void setValue1(int mValue1) {
+        updated=true;
         this.mValue1 = mValue1;
     }
 
@@ -86,6 +106,7 @@ public class Value implements Serializable {
      * @return the mValue2
      */
     public int getValue2() {
+        
         return mValue2;
     }
 
@@ -93,6 +114,7 @@ public class Value implements Serializable {
      * @param mValue2 the mValue2 to set
      */
     public void setValue2(int mValue2) {
+        updated=true;
         this.mValue2 = mValue2;
     }
 
