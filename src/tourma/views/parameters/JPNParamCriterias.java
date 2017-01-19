@@ -182,10 +182,18 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
      * Update Panel
      */
     public void update() {
+        
+                
             final boolean bTourStarted = mTournament.getRoundsCount() > 0;
             jtbCriteria.setModel(new MjtCriterias(mTournament));
-            jbtAddCriteria.setEnabled(!bTourStarted);
-            jbtRemoveCriteria.setEnabled(!bTourStarted);
+            
+            if (Tournament.getTournament().isClient())
+            {
+                jtbCriteria.setEnabled(false);
+            }
+            
+            jbtAddCriteria.setEnabled(!bTourStarted && !Tournament.getTournament().isClient());
+            jbtRemoveCriteria.setEnabled(!bTourStarted && !Tournament.getTournament().isClient());
 
             jcxTableBonus.setSelected(mTournament.getParams().isTableBonus());
             jcxTableCoefPerRound.setSelected(mTournament.getParams().isTableBonusPerRound());

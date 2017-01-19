@@ -504,6 +504,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
      */
     public void update() {
 
+        
+
         jcxLargeVictory.setSelected(mTournament.getParams().isUseLargeVictory());
         jcxLittleLoss.setSelected(mTournament.getParams().isUseLittleLoss());
 
@@ -606,6 +608,32 @@ public class JPNParamIndiv extends javax.swing.JPanel {
                 jcbRank5ActionPerformed(evt);
             }
         });
+        
+        if (Tournament.getTournament().isClient()) {
+            jcbRank1.setEnabled(false);
+            jcbRank2.setEnabled(false);
+            jcbRank3.setEnabled(false);
+            jcbRank4.setEnabled(false);
+            jcbRank5.setEnabled(false);
+            jcxBestResult.setEnabled(false);
+            jcxExceptBestAndWorst.setEnabled(false);
+            jcxExceptBestAndWorst.setEnabled(false);
+            jcxForAnnexRankingToo.setEnabled(false);
+            jcxLargeVictory.setEnabled(false);
+            jcxLittleLoss.setEnabled(false);
+            jlbLargeVictoryGap.setEnabled(false);
+            jlbLittleLossGap.setEnabled(false);
+            jspBestResults.setEnabled(false);
+            jtffConcedeed.setEnabled(false);
+            jtffDraw.setEnabled(false);
+            jtffLargeVictory.setEnabled(false);
+            jtffLargeVictoryGap.setEnabled(false);
+            jtffLittleLost.setEnabled(false);
+            jtffLittleLostGap.setEnabled(false);
+            jtffLost.setEnabled(false);
+            jtffRefused.setEnabled(false);
+            jtffVictory.setEnabled(false);
+        }
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

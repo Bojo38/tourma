@@ -471,6 +471,9 @@ public final class JPNParamTeam extends javax.swing.JPanel {
      */
     public void update() {
 
+        
+        
+        
         final boolean teamMatches = mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING);
         final boolean IndivMatches = mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING);
 
@@ -602,6 +605,29 @@ public final class JPNParamTeam extends javax.swing.JPanel {
             }
         });
 
+        if (Tournament.getTournament().isClient()) {
+            jcbRank1Team.setEnabled(false);
+            jcbRank2Team.setEnabled(false);
+            jcbRank3Team.setEnabled(false);
+            jcbRank4Team.setEnabled(false);
+            jcbRank5Team.setEnabled(false);
+            jcxBestResult.setEnabled(false);
+            jcxExceptBestAndWorst.setEnabled(false);
+            jcxForAnnexRankingToo.setEnabled(false);
+            jspBestResults.setEnabled(false);
+            
+            jcxIndividualBalance.setEnabled(false);
+            jcxTeamBalance.setEnabled(false);
+            jrbCoachPoints.setEnabled(false);
+            jrbTeamVictory.setEnabled(false);
+            jspBestResults.setEnabled(false);
+            jtffDrawTeam.setEnabled(false);
+            jtffLostTeam.setEnabled(false);
+            jtffTeamDrawBonus.setEnabled(false);
+            jtffTeamVictoryBonus.setEnabled(false);
+            jtffVictoryTeam.setEnabled(false);
+        }
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel23;

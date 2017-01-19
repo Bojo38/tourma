@@ -402,10 +402,19 @@ public final class JPNParamClan extends javax.swing.JPanel {
      */
     public void update() {
 
+        if (Tournament.getTournament().isClient())
+        {
+            jcxActivatesClans.setEnabled(false);
+            jcxAvoidFirstMatch.setEnabled(false);
+            jcxAvoidMatch.setEnabled(false);
+        }
+        
         jbtEditClanIcon.setVisible(mTournament.getParams().isUseImage());
 
         final boolean clansEnable = (mTournament.getParams().isEnableClans());
 
+        
+        
         jlbActivateClans.setEnabled(true);
         jlbAvoidClansMembersMatch.setEnabled(clansEnable);
         jlbClansMembersNUmbers.setEnabled(clansEnable);
