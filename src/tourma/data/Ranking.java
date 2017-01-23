@@ -7,12 +7,16 @@ package tourma.data;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -20,13 +24,13 @@ import org.jdom2.Element;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
-import tourma.utils.display.Ranked;
+import tourma.utils.display.IRanked;
 
 /**
  *
  * @author WFMJ7631
  */
-public final class Ranking implements XMLExport, Ranked {
+public final class Ranking implements IXMLExport, IRanked, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Ranking.class.getName());
     public static final String CS_Individual_Annex = "INDIVIDUAL_ANNEX";
@@ -41,6 +45,18 @@ public final class Ranking implements XMLExport, Ranked {
     public static final String CS_Team="Team";
     public static final String CS_array="array";
     public static final String CS_Matchs="Matchs";
+
+    
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     /**
      *
@@ -76,7 +92,7 @@ public final class Ranking implements XMLExport, Ranked {
      * @param rank
      * @param rankings
      */
-    public Ranking(final String name, final String type, final String valueType, final MjtRanking rank, ArrayList<Integer> rankings) {
+    public Ranking(final String name, final String type, final String valueType, final MjtRanking rank, ArrayList<Integer> rankings)  {
         mRank = rank;
         mName = name;
         mType = type;
@@ -129,9 +145,9 @@ public final class Ranking implements XMLExport, Ranked {
             Element ic;
             Object obj = getRank().getSortedObject(k);
             if (obj instanceof ObjectAnnexRanking) {
-                ic = ((XMLExport) obj).getXMLElement();
+                ic = ((IXMLExport) obj).getXMLElement();
             } else {
-                ic = ((XMLExport) obj).getXMLElement();
+                ic = ((IXMLExport) obj).getXMLElement();
             }
             ic.setAttribute(new Attribute(StringConstants.CS_POS, Integer.toString(k + 1)));
             rank.addContent(ic);
@@ -280,7 +296,7 @@ public final class Ranking implements XMLExport, Ranked {
                         RosterType rt = new RosterType(StringConstants.CS_ROSTER);
                         c.setRoster(rt);
                         if (bi != null) {
-                            c.setPicture(bi);
+                            c.setPicture(new ImageIcon(bi));
                         }
 
                     } else {
@@ -293,7 +309,7 @@ public final class Ranking implements XMLExport, Ranked {
                                 Tournament.getTournament().addClan(cl);
                             }
                             if (bi != null) {
-                                cl.setPicture(bi);
+                                cl.setPicture(new ImageIcon(bi));
                             }
                             List<Element> members = obj.getChildren(StringConstants.CS_MEMBER);
                             Iterator<Element> itm = members.iterator();
@@ -334,7 +350,7 @@ public final class Ranking implements XMLExport, Ranked {
                                 Team t = new Team();
                                 t.setName(name);
                                 if (bi != null) {
-                                    t.setPicture(bi);
+                                    t.setPicture(new ImageIcon(bi));
                                 }
                                 if (annex) {
                                     so = new ObjectAnnexRanking(t, value, value1, value2, value3, value4, value5);

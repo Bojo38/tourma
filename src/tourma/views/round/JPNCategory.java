@@ -1,9 +1,11 @@
 package tourma.views.round;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
+import tourma.data.Tournament;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -18,7 +20,7 @@ import tourma.views.report.JdgRanking;
  * and open the template in the editor.
  */
 
-/*
+ /*
  * JPNCategory.java
  *
  * Created on 21 mai 2011, 23:18:17
@@ -53,9 +55,9 @@ public final class JPNCategory extends javax.swing.JPanel {
         mCategory = g;
         mRoundNumber = roundNumber;
 
-        if (Tournament.getTournament().getParams().isTeamTournament()) {
-            for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-                Team team = Tournament.getTournament().getTeam(i);
+        if (t.getParams().isTeamTournament()) {
+            for (int i = 0; i < t.getTeamsCount(); i++) {
+                Team team = t.getTeam(i);
                 if (team.containsCategory(g)) {
                     mEnableTeam = true;
                     break;
@@ -63,8 +65,8 @@ public final class JPNCategory extends javax.swing.JPanel {
             }
         }
 
-        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            Coach coach = Tournament.getTournament().getCoach(i);
+        for (int i = 0; i < t.getCoachsCount(); i++) {
+            Coach coach = t.getCoach(i);
             if (coach.containsCategory(g)) {
                 mEnableCoach = true;
                 break;
@@ -179,6 +181,7 @@ public final class JPNCategory extends javax.swing.JPanel {
 
             jtbCategory.setRowHeight(25);
             TableFormat.setColumnSize(jtbCategory);
+
         }
         if (mEnableTeam) {
             final ArrayList<Team> al = new ArrayList<>();
@@ -201,16 +204,17 @@ public final class JPNCategory extends javax.swing.JPanel {
 
             jtbTeam.setRowHeight(25);
             TableFormat.setColumnSize(jtbTeam);
+
         }
     }
 
-    private final static String CS_GeneralByCategory="GENERAL PAR CATEGORIE";
-    
+    private final static String CS_GeneralByCategory = "GENERAL PAR CATEGORIE";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
         final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
-                Translate.translate(CS_GeneralByCategory) + ": " 
-                        + mCategory.getName(), mRoundNumber, mTournament, (MjtRanking) jtbCategory.getModel(), 0);
+                Translate.translate(CS_GeneralByCategory) + ": "
+                + mCategory.getName(), mRoundNumber, mTournament, (MjtRanking) jtbCategory.getModel(), 0);
         jdg.setVisible(true);
 }//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

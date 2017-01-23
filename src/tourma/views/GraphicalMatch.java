@@ -8,6 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.rmi.RemoteException;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -24,6 +25,7 @@ import tourma.utils.ImageTreatment;
  * @author WFMJ7631
  */
 public class GraphicalMatch extends javax.swing.JPanel {
+
     private static final long serialVersionUID = 1L;
 
     private final Match match;
@@ -31,38 +33,38 @@ public class GraphicalMatch extends javax.swing.JPanel {
     /**
      *
      */
-    private JLabel clanIcon1=null;
+    private JLabel clanIcon1 = null;
 
     /**
      *
      */
-    private JLabel clanIcon2=null;
-    
-    
+    private JLabel clanIcon2 = null;
+
     /**
      * Creates new form GraphicalMatch
+     *
      * @param m
      * @param width
      * @param odd
      */
     @SuppressFBWarnings({"BC"})
-    public GraphicalMatch(Match m, boolean odd,int width ) {
+    public GraphicalMatch(Match m, boolean odd, int width) {
         initComponents();
         match = m;
         this.setSize(getWidth(), 60);
-        
-        int computed_height=60;
-        int computed_width=180;
-        
+
+        int computed_height = 60;
+        int computed_width = 180;
+
         Color bkg = new Color(255, 255, 255);
         if (odd) {
             bkg = new Color(220, 220, 220);
         }
-        
-        this.setBorder(new LineBorder(new Color(200,200,200),1,false));
 
-        int xOffset=0;
-        GridBagLayout gbl=new GridBagLayout();
+        this.setBorder(new LineBorder(new Color(200, 200, 200), 1, false));
+
+        int xOffset = 0;
+        GridBagLayout gbl = new GridBagLayout();
         this.setLayout(gbl);
 
         if (match instanceof CoachMatch) {
@@ -71,19 +73,19 @@ public class GraphicalMatch extends javax.swing.JPanel {
             if (Tournament.getTournament().getClansCount() > 1) {
                 JLabel ClanIcon1 = new JLabel();
                 ClanIcon1.setSize(computed_width, computed_height);
-                xOffset=computed_width;
+                xOffset = computed_width;
                 ClanIcon1.setLocation(1, 1);
                 JLabel ClanIcon2 = new JLabel();
                 ClanIcon2.setSize(computed_width, computed_height);
-                ClanIcon2.setLocation(width-computed_width-1, 1);
+                ClanIcon2.setLocation(width - computed_width - 1, 1);
                 Clan clan1 = (cm.getCompetitor1()).getClan();
                 if (clan1.getPicture() != null) {
-                    ClanIcon1.setIcon(ImageTreatment.resize(new ImageIcon(clan1.getPicture()), computed_height,computed_height));
+                    ClanIcon1.setIcon(ImageTreatment.resize(clan1.getPicture(), computed_height, computed_height));
                 }
                 ClanIcon1.setText(clan1.getName());
                 Clan clan2 = (cm.getCompetitor2()).getClan();
                 if (clan2.getPicture() != null) {
-                    ClanIcon2.setIcon(ImageTreatment.resize(new ImageIcon(clan2.getPicture()), computed_height,computed_height));
+                    ClanIcon2.setIcon(ImageTreatment.resize(clan2.getPicture(), computed_height, computed_height));
                 }
                 ClanIcon2.setText(clan2.getName());
                 ClanIcon1.setOpaque(true);
@@ -94,16 +96,16 @@ public class GraphicalMatch extends javax.swing.JPanel {
 
             JLabel CoachIcon1 = new JLabel();
             CoachIcon1.setSize(computed_width, computed_height);
-            CoachIcon1.setLocation(xOffset+1,1);
+            CoachIcon1.setLocation(xOffset + 1, 1);
             JLabel CoachIcon2 = new JLabel();
             CoachIcon2.setSize(computed_width, computed_height);
-            CoachIcon2.setLocation(width-xOffset-computed_width-1, 1);
+            CoachIcon2.setLocation(width - xOffset - computed_width - 1, 1);
             if (cm.getCompetitor1().getPicture() != null) {
-                CoachIcon1.setIcon(ImageTreatment.resize(new ImageIcon(cm.getCompetitor1().getPicture()), computed_height,computed_height));
+                CoachIcon1.setIcon(ImageTreatment.resize(cm.getCompetitor1().getPicture(), computed_height, computed_height));
             }
             CoachIcon1.setText(cm.getCompetitor1().getName());
             if (cm.getCompetitor2().getPicture() != null) {
-                CoachIcon2.setIcon(ImageTreatment.resize(new ImageIcon(cm.getCompetitor2().getPicture()), computed_height,computed_height));
+                CoachIcon2.setIcon(ImageTreatment.resize(cm.getCompetitor2().getPicture(), computed_height, computed_height));
             }
             CoachIcon2.setText(cm.getCompetitor2().getName());
             CoachIcon1.setBackground(bkg);
@@ -119,13 +121,10 @@ public class GraphicalMatch extends javax.swing.JPanel {
             tm = (TeamMatch) match;
             this.setSize(80 * tm.getMatchCount() + 80, 400);
         }
-        
-        this.setPreferredSize(new Dimension(width,computed_height));
-        this.setSize(new Dimension(width,computed_height));
+        this.setPreferredSize(new Dimension(width, computed_height));
+        this.setSize(new Dimension(width, computed_height));
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -179,8 +178,8 @@ public class GraphicalMatch extends javax.swing.JPanel {
     public void setClanIcon2(JLabel clanIcon2) {
         this.clanIcon2 = clanIcon2;
     }
-    
-      private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

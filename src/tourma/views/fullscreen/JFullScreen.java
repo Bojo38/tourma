@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,11 +84,11 @@ public abstract class JFullScreen extends javax.swing.JDialog {
      */
     public JFullScreen() {
         super();
-        
+
         this.setUndecorated(true);
         //this.setState(JDialog.);
         this.setAlwaysOnTop(true);
-        
+
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
@@ -107,12 +108,16 @@ public abstract class JFullScreen extends javax.swing.JDialog {
     protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
 
         JLabel l = new JLabel();
-        if ((object.getPicture() != null) && (Tournament.getTournament().getParams().isUseImage())) {
-            l.setIcon(ImageTreatment.resize(new ImageIcon(object.getPicture()), height, height));
-        } else {
-            if (!(object instanceof Coach)) {
-                l.setIcon(new ImageIcon(new BufferedImage(height, height, BufferedImage.TYPE_4BYTE_ABGR)));
+        try {
+            if ((object.getPicture() != null) && (Tournament.getTournament().getParams().isUseImage())) {
+                l.setIcon(ImageTreatment.resize(object.getPicture(), height, height));
+            } else {
+                if (!(object instanceof Coach)) {
+                    l.setIcon(new ImageIcon(new BufferedImage(height, height, BufferedImage.TYPE_4BYTE_ABGR)));
+                }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
 
         //l.setPreferredSize(new Dimension(width, height));
@@ -120,8 +125,12 @@ public abstract class JFullScreen extends javax.swing.JDialog {
         l.setOpaque(true);
         l.setBackground(bkg);
 
-        String text = object.getName();
-        l.setText(text);
+        try {
+            String text = object.getName();
+            l.setText(text);
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         return l;
     }
 

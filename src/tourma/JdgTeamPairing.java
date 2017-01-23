@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * jdgCoach.java
  *
  * Created on 10 mai 2010, 19:37:53
@@ -14,6 +14,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import tourma.data.Coach;
 import tourma.data.Round;
@@ -30,10 +31,10 @@ import tourma.views.report.JdgRound;
 @SuppressWarnings("serial")
 public class JdgTeamPairing extends javax.swing.JDialog {
 
-    private final  ArrayList<Team> mTeams1;
-    private final  ArrayList<Team> mTeams2;
-    private final  Round mRound;
-    private final  ArrayList<Boolean> mPairsDone;
+    private final ArrayList<Team> mTeams1;
+    private final ArrayList<Team> mTeams2;
+    private final Round mRound;
+    private final ArrayList<Boolean> mPairsDone;
 
     /**
      * Creates new form jdgCoach
@@ -45,7 +46,6 @@ public class JdgTeamPairing extends javax.swing.JDialog {
      * @param round
      *
      */
-    
     public JdgTeamPairing(final java.awt.Frame parent, final boolean modal, final ArrayList<Team> teams1, final ArrayList<Team> teams2, final Round round) {
         super(parent, modal);
         initComponents();
@@ -62,8 +62,8 @@ public class JdgTeamPairing extends javax.swing.JDialog {
         mTeams2 = teams2;
         mRound = round;
 
-        mPairsDone = new ArrayList<>();        
-        for (int i=0; i<mTeams1.size(); i++) {
+        mPairsDone = new ArrayList<>();
+        for (int i = 0; i < mTeams1.size(); i++) {
             mPairsDone.add(false);
         }
 
@@ -92,8 +92,8 @@ public class JdgTeamPairing extends javax.swing.JDialog {
      */
     @SuppressWarnings({"unchecked", "PMD"})
     @SuppressFBWarnings(
-    value="UI_INHERITANCE_UNSAFE_GETRESOURCE", 
-    justification="GeneratedCode")
+            value = "UI_INHERITANCE_UNSAFE_GETRESOURCE",
+            justification = "GeneratedCode")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -180,11 +180,12 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtOKActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelectActionPerformed
-        if (jtPairs.getSelectedRow() >= 0) {
-            final JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true, mTeams1.get(jtPairs.getSelectedRow()), mTeams2.get(jtPairs.getSelectedRow()), mRound, (TeamMatch) mRound.getMatch(jtPairs.getSelectedRow()));
-            jdg.setVisible(true);
-            mPairsDone.add(jtPairs.getSelectedRow(), true);
-        }
+            if (jtPairs.getSelectedRow() >= 0) {
+                final JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true, mTeams1.get(jtPairs.getSelectedRow()), mTeams2.get(jtPairs.getSelectedRow()), mRound, (TeamMatch) mRound.getMatch(jtPairs.getSelectedRow()));
+                jdg.setVisible(true);
+                mPairsDone.add(jtPairs.getSelectedRow(), true);
+            }
+   
         update();
 }//GEN-LAST:event_jbtSelectActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -192,18 +193,18 @@ public class JdgTeamPairing extends javax.swing.JDialog {
 
         if (jtPairs.getSelectedRow() >= 0) {
             mPairsDone.add(jtPairs.getSelectedRow(), false);
-
-            final Team t1 = mTeams1.get(jtPairs.getSelectedRow());
-            int i = 0;
-            while (i < mRound.getMatchsCount()) {
-                if ((((Coach) mRound.getMatch(i).getCompetitor1()).getTeamMates() == t1)
-                        || (((Coach) mRound.getMatch(i).getCompetitor2()).getTeamMates() == t1)) {
-                    mRound.removeMatch(i);
-                    i = 0;
-                } else {
-                    i++;
+                final Team t1 = mTeams1.get(jtPairs.getSelectedRow());
+                int i = 0;
+                while (i < mRound.getMatchsCount()) {
+                    if ((((Coach) mRound.getMatch(i).getCompetitor1()).getTeamMates() == t1)
+                            || (((Coach) mRound.getMatch(i).getCompetitor2()).getTeamMates() == t1)) {
+                        mRound.removeMatch(i);
+                        i = 0;
+                    } else {
+                        i++;
+                    }
                 }
-            }
+   
         }
         update();
 }//GEN-LAST:event_jbtRemoveActionPerformed
@@ -211,13 +212,15 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     private void jbtSeeMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSeeMatchesActionPerformed
 
         int nb = 1;
-        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
-            if (Tournament.getTournament().getRound(i).getHour().before(mRound.getHour())) {
-                nb++;
+   
+            for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+                if (Tournament.getTournament().getRound(i).getHour().before(mRound.getHour())) {
+                    nb++;
+                }
             }
-        }
-        final JdgRound jdg = new JdgRound(MainFrame.getMainFrame(), true, mTeams1, mTeams2, nb, Tournament.getTournament());
-        jdg.setVisible(true);
+            final JdgRound jdg = new JdgRound(MainFrame.getMainFrame(), true, mTeams1, mTeams2, nb, Tournament.getTournament());
+            jdg.setVisible(true);
+   
     }//GEN-LAST:event_jbtSeeMatchesActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel2;
@@ -231,7 +234,7 @@ public class JdgTeamPairing extends javax.swing.JDialog {
     private javax.swing.JTable jtPairs;
     // End of variables declaration//GEN-END:variables
 
- private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * jdgCoach.java
  *
  * Created on 10 mai 2010, 19:37:53
@@ -13,6 +13,7 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.rmi.RemoteException;
 import java.util.logging.Logger;
 import tourma.data.Tournament;
 
@@ -26,6 +27,7 @@ public final class JdgSelectNumber extends javax.swing.JDialog {
 
     /**
      * Creates new form jdgCoach
+     *
      * @param parent
      * @param modal
      * @param tour
@@ -100,8 +102,8 @@ public final class JdgSelectNumber extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
-        mTournament.getParams().setTeamMatesNumber((Integer) jspCoachNumber.getValue());
-        mTournament.getParams().setSubstitutes(jckSubstitutes.isSelected());
+            mTournament.getParams().setTeamMatesNumber((Integer) jspCoachNumber.getValue());
+            mTournament.getParams().setSubstitutes(jckSubstitutes.isSelected());
         this.setVisible(false);
     }//GEN-LAST:event_jbtOKActionPerformed
 
@@ -117,8 +119,7 @@ public final class JdgSelectNumber extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JdgSelectNumber.class.getName());
 
-    
-     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

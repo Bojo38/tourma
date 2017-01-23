@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -1589,6 +1590,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             jbtSelectCoach.setText(CS_AssociateACoach);
         } else {
             jbtSelectCoach.setText(_coach.getName());
+
             jlbCoachName.setText(Translate.translate(CS_Coach) + ": " + _coach.getName());
             if (_coach.getRoster() != null) {
                 if (_data.getRoster() == null) {
@@ -1605,7 +1607,6 @@ public final class JdgRoster extends javax.swing.JDialog {
         }
 
         jbtSelectCoach.setEnabled(Tournament.getTournament().getActiveCoachNumber() > 0);
-
         jbtAdd.setEnabled(_data.getChampionCount() + _data.getPlayerCount() < 16);
         jbtRemove.setEnabled(_data.getPlayerCount() > 0);
 

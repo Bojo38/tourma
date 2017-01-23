@@ -4,13 +4,24 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import org.jdom2.Element;
 
 /**
  *
  * @author WFMJ7631
  */
-public abstract class Match implements XMLExport {
+public abstract class Match implements IXMLExport, Serializable {
+
+    public boolean isUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+    }
+    protected boolean updated = false;
 
     /**
      *
@@ -45,6 +56,14 @@ public abstract class Match implements XMLExport {
         mRound = round;
     }
 
+    public abstract int getUID();
+
+    public abstract void setUID(int UID);
+
+    public abstract void pull(Match match);
+
+    public abstract void push(Match match);
+
     /**
      *
      * @return
@@ -67,6 +86,7 @@ public abstract class Match implements XMLExport {
     public void resetWL() {
         setWinner(null);
         setLooser(null);
+        updated=true;
     }
 
     /**
@@ -76,11 +96,23 @@ public abstract class Match implements XMLExport {
         return mCompetitor1;
     }
 
+    public boolean equals(final Object obj) {
+        boolean result = false;
+        if (obj instanceof Match) {
+            Match m = (Match) obj;
+            result = true;
+            result &= (mCompetitor1 == m.getCompetitor1());
+            result &= (mCompetitor2 == m.getCompetitor2());
+        }
+        return result;
+    }
+
     /**
      * @param mCompetitor1 the mCompetitor1 to set
      */
     public void setCompetitor1(Competitor mCompetitor1) {
         this.mCompetitor1 = mCompetitor1;
+        updated=true;
     }
 
     /**
@@ -95,6 +127,7 @@ public abstract class Match implements XMLExport {
      */
     public void setCompetitor2(Competitor mCompetitor2) {
         this.mCompetitor2 = mCompetitor2;
+        updated=true;
     }
 
     /**
@@ -109,6 +142,7 @@ public abstract class Match implements XMLExport {
      */
     public void setRound(Round mRound) {
         this.mRound = mRound;
+        updated=true;
     }
 
     /**
@@ -123,6 +157,7 @@ public abstract class Match implements XMLExport {
      */
     public void setLooser(Competitor mLooser) {
         this.mLooser = mLooser;
+        updated=true;
     }
 
     /**
@@ -231,12 +266,12 @@ public abstract class Match implements XMLExport {
         }
         return value;
     }
-    
-    public abstract int getValue(Criteria crit, int subtype,Competitor c);
+
+    public abstract int getValue(Criteria crit, int subtype, Competitor c);
 
     public abstract Element getXMLElementForDisplay();
 
     public abstract void setXMLElementForDisplay(Element element);
-    
+
     public abstract boolean isEntered();
 }

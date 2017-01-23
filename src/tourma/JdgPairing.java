@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * jdgCoach.java
  *
  * Created on 10 mai 2010, 19:37:53
@@ -13,6 +13,7 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,14 +33,14 @@ import tourma.utility.StringConstants;
  */
 public final class JdgPairing extends javax.swing.JDialog {
 
-    private final Team mTeam1;
-    private final Team mTeam2;
-    private final Round mRound;
-    private final ArrayList<String> mItems1;
-    private final ArrayList<String> mItems2;
-    private final HashMap<String, Coach> mCoachs;
-    private final ArrayList<CoachMatch> mMatchs;
-    private final TeamMatch teamMatch;
+    private Team mTeam1;
+    private Team mTeam2;
+    private Round mRound;
+    private ArrayList<String> mItems1;
+    private ArrayList<String> mItems2;
+    private HashMap<String, Coach> mCoachs;
+    private ArrayList<CoachMatch> mMatchs;
+    private TeamMatch teamMatch;
 
     private final static String CS_ACCR_Versus = "VS";
 
@@ -91,7 +92,6 @@ public final class JdgPairing extends javax.swing.JDialog {
         }
 
         update();
-
     }
 
     private void update() {
@@ -208,6 +208,7 @@ public final class JdgPairing extends javax.swing.JDialog {
     for (CoachMatch mMatch : mMatchs) {
         teamMatch.addMatch(mMatch);
     }
+
     this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
@@ -222,6 +223,7 @@ public final class JdgPairing extends javax.swing.JDialog {
             mMatchs.add(m);
             mItems1.remove(jcbTeam1.getSelectedIndex());
             mItems2.remove(jcbTeam2.getSelectedIndex());
+
         }
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
@@ -233,6 +235,7 @@ public final class JdgPairing extends javax.swing.JDialog {
             mItems1.add(m.getCompetitor1().getName() + StringConstants.CS_THICK + ((Coach) m.getCompetitor1()).getTeam() + StringConstants.CS_THICK + ((Coach) m.getCompetitor1()).getRoster().getName());
             mItems2.add(m.getCompetitor2().getName() + StringConstants.CS_THICK + ((Coach) m.getCompetitor2()).getTeam() + StringConstants.CS_THICK + ((Coach) m.getCompetitor2()).getRoster().getName());
             mMatchs.remove(jtbMatches.getSelectedRow());
+
         }
         update();
     }//GEN-LAST:event_jbtRemoveActionPerformed
@@ -243,12 +246,14 @@ public final class JdgPairing extends javax.swing.JDialog {
         Collections.shuffle(mItems2);
 
         while ((mItems1.size() > 0) && (mItems2.size() > 0)) {
+
             final CoachMatch m = new CoachMatch(mRound);
             m.setCompetitor1(mCoachs.get(mItems1.get(0)));
             m.setCompetitor2(mCoachs.get(mItems2.get(0)));
             mMatchs.add(m);
             mItems1.remove(0);
             mItems2.remove(0);
+
         }
         update();
     }//GEN-LAST:event_jbtRandomActionPerformed

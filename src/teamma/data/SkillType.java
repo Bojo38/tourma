@@ -4,6 +4,7 @@
  */
 package teamma.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author fberger
  */
-public class SkillType {
+public class SkillType implements Serializable{
     private static final Logger LOG = Logger.getLogger(SkillType.class.getName());
 
     /**

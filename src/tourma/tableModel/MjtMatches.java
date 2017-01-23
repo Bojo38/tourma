@@ -7,6 +7,7 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -57,6 +58,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 if (m.isFullNaf()) {
                     mMatchs.add(m);
                 }
+
             }
         } else {
             mMatchs.addAll(matchs);
@@ -65,12 +67,13 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public int getColumnCount() {
-        int res;
+        int res = 0;
         if (mTeamTournament) {
             res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5;
         } else {
             res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3;
         }
+
         return res;
     }
 
@@ -83,7 +86,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
     @Override
     public String getColumnName(final int col) {
 
-        String result;
+        String result = "";
         if (mTeamTournament) {
             switch (col) {
                 case 0:
@@ -147,7 +150,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public Object getValueAt(final int row, final int col) {
-        Object obj;
+        Object obj = (int) 0;
         final CoachMatch m = mMatchs.get(row);
         Value val;
         int index;
@@ -319,24 +322,18 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 switch (col) {
                     case 3:
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                        if (tmp.equals(""))
-                        {
+                        if (tmp.equals("")) {
                             val.setValue1(-1);
-                        }
-                        else
-                        {
-                        val.setValue1(Integer.parseInt(tmp));
+                        } else {
+                            val.setValue1(Integer.parseInt(tmp));
                         }
                         break;
                     case 4:
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                        if (tmp.equals(""))
-                        {
+                        if (tmp.equals("")) {
                             val.setValue2(-1);
-                        }
-                        else
-                        {
-                        val.setValue2(Integer.parseInt(tmp));
+                        } else {
+                            val.setValue2(Integer.parseInt(tmp));
                         }
                         break;
                     default:
@@ -352,24 +349,18 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 switch (col) {
                     case 2:
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                        if (tmp.equals(""))
-                        {
+                        if (tmp.equals("")) {
                             val.setValue1(-1);
-                        }
-                        else
-                        {
-                        val.setValue1(Integer.parseInt(tmp));
+                        } else {
+                            val.setValue1(Integer.parseInt(tmp));
                         }
                         break;
                     case 3:
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
-                        if (tmp.equals(""))
-                        {
+                        if (tmp.equals("")) {
                             val.setValue2(-1);
-                        }
-                        else
-                        {
-                        val.setValue2(Integer.parseInt(tmp));
+                        } else {
+                            val.setValue2(Integer.parseInt(tmp));
                         }
                         break;
                     default:
@@ -387,7 +378,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         }
         fireTableDataChanged();
         MainFrame.getMainFrame().updateMenus();
-        
+
     }
 
     @Override
@@ -428,7 +419,9 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
         jlb.setEditable(false);
 
-        boolean useColor = Tournament.getTournament().getParams().isUseColor();
+        boolean useColor = false;
+
+        useColor = Tournament.getTournament().getParams().isUseColor();
 
         if (value instanceof String) {
             jlb.setText((String) value);
@@ -444,7 +437,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         if (isSelected) {
             bkg = new Color(200, 200, 200);
         } else {
-            Value val;
+            Value val = null;
             CoachMatch m = mMatchs.get(row);
             val = mMatchs.get(row).getValue(Tournament.getTournament().getParams().getCriteria(0));
             if (mTeamTournament) {
@@ -523,7 +516,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                         break;
                     case 4:
-                       if (useColor) {
+                        if (useColor) {
                             bkg = new Color(200, 200, 250);
                         } else {
                             if (row % 2 != 0) {
@@ -764,17 +757,21 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 }
             }
         }
+
         jlb.setBackground(bkg);
+
         jlb.setForeground(frg);
+
         jlb.setHorizontalAlignment(JTextField.CENTER);
 
-        if (Tournament.getTournament().getParams().isUseImage()) {
+        if (Tournament.getTournament()
+                .getParams().isUseImage()) {
             if ((column == 1) && (Tournament.getTournament().getParams().isTeamTournament())) {
 
                 CoachMatch m = mMatchs.get(row);
                 if (((Coach) m.getCompetitor1()).getTeamMates().getPicture() != null) {
                     JLabel obj = new JLabel();
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(((Coach) m.getCompetitor1()).getTeamMates().getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(((Coach) m.getCompetitor1()).getTeamMates().getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setText((String) value);
                     obj.setOpaque(true);
@@ -788,7 +785,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 CoachMatch m = mMatchs.get(row);
                 if (((Coach) m.getCompetitor2()).getTeamMates().getPicture() != null) {
                     JLabel obj = new JLabel();
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(((Coach) m.getCompetitor2()).getTeamMates().getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(((Coach) m.getCompetitor2()).getTeamMates().getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setText((String) value);
                     obj.setOpaque(true);

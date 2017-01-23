@@ -4,11 +4,14 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,54 +26,280 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class CoachMatch extends Match {
+public class CoachMatch extends Match implements Serializable {
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
+    public boolean isUpdated() {
+        for (Value val : mValues.values()) {
+            if (val.isUpdated()) {
+                updated = true;
+                break;
+            }
+        }
+        return updated;
+    }
+
+    public void pull(Match match) {
+        if (match instanceof CoachMatch) {
+            CoachMatch coachmatch = (CoachMatch) match;
+            this.UID = coachmatch.UID;
+            this.c1value1 = coachmatch.c1value1;
+            this.c1value2 = coachmatch.c1value2;
+            this.c1value3 = coachmatch.c1value3;
+            this.c1value4 = coachmatch.c1value4;
+            this.c1value5 = coachmatch.c1value5;
+            this.c1value1 = coachmatch.c1value1;
+            this.c2value2 = coachmatch.c2value2;
+            this.c2value3 = coachmatch.c2value3;
+            this.c2value4 = coachmatch.c2value4;
+            this.c2value5 = coachmatch.c2value5;
+            this.concedeedBy1 = coachmatch.concedeedBy1;
+            this.concedeedBy2 = coachmatch.concedeedBy2;
+
+            this.mCompetitor1 = Tournament.getTournament().getCoach(coachmatch.getCompetitor1().getName());
+            this.mCompetitor2 = Tournament.getTournament().getCoach(coachmatch.getCompetitor2().getName());
+
+            if (coachmatch.getRoster1() != null) {
+                this.mRoster1 = RosterType.getRosterType(coachmatch.getRoster1().getName());
+            }
+            if (coachmatch.getRoster2() != null) {
+                this.mRoster2 = RosterType.getRosterType(coachmatch.getRoster2().getName());
+            }
+            if (coachmatch.mSubstitute1 != null) {
+                this.mSubstitute1 = new Substitute();
+                this.mSubstitute1.UID = coachmatch.mSubstitute1.UID;
+                this.mSubstitute1.setMatch(this);
+                this.mSubstitute1.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getSubstitute().getName()));
+                this.mSubstitute1.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getTitular().getName()));
+            } else {
+                this.mSubstitute1 = null;
+            }
+
+            if (coachmatch.mSubstitute2 != null) {
+                this.mSubstitute2 = new Substitute();
+                this.mSubstitute2.UID = coachmatch.mSubstitute2.UID;
+                this.mSubstitute2.setMatch(this);
+                this.mSubstitute2.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getSubstitute().getName()));
+                this.mSubstitute2.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getTitular().getName()));
+            } else {
+                this.mSubstitute2 = null;
+            }
+
+            for (Criteria crit : coachmatch.mValues.keySet()) {
+                Criteria criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
+                if (criteria == null) {
+                    criteria = new Criteria(crit.getName());
+                    criteria.pull(crit);
+                    Tournament.getTournament().getParams().addCriteria(criteria);
+                }
+                Value val = this.mValues.get(criteria);
+                if (val == null) {
+                    val = new Value(criteria);
+                    mValues.put(criteria,val);
+                }
+                val.pull(coachmatch.mValues.get(crit));
+            }
+
+            this.refusedBy1 = coachmatch.refusedBy1;
+            this.refusedBy2 = coachmatch.refusedBy2;
+            this.values_computed = coachmatch.values_computed;
+
+            // add Match to competitor
+            boolean bFound = false;
+            for (int i = 0; i < mCompetitor1.getMatchCount(); i++) {
+                Match m = mCompetitor1.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            if (!bFound) {
+                mCompetitor1.addMatch(this);
+            }
+
+            bFound = false;
+            for (int i = 0; i < mCompetitor2.getMatchCount(); i++) {
+                Match m = mCompetitor2.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            if (!bFound) {
+                mCompetitor2.addMatch(this);
+            }
+        }
+    }
+
+    public void push(Match match) {
+        if (match.isUpdated()) {
+            if (match instanceof CoachMatch) {
+                CoachMatch coachmatch = (CoachMatch) match;
+                this.UID = coachmatch.UID;
+                this.c1value1 = coachmatch.c1value1;
+                this.c1value2 = coachmatch.c1value2;
+                this.c1value3 = coachmatch.c1value3;
+                this.c1value4 = coachmatch.c1value4;
+                this.c1value5 = coachmatch.c1value5;
+                this.c1value1 = coachmatch.c1value1;
+                this.c2value2 = coachmatch.c2value2;
+                this.c2value3 = coachmatch.c2value3;
+                this.c2value4 = coachmatch.c2value4;
+                this.c2value5 = coachmatch.c2value5;
+                this.concedeedBy1 = coachmatch.concedeedBy1;
+                this.concedeedBy2 = coachmatch.concedeedBy2;
+
+                this.mCompetitor1 = Tournament.getTournament().getCoach(coachmatch.getCompetitor1().getName());
+                this.mCompetitor2 = Tournament.getTournament().getCoach(coachmatch.getCompetitor2().getName());
+
+                if (coachmatch.getRoster1() != null) {
+                    this.mRoster1 = RosterType.getRosterType(coachmatch.getRoster1().getName());
+                }
+                if (coachmatch.getRoster1() != null) {
+                    this.mRoster2 = RosterType.getRosterType(coachmatch.getRoster2().getName());
+                }
+                if (coachmatch.mSubstitute1 != null) {
+                    this.mSubstitute1 = new Substitute();
+                    this.mSubstitute1.UID = coachmatch.mSubstitute1.UID;
+                    this.mSubstitute1.setMatch(this);
+                    this.mSubstitute1.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getSubstitute().getName()));
+                    this.mSubstitute1.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getTitular().getName()));
+                } else {
+                    this.mSubstitute1 = null;
+                }
+
+                if (coachmatch.mSubstitute2 != null) {
+                    this.mSubstitute2 = new Substitute();
+                    this.mSubstitute2.UID = coachmatch.mSubstitute2.UID;
+                    this.mSubstitute2.setMatch(this);
+                    this.mSubstitute2.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getSubstitute().getName()));
+                    this.mSubstitute2.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getTitular().getName()));
+                } else {
+                    this.mSubstitute2 = null;
+                }
+
+                Criteria touchdowns = null;
+                Criteria lTouchdowns = Tournament.getTournament().getParams().getCriteria(0);
+                for (Criteria remote : coachmatch.mValues.keySet()) {
+                    if ((remote.getName().equals(lTouchdowns.getName())) && (remote.getUID() == lTouchdowns.getUID())) {
+                        touchdowns = remote;
+                        break;
+                    }
+                }
+                Value val_td = coachmatch.mValues.get(touchdowns);
+                // If match values are correct
+                if ((val_td.getValue1() > -1) && (val_td.getValue2() > -1)) {
+                    for (Criteria crit : coachmatch.mValues.keySet()) {
+                        Criteria criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
+                        if (criteria == null) {
+                            criteria = new Criteria(crit.getName());
+                            criteria.pull(crit);
+                            Tournament.getTournament().getParams().addCriteria(criteria);
+                        }
+
+                        Value val = this.mValues.get(criteria);
+                        if (val == null) {
+                            val = new Value(criteria);
+                        }
+                        val.push(coachmatch.mValues.get(crit));
+                    }
+                }
+
+                this.refusedBy1 = coachmatch.refusedBy1;
+                this.refusedBy2 = coachmatch.refusedBy2;
+                this.values_computed = coachmatch.values_computed;
+
+                // add Match to competitor
+                boolean bFound = false;
+                for (int i = 0; i < mCompetitor1.getMatchCount(); i++) {
+                    Match m = mCompetitor1.getMatch(i);
+                    if (m.getUID() == UID) {
+                        bFound = true;
+                        break;
+                    }
+                }
+                /*if (!bFound) {
+                mCompetitor1.addMatch(this);
+            }*/
+
+                bFound = false;
+                for (int i = 0; i < mCompetitor2.getMatchCount(); i++) {
+                    Match m = mCompetitor2.getMatch(i);
+                    if (m.getUID() == UID) {
+                        bFound = true;
+                        break;
+                    }
+                }
+                /*if (!bFound) {
+                mCompetitor2.addMatch(this);
+            }*/
+            }
+        }
+    }
 
     private static final Logger LOG = Logger.getLogger(CoachMatch.class.getName());
 
+    @Override
+    public void setUpdated(boolean updated) {
+        super.setUpdated(updated);
+        for (Value v : mValues.values()) {
+            v.setUpdated(updated);
+        }
+    }
     /**
      *
      */
-    private RosterType mRoster1;
+    protected RosterType mRoster1;
 
     /**
      *
      */
-    private RosterType mRoster2;
+    protected RosterType mRoster2;
 
     /**
      *
      */
-    private final HashMap<Criteria, Value> mValues;
+    protected final HashMap<Criteria, Value> mValues;
 
     /**
      *
      */
-    private Substitute mSubstitute1;
+    protected Substitute mSubstitute1;
 
     /**
      *
      */
-    private Substitute mSubstitute2;
+    protected Substitute mSubstitute2;
 
     /**
      *
      */
-    private boolean refusedBy1 = false;
+    protected boolean refusedBy1 = false;
 
     /**
      *
      */
-    private boolean refusedBy2 = false;
+    protected boolean refusedBy2 = false;
 
     /**
      *
      */
-    private boolean concedeedBy1 = false;
+    protected boolean concedeedBy1 = false;
 
     /**
      *
      */
-    private boolean concedeedBy2 = false;
+    protected boolean concedeedBy2 = false;
 
     public HashMap<Criteria, Value> getValues() {
         return mValues;
@@ -106,6 +335,7 @@ public class CoachMatch extends Match {
         if (this == c) {
             return true;
         }
+
         if (c instanceof CoachMatch) {
             CoachMatch cm = (CoachMatch) c;
             boolean equality = (this.concedeedBy1 == cm.concedeedBy1);
@@ -132,6 +362,7 @@ public class CoachMatch extends Match {
             return equality;
 
         }
+
         return false;
     }
 
@@ -399,6 +630,7 @@ public class CoachMatch extends Match {
      */
     public void setRoster1(RosterType mRoster1) {
         this.mRoster1 = mRoster1;
+        updated = true;
     }
 
     /**
@@ -413,6 +645,7 @@ public class CoachMatch extends Match {
      */
     public void setRoster2(RosterType mRoster2) {
         this.mRoster2 = mRoster2;
+        updated = true;
     }
 
     /**
@@ -427,6 +660,7 @@ public class CoachMatch extends Match {
      */
     public void setSubstitute1(Substitute mSubstitute1) {
         this.mSubstitute1 = mSubstitute1;
+        updated = true;
     }
 
     /**
@@ -441,6 +675,7 @@ public class CoachMatch extends Match {
      */
     public void setSubstitute2(Substitute mSubstitute2) {
         this.mSubstitute2 = mSubstitute2;
+        updated = true;
     }
 
     /**
@@ -455,6 +690,7 @@ public class CoachMatch extends Match {
      */
     public void setRefusedBy1(boolean refusedBy1) {
         this.refusedBy1 = refusedBy1;
+        updated = true;
     }
 
     /**
@@ -469,6 +705,7 @@ public class CoachMatch extends Match {
      */
     public void setRefusedBy2(boolean refusedBy2) {
         this.refusedBy2 = refusedBy2;
+        updated = true;
     }
 
     /**
@@ -483,6 +720,7 @@ public class CoachMatch extends Match {
      */
     public void setConcedeedBy1(boolean concedeedBy1) {
         this.concedeedBy1 = concedeedBy1;
+        updated = true;
     }
 
     /**
@@ -497,9 +735,10 @@ public class CoachMatch extends Match {
      */
     public void setConcedeedBy2(boolean concedeedBy2) {
         this.concedeedBy2 = concedeedBy2;
+        updated = true;
     }
 
-    private static int getGroupModifier(Coach c, CoachMatch m) {
+    protected static int getGroupModifier(Coach c, CoachMatch m) {
         int value = 0;
         if (Tournament.getTournament().getGroupsCount() > 1) {
             final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
@@ -547,7 +786,20 @@ public class CoachMatch extends Match {
      * @return
      */
     public Value getValue(Criteria c) {
-        return mValues.get(c);
+        Value val = mValues.get(c);
+        if (val != null) {
+            return val;
+        } else {
+            // Find criteria ny name
+            String criteria = c.getName();
+
+            for (Criteria crit : this.mValues.keySet()) {
+                if (crit.getName().equals(criteria)) {
+                    return mValues.get(crit);
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -565,6 +817,7 @@ public class CoachMatch extends Match {
      */
     public void putValue(Criteria c, Value v) {
         mValues.put(c, v);
+        updated = true;
     }
 
     /**
@@ -573,13 +826,14 @@ public class CoachMatch extends Match {
      */
     public void removeValue(Criteria c) {
         mValues.remove(c);
+        updated = true;
     }
 
     @Override
     public Element getXMLElementForDisplay() {
         Element match = getXMLElement();
-        Element c1 = ((XMLExport) getCompetitor1()).getXMLElement();
-        Element c2 = ((XMLExport) getCompetitor2()).getXMLElement();
+        Element c1 = ((IXMLExport) getCompetitor1()).getXMLElement();
+        Element c2 = ((IXMLExport) getCompetitor2()).getXMLElement();
         match.addContent(c1);
         match.addContent(c2);
         return match;
@@ -638,6 +892,7 @@ public class CoachMatch extends Match {
         this.c1value5 = recomputeValue(5, mCompetitor1);
         this.c2value5 = recomputeValue(5, mCompetitor2);
         this.values_computed = true;
+        updated = true;
     }
 
     /**

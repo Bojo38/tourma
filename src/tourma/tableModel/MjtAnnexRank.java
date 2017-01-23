@@ -7,6 +7,7 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -70,14 +71,13 @@ public abstract class MjtAnnexRank extends MjtRanking {
         mSubtype = subtype;
         //_ranking_type = ranking_type;
         mFullRanking = full;
-        sortDatas();
     }
 
     /**
      * this function sort the data relative to current object.
      */
     @Override
-    abstract protected void sortDatas();
+    abstract protected void sortDatas() ;
 
     @Override
     abstract public int getColumnCount();
@@ -113,8 +113,10 @@ public abstract class MjtAnnexRank extends MjtRanking {
         jlb.setOpaque(true);
         jlb.setBackground(new Color(255, 255, 255));
         jlb.setForeground(new Color(0, 0, 0));
-
-        boolean useColor = Tournament.getTournament().getParams().isUseColor();
+        
+        boolean useColor = false;
+        
+            useColor=Tournament.getTournament().getParams().isUseColor();
 
         if (value instanceof String) {
             jlb.setText((String) value);

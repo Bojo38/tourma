@@ -3,18 +3,18 @@
   <Roster Name="Bas-fonds" />
   <Roster Name="Chaos" />
   <Roster Name="Elfes" />
-  <Roster Name="Elfe Sylvain" />
-  <Roster Name="Elfe Noir" />
+  <Roster Name="Elfes sylvains" />
+  <Roster Name="Elfes noirs" />
   <Roster Name="Gobelins" />
   <Roster Name="Halflings" />
   <Roster Name="Haut-Elfes" />
-  <Roster Name="Homme Lézard" />
+  <Roster Name="Hommes-Lézards" />
   <Roster Name="Humains" />
   <Roster Name="Khemri" />
   <Roster Name="Démons de Khorne" />
   <Roster Name="Morts-Vivants" />
   <Roster Name="Nains" />
-  <Roster Name="Nain du Chaos" />
+  <Roster Name="Nains du chaos" />
   <Roster Name="Necromantiques" />
   <Roster Name="Nordiques" />
   <Roster Name="Pourris de Nurgle" />
@@ -33,14 +33,14 @@
   <Clan Name="Aucun" />
   <Group Name="Classiques">
     <Roster Name="Elfes" />
-    <Roster Name="Elfe Noir" />
+    <Roster Name="Elfes noirs" />
     <Roster Name="Haut-Elfes" />
     <Roster Name="Humains" />
     <Roster Name="Démons de Khorne" />
     <Roster Name="Necromantiques" />
     <Roster Name="Orques" />
     <Roster Name="Pacte Chaotique" />
-    <Roster Name="Elfe Sylvain" />
+    <Roster Name="Elfes sylvains" />
   </Group>
   <Group Name="Minus">
     <Roster Name="Bas-fonds" />
@@ -60,9 +60,9 @@
     <Roster Name="Morts-Vivants" />
     <Roster Name="Skavens" />
     <Roster Name="Nordiques" />
-    <Roster Name="Nain du Chaos" />
+    <Roster Name="Nains du chaos" />
     <Roster Name="Nains" />
-    <Roster Name="Homme Lézard" />
+    <Roster Name="Hommes-Lézards" />
   </Group>
   <GroupModifierPoints Name="Classiques">
     <Group Name="Minus" Victory="0" Draw="0" Lost="0" />
@@ -71,7 +71,7 @@
   <GroupModifierPoints Name="Minus" />
   <GroupModifierPoints Name="Challenge" />
   <GroupModifierPoints Name="Gros Bill" />
-  <Coach Name="titouch" Team="titouch" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="titouch" Team="titouch" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="knox" Team="knox" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="elyoukey" Team="elyoukey" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Bloody" Team="Bloody" Roster="Nordiques" NAF="0" Rank="154" Clan="Aucun" Active="true" Handicap="0">
@@ -94,41 +94,41 @@
   <Coach Name="daz" Team="Daz" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Jeff" Team="Jeff" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Darktroll" Team="Darktroll" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="FXIII" Team="FXIII" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="FXIII" Team="FXIII" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Rayd" Team="Rayd" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Woelfchen" Team="Woelfchen" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Woelfchen" Team="Woelfchen" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Belentor" Team="Belentor" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Sukram" Team="Sukram" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Lokis_World" Team="Lokis_World" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Don_Pedro" Team="Don_Pedro" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Tùrin" Team="Tùrin" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Tùrin" Team="Tùrin" Roster="Elfes noirs" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Wuckal" Team="Wuckal" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Niebling" Team="Niebling" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Fisherking" Team="Fisherking" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="AntonLunau" Team="AntonLunau" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Fisherking" Team="Fisherking" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="AntonLunau" Team="AntonLunau" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Tank" Team="Tank" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Topper" Team="Topper" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="MissSweden" Team="MissSweden" Roster="Vampires" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Trippleskull" Team="Trippleskull" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Kfoged" Team="Kfoged" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Beppe" Team="Beppe" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Kfoged" Team="Kfoged" Roster="Elfes noirs" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Beppe" Team="Beppe" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Yena" Team="Yena" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Roller" Team="Roller" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Spartako" Team="Spartako" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Phoenix11" Team="Phoenix11" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Phoenix11" Team="Phoenix11" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Liam" Team="Liam" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Farina" Team="Farina" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Darth_Dreddolo" Team="Darth_Dreddolo" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Don_Vito" Team="Don_Vito" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Purplegoo" Team="Purplegoo" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Jimjimany" Team="Jimjimany" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Jimjimany" Team="Jimjimany" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Joemanji" Team="Joemanji" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Podfrey" Team="Podfrey" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Geggster" Team="Geggster" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Hangus" Team="Hangus" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Lycos" Team="Lycos" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Lycos" Team="Lycos" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Dani112233" Team="Dani112233" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Korgluk" Team="Korgluk" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Korgluk" Team="Korgluk" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Murley" Team="Murley" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Kewan" Team="Kewan" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Joanet" Team="Joanet" Roster="Elfes" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
@@ -142,24 +142,24 @@
   <Coach Name="JJ" Team="JJ" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Xod" Team="Xod" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Sjapie" Team="Sjapie" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Da_Great_MC" Team="Da_Great_MC" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Da_Great_MC" Team="Da_Great_MC" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Planlos" Team="Planlos" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="lauth81" Team="lauth81" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Flix" Team="Flix" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Flix" Team="Flix" Roster="Elfes noirs" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Sputnik" Team="Sputnik" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Oventa" Team="Oventa" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Mootaz" Team="Mootaz" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Oventa" Team="Oventa" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Mootaz" Team="Mootaz" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Utak" Team="Utak" Roster="Elfes" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Kithor" Team="Kithor" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Otis" Team="Otis" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Otis" Team="Otis" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Le_Troll" Team="Le_Troll" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Storm" Team="Storm" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Goss" Team="Goss" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Storm" Team="Storm" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Goss" Team="Goss" Roster="Elfes noirs" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Halex" Team="Halex" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Phifoe" Team="Phifoe" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="BDG" Team="BDG" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Desmondus" Team="Desmondus" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Jeguan" Team="Jeguan" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Jeguan" Team="Jeguan" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Hanu" Team="Hanu" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Pera" Team="Pera" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Knaegten" Team="Knaegten" Roster="Humains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
@@ -168,33 +168,33 @@
   <Coach Name="J-Ho" Team="J-Ho" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Kalrat" Team="Kalrat" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Indigo" Team="Indigo" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Jelmer" Team="Jelmer" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Jelmer" Team="Jelmer" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="mepmuff" Team="mepmuff" Roster="Elfes" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="MrNuffle" Team="MrNuffle" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="SirSiebstar" Team="SirSiebstar" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="MrNuffle" Team="MrNuffle" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="SirSiebstar" Team="SirSiebstar" Roster="Elfes noirs" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Kwèk" Team="Kwèk" Roster="Halflings" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="DukeJan" Team="DukeJan" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Tos_T" Team="Tos_T" Roster="Vampires" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="JammyDodger" Team="JammyDodger" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="BigFred" Team="BigFred" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="dragons" Team="dragons" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="BigFred" Team="BigFred" Roster="Elfes noirs" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="dragons" Team="dragons" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="melisqus" Team="melisqus" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="zerak" Team="zerak" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="lard" Team="lard" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="lard" Team="lard" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Stashman" Team="Stashman" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Ozt" Team="Ozt" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="David Millar" Team="David Millar" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="David Millar" Team="David Millar" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Lord Garlack" Team="Lord Garlack" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Thadrin" Team="Thadrin" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Zulu501" Team="Zulu501" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Garrick" Team="Garrick" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Garrick" Team="Garrick" Roster="Elfes noirs" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Doomy" Team="Doomy" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Tribble" Team="Tribble" Roster="Gobelins" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Bantha" Team="Bantha" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Blocknroll" Team="Blocknroll" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Sillysod" Team="Sillysod" Roster="Humains" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Hawca" Team="Hawca" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
-  <Coach Name="Hobnail" Team="Hobnail" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Hawca" Team="Hawca" Roster="Elfes sylvainss" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Hobnail" Team="Hobnail" Roster="Nains du chaos" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Antipixi" Team="Antipixi" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Dapiranha" Team="Dapiranha" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />
   <Coach Name="Northenknight" Team="Northenknight" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" Active="true" Handicap="0" />

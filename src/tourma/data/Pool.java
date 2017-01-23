@@ -4,10 +4,14 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -15,14 +19,25 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class Pool implements XMLExport {
-    private static final Logger LOG = Logger.getLogger(Pool.class.getName());
+public class Pool implements IXMLExport, Serializable {
 
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
+    private static final Logger LOG = Logger.getLogger(Pool.class.getName());
 
     /**
      *
      */
-        private final ArrayList<Competitor> mCompetitors=new ArrayList<>();
+    private final ArrayList<Competitor> mCompetitors = new ArrayList<>();
 
     /**
      *
@@ -52,17 +67,16 @@ public class Pool implements XMLExport {
     @Override
     public void setXMLElement(final Element pool) {
         setName(pool.getAttributeValue(StringConstants.CS_NAME));
-        
+
         mCompetitors.clear();
         final List<Element> coachs = pool.getChildren(StringConstants.CS_COACH);
         Iterator<Element> ro = coachs.iterator();
         while (ro.hasNext()) {
             final Element competitor = ro.next();
-            final String name=competitor.getAttributeValue(StringConstants.CS_NAME);
-            Competitor c=Coach.getCoach(name);
-            if (c==null)
-            {
-                c=Team.getTeam(name);
+            final String name = competitor.getAttributeValue(StringConstants.CS_NAME);
+            Competitor c = Coach.getCoach(name);
+            if (c == null) {
+                c = Team.getTeam(name);
             }
             mCompetitors.add(c);
         }
@@ -89,49 +103,47 @@ public class Pool implements XMLExport {
     public Competitor getCompetitor(int i) {
         return mCompetitors.get(i);
     }
-    
+
     /**
      * @param c
      */
     public void addCompetitor(Competitor c) {
-         mCompetitors.add(c);
+        mCompetitors.add(c);
     }
-    
+
     /**
      * @return the mCompetitors
      */
     public int getCompetitorCount() {
         return mCompetitors.size();
     }
-    
+
     /**
      * @return the mCompetitors
      */
     @SuppressWarnings("ReturnOfCollectionOrArrayField")
-    public ArrayList<Competitor> getCompetitors(){
+    public ArrayList<Competitor> getCompetitors() {
         return mCompetitors;
     }
 
-    
     /**
-     * 
+     *
      * @param obj
-     * @return 
+     * @return
      */
     @Override
     public boolean equals(final Object obj) {
-        
+
         boolean result;
         result = false;
         if (obj instanceof Pool) {
-            Pool p=(Pool) obj;
-            result=this.getName().equals(p.getName());
-            result&=this.getCompetitorCount()==p.getCompetitorCount();
-            for (Competitor c:mCompetitors)
-            {
-                result&=p.getCompetitors().contains(c);
-            }            
-        } 
+            Pool p = (Pool) obj;
+            result = this.getName().equals(p.getName());
+            result &= this.getCompetitorCount() == p.getCompetitorCount();
+            for (Competitor c : mCompetitors) {
+                result &= p.getCompetitors().contains(c);
+            }
+        }
         return result;
     }
 }

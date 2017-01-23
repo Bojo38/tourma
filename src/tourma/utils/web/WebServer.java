@@ -8,6 +8,7 @@ package tourma.utils.web;
 import fi.iki.elonen.NanoHTTPD;
 import java.awt.Color;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -27,8 +28,7 @@ public class WebServer extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
-        
-        
+
         Map<String, String> files = new HashMap<String, String>();
         Method method = session.getMethod();
         if (Method.PUT.equals(method) || Method.POST.equals(method)) {
@@ -40,7 +40,7 @@ public class WebServer extends NanoHTTPD {
                 return newFixedLengthResponse(re.getStatus(), NanoHTTPD.MIME_PLAINTEXT, re.getMessage());
             }
         }
-        
+
         StringBuilder msg = new StringBuilder();
         msg.append("<html><header><title>").append(Tournament.getTournament().getParams().getTournamentName()).append("</title>");
         msg.append("<script  type=\"text/javascript\">");
@@ -287,7 +287,7 @@ public class WebServer extends NanoHTTPD {
                 + "  font-weight: bold;\n"
                 + "  display: block;\n"
                 + "  background: #" + color1 + ";\n"
-                + "  color: #"+forecolor+";\n"
+                + "  color: #" + forecolor + ";\n"
                 + "  border-bottom: 1px solid #" + border_color + ";\n"
                 + "  text-transform: uppercase;\n"
                 + "  position: relative;\n"
@@ -463,6 +463,7 @@ public class WebServer extends NanoHTTPD {
         } else {
             return "&nbsp;";
         }
+        
     }
 
 }

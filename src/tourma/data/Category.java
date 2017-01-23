@@ -4,8 +4,10 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -15,8 +17,21 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Category implements Comparable<Object>, XMLExport {
+public class Category implements Comparable<Object>, IXMLExport, Serializable {
 
+    protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+    
+    
+    
     /**
      *
      */
@@ -24,6 +39,12 @@ public class Category implements Comparable<Object>, XMLExport {
     
     private static final Logger LOG = Logger.getLogger(Category.class.getName());
 
+    public void pull(Category cat)
+    {
+        this.UID=cat.UID;
+        this.mName=cat.mName;
+    }
+    
     /**
      * @param s
      * @param c

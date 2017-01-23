@@ -5,6 +5,7 @@
  */
 package tourma.utils.web;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.languages.Translate;
@@ -24,7 +25,7 @@ import tourma.data.Tournament;
 public class WebCup {
 
     protected static String CS_MainTable = "MainTable";
-    protected static String CS_ThirdPlace="ThirdPlace";
+    protected static String CS_ThirdPlace = "ThirdPlace";
     protected static String CS_Victory = "Victory";
     protected static String CS_Draw = "Draw";
     protected static String CS_LooserTable = "LooserTable";
@@ -125,6 +126,7 @@ public class WebCup {
                 }
             }
         }
+
         return sb.toString();
     }
 
@@ -146,6 +148,7 @@ public class WebCup {
         sb.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(m.getCompetitor2().getName()) + "</td>");
 
         sb.append("</tr>");
+
         return sb.toString();
     }
 

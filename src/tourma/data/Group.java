@@ -4,12 +4,16 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -18,7 +22,18 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Group implements XMLExport {
+public class Group implements IXMLExport, Serializable {
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     private static final Logger LOG = Logger.getLogger(Group.class.getName());
 
@@ -36,6 +51,51 @@ public class Group implements XMLExport {
      *
      */
     private final HashMap<Group, GroupPoints> opponentModificationPoints = new HashMap<>();
+
+    public void pull(Group group) {
+        this.UID = group.UID;
+        this.mName = group.mName;
+        for (RosterType rt : group.mRosters) {
+            RosterType roster = RosterType.getRosterType(rt.getName());
+            if (roster != null) {
+                boolean bFound = false;
+                for (RosterType local : mRosters) {
+                    if (local.getUID() == roster.getUID()) {
+                        bFound = true;
+                        break;
+                    }
+                }
+                if (!bFound) {
+                    mRosters.add(roster);
+                }
+
+            }
+        }
+        if (mRosters.size() != group.getRosterCount()) {
+            mRosters.clear();
+            pull(group);
+        }
+    }
+
+    public void pullOpponentGroupModifierPoints(Group group) {
+        for (Group opponent : group.opponentModificationPoints.keySet()) {
+            // find corresponding local group
+            Group localOpp = Tournament.getTournament().getGroup(opponent.getName());
+
+            if (localOpp != null) {
+                GroupPoints gp = this.opponentModificationPoints.get(localOpp);
+                if (gp == null) {
+                    gp = new GroupPoints();
+                }
+                gp.pull(group.opponentModificationPoints.get(opponent));
+
+                opponentModificationPoints.put(localOpp, gp);
+
+                // pull points modifiers
+            }
+        }
+
+    }
 
     /**
      *
@@ -56,7 +116,7 @@ public class Group implements XMLExport {
         group.setAttribute(StringConstants.CS_NAME, this.getName());
         for (int j = 0; j < this.getRosterCount(); j++) {
             final Element roster = new Element(StringConstants.CS_ROSTER);
-            if (this.getRoster(j) != null)  {
+            if (this.getRoster(j) != null) {
                 if (this.getRoster(j).getName() == null) {
                     this.getRoster(j).setName("Unknown");
                 }
@@ -201,7 +261,9 @@ public class Group implements XMLExport {
                 result &= getOpponentModificationPoints(og).equals(g.getOpponentModificationPoints(og));;
             }
         }
+
         return result;
+
     }
 
     /**
@@ -237,4 +299,5 @@ public class Group implements XMLExport {
     public boolean containsRoster(RosterType rt) {
         return mRosters.contains(rt);
     }
+
 }

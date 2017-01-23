@@ -5,6 +5,7 @@
  */
 package tourma.utils.web;
 
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -24,6 +25,7 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import static tourma.languages.Translate.CS_Team;
 import tourma.tableModel.MjtRanking;
+import static tourma.utils.web.WebRound.createIndividualRanking;
 
 /**
  *
@@ -56,14 +58,13 @@ public class WebRules {
     private final static String CS_Categories = "Categories";
     private final static String CS_Groups = "Groups";
 
-    private final static String CS_MatchAdditional="Match additional points";
-    
+    private final static String CS_MatchAdditional = "Match additional points";
+
     public static String getHTML() {
 
         StringBuilder rules = new StringBuilder("");
 
         LOG.log(Level.FINE, "Create Rules");
-
         Parameters params = Tournament.getTournament().getParams();
 
         // Criterias
@@ -406,7 +407,7 @@ public class WebRules {
 
                 rules.append("<td><table  style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                         + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
-                rules.append("<tr><td class=\"tab_titre\" colspan=\"4\">"+StringEscapeUtils.escapeHtml4(Translate.translate(CS_MatchAdditional)) +"</td></tr>");
+                rules.append("<tr><td class=\"tab_titre\" colspan=\"4\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_MatchAdditional)) + "</td></tr>");
                 rules.append("<tr><td class=\"tab_titre\">&nbsp</td>");
                 rules.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
                 rules.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Draw)) + "</td>");
@@ -463,24 +464,22 @@ public class WebRules {
         if (Tournament.getTournament().getPoolCount() > 0) {
 
             rules.append("<div id=\"pools\" class=\"section\">");
-            
+
             rules.append("<table  style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                     + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\">");
             nb_cols = Tournament.getTournament().getPoolCount();
             rules.append("<tr><td class=\"tab_titre\" colspan=\"" + nb_cols + "\">");
             rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Pool)) + "</center>");
             rules.append("</td></tr>");
-            
-            //rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Pool)) + "</center>");
 
-                       
+            //rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Pool)) + "</center>");
             rules.append("<tr>");
             for (int i = 0; i < Tournament.getTournament().getPoolCount(); i++) {
                 Pool p = Tournament.getTournament().getPool(i);
                 rules.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(p.getName()) + "</td>");
-            }            
+            }
             rules.append("</tr>");
-            
+
             rules.append("<tr>");
             for (int i = 0; i < Tournament.getTournament().getPoolCount(); i++) {
                 Pool p = Tournament.getTournament().getPool(i);
@@ -488,13 +487,12 @@ public class WebRules {
                 for (int j = 0; j < p.getCompetitorCount(); j++) {
                     Competitor c = p.getCompetitor(j);
                     rules.append(StringEscapeUtils.escapeHtml4(c.getName()));
-                    if (j!=p.getCompetitorCount()-1)
-                    {
+                    if (j != p.getCompetitorCount() - 1) {
                         rules.append("<br>");
                     }
                 }
                 rules.append("</td>");
-            }            
+            }
             rules.append("</tr>");
             rules.append("</table></div>");
         }

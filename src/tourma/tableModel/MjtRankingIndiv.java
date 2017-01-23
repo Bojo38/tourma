@@ -5,6 +5,7 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.ImageIcon;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
+import tourma.data.Tournament;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
@@ -28,7 +30,6 @@ import tourma.utils.ImageTreatment;
  */
 @SuppressWarnings("serial")
 public final class MjtRankingIndiv extends MjtRanking {
-
 
     private final boolean mTeamTournament;
     private final boolean mForPool;
@@ -104,11 +105,11 @@ public final class MjtRankingIndiv extends MjtRanking {
                         }
                         // test if match is in round
                         if (bFound) {
-                            aValue1.add(m.getValue(1,c));
-                            aValue2.add(m.getValue(2,c));
-                            aValue3.add(m.getValue(3,c));
-                            aValue4.add(m.getValue(4,c));
-                            aValue5.add(m.getValue(5,c));                            
+                            aValue1.add(m.getValue(1, c));
+                            aValue2.add(m.getValue(2, c));
+                            aValue3.add(m.getValue(3, c));
+                            aValue4.add(m.getValue(4, c));
+                            aValue5.add(m.getValue(5, c));
                         }
                     }
 
@@ -176,14 +177,11 @@ public final class MjtRankingIndiv extends MjtRanking {
                 for (int i = 0; i < tour.getPool(0).getCompetitorCount(); i++) {
                     final ArrayList<Coach> rank = new ArrayList<>();
                     for (int j = 0; j < nbPool; j++) {
-                        try
-                        {
-                        final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
-                        rank.add((Coach) obj.getObject());
-                        }
-                        catch (IndexOutOfBoundsException ioob)
-                        {
-                            
+                        try {
+                            final ObjectRanking obj = (ObjectRanking) pRank.get(j).mDatas.get(i);
+                            rank.add((Coach) obj.getObject());
+                        } catch (IndexOutOfBoundsException ioob) {
+
                         }
                     }
                     final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
@@ -211,7 +209,6 @@ public final class MjtRankingIndiv extends MjtRanking {
         }
     }
 
-   
     @Override
     public int getColumnCount() {
         int result = 9;
@@ -290,102 +287,90 @@ public final class MjtRankingIndiv extends MjtRanking {
         return result;
     }
 
-    public String convertVND(int value)
-    {
-        String vnd="";
-        int nb_vict=value/1000000;
-        int nb_draw=(value%1000000)/1000;
-        int nb_loss=(value%1000000)%1000;
-        vnd=Integer.toString(nb_vict)+"/"+Integer.toString(nb_draw)+"/"+Integer.toString(nb_loss);
+    public String convertVND(int value) {
+        String vnd = "";
+        int nb_vict = value / 1000000;
+        int nb_draw = (value % 1000000) / 1000;
+        int nb_loss = (value % 1000000) % 1000;
+        vnd = Integer.toString(nb_vict) + "/" + Integer.toString(nb_draw) + "/" + Integer.toString(nb_loss);
         return vnd;
     }
-    
+
     @Override
     public Object getValueAt(final int row, final int col) {
         Object object = "";
-        if (mDatas.size() > row) {
-            final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
-            int cl = col;
-            if (mTeamTournament) {
-                if (col > 1) {
-                    cl = col - 1;
+        try {
+            if (mDatas.size() > row) {
+                final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
+                int cl = col;
+                if (mTeamTournament) {
+                    if (col > 1) {
+                        cl = col - 1;
+                    }
+                    if (col == 1) {
+                        object = ((Coach) obj.getObject()).getTeamMates().getName();
+                    }
                 }
-                if (col == 1) {
-                    object = ((Coach) obj.getObject()).getTeamMates().getName();
-                }
-            }
 
-            switch (cl) {
-                case 0:
-                    object = row + 1;
-                    break;
-                case 1:
-                    if (mTeamTournament) {
-                        if (col != 1) {
+                switch (cl) {
+                    case 0:
+                        object = row + 1;
+                        break;
+                    case 1:
+                        if (mTeamTournament) {
+                            if (col != 1) {
+                                object = ((Coach) obj.getObject()).getTeam();
+                            }
+                        } else {
                             object = ((Coach) obj.getObject()).getTeam();
                         }
-                    } else {
-                        object = ((Coach) obj.getObject()).getTeam();
-                    }
-                    break;
-                case 2:
-                    object = ((IWithNameAndPicture) obj.getObject()).getName();
-                    break;
-                case 3:
-                    object = ((Coach) obj.getObject()).getStringRoster();
-                    break;
-                case 4:
-                    if (Tournament.getTournament().getParams().getIndivRankingType(0)==Parameters.C_RANKING_VND)
-                    {
-                     object=convertVND(obj.getValue1());   
-                    }
-                    else
-                    {
-                    object = obj.getValue1();
-                    }
-                    break;
-                case 5:
-                    if (Tournament.getTournament().getParams().getIndivRankingType(1)==Parameters.C_RANKING_VND)
-                    {
-                     object=convertVND(obj.getValue2());   
-                    }
-                    else
-                    {
-                    object = obj.getValue2();
-                    }
-                    break;
-                case 6:
-                    if (Tournament.getTournament().getParams().getIndivRankingType(2)==Parameters.C_RANKING_VND)
-                    {
-                     object=convertVND(obj.getValue3());   
-                    }
-                    else
-                    {
-                    object = obj.getValue3();
-                    }
-                    break;
-                case 7:
-                    if (Tournament.getTournament().getParams().getIndivRankingType(3)==Parameters.C_RANKING_VND)
-                    {
-                     object=convertVND(obj.getValue4());   
-                    }
-                    else
-                    {
-                    object = obj.getValue4();
-                    }
-                    break;
-                case 8:
-                    if (Tournament.getTournament().getParams().getIndivRankingType(4)==Parameters.C_RANKING_VND)
-                    {
-                     object=convertVND(obj.getValue5());   
-                    }
-                    else
-                    {
-                    object = obj.getValue5();
-                    }
-                    break;
-                default:
+                        break;
+                    case 2:
+                        object = ((IWithNameAndPicture) obj.getObject()).getName();
+                        break;
+                    case 3:
+                        object = ((Coach) obj.getObject()).getStringRoster();
+                        break;
+                    case 4:
+                        if (Tournament.getTournament().getParams().getIndivRankingType(0) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue1());
+                        } else {
+                            object = obj.getValue1();
+                        }
+                        break;
+                    case 5:
+                        if (Tournament.getTournament().getParams().getIndivRankingType(1) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue2());
+                        } else {
+                            object = obj.getValue2();
+                        }
+                        break;
+                    case 6:
+                        if (Tournament.getTournament().getParams().getIndivRankingType(2) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue3());
+                        } else {
+                            object = obj.getValue3();
+                        }
+                        break;
+                    case 7:
+                        if (Tournament.getTournament().getParams().getIndivRankingType(3) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue4());
+                        } else {
+                            object = obj.getValue4();
+                        }
+                        break;
+                    case 8:
+                        if (Tournament.getTournament().getParams().getIndivRankingType(4) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue5());
+                        } else {
+                            object = obj.getValue5();
+                        }
+                        break;
+                    default:
+                }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         return object;
     }
@@ -393,12 +378,11 @@ public final class MjtRankingIndiv extends MjtRanking {
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
         if (Tournament.getTournament().getParams().isUseImage()) {
             if ((column == 1) && mTeamTournament) {
                 Coach c = (Coach) mObjects.get(row);
                 if (c.getTeamMates().getPicture() != null) {
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(c.getTeamMates().getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(c.getTeamMates().getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setOpaque(true);
                     return obj;

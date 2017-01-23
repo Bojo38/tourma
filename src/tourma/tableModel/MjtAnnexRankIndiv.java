@@ -4,6 +4,7 @@
  */
 package tourma.tableModel;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import tourma.data.Coach;
@@ -43,6 +44,8 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
     public MjtAnnexRankIndiv(final int round, final Criteria criteria, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
         super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
         mTeamTournament = teamTournament;
+        sortDatas();
+
     }
 
     @Override
@@ -91,7 +94,7 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 }
                 // test if match is in round
                 if (bFound) {
-                    aValue.add(m.getValue(mCriteria, mSubtype,c));
+                    aValue.add(m.getValue(mCriteria, mSubtype, c));
 
                     aValue1.add(m.getValue(1, c));
                     aValue3.add(m.getValue(2, c));
@@ -196,6 +199,7 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
     public Object getValueAt(final int row, final int col) {
 
         Object val = StringConstants.CS_NULL;
+
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
         switch (col) {
             case 0:

@@ -4,6 +4,8 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.DataConversionException;
@@ -15,34 +17,56 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Criteria implements XMLExport {
+public class Criteria implements IXMLExport, Serializable {
 
-    private static final Logger LOG = Logger.getLogger(Criteria.class.getName());
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
+    public void pull(Criteria crit)
+    {
+        this.UID=crit.UID;
+        this.mCriticalValueThreshold=crit.mCriticalValueThreshold;
+        this.mName=crit.mName;
+        this.mPointsAgainst=crit.mPointsAgainst;
+        this.mPointsFor=crit.mPointsFor;
+        this.mPointsTeamAgainst=crit.mPointsTeamAgainst;
+        this.mPointsTeamFor=crit.mPointsTeamFor;
+    }
+    
+    protected static final Logger LOG = Logger.getLogger(Criteria.class.getName());
 
     /**
      * Name of the criteria
      */
-    private String mName;
+    protected String mName;
     /**
      * Points for
      */
-    private int mPointsFor;
+    protected int mPointsFor;
     /**
      * Points against
      */
-    private int mPointsAgainst;
+    protected int mPointsAgainst;
     /**
      * Team Points for
      */
-    private int mPointsTeamFor;
+    protected int mPointsTeamFor;
     /**
      * Team Points against
      */
-    private int mPointsTeamAgainst;
+    protected int mPointsTeamAgainst;
     /**
      * Threshold above which the value may be erroneous.
      */
-    private int mCriticalValueThreshold;
+    protected int mCriticalValueThreshold;
 
     /**
      *

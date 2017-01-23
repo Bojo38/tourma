@@ -6,6 +6,7 @@ package tourma.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.rmi.RemoteException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
+import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.RosterType;
 import tourma.data.Round;
@@ -66,7 +68,7 @@ import tourma.tableModel.MjtRankingTeam;
  */
 public final class JPNStatistics extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private Tournament mTournament;
     private final ArrayList<HashMap<String, Integer>> mHpositions = new ArrayList<>();
     private final ArrayList<HashMap<String, Integer>> mHTeampositions = new ArrayList<>();
     private ChartPanel cpPositions = null;
@@ -92,6 +94,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
      * Creates new form JPNStatistics
      */
     public JPNStatistics() {
+
         mTournament = Tournament.getTournament();
         initComponents();
 
@@ -173,7 +176,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
             }
             mHTeamBalanced.add(hm);
         }
-
         // update positions
         updateBalancedTeam();
 
@@ -189,6 +191,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private void addIndivBalanced() {
 
         final ArrayList<Coach> coachs = new ArrayList<>();
+
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coachs.add(Tournament.getTournament().getCoach(i));
         }
@@ -239,7 +242,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
 
             mHIndivBalanced.add(hm);
         }
-
         // update positions
         updateBalancedIndiv();
 
@@ -259,6 +261,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
      *
      */
     private void addCounterPerRoster() {
+
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
             Criteria crit = mTournament.getParams().getCriteria(i);
             final HashMap<String, Double> plus = new HashMap<>();
@@ -360,6 +363,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
             final ChartPanel chartPanel = new ChartPanel(chart);
             jtpStatistics.addTab(crit.getName(), chartPanel);
         }
+
     }
 
     private static final String CS_Victories = "VICTOIRES";
@@ -407,44 +411,41 @@ public final class JPNStatistics extends javax.swing.JPanel {
                         name2 = m.getRoster2().getName();
                     }
 
-                    try
-                    {
-                    double t = total.get(name2).intValue();
-                    t += 1.0;
-                    total.put(name2, t);
-                    t = total.get(name1).intValue();
-                    t += 1.0;
-                    total.put(name1, t);
-                    if (values.getValue1() > values.getValue2()) {
-                        double v = victories.get(name1);
-                        double l = loss.get(name2);
-                        v++;
-                        l++;
-                        victories.put(name1, v);
-                        loss.put(name2, l);
-                    }
-                    if (values.getValue1() < values.getValue2()) {
-                        double v = victories.get(name2);
-                        double l = loss.get(name1);
-                        v++;
-                        l++;
+                    try {
+                        double t = total.get(name2).intValue();
+                        t += 1.0;
+                        total.put(name2, t);
+                        t = total.get(name1).intValue();
+                        t += 1.0;
+                        total.put(name1, t);
+                        if (values.getValue1() > values.getValue2()) {
+                            double v = victories.get(name1);
+                            double l = loss.get(name2);
+                            v++;
+                            l++;
+                            victories.put(name1, v);
+                            loss.put(name2, l);
+                        }
+                        if (values.getValue1() < values.getValue2()) {
+                            double v = victories.get(name2);
+                            double l = loss.get(name1);
+                            v++;
+                            l++;
 
-                        victories.put(name2, v);
-                        loss.put(name1, l);
-                    }
-                    if (values.getValue1() == values.getValue2()) {
-                        double d = draw.get(name2);
-                        d++;
-                        draw.put(name2, d);
+                            victories.put(name2, v);
+                            loss.put(name1, l);
+                        }
+                        if (values.getValue1() == values.getValue2()) {
+                            double d = draw.get(name2);
+                            d++;
+                            draw.put(name2, d);
 
-                        d = draw.get(name1);
-                        d++;
-                        draw.put(name1, d);
-                    }
-                    }
-                    catch (NullPointerException npe)
-                    {
-                        System.err.println("Unknown roster: "+name2+" or "+name1);
+                            d = draw.get(name1);
+                            d++;
+                            draw.put(name1, d);
+                        }
+                    } catch (NullPointerException npe) {
+                        System.err.println("Unknown roster: " + name2 + " or " + name1);
                     }
                 }
             }
@@ -548,12 +549,10 @@ public final class JPNStatistics extends javax.swing.JPanel {
                         datas.setValue(rName, v);
                     } catch (NullPointerException npe) {
 
+                    } catch (UnknownKeyException uke) {
+                        System.out.println("Unknown roster: " + uke.getLocalizedMessage());
                     }
-                    catch (UnknownKeyException uke)
-                    {
-                        System.out.println("Unknown roster: "+uke.getLocalizedMessage());
-                    }
-                        
+
                 }
             }
         }
@@ -572,7 +571,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 i++;
             }
         }
-
         final JFreeChart chart = ChartFactory.createPieChart(
                 Translate.translate(CS_Roster),
                 datas, true, true, false);
@@ -625,7 +623,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 datas.setValue(mTournament.getGroup(i).getName(), value);
             }
         }
-
         int i = 0;
         while (i < datas.getItemCount()) {
             final Number value = datas.getValue(i);
@@ -656,6 +653,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
      * Update panel
      */
     public void update() {
+
         if (mTournament.getParams().isTeamTournament()) {
             updateTeamPositions();
             if (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
@@ -663,7 +661,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 updateBalancedTeam();
             }
         }
-
         updatePositions();
 
     }
@@ -745,7 +742,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 }
             }
         }
-
         // Affichage du graphique
         final DefaultCategoryDataset datas = new DefaultCategoryDataset();
 
@@ -851,7 +847,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
             }
             mHpositions.add(hm);
         }
-
         // update positions
         updatePositions();
 
@@ -917,7 +912,6 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 mHTeampositions.add(hm);
             }
         }
-
         // update positions
         updateTeamPositions();
 

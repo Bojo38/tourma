@@ -6,6 +6,7 @@ package tourma;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTree;
@@ -15,6 +16,7 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import tourma.data.Round;
+import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -27,71 +29,71 @@ import tourma.utils.Icons;
 public class MainTreeModel implements TreeModel, TreeCellRenderer {
 
     /**
-     * 
+     *
      */
-    private final ArrayList<TreeModelListener> mListeners;
-    private final Tournament mTournament;
-    private final DefaultMutableTreeNode mRoot;
+    private ArrayList<TreeModelListener> mListeners;
+    private Tournament mTournament;
+    private DefaultMutableTreeNode mRoot;
     /**
-     * 
+     *
      */
     private DefaultMutableTreeNode mParams;
     private DefaultMutableTreeNode mCup;
     /**
-     * 
+     *
      */
-    private final DefaultMutableTreeNode mStats;
-    private final ArrayList<DefaultMutableTreeNode> mRounds;
+    private DefaultMutableTreeNode mStats;
+    private ArrayList<DefaultMutableTreeNode> mRounds;
 
-    public final static String CS_Tournament="TOURNOI";
-    public final static String CS_Statistics="STATISTIQUES";
-    public final static String CS_Parameters="PARAMÈTRES";
-    public final static String CS_Round="Round";
-    public final static String CS_Cup="Cup";
-    
+    public final static String CS_Tournament = "TOURNOI";
+    public final static String CS_Statistics = "STATISTIQUES";
+    public final static String CS_Parameters = "PARAMÈTRES";
+    public final static String CS_Round = "Round";
+    public final static String CS_Cup = "Cup";
+
     MainTreeModel() {
         mListeners = new ArrayList<>();
-        mTournament = Tournament.getTournament();
-        mRounds = new ArrayList<>();
 
-        String name = Translate.translate(CS_Tournament);
-        if (!mTournament.getParams().getTournamentName().equals(StringConstants.CS_NULL)) {
-            name = mTournament.getParams().getTournamentName();
-        }
+            mTournament = Tournament.getTournament();
+            mRounds = new ArrayList<>();
 
-        mRoot = new DefaultMutableTreeNode(name, true);
-        mParams = new DefaultMutableTreeNode(
-                Translate.translate(CS_Parameters));
-        mStats = new DefaultMutableTreeNode(
-                Translate.translate(CS_Statistics));
-
-        mRoot.add(mParams);
-        mParams.setUserObject(mTournament.getParams());
-
-        mRoot.add(mStats);
-        mStats.setUserObject(Translate.translate(CS_Statistics));
-
-        boolean cup = false;
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            final Round r = mTournament.getRound(i);
-            if (r.isCup()) {
-                cup = true;
+            String name = Translate.translate(CS_Tournament);
+            if (!mTournament.getParams().getTournamentName().equals(StringConstants.CS_NULL)) {
+                name = mTournament.getParams().getTournamentName();
             }
-            final String tmp= Translate.translate(CS_Round);
-            final DefaultMutableTreeNode node = new DefaultMutableTreeNode(
-                    tmp+" "+(i+1));
-            mRoot.add(node);
-            node.setUserObject(r);
-            mRounds.add(node);
-        }
 
-        if (cup) {
-            mCup = new DefaultMutableTreeNode(
-                    Translate.translate(CS_Cup));
-            mRoot.add(mCup);
-            mCup.setUserObject(Translate.translate(CS_Cup));
-        }
+            mRoot = new DefaultMutableTreeNode(name, true);
+            mParams = new DefaultMutableTreeNode(
+                    Translate.translate(CS_Parameters));
+            mStats = new DefaultMutableTreeNode(
+                    Translate.translate(CS_Statistics));
 
+            mRoot.add(mParams);
+            mParams.setUserObject(mTournament.getParams());
+
+            mRoot.add(mStats);
+            mStats.setUserObject(Translate.translate(CS_Statistics));
+
+            boolean cup = false;
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                final Round r = mTournament.getRound(i);
+                if (r.isCup()) {
+                    cup = true;
+                }
+                final String tmp = Translate.translate(CS_Round);
+                final DefaultMutableTreeNode node = new DefaultMutableTreeNode(
+                        tmp + " " + (i + 1));
+                mRoot.add(node);
+                node.setUserObject(r);
+                mRounds.add(node);
+            }
+
+            if (cup) {
+                mCup = new DefaultMutableTreeNode(
+                        Translate.translate(CS_Cup));
+                mRoot.add(mCup);
+                mCup.setUserObject(Translate.translate(CS_Cup));
+            }
 
     }
 
@@ -186,8 +188,6 @@ public class MainTreeModel implements TreeModel, TreeCellRenderer {
         if (value == mStats) {
             jlb.setIcon(Icons.getStats());
         }
-
-
 
         return jlb;
     }

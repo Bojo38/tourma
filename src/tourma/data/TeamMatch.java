@@ -4,11 +4,15 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -16,7 +20,18 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class TeamMatch extends Match {
+public class TeamMatch extends Match implements Serializable {
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     private static final Logger LOG = Logger.getLogger(TeamMatch.class.getName());
 
@@ -24,6 +39,26 @@ public class TeamMatch extends Match {
      *
      */
     private final ArrayList<CoachMatch> mMatchs;
+
+    public void setUpdated(boolean updated) {
+        super.setUpdated(updated);
+        for (CoachMatch cm : mMatchs) {
+            cm.setUpdated(updated);
+        }
+    }
+
+    @Override
+    public boolean isUpdated() {
+        for (CoachMatch m:mMatchs)
+        {
+            if (m.isUpdated())
+            {
+                updated=true;
+                break;
+            }
+        }
+        return updated;
+    }
 
     /**
      *
@@ -89,6 +124,135 @@ public class TeamMatch extends Match {
             super.setWinner(winner);
             super.setLooser(looser);
             return winner;
+        }
+    }
+
+    public void pull(Match match) {
+        if (match instanceof TeamMatch) {
+            TeamMatch teammatch = (TeamMatch) match;
+            this.UID = teammatch.UID;
+            this.c1value1 = teammatch.c1value1;
+            this.c1value2 = teammatch.c1value2;
+            this.c1value3 = teammatch.c1value3;
+            this.c1value4 = teammatch.c1value4;
+            this.c1value5 = teammatch.c1value5;
+            this.c1value1 = teammatch.c1value1;
+            this.c2value2 = teammatch.c2value2;
+            this.c2value3 = teammatch.c2value3;
+            this.c2value4 = teammatch.c2value4;
+            this.c2value5 = teammatch.c2value5;
+
+            this.mCompetitor1 = Tournament.getTournament().getTeam(teammatch.getCompetitor1().getName());
+            this.mCompetitor2 = Tournament.getTournament().getTeam(teammatch.getCompetitor2().getName());
+
+            // Manage CoachMatches
+            for (CoachMatch cm : teammatch.mMatchs) {
+                boolean bFound = false;
+                for (CoachMatch coachmatch : mMatchs) {
+                    if (cm.getUID() == coachmatch.getUID()) {
+                        bFound = true;
+                        coachmatch.pull(cm);
+                        break;
+                    }
+                }
+
+                if (!bFound) {
+                    CoachMatch coachmatch = new CoachMatch(this.getRound());
+                    coachmatch.pull(cm);
+                    mMatchs.add(coachmatch);
+                }
+            }
+
+            // add Match to competitor
+            boolean bFound = false;
+            for (int i = 0; i < mCompetitor1.getMatchCount(); i++) {
+                Match m = mCompetitor1.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            if (!bFound) {
+                mCompetitor1.addMatch(this);
+            }
+
+            bFound = false;
+            for (int i = 0; i < mCompetitor2.getMatchCount(); i++) {
+                Match m = mCompetitor2.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            if (!bFound) {
+                mCompetitor2.addMatch(this);
+            }
+        }
+    }
+
+    public void push(Match match) {
+        if (match.isUpdated()) {
+            if (match instanceof TeamMatch) {
+                TeamMatch teammatch = (TeamMatch) match;
+                this.UID = teammatch.UID;
+                this.c1value1 = teammatch.c1value1;
+                this.c1value2 = teammatch.c1value2;
+                this.c1value3 = teammatch.c1value3;
+                this.c1value4 = teammatch.c1value4;
+                this.c1value5 = teammatch.c1value5;
+                this.c1value1 = teammatch.c1value1;
+                this.c2value2 = teammatch.c2value2;
+                this.c2value3 = teammatch.c2value3;
+                this.c2value4 = teammatch.c2value4;
+                this.c2value5 = teammatch.c2value5;
+
+                this.mCompetitor1 = Tournament.getTournament().getTeam(teammatch.getCompetitor1().getName());
+                this.mCompetitor2 = Tournament.getTournament().getTeam(teammatch.getCompetitor2().getName());
+
+                // Manage CoachMatches
+                for (CoachMatch cm : teammatch.mMatchs) {
+                    boolean bFound = false;
+                    for (CoachMatch coachmatch : mMatchs) {
+                        if (cm.getUID() == coachmatch.getUID()) {
+                            bFound = true;
+                            coachmatch.push(cm);
+                            break;
+                        }
+                    }
+
+                    /*if (!bFound)
+                {
+                    CoachMatch coachmatch=new CoachMatch(this.getRound());
+                    coachmatch.pull(cm);
+                    mMatchs.add(coachmatch);
+                }*/
+                }
+
+                // add Match to competitor
+                boolean bFound = false;
+                for (int i = 0; i < mCompetitor1.getMatchCount(); i++) {
+                    Match m = mCompetitor1.getMatch(i);
+                    if (m.getUID() == UID) {
+                        bFound = true;
+                        break;
+                    }
+                }
+                /*if (!bFound) {
+                mCompetitor1.addMatch(this);
+            }*/
+
+                bFound = false;
+                for (int i = 0; i < mCompetitor2.getMatchCount(); i++) {
+                    Match m = mCompetitor2.getMatch(i);
+                    if (m.getUID() == UID) {
+                        bFound = true;
+                        break;
+                    }
+                }
+                /*if (!bFound) {
+                mCompetitor2.addMatch(this);
+            }*/
+            }
         }
     }
 
@@ -456,6 +620,7 @@ public class TeamMatch extends Match {
             }
             return equality;
         }
+
         return false;
 
     }
@@ -988,11 +1153,9 @@ public class TeamMatch extends Match {
     }
 
     public boolean isEntered() {
-        for (int i=0; i<getMatchCount(); i++)
-        {
-            CoachMatch cm=getMatch(i);
-            if (!cm.isEntered())
-            {
+        for (int i = 0; i < getMatchCount(); i++) {
+            CoachMatch cm = getMatch(i);
+            if (!cm.isEntered()) {
                 return false;
             }
         }

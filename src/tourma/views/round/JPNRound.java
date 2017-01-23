@@ -13,6 +13,7 @@ package tourma.views.round;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
+import tourma.data.Tournament;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.RosterType;
@@ -140,22 +142,21 @@ public final class JPNRound extends javax.swing.JPanel {
         }
 
         ArrayList<Team> teams = new ArrayList<>();
-        for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-            teams.add(Tournament.getTournament().getTeam(cpt));
+        for (int cpt = 0; cpt < t.getTeamsCount(); cpt++) {
+            teams.add(t.getTeam(cpt));
         }
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
             final Criteria criteria = mTournament.getParams().getCriteria(i);
             final ArrayList<Coach> coaches = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
-                coaches.add(Tournament.getTournament().getCoach(cpt));
+            for (int cpt = 0; cpt < t.getCoachsCount(); cpt++) {
+                coaches.add(t.getCoach(cpt));
             }
-            final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, Tournament.getTournament(), coaches, teams, mRound, false, false);
+            final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, t, coaches, teams, mRound, false, false);
             jtpAnnexRankings.add(criteria.getName(), jpn);
         }
 
         mNafOnly = MainFrame.getMainFrame().isNafOnly();
         mRoundOnly = MainFrame.getMainFrame().isRoundOnly();
-
         update();
     }
 
@@ -223,7 +224,6 @@ public final class JPNRound extends javax.swing.JPanel {
 
             jmiChangeRosterForThisRound.setEnabled(Tournament.getTournament().getParams().isMultiRoster());
         }
-
         for (int i = 0; i < jtpGlobal.getTabCount(); i++) {
             Object panel;
             panel = jtpGlobal.getComponent(i);
@@ -422,6 +422,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtShowMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowMatchesActionPerformed
+
         for (int i = 0; i
                 < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
@@ -432,9 +433,11 @@ public final class JPNRound extends javax.swing.JPanel {
 
             }
         }
+
     }//GEN-LAST:event_jbtShowMatchesActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtShowResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowResultsActionPerformed
+
         for (int i = 0; i
                 < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
@@ -444,9 +447,11 @@ public final class JPNRound extends javax.swing.JPanel {
 
             }
         }
+
     }//GEN-LAST:event_jbtShowResultsActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralIndivActionPerformed
+
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
                 final boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
@@ -462,6 +467,7 @@ public final class JPNRound extends javax.swing.JPanel {
                 break;
             }
         }
+
     }//GEN-LAST:event_jbtGeneralIndivActionPerformed
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -470,6 +476,7 @@ public final class JPNRound extends javax.swing.JPanel {
     }//GEN-LAST:event_jtpGlobalStateChanged
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
+
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
                 final boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
@@ -495,6 +502,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
             }
         }
+
     }//GEN-LAST:event_jbtGlobalActionPerformed
 
     /**
@@ -519,6 +527,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
     private void jtbMatchesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbMatchesMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON3) {
+
             if (jtbMatches.getSelectedRow() >= 0) {
                 CoachMatch cm = mRound.getCoachMatchs().get(jtbMatches.getSelectedRow());
                 Coach c = null;
@@ -547,6 +556,7 @@ public final class JPNRound extends javax.swing.JPanel {
                     jpmCoach.setVisible(true);
                 }
             }
+
         }
 
         if (evt.getClickCount() == 2) {
@@ -560,6 +570,7 @@ public final class JPNRound extends javax.swing.JPanel {
         // Get Match
         int matchIndex = jtbMatches.getSelectedRow();
         if (matchIndex >= 0) {
+
             CoachMatch match = this.mRound.getCoachMatchs().get(matchIndex);
             boolean c1 = false;
             int critIndex = -1;
@@ -600,33 +611,31 @@ public final class JPNRound extends javax.swing.JPanel {
             if (critIndex >= 0) {
                 Value mv = match.getValues().get(Tournament.getTournament().getParams().getCriteria(critIndex));
                 if (c1) {
-                    int v=mv.getValue1();
-                    if (critIndex==0)
-                    {
-                        if (v==-1)
-                        {
+                    int v = mv.getValue1();
+                    if (critIndex == 0) {
+                        if (v == -1) {
                             mv.setValue1(0);
                         }
                     }
                     //mv.setValue1(0);
                 } else {
-                    int v=mv.getValue2();
-                    if (critIndex==0)
-                    {
-                        if (v==-1)
-                        {
+                    int v = mv.getValue2();
+                    if (critIndex == 0) {
+                        if (v == -1) {
                             mv.setValue2(0);
                         }
                     }
                     //mv.setValue2(0);
                 }
             }
+
         }
     }//GEN-LAST:event_jtbMatchesKeyPressed
 
     private void jmiChangePairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChangePairingActionPerformed
         jpmCoach.setVisible(false);
         if (jtbMatches.getSelectedRow() >= 0) {
+
             CoachMatch cm = mRound.getCoachMatchs().get(jtbMatches.getSelectedRow());
             Coach c = null;
             Coach opp = null;
@@ -718,12 +727,14 @@ public final class JPNRound extends javax.swing.JPanel {
                     }
                 }
             }
+
         }
     }//GEN-LAST:event_jmiChangePairingActionPerformed
 
     private void jmiEditCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditCoachActionPerformed
         jpmCoach.setVisible(false);
         if (jtbMatches.getSelectedRow() >= 0) {
+
             CoachMatch cm = mRound.getCoachMatchs().get(jtbMatches.getSelectedRow());
             Coach c = null;
             Coach opp = null;
@@ -750,12 +761,14 @@ public final class JPNRound extends javax.swing.JPanel {
                 JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, c);
                 jdg.setVisible(true);
             }
+
         }
 
     }//GEN-LAST:event_jmiEditCoachActionPerformed
 
     private void jmiChangeRosterForThisRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChangeRosterForThisRoundActionPerformed
         jpmCoach.setVisible(false);
+
         if (mTournament.getParams().isMultiRoster()) {
             int col = jtbMatches.getSelectedColumn();
             if (mTournament.getParams().isTeamTournament()) {
@@ -797,6 +810,7 @@ public final class JPNRound extends javax.swing.JPanel {
                 update();
             }
         }
+
     }//GEN-LAST:event_jmiChangeRosterForThisRoundActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

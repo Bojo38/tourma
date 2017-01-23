@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,8 +33,8 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingClan;
-import tourma.utils.display.Ranked;
 import tourma.utils.display.TourmaProtocol;
+import tourma.utils.display.IRanked;
 
 /**
  *
@@ -171,7 +172,7 @@ public final class JFullScreenClanRank extends JFullScreen {
     private static final String CS_Clan = "Clan";
     private static final String CS_Members = "Members";
 
-    private void buildPanel(Ranked ranked) throws FontFormatException {
+    private void buildPanel(IRanked ranked) throws FontFormatException {
 
         Font font;
 
@@ -199,139 +200,143 @@ public final class JFullScreenClanRank extends JFullScreen {
         int computed_height = height / 20;
 
         int nbCols = 0;
-        if (Tournament.getTournament().getParams().isTeamTournament()) {
-            nbCols = Tournament.getTournament().getParams().getTeamRankingNumber() + 3;
-        } else {
-            nbCols = Tournament.getTournament().getParams().getIndivRankingNumber() + 3;
-        }
-
-        ArrayList<Integer> rankings = new ArrayList<>();
-        for (int i = 0; i < nbCols - 3; i++) {
+        try {
             if (Tournament.getTournament().getParams().isTeamTournament()) {
-                rankings.add(Tournament.getTournament().getParams().getTeamRankingType(i));
+                nbCols = Tournament.getTournament().getParams().getTeamRankingNumber() + 3;
             } else {
-                rankings.add(Tournament.getTournament().getParams().getIndivRankingType(i));
-            }
-        }
-        int computed_width = width / nbCols;
-
-        // Number
-        JLabel jlbTNum = new JLabel("#");
-        jlbTNum.setFont(f1);
-        jlbTNum.setOpaque(true);
-        jlbTNum.setBackground(Color.BLACK);
-        jlbTNum.setForeground(Color.WHITE);
-
-        jpn.add(jlbTNum, getGridbBagConstraints(0, 0, 1, 1));
-
-        int index = 1;
-
-        JLabel jlbTCoach = new JLabel(Translate.translate(CS_Clan));
-        jlbTCoach.setFont(f1);
-        jlbTCoach.setOpaque(true);
-        jlbTCoach.setBackground(Color.BLACK);
-        jlbTCoach.setForeground(Color.WHITE);
-        jpn.add(jlbTCoach, getGridbBagConstraints(index, 0, 1, 5));
-        index += 5;
-
-        JLabel jlbTCoachs = new JLabel(Translate.translate(CS_Members));
-        jlbTCoachs.setFont(f1);
-        jlbTCoachs.setOpaque(true);
-        jlbTCoachs.setBackground(Color.BLACK);
-        jlbTCoachs.setForeground(Color.WHITE);
-        jpn.add(jlbTCoachs, getGridbBagConstraints(index, 0, 1, 5));
-        index += 5;
-
-        for (int j = 0; j < rankings.size(); j++) {
-            int rankingType = (Integer) rankings.get(j);
-            String name = MjtRanking.getRankingString(rankingType);
-            if (rankingType == 0) {
-                break;
-            } else {
-                JLabel jlbRank = new JLabel(name);
-                jlbRank.setFont(f1);
-                jlbRank.setOpaque(true);
-                jlbRank.setBackground(Color.BLACK);
-                jlbRank.setForeground(Color.WHITE);
-                jpn.add(jlbRank, getGridbBagConstraints(index, 0, 1, 2));
-                index += 2;
-            }
-        }
-
-        int nbRows = ranked.getRowCount();
-        int clanIndex = 0;
-        Clan NoClan = Tournament.getTournament().getClan(0);
-        for (int i = 0; i < nbRows; i++) {
-            Clan clan = (Clan) ranked.getSortedObject(i).getObject();
-            if (clan == NoClan) {
-                continue;
+                nbCols = Tournament.getTournament().getParams().getIndivRankingNumber() + 3;
             }
 
-            Color bkg = new Color(255, 255, 255);
-            if (clanIndex % 2 != 0) {
-                bkg = new Color(220, 220, 220);
-            }
-
-            // Set font
-            Font currentFont = f;
-            if (clanIndex == 0) {
-                currentFont = f1;
-            }
-            if ((clanIndex == 2) || (clanIndex == 1)) {
-                currentFont = f0;
-            }
-
-            // Number
-            JLabel jlbNum = new JLabel("" + (clanIndex + 1));
-            jlbNum.setFont(currentFont);
-            jlbNum.setOpaque(true);
-            jlbNum.setBackground(bkg);
-            jpn.add(jlbNum, getGridbBagConstraints(0, clanIndex + 1, 1, 1));
-
-            index = 1;
-
-            JLabel jlbCoach = getLabelForObject(clan, computed_height, computed_width, currentFont, bkg);
-            jpn.add(jlbCoach, getGridbBagConstraints(index, clanIndex + 1, 1, 5));
-            index += 5;
-
-            StringBuilder members = new StringBuilder("");
-            for (int j = 0; j < Tournament.getTournament().getCoachsCount(); j++) {
-                Coach c = Tournament.getTournament().getCoach(j);
-                if (c.getClan() == clan) {
-                    if (!members.toString().isEmpty()) {
-                        members.append(" / ");
-                    }
-                    members.append(c.getName());
+            ArrayList<Integer> rankings = new ArrayList<>();
+            for (int i = 0; i < nbCols - 3; i++) {
+                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                    rankings.add(Tournament.getTournament().getParams().getTeamRankingType(i));
+                } else {
+                    rankings.add(Tournament.getTournament().getParams().getIndivRankingType(i));
                 }
             }
-            JLabel jlbMembers = new JLabel(members.toString());
-            jlbMembers.setFont(currentFont);
-            jlbMembers.setOpaque(true);
-            jlbMembers.setBackground(bkg);
-            jpn.add(jlbMembers, getGridbBagConstraints(index, clanIndex + 1, 1, 5));
+
+            int computed_width = width / nbCols;
+
+            // Number
+            JLabel jlbTNum = new JLabel("#");
+            jlbTNum.setFont(f1);
+            jlbTNum.setOpaque(true);
+            jlbTNum.setBackground(Color.BLACK);
+            jlbTNum.setForeground(Color.WHITE);
+
+            jpn.add(jlbTNum, getGridbBagConstraints(0, 0, 1, 1));
+
+            int index = 1;
+
+            JLabel jlbTCoach = new JLabel(Translate.translate(CS_Clan));
+            jlbTCoach.setFont(f1);
+            jlbTCoach.setOpaque(true);
+            jlbTCoach.setBackground(Color.BLACK);
+            jlbTCoach.setForeground(Color.WHITE);
+            jpn.add(jlbTCoach, getGridbBagConstraints(index, 0, 1, 5));
+            index += 5;
+
+            JLabel jlbTCoachs = new JLabel(Translate.translate(CS_Members));
+            jlbTCoachs.setFont(f1);
+            jlbTCoachs.setOpaque(true);
+            jlbTCoachs.setBackground(Color.BLACK);
+            jlbTCoachs.setForeground(Color.WHITE);
+            jpn.add(jlbTCoachs, getGridbBagConstraints(index, 0, 1, 5));
             index += 5;
 
             for (int j = 0; j < rankings.size(); j++) {
                 int rankingType = (Integer) rankings.get(j);
-                int value;
-                value = ranked.getSortedValue(i, j + 1);
-
-                String name = Integer.toString(value);
+                String name = MjtRanking.getRankingString(rankingType);
                 if (rankingType == 0) {
                     break;
                 } else {
                     JLabel jlbRank = new JLabel(name);
-                    jlbRank.setFont(currentFont);
+                    jlbRank.setFont(f1);
                     jlbRank.setOpaque(true);
-                    jlbRank.setBackground(bkg);
-                    jpn.add(jlbRank, getGridbBagConstraints(index, clanIndex + 1, 1, 2));
+                    jlbRank.setBackground(Color.BLACK);
+                    jlbRank.setForeground(Color.WHITE);
+                    jpn.add(jlbRank, getGridbBagConstraints(index, 0, 1, 2));
                     index += 2;
                 }
-
             }
-            clanIndex++;
-        }
 
+            int nbRows = ranked.getRowCount();
+            int clanIndex = 0;
+            Clan NoClan = Tournament.getTournament().getClan(0);
+            for (int i = 0; i < nbRows; i++) {
+                Clan clan = (Clan) ranked.getSortedObject(i).getObject();
+                if (clan == NoClan) {
+                    continue;
+                }
+
+                Color bkg = new Color(255, 255, 255);
+                if (clanIndex % 2 != 0) {
+                    bkg = new Color(220, 220, 220);
+                }
+
+                // Set font
+                Font currentFont = f;
+                if (clanIndex == 0) {
+                    currentFont = f1;
+                }
+                if ((clanIndex == 2) || (clanIndex == 1)) {
+                    currentFont = f0;
+                }
+
+                // Number
+                JLabel jlbNum = new JLabel("" + (clanIndex + 1));
+                jlbNum.setFont(currentFont);
+                jlbNum.setOpaque(true);
+                jlbNum.setBackground(bkg);
+                jpn.add(jlbNum, getGridbBagConstraints(0, clanIndex + 1, 1, 1));
+
+                index = 1;
+
+                JLabel jlbCoach = getLabelForObject(clan, computed_height, computed_width, currentFont, bkg);
+                jpn.add(jlbCoach, getGridbBagConstraints(index, clanIndex + 1, 1, 5));
+                index += 5;
+
+                StringBuilder members = new StringBuilder("");
+                for (int j = 0; j < Tournament.getTournament().getCoachsCount(); j++) {
+                    Coach c = Tournament.getTournament().getCoach(j);
+                    if (c.getClan() == clan) {
+                        if (!members.toString().isEmpty()) {
+                            members.append(" / ");
+                        }
+                        members.append(c.getName());
+                    }
+                }
+                JLabel jlbMembers = new JLabel(members.toString());
+                jlbMembers.setFont(currentFont);
+                jlbMembers.setOpaque(true);
+                jlbMembers.setBackground(bkg);
+                jpn.add(jlbMembers, getGridbBagConstraints(index, clanIndex + 1, 1, 5));
+                index += 5;
+
+                for (int j = 0; j < rankings.size(); j++) {
+                    int rankingType = (Integer) rankings.get(j);
+                    int value;
+                    value = ranked.getSortedValue(i, j + 1);
+
+                    String name = Integer.toString(value);
+                    if (rankingType == 0) {
+                        break;
+                    } else {
+                        JLabel jlbRank = new JLabel(name);
+                        jlbRank.setFont(currentFont);
+                        jlbRank.setOpaque(true);
+                        jlbRank.setBackground(bkg);
+                        jpn.add(jlbRank, getGridbBagConstraints(index, clanIndex + 1, 1, 2));
+                        index += 2;
+                    }
+
+                }
+                clanIndex++;
+            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
+        }
         jscrp.setViewportView(jpn);
         jpnContent = jpn;
         this.repaint();

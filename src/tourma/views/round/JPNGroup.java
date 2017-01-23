@@ -1,9 +1,11 @@
 package tourma.views.round;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
+import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
@@ -107,6 +109,7 @@ public final class JPNGroup extends javax.swing.JPanel {
      * Update panel
      */
     public void update() {
+
         final ArrayList<Coach> ArrayList = new ArrayList<>();
 
         for (int i = 0; i < mTournament.getCoachsCount(); i++) {
@@ -143,15 +146,18 @@ public final class JPNGroup extends javax.swing.JPanel {
 
         jtbGroup.setRowHeight(25);
         TableFormat.setColumnSize(jtbGroup);
+
     }
 
     private static final String CS_Group = "GENERAL PAR GROUPE";
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralActionPerformed
+
         final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
                 Translate.translate(CS_Group) + ": " + mGroup.getName(), mRoundNumber, mTournament, (MjtRanking) jtbGroup.getModel(), 0);
         jdg.setVisible(true);
+
 }//GEN-LAST:event_jbtGeneralActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

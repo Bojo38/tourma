@@ -4,7 +4,11 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 
@@ -12,8 +16,19 @@ import tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class Substitute implements XMLExport {
+public class Substitute implements IXMLExport, Serializable {
     private static final Logger LOG = Logger.getLogger(Substitute.class.getName());
+
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     /**
      *
@@ -108,7 +123,6 @@ public class Substitute implements XMLExport {
             equality &= this.mTitular.equals(s.getTitular());
 
             return equality;
-
         }
         return false;
     }

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * jdgRoundReport.java
  *
  * Created on 28 juin 2010, 10:52:47
@@ -27,6 +27,7 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +43,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
+import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -127,7 +129,7 @@ public final class JdgRound extends javax.swing.JDialog {
         mRoundNumber = roundNumber;
         mTour = tour;
 
-        this.setTitle(tour.getParams().getTournamentName() + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + roundNumber);
+            this.setTitle(tour.getParams().getTournamentName() + StringConstants.CS_THICK + java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString(StringConstants.CS_ROUND) + " " + roundNumber);
         try {
             jepHTML.setContentType("HTML");
             File f;
@@ -302,16 +304,16 @@ public final class JdgRound extends javax.swing.JDialog {
                 in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
                 {
                     //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
-                    StringBuilder sb=new StringBuilder();
+                    StringBuilder sb = new StringBuilder();
                     int c = in.read();
                     while (c != -1) {
-                        sb.append((char)c);
+                        sb.append((char) c);
                         c = in.read();
                     }
 
-                    String s=sb.toString();
+                    String s = sb.toString();
 
-                    s=s.substring(s.indexOf("<html>"));
+                    s = s.substring(s.indexOf("<html>"));
 
                     HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Round Report");
                 }

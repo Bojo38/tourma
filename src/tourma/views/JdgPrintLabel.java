@@ -29,6 +29,7 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +47,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -71,7 +73,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
     private final Round mRound;
     private final boolean mByTeam;
     private final boolean mPreFilled;
-    private Tournament mTour = Tournament.getTournament();
+    private Tournament mTour;
     private int mRoundNumber = 0;
 
     private final static String CS_ACCR_Versus = "VS";
@@ -89,6 +91,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
     public JdgPrintLabel(final java.awt.Frame parent, final boolean modal, final Round round, final boolean preFilled, final boolean byTeam) {
         super(parent, modal);
         initComponents();
+
+        mTour = Tournament.getTournament();
 
         this.setPreferredSize(new Dimension(800, 600));
 
@@ -259,16 +263,16 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
             root.put("TitleTeam", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Team)));
 
             int nb_rows = Tournament.getTournament().getParams().getCriteriaCount() * 2;
-            
+
             root.put("nb_rows", nb_rows);
-            int nb_rows_team=Tournament.getTournament().getParams().getCriteriaCount() * 2 * Tournament.getTournament().getParams().getTeamMatesNumber();
+            int nb_rows_team = Tournament.getTournament().getParams().getCriteriaCount() * 2 * Tournament.getTournament().getParams().getTeamMatesNumber();
             root.put("nb_rows_team", nb_rows_team);
             final ArrayList team_matches = new ArrayList();
             for (int i = 0; i < mRound.getMatchsCount(); i++) {
                 Match m = mRound.getMatch(i);
                 if (m instanceof TeamMatch) {
                     TeamMatch tm = (TeamMatch) m;
-                    Map team_match=new HashMap();
+                    Map team_match = new HashMap();
                     ArrayList matches = new ArrayList();
                     for (int j = 0; j < tm.getMatchCount(); j++) {
                         CoachMatch cm = tm.getMatch(j);
@@ -313,12 +317,12 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                             }
                         }
                         match.put("criterias", crits);
-                        matches.add(match) ;                      
+                        matches.add(match);
                     }
-                    team_match.put("matches",matches);                    
+                    team_match.put("matches", matches);
                     team_matches.add(team_match);
                 }
-                
+
             }
             root.put(ReportKeys.CS_TeamMatches, team_matches);
 

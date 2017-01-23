@@ -3,13 +3,14 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * JPNTeamRound.java
  *
  * Created on 20 juil. 2010, 10:47:49
  */
 package tourma.views.round;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JScrollPane;
@@ -18,6 +19,7 @@ import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
+import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.Parameters;
 import tourma.data.Round;
@@ -48,8 +50,8 @@ public final class JPNTeamRound extends javax.swing.JPanel {
      */
     private boolean mRoundOnly = false;
 
-    private static final String CS_Matchs="MATCHS";
-    
+    private static final String CS_Matchs = "MATCHS";
+
     /**
      * Creates new form JPNTeamRound
      *
@@ -78,11 +80,11 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 teams.add(Tournament.getTournament().getTeam(cpt));
             }
             ArrayList<Coach> coachs = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount() ;cpt++) {
+            for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
                 coachs.add(Tournament.getTournament().getCoach(cpt));
             }
             final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(),
-                    criteria, Tournament.getTournament(),coachs,teams, mRound, false, true);
+                    criteria, Tournament.getTournament(), coachs, teams, mRound, false, true);
             jtpAnnexRank.add(criteria.getName(), jpn);
         }
 
@@ -91,15 +93,13 @@ public final class JPNTeamRound extends javax.swing.JPanel {
     }
 
     /**
-     * 
-     * @param r 
+     *
+     * @param r
      */
-    public void setRoundOnly(boolean r)
-    {
-        mRoundOnly=r;
+    public void setRoundOnly(boolean r) {
+        mRoundOnly = r;
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -189,29 +189,31 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private static final String CS_generalByTeam="GENERAL PAR EQUIPE";
-    
+    private static final String CS_generalByTeam = "GENERAL PAR EQUIPE";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGeneralTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGeneralTeamActionPerformed
+
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
-                ArrayList<Team> teams=new ArrayList<>();
-        for (int cpt=0;cpt<mTournament.getTeamsCount(); cpt++)
-        {
-            teams.add(mTournament.getTeam(cpt));
-        }
+                ArrayList<Team> teams = new ArrayList<>();
+                for (int cpt = 0; cpt < mTournament.getTeamsCount(); cpt++) {
+                    teams.add(mTournament.getTeam(cpt));
+                }
                 final MjtRankingTeam model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), i,
                         teams, mRoundOnly);
-                final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true, 
+                final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
                         Translate.translate(CS_generalByTeam),
                         i + 1, mTournament, model, 0);
                 jdg.setVisible(true);
                 break;
             }
         }
+
 }//GEN-LAST:event_jbtGeneralTeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtShowMatchTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowMatchTeamActionPerformed
+
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
                 final JdgRound jdg = new JdgRound(MainFrame.getMainFrame(), true, mRound, i + 1, mTournament, true, true);
@@ -219,10 +221,12 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 break;
             }
         }
+
 }//GEN-LAST:event_jbtShowMatchTeamActionPerformed
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
+
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
                 ArrayList<Team> teams = new ArrayList<>();
@@ -248,6 +252,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 break;
             }
         }
+
     }//GEN-LAST:event_jbtGlobalActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -269,6 +274,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
     public void update() {
 
         final ArrayList<Round> v = new ArrayList<>();
+
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
                 v.add(mTournament.getRound(i));
@@ -313,10 +319,8 @@ public final class JPNTeamRound extends javax.swing.JPanel {
             TableFormat.setColumnSize(mJtbTeamMatch);
             mJtbTeamMatch.setRowHeight(30);
         }
-
         jtbRankingTeam.setRowHeight(30);
 
     }
 
-    
 }

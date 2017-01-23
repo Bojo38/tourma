@@ -5,12 +5,14 @@
 package tourma.views.parameters;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.Group;
 import tourma.data.GroupPoints;
+import tourma.data.Tournament;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -21,7 +23,7 @@ import tourma.languages.Translate;
  */
 public final class JPNParamGroup extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private Tournament mTournament;
 
     /**
      * Creates new form JPNParamGroup
@@ -272,8 +274,8 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         add(jPanel18, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
 
-    private static final String CS_EnterNewGroupName="ENTREZ LE NOM DU NOUVEAU GROUPE";
-    
+    private static final String CS_EnterNewGroupName = "ENTREZ LE NOM DU NOUVEAU GROUPE";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddGroupActionPerformed
         final String newGroup = JOptionPane.showInputDialog(
@@ -290,6 +292,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
 
             update();
         }
+
     }//GEN-LAST:event_jbtAddGroupActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveGroupActionPerformed
@@ -308,29 +311,31 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             update();
         }
     }//GEN-LAST:event_jbtRemoveGroupActionPerformed
-    
-    private final static String CS_EnterGroupNewName="ENTREZ LE NOUVEAU NOM DU GROUPE";
-    
+
+    private final static String CS_EnterGroupNewName = "ENTREZ LE NOUVEAU NOM DU GROUPE";
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRenameGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRenameGroupActionPerformed
 
         if (jlsGroups.getSelectedIndex() >= 0) {
+
             final String currentName = mTournament.getGroup(jlsGroups.getSelectedIndex()).getName();
 
-            
             final String newGroup = JOptionPane.showInputDialog(
-                    Translate.translate(CS_EnterGroupNewName), 
+                    Translate.translate(CS_EnterGroupNewName),
                     currentName);
             if (newGroup != null) {
                 mTournament.getGroup(jlsGroups.getSelectedIndex()).setName(newGroup);
                 update();
             }
+
         }
     }//GEN-LAST:event_jbtRenameGroupActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbGroupLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupLeftActionPerformed
         final DefaultListModel listModel = new DefaultListModel();
         //final ArrayList<RosterType> rosters = mTournament.getGroup(jcbGroupLeft.getSelectedIndex()).getRosters();
+
         Group g = mTournament.getGroup(jcbGroupLeft.getSelectedIndex());
         for (int i = 0; i < g.getRosterCount(); i++) {
             RosterType r = g.getRoster(i);
@@ -338,12 +343,14 @@ public final class JPNParamGroup extends javax.swing.JPanel {
                 listModel.addElement(r.getName());
             }
         }
+
         jlsLeft.setModel(listModel);
     }//GEN-LAST:event_jcbGroupLeftActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGroupToRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGroupToRightActionPerformed
 
         if (jlsLeft.getSelectedIndex() > -1) {
+
             final int index = jlsLeft.getSelectedIndex();
             Group g = mTournament.getGroup(jcbGroupLeft.getSelectedIndex());
             final RosterType roster = g.getRoster(index);
@@ -363,11 +370,13 @@ public final class JPNParamGroup extends javax.swing.JPanel {
                 listModelRight.addElement(g.getRoster(i).getName());
             }
             jlsRight.setModel(listModelRight);
+
         }
     }//GEN-LAST:event_jbtGroupToRightActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGrouToLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGrouToLeftActionPerformed
         if (jlsRight.getSelectedIndex() > -1) {
+
             final int index = jlsRight.getSelectedIndex();
             Group g = mTournament.getGroup(jcbGroupRight.getSelectedIndex());
             final RosterType roster = g.getRoster(index);
@@ -388,12 +397,13 @@ public final class JPNParamGroup extends javax.swing.JPanel {
                 listModelLeft.addElement(g.getRoster(i).getName());
             }
             jlsLeft.setModel(listModelLeft);
+
         }
     }//GEN-LAST:event_jbtGrouToLeftActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbGroupRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGroupRightActionPerformed
         final DefaultListModel listModel = new DefaultListModel();
-        //final ArrayList<RosterType> rosters = mTournament.getGroup(jcbGroupRight.getSelectedIndex()).getRosters();
+
         Group g = mTournament.getGroup(jcbGroupRight.getSelectedIndex());
         for (int i = 0; i < g.getRosterCount(); i++) {
             RosterType r = g.getRoster(i);
@@ -402,6 +412,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             }
         }
         jlsRight.setModel(listModel);
+
     }//GEN-LAST:event_jcbGroupRightActionPerformed
 
     private void jcbPointsSelectedGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPointsSelectedGroupActionPerformed
@@ -415,6 +426,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
     }//GEN-LAST:event_jcbPointsOpponentGroupActionPerformed
 
     private void jftfGroupVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jftfGroupVictoryFocusLost
+
         Group g = mTournament.getGroup(jcbPointsSelectedGroup.getSelectedIndex());
         Group go = mTournament.getGroup(jcbPointsOpponentGroup.getSelectedIndex());
 
@@ -426,9 +438,12 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         } catch (ParseException e) {
             jftfGroupVictory.setValue(jftfGroupVictory.getValue());
         }
+
+
     }//GEN-LAST:event_jftfGroupVictoryFocusLost
 
     private void jftfGroupDrawFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jftfGroupDrawFocusLost
+
         Group g = mTournament.getGroup(jcbPointsSelectedGroup.getSelectedIndex());
         Group go = mTournament.getGroup(jcbPointsOpponentGroup.getSelectedIndex());
 
@@ -440,9 +455,11 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         } catch (ParseException e) {
             jftfGroupDraw.setValue(jftfGroupDraw.getValue());
         }
+
     }//GEN-LAST:event_jftfGroupDrawFocusLost
 
     private void jftfGroupLossFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jftfGroupLossFocusLost
+
         Group g = mTournament.getGroup(jcbPointsSelectedGroup.getSelectedIndex());
         Group go = mTournament.getGroup(jcbPointsOpponentGroup.getSelectedIndex());
 
@@ -454,9 +471,11 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         } catch (ParseException e) {
             jftfGroupLoss.setValue(jftfGroupLoss.getValue());
         }
+
     }//GEN-LAST:event_jftfGroupLossFocusLost
 
     private void updatePoints() {
+
         int index = jcbPointsSelectedGroup.getSelectedIndex();
         int indexO = jcbPointsOpponentGroup.getSelectedIndex();
         if ((index >= 0) && (indexO >= 0)) {
@@ -473,12 +492,14 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             jftfGroupDraw.setValue(gp.getDrawPoints());
             jftfGroupLoss.setValue(gp.getLossPoints());
         }
+
     }
 
     /**
      * Update Panel
      */
     public void update() {
+
         final DefaultListModel groupModel = new DefaultListModel();
         final DefaultComboBoxModel groupsLeftModel = new DefaultComboBoxModel();
         final DefaultComboBoxModel groupsRightModel = new DefaultComboBoxModel();
@@ -512,6 +533,19 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             }
         }
 
+        boolean isClient=Tournament.getTournament().isClient();
+        jbtAddGroup.setEnabled(!isClient);
+        jbtGrouToLeft.setEnabled(!isClient);
+        jbtGroupToRight.setEnabled(!isClient);
+        jbtRenameGroup.setEnabled(!isClient);
+        jbtRemoveGroup.setEnabled(!isClient);
+        
+        jftfGroupDraw.setEnabled(!isClient);
+        jftfGroupLoss.setEnabled(!isClient);
+        jftfGroupVictory.setEnabled(!isClient);
+        
+        
+        
         updatePoints();
 
     }

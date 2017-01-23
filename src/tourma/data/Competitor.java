@@ -6,16 +6,20 @@ package tourma.data;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import tourma.utility.StringConstants;
 
 /**
  *
  * @author WFMJ7631
  */
-public abstract class Competitor implements Comparable<Object>, IWithNameAndPicture {
+public abstract class Competitor implements Comparable<Object>, IWithNameAndPicture, Serializable {
 
     /**
      *
@@ -38,23 +42,92 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         return new Color(red, green, blue);
     }
 
+    public boolean isUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+    }
+    protected boolean updated = false;
+
+    public void pull(Competitor comp) {
+        this.setName(comp.getName());
+        this.setColor(comp.getColor());
+        this.setPicture(comp.getPicture());
+        if (comp.getClan() != null) {
+            Clan clan = Clan.getClan(comp.getClan().getName());
+            this.setClan(clan);
+        }
+
+        for (Category category : comp.mCategories) {
+            // Find local instance of Category
+            for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+                Category local = Tournament.getTournament().getCategory(i);
+                if (local.getUID() == category.getUID()) {
+                    // Test if category already contained
+                    if (!mCategories.contains(local)) {
+                        mCategories.add(local);
+                    }
+                }
+            }
+            if (comp.mCategories.size() != mCategories.size()) {
+                mCategories.clear();
+                pull(comp);
+            }
+        }
+
+    }
+
+    public void push(Competitor comp) {
+        if (comp.isUpdated()) {
+            this.setName(comp.getName());
+            this.setColor(comp.getColor());
+            this.setPicture(comp.getPicture());
+            if (comp.getClan() != null) {
+                Clan clan = Clan.getClan(comp.getClan().getName());
+                this.setClan(clan);
+            }
+
+            for (Category category : comp.mCategories) {
+                // Find local instance of Category
+                for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
+                    Category local = Tournament.getTournament().getCategory(i);
+                    if (local.getUID() == category.getUID()) {
+                        // Test if category already contained
+                        if (!mCategories.contains(local)) {
+                            mCategories.add(local);
+                        }
+                    }
+                }
+                if (comp.mCategories.size() != mCategories.size()) {
+                    mCategories.clear();
+                    pull(comp);
+                }
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object c) {
+
         if (c instanceof Competitor) {
             Competitor comp = (Competitor) c;
             return getName().equals(comp.getName());
         }
         return false;
+
     }
 
-    public String getRawName()
-    {
+    public String getRawName() {
         return mName;
     }
-    
+
     @Override
     public int hashCode() {
+
         return getName().hashCode();
+
     }
 
     /**
@@ -80,7 +153,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
     /**
      *
      */
-    private BufferedImage picture = null;
+    private ImageIcon picture = null;
     /**
      * Clan
      */
@@ -129,14 +202,17 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      */
     public void addCategory(Category mCategory) {
         mCategories.add(mCategory);
+        updated=true;
     }
 
     public void delCategory(Category mCategory) {
         mCategories.remove(mCategory);
+        updated=true;
     }
 
     public void clearCategory() {
         mCategories.clear();
+        updated=true;
     }
 
     /**
@@ -151,7 +227,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @param opponent
      * @param r
      */
-    public abstract void addMatchRoundRobin(Competitor opponent, Round r,boolean complete);
+    public abstract void addMatchRoundRobin(Competitor opponent, Round r, boolean complete);
 
     /**
      *
@@ -190,7 +266,9 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
 
     @Override
     public String toString() {
+
         return getName();
+
     }
 
     /**
@@ -207,7 +285,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      * @return
      */
     @Override
-    public BufferedImage getPicture() {
+    public ImageIcon getPicture() {
         return picture;
     }
 
@@ -231,14 +309,16 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      */
     public void setColor(Color mColor) {
         this.mColor = mColor;
+        updated=true;
     }
 
     /**
      * @param picture the picture to set
      */
     @Override
-    public void setPicture(BufferedImage picture) {
+    public void setPicture(ImageIcon picture) {
         this.picture = picture;
+        updated=true;
     }
 
     /**
@@ -253,6 +333,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      */
     public void setClan(Clan mClan) {
         this.mClan = mClan;
+        updated=true;
     }
 
     /**
@@ -286,6 +367,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
     public void removeMatch(Match m) {
         if (mMatchs.contains(m)) {
             mMatchs.remove(m);
+            updated=true;
         }
     }
 
@@ -318,11 +400,11 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      */
     public void clearMatchs() {
         mMatchs.clear();
+        updated=true;
     }
 
-    public boolean containsMatch(Match m)
-    {
+    public boolean containsMatch(Match m) {
         return mMatchs.contains(m);
     }
-    
+
 }

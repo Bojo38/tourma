@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * JdgCoach.java
  *
  * Created on 10 mai 2010, 19:37:53
@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -39,6 +40,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 import tourma.data.Category;
+import tourma.data.Tournament;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -84,14 +86,14 @@ public final class JdgTeam extends javax.swing.JDialog {
                 if (url != null) {
                     BufferedImage buf = ImageIO.read(url);
                     if (buf != null) {
-                        mTeam.setPicture(buf);
+                        mTeam.setPicture(new ImageIcon(buf));
                     }
                 }
             } catch (IOException ex) {
                 Logger.getLogger(JdgCoach.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.getPicture()), 80, 80));
+        jbtAvatar.setIcon(resize(mTeam.getPicture(), 80, 80));
 
         final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
         for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
@@ -106,7 +108,6 @@ public final class JdgTeam extends javax.swing.JDialog {
             jcbClan.setEnabled(false);
             jLabel2.setEnabled(false);
         }
-
         update();
     }
 
@@ -135,7 +136,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
         if (mTeam.getPicture() == null) {
-            mTeam.setPicture(new BufferedImage(96, 96, BufferedImage.TYPE_4BYTE_ABGR));
+            mTeam.setPicture(new ImageIcon(new BufferedImage(96, 96, BufferedImage.TYPE_4BYTE_ABGR)));
         }
 
         final DefaultComboBoxModel clanListModel = new DefaultComboBoxModel();
@@ -151,7 +152,7 @@ public final class JdgTeam extends javax.swing.JDialog {
             }
         }
 
-        jbtAvatar.setIcon(resize(new ImageIcon(mTeam.getPicture()), 80, 80));
+        jbtAvatar.setIcon(resize(mTeam.getPicture(), 80, 80));
         update();
     }
 
@@ -342,6 +343,7 @@ public final class JdgTeam extends javax.swing.JDialog {
                     Translate.translate(CS_EmptyTeamName)
             );
         } else {
+
             mTeam.setName(jtfNom.getText());
 
             if (mTour.getParams().isEnableClans()) {
@@ -393,7 +395,6 @@ public final class JdgTeam extends javax.swing.JDialog {
     private static final String CS_SelectPicture = "Select picture";
     private static final String CS_Picture = "Picture";
 
-
     public List<ImageIcon> getImagesResources(final String path) throws IOException {
         final ClassLoader loader = Thread.currentThread().getContextClassLoader();
         ArrayList<ImageIcon> list = new ArrayList<>();
@@ -418,15 +419,12 @@ public final class JdgTeam extends javax.swing.JDialog {
                 }
                 // System.out.println("Tests "+name+" starts with "+pathToTest);
                 if (name.startsWith(pathToTest + "/")) { //filter according to the path
-                    BufferedImage bi=ImageIO.read(getClass().getResource("/tourma/images/flags/Country France.png"));
-                    bi=ImageIO.read(getClass().getResource("/"+name));
-                    if (bi==null)
-                    {
-                        System.out.println("/"+name+" returns a null image");
-                    }
-                    else
-                    {
-                        ImageIcon ii=new ImageIcon(bi);
+                    BufferedImage bi = ImageIO.read(getClass().getResource("/tourma/images/flags/Country France.png"));
+                    bi = ImageIO.read(getClass().getResource("/" + name));
+                    if (bi == null) {
+                        System.out.println("/" + name + " returns a null image");
+                    } else {
+                        ImageIcon ii = new ImageIcon(bi);
                         list.add(ii);
                     }
                 }
@@ -453,7 +451,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         return list;
     }
 
-        
+
     private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
         try {
             List<ImageIcon> listOfFiles = getImagesResources("/tourma/images/flags");
@@ -484,22 +482,16 @@ public final class JdgTeam extends javax.swing.JDialog {
                 if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());
                     icon = resize(icon, 80, 80);
-                    this.mTeam.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
-                    Graphics g = this.mTeam.getPicture().createGraphics();
-                    // paint the Icon to the BufferedImage.
-                    icon.paintIcon(null, g, 0, 0);
-                    g.dispose();
+                    this.mTeam.setPicture(icon);
+                    mTeam.setUpdated(true);
                 }
             } else {
                 ImageIcon icon = (ImageIcon) combo.getSelectedItem();
-                this.mTeam.setPicture(new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB));
-                Graphics g = this.mTeam.getPicture().createGraphics();
-                // paint the Icon to the BufferedImage.
-                icon.paintIcon(null, g, 0, 0);
-                g.dispose();
+                this.mTeam.setPicture(icon);
+                mTeam.setUpdated(true);
             }
 
-            jbtAvatar.setIcon(new ImageIcon(mTeam.getPicture()));
+            jbtAvatar.setIcon(mTeam.getPicture());
         } catch (IOException use) {
             LOG.log(Level.WARNING, use.getLocalizedMessage());
         }
@@ -510,6 +502,7 @@ public final class JdgTeam extends javax.swing.JDialog {
     private void jbtAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCategoryActionPerformed
         ArrayList<String> cats = new ArrayList<>();
         cats.add(" ");
+
         for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
             Category cat = Tournament.getTournament().getCategory(i);
             if (!mTeam.containsCategory(cat)) {
@@ -524,7 +517,9 @@ public final class JdgTeam extends javax.swing.JDialog {
             String name = cats.get(jcb.getSelectedIndex());
             Category cat = Category.getCategory(name);
             mTeam.addCategory(cat);
+            mTeam.setUpdated(true);
         }
+
         update();
 
     }//GEN-LAST:event_jbtAddCategoryActionPerformed
@@ -534,9 +529,11 @@ public final class JdgTeam extends javax.swing.JDialog {
         List selection = jlsCategories.getSelectedValuesList();
         for (Object o : selection) {
             if (o instanceof String) {
+
                 String name = (String) o;
                 Category cat = Category.getCategory(name);
                 mTeam.delCategory(cat);
+                mTeam.setUpdated(true);
             }
         }
 
@@ -574,7 +571,6 @@ public final class JdgTeam extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     private void update() {
-
         jtfNom.setText(mTeam.getName());
         jtbCoachs.setModel(new MjtCoaches(mTeam));
 
@@ -600,6 +596,7 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 0);
         jbtDelCategory.setEnabled(mTeam.getCategoryCount() > 0);
+
     }
     private static final Logger LOG = Logger.getLogger(JdgTeam.class.getName());
 
