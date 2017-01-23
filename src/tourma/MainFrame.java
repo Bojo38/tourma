@@ -162,23 +162,24 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }
 
     public void updateMenus() {
-
+        boolean isClient = Tournament.getTournament().isClient();
         if (jpnContent instanceof JPNRound) {
 
             Round r = ((JPNRound) jpnContent).getRound();
             if (mTournament.getRoundIndex(r) == mTournament.getRoundsCount() - 1) {
-                jmiDelRound.setEnabled(true);
 
-                jmiGenerateNextRound.setEnabled(r.allMatchesEntered());
+                jmiDelRound.setEnabled(!isClient);
 
-                jmiChangePairing.setEnabled(true);
-                jmiAddFreeMatch.setEnabled(true);
-                jmiDelFreeMatch.setEnabled(true);
-                jmiFullScreenMatchs.setEnabled(true);
-                jmiFullScreenMatchsClash.setEnabled(true);
-                jmiFullScreenRankGeneral.setEnabled(true);
-                jmiFullScreenRankAnnexIndiv.setEnabled(true);
-                jmiFullScreenRankAnnexIndiv1.setEnabled(true);
+                jmiGenerateNextRound.setEnabled((r.allMatchesEntered()) && (!isClient));
+
+                jmiChangePairing.setEnabled(!isClient);
+                jmiAddFreeMatch.setEnabled(!isClient);
+                jmiDelFreeMatch.setEnabled(!isClient);
+                jmiFullScreenMatchs.setEnabled(!isClient);
+                jmiFullScreenMatchsClash.setEnabled(!isClient);
+                jmiFullScreenRankGeneral.setEnabled(!isClient);
+                jmiFullScreenRankAnnexIndiv.setEnabled(!isClient);
+                jmiFullScreenRankAnnexIndiv1.setEnabled(!isClient);
 
                 jmiFullScreenRankAnnexCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 0);
                 jmiFullScreenRankAnnexCategory1.setEnabled(Tournament.getTournament().getCategoriesCount() > 0);
@@ -261,14 +262,23 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiFullScreenRankCategory.setEnabled(false);
             jmiFullScreenRankAnnexGroups.setEnabled(false);
             jmiFullScreenRankAnnexGroups1.setEnabled(false);
-            jmiFullScreenRankGroups.setEnabled(false);
+            jmiFullScreenRankGroups.setEnabled(false); 
             jmiFullScreenRankAnnexPool.setEnabled(false);
             jmiFullScreenRankAnnexPool1.setEnabled(false);
             jmiFullScreenPool.setEnabled(false);
             jmiEditCoef.setEnabled(false);
         }
-        jcxmiRemoteEdit.setSelected(Tournament.getTournament().getParams().isWebEdit());
-
+        jcxmiRemoteEdit.setSelected((Tournament.getTournament().getParams().isWebEdit()) && (!isClient));
+        
+        
+        jmiGenerateFirstRound.setEnabled(!isClient);
+        jcxmiAsServer.setEnabled(!isClient);
+        jcxPatchPortugal.setEnabled(!isClient);
+        jmiEditColors.setEnabled(!isClient);
+        jmiEditWebPort.setEnabled(!isClient);
+        jmiEditDescription.setEnabled(!isClient);
+        jcxmiRemoteEdit.setEnabled(!isClient);
+        jmiNafLoad.setEnabled(!isClient);
     }
 
     /**

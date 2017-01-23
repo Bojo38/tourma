@@ -190,7 +190,10 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
             if (Tournament.getTournament().isClient())
             {
                 jtbCriteria.setEnabled(false);
-            }
+                jcxTableBonus.setEnabled(false);
+                jcxTableCoefPerRound.setEnabled(false);
+                jspCoef.setEnabled(false);                 
+             }
             
             jbtAddCriteria.setEnabled(!bTourStarted && !Tournament.getTournament().isClient());
             jbtRemoveCriteria.setEnabled(!bTourStarted && !Tournament.getTournament().isClient());

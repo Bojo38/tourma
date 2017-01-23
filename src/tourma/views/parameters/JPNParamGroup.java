@@ -533,6 +533,19 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             }
         }
 
+        boolean isClient=Tournament.getTournament().isClient();
+        jbtAddGroup.setEnabled(!isClient);
+        jbtGrouToLeft.setEnabled(!isClient);
+        jbtGroupToRight.setEnabled(!isClient);
+        jbtRenameGroup.setEnabled(!isClient);
+        jbtRemoveGroup.setEnabled(!isClient);
+        
+        jftfGroupDraw.setEnabled(!isClient);
+        jftfGroupLoss.setEnabled(!isClient);
+        jftfGroupVictory.setEnabled(!isClient);
+        
+        
+        
         updatePoints();
 
     }

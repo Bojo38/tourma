@@ -633,6 +633,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
             jtffLost.setEnabled(false);
             jtffRefused.setEnabled(false);
             jtffVictory.setEnabled(false);
+            
         }
 
     }

@@ -225,6 +225,13 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         }
 
         jlsCategories.setModel(listModel);
+        
+        
+        boolean isClient=Tournament.getTournament().isClient();
+        jbtAddCategory.setEnabled(!isClient);
+        jbtRemoveCategory.setEnabled(!isClient);
+        jbtEditCategory.setEnabled(!isClient);
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel13;
