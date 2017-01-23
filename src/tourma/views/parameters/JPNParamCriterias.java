@@ -183,7 +183,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
      */
     public void update() {
         
-                
+               
             final boolean bTourStarted = mTournament.getRoundsCount() > 0;
             jtbCriteria.setModel(new MjtCriterias(mTournament));
             
