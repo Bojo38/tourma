@@ -1236,6 +1236,59 @@ public class CoachMatch extends Match implements Serializable {
         return value;
     }
 
+    protected static int getCriteriaBonusPoints(Coach c,CoachMatch m,Criteria crit)
+    {
+        int value =0;
+        Value v=m.getValue(crit);
+        if (m.getCompetitor1()==c)
+        {
+            if (v.getValue1()>=crit.getOffensiveThreshold())
+            {
+                value+=crit.getOffensiveBonuses();
+            }
+            
+            if (v.getValue1()>=v.getValue2()+crit.getOffensiveDiffThreshold())
+            {
+                value+=crit.getOffensiveDiffBonuses();
+            }
+            
+            if ((v.getValue1()<v.getValue2())&&(v.getValue1()+crit.getDefensiveDiffThreshold()>=v.getValue2()))
+            {
+                value+=crit.getDefensiveDiffBonuses();
+            }
+        }
+        if (m.getCompetitor2()==c)
+        {
+            if (v.getValue2()>=crit.getOffensiveThreshold())
+            {
+                value+=crit.getOffensiveBonuses();
+            }
+            
+            if (v.getValue2()>=v.getValue1()+crit.getOffensiveDiffThreshold())
+            {
+                value+=crit.getOffensiveDiffBonuses();
+            }
+            
+            if ((v.getValue2()<v.getValue1())&&(v.getValue2()+crit.getDefensiveDiffThreshold()>=v.getValue1()))
+            {
+                value+=crit.getDefensiveDiffBonuses();
+            }
+        }
+        return value;
+    }
+    
+    protected static int getCriteriasBonusPoints(Coach c,CoachMatch m)
+    {
+        int value=0;
+      // loop on Criterias
+        for (int i=0; i<Tournament.getTournament().getParams().getCriteriaCount(); i++)
+        {
+            Criteria crit=Tournament.getTournament().getParams().getCriteria(i);
+            value+=getCriteriaBonusPoints(c,m,crit);
+        }
+        return value;
+    } 
+    
     /**
      *
      * @param c
@@ -1255,6 +1308,9 @@ public class CoachMatch extends Match implements Serializable {
         final Value val = m.getValue(td);
         if (val != null) {
             if (m.getCompetitor1() == c) {
+                
+                value+=getCriteriasBonusPoints(c,m);
+                
                 if (m.isConcedeedBy1()) {
                     if (withMainPoints) {
                         value += Tournament.getTournament().getParams().getPointsConcedeed();
@@ -1325,6 +1381,7 @@ public class CoachMatch extends Match implements Serializable {
                 }
             }
             if (m.getCompetitor2() == c) {
+                value+=getCriteriasBonusPoints(c,m);
                 if (m.isConcedeedBy2()) {
                     if (withMainPoints) {
                         value += Tournament.getTournament().getParams().getPointsConcedeed();
