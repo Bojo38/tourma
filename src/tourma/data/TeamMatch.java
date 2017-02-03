@@ -49,11 +49,9 @@ public class TeamMatch extends Match implements Serializable {
 
     @Override
     public boolean isUpdated() {
-        for (CoachMatch m:mMatchs)
-        {
-            if (m.isUpdated())
-            {
-                updated=true;
+        for (CoachMatch m : mMatchs) {
+            if (m.isUpdated()) {
+                updated = true;
                 break;
             }
         }
@@ -625,6 +623,95 @@ public class TeamMatch extends Match implements Serializable {
 
     }
 
+    protected static int getCriteriaBonusPoints(Coach c, CoachMatch m, Criteria crit) {
+        int value = 0;
+        Value v = m.getValue(crit);
+        if (m.getCompetitor1() == c) {
+            if (v.getValue1()  >= crit.getOffensiveThreshold()) {
+                value += crit.getOffensiveBonusesForTeam();
+            }
+
+            if (v.getValue1() >= v.getValue2() + crit.getOffensiveDiffThreshold()) {
+                value += crit.getOffensiveDiffBonusesForTeam();
+            }
+
+            if ((v.getValue1() < v.getValue2()) && (v.getValue1() + crit.getDefensiveDiffThreshold() >= v.getValue2())) {
+                value += crit.getDefensiveDiffBonusesForTeam();
+            }
+        }
+        if (m.getCompetitor2() == c) {
+            if (v.getValue2()  >= crit.getOffensiveThreshold()) {
+                value += crit.getOffensiveBonusesForTeam();
+            }
+
+            if (v.getValue2() >= v.getValue1() + crit.getOffensiveDiffThreshold()) {
+                value += crit.getOffensiveDiffBonusesForTeam();
+            }
+
+            if ((v.getValue2() < v.getValue1()) && (v.getValue2() + crit.getDefensiveDiffThreshold() >= v.getValue1())) {
+                value += crit.getDefensiveDiffBonusesForTeam();
+            }
+        }
+        return value;
+    }
+
+    protected static int getCriteriasBonusPoints(Team t, TeamMatch tm) {
+        int value = 0;
+        // loop on Criterias for individual addition
+        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            for (int j = 0; j < tm.getMatchCount(); j++) {
+                CoachMatch m = tm.getMatch(j);
+                if (((Coach) m.getCompetitor1()).getTeamMates() == t) {
+                    value += getCriteriaBonusPoints((Coach) m.getCompetitor1(), m, crit);
+                }
+                if (((Coach) m.getCompetitor2()).getTeamMates() == t) {
+                    value += getCriteriaBonusPoints((Coach) m.getCompetitor2(), m, crit);
+                }
+            }
+        }
+
+        // loop on Criterias for building Sum
+        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            int value1 = 0;
+            int value2 = 0;
+            for (int j = 0; j < tm.getMatchCount(); j++) {
+                CoachMatch m = tm.getMatch(j);
+                value1 += m.getValue(crit).getValue1();
+                value2 += m.getValue(crit).getValue2();
+            }
+
+            if (tm.getCompetitor1() == t) {
+                if (value1 >= crit.getOffensiveThresholdByTeam()) {
+                    value += crit.getOffensiveBonusesByTeam();
+                }
+
+                if (value1 >= value2 + crit.getOffensiveDiffThresholdByTeam()) {
+                    value += crit.getOffensiveDiffBonusesByTeam();
+                }
+
+                if ((value1 < value2) && (value1 + crit.getDefensiveDiffThresholdByTeam() >= value2)) {
+                    value += crit.getDefensiveDiffBonusesByTeam();
+                }
+            }
+            if (tm.getCompetitor2() == t) {
+                if (value2  >= crit.getOffensiveThresholdByTeam()) {
+                    value += crit.getOffensiveBonusesByTeam();
+                }
+
+                if (value2 >= value1 + crit.getOffensiveDiffThresholdByTeam()) {
+                    value += crit.getOffensiveDiffBonusesByTeam();
+                }
+
+                if ((value2 < value1) && (value2 + crit.getDefensiveDiffThresholdByTeam() >= value1)) {
+                    value += crit.getDefensiveDiffBonusesByTeam();
+                }
+            }
+        }
+        return value;
+    }
+
     public int getPointsByTeam(final Team t, TeamMatch tm, boolean withMainPoints, boolean withBonus) {
 
         int value = 0;
@@ -633,12 +720,6 @@ public class TeamMatch extends Match implements Serializable {
         int countTeamDraw = 0;
 
         int i = 0;
-        /*if (mRoundOnly) {
-            i = mRound;
-        }
-
-        while (i <= mRound) {*/
-        //for (int i = 0; i <= mRound; i++) {
         int victories = 0;
         int loss = 0;
         boolean matchFound = false;
@@ -687,6 +768,9 @@ public class TeamMatch extends Match implements Serializable {
                                 }
                             }
                             value += bonus;
+
+                            value += getCriteriasBonusPoints(t, tm);
+
                         }
 
                     }

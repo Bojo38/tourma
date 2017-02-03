@@ -27,7 +27,7 @@ public class Translate {
     public final static String CS_Coach = "Coach";
     public final static String CS_Opponent = "Opponent";
     public final static String CS_Roster = "Roster";
-    public final static String CS_RosterName="RosterName";
+    public final static String CS_RosterName = "RosterName";
     public final static String CS_Difference = "Difference";
     public final static String CS_NAF = "NAF";
     public final static String CS_Ranking = "Ranking";
@@ -39,7 +39,7 @@ public class Translate {
     public final static String CS_Points_Plus = "POINTS +";
     public final static String CS_Points_Minus = "POINTS -";
     public final static String CS_Points_Team_Plus = "POINTS EQUIPE +";
-    public final static String CS_Critical_Value_Threshold="CRITICAL VALUE_THRESHOLD";
+    public final static String CS_Critical_Value_Threshold = "CRITICAL VALUE_THRESHOLD";
     public final static String CS_Points_Team_Minus = "POINTS EQUIPE -";
     public final static String CS_Table = "Table";
     public final static String CS_Score = "Score";
@@ -63,19 +63,34 @@ public class Translate {
     public final static String CS_ACCR_Opponent_Points_Without_Bonus = "Opp. Pts wo";
     public final static String CS_ACCR_Victory_Drawn_Lost = "V/D/L";
 
+    public final static String CS_Offensive_Bonus_Threshold = "Offensive_Bonus_Threshold";
+    public final static String CS_Offensive_Bonus_Value = "Offensive_Bonus_Value";
+    public final static String CS_Diff_Offensive_Bonus_Threshold = "Diff_Offensive_Bonus_Threshold";
+    public final static String CS_Diff_Offensive_Bonus_Value = "Diff_Offensive_Bonus_Value";
+    public final static String CS_Diff_Defensive_Bonus_Threshold = "Diff_Defensive_Bonus_Threshold";
+    public final static String CS_Diff_Defensive_Bonus_Value = "Diff_Defensive_Bonus_Value";
+    
+    public final static String CS_ForTeam_Offensive_Bonus_Value = "ForTeam_Offensive_Bonus_Value";
+    public final static String CS_ForTeam_Diff_Offensive_Bonus_Value = "ForTeam_Diff_Offensive_Bonus_Value";
+    public final static String CS_ForTeam_Diff_Defensive_Bonus_Value = "ForTeam_Diff_Defensive_Bonus_Value";
+            
+    public final static String CS_Team_Offensive_Bonus_Threshold = "Team_Offensive_Bonus_Threshold";
+    public final static String CS_Team_Offensive_Bonus_Value = "Team_Offensive_Bonus_Value";
+    public final static String CS_Team_Diff_Offensive_Bonus_Threshold = "Team_Diff_Offensive_Bonus_Threshold";
+    public final static String CS_Team_Diff_Offensive_Bonus_Value = "Team_Diff_Offensive_Bonus_Value";
+    public final static String CS_Team_Diff_Defensive_Bonus_Threshold = "Team_Diff_Defensive_Bonus_Threshold";
+    public final static String CS_Team_Diff_Defensive_Bonus_Value = "Team_Diff_Defensive_Bonus_Value";
+
     private static ResourceBundle sBundle = null;
 
     public static String translate(String key) {
         if (sBundle == null) {
             sBundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
         }
-        String result=key;
-        try
-        {
-            result=sBundle.getString(key);
-        }
-        catch(Exception ex)
-        {
+        String result = key;
+        try {
+            result = sBundle.getString(key);
+        } catch (Exception ex) {
             System.err.println(ex.getLocalizedMessage());
         }
         return result;
