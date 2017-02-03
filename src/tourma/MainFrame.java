@@ -396,6 +396,12 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiCancelConceedMatch = new javax.swing.JMenuItem();
         jmiRefuseMatch = new javax.swing.JMenuItem();
         jmiCancelMatchRefuse = new javax.swing.JMenuItem();
+        jSeparator17 = new javax.swing.JPopupMenu.Separator();
+        jMenu2 = new javax.swing.JMenu();
+        jmiIndivReport = new javax.swing.JMenuItem();
+        jmiClanReport = new javax.swing.JMenuItem();
+        jmiTeamReport = new javax.swing.JMenuItem();
+        jSeparator18 = new javax.swing.JPopupMenu.Separator();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -932,6 +938,36 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnRound.add(jmiCancelMatchRefuse);
+        jmnRound.add(jSeparator17);
+
+        jMenu2.setText(bundle.getString("Reports")); // NOI18N
+
+        jmiIndivReport.setText(bundle.getString("IndividualReport")); // NOI18N
+        jmiIndivReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiIndivReportActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiIndivReport);
+
+        jmiClanReport.setText(bundle.getString("ClanReport")); // NOI18N
+        jmiClanReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiClanReportActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiClanReport);
+
+        jmiTeamReport.setText(bundle.getString("TeamReport")); // NOI18N
+        jmiTeamReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiTeamReportActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiTeamReport);
+
+        jmnRound.add(jMenu2);
+        jmnRound.add(jSeparator18);
 
         jMenuBar1.add(jmnRound);
 
@@ -2763,6 +2799,18 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }//GEN-LAST:event_jmiPrintLabelsActionPerformed
 
+    private void jmiIndivReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiIndivReportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiIndivReportActionPerformed
+
+    private void jmiClanReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiClanReportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiClanReportActionPerformed
+
+    private void jmiTeamReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiTeamReportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiTeamReportActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3224,6 +3272,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -3234,6 +3283,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JPopupMenu.Separator jSeparator14;
     private javax.swing.JPopupMenu.Separator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator16;
+    private javax.swing.JPopupMenu.Separator jSeparator17;
+    private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -3257,6 +3308,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiCancelMatchRefuse;
     private javax.swing.JMenuItem jmiChangePairing;
     private javax.swing.JMenuItem jmiCharger;
+    private javax.swing.JMenuItem jmiClanReport;
     private javax.swing.JMenuItem jmiConceedMatch;
     private javax.swing.JMenuItem jmiDelFreeMatch;
     private javax.swing.JMenuItem jmiDelRound;
@@ -3291,6 +3343,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiFullScreenRankTeam;
     private javax.swing.JMenuItem jmiGenerateFirstRound;
     private javax.swing.JMenuItem jmiGenerateNextRound;
+    private javax.swing.JMenuItem jmiIndivReport;
     private javax.swing.JMenuItem jmiNafLoad;
     private javax.swing.JMenuItem jmiNouveau;
     private javax.swing.JMenuItem jmiPrintLabels;
@@ -3299,6 +3352,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiSave;
     private javax.swing.JMenuItem jmiSaveAs;
     private javax.swing.JMenuItem jmiSubstitutePlayer;
+    private javax.swing.JMenuItem jmiTeamReport;
     private javax.swing.JMenu jmnFile;
     private javax.swing.JMenu jmnHelp;
     private javax.swing.JMenu jmnParameters;
