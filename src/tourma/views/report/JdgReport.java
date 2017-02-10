@@ -14,6 +14,7 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -44,16 +45,22 @@ import tourma.MainFrame;
 import tourma.data.Criteria;
 import tourma.data.Clan;
 import tourma.data.Coach;
+import tourma.data.CoachMatch;
 import tourma.data.Team;
 import tourma.data.IWithNameAndPicture;
+import tourma.data.ObjectRanking;
 import tourma.data.Tournament;
 import tourma.data.Round;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.data.Value;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtRanking;
+import tourma.tableModel.MjtRankingIndiv;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
+import tourma.utils.web.WebPicture;
 
 /**
  *
@@ -73,9 +80,11 @@ public final class JdgReport extends javax.swing.JDialog {
     public final static int C_CLAN = 1;
     public final static int C_TEAM = 2;
 
+    SwingWebView webView;
     int mType = 0;
     ArrayList<IWithNameAndPicture> objects;
 
+   
     /**
      * Creates new form jdgRoundReport
      *
@@ -92,10 +101,13 @@ public final class JdgReport extends javax.swing.JDialog {
     public JdgReport(final java.awt.Frame parent, final boolean modal, final int roundNumber, final Tournament tour, int type) {
         super(parent, modal);
         initComponents();
+        webView=new SwingWebView();
+        //webView.setPreferredSize(new Dimension(640,480));
+        this.add(webView,BorderLayout.CENTER);
+        
         //_round = round;
         mRoundNumber = roundNumber;
         mTour = tour;
-
         mType = type;
 
         objects = new ArrayList<>();
@@ -135,10 +147,11 @@ public final class JdgReport extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
             }
             try {
-                jepHTML.setContentType("html");
+                //jepHTML.setContentType("html");
                 mFilename = createReport();
-                jepHTML.setPage(mFilename.toURI().toURL());
-            } catch (IOException e) {
+                //jepHTML.setPage(mFilename.toURI().toURL());
+                webView.setURL(mFilename.toURI().toURL().toString());
+            } catch (IOException | NullPointerException e) {
                 JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
             }
         }
@@ -160,8 +173,6 @@ public final class JdgReport extends javax.swing.JDialog {
         jbtPrint = new javax.swing.JButton();
         jbtExport = new javax.swing.JButton();
         jbtExportPDF = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jepHTML = new javax.swing.JEditorPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlsObject = new javax.swing.JList<>();
 
@@ -207,10 +218,6 @@ public final class JdgReport extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
-        jScrollPane1.setViewportView(jepHTML);
-
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
         jlsObject.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -236,12 +243,12 @@ public final class JdgReport extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPrintActionPerformed
-        try {
-            jepHTML.print();
+        /*try {
+            //jepHTML.print();
 
         } catch (PrinterException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
-        }
+        }*/
     }//GEN-LAST:event_jbtPrintActionPerformed
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -372,25 +379,24 @@ public final class JdgReport extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this.getParent(), e.getLocalizedMessage());
             }
             try {
-                jepHTML.setContentType("html");
+                //jepHTML.setContentType("html");
                 mFilename = createReport();
-                jepHTML.setPage(mFilename.toURI().toURL());
-            } catch (IOException e) {
+                //jepHTML.setPage(mFilename.toURI().toURL());
+                webView.setURL(mFilename.toURI().toURL().toString());
+            } catch (IOException | NullPointerException e) {
                 JOptionPane.showMessageDialog(this.getParent(), e.getLocalizedMessage());
             }
+
         }
     }//GEN-LAST:event_jlsObjectValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtExportPDF;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtPrint;
-    private javax.swing.JEditorPane jepHTML;
     private javax.swing.JList<String> jlsObject;
     // End of variables declaration//GEN-END:variables
 
@@ -400,12 +406,25 @@ public final class JdgReport extends javax.swing.JDialog {
     private static final String CS_TheLessAgainst = "LE MOINS SUBI";
 
     private File createIndivReport(Coach c) {
-
+        File address = null;
+        return address;
     }
 
     private File createTeamReport(Team c) {
         File address = null;
         Writer out = null;
+        Team team = null;
+        ArrayList<Coach> coaches = new ArrayList<>();
+
+        if (jlsObject.getSelectedIndex() >= 0) {
+            team = (Team) objects.get(jlsObject.getSelectedIndex());
+            for (int i = 0; i < team.getCoachsCount(); i++) {
+                coaches.add(team.getCoach(i));
+            }
+            mRanking = new MjtRankingIndiv(mRoundNumber, coaches, true, false);
+        } else {
+            return null;
+        }
         try {
             final Configuration cfg = new Configuration();
             final URI uri = getClass().getResource("/tourma/views/report").toURI();
@@ -427,71 +446,253 @@ public final class JdgReport extends javax.swing.JDialog {
             root.put(
                     ReportKeys.CS_Nom,
                     StringEscapeUtils.escapeHtml3(mTour.getParams().getTournamentName()
-                            + " - " + Translate.translate(CS_Round) + " " + mRoundNumber));
-            String name;
-            if (mClan) {
-                name = Translate.translate(CS_ByClan);
-            } else {
-                if (mTeam) {
-                    name = Translate.translate(CS_ByTeam);;
-                } else {
-                    name = Translate.translate(CS_ByCoach);;
-                }
-            }
+                            + " - " + Translate.translate(Translate.CS_Round) + " " + mRoundNumber));
 
+            // Team Name
+            String name;
+            name = Translate.translate(Translate.CS_Team);;
             root.put(ReportKeys.CS_Title, StringEscapeUtils.escapeHtml3(name));
 
-            final ArrayList titles = new ArrayList();
-            for (int i = 0; i < mRanking.getColumnCount(); i++) {
-                titles.add(StringEscapeUtils.escapeHtml3(mRanking.getColumnName(i)));
-            }
-            root.put(ReportKeys.CS_Titles, titles);
+            // Picture
+            String picture = "";
+            if (team.getPicture() != null) {
+                picture = WebPicture.getPictureAsHTML(team.getPicture(), 100, 100);
 
-            final ArrayList lines = new ArrayList();
-            for (int i = 0; i < mRanking.getRowCount(); i++) {
-                final HashMap line = new HashMap();
-                final ArrayList cols = new ArrayList();
-                for (int j = 0; j < mRanking.getColumnCount(); j++) {
-                    Object obj = mRanking.getValueAt(i, j);
-                    if (obj instanceof String) {
-                        cols.add(StringEscapeUtils.escapeHtml3((String) obj));
-                    } else {
-                        cols.add(obj);
-                    }
-                }
-                line.put(ReportKeys.CS_Cols, cols);
-                lines.add(line);
             }
-            root.put(ReportKeys.CS_Lines, lines);
+            root.put("picture", picture);
 
-            root.put(ReportKeys.CS_TitreMoreFor, StringEscapeUtils.escapeHtml3(Translate.translate(CS_TheMostFor)));
-            root.put(ReportKeys.CS_TitreLessFor, StringEscapeUtils.escapeHtml3(Translate.translate(CS_TheLessFor)));
-            root.put(ReportKeys.CS_TitreMoreAgainst, StringEscapeUtils.escapeHtml3(Translate.translate(CS_TheMoreAgainst)));
-            root.put(ReportKeys.CS_TitreLessAgainst, StringEscapeUtils.escapeHtml3(Translate.translate(CS_TheLessAgainst)));
+            int nb_criterias = Tournament.getTournament().getParams().getCriteriaCount();
+            root.put("nb_criterias", nb_criterias);
+
+            root.put("coach", Translate.translate(Translate.CS_Coach));
+            root.put("round", Translate.translate(Translate.CS_Round));
+            root.put("points", Translate.translate(Translate.CS_Points));
+            root.put("total_points", Translate.translate(Translate.CS_TotalPoints));
+
+            root.put("roster", Translate.translate(Translate.CS_Roster));
+            root.put("nb_criterias", nb_criterias);
+            root.put("nb_criteriasx2", 2 * nb_criterias);
 
             final ArrayList criterias = new ArrayList();
-            for (int i = 0; i < mTour.getParams().getCriteriaCount(); i++) {
-                final HashMap criteria = new HashMap();
-                final Criteria c = mTour.getParams().getCriteria(i);
-                criteria.put(ReportKeys.CS_Name, StringEscapeUtils.escapeHtml3(c.getName()));
-
-                final MjtAnnexRank annexFor = mAnnexForRankings.get(c);
-                final MjtAnnexRank annexAgainst = mAnnexAgainstRankings.get(c);
-                criteria.put(ReportKeys.CS_MoreFor, annexFor.getValueAt(0, 1));
-                criteria.put(ReportKeys.CS_LessFor, annexFor.getValueAt(annexFor.getRowCount() - 1, 1));
-                criteria.put(ReportKeys.CS_MoreAgainst, annexAgainst.getValueAt(0, 1));
-                criteria.put(ReportKeys.CS_LessAgainst, annexAgainst.getValueAt(annexAgainst.getRowCount() - 1, 1));
-
-                criterias.add(criteria);
+            for (int i = 0; i < nb_criterias; i++) {
+                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getName()));
             }
             root.put(ReportKeys.CS_Criterias, criterias);
-            root.put("TitleCategory", StringEscapeUtils.escapeHtml3(Translate.translate("TitleCategory")));
+
+            final ArrayList rcriterias = new ArrayList();
+            for (int i = nb_criterias - 1; i >= 0; i--) {
+                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getName()));
+            }
+            root.put("rcriterias", rcriterias);
+
+            /**
+             * *****************
+             **** First table *** ******************
+             */
+            final ArrayList coaches_summary = new ArrayList();
+            for (int i = 0; i < team.getCoachsCount(); i++) {
+                Coach coach = team.getCoach(i);
+                HashMap<String, Object> hCoach = new HashMap<>();
+                hCoach.put("name", coach.getName());
+                hCoach.put("roster", coach.getRoster().getName());
+                for (int j = 0; j < mRanking.getRowCount(); j++) {
+                    ObjectRanking or = mRanking.getSortedObject(j);
+                    if (or.getObject() == coach) {
+                        hCoach.put("points", or.getValue1());
+                    }
+                }
+
+                ArrayList<Integer> values = new ArrayList<>();
+
+                // Find value + for each matches
+                for (int j = 0; j < nb_criterias; j++) {
+                    Criteria crit = mTour.getParams().getCriteria(j);
+                    int val = 0;
+                    for (int k = 0; k < coach.getMatchCount(); k++) {
+                        CoachMatch cm = (CoachMatch) coach.getMatch(k);
+                        Value value = cm.getValue(crit);
+                        if (cm.getCompetitor1() == coach) {
+                            val += value.getValue1();
+                        }
+                        if (cm.getCompetitor2() == coach) {
+                            val += value.getValue2();
+                        }
+                    }
+                    values.add(val);
+                }
+                // Find value - for each matches
+                for (int j = 0; j < nb_criterias; j++) {
+                    Criteria crit = mTour.getParams().getCriteria(j);
+                    int val = 0;
+                    for (int k = 0; k < coach.getMatchCount(); k++) {
+                        CoachMatch cm = (CoachMatch) coach.getMatch(k);
+                        Value value = cm.getValue(crit);
+                        if (cm.getCompetitor2() == coach) {
+                            val += value.getValue1();
+                        }
+                        if (cm.getCompetitor1() == coach) {
+                            val += value.getValue2();
+                        }
+                    }
+                    values.add(val);
+                }
+
+                hCoach.put("values", values);
+                coaches_summary.add(hCoach);
+                //StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getName()));
+            }
+            root.put("coaches_summary", coaches_summary);
+
+            root.put("nb_rounds", mRoundNumber + 1);
+            /**
+             * *****************
+             **** Second table *** ******************
+             */
+            ArrayList coaches_rounds = new ArrayList();
+            for (int i = 0; i < team.getCoachsCount(); i++) {
+                Coach coach = team.getCoach(i);
+                HashMap<String, Object> hCoach = new HashMap<>();
+                hCoach.put("name", coach.getName());
+
+                int round_index = 1;
+                hCoach.put("round", round_index);
+
+                ArrayList values = new ArrayList();
+                Round r = Tournament.getTournament().getRound(round_index - 1);
+                for (int j = 0; j < nb_criterias; j++) {
+                    Criteria crit = mTour.getParams().getCriteria(j);
+                    int val = 0;
+                    for (int k = 0; k < coach.getMatchCount(); k++) {
+                        CoachMatch cm = (CoachMatch) coach.getMatch(k);
+                        if (r.containsCoachMatch(cm)) {
+                            Value value = cm.getValue(crit);
+                            if (cm.getCompetitor1() == coach) {
+                                val += value.getValue1();
+                            }
+                            if (cm.getCompetitor2() == coach) {
+                                val += value.getValue2();
+                            }
+                        }
+                    }
+                    values.add(val);
+                }
+                hCoach.put("values", values);
+
+                MjtRanking rank = new MjtRankingIndiv(round_index - 1, coaches, true, true);
+                for (int j = 0; j < rank.getRowCount(); j++) {
+                    ObjectRanking or = rank.getSortedObject(j);
+                    if (or.getObject() == coach) {
+                        hCoach.put("points", or.getValue1());
+                    }
+                }
+
+                for (int j = 0; j < mRanking.getRowCount(); j++) {
+                    ObjectRanking or = mRanking.getSortedObject(j);
+                    if (or.getObject() == coach) {
+                        hCoach.put("total_points", or.getValue1());
+                    }
+                }
+
+                ArrayList coach_rounds = new ArrayList();
+                for (int j = 1; j <= mRoundNumber; j++) {
+                    HashMap<String, Object> hhCoach = new HashMap<>();
+                    round_index++;
+                    hhCoach.put("round_index", round_index);
+
+                    values = new ArrayList();
+                    r = Tournament.getTournament().getRound(round_index - 1);
+                    for (int k = 0; k < nb_criterias; k++) {
+                        Criteria crit = mTour.getParams().getCriteria(k);
+                        int val = 0;
+                        for (int l = 0; l < coach.getMatchCount(); l++) {
+                            CoachMatch cm = (CoachMatch) coach.getMatch(l);
+                            if (r.containsCoachMatch(cm)) {
+                                Value value = cm.getValue(crit);
+                                if (cm.getCompetitor1() == coach) {
+                                    val += value.getValue1();
+                                }
+                                if (cm.getCompetitor2() == coach) {
+                                    val += value.getValue2();
+                                }
+                            }
+                        }
+                        values.add(val);
+                    }
+
+                    hhCoach.put("values", values);
+
+                    rank = new MjtRankingIndiv(round_index - 1, coaches, true, true);
+                    for (int k = 0; k < rank.getRowCount(); k++) {
+                        ObjectRanking or = rank.getSortedObject(k);
+                        if (or.getObject() == coach) {
+                            hhCoach.put("points", or.getValue1());
+                        }
+                    }
+
+                    coach_rounds.add(hhCoach);
+                }
+
+                hCoach.put("rounds", coach_rounds);
+
+                coaches_rounds.add(hCoach);
+            }
+
+            root.put("coaches_rounds", coaches_rounds);
+
+            /**
+             * *****************
+             **** third table *** ******************
+             */
+            ArrayList aRounds = new ArrayList();
+            for (int i = 0; i < team.getMatchCount(); i++) {
+                HashMap aRound = new HashMap();
+                aRound.put("index", i + 1);
+                TeamMatch tm = (TeamMatch) team.getMatch(i);
+                aRound.put("opp1", tm.getCompetitor1().getName());
+                aRound.put("opp2", tm.getCompetitor2().getName());
+
+                ArrayList matchs = new ArrayList();
+                for (int j = 0; j < tm.getMatchCount(); j++) {
+                    CoachMatch cm = tm.getMatch(j);
+                    HashMap hCm = new HashMap();
+                    hCm.put("c1", cm.getCompetitor1().getName());
+                    hCm.put("c2", cm.getCompetitor2().getName());
+                    if (cm.getRoster1() != null) {
+                        hCm.put("roster1", cm.getRoster1().getName());
+                    } else {
+                        hCm.put("roster1", ((Coach) cm.getCompetitor1()).getRoster().getName());
+                    }
+                    if (cm.getRoster2() != null) {
+                        hCm.put("roster2", cm.getRoster2().getName());
+                    } else {
+                        hCm.put("roster2", ((Coach) cm.getCompetitor2()).getRoster().getName());
+                    }
+                    hCm.put("points1", cm.getValue(1, (Coach) cm.getCompetitor1()));
+                    hCm.put("points2", cm.getValue(1, (Coach) cm.getCompetitor2()));
+
+                    ArrayList values1 = new ArrayList();
+                    ArrayList values2 = new ArrayList();
+                    for (int k = 0; k < nb_criterias; k++) {
+                        Criteria crit = mTour.getParams().getCriteria(k);
+                        Value value = cm.getValue(crit);
+                        values1.add(0, value.getValue1());
+                        values2.add(value.getValue2());
+                    }
+                    hCm.put("values1", values1);
+                    hCm.put("values2", values2);
+
+                    matchs.add(hCm);
+                }
+                aRound.put("matchs", matchs);
+                aRounds.add(aRound);
+            }
+            root.put("rounds", aRounds);
 
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));
             address = File.createTempFile(
-                    StringConstants.CS_RESULT + " " + format.format(new Date()), ".tmp");
+                    StringConstants.CS_RESULT + " " + format.format(new Date()), ".html");
             address.deleteOnExit();
             out = new OutputStreamWriter(new FileOutputStream(address), Charset.defaultCharset());
             temp.process(root, out);
@@ -514,7 +715,8 @@ public final class JdgReport extends javax.swing.JDialog {
     }
 
     private File createClanReport(Clan c) {
-
+        File address = null;
+        return address;
     }
 
     @SuppressWarnings("unchecked")

@@ -46,6 +46,7 @@ public class Translate {
     public final static String CS_Refused = "REFUSED";
     public final static String CS_Conceeded = "CONCEEDED";
     public final static String CS_Points = "Points";
+    public final static String CS_TotalPoints = "TotalPoints";
     public final static String CS_Points_Without_Bonus = "Points sans bonus";
     public final static String CS_Bonus_Points = "Bonus Points";
     public final static String CS_Nothing = "Nothing";

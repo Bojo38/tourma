@@ -56,7 +56,7 @@
             td {
                 //padding: 7px 10px;
                 
-                border-width: 1 px 1px 0px 0px;
+                border-width: 1 px 1px 1px 1px;
                 border-style: solid;
                 font-size:12px;
                 text-align:center;
@@ -75,426 +75,125 @@
         <#setting number_format="0.##">-->
 
         <div id="logo">
-            Logo
+            ${picture}
         </div>
         <div id="team">
-            NOM DU TOURNOI
+            ${nom}
             <br>
-            NOM DE L'EQUIPE
+            ${title}
         </div>
 
         <table id="summary1">
             <tr >
-                <td class="summary" rowspan="2">Coach</td>
-                <td class="summary" rowspan="2">Roster</td>
-                <td class="summary" rowspan="2">Points</td>
-                <td class="summary" colspan="5">For Coach</td>
-                <td class="summary" colspan="5">Against Coach</td>                
+                <td rowspan="2">${coach}</td>
+                <td rowspan="2">${roster}</td>
+                <td rowspan="2">${points}</td>
+                <td colspan="${nb_criterias}">+</td>
+                <td colspan="${nb_criterias}">-</td>                
             </tr>
             <tr>
-                <td class="summary" >Touchdowns</td>
-                <td class="summary" >Casualties</td>
-                <td class="summary" >Fouls</td>
-                <td class="summary" >Passes</td>
-                <td class="summary" >Interceptions</td>
-                <td class="summary" >Touchdowns</td>
-                <td class="summary" >Casualties</td>
-                <td class="summary" >Fouls</td>
-                <td class="summary" >Passes</td>
-                <td class="summary" >Interceptions</td>
+                <#list criterias as criteria>
+                <td>${criteria}</td>
+                </#list>
+                <#list criterias as criteria>
+                <td>${criteria}</td>
+                </#list>
             </tr>
+            <#list coaches_summary as coach_summary>
             <tr>
-                <td class="summary" >Jimjimany</td>
-                <td class="summary" >Elfes sylvains</td>
-                <td class="summary" >4452</td>
-                <td class="summary" >12</td>
-                <td class="summary" >6</td>
-                <td class="summary" >4</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >5</td>
-                <td class="summary" >13</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
+                <td >${coach_summary.name}</td>
+                <td >${coach_summary.roster}</td>
+                <td >${coach_summary.points}</td>
+                <#list coach_summary.values as value>
+                <td>${value}</td>
+                </#list>
             </tr>
-
-            <tr><td class="summary" >Joemanji (C)</td>                
-                <td class="summary"> Amazones</td>
-                <td class="summary" >3843</td>
-                <td class="summary" >9</td>
-                <td class="summary" >7</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >3</td>
-                <td class="summary" >7</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td></tr>
-            <tr><td class="summary" >Geggster </td><td class="summary" >Elfes noirs</td>
-                <td class="summary" >3840</td>
-                <td class="summary" >6</td>
-                <td class="summary" >11</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >3</td>
-                <td class="summary" >7</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td></tr>
-            <tr><td class="summary" >Purplegoo </td><td class="summary" >Morts-vivants</td>
-                <td class="summary" >2226</td>
-                <td class="summary" >6</td>
-                <td class="summary" >4</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >5</td>
-                <td class="summary" >9</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td></tr>
-            <tr><td class="summary" >Lycos</td> <td class="summary" >Nains</td>
-                <td class="summary" >1830</td>
-                <td class="summary" >3</td>
-                <td class="summary" >10</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >4</td>
-                <td class="summary" >4</td>
-                <td class="summary" >2</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td></tr>
+            </#list>            
         </table>
 
         <table id="summary2">
             <tr >
-                <td class="summary" >Coach</td>
-                <td class="summary" >Round</td>
-                <td class="summary" >Touchdown</td>
-                <td class="summary" >Casualties</td>
-                <td class="summary" >Passes</td>
-                <td class="summary" >Foul</td>
-                <td class="summary" >Interceptions</td>
-                <td class="summary" >Points</td>                
-                <td class="summary" >Total Points</td>                
+                <td >${coach}</td>
+                <td >${round}</td>
+                <#list criterias as criteria>
+                <td>${criteria}</td>
+                </#list>
+                <td >${points}</td>                
+                <td >${total_points}</td>                
             </tr>
+            
+            <#list coaches_rounds as coach_round>
             <tr>
-                <td class="summary" rowspan="5">Jimjimany</td>
-                <td class="summary" >1 </td>
-                <td class="summary" >2 </td>
-                <td class="summary" >1 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >1008 </td>
-                <td class="summary" rowspan="5">4452</td>
+                <td rowspan="${nb_rounds}">${coach_round.name}</td>
+                <td >${coach_round.round}</td>
+                <#list coach_round.values as value>
+                <td>${value}</td>
+                </#list>
+                <td>${coach_round.points}</td>
+                <td rowspan="${nb_rounds}">${coach_round.total_points}</td>
             </tr>
+                       
+            <#list coach_round.rounds as round>            
             <tr>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1011</td></tr>
-            <tr><td class="summary" >3</td>
-                <td class="summary" >3</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >4</td>
-                <td class="summary" >4</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >5</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >407</td>
-            </tr>
-            <tr>
-                <td class="summary" rowspan="5">Jimjimany</td>
-                <td class="summary" >1 </td>
-                <td class="summary" >2 </td>
-                <td class="summary" >1 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >1008 </td>
-                <td class="summary" rowspan="5">4452</td>
-            </tr>
-            <tr>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1011</td></tr>
-            <tr><td class="summary" >3</td>
-                <td class="summary" >3</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >4</td>
-                <td class="summary" >4</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >5</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >407</td>
-            </tr>
-            <tr>
-                <td class="summary" rowspan="5">Jimjimany</td>
-                <td class="summary" >1 </td>
-                <td class="summary" >2 </td>
-                <td class="summary" >1 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >1008 </td>
-                <td class="summary" rowspan="5">4452</td>
-            </tr>
-            <tr>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1011</td></tr>
-            <tr><td class="summary" >3</td>
-                <td class="summary" >3</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >4</td>
-                <td class="summary" >4</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >5</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >407</td>
-            </tr>
-            <tr>
-                <td class="summary" rowspan="5">Jimjimany</td>
-                <td class="summary" >1 </td>
-                <td class="summary" >2 </td>
-                <td class="summary" >1 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >1008 </td>
-                <td class="summary" rowspan="5">4452</td>
-            </tr>
-            <tr>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1011</td></tr>
-            <tr><td class="summary" >3</td>
-                <td class="summary" >3</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >4</td>
-                <td class="summary" >4</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >5</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >407</td>
-            </tr>
-            <tr>
-                <td class="summary" rowspan="5">Jimjimany</td>
-                <td class="summary" >1 </td>
-                <td class="summary" >2 </td>
-                <td class="summary" >1 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >0 </td>
-                <td class="summary" >1008 </td>
-                <td class="summary" rowspan="5">4452</td>
-            </tr>
-            <tr>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >2</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1011</td></tr>
-            <tr><td class="summary" >3</td>
-                <td class="summary" >3</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >4</td>
-                <td class="summary" >4</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >1013</td></tr>
-            <tr><td class="summary" >5</td>
-                <td class="summary" >1</td>
-                <td class="summary" >2</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >0</td>
-                <td class="summary" >407</td>
-            </tr>            
+                <td>${round_index}</td>
+                <#list round.values as value>
+                <td>${value}</td>
+                </#list>
+                <td>${round.points}</td>
+            </#list>
+            </#list> 
         </table>
 
         <div align="center" class="round">
-            Round 1
-        </div>
-
+            ROUNDS
+        </div>                
+        
+        <#list rounds as around>
+        <div align="center" class="round">
+            ${round} ${around.index}
+        </div>                
         <table class="round">
             <tr>
-                <td class="summary" colspan="3">Les tauliers 3: Amazing tauliers</td>
-                <td class="summary" colspan="10">Table 3</td>
-                <td class="summary" colspan="3">All the president's men</td>
+                <td colspan="3">${around.opp1}</td>
+                <td colspan="${nb_criteriasx2}">Table 3</td>
+                <td colspan="3">${around.opp2}</td>
             </tr>
             <tr>
-                <td> Coach </td>
-                <td> Roster</td>
-                <td> Points</td>
-                <td> Passe </td>
-                <td> Interception </td>
-                <td> Foul </td>
-                <td> Sortie </td>
-                <td> Touchdowns </td>
-                <td> Touchdowns </td>
-                <td> Sortie </td>
-                <td> Foul </td>
-                <td> Interception </td>
-                <td> Passe </td>
-                <td> Points </td>
-                <td> Roster</td>
-                <td> Coach </td>
+                <td> ${coach}</td>
+                <td> ${roster}</td>
+                <td> ${points}</td>
+                
+                <#list rcriterias as criteria>
+                <td>${criteria}</td>
+                </#list>
+                
+                <#list criterias as criteria>
+                <td>${criteria}</td>
+                </#list>
+                
+                
+                <td> ${points} </td>
+                <td> ${roster}</td>
+                <td> ${coach} </td>
             </tr>
+            <#list around.matchs as match>            
             <tr>
-                <td>Bloody</td> <td>Nordiques </td> <td>0 </td> <td>0 </td> <td>0</td> 
-                <td> 0</td> <td> 0</td> <td> 0</td> <td> 3</td> <td> 4</td> <td> 0</td> 
-                <td> 0</td> <td> 0</td> <td> 1017</td> <td> Amazones</td> <td> Joemanji</td>
-            </tr>    <tr>
-                <td>Ced.BZH</td>
-                <td>
-                    Morts-vivants</td> 
-                <td>0 </td>
-                0</td> <td>
-                    0</td> <td>
-                    0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>1
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td> 1003
-                </td> <td>Nains
-                </td> <td>Lycos</td> 
-            </tr><tr>
-                <td>Turenne</td> <td>
-
-                    Halflings</td> <td> 2
-                    </td><td>0</td> <td> 1
-                </td> <td>0
-                </td> <td>1
-                </td> <td>0
-                </td> <td>1
-                </td> <td>1
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>1005
-                </td> <td>Elfes noirs
-                </td> <td>Geggster</td> 
-            </tr><tr>
-                <td>Papy Harzen</td> <td>
-                    Nains du Chaos</td> <td> 407
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>2
-                </td> <td>1
-                </td> <td>1
-                </td> <td>2
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>407
-                </td> <td>Morts-vivants
-                </td> <td>Purplegoo</td>
-            </tr><tr>
-                <td>Legalodec</td> <td>
-                    Nécromanciens</td> <td>
-                    0</td> <td> 0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>2
-                </td> <td>1
-                </td> <td>0
-                </td> <td>0
-                </td> <td>0
-                </td> <td>1008
-                </td> <td>Elfes sylvains
-                </td> <td>Jimjimany</td>
-            </tr>
+                <td> ${match.c1} </td> 
+                <td> ${match.roster1} </td>
+                <td> ${match.points1} </td>
+                <#list match.values1 as value1>
+                <td>${value1}</td>
+                </#list>
+                <#list match.values2 as value2>
+                <td>${value2}</td>
+                </#list>
+                <td> ${match.points2} </td>
+                <td> ${match.roster2} </td> 
+                <td> ${match.c2}</td>
+            </tr>    
+            </#list>
         </table>
-
-<!--        <div align="right">
-            <small>
-                Rapport généré par TourMa © le ${dateGeneration}.
-            </small>
-        </div>-->
+        
+        </#list>
     </body>
 </html>

@@ -23,7 +23,7 @@ public class WebPicture {
 
     public static String getPictureAsHTML(ImageIcon pic, int width, int heigth) {
 
-        BufferedImage bi = new BufferedImage(pic.getIconWidth(), pic.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage bi = new BufferedImage(pic.getIconWidth(), pic.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.createGraphics();
         pic.paintIcon(null, g, 0, 0);
         g.dispose();

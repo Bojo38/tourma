@@ -104,6 +104,7 @@ import static tourma.views.fullscreen.JFullScreenIndivRank.C_POOL;
 import tourma.views.fullscreen.JFullScreenMatchs;
 import tourma.views.fullscreen.JFullScreenTeamRank;
 import tourma.views.parameters.JPNParameters;
+import tourma.views.report.JdgReport;
 import tourma.views.round.JPNRound;
 import tourma.views.system.JdgAbout;
 import tourma.views.system.JdgOnlineHelp;
@@ -167,6 +168,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
             Round r = ((JPNRound) jpnContent).getRound();
             if (mTournament.getRoundIndex(r) == mTournament.getRoundsCount() - 1) {
+
+                jmiIndivReport.setEnabled(true);
+                jmiClanReport.setEnabled(true);
+                jmiTeamReport.setEnabled(true);
 
                 jmiDelRound.setEnabled(!isClient);
 
@@ -234,6 +239,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiFullScreenRankAnnexTeam1.setEnabled(mTournament.getParams().isTeamTournament());
             jmiEditCoef.setEnabled(mTournament.getParams().isTableBonusPerRound());
         } else {
+            jmiIndivReport.setEnabled(false);
+            jmiClanReport.setEnabled(false);
+            jmiTeamReport.setEnabled(false);
             jmiPrintLabels.setEnabled(false);
             jckmiRoundOnly.setEnabled(false);
             jckmiHideNonNaf.setEnabled(false);
@@ -262,15 +270,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiFullScreenRankCategory.setEnabled(false);
             jmiFullScreenRankAnnexGroups.setEnabled(false);
             jmiFullScreenRankAnnexGroups1.setEnabled(false);
-            jmiFullScreenRankGroups.setEnabled(false); 
+            jmiFullScreenRankGroups.setEnabled(false);
             jmiFullScreenRankAnnexPool.setEnabled(false);
             jmiFullScreenRankAnnexPool1.setEnabled(false);
             jmiFullScreenPool.setEnabled(false);
             jmiEditCoef.setEnabled(false);
         }
         jcxmiRemoteEdit.setSelected((Tournament.getTournament().getParams().isWebEdit()) && (!isClient));
-        
-        
+
         jmiGenerateFirstRound.setEnabled(!isClient);
         jcxmiAsServer.setEnabled(!isClient);
         jcxPatchPortugal.setEnabled(!isClient);
@@ -2800,15 +2807,24 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiPrintLabelsActionPerformed
 
     private void jmiIndivReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiIndivReportActionPerformed
-        // TODO add your handling code here:
+        JPNRound jpnr = ((JPNRound) jpnContent);
+        JdgReport report = new JdgReport(this, true, Tournament.getTournament().getRoundIndex(jpnr.getRound()),
+                this.mTournament, JdgReport.C_INDIVIDUAL);
+        report.setVisible(true);
     }//GEN-LAST:event_jmiIndivReportActionPerformed
 
     private void jmiClanReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiClanReportActionPerformed
-        // TODO add your handling code here:
+        JPNRound jpnr = ((JPNRound) jpnContent);
+        JdgReport report = new JdgReport(this, true, Tournament.getTournament().getRoundIndex(jpnr.getRound()),
+                this.mTournament, JdgReport.C_CLAN);
+        report.setVisible(true);
     }//GEN-LAST:event_jmiClanReportActionPerformed
 
     private void jmiTeamReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiTeamReportActionPerformed
-        // TODO add your handling code here:
+        JPNRound jpnr = ((JPNRound) jpnContent);
+        JdgReport report = new JdgReport(this, true, Tournament.getTournament().getRoundIndex(jpnr.getRound()),
+                this.mTournament, JdgReport.C_TEAM);
+        report.setVisible(true);
     }//GEN-LAST:event_jmiTeamReportActionPerformed
 
     public boolean isRoundOnly() {
