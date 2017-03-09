@@ -3,6 +3,10 @@
     <head>
         <title></title>
         <STYLE type="text/css">
+      
+            table { page-break-inside:avoid }
+            div   { page-break-inside:avoid; }
+            
             div#titre {
                 text-align: center;
                 font-size: 28px;
@@ -32,6 +36,8 @@
             }
 
             table {
+                page-break-inside:avoid;
+                border-width: 0px 0px 0px 0px;
                 border-collapse:collapse;
                 width: 90%;
                 left: 5%;
@@ -45,14 +51,16 @@
 
 
             td {
-                //padding: 7px 10px;
-                
-                border-width: 1 px 1px 1px 1px;
+                border-width: 1px 1px 1px 1px;
                 border-style: solid;
-                font-size:12px;
+                font-weight: 700;
                 text-align:center;
+                padding: 2px;
+                font-size:12px;
+                
 
             } 
+            
             div.round {
                 align: center;
                 position: relative;
@@ -65,16 +73,10 @@
         <!--<#setting locale="fr_FR">
         <#setting number_format="0.##">-->
 
-        <div id="logo">
-            ${picture}
-        </div>
-        <div id="team">
-            <h2>${nom}
-            <br>
-            ${title}</h2>
-        </div>
-        <div id="summary">
-            <table id="summary1">
+        <h2>${nom} - ${title}</h2>
+        ${picture}
+        <p>
+            <table style="page-break-inside:avoid;width=100%"  cellpadding="2" cellspacing="1" border="1">
                 <tr >
                     <td rowspan="2">${coach}</td>
                     <td rowspan="2">${roster}</td>
@@ -101,92 +103,87 @@
                 </tr>
                 </#list>            
             </table>
-            <br>
-            <table id="summary2">
-                <tr >
-                    <td >${coach}</td>
-                    <td >${round}</td>
-                    <#list criterias as criteria>
-                    <td>${criteria}</td>
-                    </#list>
-                    <td >${points}</td>                
-                    <td >${total_points}</td>                
-                </tr>
+    </p>
+    <p>
 
-                <#list coaches_rounds as coach_round>
-                <tr>
-                    <td rowspan="${nb_rounds}">${coach_round.name}</td>
-                    <td >${coach_round.round}</td>
-                    <#list coach_round.values as value>
-                    <td>${value}</td>
-                    </#list>
-                    <td>${coach_round.points}</td>
-                    <td rowspan="${nb_rounds}">${coach_round.total_points}</td>
-                </tr>
-
-                <#list coach_round.rounds as round>            
-                <tr>
-                    <td>${round_index}</td>
-                    <#list round.values as value>
-                    <td>${value}</td>
-                    </#list>
-                    <td>${round.points}</td>
-                </tr>
+        <table style="page-break-inside:avoid;width=100%"  cellpadding="2" cellspacing="1" border="1">
+            <tr >
+                <td >${coach}</td>
+                <td >${round}</td>
+                <#list criterias as criteria>
+                <td>${criteria}</td>
                 </#list>
-                </#list> 
-            </table>
+                <td >${points}</td>                
+                <td >${total_points}</td>                
+            </tr>
 
-            <div align="center" class="round">
-                ROUNDS
-            </div>                
-            <br>
-            <#list rounds as around>
-            <div align="center" class="round">
-                ${round} ${around.index}
-            </div>                
-            <table class="round">
-                <tr>
-                    <td colspan="3">${around.opp1}</td>
-                    <td colspan="${nb_criteriasx2}">Table 3</td>
-                    <td colspan="3">${around.opp2}</td>
-                </tr>
-                <tr>
-                    <td> ${coach}</td>
-                    <td> ${roster}</td>
-                    <td> ${points}</td>
-
-                    <#list rcriterias as criteria>
-                    <td>${criteria}</td>
-                    </#list>
-
-                    <#list criterias as criteria>
-                    <td>${criteria}</td>
-                    </#list>
-
-
-                    <td> ${points} </td>
-                    <td> ${roster}</td>
-                    <td> ${coach} </td>
-                </tr>
-                <#list around.matchs as match>            
-                <tr>
-                    <td> ${match.c1} </td> 
-                    <td> ${match.roster1} </td>
-                    <td> ${match.points1} </td>
-                    <#list match.values1 as value1>
-                    <td>${value1}</td>
-                    </#list>
-                    <#list match.values2 as value2>
-                    <td>${value2}</td>
-                    </#list>
-                    <td> ${match.points2} </td>
-                    <td> ${match.roster2} </td> 
-                    <td> ${match.c2}</td>
-                </tr>    
+            <#list coaches_rounds as coach_round>
+            <tr>
+                <td rowspan="${nb_rounds}">${coach_round.name}</td>
+                <td >${coach_round.round}</td>
+                <#list coach_round.values as value>
+                <td>${value}</td>
                 </#list>
-            </table>
+                <td>${coach_round.points}</td>
+                <td rowspan="${nb_rounds}">${coach_round.total_points}</td>
+            </tr>
 
+            <#list coach_round.rounds as round>            
+            <tr>
+                <td>${round.round_index}</td>
+                <#list round.values as value>
+                <td>${value}</td>
+                </#list>
+                <td>${round.points}</td>
+            </tr>
             </#list>
-        </div>
+            </#list> 
+        </table>
+    </p>
+    <#list rounds as around>
+    <p>
+        ${round} ${around.index}
+        <table style="page-break-inside:avoid;width=100%"  cellpadding="2" cellspacing="1" border="1">
+            <tr>
+                <td colspan="3">${around.opp1}</td>
+                <td colspan="${nb_criteriasx2}">Table 3</td>
+                <td colspan="3">${around.opp2}</td>
+            </tr>
+            <tr>
+                <td > ${coach}</td>
+                <td> ${roster}</td>
+                <td> ${points}</td>
+
+                <#list rcriterias as criteria>
+                <td>${criteria}</td>
+                </#list>
+
+                <#list criterias as criteria>
+                <td>${criteria}</td>
+                </#list>
+                <td> ${points} </td>
+                <td> ${roster}</td>
+                <td> ${coach} </td>
+            </tr>
+            <#list around.matchs as match>            
+            <tr>
+                <td> ${match.c1} </td> 
+                <td> ${match.roster1} </td>
+                <td> ${match.points1} </td>
+                <#list match.values1 as value1>
+                <td>${value1}</td>
+                </#list>
+                <#list match.values2 as value2>
+                <td>${value2}</td>
+                </#list>
+                <td> ${match.points2} </td>
+                <td> ${match.roster2} </td> 
+                <td> ${match.c2}</td>
+            </tr>    
+            </#list>
+        </table>            
+    </p>
+    </#list>
+
     </body>
 </html>

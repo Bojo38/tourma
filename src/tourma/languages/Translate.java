@@ -35,6 +35,7 @@ public class Translate {
     public final static String CS_Active = "ACTIF";
     public final static String CS_Inactive = "INACTIF";
     public final static String CS_Critera_Name = "NOM CRITÈRE";
+    public final static String CS_Critera_Accronym = "ACCRONYM";
     public final static String CS_Error = "ERROR";
     public final static String CS_Points_Plus = "POINTS +";
     public final static String CS_Points_Minus = "POINTS -";

@@ -382,6 +382,7 @@ public final class JdgReport extends javax.swing.JDialog {
                 mFilename = createReport();
                 //jepHTML.setPage(mFilename.toURI().toURL());
                 webView.setURL(mFilename.toURI().toURL().toString());
+                
             } catch (IOException | NullPointerException e) {
                 JOptionPane.showMessageDialog(this.getParent(), e.getLocalizedMessage());
             }
@@ -760,13 +761,13 @@ public final class JdgReport extends javax.swing.JDialog {
 
             final ArrayList criterias = new ArrayList();
             for (int i = 0; i < nb_criterias; i++) {
-                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getName()));
+                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getAccronym()));
             }
             root.put(ReportKeys.CS_Criterias, criterias);
 
             final ArrayList rcriterias = new ArrayList();
             for (int i = nb_criterias - 1; i >= 0; i--) {
-                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getName()));
+                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getAccronym()));
             }
             root.put("rcriterias", rcriterias);
 
@@ -839,7 +840,7 @@ public final class JdgReport extends javax.swing.JDialog {
                 HashMap<String, Object> hCoach = new HashMap<>();
                 hCoach.put("name", coach.getName());
 
-                int round_index = 1;
+                int round_index = 1;                
                 hCoach.put("round", round_index);
 
                 ArrayList values = new ArrayList();
@@ -881,11 +882,11 @@ public final class JdgReport extends javax.swing.JDialog {
                 ArrayList coach_rounds = new ArrayList();
                 for (int j = 1; j <= mRoundNumber; j++) {
                     HashMap<String, Object> hhCoach = new HashMap<>();
-                    round_index++;
-                    hhCoach.put("round_index", round_index);
-
+                    
+                    hhCoach.put("round_index", j+1);
+                    
                     values = new ArrayList();
-                    r = Tournament.getTournament().getRound(round_index - 1);
+                    r = Tournament.getTournament().getRound(j);
                     for (int k = 0; k < nb_criterias; k++) {
                         Criteria crit = mTour.getParams().getCriteria(k);
                         int val = 0;
@@ -906,7 +907,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
                     hhCoach.put("values", values);
 
-                    rank = new MjtRankingIndiv(round_index - 1, coaches, true, true);
+                    rank = new MjtRankingIndiv(j, coaches, true, true);
                     for (int k = 0; k < rank.getRowCount(); k++) {
                         ObjectRanking or = rank.getSortedObject(k);
                         if (or.getObject() == coach) {

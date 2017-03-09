@@ -48,7 +48,7 @@ public class WebPicture {
                     ImageIO.write(pic, "png", baos);
                     baos.flush();
                     img += Base64.encode(baos.toByteArray());
-                    img += "\" height=\"" + heigth + "\" >";
+                    img += "\" height=\"" + heigth + "\" ></IMG>";
                 } catch (final IOException ioe) {
                     System.err.println(ioe.getLocalizedMessage());
                     img = "";
