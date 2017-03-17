@@ -76,6 +76,8 @@
         <h2>${nom} - ${title}</h2>
         ${picture}
         <p>
+        <h2><center>${ranking}/${total_ranking}</center></h2>
+        <p>
             <table style="page-break-inside:avoid;width=100%"  cellpadding="2" cellspacing="1" border="1">
                 <tr >
                     <td rowspan="2">${coach}</td>
@@ -141,12 +143,12 @@
         </table>
     </p>
     <#list rounds as around>
-    <p>
+    <p style="page-break-inside:avoid;width=100%">
         ${round} ${around.index}
         <table style="page-break-inside:avoid;width=100%"  cellpadding="2" cellspacing="1" border="1">
             <tr>
                 <td colspan="3">${around.opp1}</td>
-                <td colspan="${nb_criteriasx2}">Table 3</td>
+                <td colspan="${nb_criteriasx2}">${around.tableindex}</td>
                 <td colspan="3">${around.opp2}</td>
             </tr>
             <tr>
