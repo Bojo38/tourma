@@ -35,6 +35,7 @@ public class Translate {
     public final static String CS_Active = "ACTIF";
     public final static String CS_Inactive = "INACTIF";
     public final static String CS_Critera_Name = "NOM CRITÈRE";
+    public final static String CS_Critera_Accronym = "ACCRONYM";
     public final static String CS_Error = "ERROR";
     public final static String CS_Points_Plus = "POINTS +";
     public final static String CS_Points_Minus = "POINTS -";
@@ -46,6 +47,7 @@ public class Translate {
     public final static String CS_Refused = "REFUSED";
     public final static String CS_Conceeded = "CONCEEDED";
     public final static String CS_Points = "Points";
+    public final static String CS_TotalPoints = "TotalPoints";
     public final static String CS_Points_Without_Bonus = "Points sans bonus";
     public final static String CS_Bonus_Points = "Bonus Points";
     public final static String CS_Nothing = "Nothing";

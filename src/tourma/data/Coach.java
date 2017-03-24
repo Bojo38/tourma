@@ -557,7 +557,11 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
         if (this.getClan() != tour.getClan(0)) {
 
-            if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundIndex(r) == 0) || (params.isAvoidClansMatch()))) {
+            boolean avoidFirstMatch=params.isAvoidClansFirstMatch();
+            int roundIndex=tour.getRoundIndex(r);
+            boolean avoidClansMatch=params.isAvoidClansMatch();
+            boolean clansEnable=params.isEnableClans();
+            if ((clansEnable) && ((avoidFirstMatch && (roundIndex <= 0)) || (avoidClansMatch))) {
 
                 int i = 0;
                 while (i < possible.size()) {

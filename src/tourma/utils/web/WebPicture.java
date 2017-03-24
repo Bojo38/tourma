@@ -23,7 +23,7 @@ public class WebPicture {
 
     public static String getPictureAsHTML(ImageIcon pic, int width, int heigth) {
 
-        BufferedImage bi = new BufferedImage(pic.getIconWidth(), pic.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage bi = new BufferedImage(pic.getIconWidth(), pic.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.createGraphics();
         pic.paintIcon(null, g, 0, 0);
         g.dispose();
@@ -48,7 +48,7 @@ public class WebPicture {
                     ImageIO.write(pic, "png", baos);
                     baos.flush();
                     img += Base64.encode(baos.toByteArray());
-                    img += "\" height=\"" + heigth + "\" >";
+                    img += "\" height=\"" + heigth + "\" ></IMG>";
                 } catch (final IOException ioe) {
                     System.err.println(ioe.getLocalizedMessage());
                     img = "";

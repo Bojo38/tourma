@@ -26,10 +26,10 @@
   <Roster Name="Slanns" />
   <Roster Name="Vampires" />
   <Parameters Organizer="Copenhaguen" Name="Eurobowl 2012" Date="26/10/2012 16:08:39" Place="Eurobowl 2012" Victory="2" Large_Victory="2" Draw="1" Lost="0" Refused="0" Conceeded="0" Little_Lost="0" Victory_Team="1000" Draw_Team="400" Lost_Team="0" Large_Victory_Gap="3" Little_Lost_Gap="1" Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Rank1_Team="1" Rank2_Team="2" Rank3_Team="3" Rank4_Team="4" Rank5_Team="5" ByTeam="true" TeamMates="8" TeamPairing="1" TeamIndivPairing="0" TeamVictoryPoints="10" TeamDrawPoints="5" TeamVictoryOnly="false" GroupEnable="false" Substitutes="false" GameType="1" ActvateClans="false" AvoidFirstMatch="true" AvoidMatch="false" ClanTeammatesNumber="3" MultiRoster="false" IndivBalanced="false" TeamBalanced="false" Portugal="false" Color="true" UseImage="false" UseLargeVictory="false" UseLittleLost="false" TableBonus="false" TableBonusPerRound="false" TableBonusCoef="1.0" UseBestResultIndiv="false" UseBestResultTeam="false" BestResultIndiv="5" BestReasultTeam="5" ApplyToAnnexTeam="false" ApplyToAnnexIndiv="false" ExceptBestAndWorstIndiv="false" ExceptBestAndWorstTeam="false" WebEdit="false" Web_port="80" WebColor1="-6710887" WebColor="-4473925" WebForeColor="-1" WebBorderColor="-13421773">
-    <Criteria Criteria="Touchdowns" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
-    <Criteria Criteria="Sorties" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
-    <Criteria Criteria="Double crânes" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
-    <Criteria Criteria="Aggressions" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Touchdowns" Accronyme="TD" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Sorties" Accronyme="INJ" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Double crânes" Accronyme="DS" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
+    <Criteria Criteria="Aggressions" Accronyme="FL" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" />
   </Parameters>
   <Clan Name="Aucun" />
   <Group Name="Classiques">

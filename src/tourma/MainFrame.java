@@ -104,6 +104,7 @@ import static tourma.views.fullscreen.JFullScreenIndivRank.C_POOL;
 import tourma.views.fullscreen.JFullScreenMatchs;
 import tourma.views.fullscreen.JFullScreenTeamRank;
 import tourma.views.parameters.JPNParameters;
+import tourma.views.report.JdgReport;
 import tourma.views.round.JPNRound;
 import tourma.views.system.JdgAbout;
 import tourma.views.system.JdgOnlineHelp;
@@ -167,6 +168,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
             Round r = ((JPNRound) jpnContent).getRound();
             if (mTournament.getRoundIndex(r) == mTournament.getRoundsCount() - 1) {
+
+                jmiIndivReport.setEnabled(true);
+                jmiClanReport.setEnabled(true);
+                jmiTeamReport.setEnabled(true);
 
                 jmiDelRound.setEnabled(!isClient);
 
@@ -234,6 +239,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiFullScreenRankAnnexTeam1.setEnabled(mTournament.getParams().isTeamTournament());
             jmiEditCoef.setEnabled(mTournament.getParams().isTableBonusPerRound());
         } else {
+            jmiIndivReport.setEnabled(false);
+            jmiClanReport.setEnabled(false);
+            jmiTeamReport.setEnabled(false);
             jmiPrintLabels.setEnabled(false);
             jckmiRoundOnly.setEnabled(false);
             jckmiHideNonNaf.setEnabled(false);
@@ -262,15 +270,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jmiFullScreenRankCategory.setEnabled(false);
             jmiFullScreenRankAnnexGroups.setEnabled(false);
             jmiFullScreenRankAnnexGroups1.setEnabled(false);
-            jmiFullScreenRankGroups.setEnabled(false); 
+            jmiFullScreenRankGroups.setEnabled(false);
             jmiFullScreenRankAnnexPool.setEnabled(false);
             jmiFullScreenRankAnnexPool1.setEnabled(false);
             jmiFullScreenPool.setEnabled(false);
             jmiEditCoef.setEnabled(false);
         }
         jcxmiRemoteEdit.setSelected((Tournament.getTournament().getParams().isWebEdit()) && (!isClient));
-        
-        
+
         jmiGenerateFirstRound.setEnabled(!isClient);
         jcxmiAsServer.setEnabled(!isClient);
         jcxPatchPortugal.setEnabled(!isClient);
@@ -396,6 +403,12 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiCancelConceedMatch = new javax.swing.JMenuItem();
         jmiRefuseMatch = new javax.swing.JMenuItem();
         jmiCancelMatchRefuse = new javax.swing.JMenuItem();
+        jSeparator17 = new javax.swing.JPopupMenu.Separator();
+        jMenu2 = new javax.swing.JMenu();
+        jmiIndivReport = new javax.swing.JMenuItem();
+        jmiClanReport = new javax.swing.JMenuItem();
+        jmiTeamReport = new javax.swing.JMenuItem();
+        jSeparator18 = new javax.swing.JPopupMenu.Separator();
         jmnHelp = new javax.swing.JMenu();
         jmiAbout = new javax.swing.JMenuItem();
         jmiRevisions = new javax.swing.JMenuItem();
@@ -932,6 +945,36 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnRound.add(jmiCancelMatchRefuse);
+        jmnRound.add(jSeparator17);
+
+        jMenu2.setText(bundle.getString("Reports")); // NOI18N
+
+        jmiIndivReport.setText(bundle.getString("IndividualReport")); // NOI18N
+        jmiIndivReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiIndivReportActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiIndivReport);
+
+        jmiClanReport.setText(bundle.getString("ClanReport")); // NOI18N
+        jmiClanReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiClanReportActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiClanReport);
+
+        jmiTeamReport.setText(bundle.getString("TeamReport")); // NOI18N
+        jmiTeamReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiTeamReportActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmiTeamReport);
+
+        jmnRound.add(jMenu2);
+        jmnRound.add(jSeparator18);
 
         jMenuBar1.add(jmnRound);
 
@@ -2763,6 +2806,27 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }//GEN-LAST:event_jmiPrintLabelsActionPerformed
 
+    private void jmiIndivReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiIndivReportActionPerformed
+        JPNRound jpnr = ((JPNRound) jpnContent);
+        JdgReport report = new JdgReport(this, true, Tournament.getTournament().getRoundIndex(jpnr.getRound()),
+                this.mTournament, JdgReport.C_INDIVIDUAL);
+        report.setVisible(true);
+    }//GEN-LAST:event_jmiIndivReportActionPerformed
+
+    private void jmiClanReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiClanReportActionPerformed
+        JPNRound jpnr = ((JPNRound) jpnContent);
+        JdgReport report = new JdgReport(this, true, Tournament.getTournament().getRoundIndex(jpnr.getRound()),
+                this.mTournament, JdgReport.C_CLAN);
+        report.setVisible(true);
+    }//GEN-LAST:event_jmiClanReportActionPerformed
+
+    private void jmiTeamReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiTeamReportActionPerformed
+        JPNRound jpnr = ((JPNRound) jpnContent);
+        JdgReport report = new JdgReport(this, true, Tournament.getTournament().getRoundIndex(jpnr.getRound()),
+                this.mTournament, JdgReport.C_TEAM);
+        report.setVisible(true);
+    }//GEN-LAST:event_jmiTeamReportActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3224,6 +3288,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -3234,6 +3299,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JPopupMenu.Separator jSeparator14;
     private javax.swing.JPopupMenu.Separator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator16;
+    private javax.swing.JPopupMenu.Separator jSeparator17;
+    private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -3257,6 +3324,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiCancelMatchRefuse;
     private javax.swing.JMenuItem jmiChangePairing;
     private javax.swing.JMenuItem jmiCharger;
+    private javax.swing.JMenuItem jmiClanReport;
     private javax.swing.JMenuItem jmiConceedMatch;
     private javax.swing.JMenuItem jmiDelFreeMatch;
     private javax.swing.JMenuItem jmiDelRound;
@@ -3291,6 +3359,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiFullScreenRankTeam;
     private javax.swing.JMenuItem jmiGenerateFirstRound;
     private javax.swing.JMenuItem jmiGenerateNextRound;
+    private javax.swing.JMenuItem jmiIndivReport;
     private javax.swing.JMenuItem jmiNafLoad;
     private javax.swing.JMenuItem jmiNouveau;
     private javax.swing.JMenuItem jmiPrintLabels;
@@ -3299,6 +3368,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiSave;
     private javax.swing.JMenuItem jmiSaveAs;
     private javax.swing.JMenuItem jmiSubstitutePlayer;
+    private javax.swing.JMenuItem jmiTeamReport;
     private javax.swing.JMenu jmnFile;
     private javax.swing.JMenu jmnHelp;
     private javax.swing.JMenu jmnParameters;

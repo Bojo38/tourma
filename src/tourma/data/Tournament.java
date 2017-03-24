@@ -85,11 +85,21 @@ public class Tournament implements IContainCoachs, Serializable {
         }
     }
 
+    public ArrayList<Team> getTeams()
+    {
+        return mTeams;
+    }
+    
+    public ArrayList<Coach> getCoachs()
+    {
+        return mCoachs;
+    }
+    
     /**
      *
      * @return
      */
-    public static Tournament getTournament() {
+      public static Tournament getTournament() {
         synchronized (Tournament.myLock) {
             if (mSingleton == null) {
                 mSingleton = new Tournament();

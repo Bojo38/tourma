@@ -47,6 +47,26 @@ public class Criteria implements IXMLExport, Serializable {
      */
     protected String mName;
     /**
+     * Accronym of the criteria
+     */
+    protected String mAccronym;
+
+    public String getAccronym() {
+        if (mAccronym==null)
+        {
+            return mName;
+        }
+        if (mAccronym.equals(""))
+        {
+            return mName;
+        }
+        return mAccronym;
+    }
+
+    public void setAccronym(String accronym) {
+        this.mAccronym = accronym;
+    }
+    /**
      * Points for
      */
     protected int mPointsFor;
@@ -193,6 +213,8 @@ public class Criteria implements IXMLExport, Serializable {
         final Element crit = new Element(StringConstants.CS_CRITERIA);
         String key = StringConstants.CS_CRITERIA;
         crit.setAttribute(key, this.getName());
+        key = StringConstants.CS_CRITERIA_ACCRONYM;
+        crit.setAttribute(key, this.getAccronym());
         crit.setAttribute(StringConstants.CS_POINTS_FOR, Integer.toString(this.getPointsFor()));
         crit.setAttribute(StringConstants.CS_POINTS_AGAINST, Integer.toString(this.getPointsAgainst()));
         crit.setAttribute(StringConstants.CS_TEAM_POINTS_FOR, Integer.toString(this.getPointsTeamFor()));
@@ -240,6 +262,12 @@ public class Criteria implements IXMLExport, Serializable {
             this.setPointsTeamAgainst(criteria.getAttribute(StringConstants.CS_TEAM_POINTS_AGAINST).getIntValue());
             try {
                 this.setCriticalThreshold(criteria.getAttribute(StringConstants.CS_CRITICAL_THRESHOLD).getIntValue());
+                
+            } catch (NullPointerException npe) {
+                this.setCriticalThreshold(10);
+            }
+             try {
+                this.setAccronym(criteria.getAttributeValue(StringConstants.CS_CRITERIA_ACCRONYM));
             } catch (NullPointerException npe) {
                 this.setCriticalThreshold(10);
             }

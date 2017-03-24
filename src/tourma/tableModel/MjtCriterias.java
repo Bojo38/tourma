@@ -43,7 +43,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
 
     @Override
     public int getColumnCount() {
-        int result = 4;
+        int result = 5;
         if (mParams.isTeamTournament()) {
             result = 6;
         }
@@ -63,22 +63,25 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                 result = Translate.translate(Translate.CS_Critera_Name);
                 break;
             case 1:
-                result = Translate.translate(Translate.CS_Points_Plus);
+                result = Translate.translate(Translate.CS_Critera_Accronym);
                 break;
             case 2:
-                result = Translate.translate(Translate.CS_Points_Minus);
+                result = Translate.translate(Translate.CS_Points_Plus);
                 break;
             case 3:
+                result = Translate.translate(Translate.CS_Points_Minus);
+                break;
+            case 4:
                 if (mParams.isTeamTournament()) {
                     result = Translate.translate(Translate.CS_Points_Team_Plus);
                 } else {
                     result = Translate.translate(Translate.CS_Critical_Value_Threshold);
                 }
                 break;
-            case 4:
+            case 5:
                 result = Translate.translate(Translate.CS_Points_Team_Minus);
                 break;
-            case 5:
+            case 6:
                 result = Translate.translate(Translate.CS_Critical_Value_Threshold);
                 break;
             default:
@@ -95,22 +98,25 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                 result = mParams.getCriteria(row).getName();
                 break;
             case 1:
-                result = mParams.getCriteria(row).getPointsFor();
+                result = mParams.getCriteria(row).getAccronym();
                 break;
             case 2:
-                result = mParams.getCriteria(row).getPointsAgainst();
+                result = mParams.getCriteria(row).getPointsFor();
                 break;
             case 3:
+                result = mParams.getCriteria(row).getPointsAgainst();
+                break;
+            case 4:
                 if (mParams.isTeamTournament()) {
                     result = mParams.getCriteria(row).getPointsTeamFor();
                 } else {
                     result = mParams.getCriteria(row).getCriticalThreshold();
                 }
                 break;
-            case 4:
+            case 5:
                 result = mParams.getCriteria(row).getPointsTeamAgainst();
                 break;
-            case 5:
+            case 6:
                 result = mParams.getCriteria(row).getCriticalThreshold();
                 break;
             default:
@@ -145,24 +151,31 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                         c.setName(tmp);
                         break;
                     case 1:
+                        c.setAccronym(tmp);
+                        break;
+                    case 2:
                         val = Integer.parseInt(tmp);
                         c.setPointsFor(val);
                         Tournament.getTournament().recomputeAll();
                         break;
-                    case 2:
+                    case 3:
                         val = Integer.parseInt(tmp);
                         c.setPointsAgainst(val);
                         Tournament.getTournament().recomputeAll();
                         break;
-                    case 3:
+                    case 4:
                         val = Integer.parseInt(tmp);
                         c.setPointsTeamFor(val);
                         Tournament.getTournament().recomputeAll();
                         break;
-                    case 4:
+                    case 5:
                         val = Integer.parseInt(tmp);
                         c.setPointsTeamAgainst(val);
                         Tournament.getTournament().recomputeAll();
+                        break;
+                    case 6:
+                        val = Integer.parseInt(tmp);
+                        c.setCriticalThreshold(val);
                         break;
                     default:
                 }
