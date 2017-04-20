@@ -42,9 +42,9 @@ public final class JPNParameters extends javax.swing.JPanel {
      */
     public JPNParameters() {
         mTournament = null;
-        
-            mTournament = Tournament.getTournament();
-        
+
+        mTournament = Tournament.getTournament();
+
         initComponents();
 
         mJpnIndiv = new JPNParamIndiv();
@@ -107,42 +107,41 @@ public final class JPNParameters extends javax.swing.JPanel {
      */
     public void update() {
 
-        
-            final boolean bTourStarted = mTournament.getRoundsCount() > 0;
+        final boolean bTourStarted = mTournament.getRoundsCount() > 0;
 
-            updateTables(bTourStarted);
+        updateTables(bTourStarted);
 
-            if (mTournament.getParams().isTeamTournament()) {
-                jpnTeamTour.update();
-                jpnTeamTour.setVisible(true);
-                jpnCoachButtons.setVisible(false);
-            } else {
-                jpnTeamTour.setVisible(false);
-                jpnCoachButtons.setVisible(true);
-            }
+        if (mTournament.getParams().isTeamTournament()) {
+            jpnTeamTour.update();
+            jpnTeamTour.setVisible(true);
+            jpnCoachButtons.setVisible(false);
+        } else {
+            jpnTeamTour.setVisible(false);
+            jpnCoachButtons.setVisible(true);
+        }
 
-            mJpnIndiv.update();
-            mJpnCriterias.update();
-            mJpnTeam.update();
-            mJpnClan.update();
-            mJpnGroup.update();
-            mJpnCategories.update();
+        mJpnIndiv.update();
+        mJpnCriterias.update();
+        mJpnTeam.update();
+        mJpnClan.update();
+        mJpnGroup.update();
+        mJpnCategories.update();
 
-            jtpOptions.setEnabledAt(4, !mTournament.getParams().isMultiRoster());
-            jtpOptions.setEnabledAt(2, mTournament.getParams().isTeamTournament());
+        jtpOptions.setEnabledAt(4, !mTournament.getParams().isMultiRoster());
+        jtpOptions.setEnabledAt(2, mTournament.getParams().isTeamTournament());
 //        jtpOptions.setEnabledAt(3, !mTournament.getParams().mTeamTournament);
 
-            jtfOrgas.setText(mTournament.getParams().getTournamentOrga());
-            jtfTournamentName.setText(mTournament.getParams().getTournamentName());
+        jtfOrgas.setText(mTournament.getParams().getTournamentOrga());
+        jtfTournamentName.setText(mTournament.getParams().getTournamentName());
 
-            Date d = new Date();
-            d.setTime(mTournament.getParams().getDateTime());
-            jDate.setDate(d);
+        Date d = new Date();
+        d.setTime(mTournament.getParams().getDateTime());
+        jDate.setDate(d);
 
-            jtfPlace.setText(mTournament.getParams().getPlace());
+        jtfPlace.setText(mTournament.getParams().getPlace());
 
-            MainFrame.getMainFrame().update();
-        
+        MainFrame.getMainFrame().update();
+
     }
 
     /**
@@ -292,14 +291,14 @@ public final class JPNParameters extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
-            mTournament.getParams().setTournamentName(jtfTournamentName.getText() + evt.getKeyChar());
-        
+        mTournament.getParams().setTournamentName(jtfTournamentName.getText() + evt.getKeyChar());
+
     }//GEN-LAST:event_jtfTournamentNameKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
-        
-            mTournament.getParams().semTournamentOrga(jtfOrgas.getText() + evt.getKeyChar());
-        
+
+        mTournament.getParams().semTournamentOrga(jtfOrgas.getText() + evt.getKeyChar());
+
     }//GEN-LAST:event_jtfOrgasKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
@@ -310,33 +309,36 @@ public final class JPNParameters extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAddActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-        
-            mTournament.removeCoach(jtbCoachs.getSelectedRow());
-            update();
-        
+
+        mTournament.removeCoach(jtbCoachs.getSelectedRow());
+        update();
+
     }//GEN-LAST:event_jbtRemoveActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
 
-        
-            if (jtbCoachs.getSelectedRow() >= 0) {
-                final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoach(jtbCoachs.getSelectedRow()));
+        if (jtbCoachs.getSelectedRow() >= 0) {
+            Object obj = jtbCoachs.getValueAt(jtbCoachs.getSelectedRow(), 0);
+            if (obj instanceof Integer) {
+                int index = (Integer) obj;
+                final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoach(index - 1));
                 w.setVisible(true);
                 update();
             }
-        
+        }
+
     }//GEN-LAST:event_jbtModifyActionPerformed
 
     private void jtfOrgasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOrgasActionPerformed
-        
-            mTournament.getParams().semTournamentOrga(jtfOrgas.getText());
-        
+
+        mTournament.getParams().semTournamentOrga(jtfOrgas.getText());
+
     }//GEN-LAST:event_jtfOrgasActionPerformed
 
     private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
-        
-            mTournament.getParams().setPlace(jtfPlace.getText() + evt.getKeyChar());
-        
+
+        mTournament.getParams().setPlace(jtfPlace.getText() + evt.getKeyChar());
+
     }//GEN-LAST:event_jtfPlaceKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

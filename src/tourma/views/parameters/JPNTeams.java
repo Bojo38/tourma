@@ -170,16 +170,18 @@ public final class JPNTeams extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyTeamActionPerformed
 
-        if (mTournament.getTeamsCount() > jtbTeam.getSelectedRow()) {
-            final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
-            if (jtbTeam.getSelectedColumn() == 1) {
-                final JdgTeam jdg = new JdgTeam(MainFrame.getMainFrame(), true, t);
-                jdg.setVisible(true);
-            } else if (jtbTeam.getSelectedColumn() > 1) {
-                final JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, t.getCoach(jtbTeam.getSelectedColumn() - 2));
-                jdg.setVisible(true);
+        if (jtbTeam.getSelectedRow() >= 0) {
+            if (mTournament.getTeamsCount() > jtbTeam.getSelectedRow()) {
+                final Team t = mTournament.getTeam(jtbTeam.getSelectedRow());
+                if (jtbTeam.getSelectedColumn() == 1) {
+                    final JdgTeam jdg = new JdgTeam(MainFrame.getMainFrame(), true, t);
+                    jdg.setVisible(true);
+                } else if (jtbTeam.getSelectedColumn() > 1) {
+                    final JdgCoach jdg = new JdgCoach(MainFrame.getMainFrame(), true, t.getCoach(jtbTeam.getSelectedColumn() - 2));
+                    jdg.setVisible(true);
+                }
+                update();
             }
-            update();
         }
 
     }//GEN-LAST:event_jbtModifyTeamActionPerformed
