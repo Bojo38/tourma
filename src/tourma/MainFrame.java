@@ -25,7 +25,11 @@ import java.awt.Toolkit;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
@@ -49,6 +53,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
@@ -361,6 +367,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiEditWebPort = new javax.swing.JMenuItem();
         jmiEditDescription = new javax.swing.JMenuItem();
         jcxmiRemoteEdit = new javax.swing.JCheckBoxMenuItem();
+        jSeparator19 = new javax.swing.JPopupMenu.Separator();
+        jmiExportWebServerAsZIP = new javax.swing.JMenuItem();
+        jmiExportWebServerToSite = new javax.swing.JMenuItem();
         jmnRound = new javax.swing.JMenu();
         jmiGenerateNextRound = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
@@ -641,6 +650,25 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jcxmiRemoteEdit);
+        jmnParameters.add(jSeparator19);
+
+        jmiExportWebServerAsZIP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/zip_32.png"))); // NOI18N
+        jmiExportWebServerAsZIP.setText(bundle.getString("ExportToZip")); // NOI18N
+        jmiExportWebServerAsZIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExportWebServerAsZIPActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiExportWebServerAsZIP);
+
+        jmiExportWebServerToSite.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExportWebServerToSite.setText(bundle.getString("ExportWebToSite")); // NOI18N
+        jmiExportWebServerToSite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExportWebServerToSiteActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiExportWebServerToSite);
 
         jMenuBar1.add(jmnParameters);
 
@@ -2827,6 +2855,66 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         report.setVisible(true);
     }//GEN-LAST:event_jmiTeamReportActionPerformed
 
+    private void jmiExportWebServerAsZIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportWebServerAsZIPActionPerformed
+
+        JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter(
+                "Zip",
+                new String[]{"ZIP",
+                    "zip"});
+        jfc.setFileFilter(filter1);
+        int result = jfc.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+
+            File zipFile = jfc.getSelectedFile();
+
+            // First this function will generate in a temporary directory
+            // all the possible web pages
+            ArrayList<File> files = WebServer.getWebSiteFiles();
+
+            if (files.size() > 0) {
+                FileOutputStream fout = null;
+                try {
+                    // Then it will zip this directory and export it
+                    fout = new FileOutputStream(zipFile);
+                    ZipOutputStream zout = new ZipOutputStream(new BufferedOutputStream(fout));
+
+                    for (int i = 0; i < files.size(); i++) {
+                        File f=files.get(i);
+                        byte [] b= new byte[(int) f.length()];
+                        FileInputStream fin = new FileInputStream(f);
+                        zout.putNextEntry(new ZipEntry(f.getName()));
+                        int length;
+                        while ((length = fin.read()) > 0) {
+                            zout.write(b, 0, length);
+                        }
+                        zout.closeEntry();
+                        fin.close();
+                    }
+                    zout.close();
+
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        fout.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            WebServer.cleanFiles(files);
+        }
+    }//GEN-LAST:event_jmiExportWebServerAsZIPActionPerformed
+
+    private void jmiExportWebServerToSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportWebServerToSiteActionPerformed
+        // First this function will generate in a temporary directory
+        // all the possible web pages
+
+        // Then it will connect to remote site (FTP or SFTP)
+        // and copy the files.
+    }//GEN-LAST:event_jmiExportWebServerToSiteActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3301,6 +3389,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JPopupMenu.Separator jSeparator16;
     private javax.swing.JPopupMenu.Separator jSeparator17;
     private javax.swing.JPopupMenu.Separator jSeparator18;
+    private javax.swing.JPopupMenu.Separator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -3337,6 +3426,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiExport;
     private javax.swing.JMenuItem jmiExportFbb;
     private javax.swing.JMenuItem jmiExportFbb1;
+    private javax.swing.JMenuItem jmiExportWebServerAsZIP;
+    private javax.swing.JMenuItem jmiExportWebServerToSite;
     private javax.swing.JMenuItem jmiFullScreenMatchs;
     private javax.swing.JMenuItem jmiFullScreenMatchsClash;
     private javax.swing.JMenuItem jmiFullScreenPool;

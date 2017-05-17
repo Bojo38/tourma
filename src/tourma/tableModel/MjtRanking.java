@@ -53,6 +53,15 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return subType;
     }
 
+    public String convertVND(int value) {
+        String vnd = "";
+        int nb_vict = value / 1000000;
+        int nb_draw = (value % 1000000) / 1000;
+        int nb_loss = (value % 1000000) % 1000;
+        vnd = Integer.toString(nb_vict) + "/" + Integer.toString(nb_draw) + "/" + Integer.toString(nb_loss);
+        return vnd;
+    }
+    
     /**
      *
      * @param valueType

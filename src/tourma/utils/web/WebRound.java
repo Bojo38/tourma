@@ -49,7 +49,7 @@ public class WebRound {
 
     private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
 
-    public static String getMenu(int nb) {
+    public static String getMenu(int nb,boolean withExtension) {
         StringBuilder menu = new StringBuilder();
 
         Round r = Tournament.getTournament().getRound(nb - 1);
