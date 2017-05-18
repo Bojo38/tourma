@@ -4,33 +4,39 @@
  */
 package tourma.views.parameters;
 
+import java.rmi.RemoteException;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.Tournament;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtCriterias;
+import tourma.tableModel.MjtCriteriasIndivBonus;
+import tourma.tableModel.MjtCriteriasTeamBonus;
+
 /**
  *
  * @author WFMJ7631
  */
 public final class JPNParamCriterias extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private Tournament mTournament;
 
     /**
      * Creates new form JPNParamCriterias
      */
     public JPNParamCriterias() {
-        mTournament = Tournament.getTournament();
+
+            mTournament = Tournament.getTournament();
         initComponents();
     }
 
-    private final static String CS_Criteria="CRITÈRE";
-    
+    private final static String CS_Criteria = "CRITÈRE";
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,13 +49,18 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         jPanel16 = new javax.swing.JPanel();
         jbtAddCriteria = new javax.swing.JButton();
         jbtRemoveCriteria = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jtbCriteria = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jcxTableBonus = new javax.swing.JCheckBox();
         jcxTableCoefPerRound = new javax.swing.JCheckBox();
         jlbCoef = new javax.swing.JLabel();
         jspCoef = new javax.swing.JSpinner();
+        jtpCriterias = new javax.swing.JTabbedPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtbCriteria = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtbPlayerBonuses = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jtbTeamBonus = new javax.swing.JTable();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -73,21 +84,6 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         jPanel16.add(jbtRemoveCriteria);
 
         add(jPanel16, java.awt.BorderLayout.PAGE_START);
-
-        jtbCriteria.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane5.setViewportView(jtbCriteria);
-
-        add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TableBonus"))); // NOI18N
         jPanel1.setLayout(new java.awt.GridLayout(2, 2));
@@ -126,52 +122,99 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         jPanel1.add(jspCoef);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_END);
+
+        jtbCriteria.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jtbCriteria);
+
+        jtpCriterias.addTab(bundle.getString("Points"), jScrollPane5); // NOI18N
+
+        jtbPlayerBonuses.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jtbPlayerBonuses);
+
+        jtpCriterias.addTab(bundle.getString("BonusIndiv"), jScrollPane6); // NOI18N
+
+        jtbTeamBonus.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane7.setViewportView(jtbTeamBonus);
+
+        jtpCriterias.addTab(bundle.getString("TeamBonus"), jScrollPane7); // NOI18N
+
+        add(jtpCriterias, java.awt.BorderLayout.CENTER);
+        jtpCriterias.getAccessibleContext().setAccessibleName(bundle.getString("IndivBonus")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
-        final int nb = Tournament.getTournament().getParams().getCriteriaCount();
-        final Criteria c = new Criteria(
-                Translate.translate(CS_Criteria)
-                        + " " + Integer.toString(nb));
-        Tournament.getTournament().getParams().addCriteria(c);
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            final Round r = mTournament.getRound(i);
-            for (int j = 0; j < r.getCoachMatchs().size(); j++) {
-                final CoachMatch m = r.getCoachMatchs().get(j);
-                m.putValue(c, new Value(c));
-            }
-        }
-
-        update();
-    }//GEN-LAST:event_jbtAddCriteriaActionPerformed
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
-        if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < mTournament.getParams().getCriteriaCount())) {
-            final Criteria crit = mTournament.getParams().getCriteria(jtbCriteria.getSelectedRow());
+            final int nb = Tournament.getTournament().getParams().getCriteriaCount();
+            final Criteria c = new Criteria(
+                    Translate.translate(CS_Criteria)
+                    + " " + Integer.toString(nb));
+            Tournament.getTournament().getParams().addCriteria(c);
             for (int i = 0; i < mTournament.getRoundsCount(); i++) {
                 final Round r = mTournament.getRound(i);
                 for (int j = 0; j < r.getCoachMatchs().size(); j++) {
                     final CoachMatch m = r.getCoachMatchs().get(j);
-                    m.removeValue(crit);
+                    m.putValue(c, new Value(c));
                 }
             }
-            mTournament.getParams().removeCriteria(jtbCriteria.getSelectedRow());
-        }
+        update();
+    }//GEN-LAST:event_jbtAddCriteriaActionPerformed
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
+            if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < mTournament.getParams().getCriteriaCount())) {
+                final Criteria crit = mTournament.getParams().getCriteria(jtbCriteria.getSelectedRow());
+                for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                    final Round r = mTournament.getRound(i);
+                    for (int j = 0; j < r.getCoachMatchs().size(); j++) {
+                        final CoachMatch m = r.getCoachMatchs().get(j);
+                        m.removeValue(crit);
+                    }
+                }
+                mTournament.getParams().removeCriteria(jtbCriteria.getSelectedRow());
+            }
         repaint();
     }//GEN-LAST:event_jbtRemoveCriteriaActionPerformed
 
     private void jcxTableCoefPerRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxTableCoefPerRoundActionPerformed
-        Tournament.getTournament().getParams().setTableBonusPerRound(jcxTableCoefPerRound.isSelected());
+            Tournament.getTournament().getParams().setTableBonusPerRound(jcxTableCoefPerRound.isSelected());
         update();
     }//GEN-LAST:event_jcxTableCoefPerRoundActionPerformed
 
     private void jcxTableBonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxTableBonusActionPerformed
-        Tournament.getTournament().getParams().setTableBonus(jcxTableBonus.isSelected());
+            Tournament.getTournament().getParams().setTableBonus(jcxTableBonus.isSelected());
         update();
     }//GEN-LAST:event_jcxTableBonusActionPerformed
 
     private void jspCoefStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspCoefStateChanged
-       Tournament.getTournament().getParams().setTableBonusCoef((Double)jspCoef.getValue());
+            Tournament.getTournament().getParams().setTableBonusCoef((Double) jspCoef.getValue());
         update();
     }//GEN-LAST:event_jspCoefStateChanged
 
@@ -179,25 +222,45 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
      * Update Panel
      */
     public void update() {
+              
+            final boolean bTourStarted = mTournament.getRoundsCount() > 0;
+            jtbCriteria.setModel(new MjtCriterias(mTournament));
+            jtbPlayerBonuses.setModel(new MjtCriteriasIndivBonus(mTournament));
+            
+            if (!Tournament.getTournament().getParams().isTeamTournament())
+            {
+                jtbTeamBonus.setEnabled(false);
+            }
+            else
+            {
+                jtbTeamBonus.setModel(new MjtCriteriasTeamBonus(mTournament));
+            }
+            
+            if (Tournament.getTournament().isClient())
+            {
+                jtbCriteria.setEnabled(false);
+                jcxTableBonus.setEnabled(false);
+                jcxTableCoefPerRound.setEnabled(false);
+                jspCoef.setEnabled(false);                 
+             }
+            
+            jbtAddCriteria.setEnabled(!bTourStarted && !Tournament.getTournament().isClient());
+            jbtRemoveCriteria.setEnabled(!bTourStarted && !Tournament.getTournament().isClient());
 
-        final boolean bTourStarted = mTournament.getRoundsCount() > 0;
-        jtbCriteria.setModel(new MjtCriterias(mTournament));
-        jbtAddCriteria.setEnabled(!bTourStarted);
-        jbtRemoveCriteria.setEnabled(!bTourStarted);
+            jcxTableBonus.setSelected(mTournament.getParams().isTableBonus());
+            jcxTableCoefPerRound.setSelected(mTournament.getParams().isTableBonusPerRound());
 
-        jcxTableBonus.setSelected(mTournament.getParams().isTableBonus());
-        jcxTableCoefPerRound.setSelected(mTournament.getParams().isTableBonusPerRound());
-
-       
-        jspCoef.setValue(Tournament.getTournament().getParams().getTableBonusCoef());
-        jspCoef.setEnabled(mTournament.getParams().isTableBonus());
-        jlbCoef.setEnabled(mTournament.getParams().isTableBonus());
+            jspCoef.setValue(Tournament.getTournament().getParams().getTableBonusCoef());
+            jspCoef.setEnabled(mTournament.getParams().isTableBonus());
+            jlbCoef.setEnabled(mTournament.getParams().isTableBonus());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JButton jbtAddCriteria;
     private javax.swing.JButton jbtRemoveCriteria;
     private javax.swing.JCheckBox jcxTableBonus;
@@ -205,6 +268,9 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
     private javax.swing.JLabel jlbCoef;
     private javax.swing.JSpinner jspCoef;
     private javax.swing.JTable jtbCriteria;
+    private javax.swing.JTable jtbPlayerBonuses;
+    private javax.swing.JTable jtbTeamBonus;
+    private javax.swing.JTabbedPane jtpCriterias;
     // End of variables declaration//GEN-END:variables
 
 }

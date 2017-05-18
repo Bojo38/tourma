@@ -17,6 +17,7 @@ public class ReportKeys {
     public static final String CS_Result = "result";
     public static final String CS_Criterias = "criterias";
     public static final String CS_Matches = "matches";
+    public static final String CS_TeamMatches = "team_matches";
     public static final String CS_Numero = "numero";
     public static final String CS_Roster1 = "roster1";
     public static final String CS_Roster2 = "roster2";

@@ -7,6 +7,7 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -38,9 +39,11 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
     public int getColumnCount() {
 
         int nbCol = 2;
+
         for (int i = 0; i < mTeams.size(); i++) {
             nbCol = Math.max(nbCol, mTeams.get(i).getCoachsCount() + 2);
         }
+
         return nbCol;
     }
 
@@ -87,6 +90,7 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
                 }
             }
         }
+
         return object;
     }
 
@@ -135,6 +139,7 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
                 }
             }
         }
+
         jlb.setHorizontalAlignment(JTextField.CENTER);
 
         if (isSelected) {
@@ -144,8 +149,8 @@ public class MjtTeams extends AbstractTableModel implements TableCellRenderer {
         }
         return jlb;
     }
-    
-      private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

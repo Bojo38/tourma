@@ -3,18 +3,20 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * JPNAnnexRanking.java
  *
  * Created on 13 mai 2011, 21:52:44
  */
 package tourma.views.round;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Tournament;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -100,7 +102,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
         mTeams = t;
 
         int roundnumber = 0;
-        while (round != tour.getRound(roundnumber)) {
+        while (!round.equals(tour.getRound(roundnumber))) {
             roundnumber++;
         }
 
@@ -214,6 +216,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtPositiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPositiveActionPerformed
+
         for (int i = 0; i < mTour.getRoundsCount(); i++) {
             if (mRound == mTour.getRound(i)) {
                 MjtAnnexRank model;
@@ -244,6 +247,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                 break;
             }
         }
+
     }//GEN-LAST:event_jbtPositiveActionPerformed
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -279,6 +283,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                 break;
             }
         }
+
     }//GEN-LAST:event_jbtNegativeActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -350,6 +355,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             jtbPositive.setAutoCreateRowSorter(true);
             jtbNegative.setAutoCreateRowSorter(true);
         }
+
     }
     private static final Logger LOG = Logger.getLogger(JPNAnnexRanking.class.getName());
 

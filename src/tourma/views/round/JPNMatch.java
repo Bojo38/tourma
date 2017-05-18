@@ -6,6 +6,7 @@ package tourma.views.round;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.rmi.RemoteException;
 import java.util.logging.Logger;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
@@ -24,6 +25,7 @@ public class JPNMatch extends javax.swing.JPanel {
 
     /**
      * Creates new form JPNMatch
+     *
      * @param m
      * @param winner
      */
@@ -121,9 +123,7 @@ public class JPNMatch extends javax.swing.JPanel {
             jPanel1.setBackground(Color.LIGHT_GRAY);
             this.setBackground(Color.LIGHT_GRAY);
         }
-
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -244,7 +244,7 @@ public class JPNMatch extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     private static final Logger LOG = Logger.getLogger(JPNMatch.class.getName());
 
-/* private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+    /* private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }
 

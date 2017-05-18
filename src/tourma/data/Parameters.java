@@ -5,6 +5,7 @@
 package tourma.data;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -27,8 +29,135 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Parameters implements XMLExport {
+public class Parameters implements IXMLExport, Serializable {
 
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
+    public Criteria getCriteria(String name)
+    {
+        for (Criteria criteria: mCriterias)
+        {
+            if(criteria.getName().equals(name))
+            {
+                return criteria;
+            }
+        }
+        return null;
+    }
+    
+    public void pull(Parameters params)
+    {
+        this.UID=params.UID;
+        this._webport=params._webport;
+        this.mApplyToAnnexIndiv=params.mApplyToAnnexIndiv;
+        this.mApplyToAnnexTeam=params.mApplyToAnnexTeam;
+        this.mAvoidClansFirstMatch=params.mAvoidClansFirstMatch;
+        this.mAvoidClansMatch=params.mAvoidClansMatch;
+        this.mBestResultsIndiv=params.mBestResultsIndiv;
+        this.mBestResultsTeam=params.mBestResultsTeam;
+        this.mBorderColor=params.mBorderColor;
+        this.mClansMembersNumber=params.mClansMembersNumber;
+        this.mColor1=params.mColor1;
+        this.mColor2=params.mColor2;
+        
+        
+        
+        //
+        // loop to find crieria
+        boolean bFound=false;
+        for (int i=0; i<params.getCriteriaCount(); i++)
+        {
+            bFound=false;
+            Criteria crit=params.getCriteria(i);
+            for (Criteria c:mCriterias)
+            {
+                if ((crit.getUID()==c.UID)||(crit.getName().equals(c.getName())))
+                {
+                    bFound=true;
+                    c.pull(crit);
+                }
+            }
+            if (!bFound)
+            {
+                Criteria c=new Criteria(crit.getName());
+                c.pull(crit);
+                mCriterias.add(c);
+            }
+        }
+        
+        this.mDate=params.mDate;
+        this.mEnableClans=params.mEnableClans;
+        this.mExceptBestAndWorstIndiv=params.mExceptBestAndWorstIndiv;
+        this.mExceptBestAndWorstTeam=params.mExceptBestAndWorstTeam;
+        this.mForeColor=params.mForeColor;
+        this.mGame=params.mGame;
+        this.mGapLargeVictory=params.mGapLargeVictory;
+        this.mGapLittleLost=params.mGapLittleLost;
+        this.mGroupsEnable=params.mGroupsEnable;
+        this.mIndivPairingIndivBalanced=params.mIndivPairingIndivBalanced;
+        this.mIndivPairingTeamBalanced=params.mIndivPairingTeamBalanced;
+        this.mMultiRoster=params.mMultiRoster;
+        this.mPlace=params.mPlace;
+        this.mPointsConcedeed=params.mPointsConcedeed;
+        this.mPointsIndivDraw=params.mPointsIndivDraw;
+        this.mPointsIndivLargeVictory=params.mPointsIndivLargeVictory;
+        this.mPointsIndivLittleLost=params.mPointsIndivLittleLost;
+        this.mPointsIndivLost=params.mPointsIndivLost;
+        this.mPointsIndivVictory=params.mPointsIndivVictory;
+        this.mPointsRefused=params.mPointsRefused;
+        this.mPointsTeamDraw=params.mPointsTeamDraw;
+        this.mPointsTeamDrawBonus=params.mPointsTeamDrawBonus;
+        this.mPointsTeamLost=params.mPointsTeamLost;
+        this.mPointsTeamVictory=params.mPointsTeamVictory;
+        this.mPointsTeamVictoryBonus=params.mPointsTeamVictoryBonus;
+        this.mPortugal=params.mPortugal;
+        
+        this.mRankingIndiv1=params.mRankingIndiv1;
+        this.mRankingIndiv2=params.mRankingIndiv2;
+        this.mRankingIndiv3=params.mRankingIndiv3;
+        this.mRankingIndiv4=params.mRankingIndiv4;
+        this.mRankingIndiv5=params.mRankingIndiv5;
+        
+        this.mRankingTeam1=params.mRankingTeam1;
+        this.mRankingTeam2=params.mRankingTeam2;
+        this.mRankingTeam3=params.mRankingTeam3;
+        this.mRankingTeam4=params.mRankingTeam4;
+        this.mRankingTeam5=params.mRankingTeam5;
+        
+        
+        this.mSubstitutes=params.mSubstitutes;
+        this.mTableBonus=params.mTableBonus;
+        this.mTableBonusCoef=params.mTableBonusCoef;
+        this.mTableBonusPerRound=params.mTableBonusPerRound;
+        this.mTeamIndivPairing=params.mTeamIndivPairing;
+        this.mTeamMatesClansNumber=params.mTeamMatesClansNumber;
+        this.mTeamMatesNumber=params.mTeamMatesNumber;
+        this.mTeamPairing=params.mTeamPairing;
+        this.mTeamTournament=params.mTeamTournament;
+        this.mTeamVictoryOnly=params.mTeamVictoryOnly;
+        this.mTournamentName=params.mTournamentName;
+        this.mTournamentOrga=params.mTournamentOrga;
+        
+        this.mUseBestResultsIndiv=params.mUseBestResultsIndiv;
+        this.mUseBestResultsTeam=params.mUseBestResultsTeam;
+        this.mUseLargeVictory=params.mUseLargeVictory;
+        this.mUseLittleLoss=params.mUseLittleLoss;
+        
+        this.mWebEdit=params.mWebEdit;
+        
+        
+        
+    }
+    
     /**
      *
      */
@@ -191,7 +320,7 @@ public class Parameters implements XMLExport {
     /**
      *
      */
-    private final Date mDate = new Date();
+    private Date mDate = new Date();
 
     /**
      *
@@ -1800,4 +1929,6 @@ public class Parameters implements XMLExport {
     public void setForeColor(Color c) {
         mForeColor = c;
     }
+    
+    
 }

@@ -4,13 +4,14 @@
  */
 package teamma.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * 
  * @author WFMJ7631
  */
-public class Player {
+public class Player implements Serializable{
 
     /**
      * 
@@ -35,6 +36,17 @@ public class Player {
         _playertype=pt;
         _skills=new ArrayList<>();
         _name="";
+    }
+    
+    public void pull(Player player)
+    {
+        this._name=player._name;
+        this._skills.clear();
+        for (int i=0; i<player.getSkillCount(); i++)
+        {
+            Skill skill=LRB.getLRB().getSkill(player.getSkill(i).getmName(), false);
+            _skills.add(skill);
+        }
     }
     
     /**

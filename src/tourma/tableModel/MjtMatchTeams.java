@@ -6,6 +6,7 @@ package tourma.tableModel;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -59,10 +60,10 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                 res = StringConstants.CS_HASH;
                 break;
             case 1:
-                res = Translate.translate(Translate.CS_Team)+" 1";
+                res = Translate.translate(Translate.CS_Team) + " 1";
                 break;
             case 2:
-                res =  Translate.translate(Translate.CS_ACCR_Victory1);
+                res = Translate.translate(Translate.CS_ACCR_Victory1);
                 break;
             case 3:
                 res = Translate.translate(Translate.CS_ACCR_Drawn);
@@ -71,7 +72,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                 res = Translate.translate(Translate.CS_ACCR_Victory2);
                 break;
             case 5:
-                res = Translate.translate(Translate.CS_Team)+" 1";
+                res = Translate.translate(Translate.CS_Team) + " 1";
                 break;
             default:
         }
@@ -145,14 +146,17 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
         if (value instanceof Integer) {
             jlb.setText(Integer.toString((Integer) value));
         }
-        boolean useColor = Tournament.getTournament().getParams().isUseColor();
+
+        boolean useColor = false;
+
+        useColor = Tournament.getTournament().getParams().isUseColor();
         Color bkg = new Color(255, 255, 255);
         Color frg = new Color(0, 0, 0);
         if (!useColor) {
-            if (row % 2 !=0) {
+            if (row % 2 != 0) {
                 bkg = new Color(220, 220, 220);
             }
-            
+
         }
         if (isSelected) {
             bkg = new Color(200, 200, 200);
@@ -163,7 +167,6 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
                         bkg = new Color(200, 50, 50);
                         frg = new Color(255, 255, 255);
-
 
                         break;
                     case 2:
@@ -202,7 +205,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                 TeamMatch tm = (TeamMatch) mRound.getMatch(row);
                 if (tm.getCompetitor1().getPicture() != null) {
                     JLabel obj = new JLabel();
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(tm.getCompetitor1().getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(tm.getCompetitor1().getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setText((String) value);
                     obj.setOpaque(true);
@@ -214,7 +217,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                 TeamMatch tm = (TeamMatch) mRound.getMatch(row);
                 if (tm.getCompetitor2().getPicture() != null) {
                     JLabel obj = new JLabel();
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(tm.getCompetitor2().getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(tm.getCompetitor2().getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setText((String) value);
                     obj.setOpaque(true);
@@ -230,7 +233,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
         jlb.setHorizontalAlignment(JTextField.CENTER);
         return jlb;
     }
-    
+
     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
         throw new java.io.NotSerializableException(getClass().getName());
     }

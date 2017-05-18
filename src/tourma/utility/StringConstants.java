@@ -119,10 +119,33 @@ public interface StringConstants {
     public static final String CS_VALUE = "Value";
     public static final String CS_SUBSTITUTION = "Substitution";
     public static final String CS_CRITERIA = "Criteria";
+    public static final String CS_CRITERIA_ACCRONYM = "Accronyme";
+    
     public static final String CS_POINTS_FOR = "PointsFor";
     public static final String CS_POINTS_AGAINST = "PointsAgainst";
     public static final String CS_TEAM_POINTS_FOR = "PointsTeamFor";
     public static final String CS_TEAM_POINTS_AGAINST = "PointsTeamAgainst";
+    public static final String CS_CRITICAL_THRESHOLD="CriticalValueThreshold";
+    
+    public static final String CS_OFFENSIVE_BONUS_THRESHOLD="OffensiveBonusThreshold";
+    public static final String CS_DIFF_OFFENSIVE_BONUS_THRESHOLD="DiffOffensiveBonusThreshold";
+    public static final String CS_DIFF_DEFENSIVE_BONUS_THRESHOLD="DiffDefensiveBinusThreshold";
+    public static final String CS_DIFF_DEFENSIVE_BONUS="DiffDefensiveBonus";
+    public static final String CS_DIFF_OFFENSIVE_BONUS="DiffOffensiveBonus";
+    public static final String CS_OFFENSIVE_BONUS="OffensiveBonus";
+    
+    public static final String CS_FOR_TEAM_DIFF_DEFENSIVE_BONUS="ForTeamDiffDefensiveBonus";
+    public static final String CS_FOR_TEAM_DIFF_OFFENSIVE_BONUS="ForTeamDiffOffensiveBonus";
+    public static final String CS_FOR_TEAM_OFFENSIVE_BONUS="ForTeamOffensiveBonus";
+    
+    public static final String CS_TEAM_OFFENSIVE_BONUS_THRESHOLD="TeamOffensiveBonusThreshold";
+    public static final String CS_TEAM_DIFF_OFFENSIVE_BONUS_THRESHOLD="TeamDiffOffensiveBonusThreshold";
+    public static final String CS_TEAM_DIFF_DEFENSIVE_BONUS_THRESHOLD="TeamDiffDefensiveBinusThreshold";
+    public static final String CS_TEAM_DIFF_DEFENSIVE_BONUS="TeamDiffDefensiveBonus";
+    public static final String CS_TEAM_DIFF_OFFENSIVE_BONUS="TeamDiffOffensiveBonus";
+    public static final String CS_TEAM_OFFENSIVE_BONUS="TeamOffensiveBonus";
+    
+    
     public static final String CS_GROUP_MODIFIER_POINTS = "GroupModifierPoints";
     public static final String CS_VICTORY = "Victory";
     public static final String CS_LARGE_VICTORY = "Large_Victory";

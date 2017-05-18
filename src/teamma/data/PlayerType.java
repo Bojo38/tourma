@@ -4,13 +4,14 @@
  */
 package teamma.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author WFMJ7631
  */
-public class PlayerType {
+public class PlayerType implements Serializable{
     /**
      * 
      */

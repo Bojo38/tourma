@@ -1,9 +1,11 @@
 package tourma.views.parameters;
 
 import java.awt.BorderLayout;
+import java.rmi.RemoteException;
 import java.util.Date;
 import tourma.JdgCoach;
 import tourma.MainFrame;
+import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtCoaches;
@@ -19,7 +21,7 @@ import tourma.utils.display.TableFormat;
  */
 public final class JPNParameters extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private Tournament mTournament;
     private final JPNParamGroup mJpnGroup;
     private final JPNParamCategories mJpnCategories;
     private final JPNParamClan mJpnClan;
@@ -39,8 +41,10 @@ public final class JPNParameters extends javax.swing.JPanel {
      * Creates new form JPNParameters
      */
     public JPNParameters() {
+        mTournament = null;
 
         mTournament = Tournament.getTournament();
+
         initComponents();
 
         mJpnIndiv = new JPNParamIndiv();
@@ -288,38 +292,53 @@ public final class JPNParameters extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfTournamentNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTournamentNameKeyPressed
         mTournament.getParams().setTournamentName(jtfTournamentName.getText() + evt.getKeyChar());
+
     }//GEN-LAST:event_jtfTournamentNameKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
+
         mTournament.getParams().semTournamentOrga(jtfOrgas.getText() + evt.getKeyChar());
+
     }//GEN-LAST:event_jtfOrgasKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
+
         final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true);
         w.setVisible(true);
         update();
     }//GEN-LAST:event_jbtAddActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
+
         mTournament.removeCoach(jtbCoachs.getSelectedRow());
         update();
+
     }//GEN-LAST:event_jbtRemoveActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtModifyActionPerformed
 
         if (jtbCoachs.getSelectedRow() >= 0) {
-            final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoach(jtbCoachs.getSelectedRow()));
-            w.setVisible(true);
-            update();
+            Object obj = jtbCoachs.getValueAt(jtbCoachs.getSelectedRow(), 0);
+            if (obj instanceof Integer) {
+                int index = (Integer) obj;
+                final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true, mTournament.getCoach(index - 1));
+                w.setVisible(true);
+                update();
+            }
         }
+
     }//GEN-LAST:event_jbtModifyActionPerformed
 
     private void jtfOrgasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOrgasActionPerformed
+
         mTournament.getParams().semTournamentOrga(jtfOrgas.getText());
+
     }//GEN-LAST:event_jtfOrgasActionPerformed
 
     private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
+
         mTournament.getParams().setPlace(jtfPlace.getText() + evt.getKeyChar());
+
     }//GEN-LAST:event_jtfPlaceKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

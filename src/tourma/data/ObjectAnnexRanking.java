@@ -4,7 +4,10 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
@@ -41,7 +44,7 @@ public class ObjectAnnexRanking extends ObjectRanking {
      *
      * @return
      */
-    public int getValue() {
+    public int getValue()  {
         return mValue;
     }
 
@@ -60,11 +63,11 @@ public class ObjectAnnexRanking extends ObjectRanking {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof ObjectAnnexRanking) {
-            if (super.equals(o)) {
-                return (((ObjectAnnexRanking) o).getValue() == getValue());
+            if (o instanceof ObjectAnnexRanking) {
+                if (super.equals(o)) {
+                    return (((ObjectAnnexRanking) o).getValue() == getValue());
+                }
             }
-        }
         return false;
     }
 
@@ -84,16 +87,16 @@ public class ObjectAnnexRanking extends ObjectRanking {
      * @return
      */
     @Override
-    public Element getXMLElement() {
+    public Element getXMLElement()  {
         final Element ic = super.getXMLElement();
 
         ic.setAttribute(new Attribute(StringConstants.CS_VALUE, Integer.toString(getValue())));
 
-        ic.removeAttribute(StringConstants.CS_RANK+1);
-        ic.removeAttribute(StringConstants.CS_RANK+2);
-        ic.removeAttribute(StringConstants.CS_RANK+3);
-        ic.removeAttribute(StringConstants.CS_RANK+4);
-        ic.removeAttribute(StringConstants.CS_RANK+5);
+        ic.removeAttribute(StringConstants.CS_RANK + 1);
+        ic.removeAttribute(StringConstants.CS_RANK + 2);
+        ic.removeAttribute(StringConstants.CS_RANK + 3);
+        ic.removeAttribute(StringConstants.CS_RANK + 4);
+        ic.removeAttribute(StringConstants.CS_RANK + 5);
         return ic;
     }
 
@@ -102,14 +105,14 @@ public class ObjectAnnexRanking extends ObjectRanking {
      * @param e
      */
     @Override
-    public void setXMLElement(final Element e) {
+    public void setXMLElement(final Element e)  {
         super.setXMLElement(e);
     }
 
     /**
      * @param mValue the mValue to set
      */
-    public void setValue(int mValue) {
+    public void setValue(int mValue)  {
         this.mValue = mValue;
     }
 }

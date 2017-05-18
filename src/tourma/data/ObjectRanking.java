@@ -4,11 +4,16 @@
  */
 package tourma.data;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -18,7 +23,7 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class ObjectRanking implements Comparable<Object>, XMLExport {
+public class ObjectRanking implements Comparable<Object>, IXMLExport {
 
     private static final Logger LOG = Logger.getLogger(ObjectRanking.class.getName());
 
@@ -119,6 +124,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
                 value = ((ObjectRanking) o).getValue1() - getValue1();
             }
         }
+
         return value;
     }
 
@@ -152,6 +158,7 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
                     && (((ObjectRanking) o).getValue2() == getValue2())
                     && (((ObjectRanking) o).getValue3() == getValue3());
         }
+
         return false;
     }
 
@@ -191,7 +198,11 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
                     try {
                         String encodedImage;
                         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                            ImageIO.write(c.getPicture(), "png", baos);
+                            BufferedImage bi = new BufferedImage(c.getPicture().getIconWidth(), c.getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                            Graphics g = bi.createGraphics();
+                            c.getPicture().paintIcon(null, g, 0, 0);
+                            g.dispose();
+                            ImageIO.write(bi, "png", baos);
                             baos.flush();
                             //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
                             encodedImage = Base64.encode(baos.toByteArray());
@@ -221,7 +232,11 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
                     try {
                         String encodedImage;
                         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                            ImageIO.write(t.getPicture(), "png", baos);
+                            BufferedImage bi = new BufferedImage(t.getPicture().getIconWidth(), t.getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                            Graphics g = bi.createGraphics();
+                            t.getPicture().paintIcon(null, g, 0, 0);
+                            g.dispose();
+                            ImageIO.write(bi, "png", baos);
                             baos.flush();
                             //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
                             encodedImage = Base64.encode(baos.toByteArray());
@@ -262,7 +277,11 @@ public class ObjectRanking implements Comparable<Object>, XMLExport {
                     try {
                         String encodedImage;
                         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                            ImageIO.write(t.getPicture(), "png", baos);
+                            BufferedImage bi = new BufferedImage(t.getPicture().getIconWidth(), t.getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                            Graphics g = bi.createGraphics();
+                            t.getPicture().paintIcon(null, g, 0, 0);
+                            g.dispose();
+                            ImageIO.write(bi, "png", baos);
                             baos.flush();
                             //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
                             encodedImage = Base64.encode(baos.toByteArray());

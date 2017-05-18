@@ -5,6 +5,7 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.ImageIcon;
@@ -59,7 +60,7 @@ public final class MjtRankingClan extends MjtRanking {
      * @param clans
      * @param round_only
      */
-    public MjtRankingClan(final int round, final ArrayList<Clan> clans, final boolean round_only) {
+    public MjtRankingClan(final int round, final ArrayList<Clan> clans, final boolean round_only) throws RemoteException {
         super(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), clans, round_only);
         sortDatas();
     }
@@ -88,6 +89,7 @@ public final class MjtRankingClan extends MjtRanking {
         for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
             teams.add(Tournament.getTournament().getTeam(cpt));
         }
+
         final ArrayList<Clan> clans = mObjects;
 
         for (int i = 0; i < clans.size(); i++) {
@@ -142,11 +144,11 @@ public final class MjtRankingClan extends MjtRanking {
                         if (tm == null) {
                             System.out.println("Error");
                         } else {
-                            aValue1.add(getValueByRankingType(mRankingType1, t, tm));
-                            aValue2.add(getValueByRankingType(mRankingType2, t, tm));
-                            aValue3.add(getValueByRankingType(mRankingType3, t, tm));
-                            aValue4.add(getValueByRankingType(mRankingType4, t, tm));
-                            aValue5.add(getValueByRankingType(mRankingType5, t, tm));
+                            aValue1.add(tm.getValue(1, t));
+                            aValue2.add(tm.getValue(2, t));
+                            aValue3.add(tm.getValue(3, t));
+                            aValue4.add(tm.getValue(4, t));
+                            aValue5.add(tm.getValue(5, t));
                         }
                         j++;
                     }
@@ -229,6 +231,7 @@ public final class MjtRankingClan extends MjtRanking {
     private void sortDatasCoach() {
 
         final ArrayList<Coach> coaches = new ArrayList<>();
+
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coaches.add(Tournament.getTournament().getCoach(i));
         }
@@ -273,11 +276,16 @@ public final class MjtRankingClan extends MjtRanking {
                         //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
                         final CoachMatch m = (CoachMatch) c.getMatch(j);
 
-                        aValue1.add(getValueByRankingType(mRankingType1, c, m));
+                        aValue1.add(m.getValue(1, c));
+                        aValue1.add(m.getValue(2, c));
+                        aValue1.add(m.getValue(3, c));
+                        aValue1.add(m.getValue(4, c));
+                        aValue1.add(m.getValue(5, c));
+                        /*aValue1.add(getValueByRankingType(mRankingType1, c, m));
                         aValue2.add(getValueByRankingType(mRankingType2, c, m));
                         aValue3.add(getValueByRankingType(mRankingType3, c, m));
                         aValue4.add(getValueByRankingType(mRankingType4, c, m));
-                        aValue5.add(getValueByRankingType(mRankingType5, c, m));
+                        aValue5.add(getValueByRankingType(mRankingType5, c, m));*/
 
                         j++;
                     }
@@ -413,29 +421,33 @@ public final class MjtRankingClan extends MjtRanking {
     public Object getValueAt(final int row, final int col) {
         Object object = StringConstants.CS_NULL;
         final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
-        switch (col) {
-            case 0:
-                object = row + 1;
-                break;
-            case 1:
-                object = ((IWithNameAndPicture) obj.getObject()).getName();
-                break;
-            case 2:
-                object = obj.getValue1();
-                break;
-            case 3:
-                object = obj.getValue2();
-                break;
-            case 4:
-                object = obj.getValue3();
-                break;
-            case 5:
-                object = obj.getValue4();
-                break;
-            case 6:
-                object = obj.getValue5();
-                break;
-            default:
+        try {
+            switch (col) {
+                case 0:
+                    object = row + 1;
+                    break;
+                case 1:
+                    object = ((IWithNameAndPicture) obj.getObject()).getName();
+                    break;
+                case 2:
+                    object = obj.getValue1();
+                    break;
+                case 3:
+                    object = obj.getValue2();
+                    break;
+                case 4:
+                    object = obj.getValue3();
+                    break;
+                case 5:
+                    object = obj.getValue4();
+                    break;
+                case 6:
+                    object = obj.getValue5();
+                    break;
+                default:
+            }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         return object;
 
@@ -448,7 +460,7 @@ public final class MjtRankingClan extends MjtRanking {
             if (column == 1) {
                 Clan t = (Clan) mObjects.get(row);
                 if (t.getPicture() != null) {
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setHorizontalAlignment(JLabel.CENTER);
                     obj.setOpaque(true);

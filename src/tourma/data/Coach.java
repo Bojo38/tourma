@@ -4,18 +4,24 @@
  */
 package tourma.data;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.DataConversionException;
@@ -30,7 +36,18 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public final class Coach extends Competitor implements XMLExport {
+public final class Coach extends Competitor implements IXMLExport, Serializable {
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     /**
      *
@@ -60,6 +77,72 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public static void newCoachMap() {
         sCoachMap = new HashMap<>();
+    }
+
+    public void pull(Coach c) {
+        super.pull(c);
+        this.UID = c.getUID();
+
+        this._PinCode = c._PinCode;
+        this.mActive = c.mActive;
+        this.mHandicap = c.mHandicap;
+        this.mNaf = c.mNaf;
+        this.mNafRank = c.mNafRank;
+        this.mRank = c.mRank;
+        this.mTeam = c.mTeam;
+
+        //RosterType
+        this.mRoster = RosterType.getRosterType(c.getRoster().getName());
+
+        //Teammates
+        if (c.getTeamMates() != null) {
+            this.mTeamMates = Tournament.getTournament().getTeam(c.getTeamMates().getName());
+            if (!mTeamMates.containsCoach(this)) {
+                mTeamMates.addCoach(this);
+            }
+        }
+
+        //Compositions
+        mCompositions.clear();
+
+        for (int i = 0; i < c.getCompositionCount(); i++) {
+            teamma.data.Roster roster = new teamma.data.Roster();
+            roster.pull(c.getComposition(i));
+            mCompositions.add(roster);
+        }
+
+    }
+
+    public void push(Coach c) {
+
+        super.push(c);
+        if (c.isUpdated()) {
+            this.UID = c.getUID();
+
+            this._PinCode = c._PinCode;
+            this.mActive = c.mActive;
+            this.mHandicap = c.mHandicap;
+            this.mNaf = c.mNaf;
+            this.mNafRank = c.mNafRank;
+            this.mRank = c.mRank;
+            this.mTeam = c.mTeam;
+
+            //RosterType
+            this.mRoster = RosterType.getRosterType(c.getRoster().getName());
+
+            //Teammates
+            this.mTeamMates = Tournament.getTournament().getTeam(c.getTeamMates().getName());
+
+            //Compositions
+            mCompositions.clear();
+
+            for (int i = 0; i < c.getCompositionCount(); i++) {
+                teamma.data.Roster roster = new teamma.data.Roster();
+                roster.pull(c.getComposition(i));
+                mCompositions.add(roster);
+            }
+        }
+
     }
 
     /**
@@ -184,6 +267,7 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public void addComposition(teamma.data.Roster r) {
         mCompositions.add(r);
+        updated=true;
     }
 
     /**
@@ -192,6 +276,7 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public void removeComposition(int i) {
         mCompositions.remove(i);
+        updated=true;
     }
 
     @Override
@@ -201,7 +286,11 @@ public final class Coach extends Competitor implements XMLExport {
         if (obj instanceof Coach) {
             result = ((Double) getNafRank()).compareTo(((Coach) obj).getNafRank());
             if (result == 0) {
-                result = getName().compareTo(((IWithNameAndPicture) obj).getName());
+                try {
+                    result = getName().compareTo(((IWithNameAndPicture) obj).getName());
+                } catch (RemoteException re) {
+                    JOptionPane.showMessageDialog(null, re.getLocalizedMessage());
+                }
             }
         }
         return result;
@@ -246,7 +335,11 @@ public final class Coach extends Competitor implements XMLExport {
             try {
                 String encodedImage;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                    ImageIO.write(getPicture(), "png", baos);
+                    BufferedImage bi = new BufferedImage(getPicture().getIconWidth(), getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    getPicture().paintIcon(null, g, 0, 0);
+                    g.dispose();
+                    ImageIO.write(bi, "png", baos);
                     baos.flush();
                     //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());                    
                     encodedImage = Base64.encode(baos.toByteArray());
@@ -382,7 +475,9 @@ public final class Coach extends Competitor implements XMLExport {
                 if (!encodedImage.isEmpty()) {
                     //byte[] bytes = DatatypeConverter.parseBase64Binary(encodedImage);
                     byte[] bytes = Base64.decode(encodedImage);
-                    setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
+                    BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+                    ImageIcon ii = new ImageIcon(bi);
+                    setPicture(ii);
                 }
             }
         } catch (IOException e) {
@@ -410,6 +505,7 @@ public final class Coach extends Competitor implements XMLExport {
         m.setCompetitor1(this);
         m.setCompetitor2(opponent);
         r.addMatch(m);
+        updated=true;
     }
 
     /**
@@ -461,7 +557,11 @@ public final class Coach extends Competitor implements XMLExport {
 
         if (this.getClan() != tour.getClan(0)) {
 
-            if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundIndex(r) == 0) || (params.isAvoidClansMatch()))) {
+            boolean avoidFirstMatch=params.isAvoidClansFirstMatch();
+            int roundIndex=tour.getRoundIndex(r);
+            boolean avoidClansMatch=params.isAvoidClansMatch();
+            boolean clansEnable=params.isEnableClans();
+            if ((clansEnable) && ((avoidFirstMatch && (roundIndex <= 0)) || (avoidClansMatch))) {
 
                 int i = 0;
                 while (i < possible.size()) {
@@ -1145,7 +1245,7 @@ public final class Coach extends Competitor implements XMLExport {
                                 m1.setCompetitor2(c2);
                                 m2.setCompetitor2(c2_tmp);
                                 canMatch = false;
-                                totallyBalanced=false;
+                                totallyBalanced = false;
                             } else {
                                 //System.err.println("Swap done");
                                 break;
@@ -1162,7 +1262,7 @@ public final class Coach extends Competitor implements XMLExport {
                                 if (!c1.isBalanced(c1_tmp, round) || !c2_tmp.isBalanced(c2, round)) {
                                     m1.setCompetitor2(c2);
                                     m2.setCompetitor1(c1_tmp);
-                                    totallyBalanced=false;
+                                    totallyBalanced = false;
                                 } else {
                                     //System.err.println("Swap done");
                                     break;
@@ -1201,23 +1301,23 @@ public final class Coach extends Competitor implements XMLExport {
 
             if (!totallyBalanced) {
                 //System.err.println("Not Balanced");
-                
-                Random ran=new Random();
-                int index=ran.nextInt(round.getMatchsCount()-1)+1;
-                
-                Coach c1=(Coach) round.getMatch(0).getCompetitor1();
-                Coach c2=(Coach) round.getMatch(0).getCompetitor2();
-                Coach c1_tmp=(Coach) round.getMatch(index).getCompetitor1();
-                Coach c2_tmp=(Coach) round.getMatch(index).getCompetitor2();
+
+                Random ran = new Random();
+                int index = ran.nextInt(round.getMatchsCount() - 1) + 1;
+
+                Coach c1 = (Coach) round.getMatch(0).getCompetitor1();
+                Coach c2 = (Coach) round.getMatch(0).getCompetitor2();
+                Coach c1_tmp = (Coach) round.getMatch(index).getCompetitor1();
+                Coach c2_tmp = (Coach) round.getMatch(index).getCompetitor2();
                 round.getMatch(0).setCompetitor2(c1_tmp);
                 round.getMatch(index).setCompetitor1(c2);
-                
-                Match m =round.getMatch(0);
+
+                Match m = round.getMatch(0);
                 round.removeMatch(m);
                 round.addMatch(m);
-              
-                
-            } /*else {
+
+            }
+            /*else {
                 System.out.println("Balanced");
 
                 for (int i = round.getMatchsCount() - 1; i >= 0; i--) {
@@ -1244,6 +1344,7 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public void setTeam(String mTeam) {
         this.mTeam = mTeam;
+        updated=true;
     }
 
     /**
@@ -1258,6 +1359,7 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public void setRoster(RosterType mRoster) {
         this.mRoster = mRoster;
+        updated=true;
     }
 
     /**
@@ -1272,6 +1374,7 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public void setNaf(int mNaf) {
         this.mNaf = mNaf;
+        updated=true;
     }
 
     /**
@@ -1286,6 +1389,7 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public void setRank(int mRank) {
         this.mRank = mRank;
+        updated=true;
     }
 
     /**
@@ -1314,6 +1418,7 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public void setTeamMates(Team mTeamMates) {
         this.mTeamMates = mTeamMates;
+        updated=true;
     }
 
     /**
@@ -1328,6 +1433,7 @@ public final class Coach extends Competitor implements XMLExport {
      */
     public void setNafRank(double mNafRank) {
         this.mNafRank = mNafRank;
+        updated=true;
     }
 
     /**
@@ -1350,5 +1456,6 @@ public final class Coach extends Competitor implements XMLExport {
 
     public void setPinCode(int pin) {
         _PinCode = pin;
+        updated=true;
     }
 }

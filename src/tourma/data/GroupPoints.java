@@ -5,16 +5,38 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  *
  * @author WFMJ7631
  */
-public class GroupPoints  {
+public class GroupPoints implements Serializable  {
     
+        protected static AtomicInteger sGenUID=new AtomicInteger(0);
+    protected int UID=sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
     private int victoryPoints=0;
     private int drawPoints=0;
     private int lossPoints=0;
 
+    public void pull(GroupPoints gp)
+    {
+        this.UID=gp.UID;
+        this.victoryPoints=gp.getVictoryPoints();
+        this.drawPoints=gp.getDrawPoints();
+        this.lossPoints=gp.getLossPoints();
+    }
+    
      /**
      * 
      * @param obj

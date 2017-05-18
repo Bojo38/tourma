@@ -4,18 +4,24 @@
  */
 package tourma.data;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom2.Element;
@@ -28,7 +34,32 @@ import tourma.utils.Generation;
  *
  * @author Frederic Berger
  */
-public class Team extends Competitor implements XMLExport, IContainCoachs {
+public class Team extends Competitor implements IXMLExport, IContainCoachs, Serializable {
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void pull(Team t) {
+        super.pull(t);
+        this.UID = t.getUID();
+
+    }
+
+    public void push(Team t) {
+        super.push(t);
+        if (t.isUpdated()) {
+            this.UID = t.getUID();
+        }
+
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     /**
      *
@@ -155,17 +186,20 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
 
             result = ((Double) rank).compareTo(rankobj);
         }
+
         return result;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (o instanceof Team) {
             Team t = (Team) o;
             if (t.getName().equals(this.getName())) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -241,7 +275,11 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             String encodedImage;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 if (getPicture() != null) {
-                    ImageIO.write(getPicture(), "png", baos);
+                    BufferedImage bi = new BufferedImage(getPicture().getIconWidth(), getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics g = bi.createGraphics();
+                    getPicture().paintIcon(null, g, 0, 0);
+                    g.dispose();
+                    ImageIO.write(bi, "png", baos);
                     baos.flush();
                     encodedImage = Base64.encode(baos.toByteArray());
                     image.addContent(encodedImage);
@@ -306,7 +344,9 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             if (image != null) {
                 String encodedImage = image.getText();
                 byte[] bytes = Base64.decode(encodedImage);
-                setPicture(ImageIO.read(new ByteArrayInputStream(bytes)));
+                BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+                ImageIcon ii = new ImageIcon(bi);
+                setPicture(ii);
             }
         } catch (IOException e) {
         }
@@ -447,28 +487,10 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
 
         ArrayList<Competitor> possible = new ArrayList<>(opponents);
 
-        int i = 0;
-        while (i < possible.size()) {
-            if (possible.get(i).havePlayed(this)) {
-                possible.remove(i);
-                i--;
-            }
-            i++;
-        }
-        
-        if (possible.isEmpty()) {
-            if (params.isEnableClans()) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("NoRemainingTeam"));
-            }
-            possible = new ArrayList<>(opponents);
-        }
-        
         if (this.getClan() != null) {
             if (this.getClan() != tour.getClan(0)) {
-                if (params.isEnableClans() &&
-                        ((params.isAvoidClansFirstMatch() && tour.getRoundsCount() == 0) || params.isAvoidClansMatch())
-                        ) {
-                    i = 0;
+                if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundsCount() == 0) || (params.isAvoidClansMatch()))) {
+                    int i = 0;
                     while (i < possible.size()) {
                         if (possible.get(i).getClan().getName().equals(this.getClan().getName())) {
                             possible.remove(i);
@@ -479,11 +501,19 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                 }
             }
         }
-       
+
+        int i = 0;
+        while (i < possible.size()) {
+            if (possible.get(i).havePlayed(this)) {
+                possible.remove(i);
+                i--;
+            }
+            i++;
+        }
 
         if (possible.isEmpty()) {
             if (params.isEnableClans()) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanTeamKey"));
+                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
             }
             possible = new ArrayList<>(opponents);
         }
@@ -561,11 +591,8 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         boolean same_clan = false;
         if (params.isEnableClans()) {
             if ((getClan() != null) && (opponent.getClan() != null)) {
-                if (
-                        (params.isAvoidClansFirstMatch() && (Tournament.getTournament().getRoundsCount() == 0))
-                        || (params.isAvoidClansMatch()
-                        )
-                    ) {
+                if ((params.isAvoidClansFirstMatch() && (Tournament.getTournament().getRoundsCount() == 0))
+                        || (params.isAvoidClansMatch())) {
                     if (getClan().equals(opponent.getClan())) {
                         same_clan = true;
                     }
@@ -744,6 +771,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     @Override
     public void addCoach(Coach c) {
         mCoachs.add(c);
+        updated=true;
     }
 
     /**
@@ -752,6 +780,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     @Override
     public void removeCoach(int i) {
         mCoachs.remove(i);
+        updated=true;
     }
 
     /**
@@ -759,6 +788,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
     @Override
     public void clearCoachs() {
         this.mCoachs.clear();
+        updated=true;
     }
 
     public boolean isBalanced(Team opp, Round round) {
@@ -770,15 +800,12 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
             return false;
         }
 
-        for (int i=0; i<Tournament.getTournament().getTeamsCount(); i++)
-        {
-            Team team=Tournament.getTournament().getTeam(i);
-            if (team!=this)
-            {
+        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+            Team team = Tournament.getTournament().getTeam(i);
+            if (team != this) {
                 teams.add(team);
             }
         }
-        
 
         HashMap<Team, Integer> hash = this.getTeamOppositionCount(teams, round);
 
@@ -800,7 +827,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
         }
 
         int nb = hash.get(opp);
-        
+
         it2 = hash.keySet().iterator();
         while (it2.hasNext()) {
             Competitor en2 = it2.next();
@@ -809,7 +836,7 @@ public class Team extends Competitor implements XMLExport, IContainCoachs {
                 int nb2 = hash.get(t2);
             }
         }
-        
+
         if ((maximum == nb) && (maximum - minimum > 1)) {
             balanced = false;
         }

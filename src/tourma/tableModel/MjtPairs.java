@@ -6,6 +6,7 @@ package tourma.tableModel;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -73,6 +74,7 @@ public class MjtPairs extends AbstractTableModel implements TableCellRenderer {
     @Override
     public Object getValueAt(final int row, final int col) {
         Object val = StringConstants.CS_NULL;
+
         switch (col) {
             case 0:
                 val = row + 1;

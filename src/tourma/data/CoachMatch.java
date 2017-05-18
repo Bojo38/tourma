@@ -4,11 +4,14 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,60 +19,287 @@ import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import tourma.MainFrame;
+import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 
 /**
  *
  * @author Frederic Berger
  */
-public class CoachMatch extends Match {
+public class CoachMatch extends Match implements Serializable {
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
+    public boolean isUpdated() {
+        for (Value val : mValues.values()) {
+            if (val.isUpdated()) {
+                updated = true;
+                break;
+            }
+        }
+        return updated;
+    }
+
+    public void pull(Match match) {
+        if (match instanceof CoachMatch) {
+            CoachMatch coachmatch = (CoachMatch) match;
+            this.UID = coachmatch.UID;
+            this.c1value1 = coachmatch.c1value1;
+            this.c1value2 = coachmatch.c1value2;
+            this.c1value3 = coachmatch.c1value3;
+            this.c1value4 = coachmatch.c1value4;
+            this.c1value5 = coachmatch.c1value5;
+            this.c1value1 = coachmatch.c1value1;
+            this.c2value2 = coachmatch.c2value2;
+            this.c2value3 = coachmatch.c2value3;
+            this.c2value4 = coachmatch.c2value4;
+            this.c2value5 = coachmatch.c2value5;
+            this.concedeedBy1 = coachmatch.concedeedBy1;
+            this.concedeedBy2 = coachmatch.concedeedBy2;
+
+            this.mCompetitor1 = Tournament.getTournament().getCoach(coachmatch.getCompetitor1().getName());
+            this.mCompetitor2 = Tournament.getTournament().getCoach(coachmatch.getCompetitor2().getName());
+
+            if (coachmatch.getRoster1() != null) {
+                this.mRoster1 = RosterType.getRosterType(coachmatch.getRoster1().getName());
+            }
+            if (coachmatch.getRoster2() != null) {
+                this.mRoster2 = RosterType.getRosterType(coachmatch.getRoster2().getName());
+            }
+            if (coachmatch.mSubstitute1 != null) {
+                this.mSubstitute1 = new Substitute();
+                this.mSubstitute1.UID = coachmatch.mSubstitute1.UID;
+                this.mSubstitute1.setMatch(this);
+                this.mSubstitute1.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getSubstitute().getName()));
+                this.mSubstitute1.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getTitular().getName()));
+            } else {
+                this.mSubstitute1 = null;
+            }
+
+            if (coachmatch.mSubstitute2 != null) {
+                this.mSubstitute2 = new Substitute();
+                this.mSubstitute2.UID = coachmatch.mSubstitute2.UID;
+                this.mSubstitute2.setMatch(this);
+                this.mSubstitute2.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getSubstitute().getName()));
+                this.mSubstitute2.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getTitular().getName()));
+            } else {
+                this.mSubstitute2 = null;
+            }
+
+            for (Criteria crit : coachmatch.mValues.keySet()) {
+                Criteria criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
+                if (criteria == null) {
+                    criteria = new Criteria(crit.getName());
+                    criteria.pull(crit);
+                    Tournament.getTournament().getParams().addCriteria(criteria);
+                }
+                Value val = this.mValues.get(criteria);
+                if (val == null) {
+                    val = new Value(criteria);
+                    mValues.put(criteria,val);
+                }
+                val.pull(coachmatch.mValues.get(crit));
+            }
+
+            this.refusedBy1 = coachmatch.refusedBy1;
+            this.refusedBy2 = coachmatch.refusedBy2;
+            this.values_computed = coachmatch.values_computed;
+
+            // add Match to competitor
+            boolean bFound = false;
+            for (int i = 0; i < mCompetitor1.getMatchCount(); i++) {
+                Match m = mCompetitor1.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            if (!bFound) {
+                mCompetitor1.addMatch(this);
+            }
+
+            bFound = false;
+            for (int i = 0; i < mCompetitor2.getMatchCount(); i++) {
+                Match m = mCompetitor2.getMatch(i);
+                if (m.getUID() == UID) {
+                    bFound = true;
+                    break;
+                }
+            }
+            if (!bFound) {
+                mCompetitor2.addMatch(this);
+            }
+        }
+    }
+
+    public void push(Match match) {
+        if (match.isUpdated()) {
+            if (match instanceof CoachMatch) {
+                CoachMatch coachmatch = (CoachMatch) match;
+                this.UID = coachmatch.UID;
+                this.c1value1 = coachmatch.c1value1;
+                this.c1value2 = coachmatch.c1value2;
+                this.c1value3 = coachmatch.c1value3;
+                this.c1value4 = coachmatch.c1value4;
+                this.c1value5 = coachmatch.c1value5;
+                this.c1value1 = coachmatch.c1value1;
+                this.c2value2 = coachmatch.c2value2;
+                this.c2value3 = coachmatch.c2value3;
+                this.c2value4 = coachmatch.c2value4;
+                this.c2value5 = coachmatch.c2value5;
+                this.concedeedBy1 = coachmatch.concedeedBy1;
+                this.concedeedBy2 = coachmatch.concedeedBy2;
+
+                this.mCompetitor1 = Tournament.getTournament().getCoach(coachmatch.getCompetitor1().getName());
+                this.mCompetitor2 = Tournament.getTournament().getCoach(coachmatch.getCompetitor2().getName());
+
+                if (coachmatch.getRoster1() != null) {
+                    this.mRoster1 = RosterType.getRosterType(coachmatch.getRoster1().getName());
+                }
+                if (coachmatch.getRoster1() != null) {
+                    this.mRoster2 = RosterType.getRosterType(coachmatch.getRoster2().getName());
+                }
+                if (coachmatch.mSubstitute1 != null) {
+                    this.mSubstitute1 = new Substitute();
+                    this.mSubstitute1.UID = coachmatch.mSubstitute1.UID;
+                    this.mSubstitute1.setMatch(this);
+                    this.mSubstitute1.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getSubstitute().getName()));
+                    this.mSubstitute1.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute1().getTitular().getName()));
+                } else {
+                    this.mSubstitute1 = null;
+                }
+
+                if (coachmatch.mSubstitute2 != null) {
+                    this.mSubstitute2 = new Substitute();
+                    this.mSubstitute2.UID = coachmatch.mSubstitute2.UID;
+                    this.mSubstitute2.setMatch(this);
+                    this.mSubstitute2.setSubstitute(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getSubstitute().getName()));
+                    this.mSubstitute2.setTitular(Tournament.getTournament().getCoach(coachmatch.getSubstitute2().getTitular().getName()));
+                } else {
+                    this.mSubstitute2 = null;
+                }
+
+                Criteria touchdowns = null;
+                Criteria lTouchdowns = Tournament.getTournament().getParams().getCriteria(0);
+                for (Criteria remote : coachmatch.mValues.keySet()) {
+                    if ((remote.getName().equals(lTouchdowns.getName())) && (remote.getUID() == lTouchdowns.getUID())) {
+                        touchdowns = remote;
+                        break;
+                    }
+                }
+                Value val_td = coachmatch.mValues.get(touchdowns);
+                // If match values are correct
+                if ((val_td.getValue1() > -1) && (val_td.getValue2() > -1)) {
+                    for (Criteria crit : coachmatch.mValues.keySet()) {
+                        Criteria criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
+                        if (criteria == null) {
+                            criteria = new Criteria(crit.getName());
+                            criteria.pull(crit);
+                            Tournament.getTournament().getParams().addCriteria(criteria);
+                        }
+
+                        Value val = this.mValues.get(criteria);
+                        if (val == null) {
+                            val = new Value(criteria);
+                        }
+                        val.push(coachmatch.mValues.get(crit));
+                    }
+                }
+
+                this.refusedBy1 = coachmatch.refusedBy1;
+                this.refusedBy2 = coachmatch.refusedBy2;
+                this.values_computed = coachmatch.values_computed;
+
+                // add Match to competitor
+                boolean bFound = false;
+                for (int i = 0; i < mCompetitor1.getMatchCount(); i++) {
+                    Match m = mCompetitor1.getMatch(i);
+                    if (m.getUID() == UID) {
+                        bFound = true;
+                        break;
+                    }
+                }
+                /*if (!bFound) {
+                mCompetitor1.addMatch(this);
+            }*/
+
+                bFound = false;
+                for (int i = 0; i < mCompetitor2.getMatchCount(); i++) {
+                    Match m = mCompetitor2.getMatch(i);
+                    if (m.getUID() == UID) {
+                        bFound = true;
+                        break;
+                    }
+                }
+                /*if (!bFound) {
+                mCompetitor2.addMatch(this);
+            }*/
+            }
+        }
+    }
 
     private static final Logger LOG = Logger.getLogger(CoachMatch.class.getName());
 
+    @Override
+    public void setUpdated(boolean updated) {
+        super.setUpdated(updated);
+        for (Value v : mValues.values()) {
+            v.setUpdated(updated);
+        }
+    }
     /**
      *
      */
-    private RosterType mRoster1;
+    protected RosterType mRoster1;
 
     /**
      *
      */
-    private RosterType mRoster2;
+    protected RosterType mRoster2;
 
     /**
      *
      */
-    private final HashMap<Criteria, Value> mValues;
+    protected final HashMap<Criteria, Value> mValues;
 
     /**
      *
      */
-    private Substitute mSubstitute1;
+    protected Substitute mSubstitute1;
 
     /**
      *
      */
-    private Substitute mSubstitute2;
+    protected Substitute mSubstitute2;
 
     /**
      *
      */
-    private boolean refusedBy1 = false;
+    protected boolean refusedBy1 = false;
 
     /**
      *
      */
-    private boolean refusedBy2 = false;
+    protected boolean refusedBy2 = false;
 
     /**
      *
      */
-    private boolean concedeedBy1 = false;
+    protected boolean concedeedBy1 = false;
 
     /**
      *
      */
-    private boolean concedeedBy2 = false;
+    protected boolean concedeedBy2 = false;
 
     public HashMap<Criteria, Value> getValues() {
         return mValues;
@@ -102,6 +332,10 @@ public class CoachMatch extends Match {
 
     @Override
     public boolean equals(Object c) {
+        if (this == c) {
+            return true;
+        }
+
         if (c instanceof CoachMatch) {
             CoachMatch cm = (CoachMatch) c;
             boolean equality = (this.concedeedBy1 == cm.concedeedBy1);
@@ -128,6 +362,7 @@ public class CoachMatch extends Match {
             return equality;
 
         }
+
         return false;
     }
 
@@ -293,34 +528,32 @@ public class CoachMatch extends Match {
             if (getCompetitor1() == Coach.getNullCoach()) {
                 super.setWinner(getCompetitor2());
                 super.setLooser(getCompetitor1());
+            } else if (getCompetitor2() == Coach.getNullCoach()) {
+                super.setWinner(getCompetitor1());
+                super.setLooser(getCompetitor2());
             } else {
-                if (getCompetitor2() == Coach.getNullCoach()) {
-                    super.setWinner(getCompetitor1());
-                    super.setLooser(getCompetitor2());
-                } else {
-                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
-                        if (getValue(crit).getValue1() > getValue(crit).getValue2()) {
-                            super.setWinner(getCompetitor1());
-                            super.setLooser(getCompetitor2());
-                            break;
-                        }
-                        if (getValue(crit).getValue1() < getValue(crit).getValue2()) {
-                            super.setWinner(getCompetitor2());
-                            super.setLooser(getCompetitor1());
-                            break;
-                        }
+                for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                    if (getValue(crit).getValue1() > getValue(crit).getValue2()) {
+                        super.setWinner(getCompetitor1());
+                        super.setLooser(getCompetitor2());
+                        break;
                     }
-                    if (super.getWinner() == null) {
-                        Random ran = new Random();
-                        final int r = ran.nextInt() % 2;
-                        if (r % 2 == 0) {
-                            super.setWinner(getCompetitor2());
-                            super.setLooser(getCompetitor1());
-                        } else {
-                            super.setWinner(getCompetitor1());
-                            super.setLooser(getCompetitor2());
-                        }
+                    if (getValue(crit).getValue1() < getValue(crit).getValue2()) {
+                        super.setWinner(getCompetitor2());
+                        super.setLooser(getCompetitor1());
+                        break;
+                    }
+                }
+                if (super.getWinner() == null) {
+                    Random ran = new Random();
+                    final int r = ran.nextInt() % 2;
+                    if (r % 2 == 0) {
+                        super.setWinner(getCompetitor2());
+                        super.setLooser(getCompetitor1());
+                    } else {
+                        super.setWinner(getCompetitor1());
+                        super.setLooser(getCompetitor2());
                     }
                 }
             }
@@ -340,36 +573,34 @@ public class CoachMatch extends Match {
             if (getCompetitor1() == Coach.getNullCoach()) {
                 super.setWinner(getCompetitor2());
                 super.setLooser(getCompetitor1());
+            } else if (getCompetitor2() == Coach.getNullCoach()) {
+                super.setWinner(getCompetitor1());
+                super.setLooser(getCompetitor2());
             } else {
-                if (getCompetitor2() == Coach.getNullCoach()) {
-                    super.setWinner(getCompetitor1());
-                    super.setLooser(getCompetitor2());
-                } else {
 
-                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
-                        if (getValue(crit).getValue1() < getValue(crit).getValue2()) {
-                            super.setWinner(getCompetitor2());
-                            super.setLooser(getCompetitor1());
-                            break;
-                        }
-                        if (getValue(crit).getValue1() > getValue(crit).getValue2()) {
-                            super.setWinner(getCompetitor1());
-                            super.setLooser(getCompetitor2());
-                            break;
-                        }
+                for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                    if (getValue(crit).getValue1() < getValue(crit).getValue2()) {
+                        super.setWinner(getCompetitor2());
+                        super.setLooser(getCompetitor1());
+                        break;
                     }
+                    if (getValue(crit).getValue1() > getValue(crit).getValue2()) {
+                        super.setWinner(getCompetitor1());
+                        super.setLooser(getCompetitor2());
+                        break;
+                    }
+                }
 
-                    if (getLooser() == null) {
-                        Random ran = new Random();
-                        final int r = ran.nextInt() % 2;
-                        if (r % 2 == 0) {
-                            super.setWinner(getCompetitor1());
-                            super.setLooser(getCompetitor2());
-                        } else {
-                            super.setWinner(getCompetitor2());
-                            super.setLooser(getCompetitor1());
-                        }
+                if (getLooser() == null) {
+                    Random ran = new Random();
+                    final int r = ran.nextInt() % 2;
+                    if (r % 2 == 0) {
+                        super.setWinner(getCompetitor1());
+                        super.setLooser(getCompetitor2());
+                    } else {
+                        super.setWinner(getCompetitor2());
+                        super.setLooser(getCompetitor1());
                     }
                 }
             }
@@ -399,6 +630,7 @@ public class CoachMatch extends Match {
      */
     public void setRoster1(RosterType mRoster1) {
         this.mRoster1 = mRoster1;
+        updated = true;
     }
 
     /**
@@ -413,6 +645,7 @@ public class CoachMatch extends Match {
      */
     public void setRoster2(RosterType mRoster2) {
         this.mRoster2 = mRoster2;
+        updated = true;
     }
 
     /**
@@ -427,6 +660,7 @@ public class CoachMatch extends Match {
      */
     public void setSubstitute1(Substitute mSubstitute1) {
         this.mSubstitute1 = mSubstitute1;
+        updated = true;
     }
 
     /**
@@ -441,6 +675,7 @@ public class CoachMatch extends Match {
      */
     public void setSubstitute2(Substitute mSubstitute2) {
         this.mSubstitute2 = mSubstitute2;
+        updated = true;
     }
 
     /**
@@ -455,6 +690,7 @@ public class CoachMatch extends Match {
      */
     public void setRefusedBy1(boolean refusedBy1) {
         this.refusedBy1 = refusedBy1;
+        updated = true;
     }
 
     /**
@@ -469,6 +705,7 @@ public class CoachMatch extends Match {
      */
     public void setRefusedBy2(boolean refusedBy2) {
         this.refusedBy2 = refusedBy2;
+        updated = true;
     }
 
     /**
@@ -483,6 +720,7 @@ public class CoachMatch extends Match {
      */
     public void setConcedeedBy1(boolean concedeedBy1) {
         this.concedeedBy1 = concedeedBy1;
+        updated = true;
     }
 
     /**
@@ -497,6 +735,49 @@ public class CoachMatch extends Match {
      */
     public void setConcedeedBy2(boolean concedeedBy2) {
         this.concedeedBy2 = concedeedBy2;
+        updated = true;
+    }
+
+    protected static int getGroupModifier(Coach c, CoachMatch m) {
+        int value = 0;
+        if (Tournament.getTournament().getGroupsCount() > 1) {
+            final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+            Group g = Tournament.getTournament().getGroup(c);
+            if (g != null) {
+                Value v = m.getValue(td);
+                if ((v.getValue1() >= 0) && ((v.getValue2() >= 0))) {
+                    if (m.getCompetitor1() == c) {
+
+                        Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor2());
+                        GroupPoints gp = g.getOpponentModificationPoints(go);
+                        if ((go != null) && (gp != null)) {
+                            if (v.getValue1() > v.getValue2()) {
+                                value = gp.getVictoryPoints();
+                            } else if (v.getValue1() == v.getValue2()) {
+                                value = gp.getDrawPoints();
+                            } else {
+                                value = gp.getLossPoints();
+                            }
+                        }
+
+                    }
+                    if (m.getCompetitor2() == c) {
+                        Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor1());
+                        GroupPoints gp = g.getOpponentModificationPoints(go);
+                        if ((go != null) && (gp != null)) {
+                            if (v.getValue1() < v.getValue2()) {
+                                value = gp.getVictoryPoints();
+                            } else if (v.getValue1() == v.getValue2()) {
+                                value = gp.getDrawPoints();
+                            } else {
+                                value = gp.getLossPoints();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return value;
     }
 
     /**
@@ -505,7 +786,20 @@ public class CoachMatch extends Match {
      * @return
      */
     public Value getValue(Criteria c) {
-        return mValues.get(c);
+        Value val = mValues.get(c);
+        if (val != null) {
+            return val;
+        } else {
+            // Find criteria ny name
+            String criteria = c.getName();
+
+            for (Criteria crit : this.mValues.keySet()) {
+                if (crit.getName().equals(criteria)) {
+                    return mValues.get(crit);
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -523,6 +817,7 @@ public class CoachMatch extends Match {
      */
     public void putValue(Criteria c, Value v) {
         mValues.put(c, v);
+        updated = true;
     }
 
     /**
@@ -531,13 +826,14 @@ public class CoachMatch extends Match {
      */
     public void removeValue(Criteria c) {
         mValues.remove(c);
+        updated = true;
     }
 
     @Override
     public Element getXMLElementForDisplay() {
         Element match = getXMLElement();
-        Element c1 = ((XMLExport) getCompetitor1()).getXMLElement();
-        Element c2 = ((XMLExport) getCompetitor2()).getXMLElement();
+        Element c1 = ((IXMLExport) getCompetitor1()).getXMLElement();
+        Element c2 = ((IXMLExport) getCompetitor2()).getXMLElement();
         match.addContent(c1);
         match.addContent(c2);
         return match;
@@ -570,5 +866,642 @@ public class CoachMatch extends Match {
         Coach c1 = (Coach) getCompetitor1();
         Coach c2 = (Coach) getCompetitor2();
         return (c1.getNaf() > 0) && (c2.getNaf() > 0);
+    }
+
+    /**
+     *
+     */
+    public static final int C_STARTING_RANK = 1000;
+    /**
+     *
+     */
+    public static final int C_ELO_K = 256;
+
+    /**
+     * Recalculate the values fot this match
+     */
+    public void recomputeValues() {
+        this.c1value1 = recomputeValue(1, mCompetitor1);
+        this.c2value1 = recomputeValue(1, mCompetitor2);
+        this.c1value2 = recomputeValue(2, mCompetitor1);
+        this.c2value2 = recomputeValue(2, mCompetitor2);
+        this.c1value3 = recomputeValue(3, mCompetitor1);
+        this.c2value3 = recomputeValue(3, mCompetitor2);
+        this.c1value4 = recomputeValue(4, mCompetitor1);
+        this.c2value4 = recomputeValue(4, mCompetitor2);
+        this.c1value5 = recomputeValue(5, mCompetitor1);
+        this.c2value5 = recomputeValue(5, mCompetitor2);
+        this.values_computed = true;
+        updated = true;
+    }
+
+    /**
+     *
+     * @param valueType
+     * @return
+     */
+    public static int getSubtypeByValue(final int valueType) {
+        int subType = -1;
+        if (valueType > Parameters.C_MAX_RANKING) {
+            final int value = valueType - Parameters.C_MAX_RANKING - 1;
+            subType = value % 3;
+        }
+        return subType;
+    }
+
+    /**
+     *
+     * @param valueType
+     * @return
+     */
+    public static Criteria getCriteriaByValue(final int valueType) {
+        Criteria criteria = null;
+
+        if (valueType > Parameters.C_MAX_RANKING) {
+            final int value = valueType - Parameters.C_MAX_RANKING - 1;
+            criteria = Tournament.getTournament().getParams().getCriteria(value / 3);
+        }
+        return criteria;
+    }
+
+    protected int recomputeValue(int index, Competitor c) {
+        int value = 0;
+        int valueType = Parameters.C_RANKING_NONE;
+        valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
+        if (valueType < Parameters.C_MAX_RANKING) {
+            value = getValue((Coach) c, valueType);
+        } else {
+            value = getValue(MjtRanking.getCriteriaByValue(valueType), MjtRanking.getSubtypeByValue(valueType), c);
+        }
+        return value;
+    }
+
+    /**
+     * Find value for criteria and the current match
+     *
+     * @param c
+     * @param m
+     * @param valueType
+     * @return
+     */
+    public int getValue(final Coach c, final int valueType) {
+        int value;
+
+        switch (valueType) {
+            case Parameters.C_RANKING_POINTS:
+                value = getPointsByCoach(c, this, true, true);
+                break;
+            case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
+                value = getPointsByCoach(c, this, true, false);
+                break;
+            case Parameters.C_RANKING_BONUS_POINTS:
+                value = getPointsByCoach(c, this, false, true);
+                break;
+            case Parameters.C_RANKING_NONE:
+                value = 0;
+                break;
+            case Parameters.C_RANKING_OPP_POINTS:
+                value = getOppPointsByCoach(c, this, true);
+                break;
+            case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
+                value = getOppPointsByCoach(c, this, false);
+                break;
+            case Parameters.C_RANKING_VND:
+                value = getVNDByCoach(c, this);
+                break;
+            case Parameters.C_RANKING_ELO:
+                value = getELOByCoach(c, this);
+                break;
+            case Parameters.C_RANKING_ELO_OPP:
+                value = getOppELOByCoach(c, this);
+                break;
+            case Parameters.C_RANKING_NB_MATCHS:
+                value = getCoachNbMatchs(c, this);
+                break;
+            case Parameters.C_RANKING_TABLES:
+                value = getCoachTablePoints(c, this);
+                break;
+            default:
+                value = 0;
+                break;
+        }
+
+        return value;
+    }
+
+    /**
+     *
+     * @param c
+     * @param m
+     * @param criteria
+     * @param sub_type
+     * @return
+     */
+    /*public static int getValue(final Coach c, final CoachMatch m, final Criteria criteria, final int sub_type) {
+        int value = 0;
+        if (sub_type == Parameters.C_RANKING_SUBTYPE_POSITIVE) {
+            if (c == m.getCompetitor1()) {
+                value += Math.max(m.getValue(criteria).getValue1(), 0);
+            } else {
+                value += Math.max(m.getValue(criteria).getValue2(), 0);
+            }
+        } else if (sub_type == Parameters.C_RANKING_SUBTYPE_NEGATIVE) {
+            if (c == m.getCompetitor1()) {
+                value += Math.max(m.getValue(criteria).getValue2(), 0);
+            } else {
+                value += Math.max(m.getValue(criteria).getValue1(), 0);
+            }
+        } else if (c == m.getCompetitor1()) {
+            value += m.getValue(criteria).getValue1() - m.getValue(criteria).getValue2();
+        } else {
+            value += m.getValue(criteria).getValue2() - m.getValue(criteria).getValue1();
+        }
+
+        return value;
+    }*/
+    /**
+     *
+     * @param c
+     * @param m
+     * @param includeCurrent
+     * @return
+     */
+    public static int getOppPointsByCoach(final Coach c, final CoachMatch m, boolean includeCurrent) {
+        int index = 0;
+        CoachMatch tmp_m = (CoachMatch) c.getMatch(index);
+        while (tmp_m != m) {
+            index++;
+            tmp_m = (CoachMatch) c.getMatch(index);
+        }
+
+        int value = 0;
+        Competitor opponent;
+        if (m.getCompetitor1() == c) {
+            opponent = m.getCompetitor2();
+        } else {
+            opponent = m.getCompetitor1();
+        }
+
+        if (((Coach) opponent) != null) {
+            if (opponent.isMatchsNotNull()) {
+                for (int i = 0; i < opponent.getMatchCount(); i++) {
+                    CoachMatch om = (CoachMatch) opponent.getMatch(i);
+                    if ((includeCurrent) || ((!includeCurrent) && (om != m))) {
+                        value += getPointsByCoach((Coach) opponent, om, true, true);
+                    }
+                    if (om == m) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return value;
+    }
+
+    /**
+     *
+     * @param c
+     * @param m
+     * @return
+     */
+    public static int getCoachNbMatchs(final Coach c, final CoachMatch m) {
+        int index = c.matchIndex(m);
+        return index + 1;
+    }
+
+    public static int getCoachTablePoints(final Coach c, final CoachMatch m) {
+        for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+            Round r = Tournament.getTournament().getRound(i);
+            if (r.containsCoachMatch(m)) {
+                // No point for first round
+                if (i == 0) {
+                    return 0;
+                } else {
+                    int maxvalue = r.getMatchsCount();
+                    return maxvalue - r.indexOf(m);
+                }
+            }
+        }
+        return 0;
+    }
+
+    /**
+     *
+     * @param c
+     * @param m
+     * @return
+     */
+    public static int getOppELOByCoach(final Coach c, final CoachMatch m) {
+        int value;
+        Competitor opponent;
+        if (m.getCompetitor1() == c) {
+            opponent = m.getCompetitor2();
+        } else {
+            opponent = m.getCompetitor1();
+        }
+        value = getELOByCoach((Coach) opponent, m);
+
+        return value;
+    }
+
+    /**
+     *
+     * @param c
+     * @param m
+     * @return
+     */
+    public static int getVNDByCoach(final Coach c, final CoachMatch m) {
+        int value = 0;
+        final Value val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+        if (val.getValue1() >= 0) {
+            if (m.getCompetitor1() == c) {
+                if (val.getValue1() > val.getValue2()) {
+                    value += 1000000;
+                } else if (val.getValue1() >= 0) {
+                    if (val.getValue1() == val.getValue2()) {
+                        value += 1000;
+                    } else {
+                        value += 1;
+                    }
+                }
+            }
+            if (m.getCompetitor2() == c) {
+                if (val.getValue2() > val.getValue1()) {
+                    value += 1000000;
+                } else if (val.getValue1() >= 0) {
+                    if (val.getValue1() == val.getValue2()) {
+                        value += 1000;
+                    } else {
+                        value += 1;
+                    }
+                }
+            }
+        }
+        return value;
+    }
+
+    /**
+     *
+     * @param c
+     * @param m
+     * @return
+     */
+    public static int getELOByCoach(final Coach c, final CoachMatch m) {
+        int value = 0;
+
+        Value val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+        if (val.getValue1() >= 0) {
+            // Get current Round index
+            int indexRound = -1;
+            for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+                Round r = Tournament.getTournament().getRound(i);
+                if (r.getCoachMatchs().contains(m)) {
+                    indexRound = i;
+                    break;
+                }
+            }
+
+            int lastPlayerRank = C_STARTING_RANK;
+            int lastOppRank = C_STARTING_RANK;
+            Coach opp = null;
+            int tdPlayer = 0;
+            int tdOpp = 0;
+            if (m.getCompetitor1() == c) {
+                opp = (Coach) m.getCompetitor2();
+                tdPlayer = val.getValue1();
+                tdOpp = val.getValue2();
+            }
+            if (m.getCompetitor2() == c) {
+                opp = (Coach) m.getCompetitor1();
+                tdOpp = val.getValue1();
+                tdPlayer = val.getValue2();
+            }
+            if (opp != null) {
+                if (indexRound >= 0) {
+                    // Find Previous Match for current player
+                    int index = c.matchIndex(m);
+                    if (index > 0) {
+                        lastPlayerRank = getELOByCoach(c, (CoachMatch) c.getMatch(index - 1));
+                    }
+
+                    if (opp.isMatchsNotNull()) {
+                        // Find Previous Match for oponnent player
+                        index = opp.matchIndex(m);
+                        if (index > 0) {
+                            lastPlayerRank = getELOByCoach(opp, (CoachMatch) opp.getMatch(index - 1));
+                        }
+                    }
+                }
+
+                double tmp = ((lastOppRank - lastPlayerRank) / (double) 200);
+                double EA = 1 / (1 + Math.pow(10.0, tmp));
+                // Compute real score
+                // Victory is 1000
+                // All bonuses to 1
+                double SA = 0;
+                if (tdPlayer > tdOpp) {
+                    SA = 1000;
+                }
+                if (tdPlayer < tdOpp) {
+                    SA = 0;
+                }
+                if (tdPlayer == tdOpp) {
+                    SA = 500;
+                }
+
+                // Add/Remove Bonuses
+                for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                    val = m.getValue(crit);
+                    if (m.getCompetitor1() == c) {
+                        SA += val.getValue1() * crit.getPointsFor();
+                        SA -= val.getValue2() * crit.getPointsFor();
+
+                        SA -= val.getValue1() * crit.getPointsAgainst();
+                        SA += val.getValue2() * crit.getPointsAgainst();
+                    }
+                    if (m.getCompetitor2() == c) {
+                        SA -= val.getValue1() * crit.getPointsFor();
+                        SA += val.getValue2() * crit.getPointsFor();
+
+                        SA -= val.getValue2() * crit.getPointsAgainst();
+                        SA += val.getValue1() * crit.getPointsAgainst();
+                    }
+                }
+                double diff = SA / 1000 - EA;
+                value = Math.round((float) (lastPlayerRank + C_ELO_K * diff));
+            }
+        }
+        return value;
+    }
+
+    protected static int getCriteriaBonusPoints(Coach c,CoachMatch m,Criteria crit)
+    {
+        int value =0;
+        Value v=m.getValue(crit);
+        if (m.getCompetitor1()==c)
+        {
+            if (v.getValue1()>=crit.getOffensiveThreshold())
+            {
+                value+=crit.getOffensiveBonuses();
+            }
+            
+            if (v.getValue1()>=v.getValue2()+crit.getOffensiveDiffThreshold())
+            {
+                value+=crit.getOffensiveDiffBonuses();
+            }
+            
+            if ((v.getValue1()<v.getValue2())&&(v.getValue1()+crit.getDefensiveDiffThreshold()>=v.getValue2()))
+            {
+                value+=crit.getDefensiveDiffBonuses();
+            }
+        }
+        if (m.getCompetitor2()==c)
+        {
+            if (v.getValue2()>=crit.getOffensiveThreshold())
+            {
+                value+=crit.getOffensiveBonuses();
+            }
+            
+            if (v.getValue2()>=v.getValue1()+crit.getOffensiveDiffThreshold())
+            {
+                value+=crit.getOffensiveDiffBonuses();
+            }
+            
+            if ((v.getValue2()<v.getValue1())&&(v.getValue2()+crit.getDefensiveDiffThreshold()>=v.getValue1()))
+            {
+                value+=crit.getDefensiveDiffBonuses();
+            }
+        }
+        return value;
+    }
+    
+    protected static int getCriteriasBonusPoints(Coach c,CoachMatch m)
+    {
+        int value=0;
+      // loop on Criterias
+        for (int i=0; i<Tournament.getTournament().getParams().getCriteriaCount(); i++)
+        {
+            Criteria crit=Tournament.getTournament().getParams().getCriteria(i);
+            value+=getCriteriaBonusPoints(c,m,crit);
+        }
+        return value;
+    } 
+    
+    /**
+     *
+     * @param c
+     * @param m
+     * @param withMainPoints
+     * @param withBonusPOints
+     * @return
+     */
+    public static int getPointsByCoach(final Coach c, final CoachMatch m, final boolean withMainPoints, final boolean withBonusPOints) {
+        int value = 0;
+        if (withMainPoints) {
+            if (c.matchIndex(m) == 0) {
+                value += c.getHandicap();
+            }
+        }
+        final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        final Value val = m.getValue(td);
+        if (val != null) {
+            if (m.getCompetitor1() == c) {
+                
+                value+=getCriteriasBonusPoints(c,m);
+                
+                if (m.isConcedeedBy1()) {
+                    if (withMainPoints) {
+                        value += Tournament.getTournament().getParams().getPointsConcedeed();
+                    }
+                } else if (m.isRefusedBy1()) {
+                    if (withMainPoints) {
+                        value += Tournament.getTournament().getParams().getPointsRefused();
+                    }
+                } else {
+
+                    if (val.getValue1() >= 0) {
+                        if ((val.getValue1() >= val.getValue2() + Tournament.getTournament().getParams().getGapLargeVictory()) && Tournament.getTournament().getParams().isUseLargeVictory()) {
+                            value += Tournament.getTournament().getParams().getPointsIndivLargeVictory();
+                        } else if (withMainPoints) {
+                            if (val.getValue1() > val.getValue2()) {
+                                value += Tournament.getTournament().getParams().getPointsIndivVictory();
+                            } else if (val.getValue1() == val.getValue2()) {
+                                value += Tournament.getTournament().getParams().getPointsIndivDraw();
+                            } else if ((val.getValue1() + Tournament.getTournament().getParams().getGapLittleLost() >= val.getValue2()) && Tournament.getTournament().getParams().isUseLittleLoss()) {
+                                value += Tournament.getTournament().getParams().getPointsIndivLittleLost();
+                            } else {
+                                value += Tournament.getTournament().getParams().getPointsIndivLost();
+                            }
+                        }
+
+                        if (withBonusPOints) {
+
+                            int bonus = 0;
+
+                            for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
+                                final Criteria cri = Tournament.getTournament().getParams().getCriteria(j);
+                                final Value va = m.getValue(cri);
+                                bonus += va.getValue1() * cri.getPointsFor();
+                                bonus += va.getValue2() * cri.getPointsAgainst();
+                            }
+
+                            if (Tournament.getTournament().getParams().isTableBonus()) {
+                                double coef = Tournament.getTournament().getParams().getTableBonusCoef();
+
+                                bonus += Math.round(getCoachTablePoints(c, m) * coef);
+                            }
+
+                            if (Tournament.getTournament().getParams().isTableBonusPerRound()) {
+                                // Find Round
+                                Round round = null;
+                                for (int cpt = 0; cpt < Tournament.getTournament().getRoundsCount(); cpt++) {
+
+                                    Round r = Tournament.getTournament().getRound(cpt);
+                                    if (r.containsMatch(m)) {
+                                        round = r;
+                                    }
+                                }
+                                if (round != null) {
+                                    if (round.getMatchsCount() > 0) {
+                                        double fBonus = bonus * round.getCoef(m);
+                                        bonus = (int) Math.round(fBonus);
+                                    }
+
+                                }
+                            }
+
+                            value += bonus;
+                        }
+                    }
+                    if (withMainPoints) {
+                        value += getGroupModifier(c, m);
+                    }
+                }
+            }
+            if (m.getCompetitor2() == c) {
+                value+=getCriteriasBonusPoints(c,m);
+                if (m.isConcedeedBy2()) {
+                    if (withMainPoints) {
+                        value += Tournament.getTournament().getParams().getPointsConcedeed();
+                    }
+                } else if (m.isRefusedBy2()) {
+                    if (withMainPoints) {
+                        value += Tournament.getTournament().getParams().getPointsRefused();
+                    }
+                } else {
+                    if (val.getValue1() >= 0) {
+                        if (withMainPoints) {
+                            if ((val.getValue2() >= val.getValue1() + Tournament.getTournament().getParams().getGapLargeVictory()) && Tournament.getTournament().getParams().isUseLargeVictory()) {
+                                value += Tournament.getTournament().getParams().getPointsIndivLargeVictory();
+                            } else if (val.getValue2() > val.getValue1()) {
+                                value += Tournament.getTournament().getParams().getPointsIndivVictory();
+                            } else if (val.getValue2() == val.getValue1()) {
+                                value += Tournament.getTournament().getParams().getPointsIndivDraw();
+                            } else if ((val.getValue2() + Tournament.getTournament().getParams().getGapLittleLost() >= val.getValue1()) && Tournament.getTournament().getParams().isUseLittleLoss()) {
+                                value += Tournament.getTournament().getParams().getPointsIndivLittleLost();
+                            } else {
+                                value += Tournament.getTournament().getParams().getPointsIndivLost();
+                            }
+                        }
+                        if (withBonusPOints) {
+                            int bonus = 0;
+                            for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
+
+                                final Criteria cri = Tournament.getTournament().getParams().getCriteria(j);
+                                final Value va = m.getValue(cri);
+                                bonus += va.getValue2() * cri.getPointsFor();
+                                bonus += va.getValue1() * cri.getPointsAgainst();
+                            }
+                            if (Tournament.getTournament().getParams().isTableBonus()) {
+                                double coef = Tournament.getTournament().getParams().getTableBonusCoef();
+                                bonus += Math.round(getCoachTablePoints(c, m) * coef);
+                            }
+
+                            if (Tournament.getTournament().getParams().isTableBonusPerRound()) {
+                                // Find Round
+                                Round round = null;
+                                for (int cpt = 0; cpt < Tournament.getTournament().getRoundsCount(); cpt++) {
+
+                                    Round r = Tournament.getTournament().getRound(cpt);
+                                    if (r.containsMatch(m)) {
+                                        round = r;
+                                    }
+                                }
+                                if (round != null) {
+                                    if (round.getMatchsCount() > 0) {
+                                        double fBonus = bonus * round.getCoef(m);
+                                        bonus = (int) Math.round(fBonus);
+                                    }
+
+                                }
+                            }
+
+                            value += bonus;
+                        }
+                    }
+                    if (withMainPoints) {
+                        value += getGroupModifier(c, m);
+                    }
+                }
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Returns current value of a criteria for this match
+     *
+     * @param crit Selected criteria
+     * @param subtype Subtype 0: POSITIVE, 1: NEGATIVE 2: DIFFERENCE
+     * @param c Competitor
+     * @return Integer
+     */
+    public int getValue(Criteria crit, int subtype, Competitor c) {
+        int value = 0;
+        Value v = getValue(crit);
+        if (v != null) {
+            if (c == mCompetitor1) {
+                switch (subtype) {
+                    case Parameters.C_RANKING_SUBTYPE_POSITIVE:
+                        value = v.getValue1();
+                        break;
+                    case Parameters.C_RANKING_SUBTYPE_NEGATIVE:
+                        value = v.getValue2();
+                        break;
+                    case Parameters.C_RANKING_SUBTYPE_DIFFERENCE:
+                        value = v.getValue1() - v.getValue2();
+                        break;
+                }
+            }
+            if (c == mCompetitor2) {
+                switch (subtype) {
+                    case Parameters.C_RANKING_SUBTYPE_POSITIVE:
+                        value = v.getValue2();
+                        break;
+                    case Parameters.C_RANKING_SUBTYPE_NEGATIVE:
+                        value = v.getValue1();
+                        break;
+                    case Parameters.C_RANKING_SUBTYPE_DIFFERENCE:
+                        value = v.getValue2() - v.getValue1();
+                        break;
+                }
+            }
+        }
+        return value;
+    }
+
+    public boolean isEntered() {
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Value v = getValue(td);
+
+        if (this.isConcedeedBy1() || isConcedeedBy2() || isRefusedBy1() || isConcedeedBy2()) {
+            return true;
+        }
+        if ((v.getValue1() == -1) || (v.getValue2() == -1)) {
+            return false;
+        }
+        return true;
     }
 }

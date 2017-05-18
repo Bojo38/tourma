@@ -4,11 +4,13 @@
  */
 package tourma.views.parameters;
 
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Criteria;
+import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 
@@ -18,13 +20,15 @@ import tourma.languages.Translate;
  */
 public class JPNParamIndiv extends javax.swing.JPanel {
 
-    private final Tournament mTournament;
+    private Tournament mTournament;
 
     /**
      * Creates new form JPNParamIndiv
      */
     public JPNParamIndiv() {
+
         mTournament = Tournament.getTournament();
+
         initComponents();
     }
 
@@ -306,6 +310,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         } catch (ParseException e) {
             jtffLargeVictory.setValue(jtffLargeVictory.getValue());
         }
+
         update();
     }//GEN-LAST:event_jtffLargeVictoryFocusLost
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -378,28 +383,38 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     }//GEN-LAST:event_jtffLostFocusLost
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank1ActionPerformed
+
         mTournament.getParams().setRankingIndiv1(jcbRank1.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
+
     }//GEN-LAST:event_jcbRank1ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank2ActionPerformed
+
         mTournament.getParams().setRankingIndiv2(jcbRank2.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
+
     }//GEN-LAST:event_jcbRank2ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank3ActionPerformed
+
         mTournament.getParams().setRankingIndiv3(jcbRank3.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcbRank3ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank4ActionPerformed
         mTournament.getParams().setRankingIndiv4(jcbRank4.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcbRank4ActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcbRank5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRank5ActionPerformed
         mTournament.getParams().setRankingIndiv5(jcbRank5.getSelectedIndex());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcbRank5ActionPerformed
 
     private void jtffRefusedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffRefusedFocusLost
@@ -425,33 +440,48 @@ public class JPNParamIndiv extends javax.swing.JPanel {
     }//GEN-LAST:event_jtffConcedeedFocusLost
 
     private void jcxLittleLossActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxLittleLossActionPerformed
+
         mTournament.getParams().setUseLittleLoss(jcxLittleLoss.isSelected());
+
         update();
+        mTournament.recomputeAll();
+
     }//GEN-LAST:event_jcxLittleLossActionPerformed
 
     private void jcxLargeVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxLargeVictoryActionPerformed
+
         mTournament.getParams().setUseLargeVictory(jcxLargeVictory.isSelected());
         update();
+        mTournament.recomputeAll();
+
     }//GEN-LAST:event_jcxLargeVictoryActionPerformed
 
     private void jcxBestResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxBestResultActionPerformed
+
         mTournament.getParams().setUseBestResultIndiv(jcxBestResult.isSelected());
         update();
+        mTournament.recomputeAll();
+
     }//GEN-LAST:event_jcxBestResultActionPerformed
 
     private void jspBestResultsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspBestResultsStateChanged
         mTournament.getParams().setBestResultIndiv((Integer) jspBestResults.getValue());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jspBestResultsStateChanged
 
     private void jcxExceptBestAndWorstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxExceptBestAndWorstActionPerformed
+
         mTournament.getParams().setExceptBestAndWorstIndiv(jcxExceptBestAndWorst.isSelected());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcxExceptBestAndWorstActionPerformed
 
     private void jcxForAnnexRankingTooActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxForAnnexRankingTooActionPerformed
+
         mTournament.getParams().setApplyToAnnexIndiv(jcxForAnnexRankingToo.isSelected());
         update();
+        mTournament.recomputeAll();
     }//GEN-LAST:event_jcxForAnnexRankingTooActionPerformed
 
     public final static String CS_None = "None";
@@ -473,6 +503,8 @@ public class JPNParamIndiv extends javax.swing.JPanel {
      * Update Panel
      */
     public void update() {
+
+        
 
         jcxLargeVictory.setSelected(mTournament.getParams().isUseLargeVictory());
         jcxLittleLoss.setSelected(mTournament.getParams().isUseLittleLoss());
@@ -576,6 +608,33 @@ public class JPNParamIndiv extends javax.swing.JPanel {
                 jcbRank5ActionPerformed(evt);
             }
         });
+        
+        if (Tournament.getTournament().isClient()) {
+            jcbRank1.setEnabled(false);
+            jcbRank2.setEnabled(false);
+            jcbRank3.setEnabled(false);
+            jcbRank4.setEnabled(false);
+            jcbRank5.setEnabled(false);
+            jcxBestResult.setEnabled(false);
+            jcxExceptBestAndWorst.setEnabled(false);
+            jcxExceptBestAndWorst.setEnabled(false);
+            jcxForAnnexRankingToo.setEnabled(false);
+            jcxLargeVictory.setEnabled(false);
+            jcxLittleLoss.setEnabled(false);
+            jlbLargeVictoryGap.setEnabled(false);
+            jlbLittleLossGap.setEnabled(false);
+            jspBestResults.setEnabled(false);
+            jtffConcedeed.setEnabled(false);
+            jtffDraw.setEnabled(false);
+            jtffLargeVictory.setEnabled(false);
+            jtffLargeVictoryGap.setEnabled(false);
+            jtffLittleLost.setEnabled(false);
+            jtffLittleLostGap.setEnabled(false);
+            jtffLost.setEnabled(false);
+            jtffRefused.setEnabled(false);
+            jtffVictory.setEnabled(false);
+            
+        }
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

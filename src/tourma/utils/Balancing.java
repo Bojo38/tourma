@@ -4,6 +4,7 @@
  */
 package tourma.utils;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public final class Balancing {
      *
      * @param matchs
      */
-    public static void balanceCoachMatchs(ArrayList<Match> matchs) {
+    public static void balanceCoachMatchs(ArrayList<Match> matchs) throws RemoteException{
 
         ArrayList<Team> teams = new ArrayList<>();
         // Build possible teams opponents
@@ -239,7 +240,7 @@ public final class Balancing {
      * @param teams
      */
     static private void fillHashMap(ArrayList<Match> matchs, HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousC,
-            HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT, ArrayList<Team> teams) {
+            HashMap<Competitor, HashMap<Team, Integer>> evaluationPreviousT, ArrayList<Team> teams) throws RemoteException{
         // @TODO
         if (Tournament.getTournament().getTeamsCount() > 0) {
             for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {

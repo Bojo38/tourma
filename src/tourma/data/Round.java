@@ -4,6 +4,8 @@
  */
 package tourma.data;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,8 +17,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -25,9 +29,20 @@ import tourma.utility.StringConstants;
  *
  * @author Frederic Berger
  */
-public class Round implements XMLExport {
+public class Round implements IXMLExport, Serializable {
 
     private static final Logger LOG = Logger.getLogger(Round.class.getName());
+
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
 
     /**
      *
@@ -86,10 +101,12 @@ public class Round implements XMLExport {
 
     public void setMinBonus(double v) {
         mMinBonus = v;
+        updated=true;
     }
 
     public void setMaxBonus(double v) {
         mMaxBonus = v;
+        updated=true;
     }
 
     public double getCoef(Match m) {
@@ -99,6 +116,96 @@ public class Round implements XMLExport {
         double steps = gap / this.getMatchsCount();
         coef = this.getMinBonus() + steps * index;
         return coef;
+    }
+
+    public void pull(Round round) {
+        this.UID = round.UID;
+        this.mCup = round.mCup;
+        this.mCupMaxTour = round.mCupMaxTour;
+        this.mHour = round.mHour;
+        this.mLooserCup = round.mLooserCup;
+        this.mMaxBonus = round.mMaxBonus;
+        this.mMinBonus = round.mMinBonus;
+        this.mThirdPlace = round.mThirdPlace;
+
+        for (Match match : round.mMatchs) {
+            boolean bFound = false;
+            for (Match local : mMatchs) {
+                if (match.getUID() == local.getUID()) {
+                    local.pull(match);
+                    bFound = true;
+                    break;
+                }
+            }
+
+            if (!bFound) {
+                Match local = null;
+                if (match instanceof TeamMatch) {
+                    local = new TeamMatch(this);
+                }
+                if (match instanceof CoachMatch) {
+                    local = new CoachMatch(this);
+                }
+                if (local != null) {
+                    local.pull(match);
+                    mMatchs.add(local);
+                }
+            }
+        }
+    }
+
+    public boolean isUpdated() {
+        
+        for (Match m:mMatchs)
+        {
+            if (m.isUpdated())
+            {
+                updated=true;
+                break;
+            }
+        }
+        
+        return updated;
+    }
+
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+        for (Match m:mMatchs)
+        {
+            m.setUpdated(updated);
+        }
+    }
+    protected boolean updated = false;
+
+    public void push(Round round) {
+        if (round.isUpdated()) {
+            this.UID = round.UID;
+
+            for (Match match : round.mMatchs) {
+                boolean bFound = false;
+                for (Match local : mMatchs) {
+                    if (match.getUID() == local.getUID()) {
+                        local.push(match);
+                        bFound = true;
+                        break;
+                    }
+                }
+
+                /*if (!bFound) {
+                Match local=null;
+                if (match instanceof TeamMatch) {
+                    local = new TeamMatch(this);
+                }
+                if (match instanceof CoachMatch) {
+                    local = new CoachMatch(this);
+                }
+                if (local != null) {
+                    local.pull(match);
+                    mMatchs.add(local);
+                }
+            }*/
+            }
+        }
     }
 
     /**
@@ -125,36 +232,29 @@ public class Round implements XMLExport {
      */
     public void addMatch(Match m) {
         mMatchs.add(m);
+        updated=true;
     }
 
     public int indexOf(Match m) {
-        for (int i=0; i<mMatchs.size(); i++)
-        {
-            Match match=mMatchs.get(i);
-            if (match instanceof TeamMatch)
-            {
-                if (m instanceof TeamMatch)
-                {
-                    if (m==match)
-                    {
+        for (int i = 0; i < mMatchs.size(); i++) {
+            Match match = mMatchs.get(i);
+            if (match instanceof TeamMatch) {
+                if (m instanceof TeamMatch) {
+                    if (m == match) {
                         return i;
                     }
                 }
-                if (m instanceof CoachMatch)
-                {
-                    if (((TeamMatch)match).containsMatch((CoachMatch)m))
-                    {
+                if (m instanceof CoachMatch) {
+                    if (((TeamMatch) match).containsMatch((CoachMatch) m)) {
                         return i;
                     }
                 }
             }
-            if (match instanceof CoachMatch)
-            {
-                if (match==m)
-                {
+            if (match instanceof CoachMatch) {
+                if (match == m) {
                     return i;
                 }
-            }        
+            }
         }
         return 0;
     }
@@ -183,8 +283,7 @@ public class Round implements XMLExport {
                 }
             } else {
                 if (match instanceof TeamMatch) {
-                    if (((TeamMatch) match).containsMatch(m)) 
-                    {
+                    if (((TeamMatch) match).containsMatch(m)) {
                         return true;
                     }
                 }
@@ -199,6 +298,7 @@ public class Round implements XMLExport {
      */
     public void clearMatchs() {
         mMatchs.clear();
+        updated=true;
     }
 
     /**
@@ -240,6 +340,7 @@ public class Round implements XMLExport {
         } catch (ParseException ex) {
             Logger.getLogger(Round.class.getName()).log(Level.SEVERE, null, ex);
         }
+        updated=true;
     }
 
     /**
@@ -248,6 +349,7 @@ public class Round implements XMLExport {
     public void setCurrentHour() {
         final Calendar cal = Calendar.getInstance();
         mHour = cal.getTime();
+        updated=true;
     }
 
     /**
@@ -268,10 +370,9 @@ public class Round implements XMLExport {
     public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(StringConstants.CS_ROUND);
-        if (mHour==null)
-        {
-            Calendar cal=Calendar.getInstance();
-            mHour=cal.getTime();
+        if (mHour == null) {
+            Calendar cal = Calendar.getInstance();
+            mHour = cal.getTime();
         }
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
@@ -430,6 +531,7 @@ public class Round implements XMLExport {
      */
     public void setCup(boolean mCup) {
         this.mCup = mCup;
+        updated=true;
     }
 
     /**
@@ -444,6 +546,7 @@ public class Round implements XMLExport {
      */
     public void setCupTour(int mCupTour) {
         this.mCupTour = mCupTour;
+        updated=true;
     }
 
     /**
@@ -458,6 +561,7 @@ public class Round implements XMLExport {
      */
     public void setCupMaxTour(int mCupMaxTour) {
         this.mCupMaxTour = mCupMaxTour;
+        updated=true;
     }
 
     /**
@@ -472,6 +576,7 @@ public class Round implements XMLExport {
      */
     public void setLooserCup(boolean mLooserCup) {
         this.mLooserCup = mLooserCup;
+        updated=true;
     }
 
     /**
@@ -480,6 +585,7 @@ public class Round implements XMLExport {
      */
     public void removeMatch(int i) {
         mMatchs.remove(i);
+        updated=true;
     }
 
     /**
@@ -488,6 +594,7 @@ public class Round implements XMLExport {
      */
     public void removeMatch(Match i) {
         mMatchs.remove(i);
+        updated=true;
     }
 
     public boolean equals(final Object obj) {
@@ -516,14 +623,31 @@ public class Round implements XMLExport {
         return result;
     }
 
-    public boolean isThirdPlace()
-    {
+    public boolean isThirdPlace() {
         return mThirdPlace;
     }
-    
-    public void setThirdPlace(boolean b)
-    {        
-        mThirdPlace=b;
+
+    public void setThirdPlace(boolean b) {
+        mThirdPlace = b;
+        updated=true;
     }
-    
+
+    public void recomputeMatchs() {
+        for (int i = 0; i < mMatchs.size(); i++) {
+            mMatchs.get(i).recomputeValues();
+        }
+    }
+
+    public boolean allMatchesEntered() {
+        // Shall check if all the matches hav been filled, conceeded or refused
+        for (int i = 0; i < getMatchsCount(); i++) {
+            Match m = getMatch(i);
+            if (!m.isEntered()) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
 }

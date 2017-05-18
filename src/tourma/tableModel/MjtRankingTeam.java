@@ -5,6 +5,7 @@
 package tourma.tableModel;
 
 import java.awt.Component;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import javax.swing.JTable;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.Tournament;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
@@ -46,9 +48,10 @@ public final class MjtRankingTeam extends MjtRanking {
 
         int nbVictory = 0;
         int nbLost = 0;
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
         for (int i = 0; i < v.size(); i++) {
             final CoachMatch m = v.get(i);
-            final Value val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+            final Value val = m.getValue(td);
             if (((Coach) m.getCompetitor1()).getTeamMates() == t) {
                 if (val.getValue1() > val.getValue2()) {
                     nbVictory++;
@@ -91,9 +94,10 @@ public final class MjtRankingTeam extends MjtRanking {
 
         int nbVictory = 0;
         int nbLost = 0;
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
         for (int i = 0; i < v.size(); i++) {
             final CoachMatch m = v.get(i);
-            final Value val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
+            final Value val = m.getValue(td);
             if (((Coach) m.getCompetitor1()).getTeamMates() == t) {
                 if (val.getValue1() > val.getValue2()) {
                     nbVictory++;
@@ -172,7 +176,6 @@ public final class MjtRankingTeam extends MjtRanking {
 
     }
 
-   
     @Override
     protected void sortDatas() {
 
@@ -192,11 +195,11 @@ public final class MjtRankingTeam extends MjtRanking {
         for (int i = 0; i < mObjects.size(); i++) {
             final Team t = (Team) mObjects.get(i);
 
-            int value1 ;
-            int value2 ;
-            int value3 ;
-            int value4 ;
-            int value5 ;
+            int value1;
+            int value2;
+            int value3;
+            int value4;
+            int value5;
 
             ArrayList<Integer> aValue1 = new ArrayList<>();
             ArrayList<Integer> aValue2 = new ArrayList<>();
@@ -209,6 +212,9 @@ public final class MjtRankingTeam extends MjtRanking {
                 for (int j = 0; j <= t.getMatchCount() - 1; j++) {
 
                     final TeamMatch tm = (TeamMatch) t.getMatch(j);
+                    if (!tm.isValues_computed()) {
+                        tm.recomputeValues();
+                    }
                     boolean bFound = false;
                     for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
                         final Round r = rounds.get(l);
@@ -219,11 +225,11 @@ public final class MjtRankingTeam extends MjtRanking {
                     // test if match is in round
 
                     if (bFound) {
-                        aValue1.add(getValueByRankingType(mRankingType1, t, tm));
-                        aValue2.add(getValueByRankingType(mRankingType2, t, tm));
-                        aValue3.add(getValueByRankingType(mRankingType3, t, tm));
-                        aValue4.add(getValueByRankingType(mRankingType4, t, tm));
-                        aValue5.add(getValueByRankingType(mRankingType5, t, tm));
+                        aValue1.add(tm.getValue(1, t));
+                        aValue2.add(tm.getValue(2, t));
+                        aValue3.add(tm.getValue(3, t));
+                        aValue4.add(tm.getValue(4, t));
+                        aValue5.add(tm.getValue(5, t));
                     }
 
                 }
@@ -352,7 +358,7 @@ public final class MjtRankingTeam extends MjtRanking {
         String val = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                val =StringConstants.CS_HASH;
+                val = StringConstants.CS_HASH;
                 break;
             case 1:
                 val = Translate.translate(Translate.CS_Team);
@@ -377,38 +383,62 @@ public final class MjtRankingTeam extends MjtRanking {
         return val;
     }
 
-  
     @Override
     public Object getValueAt(final int row,
             final int col
     ) {
+        Parameters params = Tournament.getTournament().getParams();
         Object object = StringConstants.CS_NULL;
-        if (mDatas.size() > row) {
-            final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
-            switch (col) {
-                case 0:
-                    object = row + 1;
-                    break;
-                case 1:
-                    object = ((IWithNameAndPicture) obj.getObject()).getName();
-                    break;
-                case 2:
-                    object = obj.getValue1();
-                    break;
-                case 3:
-                    object = obj.getValue2();
-                    break;
-                case 4:
-                    object = obj.getValue3();
-                    break;
-                case 5:
-                    object = obj.getValue4();
-                    break;
-                case 6:
-                    object = obj.getValue5();
-                    break;
-                default:
+        try {
+            if (mDatas.size() > row) {
+                final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
+                switch (col) {
+                    case 0:
+                        object = row + 1;
+                        break;
+                    case 1:
+                        object = ((IWithNameAndPicture) obj.getObject()).getName();
+                        break;
+                    case 2:
+                        if (params.getTeamRankingType(0) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue1());
+                        } else {
+                            object = obj.getValue1();
+                        }
+                        break;
+                    case 3:
+                        if (params.getTeamRankingType(1) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue2());
+                        } else {
+                            object = obj.getValue2();
+                        }
+                        break;
+                    case 4:
+                        if (params.getTeamRankingType(2) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue3());
+                        } else {
+                            object = obj.getValue3();
+                        }
+                        break;
+                    case 5:
+                        if (params.getTeamRankingType(3) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue4());
+                        } else {
+                            object = obj.getValue4();
+                        }
+                        break;
+                    case 6:
+                        if (params.getTeamRankingType(4) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue5());
+                        } else {
+                            object = obj.getValue5();
+                        }
+                        break;
+                    default:
+                }
             }
+        } catch (RemoteException re) {
+            re.printStackTrace();
         }
         return object;
     }
@@ -423,17 +453,19 @@ public final class MjtRankingTeam extends MjtRanking {
     ) {
 
         JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
         if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
                 Team t = (Team) mObjects.get(row);
                 if (t.getPicture() != null) {
-                    ImageIcon icon = ImageTreatment.resize(new ImageIcon(t.getPicture()), 30, 30);
+                    ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
                     obj.setIcon(icon);
                     obj.setHorizontalAlignment(JLabel.CENTER);
                     return obj;
                 }
             }
         }
+
         return obj;
     }
 
