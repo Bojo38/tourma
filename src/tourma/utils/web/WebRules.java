@@ -247,7 +247,7 @@ public class WebRules {
             }
 
             rules.append("<tr>");
-            rules.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Options)) + "</td>");
+            rules.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Options)) + "</td>");
             rules.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(" ") + "</td>");
             rules.append("</tr>");
 
@@ -272,7 +272,7 @@ public class WebRules {
 
             if (params.isTeamVictoryOnly()) {
                 // Victory
-                rules.append("<tr>< class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
+                rules.append("<tr><td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Victory)) + "</td>");
                 rules.append("<td class=\"tab_result\">" + params.getPointsTeamVictory() + "</td></tr>");
 
                 // Draw

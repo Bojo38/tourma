@@ -287,14 +287,7 @@ public final class MjtRankingIndiv extends MjtRanking {
         return result;
     }
 
-    public String convertVND(int value) {
-        String vnd = "";
-        int nb_vict = value / 1000000;
-        int nb_draw = (value % 1000000) / 1000;
-        int nb_loss = (value % 1000000) % 1000;
-        vnd = Integer.toString(nb_vict) + "/" + Integer.toString(nb_draw) + "/" + Integer.toString(nb_loss);
-        return vnd;
-    }
+    
 
     @Override
     public Object getValueAt(final int row, final int col) {

@@ -384,6 +384,7 @@ public final class MjtRankingTeam extends MjtRanking {
     public Object getValueAt(final int row,
             final int col
     ) {
+        Parameters params = Tournament.getTournament().getParams();
         Object object = StringConstants.CS_NULL;
         try {
             if (mDatas.size() > row) {
@@ -396,19 +397,39 @@ public final class MjtRankingTeam extends MjtRanking {
                         object = ((IWithNameAndPicture) obj.getObject()).getName();
                         break;
                     case 2:
-                        object = obj.getValue1();
+                        if (params.getTeamRankingType(0) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue1());
+                        } else {
+                            object = obj.getValue1();
+                        }
                         break;
                     case 3:
-                        object = obj.getValue2();
+                        if (params.getTeamRankingType(1) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue2());
+                        } else {
+                            object = obj.getValue2();
+                        }
                         break;
                     case 4:
-                        object = obj.getValue3();
+                        if (params.getTeamRankingType(2) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue3());
+                        } else {
+                            object = obj.getValue3();
+                        }
                         break;
                     case 5:
-                        object = obj.getValue4();
+                        if (params.getTeamRankingType(3) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue4());
+                        } else {
+                            object = obj.getValue4();
+                        }
                         break;
                     case 6:
-                        object = obj.getValue5();
+                        if (params.getTeamRankingType(4) == Parameters.C_RANKING_VND) {
+                            object = convertVND(obj.getValue5());
+                        } else {
+                            object = obj.getValue5();
+                        }
                         break;
                     default:
                 }

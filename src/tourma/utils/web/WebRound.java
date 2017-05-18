@@ -49,36 +49,43 @@ public class WebRound {
 
     private static final Logger LOG = Logger.getLogger(Tournament.class.getName());
 
-    public static String getMenu(int nb) {
+    public static String getMenu(int nb, boolean withExtension) {
         StringBuilder menu = new StringBuilder();
+        String ext = "";
+        String pre="/";
+        if (withExtension) {
+            ext = ".html";
+            pre="";
+        }
+        
 
         Round r = Tournament.getTournament().getRound(nb - 1);
 
         menu.append("<ul>");
-        menu.append("<li><a href='/round" + (nb) + "_matchs'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Matchs)) + "</span></a></li>");
-        menu.append("<li><a href='/round" + (nb) + "_indiv'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Individual)) + "</span></a></li>");
+        menu.append("<li><a href='"+pre+"round" + (nb) + "_matchs"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Matchs)) + "</span></a></li>");
+        menu.append("<li><a href='"+pre+"round" + (nb) + "_indiv"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Individual)) + "</span></a></li>");
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
             Criteria c = Tournament.getTournament().getParams().getCriteria(i);
-            menu.append("<li><a href='/round" + (nb) + "_indiv_crit" + i + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Individual) + " " + c.getName()) + "</span></a></li>");
+            menu.append("<li><a href='"+pre+"round" + (nb) + "_indiv_crit"+i+ext + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Individual) + " " + c.getName()) + "</span></a></li>");
         }
 
         if (Tournament.getTournament().getParams().isTeamTournament()) {
             if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
-                menu.append("<li><a href='/round" + (nb) + "_team_matchs'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team) + " " + Translate.translate(Ranking.CS_Matchs)) + "</span></a></li>");
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_team_matchs"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team) + " " + Translate.translate(Ranking.CS_Matchs)) + "</span></a></li>");
             }
 
-            menu.append("<li><a href='/round" + (nb) + "_teams'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Team)) + "</span></a></li>");
+            menu.append("<li><a href='"+pre+"round" + (nb) + "_teams"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Team)) + "</span></a></li>");
             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                 Criteria c = Tournament.getTournament().getParams().getCriteria(i);
-                menu.append("<li><a href='/round" + (nb) + "_team_crit" + i + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Team) + " " + c.getName()) + "</span></a></li>");
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_team_crit" + i +ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Team) + " " + c.getName()) + "</span></a></li>");
             }
         }
 
         if (Tournament.getTournament().getClansCount() > 1) {
-            menu.append("<li><a href='/round" + (nb) + "_clans'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</span></a></li>");
+            menu.append("<li><a href='"+pre+"round" + (nb) + "_clans"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</span></a></li>");
             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                 Criteria c = Tournament.getTournament().getParams().getCriteria(i);
-                menu.append("<li><a href='/round" + (nb) + "_clan_crit" + i + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan) + " " + c.getName()) + "</span></a></li>");
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_clan_crit"+i+ext+ "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan) + " " + c.getName()) + "</span></a></li>");
             }
         }
 
@@ -86,7 +93,7 @@ public class WebRound {
             for (int i = 0; i < Tournament.getTournament().getCategoriesCount(); i++) {
 
                 Category c = Tournament.getTournament().getCategory(i);
-                menu.append("<li><a href='/round" + (nb) + "_cat" + i + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(StringConstants.CS_CATEGORY) + " " + c.getName()) + "</span></a></li>");
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_cat" + i + ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(StringConstants.CS_CATEGORY) + " " + c.getName()) + "</span></a></li>");
             }
         }
 
@@ -94,7 +101,7 @@ public class WebRound {
             for (int i = 0; i < Tournament.getTournament().getGroupsCount(); i++) {
 
                 Group c = Tournament.getTournament().getGroup(i);
-                menu.append("<li><a href='/round" + (nb) + "_group" + i + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Group) + " " + c.getName()) + "</span></a></li>");
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_group" + i +ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Group) + " " + c.getName()) + "</span></a></li>");
             }
         }
 
@@ -103,7 +110,7 @@ public class WebRound {
             for (int i = 0; i < Tournament.getTournament().getPoolCount(); i++) {
 
                 Pool p = Tournament.getTournament().getPool(i);
-                menu.append("<li><a href='/round" + (nb) + "_pool" + i + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Pool) + " " + (i + 1)) + "</span></a></li>");
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_pool" + i +ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Pool) + " " + (i + 1)) + "</span></a></li>");
             }
         }
         menu.append("</ul>");
