@@ -6,6 +6,7 @@
 package tourma.utils.web;
 
 import fi.iki.elonen.NanoHTTPD;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -17,6 +18,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainTreeModel;
+import tourma.data.Category;
+import tourma.data.Criteria;
+import tourma.data.ETeamPairing;
+import tourma.data.Group;
+import tourma.data.Pool;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 
@@ -124,9 +130,9 @@ public class WebServer extends NanoHTTPD {
         menu.append("<div id='cssmenu'>");
         menu.append("<ul>");
         if (withExtension) {
-            menu.append("<li><a href='/index.html'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Home)) + "</span></a></li>");
-            menu.append("<li><a href='/rules.html'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Rules)) + "</span></a></li>");
-            menu.append("<li><a href='/stats.html'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(MainTreeModel.CS_Statistics)) + "</span></a></li>");
+            menu.append("<li><a href='index.html'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Home)) + "</span></a></li>");
+            menu.append("<li><a href='rules.html'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Rules)) + "</span></a></li>");
+            menu.append("<li><a href='stats.html'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(MainTreeModel.CS_Statistics)) + "</span></a></li>");
         } else {
             menu.append("<li><a href='/'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Home)) + "</span></a></li>");
             menu.append("<li><a href='/rules'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_Rules)) + "</span></a></li>");
@@ -134,9 +140,9 @@ public class WebServer extends NanoHTTPD {
         }
         for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
             if (withExtension) {
-                menu.append("<li><a href=\"/round").append(i + 1).append("\"><span>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(i + 1).append("</span></a>");
+                menu.append("<li><a href=\"round").append(i + 1).append(".html").append("\"><span>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(i + 1).append("</span></a>");
             } else {
-                menu.append("<li><a href=\"/round").append(i + 1).append(".html").append("\"><span>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(i + 1).append("</span></a>");
+                menu.append("<li><a href=\"/round").append(i + 1).append("\"><span>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(i + 1).append("</span></a>");
             }
             menu.append(WebRound.getMenu(i + 1, withExtension));
             menu.append("</li>");
@@ -145,15 +151,18 @@ public class WebServer extends NanoHTTPD {
         if (nbRounds > 0) {
             if (withExtension) {
                 if (Tournament.getTournament().getRound(nbRounds - 1).isCup()) {
-                    menu.append("<li><a href='/cup'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup)) + "</span></a></li>");
+                    menu.append("<li><a href='cup.html'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup)) + "</span></a></li>");
                 }
             } else {
                 if (Tournament.getTournament().getRound(nbRounds - 1).isCup()) {
                     menu.append("<li><a href='/cup.html'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup)) + "</span></a></li>");
                 }
-            }
-            if (Tournament.getTournament().getParams().isWebEdit()) {
-                menu.append("<li><a href='/match_result'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult)) + "</span></a></li>");
+
+                if (Tournament.getTournament().getParams().isWebEdit()) {
+                    if (!withExtension) {
+                        menu.append("<li><a href='/match_result'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_EnterMatchResult)) + "</span></a></li>");
+                    }
+                }
             }
 
         }
@@ -494,17 +503,25 @@ public class WebServer extends NanoHTTPD {
 
     protected static File getWebpageFile(String url, String filename, File tmpDir) {
         FileWriter fw = null;
+        BufferedWriter bw=null;
         File f = null;
         try {
-            String tmpPath = tmpDir.getCanonicalPath() + filename;
+            String tmpPath = tmpDir.getCanonicalPath() + "/" + filename;
             f = new File(tmpPath);
             fw = new FileWriter(f);
+            bw=new BufferedWriter(fw);
 
-            fw.write(getPageText(url, new HashMap<String, String>(), true));
+            String pageText=getPageText(url, new HashMap<String, String>(), true);
+            bw.write(pageText);
+
+                bw.close();
+                fw.close();
 
         } catch (IOException ex) {
+            ex.printStackTrace();
             Logger.getLogger(WebServer.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return f;
     }
 
@@ -531,6 +548,7 @@ public class WebServer extends NanoHTTPD {
         try {
             tmpDir = createTempDirectory();
         } catch (IOException ex) {
+            ex.printStackTrace();
             Logger.getLogger(WebServer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -547,16 +565,64 @@ public class WebServer extends NanoHTTPD {
             files.add(getWebpageFile("/", "index.html", tmpDir));
             files.add(getWebpageFile("/rules", "rules.html", tmpDir));
             files.add(getWebpageFile("/stats", "stats.html", tmpDir));
-            
-            boolean cup=false;
+
+            boolean cup = false;
             for (int i = 1; i <= Tournament.getTournament().getRoundsCount(); i++) {
-                files.add(getWebpageFile("/round" + i, "round" + i + ".html", tmpDir));
+//                files.add(getWebpageFile("/round" + i, "round" + i + ".html", tmpDir));
                 // All round subpages to add
-                
-                
-                if ((Tournament.getTournament().getRound(i-1).isCup())&&!cup)
-                {
-                    cup=true;
+
+                files.add(getWebpageFile("/round" + i + "_matchs", "round" + i + "_matchs.html", tmpDir));
+                files.add(getWebpageFile("/round" + i + "_indiv", "round" + i + "_indiv.html", tmpDir));
+
+                for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
+                    Criteria c = Tournament.getTournament().getParams().getCriteria(j);
+                    files.add(getWebpageFile("/round" + i + "_indiv_crit" + j, "round" + i + "_indiv_crit" + j + ".html", tmpDir));
+                }
+
+                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                    if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+                        files.add(getWebpageFile("/round" + i + "_team_matchs", "round" + i + "_team_matchs.html", tmpDir));
+                    }
+
+                    files.add(getWebpageFile("/round" + i + "_teams", "round" + i + "_teams.html", tmpDir));
+
+                    for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
+                        Criteria c = Tournament.getTournament().getParams().getCriteria(j);
+                        files.add(getWebpageFile("/round" + i + "_team_crit" + j, "round" + i + "_team_crit" + j + ".html", tmpDir));
+                    }
+                }
+
+                if (Tournament.getTournament().getClansCount() > 1) {
+                    files.add(getWebpageFile("/round" + i + "_clans", "round" + i + "_clans.html", tmpDir));
+                    for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
+                        Criteria c = Tournament.getTournament().getParams().getCriteria(j);
+                        files.add(getWebpageFile("/round" + i + "_clan_crit" + j, "round" + i + "_clan_crit" + j + ".html", tmpDir));
+                    }
+                }
+
+                if (Tournament.getTournament().getCategoriesCount() > 1) {
+                    for (int j = 0; j < Tournament.getTournament().getCategoriesCount(); j++) {
+                        Category c = Tournament.getTournament().getCategory(j);
+                        files.add(getWebpageFile("/round" + i + "_cat" + j, "round" + i + "_cat" + j + ".html", tmpDir));
+                    }
+                }
+
+                if (Tournament.getTournament().getGroupsCount() > 1) {
+                    for (int j = 0; j < Tournament.getTournament().getGroupsCount(); j++) {
+                        Group c = Tournament.getTournament().getGroup(j);
+                        files.add(getWebpageFile("/round" + i + "_group" + j, "round" + i + "_group" + j + ".html", tmpDir));
+                    }
+                }
+
+                if (Tournament.getTournament().getPoolCount() > 0) {
+                    for (int j = 0; j < Tournament.getTournament().getPoolCount(); j++) {
+                        Pool p = Tournament.getTournament().getPool(j);
+                        files.add(getWebpageFile("/round" + i + "_pool" + j, "round" + i + "_pool" + j + ".html", tmpDir));
+                    }
+                }
+
+                if ((Tournament.getTournament().getRound(i - 1).isCup()) && !cup) {
+                    cup = true;
                     files.add(getWebpageFile("/cup", "cup.html", tmpDir));
                 }
             }
@@ -567,7 +633,7 @@ public class WebServer extends NanoHTTPD {
 
     public static void cleanFiles(ArrayList<File> files) {
         for (File f : files) {
-            f.delete();
+            // f.delete();
         }
     }
 }

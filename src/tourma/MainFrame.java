@@ -2867,7 +2867,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         if (result == JFileChooser.APPROVE_OPTION) {
 
             File zipFile = jfc.getSelectedFile();
-
+           
             // First this function will generate in a temporary directory
             // all the possible web pages
             ArrayList<File> files = WebServer.getWebSiteFiles();
@@ -2885,7 +2885,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                         FileInputStream fin = new FileInputStream(f);
                         zout.putNextEntry(new ZipEntry(f.getName()));
                         int length;
-                        while ((length = fin.read()) > 0) {
+                        while ((length = fin.read(b)) > 0) {
                             zout.write(b, 0, length);
                         }
                         zout.closeEntry();
