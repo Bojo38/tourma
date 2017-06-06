@@ -212,6 +212,9 @@ public final class MjtRankingTeam extends MjtRanking {
                 for (int j = 0; j <= t.getMatchCount() - 1; j++) {
 
                     final TeamMatch tm = (TeamMatch) t.getMatch(j);
+                    if (!tm.isValues_computed()) {
+                        tm.recomputeValues();
+                    }
                     boolean bFound = false;
                     for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
                         final Round r = rounds.get(l);

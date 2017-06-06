@@ -580,7 +580,10 @@ public final class JPNRound extends javax.swing.JPanel {
                     if (!Tournament.getTournament().getParams().isTeamTournament()) {
                         c1 = true;
                         critIndex = 0;
+                        match.resetWL();
+                        match.recomputeValues();
                     }
+
                     break;
                 case 3:
                     if (Tournament.getTournament().getParams().isTeamTournament()) {
@@ -590,11 +593,15 @@ public final class JPNRound extends javax.swing.JPanel {
                         c1 = false;
                         critIndex = 0;
                     }
+                    match.resetWL();
+                    match.recomputeValues();
                     break;
                 case 4:
                     if (Tournament.getTournament().getParams().isTeamTournament()) {
                         c1 = false;
                         critIndex = 0;
+                        match.resetWL();
+                        match.recomputeValues();
                     }
                     break;
                 default:
@@ -606,6 +613,8 @@ public final class JPNRound extends javax.swing.JPanel {
                         } else {
                             critIndex = (col - 3) / 2;
                         }
+                        match.resetWL();
+                        match.recomputeValues();
                     }
             }
             if (critIndex >= 0) {
@@ -615,6 +624,8 @@ public final class JPNRound extends javax.swing.JPanel {
                     if (critIndex == 0) {
                         if (v == -1) {
                             mv.setValue1(0);
+                            match.resetWL();
+                            match.recomputeValues();
                         }
                     }
                     //mv.setValue1(0);
@@ -623,6 +634,8 @@ public final class JPNRound extends javax.swing.JPanel {
                     if (critIndex == 0) {
                         if (v == -1) {
                             mv.setValue2(0);
+                            match.resetWL();
+                            match.recomputeValues();
                         }
                     }
                     //mv.setValue2(0);

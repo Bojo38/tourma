@@ -144,7 +144,8 @@ public class WebRound {
             String tmp = command.replace("team_crit", "");
             int nb_crit = Integer.parseInt(tmp);
             Criteria crit = Tournament.getTournament().getParams().getCriteria(nb_crit);
-            round.append(createTeamCriteria(r, crit));
+            String tmp_str=createTeamCriteria(r, crit);
+            round.append(tmp_str);
         }
 
         if (command.equals("clans")) {

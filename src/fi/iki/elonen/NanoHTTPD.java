@@ -781,11 +781,14 @@ public abstract class NanoHTTPD {
                 Response resp = newFixedLengthResponse(Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, "SERVER INTERNAL ERROR: IOException: " + ioe.getMessage());
                 resp.send(this.outputStream);
                 safeClose(this.outputStream);
+                ioe.printStackTrace();
             } catch (ResponseException re) {
                 Response resp = newFixedLengthResponse(re.getStatus(), NanoHTTPD.MIME_PLAINTEXT, re.getMessage());
                 resp.send(this.outputStream);
                 safeClose(this.outputStream);
+                re.printStackTrace();
             } finally {
+                
                 safeClose(r);
                 this.tempFileManager.clear();
             }
