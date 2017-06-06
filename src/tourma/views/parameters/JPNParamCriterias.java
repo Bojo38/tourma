@@ -9,6 +9,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.ETeamPairing;
 import tourma.data.Tournament;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -33,6 +34,19 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
 
             mTournament = Tournament.getTournament();
         initComponents();
+        
+        if (
+                (!mTournament.getParams().isTeamTournament())
+                ||
+                (
+                    (mTournament.getParams().isTeamTournament())
+                    &&
+                    (mTournament.getParams().getTeamPairing()==ETeamPairing.INDIVIDUAL_PAIRING)
+                )
+            )
+                {
+                    jtpCriterias.remove(jspTeamBonuses);
+                }
     }
 
     private final static String CS_Criteria = "CRITÈRE";
@@ -59,7 +73,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         jtbCriteria = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         jtbPlayerBonuses = new javax.swing.JTable();
-        jScrollPane7 = new javax.swing.JScrollPane();
+        jspTeamBonuses = new javax.swing.JScrollPane();
         jtbTeamBonus = new javax.swing.JTable();
 
         setLayout(new java.awt.BorderLayout());
@@ -164,9 +178,9 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane7.setViewportView(jtbTeamBonus);
+        jspTeamBonuses.setViewportView(jtbTeamBonus);
 
-        jtpCriterias.addTab(bundle.getString("TeamBonus"), jScrollPane7); // NOI18N
+        jtpCriterias.addTab(bundle.getString("TeamBonus"), jspTeamBonuses); // NOI18N
 
         add(jtpCriterias, java.awt.BorderLayout.CENTER);
         jtpCriterias.getAccessibleContext().setAccessibleName(bundle.getString("IndivBonus")); // NOI18N
@@ -260,13 +274,13 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JButton jbtAddCriteria;
     private javax.swing.JButton jbtRemoveCriteria;
     private javax.swing.JCheckBox jcxTableBonus;
     private javax.swing.JCheckBox jcxTableCoefPerRound;
     private javax.swing.JLabel jlbCoef;
     private javax.swing.JSpinner jspCoef;
+    private javax.swing.JScrollPane jspTeamBonuses;
     private javax.swing.JTable jtbCriteria;
     private javax.swing.JTable jtbPlayerBonuses;
     private javax.swing.JTable jtbTeamBonus;
