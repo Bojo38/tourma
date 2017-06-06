@@ -359,6 +359,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jcxUseImage = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
+        jSeparator20 = new javax.swing.JPopupMenu.Separator();
+        jmiMassAdd = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jmiSubstitutePlayer = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
@@ -598,6 +600,16 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jmiGenerateFirstRound);
+        jmnParameters.add(jSeparator20);
+
+        jmiMassAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jmiMassAdd.setText(bundle.getString("MassAdd")); // NOI18N
+        jmiMassAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiMassAddActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiMassAdd);
         jmnParameters.add(jSeparator6);
 
         jmiSubstitutePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png"))); // NOI18N
@@ -2915,6 +2927,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         // and copy the files.
     }//GEN-LAST:event_jmiExportWebServerToSiteActionPerformed
 
+    private void jmiMassAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMassAddActionPerformed
+        JdgMassAdd jdg=new JdgMassAdd(this, true);
+        jdg.setVisible(true);
+    }//GEN-LAST:event_jmiMassAddActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3391,6 +3408,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JPopupMenu.Separator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator20;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
@@ -3451,6 +3469,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiGenerateFirstRound;
     private javax.swing.JMenuItem jmiGenerateNextRound;
     private javax.swing.JMenuItem jmiIndivReport;
+    private javax.swing.JMenuItem jmiMassAdd;
     private javax.swing.JMenuItem jmiNafLoad;
     private javax.swing.JMenuItem jmiNouveau;
     private javax.swing.JMenuItem jmiPrintLabels;
