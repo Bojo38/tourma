@@ -72,7 +72,8 @@ public class WebServer extends NanoHTTPD {
             int index = tmp.indexOf("_");
             int nb = Integer.parseInt(tmp.substring(0, index));
             msg.append("<div class=\"title\"> <h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Round))).append(" ").append(nb).append("</CENTER></h1></div>");
-            msg.append(WebRound.getHTML(nb, tmp.substring(index + 1)));
+            String tmp_str=WebRound.getHTML(nb, tmp.substring(index + 1));
+            msg.append(tmp_str);
         } else if (params.equals("/cup")) {
             msg.append("<h1><CENTER>").append(StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Cup))).append("</CENTER></h1>");
             msg.append(WebCup.getHTML());
