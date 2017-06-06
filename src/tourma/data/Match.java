@@ -210,6 +210,14 @@ public abstract class Match implements IXMLExport, Serializable {
      */
     boolean values_computed;
 
+    public boolean isValues_computed() {
+        return values_computed;
+    }
+
+    public void setValues_computed(boolean values_computed) {
+        this.values_computed = values_computed;
+    }
+
     /**
      * Recalculate the values fot this match
      */

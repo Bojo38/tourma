@@ -725,7 +725,7 @@ public class TeamMatch extends Match implements Serializable {
         boolean matchFound = false;
         for (int j = 0; j < t.getCoachsCount(); j++) {
             final Coach c = t.getCoach(j);
-            if (c.getMatchCount() > i) {
+            for (i = 0;(i < c.getMatchCount())&&(!matchFound); i++) {
                 final CoachMatch m = (CoachMatch) c.getMatch(i);
                 if (tm != null) {
                     if (tm.containsMatch(m)) {
@@ -917,9 +917,7 @@ public class TeamMatch extends Match implements Serializable {
                             loss++;
                         }
                     }
-                }
-                else
-                {
+                } else {
                     System.out.println("Match not found !!");
                 }
             }

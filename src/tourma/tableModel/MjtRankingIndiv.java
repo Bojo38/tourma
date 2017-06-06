@@ -96,6 +96,9 @@ public final class MjtRankingIndiv extends MjtRanking {
                     for (int j = 0; j <= c.getMatchCount() - 1; j++) {
 
                         final CoachMatch m = (CoachMatch) c.getMatch(j);
+                        if (!m.isValues_computed()) {
+                            m.recomputeValues();
+                        }
                         boolean bFound = false;
                         for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
                             final Round r = rounds.get(l);
@@ -286,8 +289,6 @@ public final class MjtRankingIndiv extends MjtRanking {
         }
         return result;
     }
-
-    
 
     @Override
     public Object getValueAt(final int row, final int col) {
