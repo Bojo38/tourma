@@ -21,11 +21,13 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.IContainCoachs;
 import tourma.data.Match;
+import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
@@ -40,7 +42,6 @@ import tourma.tableModel.mjtTeamsAndCoaches;
 public final class JdgMassAdd extends JDialog {
 
     private static final long serialVersionUID = 1L;
-
 
     /**
      * Creates new form jdgChangePairing
@@ -80,6 +81,7 @@ public final class JdgMassAdd extends JDialog {
         jPanel2 = new javax.swing.JPanel();
         jbtAdd = new javax.swing.JButton();
         jbtMinus = new javax.swing.JButton();
+        jbtNAF = new javax.swing.JButton();
 
         jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
@@ -131,10 +133,28 @@ public final class JdgMassAdd extends JDialog {
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.Y_AXIS));
 
         jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddActionPerformed(evt);
+            }
+        });
         jPanel2.add(jbtAdd);
 
         jbtMinus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtMinus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtMinusActionPerformed(evt);
+            }
+        });
         jPanel2.add(jbtMinus);
+
+        jbtNAF.setText("NAF UPDATE");
+        jbtNAF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtNAFActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtNAF);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.WEST);
 
@@ -152,6 +172,35 @@ public final class JdgMassAdd extends JDialog {
 
     }//GEN-LAST:event_jbtOKActionPerformed
 
+    private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
+        if (Tournament.getTournament().getParams().isTeamTournament()) {
+            Team t = new Team("New Team " + Tournament.getTournament().getTeamsCount());
+            for (int i = 0; i < Tournament.getTournament().getParams().getTeamMatesNumber(); i++) {
+                Coach c = new Coach("New Coach " + (Tournament.getTournament().getCoachsCount() + i));
+                c.setTeam(c.getName()+" team");
+                c.setRoster(RosterType.getRosterType(0));
+                t.addCoach(c);
+                Tournament.getTournament().addCoach(c);
+            }
+            Tournament.getTournament().addTeam(t);
+        } else {
+                Coach c = new Coach("New Coach " + Tournament.getTournament().getCoachsCount());
+                c.setTeam(c.getName()+" team");
+                c.setRoster(RosterType.getRosterType(0));
+                c.setClan(Tournament.getTournament().getClan(0));
+                Tournament.getTournament().addCoach(c);
+        }
+        update();
+    }//GEN-LAST:event_jbtAddActionPerformed
+
+    private void jbtMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtMinusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtMinusActionPerformed
+
+    private void jbtNAFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNAFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtNAFActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -159,6 +208,7 @@ public final class JdgMassAdd extends JDialog {
     private javax.swing.JButton jbtAdd;
     private javax.swing.JButton jbtCancel;
     private javax.swing.JButton jbtMinus;
+    private javax.swing.JButton jbtNAF;
     private javax.swing.JButton jbtOK;
     private javax.swing.JPanel jpnMatchs;
     private javax.swing.JScrollPane jsp;
@@ -169,13 +219,15 @@ public final class JdgMassAdd extends JDialog {
      * Update Panel
      */
     protected void update() {
-
-        jtTeamsAndCoaches.setModel(new mjtTeamsAndCoaches(Tournament.getTournament().getParams().isTeamTournament()));
-               
-                
-                
-                
-        
+        mjtTeamsAndCoaches model=new mjtTeamsAndCoaches(Tournament.getTournament().getParams().isTeamTournament());
+        jtTeamsAndCoaches.setModel(model);
+        jtTeamsAndCoaches.setDefaultRenderer(Integer.class, model);
+        jtTeamsAndCoaches.setDefaultRenderer(String.class, model);
+        jtTeamsAndCoaches.setDefaultRenderer(RosterType.class, model);
+        jtTeamsAndCoaches.setDefaultRenderer(Team.class, model);
+        jtTeamsAndCoaches.setDefaultRenderer(RosterType.class, model);
+        jtTeamsAndCoaches.setDefaultRenderer(Coach.class, model);
+        jtTeamsAndCoaches.setDefaultRenderer(Clan.class, model);
         repaint();
     }
 

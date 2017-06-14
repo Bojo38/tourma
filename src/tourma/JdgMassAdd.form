@@ -131,6 +131,9 @@
               <Image iconType="3" name="/tourma/images/Add.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtAddActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbtMinus">
           <Properties>
@@ -138,6 +141,17 @@
               <Image iconType="3" name="/tourma/images/Close.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtMinusActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jbtNAF">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="NAF UPDATE"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtNAFActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

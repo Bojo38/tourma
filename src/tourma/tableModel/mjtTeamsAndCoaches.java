@@ -55,7 +55,7 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
         if (_byTeam) {
             int teamIndex = rowIndex / _tour.getParams().getTeamMatesNumber();
             Team t = _tour.getTeam(teamIndex);
-            Coach c = t.getCoach(teamIndex * _tour.getParams().getTeamMatesNumber() + rowIndex % _tour.getParams().getTeamMatesNumber());
+            Coach c = t.getCoach(rowIndex % _tour.getParams().getTeamMatesNumber());
             switch (columnIndex) {
                 case 0:
                     return t;
@@ -155,11 +155,9 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
             return jlb;            
         }
         if (value instanceof RosterType)
-        {
-            
+        {      
             JComboBox jcb=new JComboBox(RosterType.getRostersNames());
-            jcb.setSelectedItem(((RosterType)value).getName());
-            
+            jcb.setSelectedItem(((RosterType)value).getName());            
             return jcb;            
         }
         return new JLabel("");
@@ -172,7 +170,16 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
     
     @Override
     public Class getColumnClass(final int c) {
-        return getValueAt(0, c).getClass();
+        Object obj=getValueAt(0, c);
+        if (obj!=null)
+        {
+            return obj.getClass();
+        }
+        else
+        {
+            System.out.println("Error looking for class of column "+c);
+        }
+        return String.class;
     }
 
     /*
