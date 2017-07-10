@@ -41,8 +41,8 @@ public final class NAF {
         InputStream is = null;
         InputStreamReader isr = null;
         BufferedReader reader = null;
-        try {
-            URL url = new URL("http://member.thenaf.net/index.php?module=NAF&type=coachpage&coach=" + Name);
+        try {                               
+            URL url = new URL("https://member.thenaf.net/index.php?module=NAF&type=coachpage&coach=" + Name);
             is = url.openConnection().getInputStream();
             isr = new InputStreamReader(is, Charset.defaultCharset());
             reader = new BufferedReader(isr);

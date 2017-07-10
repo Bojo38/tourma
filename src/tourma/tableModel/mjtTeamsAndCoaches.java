@@ -5,8 +5,12 @@
  */
 package tourma.tableModel;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.rmi.RemoteException;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -125,59 +129,152 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
         }
         return "";
     }
-   
-    
+
+    void setLabelLF(int row, int col,boolean isSelected, boolean hasFocus, JLabel jlb) {
+        Color bkg = new Color(150, 150, 200);
+
+        if (row % 2 != 0) {
+            bkg = new Color(220, 220, 220);
+        }
+
+        if ((isSelected) || (hasFocus)) {
+            bkg = new Color(220, 220, 100);
+            jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
+        }
+        
+        if (hasFocus)
+        {
+            bkg = new Color(255,255,255);
+        }
+        
+        jlb.setOpaque(true);
+        jlb.setBackground(bkg);
+    }
+
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        if (value instanceof String)
-        {
-            JLabel jlb=new JLabel((String)value);
-            return jlb;            
+        if (value instanceof String) {
+            JLabel jlb = new JLabel((String) value);
+            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            return jlb;
         }
-        if (value instanceof Integer)
-        {
-            JLabel jlb=new JLabel(Integer.toString((Integer)value));
-            return jlb;  
+        if (value instanceof Integer) {
+            JLabel jlb = new JLabel(Integer.toString((Integer) value));
+            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            return jlb;
         }
-        if (value instanceof Clan)
-        {
-            JLabel jlb=new JLabel(((Clan)value).getName());
-            return jlb;            
+        if (value instanceof Clan) {
+            JLabel jlb = new JLabel(((Clan) value).getName());
+            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            return jlb;
         }
-        if (value instanceof Team)
-        {
-            JLabel jlb=new JLabel(((Team)value).getName());
-            return jlb;            
+        if (value instanceof Team) {
+            JLabel jlb = new JLabel(((Team) value).getName());
+            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            return jlb;
         }
-        if (value instanceof Coach)
-        {
-            JLabel jlb=new JLabel(((Coach)value).getName());
-            return jlb;            
+        if (value instanceof Coach) {
+            JLabel jlb = new JLabel(((Coach) value).getName());
+            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            return jlb;
         }
-        if (value instanceof RosterType)
-        {      
-            JComboBox jcb=new JComboBox(RosterType.getRostersNames());
-            jcb.setSelectedItem(((RosterType)value).getName());            
-            return jcb;            
+        if (value instanceof RosterType) {
+            /*JComboBox jcb = new JComboBox(RosterType.getRostersNames());
+            jcb.setSelectedItem(((RosterType) value).getName());
+            return jcb;*/
+            JLabel jlb = new JLabel(((RosterType) value).getName());
+            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            return jlb;
         }
-        return new JLabel("");
+        JLabel jlb = new JLabel("");
+        setLabelLF(row, column,isSelected, hasFocus, jlb);
+        return jlb;
     }
 
     @Override
     public void setValueAt(final Object value, final int row, final int col) {
-        
+        if (_byTeam) {
+            int teamIndex = row / _tour.getParams().getTeamMatesNumber();
+            Team t = _tour.getTeam(teamIndex);
+            Coach c = t.getCoach(row % _tour.getParams().getTeamMatesNumber());
+            switch (col) {
+                case 0:
+                    t.setName(String.valueOf(value));
+                    break;
+                case 1:
+                    if (value instanceof Clan) {
+                        t.setClan((Clan) value);
+                    }
+                    break;
+                case 2:
+                    c.setName(String.valueOf(value));
+                    String team_name = c.getTeam();
+                    if (team_name.equals("New Coach " + row + " team")) {
+                        c.setTeam(c.getName() + " team");
+                    }
+                    break;
+                case 3:
+                    c.setTeam(String.valueOf(value));
+                    break;
+                case 4:
+                    if (value instanceof RosterType) {
+                        c.setRoster((RosterType) value);
+                    }
+                    if (value instanceof String) {
+                        c.setRoster((RosterType.getRosterType((String) value)));
+                    }
+                    break;
+                case 5:
+                    if (value instanceof Clan) {
+                        c.setClan((Clan) value);
+                    }
+                    break;
+                case 6:
+                    c.setNaf(Integer.parseInt(String.valueOf(value)));
+                    break;
+            }
+        } else {
+            Coach c = _tour.getCoach(row);
+            if (c != null) {
+                switch (col) {
+                    case 0:
+                        c.setName(String.valueOf(value));
+                        String team_name = c.getTeam();
+                        if (team_name.equals("New Coach " + row + " team")) {
+                            c.setTeam(c.getName() + " team");
+                        }
+                        break;
+                    case 1:
+                        c.setTeam(String.valueOf(value));
+                        break;
+                    case 2:
+                        if (value instanceof RosterType) {
+                            c.setRoster((RosterType) value);
+                        }
+                        if (value instanceof String) {
+                            c.setRoster((RosterType.getRosterType((String) value)));
+                        }
+                        break;
+                    case 3:
+                        if (value instanceof Clan) {
+                            c.setClan((Clan) value);
+                        }
+                        break;
+                    case 4:
+                        c.setNaf(Integer.parseInt(String.valueOf(value)));
+                        break;
+                }
+            }
+        }
     }
-    
+
     @Override
     public Class getColumnClass(final int c) {
-        Object obj=getValueAt(0, c);
-        if (obj!=null)
-        {
+        Object obj = getValueAt(0, c);
+        if (obj != null) {
             return obj.getClass();
-        }
-        else
-        {
-            System.out.println("Error looking for class of column "+c);
+        } else {
+            System.out.println("Error looking for class of column " + c);
         }
         return String.class;
     }

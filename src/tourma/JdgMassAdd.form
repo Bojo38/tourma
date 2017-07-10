@@ -147,10 +147,25 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbtNAF">
           <Properties>
-            <Property name="text" type="java.lang.String" value="NAF UPDATE"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/tourma/images/naf.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Update NAF number"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtNAFActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jbtImportExcel">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/tourma/images/excel.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Import Excel File"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtImportExcelActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

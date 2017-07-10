@@ -115,7 +115,7 @@ import tourma.views.round.JPNRound;
 import tourma.views.system.JdgAbout;
 import tourma.views.system.JdgOnlineHelp;
 import tourma.views.system.JdgRevisions;
-
+import tourma.utils.NafTask;
 /**
  *
  * @author Frederic Berger
@@ -1612,7 +1612,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 Tournament.getTournament().getCoachsCount());
         progressMonitor.setProgress(0);
 
-        task = new NafTask();
+        task = new NafTask(progressMonitor);
         task.addPropertyChangeListener(this);
         task.execute();
 
@@ -2944,43 +2944,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     private static final String CS_Download = "Download";
 
-    class NafTask extends SwingWorker<Void, Void> {
-
-        @Override
-        public Void doInBackground() {
-
-            setProgress(0);
-            try {
-                Thread.sleep(100);
-
-                for (int i = 0; (i < Tournament.getTournament().getCoachsCount()) && (!isCancelled()); i++) {
-                    Coach c = Tournament.getTournament().getCoach(i);
-                    progressMonitor.setNote(
-                            Translate.translate(CS_Download)
-                            + " " + c.getName());
-                    c.setNafRank(NAF.getRanking(c.getName(), c));
-                    progressMonitor.setProgress(i + 1);
-                }
-
-            } catch (InterruptedException ignore) {
-            }
-            return null;
-        }
-
-        @Override
-        public void done() {
-            Toolkit.getDefaultToolkit().beep();
-
-            progressMonitor.setProgress(0);
-            progressMonitor.close();
-
-            if (jpnContent instanceof JPNParameters) {
-                ((JPNParameters) jpnContent).update();
-            }
-        }
-
-    }
-
+    
     private static final String CS_NewGame = "NewGame";
     private static final String CS_Open = "Open";
     private static final String CS_UseRosterEditor = "UseRosterEditor";
