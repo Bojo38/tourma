@@ -910,29 +910,33 @@ public class TeamMatch extends Match implements Serializable {
 
         for (int j = 0; j < t.getCoachsCount(); j++) {
             matchFound = false;
+            i = 0;
             final Coach c = t.getCoach(j);
-            if (c.getMatchCount() > i) {
-                final CoachMatch m = (CoachMatch) c.getMatch(i);
-                if (includeCurrent && tm.containsMatch(m)) {
-                    matchFound = true;
-                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
-                    final Value val = m.getValue(crit);
-                    if (m.getCompetitor1() == c) {
-                        if (val.getValue1() > val.getValue2()) {
-                            victories++;
-                        } else if (val.getValue1() < val.getValue2()) {
-                            loss++;
+            while (i < c.getMatchCount()) {
+                if (c.getMatchCount() > i) {
+                    final CoachMatch m = (CoachMatch) c.getMatch(i);
+                    if (includeCurrent && tm.containsMatch(m)) {
+                        matchFound = true;
+                        final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+                        final Value val = m.getValue(crit);
+                        if (m.getCompetitor1() == c) {
+                            if (val.getValue1() > val.getValue2()) {
+                                victories++;
+                            } else if (val.getValue1() < val.getValue2()) {
+                                loss++;
+                            }
+                        } else {
+                            if (val.getValue1() < val.getValue2()) {
+                                victories++;
+                            } else if (val.getValue1() > val.getValue2()) {
+                                loss++;
+                            }
                         }
                     } else {
-                        if (val.getValue1() < val.getValue2()) {
-                            victories++;
-                        } else if (val.getValue1() > val.getValue2()) {
-                            loss++;
-                        }
+                        System.out.println("Match not found !! " + tm.getCompetitor1().getName() + "vs  " + tm.getCompetitor2().getName() + " for " + c.getName());
                     }
-                } else {
-                    System.out.println("Match not found !!");
                 }
+                i++;
             }
         }
         if (matchFound) {
@@ -1245,6 +1249,7 @@ public class TeamMatch extends Match implements Serializable {
         this.c2value4 = recomputeValue(4, mCompetitor2);
         this.c1value5 = recomputeValue(5, mCompetitor1);
         this.c2value5 = recomputeValue(5, mCompetitor2);
+        values_computed=true;
     }
 
     protected int recomputeValue(int index, Competitor c) {

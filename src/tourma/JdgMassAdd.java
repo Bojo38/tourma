@@ -201,7 +201,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
         if (Tournament.getTournament().getParams().isTeamTournament()) {
             Team t = new Team("New Team " + Tournament.getTournament().getTeamsCount());
             for (int i = 0; i < Tournament.getTournament().getParams().getTeamMatesNumber(); i++) {
-                Coach c = new Coach("New Coach " + (Tournament.getTournament().getCoachsCount() + i));
+                Coach c = new Coach("New Coach " + (Tournament.getTournament().getCoachsCount()));
                 c.setTeam(c.getName() + " team");
                 c.setRoster(RosterType.getRosterType(0));
                 c.setActive(true);

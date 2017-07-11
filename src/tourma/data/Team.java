@@ -159,11 +159,11 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public String getName() {
         String text = super.getName();
-        if (Tournament.getTournament().getParams().isEnableClans()) {
+    /*    if (Tournament.getTournament().getParams().isEnableClans()) {
             if (getClan() != null) {
                 text += " (" + getClan().getName() + ")";
             }
-        }
+        }*/
         return text;
     }
 

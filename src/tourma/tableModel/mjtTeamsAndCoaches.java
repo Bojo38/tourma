@@ -18,6 +18,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Clan;
 import tourma.data.Coach;
+import tourma.data.Competitor;
 import tourma.data.RosterType;
 import tourma.data.Team;
 import tourma.data.Tournament;
@@ -59,6 +60,9 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
         if (_byTeam) {
             int teamIndex = rowIndex / _tour.getParams().getTeamMatesNumber();
             Team t = _tour.getTeam(teamIndex);
+            if (rowIndex == 25) {
+                System.out.println("Middle reached");
+            }
             Coach c = t.getCoach(rowIndex % _tour.getParams().getTeamMatesNumber());
             switch (columnIndex) {
                 case 0:
@@ -130,7 +134,7 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
         return "";
     }
 
-    void setLabelLF(int row, int col,boolean isSelected, boolean hasFocus, JLabel jlb) {
+    void setLabelLF(int row, int col, boolean isSelected, boolean hasFocus, JLabel jlb) {
         Color bkg = new Color(150, 150, 200);
 
         if (row % 2 != 0) {
@@ -141,12 +145,11 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
             bkg = new Color(220, 220, 100);
             jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
         }
-        
-        if (hasFocus)
-        {
-            bkg = new Color(255,255,255);
+
+        if (hasFocus) {
+            bkg = new Color(255, 255, 255);
         }
-        
+
         jlb.setOpaque(true);
         jlb.setBackground(bkg);
     }
@@ -155,27 +158,27 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         if (value instanceof String) {
             JLabel jlb = new JLabel((String) value);
-            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            setLabelLF(row, column, isSelected, hasFocus, jlb);
             return jlb;
         }
         if (value instanceof Integer) {
             JLabel jlb = new JLabel(Integer.toString((Integer) value));
-            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            setLabelLF(row, column, isSelected, hasFocus, jlb);
             return jlb;
         }
         if (value instanceof Clan) {
             JLabel jlb = new JLabel(((Clan) value).getName());
-            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            setLabelLF(row, column, isSelected, hasFocus, jlb);
             return jlb;
         }
         if (value instanceof Team) {
             JLabel jlb = new JLabel(((Team) value).getName());
-            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            setLabelLF(row, column, isSelected, hasFocus, jlb);
             return jlb;
         }
         if (value instanceof Coach) {
             JLabel jlb = new JLabel(((Coach) value).getName());
-            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            setLabelLF(row, column, isSelected, hasFocus, jlb);
             return jlb;
         }
         if (value instanceof RosterType) {
@@ -183,11 +186,11 @@ public class mjtTeamsAndCoaches extends AbstractTableModel implements TableCellR
             jcb.setSelectedItem(((RosterType) value).getName());
             return jcb;*/
             JLabel jlb = new JLabel(((RosterType) value).getName());
-            setLabelLF(row, column,isSelected, hasFocus, jlb);
+            setLabelLF(row, column, isSelected, hasFocus, jlb);
             return jlb;
         }
         JLabel jlb = new JLabel("");
-        setLabelLF(row, column,isSelected, hasFocus, jlb);
+        setLabelLF(row, column, isSelected, hasFocus, jlb);
         return jlb;
     }
 
