@@ -8,7 +8,7 @@
  *
  * Created on 10 mai 2010, 19:37:53
  */
-package tourma.views;
+package tourma.views.report;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;

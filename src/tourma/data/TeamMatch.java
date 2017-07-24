@@ -932,9 +932,9 @@ public class TeamMatch extends Match implements Serializable {
                                 loss++;
                             }
                         }
-                    } else {
+                    } /*else {
                         System.out.println("Match not found !! " + tm.getCompetitor1().getName() + "vs  " + tm.getCompetitor2().getName() + " for " + c.getName());
-                    }
+                    }*/
                 }
                 i++;
             }
@@ -947,9 +947,9 @@ public class TeamMatch extends Match implements Serializable {
             } else {
                 countTeamDraw++;
             }
-        } else {
+        } /*else {
             System.out.println("Match not found ????");
-        }
+        }*/
         /*  i++;
         }*/
 

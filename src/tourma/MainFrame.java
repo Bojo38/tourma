@@ -37,6 +37,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
@@ -70,6 +71,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import net.java.dev.colorchooser.ColorChooser;
+import org.apache.commons.net.ftp.FTPClient;
 import org.jfree.ui.tabbedui.VerticalLayout;
 import teamma.data.LRB;
 import teamma.views.JdgRoster;
@@ -99,7 +101,7 @@ import tourma.utils.display.TMultiServer;
 import tourma.utils.web.WebServer;
 import tourma.views.JPNCup;
 import tourma.views.JPNStatistics;
-import tourma.views.JdgPrintLabel;
+import tourma.views.report.JdgPrintLabel;
 import tourma.views.fullscreen.JFullScreen;
 import tourma.views.fullscreen.JFullScreenClanRank;
 import tourma.views.fullscreen.JFullScreenClanTeamAnnex;
@@ -2922,6 +2924,20 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void jmiExportWebServerToSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportWebServerToSiteActionPerformed
         // First this function will generate in a temporary directory
         // all the possible web pages
+        FTPClient client=new FTPClient();
+        try
+        {
+        client.connect("ftp.ainpacte.org");
+        System.out.println("Connected to " + server + ".");
+        System.out.println(client.getReplyString());
+        System.out.println(client.getReplyCode());
+        client.login("ainpacte","Lancie69");
+        }
+        catch ( IOException ex)
+        {
+            System.out.println(ex.getLocalizedMessage());
+            ex.printStackTrace();
+        }
 
         // Then it will connect to remote site (FTP or SFTP)
         // and copy the files.
