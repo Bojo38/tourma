@@ -107,7 +107,7 @@ public final class Generation {
      *
      */
     public static final int GEN_BALANCED = 10;
-
+public static final int GEN_NAF_AVG = 11;
     /**
      *
      */
@@ -299,6 +299,15 @@ public final class Generation {
             }
         }
 
+        if (choice==GEN_NAF_AVG)
+        {
+            for(Object comp:competitors)
+            {
+                
+                ((Competitor)comp).enableNafAvg(true);
+            }
+        }
+        
         switch (choice) {
             // Manual Choice
             case GEN_MANUAL:
@@ -321,6 +330,9 @@ public final class Generation {
                 generateFirstRoundCup(competitors);
                 break;
             case GEN_NAF:
+                generateFirstRoundOrder(competitors, false, true);
+                break;
+            case GEN_NAF_AVG:
                 generateFirstRoundOrder(competitors, false, true);
                 break;
             case GEN_FREE:

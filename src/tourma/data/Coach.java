@@ -212,7 +212,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
      *
      */
     private double mNafRank = 150.0;
-
+    private double mNafRankAvg=150.0;
     /**
      *
      */
@@ -284,7 +284,14 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
         int result = -1;
 
         if (obj instanceof Coach) {
+            if (_naf_avg)
+            {
+                result = ((Double) getNafRankAvg()).compareTo(((Coach) obj).getNafRankAvg());
+            }
+            else
+            {
             result = ((Double) getNafRank()).compareTo(((Coach) obj).getNafRank());
+            }
             if (result == 0) {
                 try {
                     result = getName().compareTo(((IWithNameAndPicture) obj).getName());
@@ -310,6 +317,8 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
         coach.setAttribute(StringConstants.CS_NAF, Integer.toString(this.getNaf()));
         coach.setAttribute(StringConstants.CS_RANK, Integer.toString(this.getRank()));
         coach.setAttribute(StringConstants.CS_CLAN, this.getClan().getName());
+        
+        coach.setAttribute(StringConstants.CS_RANK_AVG, Double.toString(this.getNafRankAvg()));
 
         for (int i = 0; i < getCategoryCount(); i++) {
             if (getCategory(i) != null) {
@@ -444,6 +453,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
             try {
                 this.setActive(coach.getAttribute(StringConstants.CS_ACTIVE).getBooleanValue());
                 this.setHandicap(coach.getAttribute(StringConstants.CS_HANDICAP).getIntValue());
+                this.setNafAvg(coach.getAttribute(StringConstants.CS_RANK_AVG).getDoubleValue());
             } catch (NullPointerException npe) {
                 // Do nothing
             }
@@ -1427,12 +1437,21 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
     public double getNafRank() {
         return mNafRank;
     }
+    
+    public double getNafRankAvg() {
+        return mNafRankAvg;
+    }
 
     /**
      * @param mNafRank the mNafRank to set
      */
     public void setNafRank(double mNafRank) {
         this.mNafRank = mNafRank;
+        updated=true;
+    }
+    
+    public void setNafAvg(double mNafRank) {
+        this.mNafRankAvg = mNafRank;
         updated=true;
     }
 

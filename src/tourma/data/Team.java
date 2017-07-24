@@ -159,11 +159,11 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public String getName() {
         String text = super.getName();
-        if (Tournament.getTournament().getParams().isEnableClans()) {
+        /*    if (Tournament.getTournament().getParams().isEnableClans()) {
             if (getClan() != null) {
                 text += " (" + getClan().getName() + ")";
             }
-        }
+        }*/
         return text;
     }
 
@@ -174,13 +174,21 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
             Team team = (Team) obj;
             double rank = 0.0;
             for (Coach mCoach : mCoachs) {
-                rank += mCoach.getNafRank();
+                if (_naf_avg) {
+                    rank += mCoach.getNafRankAvg();
+                } else {
+                    rank += mCoach.getNafRank();
+                }
             }
             rank /= getCoachsCount();
 
             double rankobj = 0;
             for (Coach mCoach : team.mCoachs) {
-                rankobj += mCoach.getNafRank();
+                if (_naf_avg) {
+                    rankobj += mCoach.getNafRankAvg();
+                } else {
+                    rankobj += mCoach.getNafRank();
+                }
             }
             rankobj /= team.getCoachsCount();
 
@@ -771,7 +779,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public void addCoach(Coach c) {
         mCoachs.add(c);
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -780,7 +788,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public void removeCoach(int i) {
         mCoachs.remove(i);
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -788,7 +796,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     @Override
     public void clearCoachs() {
         this.mCoachs.clear();
-        updated=true;
+        updated = true;
     }
 
     public boolean isBalanced(Team opp, Round round) {

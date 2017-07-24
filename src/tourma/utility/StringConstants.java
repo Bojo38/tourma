@@ -108,6 +108,7 @@ public interface StringConstants {
     public static final String CS_PICTURE = "Picture";
     public static final String CS_NAF = "NAF";
     public static final String CS_RANK = "Rank";
+    public static final String CS_RANK_AVG = "RankAvg";
     public static final String CS_ACTIVE = "Active";
     public static final String CS_HANDICAP = "Handicap";
     public static final String CS_COMPOSITION = "Composition";

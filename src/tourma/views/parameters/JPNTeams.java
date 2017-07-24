@@ -124,6 +124,7 @@ public final class JPNTeams extends javax.swing.JPanel {
         }
         t.clearCoachs();
         mTournament.removeTeam(t);
+        MainFrame.getMainFrame().update();
         update();
 
     }//GEN-LAST:event_jbtRemoveTeamActionPerformed
@@ -165,6 +166,7 @@ public final class JPNTeams extends javax.swing.JPanel {
         jtbTeam.setDefaultRenderer(String.class, teamModel);
         jtbTeam.setDefaultRenderer(Integer.class, teamModel);
 
+        
     }
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
