@@ -1431,6 +1431,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private static final String CS_Pools = "POULES";
     private static final String CS_FreeRound = "FREE_ROUND";
     private static final String CS_NafRanking = "NAF_RANK";
+    private static final String CS_NafRankingAvg = "NAF_RANK_AVG";
     private static final String CS_RandomAndBalancing = "RandomAndBalancing";
     private static final String CS_Generation = "GÉNÉRATION";
     private static final String CS_ChooseGenerationMethod = "CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: ";
@@ -1495,6 +1496,13 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                      */
                     labels.add(Translate.translate(CS_FreeRound));
                     Options.add(Generation.GEN_FREE);
+
+                    
+                    /**
+                     * Naf Ranking
+                     */
+                    labels.add(Translate.translate(CS_NafRankingAvg));
+                    Options.add(Generation.GEN_NAF_AVG);
 
                     /*
                     OPTION NON CONCLUANTE

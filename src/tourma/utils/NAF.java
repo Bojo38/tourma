@@ -96,13 +96,14 @@ public final class NAF {
                                         if (index == 1) {
                                             // Roster
                                             rank = Double.parseDouble(td.getText());
-                                            ranks.add(Double.valueOf(td.getText()));
+                                            ranks.add(rank);
                                         } else {
                                             break;
                                         }
                                     }
                                     index++;
                                 }
+                                                                
 
                                 if (roster.equals(RosterType.getRosterTranslation(Name))) {
                                     naf = rank;
@@ -118,16 +119,27 @@ public final class NAF {
                 line = reader.readLine();
             }
 
+            double moy=0;
             for (int i = 0; i < rosters.size(); i++) {
                 String name=coach.getRoster().getName();
                 String tmpName = RosterType.getRosterTranslation(coach.getRoster().getName());
                 String name2 = rosters.get(i);
+                moy+=naf = ranks.get(i);
                 if (name2.equals(tmpName)) {
                     naf = ranks.get(i);
                     coach.setNafRank(naf);
-                    break;
                 }
             }
+            
+            if (moy==0)
+            {
+                moy=150.0;
+            }
+            else
+            {
+                moy=moy/ranks.size();
+            }
+            coach.setNafAvg(moy);
 
         } catch (IOException | NumberFormatException exc) {
             LOG.log(Level.INFO, exc.getLocalizedMessage());
