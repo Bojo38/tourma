@@ -105,7 +105,7 @@ public class CoachMatch extends Match implements Serializable {
                 Value val = this.mValues.get(criteria);
                 if (val == null) {
                     val = new Value(criteria);
-                    mValues.put(criteria,val);
+                    mValues.put(criteria, val);
                 }
                 val.pull(coachmatch.mValues.get(crit));
             }
@@ -1214,19 +1214,29 @@ public class CoachMatch extends Match implements Serializable {
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                     Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
                     val = m.getValue(crit);
-                    if (m.getCompetitor1() == c) {
-                        SA += val.getValue1() * crit.getPointsFor();
-                        SA -= val.getValue2() * crit.getPointsFor();
 
-                        SA -= val.getValue1() * crit.getPointsAgainst();
-                        SA += val.getValue2() * crit.getPointsAgainst();
+                    int value1 = val.getValue1();
+                    int value2 = val.getValue2();
+                    if ((i == 0) && (value1 == -1)) {
+                        value1 = 0;
+                    }
+                    if ((i == 0) && (value2 == -1)) {
+                        value2 = 0;
+                    }
+
+                    if (m.getCompetitor1() == c) {
+                        SA += value1 * crit.getPointsFor();
+                        SA -= value2 * crit.getPointsFor();
+
+                        SA -= value1 * crit.getPointsAgainst();
+                        SA += value2 * crit.getPointsAgainst();
                     }
                     if (m.getCompetitor2() == c) {
-                        SA -= val.getValue1() * crit.getPointsFor();
-                        SA += val.getValue2() * crit.getPointsFor();
+                        SA -= value1 * crit.getPointsFor();
+                        SA += value2 * crit.getPointsFor();
 
-                        SA -= val.getValue2() * crit.getPointsAgainst();
-                        SA += val.getValue1() * crit.getPointsAgainst();
+                        SA -= value2 * crit.getPointsAgainst();
+                        SA += value1 * crit.getPointsAgainst();
                     }
                 }
                 double diff = SA / 1000 - EA;
@@ -1236,59 +1246,48 @@ public class CoachMatch extends Match implements Serializable {
         return value;
     }
 
-    protected static int getCriteriaBonusPoints(Coach c,CoachMatch m,Criteria crit)
-    {
-        int value =0;
-        Value v=m.getValue(crit);
-        if (m.getCompetitor1()==c)
-        {
-            if (v.getValue1()>=crit.getOffensiveThreshold())
-            {
-                value+=crit.getOffensiveBonuses();
+    protected static int getCriteriaBonusPoints(Coach c, CoachMatch m, Criteria crit) {
+        int value = 0;
+        Value v = m.getValue(crit);
+        if (m.getCompetitor1() == c) {
+            if (v.getValue1() >= crit.getOffensiveThreshold()) {
+                value += crit.getOffensiveBonuses();
             }
-            
-            if (v.getValue1()>=v.getValue2()+crit.getOffensiveDiffThreshold())
-            {
-                value+=crit.getOffensiveDiffBonuses();
+
+            if (v.getValue1() >= v.getValue2() + crit.getOffensiveDiffThreshold()) {
+                value += crit.getOffensiveDiffBonuses();
             }
-            
-            if ((v.getValue1()<v.getValue2())&&(v.getValue1()+crit.getDefensiveDiffThreshold()>=v.getValue2()))
-            {
-                value+=crit.getDefensiveDiffBonuses();
+
+            if ((v.getValue1() < v.getValue2()) && (v.getValue1() + crit.getDefensiveDiffThreshold() >= v.getValue2())) {
+                value += crit.getDefensiveDiffBonuses();
             }
         }
-        if (m.getCompetitor2()==c)
-        {
-            if (v.getValue2()>=crit.getOffensiveThreshold())
-            {
-                value+=crit.getOffensiveBonuses();
+        if (m.getCompetitor2() == c) {
+            if (v.getValue2() >= crit.getOffensiveThreshold()) {
+                value += crit.getOffensiveBonuses();
             }
-            
-            if (v.getValue2()>=v.getValue1()+crit.getOffensiveDiffThreshold())
-            {
-                value+=crit.getOffensiveDiffBonuses();
+
+            if (v.getValue2() >= v.getValue1() + crit.getOffensiveDiffThreshold()) {
+                value += crit.getOffensiveDiffBonuses();
             }
-            
-            if ((v.getValue2()<v.getValue1())&&(v.getValue2()+crit.getDefensiveDiffThreshold()>=v.getValue1()))
-            {
-                value+=crit.getDefensiveDiffBonuses();
+
+            if ((v.getValue2() < v.getValue1()) && (v.getValue2() + crit.getDefensiveDiffThreshold() >= v.getValue1())) {
+                value += crit.getDefensiveDiffBonuses();
             }
         }
         return value;
     }
-    
-    protected static int getCriteriasBonusPoints(Coach c,CoachMatch m)
-    {
-        int value=0;
-      // loop on Criterias
-        for (int i=0; i<Tournament.getTournament().getParams().getCriteriaCount(); i++)
-        {
-            Criteria crit=Tournament.getTournament().getParams().getCriteria(i);
-            value+=getCriteriaBonusPoints(c,m,crit);
+
+    protected static int getCriteriasBonusPoints(Coach c, CoachMatch m) {
+        int value = 0;
+        // loop on Criterias
+        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            value += getCriteriaBonusPoints(c, m, crit);
         }
         return value;
-    } 
-    
+    }
+
     /**
      *
      * @param c
@@ -1308,9 +1307,9 @@ public class CoachMatch extends Match implements Serializable {
         final Value val = m.getValue(td);
         if (val != null) {
             if (m.getCompetitor1() == c) {
-                
-                value+=getCriteriasBonusPoints(c,m);
-                
+
+                value += getCriteriasBonusPoints(c, m);
+
                 if (m.isConcedeedBy1()) {
                     if (withMainPoints) {
                         value += Tournament.getTournament().getParams().getPointsConcedeed();
@@ -1343,8 +1342,17 @@ public class CoachMatch extends Match implements Serializable {
                             for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
                                 final Criteria cri = Tournament.getTournament().getParams().getCriteria(j);
                                 final Value va = m.getValue(cri);
-                                bonus += va.getValue1() * cri.getPointsFor();
-                                bonus += va.getValue2() * cri.getPointsAgainst();
+
+                                int value1 = va.getValue1();
+                                int value2 = va.getValue2();
+                                if ((j == 0) && (value1 == -1)) {
+                                    value1 = 0;
+                                }
+                                if ((j == 0) && (value2 == -1)) {
+                                    value2 = 0;
+                                }
+                                bonus += value1 * cri.getPointsFor();
+                                bonus += value2 * cri.getPointsAgainst();
                             }
 
                             if (Tournament.getTournament().getParams().isTableBonus()) {
@@ -1381,7 +1389,7 @@ public class CoachMatch extends Match implements Serializable {
                 }
             }
             if (m.getCompetitor2() == c) {
-                value+=getCriteriasBonusPoints(c,m);
+                value += getCriteriasBonusPoints(c, m);
                 if (m.isConcedeedBy2()) {
                     if (withMainPoints) {
                         value += Tournament.getTournament().getParams().getPointsConcedeed();
@@ -1411,8 +1419,17 @@ public class CoachMatch extends Match implements Serializable {
 
                                 final Criteria cri = Tournament.getTournament().getParams().getCriteria(j);
                                 final Value va = m.getValue(cri);
-                                bonus += va.getValue2() * cri.getPointsFor();
-                                bonus += va.getValue1() * cri.getPointsAgainst();
+                                int value1 = va.getValue1();
+                                int value2 = va.getValue2();
+                                if ((j == 0) && (value1 == -1)) {
+                                    value1 = 0;
+                                }
+                                if ((j == 0) && (value2 == -1)) {
+                                    value2 = 0;
+                                }
+                                bonus += value1 * cri.getPointsFor();
+                                bonus += value2 * cri.getPointsAgainst();
+
                             }
                             if (Tournament.getTournament().getParams().isTableBonus()) {
                                 double coef = Tournament.getTournament().getParams().getTableBonusCoef();
@@ -1466,8 +1483,14 @@ public class CoachMatch extends Match implements Serializable {
                 switch (subtype) {
                     case Parameters.C_RANKING_SUBTYPE_POSITIVE:
                         value = v.getValue1();
+                        if ((value == -1) && (crit == Tournament.getTournament().getParams().getCriteria(0))) {
+                            value = 0;
+                        }
                         break;
                     case Parameters.C_RANKING_SUBTYPE_NEGATIVE:
+                        if ((value == -1) && (crit == Tournament.getTournament().getParams().getCriteria(0))) {
+                            value = 0;
+                        }
                         value = v.getValue2();
                         break;
                     case Parameters.C_RANKING_SUBTYPE_DIFFERENCE:
@@ -1479,9 +1502,15 @@ public class CoachMatch extends Match implements Serializable {
                 switch (subtype) {
                     case Parameters.C_RANKING_SUBTYPE_POSITIVE:
                         value = v.getValue2();
+                        if ((value == -1) && (crit == Tournament.getTournament().getParams().getCriteria(0))) {
+                            value = 0;
+                        }
                         break;
                     case Parameters.C_RANKING_SUBTYPE_NEGATIVE:
                         value = v.getValue1();
+                        if ((value == -1) && (crit == Tournament.getTournament().getParams().getCriteria(0))) {
+                            value = 0;
+                        }
                         break;
                     case Parameters.C_RANKING_SUBTYPE_DIFFERENCE:
                         value = v.getValue2() - v.getValue1();
