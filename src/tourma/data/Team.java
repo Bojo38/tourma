@@ -423,8 +423,8 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
                         m.addMatch(team1.getActivePlayers().get(k).createMatch(shuffle2.get(k), r));
                     }
                 } else {
-                    final ArrayList<ObjectRanking> coachs1 = Generation.subRanking(team1, vs);
-                    final ArrayList<ObjectRanking> coachs2 = Generation.subRanking(team2, vs);
+                    final ArrayList<ObjectRanking> coachs1 = Generation.subRanking(team1, vs,true);
+                    final ArrayList<ObjectRanking> coachs2 = Generation.subRanking(team2, vs,true);
                     for (int k = 0; k < coachs1.size(); k++) {
                         m.addMatch(((Coach) coachs1.get(k).getObject()).createMatch((Competitor) coachs2.get(k).getObject(), r));
                     }
