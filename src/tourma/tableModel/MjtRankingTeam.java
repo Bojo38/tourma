@@ -207,6 +207,7 @@ public final class MjtRankingTeam extends MjtRanking {
             ArrayList<Integer> aValue4 = new ArrayList<>();
             ArrayList<Integer> aValue5 = new ArrayList<>();
 
+            // If Team pairing
             if (t.getMatchCount() > 0) {
 
                 for (int j = 0; j <= t.getMatchCount() - 1; j++) {
@@ -264,6 +265,72 @@ public final class MjtRankingTeam extends MjtRanking {
                     }
                 }
 
+                value1 = getValueFromArray(mRankingType1, aValue1);
+                value2 = getValueFromArray(mRankingType2, aValue2);
+                value3 = getValueFromArray(mRankingType3, aValue3);
+                value4 = getValueFromArray(mRankingType4, aValue4);
+                value5 = getValueFromArray(mRankingType5, aValue5);
+
+                mDatas.add(new ObjectRanking(t, value1, value2, value3, value4, value5));
+            } // If Indiv pairing
+            else {
+                for (int k = 0; k < t.getCoachsCount(); k++) {
+                    Coach c=t.getCoach(k);
+                    for (int j = 0; j <= c.getMatchCount() - 1; j++) {
+
+                        final CoachMatch cm = (CoachMatch) c.getMatch(j);
+                        if (!cm.isValues_computed()) {
+                            cm.recomputeValues();
+                        }
+                        boolean bFound = false;
+                        for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
+                            final Round r = rounds.get(l);
+                            if (r.containsMatch(cm)) {
+                                bFound = true;
+                            }
+                        }
+                        // test if match is in round
+
+                        if (bFound) {
+                            aValue1.add(cm.getValue(1, c));
+                            aValue2.add(cm.getValue(2, c));
+                            aValue3.add(cm.getValue(3, c));
+                            aValue4.add(cm.getValue(4, c));
+                            aValue5.add(cm.getValue(5, c));
+                        }
+
+                    }
+                    if (Tournament.getTournament().getParams().isUseBestResultTeam()) {
+                        while (aValue1.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                            removeMinValue(aValue1);
+                        }
+                        while (aValue2.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                            removeMinValue(aValue2);
+                        }
+                        while (aValue3.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                            removeMinValue(aValue3);
+                        }
+                        while (aValue4.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                            removeMinValue(aValue4);
+                        }
+                        while (aValue5.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
+                            removeMinValue(aValue5);
+                        }
+                    } else {
+                        if (Tournament.getTournament().getParams().isExceptBestAndWorstTeam()) {
+                            removeMinValue(aValue1);
+                            removeMinValue(aValue2);
+                            removeMinValue(aValue3);
+                            removeMinValue(aValue4);
+                            removeMinValue(aValue5);
+                            removeMaxValue(aValue1);
+                            removeMaxValue(aValue2);
+                            removeMaxValue(aValue3);
+                            removeMaxValue(aValue4);
+                            removeMaxValue(aValue5);
+                        }
+                    }
+                }
                 value1 = getValueFromArray(mRankingType1, aValue1);
                 value2 = getValueFromArray(mRankingType2, aValue2);
                 value3 = getValueFromArray(mRankingType3, aValue3);
