@@ -1,0 +1,189 @@
+<Tournament Version="3" RoundRobin="false">
+  <Description />
+  <Roster Name="Amazones" />
+  <Roster Name="Bas-fonds" />
+  <Roster Name="Chaos" />
+  <Roster Name="Elfes" />
+  <Roster Name="Elfes sylvains" />
+  <Roster Name="Elfes noirs" />
+  <Roster Name="Gobelins" />
+  <Roster Name="Halflings" />
+  <Roster Name="Haut-Elfes" />
+  <Roster Name="Hommes-Lézards" />
+  <Roster Name="Humains" />
+  <Roster Name="Khemri" />
+  <Roster Name="Démons de Khorne" />
+  <Roster Name="Morts-Vivants" />
+  <Roster Name="Nains" />
+  <Roster Name="Nains du chaos" />
+  <Roster Name="Necromantiques" />
+  <Roster Name="Nordiques" />
+  <Roster Name="Pourris de Nurgle" />
+  <Roster Name="Ogres" />
+  <Roster Name="Orques" />
+  <Roster Name="Pacte Chaotique" />
+  <Roster Name="Skavens" />
+  <Roster Name="Slanns" />
+  <Roster Name="Vampires" />
+  <Roster Name="Bretonniens" />
+  <Parameters Organizer="MBBC" Name="BDV 2017" Date="11/07/2017 10:12:07" Place="BDV 2017" Victory="30000" Large_Victory="1000" Draw="10000" Lost="0" Refused="0" Conceeded="0" Little_Lost="5000" Victory_Team="1000" Draw_Team="400" Lost_Team="0" Large_Victory_Gap="3" Little_Lost_Gap="1" Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Rank1_Team="1" Rank2_Team="7" Rank3_Team="0" Rank4_Team="0" Rank5_Team="0" ByTeam="true" TeamMates="4" TeamPairing="1" TeamIndivPairing="1" TeamVictoryPoints="10000" TeamDrawPoints="5000" TeamVictoryOnly="false" GroupEnable="false" Substitutes="false" GameType="1" ActvateClans="true" AvoidFirstMatch="true" AvoidMatch="false" ClanTeammatesNumber="3" MultiRoster="false" IndivBalanced="false" TeamBalanced="false" Portugal="false" Color="true" UseImage="false" UseLargeVictory="false" UseLittleLost="true" TableBonus="false" TableBonusPerRound="false" TableBonusCoef="1.0" UseBestResultIndiv="false" UseBestResultTeam="false" BestResultIndiv="5" BestReasultTeam="5" ApplyToAnnexTeam="false" ApplyToAnnexIndiv="false" ExceptBestAndWorstIndiv="false" ExceptBestAndWorstTeam="false" WebEdit="false" Web_port="80" WebColor1="-6710887" WebColor="-4473925" WebForeColor="-1" WebBorderColor="-13421773">
+    <Criteria Criteria="Touchdowns" Accronyme="Tds" PointsFor="3" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+    <Criteria Criteria="Sorties" Accronyme="Sor" PointsFor="2" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+    <Criteria Criteria="Aggressions" Accronyme="Aggr" PointsFor="2" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+  </Parameters>
+  <Clan Name="Aucun" />
+  <Clan Name="Occitanie" />
+  <Clan Name="Auvergne Rhône Alpes" />
+  <Category Name="Aucun" />
+  <Group Name="Aucun">
+    <Roster Name="Amazones" />
+    <Roster Name="Bas-fonds" />
+    <Roster Name="Chaos" />
+    <Roster Name="Elfes" />
+    <Roster Name="Elfes sylvains" />
+    <Roster Name="Elfes noirs" />
+    <Roster Name="Gobelins" />
+    <Roster Name="Halflings" />
+    <Roster Name="Haut-Elfes" />
+    <Roster Name="Hommes-Lézards" />
+    <Roster Name="Humains" />
+    <Roster Name="Khemri" />
+    <Roster Name="Démons de Khorne" />
+    <Roster Name="Morts-Vivants" />
+    <Roster Name="Nains" />
+    <Roster Name="Nains du chaos" />
+    <Roster Name="Necromantiques" />
+    <Roster Name="Nordiques" />
+    <Roster Name="Pourris de Nurgle" />
+    <Roster Name="Ogres" />
+    <Roster Name="Orques" />
+    <Roster Name="Pacte Chaotique" />
+    <Roster Name="Skavens" />
+    <Roster Name="Slanns" />
+    <Roster Name="Vampires" />
+    <Roster Name="Bretonniens" />
+  </Group>
+  <GroupModifierPoints Name="Aucun">
+    <Group Name="Aucun" Victory="0" Draw="0" Lost="0" />
+  </GroupModifierPoints>
+  <Coach Name="Sran" Team="Sran team" Roster="Morts-Vivants" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Obsidian" Team="Obsidian team" Roster="Elfes" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Pilaf" Team="Pilaf" Roster="Gobelins" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Petit Lutin" Team="Petit Lutin Team" Roster="Pourris de Nurgle" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Benny" Team="Benny team" Roster="Orques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Tristelune" Team="Tristelune team" Roster="Necromantiques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Reqqy" Team="New Coach 8 team" Roster="Hommes-Lézards" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="lord_bojo" Team="New Coach 10 team" Roster="Elfes sylvains" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Cyrlesire" Team="Cyrlesire team" Roster="Elfes sylvains" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Paul Poot" Team="New Coach 10 team" Roster="Hommes-Lézards" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Loamelas" Team="New Coach 12 team" Roster="Orques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Zom" Team="New Coach 14 team" Roster="Humains" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="aegnor" Team="aegnor team" Roster="Necromantiques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Duckynator" Team="New Coach 14 team" Roster="Elfes" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="LuLu" Team="New Coach 16 team" Roster="Orques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="OeilCendre" Team="New Coach 18 team" Roster="Hommes-Lézards" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="magikmoon" Team="magikmoon team" Roster="Pourris de Nurgle" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Lord'Hur" Team="New Coach 18 team" Roster="Humains" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Tulkas" Team="New Coach 20 team" Roster="Elfes noirs" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Baron Von Mickus" Team="New Coach 22 team" Roster="Gobelins" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Shuran" Team="Shuran team" Roster="Necromantiques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="FXIII" Team="New Coach 22 team" Roster="Orques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Galladur" Team="New Coach 24 team" Roster="Hommes-Lézards" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="BiereForever" Team="New Coach 26 team" Roster="Nordiques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Darth Mael" Team="Darth Mael team" Roster="Bas-fonds" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="G16" Team="New Coach 26 team" Roster="Elfes noirs" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Silkoun" Team="New Coach 28 team" Roster="Humains" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Hely" Team="New Coach 30 team" Roster="Necromantiques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Wazz" Team="Wazz team" Roster="Elfes" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Kalmet" Team="New Coach 30 team" Roster="Nains" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="buldogr" Team="New Coach 32 team" Roster="Halflings" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Quizz" Team="New Coach 34 team" Roster="Vampires" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Fredao" Team="BuldogrFredao team" Roster="Skavens" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Obelix" Team="New Coach 34 team" Roster="Orques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Yanno" Team="New Coach 36 team" Roster="Bas-fonds" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Pershum" Team="New Coach 38 team" Roster="Gobelins" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Mr Creed" Team="Mr Creed team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Tolm" Team="New Coach 38 team" Roster="Elfes sylvains" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Kara" Team="New Coach 40 team" Roster="Nains du chaos" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Arley" Team="New Coach 42 team" Roster="Nains" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Leto" Team="Leto team" Roster="Morts-Vivants" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="pOp" Team="New Coach 42 team" Roster="Halflings" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="sigval" Team="New Coach 44 team" Roster="Gobelins" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Ghost" Team="New Coach 46 team" Roster="Orques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Rascal" Team="Rascal team" Roster="Nordiques" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="P'tit jaune" Team="New Coach 46 team" Roster="Gobelins" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Zeus" Team="New Coach 48 team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Coach Name="Ulfwerner" Team="New Coach 50 team" Roster="Khemri" NAF="0" Rank="0" Clan="Aucun" Active="true" Handicap="0" />
+  <Team Name="Sran League" Clan="Auvergne Rhône Alpes">
+    <Coach Name="Sran" />
+    <Coach Name="Obsidian" />
+    <Coach Name="Pilaf" />
+    <Coach Name="Petit Lutin" />
+  </Team>
+  <Team Name="Bolkon 1" Clan="Auvergne Rhône Alpes">
+    <Coach Name="Benny" />
+    <Coach Name="Tristelune" />
+    <Coach Name="Reqqy" />
+    <Coach Name="lord_bojo" />
+  </Team>
+  <Team Name="Bolkon 2" Clan="Auvergne Rhône Alpes">
+    <Coach Name="Cyrlesire" />
+    <Coach Name="Paul Poot" />
+    <Coach Name="Loamelas" />
+    <Coach Name="Zom" />
+  </Team>
+  <Team Name="GBLR" Clan="Auvergne Rhône Alpes">
+    <Coach Name="aegnor" />
+    <Coach Name="Duckynator" />
+    <Coach Name="LuLu" />
+    <Coach Name="OeilCendre" />
+  </Team>
+  <Team Name="Spartak" Clan="Auvergne Rhône Alpes">
+    <Coach Name="magikmoon" />
+    <Coach Name="Lord'Hur" />
+    <Coach Name="Tulkas" />
+    <Coach Name="Baron Von Mickus" />
+  </Team>
+  <Team Name="Azes 1" Clan="Occitanie">
+    <Coach Name="Shuran" />
+    <Coach Name="FXIII" />
+    <Coach Name="Galladur" />
+    <Coach Name="BiereForever" />
+  </Team>
+  <Team Name="Azes 2" Clan="Occitanie">
+    <Coach Name="Darth Mael" />
+    <Coach Name="G16" />
+    <Coach Name="Silkoun" />
+    <Coach Name="Hely" />
+  </Team>
+  <Team Name="Les Mercos" Clan="Aucun">
+    <Coach Name="Wazz" />
+    <Coach Name="Kalmet" />
+    <Coach Name="buldogr" />
+    <Coach Name="Quizz" />
+  </Team>
+  <Team Name="AinPacte" Clan="Auvergne Rhône Alpes">
+    <Coach Name="Fredao" />
+    <Coach Name="Obelix" />
+    <Coach Name="Yanno" />
+    <Coach Name="Pershum" />
+  </Team>
+  <Team Name="Rock and block connection" Clan="Occitanie">
+    <Coach Name="Mr Creed" />
+    <Coach Name="Tolm" />
+    <Coach Name="Kara" />
+    <Coach Name="Arley" />
+  </Team>
+  <Team Name="Arverngers" Clan="Auvergne Rhône Alpes">
+    <Coach Name="Leto" />
+    <Coach Name="pOp" />
+    <Coach Name="sigval" />
+    <Coach Name="Ghost" />
+  </Team>
+  <Team Name="Mercenaires" Clan="Aucun">
+    <Coach Name="Rascal" />
+    <Coach Name="P'tit jaune" />
+    <Coach Name="Zeus" />
+    <Coach Name="Ulfwerner" />
+  </Team>
+</Tournament>

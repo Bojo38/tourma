@@ -37,6 +37,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
@@ -70,6 +71,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import net.java.dev.colorchooser.ColorChooser;
+import org.apache.commons.net.ftp.FTPClient;
 import org.jfree.ui.tabbedui.VerticalLayout;
 import teamma.data.LRB;
 import teamma.views.JdgRoster;
@@ -99,7 +101,7 @@ import tourma.utils.display.TMultiServer;
 import tourma.utils.web.WebServer;
 import tourma.views.JPNCup;
 import tourma.views.JPNStatistics;
-import tourma.views.JdgPrintLabel;
+import tourma.views.report.JdgPrintLabel;
 import tourma.views.fullscreen.JFullScreen;
 import tourma.views.fullscreen.JFullScreenClanRank;
 import tourma.views.fullscreen.JFullScreenClanTeamAnnex;
@@ -115,7 +117,7 @@ import tourma.views.round.JPNRound;
 import tourma.views.system.JdgAbout;
 import tourma.views.system.JdgOnlineHelp;
 import tourma.views.system.JdgRevisions;
-
+import tourma.utils.NafTask;
 /**
  *
  * @author Frederic Berger
@@ -359,6 +361,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jcxUseImage = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
+        jSeparator20 = new javax.swing.JPopupMenu.Separator();
+        jmiMassAdd = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jmiSubstitutePlayer = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
@@ -598,6 +602,16 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jmiGenerateFirstRound);
+        jmnParameters.add(jSeparator20);
+
+        jmiMassAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jmiMassAdd.setText(bundle.getString("MassAdd")); // NOI18N
+        jmiMassAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiMassAddActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiMassAdd);
         jmnParameters.add(jSeparator6);
 
         jmiSubstitutePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png"))); // NOI18N
@@ -1417,6 +1431,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private static final String CS_Pools = "POULES";
     private static final String CS_FreeRound = "FREE_ROUND";
     private static final String CS_NafRanking = "NAF_RANK";
+    private static final String CS_NafRankingAvg = "NAF_RANK_AVG";
     private static final String CS_RandomAndBalancing = "RandomAndBalancing";
     private static final String CS_Generation = "GÉNÉRATION";
     private static final String CS_ChooseGenerationMethod = "CHOISISSEZ LA MÉTHODE DE GÉNÉRATION: ";
@@ -1481,6 +1496,13 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                      */
                     labels.add(Translate.translate(CS_FreeRound));
                     Options.add(Generation.GEN_FREE);
+
+                    
+                    /**
+                     * Naf Ranking
+                     */
+                    labels.add(Translate.translate(CS_NafRankingAvg));
+                    Options.add(Generation.GEN_NAF_AVG);
 
                     /*
                     OPTION NON CONCLUANTE
@@ -1600,7 +1622,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 Tournament.getTournament().getCoachsCount());
         progressMonitor.setProgress(0);
 
-        task = new NafTask();
+        task = new NafTask(progressMonitor);
         task.addPropertyChangeListener(this);
         task.execute();
 
@@ -2910,10 +2932,29 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void jmiExportWebServerToSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportWebServerToSiteActionPerformed
         // First this function will generate in a temporary directory
         // all the possible web pages
+        FTPClient client=new FTPClient();
+        try
+        {
+        client.connect("ftp.ainpacte.org");
+        System.out.println("Connected to " + server + ".");
+        System.out.println(client.getReplyString());
+        System.out.println(client.getReplyCode());
+        client.login("ainpacte","Lancie69");
+        }
+        catch ( IOException ex)
+        {
+            System.out.println(ex.getLocalizedMessage());
+            ex.printStackTrace();
+        }
 
         // Then it will connect to remote site (FTP or SFTP)
         // and copy the files.
     }//GEN-LAST:event_jmiExportWebServerToSiteActionPerformed
+
+    private void jmiMassAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMassAddActionPerformed
+        JdgMassAdd jdg=new JdgMassAdd(this, true);
+        jdg.setVisible(true);
+    }//GEN-LAST:event_jmiMassAddActionPerformed
 
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
@@ -2927,43 +2968,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     private static final String CS_Download = "Download";
 
-    class NafTask extends SwingWorker<Void, Void> {
-
-        @Override
-        public Void doInBackground() {
-
-            setProgress(0);
-            try {
-                Thread.sleep(100);
-
-                for (int i = 0; (i < Tournament.getTournament().getCoachsCount()) && (!isCancelled()); i++) {
-                    Coach c = Tournament.getTournament().getCoach(i);
-                    progressMonitor.setNote(
-                            Translate.translate(CS_Download)
-                            + " " + c.getName());
-                    c.setNafRank(NAF.getRanking(c.getName(), c));
-                    progressMonitor.setProgress(i + 1);
-                }
-
-            } catch (InterruptedException ignore) {
-            }
-            return null;
-        }
-
-        @Override
-        public void done() {
-            Toolkit.getDefaultToolkit().beep();
-
-            progressMonitor.setProgress(0);
-            progressMonitor.close();
-
-            if (jpnContent instanceof JPNParameters) {
-                ((JPNParameters) jpnContent).update();
-            }
-        }
-
-    }
-
+    
     private static final String CS_NewGame = "NewGame";
     private static final String CS_Open = "Open";
     private static final String CS_UseRosterEditor = "UseRosterEditor";
@@ -3391,6 +3396,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JPopupMenu.Separator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator20;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
@@ -3451,6 +3457,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiGenerateFirstRound;
     private javax.swing.JMenuItem jmiGenerateNextRound;
     private javax.swing.JMenuItem jmiIndivReport;
+    private javax.swing.JMenuItem jmiMassAdd;
     private javax.swing.JMenuItem jmiNafLoad;
     private javax.swing.JMenuItem jmiNouveau;
     private javax.swing.JMenuItem jmiPrintLabels;

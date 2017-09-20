@@ -19,6 +19,9 @@ import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.Match;
+import tourma.data.Round;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
@@ -314,10 +317,11 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
     @Override
     public void setValueAt(final Object value, final int row, final int col) {
+        final CoachMatch m = mMatchs.get(row);
         if (value != null) {
             Value val;
             String tmp = value.toString();
-            final CoachMatch m = mMatchs.get(row);
+
             if (mTeamTournament) {
                 switch (col) {
                     case 3:
@@ -373,8 +377,33 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                 }
             }
-            m.resetWL();
-            m.recomputeValues();
+
+        }
+        m.resetWL();
+        m.recomputeValues();
+
+        if (mTeamTournament) {
+            for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+                Round r = Tournament.getTournament().getRound(i);
+                for (int j = 0; j < r.getMatchsCount(); j++) {
+                    Match match=r.getMatch(j);
+                    if (match instanceof TeamMatch)
+                    {
+                        for (int k=0; k<((TeamMatch) match).getMatchCount(); k++)
+                        {
+                            if (((TeamMatch)match).containsMatch(m))
+                            {
+                                ((TeamMatch)match).resetWL();
+                                ((TeamMatch)match).recomputeValues();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
         }
         fireTableDataChanged();
         MainFrame.getMainFrame().updateMenus();

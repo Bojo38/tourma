@@ -159,6 +159,8 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
      */
     private Clan mClan;
 
+    protected boolean _naf_avg=false;
+    
     /**
      * Default constructor
      */
@@ -407,4 +409,9 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         return mMatchs.contains(m);
     }
 
+    
+    public void enableNafAvg(boolean avg)
+    {
+        _naf_avg=avg;
+    }
 }

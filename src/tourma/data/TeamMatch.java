@@ -722,10 +722,12 @@ public class TeamMatch extends Match implements Serializable {
         int i = 0;
         int victories = 0;
         int loss = 0;
-        boolean matchFound = false;
+        int draw = 0;
+
         for (int j = 0; j < t.getCoachsCount(); j++) {
             final Coach c = t.getCoach(j);
-            for (i = 0;(i < c.getMatchCount())&&(!matchFound); i++) {
+            boolean matchFound = false;
+            for (i = 0; (i < c.getMatchCount()) && (!matchFound); i++) {
                 final CoachMatch m = (CoachMatch) c.getMatch(i);
                 if (tm != null) {
                     if (tm.containsMatch(m)) {
@@ -735,20 +737,36 @@ public class TeamMatch extends Match implements Serializable {
                         if (m.getCompetitor1() == c) {
                             if (val.getValue1() > val.getValue2()) {
                                 victories++;
-                            } else if (val.getValue1() < val.getValue2()) {
-                                loss++;
+                            } else {
+                                if (val.getValue1() < val.getValue2()) {
+                                    loss++;
+                                } else {
+                                    draw++;
+                                }
                             }
-                        } else if (val.getValue1() < val.getValue2()) {
-                            victories++;
-                        } else if (val.getValue1() > val.getValue2()) {
-                            loss++;
+                        } else {
+                            if (val.getValue1() < val.getValue2()) {
+                                victories++;
+                            } else {
+                                if (val.getValue1() > val.getValue2()) {
+                                    loss++;
+                                } else {
+                                    draw++;
+                                }
+                            }
                         }
                         if (withBonus) {
                             int bonus = 0;
                             for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
                                 final Criteria criteria = Tournament.getTournament().getParams().getCriteria(k);
-                                bonus += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamFor();
-                                bonus += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamAgainst();
+                                if (m.getCompetitor1() == c) {
+                                    bonus += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamFor();
+                                    bonus += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamAgainst();
+                                }
+                                if (m.getCompetitor2() == c) {
+                                    bonus += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamFor();
+                                    bonus += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamAgainst();
+                                }
                             }
                             if (Tournament.getTournament().getParams().isTableBonus()) {
                                 double coef = Tournament.getTournament().getParams().getTableBonusCoef();
@@ -778,22 +796,17 @@ public class TeamMatch extends Match implements Serializable {
                     System.err.println("Error detected, Team is null");
                 }
             }
+        }
 
+        if (victories > loss) {
+            countTeamVictories++;
+        } else if (victories < loss) {
+            countTeamLoss++;
+        } else {
+            countTeamDraw++;
         }
-        if (matchFound) {
-            if (victories > loss) {
-                countTeamVictories++;
-            } else if (victories < loss) {
-                countTeamLoss++;
-            } else {
-                countTeamDraw++;
-            }
-        }
-        matchFound = false;
-        victories = 0;
-        loss = 0;
-        /* i++;
-        }*/
+
+        //i++;
         if (withMainPoints) {
             value += countTeamVictories * Tournament.getTournament().getParams().getPointsTeamVictory();
             value += countTeamLoss * Tournament.getTournament().getParams().getPointsTeamLost();
@@ -897,29 +910,33 @@ public class TeamMatch extends Match implements Serializable {
 
         for (int j = 0; j < t.getCoachsCount(); j++) {
             matchFound = false;
+            i = 0;
             final Coach c = t.getCoach(j);
-            if (c.getMatchCount() > i) {
-                final CoachMatch m = (CoachMatch) c.getMatch(i);
-                if (includeCurrent && tm.containsMatch(m)) {
-                    matchFound = true;
-                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
-                    final Value val = m.getValue(crit);
-                    if (m.getCompetitor1() == c) {
-                        if (val.getValue1() > val.getValue2()) {
-                            victories++;
-                        } else if (val.getValue1() < val.getValue2()) {
-                            loss++;
+            while (i < c.getMatchCount()) {
+                if (c.getMatchCount() > i) {
+                    final CoachMatch m = (CoachMatch) c.getMatch(i);
+                    if (includeCurrent && tm.containsMatch(m)) {
+                        matchFound = true;
+                        final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+                        final Value val = m.getValue(crit);
+                        if (m.getCompetitor1() == c) {
+                            if (val.getValue1() > val.getValue2()) {
+                                victories++;
+                            } else if (val.getValue1() < val.getValue2()) {
+                                loss++;
+                            }
+                        } else {
+                            if (val.getValue1() < val.getValue2()) {
+                                victories++;
+                            } else if (val.getValue1() > val.getValue2()) {
+                                loss++;
+                            }
                         }
-                    } else {
-                        if (val.getValue1() < val.getValue2()) {
-                            victories++;
-                        } else if (val.getValue1() > val.getValue2()) {
-                            loss++;
-                        }
-                    }
-                } else {
-                    System.out.println("Match not found !!");
+                    } /*else {
+                        System.out.println("Match not found !! " + tm.getCompetitor1().getName() + "vs  " + tm.getCompetitor2().getName() + " for " + c.getName());
+                    }*/
                 }
+                i++;
             }
         }
         if (matchFound) {
@@ -930,9 +947,9 @@ public class TeamMatch extends Match implements Serializable {
             } else {
                 countTeamDraw++;
             }
-        } else {
+        } /*else {
             System.out.println("Match not found ????");
-        }
+        }*/
         /*  i++;
         }*/
 
@@ -1232,6 +1249,7 @@ public class TeamMatch extends Match implements Serializable {
         this.c2value4 = recomputeValue(4, mCompetitor2);
         this.c1value5 = recomputeValue(5, mCompetitor1);
         this.c2value5 = recomputeValue(5, mCompetitor2);
+        values_computed=true;
     }
 
     protected int recomputeValue(int index, Competitor c) {
