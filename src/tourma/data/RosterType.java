@@ -122,6 +122,7 @@ public class RosterType implements IXMLExport, Serializable {
         mRostersNames.clear();
         mRostersNames.add(translate("AmazonKey"));
         mRostersNames.add(translate("UnderworldKey"));
+        mRostersNames.add(translate("BretonianKey"));
         mRostersNames.add(translate("ChaosKey"));
         mRostersNames.add(translate("ElfKey"));
         mRostersNames.add(translate("WoodElfKey"));
@@ -150,6 +151,7 @@ public class RosterType implements IXMLExport, Serializable {
         mRosterTypes.clear();
         mRosterTypes.put(translate("AmazonKey"), new RosterType(translate("AmazonKey")));
         mRosterTypes.put(translate("UnderworldKey"), new RosterType(translate("UnderworldKey")));
+        mRosterTypes.put(translate("BretonianKey"), new RosterType(translate("BretonianKey")));
         mRosterTypes.put(translate("ChaosKey"), new RosterType(translate("ChaosKey")));
         mRosterTypes.put(translate("ElfKey"), new RosterType(translate("ElfKey")));
         mRosterTypes.put(translate("WoodElfKey"), new RosterType(translate("WoodElfKey")));
@@ -247,6 +249,9 @@ public class RosterType implements IXMLExport, Serializable {
                 break;
             case "Bas-Fonds":
                 result = translate("UnderworldKey");
+                break;
+            case "Bretonniens":
+                result=translate("BretonianKey");
                 break;
             case "Chaos":
                 result = translate("ChaosKey");
@@ -437,6 +442,9 @@ public class RosterType implements IXMLExport, Serializable {
         }
         if (translate("UnderworldKey").equals(source)) {
             result = translate("UNDERWORLD");
+        }
+        if (translate("BretonianKey").equals(source)) {
+            result=translate("BRETONNIANS");
         }
         if (translate("ChaosKey").equals(source)) {
             result = translate("CHAOS");
