@@ -230,7 +230,7 @@ public class WebMatchResult {
                     String crit2 = parms.get(crit.getName() + "2");
 
                     Value val = coachmatch.getValue(crit);
-
+                    coachmatch.setRemotely(true);
                     int val1 = 0;
                     if (crit1 != null) {
                         try {
@@ -251,7 +251,7 @@ public class WebMatchResult {
                     }
                     val.setValue2(val2);
                 }
-
+                
                 MainFrame.getMainFrame().update();
             }
 

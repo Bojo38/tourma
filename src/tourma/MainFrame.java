@@ -1419,6 +1419,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         }
 
+        
         return valid;
     }
 
@@ -1851,6 +1852,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private final static String CS_SwissRound = "RONDE SUISSE";
     private final static String CS_AcceleratedSwissRound = "RONDE SUISSE ACCELERÉE";
     private final static String CS_Animation = "Animation";
+    
+    private final static String CS_Confirm = "CONFIRM";
+    private final static String CS_WebMacthNotChecked = "WEB_MATCHES_NOT_CONFIRMED";
 
     private void jmiGenerateNextRoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiGenerateNextRoundActionPerformed
 
@@ -1862,6 +1866,24 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                 JPNRound jpnr = (JPNRound) jpnContent;
                 Round round = jpnr.getRound();
+                
+                int remote=0;
+                for (CoachMatch cm:round.getCoachMatchs())
+                {
+                    if (cm.isRemotely())
+                    {
+                        remote++;
+                    }
+                }
+                if (remote>0)
+                {
+                    int res=JOptionPane.showConfirmDialog(this, Translate.translate(CS_WebMacthNotChecked),Translate.translate(CS_Confirm),JOptionPane.OK_CANCEL_OPTION);
+                            if (res==JOptionPane.CANCEL_OPTION)
+                            {
+                                return;
+                            }
+                }
+                
                 int round_number = mTournament.getRoundIndex(round);
 
                 /**
