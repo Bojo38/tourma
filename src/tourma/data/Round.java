@@ -452,8 +452,10 @@ public class Round implements IXMLExport, Serializable {
         while (k.hasNext()) {
             final Element match = k.next();
             Match m;
-            if ((Tournament.getTournament().getParams().isTeamTournament())
-                    && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+            boolean teamTour=Tournament.getTournament().getParams().isTeamTournament();
+            ETeamPairing pairing=Tournament.getTournament().getParams().getTeamPairing();
+            if (teamTour
+                    && ( pairing== ETeamPairing.TEAM_PAIRING)) {
                 m = new TeamMatch(this);
             } else {
                 m = new CoachMatch(this);
