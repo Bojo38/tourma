@@ -134,10 +134,26 @@ public final class MjtRankingTeam extends MjtRanking {
         }
 
         if (nbVictory > nbLost) {
-            value += Tournament.getTournament().getParams().getPointsTeamVictory();
+            if (Tournament.getTournament().getParams().isUseLargeVictory()) {
+                if (nbVictory - nbLost >= Tournament.getTournament().getParams().getGapTeamLargeVictory()) {
+                    value += Tournament.getTournament().getParams().getPointsTeamLargeVictory();
+                } else {
+                    value += Tournament.getTournament().getParams().getPointsTeamVictory();
+                }
+            } else {
+                value += Tournament.getTournament().getParams().getPointsTeamVictory();
+            }
         } else {
             if (nbVictory < nbLost) {
-                value += Tournament.getTournament().getParams().getPointsTeamLost();
+                if (Tournament.getTournament().getParams().isUseLittleLoss()) {
+                    if (nbLost-nbVictory <= Tournament.getTournament().getParams().getGapTeamLittleLost()) {
+                        value += Tournament.getTournament().getParams().getPointsTeamLittleLost();
+                    } else {
+                        value += Tournament.getTournament().getParams().getPointsTeamLost();
+                    }
+                } else {
+                    value += Tournament.getTournament().getParams().getPointsTeamLost();
+                }
             } else {
                 value += Tournament.getTournament().getParams().getPointsTeamDraw();
             }
@@ -275,7 +291,7 @@ public final class MjtRankingTeam extends MjtRanking {
             } // If Indiv pairing
             else {
                 for (int k = 0; k < t.getCoachsCount(); k++) {
-                    Coach c=t.getCoach(k);
+                    Coach c = t.getCoach(k);
                     for (int j = 0; j <= c.getMatchCount() - 1; j++) {
 
                         final CoachMatch cm = (CoachMatch) c.getMatch(j);

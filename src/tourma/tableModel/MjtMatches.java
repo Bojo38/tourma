@@ -379,6 +379,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             }
 
         }
+        m.setRemotely(false);
         m.resetWL();
         m.recomputeValues();
 
@@ -405,6 +406,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 }
             }
         }
+        
         fireTableDataChanged();
         MainFrame.getMainFrame().updateMenus();
 
@@ -784,6 +786,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             }
                         }
                 }
+            }
+            if (m.isRemotely())
+            {
+                frg=Color.BLUE;
             }
         }
 

@@ -31,6 +31,16 @@ public class CoachMatch extends Match implements Serializable {
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
 
+    protected boolean remotely=false;
+
+    public boolean isRemotely() {
+        return remotely;
+    }
+
+    public void setRemotely(boolean isRemotely) {
+        this.remotely = isRemotely;
+    }
+    
     public int getUID() {
         return UID;
     }

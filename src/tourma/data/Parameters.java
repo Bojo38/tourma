@@ -31,8 +31,8 @@ import tourma.utility.StringConstants;
  */
 public class Parameters implements IXMLExport, Serializable {
 
-        protected static AtomicInteger sGenUID=new AtomicInteger(0);
-    protected int UID=sGenUID.incrementAndGet();
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
 
     public int getUID() {
         return UID;
@@ -42,122 +42,109 @@ public class Parameters implements IXMLExport, Serializable {
         this.UID = UID;
     }
 
-    public Criteria getCriteria(String name)
-    {
-        for (Criteria criteria: mCriterias)
-        {
-            if(criteria.getName().equals(name))
-            {
+    public Criteria getCriteria(String name) {
+        for (Criteria criteria : mCriterias) {
+            if (criteria.getName().equals(name)) {
                 return criteria;
             }
         }
         return null;
     }
-    
-    public void pull(Parameters params)
-    {
-        this.UID=params.UID;
-        this._webport=params._webport;
-        this.mApplyToAnnexIndiv=params.mApplyToAnnexIndiv;
-        this.mApplyToAnnexTeam=params.mApplyToAnnexTeam;
-        this.mAvoidClansFirstMatch=params.mAvoidClansFirstMatch;
-        this.mAvoidClansMatch=params.mAvoidClansMatch;
-        this.mBestResultsIndiv=params.mBestResultsIndiv;
-        this.mBestResultsTeam=params.mBestResultsTeam;
-        this.mBorderColor=params.mBorderColor;
-        this.mClansMembersNumber=params.mClansMembersNumber;
-        this.mColor1=params.mColor1;
-        this.mColor2=params.mColor2;
-        
-        
-        
+
+    public void pull(Parameters params) {
+        this.UID = params.UID;
+        this._webport = params._webport;
+        this.mApplyToAnnexIndiv = params.mApplyToAnnexIndiv;
+        this.mApplyToAnnexTeam = params.mApplyToAnnexTeam;
+        this.mAvoidClansFirstMatch = params.mAvoidClansFirstMatch;
+        this.mAvoidClansMatch = params.mAvoidClansMatch;
+        this.mBestResultsIndiv = params.mBestResultsIndiv;
+        this.mBestResultsTeam = params.mBestResultsTeam;
+        this.mBorderColor = params.mBorderColor;
+        this.mClansMembersNumber = params.mClansMembersNumber;
+        this.mColor1 = params.mColor1;
+        this.mColor2 = params.mColor2;
+
         //
         // loop to find crieria
-        boolean bFound=false;
-        for (int i=0; i<params.getCriteriaCount(); i++)
-        {
-            bFound=false;
-            Criteria crit=params.getCriteria(i);
-            for (Criteria c:mCriterias)
-            {
-                if ((crit.getUID()==c.UID)||(crit.getName().equals(c.getName())))
-                {
-                    bFound=true;
+        boolean bFound = false;
+        for (int i = 0; i < params.getCriteriaCount(); i++) {
+            bFound = false;
+            Criteria crit = params.getCriteria(i);
+            for (Criteria c : mCriterias) {
+                if ((crit.getUID() == c.UID) || (crit.getName().equals(c.getName()))) {
+                    bFound = true;
                     c.pull(crit);
                 }
             }
-            if (!bFound)
-            {
-                Criteria c=new Criteria(crit.getName());
+            if (!bFound) {
+                Criteria c = new Criteria(crit.getName());
                 c.pull(crit);
                 mCriterias.add(c);
             }
         }
-        
-        this.mDate=params.mDate;
-        this.mEnableClans=params.mEnableClans;
-        this.mExceptBestAndWorstIndiv=params.mExceptBestAndWorstIndiv;
-        this.mExceptBestAndWorstTeam=params.mExceptBestAndWorstTeam;
-        this.mForeColor=params.mForeColor;
-        this.mGame=params.mGame;
-        this.mGapLargeVictory=params.mGapLargeVictory;
-        this.mGapLittleLost=params.mGapLittleLost;
-        this.mGroupsEnable=params.mGroupsEnable;
-        this.mIndivPairingIndivBalanced=params.mIndivPairingIndivBalanced;
-        this.mIndivPairingTeamBalanced=params.mIndivPairingTeamBalanced;
-        this.mMultiRoster=params.mMultiRoster;
-        this.mPlace=params.mPlace;
-        this.mPointsConcedeed=params.mPointsConcedeed;
-        this.mPointsIndivDraw=params.mPointsIndivDraw;
-        this.mPointsIndivLargeVictory=params.mPointsIndivLargeVictory;
-        this.mPointsIndivLittleLost=params.mPointsIndivLittleLost;
-        this.mPointsIndivLost=params.mPointsIndivLost;
-        this.mPointsIndivVictory=params.mPointsIndivVictory;
-        this.mPointsRefused=params.mPointsRefused;
-        this.mPointsTeamDraw=params.mPointsTeamDraw;
-        this.mPointsTeamDrawBonus=params.mPointsTeamDrawBonus;
-        this.mPointsTeamLost=params.mPointsTeamLost;
-        this.mPointsTeamVictory=params.mPointsTeamVictory;
-        this.mPointsTeamVictoryBonus=params.mPointsTeamVictoryBonus;
-        this.mPortugal=params.mPortugal;
-        
-        this.mRankingIndiv1=params.mRankingIndiv1;
-        this.mRankingIndiv2=params.mRankingIndiv2;
-        this.mRankingIndiv3=params.mRankingIndiv3;
-        this.mRankingIndiv4=params.mRankingIndiv4;
-        this.mRankingIndiv5=params.mRankingIndiv5;
-        
-        this.mRankingTeam1=params.mRankingTeam1;
-        this.mRankingTeam2=params.mRankingTeam2;
-        this.mRankingTeam3=params.mRankingTeam3;
-        this.mRankingTeam4=params.mRankingTeam4;
-        this.mRankingTeam5=params.mRankingTeam5;
-        
-        
-        this.mSubstitutes=params.mSubstitutes;
-        this.mTableBonus=params.mTableBonus;
-        this.mTableBonusCoef=params.mTableBonusCoef;
-        this.mTableBonusPerRound=params.mTableBonusPerRound;
-        this.mTeamIndivPairing=params.mTeamIndivPairing;
-        this.mTeamMatesClansNumber=params.mTeamMatesClansNumber;
-        this.mTeamMatesNumber=params.mTeamMatesNumber;
-        this.mTeamPairing=params.mTeamPairing;
-        this.mTeamTournament=params.mTeamTournament;
-        this.mTeamVictoryOnly=params.mTeamVictoryOnly;
-        this.mTournamentName=params.mTournamentName;
-        this.mTournamentOrga=params.mTournamentOrga;
-        
-        this.mUseBestResultsIndiv=params.mUseBestResultsIndiv;
-        this.mUseBestResultsTeam=params.mUseBestResultsTeam;
-        this.mUseLargeVictory=params.mUseLargeVictory;
-        this.mUseLittleLoss=params.mUseLittleLoss;
-        
-        this.mWebEdit=params.mWebEdit;
-        
-        
-        
+
+        this.mDate = params.mDate;
+        this.mEnableClans = params.mEnableClans;
+        this.mExceptBestAndWorstIndiv = params.mExceptBestAndWorstIndiv;
+        this.mExceptBestAndWorstTeam = params.mExceptBestAndWorstTeam;
+        this.mForeColor = params.mForeColor;
+        this.mGame = params.mGame;
+        this.mGapLargeVictory = params.mGapLargeVictory;
+        this.mGapLittleLost = params.mGapLittleLost;
+        this.mGroupsEnable = params.mGroupsEnable;
+        this.mIndivPairingIndivBalanced = params.mIndivPairingIndivBalanced;
+        this.mIndivPairingTeamBalanced = params.mIndivPairingTeamBalanced;
+        this.mMultiRoster = params.mMultiRoster;
+        this.mPlace = params.mPlace;
+        this.mPointsConcedeed = params.mPointsConcedeed;
+        this.mPointsIndivDraw = params.mPointsIndivDraw;
+        this.mPointsIndivLargeVictory = params.mPointsIndivLargeVictory;
+        this.mPointsIndivLittleLost = params.mPointsIndivLittleLost;
+        this.mPointsIndivLost = params.mPointsIndivLost;
+        this.mPointsIndivVictory = params.mPointsIndivVictory;
+        this.mPointsRefused = params.mPointsRefused;
+        this.mPointsTeamDraw = params.mPointsTeamDraw;
+        this.mPointsTeamDrawBonus = params.mPointsTeamDrawBonus;
+        this.mPointsTeamLost = params.mPointsTeamLost;
+        this.mPointsTeamVictory = params.mPointsTeamVictory;
+        this.mPointsTeamVictoryBonus = params.mPointsTeamVictoryBonus;
+        this.mPortugal = params.mPortugal;
+
+        this.mRankingIndiv1 = params.mRankingIndiv1;
+        this.mRankingIndiv2 = params.mRankingIndiv2;
+        this.mRankingIndiv3 = params.mRankingIndiv3;
+        this.mRankingIndiv4 = params.mRankingIndiv4;
+        this.mRankingIndiv5 = params.mRankingIndiv5;
+
+        this.mRankingTeam1 = params.mRankingTeam1;
+        this.mRankingTeam2 = params.mRankingTeam2;
+        this.mRankingTeam3 = params.mRankingTeam3;
+        this.mRankingTeam4 = params.mRankingTeam4;
+        this.mRankingTeam5 = params.mRankingTeam5;
+
+        this.mSubstitutes = params.mSubstitutes;
+        this.mTableBonus = params.mTableBonus;
+        this.mTableBonusCoef = params.mTableBonusCoef;
+        this.mTableBonusPerRound = params.mTableBonusPerRound;
+        this.mTeamIndivPairing = params.mTeamIndivPairing;
+        this.mTeamMatesClansNumber = params.mTeamMatesClansNumber;
+        this.mTeamMatesNumber = params.mTeamMatesNumber;
+        this.mTeamPairing = params.mTeamPairing;
+        this.mTeamTournament = params.mTeamTournament;
+        this.mTeamVictoryOnly = params.mTeamVictoryOnly;
+        this.mTournamentName = params.mTournamentName;
+        this.mTournamentOrga = params.mTournamentOrga;
+
+        this.mUseBestResultsIndiv = params.mUseBestResultsIndiv;
+        this.mUseBestResultsTeam = params.mUseBestResultsTeam;
+        this.mUseLargeVictory = params.mUseLargeVictory;
+        this.mUseLittleLoss = params.mUseLittleLoss;
+
+        this.mWebEdit = params.mWebEdit;
+
     }
-    
+
     /**
      *
      */
@@ -238,14 +225,17 @@ public class Parameters implements IXMLExport, Serializable {
      *
      */
     private int mPointsIndivLargeVictory = 1000;
+    private int mPointsTeamLargeVictory = 1000;
     /**
      *
      */
     private boolean mUseLargeVictory = false;
+    private boolean mUseTeamLargeVictory = false;
     /**
      *
      */
     private boolean mUseLittleLoss = false;
+    private boolean mUseTeamLittleLoss = false;
 
     /**
      *
@@ -256,6 +246,7 @@ public class Parameters implements IXMLExport, Serializable {
      *
      */
     private int mPointsIndivLittleLost = 100;
+    private int mPointsTeamLittleLost = 100;
 
     /**
      *
@@ -286,11 +277,13 @@ public class Parameters implements IXMLExport, Serializable {
      *
      */
     private int mGapLargeVictory = 3;
+    private float mGapTeamLargeVictory = 3;
 
     /**
      *
      */
     private int mGapLittleLost = 1;
+    private float mGapTeamLittleLost = 1;
 
     /**
      *
@@ -598,11 +591,14 @@ public class Parameters implements IXMLExport, Serializable {
 
         params.setAttribute(StringConstants.CS_VICTORY, Integer.toString(this.getPointsIndivVictory()));
         params.setAttribute(StringConstants.CS_LARGE_VICTORY, Integer.toString(this.getPointsIndivLargeVictory()));
+
         params.setAttribute(StringConstants.CS_DRAW, Integer.toString(this.getPointsIndivDraw()));
         params.setAttribute(StringConstants.CS_LOST, Integer.toString(this.getPointsIndivLost()));
         try {
             params.setAttribute(StringConstants.CS_REFUSED, Integer.toString(this.getPointsRefused()));
             params.setAttribute(StringConstants.CS_CONCEEDED, Integer.toString(this.getPointsConcedeed()));
+            params.setAttribute(StringConstants.CS_TEAM_LARGE_VICTORY, Integer.toString(this.getPointsTeamLargeVictory()));
+            params.setAttribute(StringConstants.CS_TEAM_LITTLE_LOST, Integer.toString(this.getPointsTeamLittleLost()));
         } catch (Exception e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
@@ -615,6 +611,9 @@ public class Parameters implements IXMLExport, Serializable {
 
         params.setAttribute(StringConstants.CS_LARGE_VICTORY_GAP, Integer.toString(this.getGapLargeVictory()));
         params.setAttribute(StringConstants.CS_LITTLE_LOST_GAP, Integer.toString(this.getGapLittleLost()));
+
+        params.setAttribute(StringConstants.CS_TEAM_LARGE_VICTORY_GAP, Float.toString(this.getGapTeamLargeVictory()));
+        params.setAttribute(StringConstants.CS_TEAM_LITTLE_LOST_GAP, Float.toString(this.getGapTeamLittleLost()));
 
         params.setAttribute(StringConstants.CS_RANK + 1, Integer.toString(this.getRankingIndiv1()));
         params.setAttribute(StringConstants.CS_RANK + 2, Integer.toString(this.getRankingIndiv2()));
@@ -679,6 +678,8 @@ public class Parameters implements IXMLExport, Serializable {
 
         params.setAttribute(StringConstants.CS_USE_LARGE_VICTORY, Boolean.toString(this.isUseLargeVictory()));
         params.setAttribute(StringConstants.CS_USE_LITTLE_LOST, Boolean.toString(this.isUseLittleLoss()));
+        params.setAttribute(StringConstants.CS_USE_TEAM_LARGE_VICTORY, Boolean.toString(this.isUseTeamLargeVictory()));
+        params.setAttribute(StringConstants.CS_USE_TEAM_LITTLE_LOST, Boolean.toString(this.isUseTeamLittleLoss()));
 
         params.setAttribute(StringConstants.CS_TABLEBONUS, Boolean.toString(this.isTableBonus()));
         params.setAttribute(StringConstants.CS_TABLEBONUSPERROUND, Boolean.toString(this.isTableBonusPerRound()));
@@ -721,11 +722,16 @@ public class Parameters implements IXMLExport, Serializable {
 
             this.setPointsIndivVictory(params.getAttribute(StringConstants.CS_VICTORY).getIntValue());
             this.setPointsIndivLargeVictory(params.getAttribute(StringConstants.CS_LARGE_VICTORY).getIntValue());
+
             this.setPointsIndivDraw(params.getAttribute(StringConstants.CS_DRAW).getIntValue());
             this.setPointsIndivLost(params.getAttribute(StringConstants.CS_LOST).getIntValue());
             try {
                 this.setPointsRefused(params.getAttribute(StringConstants.CS_REFUSED).getIntValue());
                 this.setPointsConcedeed(params.getAttribute(StringConstants.CS_CONCEEDED).getIntValue());
+                this.setPointsTeamLargeVictory(params.getAttribute(StringConstants.CS_TEAM_LARGE_VICTORY).getIntValue());
+                this.setPointsTeamLittleLost(params.getAttribute(StringConstants.CS_TEAM_LITTLE_LOST).getIntValue());
+                this.setGapTeamLargeVictory(params.getAttribute(StringConstants.CS_TEAM_LARGE_VICTORY_GAP).getFloatValue());
+                this.setGapTeamLittleLost(params.getAttribute(StringConstants.CS_TEAM_LITTLE_LOST_GAP).getFloatValue());
             } catch (DataConversionException e) {
                 LOG.log(Level.FINE, e.getLocalizedMessage());
             } catch (NullPointerException e) {
@@ -784,6 +790,7 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setTeamVictoryOnly(params.getAttribute(StringConstants.CS_TEAMVICTORYONLY).getBooleanValue());
                 try {
                     this.setPointsTeamDrawBonus(params.getAttribute(StringConstants.CS_TEAMDRAWPOINTS).getIntValue());
+
                 } catch (DataConversionException e) {
                     this.setPointsTeamDrawBonus(0);
                     LOG.log(Level.FINE, e.getLocalizedMessage());
@@ -836,6 +843,8 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setUseImage(params.getAttribute(StringConstants.CS_USE_IMAGE).getBooleanValue());
                 this.setUseLargeVictory(params.getAttribute(StringConstants.CS_USE_LARGE_VICTORY).getBooleanValue());
                 this.setUseLittleLoss(params.getAttribute(StringConstants.CS_USE_LITTLE_LOST).getBooleanValue());
+                this.setUseTeamLargeVictory(params.getAttribute(StringConstants.CS_USE_TEAM_LARGE_VICTORY).getBooleanValue());
+                this.setUseTeamLittleLoss(params.getAttribute(StringConstants.CS_USE_TEAM_LITTLE_LOST).getBooleanValue());
 
             } catch (NullPointerException ne3) {
                 //JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());
@@ -1093,11 +1102,19 @@ public class Parameters implements IXMLExport, Serializable {
         return mPointsIndivLargeVictory;
     }
 
+    public int getPointsTeamLargeVictory() {
+        return mPointsTeamLargeVictory;
+    }
+
     /**
      * @param mPointsIndivLargeVictory the mPointsIndivLargeVictory to set
      */
     public void setPointsIndivLargeVictory(int mPointsIndivLargeVictory) {
         this.mPointsIndivLargeVictory = mPointsIndivLargeVictory;
+    }
+
+    public void setPointsTeamLargeVictory(int mPointsTeamLargeVictory) {
+        this.mPointsTeamLargeVictory = mPointsTeamLargeVictory;
     }
 
     /**
@@ -1121,11 +1138,19 @@ public class Parameters implements IXMLExport, Serializable {
         return mPointsIndivLittleLost;
     }
 
+    public int getPointsTeamLittleLost() {
+        return mPointsTeamLittleLost;
+    }
+
     /**
      * @param mPointsIndivLittleLost the mPointsIndivLittleLost to set
      */
     public void setPointsIndivLittleLost(int mPointsIndivLittleLost) {
         this.mPointsIndivLittleLost = mPointsIndivLittleLost;
+    }
+
+    public void setPointsTeamLittleLost(int mPointsTeamLittleLost) {
+        this.mPointsTeamLittleLost = mPointsTeamLittleLost;
     }
 
     /**
@@ -1205,11 +1230,19 @@ public class Parameters implements IXMLExport, Serializable {
         return mGapLargeVictory;
     }
 
+    public float getGapTeamLargeVictory() {
+        return mGapTeamLargeVictory;
+    }
+
     /**
      * @param mGapLargeVictory the mGapLargeVictory to set
      */
     public void setGapLargeVictory(int mGapLargeVictory) {
         this.mGapLargeVictory = mGapLargeVictory;
+    }
+
+    public void setGapTeamLargeVictory(float mGapLargeVictory) {
+        this.mGapTeamLargeVictory = mGapLargeVictory;
     }
 
     /**
@@ -1219,11 +1252,19 @@ public class Parameters implements IXMLExport, Serializable {
         return mGapLittleLost;
     }
 
+    public float getGapTeamLittleLost() {
+        return mGapTeamLittleLost;
+    }
+
     /**
      * @param mGapLittleLost the mGapLittleLost to set
      */
     public void setGapLittleLost(int mGapLittleLost) {
         this.mGapLittleLost = mGapLittleLost;
+    }
+
+    public void setGapTeamLittleLost(float mGapLittleLost) {
+        this.mGapTeamLittleLost = mGapLittleLost;
     }
 
     /**
@@ -1758,16 +1799,32 @@ public class Parameters implements IXMLExport, Serializable {
         this.mUseLargeVictory = use;
     }
 
+    public void setUseTeamLargeVictory(boolean use) {
+        this.mUseTeamLargeVictory = use;
+    }
+
     public void setUseLittleLoss(boolean use) {
         this.mUseLittleLoss = use;
+    }
+
+    public void setUseTeamLittleLoss(boolean use) {
+        this.mUseTeamLittleLoss = use;
     }
 
     public boolean isUseLargeVictory() {
         return mUseLargeVictory;
     }
 
+    public boolean isUseTeamLargeVictory() {
+        return mUseTeamLargeVictory;
+    }
+
     public boolean isUseLittleLoss() {
         return mUseLittleLoss;
+    }
+
+    public boolean isUseTeamLittleLoss() {
+        return mUseTeamLittleLoss;
     }
 
     protected int _webport = 80;
@@ -1929,6 +1986,5 @@ public class Parameters implements IXMLExport, Serializable {
     public void setForeColor(Color c) {
         mForeColor = c;
     }
-    
-    
+
 }
