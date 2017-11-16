@@ -3432,7 +3432,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
     private javax.swing.JCheckBoxMenuItem jcxUseColor;
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
-    private javax.swing.JCheckBoxMenuItem jcxmiAsServer;
+    public javax.swing.JCheckBoxMenuItem jcxmiAsServer;
     private javax.swing.JCheckBoxMenuItem jcxmiRemoteEdit;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAddFreeMatch;
