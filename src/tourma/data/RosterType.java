@@ -452,10 +452,10 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("ElfKey"))) {
             result = translate("ELVES");
         }
-        if (source.equals(translate("WoodElfKey"))) {
+        if ((source.equals(translate("WoodElfKey")))||(source.equals(translate("WoodElfKey2")))) {
             result = translate("WOOD ELVES");
         }
-        if (source.equals(translate("DarkElfKey"))) {
+        if ((source.equals(translate("DarkElfKey")))||(source.equals(translate("DarkElfKey2")))) {
             result = translate("DARK ELVES");
         }
         if (source.equals(translate("GoblinKey"))) {
@@ -467,7 +467,7 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("HighElfKey"))) {
             result = translate("HIGH ELVES");
         }
-        if (source.equals(translate("LizardmenKey"))) {
+        if ((source.equals(translate("LizardmenKey")))||(source.equals(translate("LizardmenKey2")))) {
             result = translate("LIZARDMEN");
         }
         if (source.equals(translate("HumanKey"))) {
@@ -482,7 +482,7 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("DwarfKey"))) {
             result = translate("DWARVES");
         }
-        if (source.equals(translate("ChaosDwarfKey"))) {
+        if ((source.equals(translate("ChaosDwarfKey")))||(source.equals(translate("ChaosDwarfKey2")))) {
             result = translate("CHAOS DWARVES");
         }
         if (source.equals(translate("NecromanticKey"))) {
@@ -513,7 +513,7 @@ public class RosterType implements IXMLExport, Serializable {
             result = translate("VAMPIRES");
         }
         if (source.equals(translate("KhorneKey")) || source.equals(translate("KhornesDaemonsKey"))) {
-            result = translate("UNKNOWN");
+            result = translate("KHORNE");
         }
         return result;
     }
