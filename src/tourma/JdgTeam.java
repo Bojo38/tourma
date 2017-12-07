@@ -40,6 +40,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 import tourma.data.Category;
+import tourma.data.Coach;
 import tourma.data.Tournament;
 import tourma.data.Team;
 import tourma.data.Tournament;
@@ -59,6 +60,8 @@ public final class JdgTeam extends javax.swing.JDialog {
     private Team mTeam;
     private Tournament mTour;
 
+    boolean newTeam=false;
+    
     /**
      *
      * @param parent
@@ -69,6 +72,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        newTeam=true;
         mTour = Tournament.getTournament();
         mTeam = new Team();
 
@@ -125,6 +129,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         mTour = Tournament.getTournament();
         mTeam = team;
 
+        newTeam=false;
         jtbCoachs.setModel(new MjtCoaches(mTeam));
 
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -330,6 +335,19 @@ public final class JdgTeam extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
+
+        /*
+        If new team remove added coaches
+        */
+        if (newTeam)
+        {
+            for (int i=0; i<mTeam.getCoachsCount(); i++)
+            {
+                Coach C=mTeam.getCoach(i);
+                mTour.removeCoach(C);
+                mTeam.removeCoach(i);
+            }            
+        }
         this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
 
