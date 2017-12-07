@@ -2794,6 +2794,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }//GEN-LAST:event_jcxmiRemoteEditActionPerformed
 
+    private static final String COLOR_1="Couleur 1";
+    private static final String COLOR_2="Couleur 2";
+    private static final String COLOR_WRITING="Couleur Ecriture";
+    private static final String COLOR_BORDER="Couleur Bordure";
+    
     private void jmiEditColorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditColorsActionPerformed
 
         ColorChooser jccColor1 = new ColorChooser();
@@ -2804,11 +2809,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jccBorderColor.setColor(Tournament.getTournament().getParams().getBorderColor());
         ColorChooser jccForeColor = new ColorChooser();
         jccForeColor.setColor(Tournament.getTournament().getParams().getForeColor());
-
-        JLabel jlbColor1 = new JLabel("Couleur 1");
-        JLabel jlbColor2 = new JLabel("Couleur 2");
-        JLabel jlbForeColor = new JLabel("Couleur Ecriture");
-        JLabel jlbBorderColor = new JLabel("Couleur Bordure");
+        
+        JLabel jlbColor1 = new JLabel(Translate.translate(COLOR_1));
+        JLabel jlbColor2 = new JLabel(Translate.translate(COLOR_2));
+        JLabel jlbForeColor = new JLabel(Translate.translate(COLOR_WRITING));
+        JLabel jlbBorderColor = new JLabel(Translate.translate(COLOR_BORDER));
 
         JPanel jpn = new JPanel(new GridLayout(4, 2));
 
