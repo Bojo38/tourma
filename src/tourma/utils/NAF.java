@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.AbstractDocument.Content;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
@@ -41,8 +42,8 @@ public final class NAF {
         InputStream is = null;
         InputStreamReader isr = null;
         BufferedReader reader = null;
-        try {                               
-            URL url = new URL("https://member.thenaf.net/index.php?module=NAF&type=coachpage&coach=" + Name);
+        try {
+            URL url = new URL("https://member.thenaf.net/index.php?module=NAF&type=tournamentinfo&uname=" + Name);
             is = url.openConnection().getInputStream();
             isr = new InputStreamReader(is, Charset.defaultCharset());
             reader = new BufferedReader(isr);
@@ -54,95 +55,111 @@ public final class NAF {
             while (line != null) {
                 if (line.contains("pn-maincontent")) {
 
-                    int pos = line.indexOf("<table bgcolor=\"#858390\" cellpadding=\"2\" cellspacing=\"1\" border=\"0\"><tr><th bgcolor=\"#D9D8D0\" colspan=\"7\">Rankings</th></tr>");
+                    String toFind = "Tournament info for ";
+                    int pos = line.indexOf(toFind);
                     if (pos >= 0) {
                         String buffer = line.substring(pos);
-                        pos = buffer.indexOf("</table>");
-                        buffer = buffer.substring(0, pos + 8);
+                        // pos = buffer.indexOf("</table>");
+                        buffer = buffer.substring(toFind.length());
+                        buffer = buffer.substring(Name.length() + 2);
+                        pos = buffer.indexOf(")");
+                        buffer = buffer.substring(0, pos);
+                        coach.setNaf(Integer.parseInt(buffer));
 
                         final SAXBuilder sxb = new SAXBuilder();
+                        int end_table = line.indexOf("</table>");
+                        if (end_table != -1) {
+                            buffer = line.substring(end_table);
+                            int posRV_begin = buffer.indexOf("<table");
+                            buffer = buffer.substring(posRV_begin);
+                            int posRV_end = buffer.indexOf("</table>");
 
-                        pos = buffer.indexOf("coach=");
-                        String subBuff = buffer.substring(pos + 6);
-                        pos = subBuff.indexOf("&amp;");
-                        subBuff = subBuff.substring(0, pos);
+                            String new_line = "";
 
-                        coach.setNaf(Integer.parseInt(subBuff));
-
-                        try {
-                            StringReader Sreader = new StringReader(buffer);
-                            final org.jdom2.Document document = sxb.build(Sreader);
-                            final Element racine = document.getRootElement();
-
-                            List trs = racine.getChildren("tr");
-                            final Iterator i = trs.iterator();
-                            String roster = "";
-                            double rank = 150;
-
-                            while (i.hasNext()) {
-                                final Element tr = (Element) i.next();
-                                List tds = tr.getChildren("td");
-                                final Iterator j = tds.iterator();
-                                int index = 0;
-
-                                while (j.hasNext()) {
-                                    final Element td = (Element) j.next();
-                                    if (index == 0) {
-                                        // Roster
-                                        Element a = td.getChild("a");
-                                        roster = a.getText();
-                                        rosters.add(roster);
-                                    } else {
-                                        if (index == 1) {
-                                            // Roster
-                                            rank = Double.parseDouble(td.getText());
-                                            ranks.add(rank);
-                                        } else {
-                                            break;
-                                        }
-                                    }
-                                    index++;
-                                }
-                                                                
-
-                                if (roster.equals(RosterType.getRosterTranslation(Name))) {
-                                    naf = rank;
-                                    coach.setNafRank(naf);
-                                    break;
-                                }
+                            while ((posRV_end == -1) && (new_line != null)) {
+                                new_line = reader.readLine();
+                                buffer = buffer + new_line;
+                                posRV_end = buffer.indexOf("</table>");
                             }
-                        } catch (JDOMException | IOException | NumberFormatException e) {
-                            LOG.log(Level.FINE, e.getLocalizedMessage());
+
+                            buffer = buffer.substring(0, posRV_end + 8);
+                            buffer = buffer.replace("&nbsp;", "");
+//                        System.out.println(buffer);
+                            try {
+                                StringReader Sreader = new StringReader(buffer);
+                                final org.jdom2.Document document = sxb.build(Sreader);
+                                final Element racine = document.getRootElement();
+
+                                List trs = racine.getChildren("tr");
+                                final Iterator i = trs.iterator();
+                                String roster = "";
+                                double rank = 150;
+
+                                while (i.hasNext()) {
+                                    final Element tr = (Element) i.next();
+                                    List tds = tr.getChildren("td");
+                                    final Iterator j = tds.iterator();
+                                    int index = 0;
+
+                                    while (j.hasNext()) {
+                                        final Element td = (Element) j.next();
+                                        if (index == 0) {
+                                            // Roster
+                                            roster = td.getText();
+                                            rosters.add(roster);
+
+                                        } else {
+                                            if (index == 1) {
+                                                // Roster
+                                                rank = Double.parseDouble(td.getText());
+                                                ranks.add(rank);
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                        index++;
+                                    }
+
+                                    if (roster.equals(RosterType.getRosterTranslation(Name))) {
+                                        naf = rank;
+                                        coach.setNafRank(naf);
+                                        break;
+                                    }
+                                }
+                            } catch (JDOMException | IOException | NumberFormatException e) {
+                                LOG.log(Level.FINE, e.getLocalizedMessage());
+                                System.err.println(e.getLocalizedMessage());
+                            }
                         }
+                    } else {
+                        System.err.println("NAF indication not found for " + Name);
                     }
                 }
                 line = reader.readLine();
             }
 
-            double moy=0;
-            for (int i = 0; i < rosters.size(); i++) {
-                String name=coach.getRoster().getName();
-                String tmpName = RosterType.getRosterTranslation(coach.getRoster().getName());
+            double moy = 0;
+            for (int i = 0; i < rosters.size() - 1; i++) {
+                String name = coach.getRoster().getName();
+                String tmpName = RosterType.getRosterTranslation(name);
                 String name2 = rosters.get(i);
-                moy+=naf = ranks.get(i);
+                moy += naf = ranks.get(i);
                 if (name2.equals(tmpName)) {
                     naf = ranks.get(i);
                     coach.setNafRank(naf);
                 }
             }
-            
-            if (moy==0)
-            {
-                moy=150.0;
-            }
-            else
-            {
-                moy=moy/ranks.size();
+
+            if (moy == 0) {
+                moy = 150.0;
+            } else {
+                moy = moy / ranks.size();
             }
             coach.setNafAvg(moy);
 
         } catch (IOException | NumberFormatException exc) {
             LOG.log(Level.INFO, exc.getLocalizedMessage());
+            System.err.println(exc.getLocalizedMessage());
         } finally {
             if (reader != null) {
                 try {

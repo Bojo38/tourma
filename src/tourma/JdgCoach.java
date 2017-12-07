@@ -122,7 +122,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         jLabel4.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jlbNafRanking.setText(Double.toString(mCoach.getNafRank())+" ("+Double.toString(mCoach.getNafRankAvg())+")");
+        jlbNafRanking.setText(Double.toString(mCoach.getNafRank()) + " (" + Double.toString(mCoach.getNafRankAvg()) + ")");
         jcbRoster.setModel(RosterType.getRostersNamesModel());
 
         jtfPinCode.setText(Integer.toString(mCoach.getPinCode()));
@@ -190,7 +190,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jLabel4.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jlbNafRanking.setText(Double.toString(mCoach.getNafRank())+" ("+Double.toString(mCoach.getNafRankAvg())+")");
+        jlbNafRanking.setText(Double.toString(mCoach.getNafRank()) + " (" + Double.toString(mCoach.getNafRankAvg()) + ")");
 
         jbtAdd.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jpnBtns.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
@@ -292,7 +292,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         jbtEditRoster.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jLabel4.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jtfNAF.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jlbNafRanking.setText(Double.toString(mCoach.getNafRank())+" ("+Double.toString(mCoach.getNafRankAvg())+")");
+        jlbNafRanking.setText(Double.toString(mCoach.getNafRank()) + " (" + Double.toString(mCoach.getNafRankAvg()) + ")");
 
         jbtAdd.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
         jpnBtns.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
@@ -611,16 +611,18 @@ public final class JdgCoach extends javax.swing.JDialog {
         }
 
         if (!error) {
-            try {
-                int pinCode = Integer.parseInt(jtfPinCode.getText());
-                if ((pinCode > 10000) || (pinCode == 0)) {
-                    error = true;
-                    JOptionPane.showMessageDialog(this, "Invalid Pin Code", "Pin Code Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    c.setPinCode(pinCode);
+            if (MainFrame.getMainFrame().jcxmiAsServer.isSelected()) {
+                try {
+                    int pinCode = Integer.parseInt(jtfPinCode.getText());
+                    if ((pinCode > 10000) || (pinCode == 0)) {
+                        error = true;
+                        JOptionPane.showMessageDialog(this, "Invalid Pin Code", "Pin Code Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        c.setPinCode(pinCode);
+                    }
+                } catch (NumberFormatException e) {
+                    c.setPinCode(0);
                 }
-            } catch (NumberFormatException e) {
-                c.setPinCode(0);
             }
 
             c.setName(jtfNom.getText());
@@ -719,7 +721,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         double rank = NAF.getRanking(jtfNom.getText(), mCoach);
         jtfNAF.setText(Integer.toString(mCoach.getNaf()));
-        jlbNafRanking.setText(Double.toString(mCoach.getNafRank())+" ("+Double.toString(mCoach.getNafRankAvg())+")");
+        jlbNafRanking.setText(Double.toString(mCoach.getNafRank()) + " (" + Double.toString(mCoach.getNafRankAvg()) + ")");
     }//GEN-LAST:event_jbtDownloadFromNafActionPerformed
 
     /**
@@ -898,7 +900,7 @@ public final class JdgCoach extends javax.swing.JDialog {
             Category cat = Tournament.getTournament().getCategory(i);
             if (!mCoach.containsCategory(cat)) {
                 cats.add(cat.getName());
-                
+
             }
         }
         @SuppressWarnings("unchecked")

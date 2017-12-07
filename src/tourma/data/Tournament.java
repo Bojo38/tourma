@@ -1196,7 +1196,23 @@ public class Tournament implements IContainCoachs, Serializable {
                         writer.println(("<coach>"));
                         writer.println(java.text.MessageFormat.format("<name>{0}</name>", new Object[]{mCoach.getName()}));
                         writer.println(java.text.MessageFormat.format("<number>{0}</number>", new Object[]{naf}));
-                        writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{RosterType.getRosterTranslation(mCoach.getRoster().getName())}));
+                        String naf_roster=RosterType.getRosterTranslation(mCoach.getRoster().getName());
+                        if (naf_roster=="Unknown")
+                        {
+                            Object[] rosters={ "Amazons","Bretonnians","Chaos","Chaos Dwarves",
+                                "Chaos Pact","Dark Elves","Dwarves","Goblins","Halflings",
+                                "High Elves","Humans","Khemri","Khorne","Lizardmen","Necromantic",
+                                "Norse","Nurgle's Rotters","Ogres","Orc","Elves","Slann","Skaven",
+                                "Undead","Underworld","Vampires","Wood Elves"};
+
+                               Object choice=JOptionPane.showInputDialog(MainFrame.getMainFrame(), 
+                                       "Roster not recognized fo coach "+mCoach.getName()+". \nlease choose the right one:",
+                                       "Roster Choice",JOptionPane.WARNING_MESSAGE,null,rosters,rosters[0]);
+                               
+                               naf_roster=(String)choice;
+                               
+                        }                        
+                        writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{naf_roster}));
                         writer.println(("</coach>"));
                     }
                 }
