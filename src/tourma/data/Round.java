@@ -101,12 +101,12 @@ public class Round implements IXMLExport, Serializable {
 
     public void setMinBonus(double v) {
         mMinBonus = v;
-        updated=true;
+        updated = true;
     }
 
     public void setMaxBonus(double v) {
         mMaxBonus = v;
-        updated=true;
+        updated = true;
     }
 
     public double getCoef(Match m) {
@@ -155,23 +155,20 @@ public class Round implements IXMLExport, Serializable {
     }
 
     public boolean isUpdated() {
-        
-        for (Match m:mMatchs)
-        {
-            if (m.isUpdated())
-            {
-                updated=true;
+
+        for (Match m : mMatchs) {
+            if (m.isUpdated()) {
+                updated = true;
                 break;
             }
         }
-        
+
         return updated;
     }
 
     public void setUpdated(boolean updated) {
         this.updated = updated;
-        for (Match m:mMatchs)
-        {
+        for (Match m : mMatchs) {
             m.setUpdated(updated);
         }
     }
@@ -232,7 +229,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void addMatch(Match m) {
         mMatchs.add(m);
-        updated=true;
+        updated = true;
     }
 
     public int indexOf(Match m) {
@@ -298,7 +295,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void clearMatchs() {
         mMatchs.clear();
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -340,7 +337,7 @@ public class Round implements IXMLExport, Serializable {
         } catch (ParseException ex) {
             Logger.getLogger(Round.class.getName()).log(Level.SEVERE, null, ex);
         }
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -349,7 +346,7 @@ public class Round implements IXMLExport, Serializable {
     public void setCurrentHour() {
         final Calendar cal = Calendar.getInstance();
         mHour = cal.getTime();
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -451,17 +448,67 @@ public class Round implements IXMLExport, Serializable {
 
         while (k.hasNext()) {
             final Element match = k.next();
-            Match m;
-            boolean teamTour=Tournament.getTournament().getParams().isTeamTournament();
-            ETeamPairing pairing=Tournament.getTournament().getParams().getTeamPairing();
-            if (teamTour
-                    && ( pairing== ETeamPairing.TEAM_PAIRING)) {
-                m = new TeamMatch(this);
-            } else {
-                m = new CoachMatch(this);
+            Match m=null;
+            boolean teamTour = Tournament.getTournament().getParams().isTeamTournament();
+            ETeamPairing pairing = Tournament.getTournament().getParams().getTeamPairing();
+            try {
+                if (teamTour
+                        && (pairing == ETeamPairing.TEAM_PAIRING)) {
+                    m = new TeamMatch(this);
+                } else {
+                    m = new CoachMatch(this);
+                }
+                m.setXMLElement(match);
+                this.mMatchs.add(m);
+            } catch (NullPointerException ne) {
+                if (m instanceof TeamMatch)
+                {
+                    // CoachMatches without TeamMatch (Old Format)
+                    m = new CoachMatch(this);
+                    m.setXMLElement(match);
+                    
+                    // Try to find a TeamMatch among already stored match
+                    boolean found=false;
+                    for (Match m_cpt:this.mMatchs)
+                    {
+                        if (m_cpt instanceof TeamMatch)
+                        {
+                            TeamMatch tm=(TeamMatch)m_cpt;
+                            Coach c1=(Coach)m.getCompetitor1();
+                            Coach c2=(Coach)m.getCompetitor2();
+                            if (tm.getCompetitor1().equals(c1.getTeamMates()))
+                            {
+                                found=true;
+                                tm.addMatch((CoachMatch) m);
+                                tm.recomputeValues();
+                                break;
+                            }
+                            if (tm.getCompetitor1().equals(c2.getTeamMates()))
+                            {
+                                // Swap C1 and C2
+                                ((CoachMatch)m).switchCoachs();
+                                found=true;
+                                tm.addMatch((CoachMatch) m);
+                                tm.recomputeValues();
+                                break;
+                            }                            
+                        }
+                    }
+                    if (!found)
+                    {
+                        TeamMatch tm=new TeamMatch(this);
+                        Team t1=((Coach)m.getCompetitor1()).getTeamMates();
+                        Team t2=((Coach)m.getCompetitor2()).getTeamMates();
+                        tm.setCompetitor1(t1);                        
+                        tm.setCompetitor2(t2);
+                        t1.addMatch(tm);
+                        t2.addMatch(tm);
+                        tm.addMatch((CoachMatch) m);
+                        tm.recomputeValues();
+                        mMatchs.add(tm);
+                    }                    
+                }
             }
-            m.setXMLElement(match);
-            this.mMatchs.add(m);
         }
     }
 
@@ -533,7 +580,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void setCup(boolean mCup) {
         this.mCup = mCup;
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -548,7 +595,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void setCupTour(int mCupTour) {
         this.mCupTour = mCupTour;
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -563,7 +610,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void setCupMaxTour(int mCupMaxTour) {
         this.mCupMaxTour = mCupMaxTour;
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -578,7 +625,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void setLooserCup(boolean mLooserCup) {
         this.mLooserCup = mLooserCup;
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -587,7 +634,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void removeMatch(int i) {
         mMatchs.remove(i);
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -596,7 +643,7 @@ public class Round implements IXMLExport, Serializable {
      */
     public void removeMatch(Match i) {
         mMatchs.remove(i);
-        updated=true;
+        updated = true;
     }
 
     public boolean equals(final Object obj) {
@@ -631,7 +678,7 @@ public class Round implements IXMLExport, Serializable {
 
     public void setThirdPlace(boolean b) {
         mThirdPlace = b;
-        updated=true;
+        updated = true;
     }
 
     public void recomputeMatchs() {
