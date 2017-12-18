@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
+import org.jfree.util.Log;
 import tourma.MainFrame;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
@@ -440,6 +441,7 @@ public class CoachMatch extends Match implements Serializable {
         try {
             final String c1 = match.getAttribute(StringConstants.CS_COACH + 1).getValue();
             final String c2 = match.getAttribute(StringConstants.CS_COACH + 2).getValue();
+            
             this.setCompetitor1(Coach.getCoach(c1));
             this.setCompetitor2(Coach.getCoach(c2));
             if (this.getCompetitor1() == null) {
@@ -459,7 +461,7 @@ public class CoachMatch extends Match implements Serializable {
                 setRefusedBy1(false);
                 setRefusedBy2(false);
                 setConcedeedBy1(false);
-                setConcedeedBy2(concedeedBy2);
+                setConcedeedBy2(false);
             }
 
             if (((Coach) getCompetitor1()) != null) {
@@ -491,6 +493,7 @@ public class CoachMatch extends Match implements Serializable {
 
                     if (criteria.getName().equals(tmp)) {
                         crit = criteria;
+                        break;
                     }
                 }
                 final Value value = new Value(crit);
@@ -526,6 +529,7 @@ public class CoachMatch extends Match implements Serializable {
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
+        this.recomputeValues();
     }
 
     /**
@@ -1437,8 +1441,8 @@ public class CoachMatch extends Match implements Serializable {
                                 if ((j == 0) && (value2 == -1)) {
                                     value2 = 0;
                                 }
-                                bonus += value1 * cri.getPointsFor();
-                                bonus += value2 * cri.getPointsAgainst();
+                                bonus += value2 * cri.getPointsFor();
+                                bonus += value1 * cri.getPointsAgainst();
 
                             }
                             if (Tournament.getTournament().getParams().isTableBonus()) {
