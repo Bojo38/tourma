@@ -278,7 +278,11 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         if ((Tournament.getTournament().getParams().isEnableClans()) && (Tournament.getTournament().getClansCount() > 1)) {
             jcbClan.setEnabled(true);
-            jcbClan.setSelectedItem(mCoach.getClan().getName());
+            
+            if(mCoach.getClan()!=null)
+            {
+                jcbClan.setSelectedItem(mCoach.getClan().getName());
+            }
         }
 
         jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 1);
@@ -576,6 +580,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
+        mCoach.setName("");
         this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
 

@@ -118,6 +118,7 @@ import tourma.views.system.JdgAbout;
 import tourma.views.system.JdgOnlineHelp;
 import tourma.views.system.JdgRevisions;
 import tourma.utils.NafTask;
+
 /**
  *
  * @author Frederic Berger
@@ -1419,7 +1420,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         }
 
-        
         return valid;
     }
 
@@ -1498,7 +1498,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     labels.add(Translate.translate(CS_FreeRound));
                     Options.add(Generation.GEN_FREE);
 
-                    
                     /**
                      * Naf Ranking
                      */
@@ -1712,6 +1711,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     Translate.translate(CS_Substitution),
                     JOptionPane.OK_OPTION);
 
+            boolean cancel = false;
             // Create Substitution
             // If None
             if (jcb.getSelectedIndex() == availableCoachs.size() - 1) {
@@ -1729,22 +1729,27 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     sub.setRoster(RosterType.getRosterType(0));
                     JdgCoach jdg = new JdgCoach(this, true, sub);
                     jdg.setVisible(true);
-                    Tournament.getTournament().addCoach(sub);
-                    sub.setActive(false);
+                    if (!sub.getName().equals("")) {
+                        Tournament.getTournament().addCoach(sub);
+                        sub.setActive(false);
+                        cancel = true;
+                    }
                 } else {
                     sub = availableCoachs.get(jcb.getSelectedIndex());
                 }
 
-                Substitute s = new Substitute();
-                s.setMatch(m);
-                s.setSubstitute(sub);
-                s.setTitular(c);
+                if (!cancel) {
+                    Substitute s = new Substitute();
+                    s.setMatch(m);
+                    s.setSubstitute(sub);
+                    s.setTitular(c);
 
-                if (m.getCompetitor1() == c) {
-                    m.setSubstitute1(s);
-                }
-                if (m.getCompetitor2() == c) {
-                    m.setSubstitute2(s);
+                    if (m.getCompetitor1() == c) {
+                        m.setSubstitute1(s);
+                    }
+                    if (m.getCompetitor2() == c) {
+                        m.setSubstitute2(s);
+                    }
                 }
             }
         }
@@ -1852,7 +1857,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private final static String CS_SwissRound = "RONDE SUISSE";
     private final static String CS_AcceleratedSwissRound = "RONDE SUISSE ACCELERÉE";
     private final static String CS_Animation = "Animation";
-    
+
     private final static String CS_Confirm = "CONFIRM";
     private final static String CS_WebMacthNotChecked = "WEB_MATCHES_NOT_CONFIRMED";
 
@@ -1866,24 +1871,20 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                 JPNRound jpnr = (JPNRound) jpnContent;
                 Round round = jpnr.getRound();
-                
-                int remote=0;
-                for (CoachMatch cm:round.getCoachMatchs())
-                {
-                    if (cm.isRemotely())
-                    {
+
+                int remote = 0;
+                for (CoachMatch cm : round.getCoachMatchs()) {
+                    if (cm.isRemotely()) {
                         remote++;
                     }
                 }
-                if (remote>0)
-                {
-                    int res=JOptionPane.showConfirmDialog(this, Translate.translate(CS_WebMacthNotChecked),Translate.translate(CS_Confirm),JOptionPane.OK_CANCEL_OPTION);
-                            if (res==JOptionPane.CANCEL_OPTION)
-                            {
-                                return;
-                            }
+                if (remote > 0) {
+                    int res = JOptionPane.showConfirmDialog(this, Translate.translate(CS_WebMacthNotChecked), Translate.translate(CS_Confirm), JOptionPane.OK_CANCEL_OPTION);
+                    if (res == JOptionPane.CANCEL_OPTION) {
+                        return;
+                    }
                 }
-                
+
                 int round_number = mTournament.getRoundIndex(round);
 
                 /**
@@ -2794,11 +2795,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }//GEN-LAST:event_jcxmiRemoteEditActionPerformed
 
-    private static final String COLOR_1="Couleur 1";
-    private static final String COLOR_2="Couleur 2";
-    private static final String COLOR_WRITING="Couleur Ecriture";
-    private static final String COLOR_BORDER="Couleur Bordure";
-    
+    private static final String COLOR_1 = "Couleur 1";
+    private static final String COLOR_2 = "Couleur 2";
+    private static final String COLOR_WRITING = "Couleur Ecriture";
+    private static final String COLOR_BORDER = "Couleur Bordure";
+
     private void jmiEditColorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditColorsActionPerformed
 
         ColorChooser jccColor1 = new ColorChooser();
@@ -2809,7 +2810,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jccBorderColor.setColor(Tournament.getTournament().getParams().getBorderColor());
         ColorChooser jccForeColor = new ColorChooser();
         jccForeColor.setColor(Tournament.getTournament().getParams().getForeColor());
-        
+
         JLabel jlbColor1 = new JLabel(Translate.translate(COLOR_1));
         JLabel jlbColor2 = new JLabel(Translate.translate(COLOR_2));
         JLabel jlbForeColor = new JLabel(Translate.translate(COLOR_WRITING));
@@ -2916,7 +2917,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         if (result == JFileChooser.APPROVE_OPTION) {
 
             File zipFile = jfc.getSelectedFile();
-           
+
             // First this function will generate in a temporary directory
             // all the possible web pages
             ArrayList<File> files = WebServer.getWebSiteFiles();
@@ -2929,8 +2930,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     ZipOutputStream zout = new ZipOutputStream(new BufferedOutputStream(fout));
 
                     for (int i = 0; i < files.size(); i++) {
-                        File f=files.get(i);
-                        byte [] b= new byte[(int) f.length()];
+                        File f = files.get(i);
+                        byte[] b = new byte[(int) f.length()];
                         FileInputStream fin = new FileInputStream(f);
                         zout.putNextEntry(new ZipEntry(f.getName()));
                         int length;
@@ -2959,17 +2960,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void jmiExportWebServerToSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportWebServerToSiteActionPerformed
         // First this function will generate in a temporary directory
         // all the possible web pages
-        FTPClient client=new FTPClient();
-        try
-        {
-        client.connect("ftp.ainpacte.org");
-        System.out.println("Connected to " + server + ".");
-        System.out.println(client.getReplyString());
-        System.out.println(client.getReplyCode());
-        client.login("ainpacte","Lancie69");
-        }
-        catch ( IOException ex)
-        {
+        FTPClient client = new FTPClient();
+        try {
+            client.connect("ftp.ainpacte.org");
+            System.out.println("Connected to " + server + ".");
+            System.out.println(client.getReplyString());
+            System.out.println(client.getReplyCode());
+            client.login("ainpacte", "Lancie69");
+        } catch (IOException ex) {
             System.out.println(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
@@ -2979,7 +2977,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiExportWebServerToSiteActionPerformed
 
     private void jmiMassAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMassAddActionPerformed
-        JdgMassAdd jdg=new JdgMassAdd(this, true);
+        JdgMassAdd jdg = new JdgMassAdd(this, true);
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiMassAddActionPerformed
 
@@ -2995,7 +2993,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     private static final String CS_Download = "Download";
 
-    
     private static final String CS_NewGame = "NewGame";
     private static final String CS_Open = "Open";
     private static final String CS_UseRosterEditor = "UseRosterEditor";
