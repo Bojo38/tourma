@@ -791,24 +791,22 @@ public class Parameters implements IXMLExport, Serializable {
                 try {
                     this.setPointsTeamDrawBonus(params.getAttribute(StringConstants.CS_TEAMDRAWPOINTS).getIntValue());
 
-                } catch (DataConversionException e) {
+                } catch (DataConversionException|NullPointerException e) {
                     this.setPointsTeamDrawBonus(0);
                     LOG.log(Level.FINE, e.getLocalizedMessage());
                 }
 
                 try {
                     this.setDate(format.parse(params.getAttribute(StringConstants.CS_DATE).getValue()));
-                } catch (ParseException pe) {
+                } catch (ParseException|NullPointerException pe) {
                 }
 
                 try {
                     this.setGame(params.getAttribute(StringConstants.CS_GAMETYPE).getIntValue());
-                } catch (DataConversionException pe) {
+                } catch (DataConversionException|NullPointerException pe) {
                     this.setGame(1);
                     LOG.log(Level.FINE, pe.getLocalizedMessage());
                 }
-
-                this.setGroupsEnable(params.getAttribute(StringConstants.CS_GROUPENABLE).getBooleanValue());
 
             } catch (NullPointerException ne) {
                 this.setGapLargeVictory(3);
@@ -893,6 +891,7 @@ public class Parameters implements IXMLExport, Serializable {
         }
 
         try {
+            this.setGroupsEnable(params.getAttribute(StringConstants.CS_GROUPENABLE).getBooleanValue());
             this.setWebEdit(params.getAttribute(StringConstants.CS_WEBEDIT).getBooleanValue());
             this._webport = Integer.parseInt(params.getAttribute(StringConstants.CS_WEB_PORT).getValue());
 

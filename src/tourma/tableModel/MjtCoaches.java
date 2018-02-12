@@ -122,7 +122,14 @@ public class MjtCoaches extends AbstractTableModel implements TableCellRenderer 
                     val = Double.toString(c.getNafRank());
                     break;
                 case 8:
-                    val = c.getClan().getName();
+                    if (c.getClan()!=null)
+                    {
+                        val = c.getClan().getName();
+                    }
+                    else
+                    {
+                        val="";
+                    }
                     break;
                 case 6:
                     if (c.isActive()) {

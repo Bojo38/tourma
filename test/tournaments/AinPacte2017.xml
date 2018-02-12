@@ -1,0 +1,1122 @@
+<Tournament Version="3">
+  <Roster Name="Amazone" />
+  <Roster Name="Bas-Fonds" />
+  <Roster Name="Chaos" />
+  <Roster Name="Elfe" />
+  <Roster Name="Elfe Sylvain" />
+  <Roster Name="Elfe Noir" />
+  <Roster Name="Gobelin" />
+  <Roster Name="Halfling" />
+  <Roster Name="Haut Elfe" />
+  <Roster Name="Homme Lézard" />
+  <Roster Name="Humain" />
+  <Roster Name="Khemri" />
+  <Roster Name="Mort-Vivant" />
+  <Roster Name="Nain" />
+  <Roster Name="Nain du Chaos" />
+  <Roster Name="Necromantiques" />
+  <Roster Name="Nordiques" />
+  <Roster Name="Nurgle" />
+  <Roster Name="Ogre" />
+  <Roster Name="Orque" />
+  <Roster Name="Pacte Chaotique" />
+  <Roster Name="Skaven" />
+  <Roster Name="Slann" />
+  <Roster Name="Vampire" />
+  <Parameters Organizer="yannolego" Name="ainpacte chouett" Date="27/11/2017 22:43:34" Place="ainpacte chouett" Victory="1000" Large_Victory="1000" Draw="500" Lost="0" Little_Lost="100" Victory_Team="1000" Draw_Team="500" Lost_Team="0" Large_Victory_Gap="3" Little_Lost_Gap="1" Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Rank1_Team="1" Rank2_Team="2" Rank3_Team="3" Rank4_Team="4" Rank5_Team="5" ByTeam="true" TeamMates="2" TeamPairing="1" TeamIndivPairing="0" TeamVictoryPoints="500" TeamVictoryOnly="false" GroupEnable="false" ActvateClans="false" AvoidFirstMatch="true" AvoidMatch="false" ClanTeammatesNumber="3">
+    <Criteria Name="Touchdowns" PointsFor="2" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+    <Criteria Name="Sorties" PointsFor="1" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+    <Criteria Name="Agressions" PointsFor="1" PointsTeamFor="0" PointsAgainst="0" PointsTeamAgainst="0" />
+  </Parameters>
+  <Clan Name="Aucun" />
+  <Group Name="Aucun">
+    <Roster Name="Amazone" />
+    <Roster Name="Bas-Fonds" />
+    <Roster Name="Chaos" />
+    <Roster Name="Elfe" />
+    <Roster Name="Elfe Sylvain" />
+    <Roster Name="Elfe Noir" />
+    <Roster Name="Gobelin" />
+    <Roster Name="Halfling" />
+    <Roster Name="Haut Elfe" />
+    <Roster Name="Homme Lézard" />
+    <Roster Name="Humain" />
+    <Roster Name="Khemri" />
+    <Roster Name="Mort-Vivant" />
+    <Roster Name="Nain" />
+    <Roster Name="Nain du Chaos" />
+    <Roster Name="Necromantiques" />
+    <Roster Name="Nordiques" />
+    <Roster Name="Nurgle" />
+    <Roster Name="Ogre" />
+    <Roster Name="Orque" />
+    <Roster Name="Pacte Chaotique" />
+    <Roster Name="Skaven" />
+    <Roster Name="Slann" />
+    <Roster Name="Vampire" />
+  </Group>
+  <Coach Name="Cyrlesir" Team="Cyrlesir" Roster="Homme Lézard" NAF="17415" Rank="110" Clan="Aucun" />
+  <Coach Name="Oeil cendre" Team="Oeil cendre" Roster="Necromantiques" NAF="20175" Rank="110" Clan="Aucun" />
+  <Coach Name="Paulpott" Team="Paulpott" Roster="Elfe Sylvain" NAF="22003" Rank="110" Clan="Aucun" />
+  <Coach Name="Poulpi" Team="Poulpi" Roster="Nain du Chaos" NAF="19958" Rank="110" Clan="Aucun" />
+  <Coach Name="Tristelune" Team="Tristelune" Roster="Gobelin" NAF="9830" Rank="110" Clan="Aucun" />
+  <Coach Name="Lord Bojo" Team="Lord Bojo" Roster="Khemri" NAF="7539" Rank="110" Clan="Aucun" />
+  <Coach Name="Helborg" Team="Helborg" Roster="Skaven" NAF="22470" Rank="110" Clan="Aucun" />
+  <Coach Name="Oldwarf" Team="Oldwarf" Roster="Slann" NAF="17629" Rank="110" Clan="Aucun" />
+  <Coach Name="Jersinho07" Team="Jersinho07" Roster="Humain" NAF="21819" Rank="110" Clan="Aucun" />
+  <Coach Name="Lohu" Team="Lohu" Roster="Nain du Chaos" NAF="23368" Rank="110" Clan="Aucun" />
+  <Coach Name="Tulkas" Team="Tulkas" Roster="Nain" NAF="18208" Rank="110" Clan="Aucun" />
+  <Coach Name="Quizz" Team="Quizz" Roster="Vampire" NAF="12061" Rank="110" Clan="Aucun" />
+  <Coach Name="Winny" Team="Winny" Roster="Ogre" NAF="19300" Rank="110" Clan="Aucun" />
+  <Coach Name="Pop" Team="Pop" Roster="Halfling" NAF="17719" Rank="110" Clan="Aucun" />
+  <Coach Name="PapaGégé" Team="PapaGégé" Roster="Homme Lézard" NAF="30" Rank="110" Clan="Aucun" />
+  <Coach Name="Duckynator" Team="Duckynator" Roster="Elfe Noir" NAF="19711" Rank="110" Clan="Aucun" />
+  <Coach Name="Obsidian" Team="Obsidian" Roster="Elfe" NAF="21201" Rank="110" Clan="Aucun" />
+  <Coach Name="Pilaf" Team="Pilaf" Roster="Slann" NAF="21736" Rank="110" Clan="Aucun" />
+  <Coach Name="Lulu" Team="Lulu" Roster="Amazone" NAF="24087" Rank="110" Clan="Aucun" />
+  <Coach Name="Aegnor" Team="Aegnor" Roster="Orque" NAF="23352" Rank="110" Clan="Aucun" />
+  <Coach Name="Racklhur" Team="Racklur" Roster="Bas-Fonds" NAF="12063" Rank="110" Clan="Aucun" />
+  <Coach Name="Petitof" Team="Petittof" Roster="Nurgle" NAF="22669" Rank="110" Clan="Aucun" />
+  <Coach Name="Buldogr" Team="Buldogr" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="CoolCan" Team="CoolCan" Roster="Nain" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Shogun" Team="Shogun" Roster="Chaos" NAF="12990" Rank="110" Clan="Aucun" />
+  <Coach Name="Magikmoon" Team="Magikmoon" Roster="Bas-Fonds" NAF="10320" Rank="110" Clan="Aucun" />
+  <Coach Name="Darkkraak" Team="Darkkraak" Roster="Nordiques" NAF="13424" Rank="110" Clan="Aucun" />
+  <Coach Name="Metalpha" Team="Metalpha" Roster="Amazone" NAF="22004" Rank="110" Clan="Aucun" />
+  <Coach Name="Sebco" Team="Sebco" Roster="Chaos" NAF="6261" Rank="110" Clan="Aucun" />
+  <Coach Name="Chocho" Team="Chocho" Roster="Khemri" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="MadCoach" Team="MadCoach" Roster="Orque" NAF="24053" Rank="110" Clan="Aucun" />
+  <Coach Name="Carpenter" Team="Carpenter" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Reqqy" Team="Reqqy" Roster="Orque" NAF="21550" Rank="110" Clan="Aucun" />
+  <Coach Name="Benny" Team="Benny" Roster="Humain" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Zom" Team="Zom" Roster="Haut Elfe" NAF="20145" Rank="110" Clan="Aucun" />
+  <Coach Name="Loamelas" Team="Loamelas" Roster="Homme Lézard" NAF="21136" Rank="110" Clan="Aucun" />
+  <Coach Name="Graam wuulfson" Team="Graam wuulfson" Roster="Nain" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Cram xuortud" Team="Cram xuorthud" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="BlackJack" Team="BlackJack" Roster="Skaven" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Moadib" Team="Moadib" Roster="Nain" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Rascal1" Team="Rascal1" Roster="Mort-Vivant" NAF="21458" Rank="110" Clan="Aucun" />
+  <Coach Name="Dasgirian" Team="Dasgirian" Roster="Orque" NAF="21405" Rank="110" Clan="Aucun" />
+  <Coach Name="Lordhur" Team="Lordhur" Roster="Humain" NAF="15579" Rank="110" Clan="Aucun" />
+  <Coach Name="Génépix" Team="Génépix" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Jimnastic" Team="Jimnastic" Roster="Necromantiques" NAF="17378" Rank="110" Clan="Aucun" />
+  <Coach Name="MLeud" Team="MLeud" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Croustix" Team="Croustix" Roster="Elfe Sylvain" NAF="22231" Rank="110" Clan="Aucun" />
+  <Coach Name="GHostGorn" Team="GhostGorn" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Sran" Team="Sran" Roster="Halfling" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Ghost" Team="Ghost" Roster="Orque" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Crom" Team="Crom" Roster="Necromantiques" NAF="13555" Rank="110" Clan="Aucun" />
+  <Coach Name="Radagast" Team="radagast" Roster="Skaven" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Getyaya" Team="Getyaya" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Drong" Team="Drong" Roster="Orque" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Elyacin" Team="Elyacin" Roster="Mort-Vivant" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Redlantern" Team="Redlantern" Roster="Skaven" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Singsorrow" Team="Singsorrow" Roster="Bas-Fonds" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Leto" Team="Leto" Roster="Elfe Sylvain" NAF="17484" Rank="110" Clan="Aucun" />
+  <Coach Name="Ulfwenner" Team="Ulfwenner" Roster="Skaven" NAF="20667" Rank="110" Clan="Aucun" />
+  <Coach Name="Cossack" Team="Cossack" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Kima" Team="Kima" Roster="Pacte Chaotique" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Bibi" Team="Bibi" Roster="Elfe Sylvain" NAF="11491" Rank="110" Clan="Aucun" />
+  <Coach Name="Elyoukey" Team="Elyoukey" Roster="Mort-Vivant" NAF="8836" Rank="110" Clan="Aucun" />
+  <Coach Name="petitlutin" Team="petitlutin" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Greenrepaer" Team="Greenreaper" Roster="Orque" NAF="13732" Rank="110" Clan="Aucun" />
+  <Coach Name="Obelix" Team="Obelix" Roster="Gobelin" NAF="0" Rank="110" Clan="Aucun" />
+  <Coach Name="Fredao" Team="Fredao" Roster="Halfling" NAF="17005" Rank="110" Clan="Aucun" />
+  <Coach Name="Yoxcoco1" Team="Yoxcocco1" Roster="Orque" NAF="0" Rank="110" Clan="Aucun" />
+  <Team Name="Dalton troll">
+    <Coach Name="Cyrlesir" />
+    <Coach Name="Oeil cendre" />
+  </Team>
+  <Team Name="Poulpotes">
+    <Coach Name="Paulpott" />
+    <Coach Name="Poulpi" />
+  </Team>
+  <Team Name="Vieux Mercenaires">
+    <Coach Name="Tristelune" />
+    <Coach Name="Lord Bojo" />
+  </Team>
+  <Team Name="La Chouine">
+    <Coach Name="Helborg" />
+    <Coach Name="Oldwarf" />
+  </Team>
+  <Team Name="Team Gropaquets">
+    <Coach Name="Jersinho07" />
+    <Coach Name="Lohu" />
+  </Team>
+  <Team Name="la nain au cul">
+    <Coach Name="Tulkas" />
+    <Coach Name="Quizz" />
+  </Team>
+  <Team Name="Les DSK">
+    <Coach Name="Winny" />
+    <Coach Name="Pop" />
+  </Team>
+  <Team Name="Kingz Moulasse">
+    <Coach Name="PapaGégé" />
+    <Coach Name="Duckynator" />
+  </Team>
+  <Team Name="sous marins couineurs">
+    <Coach Name="Obsidian" />
+    <Coach Name="Pilaf" />
+  </Team>
+  <Team Name="GBLR">
+    <Coach Name="Lulu" />
+    <Coach Name="Aegnor" />
+  </Team>
+  <Team Name="Rebloch&amp;Cancoillotte">
+    <Coach Name="Racklhur" />
+    <Coach Name="Petitof" />
+  </Team>
+  <Team Name="Famille Loups">
+    <Coach Name="Buldogr" />
+    <Coach Name="CoolCan" />
+  </Team>
+  <Team Name="SM">
+    <Coach Name="Shogun" />
+    <Coach Name="Magikmoon" />
+  </Team>
+  <Team Name="Steam Dwarves">
+    <Coach Name="Darkkraak" />
+    <Coach Name="Metalpha" />
+  </Team>
+  <Team Name="Dahu-gnons">
+    <Coach Name="Sebco" />
+    <Coach Name="Chocho" />
+  </Team>
+  <Team Name="The East Reapers">
+    <Coach Name="MadCoach" />
+    <Coach Name="Carpenter" />
+  </Team>
+  <Team Name="Bolkon Boite de Base">
+    <Coach Name="Reqqy" />
+    <Coach Name="Benny" />
+  </Team>
+  <Team Name="Bolkon BG 87">
+    <Coach Name="Zom" />
+    <Coach Name="Loamelas" />
+  </Team>
+  <Team Name="Bolkon new team">
+    <Coach Name="Graam wuulfson" />
+    <Coach Name="Cram xuortud" />
+  </Team>
+  <Team Name="Bolkon des marais">
+    <Coach Name="BlackJack" />
+    <Coach Name="Moadib" />
+  </Team>
+  <Team Name="Les pas de mauvais match up">
+    <Coach Name="Rascal1" />
+    <Coach Name="Dasgirian" />
+  </Team>
+  <Team Name="Savoie Libre">
+    <Coach Name="Lordhur" />
+    <Coach Name="Génépix" />
+  </Team>
+  <Team Name="Loups dans Bergerie">
+    <Coach Name="Jimnastic" />
+    <Coach Name="MLeud" />
+  </Team>
+  <Team Name="Spécialiste travers porc sel poivre">
+    <Coach Name="GHostGorn" />
+    <Coach Name="Sran" />
+  </Team>
+  <Team Name="Jouer guerre salsifie">
+    <Coach Name="Ghost" />
+    <Coach Name="Crom" />
+  </Team>
+  <Team Name="Cabaleux">
+    <Coach Name="Radagast" />
+    <Coach Name="Getyaya" />
+  </Team>
+  <Team Name="Gang de loup">
+    <Coach Name="Drong" />
+    <Coach Name="Elyacin" />
+  </Team>
+  <Team Name="NHAINE AIR RATS">
+    <Coach Name="Redlantern" />
+    <Coach Name="Singsorrow" />
+  </Team>
+  <Team Name="l'averngers">
+    <Coach Name="Leto" />
+    <Coach Name="Ulfwenner" />
+  </Team>
+  <Team Name="Dans ton cul daho">
+    <Coach Name="Cossack" />
+    <Coach Name="Kima" />
+  </Team>
+  <Team Name="Krox et Bully">
+    <Coach Name="Bibi" />
+    <Coach Name="Elyoukey" />
+  </Team>
+  <Team Name="OLASSE">
+    <Coach Name="petitlutin" />
+    <Coach Name="Greenrepaer" />
+  </Team>
+  <Team Name="Team Orga">
+    <Coach Name="Obelix" />
+    <Coach Name="Fredao" />
+  </Team>
+  <Team Name="Cigognes power">
+    <Coach Name="Croustix" />
+    <Coach Name="Yoxcoco1" />
+  </Team>
+  <Ronde Date="02/12/2017 10:05:26">
+    <Match Coach1="BlackJack" Coach2="Bibi">
+      <Value Name="Touchdowns" Value1="2" Value2="2" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Moadib" Coach2="Elyoukey">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Lulu" Coach2="GHostGorn">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Aegnor" Coach2="Sran">
+      <Value Name="Touchdowns" Value1="2" Value2="3" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="petitlutin" Coach2="Elyacin">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Greenrepaer" Coach2="Drong">
+      <Value Name="Touchdowns" Value1="0" Value2="3" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Graam wuulfson" Coach2="Lordhur">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Cram xuortud" Coach2="Génépix">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="MadCoach" Coach2="Reqqy">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Carpenter" Coach2="Benny">
+      <Value Name="Touchdowns" Value1="1" Value2="3" />
+      <Value Name="Sorties" Value1="0" Value2="5" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Winny" Coach2="Loamelas">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="4" />
+      <Value Name="Agressions" Value1="3" Value2="0" />
+    </Match>
+    <Match Coach1="Pop" Coach2="Zom">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Leto" Coach2="Lord Bojo">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Ulfwenner" Coach2="Tristelune">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Redlantern" Coach2="Jersinho07">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Singsorrow" Coach2="Lohu">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Tulkas" Coach2="Paulpott">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Quizz" Coach2="Poulpi">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Helborg" Coach2="Chocho">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="3" />
+    </Match>
+    <Match Coach1="Oldwarf" Coach2="Sebco">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Agressions" Value1="1" Value2="1" />
+    </Match>
+    <Match Coach1="Rascal1" Coach2="Obsidian">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Dasgirian" Coach2="Pilaf">
+      <Value Name="Touchdowns" Value1="1" Value2="3" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="PapaGégé" Coach2="Croustix">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Duckynator" Coach2="Yoxcoco1">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Shogun" Coach2="Jimnastic">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Magikmoon" Coach2="MLeud">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="5" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Obelix" Coach2="Kima">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Fredao" Coach2="Cossack">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Radagast" Coach2="Darkkraak">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Getyaya" Coach2="Metalpha">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Racklhur" Coach2="Oeil cendre">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="Cyrlesir">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="5" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Buldogr" Coach2="Ghost">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Agressions" Value1="2" Value2="0" />
+    </Match>
+    <Match Coach1="CoolCan" Coach2="Crom">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+  </Ronde>
+  <Ronde Date="02/12/2017 13:45:27">
+    <Match Coach1="Shogun" Coach2="Pilaf">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="4" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Magikmoon" Coach2="Obsidian">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Drong" Coach2="PapaGégé">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="5" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Elyacin" Coach2="Duckynator">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Paulpott" Coach2="Elyoukey">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="4" />
+      <Value Name="Agressions" Value1="1" Value2="1" />
+    </Match>
+    <Match Coach1="Poulpi" Coach2="Bibi">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Benny" Coach2="Fredao">
+      <Value Name="Touchdowns" Value1="3" Value2="0" />
+      <Value Name="Sorties" Value1="4" Value2="0" />
+      <Value Name="Agressions" Value1="2" Value2="0" />
+    </Match>
+    <Match Coach1="Reqqy" Coach2="Obelix">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Ulfwenner" Coach2="Racklhur">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="3" />
+    </Match>
+    <Match Coach1="Leto" Coach2="Petitof">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Sebco" Coach2="Lulu">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Agressions" Value1="2" Value2="0" />
+    </Match>
+    <Match Coach1="Chocho" Coach2="Aegnor">
+      <Value Name="Touchdowns" Value1="0" Value2="3" />
+      <Value Name="Sorties" Value1="1" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pop" Coach2="Helborg">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Winny" Coach2="Oldwarf">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Sran" Coach2="Loamelas">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="GHostGorn" Coach2="Zom">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Agressions" Value1="2" Value2="0" />
+    </Match>
+    <Match Coach1="Singsorrow" Coach2="Radagast">
+      <Value Name="Touchdowns" Value1="2" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Redlantern" Coach2="Getyaya">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="2" />
+    </Match>
+    <Match Coach1="Jersinho07" Coach2="Graam wuulfson">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="5" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Lohu" Coach2="Cram xuortud">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Génépix" Coach2="Crom">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Lordhur" Coach2="Ghost">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Buldogr" Coach2="Metalpha">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="4" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="CoolCan" Coach2="Darkkraak">
+      <Value Name="Touchdowns" Value1="0" Value2="4" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Cyrlesir" Coach2="Lord Bojo">
+      <Value Name="Touchdowns" Value1="3" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Oeil cendre" Coach2="Tristelune">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Kima" Coach2="BlackJack">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="4" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Cossack" Coach2="Moadib">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="6" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="MadCoach" Coach2="Croustix">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Carpenter" Coach2="Yoxcoco1">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="5" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Tulkas" Coach2="MLeud">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Quizz" Coach2="Jimnastic">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Dasgirian" Coach2="petitlutin">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Rascal1" Coach2="Greenrepaer">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+  </Ronde>
+  <Ronde Date="02/12/2017 17:17:35">
+    <Match Coach1="Benny" Coach2="Racklhur">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="5" Value2="0" />
+      <Value Name="Agressions" Value1="3" Value2="1" />
+    </Match>
+    <Match Coach1="Reqqy" Coach2="Petitof">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Drong" Coach2="Obsidian">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Elyacin" Coach2="Pilaf">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Loamelas" Coach2="Shogun">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Zom" Coach2="Magikmoon">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Crom" Coach2="Poulpi">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Ghost" Coach2="Paulpott">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Duckynator" Coach2="Elyoukey">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="PapaGégé" Coach2="Bibi">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Radagast" Coach2="Jersinho07">
+      <Value Name="Touchdowns" Value1="4" Value2="0" />
+      <Value Name="Sorties" Value1="6" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Getyaya" Coach2="Lohu">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="BlackJack" Coach2="MadCoach">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="7" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Moadib" Coach2="Carpenter">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="5" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Aegnor" Coach2="Helborg">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Lulu" Coach2="Oldwarf">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Winny" Coach2="Sebco">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="3" Value2="0" />
+    </Match>
+    <Match Coach1="Pop" Coach2="Chocho">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Metalpha" Coach2="Ulfwenner">
+      <Value Name="Touchdowns" Value1="0" Value2="5" />
+      <Value Name="Sorties" Value1="2" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Darkkraak" Coach2="Leto">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Fredao" Coach2="Buldogr">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="7" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Obelix" Coach2="CoolCan">
+      <Value Name="Touchdowns" Value1="3" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="2" />
+    </Match>
+    <Match Coach1="Singsorrow" Coach2="Graam wuulfson">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Redlantern" Coach2="Cram xuortud">
+      <Value Name="Touchdowns" Value1="0" Value2="3" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Cyrlesir" Coach2="Génépix">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Oeil cendre" Coach2="Lordhur">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Tristelune" Coach2="Sran">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Lord Bojo" Coach2="GHostGorn">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Tulkas" Coach2="Rascal1">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Quizz" Coach2="Dasgirian">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="MLeud" Coach2="petitlutin">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="1" Value2="1" />
+    </Match>
+    <Match Coach1="Jimnastic" Coach2="Greenrepaer">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Kima" Coach2="Yoxcoco1">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="5" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Cossack" Coach2="Croustix">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Agressions" Value1="4" Value2="0" />
+    </Match>
+  </Ronde>
+  <Ronde Date="02/12/2017 21:03:53">
+    <Match Coach1="Racklhur" Coach2="Crom">
+      <Value Name="Touchdowns" Value1="3" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="2" />
+      <Value Name="Agressions" Value1="3" Value2="0" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="Ghost">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Radagast" Coach2="Elyoukey">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="4" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Getyaya" Coach2="Bibi">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Drong" Coach2="BlackJack">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Elyacin" Coach2="Moadib">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Shogun" Coach2="Benny">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="2" />
+    </Match>
+    <Match Coach1="Magikmoon" Coach2="Reqqy">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="4" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Ulfwenner" Coach2="Winny">
+      <Value Name="Touchdowns" Value1="5" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="3" />
+    </Match>
+    <Match Coach1="Leto" Coach2="Pop">
+      <Value Name="Touchdowns" Value1="2" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="3" />
+    </Match>
+    <Match Coach1="Graam wuulfson" Coach2="Obsidian">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Cram xuortud" Coach2="Pilaf">
+      <Value Name="Touchdowns" Value1="0" Value2="3" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Loamelas" Coach2="Helborg">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Zom" Coach2="Oldwarf">
+      <Value Name="Touchdowns" Value1="3" Value2="0" />
+      <Value Name="Sorties" Value1="4" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Duckynator" Coach2="Rascal1">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="PapaGégé" Coach2="Dasgirian">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Poulpi" Coach2="Kima">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Paulpott" Coach2="Cossack">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Sran" Coach2="Obelix">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="4" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="GHostGorn" Coach2="Fredao">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="2" Value2="1" />
+    </Match>
+    <Match Coach1="Jersinho07" Coach2="MadCoach">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Lohu" Coach2="Carpenter">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="MLeud" Coach2="Buldogr">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Jimnastic" Coach2="CoolCan">
+      <Value Name="Touchdowns" Value1="3" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Aegnor" Coach2="Cyrlesir">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Lulu" Coach2="Oeil cendre">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Lordhur" Coach2="Tristelune">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Génépix" Coach2="Lord Bojo">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="2" />
+    </Match>
+    <Match Coach1="Darkkraak" Coach2="Sebco">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Metalpha" Coach2="Chocho">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="3" />
+    </Match>
+    <Match Coach1="Singsorrow" Coach2="petitlutin">
+      <Value Name="Touchdowns" Value1="3" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Redlantern" Coach2="Greenrepaer">
+      <Value Name="Touchdowns" Value1="4" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Quizz" Coach2="Yoxcoco1">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Tulkas" Coach2="Croustix">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+  </Ronde>
+  <Ronde Date="03/12/2017 11:39:37">
+    <Match Coach1="Racklhur" Coach2="Elyoukey">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="Bibi">
+      <Value Name="Touchdowns" Value1="0" Value2="5" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Moadib" Coach2="Shogun">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="BlackJack" Coach2="Magikmoon">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="5" Value2="2" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Ulfwenner" Coach2="Crom">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Leto" Coach2="Ghost">
+      <Value Name="Touchdowns" Value1="4" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Drong" Coach2="Poulpi">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Elyacin" Coach2="Paulpott">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Radagast" Coach2="Benny">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Getyaya" Coach2="Reqqy">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="5" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Duckynator" Coach2="Pilaf">
+      <Value Name="Touchdowns" Value1="1" Value2="3" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="PapaGégé" Coach2="Obsidian">
+      <Value Name="Touchdowns" Value1="1" Value2="3" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="Zom" Coach2="Graam wuulfson">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="4" />
+      <Value Name="Agressions" Value1="0" Value2="1" />
+    </Match>
+    <Match Coach1="Loamelas" Coach2="Cram xuortud">
+      <Value Name="Touchdowns" Value1="4" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Sran" Coach2="Helborg">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="GHostGorn" Coach2="Oldwarf">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="6" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Lohu" Coach2="Pop">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="2" />
+    </Match>
+    <Match Coach1="Jersinho07" Coach2="Winny">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Cyrlesir" Coach2="Sebco">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Oeil cendre" Coach2="Chocho">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="3" />
+    </Match>
+    <Match Coach1="Lordhur" Coach2="Singsorrow">
+      <Value Name="Touchdowns" Value1="0" Value2="4" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Agressions" Value1="1" Value2="1" />
+    </Match>
+    <Match Coach1="Génépix" Coach2="Redlantern">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Rascal1" Coach2="Jimnastic">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Dasgirian" Coach2="MLeud">
+      <Value Name="Touchdowns" Value1="3" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Buldogr" Coach2="MadCoach">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="5" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="CoolCan" Coach2="Carpenter">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Obelix" Coach2="Tulkas">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="6" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Fredao" Coach2="Quizz">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Kima" Coach2="Aegnor">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Cossack" Coach2="Lulu">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Tristelune" Coach2="Metalpha">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Agressions" Value1="2" Value2="1" />
+    </Match>
+    <Match Coach1="Lord Bojo" Coach2="Darkkraak">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+    <Match Coach1="petitlutin" Coach2="Yoxcoco1">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Agressions" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Greenrepaer" Coach2="Croustix">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Agressions" Value1="1" Value2="0" />
+    </Match>
+  </Ronde>
+</Tournament>

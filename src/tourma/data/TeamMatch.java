@@ -348,7 +348,7 @@ public class TeamMatch extends Match implements Serializable {
      * @param match
      */
     @Override
-    public void setXMLElement(final Element match) {
+    public void setXMLElement(final Element match) throws NullPointerException {
 
         String c1 = "";
         String c2 = "";
@@ -391,6 +391,7 @@ public class TeamMatch extends Match implements Serializable {
 
             mMatchs.add(m);
         }
+
     }
 
     /**
@@ -812,7 +813,7 @@ public class TeamMatch extends Match implements Serializable {
             }
         } else if (victories < loss) {
             if (Tournament.getTournament().getParams().isUseTeamLittleLoss()) {
-                if (loss-victories <= Tournament.getTournament().getParams().getGapTeamLittleLost()) {
+                if (loss - victories <= Tournament.getTournament().getParams().getGapTeamLittleLost()) {
                     countTeamLittleLoss++;
                 } else {
                     countTeamLoss++;

@@ -38,6 +38,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import tourma.MainFrame;
+import static tourma.data.RosterType.translate;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtAnnexRankIndiv;
@@ -46,6 +47,7 @@ import tourma.tableModel.MjtRankingClan;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.StringConstants;
+import tourma.utils.NAF;
 
 /**
  *
@@ -85,21 +87,19 @@ public class Tournament implements IContainCoachs, Serializable {
         }
     }
 
-    public ArrayList<Team> getTeams()
-    {
+    public ArrayList<Team> getTeams() {
         return mTeams;
     }
-    
-    public ArrayList<Coach> getCoachs()
-    {
+
+    public ArrayList<Coach> getCoachs() {
         return mCoachs;
     }
-    
+
     /**
      *
      * @return
      */
-      public static Tournament getTournament() {
+    public static Tournament getTournament() {
         synchronized (Tournament.myLock) {
             if (mSingleton == null) {
                 mSingleton = new Tournament();
@@ -212,7 +212,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void addClan(Clan c) {
         mClans.add(c);
-        clansUpdated=true;
+        clansUpdated = true;
     }
 
     /**
@@ -221,7 +221,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeClan(Clan c) {
         mClans.remove(c);
-        clansUpdated=true;
+        clansUpdated = true;
     }
 
     /**
@@ -231,7 +231,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeClan(int c) {
         mClans.remove(c);
-        clansUpdated=true;
+        clansUpdated = true;
     }
 
     /**
@@ -239,7 +239,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void clearClans() {
         mClans.clear();
-        clansUpdated=true;
+        clansUpdated = true;
     }
 
     /**
@@ -332,7 +332,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeTeam(Team c) {
         mTeams.remove(c);
-        teamsUpdated=true;
+        teamsUpdated = true;
     }
 
     /**
@@ -395,7 +395,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeTeam(int c) {
         mTeams.remove(c);
-        teamsUpdated=true;
+        teamsUpdated = true;
     }
 
     /**
@@ -504,7 +504,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeCoach(Coach i) {
         mCoachs.remove(i);
-         coachsUpdated=true;
+        coachsUpdated = true;
     }
 
     /**
@@ -514,7 +514,7 @@ public class Tournament implements IContainCoachs, Serializable {
     @Override
     public void removeCoach(int i) {
         mCoachs.remove(i);
-        coachsUpdated=true;
+        coachsUpdated = true;
 
     }
 
@@ -535,7 +535,7 @@ public class Tournament implements IContainCoachs, Serializable {
     public void addCoach(Coach c) {
         mCoachs.add(c);
         Coach.putCoach(c.getName(), c);
-        coachsUpdated=true;
+        coachsUpdated = true;
     }
 
     /**
@@ -1190,28 +1190,76 @@ public class Tournament implements IContainCoachs, Serializable {
                 writer.println(java.text.MessageFormat.format(("<organiser>{0}</organiser>"), new Object[]{mParams.getTournamentOrga()}));
                 writer.println(("<coaches>"));
                 for (Coach mCoach : mCoachs) {
+
+                    if (mCoach.getNaf() == 0) {
+                        int option = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.text.MessageFormat.format(Translate.translate("NotNaf, confirm"), new Object[]{mCoach.getName()}), "NAF", JOptionPane.YES_NO_OPTION);
+                        if (option == JOptionPane.NO_OPTION) {
+                            boolean valid = false;
+                            while (!valid) {
+                                String name = mCoach.getName();
+                                Object obj = JOptionPane.showInputDialog(Translate.translate("Confirm the name"), (Object) name);
+                                if (obj instanceof String) {
+
+                                    mCoach.setName((String) obj);
+
+                                    Object[] choices = {Translate.translate("Enter NAF number manually"),
+                                        Translate.translate("Download NAF Number"),
+                                        Translate.translate("Cancel")};
+
+                                    Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(),
+                                            Translate.translate("How to get NAF number"),
+                                            "NAF", JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+
+                                    if (choice == choices[0]) {
+                                        Object obj2 = JOptionPane.showInputDialog(Translate.translate("NAF Number"), (Object) "0");
+                                        if (obj2 instanceof String) {
+                                            int naf = Integer.parseInt((String) obj2);
+                                            if (naf > 0) {
+                                                mCoach.setNaf(naf);
+                                            } else {
+                                                JOptionPane.showMessageDialog(null, Translate.translate("Invalid NAF number"), "NAF", JOptionPane.ERROR_MESSAGE);
+                                                valid = false;
+                                            }
+                                        }
+                                    }
+                                    if (choice == choices[1]) {
+                                        NAF.updateCoachID(mCoach);
+                                        if (mCoach.getNaf() == 0) {
+                                            JOptionPane.showMessageDialog(null, Translate.translate("Coach Not found, probably bad name"), "NAF", JOptionPane.ERROR_MESSAGE);
+                                            valid = false;
+                                        } else {
+                                            valid = true;
+                                        }
+                                    }
+                                    if (choice == choices[2]) {
+                                        valid = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     if (mCoach.getNaf() > 0) {
                         String naf = Integer.toString(mCoach.getNaf());
 
                         writer.println(("<coach>"));
                         writer.println(java.text.MessageFormat.format("<name>{0}</name>", new Object[]{mCoach.getName()}));
                         writer.println(java.text.MessageFormat.format("<number>{0}</number>", new Object[]{naf}));
-                        String naf_roster=RosterType.getRosterTranslation(mCoach.getRoster().getName());
-                        if (naf_roster=="Unknown")
-                        {
-                            Object[] rosters={ "Amazons","Bretonnians","Chaos","Chaos Dwarves",
-                                "Chaos Pact","Dark Elves","Dwarves","Goblins","Halflings",
-                                "High Elves","Humans","Khemri","Khorne","Lizardmen","Necromantic",
-                                "Norse","Nurgle's Rotters","Ogres","Orc","Elves","Slann","Skaven",
-                                "Undead","Underworld","Vampires","Wood Elves"};
+                        String naf_roster = RosterType.getRosterTranslation(mCoach.getRoster().getName());
+                        if (naf_roster.equals(RosterType.translate("UNKNOWN"))) {
+                            Object[] rosters = {"Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
+                                "Chaos Pact", "Dark Elves", "Dwarves", "Goblins", "Halflings",
+                                "High Elves", "Humans", "Khemri", "Khorne", "Lizardmen", "Necromantic",
+                                "Norse", "Nurgle's Rotters", "Ogres", "Orc", "Elves", "Slann", "Skaven",
+                                "Undead", "Underworld", "Vampires", "Wood Elves"};
 
-                               Object choice=JOptionPane.showInputDialog(MainFrame.getMainFrame(), 
-                                       "Roster not recognized fo coach "+mCoach.getName()+". \nlease choose the right one:",
-                                       "Roster Choice",JOptionPane.WARNING_MESSAGE,null,rosters,rosters[0]);
-                               
-                               naf_roster=(String)choice;
-                               
-                        }                        
+                            Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(),
+                                    "Roster not recognized fo coach " + mCoach.getName() + "(" + mCoach.getRoster().getName() + "). \nlease choose the right one:",
+                                    "Roster Choice", JOptionPane.WARNING_MESSAGE, null, rosters, rosters[0]);
+
+                            naf_roster = (String) choice;
+
+                        }
                         writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{naf_roster}));
                         writer.println(("</coach>"));
                     }
@@ -1547,7 +1595,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeRound(Round r) {
         mRounds.remove(r);
-        roundsUpdated=true;
+        roundsUpdated = true;
     }
 
     /**
@@ -1556,7 +1604,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void removeRound(int r) {
         mRounds.remove(r);
-        roundsUpdated=true;
+        roundsUpdated = true;
     }
 
     public String getDescription() {
@@ -1919,32 +1967,27 @@ public class Tournament implements IContainCoachs, Serializable {
         }
     }
 
-    public void resetUpdated()
-    {
-        this.clansUpdated=false;
-        this.coachsUpdated=false;
-        this.teamsUpdated=false;
-        this.roundsUpdated=false;
-        
-        for (Round r:mRounds)
-        {
+    public void resetUpdated() {
+        this.clansUpdated = false;
+        this.coachsUpdated = false;
+        this.teamsUpdated = false;
+        this.roundsUpdated = false;
+
+        for (Round r : mRounds) {
             r.setUpdated(false);
         }
-        
-        for (Coach c:mCoachs)
-        {
+
+        for (Coach c : mCoachs) {
             c.setUpdated(false);
         }
-        
-        for (Team t:mTeams)
-        {
+
+        for (Team t : mTeams) {
             t.setUpdated(false);
         }
-        
-        for (Clan c:mClans)
-        {
+
+        for (Clan c : mClans) {
             c.setUpdated(false);
         }
-                
+
     }
 }

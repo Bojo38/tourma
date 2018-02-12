@@ -482,13 +482,13 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("DwarfKey"))) {
             result = translate("DWARVES");
         }
-        if ((source.equals(translate("ChaosDwarfKey")))||(source.equals(translate("ChaosDwarfKey2")))) {
+        if ((source.equals(translate("ChaosDwarfKey")))||(source.equals(translate("ChaosDwarfKey2")))||(source.equals("Nain du Chaos"))) {
             result = translate("CHAOS DWARVES");
         }
-        if (source.equals(translate("NecromanticKey"))) {
+        if ((source.equals(translate("NecromanticKey")))||(source.equals("Necromantiques"))) {
             result = translate("NECROMANTIC");
         }
-        if (source.equals(translate("NorseKey"))) {
+        if ((source.equals(translate("NorseKey")))||(source.equals("Nordiques"))) {
             result = translate("NORSE");
         }
         if (source.equals(translate("NurgleKey"))) {

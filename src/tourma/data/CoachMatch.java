@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
+import org.jfree.util.Log;
 import tourma.MainFrame;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
@@ -31,7 +32,7 @@ public class CoachMatch extends Match implements Serializable {
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
 
-    protected boolean remotely=false;
+    protected boolean remotely = false;
 
     public boolean isRemotely() {
         return remotely;
@@ -40,7 +41,7 @@ public class CoachMatch extends Match implements Serializable {
     public void setRemotely(boolean isRemotely) {
         this.remotely = isRemotely;
     }
-    
+
     public int getUID() {
         return UID;
     }
@@ -440,6 +441,7 @@ public class CoachMatch extends Match implements Serializable {
         try {
             final String c1 = match.getAttribute(StringConstants.CS_COACH + 1).getValue();
             final String c2 = match.getAttribute(StringConstants.CS_COACH + 2).getValue();
+            
             this.setCompetitor1(Coach.getCoach(c1));
             this.setCompetitor2(Coach.getCoach(c2));
             if (this.getCompetitor1() == null) {
@@ -459,7 +461,7 @@ public class CoachMatch extends Match implements Serializable {
                 setRefusedBy1(false);
                 setRefusedBy2(false);
                 setConcedeedBy1(false);
-                setConcedeedBy2(concedeedBy2);
+                setConcedeedBy2(false);
             }
 
             if (((Coach) getCompetitor1()) != null) {
@@ -491,6 +493,7 @@ public class CoachMatch extends Match implements Serializable {
 
                     if (criteria.getName().equals(tmp)) {
                         crit = criteria;
+                        break;
                     }
                 }
                 final Value value = new Value(crit);
@@ -526,6 +529,7 @@ public class CoachMatch extends Match implements Serializable {
         } catch (DataConversionException dce) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
+        this.recomputeValues();
     }
 
     /**
@@ -1437,8 +1441,8 @@ public class CoachMatch extends Match implements Serializable {
                                 if ((j == 0) && (value2 == -1)) {
                                     value2 = 0;
                                 }
-                                bonus += value1 * cri.getPointsFor();
-                                bonus += value2 * cri.getPointsAgainst();
+                                bonus += value2 * cri.getPointsFor();
+                                bonus += value1 * cri.getPointsAgainst();
 
                             }
                             if (Tournament.getTournament().getParams().isTableBonus()) {
@@ -1542,5 +1546,57 @@ public class CoachMatch extends Match implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public void switchCoachs() {
+        Competitor c_tmp = mCompetitor1;
+        mCompetitor1 = mCompetitor2;
+        mCompetitor2 = c_tmp;
+
+        int value_tmp = this.c1value1;
+        c1value1 = this.c2value1;
+        c2value1 = value_tmp;
+
+        value_tmp = this.c1value2;
+        c1value2 = this.c2value2;
+        c2value2 = value_tmp;
+
+        value_tmp = this.c1value3;
+        c1value3 = this.c2value3;
+        c2value3 = value_tmp;
+
+        value_tmp = this.c1value4;
+        c1value4 = this.c2value4;
+        c2value4 = value_tmp;
+
+        value_tmp = this.c1value5;
+        c1value5 = this.c2value5;
+        c2value5 = value_tmp;
+
+        boolean b_tmp = this.concedeedBy1;
+        concedeedBy1 = this.concedeedBy2;
+        concedeedBy2 = b_tmp;
+
+        b_tmp = this.refusedBy1;
+        refusedBy1 = this.refusedBy2;
+        refusedBy2 = b_tmp;
+
+        RosterType r_tmp = this.mRoster1;
+        this.mRoster1 = this.mRoster2;
+        this.mRoster2 = r_tmp;
+
+        Substitute s_tmp = this.mSubstitute1;
+        this.mSubstitute1 = this.mSubstitute2;
+        this.mSubstitute2 = s_tmp;
+
+        
+        for (int i=0; i< Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            Criteria crit=Tournament.getTournament().getParams().getCriteria(i);
+            Value val=mValues.get(crit);
+            value_tmp=val.getValue1();
+            val.setValue1(val.getValue2());
+            val.setValue2(value_tmp);
+        }
+
     }
 }
