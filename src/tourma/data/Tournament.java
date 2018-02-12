@@ -1223,7 +1223,7 @@ public class Tournament implements IContainCoachs, Serializable {
                                         }
                                     }
                                     if (choice == choices[1]) {
-                                        NAF.getRanking(mCoach.getName(), mCoach);
+                                        NAF.updateCoachID(mCoach);
                                         if (mCoach.getNaf() == 0) {
                                             JOptionPane.showMessageDialog(null, Translate.translate("Coach Not found, probably bad name"), "NAF", JOptionPane.ERROR_MESSAGE);
                                             valid = false;

@@ -359,7 +359,9 @@ public final class JdgCoach extends javax.swing.JDialog {
         jckActive = new javax.swing.JCheckBox();
         jlbHandicap = new javax.swing.JLabel();
         jtfHandicap = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
         jbtDownloadFromNaf = new javax.swing.JButton();
+        jbtUpdateFromDb = new javax.swing.JButton();
         jlbNafRanking = new javax.swing.JLabel();
         jbtPinCode = new javax.swing.JButton();
         jtfPinCode = new javax.swing.JTextField();
@@ -541,13 +543,25 @@ public final class JdgCoach extends javax.swing.JDialog {
         jtfHandicap.setText(bundle.getString("110")); // NOI18N
         jPanel1.add(jtfHandicap);
 
+        jPanel7.setLayout(new java.awt.GridLayout());
+
         jbtDownloadFromNaf.setText(bundle.getString("DOWNLOAD FROM NAF")); // NOI18N
         jbtDownloadFromNaf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtDownloadFromNafActionPerformed(evt);
             }
         });
-        jPanel1.add(jbtDownloadFromNaf);
+        jPanel7.add(jbtDownloadFromNaf);
+
+        jbtUpdateFromDb.setText(bundle.getString("UPDATE FROM NAF DB")); // NOI18N
+        jbtUpdateFromDb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtUpdateFromDbActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jbtUpdateFromDb);
+
+        jPanel1.add(jPanel7);
 
         jlbNafRanking.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNafRanking.setText("150");
@@ -723,7 +737,7 @@ public final class JdgCoach extends javax.swing.JDialog {
     }//GEN-LAST:event_jcbRosterActionPerformed
 
     private void jbtDownloadFromNafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtDownloadFromNafActionPerformed
-
+        
         double rank = NAF.getRanking(jtfNom.getText(), mCoach);
         jtfNAF.setText(Integer.toString(mCoach.getNaf()));
         jlbNafRanking.setText(Double.toString(mCoach.getNafRank()) + " (" + Double.toString(mCoach.getNafRankAvg()) + ")");
@@ -946,6 +960,10 @@ public final class JdgCoach extends javax.swing.JDialog {
         jtfPinCode.setText(Integer.toString(ran));
     }//GEN-LAST:event_jbtPinCodeActionPerformed
 
+    private void jbtUpdateFromDbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtUpdateFromDbActionPerformed
+        NAF.updateCoachID(mCoach);
+    }//GEN-LAST:event_jbtUpdateFromDbActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -960,6 +978,7 @@ public final class JdgCoach extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbtAdd;
@@ -972,6 +991,7 @@ public final class JdgCoach extends javax.swing.JDialog {
     private javax.swing.JButton jbtEditRoster;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtPinCode;
+    private javax.swing.JButton jbtUpdateFromDb;
     private javax.swing.JComboBox jcbClan;
     private javax.swing.JComboBox jcbRoster;
     private javax.swing.JCheckBox jckActive;

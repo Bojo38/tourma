@@ -95,11 +95,6 @@ public final class JdgReport extends javax.swing.JDialog {
      * @param modal
      * @param roundNumber
      * @param tour
-     * @param team
-     * @param annexForRankings
-     * @param model
-     * @param annexAgainstRankings
-     * @param clan
      */
     public JdgReport(final java.awt.Frame parent, final boolean modal, final int roundNumber, final Tournament tour, int type) {
         super(parent, modal);
