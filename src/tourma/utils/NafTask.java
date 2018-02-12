@@ -6,6 +6,8 @@
 package tourma.utils;
 
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingWorker;
@@ -43,7 +45,51 @@ public class NafTask extends SwingWorker<Void, Void> {
                 _progressMonitor.setNote(
                         Translate.translate(CS_Download)
                         + " " + c.getName());
-                c.setNafRank(NAF.getRanking(c.getName(), c));
+                boolean valid = false;
+                String nick=c.getName();
+                NAFCoach nafc = NAF.getCoachByName(nick);
+                while (!valid) {
+
+                    if (nafc != null) {
+                        c.setNaf(nafc.getId());
+                        valid = true;
+                    } else {
+                        ArrayList<String> proposals = NAF.getNameProposals(nick);
+
+                        proposals.add("Download " + nick);
+                        proposals.add("Other");
+                        proposals.add(nick + " is non NAF");
+
+                        Object option = JOptionPane.showOptionDialog(null, nick + " is not found. Our proposals are: ", "Not found", JOptionPane.OK_OPTION,
+                                JOptionPane.QUESTION_MESSAGE, null, proposals.toArray(), proposals.get(0));
+
+                        int indexOption = (int) option;
+                        if (indexOption < 5) {
+                            NAFCoach nafc2 = NAF.getCoachByName(proposals.get(indexOption));
+                            c.setNaf(nafc2.getId());
+                            c.setName(nafc2.getName());
+                            valid = true;
+                        } else {
+                            if (indexOption == 5) {
+                                c.setNafRank(NAF.getRanking(c.getName(), c));
+                                valid = true;
+                            } else {
+                                if (indexOption == 6) {
+                                    Object new_nick = JOptionPane.showInputDialog("Enter correct nickname", c.getName());
+                                    nick=(String)new_nick;
+                                    nafc = NAF.getCoachByName(nick);
+                                    valid = false;
+                                }
+                                else
+                                {
+                                    valid=true;
+                                }
+                            }
+
+                        }
+                    }
+
+                }
                 _progressMonitor.setProgress(i + 1);
             }
 

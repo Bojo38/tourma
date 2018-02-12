@@ -3086,26 +3086,41 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
      */
     private static void appInit() {
 
+        
+        
+        splashText("List NAF id Database");
+        // Get Number of naf_id text
+        ArrayList<File> naf_list=NAF.getFileList();
+        int nb_steps=naf_list.size()+6;
+        int pct=100/nb_steps;
+        splashProgress(1*pct);
+        
         try {
             splashText("Initization of RMi Registry");
-            splashProgress(1);
+            splashProgress(2*pct);
 
             RMITournament tour = RMITournament.getInstance();
             ITournament stub = (ITournament) UnicastRemoteObject.exportObject(tour, 0);
 
             splashText("Binding Tournament");
-            splashProgress(2);
+            splashProgress(3*pct);
             Registry registry = LocateRegistry.createRegistry(1099);// getRegistry();
             registry.bind("TourMa", stub);
 
         } catch (RemoteException | AlreadyBoundException e) {
             System.out.println(e.getLocalizedMessage());
         }
-
+                
+        splashText("Loading NAF coach XML base");
+        for (int i=0; i<naf_list.size(); i++)
+        {
+        splashProgress((4+i)*pct);
+        NAF.initCoachs(naf_list.get(i));
+        }
         for (int i = 1; i <= 2; i++) {
             int pctDone = i * 2;
             splashText("Initialization");
-            splashProgress(3 + pctDone);
+            splashProgress((5+ naf_list.size())*pct);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
@@ -3141,6 +3156,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
      */
     private static void splashInit() {
         mySplash = SplashScreen.getSplashScreen();
+        
         if (mySplash != null) {   // if there are any problems displaying the splash this will be null
             Dimension ssDim = mySplash.getSize();
             int height = ssDim.height;
