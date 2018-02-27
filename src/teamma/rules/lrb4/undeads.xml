@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>UndeadKey</name>
+    <reroll>70000</reroll>
+    <apothecary>false</apothecary>
+    <chef>300000</chef>
+    <igor>true</igor>
+    <bribe>100000</bribe>
+    <playertypes>               
+        <playerType>
+            <limit>2</limit>
+            <position>Mummy</position>
+            <movement>3</movement>
+            <strength>5</strength>
+            <agility>1</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Mighty Blow</skill>
+                 <skill>Regeneration</skill>
+            </skills>
+            <cost>120000</cost>
+            <single>
+                <skillType>Strength</skillType>
+               </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType> 
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Wigth</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>4</limit>
+            <position>Ghoul</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Zombie</position>
+            <movement>4</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>40000</cost>
+            <single>
+                <skillType>General</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Skeleton</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Regeneration</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>40000</cost>
+            <single>
+                <skillType>General</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

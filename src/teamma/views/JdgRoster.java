@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -52,6 +53,8 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private Roster _data = null;
     private Coach _coach = null;
+    private LRB.E_Version lrbversion = LRB.E_Version.NAF2017;
+    private LRB _lrb = LRB.getLRB(LRB.E_Version.NAF2017);
 
     /**
      * Creates new form JdgRoster
@@ -97,6 +100,17 @@ public final class JdgRoster extends javax.swing.JDialog {
         int screenWidth = dmode.getWidth();
         int screenHeight = dmode.getHeight();
         this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
+
+        String[] lrbs = {"LRB4", "LRB5", "LRB6", "CRP1", "NAF2017"};
+
+        DefaultComboBoxModel jcbModel = new DefaultComboBoxModel(lrbs);
+        jcbLRB.setModel(jcbModel);
+
+        if (roster != null) {
+            lrbversion = roster.getVersion();
+        } else {
+            lrbversion = LRB.E_Version.NAF2017;
+        }
 
         update();
         jbtAddSkill.setEnabled(false);
@@ -245,6 +259,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbPlayers = new javax.swing.JTable();
         jpnTitle = new javax.swing.JPanel();
+        jcbLRB = new javax.swing.JComboBox<>();
         jlbTeamName = new javax.swing.JLabel();
         jlbRosterType = new javax.swing.JLabel();
         jlbCoachName = new javax.swing.JLabel();
@@ -1134,7 +1149,15 @@ public final class JdgRoster extends javax.swing.JDialog {
         jpnCenter.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jpnTitle.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jpnTitle.setLayout(new java.awt.GridLayout(1, 3, 5, 5));
+        jpnTitle.setLayout(new java.awt.GridLayout(1, 4, 5, 5));
+
+        jcbLRB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbLRB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbLRBActionPerformed(evt);
+            }
+        });
+        jpnTitle.add(jcbLRB);
 
         jlbTeamName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlbTeamName.setText(bundle.getString("TeamName")); // NOI18N
@@ -1212,14 +1235,14 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private void jlbRosterTypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbRosterTypeMouseClicked
 
-        ArrayList<String> rosterlist = LRB.getLRB().getRosterTypeListAsString(false);
+        ArrayList<String> rosterlist = _lrb.getRosterTypeListAsString(false);
         String input = (String) JOptionPane.showInputDialog(this,
                 Translate.translate(CS_ChooseRoster),
                 Translate.translate(CS_RosterChoice), JOptionPane.INFORMATION_MESSAGE,
                 null, rosterlist.toArray(), rosterlist.get(0));
         LOG.log(Level.INFO, "Roster chosen: " + input);
         if (input != null) {
-            RosterType rt = LRB.getLRB().getRosterType(input, false);
+            RosterType rt = _lrb.getRosterType(input, false);
             if (_coach != null) {
                 _coach.setRoster(tourma.data.RosterType.getRosterType(input));
             }
@@ -1349,7 +1372,7 @@ public final class JdgRoster extends javax.swing.JDialog {
     private void jbtAddSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddSkillActionPerformed
         int index = jtbPlayers.getSelectedRow();
         if (index > -1) {
-            JdgSelectSkill jdg = new JdgSelectSkill(null, true, _data.getPlayer(index));
+            JdgSelectSkill jdg = new JdgSelectSkill(null, true, _data.getPlayer(index), _lrb);
             jdg.setName("JdgSelectSkill");
             jdg.setVisible(true);
         }
@@ -1574,12 +1597,64 @@ public final class JdgRoster extends javax.swing.JDialog {
         update();
     }//GEN-LAST:event_jbtImportActionPerformed
 
+    private void jcbLRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbLRBActionPerformed
+        int index = jcbLRB.getSelectedIndex();
+        LRB.E_Version newversion = LRB.E_Version.NAF2017;
+        switch (index) {
+            case 0:
+                newversion = LRB.E_Version.LRB4;
+                break;
+            case 1:
+                newversion = LRB.E_Version.LRB5;
+                break;
+            case 2:
+                newversion = LRB.E_Version.LRB6;
+                break;
+            case 3:
+                newversion = LRB.E_Version.CRP1;
+                break;
+            case 4:
+                newversion = LRB.E_Version.NAF2017;
+                break;
+        }
+        if (newversion != lrbversion) {
+            clearRoster();
+        }
+        _lrb = LRB.getLRB(newversion);
+        lrbversion = newversion;
+        update();
+    }//GEN-LAST:event_jcbLRBActionPerformed
+
     private static final String CS_Roster = "Roster";
     private static final String CS_Coach = "Coach";
     private static final String CS_RosterUnknown = "Roster: Unknown";
     private static final String CS_AssociateACoach = "Associer un coach";
 
+    private void clearRoster() {
+        this._data = new Roster();
+        _data.setVersion(lrbversion);
+    }
+
     private void update() {
+
+        switch (lrbversion) {
+            case LRB4:
+                jcbLRB.setSelectedIndex(0);
+                break;
+            case LRB5:
+                jcbLRB.setSelectedIndex(1);
+                break;
+            case LRB6:
+                jcbLRB.setSelectedIndex(2);
+                break;
+            case CRP1:
+                jcbLRB.setSelectedIndex(3);
+                break;
+            case NAF2017:
+                jcbLRB.setSelectedIndex(4);
+                break;
+        }
+
         if (_data.getRoster() != null) {
             jlbRosterType.setText(Translate.translate(CS_Roster) + ": " + _data.getRoster().getName());
         } else {
@@ -1594,7 +1669,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             jlbCoachName.setText(Translate.translate(CS_Coach) + ": " + _coach.getName());
             if (_coach.getRoster() != null) {
                 if (_data.getRoster() == null) {
-                    _data.setRoster(LRB.getLRB().getRosterType(_coach.getRoster().getName(), true));
+                    _data.setRoster(_lrb.getRosterType(_coach.getRoster().getName(), true));
                 }
                 if (_data.getRoster() != null) {
                     jlbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamma/images/" + _data.getRoster().getImage())));
@@ -1862,6 +1937,7 @@ public final class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JButton jbtRemoveSkill;
     private javax.swing.JButton jbtRemoveStar;
     private javax.swing.JButton jbtSelectCoach;
+    private javax.swing.JComboBox<String> jcbLRB;
     private javax.swing.JCheckBox jcbWithSkills;
     private javax.swing.JLabel jlbApothecary;
     private javax.swing.JLabel jlbBabes;

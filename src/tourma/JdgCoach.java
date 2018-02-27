@@ -42,6 +42,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
+import teamma.data.LRB;
 import teamma.views.JdgRoster;
 import tourma.data.Category;
 import tourma.data.Coach;
@@ -781,7 +782,8 @@ public final class JdgCoach extends javax.swing.JDialog {
                 JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.getRostersNames(), RosterType.getRostersNames()[0]);
 
-        teamma.data.RosterType rt = teamma.data.LRB.getLRB().getRosterType(input, false);
+        LRB.E_Version version=LRB.E_Version.NAF2017;
+        teamma.data.RosterType rt = teamma.data.LRB.getLRB(version).getRosterType(input, false);
 
         if (rt != null) {
             teamma.data.Roster compo = new teamma.data.Roster();

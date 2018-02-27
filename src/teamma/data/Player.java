@@ -38,13 +38,13 @@ public class Player implements Serializable{
         _name="";
     }
     
-    public void pull(Player player)
+    public void pull(Player player,LRB.E_Version version)
     {
         this._name=player._name;
         this._skills.clear();
         for (int i=0; i<player.getSkillCount(); i++)
         {
-            Skill skill=LRB.getLRB().getSkill(player.getSkill(i).getmName(), false);
+            Skill skill=LRB.getLRB(version).getSkill(player.getSkill(i).getmName(), false);
             _skills.add(skill);
         }
     }

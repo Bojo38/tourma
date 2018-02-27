@@ -15,6 +15,18 @@ import teamma.languages.Translate;
  */
 public class RosterType implements Serializable {
 
+    teamma.data.LRB.E_Version version=LRB.E_Version.CRP1;
+    
+    public LRB.E_Version getVersion()
+    {
+        return version;
+    }
+    
+    public void setVersion(LRB.E_Version v)
+    {
+        version=v;
+    }
+    
     /**
      *
      */

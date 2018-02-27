@@ -19,6 +19,7 @@ import tourma.data.IXMLExport;
 public class Roster implements IXMLExport, Serializable{
 
 
+    private final static String CS_LRB = "LRB";
     private final static String CS_Roster = "Roster";
     private final static String CS_Composition = "Composition";
     private final static String CS_Apothecary = "Apothecary";
@@ -113,7 +114,15 @@ public class Roster implements IXMLExport, Serializable{
      */
     private final ArrayList<StarPlayer> _champions;
 
-    
+    LRB.E_Version _version;
+
+    public LRB.E_Version getVersion() {
+        return _version;
+    }
+
+    public void setVersion(LRB.E_Version _version) {
+        this._version = _version;
+    }
     
     /**
      * Default Constructor
@@ -139,21 +148,21 @@ public class Roster implements IXMLExport, Serializable{
         this._rerolls=roster._rerolls;
         this._wizard=roster._wizard;
         
-        this._roster=LRB.getLRB().getRosterType(roster.getRoster().getName());
+        this._roster=LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName());
         
         this._players.clear();
         for (int i=0; i<roster.getPlayerCount(); i++)
         {
-            PlayerType pt=LRB.getLRB().getRosterType(roster.getRoster().getName()).getPlayerType(roster.getPlayer(i).getName(),false);
+            PlayerType pt=LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName()).getPlayerType(roster.getPlayer(i).getName(),false);
             Player p=new Player(pt);
-            p.pull(roster.getPlayer(i));
+            p.pull(roster.getPlayer(i),roster.getRoster().getVersion());
             _players.add(p);
         }
         
         this._champions.clear();
         for (int i=0; i<roster.getChampionCount(); i++)
         {
-            StarPlayer sp=LRB.getLRB().getStarPlayer(roster.getChampion(i).getName());
+            StarPlayer sp=LRB.getLRB(roster.getRoster().getVersion()).getStarPlayer(roster.getChampion(i).getName());
             _champions.add(sp);
         }
                 
@@ -269,9 +278,39 @@ public class Roster implements IXMLExport, Serializable{
      */
     @Override
     public void setXMLElement(Element e) {
-        LRB lrb6 = LRB.getLRB();
+
         String rosterType = e.getAttributeValue(CS_Roster);
-        this.setRoster(lrb6.getRosterType(rosterType,false));
+        
+        LRB.E_Version version=LRB.E_Version.CRP1;
+        
+        try
+        {
+            String slrb = e.getAttributeValue(CS_LRB);
+            if (slrb.equals("LRB4"))
+            {
+                version=LRB.E_Version.LRB4;
+            }
+            if (slrb.equals("LRB5"))
+            {
+                version=LRB.E_Version.LRB5;
+            }
+            if (slrb.equals("LRB6"))
+            {
+                version=LRB.E_Version.LRB6;
+            }
+            if (slrb.equals("BB2016"))
+            {
+                version=LRB.E_Version.CRP1;
+            }
+        }
+        catch (NullPointerException npe)
+        {
+            
+        }
+        
+        LRB lrb = LRB.getLRB(version);
+        
+        this.setRoster(lrb.getRosterType(rosterType,false));
         this.setApothecary(Boolean.parseBoolean(e.getAttributeValue(CS_Apothecary)));
         this.setAssistants(Integer.parseInt(e.getAttributeValue(CS_Assistants)));
         this.setCheerleaders(Integer.parseInt(e.getAttributeValue(CS_Cheerleaders)));
@@ -294,7 +333,7 @@ public class Roster implements IXMLExport, Serializable{
             while (s.hasNext()) {
                 final Element star = s.next();
                 final String spn = star.getAttributeValue(CS_Name);
-                final StarPlayer t = lrb6.getStarPlayer(spn);
+                final StarPlayer t = lrb.getStarPlayer(spn);
                 this.addChampion(t);
             }
         }
@@ -312,7 +351,7 @@ public class Roster implements IXMLExport, Serializable{
                 final Iterator<Element> is = skills.iterator();
                 while (is.hasNext()) {
                     final Element s = is.next();
-                    final teamma.data.Skill sl = new Skill(LRB.getLRB().getSkill(s.getAttributeValue(CS_Name),false));
+                    final teamma.data.Skill sl = new Skill(LRB.getLRB(version).getSkill(s.getAttributeValue(CS_Name),false));
                     String sColor=s.getAttributeValue(CS_Color);
                     Color col=Color.decode(sColor);
                     sl.setmColor(col);

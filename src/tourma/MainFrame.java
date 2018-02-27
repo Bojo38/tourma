@@ -1134,7 +1134,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jcxAllowSpecialSkill.setEnabled(false);
         } else {
             RosterType.initCollection(RosterType.C_BLOOD_BOWL);
-            LRB.getLRB();
+    //        LRB.getLRB();
         }
 
         mTournament.clearGroups();
@@ -1243,7 +1243,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiEditTeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAllowSpecialSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAllowSpecialSkillActionPerformed
-        LRB.getLRB().setAllowSpecialSkills(jcxAllowSpecialSkill.getState());
+        LRB.setAllowSpecialSkills(jcxAllowSpecialSkill.getState());
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
 
     private final static String CS_FBBCSVFile = "FBB CSV FILE";

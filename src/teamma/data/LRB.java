@@ -24,10 +24,17 @@ import tourma.MainFrame;
  */
 public final class LRB {
 
+    public enum E_Version {
+        LRB4, LRB5, LRB6, CRP1, NAF2017
+    };
     /**
      *
      */
-    private static LRB _singleton = null;
+    private static LRB _lrb4 = null;
+    private static LRB _lrb5 = null;
+    private static LRB _lrb6 = null;
+    private static LRB _naf2017 = null;
+    private static LRB _crp1 = null;
     /**
      *
      */
@@ -38,13 +45,38 @@ public final class LRB {
      *
      * @return
      */
-    public static LRB getLRB() {
+    public static LRB getLRB(E_Version version) {
         synchronized (LRB.myLock) {
-            if (_singleton == null) {
-                _singleton = new LRB();
+            switch (version) {
+                case LRB4:
+                    if (_lrb4 == null) {
+                        _lrb4 = new LRB(version);
+                    }
+                    return _lrb4;
+                case LRB5:
+                    if (_lrb5 == null) {
+                        _lrb5 = new LRB(version);
+                    }
+                    return _lrb5;
+                case LRB6:
+                    if (_lrb6 == null) {
+                        _lrb6 = new LRB(version);
+                    }
+                    return _lrb6;
+                case CRP1:
+                    if (_crp1 == null) {
+                        _crp1 = new LRB(version);
+                    }
+                    return _crp1;
+                case NAF2017:
+                    if (_naf2017 == null) {
+                        _naf2017 = new LRB(version);
+                    }
+                    return _naf2017;
+
             }
         }
-        return _singleton;
+        return null;
     }
 
     /**
@@ -66,20 +98,39 @@ public final class LRB {
     /**
      *
      */
-    private boolean _allowSpecialSkills = false;
+    private static boolean _allowSpecialSkills = false;
 
     /**
      *
      */
-    private LRB() {
+    private LRB(E_Version version) {
         _rosterTypes = new ArrayList<>();
         _starPlayers = new ArrayList<>();
         _skillTypes = new ArrayList<>();
 
+        String path = "";
+        switch (version) {
+            case LRB4:
+                path = "lrb4";
+                break;
+            case LRB5:
+                path = "lrb5";
+                break;
+            case LRB6:
+                path = "lrb6";
+                break;
+            case CRP1:
+                path = "crp1";
+                break;
+            case NAF2017:
+                path = "naf2017";
+                break;
+        }
+
         /* URL url;
          url = getClass().getResource("/teamma/rules/rules.xml");*/
-        InputStream is = getClass().getResourceAsStream("/teamma/rules/rules.xml");
-        loadLRB(is);
+        InputStream is = getClass().getResourceAsStream("/teamma/rules/" + path + "/rules.xml");
+        loadLRB(is, path);
         try {
             is.close();
         } catch (IOException e) {
@@ -98,7 +149,8 @@ public final class LRB {
      *
      * @param file
      */
-    private void loadLRB(InputStream file) {
+    private void loadLRB(InputStream file, String path) {
+        String filename="";
         try {
             SAXBuilder sxb = new SAXBuilder();
             org.jdom2.Document document = sxb.build(file);
@@ -117,7 +169,8 @@ public final class LRB {
             String skillfile = e_skillfile.getValue();
 
             LOG.log(Level.FINE, "loading {0} file", skillfile);
-            loadSkills(getClass().getResourceAsStream("/teamma/rules/" + skillfile));
+            filename="/teamma/rules/" + path + "/" + skillfile;
+            loadSkills(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + skillfile));
 
             Element e_teams = racine.getChild(CS_Teams);
             List<Element> l_teams = e_teams.getChildren(CS_Team);
@@ -128,18 +181,19 @@ public final class LRB {
                 Element e_team = cr.next();
                 String teamfile = e_team.getValue();
                 String imagename = e_team.getAttribute(CS_Picture).getValue();
-                LOG.log(Level.FINE, "loading {0} file", teamfile);
-                loadTeam(getClass().getResourceAsStream("/teamma/rules/" + teamfile), imagename);
+                filename="/teamma/rules/" + path + "/" + teamfile;
+                loadTeam(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + teamfile), imagename);
             }
             /*
              * Get Star Players file name
              */
             Element e_starfile = racine.getChild(CS_Starplayers);
             String starfile = e_starfile.getValue();
-            loadStarPlayers(getClass().getResourceAsStream("/teamma/rules/" + starfile));
+            filename="/teamma/rules/" + path + "/" + starfile;
+            loadStarPlayers(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + starfile));
 
         } catch (JDOMException | IOException jdomexception) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jdomexception.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, "Loading "+filename+" "+jdomexception.getLocalizedMessage());
         }
     }
 
@@ -187,7 +241,7 @@ public final class LRB {
             }
 
         } catch (JDOMException | IOException jdomexception) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jdomexception.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null,"Skills: "+ jdomexception.getLocalizedMessage());
         }
     }
 
@@ -276,7 +330,7 @@ public final class LRB {
                     Element e_skill = i.next();
                     Skill s = getSkill(e_skill.getValue(), false);
                     if (s == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
+                        JOptionPane.showMessageDialog(null, Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
                     } else {
                         pt.addSkill(s);
                     }
@@ -289,7 +343,7 @@ public final class LRB {
                     Element e_skilltype = j.next();
                     SkillType st = getSkillType(e_skilltype.getValue());
                     if (st == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillTypeNotFound) + ": " + e_skilltype.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
+                        JOptionPane.showMessageDialog(null, Translate.translate(CS_SkillTypeNotFound) + ": " + e_skilltype.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
                     } else {
                         pt.addSingle(st);
                     }
@@ -302,7 +356,7 @@ public final class LRB {
                     Element e_skilltype = j.next();
                     SkillType st = getSkillType(e_skilltype.getValue());
                     if (st == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillTypeNotFound) + ": " + e_skilltype.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
+                        JOptionPane.showMessageDialog(null, Translate.translate(CS_SkillTypeNotFound) + ": " + e_skilltype.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + pt.getPosition());
                     } else {
                         pt.addDouble(st);
                     }
@@ -312,7 +366,7 @@ public final class LRB {
 
             addRosterType(rt);
         } catch (JDOMException | IOException jdomexception) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jdomexception.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, "Team: from file "+ file.toString()+" "+jdomexception.getLocalizedMessage());
         }
     }
 
@@ -351,7 +405,7 @@ public final class LRB {
                     Element e_skill = i.next();
                     Skill s = getSkill(e_skill.getValue(), false);
                     if (s == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + sp.getName());
+                        JOptionPane.showMessageDialog(null, Translate.translate(CS_SkillNotFound) + ": " + e_skill.getValue() + " " + Translate.translate(CS_forThePlayer) + " " + sp.getName());
                     } else {
                         sp.addSkill(s);
                     }
@@ -366,7 +420,7 @@ public final class LRB {
                     //RosterType rt = new RosterType(n);
                     RosterType rt = getRosterType(n);
                     if (rt == null) {
-                        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), Translate.translate(CS_RosterTypeNotFound) + ": " + n + " " + Translate.translate(CS_forThePlayer) + " " + e_name.getValue());
+                        JOptionPane.showMessageDialog(null, Translate.translate(CS_RosterTypeNotFound) + ": " + n + " " + Translate.translate(CS_forThePlayer) + " " + e_name.getValue());
                     } else {
                         sp.addRoster(rt);
                         rt.addAvailableStarPlayer(sp);
@@ -378,7 +432,7 @@ public final class LRB {
             }
 
         } catch (JDOMException | IOException jdomexception) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), jdomexception.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null,"Star players: "+ jdomexception.getLocalizedMessage());
         }
     }
 
@@ -433,11 +487,11 @@ public final class LRB {
     public RosterType getRosterType(String name, boolean translate) {
         int i;
         for (i = 0; i < getRosterTypeCount(); i++) {
-            RosterType rt = getRosterType(i);            
+            RosterType rt = getRosterType(i);
             if (rt != null) {
                 if (rt.getName() != null) {
                     if (translate) {
-                        String tr=Translate.translate(rt.getName());
+                        String tr = Translate.translate(rt.getName());
                         if (name.equals(tr)) {
                             return rt;
                         }
@@ -600,22 +654,25 @@ public final class LRB {
     /**
      * @return the _allowSpecialSkills
      */
-    public boolean isAllowSpecialSkills() {
+    public static boolean isAllowSpecialSkills() {
         return _allowSpecialSkills;
     }
 
     /**
      * @param _allowSpecialSkills the _allowSpecialSkills to set
      */
-    public void setAllowSpecialSkills(boolean _allowSpecialSkills) {
-        this._allowSpecialSkills = _allowSpecialSkills;
+    public static void setAllowSpecialSkills(boolean _allowSpecialSkills) {
+        _allowSpecialSkills = _allowSpecialSkills;
     }
 
     /**
      * Unload the LRB
      */
     public static void unloadLRB() {
-        LRB._singleton = null;
+        LRB._lrb4 = null;
+        LRB._lrb5 = null;
+        LRB._lrb6 = null;
+        LRB._naf2017 = null;
     }
 
 }

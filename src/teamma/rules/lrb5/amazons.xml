@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>AmazonKey</name>
+    <reroll>50000</reroll>
+    <apothecary>true</apothecary>
+    <chef>300000</chef>
+    <igor>false</igor>
+    <bribe>100000</bribe>
+    <playertypes>               
+        <playerType>
+            <limit>4</limit>
+            <position>Amazon Blitzer</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Block</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Amazon Thrower</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Pass</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Amazon Catcher</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Catch</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Amazon Linewoman</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+
