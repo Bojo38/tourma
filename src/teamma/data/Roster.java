@@ -16,8 +16,7 @@ import tourma.data.IXMLExport;
  *
  * @author WFMJ7631
  */
-public class Roster implements IXMLExport, Serializable{
-
+public class Roster implements IXMLExport, Serializable {
 
     private final static String CS_LRB = "LRB";
     private final static String CS_Roster = "Roster";
@@ -37,12 +36,12 @@ public class Roster implements IXMLExport, Serializable{
     private final static String CS_ExtraRerolls = "ExtraRerolls";
     private final static String CS_LocalApothecary = "LocalApothecary";
 
-    private final static String CS_StarPlayer="StarPlayer";
-    private final static String CS_Name="Name";
-    private final static String CS_Player="Player";
-    private final static String CS_Position="Position";
-    private final static String CS_Skill="Skill";
-    private final static String CS_Color="Color";
+    private final static String CS_StarPlayer = "StarPlayer";
+    private final static String CS_Name = "Name";
+    private final static String CS_Player = "Player";
+    private final static String CS_Position = "Position";
+    private final static String CS_Skill = "Skill";
+    private final static String CS_Color = "Color";
     /**
      * Pointer to coach owning the team
      */
@@ -123,7 +122,7 @@ public class Roster implements IXMLExport, Serializable{
     public void setVersion(LRB.E_Version _version) {
         this._version = _version;
     }
-    
+
     /**
      * Default Constructor
      */
@@ -132,42 +131,39 @@ public class Roster implements IXMLExport, Serializable{
         _champions = new ArrayList<>();
     }
 
-    public void pull(Roster roster)
-    {
-        this._apothecary=roster._apothecary;
-        this._assistants=roster._assistants;
-        this._bloodweiserbabes=roster._bloodweiserbabes;
-        this._cards=roster._cards;        
-        this._cheerleaders=roster._cheerleaders;
-        this._chef=roster._chef;
-        this._corruptions=roster._corruptions;
-        this._extrarerolls=roster._extrarerolls;
-        this._fanfactor=roster._fanfactor;
-        this._igor=roster._igor;
-        this._localapothecary=roster._localapothecary;
-        this._rerolls=roster._rerolls;
-        this._wizard=roster._wizard;
-        
-        this._roster=LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName());
-        
+    public void pull(Roster roster) {
+        this._apothecary = roster._apothecary;
+        this._assistants = roster._assistants;
+        this._bloodweiserbabes = roster._bloodweiserbabes;
+        this._cards = roster._cards;
+        this._cheerleaders = roster._cheerleaders;
+        this._chef = roster._chef;
+        this._corruptions = roster._corruptions;
+        this._extrarerolls = roster._extrarerolls;
+        this._fanfactor = roster._fanfactor;
+        this._igor = roster._igor;
+        this._localapothecary = roster._localapothecary;
+        this._rerolls = roster._rerolls;
+        this._wizard = roster._wizard;
+
+        this._roster = LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName());
+
         this._players.clear();
-        for (int i=0; i<roster.getPlayerCount(); i++)
-        {
-            PlayerType pt=LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName()).getPlayerType(roster.getPlayer(i).getName(),false);
-            Player p=new Player(pt);
-            p.pull(roster.getPlayer(i),roster.getRoster().getVersion());
+        for (int i = 0; i < roster.getPlayerCount(); i++) {
+            PlayerType pt = LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName()).getPlayerType(roster.getPlayer(i).getName(), false);
+            Player p = new Player(pt);
+            p.pull(roster.getPlayer(i), roster.getRoster().getVersion());
             _players.add(p);
         }
-        
+
         this._champions.clear();
-        for (int i=0; i<roster.getChampionCount(); i++)
-        {
-            StarPlayer sp=LRB.getLRB(roster.getRoster().getVersion()).getStarPlayer(roster.getChampion(i).getName());
+        for (int i = 0; i < roster.getChampionCount(); i++) {
+            StarPlayer sp = LRB.getLRB(roster.getRoster().getVersion()).getStarPlayer(roster.getChampion(i).getName());
             _champions.add(sp);
         }
-                
+
     }
-    
+
     /**
      *
      * @param bWithSkill
@@ -221,6 +217,35 @@ public class Roster implements IXMLExport, Serializable{
 
         Element compo = new Element(CS_Composition);
         if (this.getRoster() != null) {
+
+            switch (this._version) {
+                case LRB1:
+                    compo.setAttribute(CS_LRB, "LRB1");
+                    break;
+                case LRB2:
+                    compo.setAttribute(CS_LRB, "LRB2");
+                    break;
+                case LRB3:
+                    compo.setAttribute(CS_LRB, "LRB3");
+                    break;
+                case LRB4:
+                    compo.setAttribute(CS_LRB, "LRB4");
+                    break;
+                case LRB5:
+                    compo.setAttribute(CS_LRB, "LRB5");
+                    break;
+                case LRB6:
+                    compo.setAttribute(CS_LRB, "LRB6");
+                    break;
+                case CRP1:
+                    compo.setAttribute(CS_LRB, "CRP1");
+                    break;
+                case NAF2017:
+                    compo.setAttribute(CS_LRB, "NAF2017");
+                    break;
+
+            }
+
             compo.setAttribute(CS_Roster, this.getRoster().getName());
             compo.setAttribute(CS_Apothecary, Boolean.toString(this.isApothecary()));
             compo.setAttribute(CS_Assistants, Integer.toString(this.getAssistants()));
@@ -261,7 +286,7 @@ public class Roster implements IXMLExport, Serializable{
                     final Element s = new Element(CS_Skill);
                     final teamma.data.Skill sk = _skill;
                     s.setAttribute(CS_Name, sk.getmName());
-                    int rgb=sk.getmColor().getRGB();
+                    int rgb = sk.getmColor().getRGB();
                     s.setAttribute(CS_Color, Integer.toString(rgb));
                     p.addContent(s);
                 }
@@ -280,37 +305,39 @@ public class Roster implements IXMLExport, Serializable{
     public void setXMLElement(Element e) {
 
         String rosterType = e.getAttributeValue(CS_Roster);
-        
-        LRB.E_Version version=LRB.E_Version.CRP1;
-        
-        try
-        {
+
+        LRB.E_Version version = LRB.E_Version.CRP1;
+
+        try {
             String slrb = e.getAttributeValue(CS_LRB);
-            if (slrb.equals("LRB4"))
-            {
-                version=LRB.E_Version.LRB4;
+            if (slrb.equals("LRB1")) {
+                version = LRB.E_Version.LRB1;
             }
-            if (slrb.equals("LRB5"))
-            {
-                version=LRB.E_Version.LRB5;
+            if (slrb.equals("LRB2")) {
+                version = LRB.E_Version.LRB2;
             }
-            if (slrb.equals("LRB6"))
-            {
-                version=LRB.E_Version.LRB6;
+            if (slrb.equals("LRB3")) {
+                version = LRB.E_Version.LRB3;
             }
-            if (slrb.equals("BB2016"))
-            {
-                version=LRB.E_Version.CRP1;
+            if (slrb.equals("LRB4")) {
+                version = LRB.E_Version.LRB4;
             }
+            if (slrb.equals("LRB5")) {
+                version = LRB.E_Version.LRB5;
+            }
+            if (slrb.equals("LRB6")) {
+                version = LRB.E_Version.LRB6;
+            }
+            if (slrb.equals("BB2016")) {
+                version = LRB.E_Version.CRP1;
+            }
+        } catch (NullPointerException npe) {
+
         }
-        catch (NullPointerException npe)
-        {
-            
-        }
-        
+
         LRB lrb = LRB.getLRB(version);
-        
-        this.setRoster(lrb.getRosterType(rosterType,false));
+
+        this.setRoster(lrb.getRosterType(rosterType, false));
         this.setApothecary(Boolean.parseBoolean(e.getAttributeValue(CS_Apothecary)));
         this.setAssistants(Integer.parseInt(e.getAttributeValue(CS_Assistants)));
         this.setCheerleaders(Integer.parseInt(e.getAttributeValue(CS_Cheerleaders)));
@@ -344,16 +371,16 @@ public class Roster implements IXMLExport, Serializable{
         while (ip.hasNext()) {
             final Element p = ip.next();
             if (this.getRoster() != null) {
-                final teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue(CS_Position),false));
+                final teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue(CS_Position), false));
                 pl.setName(p.getAttributeValue(CS_Name));
 
                 final List<Element> skills = p.getChildren(CS_Skill);
                 final Iterator<Element> is = skills.iterator();
                 while (is.hasNext()) {
                     final Element s = is.next();
-                    final teamma.data.Skill sl = new Skill(LRB.getLRB(version).getSkill(s.getAttributeValue(CS_Name),false));
-                    String sColor=s.getAttributeValue(CS_Color);
-                    Color col=Color.decode(sColor);
+                    final teamma.data.Skill sl = new Skill(LRB.getLRB(version).getSkill(s.getAttributeValue(CS_Name), false));
+                    String sColor = s.getAttributeValue(CS_Color);
+                    Color col = Color.decode(sColor);
                     sl.setmColor(col);
                     pl.addSkill(sl);
                 }

@@ -101,7 +101,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         int screenHeight = dmode.getHeight();
         this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
-        String[] lrbs = {"LRB4", "LRB5", "LRB6", "CRP1", "NAF2017"};
+        String[] lrbs = {"LRB1", "LRB2", "LRB3", "LRB4", "LRB5", "LRB6", "CRP1", "NAF2017"};
 
         DefaultComboBoxModel jcbModel = new DefaultComboBoxModel(lrbs);
         jcbLRB.setModel(jcbModel);
@@ -1602,18 +1602,27 @@ public final class JdgRoster extends javax.swing.JDialog {
         LRB.E_Version newversion = LRB.E_Version.NAF2017;
         switch (index) {
             case 0:
-                newversion = LRB.E_Version.LRB4;
+                newversion = LRB.E_Version.LRB1;
                 break;
             case 1:
-                newversion = LRB.E_Version.LRB5;
+                newversion = LRB.E_Version.LRB2;
                 break;
             case 2:
-                newversion = LRB.E_Version.LRB6;
+                newversion = LRB.E_Version.LRB3;
                 break;
             case 3:
-                newversion = LRB.E_Version.CRP1;
+                newversion = LRB.E_Version.LRB4;
                 break;
             case 4:
+                newversion = LRB.E_Version.LRB5;
+                break;
+            case 5:
+                newversion = LRB.E_Version.LRB6;
+                break;
+            case 6:
+                newversion = LRB.E_Version.CRP1;
+                break;
+            case 7:
                 newversion = LRB.E_Version.NAF2017;
                 break;
         }
@@ -1638,20 +1647,29 @@ public final class JdgRoster extends javax.swing.JDialog {
     private void update() {
 
         switch (lrbversion) {
-            case LRB4:
+             case LRB1:
                 jcbLRB.setSelectedIndex(0);
                 break;
-            case LRB5:
+            case LRB2:
                 jcbLRB.setSelectedIndex(1);
                 break;
-            case LRB6:
+            case LRB3:
                 jcbLRB.setSelectedIndex(2);
                 break;
-            case CRP1:
+            case LRB4:
                 jcbLRB.setSelectedIndex(3);
                 break;
-            case NAF2017:
+            case LRB5:
                 jcbLRB.setSelectedIndex(4);
+                break;
+            case LRB6:
+                jcbLRB.setSelectedIndex(5);
+                break;
+            case CRP1:
+                jcbLRB.setSelectedIndex(6);
+                break;
+            case NAF2017:
+                jcbLRB.setSelectedIndex(7);
                 break;
         }
 

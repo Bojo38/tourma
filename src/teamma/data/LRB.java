@@ -25,11 +25,14 @@ import tourma.MainFrame;
 public final class LRB {
 
     public enum E_Version {
-        LRB4, LRB5, LRB6, CRP1, NAF2017
+        LRB1, LRB2, LRB3, LRB4, LRB5, LRB6, CRP1, NAF2017
     };
     /**
      *
      */
+    private static LRB _lrb1 = null;
+    private static LRB _lrb2 = null;
+    private static LRB _lrb3 = null;
     private static LRB _lrb4 = null;
     private static LRB _lrb5 = null;
     private static LRB _lrb6 = null;
@@ -48,6 +51,21 @@ public final class LRB {
     public static LRB getLRB(E_Version version) {
         synchronized (LRB.myLock) {
             switch (version) {
+                case LRB1:
+                    if (_lrb1 == null) {
+                        _lrb1 = new LRB(version);
+                    }
+                    return _lrb1;
+                case LRB2:
+                    if (_lrb2 == null) {
+                        _lrb2 = new LRB(version);
+                    }
+                    return _lrb2;
+                case LRB3:
+                    if (_lrb3 == null) {
+                        _lrb3 = new LRB(version);
+                    }
+                    return _lrb3;
                 case LRB4:
                     if (_lrb4 == null) {
                         _lrb4 = new LRB(version);
@@ -110,6 +128,15 @@ public final class LRB {
 
         String path = "";
         switch (version) {
+            case LRB1:
+                path = "lrb1";
+                break;
+            case LRB2:
+                path = "lrb2";
+                break;
+            case LRB3:
+                path = "lrb3";
+                break;
             case LRB4:
                 path = "lrb4";
                 break;
@@ -150,7 +177,7 @@ public final class LRB {
      * @param file
      */
     private void loadLRB(InputStream file, String path) {
-        String filename="";
+        String filename = "";
         try {
             SAXBuilder sxb = new SAXBuilder();
             org.jdom2.Document document = sxb.build(file);
@@ -169,7 +196,7 @@ public final class LRB {
             String skillfile = e_skillfile.getValue();
 
             LOG.log(Level.FINE, "loading {0} file", skillfile);
-            filename="/teamma/rules/" + path + "/" + skillfile;
+            filename = "/teamma/rules/" + path + "/" + skillfile;
             loadSkills(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + skillfile));
 
             Element e_teams = racine.getChild(CS_Teams);
@@ -181,7 +208,7 @@ public final class LRB {
                 Element e_team = cr.next();
                 String teamfile = e_team.getValue();
                 String imagename = e_team.getAttribute(CS_Picture).getValue();
-                filename="/teamma/rules/" + path + "/" + teamfile;
+                filename = "/teamma/rules/" + path + "/" + teamfile;
                 loadTeam(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + teamfile), imagename);
             }
             /*
@@ -189,11 +216,11 @@ public final class LRB {
              */
             Element e_starfile = racine.getChild(CS_Starplayers);
             String starfile = e_starfile.getValue();
-            filename="/teamma/rules/" + path + "/" + starfile;
+            filename = "/teamma/rules/" + path + "/" + starfile;
             loadStarPlayers(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + starfile));
 
         } catch (JDOMException | IOException jdomexception) {
-            JOptionPane.showMessageDialog(null, "Loading "+filename+" "+jdomexception.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, "Loading " + filename + " " + jdomexception.getLocalizedMessage());
         }
     }
 
@@ -241,7 +268,7 @@ public final class LRB {
             }
 
         } catch (JDOMException | IOException jdomexception) {
-            JOptionPane.showMessageDialog(null,"Skills: "+ jdomexception.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, "Skills: " + jdomexception.getLocalizedMessage());
         }
     }
 
@@ -366,7 +393,7 @@ public final class LRB {
 
             addRosterType(rt);
         } catch (JDOMException | IOException jdomexception) {
-            JOptionPane.showMessageDialog(null, "Team: from file "+ file.toString()+" "+jdomexception.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, "Team: from file " + file.toString() + " " + jdomexception.getLocalizedMessage());
         }
     }
 
@@ -432,7 +459,7 @@ public final class LRB {
             }
 
         } catch (JDOMException | IOException jdomexception) {
-            JOptionPane.showMessageDialog(null,"Star players: "+ jdomexception.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, "Star players: " + jdomexception.getLocalizedMessage());
         }
     }
 
