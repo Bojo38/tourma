@@ -14,7 +14,6 @@
         <team image="highelf.png">highelves.xml</team>
         <team image="human.png">humans.xml</team>
         <team image="khemri.png">khemris.xml</team>
-        <team image="khorne.png">khornesdaemons.xml</team>
         <team image="lizardmen.png">lizardmen.xml</team>
         <team image="necromantic.png">necromantics.xml</team>
         <team image="norse.png">norses.xml</team>
@@ -27,7 +26,6 @@
         <team image="underworld.png">underworld.xml</team>
         <team image="vampire.png">vampires.xml</team>
         <team image="woodelf.png">woodelves.xml</team>
-        <team image="bretonian.png">bretonians.xml</team>
     </teams>
     <starplayers>starplayers.xml</starplayers>    
     <skills>skills.xml</skills>

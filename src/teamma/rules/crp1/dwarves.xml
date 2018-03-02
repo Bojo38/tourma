@@ -117,13 +117,14 @@ and open the template in the editor.
                 <skill>Dirty Player</skill>
                 <skill>Juggernaut</skill>
                 <skill>Stand Firm</skill>
+                <skill>No Hands</skill>
             </skills>
             <cost>160000</cost>
-            <single>
-                <skillType>General</skillType>
+            <single>                
                 <skillType>Strength</skillType>
             </single>
             <double>
+                <skillType>General</skillType>
                 <skillType>Pass</skillType>
                 <skillType>Agility</skillType>
             </double>

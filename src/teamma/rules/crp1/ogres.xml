@@ -33,8 +33,7 @@ and open the template in the editor.
                 <skillType>Strength</skillType>
             </single>
             <double>
-                <skillType>General</skillType>
-                
+                <skillType>General</skillType>                
                 <skillType>Pass</skillType>
                 <skillType>Agility</skillType>
             </double>

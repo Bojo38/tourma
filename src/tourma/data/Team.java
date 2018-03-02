@@ -140,6 +140,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     public Team() {
         super();
         mCoachs = new ArrayList<>();
+        
     }
 
     /**
@@ -423,8 +424,8 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
                         m.addMatch(team1.getActivePlayers().get(k).createMatch(shuffle2.get(k), r));
                     }
                 } else {
-                    final ArrayList<ObjectRanking> coachs1 = Generation.subRanking(team1, vs,true);
-                    final ArrayList<ObjectRanking> coachs2 = Generation.subRanking(team2, vs,true);
+                    final ArrayList<ObjectRanking> coachs1 = Generation.subRanking(team1, vs, true);
+                    final ArrayList<ObjectRanking> coachs2 = Generation.subRanking(team2, vs, true);
                     for (int k = 0; k < coachs1.size(); k++) {
                         m.addMatch(((Coach) coachs1.get(k).getObject()).createMatch((Competitor) coachs2.get(k).getObject(), r));
                     }
@@ -500,9 +501,11 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
                 if ((params.isEnableClans()) && ((params.isAvoidClansFirstMatch() && tour.getRoundsCount() == 0) || (params.isAvoidClansMatch()))) {
                     int i = 0;
                     while (i < possible.size()) {
-                        if (possible.get(i).getClan().getName().equals(this.getClan().getName())) {
-                            possible.remove(i);
-                            i--;
+                        if ((possible.get(i).getClan() != null) && (this.getClan() != null)) {
+                            if (possible.get(i).getClan().getName().equals(this.getClan().getName())) {
+                                possible.remove(i);
+                                i--;
+                            }
                         }
                         i++;
                     }

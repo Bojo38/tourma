@@ -83,7 +83,7 @@ _lrb=lrb;
             jpnSkills.add(jcb);
 
             JLabel jlb2 = new JLabel("");
-            boolean enabled = st.isSpecial() && _lrb.isAllowSpecialSkills();
+            boolean enabled = st.isSpecial() && LRB.isAllowSpecialSkills();
 
             /* Get if Single Roll or doubl roll */
             if (_player.getPlayertype().containedBySingle(st)) {
