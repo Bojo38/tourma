@@ -17,16 +17,16 @@ and open the template in the editor.
     <playertypes>               
         <playerType>
             <limit>4</limit>
-            <position>Tomb Guardian</position>
-            <movement>4</movement>
+            <position>Mummy</position>
+            <movement>3</movement>
             <strength>5</strength>
             <agility>1</agility>
             <armor>9</armor>
             <skills>
                 <skill>Regeneration</skill>
-                <skill>Decay</skill>
+                <skill>Mighty Blow</skill>
             </skills>
-            <cost>100000</cost>
+            <cost>110000</cost>
             <single>
                 
                 <skillType>Strength</skillType>
@@ -90,9 +90,8 @@ and open the template in the editor.
             <armor>7</armor>
             <skills>
                 <skill>Regeneration</skill>
-                <skill>Thick Skull</skill>
             </skills>
-            <cost>40000</cost>
+            <cost>30000</cost>
             <single>
                 <skillType>General</skillType>
             </single>

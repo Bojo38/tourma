@@ -17,10 +17,10 @@ and open the template in the editor.
     <playertypes>               
         <playerType>
             <limit>1</limit>
-            <position>Yeti</position>
+            <position>Snow Troll</position>
             <movement>5</movement>
             <strength>5</strength>
-            <agility>2</agility>
+            <agility>1</agility>
             <armor>8</armor>
             <skills>
                 <skill>Loner</skill>

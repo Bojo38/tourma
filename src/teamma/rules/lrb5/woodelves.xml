@@ -60,14 +60,13 @@ and open the template in the editor.
         <playerType>
             <limit>4</limit>
             <position>Catcher</position>
-            <movement>8</movement>
+            <movement>9</movement>
             <strength>2</strength>
             <agility>4</agility>
             <armor>7</armor>
             <skills>
                 <skill>Dodge</skill>
                 <skill>Catch</skill>
-                <skill>Sprint</skill>
             </skills>
             <cost>90000</cost>
             <single>

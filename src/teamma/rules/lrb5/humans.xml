@@ -69,7 +69,7 @@ and open the template in the editor.
                 <skill>Dodge</skill>
                 <skill>Catch</skill>
             </skills>
-            <cost>90000</cost>
+            <cost>70000</cost>
             <single>
                 <skillType>General</skillType>
                 <skillType>Agility</skillType>
@@ -117,8 +117,7 @@ and open the template in the editor.
                 <skillType>Strength</skillType>
             </single>
             <double>
-                <skillType>General</skillType>
-                
+                <skillType>General</skillType>                
                 <skillType>Pass</skillType>
                 <skillType>Agility</skillType>
             </double>

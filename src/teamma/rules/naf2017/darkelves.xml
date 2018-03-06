@@ -88,7 +88,7 @@ and open the template in the editor.
                 <skill>Stab</skill>
                 <skill>Shadowing</skill>
             </skills>
-            <cost>70000</cost>
+            <cost>90000</cost>
             <single>
                 <skillType>General</skillType>
                 <skillType>Agility</skillType>

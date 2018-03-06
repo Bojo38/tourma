@@ -106,9 +106,8 @@ and open the template in the editor.
             <armor>7</armor>
             <skills>
                 <skill>Regeneration</skill>
-                <skill>Thick Skull</skill>
             </skills>
-            <cost>40000</cost>
+            <cost>30000</cost>
             <single>
                 <skillType>General</skillType>
             </single>

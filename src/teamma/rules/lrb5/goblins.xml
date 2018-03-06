@@ -97,6 +97,8 @@ and open the template in the editor.
                 <skill>Leap</skill>
                 <skill>Very Long Legs</skill>
                 <skill>Stunty</skill>
+                <skill>Dirty Player</skill>
+                <skill>Secret Weapon</skill>
             </skills>
             <cost>70000</cost>
             <single>
@@ -119,6 +121,7 @@ and open the template in the editor.
                 <skill>Chainsaw</skill>
                 <skill>Secret Weapon</skill>
                 <skill>Stunty</skill>
+                <skill>No Hands</skill>
             </skills>
             <cost>40000</cost>
             <single>
