@@ -14,6 +14,7 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>6</limit>
@@ -29,13 +30,14 @@ and open the template in the editor.
             </skills>
             <cost>70000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
-                <skillType>Mutation</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -52,16 +54,18 @@ and open the template in the editor.
             </skills>
             <cost>130000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
-            <limit>16</limit>
+            <limit>12</limit>
             <position>Hobgoblin</position>
             <movement>6</movement>
             <strength>3</strength>
@@ -71,15 +75,16 @@ and open the template in the editor.
             </skills>
             <cost>40000</cost>
             <single>
-                <skillType>General</skillType>
+                <skillType>General Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
-         <playerType>
+      <playerType>
             <limit>1</limit>
             <position>Minotaur</position>
             <movement>5</movement>
@@ -87,20 +92,51 @@ and open the template in the editor.
             <agility>2</agility>
             <armor>8</armor>
             <skills>
-                <skill>Loner</skill>
+                <skill>Big Guy</skill>
                 <skill>Wild Animal</skill>
                 <skill>Mighty Blow</skill>
-                <skill>Claw</skill>
+                <skill>Thick Skull</skill>
+                <skill>Frenzy</skill>
+                <skill>Horns</skill>
+                <skill>Always Hungry</skill>
+                <skill>Throw Team-mate</skill>              
             </skills>
-            <cost>150000</cost>
+            <cost>110000</cost>
             <single>
-                <skillType>Strength</skillType>
+                <skillType>Strength Skill</skillType>                
             </single>
             <double>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Mutation</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Physical Trait</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Troll</position>
+            <movement>4</movement>
+            <strength>5</strength>
+            <agility>1</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Big Guy</skill>
+                <skill>Really Stupid</skill>
+                <skill>Always Hungry</skill>
+                <skill>Mighty Blow</skill>
+                <skill>Regeneration</skill>
+                <skill>Throw Team-Mate</skill>
+            </skills>
+            <cost>100000</cost>
+            <single>
+                <skillType>Strength Skill</skillType>                
+            </single>
+            <double>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Strength Trait</skillType>
             </double>
         </playerType>
     </playertypes>

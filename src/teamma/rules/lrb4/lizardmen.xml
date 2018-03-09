@@ -14,6 +14,7 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>6</limit>
@@ -26,12 +27,14 @@ and open the template in the editor.
             </skills>
             <cost>80000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Agility</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -46,14 +49,14 @@ and open the template in the editor.
                 <skill>Stunty</skill>
             </skills>
             <cost>60000</cost>
-            <single>
-                
-                <skillType>Agility</skillType>
+            <single>                
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>General</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Strength</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -64,20 +67,21 @@ and open the template in the editor.
             <agility>1</agility>
             <armor>9</armor>
             <skills>
-                <skill>Loner</skill>
                 <skill>Mighty Blow</skill>
                 <skill>Bone Head</skill>
                 <skill>Thick Skull</skill>
                 <skill>Prehensile Tail</skill>
+                <skill>Big Guy</skill>
             </skills>
-            <cost>140000</cost>
+            <cost>130000</cost>
             <single>
-                <skillType>Strength</skillType>                
+                <skillType>Strength Skill</skillType>                
             </single>
             <double>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
-                <skillType>Pass</skillType>
+                <skillType>Strength Trait</skillType>                
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>     
     </playertypes>

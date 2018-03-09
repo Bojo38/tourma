@@ -14,10 +14,11 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>  
     <playertypes>               
         <playerType>
             <limit>2</limit>
-            <position>Wardanser</position>
+            <position>Wardancer</position>
             <movement>8</movement>
             <strength>3</strength>
             <agility>4</agility>
@@ -29,12 +30,14 @@ and open the template in the editor.
             </skills>
             <cost>120000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>            
-                <skillType>Strength</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Pass Skill</skillType>            
+                <skillType>Strength Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -49,34 +52,38 @@ and open the template in the editor.
             </skills>
             <cost>90000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Pass Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Strength Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>4</limit>
             <position>Catcher</position>
-            <movement>8</movement>
+            <movement>9</movement>
             <strength>2</strength>
             <agility>4</agility>
             <armor>7</armor>
             <skills>
                 <skill>Dodge</skill>
                 <skill>Catch</skill>
-                <skill>Sprint</skill>
             </skills>
             <cost>90000</cost>
-            <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+           <single>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Pass Skill</skillType>            
+                <skillType>Strength Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -89,13 +96,15 @@ and open the template in the editor.
             <skills>
             </skills>
             <cost>70000</cost>
-            <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+           <single>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Pass Skill</skillType>            
+                <skillType>Strength Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -106,22 +115,22 @@ and open the template in the editor.
             <agility>1</agility>
             <armor>10</armor>
             <skills>
-                  <skill>Take Roots</skill>
-                  <skill>Loner</skill>
-                  <skill>Stand Firm</skill>
-                  <skill>Mighty Blow</skill>
-                  <skill>Thick Skull</skill>
-                  <skill>Strong Arm</skill>
-                  <skill>Throw Team-Mate</skill>
+                <skill>Take Root</skill>
+                <skill>Stand Firm</skill>
+                <skill>Mighty Blow</skill>
+                <skill>Thick Skull</skill>
+                <skill>Big Guy</skill>
+                <skill>Throw Team-Mate</skill>
             </skills>
-            <cost>120000</cost>
+            <cost>110000</cost>
             <single>
-                <skillType>Strength</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
-                <skillType>Pass</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
     </playertypes>

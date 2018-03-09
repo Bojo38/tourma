@@ -14,28 +14,29 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>4</limit>
-            <position>Tomb Guardian</position>
-            <movement>4</movement>
+            <position>Mummy</position>
+            <movement>3</movement>
             <strength>5</strength>
             <agility>1</agility>
             <armor>9</armor>
             <skills>
                 <skill>Regeneration</skill>
-                <skill>Decay</skill>
+                <skill>Mighty Blow</skill>
             </skills>
-            <cost>100000</cost>
+            <cost>110000</cost>
             <single>
-                
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>                
+                <skillType>Strength Skill</skillType>
             </single>
-            
             <double>
-                <skillType>General</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>                                
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Strength Trait</skillType>
             </double>
         </playerType>
         <playerType>
@@ -52,12 +53,14 @@ and open the template in the editor.
             </skills>
             <cost>70000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Skill</skillType>                
+                <skillType>Pass Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>                                
+                <skillType>Strength Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Trait</skillType>
             </double>
         </playerType>
         <playerType>
@@ -73,12 +76,14 @@ and open the template in the editor.
             </skills>
             <cost>90000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>                
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Agility</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>                                
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Strength Trait</skillType>
             </double>
         </playerType>
         <playerType>
@@ -94,12 +99,13 @@ and open the template in the editor.
             </skills>
             <cost>40000</cost>
             <single>
-                <skillType>General</skillType>
+                <skillType>General Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>       
     </playertypes>

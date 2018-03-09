@@ -9,11 +9,12 @@ and open the template in the editor.
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
     <name>AmazonKey</name>
-    <reroll>50000</reroll>
+    <reroll>40000</reroll>
     <apothecary>true</apothecary>
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>4</limit>
@@ -28,12 +29,14 @@ and open the template in the editor.
             </skills>
             <cost>90000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>                
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>                
             </single>
             <double>
-                <skillType>Agility</skillType>
-                <skillType>Pass</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
             </double>
         </playerType>
         <playerType>
@@ -49,12 +52,14 @@ and open the template in the editor.
             </skills>
             <cost>70000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Pass</skillType>                
+                <skillType>General Skill</skillType>
+                <skillType>Pass Skill</skillType>                
             </single>
             <double>
-                <skillType>Agility</skillType>
-                <skillType>Strength</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Pass Trait</skillType>                
             </double>
         </playerType>
         <playerType>
@@ -70,16 +75,18 @@ and open the template in the editor.
             </skills>
             <cost>70000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
             </double>
         </playerType>
         <playerType>
-            <limit>16</limit>
+            <limit>12</limit>
             <position>Amazon Linewoman</position>
             <movement>6</movement>
             <strength>3</strength>
@@ -90,12 +97,13 @@ and open the template in the editor.
             </skills>
             <cost>50000</cost>
             <single>
-                <skillType>General</skillType>
+                <skillType>General Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>General Trait</skillType>
             </double>
         </playerType>
     </playertypes>

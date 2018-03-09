@@ -14,6 +14,7 @@ and open the template in the editor.
     <chef>100000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    <max_big_guy>2</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>2</limit>
@@ -23,21 +24,22 @@ and open the template in the editor.
             <agility>1</agility>
             <armor>10</armor>
             <skills>
-                <skill>Take Roots</skill>
+                <skill>Take Root</skill>
                 <skill>Stand Firm</skill>
                 <skill>Mighty Blow</skill>
                 <skill>Thick Skull</skill>
-                <skill>Strong Arm</skill>
+                <skill>Big Guy</skill>
                 <skill>Throw Team-Mate</skill>
             </skills>
-            <cost>120000</cost>
+            <cost>110000</cost>
             <single>
-                <skillType>Strength</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
-                <skillType>Pass</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -53,13 +55,14 @@ and open the template in the editor.
                 <skill>Right Stuff</skill>
             </skills>
             <cost>30000</cost>
-            <single>
-                <skillType>Agility</skillType>
+            <single>               
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>General</skillType>
-                <skillType>Pass</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
     </playertypes>

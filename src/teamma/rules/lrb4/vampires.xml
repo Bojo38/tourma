@@ -14,6 +14,7 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>true</igor>
     <bribe>100000</bribe>
+<max_big_guy>1</max_big_guy> 
     <playertypes>               
         <playerType>
             <limit>6</limit>
@@ -29,16 +30,19 @@ and open the template in the editor.
             </skills>
             <cost>110000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
         <playerType>
-            <limit>16</limit>
+            <limit>12</limit>
             <position>Thrall</position>
             <movement>6</movement>
             <strength>3</strength>
@@ -48,12 +52,13 @@ and open the template in the editor.
             </skills>
             <cost>40000</cost>
             <single>
-                <skillType>General</skillType>                
+                <skillType>General Skill</skillType>                
             </single>
             <double>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Trait</skillType>                
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </double>
         </playerType>       
     </playertypes>

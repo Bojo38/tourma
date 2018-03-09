@@ -14,6 +14,7 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>true</igor>
     <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>2</limit>
@@ -24,17 +25,19 @@ and open the template in the editor.
             <armor>8</armor>
             <skills>
                 <skill>Frenzy</skill>
-                <skill>Regeneration</skill>
+                <skill>Catch</skill>
                 <skill>Claw</skill>
             </skills>
             <cost>120000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -49,17 +52,19 @@ and open the template in the editor.
             </skills>
             <cost>70000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
             </double>
         </playerType>
         <playerType>
              <limit>2</limit>
-            <position>Wigth</position>
+            <position>Wight</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>3</agility>
@@ -70,12 +75,13 @@ and open the template in the editor.
             </skills>
             <cost>90000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -91,16 +97,18 @@ and open the template in the editor.
             </skills>
             <cost>110000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
-            <limit>16</limit>
+            <limit>12</limit>
             <position>Zombie</position>
             <movement>4</movement>
             <strength>3</strength>
@@ -109,14 +117,15 @@ and open the template in the editor.
             <skills>
                 <skill>Regeneration</skill>
             </skills>
-            <cost>40000</cost>
+            <cost>30000</cost>
             <single>
-                <skillType>General</skillType>
+                <skillType>General Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
     </playertypes>

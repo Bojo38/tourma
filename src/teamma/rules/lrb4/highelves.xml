@@ -14,10 +14,11 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>2</limit>
-            <position>Blitzer</position>
+            <position>Dragon Warrior</position>
             <movement>7</movement>
             <strength>3</strength>
             <agility>4</agility>
@@ -27,38 +28,42 @@ and open the template in the editor.
             </skills>
             <cost>100000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>2</limit>
-            <position>Thrower</position>
+            <position>Phoenix Warrior</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>4</agility>
             <armor>8</armor>
             <skills>
-                <skill>Safe Throw</skill>
                 <skill>Pass</skill>
             </skills>
             <cost>90000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Trait</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>4</limit>
-            <position>Catcher</position>
+            <position>Lion Warrior</position>
             <movement>8</movement>
             <strength>3</strength>
             <agility>4</agility>
@@ -68,12 +73,14 @@ and open the template in the editor.
             </skills>
             <cost>90000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -87,12 +94,14 @@ and open the template in the editor.
             </skills>
             <cost>70000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
     </playertypes>

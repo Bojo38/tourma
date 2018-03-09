@@ -14,9 +14,10 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    
     <playertypes>               
          <playerType>
-            <limit>6</limit>
+            <limit>12</limit>
             <position>Ogre</position>
             <movement>5</movement>
             <strength>5</strength>
@@ -28,40 +29,39 @@ and open the template in the editor.
                 <skill>Thick Skull</skill>
                 <skill>Throw Team-Mate</skill>
             </skills>
-            <cost>140000</cost>
+            <cost>120000</cost>
             <single>
-                <skillType>Strength</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>General</skillType>
-                
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>General Skill</skillType>                
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         
         <playerType>
-            <limit>16</limit>
-            <position>Snotling</position>
-            <movement>4</movement>
-            <strength>1</strength>
+            <limit>6</limit>
+            <position>Goblin</position>
+            <movement>6</movement>
+            <strength>2</strength>
             <agility>3</agility>
-            <armor>5</armor>
+            <armor>7</armor>
             <skills>
                 <skill>Dodge</skill>
                 <skill>Right Stuff</skill>
                 <skill>Stunty</skill>
-                <skill>Titchy</skill>
-                <skill>Side Step</skill>
             </skills>
-            <cost>20000</cost>
+            <cost>40000</cost>
             <single>
-                <skillType>Agility</skillType>                
+                <skillType>Agility Skill</skillType>                
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Pass</skillType>
-                <skillType>General</skillType>
+                <skillType>Agility Trait</skillType>                
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>General Skill</skillType>
             </double>
         </playerType>
     </playertypes>

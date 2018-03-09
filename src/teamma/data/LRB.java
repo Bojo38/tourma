@@ -44,6 +44,106 @@ public final class LRB {
     private static final Object myLock = new Object();
     private static final Logger LOG = Logger.getLogger(LRB.class.getName());
 
+    public static boolean isChef_enabled() {
+        return _chef_enabled;
+    }
+
+    public static void setChef_enabled(boolean _chef_enabled) {
+        LRB._chef_enabled = _chef_enabled;
+    }
+
+    public static boolean isMercenaries_enabled() {
+        return _mercenaries_enabled;
+    }
+
+    public static void setMercenaries_enabled(boolean _mercenaries_enabled) {
+        LRB._mercenaries_enabled = _mercenaries_enabled;
+    }
+
+    public static boolean isBabes_enabled() {
+        return _babes_enabled;
+    }
+
+    public static void setBabes_enabled(boolean _babes_enabled) {
+        LRB._babes_enabled = _babes_enabled;
+    }
+
+    public static boolean isWizard_enabled() {
+        return _wizard_enabled;
+    }
+
+    public static void setWizard_enabled(boolean _wizard_enabled) {
+        LRB._wizard_enabled = _wizard_enabled;
+    }
+
+    public static boolean isReroll_enabled() {
+        return _reroll_enabled;
+    }
+
+    public static void setReroll_enabled(boolean _reroll_enabled) {
+        LRB._reroll_enabled = _reroll_enabled;
+    }
+
+    public static boolean isLocal_apothecaries_enabled() {
+        return _local_apothecaries_enabled;
+    }
+
+    public static void setLocal_apothecaries_enabled(boolean _local_apothecaries_enabled) {
+        LRB._local_apothecaries_enabled = _local_apothecaries_enabled;
+    }
+
+    public static boolean isIgor_enabled() {
+        return _igor_enabled;
+    }
+
+    public static void setIgor_enabled(boolean _igor_enabled) {
+        LRB._igor_enabled = _igor_enabled;
+    }
+
+    public static boolean isCards_enabled() {
+        return _cards_enabled;
+    }
+
+    public static void setCards_enabled(boolean _cards_enabled) {
+        LRB._cards_enabled = _cards_enabled;
+    }
+
+    public static boolean isStarplayers_enabled() {
+        return _starplayers_enabled;
+    }
+
+    public static void setStarplayers_enabled(boolean _starplayers_enabled) {
+        LRB._starplayers_enabled = _starplayers_enabled;
+    }
+
+    private static boolean _chef_enabled = true;
+    private static boolean _bribes_enabled = true;
+
+    public static boolean isBribes_enabled() {
+        return _bribes_enabled;
+    }
+
+    public static void setBribes_enabled(boolean _bribes_enabled) {
+        LRB._bribes_enabled = _bribes_enabled;
+    }
+    private static boolean _mercenaries_enabled = true;
+    private static boolean _babes_enabled = true;
+    private static boolean _wizard_enabled = true;
+    private static boolean _reroll_enabled = true;
+    private static boolean _local_apothecaries_enabled = true;
+    private static boolean _igor_enabled = true;
+    private static boolean _cards_enabled = true;
+    private static boolean _starplayers_enabled = true;
+    private static boolean _check_nb_big_guys = false;
+
+    public static boolean isCheck_nb_big_guys() {
+        return _check_nb_big_guys;
+    }
+
+    public static void setCheck_nb_big_guys(boolean _check_nb_big_guys) {
+        LRB._check_nb_big_guys = _check_nb_big_guys;
+    }
+
     /**
      *
      * @return
@@ -171,6 +271,12 @@ public final class LRB {
     private final static String CS_Team = "team";
     private final static String CS_Picture = "image";
     private final static String CS_Starplayers = "starplayers";
+    private final static String CS_Inducements = "inducements";
+    private final static String CS_Mercenaries = "mercenaries";
+    private final static String CS_Babes = "babes";
+    private final static String CS_Wizard = "wizard";
+    private final static String CS_Cards = "cards";
+    private final static String CS_Check_nb_big_guys = "check_nb_big_guys";
 
     /**
      *
@@ -188,6 +294,39 @@ public final class LRB {
              */
             Element e_name = racine.getChild(CS_Name);
             setName(e_name.getValue());
+
+            /**
+             * Load inducements options
+             */
+            try {
+                Element e_inducements = racine.getChild(CS_Inducements);
+                Element e_chef = e_inducements.getChild(CS_Chef);
+                _chef_enabled = e_chef.getText().equals("yes");
+                Element e_bribe = e_inducements.getChild(CS_Bribe);
+                _bribes_enabled = e_bribe.getText().equals("yes");
+                Element e_mercenaries = e_inducements.getChild(CS_Mercenaries);
+                _mercenaries_enabled = e_mercenaries.getText().equals("yes");
+                Element e_babes = e_inducements.getChild(CS_Babes);
+                _babes_enabled = e_babes.getText().equals("yes");
+                Element e_wizard = e_inducements.getChild(CS_Wizard);
+                _wizard_enabled = e_wizard.getText().equals("yes");
+                Element e_reroll = e_inducements.getChild(CS_Reroll);
+                _reroll_enabled = e_reroll.getText().equals("yes");
+                Element e_apothecary = e_inducements.getChild(CS_Apothecary);
+                _local_apothecaries_enabled = e_apothecary.getText().equals("yes");
+                Element e_igor = e_inducements.getChild(CS_Igor);
+                _igor_enabled = e_igor.getText().equals("yes");
+                Element e_cards = e_inducements.getChild(CS_Cards);
+                _cards_enabled = e_cards.getText().equals("yes");
+                Element e_starplayers = e_inducements.getChild(CS_Starplayers);
+                _starplayers_enabled = e_starplayers.getText().equals("yes");
+
+                Element e_checkBG = e_inducements.getChild(CS_Check_nb_big_guys);
+                _check_nb_big_guys = e_checkBG.getText().equals("yes");
+
+            } catch (Exception exception) {
+
+            }
 
             /*
              * Get Skill file name

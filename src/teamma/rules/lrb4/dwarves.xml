@@ -9,11 +9,12 @@ and open the template in the editor.
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
     <name>DwarfKey</name>
-    <reroll>50000</reroll>
+    <reroll>40000</reroll>
     <apothecary>true</apothecary>
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>2</limit>
@@ -30,12 +31,14 @@ and open the template in the editor.
             </skills>
             <cost>90000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -51,12 +54,14 @@ and open the template in the editor.
             </skills>
             <cost>80000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -72,17 +77,19 @@ and open the template in the editor.
             </skills>
             <cost>80000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Pass</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </single>
             <double>
-                <skillType>Strength</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Pass Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>16</limit>
-            <position>Blocker</position>
+            <position>Long Beards</position>
             <movement>4</movement>
             <strength>3</strength>
             <agility>2</agility>
@@ -94,12 +101,14 @@ and open the template in the editor.
             </skills>
             <cost>70000</cost>
             <single>
-                <skillType>General</skillType>
-                <skillType>Strength</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Pass</skillType>
-                <skillType>Agility</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
