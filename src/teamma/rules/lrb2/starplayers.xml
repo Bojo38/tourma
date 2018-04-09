@@ -20,13 +20,14 @@ and open the template in the editor.
             <skill>Throw Team-Mate</skill>
             <skill>Regeneration</skill>
         </skills>
-        <cost>70000</cost>
-        <permanent_cost>200000</permanent_cost>
+        <cost>75000</cost>
+        <permanent_cost>150000</permanent_cost>
         <team>GoblinKey</team>
         <team>OrcKey</team>       
         <team>ChaosKey</team>       
-        <team>OgreKey</team>       
-    </starplayer>    
+               
+    </starplayer>
+    
     <starplayer>
         <name>Boomer Dribblesnot</name>
         <position>Bombardier</position>
@@ -59,11 +60,9 @@ and open the template in the editor.
             <skill>Regeneration</skill>
         </skills>
         <cost>90000</cost>
-        <permanent_cost>380000</permanent_cost>
+        <permanent_cost>180000</permanent_cost>
         <team>HumanKey</team>
         <team>UndeadKey</team>
-        <team>NecromanticKey</team>
-        <team>VampireKey</team>
     </starplayer>    
             
     <starplayer>
@@ -99,7 +98,7 @@ and open the template in the editor.
             <skill>Throw Team-Mate</skill>
         </skills>
         <cost>90000</cost>
-        <permanent_cost>250000</permanent_cost>
+        <permanent_cost>180000</permanent_cost>
         <team>HalflingKey</team>
         <team>WoodElfKey</team>
     </starplayer>
@@ -132,11 +131,10 @@ and open the template in the editor.
             <skill>Mighty Blow</skill>
             <skill>Thick Skull</skill>
         </skills>
-        <cost>320000</cost>
-        <permanent_cost>80000</permanent_cost>
+        <cost>80000</cost>
+        <permanent_cost>160000</permanent_cost>
         <team>ChaosKey</team>
         <team>ChaosDwarfKey</team>
-        <team>NurgleKey</team>
     </starplayer>
                             
     <starplayer>
@@ -154,7 +152,7 @@ and open the template in the editor.
             <skill>Sure Feet</skill>
         </skills>
         <cost>90000</cost>
-        <permanent_cost>380000</permanent_cost>
+        <permanent_cost>180000</permanent_cost>
         <team>HumanKey</team>
     </starplayer>
     
@@ -172,8 +170,8 @@ and open the template in the editor.
             <skill>Frenzy</skill>
             <skill>Thick Skull</skill>
         </skills>
-        <cost>70000</cost>
-        <permanent_cost>220000</permanent_cost>
+        <cost>75000</cost>
+        <permanent_cost>150000</permanent_cost>
         <team>DwarfKey</team>
     </starplayer>
                                              
@@ -190,8 +188,8 @@ and open the template in the editor.
             <skill>Dodge</skill>
             <skill>Prehensile Tail</skill>
         </skills>
-        <cost>60000</cost>
-        <permanent_cost>230000</permanent_cost>
+        <cost>65000</cost>
+        <permanent_cost>130000</permanent_cost>
         <team>SkavenKey</team>
     </starplayer>
                                                                  
@@ -206,7 +204,7 @@ and open the template in the editor.
             <skill>Mighty Blow</skill>
         </skills>
         <cost>80000</cost>
-        <permanent_cost>350000</permanent_cost>
+        <permanent_cost>160000</permanent_cost>
         <team>SkavenKey</team>
     </starplayer>
     
@@ -243,7 +241,7 @@ and open the template in the editor.
             <skill>Sprint</skill>           
         </skills>
         <cost>90000</cost>
-        <permanent_cost>360000</permanent_cost>
+        <permanent_cost>180000</permanent_cost>
         <team>ChaosDwarfKey</team>
     </starplayer>
 
@@ -261,9 +259,8 @@ and open the template in the editor.
             <skill>Side Step</skill>
             <skill>Diving Catch</skill>
         </skills>
-        <cost>70000</cost>
-        <permanent_cost>240000</permanent_cost>
-        <team>ElfKey</team>
+        <cost>75000</cost>
+        <permanent_cost>150000</permanent_cost>
         <team>WoodElfKey</team>
     </starplayer>
     
@@ -280,9 +277,8 @@ and open the template in the editor.
             <skill>Dirty Player</skill>
         </skills>
         <cost>80000</cost>
-        <permanent_cost>250000</permanent_cost>        
+        <permanent_cost>160000</permanent_cost>        
         <team>ChaosKey</team>
-        <team>NurgleKey</team>
     </starplayer>
 
     <starplayer>
@@ -297,7 +293,7 @@ and open the template in the editor.
             <skill>Mighty Blow</skill>
         </skills>
         <cost>60000</cost>
-        <permanent_cost>180000</permanent_cost>
+        <permanent_cost>120000</permanent_cost>
         <team>HumanKey</team>
     </starplayer>
 
@@ -315,13 +311,11 @@ and open the template in the editor.
             <skill>Thick Skull</skill>
             <skill>Throw Team-Mate</skill>
         </skills>
-        <cost>100000</cost>
-        <permanent_cost>430000</permanent_cost>
+        <cost>95000</cost>
+        <permanent_cost>190000</permanent_cost>
         <team>ChaosKey</team>
         <team>GoblinKey</team>
         <team>HumanKey</team>
-        <team>NurgleKey</team>
-        <team>OgreKey</team>
         <team>OrcKey</team>
     </starplayer>
     
@@ -340,7 +334,7 @@ and open the template in the editor.
         <cost>40000</cost>
         <permanent_cost>80000</permanent_cost>
         <team>GoblinKey</team>
-        <team>OgreKey</team>
+        
         <team>OrcKey</team>
         <team>ChaosKey</team>
     </starplayer>
@@ -358,29 +352,10 @@ and open the template in the editor.
             <skill>Dauntless</skill>
         </skills>
         <cost>70000</cost>
-        <permanent_cost>180000</permanent_cost>
-        <team>ElfKey</team>
+        <permanent_cost>140000</permanent_cost>
         <team>HighElfKey</team>
     </starplayer>
-    
-    <starplayer>
-        <name>Ratmut III</name>
-        <position>Mummy</position>
-        <movement>5</movement>
-        <strength>6</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Mighty Blow</skill>
-            <skill>Break Tackle</skill>
-            <skill>Block</skill>
-            <skill>Regeneration</skill>
-        </skills>
-        <cost>80000</cost>
-        <permanent_cost>350000</permanent_cost>
-        <team>KhemriKey</team>
-        <team>NecromanticKey</team>
-    </starplayer>
+       
         
     <starplayer>
         <name>Scrappa Sorehead</name>
@@ -397,7 +372,7 @@ and open the template in the editor.
         <cost>30000</cost>
         <permanent_cost>60000</permanent_cost>
         <team>GoblinKey</team>
-        <team>OgreKey</team>
+        
         <team>OrcKey</team>
         <team>ChaosKey</team>
     </starplayer>
@@ -415,7 +390,7 @@ and open the template in the editor.
             <skill>Stand Firm</skill>
         </skills>
         <cost>70000</cost>
-        <permanent_cost>230000</permanent_cost>
+        <permanent_cost>140000</permanent_cost>
         <team>LizardmenKey</team>
     </starplayer>
     
@@ -438,28 +413,22 @@ and open the template in the editor.
             <skill>Thrud's Fans</skill>
         </skills>
         <cost>50000</cost>
-        <permanent_cost>100000</permanent_cost>
+
         <team>AmazonKey</team>
         <team>ChaosKey</team>
         <team>ChaosDwarfKey</team>
         <team>DarkElfKey</team>
         <team>DwarfKey</team>
-        <team>ElfKey</team>
         <team>GoblinKey</team>
         <team>HalflingKey</team>
         <team>HighElfKey</team>
         <team>HumanKey</team>
         <team>LizardmenKey</team>
-        <team>NorseKey</team>
-        <team>NurgleKey</team>
-        <team>OgreKey</team>
+        <team>NorseKey</team>       
         <team>OrcKey</team>
         <team>SkavenKey</team>
-        <team>VampireKey</team>
         <team>WoodElfKey</team>
-        <team>KhemriKey</team>
         <team>UndeadKey</team>
-        <team>NecromanticKey</team>
     </starplayer>
     
     <starplayer>
@@ -476,32 +445,10 @@ and open the template in the editor.
             <skill>Mighty Blow</skill>
             <skill>Leader</skill>
         </skills>
-        <cost>90000</cost>
-        <permanent_cost>290000</permanent_cost>
+        <cost>80000</cost>
+        <permanent_cost>160000</permanent_cost>
         <team>OrcKey</team>
         <team>GoblinKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Zara The Slayer</name>
-        <position>Assassin</position>
-        <movement>6</movement>
-        <strength>4</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Jump Up</skill>
-            <skill>Block</skill>
-            <skill>Dodge</skill>
-            <skill>Dauntless</skill>
-            <skill>Stakes</skill>
-        </skills>
-        <cost>70000</cost>
-        <permanent_cost>270000</permanent_cost>
-        <team>AmazonKey</team>
-        <team>HumanKey</team>
-        <team>DwarfKey</team>
-        <team>NorseKey</team>
     </starplayer>
     
     <starplayer>

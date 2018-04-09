@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rules>
-    <name>LRB6+Khorne</name>
+    <name>LRB5</name>
     <teams>
         <team image="amazon.png">amazons.xml</team>
         <team image="chaos.png">chaos.xml</team>

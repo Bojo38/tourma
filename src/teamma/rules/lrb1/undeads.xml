@@ -8,92 +8,49 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>HumanKey</name>
-    <reroll>50000</reroll>
-    <apothecary>true</apothecary>
+    <name>UndeadKey</name>
+    <reroll>70000</reroll>
+    <apothecary>false</apothecary>
     <chef>300000</chef>
-    <igor>false</igor>
+    <igor>true</igor>
     <bribe>100000</bribe>
     <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
-            <limit>4</limit>
-            <position>Blitzer</position>
-            <movement>7</movement>
-            <strength>3</strength>
-            <agility>3</agility>
-            <armor>8</armor>
+            <limit>2</limit>
+            <position>Mummy</position>
+            <movement>3</movement>
+            <strength>5</strength>
+            <agility>1</agility>
+            <armor>9</armor>
             <skills>
-                <skill>Block</skill>
+                <skill>Mighty Blow</skill>
+                <skill>Regeneration</skill>
             </skills>
-            <cost>90000</cost>
+            <cost>110000</cost>
             <single>
-                 <skillType>General Skill</skillType>
                 <skillType>Strength Skill</skillType>
-            </single>            
-            <double>               
-                <skillType>General Trait</skillType>
+                <skillType>General Skill</skillType>
+            </single>
+            <double>
                 <skillType>Strength Trait</skillType>
-                <skillType>Pass Skill</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Pass Skill</skillType> 
                 <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>2</limit>
-            <position>Thrower</position>
+            <position>Wight</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>3</agility>
             <armor>8</armor>
             <skills>
-                <skill>Sure Hands</skill>
-                <skill>Pass</skill>
+                <skill>Block</skill>
+                <skill>Regeneration</skill>
             </skills>
-            <cost>70000</cost>
-            <single>
-                 <skillType>General Skill</skillType>
-                <skillType>Pass Skill</skillType>
-            </single>            
-            <double>               
-                <skillType>General Trait</skillType>
-                <skillType>Pass Trait</skillType>
-                <skillType>Strength Skill</skillType>
-                <skillType>Agility Skill</skillType>
-            </double>
-        </playerType>
-        <playerType>
-            <limit>4</limit>
-            <position>Catcher</position>
-            <movement>8</movement>
-            <strength>2</strength>
-            <agility>3</agility>
-            <armor>7</armor>
-            <skills>
-                <skill>Dodge</skill>
-                <skill>Catch</skill>
-            </skills>
-            <cost>70000</cost>
-            <single>
-                 <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
-            </single>            
-            <double>               
-                <skillType>General Trait</skillType>
-                <skillType>Agility Trait</skillType>
-                <skillType>Strength Skill</skillType>
-                <skillType>Pass Skill</skillType>
-            </double>
-        </playerType>
-        <playerType>
-            <limit>16</limit>
-            <position>Lineman</position>
-            <movement>6</movement>
-            <strength>3</strength>
-            <agility>2</agility>
-            <armor>8</armor>
-            <skills>
-            </skills>
-            <cost>50000</cost>
+            <cost>90000</cost>
             <single>
                 <skillType>General Skill</skillType>
             </single>
@@ -105,30 +62,69 @@ and open the template in the editor.
             </double>
         </playerType>
         <playerType>
-            <limit>1</limit>
-            <position>Ogre</position>
-            <movement>5</movement>
-            <strength>5</strength>
-            <agility>2</agility>
-            <armor>9</armor>
+            <limit>4</limit>
+            <position>Ghoul</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
             <skills>
-                <skill>Bone Head</skill>
-                <skill>Mighty Blow</skill>
-                <skill>Thick Skull</skill>
-                <skill>Throw Team-Mate</skill>
-                <skill>Big Guy</skill>
+                <skill>Dodge</skill>
             </skills>
-            <cost>120000</cost>
+            <cost>70000</cost>
             <single>
-                <skillType>Strength Skill</skillType>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </single>
             <double>
-                <skillType>General Skill</skillType>                
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>12</limit>
+            <position>Zombie</position>
+            <movement>4</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>30000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Skill</skillType>
                 <skillType>Pass Skill</skillType>
                 <skillType>Agility Skill</skillType>
-                <skillType>Strength Trait</skillType>
             </double>
-        </playerType>        
+        </playerType>
+        <playerType>
+            <limit>12</limit>
+            <position>Skeleton</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>30000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </double>
+        </playerType>
     </playertypes>
 </rostertype>
 

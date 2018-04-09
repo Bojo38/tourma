@@ -8,27 +8,25 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>WoodElfKey</name>
+    <name>HighElfKey</name>
     <reroll>50000</reroll>
     <apothecary>true</apothecary>
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
-    <max_big_guy>1</max_big_guy>  
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>2</limit>
-            <position>Wardancer</position>
-            <movement>8</movement>
+            <position>Dragon Warrior</position>
+            <movement>7</movement>
             <strength>3</strength>
             <agility>4</agility>
-            <armor>7</armor>
+            <armor>8</armor>
             <skills>
-                <skill>Dodge</skill>
                 <skill>Block</skill>
-                <skill>Leap</skill>
             </skills>
-            <cost>120000</cost>
+            <cost>100000</cost>
             <single>
                 <skillType>General Skill</skillType>
                 <skillType>Agility Skill</skillType>
@@ -36,100 +34,73 @@ and open the template in the editor.
             <double>
                 <skillType>General Trait</skillType>
                 <skillType>Agility Trait</skillType>
-                <skillType>Pass Skill</skillType>            
                 <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>2</limit>
-            <position>Thrower</position>
-            <movement>7</movement>
+            <position>Phoenix Warrior</position>
+            <movement>6</movement>
             <strength>3</strength>
             <agility>4</agility>
-            <armor>7</armor>
+            <armor>8</armor>
             <skills>
                 <skill>Pass</skill>
             </skills>
             <cost>90000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Pass Skill</skillType>
                 <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </single>
             <double>
                 <skillType>General Trait</skillType>
-                <skillType>Pass Trait</skillType>
                 <skillType>Agility Trait</skillType>
                 <skillType>Strength Skill</skillType>
+                <skillType>Pass Trait</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>4</limit>
-            <position>Catcher</position>
-            <movement>9</movement>
-            <strength>2</strength>
+            <position>Lion Warrior</position>
+            <movement>8</movement>
+            <strength>3</strength>
             <agility>4</agility>
             <armor>7</armor>
             <skills>
-                <skill>Dodge</skill>
                 <skill>Catch</skill>
             </skills>
             <cost>90000</cost>
-           <single>
+            <single>
                 <skillType>General Skill</skillType>
                 <skillType>Agility Skill</skillType>
             </single>
             <double>
                 <skillType>General Trait</skillType>
                 <skillType>Agility Trait</skillType>
-                <skillType>Pass Skill</skillType>            
                 <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>16</limit>
             <position>Lineman</position>
-            <movement>7</movement>
+            <movement>6</movement>
             <strength>3</strength>
             <agility>4</agility>
-            <armor>7</armor>
+            <armor>8</armor>
             <skills>
             </skills>
             <cost>70000</cost>
-           <single>
+            <single>
                 <skillType>General Skill</skillType>
                 <skillType>Agility Skill</skillType>
             </single>
             <double>
                 <skillType>General Trait</skillType>
                 <skillType>Agility Trait</skillType>
-                <skillType>Pass Skill</skillType>            
                 <skillType>Strength Skill</skillType>
-            </double>
-        </playerType>
-        <playerType>
-            <limit>1</limit>
-            <position>Treeman</position>
-            <movement>2</movement>
-            <strength>6</strength>
-            <agility>1</agility>
-            <armor>10</armor>
-            <skills>
-                <skill>Take Roots</skill>
-                <skill>Stand Firm</skill>
-                <skill>Mighty Blow</skill>
-                <skill>Thick Skull</skill>
-                <skill>Big Guy</skill>
-                <skill>Throw Team-Mate</skill>
-            </skills>
-            <cost>110000</cost>
-            <single>
-                <skillType>Strength Skill</skillType>
-            </single>
-            <double>
-                <skillType>Strength Trait</skillType>
-                <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
                 <skillType>Pass Skill</skillType>
             </double>
         </playerType>

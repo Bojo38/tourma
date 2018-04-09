@@ -458,13 +458,34 @@ public final class LRB {
             rt.setApothecary(Boolean.parseBoolean(e_apo.getValue()));
 
             Element e_chef_cost = racine.getChild(CS_Chef);
-            rt.setChef_cost(Integer.parseInt(e_chef_cost.getValue()));
+            if (e_chef_cost!=null)
+            {
+                rt.setChef_cost(Integer.parseInt(e_chef_cost.getValue()));
+            }
+            else
+            {
+                rt.setChef_cost(0);
+            }
 
             Element e_igor = racine.getChild(CS_Igor);
-            rt.setIgor(Boolean.parseBoolean(e_igor.getValue()));
+            if (e_igor!=null)
+            {
+                rt.setIgor(Boolean.parseBoolean(e_igor.getValue()));
+            }
+            else
+            {
+                rt.setIgor(false);
+            }
 
             Element e_bribe_cost = racine.getChild(CS_Bribe);
-            rt.setBribe_cost(Integer.parseInt(e_bribe_cost.getValue()));
+            if (e_bribe_cost!=null)
+            {
+                rt.setBribe_cost(Integer.parseInt(e_bribe_cost.getValue()));
+            }
+            else
+            {
+                rt.setBribe_cost(0);
+            }
 
             Element e_playerType = racine.getChild(CS_PlayerTypes);
             List<Element> l_players = e_playerType.getChildren(CS_PlayerType);

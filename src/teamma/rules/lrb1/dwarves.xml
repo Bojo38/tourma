@@ -8,25 +8,32 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>NorseKey</name>
-    <reroll>60000</reroll>
+    <name>DwarfKey</name>
+    <reroll>40000</reroll>
     <apothecary>true</apothecary>
-    <chef>300000</chef>
-    <igor>false</igor>
-    <bribe>100000</bribe>
+        <wizard>
+        <possible>no</possible>
+        <special>
+            <possible>yes</possible>
+            <name>alchemist</name>
+            <cost>30000</cost>            
+        </special>
+    </wizard>
+
     <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
-            <limit>4</limit>
-            <position>Blitzer</position>
-            <movement>6</movement>
+            <limit>2</limit>
+            <position>Troll Slayer</position>
+            <movement>5</movement>
             <strength>3</strength>
-            <agility>3</agility>
-            <armor>7</armor>
+            <agility>2</agility>
+            <armor>8</armor>
             <skills>
+                <skill>Dauntless</skill>
                 <skill>Block</skill>
-                <skill>Jump Up</skill>
                 <skill>Frenzy</skill>
+                <skill>Thick Skull</skill>
             </skills>
             <cost>90000</cost>
             <single>
@@ -36,45 +43,45 @@ and open the template in the editor.
             <double>
                 <skillType>General Trait</skillType>
                 <skillType>Strength Trait</skillType>
-                <skillType>Agility Skill</skillType>
                 <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>2</limit>
-            <position>Catcher</position>
-            <movement>6</movement>
+            <position>Blitzer</position>
+            <movement>5</movement>
             <strength>3</strength>
             <agility>3</agility>
-            <armor>7</armor>
+            <armor>9</armor>
             <skills>
                 <skill>Block</skill>
-                <skill>Catch</skill>
+                <skill>Thick Skull</skill>
             </skills>
-            <cost>70000</cost>
+            <cost>80000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
                 <skillType>General Trait</skillType>
-                <skillType>Agility Trait</skillType>
-                <skillType>Strength Skill</skillType>
-                <skillType>Pass Skill</skillType>                
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>2</limit>
-            <position>Thrower</position>
+            <position>Runner</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>3</agility>
-            <armor>7</armor>
+            <armor>8</armor>
             <skills>
-                <skill>Block</skill>
-                <skill>Pass</skill>
+                <skill>Sure Hands</skill>
+                <skill>Thick Skull</skill>
             </skills>
-            <cost>70000</cost>
+            <cost>80000</cost>
             <single>
                 <skillType>General Skill</skillType>
                 <skillType>Pass Skill</skillType>
@@ -83,57 +90,56 @@ and open the template in the editor.
                 <skillType>General Trait</skillType>
                 <skillType>Pass Trait</skillType>
                 <skillType>Strength Skill</skillType>
-                <skillType>Agility Skill</skillType>                
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
-            <limit>12</limit>
-            <position>Lineman</position>
-            <movement>6</movement>
+            <limit>16</limit>
+            <position>Long Beards</position>
+            <movement>4</movement>
             <strength>3</strength>
-            <agility>3</agility>
-            <armor>7</armor>
+            <agility>2</agility>
+            <armor>9</armor>
             <skills>
                 <skill>Block</skill>
+                <skill>Tackle</skill>
+                <skill>Thick Skull</skill>
             </skills>
-            <cost>50000</cost>
+            <cost>70000</cost>
             <single>
-                <skillType>General Skill</skillType>                
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>General Trait</skillType>                
-                <skillType>Strength Skill</skillType>
-                <skillType>Pass Skill</skillType>   
-                <skillType>Agility Skill</skillType>             
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>1</limit>
-            <position>Minotaur</position>
-            <movement>5</movement>
-            <strength>5</strength>
-            <agility>2</agility>
-            <armor>8</armor>
+            <position>Deathroller</position>
+            <movement>4</movement>
+            <strength>7</strength>
+            <agility>1</agility>
+            <armor>10</armor>
             <skills>
-                <skill>Big Guy</skill>
-                <skill>Wild Animal</skill>
                 <skill>Mighty Blow</skill>
-                <skill>Thick Skull</skill>
-                <skill>Frenzy</skill>
-                <skill>Horns</skill>
-                <skill>Always Hungry</skill>
-                <skill>Throw Team-Mate</skill>              
+                <skill>Deathroller</skill>
+                <skill>Multiple Block</skill>
+                <skill>Stand Firm</skill>
             </skills>
-            <cost>110000</cost>
+            <cost>160000</cost>
             <single>
+                <skillType>General Skill</skillType>
                 <skillType>Strength Skill</skillType>
             </single>
             <double>
+                <skillType>General Trait</skillType>
                 <skillType>Strength Trait</skillType>
-                <skillType>Physical Trait</skillType>
-                <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
                 <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -155,8 +161,8 @@ and open the template in the editor.
                 <skillType>Strength Skill</skillType>
             </single>
             <double>
+                <skillType>General Skill</skillType>
                 <skillType>Strength Trait</skillType>
-                <skillType>General Skill</skillType>                
                 <skillType>Pass Skill</skillType>
                 <skillType>Agility Skill</skillType>
             </double>

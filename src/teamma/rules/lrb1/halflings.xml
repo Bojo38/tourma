@@ -11,7 +11,7 @@ and open the template in the editor.
     <name>HalflingKey</name>
     <reroll>60000</reroll>
     <apothecary>true</apothecary>
-    <chef>0</chef>
+    <chef>100000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
     <max_big_guy>2</max_big_guy>
@@ -63,6 +63,31 @@ and open the template in the editor.
                 <skillType>General Skill</skillType>
                 <skillType>Strength Skill</skillType>
                 <skillType>Pass Skill</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Ogre</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>2</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Bone Head</skill>
+                <skill>Mighty Blow</skill>
+                <skill>Thick Skull</skill>
+                <skill>Throw Team-Mate</skill>
+                <skill>Big Guy</skill>
+            </skills>
+            <cost>120000</cost>
+            <single>
+                <skillType>Strength Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
     </playertypes>

@@ -13,7 +13,8 @@ and open the template in the editor.
         <skill>Block</skill>       
         <skill>Dirty Player</skill>
         <skill>Kick</skill>
-        <skill>Pass Block</skill>        
+        <skill>Pass Block</skill>
+        <skill>Pro</skill>
         <skill>Shadowing</skill>
         <skill>Strip Ball</skill>        
         <skill>Sure Hands</skill>
@@ -21,9 +22,8 @@ and open the template in the editor.
     </category>
     <category>
         <name>General Trait</name>
-        <accronym>Gt</accronym>        
+        <accronym>Gt</accronym>
         <special>false</special>
-        <skill>Pro</skill>
         <skill>Leader</skill>
         <skill>Frenzy</skill>
         <skill>Dauntless</skill>

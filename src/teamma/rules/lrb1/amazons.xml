@@ -8,72 +8,77 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>ElfKey</name>
-    <reroll>50000</reroll>
+    <name>AmazonKey</name>
+    <reroll>40000</reroll>
     <apothecary>true</apothecary>
-    <chef>300000</chef>
-    <igor>false</igor>
-    <bribe>100000</bribe>
+    <wizard>
+        <possible>yes</possible>
+        <special>
+            <possible>no</possible>
+            <name>none</name>
+            <cost>0</cost>            
+        </special>
+    </wizard>
     <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
-            <limit>2</limit>
-            <position>Blitzer</position>
-            <movement>7</movement>
+            <limit>4</limit>
+            <position>Amazon Blitzer</position>
+            <movement>6</movement>
             <strength>3</strength>
-            <agility>4</agility>
-            <armor>8</armor>
+            <agility>3</agility>
+            <armor>7</armor>
             <skills>
-                <skill>Side Step</skill>
+                <skill>Dodge</skill>
                 <skill>Block</skill>
             </skills>
-            <cost>110000</cost>
+            <cost>90000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
+                <skillType>Strength Skill</skillType>                
             </single>
             <double>
-                <skillType>Strength Skill</skillType>
+                <skillType>Agility Skill</skillType>
                 <skillType>Pass Skill</skillType>
                 <skillType>General Trait</skillType>
-                <skillType>Agility Trait</skillType>
+                <skillType>Strength Trait</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>2</limit>
-            <position>Thrower</position>
+            <position>Amazon Thrower</position>
             <movement>6</movement>
             <strength>3</strength>
-            <agility>4</agility>
+            <agility>3</agility>
             <armor>7</armor>
             <skills>
+                <skill>Dodge</skill>
                 <skill>Pass</skill>
             </skills>
             <cost>70000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
-                <skillType>Pass Skill</skillType>
+                <skillType>Pass Skill</skillType>                
             </single>
             <double>
+                <skillType>Agility Skill</skillType>
                 <skillType>Strength Skill</skillType>
-                <skillType>Pass Trait</skillType>
                 <skillType>General Trait</skillType>
-                <skillType>Agility Trait</skillType>
+                <skillType>Pass Trait</skillType>                
             </double>
         </playerType>
         <playerType>
-            <limit>4</limit>
-            <position>Catcher</position>
-            <movement>8</movement>
+            <limit>2</limit>
+            <position>Amazon Catcher</position>
+            <movement>6</movement>
             <strength>3</strength>
-            <agility>4</agility>
+            <agility>3</agility>
             <armor>7</armor>
             <skills>
-                <skill>Nerves of Steel</skill>
+                <skill>Dodge</skill>
                 <skill>Catch</skill>
             </skills>
-            <cost>100000</cost>
+            <cost>70000</cost>
             <single>
                 <skillType>General Skill</skillType>
                 <skillType>Agility Skill</skillType>
@@ -87,23 +92,23 @@ and open the template in the editor.
         </playerType>
         <playerType>
             <limit>12</limit>
-            <position>Lineman</position>
+            <position>Amazon Linewoman</position>
             <movement>6</movement>
             <strength>3</strength>
-            <agility>4</agility>
+            <agility>3</agility>
             <armor>7</armor>
             <skills>
+                <skill>Dodge</skill>
             </skills>
-            <cost>60000</cost>
+            <cost>50000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
             </single>
             <double>
                 <skillType>Strength Skill</skillType>
                 <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
                 <skillType>General Trait</skillType>
-                <skillType>Agility Trait</skillType>
             </double>
         </playerType>
     </playertypes>

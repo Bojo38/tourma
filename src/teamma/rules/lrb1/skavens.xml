@@ -8,36 +8,35 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>WoodElfKey</name>
-    <reroll>50000</reroll>
+    <name>SkavenKey</name>
+    <reroll>60000</reroll>
     <apothecary>true</apothecary>
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>100000</bribe>
-    <max_big_guy>1</max_big_guy>  
+    <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
             <limit>2</limit>
-            <position>Wardancer</position>
-            <movement>8</movement>
+            <position>Stormvemins</position>
+            <movement>7</movement>
             <strength>3</strength>
-            <agility>4</agility>
-            <armor>7</armor>
-            <skills>
-                <skill>Dodge</skill>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>                
                 <skill>Block</skill>
-                <skill>Leap</skill>
             </skills>
-            <cost>120000</cost>
+            <cost>90000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
+                <skillType>Strength Skill</skillType>                
             </single>
             <double>
                 <skillType>General Trait</skillType>
-                <skillType>Agility Trait</skillType>
-                <skillType>Pass Skill</skillType>            
-                <skillType>Strength Skill</skillType>
+                <skillType>Strength Trait</skillType>                
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Physical Trait</skillType>
             </double>
         </playerType>
         <playerType>
@@ -45,92 +44,93 @@ and open the template in the editor.
             <position>Thrower</position>
             <movement>7</movement>
             <strength>3</strength>
-            <agility>4</agility>
+            <agility>3</agility>
             <armor>7</armor>
             <skills>
+                <skill>Sure Hands</skill>
                 <skill>Pass</skill>
             </skills>
-            <cost>90000</cost>
+            <cost>70000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Pass Skill</skillType>
-                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>                
             </single>
             <double>
                 <skillType>General Trait</skillType>
-                <skillType>Pass Trait</skillType>
-                <skillType>Agility Trait</skillType>
+                <skillType>Pass Trait</skillType>                
+                <skillType>Agility Skill</skillType>
                 <skillType>Strength Skill</skillType>
+                <skillType>Physical Trait</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>4</limit>
-            <position>Catcher</position>
+            <position>Gutter Runner</position>
             <movement>9</movement>
             <strength>2</strength>
             <agility>4</agility>
             <armor>7</armor>
             <skills>
                 <skill>Dodge</skill>
-                <skill>Catch</skill>
             </skills>
-            <cost>90000</cost>
-           <single>
+            <cost>80000</cost>
+            <single>
                 <skillType>General Skill</skillType>
                 <skillType>Agility Skill</skillType>
             </single>
             <double>
                 <skillType>General Trait</skillType>
                 <skillType>Agility Trait</skillType>
-                <skillType>Pass Skill</skillType>            
                 <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Physical Trait</skillType>
             </double>
         </playerType>
         <playerType>
-            <limit>16</limit>
+            <limit>12</limit>
             <position>Lineman</position>
             <movement>7</movement>
             <strength>3</strength>
-            <agility>4</agility>
+            <agility>3</agility>
             <armor>7</armor>
             <skills>
             </skills>
-            <cost>70000</cost>
-           <single>
+            <cost>50000</cost>
+            <single>
                 <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
             </single>
             <double>
                 <skillType>General Trait</skillType>
-                <skillType>Agility Trait</skillType>
-                <skillType>Pass Skill</skillType>            
                 <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Physical Trait</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>1</limit>
-            <position>Treeman</position>
-            <movement>2</movement>
-            <strength>6</strength>
-            <agility>1</agility>
-            <armor>10</armor>
+            <position>Rat Ogre</position>
+            <movement>6</movement>
+            <strength>5</strength>
+            <agility>2</agility>
+            <armor>8</armor>
             <skills>
-                <skill>Take Roots</skill>
-                <skill>Stand Firm</skill>
-                <skill>Mighty Blow</skill>
-                <skill>Thick Skull</skill>
                 <skill>Big Guy</skill>
-                <skill>Throw Team-Mate</skill>
+                <skill>Wild Animal</skill>
+                <skill>Prehensile Tail</skill>
+                <skill>Frenzy</skill>
+                <skill>Mighty Blow</skill>
             </skills>
-            <cost>110000</cost>
+            <cost>130000</cost>
             <single>
                 <skillType>Strength Skill</skillType>
             </single>
             <double>
                 <skillType>Strength Trait</skillType>
                 <skillType>General Skill</skillType>
-                <skillType>Agility Skill</skillType>
                 <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Physical Trait</skillType>
             </double>
         </playerType>
     </playertypes>

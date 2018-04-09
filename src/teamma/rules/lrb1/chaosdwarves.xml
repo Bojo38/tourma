@@ -8,8 +8,8 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>ChaosKey</name>
-    <reroll>70000</reroll>
+    <name>ChaosDwarfKey</name>
+    <reroll>50000</reroll>
     <apothecary>true</apothecary>
     <chef>300000</chef>
     <igor>false</igor>
@@ -17,51 +17,74 @@ and open the template in the editor.
     <max_big_guy>1</max_big_guy>
     <playertypes>               
         <playerType>
-            <limit>4</limit>
-            <position>Chaos Warrior</position>
-            <movement>5</movement>
-            <strength>4</strength>
-            <agility>3</agility>
+            <limit>6</limit>
+            <position>Blocker</position>
+            <movement>4</movement>
+            <strength>3</strength>
+            <agility>2</agility>
             <armor>9</armor>
             <skills>
+                <skill>Block</skill>
+                <skill>Tackle</skill>
+                <skill>Thick Skull</skill>
             </skills>
-            <cost>100000</cost>
+            <cost>70000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Strength Skill</skillType>                
+                <skillType>Strength Skill</skillType>
             </single>
             <double>
-                <skillType>Agility Skill</skillType>
-                <skillType>Pass Skill</skillType>
                 <skillType>General Trait</skillType>
                 <skillType>Strength Trait</skillType>
-                <skillType>Physical Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Bull Cantaur</position>
+            <movement>6</movement>
+            <strength>4</strength>
+            <agility>2</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Sure Feet</skill>
+                <skill>Sprint</skill>
+                 <skill>Thick Skull</skill>
+            </skills>
+            <cost>130000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
             <limit>12</limit>
-            <position>Beastman</position>
+            <position>Hobgoblin</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>3</agility>
-            <armor>8</armor>
+            <armor>7</armor>
             <skills>
-                <skill>Horns</skill>              
             </skills>
-            <cost>60000</cost>
+            <cost>40000</cost>
             <single>
                 <skillType>General Skill</skillType>
-                <skillType>Strength Skill</skillType>                
             </single>
             <double>
-                <skillType>Agility Skill</skillType>
-                <skillType>Pass Skill</skillType>
                 <skillType>General Trait</skillType>
-                <skillType>Strength Trait</skillType>
-                <skillType>Physical Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
-        <playerType>
+      <playerType>
             <limit>1</limit>
             <position>Minotaur</position>
             <movement>5</movement>
@@ -80,7 +103,7 @@ and open the template in the editor.
             </skills>
             <cost>110000</cost>
             <single>
-                <skillType>Strength Skill</skillType>
+                <skillType>Strength Skill</skillType>                
             </single>
             <double>
                 <skillType>General Skill</skillType>
@@ -88,31 +111,6 @@ and open the template in the editor.
                 <skillType>Pass Skill</skillType>
                 <skillType>Strength Trait</skillType>
                 <skillType>Physical Trait</skillType>
-            </double>
-        </playerType>
-        <playerType>
-            <limit>1</limit>
-            <position>Ogre</position>
-            <movement>5</movement>
-            <strength>5</strength>
-            <agility>2</agility>
-            <armor>9</armor>
-            <skills>
-                <skill>Bone Head</skill>
-                <skill>Mighty Blow</skill>
-                <skill>Thick Skull</skill>
-                <skill>Throw Team-Mate</skill>
-                <skill>Big Guy</skill>
-            </skills>
-            <cost>120000</cost>
-            <single>
-                <skillType>Strength Skill</skillType>
-            </single>
-            <double>
-                <skillType>General Skill</skillType>
-                <skillType>Strength Trait</skillType>
-                <skillType>Pass Skill</skillType>
-                <skillType>Agility Skill</skillType>
             </double>
         </playerType>
         <playerType>
@@ -132,16 +130,16 @@ and open the template in the editor.
             </skills>
             <cost>100000</cost>
             <single>
-                <skillType>Strength Skill</skillType>
+                <skillType>Strength Skill</skillType>                
             </single>
             <double>
                 <skillType>General Skill</skillType>
-                <skillType>Strength Trait</skillType>
-                <skillType>Pass Skill</skillType>
                 <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Strength Trait</skillType>
             </double>
         </playerType>
-    </playertypes>    
+    </playertypes>
 </rostertype>
 
 

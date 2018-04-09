@@ -25,8 +25,9 @@ and open the template in the editor.
         <team>GoblinKey</team>
         <team>OrcKey</team>       
         <team>ChaosKey</team>       
-        <team>OgreKey</team>       
-    </starplayer>    
+               
+    </starplayer>
+    
     <starplayer>
         <name>Boomer Dribblesnot</name>
         <position>Bombardier</position>
@@ -63,7 +64,7 @@ and open the template in the editor.
         <team>HumanKey</team>
         <team>UndeadKey</team>
         <team>NecromanticKey</team>
-        <team>VampireKey</team>
+        
     </starplayer>    
             
     <starplayer>
@@ -321,7 +322,7 @@ and open the template in the editor.
         <team>GoblinKey</team>
         <team>HumanKey</team>
         <team>NurgleKey</team>
-        <team>OgreKey</team>
+        
         <team>OrcKey</team>
     </starplayer>
     
@@ -340,7 +341,7 @@ and open the template in the editor.
         <cost>40000</cost>
         <permanent_cost>80000</permanent_cost>
         <team>GoblinKey</team>
-        <team>OgreKey</team>
+        
         <team>OrcKey</team>
         <team>ChaosKey</team>
     </starplayer>
@@ -397,7 +398,7 @@ and open the template in the editor.
         <cost>30000</cost>
         <permanent_cost>60000</permanent_cost>
         <team>GoblinKey</team>
-        <team>OgreKey</team>
+        
         <team>OrcKey</team>
         <team>ChaosKey</team>
     </starplayer>
@@ -452,10 +453,9 @@ and open the template in the editor.
         <team>LizardmenKey</team>
         <team>NorseKey</team>
         <team>NurgleKey</team>
-        <team>OgreKey</team>
+        
         <team>OrcKey</team>
         <team>SkavenKey</team>
-        <team>VampireKey</team>
         <team>WoodElfKey</team>
         <team>KhemriKey</team>
         <team>UndeadKey</team>
