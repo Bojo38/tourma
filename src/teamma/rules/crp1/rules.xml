@@ -3,6 +3,7 @@
     <name>CRP1</name>
     <teams>
         <team image="amazon.png">amazons.xml</team>
+        <team image="bretonian.png">bretonians.xml</team>
         <team image="chaos.png">chaos.xml</team>
         <team image="chaosdwarf.png">chaosdwarves.xml</team>
         <team image="chaos_pact.png">chaospact.xml</team>
@@ -14,6 +15,7 @@
         <team image="highelf.png">highelves.xml</team>
         <team image="human.png">humans.xml</team>
         <team image="khemri.png">khemris.xml</team>
+        <team image="khorne.png">khornesdaemons.xml</team>
         <team image="lizardmen.png">lizardmen.xml</team>
         <team image="necromantic.png">necromantics.xml</team>
         <team image="norse.png">norses.xml</team>

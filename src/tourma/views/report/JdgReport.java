@@ -508,6 +508,8 @@ public final class JdgReport extends javax.swing.JDialog {
 
             ArrayList<Integer> values = new ArrayList<>();
 
+            Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+
             // Find value + for each matches
             for (int j = 0; j < nb_criterias; j++) {
                 Criteria crit = mTour.getParams().getCriteria(j);
@@ -516,10 +518,28 @@ public final class JdgReport extends javax.swing.JDialog {
                     CoachMatch cm = (CoachMatch) coach.getMatch(k);
                     Value value = cm.getValue(crit);
                     if (cm.getCompetitor1() == coach) {
-                        val += value.getValue1();
+                        if (crit == td) {
+                            if (value.getValue1() < 0) {
+                                val += 0;
+                            } else {
+                                val += value.getValue1();
+                            }
+
+                        } else {
+                            val += value.getValue1();
+                        }
                     }
                     if (cm.getCompetitor2() == coach) {
-                        val += value.getValue2();
+                        if (crit == td) {
+                            if (value.getValue2() < 0) {
+                                val += 0;
+                            } else {
+                                val += value.getValue2();
+                            }
+
+                        } else {
+                            val += value.getValue2();
+                        }
                     }
                 }
                 values.add(val);
@@ -532,10 +552,28 @@ public final class JdgReport extends javax.swing.JDialog {
                     CoachMatch cm = (CoachMatch) coach.getMatch(k);
                     Value value = cm.getValue(crit);
                     if (cm.getCompetitor2() == coach) {
-                        val += value.getValue1();
+                        if (crit == td) {
+                            if (value.getValue1() < 0) {
+                                val += 0;
+                            } else {
+                                val += value.getValue1();
+                            }
+
+                        } else {
+                            val += value.getValue1();
+                        }
                     }
                     if (cm.getCompetitor1() == coach) {
-                        val += value.getValue2();
+                        if (crit == td) {
+                            if (value.getValue2() < 0) {
+                                val += 0;
+                            } else {
+                                val += value.getValue2();
+                            }
+
+                        } else {
+                            val += value.getValue2();
+                        }
                     }
                 }
                 values.add(val);
@@ -570,10 +608,28 @@ public final class JdgReport extends javax.swing.JDialog {
                     if (r.containsCoachMatch(cm)) {
                         Value value = cm.getValue(crit);
                         if (cm.getCompetitor1() == coach) {
-                            val += value.getValue1();
+                            if (crit == td) {
+                                if (value.getValue1() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue1();
+                                }
+
+                            } else {
+                                val += value.getValue1();
+                            }
                         }
                         if (cm.getCompetitor2() == coach) {
-                            val += value.getValue2();
+                            if (crit == td) {
+                                if (value.getValue2() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue2();
+                                }
+
+                            } else {
+                                val += value.getValue2();
+                            }
                         }
                     }
                 }
@@ -613,10 +669,28 @@ public final class JdgReport extends javax.swing.JDialog {
                         if (r.containsCoachMatch(cm)) {
                             Value value = cm.getValue(crit);
                             if (cm.getCompetitor1() == coach) {
-                                val += value.getValue1();
+                                if (crit == td) {
+                                    if (value.getValue1() < 0) {
+                                        val += 0;
+                                    } else {
+                                        val += value.getValue1();
+                                    }
+
+                                } else {
+                                    val += value.getValue1();
+                                }
                             }
                             if (cm.getCompetitor2() == coach) {
-                                val += value.getValue2();
+                                if (crit == td) {
+                                    if (value.getValue2() < 0) {
+                                        val += 0;
+                                    } else {
+                                        val += value.getValue2();
+                                    }
+
+                                } else {
+                                    val += value.getValue2();
+                                }
                             }
                         }
                     }
@@ -700,8 +774,29 @@ public final class JdgReport extends javax.swing.JDialog {
                 for (int k = 0; k < nb_criterias; k++) {
                     Criteria crit = mTour.getParams().getCriteria(k);
                     Value value = cm.getValue(crit);
-                    val1.add(0, value.getValue1());
-                    val2.add(value.getValue2());
+
+                    if (crit == td) {
+                        if (value.getValue1() < 0) {
+                            val1.add(0, 0);
+                        } else {
+                            val1.add(0, value.getValue1());
+                        }
+
+                    } else {
+                        val1.add(0, value.getValue1());
+                    }
+                    if (crit == td) {
+                        if (value.getValue2() < 0) {
+                            val2.add(0);
+                        } else {
+                            val2.add(value.getValue2());
+                        }
+
+                    } else {
+                        val2.add(value.getValue2());
+                    }
+                    //val1.add(0, value.getValue1());
+                    //val2.add(value.getValue2());
                 }
                 hCm.put("values1", val1);
                 hCm.put("values2", val2);
@@ -1134,7 +1229,7 @@ public final class JdgReport extends javax.swing.JDialog {
         Writer out = null;
 
         mRanking = new MjtRankingIndiv(mRoundNumber, coaches, true, false);
-
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
         try {
             final Configuration cfg = new Configuration();
             final URI uri = getClass().getResource("/tourma/views/report").toURI();
@@ -1222,10 +1317,28 @@ public final class JdgReport extends javax.swing.JDialog {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
                         Value value = cm.getValue(crit);
                         if (cm.getCompetitor1() == coach) {
-                            val += value.getValue1();
+                            if (crit == td) {
+                                if (value.getValue1() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue1();
+                                }
+
+                            } else {
+                                val += value.getValue1();
+                            }
                         }
                         if (cm.getCompetitor2() == coach) {
-                            val += value.getValue2();
+                            if (crit == td) {
+                                if (value.getValue2() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue2();
+                                }
+
+                            } else {
+                                val += value.getValue2();
+                            }
                         }
                     }
                     values.add(val);
@@ -1238,10 +1351,28 @@ public final class JdgReport extends javax.swing.JDialog {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
                         Value value = cm.getValue(crit);
                         if (cm.getCompetitor2() == coach) {
-                            val += value.getValue1();
+                            if (crit == td) {
+                                if (value.getValue1() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue1();
+                                }
+
+                            } else {
+                                val += value.getValue1();
+                            }
                         }
                         if (cm.getCompetitor1() == coach) {
-                            val += value.getValue2();
+                            if (crit == td) {
+                                if (value.getValue2() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue2();
+                                }
+
+                            } else {
+                                val += value.getValue2();
+                            }
                         }
                     }
                     values.add(val);
@@ -1277,10 +1408,28 @@ public final class JdgReport extends javax.swing.JDialog {
                         if (r.containsCoachMatch(cm)) {
                             Value value = cm.getValue(crit);
                             if (cm.getCompetitor1() == coach) {
-                                val += value.getValue1();
+                                if (crit == td) {
+                                    if (value.getValue1() < 0) {
+                                        val += 0;
+                                    } else {
+                                        val += value.getValue1();
+                                    }
+
+                                } else {
+                                    val += value.getValue1();
+                                }
                             }
                             if (cm.getCompetitor2() == coach) {
-                                val += value.getValue2();
+                                if (crit == td) {
+                                    if (value.getValue2() < 0) {
+                                        val += 0;
+                                    } else {
+                                        val += value.getValue2();
+                                    }
+
+                                } else {
+                                    val += value.getValue2();
+                                }
                             }
                         }
                     }
@@ -1319,10 +1468,28 @@ public final class JdgReport extends javax.swing.JDialog {
                             if (r.containsCoachMatch(cm)) {
                                 Value value = cm.getValue(crit);
                                 if (cm.getCompetitor1() == coach) {
-                                    val += value.getValue1();
+                                    if (crit == td) {
+                                        if (value.getValue1() < 0) {
+                                            val += 0;
+                                        } else {
+                                            val += value.getValue1();
+                                        }
+
+                                    } else {
+                                        val += value.getValue1();
+                                    }
                                 }
                                 if (cm.getCompetitor2() == coach) {
-                                    val += value.getValue2();
+                                    if (crit == td) {
+                                        if (value.getValue2() < 0) {
+                                            val += 0;
+                                        } else {
+                                            val += value.getValue2();
+                                        }
+
+                                    } else {
+                                        val += value.getValue2();
+                                    }
                                 }
                             }
                         }
@@ -1429,8 +1596,29 @@ public final class JdgReport extends javax.swing.JDialog {
                     for (int k = 0; k < nb_criterias; k++) {
                         Criteria crit = mTour.getParams().getCriteria(k);
                         Value value = cm.getValue(crit);
-                        values1.add(0, value.getValue1());
-                        values2.add(value.getValue2());
+
+                        if (crit == td) {
+                            if (value.getValue1() < 0) {
+                                values1.add(0, 0);
+                            } else {
+                                values1.add(0, value.getValue1());
+                            }
+
+                        } else {
+                            values1.add(0, value.getValue1());
+                        }
+                        if (crit == td) {
+                            if (value.getValue2() < 0) {
+                                values2.add(0);
+                            } else {
+                                values2.add(value.getValue2());
+                            }
+
+                        } else {
+                            values2.add(value.getValue2());
+                        }
+                        // values1.add(0, value.getValue1());
+                        // values2.add(value.getValue2());
                     }
                     hCm.put("values1", values1);
                     hCm.put("values2", values2);

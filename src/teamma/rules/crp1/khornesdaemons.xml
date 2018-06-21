@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>KhornesDaemonsKey</name>
+    <reroll>70000</reroll>
+    <apothecary>true</apothecary>
+    <chef>300000</chef>
+    <igor>false</igor>
+    <bribe>100000</bribe>
+    <playertypes>               
+        <playerType>
+            <limit>1</limit>
+            <position>Blood Thirster</position>
+            <movement>6</movement>
+            <strength>5</strength>
+            <agility>1</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Loner</skill>
+                <skill>Wild Animal</skill>
+                <skill>Juggernaut</skill>
+                <skill>Frenzy</skill>
+                <skill>Claws</skill>
+                <skill>Regeneration</skill>
+                <skill>Horns</skill>
+            </skills>
+            <cost>180000</cost>
+            <single>                
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Khorne Herald</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Horns</skill>
+                <skill>Frenzy</skill>
+                <skill>Juggernaut</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>4</limit>
+            <position>Bloodletter daemon</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Horns</skill>
+                <skill>Juggernaut</skill>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>                
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Pit Fighter</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Frenzy</skill>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>                
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

@@ -17,7 +17,7 @@ and open the template in the editor.
     <playertypes>               
         <playerType>
             <limit>1</limit>
-            <position>Bloodt hirster</position>
+            <position>Blood Thirster</position>
             <movement>6</movement>
             <strength>5</strength>
             <agility>1</agility>

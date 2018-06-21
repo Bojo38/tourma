@@ -244,7 +244,7 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Block</skill>
-            <skill>Claw</skill>
+            <skill>Claws</skill>
             <skill>Juggernaut</skill>
         </skills>
         <cost>200000</cost>
@@ -462,7 +462,7 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Mighty Blow</skill>
-            <skill>Claw</skill>
+            <skill>Claws</skill>
             <skill>Frenzy</skill>
             <skill>Disturbing Presence</skill>
             <skill>Regeneration</skill>
@@ -1055,7 +1055,7 @@ and open the template in the editor.
         <skills>
             <skill>Loner</skill>
             <skill>Catch</skill>
-            <skill>Claw</skill>
+            <skill>Claws</skill>
             <skill>Frenzy</skill>
             <skill>Wrestle</skill>
             <skill>Regeneration</skill>

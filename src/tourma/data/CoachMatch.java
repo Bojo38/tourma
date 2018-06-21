@@ -6,6 +6,7 @@ package tourma.data;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -441,7 +442,7 @@ public class CoachMatch extends Match implements Serializable {
         try {
             final String c1 = match.getAttribute(StringConstants.CS_COACH + 1).getValue();
             final String c2 = match.getAttribute(StringConstants.CS_COACH + 2).getValue();
-            
+
             this.setCompetitor1(Coach.getCoach(c1));
             this.setCompetitor2(Coach.getCoach(c2));
             if (this.getCompetitor1() == null) {
@@ -1041,14 +1042,52 @@ public class CoachMatch extends Match implements Serializable {
      * @return
      */
     public static int getOppPointsByCoach(final Coach c, final CoachMatch m, boolean includeCurrent) {
-        int index = 0;
-        CoachMatch tmp_m = (CoachMatch) c.getMatch(index);
+
+        int match_index = 0;
+        CoachMatch tmp_m = (CoachMatch) c.getMatch(match_index);
+
+        // Loop on opponents from the first match               
         while (tmp_m != m) {
-            index++;
-            tmp_m = (CoachMatch) c.getMatch(index);
+            match_index++;
+            tmp_m = (CoachMatch) c.getMatch(match_index);
+        }
+        //Get round
+        Round round = tmp_m.getRound();
+
+        // List prévious Opponents
+        ArrayList<Competitor> opponents = new ArrayList<>();
+        for (int i = 0; i <= match_index; i++) {
+            CoachMatch cm = (CoachMatch) c.getMatch(i);
+            if (cm.getCompetitor1() == c) {
+                opponents.add(cm.getCompetitor2());
+            }
+            if (cm.getCompetitor2() == c) {
+                opponents.add(cm.getCompetitor1());
+            }
+        }
+        int value = 0;
+        // Get Points of each competitor on this round except for the current match       
+        for (Competitor cmp : opponents) {
+            for (int j = 0; j < cmp.getMatchCount(); j++) {
+                CoachMatch cm = (CoachMatch) cmp.getMatch(j);
+
+                if (cm.getCompetitor1().equals(cmp)) {
+                    if ((includeCurrent) || ((!cm.getCompetitor2().equals(c)) && (!includeCurrent))) {
+                        value += getPointsByCoach((Coach) cmp, cm, true, true);
+                    }
+                }
+                if (cm.getCompetitor2().equals(cmp)) {
+                    if ((includeCurrent) || ((!cm.getCompetitor1().equals(c)) && (!includeCurrent))) {
+                        value += getPointsByCoach((Coach) cmp, cm, true, true);
+                    }
+                }
+                if (cm.getRound() == round) {
+                    break;
+                }
+            }
         }
 
-        int value = 0;
+        /*  int value = 0;
         Competitor opponent;
         if (m.getCompetitor1() == c) {
             opponent = m.getCompetitor2();
@@ -1068,8 +1107,7 @@ public class CoachMatch extends Match implements Serializable {
                     }
                 }
             }
-        }
-
+        }*/
         return value;
     }
 
@@ -1166,7 +1204,7 @@ public class CoachMatch extends Match implements Serializable {
 
         Value val = m.getValue(Tournament.getTournament().getParams().getCriteria(0));
         if (val.getValue1() >= 0) {
-            // Get current Round index
+            // Get current Round match_index
             int indexRound = -1;
             for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
                 Round r = Tournament.getTournament().getRound(i);
@@ -1589,11 +1627,10 @@ public class CoachMatch extends Match implements Serializable {
         this.mSubstitute1 = this.mSubstitute2;
         this.mSubstitute2 = s_tmp;
 
-        
-        for (int i=0; i< Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit=Tournament.getTournament().getParams().getCriteria(i);
-            Value val=mValues.get(crit);
-            value_tmp=val.getValue1();
+        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Value val = mValues.get(crit);
+            value_tmp = val.getValue1();
             val.setValue1(val.getValue2());
             val.setValue2(value_tmp);
         }
