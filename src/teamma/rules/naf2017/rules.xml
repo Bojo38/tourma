@@ -29,6 +29,29 @@
         <team image="woodelf.png">woodelves.xml</team>
         <team image="bretonian.png">bretonians.xml</team>
     </teams>
+    <inducements>
+        <chef>yes</chef>
+        <bribe>yes</bribe>
+        <mercenaries>yes</mercenaries>
+        <babes>yes</babes>
+        <wizard>yes</wizard>
+        <reroll>yes</reroll>
+        <apothecary>yes</apothecary>
+        <igor>yes</igor>
+        <cards>yes</cards>
+        <starplayers>yes</starplayers>        
+        
+        <chaos_wizard>yes</chaos_wizard>   
+        <kari_coldstell>yes</kari_coldstell>   
+        <fink_da_fixer>yes</fink_da_fixer>   
+        <papa_skullbones>yes</papa_skullbones>   
+        <galandril_silverwater>yes</galandril_silverwater>   
+        <krot_shockwhisker>yes</krot_shockwhisker>   
+        <horacio_x_schottenheim>yes</horacio_x_schottenheim>   
+    </inducements>
+    <check_nb_big_guys>no</check_nb_big_guys>
+    <min_ff>0</min_ff>
+    <max_ff>18</max_ff>   
     <starplayers>starplayers.xml</starplayers>    
     <skills>skills.xml</skills>
 </rules>

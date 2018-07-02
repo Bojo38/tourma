@@ -136,6 +136,17 @@ public final class LRB {
     private static boolean _starplayers_enabled = true;
     private static boolean _check_nb_big_guys = false;
 
+    private int _min_ff = 0;
+    private int _max_ff = 18;
+
+    private static boolean _chaos_wizard;
+    private static boolean _kari_coldstell;
+    private static boolean _fink_da_fixer;
+    private static boolean _papa_skullbones;
+    private static boolean _galandril_silverwater;
+    private static boolean _krot_shockwhisker;
+    private static boolean _horacio_x_schottenheim;
+
     public static boolean isCheck_nb_big_guys() {
         return _check_nb_big_guys;
     }
@@ -278,6 +289,14 @@ public final class LRB {
     private final static String CS_Cards = "cards";
     private final static String CS_Check_nb_big_guys = "check_nb_big_guys";
 
+    private final static String CS_ChaosWizard = "chaos_wizard";
+    private final static String CS_KariColdstell = "kari_coldstell";
+    private final static String CS_FinkDaFixer = "fink_da_fixer";
+    private final static String CS_PapaSkullbones = "papa_skullbones";
+    private final static String CS_GalandrilSilverWater = "galandril_silverwater";
+    private final static String CS_KrotShockwhisker = "krot_shockwhisker";
+    private final static String CS_HoracioXSchottenheim = "horacio_x_schottenheim";
+
     /**
      *
      * @param file
@@ -321,8 +340,56 @@ public final class LRB {
                 Element e_starplayers = e_inducements.getChild(CS_Starplayers);
                 _starplayers_enabled = e_starplayers.getText().equals("yes");
 
-                Element e_checkBG = e_inducements.getChild(CS_Check_nb_big_guys);
-                _check_nb_big_guys = e_checkBG.getText().equals("yes");
+                try {
+                    Element e_chaoswizard = e_inducements.getChild(CS_ChaosWizard);
+                    _chaos_wizard = e_chaoswizard.getText().equals("yes");
+                } catch (Exception e) {
+
+                }
+                try {
+                    Element e_coldstell = e_inducements.getChild(CS_KariColdstell);
+                    _kari_coldstell = e_coldstell.getText().equals("yes");
+                } catch (Exception e) {
+
+                }
+                try {
+                    Element e_fink_da_fixer = e_inducements.getChild(CS_FinkDaFixer);
+                    _fink_da_fixer = e_fink_da_fixer.getText().equals("yes");
+                } catch (Exception e) {
+
+                }
+                try {
+                    Element e_papa_skullbones = e_inducements.getChild(CS_PapaSkullbones);
+                    _papa_skullbones = e_papa_skullbones.getText().equals("yes");
+                } catch (Exception e) {
+
+                }
+                try {
+                    Element e_silverwater = e_inducements.getChild(CS_GalandrilSilverWater);
+                    _galandril_silverwater = e_silverwater.getText().equals("yes");
+                } catch (Exception e) {
+
+                }
+                try {
+                    Element e_krot = e_inducements.getChild(CS_KrotShockwhisker);
+                    _krot_shockwhisker = e_krot.getText().equals("yes");
+                } catch (Exception e) {
+
+                }
+                
+                 try {
+                    Element e_horacio = e_inducements.getChild(CS_HoracioXSchottenheim);
+                    _horacio_x_schottenheim = e_horacio.getText().equals("yes");
+                } catch (Exception e) {
+
+                }
+                
+                try {
+                    Element e_checkBG = e_inducements.getChild(CS_Check_nb_big_guys);
+                    _check_nb_big_guys = e_checkBG.getText().equals("yes");
+                } catch (Exception e) {
+
+                }
 
             } catch (Exception exception) {
 
@@ -458,35 +525,92 @@ public final class LRB {
             rt.setApothecary(Boolean.parseBoolean(e_apo.getValue()));
 
             Element e_chef_cost = racine.getChild(CS_Chef);
-            if (e_chef_cost!=null)
-            {
+            if (e_chef_cost != null) {
                 rt.setChef_cost(Integer.parseInt(e_chef_cost.getValue()));
-            }
-            else
-            {
+            } else {
                 rt.setChef_cost(0);
             }
 
             Element e_igor = racine.getChild(CS_Igor);
-            if (e_igor!=null)
-            {
+            if (e_igor != null) {
                 rt.setIgor(Boolean.parseBoolean(e_igor.getValue()));
-            }
-            else
-            {
+            } else {
                 rt.setIgor(false);
             }
 
             Element e_bribe_cost = racine.getChild(CS_Bribe);
-            if (e_bribe_cost!=null)
-            {
+            if (e_bribe_cost != null) {
                 rt.setBribe_cost(Integer.parseInt(e_bribe_cost.getValue()));
-            }
-            else
-            {
+            } else {
                 rt.setBribe_cost(0);
             }
 
+            try {
+                Element e_chaos_wizard = racine.getChild(CS_ChaosWizard);
+                if (e_chaos_wizard != null) {
+                    rt.setChaos_wizard(e_chaos_wizard.getValue().equals("true"));
+                } else {
+                    rt.setChaos_wizard(false);
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+                Element e_kari = racine.getChild(CS_KariColdstell);
+                if (e_kari != null) {
+                    rt.setKari_Coldstell(e_kari.getValue().equals("true"));
+                } else {
+                    rt.setKari_Coldstell(false);
+                }
+            } catch (Exception e) {
+
+            }
+            
+            try {
+                Element e_fink = racine.getChild(CS_FinkDaFixer);
+                if (e_fink != null) {
+                    rt.setFink_Da_Fixer(e_fink.getValue().equals("true"));
+                } else {
+                    rt.setFink_Da_Fixer(false);
+                }
+            } catch (Exception e) {
+
+            }
+            
+             try {
+                Element e_papa = racine.getChild(CS_PapaSkullbones);
+                if (e_papa != null) {
+                    rt.setPapa_Skullbones(e_papa.getValue().equals("true"));
+                } else {
+                    rt.setPapa_Skullbones(false);
+                }
+            } catch (Exception e) {
+
+            }
+             
+              try {
+                Element e_galandril = racine.getChild(CS_GalandrilSilverWater);
+                if (e_galandril != null) {
+                    rt.setGalandril_Silverwater(e_galandril.getValue().equals("true"));
+                } else {
+                    rt.setGalandril_Silverwater(false);
+                }
+            } catch (Exception e) {
+
+            }
+            
+              try {
+                Element e_krot = racine.getChild(CS_KrotShockwhisker);
+                if (e_krot != null) {
+                    rt.setKrot_Shockwhisker(e_krot.getValue().equals("true"));
+                } else {
+                    rt.setKrot_Shockwhisker(false);
+                }
+            } catch (Exception e) {
+
+            }
+              
             Element e_playerType = racine.getChild(CS_PlayerTypes);
             List<Element> l_players = e_playerType.getChildren(CS_PlayerType);
             Iterator<Element> cr = l_players.iterator();

@@ -231,6 +231,54 @@ public final class JdgRoster extends javax.swing.JDialog {
         jlbPriceChef = new javax.swing.JLabel();
         jlbX15 = new javax.swing.JLabel();
         jlbCostChef = new javax.swing.JLabel();
+        jPanel24 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jslChef1 = new javax.swing.JSlider();
+        jlbNbChef1 = new javax.swing.JLabel();
+        jlbX16 = new javax.swing.JLabel();
+        jlbPriceChef1 = new javax.swing.JLabel();
+        jlbX17 = new javax.swing.JLabel();
+        jlbCostChef1 = new javax.swing.JLabel();
+        jPanel25 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jslChef2 = new javax.swing.JSlider();
+        jlbNbChef2 = new javax.swing.JLabel();
+        jlbX18 = new javax.swing.JLabel();
+        jlbPriceChef2 = new javax.swing.JLabel();
+        jlbX19 = new javax.swing.JLabel();
+        jlbCostChef2 = new javax.swing.JLabel();
+        jPanel26 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jslChef3 = new javax.swing.JSlider();
+        jlbNbChef3 = new javax.swing.JLabel();
+        jlbX21 = new javax.swing.JLabel();
+        jlbPriceChef3 = new javax.swing.JLabel();
+        jlbX22 = new javax.swing.JLabel();
+        jlbCostChef3 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jslChef4 = new javax.swing.JSlider();
+        jlbNbChef4 = new javax.swing.JLabel();
+        jlbX23 = new javax.swing.JLabel();
+        jlbPriceChef4 = new javax.swing.JLabel();
+        jlbX24 = new javax.swing.JLabel();
+        jlbCostChef4 = new javax.swing.JLabel();
+        jPanel28 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jslChef5 = new javax.swing.JSlider();
+        jlbNbChef5 = new javax.swing.JLabel();
+        jlbX25 = new javax.swing.JLabel();
+        jlbPriceChef5 = new javax.swing.JLabel();
+        jlbX26 = new javax.swing.JLabel();
+        jlbCostChef5 = new javax.swing.JLabel();
+        jPanel29 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jslChef6 = new javax.swing.JSlider();
+        jlbNbChef6 = new javax.swing.JLabel();
+        jlbX27 = new javax.swing.JLabel();
+        jlbPriceChef6 = new javax.swing.JLabel();
+        jlbX28 = new javax.swing.JLabel();
+        jlbCostChef6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbStars = new javax.swing.JTable();
@@ -270,7 +318,6 @@ public final class JdgRoster extends javax.swing.JDialog {
         jbtImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1024, 724));
 
         jtpGoods.setName("jtpGoods"); // NOI18N
 
@@ -938,6 +985,318 @@ public final class JdgRoster extends javax.swing.JDialog {
         jPanel23.add(jlbCostChef);
 
         jPanel8.add(jPanel23);
+
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel13.setText(bundle1.getString("ChaosWizard")); // NOI18N
+        jLabel13.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel24.add(jLabel13);
+
+        jslChef1.setMajorTickSpacing(1);
+        jslChef1.setMaximum(1);
+        jslChef1.setPaintTicks(true);
+        jslChef1.setSnapToTicks(true);
+        jslChef1.setValue(0);
+        jslChef1.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslChef1.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslChef1.setName("jslChef"); // NOI18N
+        jslChef1.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslChef1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslChef1StateChanged(evt);
+            }
+        });
+        jPanel24.add(jslChef1);
+
+        jlbNbChef1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbChef1.setLabelFor(jslWizard);
+        jlbNbChef1.setText("0");
+        jlbNbChef1.setName("jlbNbChef"); // NOI18N
+        jlbNbChef1.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel24.add(jlbNbChef1);
+
+        jlbX16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX16.setText("x");
+        jlbX16.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel24.add(jlbX16);
+
+        jlbPriceChef1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceChef1.setText("0");
+        jlbPriceChef1.setName("jlbPriceChef"); // NOI18N
+        jlbPriceChef1.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel24.add(jlbPriceChef1);
+
+        jlbX17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX17.setText("=");
+        jlbX17.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel24.add(jlbX17);
+
+        jlbCostChef1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostChef1.setText("0");
+        jlbCostChef1.setName("jlbCostChef"); // NOI18N
+        jlbCostChef1.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel24.add(jlbCostChef1);
+
+        jPanel8.add(jPanel24);
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel14.setText(bundle1.getString("Horatio X. Schottenheim, Wizard Master")); // NOI18N
+        jLabel14.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel25.add(jLabel14);
+
+        jslChef2.setMajorTickSpacing(1);
+        jslChef2.setMaximum(1);
+        jslChef2.setPaintTicks(true);
+        jslChef2.setSnapToTicks(true);
+        jslChef2.setValue(0);
+        jslChef2.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslChef2.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslChef2.setName("jslChef"); // NOI18N
+        jslChef2.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslChef2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslChef2StateChanged(evt);
+            }
+        });
+        jPanel25.add(jslChef2);
+
+        jlbNbChef2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbChef2.setLabelFor(jslWizard);
+        jlbNbChef2.setText("0");
+        jlbNbChef2.setName("jlbNbChef"); // NOI18N
+        jlbNbChef2.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel25.add(jlbNbChef2);
+
+        jlbX18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX18.setText("x");
+        jlbX18.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel25.add(jlbX18);
+
+        jlbPriceChef2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceChef2.setText("0");
+        jlbPriceChef2.setName("jlbPriceChef"); // NOI18N
+        jlbPriceChef2.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel25.add(jlbPriceChef2);
+
+        jlbX19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX19.setText("=");
+        jlbX19.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel25.add(jlbX19);
+
+        jlbCostChef2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostChef2.setText("0");
+        jlbCostChef2.setName("jlbCostChef"); // NOI18N
+        jlbCostChef2.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel25.add(jlbCostChef2);
+
+        jPanel8.add(jPanel25);
+
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel19.setText(bundle1.getString("Kari Coldstell, Norse cheerleader")); // NOI18N
+        jLabel19.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel26.add(jLabel19);
+
+        jslChef3.setMajorTickSpacing(1);
+        jslChef3.setMaximum(1);
+        jslChef3.setPaintTicks(true);
+        jslChef3.setSnapToTicks(true);
+        jslChef3.setValue(0);
+        jslChef3.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslChef3.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslChef3.setName("jslChef"); // NOI18N
+        jslChef3.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslChef3.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslChef3StateChanged(evt);
+            }
+        });
+        jPanel26.add(jslChef3);
+
+        jlbNbChef3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbChef3.setLabelFor(jslWizard);
+        jlbNbChef3.setText("0");
+        jlbNbChef3.setName("jlbNbChef"); // NOI18N
+        jlbNbChef3.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel26.add(jlbNbChef3);
+
+        jlbX21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX21.setText("x");
+        jlbX21.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel26.add(jlbX21);
+
+        jlbPriceChef3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceChef3.setText("0");
+        jlbPriceChef3.setName("jlbPriceChef"); // NOI18N
+        jlbPriceChef3.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel26.add(jlbPriceChef3);
+
+        jlbX22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX22.setText("=");
+        jlbX22.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel26.add(jlbX22);
+
+        jlbCostChef3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostChef3.setText("0");
+        jlbCostChef3.setName("jlbCostChef"); // NOI18N
+        jlbCostChef3.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel26.add(jlbCostChef3);
+
+        jPanel8.add(jPanel26);
+
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel20.setText("Halfling Chef");
+        jLabel20.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel27.add(jLabel20);
+
+        jslChef4.setMajorTickSpacing(1);
+        jslChef4.setMaximum(1);
+        jslChef4.setPaintTicks(true);
+        jslChef4.setSnapToTicks(true);
+        jslChef4.setValue(0);
+        jslChef4.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslChef4.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslChef4.setName("jslChef"); // NOI18N
+        jslChef4.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslChef4.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslChef4StateChanged(evt);
+            }
+        });
+        jPanel27.add(jslChef4);
+
+        jlbNbChef4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbChef4.setLabelFor(jslWizard);
+        jlbNbChef4.setText("0");
+        jlbNbChef4.setName("jlbNbChef"); // NOI18N
+        jlbNbChef4.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel27.add(jlbNbChef4);
+
+        jlbX23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX23.setText("x");
+        jlbX23.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel27.add(jlbX23);
+
+        jlbPriceChef4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceChef4.setText("0");
+        jlbPriceChef4.setName("jlbPriceChef"); // NOI18N
+        jlbPriceChef4.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel27.add(jlbPriceChef4);
+
+        jlbX24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX24.setText("=");
+        jlbX24.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel27.add(jlbX24);
+
+        jlbCostChef4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostChef4.setText("0");
+        jlbCostChef4.setName("jlbCostChef"); // NOI18N
+        jlbCostChef4.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel27.add(jlbCostChef4);
+
+        jPanel8.add(jPanel27);
+
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel21.setText("Halfling Chef");
+        jLabel21.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel28.add(jLabel21);
+
+        jslChef5.setMajorTickSpacing(1);
+        jslChef5.setMaximum(1);
+        jslChef5.setPaintTicks(true);
+        jslChef5.setSnapToTicks(true);
+        jslChef5.setValue(0);
+        jslChef5.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslChef5.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslChef5.setName("jslChef"); // NOI18N
+        jslChef5.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslChef5.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslChef5StateChanged(evt);
+            }
+        });
+        jPanel28.add(jslChef5);
+
+        jlbNbChef5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbChef5.setLabelFor(jslWizard);
+        jlbNbChef5.setText("0");
+        jlbNbChef5.setName("jlbNbChef"); // NOI18N
+        jlbNbChef5.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel28.add(jlbNbChef5);
+
+        jlbX25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX25.setText("x");
+        jlbX25.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel28.add(jlbX25);
+
+        jlbPriceChef5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceChef5.setText("0");
+        jlbPriceChef5.setName("jlbPriceChef"); // NOI18N
+        jlbPriceChef5.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel28.add(jlbPriceChef5);
+
+        jlbX26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX26.setText("=");
+        jlbX26.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel28.add(jlbX26);
+
+        jlbCostChef5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostChef5.setText("0");
+        jlbCostChef5.setName("jlbCostChef"); // NOI18N
+        jlbCostChef5.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel28.add(jlbCostChef5);
+
+        jPanel8.add(jPanel28);
+
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel22.setText("Halfling Chef");
+        jLabel22.setPreferredSize(new java.awt.Dimension(120, 14));
+        jPanel29.add(jLabel22);
+
+        jslChef6.setMajorTickSpacing(1);
+        jslChef6.setMaximum(1);
+        jslChef6.setPaintTicks(true);
+        jslChef6.setSnapToTicks(true);
+        jslChef6.setValue(0);
+        jslChef6.setMaximumSize(new java.awt.Dimension(50, 23));
+        jslChef6.setMinimumSize(new java.awt.Dimension(30, 23));
+        jslChef6.setName("jslChef"); // NOI18N
+        jslChef6.setPreferredSize(new java.awt.Dimension(50, 23));
+        jslChef6.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jslChef6StateChanged(evt);
+            }
+        });
+        jPanel29.add(jslChef6);
+
+        jlbNbChef6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNbChef6.setLabelFor(jslWizard);
+        jlbNbChef6.setText("0");
+        jlbNbChef6.setName("jlbNbChef"); // NOI18N
+        jlbNbChef6.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel29.add(jlbNbChef6);
+
+        jlbX27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX27.setText("x");
+        jlbX27.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel29.add(jlbX27);
+
+        jlbPriceChef6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPriceChef6.setText("0");
+        jlbPriceChef6.setName("jlbPriceChef"); // NOI18N
+        jlbPriceChef6.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel29.add(jlbPriceChef6);
+
+        jlbX28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbX28.setText("=");
+        jlbX28.setPreferredSize(new java.awt.Dimension(10, 14));
+        jPanel29.add(jlbX28);
+
+        jlbCostChef6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbCostChef6.setText("0");
+        jlbCostChef6.setName("jlbCostChef"); // NOI18N
+        jlbCostChef6.setPreferredSize(new java.awt.Dimension(70, 14));
+        jPanel29.add(jlbCostChef6);
+
+        jPanel8.add(jPanel29);
 
         jtpGoods.addTab(bundle.getString("Inducements"), jPanel8); // NOI18N
 
@@ -1634,6 +1993,30 @@ public final class JdgRoster extends javax.swing.JDialog {
         update();
     }//GEN-LAST:event_jcbLRBActionPerformed
 
+    private void jslChef1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslChef1StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jslChef1StateChanged
+
+    private void jslChef2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslChef2StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jslChef2StateChanged
+
+    private void jslChef3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslChef3StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jslChef3StateChanged
+
+    private void jslChef4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslChef4StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jslChef4StateChanged
+
+    private void jslChef5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslChef5StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jslChef5StateChanged
+
+    private void jslChef6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jslChef6StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jslChef6StateChanged
+
     private static final String CS_Roster = "Roster";
     private static final String CS_Coach = "Coach";
     private static final String CS_RosterUnknown = "Roster: Unknown";
@@ -1907,11 +2290,17 @@ public final class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1935,6 +2324,12 @@ public final class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1967,6 +2362,12 @@ public final class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbCostCard;
     private javax.swing.JLabel jlbCostCheerleaders;
     private javax.swing.JLabel jlbCostChef;
+    private javax.swing.JLabel jlbCostChef1;
+    private javax.swing.JLabel jlbCostChef2;
+    private javax.swing.JLabel jlbCostChef3;
+    private javax.swing.JLabel jlbCostChef4;
+    private javax.swing.JLabel jlbCostChef5;
+    private javax.swing.JLabel jlbCostChef6;
     private javax.swing.JLabel jlbCostExtraReroll;
     private javax.swing.JLabel jlbCostFanFactor;
     private javax.swing.JLabel jlbCostIgor;
@@ -1987,6 +2388,12 @@ public final class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbNbBabes;
     private javax.swing.JLabel jlbNbBribeTheRef;
     private javax.swing.JLabel jlbNbChef;
+    private javax.swing.JLabel jlbNbChef1;
+    private javax.swing.JLabel jlbNbChef2;
+    private javax.swing.JLabel jlbNbChef3;
+    private javax.swing.JLabel jlbNbChef4;
+    private javax.swing.JLabel jlbNbChef5;
+    private javax.swing.JLabel jlbNbChef6;
     private javax.swing.JLabel jlbNbCherrleaders;
     private javax.swing.JLabel jlbNbExtraReroll;
     private javax.swing.JLabel jlbNbFanFactor;
@@ -2000,6 +2407,12 @@ public final class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbPriceBribeTheRef;
     private javax.swing.JLabel jlbPriceCheerleaders;
     private javax.swing.JLabel jlbPriceChef;
+    private javax.swing.JLabel jlbPriceChef1;
+    private javax.swing.JLabel jlbPriceChef2;
+    private javax.swing.JLabel jlbPriceChef3;
+    private javax.swing.JLabel jlbPriceChef4;
+    private javax.swing.JLabel jlbPriceChef5;
+    private javax.swing.JLabel jlbPriceChef6;
     private javax.swing.JLabel jlbPriceExtraReroll;
     private javax.swing.JLabel jlbPriceFanFactor;
     private javax.swing.JLabel jlbPriceIgor;
@@ -2018,8 +2431,20 @@ public final class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JLabel jlbX13;
     private javax.swing.JLabel jlbX14;
     private javax.swing.JLabel jlbX15;
+    private javax.swing.JLabel jlbX16;
+    private javax.swing.JLabel jlbX17;
+    private javax.swing.JLabel jlbX18;
+    private javax.swing.JLabel jlbX19;
     private javax.swing.JLabel jlbX2;
     private javax.swing.JLabel jlbX20;
+    private javax.swing.JLabel jlbX21;
+    private javax.swing.JLabel jlbX22;
+    private javax.swing.JLabel jlbX23;
+    private javax.swing.JLabel jlbX24;
+    private javax.swing.JLabel jlbX25;
+    private javax.swing.JLabel jlbX26;
+    private javax.swing.JLabel jlbX27;
+    private javax.swing.JLabel jlbX28;
     private javax.swing.JLabel jlbX3;
     private javax.swing.JLabel jlbX4;
     private javax.swing.JLabel jlbX5;
@@ -2036,6 +2461,12 @@ public final class JdgRoster extends javax.swing.JDialog {
     private javax.swing.JSlider jslCardBudget;
     private javax.swing.JSlider jslCheerleaders;
     private javax.swing.JSlider jslChef;
+    private javax.swing.JSlider jslChef1;
+    private javax.swing.JSlider jslChef2;
+    private javax.swing.JSlider jslChef3;
+    private javax.swing.JSlider jslChef4;
+    private javax.swing.JSlider jslChef5;
+    private javax.swing.JSlider jslChef6;
     private javax.swing.JSlider jslExtraReroll;
     private javax.swing.JSlider jslFanFactor;
     private javax.swing.JSlider jslIgor;

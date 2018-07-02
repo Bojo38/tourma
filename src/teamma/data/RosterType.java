@@ -215,6 +215,135 @@ public class RosterType implements Serializable {
      *
      */
     private boolean _igor;
+
+    public boolean isChaos_wizard() {
+        return _chaos_wizard;
+    }
+
+    public void setChaos_wizard(boolean _chaos_wizard) {
+        this._chaos_wizard = _chaos_wizard;
+    }
+
+    public int getChaos_wizard_cost() {
+        return _chaos_wizard_cost;
+    }
+
+    public void setChaos_wizard_cost(int _chaos_wizard_cost) {
+        this._chaos_wizard_cost = _chaos_wizard_cost;
+    }
+
+    public int getHoratio_X_Schottenheim_cost() {
+        return Horatio_X_Schottenheim_cost;
+    }
+
+    public void setHoratio_X_Schottenheim_cost(int Horatio_X_Schottenheim_cost) {
+        this.Horatio_X_Schottenheim_cost = Horatio_X_Schottenheim_cost;
+    }
+
+    public boolean isKari_Coldstell() {
+        return Kari_Coldstell;
+    }
+
+    public void setKari_Coldstell(boolean Kari_Coldstell) {
+        this.Kari_Coldstell = Kari_Coldstell;
+    }
+
+    public int getKari_Coldstell_cost() {
+        return Kari_Coldstell_cost;
+    }
+
+    public void setKari_Coldstell_cost(int Kari_Coldstell_cost) {
+        this.Kari_Coldstell_cost = Kari_Coldstell_cost;
+    }
+
+    public boolean isFink_Da_Fixer() {
+        return Fink_Da_Fixer;
+    }
+
+    public void setFink_Da_Fixer(boolean Fink_Da_Fixer) {
+        this.Fink_Da_Fixer = Fink_Da_Fixer;
+    }
+
+    public int getFink_Da_Fixer_cost() {
+        return Fink_Da_Fixer_cost;
+    }
+
+    public void setFink_Da_Fixer_cost(int Fink_Da_Fixer_cost) {
+        this.Fink_Da_Fixer_cost = Fink_Da_Fixer_cost;
+    }
+
+    public boolean isPapa_Skullbones() {
+        return Papa_Skullbones;
+    }
+
+    public void setPapa_Skullbones(boolean Papa_Skullbones) {
+        this.Papa_Skullbones = Papa_Skullbones;
+    }
+
+    public int getPapa_Skullbones_cost() {
+        return Papa_Skullbones_cost;
+    }
+
+    public void setPapa_Skullbones_cost(int Papa_Skullbones_cost) {
+        this.Papa_Skullbones_cost = Papa_Skullbones_cost;
+    }
+
+    public boolean isGalandril_Silverwater() {
+        return Galandril_Silverwater;
+    }
+
+    public void setGalandril_Silverwater(boolean Galandril_Silverwater) {
+        this.Galandril_Silverwater = Galandril_Silverwater;
+    }
+
+    public int getGalandril_Silverwater_cost() {
+        return Galandril_Silverwater_cost;
+    }
+
+    public void setGalandril_Silverwater_cost(int Galandril_Silverwater_cost) {
+        this.Galandril_Silverwater_cost = Galandril_Silverwater_cost;
+    }
+
+    public boolean isKrot_Shockwhisker() {
+        return Krot_Shockwhisker;
+    }
+
+    public void setKrot_Shockwhisker(boolean Krot_Shockwhisker) {
+        this.Krot_Shockwhisker = Krot_Shockwhisker;
+    }
+
+    public int getKrot_Shockwhisker_cost() {
+        return Krot_Shockwhisker_cost;
+    }
+
+    /**
+     * Chaos Wizard Allowed
+     */
+    public void setKrot_Shockwhisker_cost(int Krot_Shockwhisker_cost) {
+        this.Krot_Shockwhisker_cost = Krot_Shockwhisker_cost;
+    }
+
+    private boolean _chaos_wizard;
+    /**
+     * Chaos Wizard cost
+     */
+    private int _chaos_wizard_cost=150000;
+    
+    private int Horatio_X_Schottenheim_cost=80000;
+    private boolean Kari_Coldstell;
+    private int Kari_Coldstell_cost=50000;
+    
+    private boolean Fink_Da_Fixer;
+    private int Fink_Da_Fixer_cost=50000;
+    
+    private boolean Papa_Skullbones;
+    private int Papa_Skullbones_cost=80000;
+    
+     private boolean Galandril_Silverwater;
+    private int Galandril_Silverwater_cost=50000;
+    
+    private boolean Krot_Shockwhisker;
+    private int Krot_Shockwhisker_cost=80000;
     /**
      *
      */

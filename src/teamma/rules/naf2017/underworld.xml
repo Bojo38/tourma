@@ -14,6 +14,12 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>50000</bribe>
+        <chaos_wizard>false</chaos_wizard>
+    <kari_coldstell>false</kari_coldstell>
+    <fink_da_fixer>true</fink_da_fixer>
+    <papa_skullbones>false</papa_skullbones>
+    <galandril_silverwater>false</galandril_silverwater>
+    <krot_shockwhisker>true</krot_shockwhisker>
     <playertypes>               
         <playerType>
             <limit>16</limit>

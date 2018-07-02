@@ -27,7 +27,7 @@
         <reroll>no</reroll>
         <apothecary>no</apothecary>
         <igor>no</igor>
-        <cards>no</cards>
+        <cards>no</cards>        
         <starplayers>yes</starplayers>        
     </inducements>
     <check_nb_big_guys>yes</check_nb_big_guys>

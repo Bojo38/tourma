@@ -102,6 +102,11 @@ public class Roster implements IXMLExport, Serializable {
      */
     private boolean _wizard;
     /**
+     * Chaos Wizard 
+     */
+    private boolean _chaos_wizard;
+    private boolean Horatio_X_Schottenheim;
+    /**
      *
      */
     private int _cards;
