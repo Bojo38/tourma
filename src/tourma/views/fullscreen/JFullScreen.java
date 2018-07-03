@@ -43,7 +43,8 @@ public abstract class JFullScreen extends javax.swing.JDialog {
     protected Semaphore semStart = new Semaphore(1);
 
     private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
-
+    protected GraphicsDevice mSelectedGD;
+    
     public JFullScreen(Socket s) throws IOException {
         super();
         try {
@@ -72,6 +73,11 @@ public abstract class JFullScreen extends javax.swing.JDialog {
             Object val = JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (val instanceof Integer) {
                 screen = ((Integer) val).intValue();
+                mSelectedGD=gs[screen];
+            }
+            else
+            {
+                mSelectedGD=gs[0];
             }
         }
 
@@ -88,7 +94,9 @@ public abstract class JFullScreen extends javax.swing.JDialog {
         this.setUndecorated(true);
         //this.setState(JDialog.);
         this.setAlwaysOnTop(true);
-
+        
+        mSelectedGD=GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
@@ -243,6 +251,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
             ncomputedTime=new Double(decr-computedTime*1000000).longValue();
         }
 
+        @Override
         public void setSuspended(boolean s) {
             suspended = s;
         }
@@ -251,10 +260,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
-            computedTime = getHeight() / 100;
-            //int blockIncrement = jscrp.getVerticalScrollBar().getBlockIncrement();
-
-            //System.out.println("Screen Height: " + getHeight() + " ScrollBar size: " + (jscrp.getVerticalScrollBar().getMaximum() - jscrp.getVerticalScrollBar().getMinimum()) + " Computed Time: " + computedTime);
+            computedTime = mSelectedGD.getDisplayMode().getHeight() / 100;
             int lastValue = 0;
             try {
                 semAnimate.acquire();

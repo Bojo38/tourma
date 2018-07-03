@@ -62,9 +62,9 @@ public final class JFullScreenClanRank extends JFullScreen {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
-            int width = gd.getDisplayMode().getWidth();
-            int height = gd.getDisplayMode().getHeight();
+            
+            int width = mSelectedGD.getDisplayMode().getWidth();
+            int height = mSelectedGD.getDisplayMode().getHeight();
 
             float size = (float) height / 50;
             Font f0 = font.deriveFont(Font.ITALIC, size);
@@ -103,7 +103,7 @@ public final class JFullScreenClanRank extends JFullScreen {
                             buildPanel(r);
 
                             semAnimate.release();
-                            gd.setFullScreenWindow(this);
+                            mSelectedGD.setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,9 +188,8 @@ public final class JFullScreenClanRank extends JFullScreen {
             font = this.getFont();
         }
 
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
+        int width = mSelectedGD.getDisplayMode().getWidth();
+        int height = mSelectedGD.getDisplayMode().getHeight();
 
         float size = height / ((float) 50.0);
         Font f0 = font.deriveFont(Font.ITALIC, size);

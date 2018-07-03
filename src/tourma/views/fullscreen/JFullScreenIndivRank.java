@@ -86,9 +86,8 @@ public final class JFullScreenIndivRank extends JFullScreen {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
-            int width = gd.getDisplayMode().getWidth();
-            int height = gd.getDisplayMode().getHeight();
+            int width = mSelectedGD.getDisplayMode().getWidth();
+            int height = mSelectedGD.getDisplayMode().getHeight();
 
             float size = (float) height / 50;
             Font f0 = font.deriveFont(Font.ITALIC, size);
@@ -152,7 +151,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                             }
                             buildPanel(rs);
                             semAnimate.release();
-                            gd.setFullScreenWindow(this);
+                            mSelectedGD.setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -303,6 +302,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
             Integer options[] = new Integer[gs.length];
             for (int i = 0; i < gs.length; i++) {
                 options[i] = i;
+                
             }
             Object val = JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (val instanceof Integer) {
@@ -311,8 +311,10 @@ public final class JFullScreenIndivRank extends JFullScreen {
         }
         if (screen > -1 && screen < gs.length) {
             gs[screen].setFullScreenWindow(this);
+            mSelectedGD=gs[screen];
         } else if (gs.length > 0) {
             gs[0].setFullScreenWindow(this);
+            mSelectedGD=gs[0];
         } else {
             throw new RuntimeException("No Screens Found");
         }
@@ -334,9 +336,8 @@ public final class JFullScreenIndivRank extends JFullScreen {
             font = this.getFont();
         }
 
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
+        int width = mSelectedGD.getDisplayMode().getWidth();
+        int height = mSelectedGD.getDisplayMode().getHeight();
 
         float size = (float) height / 50;
         Font f0 = font.deriveFont(Font.ITALIC, size);

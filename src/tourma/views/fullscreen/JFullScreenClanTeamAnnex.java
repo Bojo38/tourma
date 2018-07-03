@@ -124,8 +124,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                                 buildPanel(rs);
                             }
                             semAnimate.release();
-                            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
-                            gd.setFullScreenWindow(this);
+                            mSelectedGD.setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -300,9 +299,8 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             font = this.getFont();
         }
 
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
+        int width = mSelectedGD.getDisplayMode().getWidth();
+        int height = mSelectedGD.getDisplayMode().getHeight();
 
         float size = (float) height / 50;
         Font f = font.deriveFont(Font.PLAIN, size);
