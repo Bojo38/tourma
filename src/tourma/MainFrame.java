@@ -290,6 +290,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiGenerateFirstRound.setEnabled(!isClient);
         jcxmiAsServer.setEnabled(!isClient);
         jcxPatchPortugal.setEnabled(!isClient);
+        jcxDisplayRosters.setEnabled(true);        
+        jcxDisplayRosters.setSelected(Tournament.getTournament().getParams().isDisplayRoster());        
         jmiEditColors.setEnabled(!isClient);
         jmiEditWebPort.setEnabled(!isClient);
         jmiEditDescription.setEnabled(!isClient);
@@ -360,6 +362,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jSeparator13 = new javax.swing.JPopupMenu.Separator();
         jcxUseColor = new javax.swing.JCheckBoxMenuItem();
         jcxUseImage = new javax.swing.JCheckBoxMenuItem();
+        jcxDisplayRosters = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jSeparator20 = new javax.swing.JPopupMenu.Separator();
@@ -590,6 +593,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnTools.add(jcxUseImage);
+
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("tourma/languages/language_en"); // NOI18N
+        jcxDisplayRosters.setText(bundle1.getString("DisplayRostersInFullScreen")); // NOI18N
+        jcxDisplayRosters.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxDisplayRostersActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxDisplayRosters);
 
         jMenuBar1.add(jmnTools);
 
@@ -2981,6 +2993,10 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiMassAddActionPerformed
 
+    private void jcxDisplayRostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxDisplayRostersActionPerformed
+         Tournament.getTournament().getParams().setDisplayRoster(jcxDisplayRosters.getState());
+    }//GEN-LAST:event_jcxDisplayRostersActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3447,6 +3463,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jckmiHideNonNaf;
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
+    private javax.swing.JCheckBoxMenuItem jcxDisplayRosters;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
     private javax.swing.JCheckBoxMenuItem jcxUseColor;
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
