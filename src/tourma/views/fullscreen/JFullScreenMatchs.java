@@ -972,16 +972,23 @@ public final class JFullScreenMatchs extends JFullScreen {
 
         private boolean suspended = false;
 
-        private long millis = 1000000000;
+        private long nanos = 1000000000;
+        private int step=1;
 
         synchronized void incrementSync() {
-            millis = millis - millis * 10 / 100;
-            System.out.println(millis);
+            nanos = nanos - nanos * 10 / 100;
+            System.out.println(nanos);
+            step++;
         }
 
         synchronized void decrementSync() {
-            millis = millis + millis * 10 / 100;
-            System.out.println(millis);
+            nanos = nanos + nanos * 10 / 100;
+            System.out.println(nanos);
+            step--;
+            if (step<0)
+            {
+                step=0;
+            }
         }
 
         public void setSuspended(boolean s) {
@@ -1094,15 +1101,18 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 // Draw vs
                                 // Set JPN1 & JPN2 position
 
-                                jpn1X = 0 - size1.width + (j < width / 2 ? j : width / 2);
-                                jpn2X = width - (j > width / 2 ? j - width / 2 : 0);
+                                jpn1X = 0 - size1.width + (j < width / 2 ? j+step : width / 2);
+                                jpn2X = width - (j > width / 2 ? j - width / 2-step : 0);
 
+                                j+=step;
                                 synchronized (this) {
                                     suspended = true;
-                                    long timer = millis / (width / 2);
+                                    long timer = nanos / (width / 2);
                                     long timer1 = timer / 1000000;
                                     long timer2 = timer % 1000000;
                                     spleeping.sleep(timer1, (int) timer2);
+                                    //System.out.println("timer1: "+timer1+" timer2: "+ timer2);
+                                    //spleeping.sleep(0, (int) 10);
                                     while (suspended && animationStarted) {
                                         try {
                                             wait();
@@ -1120,7 +1130,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                             if (i <= round.getMatchsCount() - 1) {
                                 synchronized (this) {
                                     suspended = true;
-                                    spleeping.sleep((2 * millis) / 1000000, (int) (2 * millis) % 1000000);
+                                    spleeping.sleep((2 * nanos) / 1000000, (int) (2 * nanos) % 1000000);
                                     while (suspended && animationStarted) {
                                         try {
                                             wait();
@@ -1135,7 +1145,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                     semAnimate.release();
                     synchronized (this) {
                         suspended = true;
-                        spleeping.sleep((2 * millis) / 1000000, (int) (2 * millis) % 1000000);
+                        spleeping.sleep((2 * nanos) / 1000000, (int) (2 * nanos) % 1000000);                        
                         while (suspended && animationStarted) {
                             try {
                                 wait();
