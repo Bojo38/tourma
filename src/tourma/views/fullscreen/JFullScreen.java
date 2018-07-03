@@ -95,6 +95,10 @@ public abstract class JFullScreen extends javax.swing.JDialog {
 
     }
 
+    protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
+        return getLabelForObject(object, height,  width, f,  bkg, false,0);
+    }
+    
     /**
      *
      * @param object
@@ -102,10 +106,11 @@ public abstract class JFullScreen extends javax.swing.JDialog {
      * @param width
      * @param f
      * @param bkg
+     * @param right
      * @return
      */
     @SuppressWarnings("SuspiciousNameCombination")
-    protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
+    protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg,boolean right,int matchIndex) {
 
         JLabel l = new JLabel();
         try {
@@ -127,7 +132,19 @@ public abstract class JFullScreen extends javax.swing.JDialog {
 
         try {
             String text = object.getName();
-            l.setText(text);
+            if ((object instanceof Coach)&&(Tournament.getTournament().getParams().isDisplayRoster())) {
+                Coach c=(Coach)object;
+                if (right)
+                {
+                    l.setText("<HTML>" + c.getName() +" <i>("+c.getMatchRoster(matchIndex)+")</i></HTML>");
+                }
+                else
+                {
+                    l.setText("<HTML><i>("+c.getMatchRoster(matchIndex)+")</i> " + c.getName() +"</HTML>");
+                }
+            } else {
+                l.setText(text);
+            }
         } catch (RemoteException re) {
             re.printStackTrace();
         }

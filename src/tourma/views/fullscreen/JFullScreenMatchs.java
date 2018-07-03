@@ -705,10 +705,19 @@ public final class JFullScreenMatchs extends JFullScreen {
                     JLabel jlbCoach = new JLabel();
                     jlbCoach.setOpaque(true);
                     jlbCoach.setHorizontalAlignment(right ? JLabel.LEFT : JLabel.RIGHT);
-                    if (right) {
-                        jlbCoach.setText(" " + c.getName());
+                    if (Tournament.getTournament().getParams().isDisplayRoster()) {
+
+                        if (right) {
+                            jlbCoach.setText("<HTML> " + c.getName() + " <i>(" + c.getMatchRoster(i)+")</i></HTML>");
+                        } else {
+                            jlbCoach.setText("<HTML><i>("+c.getMatchRoster(i) + ")</i> " + c.getName() + "</HTML>");
+                        }
                     } else {
-                        jlbCoach.setText(c.getName() + " ");
+                        if (right) {
+                            jlbCoach.setText(" " + c.getName());
+                        } else {
+                            jlbCoach.setText(c.getName() + " ");
+                        }
                     }
                     jlbCoach.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
                     //jlbCoach.setFont(font.deriveFont((float) line_height));
@@ -778,7 +787,7 @@ public final class JFullScreenMatchs extends JFullScreen {
         return font;
     }
 
-    public JPanel createClashCoachPane(Coach t, int score, boolean right) {
+    public JPanel createClashCoachPane(Coach t, int score, boolean right, int matchIndex) {
         JPanel p = null;
         if (t != null) {
             int mwidth = 0;
@@ -795,7 +804,21 @@ public final class JFullScreenMatchs extends JFullScreen {
 
             jlbCoach.setPreferredSize(new Dimension(width / 4, line_height));
             jlbCoach.setFont(getOptimalFont(width / 6, line_height, t.getName()));
-            jlbCoach.setText(t.getName());
+
+            if (Tournament.getTournament().getParams().isDisplayRoster()) {
+
+                if (right) {
+                    jlbCoach.setText("<HTML>" + t.getName() + " <i>(" + t.getMatchRoster(matchIndex)+")</i></HTML>");
+                } else {
+                    jlbCoach.setText("<HTML><i>("+t.getMatchRoster(matchIndex) + ")</i>" + t.getName() + " </HTML>");
+                }
+            } else {
+                if (right) {
+                    jlbCoach.setText(" " + t.getName());
+                } else {
+                    jlbCoach.setText(t.getName() + " ");
+                }
+            }
 
             jlbCoach.setOpaque(true);
             jlbCoach.setHorizontalAlignment(JLabel.CENTER);
@@ -957,8 +980,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                             jpnClash2 = createClashTeamPane((Team) m.getCompetitor2(), (TeamMatch) m, true);
                         }
                         if (m instanceof CoachMatch) {
-                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1(), false);
-                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2(), true);
+                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1(), false,i);
+                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2(), true,i);
                         }
 
                         if ((jpnClash1 != null) && (jpnClash2 != null)) {

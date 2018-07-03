@@ -51,6 +51,16 @@ public class Parameters implements IXMLExport, Serializable {
         return null;
     }
 
+    boolean mDisplayRoster = true;
+
+    public boolean isDisplayRoster() {
+        return mDisplayRoster;
+    }
+    
+    public void setDisplayRoster(boolean d) {
+        mDisplayRoster=d;
+    }
+
     public void pull(Parameters params) {
         this.UID = params.UID;
         this._webport = params._webport;
@@ -791,19 +801,19 @@ public class Parameters implements IXMLExport, Serializable {
                 try {
                     this.setPointsTeamDrawBonus(params.getAttribute(StringConstants.CS_TEAMDRAWPOINTS).getIntValue());
 
-                } catch (DataConversionException|NullPointerException e) {
+                } catch (DataConversionException | NullPointerException e) {
                     this.setPointsTeamDrawBonus(0);
                     LOG.log(Level.FINE, e.getLocalizedMessage());
                 }
 
                 try {
                     this.setDate(format.parse(params.getAttribute(StringConstants.CS_DATE).getValue()));
-                } catch (ParseException|NullPointerException pe) {
+                } catch (ParseException | NullPointerException pe) {
                 }
 
                 try {
                     this.setGame(params.getAttribute(StringConstants.CS_GAMETYPE).getIntValue());
-                } catch (DataConversionException|NullPointerException pe) {
+                } catch (DataConversionException | NullPointerException pe) {
                     this.setGame(1);
                     LOG.log(Level.FINE, pe.getLocalizedMessage());
                 }

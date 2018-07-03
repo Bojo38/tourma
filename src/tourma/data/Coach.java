@@ -1477,4 +1477,28 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
         _PinCode = pin;
         updated=true;
     }
+    
+    public String getMatchRoster(int i)
+    {
+        String res=mRoster.getName();
+        if (i<mMatchs.size())
+        {
+            CoachMatch cm=(CoachMatch)mMatchs.get(i);
+            if (cm.getCompetitor1()==this)
+            {
+                if (cm.getRoster1()!=null)
+                {
+                    res=cm.getRoster1().getName();
+                }
+            }
+            if (cm.getCompetitor2()==this)
+            {
+                if (cm.getRoster2()!=null)
+                {
+                    res=cm.getRoster2().getName();
+                }
+            }
+        }
+        return res;
+    }
 }
