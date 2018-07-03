@@ -621,6 +621,28 @@ public final class JFullScreenMatchs extends JFullScreen {
                 System.exit(0);
             }
         }
+        if ((evt.getKeyCode() == KeyEvent.VK_SUBTRACT) || (evt.getKeyCode() == KeyEvent.VK_M)) {
+            if (animationStarted) {
+                jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                if (animation != null) {
+                    if (animation.isAlive()) {
+                        animation.incrementSync();
+                    }
+                }
+            }
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ADD) || (evt.getKeyCode() == KeyEvent.VK_P)) {
+            if (animationStarted) {
+                jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                if (animation != null) {
+                    if (animation.isAlive()) {
+                        animation.decrementSync();
+                    }
+                }
+            }
+        }
     }
     //public Animation animation;
 
@@ -708,9 +730,9 @@ public final class JFullScreenMatchs extends JFullScreen {
                     if (Tournament.getTournament().getParams().isDisplayRoster()) {
 
                         if (right) {
-                            jlbCoach.setText("<HTML> " + c.getName() + " <i>(" + c.getMatchRoster(i)+")</i></HTML>");
+                            jlbCoach.setText("<HTML> " + c.getName() + " <i>(" + c.getMatchRoster(i) + ")</i></HTML>");
                         } else {
-                            jlbCoach.setText("<HTML><i>("+c.getMatchRoster(i) + ")</i> " + c.getName() + "</HTML>");
+                            jlbCoach.setText("<HTML><i>(" + c.getMatchRoster(i) + ")</i> " + c.getName() + "</HTML>");
                         }
                     } else {
                         if (right) {
@@ -808,9 +830,9 @@ public final class JFullScreenMatchs extends JFullScreen {
             if (Tournament.getTournament().getParams().isDisplayRoster()) {
 
                 if (right) {
-                    jlbCoach.setText("<HTML>" + t.getName() + " <i>(" + t.getMatchRoster(matchIndex)+")</i></HTML>");
+                    jlbCoach.setText("<HTML>" + t.getName() + " <i>(" + t.getMatchRoster(matchIndex) + ")</i></HTML>");
                 } else {
-                    jlbCoach.setText("<HTML><i>("+t.getMatchRoster(matchIndex) + ")</i>" + t.getName() + " </HTML>");
+                    jlbCoach.setText("<HTML><i>(" + t.getMatchRoster(matchIndex) + ")</i>" + t.getName() + " </HTML>");
                 }
             } else {
                 if (right) {
@@ -980,8 +1002,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                             jpnClash2 = createClashTeamPane((Team) m.getCompetitor2(), (TeamMatch) m, true);
                         }
                         if (m instanceof CoachMatch) {
-                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1(), false,i);
-                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2(), true,i);
+                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1(), false, i);
+                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2(), true, i);
                         }
 
                         if ((jpnClash1 != null) && (jpnClash2 != null)) {

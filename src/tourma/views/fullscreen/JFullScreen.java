@@ -96,9 +96,9 @@ public abstract class JFullScreen extends javax.swing.JDialog {
     }
 
     protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
-        return getLabelForObject(object, height,  width, f,  bkg, false,0);
+        return getLabelForObject(object, height, width, f, bkg, false, 0);
     }
-    
+
     /**
      *
      * @param object
@@ -110,7 +110,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
      * @return
      */
     @SuppressWarnings("SuspiciousNameCombination")
-    protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg,boolean right,int matchIndex) {
+    protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg, boolean right, int matchIndex) {
 
         JLabel l = new JLabel();
         try {
@@ -132,15 +132,12 @@ public abstract class JFullScreen extends javax.swing.JDialog {
 
         try {
             String text = object.getName();
-            if ((object instanceof Coach)&&(Tournament.getTournament().getParams().isDisplayRoster())) {
-                Coach c=(Coach)object;
-                if (right)
-                {
-                    l.setText("<HTML>" + c.getName() +" <i>("+c.getMatchRoster(matchIndex)+")</i></HTML>");
-                }
-                else
-                {
-                    l.setText("<HTML><i>("+c.getMatchRoster(matchIndex)+")</i> " + c.getName() +"</HTML>");
+            if ((object instanceof Coach) && (Tournament.getTournament().getParams().isDisplayRoster())) {
+                Coach c = (Coach) object;
+                if (right) {
+                    l.setText("<HTML>" + c.getName() + " <i>(" + c.getMatchRoster(matchIndex) + ")</i></HTML>");
+                } else {
+                    l.setText("<HTML><i>(" + c.getMatchRoster(matchIndex) + ")</i> " + c.getName() + "</HTML>");
                 }
             } else {
                 l.setText(text);
@@ -223,6 +220,28 @@ public abstract class JFullScreen extends javax.swing.JDialog {
     protected class Animation extends Thread implements Suspendable {
 
         private boolean suspended = false;
+        private long millis = 8000;
+        private long computedTime;
+        private long ncomputedTime=0;
+
+        synchronized void incrementSync() {
+            millis = millis - millis * 10 / 100;
+            
+            double decr=computedTime*1000000+ncomputedTime;
+            decr=decr*0.9;
+            computedTime=new Double(Math.floor(decr/1000000)).longValue();
+            ncomputedTime=new Double(decr-computedTime*1000000).longValue();
+            
+            //computedTime=computedTime-decr;
+        }
+
+        synchronized void decrementSync() {
+            millis = millis + millis * 10 / 100;
+           double decr=computedTime*1000000+ncomputedTime;
+            decr=decr*1.1;
+            computedTime=new Double(Math.floor(decr/1000000)).longValue();
+            ncomputedTime=new Double(decr-computedTime*1000000).longValue();
+        }
 
         public void setSuspended(boolean s) {
             suspended = s;
@@ -232,7 +251,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
-            long computedTime = getHeight() / 100;
+            computedTime = getHeight() / 100;
             //int blockIncrement = jscrp.getVerticalScrollBar().getBlockIncrement();
 
             //System.out.println("Screen Height: " + getHeight() + " ScrollBar size: " + (jscrp.getVerticalScrollBar().getMaximum() - jscrp.getVerticalScrollBar().getMinimum()) + " Computed Time: " + computedTime);
@@ -251,7 +270,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
                     synchronized (this) {
                         suspended = true;
 
-                        spleeping.sleep(8000, 0);
+                        spleeping.sleep(millis, 0);
                         while (suspended && animationStarted) {
                             try {
                                 wait();
@@ -264,7 +283,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
                     synchronized (this) {
                         suspended = true;
 
-                        spleeping.sleep(8000, 0);
+                        spleeping.sleep(millis, 0);
                         while (suspended && animationStarted) {
                             try {
                                 wait();
@@ -287,7 +306,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
                 synchronized (this) {
                     suspended = true;
 
-                    spleeping.sleep(computedTime, (int) 0);
+                    spleeping.sleep(computedTime, (int) ncomputedTime);
                     while (suspended && animationStarted) {
                         try {
                             wait();
@@ -371,7 +390,28 @@ public abstract class JFullScreen extends javax.swing.JDialog {
                 animation = new Animation();
                 animation.start();
             }
-
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_SUBTRACT) || (evt.getKeyCode() == KeyEvent.VK_M)) {
+            if (animationStarted) {
+                jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                if (animation != null) {
+                    if (animation.isAlive()) {
+                        animation.incrementSync();
+                    }
+                }
+            }
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ADD) || (evt.getKeyCode() == KeyEvent.VK_P)) {
+            if (animationStarted) {
+                jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                if (animation != null) {
+                    if (animation.isAlive()) {
+                        animation.decrementSync();
+                    }
+                }
+            }
         }
     }
 
