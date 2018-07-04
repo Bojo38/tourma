@@ -65,6 +65,10 @@ import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.web.WebPicture;
+import java.io.*;
+import javax.print.*;
+import javax.print.attribute.*;
+import javax.print.attribute.standard.*;
 
 /**
  *
@@ -146,7 +150,7 @@ public final class JdgReport extends javax.swing.JDialog {
             }
             try {
                 //jepHTML.setContentType("html");
-                mFilename = createReport();
+                mFilename = createReport(jlsObject.getSelectedIndex());
                 //jepHTML.setPage(mFilename.toURI().toURL());
                 webView.setURL(mFilename.toURI().toURL().toString());
             } catch (IOException | NullPointerException e) {
@@ -169,8 +173,10 @@ public final class JdgReport extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtPrint = new javax.swing.JButton();
+        jbtPrintAll = new javax.swing.JButton();
         jbtExport = new javax.swing.JButton();
         jbtExportPDF = new javax.swing.JButton();
+        jbtExportPDFAll = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlsObject = new javax.swing.JList<>();
 
@@ -196,6 +202,15 @@ public final class JdgReport extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
+        jbtPrintAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtPrintAll.setText(bundle.getString("PrintAll")); // NOI18N
+        jbtPrintAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtPrintAllActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtPrintAll);
+
         jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
         jbtExport.setText(bundle.getString("HTMLExport")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +228,15 @@ public final class JdgReport extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jbtExportPDF);
+
+        jbtExportPDFAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
+        jbtExportPDFAll.setText(bundle.getString("PDFExportAll")); // NOI18N
+        jbtExportPDFAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExportPDFAllActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtExportPDFAll);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
@@ -247,7 +271,63 @@ public final class JdgReport extends javax.swing.JDialog {
         } catch (PrinterException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
         }*/
+
+        File file = createReport(jlsObject.getSelectedIndex());
+        File file2 = createPDFfromHTML(file);
+        printPDFFile(file2);
     }//GEN-LAST:event_jbtPrintActionPerformed
+
+    private void printPDFFile(File file2) {
+        FileInputStream psStream = null;
+        if (file2 != null) {
+            try {
+                psStream = new FileInputStream(file2);
+            } catch (FileNotFoundException ffne) {
+                ffne.printStackTrace();
+            }
+            if (psStream == null) {
+                return;
+            }
+            DocFlavor psInFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            Doc myDoc = new SimpleDoc(psStream, psInFormat, null);
+            PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+            PrintService[] services = PrintServiceLookup.lookupPrintServices(psInFormat, aset);
+
+            // this step is necessary because I have several printers configured
+            PrintService myPrinter = null;
+            if (services.length == 0) {
+                JOptionPane.showMessageDialog(this, "No printer found", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                ArrayList<String> choices = new ArrayList<>();
+                for (int i = 0; i < services.length; i++) {
+                    choices.add(services[i].getName());
+                }
+                String input = (String) JOptionPane.showInputDialog(null, "Choose printer.",
+                        "printer", JOptionPane.QUESTION_MESSAGE, null, // Use
+                        // default
+                        // icon
+                        choices.toArray(), // Array of choices
+                        choices.get(0)); // Initial choice
+
+                int index = choices.indexOf(input);
+
+                if (index >= 0) {
+                    myPrinter = services[index];
+                }
+                if (myPrinter != null) {
+                    DocPrintJob job = myPrinter.createPrintJob();
+                    try {
+                        job.print(myDoc, aset);
+
+                    } catch (Exception pe) {
+                        pe.printStackTrace();
+                    }
+                } else {
+                    System.out.println("no printer services found");
+                }
+            }
+        }
+    }
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
@@ -362,8 +442,109 @@ public final class JdgReport extends javax.swing.JDialog {
         }
 
 //        http://www.rgagnon.com/javadetails/java-html-to-pdf-using-itext.html
-
     }//GEN-LAST:event_jbtExportPDFActionPerformed
+
+    private File createPDFfromHTML(File html) {
+        String property = "java.io.tmpdir";
+        OutputStreamWriter out = null;
+        InputStreamReader in = null;
+        File export = null;
+        String tempDir = System.getProperty(property);
+        try {
+            export = File.createTempFile("pdf_report", null, new File(tempDir));
+
+            in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
+            {
+                //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
+                StringBuilder sb = new StringBuilder();
+                int c = in.read();
+                while (c != -1) {
+                    sb.append((char) c);
+                    c = in.read();
+                }
+
+                String s = sb.toString();
+
+                s = s.substring(s.indexOf("<html>"));
+
+                HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Global Report");
+            }
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
+                }
+            }
+
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
+                }
+            }
+        }
+        return export;
+    }
+
+    private File createAllPDFfromHTML() {
+        String property = "java.io.tmpdir";
+        OutputStreamWriter out = null;
+        InputStreamReader in = null;
+        File export = null;
+        String tempDir = System.getProperty(property);
+        try {
+            export = File.createTempFile("pdf_report", null, new File(tempDir));
+            String content = "";
+            for (int j = 0; j < jlsObject.getModel().getSize(); j++) {
+                File file = createReport(j);
+                in = new InputStreamReader(new FileInputStream(file), Charset.defaultCharset());
+                {
+                    //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
+                    StringBuilder sb = new StringBuilder();
+                    int c = in.read();
+                    while (c != -1) {
+                        sb.append((char) c);
+                        c = in.read();
+                    }
+
+                    String s = sb.toString();
+
+                    s = s.substring(s.indexOf("<html>"));
+                    content += s;
+                    if (j > 0) {
+                        content += "<p style=\"page-break-after: always;\">&nbsp;</p>";
+                    }
+                }
+            }
+            HTMLtoPDF.exportToPDF(new FileOutputStream(export), content, "Total Report");
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
+                }
+            }
+
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
+                }
+            }
+        }
+        return export;
+    }
 
     private void jlsObjectValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlsObjectValueChanged
         if (jlsObject.getSelectedIndex() >= 0) {
@@ -378,7 +559,7 @@ public final class JdgReport extends javax.swing.JDialog {
             }
             try {
                 //jepHTML.setContentType("html");
-                mFilename = createReport();
+                mFilename = createReport(jlsObject.getSelectedIndex());
                 //jepHTML.setPage(mFilename.toURI().toURL());
                 webView.setURL(mFilename.toURI().toURL().toString());
 
@@ -389,13 +570,87 @@ public final class JdgReport extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jlsObjectValueChanged
 
+    private void jbtPrintAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPrintAllActionPerformed
+        
+        File file2 = createAllPDFfromHTML();
+        printPDFFile(file2);
+    }//GEN-LAST:event_jbtPrintAllActionPerformed
+
+    private void jbtExportPDFAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportPDFAllActionPerformed
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("PDF", new String[]{"PDF", "pdf"});
+        jfc.setFileFilter(filter1);
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
+            String ext = StringConstants.CS_NULL;
+            final int i = url2.toString().lastIndexOf('.');
+            if (i > 0 && i < url2.length() - 1) {
+                ext = url2.substring(i + 1).toLowerCase(Locale.getDefault());
+            }
+            if (!ext.equals("pdf")) {
+                url2 = url2.append(".pdf");
+            }
+
+            final File export = new File(url2.toString());
+
+            OutputStreamWriter out = null;
+            InputStreamReader in = null;
+            try {
+                String content = "";
+                for (int j = 0; j < jlsObject.getModel().getSize(); j++) {
+                    File file = createReport(j);
+                    in = new InputStreamReader(new FileInputStream(file), Charset.defaultCharset());
+                    {
+                        //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
+                        StringBuilder sb = new StringBuilder();
+                        int c = in.read();
+                        while (c != -1) {
+                            sb.append((char) c);
+                            c = in.read();
+                        }
+
+                        String s = sb.toString();
+
+                        s = s.substring(s.indexOf("<html>"));
+                        content += s;
+                        if (j > 0) {
+                            content += "<p style=\"page-break-after: always;\">&nbsp;</p>";
+                        }
+                    }
+                }
+                HTMLtoPDF.exportToPDF(new FileOutputStream(export), content, "Total Report");
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
+                    }
+                }
+
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jbtExportPDFAllActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtExportPDF;
+    private javax.swing.JButton jbtExportPDFAll;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtPrint;
+    private javax.swing.JButton jbtPrintAll;
     private javax.swing.JList<String> jlsObject;
     // End of variables declaration//GEN-END:variables
 
@@ -1470,11 +1725,11 @@ public final class JdgReport extends javax.swing.JDialog {
     }
 
     @SuppressWarnings("unchecked")
-    private File createReport() {
+    private File createReport(int index) {
 
         File f = null;
-        if (jlsObject.getSelectedIndex() >= 0) {
-            IWithNameAndPicture object = objects.get(jlsObject.getSelectedIndex());
+        if (index >= 0) {
+            IWithNameAndPicture object = objects.get(index);
             switch (mType) {
                 case C_CLAN:
                     f = createClanReport((Clan) object);
