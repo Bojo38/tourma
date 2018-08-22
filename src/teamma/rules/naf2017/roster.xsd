@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    
+    <xs:element name="skillType">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" />
+                <xs:element name="accronym" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    
+    <xs:element name="skill">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" />
+                <xs:element name="category" type="skillType" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="SkillList">  
+        <xs:sequence>  
+            <xs:element name="skill" type="skill" minOccurs="0" maxOccurs="unbounded"/>  
+        </xs:sequence>  
+    </xs:complexType> 
+  
+    <xs:complexType name="SkillTypeList">  
+        <xs:sequence>  
+            <xs:element name="skillType" type="skillType" minOccurs="0" maxOccurs="unbounded"/>  
+        </xs:sequence>  
+    </xs:complexType> 
+    
+    <xs:element name="playerType">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="limit" type="xs:integer" />
+                <xs:element name="position" type="xs:string" />
+                <xs:element name="movement" type="xs:integer" />
+                <xs:element name="strength" type="xs:integer" />
+                <xs:element name="agility" type="xs:integer" />
+                <xs:element name="armor" type="xs:integer" />
+                <xs:element name="skills" type="SkillList" />
+                <xs:element name="cost" type="xs:integer" />
+                <xs:element name="single" type="SkillTypeList" />
+                <xs:element name="double" type="SkillTypeList" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="starplayer">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" />
+                <xs:element name="position" type="xs:string" />
+                <xs:element name="movement" type="xs:integer" />
+                <xs:element name="stength" type="xs:integer" />
+                <xs:element name="agility" type="xs:integer" />
+                <xs:element name="armor" type="xs:integer" />
+                <xs:element name="skills" type="SkillList" />
+                <xs:element name="cost" type="xs:integer" />
+                <xs:sequence>  
+                    <xs:element name="team" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>  
+                </xs:sequence>  
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="PlayerTypeList">  
+        <xs:sequence>  
+            <xs:element name="playertype" type="playerType" minOccurs="0" maxOccurs="unbounded"/>  
+        </xs:sequence>  
+    </xs:complexType>
+  
+    <xs:complexType name="StarPlayerList">  
+        <xs:sequence>  
+            <xs:element name="starplayer" type="starplayer" minOccurs="0" maxOccurs="unbounded"/>  
+        </xs:sequence>  
+    </xs:complexType>
+    
+    <xs:element name="rostertype">
+        <xs:complexType>
+            <xs:sequence>                
+                <xs:element name="playertypes" type="PlayerTypeList" />
+                <xs:element name="name" type="xs:string" />
+                <xs:element name="reroll" type="xs:integer" />
+                <xs:element name="apothecary" type="xs:integer" />
+                <xs:element name="chef" type="xs:integer" />
+                <xs:element name="igor" type="xs:integer" />
+                <xs:element name="bribe" type="xs:integer" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+            
+</xs:schema>

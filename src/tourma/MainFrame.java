@@ -1146,7 +1146,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jcxAllowSpecialSkill.setEnabled(false);
         } else {
             RosterType.initCollection(RosterType.C_BLOOD_BOWL);
-            LRB.getLRB();
+    //        LRB.getLRB();
         }
 
         mTournament.clearGroups();
@@ -1255,7 +1255,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiEditTeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAllowSpecialSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAllowSpecialSkillActionPerformed
-        LRB.getLRB().setAllowSpecialSkills(jcxAllowSpecialSkill.getState());
+        LRB.setAllowSpecialSkills(jcxAllowSpecialSkill.getState());
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
 
     private final static String CS_FBBCSVFile = "FBB CSV FILE";
@@ -2992,10 +2992,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         JdgMassAdd jdg = new JdgMassAdd(this, true);
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiMassAddActionPerformed
-
-    private void jcxDisplayRostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxDisplayRostersActionPerformed
-         Tournament.getTournament().getParams().setDisplayRoster(jcxDisplayRosters.getState());
-    }//GEN-LAST:event_jcxDisplayRostersActionPerformed
 
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();

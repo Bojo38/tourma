@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>BretonianKey</name>
+    <reroll>70000</reroll>
+    <apothecary>true</apothecary>
+    <chef>300000</chef>
+    <igor>false</igor>
+    <bribe>100000</bribe>
+    <playertypes>               
+        <playerType>
+            <limit>4</limit>
+            <position>Blitzer</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Catch</skill>
+                <skill>Dauntless</skill>
+            </skills>
+            <cost>110000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </single>            
+            <double>               
+                <skillType>Strength</skillType>                              
+            </double>
+        </playerType>
+        <playerType>
+            <limit>4</limit>
+            <position>Yeomen</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Wrestle</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Lineman</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Fend</skill>
+            </skills>
+            <cost>40000</cost>
+            <single>
+                <skillType>General</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>               
+    </playertypes>
+</rostertype>
+
+

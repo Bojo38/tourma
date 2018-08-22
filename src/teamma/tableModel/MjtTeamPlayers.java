@@ -215,7 +215,7 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                         /*
                          * If charactristics, it depends.
                          */
-                        if (st.equals(LRB.getLRB().getSkillType(CS_Characteristics))) {
+                        if (st.equals(LRB.getLRB(_roster.getRoster().getVersion()).getSkillType(CS_Characteristics))) {
                             Skill s = player.getSkill(i);
                             if (s.getmName().equals(Player.CS_Plus1Movement)) {
                                 skillCost += 30000;

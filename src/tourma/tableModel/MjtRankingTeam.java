@@ -483,35 +483,40 @@ public final class MjtRankingTeam extends MjtRanking {
                         object = ((IWithNameAndPicture) obj.getObject()).getName();
                         break;
                     case 2:
-                        if (params.getTeamRankingType(0) == Parameters.C_RANKING_VND) {
+                        if ((params.isTeamVictoryOnly()&&(params.getTeamRankingType(0) == Parameters.C_RANKING_VND))
+                        ||(!params.isTeamVictoryOnly()&&(params.getIndivRankingType(0) == Parameters.C_RANKING_VND))){
                             object = convertVND(obj.getValue1());
                         } else {
                             object = obj.getValue1();
                         }
                         break;
                     case 3:
-                        if (params.getTeamRankingType(1) == Parameters.C_RANKING_VND) {
+                        if ((params.isTeamVictoryOnly()&&(params.getTeamRankingType(1) == Parameters.C_RANKING_VND))
+                        ||(!params.isTeamVictoryOnly()&&(params.getIndivRankingType(1) == Parameters.C_RANKING_VND))) {
                             object = convertVND(obj.getValue2());
                         } else {
                             object = obj.getValue2();
                         }
                         break;
                     case 4:
-                        if (params.getTeamRankingType(2) == Parameters.C_RANKING_VND) {
+                        if ((params.isTeamVictoryOnly()&&(params.getTeamRankingType(2) == Parameters.C_RANKING_VND))
+                        ||(!params.isTeamVictoryOnly()&&(params.getIndivRankingType(2) == Parameters.C_RANKING_VND))) {
                             object = convertVND(obj.getValue3());
                         } else {
                             object = obj.getValue3();
                         }
                         break;
                     case 5:
-                        if (params.getTeamRankingType(3) == Parameters.C_RANKING_VND) {
+                        if ((params.isTeamVictoryOnly()&&(params.getTeamRankingType(3) == Parameters.C_RANKING_VND))
+                        ||(!params.isTeamVictoryOnly()&&(params.getIndivRankingType(3) == Parameters.C_RANKING_VND))) {
                             object = convertVND(obj.getValue4());
                         } else {
                             object = obj.getValue4();
                         }
                         break;
                     case 6:
-                        if (params.getTeamRankingType(4) == Parameters.C_RANKING_VND) {
+                        if ((params.isTeamVictoryOnly()&&(params.getTeamRankingType(4) == Parameters.C_RANKING_VND))
+                        ||(!params.isTeamVictoryOnly()&&(params.getIndivRankingType(4) == Parameters.C_RANKING_VND))) {
                             object = convertVND(obj.getValue5());
                         } else {
                             object = obj.getValue5();

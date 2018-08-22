@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>NurgleKey</name>
+    <reroll>70000</reroll>
+    <apothecary>false</apothecary>
+    <chef>300000</chef>
+    <igor>true</igor>
+    <bribe>100000</bribe>
+    <playertypes>               
+        <playerType>
+            <limit>4</limit>
+            <position>Nurgle's Warrior</position>
+            <movement>4</movement>
+            <strength>4</strength>
+            <agility>2</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Disturbing Presence</skill>
+                <skill>Foul Appearance</skill>
+                <skill>Nurgle's Rot</skill>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>110000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>4</limit>
+            <position>Pestigor</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Horns</skill>
+                <skill>Nurgle's Rot</skill>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Nurgle's Beast</position>
+            <movement>4</movement>
+            <strength>5</strength>
+            <agility>1</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Disturbing Presence</skill>
+                <skill>Foul Appearance</skill>
+                <skill>Nurgle's Rot</skill>
+                <skill>Regeneration</skill>
+                <skill>Loner</skill>
+                <skill>Really Stupid</skill>
+                <skill>Tentacles</skill>
+                <skill>Mighty Blow</skill>
+            </skills>
+            <cost>140000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Rotter</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Nurgle's Rot</skill>
+                <skill>Decay</skill>
+            </skills>
+            <cost>40000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

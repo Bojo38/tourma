@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+    <name>LRB3</name>
+    <teams>
+        <team image="amazon.png">amazons.xml</team>
+        <team image="chaos.png">chaos.xml</team>
+        <team image="chaosdwarf.png">chaosdwarves.xml</team>
+        <team image="darkelf.png">darkelves.xml</team>
+        <team image="dwarf.png">dwarves.xml</team>
+        <team image="elf.png">elves.xml</team>
+        <team image="goblin.png">goblins.xml</team>
+        <team image="halfling.png">halflings.xml</team>
+        <team image="highelf.png">highelves.xml</team>
+        <team image="human.png">humans.xml</team>
+        <team image="khemri.png">khemris.xml</team>
+        <team image="lizardmen.png">lizardmen.xml</team>
+        <team image="necromantic.png">necromantics.xml</team>
+        <team image="norse.png">norses.xml</team>
+        <team image="nurgle.png">nurgle.xml</team>
+        <team image="orc.png">orcs.xml</team>
+        <team image="skaven.png">skavens.xml</team>
+        <team image="undead.png">undeads.xml</team>
+        <team image="woodelf.png">woodelves.xml</team>        
+    </teams>
+    <inducements>
+        <chef>no</chef>
+        <bribe>no</bribe>
+        <mercenaries>no</mercenaries>
+        <babes>no</babes>
+        <wizard>no</wizard>
+        <reroll>no</reroll>
+        <apothecary>no</apothecary>
+        <igor>no</igor>
+        <cards>no</cards>
+        <starplayers>yes</starplayers>        
+    </inducements>
+    <check_nb_big_guys>yes</check_nb_big_guys>
+    <min_ff>1</min_ff>
+    <max_ff>9</max_ff>
+    <starplayers>starplayers.xml</starplayers>    
+    <skills>skills.xml</skills>
+</rules>

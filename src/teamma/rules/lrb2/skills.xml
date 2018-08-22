@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<skills>
+    <category>
+        <name>General Skill</name>
+        <accronym>Gs</accronym>
+        <special>false</special>
+        <skill>Block</skill>       
+        <skill>Dirty Player</skill>
+        <skill>Kick</skill>
+        <skill>Pass Block</skill>
+        <skill>Pro</skill>
+        <skill>Shadowing</skill>
+        <skill>Strip Ball</skill>        
+        <skill>Sure Hands</skill>
+        <skill>Tackle</skill>    
+    </category>
+    <category>
+        <name>General Trait</name>
+        <accronym>Gt</accronym>
+        <special>false</special>
+        <skill>Leader</skill>
+        <skill>Frenzy</skill>
+        <skill>Dauntless</skill>
+        <skill>Nerves of Steel</skill>
+    </category>
+    <category>
+        <name>Pass Skill</name>
+        <accronym>Ps</accronym>
+        <special>false</special>
+        <skill>Safe Throw</skill>
+        <skill>Pass</skill>
+        <skill>Hail Mary Pass</skill>
+        <skill>Dump-Off</skill>
+        <skill>Accurate</skill>
+    </category>
+    <category>
+        <name>Pass Trait</name>
+        <accronym>Pt</accronym>
+        <special>false</special>
+        <skill>Strong Arm</skill>
+    </category>
+    <category>
+        <name>Strength Skill</name>
+        <accronym>Ss</accronym>
+        <special>false</special>
+        <skill>Break Tackle</skill>
+        <skill>Guard</skill>
+        <skill>Mighty Blow</skill>
+        <skill>Multiple Block</skill>                
+        <skill>Piling On</skill>
+    </category>
+    <category>
+        <name>Strength Trait</name>
+        <accronym>St</accronym>
+        <special>false</special>
+        <skill>Stand Firm</skill>
+    </category>
+    <category>
+        <name>Physical Skill</name>
+        <accronym>Ms</accronym>
+        <special>false</special>
+    </category>
+    <category>
+        <name>Physical Trait</name>
+        <accronym>Mt</accronym>
+        <special>false</special>
+        <skill>Big Hand</skill>
+        <skill>Claw</skill>        
+        <skill>Extra Arms</skill>
+        <skill>Foul Appearance</skill>        
+        <skill>Horns</skill>
+        <skill>Prehensile Tail</skill>
+        <skill>Razor Sharp Claws or Fangs</skill>
+        <skill>Spikes</skill>
+        <skill>Tentacles</skill>
+        <skill>Thick Skull</skill>
+        <skill>Two Heads</skill>
+        <skill>Very Long Legs</skill>
+    </category>
+    <category>
+        <name>Agility Skill</name>
+        <accronym>As</accronym>
+        <special>false</special>
+        <skill>Catch</skill>
+        <skill>Diving Catch</skill>
+        <skill>Diving Tackle</skill>
+        <skill>Dodge</skill>
+        <skill>Leap</skill>
+        <skill>Side Step</skill>
+        <skill>Sprint</skill>
+        <skill>Sure Feet</skill>        
+    </category>
+    <category>
+        <name>Agility Trait</name>
+        <accronym>At</accronym>
+        <special>false</special>
+        <skill>Jump Up</skill>
+    </category>
+    <category>
+        <name>Extraordinary</name>
+        <accronym>E</accronym>
+        <special>true</special>        
+        <skill>Bomb</skill>
+        <skill>Ball And Chain</skill>
+        <skill>Chainsaw</skill>
+        <skill>Blunderbuss</skill>
+        <skill>Deathroller</skill>
+        <skill>Poisoned Dagger</skill>
+        <skill>Pogo Stick</skill>
+        <skill>Stakes</skill>        
+    </category>
+    <category>
+        <name>Racial Characteristic</name>
+        <accronym>Rc</accronym>
+        <special>true</special>
+        <skill>Always Hungry</skill>
+        <skill>Big Guy</skill>
+        <skill>Bone Head</skill>
+        <skill>Nurgle's Rot</skill>
+        <skill>Really Stupid</skill>
+        <skill>Take Roots</skill>
+        <skill>Throw Team-Mate</skill>
+        <skill>Wild Animal</skill>
+        <skill>Blood Lust</skill>
+        <skill>Easily Confused</skill>
+        <skill>Hypnotic Gaze</skill>
+        <skill>Regeneration</skill>
+        <skill>Right Stuff</skill>
+        <skill>Stunty</skill>
+        <skill>Thrud's Fans</skill>
+    </category>
+    <category>
+        <name>Characteristics</name>
+        <accronym>C</accronym>
+        <special>true</special>
+        <skill>+1 Movement</skill>
+        <skill>+1 Strength</skill>
+        <skill>+1 Agility</skill>
+        <skill>+1 Armor</skill>
+    </category>
+    <category>
+        <name>Injury</name>
+        <accronym>I</accronym>
+        <special>true</special>
+        <skill>Niggling Injury</skill>
+        <skill>-1 Movement</skill>
+        <skill>-1 Strength</skill>
+        <skill>-1 Agility</skill>
+        <skill>-1 Armor</skill>
+    </category>
+</skills>

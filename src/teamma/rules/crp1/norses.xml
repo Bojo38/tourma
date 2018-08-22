@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>NorseKey</name>
+    <reroll>60000</reroll>
+    <apothecary>true</apothecary>
+    <chef>300000</chef>
+    <igor>false</igor>
+    <bribe>100000</bribe>
+    <playertypes>               
+        <playerType>
+            <limit>1</limit>
+            <position>Yeti</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>2</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Loner</skill>
+                <skill>Wild Animal</skill>
+                <skill>Claws</skill>
+                <skill>Frenzy</skill>
+                <skill>Disturbing Presence</skill>
+            </skills>
+            <cost>140000</cost>
+            <single>                
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Ulfwerner</position>
+            <movement>6</movement>
+            <strength>4</strength>
+            <agility>2</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Frenzy</skill>
+            </skills>
+            <cost>110000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Berserker</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Jump Up</skill>
+                <skill>Frenzy</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Runner</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Dauntless</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>                
+            </double>
+        </playerType>
+         <playerType>
+            <limit>2</limit>
+            <position>Thrower</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Pass</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Agility</skillType>                
+            </double>
+        </playerType>
+         <playerType>
+            <limit>16</limit>
+            <position>Lineman</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Block</skill>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>                
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>   
+                <skillType>Agility</skillType>             
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>DarkElfKey</name>
+    <reroll>50000</reroll>
+    <apothecary>true</apothecary>
+    <chef>300000</chef>
+    <igor>false</igor>
+    <bribe>100000</bribe>
+        <chaos_wizard>false</chaos_wizard>
+    <kari_coldstell>false</kari_coldstell>
+    <fink_da_fixer>false</fink_da_fixer>
+    <papa_skullbones>false</papa_skullbones>
+    <galandril_silverwater>false</galandril_silverwater>
+    <krot_shockwhisker>false</krot_shockwhisker>
+    <playertypes>               
+        <playerType>
+            <limit>4</limit>
+            <position>Blitzer</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Block</skill>
+            </skills>
+            <cost>100000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Witch Elf</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Frenzy</skill>
+                <skill>Jump Up</skill>
+            </skills>
+            <cost>110000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Runner</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dump-Off</skill>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+         <playerType>
+            <limit>2</limit>
+            <position>Assassin</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Stab</skill>
+                <skill>Shadowing</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>   
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Lineman</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>8</armor>
+            <skills>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>            
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

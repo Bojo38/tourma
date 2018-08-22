@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>LizardmenKey</name>
+    <reroll>60000</reroll>
+    <apothecary>true</apothecary>
+    <chef>300000</chef>
+    <igor>false</igor>
+    <bribe>100000</bribe>
+    <playertypes>               
+        <playerType>
+            <limit>6</limit>
+            <position>Saurus</position>
+            <movement>6</movement>
+            <strength>4</strength>
+            <agility>1</agility>
+            <armor>9</armor>
+            <skills>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Skink</position>
+            <movement>8</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Stunty</skill>
+            </skills>
+            <cost>60000</cost>
+            <single>
+                
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Kroxigor</position>
+            <movement>6</movement>
+            <strength>5</strength>
+            <agility>1</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Loner</skill>
+                <skill>Mighty Blow</skill>
+                <skill>Bone Head</skill>
+                <skill>Thick Skull</skill>
+                <skill>Prehensile Tail</skill>
+            </skills>
+            <cost>140000</cost>
+            <single>
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>     
+    </playertypes>
+</rostertype>
+
+

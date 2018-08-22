@@ -419,11 +419,17 @@ public class Tournament implements IContainCoachs, Serializable {
         final ArrayList<Clan> clans = new ArrayList<>();
         if (mParams.isTeamTournament()) {
             for (Team c : mTeams) {
-                counts.put(c.getClan(), counts.get(c.getClan()) + 1);
+                if (c.getClan()!=null)
+                {
+                    counts.put(c.getClan(), counts.get(c.getClan()) + 1);
+                }
             }
         } else {
             for (Coach c : mCoachs) {
+                if (c.getClan()!=null)
+                {
                 counts.put(c.getClan(), counts.get(c.getClan()) + 1);
+                }
             }
         }
 
