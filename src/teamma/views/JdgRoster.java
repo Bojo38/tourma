@@ -2517,8 +2517,8 @@ public final class JdgRoster extends javax.swing.JDialog {
         } else {
 
             jlbNbKari.setText(Integer.toString(jslKari.getValue()));
-            jlbCostKari.setText(Integer.toString(jslKari.getValue() * _data.getRoster().getKari_Coldstell_cost()));
-            jlbPriceKari.setText(Integer.toString(_data.getRoster().getKari_Coldstell_cost()));
+            jlbCostKari.setText(Integer.toString(jslKari.getValue() *RosterType.getKari_Coldstell_cost()));
+            jlbPriceKari.setText(Integer.toString(RosterType.getKari_Coldstell_cost()));
         }
     }
     
@@ -2547,8 +2547,8 @@ public final class JdgRoster extends javax.swing.JDialog {
         } else {
 
             jlbNbFink.setText(Integer.toString(jslFink.getValue()));
-            jlbCostFink.setText(Integer.toString(jslFink.getValue() * _data.getRoster().getFink_Da_Fixer_cost()));
-            jlbPriceFink.setText(Integer.toString(_data.getRoster().getFink_Da_Fixer_cost()));
+            jlbCostFink.setText(Integer.toString(jslFink.getValue() * RosterType.getFink_Da_Fixer_cost()));
+            jlbPriceFink.setText(Integer.toString(RosterType.getFink_Da_Fixer_cost()));
         }
     }
     
@@ -2576,8 +2576,8 @@ public final class JdgRoster extends javax.swing.JDialog {
         } else {
 
             jlbNbPapa.setText(Integer.toString(jslPapa.getValue()));
-            jlbCostPapa.setText(Integer.toString(jslPapa.getValue() * _data.getRoster().getPapa_Skullbones_cost()));
-            jlbPricePapa.setText(Integer.toString(_data.getRoster().getPapa_Skullbones_cost()));
+            jlbCostPapa.setText(Integer.toString(jslPapa.getValue() * RosterType.getPapa_Skullbones_cost()));
+            jlbPricePapa.setText(Integer.toString(RosterType.getPapa_Skullbones_cost()));
         }
     }
     
@@ -2605,8 +2605,8 @@ public final class JdgRoster extends javax.swing.JDialog {
         } else {
 
             jlbNbGalandril.setText(Integer.toString(jslGalandril.getValue()));
-            jlbCostGalandril.setText(Integer.toString(jslGalandril.getValue() * _data.getRoster().getGalandril_Silverwater_cost()));
-            jlbPriceGalandril.setText(Integer.toString(_data.getRoster().getGalandril_Silverwater_cost()));
+            jlbCostGalandril.setText(Integer.toString(jslGalandril.getValue() *RosterType.getGalandril_Silverwater_cost()));
+            jlbPriceGalandril.setText(Integer.toString(RosterType.getGalandril_Silverwater_cost()));
         }
     }
     
@@ -2634,8 +2634,8 @@ public final class JdgRoster extends javax.swing.JDialog {
         } else {
 
             jlbNbKrot.setText(Integer.toString(jslKrot.getValue()));
-            jlbCostKrot.setText(Integer.toString(jslKrot.getValue() * _data.getRoster().getKrot_Shockwhisker_cost()));
-            jlbPriceKrot.setText(Integer.toString(_data.getRoster().getKrot_Shockwhisker_cost()));
+            jlbCostKrot.setText(Integer.toString(jslKrot.getValue() * RosterType.getKrot_Shockwhisker_cost()));
+            jlbPriceKrot.setText(Integer.toString(RosterType.getKrot_Shockwhisker_cost()));
         }
     }
     

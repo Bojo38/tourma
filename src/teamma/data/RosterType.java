@@ -49,6 +49,7 @@ public class RosterType implements Serializable {
      *
      */
     private static int _igor_cost = 100000;
+    
 
     /**
      *
@@ -251,12 +252,12 @@ public class RosterType implements Serializable {
         this.Kari_Coldstell = Kari_Coldstell;
     }
 
-    public int getKari_Coldstell_cost() {
+    public static int getKari_Coldstell_cost() {
         return Kari_Coldstell_cost;
     }
 
-    public void setKari_Coldstell_cost(int Kari_Coldstell_cost) {
-        this.Kari_Coldstell_cost = Kari_Coldstell_cost;
+    public static void setKari_Coldstell_cost(int Kari_Coldstell_cost) {
+        Kari_Coldstell_cost = Kari_Coldstell_cost;
     }
 
     public boolean isFink_Da_Fixer() {
@@ -267,12 +268,12 @@ public class RosterType implements Serializable {
         this.Fink_Da_Fixer = Fink_Da_Fixer;
     }
 
-    public int getFink_Da_Fixer_cost() {
+    public static int getFink_Da_Fixer_cost() {
         return Fink_Da_Fixer_cost;
     }
 
-    public void setFink_Da_Fixer_cost(int Fink_Da_Fixer_cost) {
-        this.Fink_Da_Fixer_cost = Fink_Da_Fixer_cost;
+    public static void setFink_Da_Fixer_cost(int Fink_Da_Fixer_cost) {
+        Fink_Da_Fixer_cost = Fink_Da_Fixer_cost;
     }
 
     public boolean isPapa_Skullbones() {
@@ -283,12 +284,12 @@ public class RosterType implements Serializable {
         this.Papa_Skullbones = Papa_Skullbones;
     }
 
-    public int getPapa_Skullbones_cost() {
+    public static int getPapa_Skullbones_cost() {
         return Papa_Skullbones_cost;
     }
 
-    public void setPapa_Skullbones_cost(int Papa_Skullbones_cost) {
-        this.Papa_Skullbones_cost = Papa_Skullbones_cost;
+    public static void setPapa_Skullbones_cost(int Papa_Skullbones_cost) {
+        Papa_Skullbones_cost = Papa_Skullbones_cost;
     }
 
     public boolean isGalandril_Silverwater() {
@@ -299,12 +300,12 @@ public class RosterType implements Serializable {
         this.Galandril_Silverwater = Galandril_Silverwater;
     }
 
-    public int getGalandril_Silverwater_cost() {
+    public static int getGalandril_Silverwater_cost() {
         return Galandril_Silverwater_cost;
     }
 
-    public void setGalandril_Silverwater_cost(int Galandril_Silverwater_cost) {
-        this.Galandril_Silverwater_cost = Galandril_Silverwater_cost;
+    public static void setGalandril_Silverwater_cost(int Galandril_Silverwater_cost) {
+        Galandril_Silverwater_cost = Galandril_Silverwater_cost;
     }
 
     public boolean isKrot_Shockwhisker() {
@@ -315,15 +316,15 @@ public class RosterType implements Serializable {
         this.Krot_Shockwhisker = Krot_Shockwhisker;
     }
 
-    public int getKrot_Shockwhisker_cost() {
+    public static int getKrot_Shockwhisker_cost() {
         return Krot_Shockwhisker_cost;
     }
 
     /**
      * Chaos Wizard Allowed
      */
-    public void setKrot_Shockwhisker_cost(int Krot_Shockwhisker_cost) {
-        this.Krot_Shockwhisker_cost = Krot_Shockwhisker_cost;
+    public static void setKrot_Shockwhisker_cost(int Krot_Shockwhisker_cost) {
+        Krot_Shockwhisker_cost = Krot_Shockwhisker_cost;
     }
 
     private boolean _chaos_wizard;
@@ -333,19 +334,19 @@ public class RosterType implements Serializable {
     
     private static int Horatio_X_Schottenheim_cost=80000;
     private boolean Kari_Coldstell;
-    private int Kari_Coldstell_cost=50000;
+    private static int Kari_Coldstell_cost=50000;
     
     private boolean Fink_Da_Fixer;
-    private int Fink_Da_Fixer_cost=50000;
+    private static int Fink_Da_Fixer_cost=50000;
     
     private boolean Papa_Skullbones;
-    private int Papa_Skullbones_cost=80000;
+    private static int Papa_Skullbones_cost=80000;
     
      private boolean Galandril_Silverwater;
-    private int Galandril_Silverwater_cost=50000;
+    private static int Galandril_Silverwater_cost=50000;
     
     private boolean Krot_Shockwhisker;
-    private int Krot_Shockwhisker_cost=80000;
+    private static int Krot_Shockwhisker_cost=80000;
     /**
      *
      */

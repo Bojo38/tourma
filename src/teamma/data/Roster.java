@@ -277,13 +277,13 @@ public class Roster implements IXMLExport, Serializable {
         cost += isIgor() ? RosterType.getIgor_cost() : 0;
         cost += isWizard() ? RosterType.getWizard_cost() : 0;
         
-        cost += isChaos_wizard()? _roster.getChaos_wizard_cost() : 0;
-        cost += isHoratio_X_Schottenheim()? _roster.getHoratio_X_Schottenheim_cost(): 0;
-        cost += isFink_Da_Fixer()? _roster.getFink_Da_Fixer_cost(): 0;
-        cost += isGalandril_Silverwater()? _roster.getGalandril_Silverwater_cost(): 0;
-        cost += isKari_Coldsteel()? _roster.getKari_Coldstell_cost() : 0;
-        cost += isKrot_Shockwhisker()? _roster.getKrot_Shockwhisker_cost(): 0;
-        cost += isPapa_Skullbones()? _roster.getPapa_Skullbones_cost(): 0;
+        cost += isChaos_wizard()? RosterType.getChaos_wizard_cost() : 0;
+        cost += isHoratio_X_Schottenheim()? RosterType.getHoratio_X_Schottenheim_cost(): 0;
+        cost += isFink_Da_Fixer()? RosterType.getFink_Da_Fixer_cost(): 0;
+        cost += isGalandril_Silverwater()? RosterType.getGalandril_Silverwater_cost(): 0;
+        cost += isKari_Coldsteel()? RosterType.getKari_Coldstell_cost() : 0;
+        cost += isKrot_Shockwhisker()? RosterType.getKrot_Shockwhisker_cost(): 0;
+        cost += isPapa_Skullbones()? RosterType.getPapa_Skullbones_cost(): 0;
         
 
         return cost;
