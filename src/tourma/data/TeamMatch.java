@@ -1272,13 +1272,26 @@ public class TeamMatch extends Match implements Serializable {
         this.c2value4 = recomputeValue(4, mCompetitor2);
         this.c1value5 = recomputeValue(5, mCompetitor1);
         this.c2value5 = recomputeValue(5, mCompetitor2);
+        
+        for (CoachMatch cm:mMatchs)
+        {
+            cm.recomputeValues();
+        }
+        
         values_computed = true;
     }
 
     protected int recomputeValue(int index, Competitor c) {
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
-        valueType = Tournament.getTournament().getParams().getTeamRankingType(index - 1);
+        if (Tournament.getTournament().getParams().isTeamVictoryOnly())
+        {
+            valueType = Tournament.getTournament().getParams().getTeamRankingType(index - 1);
+        }
+        else
+        {
+           valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
+        }
         value = getValue((Team) c, valueType, Tournament.getTournament().getParams().isTeamVictoryOnly());
         return value;
     }

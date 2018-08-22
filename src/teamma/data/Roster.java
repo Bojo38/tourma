@@ -101,11 +101,78 @@ public class Roster implements IXMLExport, Serializable {
      *
      */
     private boolean _wizard;
+    
     /**
      * Chaos Wizard 
      */
     private boolean _chaos_wizard;
+
+    public boolean isChaos_wizard() {
+        return _chaos_wizard;
+    }
+
+    public void setChaos_wizard(boolean _chaos_wizard) {
+        this._chaos_wizard = _chaos_wizard;
+    }
+
+    public boolean isHoratio_X_Schottenheim() {
+        return Horatio_X_Schottenheim;
+    }
+
+    public void setHoratio_X_Schottenheim(boolean Horatio_X_Schottenheim) {
+        this.Horatio_X_Schottenheim = Horatio_X_Schottenheim;
+    }
     private boolean Horatio_X_Schottenheim;
+    
+    
+    private boolean Kari_Coldsteel;
+
+    public boolean isKari_Coldsteel() {
+        return Kari_Coldsteel;
+    }
+
+    public void setKari_Coldsteel(boolean Kari_Coldsteel) {
+        this.Kari_Coldsteel = Kari_Coldsteel;
+    }
+    
+    private boolean Fink_Da_Fixer;
+
+    public boolean isFink_Da_Fixer() {
+        return Fink_Da_Fixer;
+    }
+
+    public void setFink_Da_Fixer(boolean Fink_Da_Fixer) {
+        this.Fink_Da_Fixer = Fink_Da_Fixer;
+    }
+    
+     private boolean Papa_Skullbones;
+     private boolean Galandril_Silverwater;
+     private boolean Krot_Shockwhisker;
+
+    public boolean isPapa_Skullbones() {
+        return Papa_Skullbones;
+    }
+
+    public void setPapa_Skullbones(boolean Papa_Skullbones) {
+        this.Papa_Skullbones = Papa_Skullbones;
+    }
+
+    public boolean isGalandril_Silverwater() {
+        return Galandril_Silverwater;
+    }
+
+    public void setGalandril_Silverwater(boolean Galandril_Silverwater) {
+        this.Galandril_Silverwater = Galandril_Silverwater;
+    }
+
+    public boolean isKrot_Shockwhisker() {
+        return Krot_Shockwhisker;
+    }
+
+    public void setKrot_Shockwhisker(boolean Krot_Shockwhisker) {
+        this.Krot_Shockwhisker = Krot_Shockwhisker;
+    }
+    
     /**
      *
      */
@@ -209,6 +276,15 @@ public class Roster implements IXMLExport, Serializable {
         cost += (isChef()) && (getRoster() != null) ? getRoster().getChef_cost() : 0;
         cost += isIgor() ? RosterType.getIgor_cost() : 0;
         cost += isWizard() ? RosterType.getWizard_cost() : 0;
+        
+        cost += isChaos_wizard()? _roster.getChaos_wizard_cost() : 0;
+        cost += isHoratio_X_Schottenheim()? _roster.getHoratio_X_Schottenheim_cost(): 0;
+        cost += isFink_Da_Fixer()? _roster.getFink_Da_Fixer_cost(): 0;
+        cost += isGalandril_Silverwater()? _roster.getGalandril_Silverwater_cost(): 0;
+        cost += isKari_Coldsteel()? _roster.getKari_Coldstell_cost() : 0;
+        cost += isKrot_Shockwhisker()? _roster.getKrot_Shockwhisker_cost(): 0;
+        cost += isPapa_Skullbones()? _roster.getPapa_Skullbones_cost(): 0;
+        
 
         return cost;
     }

@@ -39,6 +39,8 @@ public class RosterType implements Serializable {
      *
      */
     private static int _wizard_cost = 150000;
+    
+    private static int _chaos_wizard_cost = 150000;
     /**
      *
      */
@@ -100,7 +102,8 @@ public class RosterType implements Serializable {
     public static int getWizard_cost() {
         return _wizard_cost;
     }
-
+    
+ 
     /**
      * @param aWizard_cost the _wizard_cost to set
      */
@@ -224,20 +227,20 @@ public class RosterType implements Serializable {
         this._chaos_wizard = _chaos_wizard;
     }
 
-    public int getChaos_wizard_cost() {
+    public static int getChaos_wizard_cost() {
         return _chaos_wizard_cost;
     }
 
-    public void setChaos_wizard_cost(int _chaos_wizard_cost) {
-        this._chaos_wizard_cost = _chaos_wizard_cost;
+    public static void setChaos_wizard_cost(int _chaos_wizard_cost) {
+        _chaos_wizard_cost = _chaos_wizard_cost;
     }
 
-    public int getHoratio_X_Schottenheim_cost() {
+    public static int getHoratio_X_Schottenheim_cost() {
         return Horatio_X_Schottenheim_cost;
     }
 
-    public void setHoratio_X_Schottenheim_cost(int Horatio_X_Schottenheim_cost) {
-        this.Horatio_X_Schottenheim_cost = Horatio_X_Schottenheim_cost;
+    public static void setHoratio_X_Schottenheim_cost(int Horatio_X_Schottenheim_cost) {
+        RosterType.Horatio_X_Schottenheim_cost = Horatio_X_Schottenheim_cost;
     }
 
     public boolean isKari_Coldstell() {
@@ -326,10 +329,9 @@ public class RosterType implements Serializable {
     private boolean _chaos_wizard;
     /**
      * Chaos Wizard cost
-     */
-    private int _chaos_wizard_cost=150000;
+     */    
     
-    private int Horatio_X_Schottenheim_cost=80000;
+    private static int Horatio_X_Schottenheim_cost=80000;
     private boolean Kari_Coldstell;
     private int Kari_Coldstell_cost=50000;
     
