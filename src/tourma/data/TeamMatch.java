@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.Element;
+import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 
 /**
@@ -1101,6 +1102,9 @@ public class TeamMatch extends Match implements Serializable {
                     value = getTeamTable(t, this);
                     break;
                 default:
+                    if (rankingType > Parameters.C_MAX_RANKING) {
+                        value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                    }
             }
         } else {
             /*for (int i = 0; i < t.getCoachsCount(); i++) {
@@ -1158,6 +1162,7 @@ public class TeamMatch extends Match implements Serializable {
                             }
                             break;
                         default:
+                           
                     }
                 }
             }
@@ -1212,12 +1217,17 @@ public class TeamMatch extends Match implements Serializable {
                     }
                     break;
                 default:
+                     if (rankingType > Parameters.C_MAX_RANKING) {
+                                value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                            }
             }
         }
         return value;
     }
 
-    int getValue(final Team t, TeamMatch tm, final Criteria crit, final int subtype) {
+    int getValue(final Team t, TeamMatch tm,
+            final Criteria crit, final int subtype
+    ) {
         int value = 0;
         for (int i = 0; i < tm.getMatchCount(); i++) {
             CoachMatch cm = tm.getMatch(i);
@@ -1272,25 +1282,21 @@ public class TeamMatch extends Match implements Serializable {
         this.c2value4 = recomputeValue(4, mCompetitor2);
         this.c1value5 = recomputeValue(5, mCompetitor1);
         this.c2value5 = recomputeValue(5, mCompetitor2);
-        
-        for (CoachMatch cm:mMatchs)
-        {
+
+        for (CoachMatch cm : mMatchs) {
             cm.recomputeValues();
         }
-        
+
         values_computed = true;
     }
 
     protected int recomputeValue(int index, Competitor c) {
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
-        if (Tournament.getTournament().getParams().isTeamVictoryOnly())
-        {
+        if (Tournament.getTournament().getParams().isTeamVictoryOnly()) {
             valueType = Tournament.getTournament().getParams().getTeamRankingType(index - 1);
-        }
-        else
-        {
-           valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
+        } else {
+            valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
         }
         value = getValue((Team) c, valueType, Tournament.getTournament().getParams().isTeamVictoryOnly());
         return value;

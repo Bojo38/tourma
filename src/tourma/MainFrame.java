@@ -1980,7 +1980,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void jmiChangePairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChangePairingActionPerformed
 
         if (jpnContent instanceof JPNRound) {
-
             JPNRound jpnr = (JPNRound) jpnContent;
             Round round = jpnr.getRound();
             final JdgChangePairing jdg = new JdgChangePairing(MainFrame.getMainFrame(), true, round);

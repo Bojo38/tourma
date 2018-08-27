@@ -943,7 +943,7 @@ public class CoachMatch extends Match implements Serializable {
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
         valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
-        if (valueType < Parameters.C_MAX_RANKING) {
+        if (valueType <= Parameters.C_MAX_RANKING) {
             value = getValue((Coach) c, valueType);
         } else {
             value = getValue(MjtRanking.getCriteriaByValue(valueType), MjtRanking.getSubtypeByValue(valueType), c);
