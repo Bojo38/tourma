@@ -1054,7 +1054,7 @@ public class CoachMatch extends Match implements Serializable {
         //Get round
         Round round = tmp_m.getRound();
 
-        // List prévious Opponents
+        // List previous Opponents
         ArrayList<Competitor> opponents = new ArrayList<>();
         for (int i = 0; i <= match_index; i++) {
             CoachMatch cm = (CoachMatch) c.getMatch(i);
@@ -1071,18 +1071,23 @@ public class CoachMatch extends Match implements Serializable {
             for (int j = 0; j < cmp.getMatchCount(); j++) {
                 CoachMatch cm = (CoachMatch) cmp.getMatch(j);
 
-                if (cm.getCompetitor1().equals(cmp)) {
-                    if ((includeCurrent) || ((!cm.getCompetitor2().equals(c)) && (!includeCurrent))) {
-                        value += getPointsByCoach((Coach) cmp, cm, true, true);
+                if (cm.getRound().equals(m.getRound())
+                        || m.getCompetitor1().equals(cmp)
+                        || m.getCompetitor2().equals(cmp)) {
+
+                    if (cm.getCompetitor1().equals(cmp)) {
+                        if ((includeCurrent) || ((!cm.getCompetitor2().equals(c)) && (!includeCurrent))) {
+                            value += getPointsByCoach((Coach) cmp, cm, true, true);
+                        }
                     }
-                }
-                if (cm.getCompetitor2().equals(cmp)) {
-                    if ((includeCurrent) || ((!cm.getCompetitor1().equals(c)) && (!includeCurrent))) {
-                        value += getPointsByCoach((Coach) cmp, cm, true, true);
+                    if (cm.getCompetitor2().equals(cmp)) {
+                        if ((includeCurrent) || ((!cm.getCompetitor1().equals(c)) && (!includeCurrent))) {
+                            value += getPointsByCoach((Coach) cmp, cm, true, true);
+                        }
                     }
-                }
-                if (cm.getRound() == round) {
-                    break;
+                    if (cm.getRound() == round) {
+                        break;
+                    }
                 }
             }
         }
