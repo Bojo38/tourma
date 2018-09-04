@@ -1981,7 +1981,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         if (jpnContent instanceof JPNRound) {
             JPNRound jpnr = (JPNRound) jpnContent;
-            Round round = jpnr.getRound();
+            Round round = jpnr.getRound();            
             final JdgChangePairing jdg = new JdgChangePairing(MainFrame.getMainFrame(), true, round);
             jdg.setVisible(true);
             jpnr.update();

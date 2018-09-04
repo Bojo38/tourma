@@ -23,8 +23,10 @@ import tourma.data.CoachMatch;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
+import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtMatches;
+import tourma.tableModel.MjtRankingIndiv;
 import tourma.utility.StringConstants;
 
 /**
@@ -126,6 +128,7 @@ public final class JdgPairing extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jbtAdd = new javax.swing.JButton();
         jbtRemove = new javax.swing.JButton();
+        jbtSwiss = new javax.swing.JButton();
         jbtRandom = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -186,6 +189,15 @@ public final class JdgPairing extends javax.swing.JDialog {
             }
         });
         jPanel4.add(jbtRemove);
+
+        jbtSwiss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/swiss.png"))); // NOI18N
+        jbtSwiss.setText(bundle.getString("Swiss")); // NOI18N
+        jbtSwiss.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtSwissActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jbtSwiss);
 
         jbtRandom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png"))); // NOI18N
         jbtRandom.setText(bundle.getString("Random")); // NOI18N
@@ -258,6 +270,50 @@ public final class JdgPairing extends javax.swing.JDialog {
         update();
     }//GEN-LAST:event_jbtRandomActionPerformed
 
+    private void jbtSwissActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSwissActionPerformed
+        
+        // Sort items by ranking
+        ArrayList<Coach> list1=new ArrayList<>();
+                ArrayList<Coach> list2=new ArrayList<>();
+        for (String item:mItems1)
+        {
+            list1.add(mCoachs.get(item));
+        }
+        for (String item:mItems2)
+        {
+            list2.add(mCoachs.get(item));
+        }
+        MjtRankingIndiv indivR1=new MjtRankingIndiv(Tournament.getTournament().getRoundIndex(mRound), list1, true, false);
+        MjtRankingIndiv indivR2=new MjtRankingIndiv(Tournament.getTournament().getRoundIndex(mRound), list2, true, false);
+
+        list1=new ArrayList<>();
+        list2=new ArrayList<>();
+        
+        for (int i=0; i<indivR1.getRowCount(); i++)
+        {
+            list1.add((Coach)indivR1.getSortedObject(i).getObject());
+        }
+        
+        for (int i=0; i<indivR2.getRowCount(); i++)
+        {
+            list2.add((Coach)indivR2.getSortedObject(i).getObject());
+        }
+        
+        while ((list1.size() > 0) && (list2.size() > 0)) {
+
+            final CoachMatch m = new CoachMatch(mRound);
+            m.setCompetitor1(list1.get(0));
+            m.setCompetitor2(list2.get(0));
+            mMatchs.add(m);
+            list1.remove(0);
+            list2.remove(0);
+        }
+        mItems1.clear();
+        mItems2.clear();
+        
+        update();
+    }//GEN-LAST:event_jbtSwissActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
@@ -268,6 +324,7 @@ public final class JdgPairing extends javax.swing.JDialog {
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtRandom;
     private javax.swing.JButton jbtRemove;
+    private javax.swing.JButton jbtSwiss;
     private javax.swing.JComboBox jcbTeam1;
     private javax.swing.JComboBox jcbTeam2;
     private javax.swing.JTable jtbMatches;
