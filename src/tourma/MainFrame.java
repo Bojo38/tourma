@@ -365,6 +365,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jcxDisplayRosters = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
+        jSeparator21 = new javax.swing.JPopupMenu.Separator();
+        jmiEditRosterList = new javax.swing.JMenuItem();
         jSeparator20 = new javax.swing.JPopupMenu.Separator();
         jmiMassAdd = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
@@ -496,7 +498,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnFile.add(jmiSaveAs);
         jmnFile.add(jSeparator1);
 
-        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/naf.png"))); // NOI18N
         jmiExport.setText(bundle.getString("ExportNafResultKey")); // NOI18N
         jmiExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -508,6 +510,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiExportFbb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
         jmiExportFbb.setText(bundle.getString("ExportFBBResultXML")); // NOI18N
         jmiExportFbb.setActionCommand(bundle.getString("FBBExport")); // NOI18N
+        jmiExportFbb.setEnabled(false);
         jmiExportFbb.setLabel(bundle.getString("FBBExport")); // NOI18N
         jmiExportFbb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -517,6 +520,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnFile.add(jmiExportFbb);
 
         jmiExportFbb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExportFbb1.setEnabled(false);
         jmiExportFbb1.setLabel(bundle.getString("FBBFullExport")); // NOI18N
         jmiExportFbb1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -614,6 +618,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jmiGenerateFirstRound);
+        jmnParameters.add(jSeparator21);
+
+        jmiEditRosterList.setText(bundle.getString("EditRosterList")); // NOI18N
+        jmiEditRosterList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditRosterListActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiEditRosterList);
         jmnParameters.add(jSeparator20);
 
         jmiMassAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
@@ -2996,6 +3009,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     }//GEN-LAST:event_jcxDisplayRostersActionPerformed
 
+    private void jmiEditRosterListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditRosterListActionPerformed
+        JdgRosters jdg=new JdgRosters(this,true);
+        jdg.setVisible(true);
+    }//GEN-LAST:event_jmiEditRosterListActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3452,6 +3470,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JPopupMenu.Separator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator20;
+    private javax.swing.JPopupMenu.Separator jSeparator21;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
@@ -3482,6 +3501,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiEditCoef;
     private javax.swing.JMenuItem jmiEditColors;
     private javax.swing.JMenuItem jmiEditDescription;
+    private javax.swing.JMenuItem jmiEditRosterList;
     private javax.swing.JMenuItem jmiEditTeam;
     private javax.swing.JMenuItem jmiEditWebPort;
     private javax.swing.JMenuItem jmiExit;

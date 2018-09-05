@@ -1247,13 +1247,10 @@ public class Tournament implements IContainCoachs, Serializable {
 
                     if (mCoach.getNaf() > 0) {
                         String naf = Integer.toString(mCoach.getNaf());
-
-                        writer.println(("<coach>"));
-                        writer.println(java.text.MessageFormat.format("<name>{0}</name>", new Object[]{mCoach.getName()}));
-                        writer.println(java.text.MessageFormat.format("<number>{0}</number>", new Object[]{naf}));
+                        
                         String naf_roster = RosterType.getRosterTranslation(mCoach.getRoster().getName());
                         if (naf_roster.equals(RosterType.translate("UNKNOWN"))) {
-                            Object[] rosters = {"Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
+                            Object[] rosters = {"None","Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
                                 "Chaos Pact", "Dark Elves", "Dwarves", "Goblins", "Halflings",
                                 "High Elves", "Humans", "Khemri", "Khorne", "Lizardmen", "Necromantic",
                                 "Norse", "Nurgle's Rotters", "Ogres", "Orc", "Elves", "Slann", "Skaven",
@@ -1266,8 +1263,18 @@ public class Tournament implements IContainCoachs, Serializable {
                             naf_roster = (String) choice;
 
                         }
-                        writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{naf_roster}));
-                        writer.println(("</coach>"));
+                        if (!naf_roster.equals("None"))
+                        {
+                            writer.println(("<coach>"));
+                            writer.println(java.text.MessageFormat.format("<name>{0}</name>", new Object[]{mCoach.getName()}));
+                            writer.println(java.text.MessageFormat.format("<number>{0}</number>", new Object[]{naf}));
+                            writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{naf_roster}));
+                            writer.println(("</coach>"));
+                        }
+                        else
+                        {
+                            mCoach.setNaf(0);
+                        }
                     }
                 }
                 writer.println(("</coaches>"));
