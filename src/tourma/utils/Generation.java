@@ -23,6 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import tourma.JdgPairing;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
@@ -542,7 +543,21 @@ public final class Generation {
                     final String tmpString = tmpOpp.getDecoratedName();
 
                     if (opp.equals(tmpString)) {
-                        c.addMatch(tmpOpp, r);
+
+                        if (tmpOpp instanceof Team) {
+                            TeamMatch tm = new TeamMatch(r);
+                            tm.setCompetitor1(c);
+                            tm.setCompetitor2(tmpOpp);
+                            r.addMatch(tm);
+                            JdgPairing jdg = new JdgPairing(null, true, (Team) c, (Team) tmpOpp, r, tm);
+                            jdg.setVisible(true);
+
+                            tmpOpp.addMatch(tm);
+                            c.addMatch(tm);
+                        } else {
+                            c.addMatch(tmpOpp, r);
+                        }
+
                         comps.remove(tmpOpp);
                         break;
                     }
@@ -551,6 +566,7 @@ public final class Generation {
                 break;
             }
         }
+
         tour.addRound(r);
     }
 

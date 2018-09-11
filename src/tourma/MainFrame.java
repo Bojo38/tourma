@@ -1869,10 +1869,30 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         int res = JOptionPane.showConfirmDialog(this, jpn, Translate.translate(CS_RoundCoefficient), JOptionPane.OK_CANCEL_OPTION);
         if (res == JOptionPane.OK_OPTION) {
+            try{
             Double val1 = (Double) jftf1.getValue();
             r.setMaxBonus(val1);
-            Double val2 = (Double) jftf2.getValue();
-            r.setMinBonus(val2);
+            }
+            catch (ClassCastException ce)
+            {
+                if (jftf1.getValue() instanceof Long)
+                {
+                    String txt=((Long)jftf1.getValue()).toString()+".0";
+                    r.setMaxBonus(Double.valueOf(txt));
+                }
+            }
+            try{
+                Double val2 = (Double) jftf2.getValue();
+                r.setMinBonus(val2);
+            }
+            catch (ClassCastException cc)
+            {
+                if (jftf2.getValue() instanceof Long)
+                {
+                    String txt=((Long)jftf2.getValue()).toString()+".0";
+                    r.setMinBonus(Double.valueOf(txt));
+                }
+            }
             update();
         }
 

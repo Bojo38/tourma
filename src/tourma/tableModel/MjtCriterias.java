@@ -197,7 +197,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
 
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        return mTour.getRoundsCount() <= 0;
+        return true;// mTour.getRoundsCount() <= 0;
     }
 
     @Override

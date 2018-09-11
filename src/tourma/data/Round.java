@@ -269,7 +269,15 @@ public class Round implements IXMLExport, Serializable {
      * @return
      */
     public boolean containsMatch(Match m) {
-        return mMatchs.contains(m);
+        
+        if (m instanceof CoachMatch)
+        {
+            return getCoachMatchs().contains((CoachMatch)m);
+        }
+        else
+        {
+            return mMatchs.contains(m);
+        }
     }
 
     public boolean containsCoachMatch(CoachMatch m) {

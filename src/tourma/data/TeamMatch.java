@@ -721,6 +721,7 @@ public class TeamMatch extends Match implements Serializable {
         int countTeamLargeVictories = 0;
         int countTeamLoss = 0;
         int countTeamLittleLoss = 0;
+        int countTeamHugeLoss = 0;
         int countTeamDraw = 0;
 
         int i = 0;
@@ -813,7 +814,37 @@ public class TeamMatch extends Match implements Serializable {
                 countTeamVictories++;
             }
         } else if (victories < loss) {
+
             if (Tournament.getTournament().getParams().isUseTeamLittleLoss()) {
+                if (loss - victories <= Math.round(Tournament.getTournament().getParams().getGapTeamLittleLost())) {
+                    countTeamLittleLoss++;
+                } else {
+                    if (Tournament.getTournament().getParams().isUseTeamHugeLoss()) {
+                        if (loss - victories <= Math.round(Tournament.getTournament().getParams().getGapTeamHugeLost())) {
+                            countTeamLoss++;
+                        } else {
+                            countTeamHugeLoss++;
+                        }
+                    } else {
+                        countTeamLoss++;
+                    }
+                }
+            }
+            else
+            {
+                if (Tournament.getTournament().getParams().isUseTeamHugeLoss()) {
+                        if (loss - victories <= Math.round(Tournament.getTournament().getParams().getGapTeamHugeLost())) {
+                            countTeamLoss++;
+                        } else {
+                            countTeamHugeLoss++;
+                        }
+                    } else {
+                        countTeamLoss++;
+                    }
+            }
+                    
+
+            /*if (Tournament.getTournament().getParams().isUseTeamLittleLoss()) {
                 if (loss - victories <= Tournament.getTournament().getParams().getGapTeamLittleLost()) {
                     countTeamLittleLoss++;
                 } else {
@@ -821,7 +852,7 @@ public class TeamMatch extends Match implements Serializable {
                 }
             } else {
                 countTeamLoss++;
-            }
+            }*/
         } else {
             countTeamDraw++;
         }
@@ -832,6 +863,7 @@ public class TeamMatch extends Match implements Serializable {
             value += countTeamLargeVictories * Tournament.getTournament().getParams().getPointsTeamLargeVictory();
             value += countTeamLoss * Tournament.getTournament().getParams().getPointsTeamLost();
             value += countTeamLittleLoss * Tournament.getTournament().getParams().getPointsTeamLittleLost();
+            value += countTeamHugeLoss * Tournament.getTournament().getParams().getPointsTeamHugeLost();
             value += countTeamDraw * Tournament.getTournament().getParams().getPointsTeamDraw();
         }
 
@@ -1162,7 +1194,7 @@ public class TeamMatch extends Match implements Serializable {
                             }
                             break;
                         default:
-                           
+
                     }
                 }
             }
@@ -1217,9 +1249,9 @@ public class TeamMatch extends Match implements Serializable {
                     }
                     break;
                 default:
-                     if (rankingType > Parameters.C_MAX_RANKING) {
-                                value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
-                            }
+                    if (rankingType > Parameters.C_MAX_RANKING) {
+                        value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                    }
             }
         }
         return value;
