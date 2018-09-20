@@ -229,6 +229,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         jcbRoster.setModel(RosterType.getRostersNamesModel());
         mCoach = coach;
+        mCoach.setName(coach.getName());
         if (mCoach.getPicture() == null) {
             try {
                 coach.setPicture(new ImageIcon(ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.png"))));

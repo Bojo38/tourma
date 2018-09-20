@@ -44,6 +44,10 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jrbTeamVictory = new javax.swing.JRadioButton();
         jrbCoachPoints = new javax.swing.JRadioButton();
+        jcxHugeVictory = new javax.swing.JCheckBox();
+        jtffHugeVictory = new javax.swing.JFormattedTextField();
+        jlbHugeVictoryGap = new javax.swing.JLabel();
+        jtffHugeVictoryGap = new javax.swing.JFormattedTextField();
         jcxLargeVictory = new javax.swing.JCheckBox();
         jtffLargeVictory = new javax.swing.JFormattedTextField();
         jlbLargeVictoryGap = new javax.swing.JLabel();
@@ -88,7 +92,7 @@ public final class JPNParamTeam extends javax.swing.JPanel {
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Team Ranking"))); // NOI18N
-        jPanel1.setLayout(new java.awt.GridLayout(19, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(21, 2));
 
         jrbTeamVictory.setText(bundle.getString("UseTeamVictory")); // NOI18N
         jrbTeamVictory.setHideActionText(true);
@@ -108,6 +112,38 @@ public final class JPNParamTeam extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jrbCoachPoints);
+
+        jcxHugeVictory.setText(bundle.getString("HugeeoryKey")); // NOI18N
+        jcxHugeVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jcxHugeVictory.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jcxHugeVictory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxHugeVictoryActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jcxHugeVictory);
+
+        jtffHugeVictory.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtffHugeVictory.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffHugeVictoryFocusLost(evt);
+            }
+        });
+        jPanel1.add(jtffHugeVictory);
+
+        jlbHugeVictoryGap.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jlbHugeVictoryGap.setText(bundle.getString("MinimumGapForHugeVictoryKey")); // NOI18N
+        jlbHugeVictoryGap.setToolTipText(bundle.getString("GapForLargeVictoryTipKey")); // NOI18N
+        jPanel1.add(jlbHugeVictoryGap);
+
+        jtffHugeVictoryGap.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.0"))));
+        jtffHugeVictoryGap.setToolTipText(bundle.getString("TeamLargeVictoryGapToolTip")); // NOI18N
+        jtffHugeVictoryGap.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtffHugeVictoryGapFocusLost(evt);
+            }
+        });
+        jPanel1.add(jtffHugeVictoryGap);
 
         jcxLargeVictory.setText(bundle.getString("LargeVictoryKey")); // NOI18N
         jcxLargeVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -559,12 +595,12 @@ public final class JPNParamTeam extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jcxForAnnexRankingTooActionPerformed
 
-    private void jcxLargeVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxLargeVictoryActionPerformed
+    private void jcxHugeVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxHugeVictoryActionPerformed
 
-        mTournament.getParams().setUseTeamLargeVictory(jcxLargeVictory.isSelected());
+        mTournament.getParams().setUseTeamHugeVictory(jcxHugeVictory.isSelected());
         update();
         mTournament.recomputeAll();
-    }//GEN-LAST:event_jcxLargeVictoryActionPerformed
+    }//GEN-LAST:event_jcxHugeVictoryActionPerformed
 
     private void jtffLargeVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffLargeVictoryFocusLost
 
@@ -657,6 +693,40 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jtffHugeLostTeamFocusLost
 
+    private void jcxLargeVictoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxLargeVictoryActionPerformed
+        
+        mTournament.getParams().setUseTeamLargeVictory(jcxLargeVictory.isSelected());
+        update();
+        mTournament.recomputeAll();
+
+    }//GEN-LAST:event_jcxLargeVictoryActionPerformed
+
+    private void jtffHugeVictoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffHugeVictoryFocusLost
+                try {
+            jtffHugeVictory.commitEdit();
+            final int points = ((Number) jtffHugeVictory.getValue()).intValue();
+            mTournament.getParams().setPointsTeamHugeVictory(points);
+            mTournament.recomputeAll();
+        } catch (ParseException e) {
+            jtffHugeVictory.setValue(jtffHugeVictory.getValue());
+        }
+
+    }//GEN-LAST:event_jtffHugeVictoryFocusLost
+
+    private void jtffHugeVictoryGapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtffHugeVictoryGapFocusLost
+        try {
+            jtffHugeVictoryGap.commitEdit();
+            final float points = ((Number) jtffHugeVictoryGap.getValue()).floatValue();
+            mTournament.getParams().setGapTeamHugeVictory(points);
+            mTournament.recomputeAll();
+        } catch (ParseException e) {
+            jtffHugeVictoryGap.setValue(jtffHugeVictoryGap.getValue());
+        }
+
+        update();
+
+    }//GEN-LAST:event_jtffHugeVictoryGapFocusLost
+
     private final static String CS_None = "None";
     private final static String CS_Points = "Points";
     private final static String CS_OpponentPoints = "POINTS ADVERSAIRES";
@@ -694,7 +764,10 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         jtffVictoryTeam.setValue(mTournament.getParams().getPointsTeamVictory());
         
          jtffLargeVictory.setValue(mTournament.getParams().getPointsTeamLargeVictory());
+              jtffHugeVictory.setValue(mTournament.getParams().getPointsTeamHugeVictory());
         jtffLargeVictoryGap.setValue(mTournament.getParams().getGapTeamLargeVictory());
+        jtffHugeVictoryGap.setValue(mTournament.getParams().getGapTeamHugeVictory());
+        jcxHugeVictory.setSelected(mTournament.getParams().isUseTeamHugeVictory());
         jcxLargeVictory.setSelected(mTournament.getParams().isUseTeamLargeVictory());
 
         jrbCoachPoints.setEnabled(teamMatches);
@@ -712,6 +785,7 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         jtffHugeLostTeam.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly() && mTournament.getParams().isUseTeamHugeLoss());
 
         jlbLargeVictoryGap.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly()&&mTournament.getParams().isUseTeamLargeVictory());
+        jlbHugeVictoryGap.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly()&&mTournament.getParams().isUseTeamHugeVictory());
 
         jlbLittleLossGap.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly() && mTournament.getParams().isUseTeamLittleLoss());
         jlbBigLossGap.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly() && mTournament.getParams().isUseTeamHugeLoss());
@@ -719,8 +793,13 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         jtffLargeVictory.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly()&&mTournament.getParams().isUseTeamLargeVictory());
         jtffLargeVictoryGap.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly()&&mTournament.getParams().isUseTeamLargeVictory());
         
+        jtffHugeVictory.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly()&&mTournament.getParams().isUseTeamHugeVictory());
+        jtffHugeVictoryGap.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly()&&mTournament.getParams().isUseTeamHugeVictory());
+        
+        jcxHugeVictory.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly());
         jcxLargeVictory.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly());
         jcxLittleLoss.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
+        jcxBigLoss.setEnabled(teamMatches && (mTournament.getParams().isTeamVictoryOnly()));
         
         jtffLittleLostGap.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly() && mTournament.getParams().isUseTeamLittleLoss());
         jtffBigLostGap.setEnabled(teamMatches && mTournament.getParams().isTeamVictoryOnly() && mTournament.getParams().isUseTeamHugeLoss());
@@ -880,11 +959,13 @@ public final class JPNParamTeam extends javax.swing.JPanel {
     private javax.swing.JCheckBox jcxBigLoss;
     private javax.swing.JCheckBox jcxExceptBestAndWorst;
     private javax.swing.JCheckBox jcxForAnnexRankingToo;
+    private javax.swing.JCheckBox jcxHugeVictory;
     private javax.swing.JCheckBox jcxIndividualBalance;
     private javax.swing.JCheckBox jcxLargeVictory;
     private javax.swing.JCheckBox jcxLittleLoss;
     private javax.swing.JCheckBox jcxTeamBalance;
     private javax.swing.JLabel jlbBigLossGap;
+    private javax.swing.JLabel jlbHugeVictoryGap;
     private javax.swing.JLabel jlbLargeVictoryGap;
     private javax.swing.JLabel jlbLittleLossGap;
     private javax.swing.JLabel jlbVictoryPoints;
@@ -895,6 +976,8 @@ public final class JPNParamTeam extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jtffBigLostGap;
     private javax.swing.JFormattedTextField jtffDrawTeam;
     private javax.swing.JFormattedTextField jtffHugeLostTeam;
+    private javax.swing.JFormattedTextField jtffHugeVictory;
+    private javax.swing.JFormattedTextField jtffHugeVictoryGap;
     private javax.swing.JFormattedTextField jtffLargeVictory;
     private javax.swing.JFormattedTextField jtffLargeVictoryGap;
     private javax.swing.JFormattedTextField jtffLittleLost;
