@@ -116,6 +116,9 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         if (ranking.equals(Translate.translate(Translate.CS_TablesPoints))) {
             return Parameters.C_RANKING_TABLES;
         }
+        if (ranking.equals(Translate.translate(Translate.CS_HeadByHead))) {
+            return Parameters.C_RANKING_HEAD_BY_HEAD;
+        }
 
         if (ranking.endsWith(" " + Translate.translate(Translate.CS_Coach))) {
             String tmp = ranking.replace(" " + Translate.translate(Translate.CS_Coach), StringConstants.CS_NULL);
@@ -179,6 +182,9 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                     break;
                 case Parameters.C_RANKING_TABLES:
                     result = Translate.translate(Translate.CS_TablesPoints);
+                    break;
+                    case Parameters.C_RANKING_HEAD_BY_HEAD:
+                    result = Translate.translate(Translate.CS_HeadByHead);
                     break;
                 default:
             }

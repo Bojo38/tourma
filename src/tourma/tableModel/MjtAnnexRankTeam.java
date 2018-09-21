@@ -14,8 +14,10 @@ import javax.swing.JTable;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.ETeamPairing;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
+import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -269,9 +271,178 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
             mDatas.add(new ObjectAnnexRanking(t, value, value1, value2, value3, value4, value5));
         }
 
+        final Tournament tour = Tournament.getTournament();
+        
+        // if Head by Head
+        if (tour.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+            // If one of sorting parameteetr is head by head
+            for (int i = 1; i < 5; i++) {
+                if (Tournament.getTournament().getParams().getTeamRankingType(i) == Parameters.C_RANKING_HEAD_BY_HEAD) {
+                    // Loop on ranking to sort according to own match of the coaches who are ties.
+                    // The head by head ranking is nonsense a first ranking type.
+
+                    // Now check equalities
+                    for (int j = 0; j < mDatas.size(); j++) {
+                        ObjectAnnexRanking or = (ObjectAnnexRanking) mDatas.get(j);
+
+                        switch (i) {
+                            case 1:
+                                or.setValue2(0);
+                                break;
+                            case 2:
+                                or.setValue3(0);
+                                break;
+                            case 3:
+                                or.setValue4(0);
+                                break;
+                            case 4:
+                                or.setValue5(0);
+                                break;
+                        }
+                    }
+                    for (int j = 0; j < mDatas.size(); j++) {
+                        ObjectAnnexRanking or = (ObjectAnnexRanking) mDatas.get(j);
+
+                        // find objects with same rankings
+                        for (int k = j + 1; k < mDatas.size(); k++) {
+                            ObjectAnnexRanking or2 = (ObjectAnnexRanking) mDatas.get(k);
+
+                            // If previous ranking is the same;
+                            if (i == 1) {
+                                if (or.getValue1() == or2.getValue1()) {
+                                    updateHeadByHeadValue(mRound, i, or, or2);
+                                }
+                            }
+                            if (i == 2) {
+                                if ((or.getValue1() == or2.getValue1()) && (or.getValue2() == or2.getValue2())) {
+                                    updateHeadByHeadValue(mRound, i, or, or2);
+                                }
+                            }
+                            if (i == 3) {
+                                if ((or.getValue1() == or2.getValue1()) && (or.getValue2() == or2.getValue2()) && (or.getValue3() == or2.getValue3())) {
+                                    updateHeadByHeadValue(mRound, i, or, or2);
+                                }
+                            }
+                            if (i == 4) {
+                                if ((or.getValue1() == or2.getValue1()) && (or.getValue2() == or2.getValue2()) && (or.getValue3() == or2.getValue3()) && (or.getValue4() == or2.getValue4())) {
+                                    updateHeadByHeadValue(mRound, i, or, or2);
+                                }
+                            }
+                        }
+                    }
+
+                    // Now checking that all the competitors hava played against all the other ones
+                    for (int j = 0; j < mDatas.size(); j++) {
+                        ObjectAnnexRanking or = (ObjectAnnexRanking) mDatas.get(j);
+                        if (or.getValue(i)==-1)
+                        {
+                            continue;
+                        }
+                        ArrayList<ObjectAnnexRanking> ors = new ArrayList<>();
+                        // find objects with same rankings
+                        for (int k = 0; k < mDatas.size(); k++) {
+                            ObjectAnnexRanking or2 = (ObjectAnnexRanking) mDatas.get(k);
+                            if (or2 != or) {
+                                // If previous ranking is the same;
+                                if (i == 1) {
+                                    if (or.getValue1() == or2.getValue1()) {
+                                        ors.add(or2);
+                                    }
+                                }
+                                if (i == 2) {
+                                    if ((or.getValue1() == or2.getValue1()) && (or.getValue2() == or2.getValue2())) {
+                                        ors.add(or2);
+                                    }
+                                }
+                                if (i == 3) {
+                                    if ((or.getValue1() == or2.getValue1()) && (or.getValue2() == or2.getValue2()) && (or.getValue3() == or2.getValue3())) {
+                                        ors.add(or2);
+                                    }
+                                }
+                                if (i == 4) {
+                                    if ((or.getValue1() == or2.getValue1()) && (or.getValue2() == or2.getValue2()) && (or.getValue3() == or2.getValue3()) && (or.getValue4() == or2.getValue4())) {
+                                        ors.add(or2);
+                                    }
+                                }
+                            }
+                        }
+                        if (ors.size()>0)
+                        {
+                            // 2 points per match
+                            // size+1 competitors
+                            int nb_theoric=0;
+                            for (int k=ors.size(); k>0; k--)
+                            {
+                                nb_theoric+=k;
+                            }
+                            // practical Sum 
+                            int r_value=or.getValue(i);
+                            for (ObjectAnnexRanking or_tmp:ors)
+                            {
+                                r_value+=or_tmp.getValue(i);
+                            }
+                            
+                            if (r_value!=nb_theoric*2)
+                            {
+                                or.setValue(i, -1);
+                                for (ObjectAnnexRanking or_tmp:ors)
+                                {
+                                    or_tmp.setValue(i, -1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         Collections.sort(mDatas);
     }
+protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectAnnexRanking or1, ObjectAnnexRanking or2) {
 
+        if (or1.getObject() instanceof Team) {
+            Team t = (Team) or1.getObject();
+            Team t2 = (Team) or2.getObject();
+            
+            for (int l = 0; l < t.getMatchCount(); l++) {
+                TeamMatch tm = (TeamMatch) t.getMatch(l);
+                Round round = tm.getRound();
+                int r_index = Tournament.getTournament().getRoundIndex(round);
+                if (r_index <= round_index) {
+                    if ((tm.getCompetitor1() == t) && (tm.getCompetitor2() == t2)) {
+                        int nb_vic1=tm.getVictories(t);
+                        int nb_vic2=tm.getVictories(t2);
+                        if (nb_vic1 > nb_vic2) {
+                            or1.setValue(valueIndex, or1.getValue(valueIndex) + 2);
+                        }
+                        if (nb_vic1 == nb_vic2) {
+                            or1.setValue(valueIndex, or1.getValue(valueIndex) + 1);
+                            or2.setValue(valueIndex, or2.getValue(valueIndex) + 1);
+                        }
+                        if (nb_vic1 < nb_vic2) {
+                            or2.setValue(valueIndex, or2.getValue(valueIndex) + 2);
+                        }
+                    }
+                    if ((tm.getCompetitor1() == t2) && (tm.getCompetitor2() == t)) {
+                        int nb_vic1=tm.getVictories(t);
+                        int nb_vic2=tm.getVictories(t2);
+                        if (nb_vic1 < nb_vic2) {
+                            or1.setValue(valueIndex, or1.getValue(valueIndex) + 2);
+                        }
+                        if (nb_vic1 == nb_vic2) {
+                            or1.setValue(valueIndex, or1.getValue(valueIndex) + 1);
+                            or2.setValue(valueIndex, or2.getValue(valueIndex) + 1);
+                        }
+                        if (nb_vic1 > nb_vic2) {
+                            or2.setValue(valueIndex, or2.getValue(valueIndex) + 2);
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    
     @Override
     public int getColumnCount() {
         return 3;

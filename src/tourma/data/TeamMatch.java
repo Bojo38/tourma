@@ -811,7 +811,7 @@ public class TeamMatch extends Match implements Serializable {
                     countTeamHugeVictories++;
                 } else {
                     if (Tournament.getTournament().getParams().isUseTeamLargeVictory()) {
-                        if (victories - loss - Tournament.getTournament().getParams().getGapTeamLargeVictory()>=-0.1) {
+                        if (victories - loss - Tournament.getTournament().getParams().getGapTeamLargeVictory() >= -0.1) {
                             countTeamLargeVictories++;
                         } else {
                             countTeamVictories++;
@@ -822,7 +822,7 @@ public class TeamMatch extends Match implements Serializable {
                 }
             } else {
                 if (Tournament.getTournament().getParams().isUseTeamLargeVictory()) {
-                    if (victories - loss - Tournament.getTournament().getParams().getGapTeamLargeVictory()>=-0.1) {
+                    if (victories - loss - Tournament.getTournament().getParams().getGapTeamLargeVictory() >= -0.1) {
                         countTeamLargeVictories++;
                     } else {
                         countTeamVictories++;
@@ -834,11 +834,11 @@ public class TeamMatch extends Match implements Serializable {
         } else if (victories < loss) {
 
             if (Tournament.getTournament().getParams().isUseTeamLittleLoss()) {
-                if (loss - victories - Tournament.getTournament().getParams().getGapTeamLittleLost()<=0.1) {
+                if (loss - victories - Tournament.getTournament().getParams().getGapTeamLittleLost() <= 0.1) {
                     countTeamLittleLoss++;
                 } else {
                     if (Tournament.getTournament().getParams().isUseTeamHugeLoss()) {
-                        if (loss - victories - Tournament.getTournament().getParams().getGapTeamHugeLost()<0.1) {
+                        if (loss - victories - Tournament.getTournament().getParams().getGapTeamHugeLost() < 0.1) {
                             countTeamLoss++;
                         } else {
                             countTeamHugeLoss++;
@@ -849,7 +849,7 @@ public class TeamMatch extends Match implements Serializable {
                 }
             } else {
                 if (Tournament.getTournament().getParams().isUseTeamHugeLoss()) {
-                    if (loss - victories - Tournament.getTournament().getParams().getGapTeamHugeLost()<0.1) {
+                    if (loss - victories - Tournament.getTournament().getParams().getGapTeamHugeLost() < 0.1) {
                         countTeamLoss++;
                     } else {
                         countTeamHugeLoss++;
@@ -1149,6 +1149,9 @@ public class TeamMatch extends Match implements Serializable {
                     break;
                 case Parameters.C_RANKING_TABLES:
                     value = getTeamTable(t, this);
+                    break;
+                case Parameters.C_RANKING_HEAD_BY_HEAD:
+                    value = 0;
                     break;
                 default:
                     if (rankingType > Parameters.C_MAX_RANKING) {

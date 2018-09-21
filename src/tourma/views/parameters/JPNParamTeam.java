@@ -845,6 +845,7 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         rankChoices.add(Translate.translate(CS_TablesPoints));
         rankChoices.add(Translate.translate(CS_PointsWithoutBonus));
         rankChoices.add(Translate.translate(CS_BonusPoints));
+        rankChoices.add(Translate.translate(Translate.CS_HeadByHead));
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
             final Criteria criteria = Tournament.getTournament().getParams().getCriteria(i);
             rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Player));

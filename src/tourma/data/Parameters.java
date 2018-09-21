@@ -214,9 +214,13 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public static final int C_RANKING_BONUS_POINTS = 10;
     /**
+     * 
+     */
+    public static final int C_RANKING_HEAD_BY_HEAD = 11;
+    /**
      *
      */
-    public static final int C_MAX_RANKING = 10;
+    public static final int C_MAX_RANKING = 11;
     /**
      *
      */

@@ -960,7 +960,7 @@ public class CoachMatch extends Match implements Serializable {
      * @return
      */
     public int getValue(final Coach c, final int valueType) {
-        int value;
+        int value=0;
 
         switch (valueType) {
             case Parameters.C_RANKING_POINTS:
@@ -995,6 +995,9 @@ public class CoachMatch extends Match implements Serializable {
                 break;
             case Parameters.C_RANKING_TABLES:
                 value = getCoachTablePoints(c, this);
+                break;
+            case Parameters.C_RANKING_HEAD_BY_HEAD:
+                value = 0;
                 break;
             default:
                 value = 0;
