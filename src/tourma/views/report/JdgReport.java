@@ -16,6 +16,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,6 +70,8 @@ import java.io.*;
 import javax.print.*;
 import javax.print.attribute.*;
 import javax.print.attribute.standard.*;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 
 /**
  *
@@ -83,6 +86,10 @@ public final class JdgReport extends javax.swing.JDialog {
 //    private boolean mResult;
     private File mFilename = null;
     private MjtRanking mRanking;
+
+    private static final String CS_IncludeMembersReports = "Include the reports of the members";
+
+    private final JCheckBox jcxWithMembers = new JCheckBox(Translate.translate(CS_IncludeMembersReports));
 
     public final static int C_INDIVIDUAL = 0;
     public final static int C_CLAN = 1;
@@ -127,13 +134,26 @@ public final class JdgReport extends javax.swing.JDialog {
                     objects.add(tour.getTeam(i));
                     model.addElement(tour.getTeam(i).getName());
                 }
+
                 break;
             case C_CLAN:
                 for (int i = 0; i < tour.getClansCount(); i++) {
                     objects.add(tour.getClan(i));
                     model.addElement(tour.getClan(i).getName());
                 }
+
                 break;
+        }
+
+        if ((mType == C_TEAM) || (mType == C_CLAN)) {
+            JPanel north = new JPanel(new FlowLayout());
+            north.add(jcxWithMembers);
+            jcxWithMembers.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jcxWithMembersActionPerformed(evt);
+                }
+            });
+            this.add(north, BorderLayout.NORTH);
         }
 
         jlsObject.setModel(model);
@@ -149,9 +169,8 @@ public final class JdgReport extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
             }
             try {
-                //jepHTML.setContentType("html");
+
                 mFilename = createReport(jlsObject.getSelectedIndex());
-                //jepHTML.setPage(mFilename.toURI().toURL());
                 webView.setURL(mFilename.toURI().toURL().toString());
             } catch (IOException | NullPointerException e) {
                 JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
@@ -257,6 +276,15 @@ public final class JdgReport extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcxWithMembersActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            mFilename = createReport(jlsObject.getSelectedIndex());
+            webView.setURL(mFilename.toURI().toURL().toString());
+        } catch (IOException | NullPointerException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        }
+    }
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
@@ -571,7 +599,7 @@ public final class JdgReport extends javax.swing.JDialog {
     }//GEN-LAST:event_jlsObjectValueChanged
 
     private void jbtPrintAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPrintAllActionPerformed
-        
+
         File file2 = createAllPDFfromHTML();
         printPDFFile(file2);
     }//GEN-LAST:event_jbtPrintAllActionPerformed
@@ -1929,9 +1957,109 @@ public final class JdgReport extends javax.swing.JDialog {
                     f = createTeamReport((Team) object);
                     break;
             }
+
+            if (jcxWithMembers.isSelected()) {
+                ArrayList<File> files = new ArrayList<>();
+                if (object instanceof Team) {
+                    Team t = (Team) object;
+                    for (int i = 0; i < t.getCoachsCount(); i++) {
+                        File f_tmp = createIndivReport(t.getCoach(i));
+                        files.add(f_tmp);
+                    }
+                }
+                if (object instanceof Clan) {
+                    Clan c = (Clan) object;
+                    for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+                        Team t = Tournament.getTournament().getTeam(i);
+                        if (t.getClan() == c) {
+                            File f_tmp = createTeamReport(t);
+                            files.add(f_tmp);
+                        }
+                    }
+                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                        Coach co = Tournament.getTournament().getCoach(i);
+                        if (co.getClan() == c) {
+                            File f_tmp = createIndivReport(co);
+                            files.add(f_tmp);
+                        }
+                    }
+                }
+
+                f = mergeReports(f, files);
+            }
         }
         return f;
     }
+
+    protected File mergeReports(File file, ArrayList<File> files) {
+
+        File full_file = null;
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            // Load first file
+            String baseFile = readFile(file);
+
+            // Find </body>
+            int end_body_index = baseFile.indexOf("</body>");
+            sb.append(baseFile.substring(0, end_body_index));
+
+            // Loop on other files
+            for (File f : files) {
+                // Find <body> and </body>
+                String tmp_f = readFile(f);
+                int end_index = tmp_f.indexOf("</body>");
+                int start_index = tmp_f.indexOf("<body>");
+
+                if ((end_index != -1) && (start_index != -1)) {
+                    // insert the content in sb
+                    sb.append("<p style=\"page-break-before: always\">\n");
+                    sb.append(tmp_f.substring(start_index + 6, end_index));
+                    sb.append("</p>\n");
+                }
+            }
+
+            sb.append(baseFile.substring(end_body_index));
+
+            // Open temporary file
+            full_file = File.createTempFile("full_report_file", ".html");
+            // Write it
+            BufferedWriter writer = new BufferedWriter(new FileWriter(full_file));
+            writer.write(sb.toString());
+
+            //Close writer
+            writer.close();
+
+            // Delete others
+            file.delete();
+            for (File f : files) {
+                f.delete();
+            }
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(this, exception.getLocalizedMessage());
+        }
+
+        return full_file;
+    }
+
+    private String readFile(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        String ls = System.getProperty("line.separator");
+
+        try {
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+
+            return stringBuilder.toString();
+        } finally {
+            reader.close();
+        }
+    }
+
     private static final Logger LOG = Logger.getLogger(JdgReport.class
             .getName());
 
