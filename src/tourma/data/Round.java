@@ -269,13 +269,10 @@ public class Round implements IXMLExport, Serializable {
      * @return
      */
     public boolean containsMatch(Match m) {
-        
-        if (m instanceof CoachMatch)
-        {
-            return getCoachMatchs().contains((CoachMatch)m);
-        }
-        else
-        {
+
+        if (m instanceof CoachMatch) {
+            return getCoachMatchs().contains((CoachMatch) m);
+        } else {
             return mMatchs.contains(m);
         }
     }
@@ -456,7 +453,7 @@ public class Round implements IXMLExport, Serializable {
 
         while (k.hasNext()) {
             final Element match = k.next();
-            Match m=null;
+            Match m = null;
             boolean teamTour = Tournament.getTournament().getParams().isTeamTournament();
             ETeamPairing pairing = Tournament.getTournament().getParams().getTeamPairing();
             try {
@@ -469,52 +466,46 @@ public class Round implements IXMLExport, Serializable {
                 m.setXMLElement(match);
                 this.mMatchs.add(m);
             } catch (NullPointerException ne) {
-                if (m instanceof TeamMatch)
-                {
+                if (m instanceof TeamMatch) {
                     // CoachMatches without TeamMatch (Old Format)
                     m = new CoachMatch(this);
                     m.setXMLElement(match);
-                    
+
                     // Try to find a TeamMatch among already stored match
-                    boolean found=false;
-                    for (Match m_cpt:this.mMatchs)
-                    {
-                        if (m_cpt instanceof TeamMatch)
-                        {
-                            TeamMatch tm=(TeamMatch)m_cpt;
-                            Coach c1=(Coach)m.getCompetitor1();
-                            Coach c2=(Coach)m.getCompetitor2();
-                            if (tm.getCompetitor1().equals(c1.getTeamMates()))
-                            {
-                                found=true;
+                    boolean found = false;
+                    for (Match m_cpt : this.mMatchs) {
+                        if (m_cpt instanceof TeamMatch) {
+                            TeamMatch tm = (TeamMatch) m_cpt;
+                            Coach c1 = (Coach) m.getCompetitor1();
+                            Coach c2 = (Coach) m.getCompetitor2();
+                            if (tm.getCompetitor1().equals(c1.getTeamMates())) {
+                                found = true;
                                 tm.addMatch((CoachMatch) m);
                                 tm.recomputeValues();
                                 break;
                             }
-                            if (tm.getCompetitor1().equals(c2.getTeamMates()))
-                            {
+                            if (tm.getCompetitor1().equals(c2.getTeamMates())) {
                                 // Swap C1 and C2
-                                ((CoachMatch)m).switchCoachs();
-                                found=true;
+                                ((CoachMatch) m).switchCoachs();
+                                found = true;
                                 tm.addMatch((CoachMatch) m);
                                 tm.recomputeValues();
                                 break;
-                            }                            
+                            }
                         }
                     }
-                    if (!found)
-                    {
-                        TeamMatch tm=new TeamMatch(this);
-                        Team t1=((Coach)m.getCompetitor1()).getTeamMates();
-                        Team t2=((Coach)m.getCompetitor2()).getTeamMates();
-                        tm.setCompetitor1(t1);                        
+                    if (!found) {
+                        TeamMatch tm = new TeamMatch(this);
+                        Team t1 = ((Coach) m.getCompetitor1()).getTeamMates();
+                        Team t2 = ((Coach) m.getCompetitor2()).getTeamMates();
+                        tm.setCompetitor1(t1);
                         tm.setCompetitor2(t2);
                         t1.addMatch(tm);
                         t2.addMatch(tm);
                         tm.addMatch((CoachMatch) m);
                         tm.recomputeValues();
                         mMatchs.add(tm);
-                    }                    
+                    }
                 }
             }
         }
@@ -707,4 +698,15 @@ public class Round implements IXMLExport, Serializable {
 
     }
 
+    public void setMatchPosition(Match m, int position) {
+        mMatchs.remove(m);
+        if (position>mMatchs.size())
+        {
+            mMatchs.add(m);
+        }
+        else
+        {
+            mMatchs.add(position, m);
+        }
+    }
 }

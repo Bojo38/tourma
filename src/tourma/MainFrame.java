@@ -1899,6 +1899,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }
 
     private final static String CS_SwissRound = "RONDE SUISSE";
+    private final static String CS_SwissRound_TopDown = "RONDE SUISSE ALTERNEE";
+    
     private final static String CS_AcceleratedSwissRound = "RONDE SUISSE ACCELERÉE";
     private final static String CS_Animation = "Animation";
 
@@ -1937,6 +1939,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
                     labels.add(Translate.translate(CS_SwissRound));
                     Options.add(Generation.GEN_SWISS);
+                    labels.add(Translate.translate(CS_SwissRound_TopDown));
+                    Options.add(Generation.GEN_SWISS_TOP_AND_DOWN);
                 }
 
                 /**

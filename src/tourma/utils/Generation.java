@@ -107,6 +107,7 @@ public final class Generation {
      */
     public static final int GEN_BALANCED = 10;
     public static final int GEN_NAF_AVG = 11;
+    public static final int GEN_SWISS_TOP_AND_DOWN = 12;
     /**
      *
      */
@@ -179,7 +180,10 @@ public final class Generation {
 
         switch (choice) {
             case GEN_SWISS:
-                r = nextRoundSwiss(round, roundnumber);
+                r = nextRoundSwiss(round, roundnumber, false);
+                break;
+            case GEN_SWISS_TOP_AND_DOWN:
+                r = nextRoundSwiss(round, roundnumber, true);
                 break;
             case GEN_CUP:
                 r = nextRoundCup(round, roundnumber);
@@ -784,7 +788,7 @@ public final class Generation {
      * @param r
      * @return
      */
-    private static Round genSwiss(final ArrayList competitors, final MjtRanking datas, final Round r) {
+    private static Round genSwiss(final ArrayList competitors, final MjtRanking datas, final Round r, boolean topdown) {
 
         final ArrayList<ObjectRanking> datas_tmp = new ArrayList<>();
 
@@ -793,7 +797,7 @@ public final class Generation {
             datas_tmp.add(data);
         }
 
-        return genSwiss(competitors, datas_tmp, r);
+        return genSwiss(competitors, datas_tmp, r, topdown);
     }
 
     /**
@@ -806,7 +810,7 @@ public final class Generation {
      * @return new round
      */
     @SuppressWarnings("unchecked")
-    private static Round genSwiss(final ArrayList competitors, final ArrayList<ObjectRanking> datas, final Round r) {
+    private static Round genSwiss(final ArrayList competitors, final ArrayList<ObjectRanking> datas, final Round r, boolean topdown) {
 
         final Tournament tour = Tournament.getTournament();
         //final Calendar cal = Calendar.getInstance();
@@ -851,9 +855,19 @@ public final class Generation {
                     Translate.translate(CS_NotEnoughRoundToAvoidSameMatch));
         } else {
             ArrayList<ObjectRanking> datas2 = new ArrayList<>(datas_tmp);
+
             while (datas2.size() > 0) {
-                Competitor c1 = (Competitor) datas2.get(0).getObject();
-                datas2.remove(0);
+                int index = 0;
+                boolean byEnd = false;
+                // Alternate affectation top then bottom
+                if (topdown) {
+                    if ((datas2.size() / 2) % 2 == 1) {
+                        index = datas2.size() - 1;
+                        byEnd = true;
+                    }
+                }
+                Competitor c1 = (Competitor) datas2.get(index).getObject();
+                datas2.remove(index);
 
                 ArrayList<Competitor> opponents = new ArrayList<>();
                 for (int i = 0; i < datas2.size(); i++) {
@@ -871,8 +885,12 @@ public final class Generation {
                 ArrayList<Competitor> possible = c1.getPossibleOpponents(opponents, r);
                 Competitor c2 = null;
                 if (!possible.isEmpty()) {
-                    c2 = possible.get(0);
-                    int index = 0;
+                    if (!byEnd) {
+                        c2 = possible.get(0);
+                    } else {
+                        c2 = possible.get(possible.size() - 1);
+                    }
+                    //int index = 0;
                     for (int i = 0; i < datas2.size(); i++) {
                         if (datas2.get(i).getObject().equals(c2)) {
                             datas2.remove(i);
@@ -885,9 +903,29 @@ public final class Generation {
                     if (((tour.getParams().isTeamTournament() && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)))
                             && (opponents.size() % 2 == 0)) {
                         int nbMatchs = c1.getMatchCount();
-                        // Remove Find possible opponent in previous allocated Match
+                        // Remove Find possible opponent in previous allocated Match                        
                         for (int i = r.getMatchsCount() - 1; i >= 0; i--) {
-                            Match m = r.getMatch(i);
+                            Match m;
+                            if (!topdown) {
+                                m = r.getMatch(i);
+                            } else {
+                                //inverted index
+                                int j = i - r.getMatchsCount() + 1;
+
+                                if (!byEnd) {
+                                    if (j % 2 == 0) {
+                                        m = r.getMatch(r.getMatchsCount() / 2 - j / 2);
+                                    } else {
+                                        m = r.getMatch(r.getMatchsCount() / 2 + j / 2);
+                                    }
+                                } else {
+                                    if (j % 2 == 0) {
+                                        m = r.getMatch(r.getMatchsCount() / 2 + 1 + j / 2);
+                                    } else {
+                                        m = r.getMatch(r.getMatchsCount() / 2 +1 - j / 2);
+                                    }
+                                }
+                            }
                             Competitor cm1 = m.getCompetitor1();
                             Competitor cm2 = m.getCompetitor2();
                             Coach copp1 = (Coach) cm1;
@@ -937,6 +975,12 @@ public final class Generation {
                 }
                 if (c2 != null) {
                     c1.addMatch(c2, r);
+                    // reorder matchset
+                    if (topdown) {
+                        int middle = r.getMatchsCount() / 2;
+                        Match m = c1.getMatch(c1.getMatchCount() - 1);
+                        r.setMatchPosition(m, middle+(r.getMatchsCount()-1)%2 );                        
+                    }
                 }
 
             }
@@ -1704,13 +1748,13 @@ public final class Generation {
                                     for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                                         coaches.add(Tournament.getTournament().getCoach(i));
                                     }
-                                    genSwiss(coaches, datas, r2);
+                                    genSwiss(coaches, datas, r2, false);
                                 } else {
                                     ArrayList<Team> tmp_teams = new ArrayList<>();
                                     for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
                                         tmp_teams.add(Tournament.getTournament().getTeam(cpt));
                                     }
-                                    genSwiss(tmp_teams, datas, r2);
+                                    genSwiss(tmp_teams, datas, r2, false);
                                 }
                             } else {
                                 if (tour.getActiveCoachNumber() % 2 > 0) {
@@ -1723,7 +1767,7 @@ public final class Generation {
                                     for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                                         coaches.add(Tournament.getTournament().getCoach(i));
                                     }
-                                    genSwiss(coaches, datas, r2);
+                                    genSwiss(coaches, datas, r2, false);
                                 }
                             }
                         } else {
@@ -1800,7 +1844,7 @@ public final class Generation {
      * @param roundnumber
      * @return
      */
-    private static Round nextRoundSwiss(final Round round, final int roundnumber) {
+    private static Round nextRoundSwiss(final Round round, final int roundnumber, boolean topdown) {
 
         final Tournament tour = Tournament.getTournament();
 
@@ -1820,13 +1864,13 @@ public final class Generation {
                     for (int i = 0; i < tour.getCoachsCount(); i++) {
                         coaches.add(tour.getCoach(i));
                     }
-                    genSwiss(coaches, datas, r);
+                    genSwiss(coaches, datas, r, topdown);
                 } else {
                     ArrayList<Team> tmp_teams = new ArrayList<>();
                     for (int cpt = 0; cpt < tour.getTeamsCount(); cpt++) {
                         tmp_teams.add(tour.getTeam(cpt));
                     }
-                    genSwiss(tmp_teams, datas, r);
+                    genSwiss(tmp_teams, datas, r, topdown);
                 }
             } else {
                 if (tour.getActiveCoachNumber() % 2 > 0) {
@@ -1839,13 +1883,13 @@ public final class Generation {
                     for (int i = 0; i < tour.getCoachsCount(); i++) {
                         coaches.add(tour.getCoach(i));
                     }
-                    genSwiss(coaches, datas, r);
+                    genSwiss(coaches, datas, r, topdown);
                 }
             }
         } else {
             for (int i = 0; i < tour.getPoolCount(); i++) {
                 datas = getSortedRankingData(tour.getPool(i), roundnumber);
-                genSwiss(tour.getPool(i).getCompetitors(), datas, r);
+                genSwiss(tour.getPool(i).getCompetitors(), datas, r, topdown);
             }
         }
         return r;
