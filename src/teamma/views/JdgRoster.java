@@ -40,6 +40,7 @@ import teamma.languages.Translate;
 import teamma.tableModel.MjtTeamPlayers;
 import teamma.tableModel.MjtTeamStars;
 import teamma.views.report.JdgPrintableRoster;
+import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Tournament;
 import tourma.utility.ExtensionFileFilter;
@@ -1913,7 +1914,7 @@ public final class JdgRoster extends javax.swing.JDialog {
              * Build Avilable Positions
              */
 
-            ArrayList<String> positions = new ArrayList<>();
+            ArrayList<PlayerType> positions = new ArrayList<>();
             for (i = 0; i < _data.getRoster().getPlayerTypeCount(); i++) {
                 PlayerType pt = _data.getRoster().getPlayerType(i);
                 /*
@@ -1927,18 +1928,23 @@ public final class JdgRoster extends javax.swing.JDialog {
                     }
                 }
                 if (limit > 0) {
-                    positions.add(Translate.translate(pt.getPosition()));
+                    positions.add(pt);
                 }
             }
 
-            String input = (String) JOptionPane.showInputDialog(this,
+            PlayerType pt =positions.get(0);
+            JdgSelectPosition jdg=new JdgSelectPosition(null,true,positions, pt);            
+            jdg.setVisible(true);
+            pt=jdg.getPosition();
+            
+            /*String input = (String) JOptionPane.showInputDialog(this,
                     Translate.translate(CS_ChooseKindOfplayer),
                     Translate.translate(CS_PlayerChoice), JOptionPane.INFORMATION_MESSAGE,
                     null, positions.toArray(), positions.get(0));
-            if (input != null) {
-                PlayerType pt = _data.getRoster().getPlayerType(input, true);
+            */
+            if (pt != null) {
+              //  PlayerType pt = _data.getRoster().getPlayerType(input, true);
                 Player p = new Player(pt);
-
                 _data.addPlayer(p);
             }
         }
@@ -1997,7 +2003,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             /**
              * Build Avilable Positions
              */
-            ArrayList<String> names = new ArrayList<>();
+            ArrayList<StarPlayer> names = new ArrayList<>();
             for (i = 0; i < _data.getRoster().getAvailableStarplayerCount(); i++) {
                 StarPlayer sp = _data.getRoster().getAvailableStarplayer(i);
                 boolean found = false;
@@ -2007,16 +2013,23 @@ public final class JdgRoster extends javax.swing.JDialog {
                     }
                 }
                 if (!found) {
-                    names.add(Translate.translate(sp.getName()));
+                    names.add(sp);
                 }
-
             }
-
+/*
             String input = (String) JOptionPane.showInputDialog(this,
                     Translate.translate(CS_ChooseKindOfplayer), Translate.translate(CS_PlayerChoice),
                     JOptionPane.INFORMATION_MESSAGE,
                     null, names.toArray(), "");
-            StarPlayer sp = _data.getRoster().getStarPlayer(input, true);
+            StarPlayer sp = _data.getRoster().getStarPlayer(input, true);*/
+            
+            StarPlayer sp =names.get(0);
+            JdgSelectPosition jdg=new JdgSelectPosition(null,true,names, sp);            
+            jdg.setVisible(true);
+
+            sp=jdg.getStarPlayer();
+
+
             _data.addChampion(sp);
         }
         update();
