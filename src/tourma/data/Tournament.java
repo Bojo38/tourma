@@ -258,6 +258,15 @@ public class Tournament implements IContainCoachs, Serializable {
     public Category getCategory(int i) {
         return mCategories.get(i);
     }
+    
+    public Category getCategory(String s) {
+            for (int i = 0; i < mCategories.size(); i++) {
+            if (mCategories.get(i).getName().equals(s)) {
+                return mCategories.get(i);
+            }
+        }
+        return null;
+    }
 
     /**
      *
@@ -2002,5 +2011,15 @@ public class Tournament implements IContainCoachs, Serializable {
             c.setUpdated(false);
         }
 
+    }
+    
+    public String[] getTeamsNames()
+    {
+        ArrayList<String> names=new ArrayList<>();
+        for(Team t:mTeams)
+        {
+            names.add(t.getName());
+        }
+        return (String[])names.toArray();
     }
 }

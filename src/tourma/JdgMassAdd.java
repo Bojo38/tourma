@@ -19,14 +19,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ProgressMonitor;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.TableColumn;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import tourma.data.Category;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
@@ -40,14 +52,16 @@ import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.mjtTeamsAndCoaches;
+import tourma.utility.ExtensionFileFilter;
+import tourma.utility.StringConstants;
 import tourma.utils.NafTask;
 
 /**
  *
  * @author Administrateur
  */
-public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
-    
+public final class JdgMassAdd extends JDialog implements PropertyChangeListener {
+
     private static final long serialVersionUID = 1L;
     ArrayList<Clan> _clans = new ArrayList<>();
 
@@ -61,25 +75,25 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
     public JdgMassAdd(final java.awt.Frame parent, final boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
-        
+
         this.setSize(800, 600);
-        
+
         final int screenWidth = dmode.getWidth();
         final int screenHeight = dmode.getHeight();
         this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
-        
+
         for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
             Clan c = Tournament.getTournament().getClan(i);
             _clans.add(c);
         }
-        
+
         update();
     }
-    
+
     @SuppressWarnings({"PMD.MethodArgumentCouldBeFinal", "PMD.LocalVariableCouldBeFinal"})
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -173,7 +187,6 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
 
         jbtImportExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/excel.png"))); // NOI18N
         jbtImportExcel.setToolTipText("Import Excel File");
-        jbtImportExcel.setEnabled(false);
         jbtImportExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtImportExcelActionPerformed(evt);
@@ -192,7 +205,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
     }//GEN-LAST:event_jbtCancelActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
-        
+
         this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
@@ -226,14 +239,14 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtMinusActionPerformed
 
-     private ProgressMonitor progressMonitor;
-     private static final String CS_DownloadFromNAF = "DownloadFromNAF";
+    private ProgressMonitor progressMonitor;
+    private static final String CS_DownloadFromNAF = "DownloadFromNAF";
     private static final String CS_Downloading = "Downloading";
-    
+
     private NafTask task;
 
     private void jbtNAFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNAFActionPerformed
-                progressMonitor = new ProgressMonitor(this,
+        progressMonitor = new ProgressMonitor(this,
                 Translate.translate(CS_DownloadFromNAF),
                 Translate.translate(CS_Downloading), 0,
                 Tournament.getTournament().getCoachsCount());
@@ -247,8 +260,362 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
     }//GEN-LAST:event_jbtNAFActionPerformed
 
     private void jbtImportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtImportExcelActionPerformed
-        // TODO add your handling code here:
+
+        // Select Excel file
+        final JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(MainFrame.getMainFrame().getCurrentPath()));
+        final FileFilter filter1 = new ExtensionFileFilter(
+                "Excel file",
+                new String[]{"XLS", "xls"});
+        jfc.setFileFilter(filter1);
+        if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            loadExcelFile(jfc.getSelectedFile());
+
+        }
+
     }//GEN-LAST:event_jbtImportExcelActionPerformed
+
+    private void loadExcelFile(File file) {
+        try {
+            // Open it
+            Workbook workbook = WorkbookFactory.create(file);
+
+            // Navigate in sheets
+            int nbSheet = workbook.getNumberOfSheets();
+            if (nbSheet < 2) {
+                JOptionPane.showMessageDialog(this, "Error, invalid number of shhets");
+                return;
+            }
+
+            Sheet sheet = workbook.getSheet("Coachs");
+            if (sheet == null) {
+                JOptionPane.showMessageDialog(this, "Error, sheet \"Coachs\" not found");
+                return;
+            }
+
+            Sheet calcul = workbook.getSheet("Calculs");
+            if (calcul == null) {
+                JOptionPane.showMessageDialog(this, "Error, sheet \"Calculs\" not found");
+                return;
+            }
+
+            // Load Rosters
+            for (int i = 0; i <= 40; i++) {
+                Row row = calcul.getRow(i);
+                if (row != null) {
+                    Cell cell = row.getCell(1);
+                    if (cell != null) {
+                        String value = cell.getStringCellValue();
+                        if (!value.equals("")) {
+                            boolean found = false;
+                            // Check if roster exists
+                            for (int j = 0; j < RosterType.getRostersNamesCount(); j++) {
+                                String name = RosterType.getRostersName(j);
+                                if (name.equals("None")) {
+                                    found = true;
+                                    break;
+                                }
+                                if (name.equals(value)) {
+                                    found = true;
+                                    break;
+                                }
+                                if (RosterType.getRosterTranslation(name).equals(value)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found) {
+                                RosterType.addRosterName(value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Test if sheet has correct format for team or coach
+            // Load sheet content.
+            // Load Categories
+            String cat = "";
+            int i = 1;
+            do {
+                Row row = sheet.getRow(i);
+                if (row == null) {
+                    cat = "";
+                } else {
+                    Cell cell = row.getCell(14);
+                    if (cell == null) {
+                        cat = "";
+                    } else {
+                        cat = cell.getStringCellValue();
+                        if (!cat.equals("")) {
+                            boolean found = false;
+                            for (int j = 0; j < Tournament.getTournament().getCategoriesCount(); j++) {
+                                Category category = Tournament.getTournament().getCategory(j);
+                                if (category.getName().equals(cat)) {
+                                    JOptionPane.showMessageDialog(this, "Category " + cat + " already exists");
+                                    found = true;
+                                }
+                            }
+                            if (!found) {
+                                Category category = new Category(cat);
+                                Tournament.getTournament().addCategory(category);
+                            }
+                        }
+                    }
+                }
+                i++;
+            } while (!cat.equals(""));
+
+            // Load Clan
+            String cl = "";
+            i = 1;
+            do {
+                Row row = sheet.getRow(i);
+                if (row == null) {
+                    cl = "";
+                } else {
+                    Cell cell = row.getCell(15);
+                    if (cell == null) {
+                        cl = "";
+                    } else {
+                        cl = cell.getStringCellValue();
+                        if (!cl.equals("")) {
+                            boolean found = false;
+                            for (int j = 0; j < Tournament.getTournament().getClansCount(); j++) {
+                                Clan clan = Tournament.getTournament().getClan(j);
+                                if (clan.getName().equals(cl)) {
+                                    JOptionPane.showMessageDialog(this, "Clan " + cl + " already exists");
+                                    found = true;
+                                }
+                            }
+                            if (!found) {
+                                Clan clan = new Clan(cl);
+                                Tournament.getTournament().addClan(clan);
+                            }
+                        }
+                    }
+                }
+                i++;
+            } while (!cl.equals(""));
+
+            if (Tournament.getTournament().getClansCount() > 1) {
+                Tournament.getTournament().getParams().setEnableClans(true);
+            }
+
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
+                // Load Team            
+                String t = "";
+                i = 1;
+                do {
+                    Row row = sheet.getRow(i);
+                    if (row == null) {
+                        t = "";
+                    } else {
+                        Cell cell = row.getCell(13);
+                        if (cell == null) {
+                            t = "";
+                        } else {
+                            t = cell.getStringCellValue();
+                            if (!t.equals("")) {
+                                boolean found = false;
+                                for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
+                                    Team team = Tournament.getTournament().getTeam(j);
+                                    if (team.getName().equals(t)) {
+                                        JOptionPane.showMessageDialog(this, "Team " + t + " already exists");
+                                        found = true;
+                                    }
+                                }
+                                if (!found) {
+                                    Team team = new Team(t);
+                                    Tournament.getTournament().addTeam(team);
+                                }
+                            }
+                        }
+                    }
+                    i++;
+                } while (!t.equals(""));
+            }
+
+            // Load Coachs
+            if (Tournament.getTournament().getParams().isTeamTournament()) {
+                String t = "";
+                i = 1;
+                do {
+                    Row row = sheet.getRow(i);
+                    if (row == null) {
+                        t = "";
+                    } else {
+                        Cell cell = row.getCell(13);
+                        if (cell == null) {
+                            t = "";
+                        } else {
+                            t = cell.getStringCellValue();
+                            if (!t.equals("")) {
+                                boolean found = false;
+                                for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
+                                    Team team = Tournament.getTournament().getTeam(j);
+                                    if (team.getName().equals(t)) {
+                                        JOptionPane.showMessageDialog(this, "Team " + t + " already exists");
+                                        found = true;
+                                    }
+                                }
+                                if (!found) {
+                                    Team team = new Team(t);
+                                    Tournament.getTournament().addTeam(team);
+                                }
+                            }
+                        }
+                    }
+                    i++;
+                } while (!t.equals(""));
+            }
+
+            // Load Coachs
+            String c = "";
+            i = 1;
+            do {
+                Row row = sheet.getRow(i);
+                if (row == null) {
+                    c = "";
+                } else {
+                    Cell cell = row.getCell(2);
+                    if (cell == null) {
+                        c = "";
+                    } else {
+                        c = cell.getStringCellValue();
+                        if (!c.equals("")) {
+                            boolean found = false;
+                            for (int j = 0; j < Tournament.getTournament().getCoachsCount(); j++) {
+                                Coach coach = Tournament.getTournament().getCoach(j);
+                                if (coach.getName().equals(c)) {
+                                    JOptionPane.showMessageDialog(this, "Coach " + c + " already exists");
+                                    found = true;
+                                }
+                            }
+                            if (!found) {
+                                Coach coach = new Coach(c);
+                                Tournament.getTournament().addCoach(coach);
+
+                                // Roster Name
+                                Cell cell_tmp = row.getCell(3);
+                                String tmp = "";
+                                if (cell_tmp != null) {
+                                    tmp = cell_tmp.getStringCellValue();
+                                }
+                                if (!tmp.equals("")) {
+                                    coach.setTeam(tmp);
+                                } else {
+                                    String suffixes[] = {"Team", "Fighters", "Marauders", "Dancers", "Miners", "Steelers",
+                                        "Warriors", "Politicians", "Rebels", "Patriots", "Blacksmiths", "Knights"
+                                    };
+                                    Random random = new Random();
+                                    int index = random.nextInt(suffixes.length);
+                                    coach.setTeam(c + "'s " + suffixes[index]);
+                                }
+
+                                // Roster
+                                cell_tmp = row.getCell(4);
+                                tmp = "";
+                                if (cell_tmp != null) {
+                                    tmp = cell_tmp.getStringCellValue();
+                                }
+                                if (!tmp.equals("")) {
+                                    RosterType rt = RosterType.getRosterType(tmp);
+                                    if (rt == null) {
+                                        rt = RosterType.getRosterType(RosterType.translate(tmp));
+                                    }
+
+                                    coach.setRoster(rt);
+                                }
+                                if (coach.getRoster() == null) {
+                                    String rosters[] = RosterType.getRostersNames();
+                                    String s = (String) JOptionPane.showInputDialog(
+                                            this,
+                                            "Coach " + coach.getName() + " has no roster chosen. Please, choose one",
+                                            "Choose a roster",
+                                            JOptionPane.PLAIN_MESSAGE,
+                                            null,
+                                            rosters,
+                                            rosters[0]);
+
+                                    coach.setRoster(RosterType.getRosterType(s));
+                                }
+
+                                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                                    //Team
+                                    cell_tmp = row.getCell(5);
+                                    tmp = "";
+                                    Team t = null;
+                                    if (cell_tmp != null) {
+                                        tmp = cell_tmp.getStringCellValue();
+                                    }
+                                    if (!tmp.equals("")) {
+                                        t = Tournament.getTournament().getTeam(tmp);
+                                        coach.setTeamMates(t);
+                                    }
+                                    if (coach.getTeam() == null) {
+                                        String teams[] = Tournament.getTournament().getTeamsNames();
+                                        String s = (String) JOptionPane.showInputDialog(
+                                                this,
+                                                "Coach " + coach.getName() + " has no team chosen. Please, choose one",
+                                                "Choose a team",
+                                                JOptionPane.PLAIN_MESSAGE,
+                                                null,
+                                                teams,
+                                                teams[0]);
+
+                                        t = Tournament.getTournament().getTeam(s);
+                                        if (t.getActivePlayerNumber() >= Tournament.getTournament().getParams().getTeamMatesNumber()) {
+                                            coach.setActive(false);
+                                        }
+                                        coach.setTeamMates(t);
+
+                                    }
+                                }
+
+                                // Clan
+                                cell_tmp = row.getCell(6);
+                                tmp = "";
+                                Clan clan = null;
+                                if (cell_tmp != null) {
+                                    tmp = cell_tmp.getStringCellValue();
+                                }
+                                if (!tmp.equals("")) {
+                                    clan = Tournament.getTournament().getClan(tmp);
+                                    if (clan != null) {
+                                        coach.setClan(clan);
+                                    }
+                                }
+
+                                // Category (3 columns)
+                                for (int k = 7; k < 10;k++) {
+                                    cell_tmp = row.getCell(k);
+                                    tmp = "";
+                                    Category category = null;
+                                    if (cell_tmp != null) {
+                                        tmp = cell_tmp.getStringCellValue();
+                                    }
+                                    if (!tmp.equals("")) {
+                                        category = Tournament.getTournament().getCategory(tmp);
+                                        if (category != null) {
+                                            coach.addCategory(category);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                i++;
+            } while (!c.equals(""));
+
+            // Check number of Coachs
+            // Associate Clans to teams if all coachs are in clan
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -278,31 +645,31 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
         jtTeamsAndCoaches.setDefaultRenderer(RosterType.class, model);
         jtTeamsAndCoaches.setDefaultRenderer(Coach.class, model);
         jtTeamsAndCoaches.setDefaultRenderer(Clan.class, model);
-        
+
         TableColumn rosterColumn;
         if (Tournament.getTournament().getParams().isTeamTournament()) {
             rosterColumn = jtTeamsAndCoaches.getColumnModel().getColumn(4);
         } else {
             rosterColumn = jtTeamsAndCoaches.getColumnModel().getColumn(2);
-        }        
-        
+        }
+
         JComboBox jcbRoster = new JComboBox(RosterType.getRostersNames());
         rosterColumn.setCellEditor(new DefaultCellEditor(jcbRoster));
-        
+
         TableColumn clanColumn;
         if (Tournament.getTournament().getParams().isTeamTournament()) {
             clanColumn = jtTeamsAndCoaches.getColumnModel().getColumn(5);
         } else {
             clanColumn = jtTeamsAndCoaches.getColumnModel().getColumn(3);
-        }        
-        
+        }
+
         JComboBox jcbClans = new JComboBox(_clans.toArray());
         clanColumn.setCellEditor(new DefaultCellEditor(jcbClans));
-        
+
         if (Tournament.getTournament().getParams().isTeamTournament()) {
             jtTeamsAndCoaches.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(jcbClans));
         }
-        
+
         repaint();
     }
 
@@ -324,5 +691,5 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener{
             }
         }
         update();
-    }    
+    }
 }

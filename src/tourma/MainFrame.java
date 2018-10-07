@@ -132,6 +132,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private final static String CS_TourMaXMLFile = "TourMaXMLFile";
     private String currentPath;
 
+    public String getCurrentPath() {
+        return currentPath;
+    }
+
+    
     /**
      * Creates new form MainFrame
      *

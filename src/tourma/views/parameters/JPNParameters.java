@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import tourma.JdgCoach;
 import tourma.MainFrame;
+import tourma.data.Coach;
 import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -309,8 +310,16 @@ public final class JPNParameters extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAddActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
-
-        mTournament.removeCoach(jtbCoachs.getSelectedRow());
+ 
+        Object oname=jtbCoachs.getValueAt(jtbCoachs.getSelectedRow(), 1);
+        if (oname!=null)
+        {
+            if (oname instanceof String)
+            {
+                Coach c=mTournament.getCoach((String)oname);
+                mTournament.removeCoach(c);
+            }        
+        }
         update();
 
     }//GEN-LAST:event_jbtRemoveActionPerformed
