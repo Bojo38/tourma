@@ -3031,6 +3031,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void jmiMassAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMassAddActionPerformed
         JdgMassAdd jdg = new JdgMassAdd(this, true);
         jdg.setVisible(true);
+        update();
     }//GEN-LAST:event_jmiMassAddActionPerformed
 
     private void jcxDisplayRostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxDisplayRostersActionPerformed

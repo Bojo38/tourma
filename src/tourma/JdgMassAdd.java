@@ -270,8 +270,8 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
         jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             loadExcelFile(jfc.getSelectedFile());
-
         }
+        update();
 
     }//GEN-LAST:event_jbtImportExcelActionPerformed
 
@@ -437,40 +437,6 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
             }
 
             // Load Coachs
-            if (Tournament.getTournament().getParams().isTeamTournament()) {
-                String t = "";
-                i = 1;
-                do {
-                    Row row = sheet.getRow(i);
-                    if (row == null) {
-                        t = "";
-                    } else {
-                        Cell cell = row.getCell(13);
-                        if (cell == null) {
-                            t = "";
-                        } else {
-                            t = cell.getStringCellValue();
-                            if (!t.equals("")) {
-                                boolean found = false;
-                                for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
-                                    Team team = Tournament.getTournament().getTeam(j);
-                                    if (team.getName().equals(t)) {
-                                        JOptionPane.showMessageDialog(this, "Team " + t + " already exists");
-                                        found = true;
-                                    }
-                                }
-                                if (!found) {
-                                    Team team = new Team(t);
-                                    Tournament.getTournament().addTeam(team);
-                                }
-                            }
-                        }
-                    }
-                    i++;
-                } while (!t.equals(""));
-            }
-
-            // Load Coachs
             String c = "";
             i = 1;
             do {
@@ -478,7 +444,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                 if (row == null) {
                     c = "";
                 } else {
-                    Cell cell = row.getCell(2);
+                    Cell cell = row.getCell(1);
                     if (cell == null) {
                         c = "";
                     } else {
@@ -497,7 +463,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                                 Tournament.getTournament().addCoach(coach);
 
                                 // Roster Name
-                                Cell cell_tmp = row.getCell(3);
+                                Cell cell_tmp = row.getCell(2);
                                 String tmp = "";
                                 if (cell_tmp != null) {
                                     tmp = cell_tmp.getStringCellValue();
@@ -514,7 +480,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                                 }
 
                                 // Roster
-                                cell_tmp = row.getCell(4);
+                                cell_tmp = row.getCell(3);
                                 tmp = "";
                                 if (cell_tmp != null) {
                                     tmp = cell_tmp.getStringCellValue();
@@ -522,7 +488,8 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                                 if (!tmp.equals("")) {
                                     RosterType rt = RosterType.getRosterType(tmp);
                                     if (rt == null) {
-                                        rt = RosterType.getRosterType(RosterType.translate(tmp));
+                                        String tr = RosterType.translate(tmp);
+                                        rt = RosterType.getRosterType(tr);
                                     }
 
                                     coach.setRoster(rt);
@@ -543,7 +510,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
 
                                 if (Tournament.getTournament().getParams().isTeamTournament()) {
                                     //Team
-                                    cell_tmp = row.getCell(5);
+                                    cell_tmp = row.getCell(4);
                                     tmp = "";
                                     Team t = null;
                                     if (cell_tmp != null) {
@@ -552,8 +519,9 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                                     if (!tmp.equals("")) {
                                         t = Tournament.getTournament().getTeam(tmp);
                                         coach.setTeamMates(t);
+                                        t.addCoach(coach);
                                     }
-                                    if (coach.getTeam() == null) {
+                                    if (coach.getTeamMates() == null) {
                                         String teams[] = Tournament.getTournament().getTeamsNames();
                                         String s = (String) JOptionPane.showInputDialog(
                                                 this,
@@ -569,26 +537,28 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                                             coach.setActive(false);
                                         }
                                         coach.setTeamMates(t);
+                                        t.addCoach(coach);
 
                                     }
                                 }
 
                                 // Clan
-                                cell_tmp = row.getCell(6);
+                                cell_tmp = row.getCell(5);
                                 tmp = "";
-                                Clan clan = null;
+                                Clan clan = Tournament.getTournament().getClan(0);
                                 if (cell_tmp != null) {
                                     tmp = cell_tmp.getStringCellValue();
                                 }
                                 if (!tmp.equals("")) {
                                     clan = Tournament.getTournament().getClan(tmp);
-                                    if (clan != null) {
-                                        coach.setClan(clan);
-                                    }
+
+                                }
+                                if (clan != null) {
+                                    coach.setClan(clan);
                                 }
 
                                 // Category (3 columns)
-                                for (int k = 7; k < 10;k++) {
+                                for (int k = 6; k < 9; k++) {
                                     cell_tmp = row.getCell(k);
                                     tmp = "";
                                     Category category = null;
@@ -610,7 +580,40 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
             } while (!c.equals(""));
 
             // Check number of Coachs
+            for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
+                Team t = Tournament.getTournament().getTeam(j);
+                int nbCoachs = t.getCoachsCount();
+                if (nbCoachs < Tournament.getTournament().getParams().getTeamMatesNumber()) {
+                    JOptionPane.showMessageDialog(this, "Team " + t.getName() + " is incomplete, completing by \"John Doe\"");
+                    for (int k = nbCoachs; k < Tournament.getTournament().getParams().getTeamMatesNumber(); k++) {
+                        Coach john = new Coach("John Doe " + Tournament.getTournament().getCoachsCount());
+                        john.setRoster(RosterType.getRosterType(0));
+                        john.setTeam("Forgotten players");
+                        john.setTeamMates(t);
+                        john.setClan(Tournament.getTournament().getClan(0));
+                        t.addCoach(john);
+                        Tournament.getTournament().addCoach(john);
+                    }
+                }
+            }
+
             // Associate Clans to teams if all coachs are in clan
+            for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
+                Team t = Tournament.getTournament().getTeam(j);
+                Clan clan = t.getCoach(0).getClan();
+                boolean associate = true;
+                for (int k = 1; k < t.getCoachsCount(); k++) {
+                    if (t.getCoach(k).getClan() != clan) {
+                        associate = false;
+                        break;
+                    }
+                }
+                if (associate) {
+                    t.setClan(clan);
+                } else {
+                    t.setClan(Tournament.getTournament().getClan(0));
+                }
+            }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
             e.printStackTrace();
