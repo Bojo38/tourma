@@ -516,62 +516,138 @@ public final class Generation {
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
         while (comps.size() > 0) {
-            Competitor c = comps.get(0);
-            comps.remove(c);
-            ArrayList<Competitor> possible = c.getPossibleOpponents(comps, r);
 
-            Object[] possibilities = new Object[possible.size()];
-            for (int i = 0; i < possible.size(); i++) {
-                possibilities[i] = possible.get(i).getDecoratedName();
-            }
+            if (comps.size() == 3) {
+                if (Tournament.getTournament().getParams().isTeamTournament()
+                        && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                    Team t1 = (Team) comps.get(0);
+                    Team t2 = (Team) comps.get(1);
+                    Team t3 = (Team) comps.get(2);
 
-            final String name = c.getDecoratedName();
+                    int nbMates = Tournament.getTournament().getParams().getTeamMatesNumber();
+                    TeamMatch tm1 = new TeamMatch(r);
+                    TeamMatch tm2 = new TeamMatch(r);
+                    TeamMatch tm3 = new TeamMatch(r);
 
-            String opp = null;
-
-            if (possibilities.length > 0) {
-                while (opp == null) {
-                    opp = (String) JOptionPane.showInputDialog(
-                            MainFrame.getMainFrame(),
-                            Translate.translate(CS_ChooseOpponentFor)
-                            + " " + name,
-                            Translate.translate(CS_ChoosOpponent),
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null,
-                            possibilities,
-                            possibilities[0]);
-                }
-
-                for (int i = 0; i < comps.size(); i++) {
-                    Competitor tmpOpp = possible.get(i);
-                    final String tmpString = tmpOpp.getDecoratedName();
-
-                    if (opp.equals(tmpString)) {
-
-                        if (tmpOpp instanceof Team) {
-                            TeamMatch tm = new TeamMatch(r);
-                            tm.setCompetitor1(c);
-                            tm.setCompetitor2(tmpOpp);
-                            r.addMatch(tm);
-                            JdgPairing jdg = new JdgPairing(null, true, (Team) c, (Team) tmpOpp, r, tm);
-                            jdg.setVisible(true);
-
-                            tmpOpp.addMatch(tm);
-                            c.addMatch(tm);
-                        } else {
-                            c.addMatch(tmpOpp, r);
-                        }
-
-                        comps.remove(tmpOpp);
-                        break;
+                    ArrayList<Coach> tc1 = new ArrayList<>();
+                    ArrayList<Coach> tc2 = new ArrayList<>();
+                    ArrayList<Coach> tc3 = new ArrayList<>();
+                    for (int i = 0; i < nbMates; i++) {
+                        tc1.add(t1.getCoach(i));
+                        tc2.add(t2.getCoach(i));
+                        tc3.add(t3.getCoach(i));
                     }
+
+                    setManualHalfTeamMatch(nbMates, t1, t2, tc1, tc2, r);
+                    setManualHalfTeamMatch(nbMates, t1, t3, tc1, tc3, r);
+                    setManualHalfTeamMatch(nbMates, t3, t2, tc3, tc2, r);
+
+                    comps.clear();
+
                 }
             } else {
-                break;
+
+                Competitor c = comps.get(0);
+                comps.remove(c);
+                ArrayList<Competitor> possible = c.getPossibleOpponents(comps, r);
+
+                Object[] possibilities = new Object[possible.size()];
+                for (int i = 0; i < possible.size(); i++) {
+                    possibilities[i] = possible.get(i).getDecoratedName();
+                }
+
+                final String name = c.getDecoratedName();
+
+                String opp = null;
+
+                if (possibilities.length > 0) {
+                    while (opp == null) {
+                        opp = (String) JOptionPane.showInputDialog(
+                                MainFrame.getMainFrame(),
+                                Translate.translate(CS_ChooseOpponentFor)
+                                + " " + name,
+                                Translate.translate(CS_ChoosOpponent),
+                                JOptionPane.INFORMATION_MESSAGE,
+                                null,
+                                possibilities,
+                                possibilities[0]);
+                    }
+
+                    for (int i = 0; i < comps.size(); i++) {
+                        Competitor tmpOpp = possible.get(i);
+                        final String tmpString = tmpOpp.getDecoratedName();
+
+                        if (opp.equals(tmpString)) {
+                            if (tmpOpp instanceof Team) {
+                                TeamMatch tm = new TeamMatch(r);
+                                tm.setCompetitor1(c);
+                                tm.setCompetitor2(tmpOpp);
+                                r.addMatch(tm);
+                                JdgPairing jdg = new JdgPairing(null, true, (Team) c, (Team) tmpOpp, r, tm);
+                                jdg.setVisible(true);
+
+                                tmpOpp.addMatch(tm);
+                                c.addMatch(tm);
+                            } else {
+                                c.addMatch(tmpOpp, r);
+                            }
+
+                            comps.remove(tmpOpp);
+                            break;
+                        }
+                    }
+                } else {
+                    break;
+                }
             }
         }
 
         tour.addRound(r);
+    }
+
+    private static void setManualHalfTeamMatch(int nbMates, Team t1, Team t2, ArrayList<Coach> tc1, ArrayList<Coach> tc2, Round r) {
+        TeamMatch tm = new TeamMatch(r);
+        for (int i = 0; i < nbMates / 2; i++) {
+            // tc1.get(i) coach.
+            Object[] possibilities = new Object[tc2.size()];
+            for (int j = 0; j < tc2.size(); j++) {
+                possibilities[j] = tc2.get(i).getDecoratedName();
+            }
+
+            final String name = tc1.get(i).getDecoratedName();
+
+            String opp = null;
+
+            opp = (String) JOptionPane.showInputDialog(
+                    MainFrame.getMainFrame(),
+                    Translate.translate(CS_ChooseOpponentFor)
+                    + " " + name,
+                    Translate.translate(CS_ChoosOpponent),
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    possibilities,
+                    possibilities[0]);
+
+            for (int j = 0; j < tc2.size(); j++) {
+                if (opp.equals(possibilities[j])) {
+                    CoachMatch mc = new CoachMatch(r);
+                    mc.setCompetitor1(tc2.get(j));
+                    tc2.get(j).addMatch(mc);
+                    tc2.remove(j);
+                    mc.setCompetitor2(tc1.get(i));
+                    tc1.get(i).addMatch(mc);
+                    tc1.remove(i);
+                    tm.addMatch(mc);
+                }
+            }
+        }
+
+        tm.setCompetitor1(t1);
+        tm.setCompetitor2(t2);
+        t1.addMatch(tm);
+        t2.addMatch(tm);
+
+        r.addMatch(tm);
     }
 
     /**
@@ -601,18 +677,134 @@ public final class Generation {
         r.clearMatchs();
 
         while (shuffle.size() > 0) {
-            Competitor c = shuffle.get(0);
-            shuffle.remove(c);
-            ArrayList<Competitor> possible = c.getPossibleOpponents(shuffle, r);
-            Competitor opp = possible.get(0);
-            c.addMatch(possible.get(0), r);
-            shuffle.remove(possible.get(0));
+            if (shuffle.size() == 3) {
+                // In this specific case of odd number of teams with even number of player, the teams must be splitted in 2
+                if (Tournament.getTournament().getParams().isTeamTournament()
+                        && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                    Team t1 = (Team) shuffle.get(0);
+                    Team t2 = (Team) shuffle.get(1);
+                    Team t3 = (Team) shuffle.get(2);
 
-            c.roundCheck(r);
-            opp.roundCheck(r);
+                    int nbMates = Tournament.getTournament().getParams().getTeamMatesNumber();
+
+                    /**
+                     * @TODO: Shuffle or coachs of the team
+                     */
+                    ArrayList<Coach> tc1 = new ArrayList<>();
+                    ArrayList<Coach> tc2 = new ArrayList<>();
+                    ArrayList<Coach> tc3 = new ArrayList<>();
+                    for (int i = 0; i < nbMates; i++) {
+                        tc1.add(t1.getCoach(i));
+                        tc2.add(t2.getCoach(i));
+                        tc3.add(t3.getCoach(i));
+                    }
+
+                    if (random) {
+                        Collections.shuffle(tc1);
+                        Collections.shuffle(tc2);
+                        Collections.shuffle(tc3);
+                    }
+                    // T1.1 vs T2.1
+                    // T1.1 vs T3.1
+                    // T2.2 vs T3.2
+
+                    setHalfTeamMatch(nbMates,  t1, t2, tc1, tc2, r);
+                    setHalfTeamMatch(nbMates,  t1, t3, tc1, tc3, r);
+                    setHalfTeamMatch(nbMates,  t3, t2, tc3, tc2, r);
+                    
+                    /*ArrayList<Coach> t11 = new ArrayList<>();
+                    ArrayList<Coach> t12 = new ArrayList<>();
+                    ArrayList<Coach> t21 = new ArrayList<>();
+                    ArrayList<Coach> t22 = new ArrayList<>();
+                    ArrayList<Coach> t31 = new ArrayList<>();
+                    ArrayList<Coach> t32 = new ArrayList<>();
+
+                    for (int i = 0; i < nbMates / 2; i++) {
+                        t11.add(tc1.get(i));
+                        t12.add(tc1.get(i + nbMates / 2));
+                        t21.add(tc2.get(i));
+                        t22.add(tc2.get(i + nbMates / 2));
+                        t31.add(tc3.get(i));
+                        t32.add(tc3.get(i + nbMates / 2));
+                    }
+
+                    TeamMatch tm1 = new TeamMatch(r);
+                    TeamMatch tm2 = new TeamMatch(r);
+                    TeamMatch tm3 = new TeamMatch(r);
+                    for (int i = 0; i < nbMates / 2; i++) {
+                        CoachMatch mc1 = new CoachMatch(r);
+                        mc1.setCompetitor1(t11.get(i));
+                        mc1.setCompetitor2(t21.get(i));
+                        tm1.addMatch(mc1);
+                        t11.get(i).addMatch(mc1);
+                        t21.get(i).addMatch(mc1);
+                        CoachMatch mc2 = new CoachMatch(r);
+                        mc2.setCompetitor1(t12.get(i));
+                        mc2.setCompetitor2(t31.get(i));
+                        tm2.addMatch(mc2);
+                        t12.get(i).addMatch(mc2);
+                        t31.get(i).addMatch(mc2);
+                        CoachMatch mc3 = new CoachMatch(r);
+                        mc3.setCompetitor1(t22.get(i));
+                        mc3.setCompetitor2(t32.get(i));
+                        tm3.addMatch(mc3);
+                        t22.get(i).addMatch(mc3);
+                        t32.get(i).addMatch(mc3);
+                    }
+
+                    tm1.setCompetitor1(t1);
+                    tm1.setCompetitor2(t2);
+                    t1.addMatch(tm1);
+                    t1.addMatch(tm2);
+                    tm2.setCompetitor1(t1);
+                    tm2.setCompetitor2(t3);
+                    t2.addMatch(tm1);
+                    t2.addMatch(tm3);
+                    tm3.setCompetitor1(t2);
+                    tm3.setCompetitor2(t3);
+                    t3.addMatch(tm2);
+                    t3.addMatch(tm3);
+
+                    r.addMatch(tm1);
+                    r.addMatch(tm2);
+                    r.addMatch(tm3);*/
+                    shuffle.clear();
+                }
+            } else {
+                Competitor c = shuffle.get(0);
+                shuffle.remove(c);
+                ArrayList<Competitor> possible = c.getPossibleOpponents(shuffle, r);
+                Competitor opp = possible.get(0);
+                c.addMatch(possible.get(0), r);
+                shuffle.remove(possible.get(0));
+
+                c.roundCheck(r);
+                opp.roundCheck(r);
+            }
         }
 
         tour.addRound(r);
+    }
+
+    private static void setHalfTeamMatch(int nbMates, Team t1, Team t2, ArrayList<Coach> tc1, ArrayList<Coach> tc2, Round r) {
+        TeamMatch tm = new TeamMatch(r);
+
+        for (int i = 0; i < nbMates / 2; i++) {
+            CoachMatch mc = new CoachMatch(r);
+            mc.setCompetitor1(tc1.get(i));
+            mc.setCompetitor2(tc2.get(i));
+            tc1.get(i).addMatch(mc);
+            tc2.get(i).addMatch(mc);
+            tc1.remove(i);
+            tc2.remove(i);
+            tm.addMatch(mc);
+        }
+
+        tm.setCompetitor1(t1);
+        tm.setCompetitor2(t2);
+        t1.addMatch(tm);
+        t2.addMatch(tm);
+        r.addMatch(tm);
     }
 
     /**
@@ -691,6 +883,15 @@ public final class Generation {
         final boolean home_away = (JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("MATCH ALLER-RETOUR ?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ALLER-RETOUR"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
 
         final ArrayList<Competitor> comps = new ArrayList<>(competitors);
+
+        if (comps.size() % 2 == 1) {
+            if (tour.getParams().isTeamTournament()) {
+                comps.add(Team.getNullTeam());
+            } else {
+                comps.add(Coach.getNullCoach());
+            }
+        }
+
         Collections.shuffle(comps);
 
         final ArrayList<Competitor> c1part = new ArrayList<>();
@@ -839,17 +1040,27 @@ public final class Generation {
             if (comps.get(0) instanceof Coach) {
                 comps.add(Coach.getNullCoach());
             }
+
             if (comps.get(0) instanceof Team) {
-                comps.add(Team.getNullTeam());
+                if (Tournament.getTournament().getParams().getTeamMatesNumber() % 2 == 1) {
+                    comps.add(Team.getNullTeam());
+                }
             }
         }
 
         // If the number of round is more than the number of players, no switch
         if (comps.size() - 1 <= tour.getRoundsCount()) {
             for (int i = 0; i < datas_tmp.size() / 2; i++) {
-                Competitor c1 = (Competitor) datas_tmp.get(2 * i).getObject();
-                Competitor c2 = (Competitor) datas_tmp.get(2 * i + 1).getObject();
-                c1.addMatch(c2, r);
+                if (datas_tmp.size() - i == 3) {
+if (Tournament.getTournament().getParams().isTeamTournament()&&)
+                {
+                    // Allocates the 3 last teams
+                
+                } else {
+                    Competitor c1 = (Competitor) datas_tmp.get(2 * i).getObject();
+                    Competitor c2 = (Competitor) datas_tmp.get(2 * i + 1).getObject();
+                    c1.addMatch(c2, r);
+                }
             }
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
                     Translate.translate(CS_NotEnoughRoundToAvoidSameMatch));
@@ -922,7 +1133,7 @@ public final class Generation {
                                     if (j % 2 == 0) {
                                         m = r.getMatch(r.getMatchsCount() / 2 + 1 + j / 2);
                                     } else {
-                                        m = r.getMatch(r.getMatchsCount() / 2 +1 - j / 2);
+                                        m = r.getMatch(r.getMatchsCount() / 2 + 1 - j / 2);
                                     }
                                 }
                             }
@@ -979,7 +1190,7 @@ public final class Generation {
                     if (topdown) {
                         int middle = r.getMatchsCount() / 2;
                         Match m = c1.getMatch(c1.getMatchCount() - 1);
-                        r.setMatchPosition(m, middle+(r.getMatchsCount()-1)%2 );                        
+                        r.setMatchPosition(m, middle + (r.getMatchsCount() - 1) % 2);
                     }
                 }
 
@@ -1318,6 +1529,9 @@ public final class Generation {
             m.getCompetitor2().addMatch(m);
         }
 
+        /**
+         * Application of a provate joke
+         */
         applyPortugal(r);
 
         saveTemporaryTournament();

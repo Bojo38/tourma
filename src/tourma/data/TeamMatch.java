@@ -1105,6 +1105,11 @@ public class TeamMatch extends Match implements Serializable {
     public int getValue(final Team t, final int rankingType, boolean teamVictory) {
         int value = 0;
 
+        boolean splitted = false;
+        if (this.getMatchCount() == t.getCoachsCount() / 2) {
+            splitted = true;
+        }
+
         int roundIndex = -1;
         for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
             Round r = Tournament.getTournament().getRound(i);
@@ -1119,24 +1124,30 @@ public class TeamMatch extends Match implements Serializable {
             switch (rankingType) {
                 case Parameters.C_RANKING_POINTS:
                     value = getPointsByTeam(t, this, true, true);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
                     value = getPointsByTeam(t, this, true, false);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_BONUS_POINTS:
                     value = getPointsByTeam(t, this, false, true);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_NONE:
                     value = 0;
                     break;
                 case Parameters.C_RANKING_OPP_POINTS:
                     value = getOppPointsByTeam(t, this, true);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
                     value = getOppPointsByTeam(t, this, false);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_VND:
                     value = getVNDByTeam(t, this, true);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_ELO:
                     value = getELOByTeam(t, this, roundIndex);
@@ -1146,9 +1157,11 @@ public class TeamMatch extends Match implements Serializable {
                     break;
                 case Parameters.C_RANKING_NB_MATCHS:
                     value = getTeamNbMatch(t, this);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_TABLES:
                     value = getTeamTable(t, this);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_HEAD_BY_HEAD:
                     value = 0;
@@ -1159,10 +1172,6 @@ public class TeamMatch extends Match implements Serializable {
                     }
             }
         } else {
-            /*for (int i = 0; i < t.getCoachsCount(); i++) {
-            final Coach c = t.getCoach(i);
-            //for (int j = 0; j < c.getMatchCount(); j++) {
-            final CoachMatch m = (CoachMatch) c.getMatch(j);*/
             for (int i = 0; i < getMatchCount(); i++) {
                 CoachMatch cm = getMatch(i);
                 Coach c = null;
@@ -1223,16 +1232,26 @@ public class TeamMatch extends Match implements Serializable {
                     int VND = getVNDByTeam(t, this, true);
                     int nbVictory = (VND / 1000000);
                     int nbDraw = (VND % 1000000) / 1000;
-                    value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                    value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                    if (splitted) {
+                        value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus() / 2;
+                        value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus() / 2;
+                    } else {
+                        value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                        value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                    }
                 }
                 break;
                 case Parameters.C_RANKING_POINTS_WITHOUT_BONUS: {
                     int VND = getVNDByTeam(t, this, true);
                     int nbVictory = (VND / 1000000);
                     int nbDraw = (VND % 1000000) / 1000;
-                    value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                    value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                    if (splitted) {
+                        value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus() / 2;
+                        value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus() / 2;
+                    } else {
+                        value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                        value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                    }
                 }
                 break;
                 case Parameters.C_RANKING_OPP_POINTS:
@@ -1240,12 +1259,6 @@ public class TeamMatch extends Match implements Serializable {
                     if (t.getCoachsCount() > 0) {
                         final Coach c = t.getCoach(0);
                         int i = 0;
-                        /*if (mRoundOnly) {
-                            i = mRound;
-                        }
-
-                        while (i <= mRound) {*/
-                        //for (int i = 0; i <= mRound; i++) {
                         if (c.getMatchCount() > i) {
                             final CoachMatch m = (CoachMatch) c.getMatch(i);
                             if (m.getCompetitor1() == null) {
@@ -1256,16 +1269,25 @@ public class TeamMatch extends Match implements Serializable {
                             }
                             if (m.getCompetitor1() == c) {
                                 long tmp = getVNDByTeam(((Coach) m.getCompetitor2()).getTeamMates(), this, rankingType != Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS);
-                                value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                                value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                                if (splitted) {
+                                    value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus() / 2;
+                                    value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus() / 2;
+                                } else {
+                                    value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                                    value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                                }
                             } else {
                                 long tmp = getVNDByTeam(((Coach) m.getCompetitor1()).getTeamMates(), this, rankingType != Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS);
-                                value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                                value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+
+                                if (splitted) {
+                                    value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus() / 2;
+                                    value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus() / 2;
+                                } else {
+                                    value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                                    value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                                }
                             }
                         }
-                        /*     i++;
-                        }*/
                     }
                     break;
                 default:
