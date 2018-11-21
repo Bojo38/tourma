@@ -596,7 +596,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
-        mCoach.setName("");
+        //mCoach.setName("");
         this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
 
@@ -646,7 +646,10 @@ public final class JdgCoach extends javax.swing.JDialog {
                 }
             }
 
-            c.setName(jtfNom.getText());
+            if (!jtfNom.getText().equals(""))
+            {
+                c.setName(jtfNom.getText());
+            }
             c.setRoster(new RosterType(jcbRoster.getSelectedIndex()));
             c.setTeam(jtfEquipe.getText());
             c.setActive(jckActive.isSelected());
