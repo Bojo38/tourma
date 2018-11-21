@@ -96,26 +96,22 @@ public final class MjtRankingIndiv extends MjtRanking {
 
                 if (c.getMatchCount() > 0) {
 
+                                        
                     for (int j = 0; j <= c.getMatchCount() - 1; j++) {
 
                         final CoachMatch m = (CoachMatch) c.getMatch(j);
                         if (!m.isValues_computed()) {
                             m.recomputeValues();
                         }
-                        boolean bFound = false;
-                        for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
+                        for (int l = 0; l < rounds.size(); l++) {
                             final Round r = rounds.get(l);
                             if (r.getCoachMatchs().contains(m)) {
-                                bFound = true;
+                                aValue1.add(m.getValue(1, c));
+                                aValue2.add(m.getValue(2, c));
+                                aValue3.add(m.getValue(3, c));
+                                aValue4.add(m.getValue(4, c));
+                                aValue5.add(m.getValue(5, c));
                             }
-                        }
-                        // test if match is in round
-                        if (bFound) {
-                            aValue1.add(m.getValue(1, c));
-                            aValue2.add(m.getValue(2, c));
-                            aValue3.add(m.getValue(3, c));
-                            aValue4.add(m.getValue(4, c));
-                            aValue5.add(m.getValue(5, c));
                         }
                     }
 

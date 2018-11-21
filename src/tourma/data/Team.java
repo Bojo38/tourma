@@ -140,7 +140,7 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     public Team() {
         super();
         mCoachs = new ArrayList<>();
-        
+
     }
 
     /**
@@ -476,7 +476,14 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
                             break;
                         }
                     }
+                    if (have_played) {
+                        break;
+                    }
                 }
+
+            }
+            if (have_played) {
+                break;
             }
         }
         return have_played;
@@ -489,7 +496,8 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r) {
+    public ArrayList<Competitor> getPossibleOpponents(ArrayList<Competitor> opponents, Round r
+    ) {
 
         Tournament tour = Tournament.getTournament();
         Parameters params = tour.getParams();
@@ -547,7 +555,9 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param r
      */
     @Override
-    public void addMatchRoundRobin(Competitor c, Round r, boolean complete) {
+    public void addMatchRoundRobin(Competitor c, Round r,
+            boolean complete
+    ) {
         if (!complete) {
             addMatch(c, r);
         } else {
@@ -621,58 +631,94 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
     public void roundCheck(Round round) {
 
         Tournament tour = Tournament.getTournament();
-        //ArrayList<Match> matchs = round.getMatchs();
 
         for (int i = round.getMatchsCount() - 1; i > 0; i--) {
+            TeamMatch team_match = (TeamMatch) round.getMatch(i);
+            if (team_match.getMatchCount() == tour.getParams().getTeamMatesNumber()) {
+                final Team t1 = (Team) team_match.getCompetitor1();
+                final Team t2 = (Team) team_match.getCompetitor2();
+                boolean have_played = !t1.canPlay(t2, round);
 
-            final Team t1 = (Team) round.getMatch(i).getCompetitor1();
-            final Team t2 = (Team) round.getMatch(i).getCompetitor2();
-            boolean have_played = !t1.canPlay(t2, round);
+                if (have_played) {
+                    for (int k = i - 1; k >= 0; k--) {
 
-            if (have_played) {
-                for (int k = i - 1; k >= 0; k--) {
+                        Team t1_tmp = (Team) round.getMatch(k).getCompetitor1();
+                        Team t2_tmp = (Team) round.getMatch(k).getCompetitor2();
 
-                    Team t1_tmp = (Team) round.getMatch(k).getCompetitor1();
-                    Team t2_tmp = (Team) round.getMatch(k).getCompetitor2();
+                        have_played = !t1.canPlay(t2_tmp, round);
 
-                    have_played = !t1.canPlay(t2_tmp, round);
+                        boolean canMatch = !have_played;
 
-                    boolean canMatch = !have_played;
-
-                    if (canMatch) {
-                        //Switch Team
-                        round.getMatch(i).setCompetitor2(t2_tmp);
-                        round.getMatch(k).setCompetitor2(t2);
-
-                        // Switch coachs into matchs 
-                        for (int j = 0; j < tour.getParams().getTeamMatesNumber(); j++) {
-                            Match m = ((TeamMatch) round.getMatch(i)).getMatch(j);
-                            Match m_tmp = ((TeamMatch) round.getMatch(k)).getMatch(j);
-                            Coach c2_tmp = (Coach) m_tmp.getCompetitor2();
-                            Coach c2 = (Coach) m.getCompetitor2();
-                            m.setCompetitor2(c2_tmp);
-                            m_tmp.setCompetitor2(c2);
-                        }
-                        break;
-                    } else {
-                        have_played = !t1.canPlay(t1_tmp, round);
-
-                        canMatch = !have_played;
                         if (canMatch) {
-                            //Switch Team
-                            round.getMatch(i).setCompetitor2(t1_tmp);
-                            round.getMatch(k).setCompetitor1(t2);
 
                             // Switch coachs into matchs 
-                            for (int j = 0; j < tour.getParams().getTeamMatesNumber(); j++) {
-                                Match m = ((TeamMatch) round.getMatch(i)).getMatch(j);
-                                Match m_tmp = ((TeamMatch) round.getMatch(k)).getMatch(j);
-                                Coach c1_tmp = (Coach) m_tmp.getCompetitor1();
-                                Coach c2 = (Coach) m.getCompetitor2();
-                                m.setCompetitor2(c1_tmp);
-                                m_tmp.setCompetitor1(c2);
+                            TeamMatch tm1 = ((TeamMatch) round.getMatch(i));
+                            TeamMatch tm2 = ((TeamMatch) round.getMatch(k));
+
+                            // If team is splited
+                            //Switch Team
+                            tm1.setCompetitor2(t2_tmp);
+                            tm2.setCompetitor2(t2);
+
+                            // Reallocate matches
+                            t2.removeMatch(tm1);
+                            t2.addMatch(tm2);
+
+                            t2_tmp.removeMatch(tm2);
+                            t2_tmp.addMatch(tm1);
+
+                            for (int j = 0; (j < tm1.getMatchCount()) && (j < tm2.getMatchCount()); j++) {
+                                Match m1 = tm1.getMatch(j);
+                                Match m2 = tm2.getMatch(j);
+                                Coach c2_tmp = (Coach) m2.getCompetitor2();
+                                Coach c2 = (Coach) m1.getCompetitor2();
+
+                                m1.setCompetitor2(c2_tmp);
+                                m2.setCompetitor2(c2);
+
+                                c2_tmp.removeMatch(m2);
+                                c2_tmp.addMatch(m1);
+
+                                c2.removeMatch(m1);
+                                c2.addMatch(m2);
                             }
                             break;
+
+                        } else {
+                            have_played = !t1.canPlay(t1_tmp, round);
+
+                            canMatch = !have_played;
+                            if (canMatch) {
+                                //Switch Team
+                                round.getMatch(i).setCompetitor2(t1_tmp);
+                                round.getMatch(k).setCompetitor1(t2);
+
+                                // Switch coachs into matchs 
+                                TeamMatch tm1 = ((TeamMatch) round.getMatch(i));
+                                TeamMatch tm2 = ((TeamMatch) round.getMatch(k));
+
+                                t2.removeMatch(round.getMatch(i));
+                                t2.addMatch(round.getMatch(k));
+
+                                t1_tmp.removeMatch(round.getMatch(k));
+                                t1_tmp.addMatch(round.getMatch(i));
+
+                                for (int j = 0; (j < tm1.getMatchCount()) && (j < tm2.getMatchCount()); j++) {
+                                    Match m = tm1.getMatch(j);
+                                    Match m_tmp = tm2.getMatch(j);
+                                    Coach c1_tmp = (Coach) m_tmp.getCompetitor1();
+                                    Coach c2 = (Coach) m.getCompetitor2();
+                                    m.setCompetitor2(c1_tmp);
+                                    m_tmp.setCompetitor1(c2);
+
+                                    c1_tmp.removeMatch(m_tmp);
+                                    c1_tmp.addMatch(m);
+
+                                    c2.removeMatch(m);
+                                    c2.addMatch(m_tmp);
+                                }
+                                break;
+                            }
                         }
                     }
                 }
@@ -687,7 +733,8 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current) {
+    public HashMap<Team, Integer> getTeamOppositionCount(ArrayList<Team> teams, Round current
+    ) {
 
         HashMap<Team, Integer> map = new HashMap<>();
 
@@ -753,7 +800,8 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return the mCoachs
      */
     @Override
-    public Coach getCoach(int i) {
+    public Coach getCoach(int i
+    ) {
         return mCoachs.get(i);
     }
 
@@ -771,7 +819,8 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @return
      */
     @Override
-    public boolean containsCoach(Coach c) {
+    public boolean containsCoach(Coach c
+    ) {
         return mCoachs.contains(c);
     }
 
@@ -780,7 +829,8 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      * @param c
      */
     @Override
-    public void addCoach(Coach c) {
+    public void addCoach(Coach c
+    ) {
         mCoachs.add(c);
         updated = true;
     }
@@ -789,7 +839,8 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
      *
      */
     @Override
-    public void removeCoach(int i) {
+    public void removeCoach(int i
+    ) {
         mCoachs.remove(i);
         updated = true;
     }

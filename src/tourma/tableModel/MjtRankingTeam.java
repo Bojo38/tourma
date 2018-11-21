@@ -231,23 +231,17 @@ public final class MjtRankingTeam extends MjtRanking {
 
                     final TeamMatch tm = (TeamMatch) t.getMatch(j);
                     if (!tm.isValues_computed()) {
-                        tm.recomputeValues();
+                            tm.recomputeValues();
                     }
-                    boolean bFound = false;
-                    for (int l = 0; (l < rounds.size()) && (!bFound); l++) {
+                    for (int l = 0; l < rounds.size(); l++) {
                         final Round r = rounds.get(l);
                         if (r.containsMatch(tm)) {
-                            bFound = true;
+                            aValue1.add(tm.getValue(1, t));
+                            aValue2.add(tm.getValue(2, t));
+                            aValue3.add(tm.getValue(3, t));
+                            aValue4.add(tm.getValue(4, t));
+                            aValue5.add(tm.getValue(5, t));
                         }
-                    }
-                    // test if match is in round
-
-                    if (bFound) {
-                        aValue1.add(tm.getValue(1, t));
-                        aValue2.add(tm.getValue(2, t));
-                        aValue3.add(tm.getValue(3, t));
-                        aValue4.add(tm.getValue(4, t));
-                        aValue5.add(tm.getValue(5, t));
                     }
 
                 }
@@ -421,8 +415,7 @@ public final class MjtRankingTeam extends MjtRanking {
                     // Now checking that all the competitors hava played against all the other ones
                     for (int j = 0; j < mDatas.size(); j++) {
                         ObjectRanking or = (ObjectRanking) mDatas.get(j);
-                        if (or.getValue(i)==-1)
-                        {
+                        if (or.getValue(i) == -1) {
                             continue;
                         }
                         ArrayList<ObjectRanking> ors = new ArrayList<>();
@@ -453,27 +446,22 @@ public final class MjtRankingTeam extends MjtRanking {
                                 }
                             }
                         }
-                        if (ors.size()>0)
-                        {
+                        if (ors.size() > 0) {
                             // 2 points per match
                             // size+1 competitors
-                            int nb_theoric=0;
-                            for (int k=ors.size(); k>0; k--)
-                            {
-                                nb_theoric+=k;
+                            int nb_theoric = 0;
+                            for (int k = ors.size(); k > 0; k--) {
+                                nb_theoric += k;
                             }
                             // practical Sum 
-                            int r_value=or.getValue(i);
-                            for (ObjectRanking or_tmp:ors)
-                            {
-                                r_value+=or_tmp.getValue(i);
+                            int r_value = or.getValue(i);
+                            for (ObjectRanking or_tmp : ors) {
+                                r_value += or_tmp.getValue(i);
                             }
-                            
-                            if (r_value!=nb_theoric*2)
-                            {
+
+                            if (r_value != nb_theoric * 2) {
                                 or.setValue(i, -1);
-                                for (ObjectRanking or_tmp:ors)
-                                {
+                                for (ObjectRanking or_tmp : ors) {
                                     or_tmp.setValue(i, -1);
                                 }
                             }

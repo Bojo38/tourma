@@ -121,7 +121,7 @@ public final class MjtRankingClan extends MjtRanking {
                         j = mRound;
                     }
 
-                    TeamMatch tm = null;
+                    /*TeamMatch tm = null;
                     Round round = Tournament.getTournament().getRound(this.getRound());
                     for (int l = 0; l < round.getMatchsCount(); l++) {
                         TeamMatch tmp = (TeamMatch) round.getMatch(l);
@@ -129,15 +129,32 @@ public final class MjtRankingClan extends MjtRanking {
                             tm = tmp;
                             break;
                         }
-                    }
-
+                    }*/
                     ArrayList<Integer> aValue1 = new ArrayList<>();
                     ArrayList<Integer> aValue2 = new ArrayList<>();
                     ArrayList<Integer> aValue3 = new ArrayList<>();
                     ArrayList<Integer> aValue4 = new ArrayList<>();
                     ArrayList<Integer> aValue5 = new ArrayList<>();
 
-                    while (j <= Math.min(t.getMatchCount() - 1, mRound)) {
+                    while (j <= mRound) {
+
+                        Round r = Tournament.getTournament().getRound(j);
+
+                        for (int l = 0; l < t.getMatchCount(); l++) {
+                            final TeamMatch tm = (TeamMatch) t.getMatch(l);
+
+                            if (r.containsMatch(tm)) {
+                                aValue1.add(tm.getValue(1, t));
+                                aValue2.add(tm.getValue(2, t));
+                                aValue3.add(tm.getValue(3, t));
+                                aValue4.add(tm.getValue(4, t));
+                                aValue5.add(tm.getValue(5, t));
+                            }
+                        }
+                        j++;
+                    }
+
+                    /*while (j <= Math.min(t.getMatchCount() - 1, mRound)) {
                         //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
                         //final CoachMatch m = (CoachMatch) c.mMatchs.get(j);
 
@@ -151,8 +168,7 @@ public final class MjtRankingClan extends MjtRanking {
                             aValue5.add(tm.getValue(5, t));
                         }
                         j++;
-                    }
-
+                    }*/
                     if (Tournament.getTournament().getParams().isUseBestResultTeam()) {
                         while (aValue1.size() > Tournament.getTournament().getParams().getBestResultTeam()) {
                             removeMinValue(aValue1);
@@ -272,21 +288,22 @@ public final class MjtRankingClan extends MjtRanking {
                         j = mRound;
                     }
 
-                    while (j <= Math.min(c.getMatchCount() - 1, mRound)) {
-                        //for (int j = 0; j <= Math.min(c.mMatchs.size(),mRound); j++) {
-                        final CoachMatch m = (CoachMatch) c.getMatch(j);
+                    while (j <= mRound) {
 
-                        aValue1.add(m.getValue(1, c));
-                        aValue1.add(m.getValue(2, c));
-                        aValue1.add(m.getValue(3, c));
-                        aValue1.add(m.getValue(4, c));
-                        aValue1.add(m.getValue(5, c));
-                        /*aValue1.add(getValueByRankingType(mRankingType1, c, m));
-                        aValue2.add(getValueByRankingType(mRankingType2, c, m));
-                        aValue3.add(getValueByRankingType(mRankingType3, c, m));
-                        aValue4.add(getValueByRankingType(mRankingType4, c, m));
-                        aValue5.add(getValueByRankingType(mRankingType5, c, m));*/
+                        Round r = Tournament.getTournament().getRound(j);
 
+                        ArrayList<CoachMatch> ar_cm = r.getCoachMatchs();
+                        for (int l = 0; l < c.getMatchCount(); l++) {
+                            final CoachMatch m = (CoachMatch) c.getMatch(l);
+
+                            if (ar_cm.contains(m)) {
+                                aValue1.add(m.getValue(1, c));
+                                aValue1.add(m.getValue(2, c));
+                                aValue1.add(m.getValue(3, c));
+                                aValue1.add(m.getValue(4, c));
+                                aValue1.add(m.getValue(5, c));
+                            }
+                        }
                         j++;
                     }
 

@@ -120,18 +120,14 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                     for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
                         final Round r = rounds.get(i);
                         if (r.containsMatch(tm)) {
-                            bFound = true;
-                        }
-                    }
-                    // test if match is in round
-                    if (bFound) {
-                        aValue.add(tm.getValue(mCriteria, mSubtype, t));
+                            aValue.add(tm.getValue(mCriteria, mSubtype, t));
 
-                        aValue1.add(tm.getValue(1, t));
-                        aValue1.add(tm.getValue(2, t));
-                        aValue1.add(tm.getValue(3, t));
-                        aValue1.add(tm.getValue(4, t));
-                        aValue1.add(tm.getValue(5, t));
+                            aValue1.add(tm.getValue(1, t));
+                            aValue1.add(tm.getValue(2, t));
+                            aValue1.add(tm.getValue(3, t));
+                            aValue1.add(tm.getValue(4, t));
+                            aValue1.add(tm.getValue(5, t));
+                        }
                     }
 
                 }
@@ -272,7 +268,7 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
         }
 
         final Tournament tour = Tournament.getTournament();
-        
+
         // if Head by Head
         if (tour.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
             // If one of sorting parameteetr is head by head
@@ -334,8 +330,7 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                     // Now checking that all the competitors hava played against all the other ones
                     for (int j = 0; j < mDatas.size(); j++) {
                         ObjectAnnexRanking or = (ObjectAnnexRanking) mDatas.get(j);
-                        if (or.getValue(i)==-1)
-                        {
+                        if (or.getValue(i) == -1) {
                             continue;
                         }
                         ArrayList<ObjectAnnexRanking> ors = new ArrayList<>();
@@ -366,27 +361,22 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                                 }
                             }
                         }
-                        if (ors.size()>0)
-                        {
+                        if (ors.size() > 0) {
                             // 2 points per match
                             // size+1 competitors
-                            int nb_theoric=0;
-                            for (int k=ors.size(); k>0; k--)
-                            {
-                                nb_theoric+=k;
+                            int nb_theoric = 0;
+                            for (int k = ors.size(); k > 0; k--) {
+                                nb_theoric += k;
                             }
                             // practical Sum 
-                            int r_value=or.getValue(i);
-                            for (ObjectAnnexRanking or_tmp:ors)
-                            {
-                                r_value+=or_tmp.getValue(i);
+                            int r_value = or.getValue(i);
+                            for (ObjectAnnexRanking or_tmp : ors) {
+                                r_value += or_tmp.getValue(i);
                             }
-                            
-                            if (r_value!=nb_theoric*2)
-                            {
+
+                            if (r_value != nb_theoric * 2) {
                                 or.setValue(i, -1);
-                                for (ObjectAnnexRanking or_tmp:ors)
-                                {
+                                for (ObjectAnnexRanking or_tmp : ors) {
                                     or_tmp.setValue(i, -1);
                                 }
                             }
@@ -395,23 +385,24 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                 }
             }
         }
-        
+
         Collections.sort(mDatas);
     }
-protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectAnnexRanking or1, ObjectAnnexRanking or2) {
+
+    protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectAnnexRanking or1, ObjectAnnexRanking or2) {
 
         if (or1.getObject() instanceof Team) {
             Team t = (Team) or1.getObject();
             Team t2 = (Team) or2.getObject();
-            
+
             for (int l = 0; l < t.getMatchCount(); l++) {
                 TeamMatch tm = (TeamMatch) t.getMatch(l);
                 Round round = tm.getRound();
                 int r_index = Tournament.getTournament().getRoundIndex(round);
                 if (r_index <= round_index) {
                     if ((tm.getCompetitor1() == t) && (tm.getCompetitor2() == t2)) {
-                        int nb_vic1=tm.getVictories(t);
-                        int nb_vic2=tm.getVictories(t2);
+                        int nb_vic1 = tm.getVictories(t);
+                        int nb_vic2 = tm.getVictories(t2);
                         if (nb_vic1 > nb_vic2) {
                             or1.setValue(valueIndex, or1.getValue(valueIndex) + 2);
                         }
@@ -424,8 +415,8 @@ protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectAnne
                         }
                     }
                     if ((tm.getCompetitor1() == t2) && (tm.getCompetitor2() == t)) {
-                        int nb_vic1=tm.getVictories(t);
-                        int nb_vic2=tm.getVictories(t2);
+                        int nb_vic1 = tm.getVictories(t);
+                        int nb_vic2 = tm.getVictories(t2);
                         if (nb_vic1 < nb_vic2) {
                             or1.setValue(valueIndex, or1.getValue(valueIndex) + 2);
                         }
@@ -440,9 +431,9 @@ protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectAnne
                 }
             }
         }
-        
+
     }
-    
+
     @Override
     public int getColumnCount() {
         return 3;

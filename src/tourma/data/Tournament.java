@@ -2022,4 +2022,23 @@ public class Tournament implements IContainCoachs, Serializable {
         }
         return (String[])names.toArray();
     }
+    
+    public int getActiveCompetitorsCount()
+    {
+        if (mParams.isTeamTournament())
+        {
+            if (mParams.getTeamPairing()==ETeamPairing.TEAM_PAIRING)
+            {
+                return getTeamsCount();
+            }
+            else
+            {
+                return getActiveCoachNumber();
+            }
+        }
+        else
+        {
+            return getActiveCoachNumber();
+        }
+    }
 }

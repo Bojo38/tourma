@@ -616,7 +616,15 @@ public class TeamMatch extends Match implements Serializable {
             }
 
             for (int i = 0; i < mMatchs.size(); i++) {
-                equality &= mMatchs.get(i).equals(tm.getMatch(i));
+                if (i<tm.getMatchCount())
+                {
+                    equality &= mMatchs.get(i).equals(tm.getMatch(i));
+                }
+                else
+                {
+                    equality=false;
+                    break;
+                }
             }
             return equality;
         }
@@ -973,21 +981,21 @@ public class TeamMatch extends Match implements Serializable {
             i = mRound;
         }*/
 
-        boolean matchFound = false;
+        int matchFound = 0;
         //while (i <= mRound) {
         //for (int i = 0; i <= mRound; i++) {
         int victories = 0;
         int loss = 0;
 
         for (int j = 0; j < t.getCoachsCount(); j++) {
-            matchFound = false;
+            //matchFound = false;
             i = 0;
             final Coach c = t.getCoach(j);
             while (i < c.getMatchCount()) {
                 if (c.getMatchCount() > i) {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
                     if (includeCurrent && tm.containsMatch(m)) {
-                        matchFound = true;
+                        matchFound++;
                         final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
                         final Value val = m.getValue(crit);
                         if (m.getCompetitor1() == c) {
@@ -1011,7 +1019,7 @@ public class TeamMatch extends Match implements Serializable {
                 i++;
             }
         }
-        if (matchFound) {
+        if (matchFound>0) {
             if (victories > loss) {
                 countTeamVictories++;
             } else if (victories < loss) {

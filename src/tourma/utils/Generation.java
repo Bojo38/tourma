@@ -687,9 +687,6 @@ public final class Generation {
 
                     int nbMates = Tournament.getTournament().getParams().getTeamMatesNumber();
 
-                    /**
-                     * @TODO: Shuffle or coachs of the team
-                     */
                     ArrayList<Coach> tc1 = new ArrayList<>();
                     ArrayList<Coach> tc2 = new ArrayList<>();
                     ArrayList<Coach> tc3 = new ArrayList<>();
@@ -708,66 +705,10 @@ public final class Generation {
                     // T1.1 vs T3.1
                     // T2.2 vs T3.2
 
-                    setHalfTeamMatch(nbMates,  t1, t2, tc1, tc2, r);
-                    setHalfTeamMatch(nbMates,  t1, t3, tc1, tc3, r);
-                    setHalfTeamMatch(nbMates,  t3, t2, tc3, tc2, r);
-                    
-                    /*ArrayList<Coach> t11 = new ArrayList<>();
-                    ArrayList<Coach> t12 = new ArrayList<>();
-                    ArrayList<Coach> t21 = new ArrayList<>();
-                    ArrayList<Coach> t22 = new ArrayList<>();
-                    ArrayList<Coach> t31 = new ArrayList<>();
-                    ArrayList<Coach> t32 = new ArrayList<>();
+                    setHalfTeamMatch(nbMates, t1, t2, tc1, tc2, r);
+                    setHalfTeamMatch(nbMates, t1, t3, tc1, tc3, r);
+                    setHalfTeamMatch(nbMates, t3, t2, tc3, tc2, r);
 
-                    for (int i = 0; i < nbMates / 2; i++) {
-                        t11.add(tc1.get(i));
-                        t12.add(tc1.get(i + nbMates / 2));
-                        t21.add(tc2.get(i));
-                        t22.add(tc2.get(i + nbMates / 2));
-                        t31.add(tc3.get(i));
-                        t32.add(tc3.get(i + nbMates / 2));
-                    }
-
-                    TeamMatch tm1 = new TeamMatch(r);
-                    TeamMatch tm2 = new TeamMatch(r);
-                    TeamMatch tm3 = new TeamMatch(r);
-                    for (int i = 0; i < nbMates / 2; i++) {
-                        CoachMatch mc1 = new CoachMatch(r);
-                        mc1.setCompetitor1(t11.get(i));
-                        mc1.setCompetitor2(t21.get(i));
-                        tm1.addMatch(mc1);
-                        t11.get(i).addMatch(mc1);
-                        t21.get(i).addMatch(mc1);
-                        CoachMatch mc2 = new CoachMatch(r);
-                        mc2.setCompetitor1(t12.get(i));
-                        mc2.setCompetitor2(t31.get(i));
-                        tm2.addMatch(mc2);
-                        t12.get(i).addMatch(mc2);
-                        t31.get(i).addMatch(mc2);
-                        CoachMatch mc3 = new CoachMatch(r);
-                        mc3.setCompetitor1(t22.get(i));
-                        mc3.setCompetitor2(t32.get(i));
-                        tm3.addMatch(mc3);
-                        t22.get(i).addMatch(mc3);
-                        t32.get(i).addMatch(mc3);
-                    }
-
-                    tm1.setCompetitor1(t1);
-                    tm1.setCompetitor2(t2);
-                    t1.addMatch(tm1);
-                    t1.addMatch(tm2);
-                    tm2.setCompetitor1(t1);
-                    tm2.setCompetitor2(t3);
-                    t2.addMatch(tm1);
-                    t2.addMatch(tm3);
-                    tm3.setCompetitor1(t2);
-                    tm3.setCompetitor2(t3);
-                    t3.addMatch(tm2);
-                    t3.addMatch(tm3);
-
-                    r.addMatch(tm1);
-                    r.addMatch(tm2);
-                    r.addMatch(tm3);*/
                     shuffle.clear();
                 }
             } else {
@@ -786,17 +727,87 @@ public final class Generation {
         tour.addRound(r);
     }
 
+    private static void set3TeamsMatches(Team t1, Team t2, Team t3, Round r) {
+        int nbMates = Tournament.getTournament().getParams().getTeamMatesNumber();
+        Tournament tour = Tournament.getTournament();
+
+        ArrayList<Coach> tc1 = new ArrayList<>();
+        ArrayList<Coach> tc2 = new ArrayList<>();
+        ArrayList<Coach> tc3 = new ArrayList<>();
+
+        for (int j = 0; j < nbMates; j++) {
+            tc1.add(t1.getCoach(j));
+            tc2.add(t2.getCoach(j));
+            tc3.add(t3.getCoach(j));
+        }
+
+        // Ordering coaches
+        final ArrayList<Round> vs = new ArrayList<>();
+        for (int j = 0; j < tour.getRoundsCount(); j++) {
+            if (tour.getRound(j).getHour().before(r.getHour())) {
+                vs.add(tour.getRound(j));
+            }
+        }
+        vs.add(r);
+
+        switch (tour.getParams().getTeamIndivPairing()) {
+            // Ranking
+            case RANKING:
+                if (vs.size() == 1) {
+                    Collections.shuffle(tc1);
+                    Collections.shuffle(tc2);
+                    Collections.shuffle(tc3);
+                } else {
+                    final ArrayList<ObjectRanking> coachs1 = Generation.subRanking(tc1, vs, true);
+                    final ArrayList<ObjectRanking> coachs2 = Generation.subRanking(tc2, vs, true);
+                    final ArrayList<ObjectRanking> coachs3 = Generation.subRanking(tc3, vs, true);
+                    tc1.clear();
+                    tc2.clear();
+                    tc3.clear();
+                    for (int k = 0; k < coachs1.size(); k++) {
+                        tc1.add((Coach) coachs1.get(k).getObject());
+                        tc2.add((Coach) coachs2.get(k).getObject());
+                        tc3.add((Coach) coachs3.get(k).getObject());
+                    }
+                }
+                break;
+            // Manual
+            case FREE:
+                // Keep Registration order. Organizers can arrange the match later.
+                break;
+            // genRandom
+            case RANDOM:
+                Collections.shuffle(tc1);
+                Collections.shuffle(tc2);
+                Collections.shuffle(tc3);
+                break;
+            // NAF
+            case NAF:
+                Collections.sort(tc1);
+                Collections.sort(tc2);
+                Collections.sort(tc3);
+                break;
+        }
+
+        // T1.1 vs T2.1
+        // T1.1 vs T3.1
+        // T2.2 vs T3.2
+        setHalfTeamMatch(nbMates, t1, t2, tc1, tc2, r);
+        setHalfTeamMatch(nbMates, t1, t3, tc1, tc3, r);
+        setHalfTeamMatch(nbMates, t3, t2, tc3, tc2, r);
+    }
+
     private static void setHalfTeamMatch(int nbMates, Team t1, Team t2, ArrayList<Coach> tc1, ArrayList<Coach> tc2, Round r) {
         TeamMatch tm = new TeamMatch(r);
 
         for (int i = 0; i < nbMates / 2; i++) {
             CoachMatch mc = new CoachMatch(r);
-            mc.setCompetitor1(tc1.get(i));
-            mc.setCompetitor2(tc2.get(i));
-            tc1.get(i).addMatch(mc);
-            tc2.get(i).addMatch(mc);
-            tc1.remove(i);
-            tc2.remove(i);
+            mc.setCompetitor1(tc1.get(0));
+            mc.setCompetitor2(tc2.get(0));
+            tc1.get(0).addMatch(mc);
+            tc2.get(0).addMatch(mc);
+            tc1.remove(0);
+            tc2.remove(0);
             tm.addMatch(mc);
         }
 
@@ -1049,148 +1060,314 @@ public final class Generation {
         }
 
         // If the number of round is more than the number of players, no switch
-        if (comps.size() - 1 <= tour.getRoundsCount()) {
-            for (int i = 0; i < datas_tmp.size() / 2; i++) {
-                if (datas_tmp.size() - i == 3) {
-if (Tournament.getTournament().getParams().isTeamTournament()&&)
-                {
-                    // Allocates the 3 last teams
-                
-                } else {
-                    Competitor c1 = (Competitor) datas_tmp.get(2 * i).getObject();
-                    Competitor c2 = (Competitor) datas_tmp.get(2 * i + 1).getObject();
-                    c1.addMatch(c2, r);
-                }
-            }
+        if ((comps.size() - 1 <= tour.getRoundsCount())
+                || ((comps.get(0) instanceof Team)
+                && (comps.size() % 2 == 1)
+                && (((comps.size() - 1) / 2) - 1 <= tour.getRoundsCount()))) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
                     Translate.translate(CS_NotEnoughRoundToAvoidSameMatch));
+
+            while(datas_tmp.size()>0) {
+                if (datas_tmp.size() == 3) {
+                    if (Tournament.getTournament().getParams().isTeamTournament()
+                            && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+
+                        // Allocates the 3 last teams
+                        Team t1 = (Team) datas_tmp.get(0).getObject();
+                        Team t2 = (Team) datas_tmp.get(1).getObject();
+                        Team t3 = (Team) datas_tmp.get(2).getObject();
+
+                        // Distribute the 3 last teams. If they have already played,it will be treated during roundcheck
+                        set3TeamsMatches(t1, t2, t3, r);
+                        datas_tmp.clear();
+
+                    }
+                    else
+                    {
+                        Competitor c1 = (Competitor) datas_tmp.get(0).getObject();
+                        if (c1 instanceof Coach)
+                        {
+                            c1.addMatch(Coach.getNullCoach(), r);
+                        }
+                        if (c1 instanceof Team)
+                        {
+                            c1.addMatch(Team.getNullTeam(), r);
+                        }
+                    }
+                } else {
+                    Competitor c1 = (Competitor) datas_tmp.get(0).getObject();
+                    Competitor c2 = (Competitor) datas_tmp.get(1).getObject();
+                    c1.addMatch(c2, r);
+                    datas_tmp.remove(0);
+                    datas_tmp.remove(0);
+                }
+            }
         } else {
             ArrayList<ObjectRanking> datas2 = new ArrayList<>(datas_tmp);
 
             while (datas2.size() > 0) {
-                int index = 0;
-                boolean byEnd = false;
-                // Alternate affectation top then bottom
-                if (topdown) {
-                    if ((datas2.size() / 2) % 2 == 1) {
-                        index = datas2.size() - 1;
-                        byEnd = true;
-                    }
-                }
-                Competitor c1 = (Competitor) datas2.get(index).getObject();
-                datas2.remove(index);
 
-                ArrayList<Competitor> opponents = new ArrayList<>();
-                for (int i = 0; i < datas2.size(); i++) {
-                    if (tour.getParams().isTeamTournament() && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
-                        Coach opp = (Coach) datas2.get(i).getObject();
-                        Coach self = (Coach) c1;
-                        if (self.getTeamMates() != opp.getTeamMates()) {
+                if ((datas2.size() == 3)
+                        && Tournament.getTournament().getParams().isTeamTournament()
+                        && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+
+                    // Allocates the 3 last teams
+                    // Find the 2 last teams which have not played against the last one
+                    Team opp1 = (Team) datas2.get(0).getObject();
+                    Team opp2 = (Team) datas2.get(1).getObject();
+                    Team t3 = (Team) datas2.get(2).getObject();
+
+                    ArrayList<Team> opps = t3.getPossibleOpponents(competitors, r);
+
+                    Team t1 = null;
+                    Team t2 = null;
+
+                    if (opps.size() < 2) {
+                        t1 = opp1;
+                        t2 = opp2;
+                    } else {
+                        for (int cpt = opps.size() - 1; (cpt >= 0); cpt--) {
+                            Team t = (Team) opps.get(cpt);
+                            if (t3.canPlay(t, r)) {
+                                if (t1 == null) {
+                                    t1 = t;
+                                } else {
+                                    if (t2 == null) {
+                                        t2 = t;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if ((t1 == null) || (t2 == null)) {
+                            t1 = opp1;
+                            t2 = opp2;
+                        }
+
+                        // if needed swap t1 and t2 in the previously allocated matches.
+                        TeamMatch tm1 = (TeamMatch) t1.getMatch(t1.getMatchCount() - 1);
+                        if (tm1.getMatchCount() == Tournament.getTournament().getParams().getTeamMatesNumber()) {
+                            if (r.containsMatch(tm1)) {
+
+                                t1.removeMatch(tm1);
+                                opp1.addMatch(tm1);
+
+                                // Swap t1 with opp1
+                                if (tm1.getCompetitor1() == t1) {
+                                    tm1.setCompetitor1(opp1);
+                                    for (int cpt2 = 0; cpt2 < tm1.getMatchCount(); cpt2++) {
+                                        CoachMatch tc1 = tm1.getMatch(cpt2);
+                                        if (((Coach) tc1.getCompetitor1()).getTeamMates() == t1) {
+                                            tc1.getCompetitor1().removeMatch(tc1);
+                                            tc1.setCompetitor1(opp1.getCoach(cpt2));
+
+                                        }
+
+                                        if (((Coach) tc1.getCompetitor2()).getTeamMates() == t1) {
+                                            tc1.getCompetitor2().removeMatch(tc1);
+                                            tc1.setCompetitor2(opp1.getCoach(cpt2));
+                                        }
+                                        opp1.getCoach(cpt2).addMatch(tc1);
+                                    }
+                                }
+
+                                if (tm1.getCompetitor2() == t1) {
+                                    tm1.setCompetitor2(opp1);
+                                    for (int cpt2 = 0; cpt2 < tm1.getMatchCount(); cpt2++) {
+                                        CoachMatch tc1 = tm1.getMatch(cpt2);
+
+                                        if (((Coach) tc1.getCompetitor1()).getTeamMates() == t1) {
+                                            tc1.getCompetitor1().removeMatch(tc1);
+                                            tc1.setCompetitor1(opp1.getCoach(cpt2));
+
+                                        }
+
+                                        if (((Coach) tc1.getCompetitor2()).getTeamMates() == t1) {
+                                            tc1.getCompetitor2().removeMatch(tc1);
+                                            tc1.setCompetitor2(opp1.getCoach(cpt2));
+                                        }
+                                        opp1.getCoach(cpt2).addMatch(tc1);
+                                    }
+                                }
+                            }
+                        }
+
+                        TeamMatch tm2 = (TeamMatch) t2.getMatch(t2.getMatchCount() - 1);
+                        if (tm2.getMatchCount() == Tournament.getTournament().getParams().getTeamMatesNumber()) {
+                            if (r.containsMatch(tm2)) {
+                                t2.removeMatch(tm2);
+                                opp2.addMatch(tm2);
+
+                                // Swap t1 with opp1
+                                if (tm2.getCompetitor1() == t2) {
+                                    tm2.setCompetitor1(opp2);
+                                    for (int cpt2 = 0; cpt2 < tm2.getMatchCount(); cpt2++) {
+                                        CoachMatch tc2 = tm2.getMatch(cpt2);
+
+                                        if (((Coach) tc2.getCompetitor1()).getTeamMates() == t2) {
+                                            tc2.getCompetitor1().removeMatch(tc2);
+                                            tc2.setCompetitor1(opp2.getCoach(cpt2));
+
+                                        }
+
+                                        if (((Coach) tc2.getCompetitor2()).getTeamMates() == t2) {
+                                            tc2.getCompetitor2().removeMatch(tc2);
+                                            tc2.setCompetitor2(opp2.getCoach(cpt2));
+                                        }
+                                        opp2.getCoach(cpt2).addMatch(tc2);
+                                    }
+                                }
+
+                                if (tm2.getCompetitor2() == t2) {
+                                    tm2.setCompetitor2(opp2);
+                                    for (int cpt2 = 0; cpt2 < tm2.getMatchCount(); cpt2++) {
+                                        CoachMatch tc2 = tm2.getMatch(cpt2);
+                                        if (((Coach) tc2.getCompetitor1()).getTeamMates() == t2) {
+                                            tc2.getCompetitor1().removeMatch(tc2);
+                                            tc2.setCompetitor1(opp2.getCoach(cpt2));
+
+                                        }
+
+                                        if (((Coach) tc2.getCompetitor2()).getTeamMates() == t2) {
+                                            tc2.getCompetitor2().removeMatch(tc2);
+                                            tc2.setCompetitor2(opp2.getCoach(cpt2));
+                                        }
+                                        opp2.getCoach(cpt2).addMatch(tc2);
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    set3TeamsMatches(t1, t2, t3, r);
+                    datas2.clear();
+
+                } else {
+                    int index = 0;
+                    boolean byEnd = false;
+                    // Alternate affectation top then bottom
+                    if (topdown) {
+                        if ((datas2.size() / 2) % 2 == 1) {
+                            index = datas2.size() - 1;
+                            byEnd = true;
+                        }
+                    }
+                    Competitor c1 = (Competitor) datas2.get(index).getObject();
+                    datas2.remove(index);
+
+                    ArrayList<Competitor> opponents = new ArrayList<>();
+                    for (int i = 0; i < datas2.size(); i++) {
+                        if (tour.getParams().isTeamTournament() && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)) {
+                            Coach opp = (Coach) datas2.get(i).getObject();
+                            Coach self = (Coach) c1;
+                            if (self.getTeamMates() != opp.getTeamMates()) {
+                                opponents.add((Competitor) datas2.get(i).getObject());
+                            }
+                        } else {
                             opponents.add((Competitor) datas2.get(i).getObject());
                         }
-                    } else {
-                        opponents.add((Competitor) datas2.get(i).getObject());
                     }
-                }
 
-                ArrayList<Competitor> possible = c1.getPossibleOpponents(opponents, r);
-                Competitor c2 = null;
-                if (!possible.isEmpty()) {
-                    if (!byEnd) {
-                        c2 = possible.get(0);
-                    } else {
-                        c2 = possible.get(possible.size() - 1);
-                    }
-                    //int index = 0;
-                    for (int i = 0; i < datas2.size(); i++) {
-                        if (datas2.get(i).getObject().equals(c2)) {
-                            datas2.remove(i);
-                            break;
+                    ArrayList<Competitor> possible = c1.getPossibleOpponents(opponents, r);
+                    Competitor c2 = null;
+                    if (!possible.isEmpty()) {
+                        if (!byEnd) {
+                            c2 = possible.get(0);
+                        } else {
+                            c2 = possible.get(possible.size() - 1);
                         }
-                    }
-                    //datas2.remove(index);
-                } else {
-
-                    if (((tour.getParams().isTeamTournament() && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)))
-                            && (opponents.size() % 2 == 0)) {
-                        int nbMatchs = c1.getMatchCount();
-                        // Remove Find possible opponent in previous allocated Match                        
-                        for (int i = r.getMatchsCount() - 1; i >= 0; i--) {
-                            Match m;
-                            if (!topdown) {
-                                m = r.getMatch(i);
-                            } else {
-                                //inverted index
-                                int j = i - r.getMatchsCount() + 1;
-
-                                if (!byEnd) {
-                                    if (j % 2 == 0) {
-                                        m = r.getMatch(r.getMatchsCount() / 2 - j / 2);
-                                    } else {
-                                        m = r.getMatch(r.getMatchsCount() / 2 + j / 2);
-                                    }
-                                } else {
-                                    if (j % 2 == 0) {
-                                        m = r.getMatch(r.getMatchsCount() / 2 + 1 + j / 2);
-                                    } else {
-                                        m = r.getMatch(r.getMatchsCount() / 2 + 1 - j / 2);
-                                    }
-                                }
-                            }
-                            Competitor cm1 = m.getCompetitor1();
-                            Competitor cm2 = m.getCompetitor2();
-                            Coach copp1 = (Coach) cm1;
-                            Coach copp2 = (Coach) cm2;
-                            if (copp2.getTeamMates() != ((Coach) c1).getTeamMates()) {
-                                if (copp1.getTeamMates() != ((Coach) c1).getTeamMates()) {
-                                    opponents.add(copp2);
-                                }
-                            }
-                            if (copp1.getTeamMates() != ((Coach) c1).getTeamMates()) {
-                                if (copp2.getTeamMates() != ((Coach) c1).getTeamMates()) {
-                                    opponents.add(copp1);
-                                }
-                            }
-                            possible = c1.getPossibleOpponents(opponents, r);
-                            if (!possible.isEmpty()) {
-                                cm1.removeMatch(m);
-                                cm2.removeMatch(m);
-                                r.removeMatch(m);
-                                c2 = possible.get(possible.size() - 1);
-                                // Re-Add removed data to data2
-                                Competitor other = null;
-                                if (c2 == cm1) {
-                                    other = cm2;
-                                }
-                                if (c2 == cm2) {
-                                    other = cm1;
-                                }
-                                // Find cm2 data and re-add it at beginning
-                                for (int j = 0; j < datas_tmp.size(); j++) {
-                                    if (datas_tmp.get(j).getObject().equals(other)) {
-                                        datas2.add(0, datas_tmp.get(j));
-                                    }
-                                }
-
+                        //int index = 0;
+                        for (int i = 0; i < datas2.size(); i++) {
+                            if (datas2.get(i).getObject().equals(c2)) {
+                                datas2.remove(i);
                                 break;
                             }
                         }
+                        //datas2.remove(index);
                     } else {
-                        if (c1 instanceof Team) {
-                            c2 = Team.getNullTeam();
-                        }
-                        if (c1 instanceof Coach) {
-                            c2 = Coach.getNullCoach();
+
+                        if (((tour.getParams().isTeamTournament() && (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING)))
+                                && (opponents.size() % 2 == 0)) {
+                            int nbMatchs = c1.getMatchCount();
+                            // Remove Find possible opponent in previous allocated Match                        
+                            for (int i = r.getMatchsCount() - 1; i >= 0; i--) {
+                                Match m;
+                                if (!topdown) {
+                                    m = r.getMatch(i);
+                                } else {
+                                    //inverted index
+                                    int j = i - r.getMatchsCount() + 1;
+
+                                    if (!byEnd) {
+                                        if (j % 2 == 0) {
+                                            m = r.getMatch(r.getMatchsCount() / 2 - j / 2);
+                                        } else {
+                                            m = r.getMatch(r.getMatchsCount() / 2 + j / 2);
+                                        }
+                                    } else {
+                                        if (j % 2 == 0) {
+                                            m = r.getMatch(r.getMatchsCount() / 2 + 1 + j / 2);
+                                        } else {
+                                            m = r.getMatch(r.getMatchsCount() / 2 + 1 - j / 2);
+                                        }
+                                    }
+                                }
+                                Competitor cm1 = m.getCompetitor1();
+                                Competitor cm2 = m.getCompetitor2();
+                                Coach copp1 = (Coach) cm1;
+                                Coach copp2 = (Coach) cm2;
+                                if (copp2.getTeamMates() != ((Coach) c1).getTeamMates()) {
+                                    if (copp1.getTeamMates() != ((Coach) c1).getTeamMates()) {
+                                        opponents.add(copp2);
+                                    }
+                                }
+                                if (copp1.getTeamMates() != ((Coach) c1).getTeamMates()) {
+                                    if (copp2.getTeamMates() != ((Coach) c1).getTeamMates()) {
+                                        opponents.add(copp1);
+                                    }
+                                }
+                                possible = c1.getPossibleOpponents(opponents, r);
+                                if (!possible.isEmpty()) {
+                                    cm1.removeMatch(m);
+                                    cm2.removeMatch(m);
+                                    r.removeMatch(m);
+                                    c2 = possible.get(possible.size() - 1);
+                                    // Re-Add removed data to data2
+                                    Competitor other = null;
+                                    if (c2 == cm1) {
+                                        other = cm2;
+                                    }
+                                    if (c2 == cm2) {
+                                        other = cm1;
+                                    }
+                                    // Find cm2 data and re-add it at beginning
+                                    for (int j = 0; j < datas_tmp.size(); j++) {
+                                        if (datas_tmp.get(j).getObject().equals(other)) {
+                                            datas2.add(0, datas_tmp.get(j));
+                                        }
+                                    }
+
+                                    break;
+                                }
+                            }
+                        } else {
+                            if (c1 instanceof Team) {
+                                c2 = Team.getNullTeam();
+                            }
+                            if (c1 instanceof Coach) {
+                                c2 = Coach.getNullCoach();
+                            }
                         }
                     }
-                }
-                if (c2 != null) {
-                    c1.addMatch(c2, r);
-                    // reorder matchset
-                    if (topdown) {
-                        int middle = r.getMatchsCount() / 2;
-                        Match m = c1.getMatch(c1.getMatchCount() - 1);
-                        r.setMatchPosition(m, middle + (r.getMatchsCount() - 1) % 2);
+                    if (c2 != null) {
+                        c1.addMatch(c2, r);
+                        // reorder matchset
+                        if (topdown) {
+                            int middle = r.getMatchsCount() / 2;
+                            Match m = c1.getMatch(c1.getMatchCount() - 1);
+                            r.setMatchPosition(m, middle + (r.getMatchsCount() - 1) % 2);
+                        }
                     }
                 }
 
@@ -1208,7 +1385,8 @@ if (Tournament.getTournament().getParams().isTeamTournament()&&)
      * @return
      */
     @SuppressWarnings("unchecked")
-    private static Round genQSwiss(final ArrayList competitors, final MjtRanking datas, Round r2) {
+    private static Round genQSwiss(final ArrayList competitors, final MjtRanking datas, Round r2
+    ) {
 
         final Tournament tour = Tournament.getTournament();
 
@@ -1304,20 +1482,36 @@ if (Tournament.getTournament().getParams().isTeamTournament()&&)
 
                 final ArrayList<ObjectRanking> datas_tmp3 = new ArrayList<>(datas_3);
                 final ArrayList<ObjectRanking> datas_tmp4 = new ArrayList<>(datas_4);
+
                 while ((datas_tmp3.size() > 0) && (datas_tmp4.size() > 0)) {
-                    Competitor c1 = (Competitor) datas_3.get(0).getObject();
-                    datas_tmp3.remove(0);
+                    // Odd number of teams management
+                    if ((datas_tmp3.size() + datas_tmp4.size() == 3)) {
+                        if (tour.getParams().isTeamTournament() && (tour.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                            Competitor c1 = (Competitor) datas_3.get(0).getObject();
+                            Team t1 = (Team) c1;
+                            Competitor c2 = (Competitor) datas_4.get(0).getObject();
+                            Team t2 = (Team) c2;
+                            Competitor c3 = (Competitor) datas_4.get(1).getObject();
+                            Team t3 = (Team) c3;
 
-                    ArrayList opponents = new ArrayList();
-                    for (int i = 0; i < datas_tmp4.size(); i++) {
-                        opponents.add(datas_tmp4.get(i));
+                            set3TeamsMatches(t1, t2, t3, r);
+                        }
+                    } else {
+
+                        Competitor c1 = (Competitor) datas_3.get(0).getObject();
+                        datas_tmp3.remove(0);
+
+                        ArrayList opponents = new ArrayList();
+                        for (int i = 0; i < datas_tmp4.size(); i++) {
+                            opponents.add(datas_tmp4.get(i));
+                        }
+                        ArrayList<Competitor> possible = c1.getPossibleOpponents(opponents, r);
+                        Competitor c2 = possible.get(0);
+
+                        int index = opponents.indexOf(c2);
+                        datas_tmp4.remove(index);
+                        c1.addMatch(c2, r);
                     }
-                    ArrayList<Competitor> possible = c1.getPossibleOpponents(opponents, r);
-                    Competitor c2 = possible.get(0);
-
-                    int index = opponents.indexOf(c2);
-                    datas_tmp4.remove(index);
-                    c1.addMatch(c2, r);
                 }
             }
         }
@@ -1341,12 +1535,22 @@ if (Tournament.getTournament().getParams().isTeamTournament()&&)
         final ArrayList<Competitor> shuffle = new ArrayList<>(competitors);
         Collections.shuffle(shuffle);
         while (shuffle.size() > 0) {
-            Competitor c = shuffle.get(0);
+            // Manage odd number of team with even number of coachs
+            if (shuffle.size() == 3) {
+                if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
+                    Team t1 = (Team) shuffle.get(0);
+                    Team t2 = (Team) shuffle.get(1);
+                    Team t3 = (Team) shuffle.get(2);
 
-            shuffle.remove(c);
-            ArrayList<Competitor> opp = c.getPossibleOpponents(shuffle, r);
-            c.addMatch(opp.get(0), r);
-            shuffle.remove(opp.get(0));
+                    set3TeamsMatches(t1, t2, t3, r);
+                }
+            } else {
+                Competitor c = shuffle.get(0);
+                shuffle.remove(c);
+                ArrayList<Competitor> opp = c.getPossibleOpponents(shuffle, r);
+                c.addMatch(opp.get(0), r);
+                shuffle.remove(opp.get(0));
+            }
         }
 
         ((Competitor) competitors.get(0)).roundCheck(r);
@@ -1708,11 +1912,20 @@ if (Tournament.getTournament().getParams().isTeamTournament()&&)
                     }
                 }
             } else {
-                if (tour.getActiveCoachNumber() % 2 > 0) {
+                if (tour.getActiveCompetitorsCount() % 2 > 0) {
                     JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
                             Translate.translate(CS_OddNumberOfActiveCoachs),
                             Translate.translate(CS_GenerationError), JOptionPane.WARNING_MESSAGE);
-                    r = null;
+                    int option = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), "Complete with ghost coach/team ?", "Odd number", JOptionPane.YES_NO_OPTION);
+                    if (option == JOptionPane.NO_OPTION) {
+                        r = null;
+                    } else {
+
+                        while (nb_tmp < tour.getActiveCoachNumber()) {
+                            nb_tmp *= 2;
+                            cup_max_tour++;
+                        }
+                    }
                 } else {
                     while (nb_tmp < tour.getActiveCoachNumber()) {
                         nb_tmp *= 2;

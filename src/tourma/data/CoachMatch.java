@@ -960,7 +960,7 @@ public class CoachMatch extends Match implements Serializable {
      * @return
      */
     public int getValue(final Coach c, final int valueType) {
-        int value=0;
+        int value = 0;
 
         switch (valueType) {
             case Parameters.C_RANKING_POINTS:
@@ -1047,49 +1047,52 @@ public class CoachMatch extends Match implements Serializable {
     public static int getOppPointsByCoach(final Coach c, final CoachMatch m, boolean includeCurrent) {
 
         int match_index = 0;
+        int value = 0;
         CoachMatch tmp_m = (CoachMatch) c.getMatch(match_index);
 
         // Loop on opponents from the first match               
-        while (tmp_m != m) {
+        while ((tmp_m != m) && (match_index < c.getMatchCount()-1)) {
             match_index++;
             tmp_m = (CoachMatch) c.getMatch(match_index);
         }
-        //Get round
-        Round round = tmp_m.getRound();
+        if (tmp_m != null) {
+            //Get round
+            Round round = tmp_m.getRound();
 
-        // List previous Opponents
-        ArrayList<Competitor> opponents = new ArrayList<>();
-        for (int i = 0; i <= match_index; i++) {
-            CoachMatch cm = (CoachMatch) c.getMatch(i);
-            if (cm.getCompetitor1() == c) {
-                opponents.add(cm.getCompetitor2());
+            // List previous Opponents
+            ArrayList<Competitor> opponents = new ArrayList<>();
+            for (int i = 0; i <= match_index; i++) {
+                CoachMatch cm = (CoachMatch) c.getMatch(i);
+                if (cm.getCompetitor1() == c) {
+                    opponents.add(cm.getCompetitor2());
+                }
+                if (cm.getCompetitor2() == c) {
+                    opponents.add(cm.getCompetitor1());
+                }
             }
-            if (cm.getCompetitor2() == c) {
-                opponents.add(cm.getCompetitor1());
-            }
-        }
-        int value = 0;
-        // Get Points of each competitor on this round except for the current match       
-        for (Competitor cmp : opponents) {
-            for (int j = 0; j < cmp.getMatchCount(); j++) {
-                CoachMatch cm = (CoachMatch) cmp.getMatch(j);
 
-                if (cm.getRound().equals(m.getRound())
-                        || m.getCompetitor1().equals(cmp)
-                        || m.getCompetitor2().equals(cmp)) {
+            // Get Points of each competitor on this round except for the current match       
+            for (Competitor cmp : opponents) {
+                for (int j = 0; j < cmp.getMatchCount(); j++) {
+                    CoachMatch cm = (CoachMatch) cmp.getMatch(j);
 
-                    if (cm.getCompetitor1().equals(cmp)) {
-                        if ((includeCurrent) || ((!cm.getCompetitor2().equals(c)) && (!includeCurrent))) {
-                            value += getPointsByCoach((Coach) cmp, cm, true, true);
+                    if (cm.getRound().equals(m.getRound())
+                            || m.getCompetitor1().equals(cmp)
+                            || m.getCompetitor2().equals(cmp)) {
+
+                        if (cm.getCompetitor1().equals(cmp)) {
+                            if ((includeCurrent) || ((!cm.getCompetitor2().equals(c)) && (!includeCurrent))) {
+                                value += getPointsByCoach((Coach) cmp, cm, true, true);
+                            }
                         }
-                    }
-                    if (cm.getCompetitor2().equals(cmp)) {
-                        if ((includeCurrent) || ((!cm.getCompetitor1().equals(c)) && (!includeCurrent))) {
-                            value += getPointsByCoach((Coach) cmp, cm, true, true);
+                        if (cm.getCompetitor2().equals(cmp)) {
+                            if ((includeCurrent) || ((!cm.getCompetitor1().equals(c)) && (!includeCurrent))) {
+                                value += getPointsByCoach((Coach) cmp, cm, true, true);
+                            }
                         }
-                    }
-                    if (cm.getRound() == round) {
-                        break;
+                        if (cm.getRound() == round) {
+                            break;
+                        }
                     }
                 }
             }
