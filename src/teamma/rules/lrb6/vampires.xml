@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>VampireKey</name>
+    <reroll>70000</reroll>
+    <apothecary>false</apothecary>
+    <chef>300000</chef>
+    <igor>true</igor>
+    <bribe>100000</bribe>
+    <playertypes>               
+        <playerType>
+            <limit>6</limit>
+            <position>Vampires</position>
+            <movement>6</movement>
+            <strength>4</strength>
+            <agility>4</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Regeneration</skill>
+                <skill>Hypnotic Gaze</skill>
+                <skill>Blood Lust</skill>
+            </skills>
+            <cost>110000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Thrall</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+            </skills>
+            <cost>40000</cost>
+            <single>
+                <skillType>General</skillType>                
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>       
+    </playertypes>
+</rostertype>
+
+

@@ -8,9 +8,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
@@ -83,11 +85,53 @@ public final class NAF {
                     stop = true;
                     break;
                 }
-                File file = new File(url.toURI());
-                if (file.exists()) {
-                    list.add(file);
+                //System.out.println("Open " + url.getPath());
+                if (url.getPath().contains("jar!")) {
+                    try {
+                        File tempFile;
+                        OutputStream out;
+                        // Was the resource found?
+                        try ( // Read the file we're looking for
+                                InputStream fileStream = _singleton.getClass().getResourceAsStream("/tourma/naf/naf_id" + i + ".xml")) {
+                            // Was the resource found?
+                            if (fileStream == null) {
+                                stop = true;
+                            }   // Grab the file name
+                            String[] chopped = url.getPath().split("\\/");
+                            String fileName = chopped[chopped.length - 1];
+                            // Create our temp file (first param is just random bits)
+                            tempFile = File.createTempFile("asdf", fileName);
+                            // Set this file to be deleted on VM exit
+                            tempFile.deleteOnExit();
+                            // Create an output stream to barf to the temp file
+                            out = new FileOutputStream(tempFile);
+                            // Write the file to the temp file
+                            byte[] buffer = new byte[1024];
+                            int len = fileStream.read(buffer);
+                            while (len != -1) {
+                                out.write(buffer, 0, len);
+                                len = fileStream.read(buffer);
+                            }
+                            // Close the streams
+                        }
+                        out.close();
+                        
+                        // Store this file in the cache list
+                        list.add(tempFile);
+
+                       
+
+                    } catch (IOException e) {
+                        stop = true;
+                    }
                 } else {
-                    stop = true;
+                    File file = new File(url.toURI());
+
+                    if (file.exists()) {
+                        list.add(file);
+                    } else {
+                        stop = true;
+                    }
                 }
                 i++;
             }
@@ -107,7 +151,7 @@ public final class NAF {
                 fileReader = new InputStreamReader(is);
 
                 final SAXBuilder sxb = new SAXBuilder();
-            
+
                 try {
                     final org.jdom2.Document document = sxb.build(fileReader);
                     final Element racine = document.getRootElement();
@@ -115,7 +159,6 @@ public final class NAF {
                     try {
                         final List<Element> xcoachs = racine.getChildren("coach");
                         final Iterator<Element> xcoach_it = xcoachs.iterator();
-                        
 
                         while (xcoach_it.hasNext()) {
                             final Element xcoach = xcoach_it.next();
@@ -158,10 +201,9 @@ public final class NAF {
     public static double getRanking(String Name, Coach coach) {
         if (netIsAvailable()) {
             try {
-                String tmp=Name;
-                if (Name.contains(" "))
-                {
-                    Name="\""+Name+"\"";
+                String tmp = Name;
+                if (Name.contains(" ")) {
+                    Name = "\"" + Name + "\"";
                 }
                 URL url = new URL("https://member.thenaf.net/index.php?module=NAF&type=tournamentinfo&uname=" + Name);
                 return getRanking(url, coach);
@@ -379,7 +421,7 @@ public final class NAF {
 
         HashMap<String, Float> distances = new HashMap<>();
         for (NAFCoach c : coachs) {
-            float dist = (float)1-getDistance(name, c.getName());
+            float dist = (float) 1 - getDistance(name, c.getName());
             distances.put(c.getName(), dist);
 
             if (dist < min5) {

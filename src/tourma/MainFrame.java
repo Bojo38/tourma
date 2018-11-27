@@ -132,6 +132,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private final static String CS_TourMaXMLFile = "TourMaXMLFile";
     private String currentPath;
 
+    public String getCurrentPath() {
+        return currentPath;
+    }
+
+    
     /**
      * Creates new form MainFrame
      *
@@ -290,6 +295,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiGenerateFirstRound.setEnabled(!isClient);
         jcxmiAsServer.setEnabled(!isClient);
         jcxPatchPortugal.setEnabled(!isClient);
+        jcxDisplayRosters.setEnabled(true);        
+        jcxDisplayRosters.setSelected(Tournament.getTournament().getParams().isDisplayRoster());        
         jmiEditColors.setEnabled(!isClient);
         jmiEditWebPort.setEnabled(!isClient);
         jmiEditDescription.setEnabled(!isClient);
@@ -360,8 +367,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jSeparator13 = new javax.swing.JPopupMenu.Separator();
         jcxUseColor = new javax.swing.JCheckBoxMenuItem();
         jcxUseImage = new javax.swing.JCheckBoxMenuItem();
+        jcxDisplayRosters = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
+        jSeparator21 = new javax.swing.JPopupMenu.Separator();
+        jmiEditRosterList = new javax.swing.JMenuItem();
         jSeparator20 = new javax.swing.JPopupMenu.Separator();
         jmiMassAdd = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
@@ -493,7 +503,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnFile.add(jmiSaveAs);
         jmnFile.add(jSeparator1);
 
-        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/naf.png"))); // NOI18N
         jmiExport.setText(bundle.getString("ExportNafResultKey")); // NOI18N
         jmiExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -505,6 +515,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiExportFbb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
         jmiExportFbb.setText(bundle.getString("ExportFBBResultXML")); // NOI18N
         jmiExportFbb.setActionCommand(bundle.getString("FBBExport")); // NOI18N
+        jmiExportFbb.setEnabled(false);
         jmiExportFbb.setLabel(bundle.getString("FBBExport")); // NOI18N
         jmiExportFbb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -514,7 +525,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnFile.add(jmiExportFbb);
 
         jmiExportFbb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
-        jmiExportFbb1.setText(bundle.getString("ExportFBBResultKey")); // NOI18N
+        jmiExportFbb1.setEnabled(false);
         jmiExportFbb1.setLabel(bundle.getString("FBBFullExport")); // NOI18N
         jmiExportFbb1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -591,6 +602,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnTools.add(jcxUseImage);
 
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("tourma/languages/language_en"); // NOI18N
+        jcxDisplayRosters.setText(bundle1.getString("DisplayRostersInFullScreen")); // NOI18N
+        jcxDisplayRosters.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxDisplayRostersActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxDisplayRosters);
+
         jMenuBar1.add(jmnTools);
 
         jmnParameters.setText(bundle.getString("Parameters")); // NOI18N
@@ -603,6 +623,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jmiGenerateFirstRound);
+        jmnParameters.add(jSeparator21);
+
+        jmiEditRosterList.setText(bundle.getString("EditRosterList")); // NOI18N
+        jmiEditRosterList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditRosterListActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiEditRosterList);
         jmnParameters.add(jSeparator20);
 
         jmiMassAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
@@ -1134,7 +1163,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             jcxAllowSpecialSkill.setEnabled(false);
         } else {
             RosterType.initCollection(RosterType.C_BLOOD_BOWL);
-            LRB.getLRB();
+    //        LRB.getLRB();
         }
 
         mTournament.clearGroups();
@@ -1243,7 +1272,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiEditTeamActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jcxAllowSpecialSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxAllowSpecialSkillActionPerformed
-        LRB.getLRB().setAllowSpecialSkills(jcxAllowSpecialSkill.getState());
+        LRB.setAllowSpecialSkills(jcxAllowSpecialSkill.getState());
     }//GEN-LAST:event_jcxAllowSpecialSkillActionPerformed
 
     private final static String CS_FBBCSVFile = "FBB CSV FILE";
@@ -1442,7 +1471,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         if (areRulesValid()) {
 
             if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                if (mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) && mTournament.getTeamsCount() % 2 > 0) {
+                if (mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) && mTournament.getCoachsCount() % 2 > 0) {
                     JOptionPane.showMessageDialog(this,
                             Translate.translate(CS_OddTeamNumber));
                 } else {
@@ -1845,16 +1874,38 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         int res = JOptionPane.showConfirmDialog(this, jpn, Translate.translate(CS_RoundCoefficient), JOptionPane.OK_CANCEL_OPTION);
         if (res == JOptionPane.OK_OPTION) {
+            try{
             Double val1 = (Double) jftf1.getValue();
             r.setMaxBonus(val1);
-            Double val2 = (Double) jftf2.getValue();
-            r.setMinBonus(val2);
+            }
+            catch (ClassCastException ce)
+            {
+                if (jftf1.getValue() instanceof Long)
+                {
+                    String txt=((Long)jftf1.getValue()).toString()+".0";
+                    r.setMaxBonus(Double.valueOf(txt));
+                }
+            }
+            try{
+                Double val2 = (Double) jftf2.getValue();
+                r.setMinBonus(val2);
+            }
+            catch (ClassCastException cc)
+            {
+                if (jftf2.getValue() instanceof Long)
+                {
+                    String txt=((Long)jftf2.getValue()).toString()+".0";
+                    r.setMinBonus(Double.valueOf(txt));
+                }
+            }
             update();
         }
 
     }
 
     private final static String CS_SwissRound = "RONDE SUISSE";
+    private final static String CS_SwissRound_TopDown = "RONDE SUISSE ALTERNEE";
+    
     private final static String CS_AcceleratedSwissRound = "RONDE SUISSE ACCELERÉE";
     private final static String CS_Animation = "Animation";
 
@@ -1893,6 +1944,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 if ((!round.isCup()) && (!mTournament.isRoundRobin())) {
                     labels.add(Translate.translate(CS_SwissRound));
                     Options.add(Generation.GEN_SWISS);
+                    labels.add(Translate.translate(CS_SwissRound_TopDown));
+                    Options.add(Generation.GEN_SWISS_TOP_AND_DOWN);
                 }
 
                 /**
@@ -1969,9 +2022,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void jmiChangePairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiChangePairingActionPerformed
 
         if (jpnContent instanceof JPNRound) {
-
             JPNRound jpnr = (JPNRound) jpnContent;
-            Round round = jpnr.getRound();
+            Round round = jpnr.getRound();            
             final JdgChangePairing jdg = new JdgChangePairing(MainFrame.getMainFrame(), true, round);
             jdg.setVisible(true);
             jpnr.update();
@@ -2979,7 +3031,18 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private void jmiMassAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMassAddActionPerformed
         JdgMassAdd jdg = new JdgMassAdd(this, true);
         jdg.setVisible(true);
+        update();
     }//GEN-LAST:event_jmiMassAddActionPerformed
+
+    private void jcxDisplayRostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxDisplayRostersActionPerformed
+          Tournament.getTournament().getParams().setDisplayRoster(jcxDisplayRosters.getState());
+
+    }//GEN-LAST:event_jcxDisplayRostersActionPerformed
+
+    private void jmiEditRosterListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditRosterListActionPerformed
+        JdgRosters jdg=new JdgRosters(this,true);
+        jdg.setVisible(true);
+    }//GEN-LAST:event_jmiEditRosterListActionPerformed
 
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
@@ -3437,6 +3500,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JPopupMenu.Separator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator20;
+    private javax.swing.JPopupMenu.Separator jSeparator21;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
@@ -3447,6 +3511,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jckmiHideNonNaf;
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
+    private javax.swing.JCheckBoxMenuItem jcxDisplayRosters;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
     private javax.swing.JCheckBoxMenuItem jcxUseColor;
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
@@ -3466,6 +3531,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiEditCoef;
     private javax.swing.JMenuItem jmiEditColors;
     private javax.swing.JMenuItem jmiEditDescription;
+    private javax.swing.JMenuItem jmiEditRosterList;
     private javax.swing.JMenuItem jmiEditTeam;
     private javax.swing.JMenuItem jmiEditWebPort;
     private javax.swing.JMenuItem jmiExit;

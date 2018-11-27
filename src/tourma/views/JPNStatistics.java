@@ -99,6 +99,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
         initComponents();
 
         addRosterPie();
+        
         if (mTournament.getGroupsCount() > 1) {
             addGroupPie();
         }

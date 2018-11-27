@@ -55,6 +55,7 @@ public class Translate {
     public final static String CS_OpponentsElo = "OpponentsElo";
     public final static String CS_MatchCount = "MatchCount";
     public final static String CS_TablesPoints = "TablesPoints";
+    public final static String CS_HeadByHead = "Head by Head";
     public final static String CS_Name = "Name";
 
     public final static String CS_ACCR_Victory1 = "V1";

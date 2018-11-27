@@ -152,7 +152,10 @@ public interface StringConstants {
     public static final String CS_LARGE_VICTORY = "Large_Victory";
     public static final String CS_LITTLE_LOST = "Little_Lost";
     public static final String CS_TEAM_LARGE_VICTORY = "Team_Large_Victory";
+    public static final String CS_TEAM_HUGE_VICTORY = "Team_Huge_Victory";
+    
     public static final String CS_TEAM_LITTLE_LOST = "Team_Little_Lost";
+    public static final String CS_TEAM_LOST = "Team_Lost";
     public static final String CS_DRAW = "Draw";
     public static final String CS_LOST = "Lost";
     public static final String CS_POSITION = "Position";
@@ -165,11 +168,13 @@ public interface StringConstants {
     public static final String CS_PORTUGAL = "Portugal";
     public static final String CS_VICTORY_TEAM = "Victory_Team";
     public static final String CS_DRAW_TEAM = "Draw_Team";
-    public static final String CS_LOST_TEAM = "Lost_Team";
+    public static final String CS_HUGE_LOST_TEAM = "Huge_Lost_Team";
     public static final String CS_LARGE_VICTORY_GAP = "Large_Victory_Gap";
     public static final String CS_LITTLE_LOST_GAP = "Little_Lost_Gap";
     public static final String CS_TEAM_LARGE_VICTORY_GAP = "Team_Large_Victory_Gap";
+    public static final String CS_TEAM_HUGE_VICTORY_GAP = "Team_Huge_Victory_Gap";
     public static final String CS_TEAM_LITTLE_LOST_GAP = "Team_Little_Lost_Gap";
+    public static final String CS_TEAM_HUGE_LOST_GAP = "Team_Huge_Lost_Gap";
     public static final String CS_BYTEAM = "ByTeam";
     public static final String CS_TEAMPAIRING = "TeamPairing";
     public static final String CS_TEAMINDIVPAIRING = "TeamIndivPairing";
@@ -192,7 +197,10 @@ public interface StringConstants {
     public static final String CS_USE_LARGE_VICTORY = "UseLargeVictory";
     public static final String CS_USE_LITTLE_LOST = "UseLittleLost";
     public static final String CS_USE_TEAM_LARGE_VICTORY = "UseTeamLargeVictory";
+    public static final String CS_USE_TEAM_HUGE_VICTORY = "UseTeamHugeVictory";
     public static final String CS_USE_TEAM_LITTLE_LOST = "UseTeamLittleLost";
+    //public static final String CS_USE_TEAM_LOST = "UseTeamLost";
+    public static final String CS_USE_TEAM_HUGE_LOST = "UseTeamHugeLost";
                
     public static final String CS_TABLEBONUS = "TableBonus";
     public static final String CS_TABLEBONUSPERROUND = "TableBonusPerRound";

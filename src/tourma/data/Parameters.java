@@ -51,6 +51,16 @@ public class Parameters implements IXMLExport, Serializable {
         return null;
     }
 
+    boolean mDisplayRoster = true;
+
+    public boolean isDisplayRoster() {
+        return mDisplayRoster;
+    }
+
+    public void setDisplayRoster(boolean d) {
+        mDisplayRoster = d;
+    }
+
     public void pull(Parameters params) {
         this.UID = params.UID;
         this._webport = params._webport;
@@ -139,6 +149,7 @@ public class Parameters implements IXMLExport, Serializable {
         this.mUseBestResultsIndiv = params.mUseBestResultsIndiv;
         this.mUseBestResultsTeam = params.mUseBestResultsTeam;
         this.mUseLargeVictory = params.mUseLargeVictory;
+        this.mUseTeamHugeVictory = params.mUseTeamHugeVictory;
         this.mUseLittleLoss = params.mUseLittleLoss;
 
         this.mWebEdit = params.mWebEdit;
@@ -203,9 +214,13 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public static final int C_RANKING_BONUS_POINTS = 10;
     /**
+     * 
+     */
+    public static final int C_RANKING_HEAD_BY_HEAD = 11;
+    /**
      *
      */
-    public static final int C_MAX_RANKING = 10;
+    public static final int C_MAX_RANKING = 11;
     /**
      *
      */
@@ -226,16 +241,20 @@ public class Parameters implements IXMLExport, Serializable {
      */
     private int mPointsIndivLargeVictory = 1000;
     private int mPointsTeamLargeVictory = 1000;
+    private int mPointsTeamHugeVictory = 1100;
     /**
      *
      */
     private boolean mUseLargeVictory = false;
     private boolean mUseTeamLargeVictory = false;
+
+    private boolean mUseTeamHugeVictory = false;
     /**
      *
      */
     private boolean mUseLittleLoss = false;
     private boolean mUseTeamLittleLoss = false;
+    private boolean mUseTeamHugeLoss = false;
 
     /**
      *
@@ -247,6 +266,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     private int mPointsIndivLittleLost = 100;
     private int mPointsTeamLittleLost = 100;
+    private int mPointsTeamHugeLost = 100;
 
     /**
      *
@@ -277,13 +297,15 @@ public class Parameters implements IXMLExport, Serializable {
      *
      */
     private int mGapLargeVictory = 3;
-    private float mGapTeamLargeVictory = 3;
+    private float mGapTeamLargeVictory = 2;
+    private float mGapTeamHugeVictory = 4;
 
     /**
      *
      */
     private int mGapLittleLost = 1;
     private float mGapTeamLittleLost = 1;
+    private float mGapTeamHugeLost = 2;
 
     /**
      *
@@ -599,6 +621,7 @@ public class Parameters implements IXMLExport, Serializable {
             params.setAttribute(StringConstants.CS_CONCEEDED, Integer.toString(this.getPointsConcedeed()));
             params.setAttribute(StringConstants.CS_TEAM_LARGE_VICTORY, Integer.toString(this.getPointsTeamLargeVictory()));
             params.setAttribute(StringConstants.CS_TEAM_LITTLE_LOST, Integer.toString(this.getPointsTeamLittleLost()));
+            params.setAttribute(StringConstants.CS_TEAM_HUGE_VICTORY, Integer.toString(this.getPointsTeamHugeVictory()));
         } catch (Exception e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
@@ -607,13 +630,17 @@ public class Parameters implements IXMLExport, Serializable {
 
         params.setAttribute(StringConstants.CS_VICTORY_TEAM, Integer.toString(this.getPointsTeamVictory()));
         params.setAttribute(StringConstants.CS_DRAW_TEAM, Integer.toString(this.getPointsTeamDraw()));
-        params.setAttribute(StringConstants.CS_LOST_TEAM, Integer.toString(this.getPointsTeamLost()));
+        params.setAttribute(StringConstants.CS_TEAM_LOST, Integer.toString(this.getPointsTeamLost()));
+        params.setAttribute(StringConstants.CS_HUGE_LOST_TEAM, Integer.toString(this.getPointsTeamHugeLost()));
+        params.setAttribute(StringConstants.CS_TEAM_LITTLE_LOST, Integer.toString(this.getPointsTeamLittleLost()));
 
         params.setAttribute(StringConstants.CS_LARGE_VICTORY_GAP, Integer.toString(this.getGapLargeVictory()));
         params.setAttribute(StringConstants.CS_LITTLE_LOST_GAP, Integer.toString(this.getGapLittleLost()));
 
         params.setAttribute(StringConstants.CS_TEAM_LARGE_VICTORY_GAP, Float.toString(this.getGapTeamLargeVictory()));
+        params.setAttribute(StringConstants.CS_TEAM_HUGE_VICTORY_GAP, Float.toString(this.getGapTeamHugeVictory()));
         params.setAttribute(StringConstants.CS_TEAM_LITTLE_LOST_GAP, Float.toString(this.getGapTeamLittleLost()));
+        params.setAttribute(StringConstants.CS_TEAM_HUGE_LOST_GAP, Float.toString(this.getGapTeamHugeLost()));
 
         params.setAttribute(StringConstants.CS_RANK + 1, Integer.toString(this.getRankingIndiv1()));
         params.setAttribute(StringConstants.CS_RANK + 2, Integer.toString(this.getRankingIndiv2()));
@@ -679,7 +706,9 @@ public class Parameters implements IXMLExport, Serializable {
         params.setAttribute(StringConstants.CS_USE_LARGE_VICTORY, Boolean.toString(this.isUseLargeVictory()));
         params.setAttribute(StringConstants.CS_USE_LITTLE_LOST, Boolean.toString(this.isUseLittleLoss()));
         params.setAttribute(StringConstants.CS_USE_TEAM_LARGE_VICTORY, Boolean.toString(this.isUseTeamLargeVictory()));
+        params.setAttribute(StringConstants.CS_USE_TEAM_HUGE_VICTORY, Boolean.toString(this.isUseTeamHugeVictory()));
         params.setAttribute(StringConstants.CS_USE_TEAM_LITTLE_LOST, Boolean.toString(this.isUseTeamLittleLoss()));
+        params.setAttribute(StringConstants.CS_USE_TEAM_HUGE_LOST, Boolean.toString(this.isUseTeamHugeLoss()));
 
         params.setAttribute(StringConstants.CS_TABLEBONUS, Boolean.toString(this.isTableBonus()));
         params.setAttribute(StringConstants.CS_TABLEBONUSPERROUND, Boolean.toString(this.isTableBonusPerRound()));
@@ -729,9 +758,12 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setPointsRefused(params.getAttribute(StringConstants.CS_REFUSED).getIntValue());
                 this.setPointsConcedeed(params.getAttribute(StringConstants.CS_CONCEEDED).getIntValue());
                 this.setPointsTeamLargeVictory(params.getAttribute(StringConstants.CS_TEAM_LARGE_VICTORY).getIntValue());
+                this.setPointsTeamHugeVictory(params.getAttribute(StringConstants.CS_TEAM_HUGE_VICTORY).getIntValue());
                 this.setPointsTeamLittleLost(params.getAttribute(StringConstants.CS_TEAM_LITTLE_LOST).getIntValue());
                 this.setGapTeamLargeVictory(params.getAttribute(StringConstants.CS_TEAM_LARGE_VICTORY_GAP).getFloatValue());
+                this.setGapTeamHugeVictory(params.getAttribute(StringConstants.CS_TEAM_HUGE_VICTORY_GAP).getFloatValue());
                 this.setGapTeamLittleLost(params.getAttribute(StringConstants.CS_TEAM_LITTLE_LOST_GAP).getFloatValue());
+                this.setGapTeamHugeLost(params.getAttribute(StringConstants.CS_TEAM_HUGE_LOST_GAP).getFloatValue());
             } catch (DataConversionException e) {
                 LOG.log(Level.FINE, e.getLocalizedMessage());
             } catch (NullPointerException e) {
@@ -750,6 +782,7 @@ public class Parameters implements IXMLExport, Serializable {
             try {
                 this.setGapLargeVictory(params.getAttribute(StringConstants.CS_LARGE_VICTORY_GAP).getIntValue());
                 this.setGapLittleLost(params.getAttribute(StringConstants.CS_LITTLE_LOST_GAP).getIntValue());
+
                 this.setPlace(params.getAttribute(StringConstants.CS_PLACE).getValue());
                 this.setTeamTournament(params.getAttribute(StringConstants.CS_BYTEAM).getBooleanValue());
 
@@ -791,19 +824,19 @@ public class Parameters implements IXMLExport, Serializable {
                 try {
                     this.setPointsTeamDrawBonus(params.getAttribute(StringConstants.CS_TEAMDRAWPOINTS).getIntValue());
 
-                } catch (DataConversionException|NullPointerException e) {
+                } catch (DataConversionException | NullPointerException e) {
                     this.setPointsTeamDrawBonus(0);
                     LOG.log(Level.FINE, e.getLocalizedMessage());
                 }
 
                 try {
                     this.setDate(format.parse(params.getAttribute(StringConstants.CS_DATE).getValue()));
-                } catch (ParseException|NullPointerException pe) {
+                } catch (ParseException | NullPointerException pe) {
                 }
 
                 try {
                     this.setGame(params.getAttribute(StringConstants.CS_GAMETYPE).getIntValue());
-                } catch (DataConversionException|NullPointerException pe) {
+                } catch (DataConversionException | NullPointerException pe) {
                     this.setGame(1);
                     LOG.log(Level.FINE, pe.getLocalizedMessage());
                 }
@@ -820,7 +853,8 @@ public class Parameters implements IXMLExport, Serializable {
             try {
                 this.setPointsTeamVictory(params.getAttribute(StringConstants.CS_VICTORY_TEAM).getIntValue());
                 this.setPointsTeamDraw(params.getAttribute(StringConstants.CS_DRAW_TEAM).getIntValue());
-                this.setPointsTeamLost(params.getAttribute(StringConstants.CS_LOST_TEAM).getIntValue());
+                this.setPointsTeamLost(params.getAttribute(StringConstants.CS_TEAM_LOST).getIntValue());
+                this.setPointsTeamHugeLost(params.getAttribute(StringConstants.CS_HUGE_LOST_TEAM).getIntValue());
                 this.setRankingTeam1(params.getAttribute(StringConstants.CS_RANK + 1 + "_" + StringConstants.CS_TEAM).getIntValue());
                 this.setRankingTeam2(params.getAttribute(StringConstants.CS_RANK + 2 + "_" + StringConstants.CS_TEAM).getIntValue());
                 this.setRankingTeam3(params.getAttribute(StringConstants.CS_RANK + 3 + "_" + StringConstants.CS_TEAM).getIntValue());
@@ -842,7 +876,9 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setUseLargeVictory(params.getAttribute(StringConstants.CS_USE_LARGE_VICTORY).getBooleanValue());
                 this.setUseLittleLoss(params.getAttribute(StringConstants.CS_USE_LITTLE_LOST).getBooleanValue());
                 this.setUseTeamLargeVictory(params.getAttribute(StringConstants.CS_USE_TEAM_LARGE_VICTORY).getBooleanValue());
+                this.setUseTeamHugeVictory(params.getAttribute(StringConstants.CS_USE_TEAM_HUGE_VICTORY).getBooleanValue());
                 this.setUseTeamLittleLoss(params.getAttribute(StringConstants.CS_USE_TEAM_LITTLE_LOST).getBooleanValue());
+                this.setUseTeamHugeLoss(params.getAttribute(StringConstants.CS_USE_TEAM_HUGE_LOST).getBooleanValue());
 
             } catch (NullPointerException ne3) {
                 //JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());
@@ -1105,6 +1141,9 @@ public class Parameters implements IXMLExport, Serializable {
         return mPointsTeamLargeVictory;
     }
 
+    public int getPointsTeamHugeVictory() {
+        return mPointsTeamHugeVictory;
+    }
     /**
      * @param mPointsIndivLargeVictory the mPointsIndivLargeVictory to set
      */
@@ -1114,6 +1153,10 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setPointsTeamLargeVictory(int mPointsTeamLargeVictory) {
         this.mPointsTeamLargeVictory = mPointsTeamLargeVictory;
+    }
+    
+    public void setPointsTeamHugeVictory(int points) {
+        this.mPointsTeamHugeVictory = points;
     }
 
     /**
@@ -1232,6 +1275,10 @@ public class Parameters implements IXMLExport, Serializable {
     public float getGapTeamLargeVictory() {
         return mGapTeamLargeVictory;
     }
+    
+    public float getGapTeamHugeVictory() {
+        return mGapTeamHugeVictory;
+    }
 
     /**
      * @param mGapLargeVictory the mGapLargeVictory to set
@@ -1242,6 +1289,10 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setGapTeamLargeVictory(float mGapLargeVictory) {
         this.mGapTeamLargeVictory = mGapLargeVictory;
+    }
+    
+    public void setGapTeamHugeVictory(float mGapLargeVictory) {
+        this.mGapTeamHugeVictory = mGapLargeVictory;
     }
 
     /**
@@ -1255,6 +1306,10 @@ public class Parameters implements IXMLExport, Serializable {
         return mGapTeamLittleLost;
     }
 
+    public float getGapTeamHugeLost() {
+        return mGapTeamHugeLost;
+    }
+
     /**
      * @param mGapLittleLost the mGapLittleLost to set
      */
@@ -1264,6 +1319,10 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setGapTeamLittleLost(float mGapLittleLost) {
         this.mGapTeamLittleLost = mGapLittleLost;
+    }
+
+    public void setGapTeamHugeLost(float mGapLittleLost) {
+        this.mGapTeamHugeLost = mGapLittleLost;
     }
 
     /**
@@ -1587,11 +1646,19 @@ public class Parameters implements IXMLExport, Serializable {
         return mPointsTeamLost;
     }
 
+    public int getPointsTeamHugeLost() {
+        return mPointsTeamHugeLost;
+    }
+
     /**
      * @param mPointsTeamLost the mPointsTeamLost to set
      */
     public void setPointsTeamLost(int mPointsTeamLost) {
         this.mPointsTeamLost = mPointsTeamLost;
+    }
+
+    public void setPointsTeamHugeLost(int mPointsTeamLost) {
+        this.mPointsTeamHugeLost = mPointsTeamLost;
     }
 
     /**
@@ -1801,6 +1868,9 @@ public class Parameters implements IXMLExport, Serializable {
     public void setUseTeamLargeVictory(boolean use) {
         this.mUseTeamLargeVictory = use;
     }
+    public void setUseTeamHugeVictory(boolean use) {
+        this.mUseTeamHugeVictory = use;
+    }
 
     public void setUseLittleLoss(boolean use) {
         this.mUseLittleLoss = use;
@@ -1810,12 +1880,20 @@ public class Parameters implements IXMLExport, Serializable {
         this.mUseTeamLittleLoss = use;
     }
 
+    public void setUseTeamHugeLoss(boolean use) {
+        this.mUseTeamHugeLoss = use;
+    }
+
     public boolean isUseLargeVictory() {
         return mUseLargeVictory;
     }
 
     public boolean isUseTeamLargeVictory() {
         return mUseTeamLargeVictory;
+    }
+    
+    public boolean isUseTeamHugeVictory() {
+        return mUseTeamHugeVictory;
     }
 
     public boolean isUseLittleLoss() {
@@ -1824,6 +1902,10 @@ public class Parameters implements IXMLExport, Serializable {
 
     public boolean isUseTeamLittleLoss() {
         return mUseTeamLittleLoss;
+    }
+
+    public boolean isUseTeamHugeLoss() {
+        return mUseTeamHugeLoss;
     }
 
     protected int _webport = 80;

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 
 /**
@@ -167,6 +168,11 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
     public Competitor() {
         mColor = generateRandomColor(Color.WHITE);
         mMatchs = new ArrayList<>();
+        if (Tournament.getTournament().getClansCount()==0)
+        {
+            Tournament.getTournament().addClan(new Clan(Translate.translate(Translate.CS_None)));
+        }
+        mClan=Tournament.getTournament().getClan(0);
     }
 
     /**

@@ -124,8 +124,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                             buildPanel(rs, screen);
 
                             semAnimate.release();
-                            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
-                            gd.setFullScreenWindow(this);
+                            mSelectedGD.setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -207,8 +206,10 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
         }
         if (screen > -1 && screen < gs.length) {
             gs[screen].setFullScreenWindow(this);
+            mSelectedGD=gs[screen];
         } else if (gs.length > 0) {
             gs[0].setFullScreenWindow(this);
+            mSelectedGD=gs[0];
         } else {
             throw new RuntimeException("No Screens Found");
         }
@@ -274,7 +275,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
+        mSelectedGD.setFullScreenWindow(this);
     }
 
     private final static String CS_Pool = "Pool";
@@ -299,9 +300,8 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
             font = this.getFont();
         }
 
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
+        int width = mSelectedGD.getDisplayMode().getWidth();
+        int height = mSelectedGD.getDisplayMode().getHeight();
 
         float size = (float) height / 50;
         Font f = font.deriveFont(Font.PLAIN, size);

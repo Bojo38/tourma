@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<skills>
+    <category>
+        <name>General</name>
+        <accronym>G</accronym>
+        <special>false</special>
+        <skill>Kick-off Return</skill>
+        <skill>Strip Ball</skill>
+        <skill>Block</skill>
+        <skill>Pass Block</skill>
+        <skill>Sure Hands</skill>
+        <skill>Kick</skill>
+        <skill>Frenzy</skill>
+        <skill>Dauntless</skill>
+        <skill>Dirty Player</skill>
+        <skill>Wrestle</skill>
+        <skill>Fend</skill>
+        <skill>Shadowing</skill>
+        <skill>Pro</skill>
+        <skill>Tackle</skill>
+    </category>
+    <category>
+        <name>Pass</name>
+        <accronym>P</accronym>
+        <special>false</special>
+        <skill>Leader</skill>
+        <skill>Hail Mary Pass</skill>
+        <skill>Safe Throw</skill>
+        <skill>Nerves of Steel</skill>
+        <skill>Pass</skill>
+        <skill>Dump-Off</skill>
+        <skill>Accurate</skill>
+    </category>
+    <category>
+        <name>Strength</name>
+        <accronym>S</accronym>
+        <special>false</special>
+        <skill>Multiple Block</skill>
+        <skill>Mighty Blow</skill>
+        <skill>Strong Arm</skill>
+        <skill>Thick Skull</skill>
+        <skill>Piling On</skill>
+        <skill>Break Tackle</skill>
+        <skill>Guard</skill>
+        <skill>Juggernaut</skill>
+        <skill>Grab</skill>
+        <skill>Stand Firm</skill>
+    </category>
+    <category>
+        <name>Mutation</name>
+        <accronym>M</accronym>
+        <special>false</special>
+        <skill>Extra Arms</skill>
+        <skill>Horns</skill>
+        <skill>Two Heads</skill>
+        <skill>Big Hand</skill>
+        <skill>Claws</skill>
+        <skill>Disturbing Presence</skill>
+        <skill>Prehensile Tail</skill>
+        <skill>Foul Appearance</skill>
+        <skill>Tentacles</skill>
+        <skill>Very Long Legs</skill>
+    </category>
+    <category>
+        <name>Agility</name>
+        <accronym>A</accronym>
+        <special>false</special>
+        <skill>Jump Up</skill>
+        <skill>Sure Feet</skill>
+        <skill>Dodge</skill>
+        <skill>Side Step</skill>
+        <skill>Diving Catch</skill>
+        <skill>Catch</skill>
+        <skill>Leap</skill>
+        <skill>Sneaky Git</skill>
+        <skill>Sprint</skill>
+        <skill>Diving Tackle</skill>
+    </category>
+    <category>
+        <name>Extraordinary</name>
+        <accronym>E</accronym>
+        <special>true</special>
+        <skill>Wild Animal</skill>
+        <skill>Animosity</skill>
+        <skill>Secret Weapon</skill>
+        <skill>Bombardier</skill>
+        <skill>Bone Head</skill>
+        <skill>Ball And Chain</skill>
+        <skill>Decay</skill>
+        <skill>Really Stupid</skill>
+        <skill>Fan Favourite</skill>
+        <skill>Throw Team-Mate</skill>
+        <skill>No Hands</skill>
+        <skill>Titchy</skill>
+        <skill>Stunty</skill>
+        <skill>Stakes</skill>
+        <skill>Right Stuff</skill>
+        <skill>Stab</skill>
+        <skill>Nurgle's Rot</skill>
+        <skill>Take Roots</skill>
+        <skill>Hypnotic Gaze</skill>
+        <skill>Regeneration</skill>
+        <skill>Blood Lust</skill>
+        <skill>Loner</skill>
+        <skill>Always Hungry</skill>
+        <skill>Chainsaw</skill>
+    </category>
+    <category>
+        <name>Characteristics</name>
+        <accronym>C</accronym>
+        <special>true</special>
+        <skill>+1 Movement</skill>
+        <skill>+1 Strength</skill>
+        <skill>+1 Agility</skill>
+        <skill>+1 Armor</skill>
+    </category>
+    <category>
+        <name>Injury</name>
+        <accronym>I</accronym>
+        <special>true</special>
+        <skill>Niggling Injury</skill>
+        <skill>-1 Movement</skill>
+        <skill>-1 Strength</skill>
+        <skill>-1 Agility</skill>
+        <skill>-1 Armor</skill>
+    </category>
+</skills>

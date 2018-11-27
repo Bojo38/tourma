@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.Element;
+import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 
 /**
@@ -615,7 +616,15 @@ public class TeamMatch extends Match implements Serializable {
             }
 
             for (int i = 0; i < mMatchs.size(); i++) {
-                equality &= mMatchs.get(i).equals(tm.getMatch(i));
+                if (i<tm.getMatchCount())
+                {
+                    equality &= mMatchs.get(i).equals(tm.getMatch(i));
+                }
+                else
+                {
+                    equality=false;
+                    break;
+                }
             }
             return equality;
         }
@@ -718,8 +727,10 @@ public class TeamMatch extends Match implements Serializable {
         int value = 0;
         int countTeamVictories = 0;
         int countTeamLargeVictories = 0;
+        int countTeamHugeVictories = 0;
         int countTeamLoss = 0;
         int countTeamLittleLoss = 0;
+        int countTeamHugeLoss = 0;
         int countTeamDraw = 0;
 
         int i = 0;
@@ -802,17 +813,62 @@ public class TeamMatch extends Match implements Serializable {
         }
 
         if (victories > loss) {
-            if (Tournament.getTournament().getParams().isUseTeamLargeVictory()) {
-                if (victories - loss >= Tournament.getTournament().getParams().getGapTeamLargeVictory()) {
-                    countTeamLargeVictories++;
+            if (Tournament.getTournament().getParams().isUseTeamHugeVictory()) {
+
+                if (victories - loss - Tournament.getTournament().getParams().getGapTeamHugeVictory() >= -0.1) {
+                    countTeamHugeVictories++;
+                } else {
+                    if (Tournament.getTournament().getParams().isUseTeamLargeVictory()) {
+                        if (victories - loss - Tournament.getTournament().getParams().getGapTeamLargeVictory() >= -0.1) {
+                            countTeamLargeVictories++;
+                        } else {
+                            countTeamVictories++;
+                        }
+                    } else {
+                        countTeamVictories++;
+                    }
+                }
+            } else {
+                if (Tournament.getTournament().getParams().isUseTeamLargeVictory()) {
+                    if (victories - loss - Tournament.getTournament().getParams().getGapTeamLargeVictory() >= -0.1) {
+                        countTeamLargeVictories++;
+                    } else {
+                        countTeamVictories++;
+                    }
                 } else {
                     countTeamVictories++;
                 }
-            } else {
-                countTeamVictories++;
             }
         } else if (victories < loss) {
+
             if (Tournament.getTournament().getParams().isUseTeamLittleLoss()) {
+                if (loss - victories - Tournament.getTournament().getParams().getGapTeamLittleLost() <= 0.1) {
+                    countTeamLittleLoss++;
+                } else {
+                    if (Tournament.getTournament().getParams().isUseTeamHugeLoss()) {
+                        if (loss - victories - Tournament.getTournament().getParams().getGapTeamHugeLost() < 0.1) {
+                            countTeamLoss++;
+                        } else {
+                            countTeamHugeLoss++;
+                        }
+                    } else {
+                        countTeamLoss++;
+                    }
+                }
+            } else {
+                if (Tournament.getTournament().getParams().isUseTeamHugeLoss()) {
+                    if (loss - victories - Tournament.getTournament().getParams().getGapTeamHugeLost() < 0.1) {
+                        countTeamLoss++;
+                    } else {
+                        countTeamHugeLoss++;
+                    }
+                } else {
+                    countTeamLoss++;
+                }
+            }
+
+
+            /*if (Tournament.getTournament().getParams().isUseTeamLittleLoss()) {
                 if (loss - victories <= Tournament.getTournament().getParams().getGapTeamLittleLost()) {
                     countTeamLittleLoss++;
                 } else {
@@ -820,7 +876,7 @@ public class TeamMatch extends Match implements Serializable {
                 }
             } else {
                 countTeamLoss++;
-            }
+            }*/
         } else {
             countTeamDraw++;
         }
@@ -829,8 +885,10 @@ public class TeamMatch extends Match implements Serializable {
         if (withMainPoints) {
             value += countTeamVictories * Tournament.getTournament().getParams().getPointsTeamVictory();
             value += countTeamLargeVictories * Tournament.getTournament().getParams().getPointsTeamLargeVictory();
+            value += countTeamHugeVictories * Tournament.getTournament().getParams().getPointsTeamHugeVictory();
             value += countTeamLoss * Tournament.getTournament().getParams().getPointsTeamLost();
             value += countTeamLittleLoss * Tournament.getTournament().getParams().getPointsTeamLittleLost();
+            value += countTeamHugeLoss * Tournament.getTournament().getParams().getPointsTeamHugeLost();
             value += countTeamDraw * Tournament.getTournament().getParams().getPointsTeamDraw();
         }
 
@@ -923,21 +981,21 @@ public class TeamMatch extends Match implements Serializable {
             i = mRound;
         }*/
 
-        boolean matchFound = false;
+        int matchFound = 0;
         //while (i <= mRound) {
         //for (int i = 0; i <= mRound; i++) {
         int victories = 0;
         int loss = 0;
 
         for (int j = 0; j < t.getCoachsCount(); j++) {
-            matchFound = false;
+            //matchFound = false;
             i = 0;
             final Coach c = t.getCoach(j);
             while (i < c.getMatchCount()) {
                 if (c.getMatchCount() > i) {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
                     if (includeCurrent && tm.containsMatch(m)) {
-                        matchFound = true;
+                        matchFound++;
                         final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
                         final Value val = m.getValue(crit);
                         if (m.getCompetitor1() == c) {
@@ -961,7 +1019,7 @@ public class TeamMatch extends Match implements Serializable {
                 i++;
             }
         }
-        if (matchFound) {
+        if (matchFound>0) {
             if (victories > loss) {
                 countTeamVictories++;
             } else if (victories < loss) {
@@ -1055,6 +1113,11 @@ public class TeamMatch extends Match implements Serializable {
     public int getValue(final Team t, final int rankingType, boolean teamVictory) {
         int value = 0;
 
+        boolean splitted = false;
+        if (this.getMatchCount() == t.getCoachsCount() / 2) {
+            splitted = true;
+        }
+
         int roundIndex = -1;
         for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
             Round r = Tournament.getTournament().getRound(i);
@@ -1069,24 +1132,30 @@ public class TeamMatch extends Match implements Serializable {
             switch (rankingType) {
                 case Parameters.C_RANKING_POINTS:
                     value = getPointsByTeam(t, this, true, true);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
                     value = getPointsByTeam(t, this, true, false);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_BONUS_POINTS:
                     value = getPointsByTeam(t, this, false, true);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_NONE:
                     value = 0;
                     break;
                 case Parameters.C_RANKING_OPP_POINTS:
                     value = getOppPointsByTeam(t, this, true);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
                     value = getOppPointsByTeam(t, this, false);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_VND:
                     value = getVNDByTeam(t, this, true);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_ELO:
                     value = getELOByTeam(t, this, roundIndex);
@@ -1096,17 +1165,21 @@ public class TeamMatch extends Match implements Serializable {
                     break;
                 case Parameters.C_RANKING_NB_MATCHS:
                     value = getTeamNbMatch(t, this);
+                    value = splitted ? value / 2 : value;
                     break;
                 case Parameters.C_RANKING_TABLES:
                     value = getTeamTable(t, this);
+                    value = splitted ? value / 2 : value;
+                    break;
+                case Parameters.C_RANKING_HEAD_BY_HEAD:
+                    value = 0;
                     break;
                 default:
+                    if (rankingType > Parameters.C_MAX_RANKING) {
+                        value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                    }
             }
         } else {
-            /*for (int i = 0; i < t.getCoachsCount(); i++) {
-            final Coach c = t.getCoach(i);
-            //for (int j = 0; j < c.getMatchCount(); j++) {
-            final CoachMatch m = (CoachMatch) c.getMatch(j);*/
             for (int i = 0; i < getMatchCount(); i++) {
                 CoachMatch cm = getMatch(i);
                 Coach c = null;
@@ -1158,6 +1231,7 @@ public class TeamMatch extends Match implements Serializable {
                             }
                             break;
                         default:
+
                     }
                 }
             }
@@ -1166,16 +1240,26 @@ public class TeamMatch extends Match implements Serializable {
                     int VND = getVNDByTeam(t, this, true);
                     int nbVictory = (VND / 1000000);
                     int nbDraw = (VND % 1000000) / 1000;
-                    value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                    value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                    if (splitted) {
+                        value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus() / 2;
+                        value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus() / 2;
+                    } else {
+                        value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                        value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                    }
                 }
                 break;
                 case Parameters.C_RANKING_POINTS_WITHOUT_BONUS: {
                     int VND = getVNDByTeam(t, this, true);
                     int nbVictory = (VND / 1000000);
                     int nbDraw = (VND % 1000000) / 1000;
-                    value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                    value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                    if (splitted) {
+                        value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus() / 2;
+                        value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus() / 2;
+                    } else {
+                        value += nbVictory * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                        value += nbDraw * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                    }
                 }
                 break;
                 case Parameters.C_RANKING_OPP_POINTS:
@@ -1183,12 +1267,6 @@ public class TeamMatch extends Match implements Serializable {
                     if (t.getCoachsCount() > 0) {
                         final Coach c = t.getCoach(0);
                         int i = 0;
-                        /*if (mRoundOnly) {
-                            i = mRound;
-                        }
-
-                        while (i <= mRound) {*/
-                        //for (int i = 0; i <= mRound; i++) {
                         if (c.getMatchCount() > i) {
                             final CoachMatch m = (CoachMatch) c.getMatch(i);
                             if (m.getCompetitor1() == null) {
@@ -1199,25 +1277,39 @@ public class TeamMatch extends Match implements Serializable {
                             }
                             if (m.getCompetitor1() == c) {
                                 long tmp = getVNDByTeam(((Coach) m.getCompetitor2()).getTeamMates(), this, rankingType != Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS);
-                                value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                                value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                                if (splitted) {
+                                    value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus() / 2;
+                                    value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus() / 2;
+                                } else {
+                                    value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                                    value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                                }
                             } else {
                                 long tmp = getVNDByTeam(((Coach) m.getCompetitor1()).getTeamMates(), this, rankingType != Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS);
-                                value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
-                                value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+
+                                if (splitted) {
+                                    value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus() / 2;
+                                    value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus() / 2;
+                                } else {
+                                    value += (tmp / 1000000) * Tournament.getTournament().getParams().getPointsTeamVictoryBonus();
+                                    value += ((tmp % 1000000) / 1000) * Tournament.getTournament().getParams().getPointsTeamDrawBonus();
+                                }
                             }
                         }
-                        /*     i++;
-                        }*/
                     }
                     break;
                 default:
+                    if (rankingType > Parameters.C_MAX_RANKING) {
+                        value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                    }
             }
         }
         return value;
     }
 
-    int getValue(final Team t, TeamMatch tm, final Criteria crit, final int subtype) {
+    int getValue(final Team t, TeamMatch tm,
+            final Criteria crit, final int subtype
+    ) {
         int value = 0;
         for (int i = 0; i < tm.getMatchCount(); i++) {
             CoachMatch cm = tm.getMatch(i);
@@ -1272,13 +1364,22 @@ public class TeamMatch extends Match implements Serializable {
         this.c2value4 = recomputeValue(4, mCompetitor2);
         this.c1value5 = recomputeValue(5, mCompetitor1);
         this.c2value5 = recomputeValue(5, mCompetitor2);
+
+        for (CoachMatch cm : mMatchs) {
+            cm.recomputeValues();
+        }
+
         values_computed = true;
     }
 
     protected int recomputeValue(int index, Competitor c) {
         int value = 0;
         int valueType = Parameters.C_RANKING_NONE;
-        valueType = Tournament.getTournament().getParams().getTeamRankingType(index - 1);
+        if (Tournament.getTournament().getParams().isTeamVictoryOnly()) {
+            valueType = Tournament.getTournament().getParams().getTeamRankingType(index - 1);
+        } else {
+            valueType = Tournament.getTournament().getParams().getIndivRankingType(index - 1);
+        }
         value = getValue((Team) c, valueType, Tournament.getTournament().getParams().isTeamVictoryOnly());
         return value;
     }

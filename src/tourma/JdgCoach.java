@@ -42,6 +42,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
+import teamma.data.LRB;
 import teamma.views.JdgRoster;
 import tourma.data.Category;
 import tourma.data.Coach;
@@ -228,6 +229,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
         jcbRoster.setModel(RosterType.getRostersNamesModel());
         mCoach = coach;
+        mCoach.setName(coach.getName());
         if (mCoach.getPicture() == null) {
             try {
                 coach.setPicture(new ImageIcon(ImageIO.read(getClass().getResource("/tourma/images/avatar/60001.png"))));
@@ -594,7 +596,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelActionPerformed
-        mCoach.setName("");
+        //mCoach.setName("");
         this.setVisible(false);
     }//GEN-LAST:event_jbtCancelActionPerformed
 
@@ -644,7 +646,10 @@ public final class JdgCoach extends javax.swing.JDialog {
                 }
             }
 
-            c.setName(jtfNom.getText());
+            if (!jtfNom.getText().equals(""))
+            {
+                c.setName(jtfNom.getText());
+            }
             c.setRoster(new RosterType(jcbRoster.getSelectedIndex()));
             c.setTeam(jtfEquipe.getText());
             c.setActive(jckActive.isSelected());
@@ -781,7 +786,8 @@ public final class JdgCoach extends javax.swing.JDialog {
                 JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.getRostersNames(), RosterType.getRostersNames()[0]);
 
-        teamma.data.RosterType rt = teamma.data.LRB.getLRB().getRosterType(input, false);
+        LRB.E_Version version=LRB.E_Version.NAF2017;
+        teamma.data.RosterType rt = teamma.data.LRB.getLRB(version).getRosterType(input, false);
 
         if (rt != null) {
             teamma.data.Roster compo = new teamma.data.Roster();

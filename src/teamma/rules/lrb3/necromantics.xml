@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>NecromanticKey</name>
+    <reroll>70000</reroll>
+    <apothecary>false</apothecary>
+    <chef>300000</chef>
+    <igor>true</igor>
+    <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
+    <playertypes>               
+        <playerType>
+            <limit>2</limit>
+            <position>Werewolf</position>
+            <movement>8</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Frenzy</skill>
+                <skill>Catch</skill>
+                <skill>Claw</skill>
+            </skills>
+            <cost>120000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Ghoul</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </single>
+            <double>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+            </double>
+        </playerType>
+        <playerType>
+             <limit>2</limit>
+            <position>Wight</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Flesh Golem</position>
+            <movement>4</movement>
+            <strength>4</strength>
+            <agility>2</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Stand Firm</skill>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>110000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+                <skillType>Strength Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>12</limit>
+            <position>Zombie</position>
+            <movement>4</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Regeneration</skill>
+            </skills>
+            <cost>30000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

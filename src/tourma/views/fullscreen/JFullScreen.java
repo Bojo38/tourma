@@ -43,7 +43,8 @@ public abstract class JFullScreen extends javax.swing.JDialog {
     protected Semaphore semStart = new Semaphore(1);
 
     private static final Logger LOG = Logger.getLogger(JFullScreenMatchs.class.getName());
-
+    protected GraphicsDevice mSelectedGD;
+    
     public JFullScreen(Socket s) throws IOException {
         super();
         try {
@@ -72,6 +73,11 @@ public abstract class JFullScreen extends javax.swing.JDialog {
             Object val = JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (val instanceof Integer) {
                 screen = ((Integer) val).intValue();
+                mSelectedGD=gs[screen];
+            }
+            else
+            {
+                mSelectedGD=gs[0];
             }
         }
 
@@ -88,11 +94,17 @@ public abstract class JFullScreen extends javax.swing.JDialog {
         this.setUndecorated(true);
         //this.setState(JDialog.);
         this.setAlwaysOnTop(true);
-
+        
+        mSelectedGD=GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        
         initComponents();
         GridBagLayout gbl = new GridBagLayout();
         jpnContent.setLayout(gbl);
 
+    }
+
+    protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
+        return getLabelForObject(object, height, width, f, bkg, false, 0);
     }
 
     /**
@@ -102,10 +114,11 @@ public abstract class JFullScreen extends javax.swing.JDialog {
      * @param width
      * @param f
      * @param bkg
+     * @param right
      * @return
      */
     @SuppressWarnings("SuspiciousNameCombination")
-    protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg) {
+    protected JLabel getLabelForObject(IWithNameAndPicture object, int height, int width, Font f, Color bkg, boolean right, int matchIndex) {
 
         JLabel l = new JLabel();
         try {
@@ -127,7 +140,16 @@ public abstract class JFullScreen extends javax.swing.JDialog {
 
         try {
             String text = object.getName();
-            l.setText(text);
+            if ((object instanceof Coach) && (Tournament.getTournament().getParams().isDisplayRoster())) {
+                Coach c = (Coach) object;
+                if (right) {
+                    l.setText("<HTML>" + c.getName() + " <i>(" + c.getMatchRoster(matchIndex) + ")</i></HTML>");
+                } else {
+                    l.setText("<HTML><i>(" + c.getMatchRoster(matchIndex) + ")</i> " + c.getName() + "</HTML>");
+                }
+            } else {
+                l.setText(text);
+            }
         } catch (RemoteException re) {
             re.printStackTrace();
         }
@@ -206,7 +228,30 @@ public abstract class JFullScreen extends javax.swing.JDialog {
     protected class Animation extends Thread implements Suspendable {
 
         private boolean suspended = false;
+        private long millis = 8000;
+        private long computedTime;
+        private long ncomputedTime=0;
 
+        synchronized void incrementSync() {
+            millis = millis - millis * 10 / 100;
+            
+            double decr=computedTime*1000000+ncomputedTime;
+            decr=decr*0.9;
+            computedTime=new Double(Math.floor(decr/1000000)).longValue();
+            ncomputedTime=new Double(decr-computedTime*1000000).longValue();
+            
+            //computedTime=computedTime-decr;
+        }
+
+        synchronized void decrementSync() {
+            millis = millis + millis * 10 / 100;
+           double decr=computedTime*1000000+ncomputedTime;
+            decr=decr*1.1;
+            computedTime=new Double(Math.floor(decr/1000000)).longValue();
+            ncomputedTime=new Double(decr-computedTime*1000000).longValue();
+        }
+
+        @Override
         public void setSuspended(boolean s) {
             suspended = s;
         }
@@ -215,10 +260,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
-            long computedTime = getHeight() / 100;
-            //int blockIncrement = jscrp.getVerticalScrollBar().getBlockIncrement();
-
-            //System.out.println("Screen Height: " + getHeight() + " ScrollBar size: " + (jscrp.getVerticalScrollBar().getMaximum() - jscrp.getVerticalScrollBar().getMinimum()) + " Computed Time: " + computedTime);
+            computedTime = mSelectedGD.getDisplayMode().getHeight() / 100;
             int lastValue = 0;
             try {
                 semAnimate.acquire();
@@ -234,7 +276,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
                     synchronized (this) {
                         suspended = true;
 
-                        spleeping.sleep(8000, 0);
+                        spleeping.sleep(millis, 0);
                         while (suspended && animationStarted) {
                             try {
                                 wait();
@@ -247,7 +289,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
                     synchronized (this) {
                         suspended = true;
 
-                        spleeping.sleep(8000, 0);
+                        spleeping.sleep(millis, 0);
                         while (suspended && animationStarted) {
                             try {
                                 wait();
@@ -270,7 +312,7 @@ public abstract class JFullScreen extends javax.swing.JDialog {
                 synchronized (this) {
                     suspended = true;
 
-                    spleeping.sleep(computedTime, (int) 0);
+                    spleeping.sleep(computedTime, (int) ncomputedTime);
                     while (suspended && animationStarted) {
                         try {
                             wait();
@@ -354,7 +396,28 @@ public abstract class JFullScreen extends javax.swing.JDialog {
                 animation = new Animation();
                 animation.start();
             }
-
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_SUBTRACT) || (evt.getKeyCode() == KeyEvent.VK_M)) {
+            if (animationStarted) {
+                jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                if (animation != null) {
+                    if (animation.isAlive()) {
+                        animation.incrementSync();
+                    }
+                }
+            }
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ADD) || (evt.getKeyCode() == KeyEvent.VK_P)) {
+            if (animationStarted) {
+                jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                if (animation != null) {
+                    if (animation.isAlive()) {
+                        animation.decrementSync();
+                    }
+                }
+            }
         }
     }
 

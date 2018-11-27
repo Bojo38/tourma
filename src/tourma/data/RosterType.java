@@ -174,8 +174,7 @@ public class RosterType implements IXMLExport, Serializable {
         mRosterTypes.put(translate("ChaosPactKey"), new RosterType(translate("ChaosPactKey")));
         mRosterTypes.put(translate("SkavenKey"), new RosterType(translate("SkavenKey")));
         mRosterTypes.put(translate("SlannKey"), new RosterType(translate("SlannKey")));
-        mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));
-        mRosterTypes.put(translate("BretonianKey"), new RosterType(translate("BretonianKey")));
+        mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));    
     }
 
     /**

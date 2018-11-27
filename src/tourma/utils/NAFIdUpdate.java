@@ -29,7 +29,7 @@ import tourma.utility.StringConstants;
  */
 public class NAFIdUpdate {
 
-    public static final int MAX_NAF_ID = 26000;
+    public static final int MAX_NAF_ID = 27000;
     public static final int MIN_NAF_ID = 25001;
 
     /**

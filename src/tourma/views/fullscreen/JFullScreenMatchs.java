@@ -65,6 +65,7 @@ public final class JFullScreenMatchs extends JFullScreen {
     private Round round;
     private boolean loopStop = false;
     private boolean clash = false;
+    private int _screenIndex = 0;
 
     public JFullScreenMatchs(Socket s) throws IOException {
         this(s, false);
@@ -90,6 +91,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
             GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
+            _screenIndex = screen;
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
 
@@ -195,203 +197,87 @@ public final class JFullScreenMatchs extends JFullScreen {
 
         Font font;
 
-        jpn = new JPanel();
-        GridBagLayout gbl = new GridBagLayout();
-        jpn.setLayout(gbl);
+        int fontRatio = 50;
 
-        try {
-            font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
-        } catch (FontFormatException | IOException ex) {
-            Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            font = this.getFont();
-        }
+        do {
+            jpn = new JPanel();
+            GridBagLayout gbl = new GridBagLayout();
+            jpn.setLayout(gbl);
 
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[display];
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
-
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
-
-        float size = (float) height / 50;
-        Font f0 = font.deriveFont(Font.ITALIC, size);
-        Font f1 = font.deriveFont(Font.BOLD, size);
-        Font f1Winner = font.deriveFont(Font.BOLD, size);
-        Font f1Draw = font.deriveFont(Font.ITALIC, size);
-        Font f1Looser = font.deriveFont(Font.PLAIN, size);
-        Font fBig = font.deriveFont(Font.BOLD, (float) height / 20);
-
-        int computed_height = height / 10;
-        int nbCols = 3;
-        int computed_width = width / nbCols;
-
-        for (int i = 0; i < r.getMatchsCount(); i++) {
-            Color bkg = new Color(255, 255, 255);
-            if (i % 2 != 0) {
-                bkg = new Color(220, 220, 220);
-            }
-            Match m = r.getMatch(i);
-            if (m instanceof CoachMatch) {
-                CoachMatch cm = (CoachMatch) m;
-
-                int colIndex = 0;
-                int rowspan = cm.getValueCount();
-                if (Tournament.getTournament().getClansCount() > 1) {
-                    nbCols = 5;
-                    computed_width = width / nbCols;
-                    colIndex = 1;
-                    JLabel ClanIcon1 = getLabelForObject((cm.getCompetitor1()).getClan(), computed_height, computed_width, f0, bkg);
-                    JLabel ClanIcon2 = getLabelForObject((cm.getCompetitor2()).getClan(), computed_height, computed_width, f0, bkg);
-
-                    ClanIcon1.setHorizontalTextPosition(JLabel.LEADING);
-                    ClanIcon1.setHorizontalAlignment(JLabel.RIGHT);
-                    ClanIcon2.setHorizontalAlignment(JLabel.LEFT);
-
-                    jpn.add(ClanIcon1, getGridbBagConstraints(0, i * (rowspan + 1), rowspan + 1, 1));
-                    jpn.add(ClanIcon2, getGridbBagConstraints(nbCols - 1, i * (rowspan + 1), rowspan + 1, 1));
-                }
-                if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamIndivPairing() == EIndivPairing.RANKING)) {
-                    nbCols = 5;
-                    computed_width = width / nbCols;
-                    colIndex = 1;
-
-                    JLabel TeamIcon1 = getLabelForObject(((Coach) (cm.getCompetitor1())).getTeamMates(), computed_height, computed_width, f0, bkg);
-                    JLabel TeamIcon2 = getLabelForObject(((Coach) (cm.getCompetitor2())).getTeamMates(), computed_height, computed_width, f0, bkg);
-                    TeamIcon1.setHorizontalTextPosition(JLabel.LEADING);
-                    TeamIcon1.setHorizontalAlignment(JLabel.RIGHT);
-                    TeamIcon2.setHorizontalAlignment(JLabel.LEFT);
-
-                    jpn.add(TeamIcon1, getGridbBagConstraints(0, i * (rowspan + 1), rowspan + 1, 1));
-                    jpn.add(TeamIcon2, getGridbBagConstraints(nbCols - 1, i * (rowspan + 1), rowspan + 1, 1));
-                }
-
-                JLabel CoachIcon1 = getLabelForObject(cm.getCompetitor1(), computed_height, computed_width, getCoachMatchFont(cm, cm.getCompetitor1(), f1Winner, f1Looser, f1Draw, f1), bkg);
-                JLabel CoachIcon2 = getLabelForObject(cm.getCompetitor2(), computed_height, computed_width, getCoachMatchFont(cm, cm.getCompetitor2(), f1Winner, f1Looser, f1Draw, f1), bkg);
-
-                CoachIcon1.setHorizontalAlignment(JLabel.CENTER);
-                CoachIcon2.setHorizontalAlignment(JLabel.CENTER);
-
-                jpn.add(CoachIcon1, getGridbBagConstraints(colIndex, i * (rowspan + 1), rowspan, 1));
-                jpn.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * (rowspan + 1), rowspan, 1));
-
-                int value1 = cm.getValue(td).getValue1();
-                int value2 = cm.getValue(td).getValue2();
-                String sV1 = value1 >= 0 ? Integer.toString(value1) : " - ";
-                String sV2 = value2 >= 0 ? Integer.toString(value2) : " - ";
-
-                JLabel CoachScore1 = new JLabel();
-                CoachScore1.setSize(computed_width, computed_height);
-                CoachScore1.setFont(getCoachMatchFont(cm, cm.getCompetitor1(), f1Winner, f1Looser, f1Draw, f1));
-
-                JLabel CoachScore2 = new JLabel();
-                CoachScore2.setSize(computed_width, computed_height);
-                CoachScore2.setFont(getCoachMatchFont(cm, cm.getCompetitor2(), f1Winner, f1Looser, f1Draw, f1));
-
-                CoachScore1.setText(sV1);
-                CoachScore2.setText(sV2);
-
-                CoachScore1.setHorizontalAlignment(JLabel.CENTER);
-                CoachScore1.setBackground(bkg);
-                CoachScore1.setOpaque(true);
-
-                CoachScore2.setBackground(bkg);
-                CoachScore2.setOpaque(true);
-                CoachScore2.setHorizontalAlignment(JLabel.CENTER);
-
-                jpn.add(CoachScore1, getGridbBagConstraints(colIndex, (i + 1) * (rowspan + 1) - 1, 1, 1));
-                jpn.add(CoachScore2, getGridbBagConstraints(nbCols - colIndex - 1, (i + 1) * (rowspan + 1) - 1, 1, 1));
-
-                // Score                    
-                JLabel score = new JLabel(sV1 + " " + td.getName() + " " + sV2);
-
-                score.setHorizontalAlignment(JLabel.CENTER);
-                score.setOpaque(true);
-                score.setBackground(bkg);
-                score.setFont(f1);
-
-                jpn.add(score, getGridbBagConstraints(colIndex + 1, i * (rowspan + 1), 2, 1));
-
-                Font f2 = font.deriveFont(Font.ITALIC, (float) height / 75);
-                for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                    Criteria crit = Tournament.getTournament().getParams().getCriteria(j);
-                    value1 = cm.getValue(crit).getValue1();
-                    value2 = cm.getValue(crit).getValue2();
-                    JLabel tmp = new JLabel("" + value1 + " " + crit.getName() + " " + value2);
-                    tmp.setBackground(bkg);
-                    tmp.setOpaque(true);
-                    tmp.setFont(f2);
-                    tmp.setHorizontalAlignment(JLabel.CENTER);
-                    jpn.add(tmp, getGridbBagConstraints(colIndex + 1, i * (rowspan + 1) + j + 1, 1, 1));
-                }
+            try {
+                font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
+            } catch (FontFormatException | IOException ex) {
+                Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                font = this.getFont();
             }
 
-            if (m instanceof TeamMatch) {
-                TeamMatch tm = (TeamMatch) m;
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[display];
+            int width = gd.getDisplayMode().getWidth();
+            int height = gd.getDisplayMode().getHeight();
 
-                int colIndex;
-                nbCols = 5;
-                int nbValues = tm.getMatch(0).getValueCount();
-                int NbLinesPerCoachMatch = nbValues + 1;
-                int nbMatchs = tm.getMatchCount();
-                int NbLinesPerTeamMatch = NbLinesPerCoachMatch * nbMatchs + 1;
+            Criteria td = Tournament.getTournament().getParams().getCriteria(0);
 
-                computed_width = width / nbCols;
-                colIndex = 1;
+            float size = (float) height / fontRatio;
+            Font f0 = font.deriveFont(Font.ITALIC, size);
+            Font f1 = font.deriveFont(Font.BOLD, size);
+            Font f1Winner = font.deriveFont(Font.BOLD, size);
+            Font f1Draw = font.deriveFont(Font.ITALIC, size);
+            Font f1Looser = font.deriveFont(Font.PLAIN, size);
+            Font fBig = font.deriveFont(Font.BOLD, (float) height / 20);
 
-                JLabel TeamIcon1 = getLabelForObject(tm.getCompetitor1(), computed_height, computed_width, f0, bkg);
-                JLabel TeamIcon2 = getLabelForObject(tm.getCompetitor2(), computed_height, computed_width, f0, bkg);
+            int computed_height = height / 10;
+            int nbCols = 3;
+            int computed_width = width / nbCols;
 
-                TeamIcon1.setHorizontalTextPosition(JLabel.LEADING);
-                TeamIcon1.setHorizontalAlignment(JLabel.RIGHT);
-                TeamIcon2.setHorizontalAlignment(JLabel.LEFT);
-
-                jpn.add(TeamIcon1, getGridbBagConstraints(0, i * NbLinesPerTeamMatch, NbLinesPerTeamMatch, 1));
-                jpn.add(TeamIcon2, getGridbBagConstraints(nbCols - 1, i * NbLinesPerTeamMatch, NbLinesPerTeamMatch, 1));
-
-                JLabel v = new JLabel("");
-                if ((tm.getCompetitor1().getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
-                    v.setIcon(ImageTreatment.resize(tm.getCompetitor1().getPicture(), computed_height, computed_height));
+            for (int i = 0; i < r.getMatchsCount(); i++) {
+                Color bkg = new Color(255, 255, 255);
+                if (i % 2 != 0) {
+                    bkg = new Color(220, 220, 220);
                 }
-                v.setFont(f1);
-                v.setOpaque(true);
-                v.setBackground(bkg);
-                v.setHorizontalAlignment(JLabel.CENTER);
+                Match m = r.getMatch(i);
+                if (m instanceof CoachMatch) {
+                    CoachMatch cm = (CoachMatch) m;
 
-                jpn.add(v, getGridbBagConstraints(1, i * NbLinesPerTeamMatch, 1, 1));
+                    int colIndex = 0;
+                    int rowspan = cm.getValueCount();
+                    if (Tournament.getTournament().getClansCount() > 1) {
+                        nbCols = 5;
+                        computed_width = width / nbCols;
+                        colIndex = 1;
+                        JLabel ClanIcon1 = getLabelForObject((cm.getCompetitor1()).getClan(), computed_height, computed_width, f0, bkg);
+                        JLabel ClanIcon2 = getLabelForObject((cm.getCompetitor2()).getClan(), computed_height, computed_width, f0, bkg);
 
-                JLabel n = new JLabel("" + tm.getVictories((Team) tm.getCompetitor1()) + " - " + tm.getDraw((Team) tm.getCompetitor1()) + " - " + tm.getVictories((Team) tm.getCompetitor2()));
-                n.setFont(fBig);
-                n.setBackground(bkg);
-                n.setOpaque(true);
-                n.setHorizontalAlignment(JLabel.CENTER);
-                jpn.add(n, getGridbBagConstraints(2, i * NbLinesPerTeamMatch, 1, 1));
+                        ClanIcon1.setHorizontalTextPosition(JLabel.LEADING);
+                        ClanIcon1.setHorizontalAlignment(JLabel.RIGHT);
+                        ClanIcon2.setHorizontalAlignment(JLabel.LEFT);
 
-                JLabel l = new JLabel("");
-                l.setFont(f1);
-                if ((tm.getCompetitor2().getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
-                    l.setIcon(ImageTreatment.resize(tm.getCompetitor2().getPicture(), computed_height, computed_height));
-                }
-                l.setHorizontalTextPosition(JLabel.LEFT);
-                l.setBackground(bkg);
-                l.setOpaque(true);
-                l.setHorizontalAlignment(JLabel.CENTER);
-                jpn.add(l, getGridbBagConstraints(3, i * NbLinesPerTeamMatch, 1, 1));
-
-                for (int j = 0; j < tm.getMatchCount(); j++) {
-
-                    Color cmBkg = bkg;
-                    if (j % 2 == 0) {
-                        cmBkg = new Color(bkg.getRed() - 10, bkg.getGreen() - 10, bkg.getBlue() - 10);
+                        jpn.add(ClanIcon1, getGridbBagConstraints(0, i * (rowspan + 1), rowspan + 1, 1));
+                        jpn.add(ClanIcon2, getGridbBagConstraints(nbCols - 1, i * (rowspan + 1), rowspan + 1, 1));
                     }
-                    CoachMatch cm = tm.getMatch(j);
+                    if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamIndivPairing() == EIndivPairing.RANKING)) {
+                        nbCols = 5;
+                        computed_width = width / nbCols;
+                        colIndex = 1;
 
-                    JLabel CoachIcon1 = getLabelForObject(cm.getCompetitor1(), computed_height, computed_width, getCoachMatchFont(cm, cm.getCompetitor1(), f1Winner, f1Looser, f1Draw, f1), cmBkg);
-                    JLabel CoachIcon2 = getLabelForObject(cm.getCompetitor2(), computed_height, computed_width, getCoachMatchFont(cm, cm.getCompetitor2(), f1Winner, f1Looser, f1Draw, f1), cmBkg);
+                        JLabel TeamIcon1 = getLabelForObject(((Coach) (cm.getCompetitor1())).getTeamMates(), computed_height, computed_width, f0, bkg);
+                        JLabel TeamIcon2 = getLabelForObject(((Coach) (cm.getCompetitor2())).getTeamMates(), computed_height, computed_width, f0, bkg);
+                        TeamIcon1.setHorizontalTextPosition(JLabel.LEADING);
+                        TeamIcon1.setHorizontalAlignment(JLabel.RIGHT);
+                        TeamIcon2.setHorizontalAlignment(JLabel.LEFT);
+
+                        jpn.add(TeamIcon1, getGridbBagConstraints(0, i * (rowspan + 1), rowspan + 1, 1));
+                        jpn.add(TeamIcon2, getGridbBagConstraints(nbCols - 1, i * (rowspan + 1), rowspan + 1, 1));
+                    }
+
+                    JLabel CoachIcon1 = getLabelForObject(cm.getCompetitor1(), computed_height, computed_width, getCoachMatchFont(cm, cm.getCompetitor1(), f1Winner, f1Looser, f1Draw, f1), bkg);
+                    JLabel CoachIcon2 = getLabelForObject(cm.getCompetitor2(), computed_height, computed_width, getCoachMatchFont(cm, cm.getCompetitor2(), f1Winner, f1Looser, f1Draw, f1), bkg);
+
                     CoachIcon1.setHorizontalAlignment(JLabel.CENTER);
                     CoachIcon2.setHorizontalAlignment(JLabel.CENTER);
 
-                    jpn.add(CoachIcon1, getGridbBagConstraints(colIndex, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
-                    jpn.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
+                    jpn.add(CoachIcon1, getGridbBagConstraints(colIndex, i * (rowspan + 1), rowspan, 1));
+                    jpn.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * (rowspan + 1), rowspan, 1));
 
                     int value1 = cm.getValue(td).getValue1();
                     int value2 = cm.getValue(td).getValue2();
@@ -410,50 +296,179 @@ public final class JFullScreenMatchs extends JFullScreen {
                     CoachScore2.setText(sV2);
 
                     CoachScore1.setHorizontalAlignment(JLabel.CENTER);
-                    CoachScore1.setBackground(cmBkg);
+                    CoachScore1.setBackground(bkg);
                     CoachScore1.setOpaque(true);
-                    CoachScore2.setBackground(cmBkg);
+
+                    CoachScore2.setBackground(bkg);
                     CoachScore2.setOpaque(true);
                     CoachScore2.setHorizontalAlignment(JLabel.CENTER);
 
-                    jpn.add(CoachScore1, getGridbBagConstraints(colIndex, i * NbLinesPerTeamMatch + (j + 1) * NbLinesPerCoachMatch, 1, 1));
-                    jpn.add(CoachScore2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + (j + 1) * NbLinesPerCoachMatch, 1, 1));
+                    jpn.add(CoachScore1, getGridbBagConstraints(colIndex, (i + 1) * (rowspan + 1) - 1, 1, 1));
+                    jpn.add(CoachScore2, getGridbBagConstraints(nbCols - colIndex - 1, (i + 1) * (rowspan + 1) - 1, 1, 1));
 
                     // Score                    
                     JLabel score = new JLabel(sV1 + " " + td.getName() + " " + sV2);
 
                     score.setHorizontalAlignment(JLabel.CENTER);
                     score.setOpaque(true);
-                    score.setBackground(cmBkg);
+                    score.setBackground(bkg);
                     score.setFont(f1);
-                    score.setHorizontalAlignment(JLabel.CENTER);
-                    jpn.add(score, getGridbBagConstraints(colIndex + 1, i * NbLinesPerTeamMatch + j * NbLinesPerCoachMatch + 1, 2, 1));
+
+                    jpn.add(score, getGridbBagConstraints(colIndex + 1, i * (rowspan + 1), 2, 1));
 
                     Font f2 = font.deriveFont(Font.ITALIC, (float) height / 75);
-                    for (int k = 1; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
-                        Criteria crit = Tournament.getTournament().getParams().getCriteria(k);
+                    for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
+                        Criteria crit = Tournament.getTournament().getParams().getCriteria(j);
                         value1 = cm.getValue(crit).getValue1();
                         value2 = cm.getValue(crit).getValue2();
                         JLabel tmp = new JLabel("" + value1 + " " + crit.getName() + " " + value2);
-                        tmp.setBackground(cmBkg);
+                        tmp.setBackground(bkg);
                         tmp.setOpaque(true);
                         tmp.setFont(f2);
                         tmp.setHorizontalAlignment(JLabel.CENTER);
-                        jpn.add(tmp, getGridbBagConstraints(colIndex + 1, i * NbLinesPerTeamMatch + j * NbLinesPerCoachMatch + k + 2, 1, 1));
+                        jpn.add(tmp, getGridbBagConstraints(colIndex + 1, i * (rowspan + 1) + j + 1, 1, 1));
                     }
                 }
 
+                if (m instanceof TeamMatch) {
+                    TeamMatch tm = (TeamMatch) m;
+
+                    int colIndex;
+                    nbCols = 5;
+                    int nbValues = tm.getMatch(0).getValueCount();
+                    int NbLinesPerCoachMatch = nbValues + 1;
+                    int nbMatchs = tm.getMatchCount();
+                    int NbLinesPerTeamMatch = NbLinesPerCoachMatch * nbMatchs + 1;
+
+                    computed_width = width / nbCols;
+                    colIndex = 1;
+
+                    JLabel TeamIcon1 = getLabelForObject(tm.getCompetitor1(), computed_height, computed_width, f0, bkg);
+                    JLabel TeamIcon2 = getLabelForObject(tm.getCompetitor2(), computed_height, computed_width, f0, bkg);
+
+                    TeamIcon1.setHorizontalTextPosition(JLabel.LEADING);
+                    TeamIcon1.setHorizontalAlignment(JLabel.RIGHT);
+                    TeamIcon2.setHorizontalAlignment(JLabel.LEFT);
+
+                    jpn.add(TeamIcon1, getGridbBagConstraints(0, i * NbLinesPerTeamMatch, NbLinesPerTeamMatch, 1));
+                    jpn.add(TeamIcon2, getGridbBagConstraints(nbCols - 1, i * NbLinesPerTeamMatch, NbLinesPerTeamMatch, 1));
+
+                    JLabel v = new JLabel("");
+                    if ((tm.getCompetitor1().getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
+                        v.setIcon(ImageTreatment.resize(tm.getCompetitor1().getPicture(), computed_height, computed_height));
+                    }
+                    v.setFont(f1);
+                    v.setOpaque(true);
+                    v.setBackground(bkg);
+                    v.setHorizontalAlignment(JLabel.CENTER);
+
+                    jpn.add(v, getGridbBagConstraints(1, i * NbLinesPerTeamMatch, 1, 1));
+
+                    JLabel n = new JLabel("" + tm.getVictories((Team) tm.getCompetitor1()) + " - " + tm.getDraw((Team) tm.getCompetitor1()) + " - " + tm.getVictories((Team) tm.getCompetitor2()));
+                    n.setFont(fBig);
+                    n.setBackground(bkg);
+                    n.setOpaque(true);
+                    n.setHorizontalAlignment(JLabel.CENTER);
+                    jpn.add(n, getGridbBagConstraints(2, i * NbLinesPerTeamMatch, 1, 1));
+
+                    JLabel l = new JLabel("");
+                    l.setFont(f1);
+                    if ((tm.getCompetitor2().getPicture() != null) && Tournament.getTournament().getParams().isUseImage()) {
+                        l.setIcon(ImageTreatment.resize(tm.getCompetitor2().getPicture(), computed_height, computed_height));
+                    }
+                    l.setHorizontalTextPosition(JLabel.LEFT);
+                    l.setBackground(bkg);
+                    l.setOpaque(true);
+                    l.setHorizontalAlignment(JLabel.CENTER);
+                    jpn.add(l, getGridbBagConstraints(3, i * NbLinesPerTeamMatch, 1, 1));
+
+                    for (int j = 0; j < tm.getMatchCount(); j++) {
+
+                        Color cmBkg = bkg;
+                        if (j % 2 == 0) {
+                            cmBkg = new Color(bkg.getRed() - 10, bkg.getGreen() - 10, bkg.getBlue() - 10);
+                        }
+                        CoachMatch cm = tm.getMatch(j);
+
+                        JLabel CoachIcon1 = getLabelForObject(cm.getCompetitor1(), computed_height, computed_width, getCoachMatchFont(cm, cm.getCompetitor1(), f1Winner, f1Looser, f1Draw, f1), cmBkg);
+                        JLabel CoachIcon2 = getLabelForObject(cm.getCompetitor2(), computed_height, computed_width, getCoachMatchFont(cm, cm.getCompetitor2(), f1Winner, f1Looser, f1Draw, f1), cmBkg);
+                        CoachIcon1.setHorizontalAlignment(JLabel.CENTER);
+                        CoachIcon2.setHorizontalAlignment(JLabel.CENTER);
+
+                        jpn.add(CoachIcon1, getGridbBagConstraints(colIndex, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
+                        jpn.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
+
+                        int value1 = cm.getValue(td).getValue1();
+                        int value2 = cm.getValue(td).getValue2();
+                        String sV1 = value1 >= 0 ? Integer.toString(value1) : " - ";
+                        String sV2 = value2 >= 0 ? Integer.toString(value2) : " - ";
+
+                        JLabel CoachScore1 = new JLabel();
+                        CoachScore1.setSize(computed_width, computed_height);
+                        CoachScore1.setFont(getCoachMatchFont(cm, cm.getCompetitor1(), f1Winner, f1Looser, f1Draw, f1));
+
+                        JLabel CoachScore2 = new JLabel();
+                        CoachScore2.setSize(computed_width, computed_height);
+                        CoachScore2.setFont(getCoachMatchFont(cm, cm.getCompetitor2(), f1Winner, f1Looser, f1Draw, f1));
+
+                        CoachScore1.setText(sV1);
+                        CoachScore2.setText(sV2);
+
+                        CoachScore1.setHorizontalAlignment(JLabel.CENTER);
+                        CoachScore1.setBackground(cmBkg);
+                        CoachScore1.setOpaque(true);
+                        CoachScore2.setBackground(cmBkg);
+                        CoachScore2.setOpaque(true);
+                        CoachScore2.setHorizontalAlignment(JLabel.CENTER);
+
+                        jpn.add(CoachScore1, getGridbBagConstraints(colIndex, i * NbLinesPerTeamMatch + (j + 1) * NbLinesPerCoachMatch, 1, 1));
+                        jpn.add(CoachScore2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + (j + 1) * NbLinesPerCoachMatch, 1, 1));
+
+                        // Score                    
+                        JLabel score = new JLabel(sV1 + " " + td.getName() + " " + sV2);
+
+                        score.setHorizontalAlignment(JLabel.CENTER);
+                        score.setOpaque(true);
+                        score.setBackground(cmBkg);
+                        score.setFont(f1);
+                        score.setHorizontalAlignment(JLabel.CENTER);
+                        jpn.add(score, getGridbBagConstraints(colIndex + 1, i * NbLinesPerTeamMatch + j * NbLinesPerCoachMatch + 1, 2, 1));
+
+                        Font f2 = font.deriveFont(Font.ITALIC, (float) height / 75);
+                        for (int k = 1; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
+                            Criteria crit = Tournament.getTournament().getParams().getCriteria(k);
+                            value1 = cm.getValue(crit).getValue1();
+                            value2 = cm.getValue(crit).getValue2();
+                            JLabel tmp = new JLabel("" + value1 + " " + crit.getName() + " " + value2);
+                            tmp.setBackground(cmBkg);
+                            tmp.setOpaque(true);
+                            tmp.setFont(f2);
+                            tmp.setHorizontalAlignment(JLabel.CENTER);
+                            jpn.add(tmp, getGridbBagConstraints(colIndex + 1, i * NbLinesPerTeamMatch + j * NbLinesPerCoachMatch + k + 2, 1, 1));
+                        }
+                    }
+
+                }
             }
-        }
 
-        this.getContentPane().removeAll();
-        jscrp = new JScrollPane();
-        jscrp.setViewportView(jpn);
-        jpnContent = jpn;
+            this.getContentPane().removeAll();
+            jscrp = new JScrollPane();
+            jscrp.setViewportView(jpn);
+            jpnContent = jpn;
 
-        this.getContentPane().add(jscrp, BorderLayout.CENTER);
-        this.repaint();
+            this.getContentPane().add(jscrp, BorderLayout.CENTER);
+            this.repaint();
+            fontRatio = fontRatio * 11 / 10;
 
+ /*           System.out.println(fontRatio);
+            System.out.println(jscrp.getComponent(0).getWidth());
+            System.out.println(mSelectedGD.getDisplayMode().getWidth());
+            System.out.println(jscrp.getPreferredSize().width);
+            System.out.println(jscrp.getViewport().getExtentSize().width);
+*/
+            
+            
+        } while (jscrp.getPreferredSize().width > mSelectedGD.getDisplayMode().getWidth());
     }
 
     protected void setStop(boolean s) {
@@ -468,6 +483,8 @@ public final class JFullScreenMatchs extends JFullScreen {
     public JFullScreenMatchs(Round r) throws IOException {
         this(r, false);
     }
+
+    GraphicsDevice mSelectedGD;
 
     @SuppressWarnings("LeakingThisInConstructor")
     public JFullScreenMatchs(Round r, boolean clash) throws IOException {
@@ -493,8 +510,11 @@ public final class JFullScreenMatchs extends JFullScreen {
         }
         if (screen > -1 && screen < gs.length) {
             gs[screen].setFullScreenWindow(this);
+            mSelectedGD = gs[screen];
+            _screenIndex = screen;
         } else if (gs.length > 0) {
             gs[0].setFullScreenWindow(this);
+            mSelectedGD = gs[0];
         } else {
             throw new RuntimeException("No Screens Found");
         }
@@ -574,7 +594,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             } else {
                 animationStarted = true;
                 if (clash) {
-                    clashAnim = new JFullScreenMatchs.Animation();
+                    clashAnim = new JFullScreenMatchs.Animation(this._screenIndex);
                     clashAnim.start();
                 } else {
                     animation = new JFullScreen.Animation();
@@ -621,6 +641,34 @@ public final class JFullScreenMatchs extends JFullScreen {
                 System.exit(0);
             }
         }
+        if ((evt.getKeyCode() == KeyEvent.VK_SUBTRACT) || (evt.getKeyCode() == KeyEvent.VK_M)) {
+            if (animationStarted) {
+                jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                if (animation != null) {
+                    if (animation.isAlive()) {
+                        animation.incrementSync();
+                    }
+                }
+            }
+            if (clashAnim != null) {
+                clashAnim.incrementSync();
+            }
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ADD) || (evt.getKeyCode() == KeyEvent.VK_P)) {
+            if (animationStarted) {
+                jscrp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                jscrp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                if (animation != null) {
+                    if (animation.isAlive()) {
+                        animation.decrementSync();
+                    }
+                }
+            }
+            if (clashAnim != null) {
+                clashAnim.decrementSync();
+            }
+        }
     }
     //public Animation animation;
 
@@ -633,9 +681,8 @@ public final class JFullScreenMatchs extends JFullScreen {
         if (t != null) {
             int max_width = 0, c_height = 0;
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-            int width = gd.getDisplayMode().getWidth();
-            int height = gd.getDisplayMode().getHeight();
+            int width = mSelectedGD.getDisplayMode().getWidth();
+            int height = mSelectedGD.getDisplayMode().getHeight();
 
             p = new JPanel();
             //Compute dimensions
@@ -705,10 +752,19 @@ public final class JFullScreenMatchs extends JFullScreen {
                     JLabel jlbCoach = new JLabel();
                     jlbCoach.setOpaque(true);
                     jlbCoach.setHorizontalAlignment(right ? JLabel.LEFT : JLabel.RIGHT);
-                    if (right) {
-                        jlbCoach.setText(" " + c.getName());
+                    if (Tournament.getTournament().getParams().isDisplayRoster()) {
+
+                        if (right) {
+                            jlbCoach.setText("<HTML> " + c.getName() + " <i>(" + c.getMatchRoster(i) + ")</i></HTML>");
+                        } else {
+                            jlbCoach.setText("<HTML><i>(" + c.getMatchRoster(i) + ")</i> " + c.getName() + "</HTML>");
+                        }
                     } else {
-                        jlbCoach.setText(c.getName() + " ");
+                        if (right) {
+                            jlbCoach.setText(" " + c.getName());
+                        } else {
+                            jlbCoach.setText(c.getName() + " ");
+                        }
                     }
                     jlbCoach.setBackground(i % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
                     //jlbCoach.setFont(font.deriveFont((float) line_height));
@@ -778,16 +834,15 @@ public final class JFullScreenMatchs extends JFullScreen {
         return font;
     }
 
-    public JPanel createClashCoachPane(Coach t, int score, boolean right) {
+    public JPanel createClashCoachPane(Coach t, int score, boolean right, int matchIndex) {
         JPanel p = null;
         if (t != null) {
             int mwidth = 0;
             int mheight = 0;
             p = new JPanel();
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-            int width = gd.getDisplayMode().getWidth();
-            int height = gd.getDisplayMode().getHeight();
+            int width = mSelectedGD.getDisplayMode().getWidth();
+            int height = mSelectedGD.getDisplayMode().getHeight();
 
             //Compute dimensions
             int line_height = (height / 10);
@@ -795,7 +850,21 @@ public final class JFullScreenMatchs extends JFullScreen {
 
             jlbCoach.setPreferredSize(new Dimension(width / 4, line_height));
             jlbCoach.setFont(getOptimalFont(width / 6, line_height, t.getName()));
-            jlbCoach.setText(t.getName());
+
+            if (Tournament.getTournament().getParams().isDisplayRoster()) {
+
+                if (right) {
+                    jlbCoach.setText("<HTML>" + t.getName() + " <i>(" + t.getMatchRoster(matchIndex) + ")</i></HTML>");
+                } else {
+                    jlbCoach.setText("<HTML><i>(" + t.getMatchRoster(matchIndex) + ")</i>" + t.getName() + " </HTML>");
+                }
+            } else {
+                if (right) {
+                    jlbCoach.setText(" " + t.getName());
+                } else {
+                    jlbCoach.setText(t.getName() + " ");
+                }
+            }
 
             jlbCoach.setOpaque(true);
             jlbCoach.setHorizontalAlignment(JLabel.CENTER);
@@ -903,8 +972,33 @@ public final class JFullScreenMatchs extends JFullScreen {
 
         private boolean suspended = false;
 
+        private long nanos = 1000000000;
+        private int step=1;
+
+        synchronized void incrementSync() {
+            nanos = nanos - nanos * 10 / 100;
+            System.out.println(nanos);
+            step++;
+        }
+
+        synchronized void decrementSync() {
+            nanos = nanos + nanos * 10 / 100;
+            System.out.println(nanos);
+            step--;
+            if (step<0)
+            {
+                step=0;
+            }
+        }
+
         public void setSuspended(boolean s) {
             suspended = s;
+        }
+
+        int _screen = 0;
+
+        public Animation(int screen) {
+            _screen = screen;
         }
 
         private static final String CS_Round = "Round";
@@ -915,7 +1009,7 @@ public final class JFullScreenMatchs extends JFullScreen {
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[_screen];
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
 
@@ -930,7 +1024,6 @@ public final class JFullScreenMatchs extends JFullScreen {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(JFullScreenMatchs.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                long time = 1000000000;
                 if (clash) {
                     for (int i = 0; i < round.getMatchsCount(); i++) {
                         if (!animationStarted) {
@@ -957,8 +1050,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                             jpnClash2 = createClashTeamPane((Team) m.getCompetitor2(), (TeamMatch) m, true);
                         }
                         if (m instanceof CoachMatch) {
-                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1(), false);
-                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2(), true);
+                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1(), false, i);
+                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2(), true, i);
                         }
 
                         if ((jpnClash1 != null) && (jpnClash2 != null)) {
@@ -999,11 +1092,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                             jlbTitle2.setBounds((width - sizeTitle2.width) / 2, sizeTitle1.height, sizeTitle2.width, sizeTitle2.height);
 
                             // 1 seconde <=> lateral margin => timer
-                            long timer = time / (width / 2);
-                            long timer1 = timer / 1000000;
-                            long timer2 = timer % 1000000;
-
                             for (int j = 0; j < width; j += 2) {
+
                                 if (!animationStarted) {
                                     break;
                                 }
@@ -1011,13 +1101,18 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 // Draw vs
                                 // Set JPN1 & JPN2 position
 
-                                jpn1X = 0 - size1.width + (j < width / 2 ? j : width / 2);
-                                jpn2X = width - (j > width / 2 ? j - width / 2 : 0);
+                                jpn1X = 0 - size1.width + (j < width / 2 ? j+step : width / 2);
+                                jpn2X = width - (j > width / 2 ? j - width / 2-step : 0);
 
+                                j+=step;
                                 synchronized (this) {
                                     suspended = true;
-
+                                    long timer = nanos / (width / 2);
+                                    long timer1 = timer / 1000000;
+                                    long timer2 = timer % 1000000;
                                     spleeping.sleep(timer1, (int) timer2);
+                                    //System.out.println("timer1: "+timer1+" timer2: "+ timer2);
+                                    //spleeping.sleep(0, (int) 10);
                                     while (suspended && animationStarted) {
                                         try {
                                             wait();
@@ -1035,7 +1130,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                             if (i <= round.getMatchsCount() - 1) {
                                 synchronized (this) {
                                     suspended = true;
-                                    spleeping.sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
+                                    spleeping.sleep((2 * nanos) / 1000000, (int) (2 * nanos) % 1000000);
                                     while (suspended && animationStarted) {
                                         try {
                                             wait();
@@ -1050,7 +1145,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                     semAnimate.release();
                     synchronized (this) {
                         suspended = true;
-                        spleeping.sleep((2 * time) / 1000000, (int) (2 * time) % 1000000);
+                        spleeping.sleep((2 * nanos) / 1000000, (int) (2 * nanos) % 1000000);                        
                         while (suspended && animationStarted) {
                             try {
                                 wait();

@@ -30,7 +30,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
     private Player _player;
     private ArrayList<JComboBox> _jcbs;
     private Color _color = Color.BLACK;
-
+    private LRB _lrb;
     private final static String CS_SingleRoll="Single Roll";
     private final static String CS_DoubleRoll="Double Roll";
     
@@ -41,20 +41,20 @@ public class JdgSelectSkill extends javax.swing.JDialog {
      * @param modal
      * @param player
      */
-    public JdgSelectSkill(java.awt.Frame parent, boolean modal, Player player) {
+    public JdgSelectSkill(java.awt.Frame parent, boolean modal, Player player,LRB lrb) {
         super(parent, modal);
         initComponents();
 
         _jcbs = new ArrayList<>();
-        int nbcats = LRB.getLRB().getSkillTypeCount();
+        int nbcats = lrb.getSkillTypeCount();
         _player = player;
-
+_lrb=lrb;
         GridLayout layout = new GridLayout(nbcats, 3);
         jpnSkills.setLayout(layout);
         int i;
         int j;
         for (i = 0; i < nbcats; i++) {
-            SkillType st = LRB.getLRB().getSkillType(i);
+            SkillType st = lrb.getSkillType(i);
             JLabel jlb = new JLabel(st.getName());
             jlb.setHorizontalAlignment(JLabel.TRAILING);
             ArrayList<String> sa = new ArrayList<>();
@@ -83,7 +83,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             jpnSkills.add(jcb);
 
             JLabel jlb2 = new JLabel("");
-            boolean enabled = st.isSpecial() && LRB.getLRB().isAllowSpecialSkills();
+            boolean enabled = st.isSpecial() && LRB.isAllowSpecialSkills();
 
             /* Get if Single Roll or doubl roll */
             if (_player.getPlayertype().containedBySingle(st)) {
@@ -214,7 +214,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             JComboBox<String> jcb = _jcbs.get(i);
             if (jcb.getSelectedIndex() > 0) {
                 stringName = (String) jcb.getSelectedItem();
-                s = LRB.getLRB().getSkill(stringName,true);
+                s = _lrb.getSkill(stringName,true);
                 break;
             }
         }

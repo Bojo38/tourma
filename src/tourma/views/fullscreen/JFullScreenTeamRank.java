@@ -70,9 +70,8 @@ public final class JFullScreenTeamRank extends JFullScreen {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
-            int width = gd.getDisplayMode().getWidth();
-            int height = gd.getDisplayMode().getHeight();
+            int width = mSelectedGD.getDisplayMode().getWidth();
+            int height = mSelectedGD.getDisplayMode().getHeight();
 
             float size = (float) height / 50;
             Font f0 = font.deriveFont(Font.ITALIC, size);
@@ -126,7 +125,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
                             buildPanel(rs, screen);
 
                             semAnimate.release();
-                            gd.setFullScreenWindow(this);
+                            mSelectedGD.setFullScreenWindow(this);
 
                         } catch (JDOMException ex) {
                             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,9 +183,8 @@ public final class JFullScreenTeamRank extends JFullScreen {
             font = this.getFont();
         }
 
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
+        int width = mSelectedGD.getDisplayMode().getWidth();
+        int height = mSelectedGD.getDisplayMode().getHeight();
 
         Font f0 = font.deriveFont(Font.ITALIC, (float) height / 50);
         Font f1 = font.deriveFont(Font.BOLD, (float) height / 50);
@@ -356,8 +354,10 @@ public final class JFullScreenTeamRank extends JFullScreen {
         }
         if (screen > -1 && screen < gs.length) {
             gs[screen].setFullScreenWindow(this);
+            mSelectedGD=gs[screen];
         } else if (gs.length > 0) {
             gs[0].setFullScreenWindow(this);
+            mSelectedGD=gs[0];
         } else {
             throw new RuntimeException("No Screens Found");
         }

@@ -73,8 +73,8 @@
     nbproject/build-impl.xml file. 
 
     -->
-    <target name="-post-jar">
-    </target>
+    <!--<target name="-post-jar">
+    </target>-->
 
 
 
@@ -83,8 +83,7 @@
                  classname="com.yworks.yguard.YGuardTask"
                  classpath="tools/yguard.jar"/>
         <yguard>
-
-            <!--<inoutpair in="dist/TourMa.jar" out="dist/TourMa_obf.jar"/>-->
+           
             <inoutpair in="store/TourMa.jar" out="store/TourMa_obf.jar" resources="copy"/>
 
             <externalclasses>
@@ -109,116 +108,14 @@
                 <property name="error-checking" value="pedantic"/>
                 <keep>
                     <method name="void main(java.lang.String[])" class="tourma.MainFrame" />
-                    <!--<field name="*" class="javax.xml.parsers.SAXParser"/>
-                    <field name="*" class="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
-                    <method name="*init*" class="org.apache.xerces.jaxp.SAXParserFactoryImpl"/>
-                    <class name="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
-                    <class name="com.google.zxing.aztec.decoder.Decoder$Table"/>
-                    <class name="com.google.zxing.aztec.detector.Detector$Point"/>
-                    <class name="com.google.zxing.aztec.detector.Detector$1"/>
-                    <class name="com.google.zxing.client.j2se.Config"/>
-                    <class name="com.google.zxing.client.j2se.Inputs"/>
-                    <class name="com.google.zxing.datamatrix.detector.Detector$ResultPointsAndTransitions"/>
-                    <class name="com.google.zxing.datamatrix.detector.Detector$1"/>
-                    <class name="com.google.zxing.oned.rss.Pair"/>
-                    <class name="com.google.zxing.oned.rss.expanded.ExpandedPair"/>
-                    <class name="com.google.zxing.oned.rss.expanded.decoders.GeneralAppIdDecoder"/>
-                    <class name="com.google.zxing.oned.rss.expanded.decoders.DecodedNumeric"/>
-                    <class name="com.google.zxing.oned.rss.expanded.decoders.DecodedInformation"/>
-                    <class name="com.google.zxing.oned.rss.expanded.decoders.BlockParsedResult"/>
-                    <class name="com.google.zxing.oned.rss.expanded.decoders.DecodedChar"/>
-                    <class name="com.google.zxing.pdf417.encoder.PDF417"/>
-                    <class name="com.google.zxing.pdf417.encoder.BarcodeMatrix"/>
-                    <class name="com.google.zxing.pdf417.encoder.BarcodeRow"/>
-                    <class name="freemarker.cache.MruCacheStorage$MruEntry"/>-->
-                    <class name="freemarker.ext.xml.NodeOperator"/><!--
-                    <class name="freemarker.ext.jsp.TaglibFactory$TldPath"/>
-                    <class name="org.apache.commons.logging.Log"/>-->
-                    <class name="freemarker.ext.xml.Navigator$XPathEx"/><!--
-                    
-                    <class name="org.apache.xml.resolver.Catalog"/>
-                    <class name="org.jaxen.saxpath.base.Token"/>
-                    <class name="nu.xom.Element"/>
-                    <class name="nu.xom.jaxen.saxpath.base.Token"/>                     
-                    <class name="nu.xom.xinclude.XPointerSyntaxException"/>
-                    <class name="nu.xom.xinclude.XPointerResourceException"/>
-                    <class name="org.jfree.base.modules.AbstractModule$ReaderHelper"/>
-                    <class name="org.jfree.base.modules.PackageSorter$SortModule"/>
-                    <class name="org.jfree.data.general.CombinedDataset$DatasetInfo"/>
-                    <class name="org.jfree.ui.action.ActionButton$ActionEnablePropertyChangeHandler"/>
-                    <class name="org.jfree.ui.action.ActionMenuItem$ActionEnablePropertyChangeHandler"/>
-                    <class name="org.jfree.ui.action.ActionRadioButton$ActionEnablePropertyChangeHandler"/>
-                    <class name="org.jfree.ui.action.ActionRadioButton$1"/>
-                    <class name="org.junit.internal.runners.FailedBefore"/>
-                    <class name="org.junit.internal.runners.statements.FailOnTimeout$StatementThread"/>
-                    <class name="org.junit.rules.ExpectedExceptionMatcherBuilder"/>
-                    <class name="org.mozilla.javascript.JavaAdapter$JavaAdapterSignature"/>
-                    <class name="org.mozilla.javascript.Interpreter$CallFrame"/>
-                    <class name="org.mozilla.javascript.Interpreter$1"/>
-                    <class name="org.mozilla.javascript.InterpreterData"/>
-                    <class name="org.mozilla.javascript.InterpretedFunction"/>
-                    <class name="org.mozilla.javascript.Scriptable"/>
-                    <class name="org.mozilla.javascript.ScriptRuntime$NoSuchMethodShim"/>
-                    <class name="org.mozilla.javascript.Interpreter$GeneratorState"/>
-                    <class name="org.mozilla.javascript.JavaMembers$MethodSignature"/>
-                    <class name="org.mozilla.javascript.FieldAndMethods"/>
-                    <class name="org.mozilla.javascript.NativeJSON$StringifyState"/>
-                    <class name="org.mozilla.javascript.Node$PropListItem"/>
-                    <class name="org.mozilla.javascript.Node$1"/>
-                    <class name="org.mozilla.javascript.Parser$ConditionData"/>
-                    <class name="org.mozilla.javascript.Parser$1"/>
-                    <class name="org.mozilla.javascript.Parser$ParserException"/>
-                    <class name="org.mozilla.javascript.ScriptRuntime$IdEnumeration"/>
-                    <class name="org.mozilla.javascript.regexp.RECompiled"/>
-                    <class name="org.mozilla.javascript.regexp.CompilerState"/>
-                    <class name="org.mozilla.javascript.regexp.RENode"/>
-                    <class name="org.mozilla.javascript.regexp.REGlobalData"/>
-                    <class name="org.mozilla.javascript.regexp.REBackTrackData"/>
-                    <class name="org.mozilla.javascript.regexp.REProgState"/>
-                    <class name="org.mozilla.javascript.regexp.RECharSet"/>
-                    <class name="org.mozilla.javascript.regexp.GlobData"/>
-                    <class name="org.mozilla.javascript.tools.debugger.Dim$1"/>
-                    <class name="org.mozilla.javascript.tools.debugger.Menubar"/>
-                    <class name="org.mozilla.javascript.tools.debugger.JSInternalConsole"/>
-                    <class name="org.mozilla.javascript.tools.debugger.FileWindow"/>
-                    <class name="org.mozilla.javascript.tools.idswitch.CodePrinter"/>
-                    <class name="org.mozilla.javascript.tools.shell.Main$ScriptReference"/>
-                    <class name="org.apache.xmlbeans.XmlCursor"/>
-                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.XMLName"/>
-                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.Namespace"/>
-                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.QName"/>
-                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.XML"/>
-                    <class name="org.mozilla.javascript.xml.impl.xmlbeans.XML$XScriptAnnotation"/>
-                    <class name="org.mozilla.javascript.xmlimpl.QName"/>
-                    <class name="org.mozilla.javascript.xmlimpl.XmlNode$QName"/>
-                    <class name="org.mozilla.javascript.xmlimpl.XmlProcessor"/>
-                    <class name="org.mozilla.javascript.xmlimpl.XMLName"/>
-                    <class name="org.mozilla.javascript.xmlimpl.Namespace"/>
-                    <class name="org.mozilla.javascript.xmlimpl.XmlNode$Namespace"/>
-                    <class name="org.mozilla.javascript.xmlimpl.XML"/>-->
-<!--                    <class name="javax.xml.bind.*"/>
-                    <method name="*" class="javax.xml.bind.DatatypeConverter"/>-->
+                    <class name="freemarker.ext.xml.NodeOperator"/>
+                    <class name="freemarker.ext.xml.Navigator$XPathEx"/>
                     <class classes="public"/>
                     <class  classes="public" methods="public">
                         <patternset>
-                            <!--<include name="javax.*"/>-->
-                            <!--<include name="org.apache.xerces.impl.*"/>
-                            <include name="org.apache.xerces.jaxp.*"/>
-                            <include name="org.apache.xerces.parsers.*"/>
-                            <include name="org.jfree.chart.resources.*"/>
-                            <include name="org.jfree.resources.*"/>
-                            <include name="freemarker.*"/>-->
+                            
                         </patternset>
                     </class>
-                    
-                    
-                    <!--<package>
-                        <patternset>
-                            <include name="touma.images.*"/>
-                            <include name="touma.languages.*"/>
-                        </patternset>
-                    </package>-->
-                    
                 </keep>
             </shrink>
 
@@ -327,5 +224,110 @@
        summaryclass="com.kirkk.analyzer.textui.XMLUISummary" packageFilter="java.*;javax.*;" jarFilter="Somejar.jar" />
         <xslt in="tools/dependencies.xml" out="tools/dependencies.html" style="tools/jaranalyzer.xsl"/>	
 </target>
+
+   <target name="proguard" depends="package-for-store">
+        <property name="proguard.jar.path" value="tools/proguard.jar" />
+        <property name="proguard.dir" value="tools/proguard.jar" />
+        <property name="java.home.path" value="C:/Program Files/Java/jdk1.8.0_151" />
+        <property name="dist.jar" value="store/TourMa.jar" />
+        
+        <taskdef resource="proguard/ant/task.properties"
+                 classpath="${proguard.jar.path}" />
+        
+        <echo message="Obfuscating ${dist.jar}..."/>
+        <mkdir dir="${build.dir}/obfuscated"/>
+        <proguard printmapping="store/obfuscated/tourma.map"    renamesourcefileattribute="SourceFile" ignorewarnings="true">
+            
+            <!-- Specify the input jars, output jars, and library jars. -->
+            <injar  file="store/TourMa.jar" />
+            <outjar file="store/TourMal.jar" />
+            
+            <libraryjar path="${javac.classpath}" />            
+            <libraryjar file="${java.home.path}/jre/lib/rt.jar" />
+            
+            <!-- Keep some useful attributes. -->
+
+            <keepattribute name="InnerClasses" />
+            <keepattribute name="SourceFile" />
+            <keepattribute name="LineNumberTable" />
+            <keepattribute name="Deprecated" />
+            <keepattribute name="*Annotation*" />
+            <keepattribute name="Signature" />
+            
+            <!-- Preserve all public classes, and their public and protected fields and methods. -->
+
+            <keep access="public">
+                <field  access="public protected" />
+                <method access="public protected" />
+            </keep>
+            
+            
+            <!-- Preserve all .class method names. -->
+
+            <keepclassmembernames access="public">
+                <method type      ="java.lang.Class"
+                        name      ="class$"
+                        parameters="java.lang.String" />
+                <method type      ="java.lang.Class"
+                        name      ="class$"
+                        parameters="java.lang.String,boolean" />
+            </keepclassmembernames>
+            
+            <!-- Preserve all native method names and the names of their classes. -->
+
+            <keepclasseswithmembernames>
+                <method access="native" />
+            </keepclasseswithmembernames>
+            
+            <!-- Preserve the methods that are required in all enumeration classes. -->
+
+            <keepclassmembers extends="java.lang.Enum">
+                <method access="public static"
+                        type="**[]"
+                        name="values"
+                        parameters="" />
+                <method access="public static"
+                        type="**"
+                        name="valueOf"
+                        parameters="java.lang.String" />
+            </keepclassmembers>
+            
+            <!-- Explicitly preserve all serialization members. The Serializable
+                 interface is only a marker interface, so it wouldn't save them.
+                 You can comment this out if your library doesn't use serialization.
+                 With this code serializable classes will be backward compatible -->
+
+            <keepnames implements="java.io.Serializable"/>
+            <keepclassmembers implements="java.io.Serializable">
+                <field  access    ="final"
+                        type      ="long"
+                        name      ="serialVersionUID" />
+                <field  access    ="!static !transient"
+                        name      ="**"/>
+                <field  access    ="!private"
+                        name      ="**"/>
+                <method access    ="!private"
+                        name      ="**"/>
+                <method access    ="private"
+                        type      ="void"
+                        name      ="writeObject"
+                        parameters="java.io.ObjectOutputStream" />
+                <method access    ="private"
+                        type      ="void"
+                        name      ="readObject"
+                        parameters="java.io.ObjectOutputStream" />
+                <method type      ="java.lang.Object"
+                        name      ="writeReplace"
+                        parameters="" />
+                <method type      ="java.lang.Object"
+                        name      ="readResolve"
+                        parameters="" />
+            </keepclassmembers>
+            
+            <!-- Your application may contain more items that need to be preserved;
+                 typically classes that are dynamically created using Class.forName -->
+
+        </proguard>
+    </target>  
                                                             
 </project>

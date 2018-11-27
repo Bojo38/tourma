@@ -258,6 +258,15 @@ public class Tournament implements IContainCoachs, Serializable {
     public Category getCategory(int i) {
         return mCategories.get(i);
     }
+    
+    public Category getCategory(String s) {
+            for (int i = 0; i < mCategories.size(); i++) {
+            if (mCategories.get(i).getName().equals(s)) {
+                return mCategories.get(i);
+            }
+        }
+        return null;
+    }
 
     /**
      *
@@ -419,11 +428,17 @@ public class Tournament implements IContainCoachs, Serializable {
         final ArrayList<Clan> clans = new ArrayList<>();
         if (mParams.isTeamTournament()) {
             for (Team c : mTeams) {
-                counts.put(c.getClan(), counts.get(c.getClan()) + 1);
+                if (c.getClan()!=null)
+                {
+                    counts.put(c.getClan(), counts.get(c.getClan()) + 1);
+                }
             }
         } else {
             for (Coach c : mCoachs) {
+                if (c.getClan()!=null)
+                {
                 counts.put(c.getClan(), counts.get(c.getClan()) + 1);
+                }
             }
         }
 
@@ -1241,13 +1256,10 @@ public class Tournament implements IContainCoachs, Serializable {
 
                     if (mCoach.getNaf() > 0) {
                         String naf = Integer.toString(mCoach.getNaf());
-
-                        writer.println(("<coach>"));
-                        writer.println(java.text.MessageFormat.format("<name>{0}</name>", new Object[]{mCoach.getName()}));
-                        writer.println(java.text.MessageFormat.format("<number>{0}</number>", new Object[]{naf}));
+                        
                         String naf_roster = RosterType.getRosterTranslation(mCoach.getRoster().getName());
                         if (naf_roster.equals(RosterType.translate("UNKNOWN"))) {
-                            Object[] rosters = {"Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
+                            Object[] rosters = {"None","Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
                                 "Chaos Pact", "Dark Elves", "Dwarves", "Goblins", "Halflings",
                                 "High Elves", "Humans", "Khemri", "Khorne", "Lizardmen", "Necromantic",
                                 "Norse", "Nurgle's Rotters", "Ogres", "Orc", "Elves", "Slann", "Skaven",
@@ -1260,8 +1272,18 @@ public class Tournament implements IContainCoachs, Serializable {
                             naf_roster = (String) choice;
 
                         }
-                        writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{naf_roster}));
-                        writer.println(("</coach>"));
+                        if (!naf_roster.equals("None"))
+                        {
+                            writer.println(("<coach>"));
+                            writer.println(java.text.MessageFormat.format("<name>{0}</name>", new Object[]{mCoach.getName()}));
+                            writer.println(java.text.MessageFormat.format("<number>{0}</number>", new Object[]{naf}));
+                            writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{naf_roster}));
+                            writer.println(("</coach>"));
+                        }
+                        else
+                        {
+                            mCoach.setNaf(0);
+                        }
                     }
                 }
                 writer.println(("</coaches>"));
@@ -1989,5 +2011,34 @@ public class Tournament implements IContainCoachs, Serializable {
             c.setUpdated(false);
         }
 
+    }
+    
+    public String[] getTeamsNames()
+    {
+        ArrayList<String> names=new ArrayList<>();
+        for(Team t:mTeams)
+        {
+            names.add(t.getName());
+        }
+        return (String[])names.toArray();
+    }
+    
+    public int getActiveCompetitorsCount()
+    {
+        if (mParams.isTeamTournament())
+        {
+            if (mParams.getTeamPairing()==ETeamPairing.TEAM_PAIRING)
+            {
+                return getTeamsCount();
+            }
+            else
+            {
+                return getActiveCoachNumber();
+            }
+        }
+        else
+        {
+            return getActiveCoachNumber();
+        }
     }
 }

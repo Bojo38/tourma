@@ -16,6 +16,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,6 +66,12 @@ import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.ExtensionFileFilter;
 import tourma.utility.StringConstants;
 import tourma.utils.web.WebPicture;
+import java.io.*;
+import javax.print.*;
+import javax.print.attribute.*;
+import javax.print.attribute.standard.*;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 
 /**
  *
@@ -79,6 +86,10 @@ public final class JdgReport extends javax.swing.JDialog {
 //    private boolean mResult;
     private File mFilename = null;
     private MjtRanking mRanking;
+
+    private static final String CS_IncludeMembersReports = "Include the reports of the members";
+
+    private final JCheckBox jcxWithMembers = new JCheckBox(Translate.translate(CS_IncludeMembersReports));
 
     public final static int C_INDIVIDUAL = 0;
     public final static int C_CLAN = 1;
@@ -123,13 +134,26 @@ public final class JdgReport extends javax.swing.JDialog {
                     objects.add(tour.getTeam(i));
                     model.addElement(tour.getTeam(i).getName());
                 }
+
                 break;
             case C_CLAN:
                 for (int i = 0; i < tour.getClansCount(); i++) {
                     objects.add(tour.getClan(i));
                     model.addElement(tour.getClan(i).getName());
                 }
+
                 break;
+        }
+
+        if ((mType == C_TEAM) || (mType == C_CLAN)) {
+            JPanel north = new JPanel(new FlowLayout());
+            north.add(jcxWithMembers);
+            jcxWithMembers.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jcxWithMembersActionPerformed(evt);
+                }
+            });
+            this.add(north, BorderLayout.NORTH);
         }
 
         jlsObject.setModel(model);
@@ -145,9 +169,8 @@ public final class JdgReport extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
             }
             try {
-                //jepHTML.setContentType("html");
-                mFilename = createReport();
-                //jepHTML.setPage(mFilename.toURI().toURL());
+
+                mFilename = createReport(jlsObject.getSelectedIndex());
                 webView.setURL(mFilename.toURI().toURL().toString());
             } catch (IOException | NullPointerException e) {
                 JOptionPane.showMessageDialog(parent, e.getLocalizedMessage());
@@ -169,8 +192,10 @@ public final class JdgReport extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
         jbtPrint = new javax.swing.JButton();
+        jbtPrintAll = new javax.swing.JButton();
         jbtExport = new javax.swing.JButton();
         jbtExportPDF = new javax.swing.JButton();
+        jbtExportPDFAll = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlsObject = new javax.swing.JList<>();
 
@@ -196,6 +221,15 @@ public final class JdgReport extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
+        jbtPrintAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtPrintAll.setText(bundle.getString("PrintAll")); // NOI18N
+        jbtPrintAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtPrintAllActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtPrintAll);
+
         jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
         jbtExport.setText(bundle.getString("HTMLExport")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +247,15 @@ public final class JdgReport extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jbtExportPDF);
+
+        jbtExportPDFAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
+        jbtExportPDFAll.setText(bundle.getString("PDFExportAll")); // NOI18N
+        jbtExportPDFAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExportPDFAllActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtExportPDFAll);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
@@ -234,6 +277,15 @@ public final class JdgReport extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jcxWithMembersActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            mFilename = createReport(jlsObject.getSelectedIndex());
+            webView.setURL(mFilename.toURI().toURL().toString());
+        } catch (IOException | NullPointerException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        }
+    }
+
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
         this.setVisible(false);
@@ -247,7 +299,63 @@ public final class JdgReport extends javax.swing.JDialog {
         } catch (PrinterException e) {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
         }*/
+
+        File file = createReport(jlsObject.getSelectedIndex());
+        File file2 = createPDFfromHTML(file);
+        printPDFFile(file2);
     }//GEN-LAST:event_jbtPrintActionPerformed
+
+    private void printPDFFile(File file2) {
+        FileInputStream psStream = null;
+        if (file2 != null) {
+            try {
+                psStream = new FileInputStream(file2);
+            } catch (FileNotFoundException ffne) {
+                ffne.printStackTrace();
+            }
+            if (psStream == null) {
+                return;
+            }
+            DocFlavor psInFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            Doc myDoc = new SimpleDoc(psStream, psInFormat, null);
+            PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+            PrintService[] services = PrintServiceLookup.lookupPrintServices(psInFormat, aset);
+
+            // this step is necessary because I have several printers configured
+            PrintService myPrinter = null;
+            if (services.length == 0) {
+                JOptionPane.showMessageDialog(this, "No printer found", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                ArrayList<String> choices = new ArrayList<>();
+                for (int i = 0; i < services.length; i++) {
+                    choices.add(services[i].getName());
+                }
+                String input = (String) JOptionPane.showInputDialog(null, "Choose printer.",
+                        "printer", JOptionPane.QUESTION_MESSAGE, null, // Use
+                        // default
+                        // icon
+                        choices.toArray(), // Array of choices
+                        choices.get(0)); // Initial choice
+
+                int index = choices.indexOf(input);
+
+                if (index >= 0) {
+                    myPrinter = services[index];
+                }
+                if (myPrinter != null) {
+                    DocPrintJob job = myPrinter.createPrintJob();
+                    try {
+                        job.print(myDoc, aset);
+
+                    } catch (Exception pe) {
+                        pe.printStackTrace();
+                    }
+                } else {
+                    System.out.println("no printer services found");
+                }
+            }
+        }
+    }
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportActionPerformed
@@ -362,8 +470,109 @@ public final class JdgReport extends javax.swing.JDialog {
         }
 
 //        http://www.rgagnon.com/javadetails/java-html-to-pdf-using-itext.html
-
     }//GEN-LAST:event_jbtExportPDFActionPerformed
+
+    private File createPDFfromHTML(File html) {
+        String property = "java.io.tmpdir";
+        OutputStreamWriter out = null;
+        InputStreamReader in = null;
+        File export = null;
+        String tempDir = System.getProperty(property);
+        try {
+            export = File.createTempFile("pdf_report", null, new File(tempDir));
+
+            in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
+            {
+                //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
+                StringBuilder sb = new StringBuilder();
+                int c = in.read();
+                while (c != -1) {
+                    sb.append((char) c);
+                    c = in.read();
+                }
+
+                String s = sb.toString();
+
+                s = s.substring(s.indexOf("<html>"));
+
+                HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, "Global Report");
+            }
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
+                }
+            }
+
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
+                }
+            }
+        }
+        return export;
+    }
+
+    private File createAllPDFfromHTML() {
+        String property = "java.io.tmpdir";
+        OutputStreamWriter out = null;
+        InputStreamReader in = null;
+        File export = null;
+        String tempDir = System.getProperty(property);
+        try {
+            export = File.createTempFile("pdf_report", null, new File(tempDir));
+            String content = "";
+            for (int j = 0; j < jlsObject.getModel().getSize(); j++) {
+                File file = createReport(j);
+                in = new InputStreamReader(new FileInputStream(file), Charset.defaultCharset());
+                {
+                    //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
+                    StringBuilder sb = new StringBuilder();
+                    int c = in.read();
+                    while (c != -1) {
+                        sb.append((char) c);
+                        c = in.read();
+                    }
+
+                    String s = sb.toString();
+
+                    s = s.substring(s.indexOf("<html>"));
+                    content += s;
+                    if (j > 0) {
+                        content += "<p style=\"page-break-after: always;\">&nbsp;</p>";
+                    }
+                }
+            }
+            HTMLtoPDF.exportToPDF(new FileOutputStream(export), content, "Total Report");
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
+                }
+            }
+
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    LOG.log(Level.INFO, e.getLocalizedMessage());
+                }
+            }
+        }
+        return export;
+    }
 
     private void jlsObjectValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlsObjectValueChanged
         if (jlsObject.getSelectedIndex() >= 0) {
@@ -378,7 +587,7 @@ public final class JdgReport extends javax.swing.JDialog {
             }
             try {
                 //jepHTML.setContentType("html");
-                mFilename = createReport();
+                mFilename = createReport(jlsObject.getSelectedIndex());
                 //jepHTML.setPage(mFilename.toURI().toURL());
                 webView.setURL(mFilename.toURI().toURL().toString());
 
@@ -389,13 +598,87 @@ public final class JdgReport extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jlsObjectValueChanged
 
+    private void jbtPrintAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPrintAllActionPerformed
+
+        File file2 = createAllPDFfromHTML();
+        printPDFFile(file2);
+    }//GEN-LAST:event_jbtPrintAllActionPerformed
+
+    private void jbtExportPDFAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExportPDFAllActionPerformed
+        final JFileChooser jfc = new JFileChooser();
+        final FileFilter filter1 = new ExtensionFileFilter("PDF", new String[]{"PDF", "pdf"});
+        jfc.setFileFilter(filter1);
+        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            StringBuffer url2 = new StringBuffer(jfc.getSelectedFile().getAbsolutePath());
+            String ext = StringConstants.CS_NULL;
+            final int i = url2.toString().lastIndexOf('.');
+            if (i > 0 && i < url2.length() - 1) {
+                ext = url2.substring(i + 1).toLowerCase(Locale.getDefault());
+            }
+            if (!ext.equals("pdf")) {
+                url2 = url2.append(".pdf");
+            }
+
+            final File export = new File(url2.toString());
+
+            OutputStreamWriter out = null;
+            InputStreamReader in = null;
+            try {
+                String content = "";
+                for (int j = 0; j < jlsObject.getModel().getSize(); j++) {
+                    File file = createReport(j);
+                    in = new InputStreamReader(new FileInputStream(file), Charset.defaultCharset());
+                    {
+                        //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
+                        StringBuilder sb = new StringBuilder();
+                        int c = in.read();
+                        while (c != -1) {
+                            sb.append((char) c);
+                            c = in.read();
+                        }
+
+                        String s = sb.toString();
+
+                        s = s.substring(s.indexOf("<html>"));
+                        content += s;
+                        if (j > 0) {
+                            content += "<p style=\"page-break-after: always;\">&nbsp;</p>";
+                        }
+                    }
+                }
+                HTMLtoPDF.exportToPDF(new FileOutputStream(export), content, "Total Report");
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
+                    }
+                }
+
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        LOG.log(Level.INFO, e.getLocalizedMessage());
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jbtExportPDFAllActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbtExport;
     private javax.swing.JButton jbtExportPDF;
+    private javax.swing.JButton jbtExportPDFAll;
     private javax.swing.JButton jbtOK;
     private javax.swing.JButton jbtPrint;
+    private javax.swing.JButton jbtPrintAll;
     private javax.swing.JList<String> jlsObject;
     // End of variables declaration//GEN-END:variables
 
@@ -508,6 +791,8 @@ public final class JdgReport extends javax.swing.JDialog {
 
             ArrayList<Integer> values = new ArrayList<>();
 
+            Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+
             // Find value + for each matches
             for (int j = 0; j < nb_criterias; j++) {
                 Criteria crit = mTour.getParams().getCriteria(j);
@@ -516,10 +801,28 @@ public final class JdgReport extends javax.swing.JDialog {
                     CoachMatch cm = (CoachMatch) coach.getMatch(k);
                     Value value = cm.getValue(crit);
                     if (cm.getCompetitor1() == coach) {
-                        val += value.getValue1();
+                        if (crit == td) {
+                            if (value.getValue1() < 0) {
+                                val += 0;
+                            } else {
+                                val += value.getValue1();
+                            }
+
+                        } else {
+                            val += value.getValue1();
+                        }
                     }
                     if (cm.getCompetitor2() == coach) {
-                        val += value.getValue2();
+                        if (crit == td) {
+                            if (value.getValue2() < 0) {
+                                val += 0;
+                            } else {
+                                val += value.getValue2();
+                            }
+
+                        } else {
+                            val += value.getValue2();
+                        }
                     }
                 }
                 values.add(val);
@@ -532,10 +835,28 @@ public final class JdgReport extends javax.swing.JDialog {
                     CoachMatch cm = (CoachMatch) coach.getMatch(k);
                     Value value = cm.getValue(crit);
                     if (cm.getCompetitor2() == coach) {
-                        val += value.getValue1();
+                        if (crit == td) {
+                            if (value.getValue1() < 0) {
+                                val += 0;
+                            } else {
+                                val += value.getValue1();
+                            }
+
+                        } else {
+                            val += value.getValue1();
+                        }
                     }
                     if (cm.getCompetitor1() == coach) {
-                        val += value.getValue2();
+                        if (crit == td) {
+                            if (value.getValue2() < 0) {
+                                val += 0;
+                            } else {
+                                val += value.getValue2();
+                            }
+
+                        } else {
+                            val += value.getValue2();
+                        }
                     }
                 }
                 values.add(val);
@@ -570,10 +891,28 @@ public final class JdgReport extends javax.swing.JDialog {
                     if (r.containsCoachMatch(cm)) {
                         Value value = cm.getValue(crit);
                         if (cm.getCompetitor1() == coach) {
-                            val += value.getValue1();
+                            if (crit == td) {
+                                if (value.getValue1() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue1();
+                                }
+
+                            } else {
+                                val += value.getValue1();
+                            }
                         }
                         if (cm.getCompetitor2() == coach) {
-                            val += value.getValue2();
+                            if (crit == td) {
+                                if (value.getValue2() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue2();
+                                }
+
+                            } else {
+                                val += value.getValue2();
+                            }
                         }
                     }
                 }
@@ -613,10 +952,28 @@ public final class JdgReport extends javax.swing.JDialog {
                         if (r.containsCoachMatch(cm)) {
                             Value value = cm.getValue(crit);
                             if (cm.getCompetitor1() == coach) {
-                                val += value.getValue1();
+                                if (crit == td) {
+                                    if (value.getValue1() < 0) {
+                                        val += 0;
+                                    } else {
+                                        val += value.getValue1();
+                                    }
+
+                                } else {
+                                    val += value.getValue1();
+                                }
                             }
                             if (cm.getCompetitor2() == coach) {
-                                val += value.getValue2();
+                                if (crit == td) {
+                                    if (value.getValue2() < 0) {
+                                        val += 0;
+                                    } else {
+                                        val += value.getValue2();
+                                    }
+
+                                } else {
+                                    val += value.getValue2();
+                                }
                             }
                         }
                     }
@@ -700,8 +1057,29 @@ public final class JdgReport extends javax.swing.JDialog {
                 for (int k = 0; k < nb_criterias; k++) {
                     Criteria crit = mTour.getParams().getCriteria(k);
                     Value value = cm.getValue(crit);
-                    val1.add(0, value.getValue1());
-                    val2.add(value.getValue2());
+
+                    if (crit == td) {
+                        if (value.getValue1() < 0) {
+                            val1.add(0, 0);
+                        } else {
+                            val1.add(0, value.getValue1());
+                        }
+
+                    } else {
+                        val1.add(0, value.getValue1());
+                    }
+                    if (crit == td) {
+                        if (value.getValue2() < 0) {
+                            val2.add(0);
+                        } else {
+                            val2.add(value.getValue2());
+                        }
+
+                    } else {
+                        val2.add(value.getValue2());
+                    }
+                    //val1.add(0, value.getValue1());
+                    //val2.add(value.getValue2());
                 }
                 hCm.put("values1", val1);
                 hCm.put("values2", val2);
@@ -1134,7 +1512,7 @@ public final class JdgReport extends javax.swing.JDialog {
         Writer out = null;
 
         mRanking = new MjtRankingIndiv(mRoundNumber, coaches, true, false);
-
+        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
         try {
             final Configuration cfg = new Configuration();
             final URI uri = getClass().getResource("/tourma/views/report").toURI();
@@ -1222,10 +1600,28 @@ public final class JdgReport extends javax.swing.JDialog {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
                         Value value = cm.getValue(crit);
                         if (cm.getCompetitor1() == coach) {
-                            val += value.getValue1();
+                            if (crit == td) {
+                                if (value.getValue1() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue1();
+                                }
+
+                            } else {
+                                val += value.getValue1();
+                            }
                         }
                         if (cm.getCompetitor2() == coach) {
-                            val += value.getValue2();
+                            if (crit == td) {
+                                if (value.getValue2() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue2();
+                                }
+
+                            } else {
+                                val += value.getValue2();
+                            }
                         }
                     }
                     values.add(val);
@@ -1238,10 +1634,28 @@ public final class JdgReport extends javax.swing.JDialog {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
                         Value value = cm.getValue(crit);
                         if (cm.getCompetitor2() == coach) {
-                            val += value.getValue1();
+                            if (crit == td) {
+                                if (value.getValue1() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue1();
+                                }
+
+                            } else {
+                                val += value.getValue1();
+                            }
                         }
                         if (cm.getCompetitor1() == coach) {
-                            val += value.getValue2();
+                            if (crit == td) {
+                                if (value.getValue2() < 0) {
+                                    val += 0;
+                                } else {
+                                    val += value.getValue2();
+                                }
+
+                            } else {
+                                val += value.getValue2();
+                            }
                         }
                     }
                     values.add(val);
@@ -1277,10 +1691,28 @@ public final class JdgReport extends javax.swing.JDialog {
                         if (r.containsCoachMatch(cm)) {
                             Value value = cm.getValue(crit);
                             if (cm.getCompetitor1() == coach) {
-                                val += value.getValue1();
+                                if (crit == td) {
+                                    if (value.getValue1() < 0) {
+                                        val += 0;
+                                    } else {
+                                        val += value.getValue1();
+                                    }
+
+                                } else {
+                                    val += value.getValue1();
+                                }
                             }
                             if (cm.getCompetitor2() == coach) {
-                                val += value.getValue2();
+                                if (crit == td) {
+                                    if (value.getValue2() < 0) {
+                                        val += 0;
+                                    } else {
+                                        val += value.getValue2();
+                                    }
+
+                                } else {
+                                    val += value.getValue2();
+                                }
                             }
                         }
                     }
@@ -1319,10 +1751,28 @@ public final class JdgReport extends javax.swing.JDialog {
                             if (r.containsCoachMatch(cm)) {
                                 Value value = cm.getValue(crit);
                                 if (cm.getCompetitor1() == coach) {
-                                    val += value.getValue1();
+                                    if (crit == td) {
+                                        if (value.getValue1() < 0) {
+                                            val += 0;
+                                        } else {
+                                            val += value.getValue1();
+                                        }
+
+                                    } else {
+                                        val += value.getValue1();
+                                    }
                                 }
                                 if (cm.getCompetitor2() == coach) {
-                                    val += value.getValue2();
+                                    if (crit == td) {
+                                        if (value.getValue2() < 0) {
+                                            val += 0;
+                                        } else {
+                                            val += value.getValue2();
+                                        }
+
+                                    } else {
+                                        val += value.getValue2();
+                                    }
                                 }
                             }
                         }
@@ -1429,8 +1879,29 @@ public final class JdgReport extends javax.swing.JDialog {
                     for (int k = 0; k < nb_criterias; k++) {
                         Criteria crit = mTour.getParams().getCriteria(k);
                         Value value = cm.getValue(crit);
-                        values1.add(0, value.getValue1());
-                        values2.add(value.getValue2());
+
+                        if (crit == td) {
+                            if (value.getValue1() < 0) {
+                                values1.add(0, 0);
+                            } else {
+                                values1.add(0, value.getValue1());
+                            }
+
+                        } else {
+                            values1.add(0, value.getValue1());
+                        }
+                        if (crit == td) {
+                            if (value.getValue2() < 0) {
+                                values2.add(0);
+                            } else {
+                                values2.add(value.getValue2());
+                            }
+
+                        } else {
+                            values2.add(value.getValue2());
+                        }
+                        // values1.add(0, value.getValue1());
+                        // values2.add(value.getValue2());
                     }
                     hCm.put("values1", values1);
                     hCm.put("values2", values2);
@@ -1470,11 +1941,11 @@ public final class JdgReport extends javax.swing.JDialog {
     }
 
     @SuppressWarnings("unchecked")
-    private File createReport() {
+    private File createReport(int index) {
 
         File f = null;
-        if (jlsObject.getSelectedIndex() >= 0) {
-            IWithNameAndPicture object = objects.get(jlsObject.getSelectedIndex());
+        if (index >= 0) {
+            IWithNameAndPicture object = objects.get(index);
             switch (mType) {
                 case C_CLAN:
                     f = createClanReport((Clan) object);
@@ -1486,9 +1957,109 @@ public final class JdgReport extends javax.swing.JDialog {
                     f = createTeamReport((Team) object);
                     break;
             }
+
+            if (jcxWithMembers.isSelected()) {
+                ArrayList<File> files = new ArrayList<>();
+                if (object instanceof Team) {
+                    Team t = (Team) object;
+                    for (int i = 0; i < t.getCoachsCount(); i++) {
+                        File f_tmp = createIndivReport(t.getCoach(i));
+                        files.add(f_tmp);
+                    }
+                }
+                if (object instanceof Clan) {
+                    Clan c = (Clan) object;
+                    for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+                        Team t = Tournament.getTournament().getTeam(i);
+                        if (t.getClan() == c) {
+                            File f_tmp = createTeamReport(t);
+                            files.add(f_tmp);
+                        }
+                    }
+                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                        Coach co = Tournament.getTournament().getCoach(i);
+                        if (co.getClan() == c) {
+                            File f_tmp = createIndivReport(co);
+                            files.add(f_tmp);
+                        }
+                    }
+                }
+
+                f = mergeReports(f, files);
+            }
         }
         return f;
     }
+
+    protected File mergeReports(File file, ArrayList<File> files) {
+
+        File full_file = null;
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            // Load first file
+            String baseFile = readFile(file);
+
+            // Find </body>
+            int end_body_index = baseFile.indexOf("</body>");
+            sb.append(baseFile.substring(0, end_body_index));
+
+            // Loop on other files
+            for (File f : files) {
+                // Find <body> and </body>
+                String tmp_f = readFile(f);
+                int end_index = tmp_f.indexOf("</body>");
+                int start_index = tmp_f.indexOf("<body>");
+
+                if ((end_index != -1) && (start_index != -1)) {
+                    // insert the content in sb
+                    sb.append("<p style=\"page-break-before: always\">\n");
+                    sb.append(tmp_f.substring(start_index + 6, end_index));
+                    sb.append("</p>\n");
+                }
+            }
+
+            sb.append(baseFile.substring(end_body_index));
+
+            // Open temporary file
+            full_file = File.createTempFile("full_report_file", ".html");
+            // Write it
+            BufferedWriter writer = new BufferedWriter(new FileWriter(full_file));
+            writer.write(sb.toString());
+
+            //Close writer
+            writer.close();
+
+            // Delete others
+            file.delete();
+            for (File f : files) {
+                f.delete();
+            }
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(this, exception.getLocalizedMessage());
+        }
+
+        return full_file;
+    }
+
+    private String readFile(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        String ls = System.getProperty("line.separator");
+
+        try {
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+
+            return stringBuilder.toString();
+        } finally {
+            reader.close();
+        }
+    }
+
     private static final Logger LOG = Logger.getLogger(JdgReport.class
             .getName());
 

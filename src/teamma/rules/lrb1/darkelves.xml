@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>DarkElfKey</name>
+    <reroll>50000</reroll>
+    <apothecary>true</apothecary>
+    <chef>300000</chef>
+    <igor>false</igor>
+    <bribe>100000</bribe>
+    <max_big_guy>1</max_big_guy>
+    <playertypes>               
+        <playerType>
+            <limit>4</limit>
+            <position>Blitzer</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Block</skill>
+            </skills>
+            <cost>100000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Strength Skill</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Witch Elf</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Frenzy</skill>
+                <skill>Jump Up</skill>
+            </skills>
+            <cost>110000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </single>
+            <double>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Thrower</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Pass</skill>
+            </skills>
+            <cost>980000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+                <skillType>Pass Skill</skillType>
+            </single>
+            <double>
+                <skillType>Strength Skill</skillType>
+                <skillType>Pass Trait</skillType>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+            </double>
+        </playerType>       
+        <playerType>
+            <limit>12</limit>
+            <position>Lineman</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>8</armor>
+            <skills>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General Skill</skillType>
+                <skillType>Agility Skill</skillType>
+            </single>
+            <double>
+                <skillType>General Trait</skillType>
+                <skillType>Agility Trait</skillType>
+                <skillType>Pass Skill</skillType>
+                <skillType>Strength Skill</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

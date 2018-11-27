@@ -74,7 +74,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Teams &amp; Coaches">
+                <TitledBorder title="Teams &amp; &amp;Coaches">
                   <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="Team&amp;Coaches" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </TitledBorder>
               </Border>
@@ -162,7 +162,6 @@
               <Image iconType="3" name="/tourma/images/excel.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Import Excel File"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtImportExcelActionPerformed"/>

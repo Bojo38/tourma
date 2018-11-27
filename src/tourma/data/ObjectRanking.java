@@ -354,4 +354,40 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
     public void setValue5(int mValue5) {
         this.mValue5 = mValue5;
     }
+
+    public void setValue(int index, int value) {
+        switch (index) {
+            case 0:
+                setValue1(value);
+                break;
+            case 1:
+                setValue2(value);
+                break;
+            case 2:
+                setValue3(value);
+                break;
+            case 3:
+                setValue4(value);
+                break;
+            case 4:
+                setValue5(value);
+                break;
+        }
+    }
+
+    public int getValue(int index) {
+        switch (index) {
+            case 0:
+                return getValue1();
+            case 1:
+                return getValue2();
+            case 2:
+                return getValue3();
+            case 3:
+                return getValue4();
+            case 4:
+                return getValue5();
+        }
+        return 0;
+    }
 }
