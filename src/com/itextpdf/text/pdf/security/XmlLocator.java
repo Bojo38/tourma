@@ -46,7 +46,6 @@ package com.itextpdf.text.pdf.security;
 
 import com.itextpdf.text.DocumentException;
 
-import javax.xml.transform.TransformerConfigurationException;
 import java.io.IOException;
 
 /**

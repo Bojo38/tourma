@@ -1,6 +1,5 @@
 package com.swabunga.spell.event;
 
-import java.util.*;
 import java.text.*;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Document;

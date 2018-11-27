@@ -5,7 +5,6 @@
 package tourma.data;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,7 +18,6 @@ import javax.swing.JOptionPane;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.jfree.util.Log;
 import tourma.MainFrame;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;

@@ -7,8 +7,6 @@ package tourma.views.fullscreen;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridBagLayout;
 import java.io.BufferedReader;
 import java.io.IOException;

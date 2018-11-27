@@ -61,7 +61,6 @@ import com.itextpdf.tool.xml.exceptions.RuntimeWorkerException;
 import com.itextpdf.tool.xml.net.ImageRetrieve;
 import com.itextpdf.tool.xml.net.exc.NoImageException;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
-import com.itextpdf.tool.xml.pipeline.html.UrlLinkResolver;
 
 import java.util.ArrayList;
 import java.util.List;

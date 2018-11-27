@@ -51,7 +51,6 @@ import com.itextpdf.tool.xml.css.parser.state.Properties;
 import com.itextpdf.tool.xml.css.parser.state.Rule;
 import com.itextpdf.tool.xml.css.parser.state.Unknown;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

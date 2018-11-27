@@ -13,7 +13,6 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.rmi.RemoteException;
 import java.util.logging.Logger;
 import tourma.data.Tournament;
 

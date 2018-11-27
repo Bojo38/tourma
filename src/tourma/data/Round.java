@@ -5,8 +5,6 @@
 package tourma.data;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 //import java.time.Instant;
@@ -20,7 +18,6 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;

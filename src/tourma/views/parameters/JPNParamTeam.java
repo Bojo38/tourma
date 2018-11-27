@@ -4,13 +4,11 @@
  */
 package tourma.views.parameters;
 
-import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
-import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 

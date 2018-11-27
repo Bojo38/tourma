@@ -4,7 +4,6 @@
  */
 package tourma.tableModel;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import tourma.data.Coach;
@@ -12,7 +11,6 @@ import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.ObjectAnnexRanking;
-import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Tournament;

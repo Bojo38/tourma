@@ -45,7 +45,6 @@
 package com.itextpdf.text.pdf;
 
 import com.itextpdf.text.ExceptionConverter;
-import com.itextpdf.text.Image;
 
 /**
  * <CODE>PdfFont</CODE> is the Pdf Font object.

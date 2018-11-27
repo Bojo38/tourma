@@ -4,13 +4,11 @@
  */
 package tourma.views.parameters;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import tourma.JdgCoach;
 import tourma.JdgTeam;
 import tourma.MainFrame;
 import tourma.data.ETeamPairing;
-import tourma.data.Tournament;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;

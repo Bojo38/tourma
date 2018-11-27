@@ -45,8 +45,6 @@
 package com.itextpdf.text.pdf;
 
 import com.itextpdf.text.error_messages.MessageLocalization;
-import com.itextpdf.text.log.LoggerFactory;
-import com.itextpdf.text.log.Logger;
 
 import java.io.IOException;
 import java.util.Map;

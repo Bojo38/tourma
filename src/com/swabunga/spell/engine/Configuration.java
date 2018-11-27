@@ -1,7 +1,5 @@
 package com.swabunga.spell.engine;
 
-import java.util.ResourceBundle;
-
 /**
  * @author aim4min
  *

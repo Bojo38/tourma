@@ -44,7 +44,6 @@
  */
 package com.itextpdf.tool.xml.css.apply;
 
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.tool.xml.Tag;

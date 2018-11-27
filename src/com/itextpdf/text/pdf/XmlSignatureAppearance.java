@@ -50,9 +50,7 @@ import com.itextpdf.text.pdf.security.XmlLocator;
 
 import java.io.IOException;
 import java.security.cert.Certificate;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 public class XmlSignatureAppearance {
 

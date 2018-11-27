@@ -42,7 +42,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
-import teamma.data.LRB;
 import teamma.data.Player;
 import teamma.data.Roster;
 import teamma.data.RosterType;

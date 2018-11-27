@@ -6,7 +6,6 @@ package tourma.views.round;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.rmi.RemoteException;
 import java.util.logging.Logger;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;

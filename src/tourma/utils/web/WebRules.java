@@ -5,7 +5,6 @@
  */
 package tourma.utils.web;
 
-import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -25,7 +24,6 @@ import tourma.data.Tournament;
 import tourma.languages.Translate;
 import static tourma.languages.Translate.CS_Team;
 import tourma.tableModel.MjtRanking;
-import static tourma.utils.web.WebRound.createIndividualRanking;
 
 /**
  *

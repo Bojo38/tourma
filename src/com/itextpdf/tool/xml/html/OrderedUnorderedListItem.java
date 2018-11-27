@@ -48,10 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.itextpdf.text.*;
-import com.itextpdf.tool.xml.NoCustomContextException;
 import com.itextpdf.tool.xml.Tag;
 import com.itextpdf.tool.xml.WorkerContext;
-import com.itextpdf.tool.xml.exceptions.RuntimeWorkerException;
 
 /**
  * @author redlab_b

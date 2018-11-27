@@ -1,12 +1,10 @@
 package tourma.views.parameters;
 
 import java.awt.BorderLayout;
-import java.rmi.RemoteException;
 import java.util.Date;
 import tourma.JdgCoach;
 import tourma.MainFrame;
 import tourma.data.Coach;
-import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtCoaches;

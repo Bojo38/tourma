@@ -5,14 +5,12 @@
 package tourma.views.parameters;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.rmi.RemoteException;
 import java.text.ParseException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.Group;
 import tourma.data.GroupPoints;
-import tourma.data.Tournament;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
 import tourma.languages.Translate;

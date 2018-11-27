@@ -14,7 +14,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import tourma.data.Coach;
 import tourma.data.Round;

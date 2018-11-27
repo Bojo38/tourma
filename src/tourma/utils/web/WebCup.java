@@ -5,7 +5,6 @@
  */
 package tourma.utils.web;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.languages.Translate;

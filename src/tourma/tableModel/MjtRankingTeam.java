@@ -16,7 +16,6 @@ import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
-import tourma.data.Tournament;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;

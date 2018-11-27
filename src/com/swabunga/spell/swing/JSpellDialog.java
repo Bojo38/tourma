@@ -2,8 +2,6 @@ package com.swabunga.spell.swing;
 
 import com.swabunga.spell.event.*;
 import javax.swing.*;
-import javax.swing.text.*;
-import java.io.File;
 import java.awt.*;
 import java.awt.event.*;
 

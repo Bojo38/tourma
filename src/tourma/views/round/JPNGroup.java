@@ -1,11 +1,9 @@
 package tourma.views.round;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
-import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;

@@ -17,7 +17,6 @@ import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
-import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;

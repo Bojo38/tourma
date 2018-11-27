@@ -1,6 +1,5 @@
 package com.swabunga.spell.event;
 
-import java.util.*;
 import java.text.*;
 
 /** This class tokenizes a input string.

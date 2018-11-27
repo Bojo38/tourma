@@ -16,7 +16,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -28,15 +27,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.text.AbstractDocument.Content;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import tourma.MainFrame;
 import tourma.data.Coach;
-import tourma.data.Group;
 import tourma.data.RosterType;
-import tourma.utility.StringConstants;
 
 /**
  *

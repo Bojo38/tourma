@@ -4,24 +4,13 @@
  */
 package teamma.views;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import teamma.data.LRB;
-import teamma.data.Player;
 import teamma.data.PlayerType;
-import teamma.data.Skill;
-import teamma.data.SkillType;
 import teamma.data.StarPlayer;
-import teamma.languages.Translate;
 import teamma.tableModel.MjtPlayerTypes;
 import teamma.tableModel.MjtStarPlayers;
 

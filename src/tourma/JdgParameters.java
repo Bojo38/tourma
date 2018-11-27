@@ -7,7 +7,6 @@ package tourma;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.rmi.RemoteException;
 import tourma.data.EIndivPairing;
 import tourma.data.ETeamPairing;
 import tourma.data.Parameters;

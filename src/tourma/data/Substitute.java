@@ -5,10 +5,8 @@
 package tourma.data;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.jdom2.Element;
 import tourma.utility.StringConstants;
 

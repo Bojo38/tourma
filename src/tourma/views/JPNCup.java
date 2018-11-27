@@ -4,7 +4,6 @@
  */
 package tourma.views;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import tourma.data.Match;

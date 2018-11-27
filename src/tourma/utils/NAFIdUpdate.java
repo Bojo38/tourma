@@ -9,19 +9,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.logging.Level;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import tourma.MainFrame;
 import tourma.data.Coach;
-import tourma.languages.Translate;
-import tourma.utility.ExtensionFileFilter;
-import tourma.utility.StringConstants;
 
 /**
  *

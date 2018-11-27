@@ -44,13 +44,6 @@
  */
 package com.itextpdf.text.xml.xmp;
 
-
-import com.itextpdf.xmp.XMPConst;
-import com.itextpdf.xmp.XMPException;
-import com.itextpdf.xmp.XMPMeta;
-import com.itextpdf.xmp.XMPUtils;
-import com.itextpdf.xmp.options.PropertyOptions;
-
 /**
  * An implementation of an XmpSchema.
  */

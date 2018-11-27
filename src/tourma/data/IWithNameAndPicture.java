@@ -4,7 +4,6 @@
  */
 package tourma.data;
 
-import java.awt.image.BufferedImage;
 import java.rmi.RemoteException;
 import javax.swing.ImageIcon;
 

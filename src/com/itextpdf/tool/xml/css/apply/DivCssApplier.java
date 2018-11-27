@@ -44,7 +44,6 @@
  */
 package com.itextpdf.tool.xml.css.apply;
 
-import java.io.IOException;
 import java.util.Map;
 
 import com.itextpdf.text.Font;

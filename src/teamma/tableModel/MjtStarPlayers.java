@@ -12,12 +12,8 @@ import javax.swing.JEditorPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-import teamma.data.LRB;
-import teamma.data.Player;
 import teamma.data.StarPlayer;
-import teamma.data.Roster;
 import teamma.data.Skill;
-import teamma.data.SkillType;
 import teamma.languages.Translate;
 
 /**

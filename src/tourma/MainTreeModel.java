@@ -6,7 +6,6 @@ package tourma;
 
 import java.awt.Component;
 import java.awt.Font;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTree;
@@ -16,7 +15,6 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import tourma.data.Round;
-import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
