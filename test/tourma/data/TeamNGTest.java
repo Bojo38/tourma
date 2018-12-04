@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -791,6 +791,89 @@ public class TeamNGTest {
         Team cm = new Team();
         cm.setXMLElementForDisplay(result);
         assertEquals(instance, cm);
+    }
+
+    /**
+     * Test of getUID method, of class Team.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Team instance = new Team();
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Team.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Team t = null;
+        Team instance = new Team();
+        instance.pull(t);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class Team.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Team t = null;
+        Team instance = new Team();
+        instance.push(t);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Team.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Team instance = new Team();
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCoachsCount method, of class Team.
+     */
+    @Test
+    public void testGetCoachsCount() {
+        System.out.println("getCoachsCount");
+        Team instance = new Team();
+        int expResult = 0;
+        int result = instance.getCoachsCount();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isBalanced method, of class Team.
+     */
+    @Test
+    public void testIsBalanced() {
+        System.out.println("isBalanced");
+        Team opp = null;
+        Round round = null;
+        Team instance = new Team();
+        boolean expResult = false;
+        boolean result = instance.isBalanced(opp, round);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

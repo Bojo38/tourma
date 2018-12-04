@@ -17,8 +17,8 @@ import java.util.logging.Logger;
 import org.fest.swing.core.BasicRobot;
 import org.fest.swing.core.Robot;
 import org.fest.swing.fixture.DialogFixture;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
 import org.testng.Assert;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -55,7 +55,7 @@ public class JdgPrintableRosterNGTest {
     public void setUpMethod() throws Exception {
 
         final SAXBuilder sxb = new SAXBuilder();
-        final org.jdom2.Document document = sxb.build(new File("test/necros.xml"));
+        final org.jdom.Document document = sxb.build(new File("test/necros.xml"));
         final Element racine = document.getRootElement();
         roster = new Roster();
         roster.setXMLElement(racine);

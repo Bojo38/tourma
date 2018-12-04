@@ -107,5 +107,37 @@ public class GenerationNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of subRanking method, of class Generation.
+     */
+    @Test
+    public void testSubRanking_3args_1() {
+        System.out.println("subRanking");
+        Team team = null;
+        ArrayList<Round> rounds = null;
+        boolean sum = false;
+        ArrayList expResult = null;
+        ArrayList result = Generation.subRanking(team, rounds, sum);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of subRanking method, of class Generation.
+     */
+    @Test
+    public void testSubRanking_3args_2() {
+        System.out.println("subRanking");
+        ArrayList<Coach> coachs = null;
+        ArrayList<Round> rounds = null;
+        boolean sum = false;
+        ArrayList expResult = null;
+        ArrayList result = Generation.subRanking(coachs, rounds, sum);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

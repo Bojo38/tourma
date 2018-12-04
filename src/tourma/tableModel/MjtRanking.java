@@ -51,7 +51,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         vnd = Integer.toString(nb_vict) + "/" + Integer.toString(nb_draw) + "/" + Integer.toString(nb_loss);
         return vnd;
     }
-    
+
     /**
      *
      * @param valueType
@@ -173,8 +173,17 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 case Parameters.C_RANKING_TABLES:
                     result = Translate.translate(Translate.CS_TablesPoints);
                     break;
-                    case Parameters.C_RANKING_HEAD_BY_HEAD:
+                case Parameters.C_RANKING_HEAD_BY_HEAD:
                     result = Translate.translate(Translate.CS_HeadByHead);
+                    break;
+                case Parameters.C_RANKING_TIER:
+                    result = Translate.translate(Translate.CS_Tier);
+                    break;
+                case Parameters.C_RANKING_TEAMMATES_POINTS:
+                    result = Translate.translate(Translate.CS_Teammates_Points);
+                    break;
+                case Parameters.C_RANKING_TEAMMATES_VND:
+                    result = Translate.translate(Translate.CS_Teammates_VND);
                     break;
                 default:
             }
@@ -377,7 +386,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             default:
                 return 0;
         }
-        
+
     }
 
     /**

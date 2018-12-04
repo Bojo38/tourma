@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -55,7 +55,7 @@ public class RosterNGTest {
     @BeforeMethod
     public void setUpMethod() throws Exception {
         final SAXBuilder sxb = new SAXBuilder();
-        final org.jdom2.Document document = sxb.build(new File("test/necros.xml"));
+        final org.jdom.Document document = sxb.build(new File("test/necros.xml"));
         final Element racine = document.getRootElement();
         roster = new Roster();
         roster.setXMLElement(racine);
@@ -147,7 +147,7 @@ public class RosterNGTest {
         } else {
             try {
                 final SAXBuilder sxb = new SAXBuilder();
-                final org.jdom2.Document document = sxb.build(new File("test/necros.xml"));
+                final org.jdom.Document document = sxb.build(new File("test/necros.xml"));
                 final Element racine = document.getRootElement();
                 Roster tmp = new Roster();
                 tmp.setXMLElement(racine);
@@ -880,6 +880,235 @@ public class RosterNGTest {
             Assert.assertTrue(nb == 4);
             roster.setFanfactor(save);
         }
+    }
+
+    /**
+     * Test of isChaos_wizard method, of class Roster.
+     */
+    @Test
+    public void testIsChaos_wizard() {
+        System.out.println("isChaos_wizard");
+        Roster instance = new Roster();
+        boolean expResult = false;
+        boolean result = instance.isChaos_wizard();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setChaos_wizard method, of class Roster.
+     */
+    @Test
+    public void testSetChaos_wizard() {
+        System.out.println("setChaos_wizard");
+        boolean _chaos_wizard = false;
+        Roster instance = new Roster();
+        instance.setChaos_wizard(_chaos_wizard);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isHoratio_X_Schottenheim method, of class Roster.
+     */
+    @Test
+    public void testIsHoratio_X_Schottenheim() {
+        System.out.println("isHoratio_X_Schottenheim");
+        Roster instance = new Roster();
+        boolean expResult = false;
+        boolean result = instance.isHoratio_X_Schottenheim();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setHoratio_X_Schottenheim method, of class Roster.
+     */
+    @Test
+    public void testSetHoratio_X_Schottenheim() {
+        System.out.println("setHoratio_X_Schottenheim");
+        boolean Horatio_X_Schottenheim = false;
+        Roster instance = new Roster();
+        instance.setHoratio_X_Schottenheim(Horatio_X_Schottenheim);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isKari_Coldsteel method, of class Roster.
+     */
+    @Test
+    public void testIsKari_Coldsteel() {
+        System.out.println("isKari_Coldsteel");
+        Roster instance = new Roster();
+        boolean expResult = false;
+        boolean result = instance.isKari_Coldsteel();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setKari_Coldsteel method, of class Roster.
+     */
+    @Test
+    public void testSetKari_Coldsteel() {
+        System.out.println("setKari_Coldsteel");
+        boolean Kari_Coldsteel = false;
+        Roster instance = new Roster();
+        instance.setKari_Coldsteel(Kari_Coldsteel);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isFink_Da_Fixer method, of class Roster.
+     */
+    @Test
+    public void testIsFink_Da_Fixer() {
+        System.out.println("isFink_Da_Fixer");
+        Roster instance = new Roster();
+        boolean expResult = false;
+        boolean result = instance.isFink_Da_Fixer();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setFink_Da_Fixer method, of class Roster.
+     */
+    @Test
+    public void testSetFink_Da_Fixer() {
+        System.out.println("setFink_Da_Fixer");
+        boolean Fink_Da_Fixer = false;
+        Roster instance = new Roster();
+        instance.setFink_Da_Fixer(Fink_Da_Fixer);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isPapa_Skullbones method, of class Roster.
+     */
+    @Test
+    public void testIsPapa_Skullbones() {
+        System.out.println("isPapa_Skullbones");
+        Roster instance = new Roster();
+        boolean expResult = false;
+        boolean result = instance.isPapa_Skullbones();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPapa_Skullbones method, of class Roster.
+     */
+    @Test
+    public void testSetPapa_Skullbones() {
+        System.out.println("setPapa_Skullbones");
+        boolean Papa_Skullbones = false;
+        Roster instance = new Roster();
+        instance.setPapa_Skullbones(Papa_Skullbones);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isGalandril_Silverwater method, of class Roster.
+     */
+    @Test
+    public void testIsGalandril_Silverwater() {
+        System.out.println("isGalandril_Silverwater");
+        Roster instance = new Roster();
+        boolean expResult = false;
+        boolean result = instance.isGalandril_Silverwater();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGalandril_Silverwater method, of class Roster.
+     */
+    @Test
+    public void testSetGalandril_Silverwater() {
+        System.out.println("setGalandril_Silverwater");
+        boolean Galandril_Silverwater = false;
+        Roster instance = new Roster();
+        instance.setGalandril_Silverwater(Galandril_Silverwater);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isKrot_Shockwhisker method, of class Roster.
+     */
+    @Test
+    public void testIsKrot_Shockwhisker() {
+        System.out.println("isKrot_Shockwhisker");
+        Roster instance = new Roster();
+        boolean expResult = false;
+        boolean result = instance.isKrot_Shockwhisker();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setKrot_Shockwhisker method, of class Roster.
+     */
+    @Test
+    public void testSetKrot_Shockwhisker() {
+        System.out.println("setKrot_Shockwhisker");
+        boolean Krot_Shockwhisker = false;
+        Roster instance = new Roster();
+        instance.setKrot_Shockwhisker(Krot_Shockwhisker);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getVersion method, of class Roster.
+     */
+    @Test
+    public void testGetVersion() {
+        System.out.println("getVersion");
+        Roster instance = new Roster();
+        LRB.E_Version expResult = null;
+        LRB.E_Version result = instance.getVersion();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setVersion method, of class Roster.
+     */
+    @Test
+    public void testSetVersion() {
+        System.out.println("setVersion");
+        LRB.E_Version _version = null;
+        Roster instance = new Roster();
+        instance.setVersion(_version);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Roster.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Roster roster = null;
+        Roster instance = new Roster();
+        instance.pull(roster);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

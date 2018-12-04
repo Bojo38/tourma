@@ -5,8 +5,8 @@
 package tourma.data;
 
 import java.util.logging.Logger;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
+import org.jdom.Attribute;
+import org.jdom.Element;
 import tourma.utility.StringConstants;
 
 /**

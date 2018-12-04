@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;
+import org.jdom.DataConversionException;
+import org.jdom.Element;
 import tourma.utility.StringConstants;
 
 /**
@@ -31,6 +31,16 @@ public class Group implements IXMLExport, Serializable {
 
     public void setUID(int UID) {
         this.UID = UID;
+    }
+
+    int _points;
+
+    public int getPoints() {
+        return _points;
+    }
+
+    public void setPoints(int _points) {
+        this._points = _points;
     }
 
     private static final Logger LOG = Logger.getLogger(Group.class.getName());
@@ -112,6 +122,7 @@ public class Group implements IXMLExport, Serializable {
     public Element getXMLElement() {
         final Element group = new Element(StringConstants.CS_GROUP);
         group.setAttribute(StringConstants.CS_NAME, this.getName());
+        group.setAttribute(StringConstants.CS_POINTS, Integer.toString(this.getPoints()));
         for (int j = 0; j < this.getRosterCount(); j++) {
             final Element roster = new Element(StringConstants.CS_ROSTER);
             if (this.getRoster(j) != null) {
@@ -149,6 +160,12 @@ public class Group implements IXMLExport, Serializable {
     @Override
     public void setXMLElement(final Element group) {
         setName(group.getAttributeValue(StringConstants.CS_NAME));
+
+        try {
+            setPoints(group.getAttribute(StringConstants.CS_POINTS).getIntValue());
+        } catch (DataConversionException | NullPointerException ex) {
+
+        }
 
         final List<Element> rosters = group.getChildren(StringConstants.CS_ROSTER);
         final Iterator<Element> ro = rosters.iterator();

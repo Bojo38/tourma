@@ -4,7 +4,7 @@
  */
 package tourma.data;
 
-import org.jdom2.Element;
+import org.jdom.Element;
 
 /**
  *

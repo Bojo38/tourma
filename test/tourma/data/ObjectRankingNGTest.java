@@ -5,7 +5,7 @@
  */
 package tourma.data;
 
-import org.jdom2.Element;
+import org.jdom.Element;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import org.testng.annotations.AfterClass;
@@ -366,6 +366,35 @@ public class ObjectRankingNGTest {
         ObjectRanking instance = new ObjectRanking(null, mValue1, mValue2, mValue3, mValue4, mValue5);
         instance.setValue5(mValue);
         assertEquals(mValue, instance.getValue5());
+    }
+
+    /**
+     * Test of setValue method, of class ObjectRanking.
+     */
+    @Test
+    public void testSetValue() {
+        System.out.println("setValue");
+        int index = 0;
+        int value = 0;
+        ObjectRanking instance = null;
+        instance.setValue(index, value);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValue method, of class ObjectRanking.
+     */
+    @Test
+    public void testGetValue() {
+        System.out.println("getValue");
+        int index = 0;
+        ObjectRanking instance = null;
+        int expResult = 0;
+        int result = instance.getValue(index);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

@@ -17,6 +17,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tourma.data.ObjectRanking;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -140,6 +141,22 @@ public class MjtRankingTeamNGTest {
                 Assert.assertTrue(result instanceof JLabel);
             }
         }
+    }
+
+    /**
+     * Test of updateHeadByHeadValue method, of class MjtRankingTeam.
+     */
+    @Test
+    public void testUpdateHeadByHeadValue() {
+        System.out.println("updateHeadByHeadValue");
+        int round_index = 0;
+        int valueIndex = 0;
+        ObjectRanking or1 = null;
+        ObjectRanking or2 = null;
+        MjtRankingTeam instance = null;
+        instance.updateHeadByHeadValue(round_index, valueIndex, or1, or2);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
-import org.jdom2.Element;
+import org.jdom.Element;
 import tourma.utility.StringConstants;
 
 /**

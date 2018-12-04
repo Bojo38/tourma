@@ -12,8 +12,8 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import org.apache.xerces.impl.dv.util.Base64;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
+import org.jdom.Attribute;
+import org.jdom.Element;
 import tourma.utility.StringConstants;
 
 /**

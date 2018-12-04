@@ -113,5 +113,85 @@ public class ValueNGTest {
         instance.setValue2(mValue2);
         assertEquals(19,instance.getValue2());
     }
+
+    /**
+     * Test of isUpdated method, of class Value.
+     */
+    @Test
+    public void testIsUpdated() {
+        System.out.println("isUpdated");
+        Value instance = null;
+        boolean expResult = false;
+        boolean result = instance.isUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUpdated method, of class Value.
+     */
+    @Test
+    public void testSetUpdated() {
+        System.out.println("setUpdated");
+        boolean updated = false;
+        Value instance = null;
+        instance.setUpdated(updated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getUID method, of class Value.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Value instance = null;
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Value.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Value instance = null;
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Value.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Value value = null;
+        Value instance = null;
+        instance.pull(value);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class Value.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Value value = null;
+        Value instance = null;
+        instance.push(value);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

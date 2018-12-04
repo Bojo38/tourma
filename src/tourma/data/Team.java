@@ -23,7 +23,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.apache.xerces.impl.dv.util.Base64;
-import org.jdom2.Element;
+import org.jdom.Element;
 import tourma.JdgPairing;
 import tourma.MainFrame;
 import tourma.utility.StringConstants;

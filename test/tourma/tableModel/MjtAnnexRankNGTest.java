@@ -183,4 +183,17 @@ public class MjtAnnexRankNGTest {
         assertEquals(result, expResult);
     }
 
+    /**
+     * Test of setCriteria method, of class MjtAnnexRank.
+     */
+    @Test
+    public void testSetCriteria() {
+        System.out.println("setCriteria");
+        Criteria c = null;
+        MjtAnnexRank instance = null;
+        instance.setCriteria(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

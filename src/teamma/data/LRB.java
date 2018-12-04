@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 import teamma.languages.Translate;
 
 /**
@@ -304,7 +304,7 @@ public final class LRB {
         String filename = "";
         try {
             SAXBuilder sxb = new SAXBuilder();
-            org.jdom2.Document document = sxb.build(file);
+            org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
             /*
@@ -441,7 +441,7 @@ public final class LRB {
     private void loadSkills(InputStream file) {
         try {
             SAXBuilder sxb = new SAXBuilder();
-            org.jdom2.Document document = sxb.build(file);
+            org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
             List<Element> l_categories = racine.getChildren(CS_Category);
@@ -508,7 +508,7 @@ public final class LRB {
     private void loadTeam(InputStream file, String image) {
         try {
             SAXBuilder sxb = new SAXBuilder();
-            org.jdom2.Document document = sxb.build(file);
+            org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
             Element e_name = racine.getChild(CS_Name);
@@ -689,7 +689,7 @@ public final class LRB {
     private void loadStarPlayers(InputStream file) {
         try {
             SAXBuilder sxb = new SAXBuilder();
-            org.jdom2.Document document = sxb.build(file);
+            org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
 
             clearStarPlayers();

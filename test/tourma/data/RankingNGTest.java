@@ -7,7 +7,7 @@ package tourma.data;
 
 import java.io.File;
 import java.util.ArrayList;
-import org.jdom2.Element;
+import org.jdom.Element;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -427,6 +427,33 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             assertEquals(instance2.getSortedValue(i,0), values.get(i).intValue());
         }
+    }
+
+    /**
+     * Test of getUID method, of class Ranking.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Ranking instance = null;
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Ranking.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Ranking instance = null;
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

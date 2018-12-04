@@ -5,17 +5,19 @@
  */
 package tourma.data;
 
+import java.awt.image.RenderedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -1278,7 +1280,7 @@ public class TournamentNGTest {
         final SAXBuilder sxb = new SAXBuilder();
 
         try {
-            final org.jdom2.Document document = sxb.build(new File("./test/tournament.xml"));
+            final org.jdom.Document document = sxb.build(new File("./test/tournament.xml"));
             final Element racine = document.getRootElement();
             Tournament instance = Tournament.getTournament();
             RosterType.newRostersNames();
@@ -1292,5 +1294,505 @@ public class TournamentNGTest {
         } catch (Exception e) {
             fail("Exception catched");
         }
+    }
+
+    /**
+     * Test of isClient method, of class Tournament.
+     */
+    @Test
+    public void testIsClient() {
+        System.out.println("isClient");
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.isClient();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setIsClient method, of class Tournament.
+     */
+    @Test
+    public void testSetIsClient() {
+        System.out.println("setIsClient");
+        boolean isClient = false;
+        Tournament instance = null;
+        instance.setIsClient(isClient);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of recomputeAll method, of class Tournament.
+     */
+    @Test
+    public void testRecomputeAll() {
+        System.out.println("recomputeAll");
+        Tournament instance = null;
+        instance.recomputeAll();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeams method, of class Tournament.
+     */
+    @Test
+    public void testGetTeams() {
+        System.out.println("getTeams");
+        Tournament instance = null;
+        ArrayList expResult = null;
+        ArrayList result = instance.getTeams();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCoachs method, of class Tournament.
+     */
+    @Test
+    public void testGetCoachs() {
+        System.out.println("getCoachs");
+        Tournament instance = null;
+        ArrayList expResult = null;
+        ArrayList result = instance.getCoachs();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCategory method, of class Tournament.
+     */
+    @Test
+    public void testGetCategory_int() {
+        System.out.println("getCategory");
+        int i = 0;
+        Tournament instance = null;
+        Category expResult = null;
+        Category result = instance.getCategory(i);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCategory method, of class Tournament.
+     */
+    @Test
+    public void testGetCategory_String() {
+        System.out.println("getCategory");
+        String s = "";
+        Tournament instance = null;
+        Category expResult = null;
+        Category result = instance.getCategory(s);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsGroup method, of class Tournament.
+     */
+    @Test
+    public void testContainsGroup() {
+        System.out.println("containsGroup");
+        Group g = null;
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.containsGroup(g);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of saveXML method, of class Tournament.
+     */
+    @Test
+    public void testSaveXML() {
+        System.out.println("saveXML");
+        File file = null;
+        Tournament instance = null;
+        instance.saveXML(file);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of generateCSVRanking method, of class Tournament.
+     */
+    @Test
+    public void testGenerateCSVRanking() {
+        System.out.println("generateCSVRanking");
+        int round = 0;
+        boolean withRoster = false;
+        boolean withNaf = false;
+        Tournament instance = null;
+        String expResult = "";
+        String result = instance.generateCSVRanking(round, withRoster, withNaf);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of generateRankingQRCode method, of class Tournament.
+     */
+    @Test
+    public void testGenerateRankingQRCode() {
+        System.out.println("generateRankingQRCode");
+        int round = 0;
+        Tournament instance = null;
+        RenderedImage expResult = null;
+        RenderedImage result = instance.generateRankingQRCode(round);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getDescription method, of class Tournament.
+     */
+    @Test
+    public void testGetDescription() {
+        System.out.println("getDescription");
+        Tournament instance = null;
+        String expResult = "";
+        String result = instance.getDescription();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setDescription method, of class Tournament.
+     */
+    @Test
+    public void testSetDescription() {
+        System.out.println("setDescription");
+        String tmp = "";
+        Tournament instance = null;
+        instance.setDescription(tmp);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Tournament.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Tournament tour = null;
+        Tournament.pull(tour);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pullRounds method, of class Tournament.
+     */
+    @Test
+    public void testPullRounds() {
+        System.out.println("pullRounds");
+        ArrayList<Round> rounds = null;
+        Tournament instance = null;
+        instance.pullRounds(rounds);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pullClans method, of class Tournament.
+     */
+    @Test
+    public void testPullClans() {
+        System.out.println("pullClans");
+        ArrayList<Clan> clans = null;
+        Tournament instance = null;
+        instance.pullClans(clans);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pullCategories method, of class Tournament.
+     */
+    @Test
+    public void testPullCategories() {
+        System.out.println("pullCategories");
+        ArrayList<Category> categories = null;
+        Tournament instance = null;
+        instance.pullCategories(categories);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pullTeams method, of class Tournament.
+     */
+    @Test
+    public void testPullTeams() {
+        System.out.println("pullTeams");
+        ArrayList<Team> teams = null;
+        Tournament instance = null;
+        instance.pullTeams(teams);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pullCoachs method, of class Tournament.
+     */
+    @Test
+    public void testPullCoachs() {
+        System.out.println("pullCoachs");
+        ArrayList<Coach> coachs = null;
+        Tournament instance = null;
+        instance.pullCoachs(coachs);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pullGroups method, of class Tournament.
+     */
+    @Test
+    public void testPullGroups() {
+        System.out.println("pullGroups");
+        ArrayList<Group> groups = null;
+        Tournament instance = null;
+        instance.pullGroups(groups);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRosterType method, of class Tournament.
+     */
+    @Test
+    public void testGetRosterType() {
+        System.out.println("getRosterType");
+        Tournament instance = null;
+        HashMap expResult = null;
+        HashMap result = instance.getRosterType();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class Tournament.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Tournament tour = null;
+        Tournament.push(tour);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isClansUpdated method, of class Tournament.
+     */
+    @Test
+    public void testIsClansUpdated() {
+        System.out.println("isClansUpdated");
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.isClansUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setClansUpdated method, of class Tournament.
+     */
+    @Test
+    public void testSetClansUpdated() {
+        System.out.println("setClansUpdated");
+        boolean clansUpdated = false;
+        Tournament instance = null;
+        instance.setClansUpdated(clansUpdated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isCoachsUpdated method, of class Tournament.
+     */
+    @Test
+    public void testIsCoachsUpdated() {
+        System.out.println("isCoachsUpdated");
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.isCoachsUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setCoachsUpdated method, of class Tournament.
+     */
+    @Test
+    public void testSetCoachsUpdated() {
+        System.out.println("setCoachsUpdated");
+        boolean coachsUpdated = false;
+        Tournament instance = null;
+        instance.setCoachsUpdated(coachsUpdated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isTeamsUpdated method, of class Tournament.
+     */
+    @Test
+    public void testIsTeamsUpdated() {
+        System.out.println("isTeamsUpdated");
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.isTeamsUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTeamsUpdated method, of class Tournament.
+     */
+    @Test
+    public void testSetTeamsUpdated() {
+        System.out.println("setTeamsUpdated");
+        boolean teamsUpdated = false;
+        Tournament instance = null;
+        instance.setTeamsUpdated(teamsUpdated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isRoundsUpdated method, of class Tournament.
+     */
+    @Test
+    public void testIsRoundsUpdated() {
+        System.out.println("isRoundsUpdated");
+        Tournament instance = null;
+        boolean expResult = false;
+        boolean result = instance.isRoundsUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setRoundsUpdated method, of class Tournament.
+     */
+    @Test
+    public void testSetRoundsUpdated() {
+        System.out.println("setRoundsUpdated");
+        boolean roundsUpdated = false;
+        Tournament instance = null;
+        instance.setRoundsUpdated(roundsUpdated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pushClans method, of class Tournament.
+     */
+    @Test
+    public void testPushClans() {
+        System.out.println("pushClans");
+        ArrayList<Clan> clans = null;
+        Tournament instance = null;
+        instance.pushClans(clans);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pushTeams method, of class Tournament.
+     */
+    @Test
+    public void testPushTeams() {
+        System.out.println("pushTeams");
+        ArrayList<Team> teams = null;
+        Tournament instance = null;
+        instance.pushTeams(teams);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pushCoachs method, of class Tournament.
+     */
+    @Test
+    public void testPushCoachs() {
+        System.out.println("pushCoachs");
+        ArrayList<Coach> coachs = null;
+        Tournament instance = null;
+        instance.pushCoachs(coachs);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pushRounds method, of class Tournament.
+     */
+    @Test
+    public void testPushRounds() {
+        System.out.println("pushRounds");
+        ArrayList<Round> rounds = null;
+        Tournament instance = null;
+        instance.pushRounds(rounds);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of resetUpdated method, of class Tournament.
+     */
+    @Test
+    public void testResetUpdated() {
+        System.out.println("resetUpdated");
+        Tournament instance = null;
+        instance.resetUpdated();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeamsNames method, of class Tournament.
+     */
+    @Test
+    public void testGetTeamsNames() {
+        System.out.println("getTeamsNames");
+        Tournament instance = null;
+        String[] expResult = null;
+        String[] result = instance.getTeamsNames();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getActiveCompetitorsCount method, of class Tournament.
+     */
+    @Test
+    public void testGetActiveCompetitorsCount() {
+        System.out.println("getActiveCompetitorsCount");
+        Tournament instance = null;
+        int expResult = 0;
+        int result = instance.getActiveCompetitorsCount();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

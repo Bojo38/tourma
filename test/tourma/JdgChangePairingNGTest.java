@@ -103,6 +103,18 @@ public class JdgChangePairingNGTest {
         Assert.assertEquals(c2,c1);
     }
 
+    /**
+     * Test of update method, of class JdgChangePairing.
+     */
+    @Test
+    public void testUpdate() {
+        System.out.println("update");
+        JdgChangePairing instance = null;
+        instance.update();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
     
     
 }

@@ -164,5 +164,55 @@ public class MainFrameNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getCurrentPath method, of class MainFrame.
+     */
+    @Test
+    public void testGetCurrentPath() {
+        System.out.println("getCurrentPath");
+        MainFrame instance = null;
+        String expResult = "";
+        String result = instance.getCurrentPath();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updateMenus method, of class MainFrame.
+     */
+    @Test
+    public void testUpdateMenus() {
+        System.out.println("updateMenus");
+        MainFrame instance = null;
+        instance.updateMenus();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of splashProgress method, of class MainFrame.
+     */
+    @Test
+    public void testSplashProgress() {
+        System.out.println("splashProgress");
+        int pct = 0;
+        MainFrame.splashProgress(pct);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of splashText method, of class MainFrame.
+     */
+    @Test
+    public void testSplashText() {
+        System.out.println("splashText");
+        String str = "";
+        MainFrame.splashText(str);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

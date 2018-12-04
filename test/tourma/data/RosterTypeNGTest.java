@@ -5,8 +5,9 @@
  */
 package tourma.data;
 
+import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
@@ -290,6 +291,58 @@ public class RosterTypeNGTest {
         String expResult = "Amazons";
         String result = RosterType.getRosterTranslation(source);
         assertEquals(result, expResult);
+    }
+
+    /**
+     * Test of getUID method, of class RosterType.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        RosterType instance = null;
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class RosterType.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        RosterType instance = null;
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRosters method, of class RosterType.
+     */
+    @Test
+    public void testGetRosters() {
+        System.out.println("getRosters");
+        HashMap expResult = null;
+        HashMap result = RosterType.getRosters();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class RosterType.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        HashMap<String, RosterType> types = null;
+        RosterType.pull(types);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

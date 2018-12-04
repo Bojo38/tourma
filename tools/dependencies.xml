@@ -136,20 +136,20 @@
                     <Package>org.apache.xml.serialize</Package>
                     <Package>org.apache.xmlcommons</Package>
                     <Package>org.jdom2</Package>
-                    <Package>org.jdom2.adapters</Package>
-                    <Package>org.jdom2.filter</Package>
-                    <Package>org.jdom2.input</Package>
-                    <Package>org.jdom2.input.sax</Package>
-                    <Package>org.jdom2.input.stax</Package>
-                    <Package>org.jdom2.internal</Package>
-                    <Package>org.jdom2.located</Package>
-                    <Package>org.jdom2.output</Package>
-                    <Package>org.jdom2.output.support</Package>
-                    <Package>org.jdom2.transform</Package>
-                    <Package>org.jdom2.util</Package>
-                    <Package>org.jdom2.xpath</Package>
-                    <Package>org.jdom2.xpath.jaxen</Package>
-                    <Package>org.jdom2.xpath.util</Package>
+                    <Package>org.jdom.adapters</Package>
+                    <Package>org.jdom.filter</Package>
+                    <Package>org.jdom.input</Package>
+                    <Package>org.jdom.input.sax</Package>
+                    <Package>org.jdom.input.stax</Package>
+                    <Package>org.jdom.internal</Package>
+                    <Package>org.jdom.located</Package>
+                    <Package>org.jdom.output</Package>
+                    <Package>org.jdom.output.support</Package>
+                    <Package>org.jdom.transform</Package>
+                    <Package>org.jdom.util</Package>
+                    <Package>org.jdom.xpath</Package>
+                    <Package>org.jdom.xpath.jaxen</Package>
+                    <Package>org.jdom.xpath.util</Package>
                     <Package>org.jfree</Package>
                     <Package>org.jfree.base</Package>
                     <Package>org.jfree.base.config</Package>

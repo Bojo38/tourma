@@ -23,11 +23,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import teamma.data.LRB;
 import teamma.data.Player;
 import teamma.data.PlayerType;
@@ -2097,7 +2097,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             final SAXBuilder sxb = new SAXBuilder();
 
             try {
-                final org.jdom2.Document document = sxb.build(jfc.getSelectedFile());
+                final org.jdom.Document document = sxb.build(jfc.getSelectedFile());
                 final Element racine = document.getRootElement();
                 _data = new Roster();
                 _data.setXMLElement(racine);

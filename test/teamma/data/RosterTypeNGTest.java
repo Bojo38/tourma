@@ -1235,4 +1235,368 @@ public class RosterTypeNGTest {
         }
     }
 
+    /**
+     * Test of getVersion method, of class RosterType.
+     */
+    @Test
+    public void testGetVersion() {
+        System.out.println("getVersion");
+        RosterType instance = null;
+        LRB.E_Version expResult = null;
+        LRB.E_Version result = instance.getVersion();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setVersion method, of class RosterType.
+     */
+    @Test
+    public void testSetVersion() {
+        System.out.println("setVersion");
+        LRB.E_Version v = null;
+        RosterType instance = null;
+        instance.setVersion(v);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isChaos_wizard method, of class RosterType.
+     */
+    @Test
+    public void testIsChaos_wizard() {
+        System.out.println("isChaos_wizard");
+        RosterType instance = null;
+        boolean expResult = false;
+        boolean result = instance.isChaos_wizard();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setChaos_wizard method, of class RosterType.
+     */
+    @Test
+    public void testSetChaos_wizard() {
+        System.out.println("setChaos_wizard");
+        boolean _chaos_wizard = false;
+        RosterType instance = null;
+        instance.setChaos_wizard(_chaos_wizard);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getChaos_wizard_cost method, of class RosterType.
+     */
+    @Test
+    public void testGetChaos_wizard_cost() {
+        System.out.println("getChaos_wizard_cost");
+        int expResult = 0;
+        int result = RosterType.getChaos_wizard_cost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setChaos_wizard_cost method, of class RosterType.
+     */
+    @Test
+    public void testSetChaos_wizard_cost() {
+        System.out.println("setChaos_wizard_cost");
+        int _chaos_wizard_cost = 0;
+        RosterType.setChaos_wizard_cost(_chaos_wizard_cost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getHoratio_X_Schottenheim_cost method, of class RosterType.
+     */
+    @Test
+    public void testGetHoratio_X_Schottenheim_cost() {
+        System.out.println("getHoratio_X_Schottenheim_cost");
+        int expResult = 0;
+        int result = RosterType.getHoratio_X_Schottenheim_cost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setHoratio_X_Schottenheim_cost method, of class RosterType.
+     */
+    @Test
+    public void testSetHoratio_X_Schottenheim_cost() {
+        System.out.println("setHoratio_X_Schottenheim_cost");
+        int Horatio_X_Schottenheim_cost = 0;
+        RosterType.setHoratio_X_Schottenheim_cost(Horatio_X_Schottenheim_cost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isKari_Coldstell method, of class RosterType.
+     */
+    @Test
+    public void testIsKari_Coldstell() {
+        System.out.println("isKari_Coldstell");
+        RosterType instance = null;
+        boolean expResult = false;
+        boolean result = instance.isKari_Coldstell();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setKari_Coldstell method, of class RosterType.
+     */
+    @Test
+    public void testSetKari_Coldstell() {
+        System.out.println("setKari_Coldstell");
+        boolean Kari_Coldstell = false;
+        RosterType instance = null;
+        instance.setKari_Coldstell(Kari_Coldstell);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getKari_Coldstell_cost method, of class RosterType.
+     */
+    @Test
+    public void testGetKari_Coldstell_cost() {
+        System.out.println("getKari_Coldstell_cost");
+        int expResult = 0;
+        int result = RosterType.getKari_Coldstell_cost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setKari_Coldstell_cost method, of class RosterType.
+     */
+    @Test
+    public void testSetKari_Coldstell_cost() {
+        System.out.println("setKari_Coldstell_cost");
+        int Kari_Coldstell_cost = 0;
+        RosterType.setKari_Coldstell_cost(Kari_Coldstell_cost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isFink_Da_Fixer method, of class RosterType.
+     */
+    @Test
+    public void testIsFink_Da_Fixer() {
+        System.out.println("isFink_Da_Fixer");
+        RosterType instance = null;
+        boolean expResult = false;
+        boolean result = instance.isFink_Da_Fixer();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setFink_Da_Fixer method, of class RosterType.
+     */
+    @Test
+    public void testSetFink_Da_Fixer() {
+        System.out.println("setFink_Da_Fixer");
+        boolean Fink_Da_Fixer = false;
+        RosterType instance = null;
+        instance.setFink_Da_Fixer(Fink_Da_Fixer);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getFink_Da_Fixer_cost method, of class RosterType.
+     */
+    @Test
+    public void testGetFink_Da_Fixer_cost() {
+        System.out.println("getFink_Da_Fixer_cost");
+        int expResult = 0;
+        int result = RosterType.getFink_Da_Fixer_cost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setFink_Da_Fixer_cost method, of class RosterType.
+     */
+    @Test
+    public void testSetFink_Da_Fixer_cost() {
+        System.out.println("setFink_Da_Fixer_cost");
+        int Fink_Da_Fixer_cost = 0;
+        RosterType.setFink_Da_Fixer_cost(Fink_Da_Fixer_cost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isPapa_Skullbones method, of class RosterType.
+     */
+    @Test
+    public void testIsPapa_Skullbones() {
+        System.out.println("isPapa_Skullbones");
+        RosterType instance = null;
+        boolean expResult = false;
+        boolean result = instance.isPapa_Skullbones();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPapa_Skullbones method, of class RosterType.
+     */
+    @Test
+    public void testSetPapa_Skullbones() {
+        System.out.println("setPapa_Skullbones");
+        boolean Papa_Skullbones = false;
+        RosterType instance = null;
+        instance.setPapa_Skullbones(Papa_Skullbones);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPapa_Skullbones_cost method, of class RosterType.
+     */
+    @Test
+    public void testGetPapa_Skullbones_cost() {
+        System.out.println("getPapa_Skullbones_cost");
+        int expResult = 0;
+        int result = RosterType.getPapa_Skullbones_cost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPapa_Skullbones_cost method, of class RosterType.
+     */
+    @Test
+    public void testSetPapa_Skullbones_cost() {
+        System.out.println("setPapa_Skullbones_cost");
+        int Papa_Skullbones_cost = 0;
+        RosterType.setPapa_Skullbones_cost(Papa_Skullbones_cost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isGalandril_Silverwater method, of class RosterType.
+     */
+    @Test
+    public void testIsGalandril_Silverwater() {
+        System.out.println("isGalandril_Silverwater");
+        RosterType instance = null;
+        boolean expResult = false;
+        boolean result = instance.isGalandril_Silverwater();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGalandril_Silverwater method, of class RosterType.
+     */
+    @Test
+    public void testSetGalandril_Silverwater() {
+        System.out.println("setGalandril_Silverwater");
+        boolean Galandril_Silverwater = false;
+        RosterType instance = null;
+        instance.setGalandril_Silverwater(Galandril_Silverwater);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGalandril_Silverwater_cost method, of class RosterType.
+     */
+    @Test
+    public void testGetGalandril_Silverwater_cost() {
+        System.out.println("getGalandril_Silverwater_cost");
+        int expResult = 0;
+        int result = RosterType.getGalandril_Silverwater_cost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGalandril_Silverwater_cost method, of class RosterType.
+     */
+    @Test
+    public void testSetGalandril_Silverwater_cost() {
+        System.out.println("setGalandril_Silverwater_cost");
+        int Galandril_Silverwater_cost = 0;
+        RosterType.setGalandril_Silverwater_cost(Galandril_Silverwater_cost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isKrot_Shockwhisker method, of class RosterType.
+     */
+    @Test
+    public void testIsKrot_Shockwhisker() {
+        System.out.println("isKrot_Shockwhisker");
+        RosterType instance = null;
+        boolean expResult = false;
+        boolean result = instance.isKrot_Shockwhisker();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setKrot_Shockwhisker method, of class RosterType.
+     */
+    @Test
+    public void testSetKrot_Shockwhisker() {
+        System.out.println("setKrot_Shockwhisker");
+        boolean Krot_Shockwhisker = false;
+        RosterType instance = null;
+        instance.setKrot_Shockwhisker(Krot_Shockwhisker);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getKrot_Shockwhisker_cost method, of class RosterType.
+     */
+    @Test
+    public void testGetKrot_Shockwhisker_cost() {
+        System.out.println("getKrot_Shockwhisker_cost");
+        int expResult = 0;
+        int result = RosterType.getKrot_Shockwhisker_cost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setKrot_Shockwhisker_cost method, of class RosterType.
+     */
+    @Test
+    public void testSetKrot_Shockwhisker_cost() {
+        System.out.println("setKrot_Shockwhisker_cost");
+        int Krot_Shockwhisker_cost = 0;
+        RosterType.setKrot_Shockwhisker_cost(Krot_Shockwhisker_cost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

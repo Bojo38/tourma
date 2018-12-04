@@ -10,9 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
+import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import tourma.MainFrame;
 import tourma.data.Coach;
 

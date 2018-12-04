@@ -108,5 +108,60 @@ public class GroupPointsNGTest {
         instance.setLossPoints(value);
         assertEquals(instance.getLossPoints(),value);
     }
+
+    /**
+     * Test of getUID method, of class GroupPoints.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        GroupPoints instance = new GroupPoints();
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class GroupPoints.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        GroupPoints instance = new GroupPoints();
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class GroupPoints.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        GroupPoints gp = null;
+        GroupPoints instance = new GroupPoints();
+        instance.pull(gp);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class GroupPoints.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        GroupPoints instance = new GroupPoints();
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

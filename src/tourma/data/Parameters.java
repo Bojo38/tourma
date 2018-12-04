@@ -17,9 +17,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;
+import org.jdom.Attribute;
+import org.jdom.DataConversionException;
+import org.jdom.Element;
 import tourma.languages.Translate;
 import static tourma.languages.Translate.CS_Injuries;
 import static tourma.languages.Translate.CS_Touchdowns;
@@ -220,7 +220,22 @@ public class Parameters implements IXMLExport, Serializable {
     /**
      *
      */
-    public static final int C_MAX_RANKING = 11;
+    public static final int C_RANKING_TIER = 12;
+    
+    /**
+     *
+     */
+    public static final int C_RANKING_TEAMMATES_POINTS = 13;
+
+    /**
+     *
+     */
+    public static final int C_RANKING_TEAMMATES_VND = 14;
+
+    /**
+     *
+     */
+    public static final int C_MAX_RANKING = 14;
     /**
      *
      */

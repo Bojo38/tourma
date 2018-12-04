@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.Element;
+import org.jdom.Element;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 

@@ -560,4 +560,99 @@ public class CompetitorNGTest {
 
     }
 
+    /**
+     * Test of isUpdated method, of class Competitor.
+     */
+    @Test
+    public void testIsUpdated() {
+        System.out.println("isUpdated");
+        Competitor instance = new CompetitorImpl();
+        boolean expResult = false;
+        boolean result = instance.isUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUpdated method, of class Competitor.
+     */
+    @Test
+    public void testSetUpdated() {
+        System.out.println("setUpdated");
+        boolean updated = false;
+        Competitor instance = new CompetitorImpl();
+        instance.setUpdated(updated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Competitor.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Competitor comp = null;
+        Competitor instance = new CompetitorImpl();
+        instance.pull(comp);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class Competitor.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Competitor comp = null;
+        Competitor instance = new CompetitorImpl();
+        instance.push(comp);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRawName method, of class Competitor.
+     */
+    @Test
+    public void testGetRawName() {
+        System.out.println("getRawName");
+        Competitor instance = new CompetitorImpl();
+        String expResult = "";
+        String result = instance.getRawName();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsMatch method, of class Competitor.
+     */
+    @Test
+    public void testContainsMatch() {
+        System.out.println("containsMatch");
+        Match m = null;
+        Competitor instance = new CompetitorImpl();
+        boolean expResult = false;
+        boolean result = instance.containsMatch(m);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of enableNafAvg method, of class Competitor.
+     */
+    @Test
+    public void testEnableNafAvg() {
+        System.out.println("enableNafAvg");
+        boolean avg = false;
+        Competitor instance = new CompetitorImpl();
+        instance.enableNafAvg(avg);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

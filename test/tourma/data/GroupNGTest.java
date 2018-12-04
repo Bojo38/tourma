@@ -5,7 +5,7 @@
  */
 package tourma.data;
 
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
@@ -348,6 +348,74 @@ public class GroupNGTest {
         Assert.assertFalse(instance.containsRoster(rt));
         instance.addRoster(rt);
         Assert.assertTrue(instance.containsRoster(rt));
+    }
+
+    /**
+     * Test of getUID method, of class Group.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Group instance = null;
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Group.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Group instance = null;
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Group.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Group group = null;
+        Group instance = null;
+        instance.pull(group);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pullOpponentGroupModifierPoints method, of class Group.
+     */
+    @Test
+    public void testPullOpponentGroupModifierPoints() {
+        System.out.println("pullOpponentGroupModifierPoints");
+        Group group = null;
+        Group instance = null;
+        instance.pullOpponentGroupModifierPoints(group);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class Group.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        Group instance = null;
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }

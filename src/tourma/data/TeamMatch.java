@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
-import org.jdom2.Element;
+import org.jdom.Element;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 
@@ -614,13 +614,10 @@ public class TeamMatch extends Match implements Serializable {
             }
 
             for (int i = 0; i < mMatchs.size(); i++) {
-                if (i<tm.getMatchCount())
-                {
+                if (i < tm.getMatchCount()) {
                     equality &= mMatchs.get(i).equals(tm.getMatch(i));
-                }
-                else
-                {
-                    equality=false;
+                } else {
+                    equality = false;
                     break;
                 }
             }
@@ -1017,7 +1014,7 @@ public class TeamMatch extends Match implements Serializable {
                 i++;
             }
         }
-        if (matchFound>0) {
+        if (matchFound > 0) {
             if (victories > loss) {
                 countTeamVictories++;
             } else if (victories < loss) {
@@ -1108,6 +1105,65 @@ public class TeamMatch extends Match implements Serializable {
         return index + 1;
     }
 
+    int getTeammatesPoints(Team t) {
+        int value = 0;
+        for (int i = 0; i < getMatchCount(); i++) {
+            CoachMatch cm = getMatch(i);
+            Coach c = null;
+            Coach c1 = (Coach) cm.getCompetitor1();
+            Coach c2 = (Coach) cm.getCompetitor2();
+            if (c1.getTeamMates() == t) {
+                c = c1;
+            }
+            if (c2.getTeamMates() == t) {
+                c = c2;
+            }
+            if (c != null) {
+                value += CoachMatch.getPointsByCoach(c, cm, true, true);
+
+            }
+        }
+        return value;
+    }
+
+    int getTeammatesVND(Team t) {
+        int value = 0;
+        for (int i = 0; i < getMatchCount(); i++) {
+            CoachMatch cm = getMatch(i);
+            Coach c = null;
+            Coach c1 = (Coach) cm.getCompetitor1();
+            Coach c2 = (Coach) cm.getCompetitor2();
+            if (c1.getTeamMates() == t) {
+                c = c1;
+            }
+            if (c2.getTeamMates() == t) {
+                c = c2;
+            }
+            if (c != null) {
+                value += CoachMatch.getVNDByCoach(c, cm);
+            }
+        }
+        return value;
+    }
+
+    private int getTeamRosterGroups(Team t) {
+        int value = 0;
+        if (this == t.getMatch(0)) {
+            for (int i = 0; i < Tournament.getTournament().getParams().getTeamMatesNumber(); i++) {
+                Coach c = t.getCoach(i);
+                RosterType rt = c.getRoster();
+                for (int j = 0; j < Tournament.getTournament().getGroupsCount(); j++) {
+                    Group g = Tournament.getTournament().getGroup(j);
+                    if (g.containsRoster(rt)) {
+                        value += g.getPoints();
+                        break;
+                    }
+                }
+            }
+        }
+        return value;
+    }
+
     public int getValue(final Team t, final int rankingType, boolean teamVictory) {
         int value = 0;
 
@@ -1172,6 +1228,15 @@ public class TeamMatch extends Match implements Serializable {
                 case Parameters.C_RANKING_HEAD_BY_HEAD:
                     value = 0;
                     break;
+                case Parameters.C_RANKING_TIER:
+                    value = getTeamRosterGroups(t);
+                    break;
+                case Parameters.C_RANKING_TEAMMATES_POINTS:
+                    value = getTeammatesPoints(t);
+                    break;
+                case Parameters.C_RANKING_TEAMMATES_VND:
+                    value = getTeammatesVND(t);
+                    break;
                 default:
                     if (rankingType > Parameters.C_MAX_RANKING) {
                         value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
@@ -1228,6 +1293,12 @@ public class TeamMatch extends Match implements Serializable {
                                 value += CoachMatch.getCoachTablePoints(c, cm);
                             }
                             break;
+                        case Parameters.C_RANKING_TEAMMATES_POINTS:
+                            value = 0;
+                            break;
+                        case Parameters.C_RANKING_TEAMMATES_VND:
+                            value = 0;
+                            break;
                         default:
 
                     }
@@ -1260,6 +1331,10 @@ public class TeamMatch extends Match implements Serializable {
                     }
                 }
                 break;
+                case Parameters.C_RANKING_TIER:
+                    value = getTeamRosterGroups(t);
+                    break;
+
                 case Parameters.C_RANKING_OPP_POINTS:
                 case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
                     if (t.getCoachsCount() > 0) {

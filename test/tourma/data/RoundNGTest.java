@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -567,6 +567,183 @@ public class RoundNGTest {
         Round instance2=new Round();
         instance2.setXMLElementForDisplay(result);
         assertEquals(instance, instance2);
+    }
+
+    /**
+     * Test of getUID method, of class Round.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Round instance = new Round();
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Round.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Round instance = new Round();
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Round.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Round round = null;
+        Round instance = new Round();
+        instance.pull(round);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUpdated method, of class Round.
+     */
+    @Test
+    public void testIsUpdated() {
+        System.out.println("isUpdated");
+        Round instance = new Round();
+        boolean expResult = false;
+        boolean result = instance.isUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUpdated method, of class Round.
+     */
+    @Test
+    public void testSetUpdated() {
+        System.out.println("setUpdated");
+        boolean updated = false;
+        Round instance = new Round();
+        instance.setUpdated(updated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class Round.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Round round = null;
+        Round instance = new Round();
+        instance.push(round);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of containsCoachMatch method, of class Round.
+     */
+    @Test
+    public void testContainsCoachMatch() {
+        System.out.println("containsCoachMatch");
+        CoachMatch m = null;
+        Round instance = new Round();
+        boolean expResult = false;
+        boolean result = instance.containsCoachMatch(m);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class Round.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        Round instance = new Round();
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isThirdPlace method, of class Round.
+     */
+    @Test
+    public void testIsThirdPlace() {
+        System.out.println("isThirdPlace");
+        Round instance = new Round();
+        boolean expResult = false;
+        boolean result = instance.isThirdPlace();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setThirdPlace method, of class Round.
+     */
+    @Test
+    public void testSetThirdPlace() {
+        System.out.println("setThirdPlace");
+        boolean b = false;
+        Round instance = new Round();
+        instance.setThirdPlace(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of recomputeMatchs method, of class Round.
+     */
+    @Test
+    public void testRecomputeMatchs() {
+        System.out.println("recomputeMatchs");
+        Round instance = new Round();
+        instance.recomputeMatchs();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of allMatchesEntered method, of class Round.
+     */
+    @Test
+    public void testAllMatchesEntered() {
+        System.out.println("allMatchesEntered");
+        Round instance = new Round();
+        boolean expResult = false;
+        boolean result = instance.allMatchesEntered();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setMatchPosition method, of class Round.
+     */
+    @Test
+    public void testSetMatchPosition() {
+        System.out.println("setMatchPosition");
+        Match m = null;
+        int position = 0;
+        Round instance = new Round();
+        instance.setMatchPosition(m, position);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

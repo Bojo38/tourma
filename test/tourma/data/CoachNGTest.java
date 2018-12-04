@@ -8,7 +8,7 @@ package tourma.data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -902,6 +902,157 @@ public class CoachNGTest {
         instance.setHandicap(50);
         assertEquals(50, instance.getHandicap());
         instance.setHandicap(save);
+    }
+
+    /**
+     * Test of getUID method, of class Coach.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Coach instance = new Coach();
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Coach.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Coach instance = new Coach();
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Coach.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Coach c = null;
+        Coach instance = new Coach();
+        instance.pull(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class Coach.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Coach c = null;
+        Coach instance = new Coach();
+        instance.push(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isBalanced method, of class Coach.
+     */
+    @Test
+    public void testIsBalanced() {
+        System.out.println("isBalanced");
+        Coach opp = null;
+        Round round = null;
+        Coach instance = new Coach();
+        boolean expResult = false;
+        boolean result = instance.isBalanced(opp, round);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of printBalanced method, of class Coach.
+     */
+    @Test
+    public void testPrintBalanced() {
+        System.out.println("printBalanced");
+        Round round = null;
+        Coach instance = new Coach();
+        instance.printBalanced(round);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNafRankAvg method, of class Coach.
+     */
+    @Test
+    public void testGetNafRankAvg() {
+        System.out.println("getNafRankAvg");
+        Coach instance = new Coach();
+        double expResult = 0.0;
+        double result = instance.getNafRankAvg();
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setNafAvg method, of class Coach.
+     */
+    @Test
+    public void testSetNafAvg() {
+        System.out.println("setNafAvg");
+        double mNafRank = 0.0;
+        Coach instance = new Coach();
+        instance.setNafAvg(mNafRank);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPinCode method, of class Coach.
+     */
+    @Test
+    public void testGetPinCode() {
+        System.out.println("getPinCode");
+        Coach instance = new Coach();
+        int expResult = 0;
+        int result = instance.getPinCode();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPinCode method, of class Coach.
+     */
+    @Test
+    public void testSetPinCode() {
+        System.out.println("setPinCode");
+        int pin = 0;
+        Coach instance = new Coach();
+        instance.setPinCode(pin);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMatchRoster method, of class Coach.
+     */
+    @Test
+    public void testGetMatchRoster() {
+        System.out.println("getMatchRoster");
+        int i = 0;
+        Coach instance = new Coach();
+        String expResult = "";
+        String result = instance.getMatchRoster(i);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

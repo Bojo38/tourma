@@ -70,7 +70,7 @@ import org.bouncycastle.cert.ocsp.OCSPReq;
 import org.bouncycastle.cert.ocsp.OCSPReqBuilder;
 import org.bouncycastle.cert.ocsp.OCSPResp;
 import org.bouncycastle.cert.ocsp.SingleResp;
-import org.bouncycastle.ocsp.OCSPRespStatus;
+//import org.bouncycastle.ocsp.OCSPRespStatus;
 import org.bouncycastle.operator.OperatorException;
 import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 
@@ -121,7 +121,7 @@ public class OcspClientBouncyCastle implements OcspClient {
             if (ocspResponse == null) {
                 return null;
             }
-            if (ocspResponse.getStatus() != OCSPRespStatus.SUCCESSFUL) {
+            if (ocspResponse.getStatus() != OCSPResp.SUCCESSFUL) {
                 return null;
             }
             BasicOCSPResp basicResponse = (BasicOCSPResp) ocspResponse.getResponseObject();
@@ -155,7 +155,7 @@ public class OcspClientBouncyCastle implements OcspClient {
                     Object status = resp.getCertStatus();
                     if (status == CertificateStatus.GOOD) {
                         return basicResponse.getEncoded();
-                    } else if (status instanceof org.bouncycastle.ocsp.RevokedStatus) {
+                    } else if (status instanceof org.bouncycastle.cert.ocsp.RevokedStatus) {
                         throw new IOException(MessageLocalization.getComposedMessage("ocsp.status.is.revoked"));
                     } else {
                         throw new IOException(MessageLocalization.getComposedMessage("ocsp.status.is.unknown"));

@@ -1637,4 +1637,19 @@ public class MjtRankingNGTest {
         }
     }
 
+    /**
+     * Test of convertVND method, of class MjtRanking.
+     */
+    @Test
+    public void testConvertVND() {
+        System.out.println("convertVND");
+        int value = 0;
+        MjtRanking instance = null;
+        String expResult = "";
+        String result = instance.convertVND(value);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

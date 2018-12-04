@@ -161,4 +161,17 @@ public class MjtRankingManualNGTest {
         }
     }
 
+    /**
+     * Test of delData method, of class MjtRankingManual.
+     */
+    @Test
+    public void testDelData() {
+        System.out.println("delData");
+        Competitor obj = null;
+        MjtRankingManual instance = null;
+        instance.delData(obj);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

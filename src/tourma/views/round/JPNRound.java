@@ -33,6 +33,7 @@ import tourma.data.Pool;
 import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
@@ -646,10 +647,15 @@ public final class JPNRound extends javax.swing.JPanel {
         jpmCoach.setVisible(false);
         if (jtbMatches.getSelectedRow() >= 0) {
 
+            TeamMatch tm=null;
             CoachMatch cm = mRound.getCoachMatchs().get(jtbMatches.getSelectedRow());
             Coach c = null;
             Coach opp = null;
             if (Tournament.getTournament().getParams().isTeamTournament()) {
+                if (Tournament.getTournament().getParams().getTeamPairing()==ETeamPairing.TEAM_PAIRING)
+                {
+                    tm=(TeamMatch)mRound.getMatch(jtbMatches.getSelectedRow()/Tournament.getTournament().getParams().getTeamMatesNumber());
+                }
                 if (jtbMatches.getSelectedColumn() == 2) {
                     c = (Coach) cm.getCompetitor1();
                     opp = (Coach) cm.getCompetitor2();
@@ -717,7 +723,12 @@ public final class JPNRound extends javax.swing.JPanel {
                                 if (cm.getCompetitor2() == c) {
                                     cm.setCompetitor1(newOpp);
                                 }
-
+                                cm.recomputeValues();
+                                cm2.recomputeValues();
+                                if (tm!=null)
+                                {
+                                    tm.recomputeValues();
+                                }
                                 break;
                             }
                             if (cm2.getCompetitor2() == newOpp) {
@@ -729,6 +740,12 @@ public final class JPNRound extends javax.swing.JPanel {
                                 }
                                 if (cm.getCompetitor2() == c) {
                                     cm.setCompetitor1(newOpp);
+                                }
+                                cm.recomputeValues();
+                                cm2.recomputeValues();
+                                if (tm!=null)
+                                {
+                                    tm.recomputeValues();
                                 }
                                 break;
                             }

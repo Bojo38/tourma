@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.RosterType;
@@ -149,7 +149,7 @@ public final class NAF {
                 final SAXBuilder sxb = new SAXBuilder();
 
                 try {
-                    final org.jdom2.Document document = sxb.build(fileReader);
+                    final org.jdom.Document document = sxb.build(fileReader);
                     final Element racine = document.getRootElement();
 
                     try {
@@ -269,7 +269,7 @@ public final class NAF {
 //                        System.out.println(buffer);
                             try {
                                 StringReader Sreader = new StringReader(buffer);
-                                final org.jdom2.Document document = sxb.build(Sreader);
+                                final org.jdom.Document document = sxb.build(Sreader);
                                 final Element racine = document.getRootElement();
 
                                 List trs = racine.getChildren("tr");

@@ -226,26 +226,30 @@
 </target>
 
    <target name="proguard" depends="package-for-store">
-        <property name="proguard.jar.path" value="tools/proguard.jar" />
+        
+       <property name="proguard.jar" value="tools/proguard.jar" />
+       
+        <taskdef resource="proguard/ant/task.properties"  classpath="${proguard.jar}" />
+        <proguard configuration="proguard.cfg"/>
+       
+       <!--<property name="proguard.jar.path" value="tools/proguard.jar" />
         <property name="proguard.dir" value="tools/proguard.jar" />
         <property name="java.home.path" value="C:/Program Files/Java/jdk1.8.0_151" />
         <property name="dist.jar" value="store/TourMa.jar" />
         
-        <taskdef resource="proguard/ant/task.properties"
-                 classpath="${proguard.jar.path}" />
+        <taskdef resource="proguard/ant/task.properties" classpath="${proguard.jar.path}" />
         
         <echo message="Obfuscating ${dist.jar}..."/>
         <mkdir dir="${build.dir}/obfuscated"/>
         <proguard printmapping="store/obfuscated/tourma.map"    renamesourcefileattribute="SourceFile" ignorewarnings="true">
             
-            <!-- Specify the input jars, output jars, and library jars. -->
+
             <injar  file="store/TourMa.jar" />
             <outjar file="store/TourMal.jar" />
             
             <libraryjar path="${javac.classpath}" />            
             <libraryjar file="${java.home.path}/jre/lib/rt.jar" />
             
-            <!-- Keep some useful attributes. -->
 
             <keepattribute name="InnerClasses" />
             <keepattribute name="SourceFile" />
@@ -254,7 +258,7 @@
             <keepattribute name="*Annotation*" />
             <keepattribute name="Signature" />
             
-            <!-- Preserve all public classes, and their public and protected fields and methods. -->
+            Preserve all public classes, and their public and protected fields and methods. 
 
             <keep access="public">
                 <field  access="public protected" />
@@ -262,9 +266,8 @@
             </keep>
             
             
-            <!-- Preserve all .class method names. -->
 
-            <keepclassmembernames access="public">
+               <keepclassmembernames access="public">
                 <method type      ="java.lang.Class"
                         name      ="class$"
                         parameters="java.lang.String" />
@@ -273,14 +276,10 @@
                         parameters="java.lang.String,boolean" />
             </keepclassmembernames>
             
-            <!-- Preserve all native method names and the names of their classes. -->
-
             <keepclasseswithmembernames>
                 <method access="native" />
             </keepclasseswithmembernames>
             
-            <!-- Preserve the methods that are required in all enumeration classes. -->
-
             <keepclassmembers extends="java.lang.Enum">
                 <method access="public static"
                         type="**[]"
@@ -292,11 +291,6 @@
                         parameters="java.lang.String" />
             </keepclassmembers>
             
-            <!-- Explicitly preserve all serialization members. The Serializable
-                 interface is only a marker interface, so it wouldn't save them.
-                 You can comment this out if your library doesn't use serialization.
-                 With this code serializable classes will be backward compatible -->
-
             <keepnames implements="java.io.Serializable"/>
             <keepclassmembers implements="java.io.Serializable">
                 <field  access    ="final"
@@ -324,10 +318,7 @@
                         parameters="" />
             </keepclassmembers>
             
-            <!-- Your application may contain more items that need to be preserved;
-                 typically classes that are dynamically created using Class.forName -->
-
-        </proguard>
+        </proguard>-->
     </target>  
                                                             
 </project>

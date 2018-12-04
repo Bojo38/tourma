@@ -131,5 +131,45 @@ public class JFullScreenNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getLabelForObject method, of class JFullScreen.
+     */
+    @Test
+    public void testGetLabelForObject_5args() {
+        System.out.println("getLabelForObject");
+        IWithNameAndPicture object = null;
+        int height = 0;
+        int width = 0;
+        Font f = null;
+        Color bkg = null;
+        JFullScreen instance = new JFullScreenImpl();
+        JLabel expResult = null;
+        JLabel result = instance.getLabelForObject(object, height, width, f, bkg);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getLabelForObject method, of class JFullScreen.
+     */
+    @Test
+    public void testGetLabelForObject_7args() {
+        System.out.println("getLabelForObject");
+        IWithNameAndPicture object = null;
+        int height = 0;
+        int width = 0;
+        Font f = null;
+        Color bkg = null;
+        boolean right = false;
+        int matchIndex = 0;
+        JFullScreen instance = new JFullScreenImpl();
+        JLabel expResult = null;
+        JLabel result = instance.getLabelForObject(object, height, width, f, bkg, right, matchIndex);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }
