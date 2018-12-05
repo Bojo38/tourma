@@ -716,6 +716,7 @@ public final class JPNRound extends javax.swing.JPanel {
                             if (cm2.getCompetitor1() == newOpp) {
                                 newOpp.removeMatch(cm2);
                                 opp.addMatch(cm2);
+                                newOpp.addMatch(cm);
                                 cm2.setCompetitor1(opp);
                                 if (cm.getCompetitor1() == c) {
                                     cm.setCompetitor2(newOpp);
@@ -733,6 +734,7 @@ public final class JPNRound extends javax.swing.JPanel {
                             }
                             if (cm2.getCompetitor2() == newOpp) {
                                 newOpp.removeMatch(cm2);
+                                newOpp.addMatch(cm);
                                 opp.addMatch(cm2);
                                 cm2.setCompetitor2(opp);
                                 if (cm.getCompetitor1() == c) {

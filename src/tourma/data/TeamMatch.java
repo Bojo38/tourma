@@ -1334,7 +1334,6 @@ public class TeamMatch extends Match implements Serializable {
                 case Parameters.C_RANKING_TIER:
                     value = getTeamRosterGroups(t);
                     break;
-
                 case Parameters.C_RANKING_OPP_POINTS:
                 case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
                     if (t.getCoachsCount() > 0) {
