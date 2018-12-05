@@ -9,7 +9,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.apache.xerces.impl.dv.util.Base64;

@@ -47,9 +47,6 @@ import com.itextpdf.tool.xml.css.apply.*;
 import com.itextpdf.tool.xml.html.pdfelement.HtmlCell;
 import com.itextpdf.tool.xml.html.pdfelement.NoNewLineParagraph;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
-import com.itextpdf.tool.xml.pipeline.html.ImageProvider;
-import com.itextpdf.tool.xml.pipeline.html.NoImageProviderException;
-import com.itextpdf.tool.xml.pipeline.html.UrlLinkResolver;
 
 /**
  * Applies CSS to an Element using the appliers from the <code>com.itextpdf.tool.xml.css.apply</code>.

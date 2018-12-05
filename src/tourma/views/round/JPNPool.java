@@ -10,7 +10,6 @@
  */
 package tourma.views.round;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import tourma.MainFrame;
@@ -19,7 +18,6 @@ import tourma.data.Competitor;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.IContainCoachs;
-import tourma.data.Tournament;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.Round;

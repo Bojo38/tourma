@@ -5,10 +5,8 @@
  */
 package tourma.utils.web;
 
-import java.awt.image.BufferedImage;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import org.apache.commons.lang3.StringEscapeUtils;

@@ -5,10 +5,11 @@
  */
 package tourma.data;
 
+import java.awt.Color;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.jdom2.Element;
+import org.jdom.Element;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -1872,6 +1873,674 @@ public class ParametersNGTest {
         instance.setUseLittleLoss(expResult);
         boolean result = instance.isUseLittleLoss();
         assertEquals(result, expResult);
+    }
+
+    /**
+     * Test of getUID method, of class Parameters.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Parameters.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Parameters instance = new Parameters();
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCriteria method, of class Parameters.
+     */
+    @Test
+    public void testGetCriteria_String() {
+        System.out.println("getCriteria");
+        String name = "";
+        Parameters instance = new Parameters();
+        Criteria expResult = null;
+        Criteria result = instance.getCriteria(name);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isDisplayRoster method, of class Parameters.
+     */
+    @Test
+    public void testIsDisplayRoster() {
+        System.out.println("isDisplayRoster");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isDisplayRoster();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setDisplayRoster method, of class Parameters.
+     */
+    @Test
+    public void testSetDisplayRoster() {
+        System.out.println("setDisplayRoster");
+        boolean d = false;
+        Parameters instance = new Parameters();
+        instance.setDisplayRoster(d);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Parameters.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Parameters params = null;
+        Parameters instance = new Parameters();
+        instance.pull(params);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCriteria method, of class Parameters.
+     */
+    @Test
+    public void testGetCriteria_int() {
+        System.out.println("getCriteria");
+        int i = 0;
+        Parameters instance = new Parameters();
+        Criteria expResult = null;
+        Criteria result = instance.getCriteria(i);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPointsTeamLargeVictory method, of class Parameters.
+     */
+    @Test
+    public void testGetPointsTeamLargeVictory() {
+        System.out.println("getPointsTeamLargeVictory");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getPointsTeamLargeVictory();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPointsTeamHugeVictory method, of class Parameters.
+     */
+    @Test
+    public void testGetPointsTeamHugeVictory() {
+        System.out.println("getPointsTeamHugeVictory");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getPointsTeamHugeVictory();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPointsTeamLargeVictory method, of class Parameters.
+     */
+    @Test
+    public void testSetPointsTeamLargeVictory() {
+        System.out.println("setPointsTeamLargeVictory");
+        int mPointsTeamLargeVictory = 0;
+        Parameters instance = new Parameters();
+        instance.setPointsTeamLargeVictory(mPointsTeamLargeVictory);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPointsTeamHugeVictory method, of class Parameters.
+     */
+    @Test
+    public void testSetPointsTeamHugeVictory() {
+        System.out.println("setPointsTeamHugeVictory");
+        int points = 0;
+        Parameters instance = new Parameters();
+        instance.setPointsTeamHugeVictory(points);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPointsTeamLittleLost method, of class Parameters.
+     */
+    @Test
+    public void testGetPointsTeamLittleLost() {
+        System.out.println("getPointsTeamLittleLost");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getPointsTeamLittleLost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPointsTeamLittleLost method, of class Parameters.
+     */
+    @Test
+    public void testSetPointsTeamLittleLost() {
+        System.out.println("setPointsTeamLittleLost");
+        int mPointsTeamLittleLost = 0;
+        Parameters instance = new Parameters();
+        instance.setPointsTeamLittleLost(mPointsTeamLittleLost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGapTeamLargeVictory method, of class Parameters.
+     */
+    @Test
+    public void testGetGapTeamLargeVictory() {
+        System.out.println("getGapTeamLargeVictory");
+        Parameters instance = new Parameters();
+        float expResult = 0.0F;
+        float result = instance.getGapTeamLargeVictory();
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGapTeamHugeVictory method, of class Parameters.
+     */
+    @Test
+    public void testGetGapTeamHugeVictory() {
+        System.out.println("getGapTeamHugeVictory");
+        Parameters instance = new Parameters();
+        float expResult = 0.0F;
+        float result = instance.getGapTeamHugeVictory();
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGapTeamLargeVictory method, of class Parameters.
+     */
+    @Test
+    public void testSetGapTeamLargeVictory() {
+        System.out.println("setGapTeamLargeVictory");
+        float mGapLargeVictory = 0.0F;
+        Parameters instance = new Parameters();
+        instance.setGapTeamLargeVictory(mGapLargeVictory);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGapTeamHugeVictory method, of class Parameters.
+     */
+    @Test
+    public void testSetGapTeamHugeVictory() {
+        System.out.println("setGapTeamHugeVictory");
+        float mGapLargeVictory = 0.0F;
+        Parameters instance = new Parameters();
+        instance.setGapTeamHugeVictory(mGapLargeVictory);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGapTeamLittleLost method, of class Parameters.
+     */
+    @Test
+    public void testGetGapTeamLittleLost() {
+        System.out.println("getGapTeamLittleLost");
+        Parameters instance = new Parameters();
+        float expResult = 0.0F;
+        float result = instance.getGapTeamLittleLost();
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGapTeamHugeLost method, of class Parameters.
+     */
+    @Test
+    public void testGetGapTeamHugeLost() {
+        System.out.println("getGapTeamHugeLost");
+        Parameters instance = new Parameters();
+        float expResult = 0.0F;
+        float result = instance.getGapTeamHugeLost();
+        assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGapTeamLittleLost method, of class Parameters.
+     */
+    @Test
+    public void testSetGapTeamLittleLost() {
+        System.out.println("setGapTeamLittleLost");
+        float mGapLittleLost = 0.0F;
+        Parameters instance = new Parameters();
+        instance.setGapTeamLittleLost(mGapLittleLost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGapTeamHugeLost method, of class Parameters.
+     */
+    @Test
+    public void testSetGapTeamHugeLost() {
+        System.out.println("setGapTeamHugeLost");
+        float mGapLittleLost = 0.0F;
+        Parameters instance = new Parameters();
+        instance.setGapTeamHugeLost(mGapLittleLost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPointsTeamHugeLost method, of class Parameters.
+     */
+    @Test
+    public void testGetPointsTeamHugeLost() {
+        System.out.println("getPointsTeamHugeLost");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getPointsTeamHugeLost();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPointsTeamHugeLost method, of class Parameters.
+     */
+    @Test
+    public void testSetPointsTeamHugeLost() {
+        System.out.println("setPointsTeamHugeLost");
+        int mPointsTeamLost = 0;
+        Parameters instance = new Parameters();
+        instance.setPointsTeamHugeLost(mPointsTeamLost);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of gemRankingTeam2 method, of class Parameters.
+     */
+    @Test
+    public void testGemRankingTeam2() {
+        System.out.println("gemRankingTeam2");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.gemRankingTeam2();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUseTeamLargeVictory method, of class Parameters.
+     */
+    @Test
+    public void testSetUseTeamLargeVictory() {
+        System.out.println("setUseTeamLargeVictory");
+        boolean use = false;
+        Parameters instance = new Parameters();
+        instance.setUseTeamLargeVictory(use);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUseTeamHugeVictory method, of class Parameters.
+     */
+    @Test
+    public void testSetUseTeamHugeVictory() {
+        System.out.println("setUseTeamHugeVictory");
+        boolean use = false;
+        Parameters instance = new Parameters();
+        instance.setUseTeamHugeVictory(use);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUseTeamLittleLoss method, of class Parameters.
+     */
+    @Test
+    public void testSetUseTeamLittleLoss() {
+        System.out.println("setUseTeamLittleLoss");
+        boolean use = false;
+        Parameters instance = new Parameters();
+        instance.setUseTeamLittleLoss(use);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUseTeamHugeLoss method, of class Parameters.
+     */
+    @Test
+    public void testSetUseTeamHugeLoss() {
+        System.out.println("setUseTeamHugeLoss");
+        boolean use = false;
+        Parameters instance = new Parameters();
+        instance.setUseTeamHugeLoss(use);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUseTeamLargeVictory method, of class Parameters.
+     */
+    @Test
+    public void testIsUseTeamLargeVictory() {
+        System.out.println("isUseTeamLargeVictory");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isUseTeamLargeVictory();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUseTeamHugeVictory method, of class Parameters.
+     */
+    @Test
+    public void testIsUseTeamHugeVictory() {
+        System.out.println("isUseTeamHugeVictory");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isUseTeamHugeVictory();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUseTeamLittleLoss method, of class Parameters.
+     */
+    @Test
+    public void testIsUseTeamLittleLoss() {
+        System.out.println("isUseTeamLittleLoss");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isUseTeamLittleLoss();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUseTeamHugeLoss method, of class Parameters.
+     */
+    @Test
+    public void testIsUseTeamHugeLoss() {
+        System.out.println("isUseTeamHugeLoss");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isUseTeamHugeLoss();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getWebServerPort method, of class Parameters.
+     */
+    @Test
+    public void testGetWebServerPort() {
+        System.out.println("getWebServerPort");
+        Parameters instance = new Parameters();
+        int expResult = 0;
+        int result = instance.getWebServerPort();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setWebServerPort method, of class Parameters.
+     */
+    @Test
+    public void testSetWebServerPort() {
+        System.out.println("setWebServerPort");
+        int port = 0;
+        Parameters instance = new Parameters();
+        instance.setWebServerPort(port);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class Parameters.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setWebEdit method, of class Parameters.
+     */
+    @Test
+    public void testSetWebEdit() {
+        System.out.println("setWebEdit");
+        boolean WebEdit = false;
+        Parameters instance = new Parameters();
+        instance.setWebEdit(WebEdit);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isWebEdit method, of class Parameters.
+     */
+    @Test
+    public void testIsWebEdit() {
+        System.out.println("isWebEdit");
+        Parameters instance = new Parameters();
+        boolean expResult = false;
+        boolean result = instance.isWebEdit();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getStringColor1 method, of class Parameters.
+     */
+    @Test
+    public void testGetStringColor1() {
+        System.out.println("getStringColor1");
+        Parameters instance = new Parameters();
+        String expResult = "";
+        String result = instance.getStringColor1();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getStringColor2 method, of class Parameters.
+     */
+    @Test
+    public void testGetStringColor2() {
+        System.out.println("getStringColor2");
+        Parameters instance = new Parameters();
+        String expResult = "";
+        String result = instance.getStringColor2();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getStringBorderColor method, of class Parameters.
+     */
+    @Test
+    public void testGetStringBorderColor() {
+        System.out.println("getStringBorderColor");
+        Parameters instance = new Parameters();
+        String expResult = "";
+        String result = instance.getStringBorderColor();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getStringForeColor method, of class Parameters.
+     */
+    @Test
+    public void testGetStringForeColor() {
+        System.out.println("getStringForeColor");
+        Parameters instance = new Parameters();
+        String expResult = "";
+        String result = instance.getStringForeColor();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getColor1 method, of class Parameters.
+     */
+    @Test
+    public void testGetColor1() {
+        System.out.println("getColor1");
+        Parameters instance = new Parameters();
+        Color expResult = null;
+        Color result = instance.getColor1();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getColor2 method, of class Parameters.
+     */
+    @Test
+    public void testGetColor2() {
+        System.out.println("getColor2");
+        Parameters instance = new Parameters();
+        Color expResult = null;
+        Color result = instance.getColor2();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getBorderColor method, of class Parameters.
+     */
+    @Test
+    public void testGetBorderColor() {
+        System.out.println("getBorderColor");
+        Parameters instance = new Parameters();
+        Color expResult = null;
+        Color result = instance.getBorderColor();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getForeColor method, of class Parameters.
+     */
+    @Test
+    public void testGetForeColor() {
+        System.out.println("getForeColor");
+        Parameters instance = new Parameters();
+        Color expResult = null;
+        Color result = instance.getForeColor();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setColor1 method, of class Parameters.
+     */
+    @Test
+    public void testSetColor1() {
+        System.out.println("setColor1");
+        Color c = null;
+        Parameters instance = new Parameters();
+        instance.setColor1(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setColor2 method, of class Parameters.
+     */
+    @Test
+    public void testSetColor2() {
+        System.out.println("setColor2");
+        Color c = null;
+        Parameters instance = new Parameters();
+        instance.setColor2(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setBorderColor method, of class Parameters.
+     */
+    @Test
+    public void testSetBorderColor() {
+        System.out.println("setBorderColor");
+        Color c = null;
+        Parameters instance = new Parameters();
+        instance.setBorderColor(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setForeColor method, of class Parameters.
+     */
+    @Test
+    public void testSetForeColor() {
+        System.out.println("setForeColor");
+        Color c = null;
+        Parameters instance = new Parameters();
+        instance.setForeColor(c);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

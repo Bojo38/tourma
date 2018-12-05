@@ -57,8 +57,6 @@ import com.itextpdf.text.error_messages.MessageLocalization;
 import com.itextpdf.text.io.RASInputStream;
 import com.itextpdf.text.io.RandomAccessSource;
 import com.itextpdf.text.io.RandomAccessSourceFactory;
-import com.itextpdf.text.pdf.AcroFields.Item;
-import com.itextpdf.text.pdf.interfaces.PdfVersion;
 import com.itextpdf.text.pdf.security.CertificateInfo;
 import com.itextpdf.text.pdf.security.CertificateInfo.X500Name;
 

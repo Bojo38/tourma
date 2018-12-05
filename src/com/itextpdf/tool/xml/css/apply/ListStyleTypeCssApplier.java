@@ -44,7 +44,6 @@
  */
 package com.itextpdf.tool.xml.css.apply;
 
-import java.io.IOException;
 import java.util.Map;
 
 import com.itextpdf.text.BaseColor;
@@ -69,8 +68,6 @@ import com.itextpdf.tool.xml.html.HTML;
 import com.itextpdf.tool.xml.net.ImageRetrieve;
 import com.itextpdf.tool.xml.net.exc.NoImageException;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
-import com.itextpdf.tool.xml.pipeline.html.ImageProvider;
-import com.itextpdf.tool.xml.pipeline.html.UrlLinkResolver;
 
 /**
  * @author itextpdf.com

@@ -13,7 +13,6 @@ package tourma.views.round;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,12 +28,12 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
-import tourma.data.Tournament;
 import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
@@ -42,7 +41,6 @@ import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankIndiv;
 import tourma.tableModel.MjtMatches;
 import tourma.tableModel.MjtRankingIndiv;
-import tourma.utility.StringConstants;
 import tourma.utils.display.TableFormat;
 import tourma.views.JPNCup;
 import tourma.views.report.JdgGlobal;
@@ -649,10 +647,15 @@ public final class JPNRound extends javax.swing.JPanel {
         jpmCoach.setVisible(false);
         if (jtbMatches.getSelectedRow() >= 0) {
 
+            TeamMatch tm=null;
             CoachMatch cm = mRound.getCoachMatchs().get(jtbMatches.getSelectedRow());
             Coach c = null;
             Coach opp = null;
             if (Tournament.getTournament().getParams().isTeamTournament()) {
+                if (Tournament.getTournament().getParams().getTeamPairing()==ETeamPairing.TEAM_PAIRING)
+                {
+                    tm=(TeamMatch)mRound.getMatch(jtbMatches.getSelectedRow()/Tournament.getTournament().getParams().getTeamMatesNumber());
+                }
                 if (jtbMatches.getSelectedColumn() == 2) {
                     c = (Coach) cm.getCompetitor1();
                     opp = (Coach) cm.getCompetitor2();
@@ -713,6 +716,7 @@ public final class JPNRound extends javax.swing.JPanel {
                             if (cm2.getCompetitor1() == newOpp) {
                                 newOpp.removeMatch(cm2);
                                 opp.addMatch(cm2);
+                                newOpp.addMatch(cm);
                                 cm2.setCompetitor1(opp);
                                 if (cm.getCompetitor1() == c) {
                                     cm.setCompetitor2(newOpp);
@@ -720,11 +724,17 @@ public final class JPNRound extends javax.swing.JPanel {
                                 if (cm.getCompetitor2() == c) {
                                     cm.setCompetitor1(newOpp);
                                 }
-
+                                cm.recomputeValues();
+                                cm2.recomputeValues();
+                                if (tm!=null)
+                                {
+                                    tm.recomputeValues();
+                                }
                                 break;
                             }
                             if (cm2.getCompetitor2() == newOpp) {
                                 newOpp.removeMatch(cm2);
+                                newOpp.addMatch(cm);
                                 opp.addMatch(cm2);
                                 cm2.setCompetitor2(opp);
                                 if (cm.getCompetitor1() == c) {
@@ -732,6 +742,12 @@ public final class JPNRound extends javax.swing.JPanel {
                                 }
                                 if (cm.getCompetitor2() == c) {
                                     cm.setCompetitor1(newOpp);
+                                }
+                                cm.recomputeValues();
+                                cm2.recomputeValues();
+                                if (tm!=null)
+                                {
+                                    tm.recomputeValues();
                                 }
                                 break;
                             }

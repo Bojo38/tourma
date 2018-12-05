@@ -7,7 +7,7 @@ package tourma.data;
 
 import java.io.File;
 import java.util.ArrayList;
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -408,6 +408,344 @@ public class TeamMatchNGTest {
         TeamMatch cm = new TeamMatch(r);
         cm.setXMLElementForDisplay(result);
         assertEquals(instance, cm);
+    }
+
+    /**
+     * Test of getUID method, of class TeamMatch.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class TeamMatch.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        TeamMatch instance = null;
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUpdated method, of class TeamMatch.
+     */
+    @Test
+    public void testSetUpdated() {
+        System.out.println("setUpdated");
+        boolean updated = false;
+        TeamMatch instance = null;
+        instance.setUpdated(updated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isUpdated method, of class TeamMatch.
+     */
+    @Test
+    public void testIsUpdated() {
+        System.out.println("isUpdated");
+        TeamMatch instance = null;
+        boolean expResult = false;
+        boolean result = instance.isUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class TeamMatch.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Match match = null;
+        TeamMatch instance = null;
+        instance.pull(match);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class TeamMatch.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Match match = null;
+        TeamMatch instance = null;
+        instance.push(match);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class TeamMatch.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object c = null;
+        TeamMatch instance = null;
+        boolean expResult = false;
+        boolean result = instance.equals(c);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCriteriaBonusPoints method, of class TeamMatch.
+     */
+    @Test
+    public void testGetCriteriaBonusPoints() {
+        System.out.println("getCriteriaBonusPoints");
+        Coach c = null;
+        CoachMatch m = null;
+        Criteria crit = null;
+        int expResult = 0;
+        int result = TeamMatch.getCriteriaBonusPoints(c, m, crit);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCriteriasBonusPoints method, of class TeamMatch.
+     */
+    @Test
+    public void testGetCriteriasBonusPoints() {
+        System.out.println("getCriteriasBonusPoints");
+        Team t = null;
+        TeamMatch tm = null;
+        int expResult = 0;
+        int result = TeamMatch.getCriteriasBonusPoints(t, tm);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPointsByTeam method, of class TeamMatch.
+     */
+    @Test
+    public void testGetPointsByTeam() {
+        System.out.println("getPointsByTeam");
+        Team t = null;
+        TeamMatch tm = null;
+        boolean withMainPoints = false;
+        boolean withBonus = false;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getPointsByTeam(t, tm, withMainPoints, withBonus);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getELOByTeam method, of class TeamMatch.
+     */
+    @Test
+    public void testGetELOByTeam() {
+        System.out.println("getELOByTeam");
+        Team t = null;
+        TeamMatch tm = null;
+        int roundIndex = 0;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getELOByTeam(t, tm, roundIndex);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getVNDByTeam method, of class TeamMatch.
+     */
+    @Test
+    public void testGetVNDByTeam() {
+        System.out.println("getVNDByTeam");
+        Team t = null;
+        TeamMatch tm = null;
+        boolean includeCurrent = false;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getVNDByTeam(t, tm, includeCurrent);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getOppPointsByTeam method, of class TeamMatch.
+     */
+    @Test
+    public void testGetOppPointsByTeam() {
+        System.out.println("getOppPointsByTeam");
+        Team t = null;
+        TeamMatch tm = null;
+        boolean includeCurrent = false;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getOppPointsByTeam(t, tm, includeCurrent);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getOppELOByTeam method, of class TeamMatch.
+     */
+    @Test
+    public void testGetOppELOByTeam() {
+        System.out.println("getOppELOByTeam");
+        Team t = null;
+        TeamMatch tm = null;
+        int roundIndex = 0;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getOppELOByTeam(t, tm, roundIndex);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeamTable method, of class TeamMatch.
+     */
+    @Test
+    public void testGetTeamTable() {
+        System.out.println("getTeamTable");
+        Team t = null;
+        TeamMatch tm = null;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getTeamTable(t, tm);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeamNbMatch method, of class TeamMatch.
+     */
+    @Test
+    public void testGetTeamNbMatch() {
+        System.out.println("getTeamNbMatch");
+        Team t = null;
+        TeamMatch tm = null;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getTeamNbMatch(t, tm);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValue method, of class TeamMatch.
+     */
+    @Test
+    public void testGetValue_3args_1() {
+        System.out.println("getValue");
+        Team t = null;
+        int rankingType = 0;
+        boolean teamVictory = false;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getValue(t, rankingType, teamVictory);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValue method, of class TeamMatch.
+     */
+    @Test
+    public void testGetValue_4args() {
+        System.out.println("getValue");
+        Team t = null;
+        TeamMatch tm = null;
+        Criteria crit = null;
+        int subtype = 0;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getValue(t, tm, crit, subtype);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValue method, of class TeamMatch.
+     */
+    @Test
+    public void testGetValue_3args_2() {
+        System.out.println("getValue");
+        Criteria crit = null;
+        int subtype = 0;
+        Competitor c = null;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getValue(crit, subtype, c);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of recomputeValues method, of class TeamMatch.
+     */
+    @Test
+    public void testRecomputeValues() {
+        System.out.println("recomputeValues");
+        TeamMatch instance = null;
+        instance.recomputeValues();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of recomputeValue method, of class TeamMatch.
+     */
+    @Test
+    public void testRecomputeValue() {
+        System.out.println("recomputeValue");
+        int index = 0;
+        Competitor c = null;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.recomputeValue(index, c);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isEntered method, of class TeamMatch.
+     */
+    @Test
+    public void testIsEntered() {
+        System.out.println("isEntered");
+        TeamMatch instance = null;
+        boolean expResult = false;
+        boolean result = instance.isEntered();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

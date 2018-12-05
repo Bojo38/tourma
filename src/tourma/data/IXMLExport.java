@@ -4,8 +4,7 @@
  */
 package tourma.data;
 
-import java.rmi.RemoteException;
-import org.jdom2.Element;
+import org.jdom.Element;
 
 /**
  *

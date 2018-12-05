@@ -7,8 +7,8 @@ package tourma.utils.display;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import org.jdom2.Element;
-import org.jdom2.output.XMLOutputter;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 import tourma.data.Category;
 import tourma.data.Clan;
 import tourma.data.Coach;

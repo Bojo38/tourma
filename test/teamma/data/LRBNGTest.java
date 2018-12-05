@@ -417,4 +417,279 @@ public class LRBNGTest {
         LRB.unloadLRB();
     }
 
+    /**
+     * Test of isChef_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsChef_enabled() {
+        System.out.println("isChef_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isChef_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setChef_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetChef_enabled() {
+        System.out.println("setChef_enabled");
+        boolean _chef_enabled = false;
+        LRB.setChef_enabled(_chef_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isMercenaries_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsMercenaries_enabled() {
+        System.out.println("isMercenaries_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isMercenaries_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setMercenaries_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetMercenaries_enabled() {
+        System.out.println("setMercenaries_enabled");
+        boolean _mercenaries_enabled = false;
+        LRB.setMercenaries_enabled(_mercenaries_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isBabes_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsBabes_enabled() {
+        System.out.println("isBabes_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isBabes_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setBabes_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetBabes_enabled() {
+        System.out.println("setBabes_enabled");
+        boolean _babes_enabled = false;
+        LRB.setBabes_enabled(_babes_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isWizard_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsWizard_enabled() {
+        System.out.println("isWizard_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isWizard_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setWizard_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetWizard_enabled() {
+        System.out.println("setWizard_enabled");
+        boolean _wizard_enabled = false;
+        LRB.setWizard_enabled(_wizard_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isReroll_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsReroll_enabled() {
+        System.out.println("isReroll_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isReroll_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setReroll_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetReroll_enabled() {
+        System.out.println("setReroll_enabled");
+        boolean _reroll_enabled = false;
+        LRB.setReroll_enabled(_reroll_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isLocal_apothecaries_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsLocal_apothecaries_enabled() {
+        System.out.println("isLocal_apothecaries_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isLocal_apothecaries_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setLocal_apothecaries_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetLocal_apothecaries_enabled() {
+        System.out.println("setLocal_apothecaries_enabled");
+        boolean _local_apothecaries_enabled = false;
+        LRB.setLocal_apothecaries_enabled(_local_apothecaries_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isIgor_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsIgor_enabled() {
+        System.out.println("isIgor_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isIgor_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setIgor_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetIgor_enabled() {
+        System.out.println("setIgor_enabled");
+        boolean _igor_enabled = false;
+        LRB.setIgor_enabled(_igor_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isCards_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsCards_enabled() {
+        System.out.println("isCards_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isCards_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setCards_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetCards_enabled() {
+        System.out.println("setCards_enabled");
+        boolean _cards_enabled = false;
+        LRB.setCards_enabled(_cards_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isStarplayers_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsStarplayers_enabled() {
+        System.out.println("isStarplayers_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isStarplayers_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setStarplayers_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetStarplayers_enabled() {
+        System.out.println("setStarplayers_enabled");
+        boolean _starplayers_enabled = false;
+        LRB.setStarplayers_enabled(_starplayers_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isBribes_enabled method, of class LRB.
+     */
+    @Test
+    public void testIsBribes_enabled() {
+        System.out.println("isBribes_enabled");
+        boolean expResult = false;
+        boolean result = LRB.isBribes_enabled();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setBribes_enabled method, of class LRB.
+     */
+    @Test
+    public void testSetBribes_enabled() {
+        System.out.println("setBribes_enabled");
+        boolean _bribes_enabled = false;
+        LRB.setBribes_enabled(_bribes_enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isCheck_nb_big_guys method, of class LRB.
+     */
+    @Test
+    public void testIsCheck_nb_big_guys() {
+        System.out.println("isCheck_nb_big_guys");
+        boolean expResult = false;
+        boolean result = LRB.isCheck_nb_big_guys();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setCheck_nb_big_guys method, of class LRB.
+     */
+    @Test
+    public void testSetCheck_nb_big_guys() {
+        System.out.println("setCheck_nb_big_guys");
+        boolean _check_nb_big_guys = false;
+        LRB.setCheck_nb_big_guys(_check_nb_big_guys);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

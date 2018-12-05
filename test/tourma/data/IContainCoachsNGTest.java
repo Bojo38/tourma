@@ -130,5 +130,19 @@ public class IContainCoachsNGTest {
         public void clearCoachs() {
         }
     }
+
+    /**
+     * Test of getCoachsCount method, of class IContainCoachs.
+     */
+    @Test
+    public void testGetCoachsCount() {
+        System.out.println("getCoachsCount");
+        IContainCoachs instance = new IContainCoachsImpl();
+        int expResult = 0;
+        int result = instance.getCoachsCount();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

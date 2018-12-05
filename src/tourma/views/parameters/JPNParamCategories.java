@@ -5,11 +5,9 @@
 package tourma.views.parameters;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.rmi.RemoteException;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.Category;
-import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;

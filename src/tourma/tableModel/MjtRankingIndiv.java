@@ -14,9 +14,7 @@ import javax.swing.JTable;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
-import tourma.data.Tournament;
 import tourma.data.IWithNameAndPicture;
-import tourma.data.ObjectAnnexRanking;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Pool;
@@ -481,35 +479,40 @@ public final class MjtRankingIndiv extends MjtRanking {
                         object = ((Coach) obj.getObject()).getStringRoster();
                         break;
                     case 4:
-                        if (Tournament.getTournament().getParams().getIndivRankingType(0) == Parameters.C_RANKING_VND) {
+                        if ((Tournament.getTournament().getParams().getIndivRankingType(0) == Parameters.C_RANKING_VND)
+                                ||(Tournament.getTournament().getParams().getIndivRankingType(0) == Parameters.C_RANKING_TEAMMATES_VND)) {
                             object = convertVND(obj.getValue1());
                         } else {
                             object = obj.getValue1();
                         }
                         break;
                     case 5:
-                        if (Tournament.getTournament().getParams().getIndivRankingType(1) == Parameters.C_RANKING_VND) {
+                        if ((Tournament.getTournament().getParams().getIndivRankingType(1) == Parameters.C_RANKING_VND)
+                                ||(Tournament.getTournament().getParams().getIndivRankingType(1) == Parameters.C_RANKING_TEAMMATES_VND)){
                             object = convertVND(obj.getValue2());
                         } else {
                             object = obj.getValue2();
                         }
                         break;
                     case 6:
-                        if (Tournament.getTournament().getParams().getIndivRankingType(2) == Parameters.C_RANKING_VND) {
+                        if ((Tournament.getTournament().getParams().getIndivRankingType(2) == Parameters.C_RANKING_VND)
+                                ||(Tournament.getTournament().getParams().getIndivRankingType(2) == Parameters.C_RANKING_TEAMMATES_VND)){
                             object = convertVND(obj.getValue3());
                         } else {
                             object = obj.getValue3();
                         }
                         break;
                     case 7:
-                        if (Tournament.getTournament().getParams().getIndivRankingType(3) == Parameters.C_RANKING_VND) {
+                        if ((Tournament.getTournament().getParams().getIndivRankingType(3) == Parameters.C_RANKING_VND)
+                                ||(Tournament.getTournament().getParams().getIndivRankingType(3) == Parameters.C_RANKING_TEAMMATES_VND)){
                             object = convertVND(obj.getValue4());
                         } else {
                             object = obj.getValue4();
                         }
                         break;
                     case 8:
-                        if (Tournament.getTournament().getParams().getIndivRankingType(4) == Parameters.C_RANKING_VND) {
+                        if ((Tournament.getTournament().getParams().getIndivRankingType(4) == Parameters.C_RANKING_VND)
+                                ||(Tournament.getTournament().getParams().getIndivRankingType(4) == Parameters.C_RANKING_TEAMMATES_VND)){
                             object = convertVND(obj.getValue5());
                         } else {
                             object = obj.getValue5();

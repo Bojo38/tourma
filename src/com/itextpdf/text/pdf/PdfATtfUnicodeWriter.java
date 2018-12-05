@@ -45,7 +45,6 @@
 package com.itextpdf.text.pdf;
 
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.log.Logger;
 import com.itextpdf.text.log.LoggerFactory;
 
 import java.io.IOException;

@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.ImageIcon;
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -252,6 +252,86 @@ public class ClanNGTest {
         Clan.delClan(s);
         tmp = Clan.getClan(s);
         Assert.assertNull(tmp);
+    }
+
+    /**
+     * Test of isUpdated method, of class Clan.
+     */
+    @Test
+    public void testIsUpdated() {
+        System.out.println("isUpdated");
+        Clan instance = null;
+        boolean expResult = false;
+        boolean result = instance.isUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUpdated method, of class Clan.
+     */
+    @Test
+    public void testSetUpdated() {
+        System.out.println("setUpdated");
+        boolean updated = false;
+        Clan instance = null;
+        instance.setUpdated(updated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getUID method, of class Clan.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Clan instance = null;
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Clan.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Clan instance = null;
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Clan.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Clan clan = null;
+        Clan instance = null;
+        instance.pull(clan);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class Clan.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Clan clan = null;
+        Clan instance = null;
+        instance.push(clan);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

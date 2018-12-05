@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.jdom2.Element;
+import org.jdom.Element;
 import tourma.data.IXMLExport;
 
 /**
@@ -298,7 +298,10 @@ public class Roster implements IXMLExport, Serializable {
 
         Element compo = new Element(CS_Composition);
         if (this.getRoster() != null) {
-
+            if (this._version==null)
+            {
+                this._version=LRB.E_Version.NAF2017;
+            }
             switch (this._version) {
                 case LRB1:
                     compo.setAttribute(CS_LRB, "LRB1");

@@ -5,8 +5,6 @@
  */
 package tourma.utils.web;
 
-import java.io.UnsupportedEncodingException;
-import java.rmi.RemoteException;
 import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;

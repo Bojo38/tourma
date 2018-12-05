@@ -56,6 +56,11 @@ public class Translate {
     public final static String CS_MatchCount = "MatchCount";
     public final static String CS_TablesPoints = "TablesPoints";
     public final static String CS_HeadByHead = "Head by Head";
+    
+    public final static String CS_Tier="Tier ranking";
+    public final static String CS_Teammates_Points="Teammates points";
+    public final static String CS_Teammates_VND="Teammates victories";
+    
     public final static String CS_Name = "Name";
 
     public final static String CS_ACCR_Victory1 = "V1";

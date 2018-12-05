@@ -24,13 +24,10 @@ package com.hexidec.ekit;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 import javax.swing.JApplet;
-import javax.swing.JLabel;
 
 import com.hexidec.ekit.EkitCore;
 

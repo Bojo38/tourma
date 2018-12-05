@@ -4,12 +4,9 @@
  */
 package tourma.data;
 
-import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
+import org.jdom.Attribute;
+import org.jdom.Element;
 import tourma.utility.StringConstants;
 
 /**

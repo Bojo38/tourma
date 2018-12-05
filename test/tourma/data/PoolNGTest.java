@@ -6,7 +6,7 @@
 package tourma.data;
 
 import java.io.File;
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -178,6 +178,48 @@ public class PoolNGTest {
             Competitor expResult = instance.getCompetitor(i);
             Assert.assertEquals(expResult, instance.getCompetitors().get(i));
         }
+    }
+
+    /**
+     * Test of getUID method, of class Pool.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Pool instance = new Pool();
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Pool.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Pool instance = new Pool();
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class Pool.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        Pool instance = new Pool();
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

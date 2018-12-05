@@ -5,7 +5,6 @@
 package tourma.data;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,10 +15,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;
-import org.jfree.util.Log;
+import org.jdom.Attribute;
+import org.jdom.DataConversionException;
+import org.jdom.Element;
 import tourma.MainFrame;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
@@ -999,11 +997,29 @@ public class CoachMatch extends Match implements Serializable {
             case Parameters.C_RANKING_HEAD_BY_HEAD:
                 value = 0;
                 break;
+            case Parameters.C_RANKING_TIER:
+                value = getCoachRosterGroups(c);
+                break;
             default:
                 value = 0;
                 break;
         }
 
+        return value;
+    }
+
+    private int getCoachRosterGroups(Coach c) {
+        int value = 0;
+        if (this == c.getMatch(0)) {
+            RosterType rt = c.getRoster();
+            for (int i = 0; i < Tournament.getTournament().getGroupsCount(); i++) {
+                Group g = Tournament.getTournament().getGroup(i);
+                if (g.containsRoster(rt)) {
+                    value = g.getPoints();
+                    break;
+                }
+            }
+        }
         return value;
     }
 
@@ -1051,7 +1067,7 @@ public class CoachMatch extends Match implements Serializable {
         CoachMatch tmp_m = (CoachMatch) c.getMatch(match_index);
 
         // Loop on opponents from the first match               
-        while ((tmp_m != m) && (match_index < c.getMatchCount()-1)) {
+        while ((tmp_m != m) && (match_index < c.getMatchCount() - 1)) {
             match_index++;
             tmp_m = (CoachMatch) c.getMatch(match_index);
         }

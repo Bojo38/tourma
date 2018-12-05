@@ -5,7 +5,7 @@
  */
 package tourma.data;
 
-import org.jdom2.Element;
+import org.jdom.Element;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import org.testng.annotations.AfterClass;
@@ -250,6 +250,187 @@ public class MatchNGTest {
         Element element = null;
         Match instance = null;
         instance.setXMLElementForDisplay(element);
+    }
+
+    /**
+     * Test of isUpdated method, of class Match.
+     */
+    @Test
+    public void testIsUpdated() {
+        System.out.println("isUpdated");
+        Match instance = null;
+        boolean expResult = false;
+        boolean result = instance.isUpdated();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUpdated method, of class Match.
+     */
+    @Test
+    public void testSetUpdated() {
+        System.out.println("setUpdated");
+        boolean updated = false;
+        Match instance = null;
+        instance.setUpdated(updated);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getUID method, of class Match.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Match instance = null;
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Match.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Match instance = null;
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Match.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Match match = null;
+        Match instance = null;
+        instance.pull(match);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of push method, of class Match.
+     */
+    @Test
+    public void testPush() {
+        System.out.println("push");
+        Match match = null;
+        Match instance = null;
+        instance.push(match);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class Match.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        Match instance = null;
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isValues_computed method, of class Match.
+     */
+    @Test
+    public void testIsValues_computed() {
+        System.out.println("isValues_computed");
+        Match instance = null;
+        boolean expResult = false;
+        boolean result = instance.isValues_computed();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setValues_computed method, of class Match.
+     */
+    @Test
+    public void testSetValues_computed() {
+        System.out.println("setValues_computed");
+        boolean values_computed = false;
+        Match instance = null;
+        instance.setValues_computed(values_computed);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of recomputeValues method, of class Match.
+     */
+    @Test
+    public void testRecomputeValues() {
+        System.out.println("recomputeValues");
+        Match instance = null;
+        instance.recomputeValues();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValue method, of class Match.
+     */
+    @Test
+    public void testGetValue_int_Competitor() {
+        System.out.println("getValue");
+        int indexvalue = 0;
+        Competitor c = null;
+        Match instance = null;
+        int expResult = 0;
+        int result = instance.getValue(indexvalue, c);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getValue method, of class Match.
+     */
+    @Test
+    public void testGetValue_3args() {
+        System.out.println("getValue");
+        Criteria crit = null;
+        int subtype = 0;
+        Competitor c = null;
+        Match instance = null;
+        int expResult = 0;
+        int result = instance.getValue(crit, subtype, c);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isEntered method, of class Match.
+     */
+    @Test
+    public void testIsEntered() {
+        System.out.println("isEntered");
+        Match instance = null;
+        boolean expResult = false;
+        boolean result = instance.isEntered();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package tourma.views;
 
+import javax.swing.JTabbedPane;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -44,6 +45,68 @@ public class JPNStatisticsNGTest {
         System.out.println("update");
         JPNStatistics instance = new JPNStatistics();
         instance.update();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTabbedPane method, of class JPNStatistics.
+     */
+    @Test
+    public void testGetTabbedPane() {
+        System.out.println("getTabbedPane");
+        JPNStatistics instance = new JPNStatistics();
+        JTabbedPane expResult = null;
+        JTabbedPane result = instance.getTabbedPane();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updatePositions method, of class JPNStatistics.
+     */
+    @Test
+    public void testUpdatePositions() {
+        System.out.println("updatePositions");
+        JPNStatistics instance = new JPNStatistics();
+        instance.updatePositions();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updateBalancedTeam method, of class JPNStatistics.
+     */
+    @Test
+    public void testUpdateBalancedTeam() {
+        System.out.println("updateBalancedTeam");
+        JPNStatistics instance = new JPNStatistics();
+        instance.updateBalancedTeam();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updateBalancedIndiv method, of class JPNStatistics.
+     */
+    @Test
+    public void testUpdateBalancedIndiv() {
+        System.out.println("updateBalancedIndiv");
+        JPNStatistics instance = new JPNStatistics();
+        instance.updateBalancedIndiv();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of updateTeamPositions method, of class JPNStatistics.
+     */
+    @Test
+    public void testUpdateTeamPositions() {
+        System.out.println("updateTeamPositions");
+        JPNStatistics instance = new JPNStatistics();
+        instance.updateTeamPositions();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

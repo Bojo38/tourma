@@ -6,8 +6,8 @@
 package teamma.data;
 
 import java.io.File;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
@@ -43,7 +43,7 @@ public class PlayerNGTest {
     @BeforeMethod
     public void setUpMethod() throws Exception {
         final SAXBuilder sxb = new SAXBuilder();
-        final org.jdom2.Document document = sxb.build(new File("test/necros.xml"));
+        final org.jdom.Document document = sxb.build(new File("test/necros.xml"));
         final Element racine = document.getRootElement();
         roster = new Roster();
         roster.setXMLElement(racine);
@@ -495,6 +495,20 @@ public class PlayerNGTest {
             assertEquals(p.getName(), "Test");
             p.setName(save);
         }
+    }
+
+    /**
+     * Test of pull method, of class Player.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Player player = null;
+        LRB.E_Version version = null;
+        Player instance = null;
+        instance.pull(player, version);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import org.jdom2.Element;
+import org.jdom.Element;
 import tourma.utility.StringConstants;
 
 /**

@@ -5,7 +5,6 @@
 package tourma.tableModel;
 
 import java.awt.Component;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.swing.JLabel;

@@ -34,7 +34,6 @@ import javax.swing.text.html.HTMLEditorKit;
 import com.hexidec.ekit.EkitCore;
 import com.hexidec.ekit.component.*;
 
-import com.hexidec.util.Translatrix;
 
 /** Class for automatically creating bulleted lists from selected text
   */

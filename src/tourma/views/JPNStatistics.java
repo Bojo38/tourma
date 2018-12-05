@@ -6,7 +6,6 @@ package tourma.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.rmi.RemoteException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +49,6 @@ import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
-import tourma.data.Tournament;
 import tourma.data.Match;
 import tourma.data.RosterType;
 import tourma.data.Round;
@@ -58,7 +56,6 @@ import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
-import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
 

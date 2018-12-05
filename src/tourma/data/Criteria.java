@@ -8,8 +8,8 @@ import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;
+import org.jdom.DataConversionException;
+import org.jdom.Element;
 import tourma.MainFrame;
 import tourma.utility.StringConstants;
 

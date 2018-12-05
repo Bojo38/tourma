@@ -4,13 +4,10 @@
  */
 package tourma.views.parameters;
 
-import java.rmi.RemoteException;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
-import tourma.data.Tournament;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;

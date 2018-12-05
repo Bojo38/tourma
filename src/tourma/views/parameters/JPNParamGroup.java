@@ -5,14 +5,12 @@
 package tourma.views.parameters;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.rmi.RemoteException;
 import java.text.ParseException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import tourma.data.Group;
 import tourma.data.GroupPoints;
-import tourma.data.Tournament;
 import tourma.data.RosterType;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -79,6 +77,8 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         jbtAddGroup = new javax.swing.JButton();
         jbtRemoveGroup = new javax.swing.JButton();
         jbtRenameGroup = new javax.swing.JButton();
+        jlbPoints = new javax.swing.JLabel();
+        jspPoints = new javax.swing.JSpinner();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -236,11 +236,16 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             public Object getElementAt(int i) { return strings[i]; }
         });
         jlsGroups.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlsGroups.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlsGroupsMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(jlsGroups);
 
         jPanel18.add(jScrollPane6, java.awt.BorderLayout.CENTER);
 
-        jPanel19.setLayout(new java.awt.GridLayout(3, 1, 1, 1));
+        jPanel19.setLayout(new java.awt.GridLayout(5, 1, 1, 1));
 
         jbtAddGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
         jbtAddGroup.setText(bundle.getString("Add")); // NOI18N
@@ -268,6 +273,18 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             }
         });
         jPanel19.add(jbtRenameGroup);
+
+        jlbPoints.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPoints.setText(bundle.getString("Points")); // NOI18N
+        jlbPoints.setToolTipText("For Group ranking points");
+        jPanel19.add(jlbPoints);
+
+        jspPoints.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jspPointsStateChanged(evt);
+            }
+        });
+        jPanel19.add(jspPoints);
 
         jPanel18.add(jPanel19, java.awt.BorderLayout.LINE_END);
 
@@ -474,6 +491,42 @@ public final class JPNParamGroup extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jftfGroupLossFocusLost
 
+    private void jlsGroupsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlsGroupsMouseClicked
+        if (jlsGroups.isSelectionEmpty()) {
+            jlbPoints.setEnabled(false);
+            jspPoints.setEnabled(false);
+        } else {
+            jlbPoints.setEnabled(true);
+            jspPoints.setEnabled(true);
+            int index = jlsGroups.getSelectedIndex();
+            Group g = Tournament.getTournament().getGroup(index);
+            int value = g.getPoints();
+            jspPoints.setValue(value);
+
+        }
+    }//GEN-LAST:event_jlsGroupsMouseClicked
+
+    private void jspPointsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspPointsStateChanged
+        try
+        {
+        jspPoints.commitEdit();
+        Object obj=jspPoints.getValue();
+        if (obj instanceof Integer)
+        {
+            int index=jlsGroups.getSelectedIndex();
+            if (index>=0)
+            {
+                Group g=Tournament.getTournament().getGroup(index);
+                g.setPoints(((Integer)obj).intValue());
+            }
+        }
+        }
+        catch(ParseException ex)
+        {
+            update();
+        }
+    }//GEN-LAST:event_jspPointsStateChanged
+
     private void updatePoints() {
 
         int index = jcbPointsSelectedGroup.getSelectedIndex();
@@ -487,12 +540,10 @@ public final class JPNParamGroup extends javax.swing.JPanel {
                 gp = new GroupPoints();
                 g.setOpponentModificationPoints(go, gp);
             }
-
             jftfGroupVictory.setValue(gp.getVictoryPoints());
             jftfGroupDraw.setValue(gp.getDrawPoints());
             jftfGroupLoss.setValue(gp.getLossPoints());
         }
-
     }
 
     /**
@@ -533,19 +584,30 @@ public final class JPNParamGroup extends javax.swing.JPanel {
             }
         }
 
-        boolean isClient=Tournament.getTournament().isClient();
+        boolean isClient = Tournament.getTournament().isClient();
         jbtAddGroup.setEnabled(!isClient);
         jbtGrouToLeft.setEnabled(!isClient);
         jbtGroupToRight.setEnabled(!isClient);
         jbtRenameGroup.setEnabled(!isClient);
         jbtRemoveGroup.setEnabled(!isClient);
-        
+
         jftfGroupDraw.setEnabled(!isClient);
         jftfGroupLoss.setEnabled(!isClient);
         jftfGroupVictory.setEnabled(!isClient);
-        
-        
-        
+
+        if (jlsGroups.isSelectionEmpty()) {
+            jlbPoints.setEnabled(false);
+            jspPoints.setEnabled(false);
+        } else {
+            jlbPoints.setEnabled(true);
+            jspPoints.setEnabled(true);
+            int index = jlsGroups.getSelectedIndex();
+            Group g = Tournament.getTournament().getGroup(index);
+            int value = g.getPoints();
+            jspPoints.setValue(value);
+
+        }
+
         updatePoints();
 
     }
@@ -581,10 +643,12 @@ public final class JPNParamGroup extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jftfGroupDraw;
     private javax.swing.JFormattedTextField jftfGroupLoss;
     private javax.swing.JFormattedTextField jftfGroupVictory;
+    private javax.swing.JLabel jlbPoints;
     private javax.swing.JList jlsGroups;
     private javax.swing.JList jlsLeft;
     private javax.swing.JList jlsRight;
     private javax.swing.JPanel jpnPointsModifiers;
+    private javax.swing.JSpinner jspPoints;
     // End of variables declaration//GEN-END:variables
 
 }

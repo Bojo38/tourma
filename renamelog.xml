@@ -300,10 +300,10 @@ to act on classes which have been obfuscated.
      Your class org.bouncycastle.x509.X509Util calls the java.lang.ClassLoader method java.lang.Class loadClass(java.lang.String)
 -->
 <!--
-     Your class org.jdom2.adapters.AbstractDOMAdapter calls the java.lang.Class method java.lang.reflect.Method getMethod(java.lang.String, java.lang.Class[])
+     Your class org.jdom.adapters.AbstractDOMAdapter calls the java.lang.Class method java.lang.reflect.Method getMethod(java.lang.String, java.lang.Class[])
 -->
 <!--
-     Your class org.jdom2.output.support.AbstractSAXOutputProcessor calls the java.lang.Class method java.lang.reflect.Method getMethod(java.lang.String, java.lang.Class[])
+     Your class org.jdom.output.support.AbstractSAXOutputProcessor calls the java.lang.Class method java.lang.reflect.Method getMethod(java.lang.String, java.lang.Class[])
 -->
 <!--
      Your class org.jfree.base.AbstractBoot calls the java.lang.ClassLoader method java.lang.Class loadClass(java.lang.String)

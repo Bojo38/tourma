@@ -42,9 +42,6 @@
  */
 package com.itextpdf.tool.xml.css;
 
-import com.itextpdf.text.pdf.events.IndexEvents;
-
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

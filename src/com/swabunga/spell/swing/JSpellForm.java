@@ -5,12 +5,9 @@
 
 package  com.swabunga.spell.swing;
 
-import com.swabunga.spell.engine.Word;
 import com.swabunga.spell.event.*;
 import javax.swing.*;
-import javax.swing.text.*;
 import javax.swing.event.*;
-import java.io.File;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;

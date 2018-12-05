@@ -5,14 +5,11 @@
 package tourma.data;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 

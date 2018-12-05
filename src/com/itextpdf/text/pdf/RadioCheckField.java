@@ -47,7 +47,6 @@ package com.itextpdf.text.pdf;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.ExceptionConverter;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.error_messages.MessageLocalization;
 
 import java.io.IOException;
 

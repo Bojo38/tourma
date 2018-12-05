@@ -46,7 +46,6 @@ package com.itextpdf.tool.xml.parser;
 
 import com.itextpdf.tool.xml.parser.state.InsideTagHTMLState;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

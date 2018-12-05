@@ -5,7 +5,7 @@
  */
 package tourma.data;
 
-import org.jdom2.Element;
+import org.jdom.Element;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;

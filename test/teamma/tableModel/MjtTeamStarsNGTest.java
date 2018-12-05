@@ -10,8 +10,8 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JEditorPane;
 import javax.swing.JTable;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
@@ -49,7 +49,7 @@ public class MjtTeamStarsNGTest {
     @BeforeMethod
     public void setUpMethod() throws Exception {
         final SAXBuilder sxb = new SAXBuilder();
-        final org.jdom2.Document document = sxb.build(new File("test/necros.xml"));
+        final org.jdom.Document document = sxb.build(new File("test/necros.xml"));
         final Element racine = document.getRootElement();
         roster = new Roster();
         roster.setXMLElement(racine);

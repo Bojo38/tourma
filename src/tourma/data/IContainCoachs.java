@@ -5,8 +5,6 @@
  */
 package tourma.data;
 
-import java.rmi.RemoteException;
-
 /**
  *
  * @author WFMJ7631

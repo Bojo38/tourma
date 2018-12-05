@@ -6,7 +6,6 @@ package tourma.tableModel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

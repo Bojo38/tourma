@@ -14,20 +14,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-import tourma.data.Coach;
-import tourma.data.CoachMatch;
-import tourma.data.Competitor;
 import tourma.data.Criteria;
-import tourma.data.ETeamPairing;
-import tourma.data.Group;
-import tourma.data.GroupPoints;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
-import tourma.data.Round;
-import tourma.data.Team;
-import tourma.data.TeamMatch;
 import tourma.data.Tournament;
-import tourma.data.Value;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 import tourma.utils.display.IRanked;
@@ -61,7 +51,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         vnd = Integer.toString(nb_vict) + "/" + Integer.toString(nb_draw) + "/" + Integer.toString(nb_loss);
         return vnd;
     }
-    
+
     /**
      *
      * @param valueType
@@ -183,8 +173,17 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
                 case Parameters.C_RANKING_TABLES:
                     result = Translate.translate(Translate.CS_TablesPoints);
                     break;
-                    case Parameters.C_RANKING_HEAD_BY_HEAD:
+                case Parameters.C_RANKING_HEAD_BY_HEAD:
                     result = Translate.translate(Translate.CS_HeadByHead);
+                    break;
+                case Parameters.C_RANKING_TIER:
+                    result = Translate.translate(Translate.CS_Tier);
+                    break;
+                case Parameters.C_RANKING_TEAMMATES_POINTS:
+                    result = Translate.translate(Translate.CS_Teammates_Points);
+                    break;
+                case Parameters.C_RANKING_TEAMMATES_VND:
+                    result = Translate.translate(Translate.CS_Teammates_VND);
                     break;
                 default:
             }
@@ -387,7 +386,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
             default:
                 return 0;
         }
-        
+
     }
 
     /**

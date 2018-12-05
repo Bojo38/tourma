@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.apache.xerces.impl.dv.util.Base64;
-import org.jdom2.Element;
+import org.jdom.Element;
 import tourma.utility.StringConstants;
 
 /**

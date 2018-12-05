@@ -6,14 +6,12 @@ package tourma.tableModel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.rmi.RemoteException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Criteria;
-import tourma.data.Tournament;
 import tourma.data.Parameters;
 import tourma.data.Tournament;
 import tourma.languages.Translate;

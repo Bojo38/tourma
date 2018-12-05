@@ -8,7 +8,7 @@ package tourma.data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
-import org.jdom2.Element;
+import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
@@ -231,6 +231,46 @@ public class CategoryNGTest {
         String s = "TestCategory";
         Category c = new Category(s);
         assertEquals(c.toString(), s);
+    }
+
+    /**
+     * Test of getUID method, of class Category.
+     */
+    @Test
+    public void testGetUID() {
+        System.out.println("getUID");
+        Category instance = null;
+        int expResult = 0;
+        int result = instance.getUID();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setUID method, of class Category.
+     */
+    @Test
+    public void testSetUID() {
+        System.out.println("setUID");
+        int UID = 0;
+        Category instance = null;
+        instance.setUID(UID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of pull method, of class Category.
+     */
+    @Test
+    public void testPull() {
+        System.out.println("pull");
+        Category cat = null;
+        Category instance = null;
+        instance.pull(cat);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

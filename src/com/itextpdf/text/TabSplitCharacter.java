@@ -44,7 +44,6 @@
  */
  package com.itextpdf.text;
 
-import com.itextpdf.text.pdf.DefaultSplitCharacter;
 import com.itextpdf.text.pdf.PdfChunk;
 
 public class TabSplitCharacter implements SplitCharacter {
