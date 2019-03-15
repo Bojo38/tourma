@@ -1103,6 +1103,9 @@ edu.umd.cs.findbugs.XDocsBugReporter:
 edu.umd.cs.findbugs.annotations.package-info
 edu.umd.cs.findbugs.anttask.FindBugsViewerTask:
     private static final long DEFAULT_TIMEOUT
+edu.umd.cs.findbugs.asm.FBClassReader$MyClassAdapter:
+    67:72:public org.objectweb.asm.MethodVisitor visitMethod(int,java.lang.String,java.lang.String,java.lang.String,java.lang.String[])
+edu.umd.cs.findbugs.asm.FBClassReader$MyMethodAdapter
 edu.umd.cs.findbugs.ba.AbstractClassMember:
     174:175:void markAsResolved()
 edu.umd.cs.findbugs.ba.AnalysisException:
@@ -1227,8 +1230,44 @@ edu.umd.cs.findbugs.charsets.UTF8:
     private static final java.lang.String UTF_8
 edu.umd.cs.findbugs.classfile.ClassDescriptor:
     private static final long serialVersionUID
+edu.umd.cs.findbugs.classfile.analysis.AnnotationValue:
+    104:107:private static java.lang.String canonicalString(java.lang.String)
+    38:38:static synthetic java.lang.String access$000(java.lang.String)
+    38:38:static synthetic java.util.Map access$100(edu.umd.cs.findbugs.classfile.analysis.AnnotationValue)
+    38:38:static synthetic java.util.Map access$200(edu.umd.cs.findbugs.classfile.analysis.AnnotationValue)
+edu.umd.cs.findbugs.classfile.analysis.AnnotationValue$1:
+    117:119:public void visit(java.lang.String,java.lang.Object)
+    130:134:public org.objectweb.asm.AnnotationVisitor visitAnnotation(java.lang.String,java.lang.String)
+    145:146:public org.objectweb.asm.AnnotationVisitor visitArray(java.lang.String)
+    157:157:public void visitEnd()
+    168:172:public void visitEnum(java.lang.String,java.lang.String,java.lang.String)
+edu.umd.cs.findbugs.classfile.analysis.AnnotationValue$AnnotationArrayVisitor
 edu.umd.cs.findbugs.classfile.analysis.package-info
 edu.umd.cs.findbugs.classfile.engine.ClassParser$FieldOrMethodDescriptorCreator
+edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM:
+    56:56:static synthetic java.lang.String access$000(edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM)
+    56:56:static synthetic java.lang.String access$002(edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM,java.lang.String)
+edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM$1:
+    525:536:public void visit(int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String[])
+    540:545:public org.objectweb.asm.AnnotationVisitor visitAnnotation(java.lang.String,boolean)
+    551:551:public void visitAttribute(org.objectweb.asm.Attribute)
+    556:556:public void visitEnd()
+    563:591:public org.objectweb.asm.FieldVisitor visitField(int,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)
+    596:605:public void visitInnerClass(java.lang.String,java.lang.String,java.lang.String,int)
+    610:621:public org.objectweb.asm.MethodVisitor visitMethod(int,java.lang.String,java.lang.String,java.lang.String,java.lang.String[])
+    627:627:public void visitOuterClass(java.lang.String,java.lang.String,java.lang.String)
+    631:635:public void visitSource(java.lang.String,java.lang.String)
+edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM$1$1
+edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM$ClassParserMethodVisitor
+edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM$IdentityMethodState
+edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM$ParameterLoadState
+edu.umd.cs.findbugs.classfile.engine.ClassParserUsingASM$StubState
+edu.umd.cs.findbugs.classfile.engine.SelfMethodCalls:
+    44:44:private static boolean interestingSignature(java.lang.String)
+    41:41:static synthetic boolean access$000(java.lang.String)
+edu.umd.cs.findbugs.classfile.engine.SelfMethodCalls$1:
+    62:62:public org.objectweb.asm.MethodVisitor visitMethod(int,java.lang.String,java.lang.String,java.lang.String,java.lang.String[])
+edu.umd.cs.findbugs.classfile.engine.SelfMethodCalls$1$1
 edu.umd.cs.findbugs.classfile.engine.asm.package-info
 edu.umd.cs.findbugs.classfile.engine.bcel.package-info
 edu.umd.cs.findbugs.classfile.engine.package-info
@@ -1275,6 +1314,21 @@ edu.umd.cs.findbugs.detect.BadResultSetAccess$1:
     static final long serialVersionUID
 edu.umd.cs.findbugs.detect.BuildCheckReturnAnnotationDatabase:
     private static final java.lang.String DEFAULT_ANNOTATION_ANNOTATION_CLASS
+edu.umd.cs.findbugs.detect.CheckRelaxingNullnessAnnotation:
+    266:275:static boolean containsCheckForNull(java.util.List)
+    280:297:static java.util.Map getNonnullOrNullableParams(java.util.List[])
+    302:307:static edu.umd.cs.findbugs.ba.NullnessAnnotation getNullness(java.lang.String)
+    311:317:static boolean containsNullness(java.util.Collection,edu.umd.cs.findbugs.ba.NullnessAnnotation)
+    321:341:static boolean compatibleParameters(java.lang.String,java.lang.String)
+    346:357:static boolean areRelated(java.lang.String,java.lang.String)
+    75:75:static synthetic edu.umd.cs.findbugs.BugReporter access$000(edu.umd.cs.findbugs.detect.CheckRelaxingNullnessAnnotation)
+    75:75:static synthetic edu.umd.cs.findbugs.BugReporter access$100(edu.umd.cs.findbugs.detect.CheckRelaxingNullnessAnnotation)
+edu.umd.cs.findbugs.detect.CheckRelaxingNullnessAnnotation$DetectorNode:
+    private java.util.Map nonNullParameter
+    private boolean checkForNullReturn
+    136:185:public void visitEnd()
+    188:225:private final boolean checkMethod(edu.umd.cs.findbugs.ba.XMethod)
+edu.umd.cs.findbugs.detect.CheckRelaxingNullnessAnnotation$HierarchyIterator
 edu.umd.cs.findbugs.detect.DefaultEncodingDetector$DefaultEncodingAnnotation:
     57:57:public static edu.umd.cs.findbugs.detect.DefaultEncodingDetector$DefaultEncodingAnnotation[] values()
 edu.umd.cs.findbugs.detect.DontIgnoreResultOfPutIfAbsent:
@@ -1387,6 +1441,13 @@ edu.umd.cs.findbugs.detect.StringConcatenation:
 edu.umd.cs.findbugs.detect.SuperfluousInstanceOf:
     private static final int SEEN_NOTHING
     private static final int SEEN_ALOAD
+edu.umd.cs.findbugs.detect.TestASM:
+    40:40:static synthetic edu.umd.cs.findbugs.BugReporter access$000(edu.umd.cs.findbugs.detect.TestASM)
+edu.umd.cs.findbugs.detect.TestASM$1:
+    int prevOpcode
+    int prevPC
+    61:63:public void visitInsn(int)
+    67:74:public void visitMethodInsn(int,java.lang.String,java.lang.String,java.lang.String,boolean)
 edu.umd.cs.findbugs.detect.UnnecessaryMath:
     static final int SEEN_NOTHING
     static final int SEEN_DCONST
@@ -2133,6 +2194,8 @@ freemarker.ext.beans.ClassIntrospectorBuilder:
     177:177:static java.util.Map getInstanceCache()
 freemarker.ext.beans.JRebelClassChangeNotifier:
     30:31:static void testAvailability()
+freemarker.ext.beans.JRebelClassChangeNotifier$ClassIntrospectorCacheInvalidator:
+    47:53:public void onClassEvent(int,java.lang.Class)
 freemarker.ext.beans.MemberAndArguments:
     46:46:java.lang.Object[] getArgs()
 freemarker.ext.beans.OverloadedNumberUtil:
@@ -2199,6 +2262,11 @@ freemarker.ext.dom.SunInternalXalanXPathSupport:
     private static final java.lang.String ERRMSG_EMPTY_NODE_SET
 freemarker.ext.dom.XalanXPathSupport:
     private static final java.lang.String ERRMSG_EMPTY_NODE_SET
+freemarker.ext.dom.XalanXPathSupport$1:
+    123:123:public java.lang.String getNamespaceForPrefix(java.lang.String,org.w3c.dom.Node)
+    127:130:public java.lang.String getNamespaceForPrefix(java.lang.String)
+    134:134:public java.lang.String getBaseIdentifier()
+    138:138:public boolean handlesNullPrefixes()
 freemarker.ext.jdom.NodeListModel:
     private static final int SPECIAL_OPERATION_COPY
     private static final int SPECIAL_OPERATION_UNIQUE
@@ -2227,19 +2295,98 @@ freemarker.ext.jsp.FreeMarkerJspApplicationContext$FreeMarkerELContext:
     141:141:public javax.el.VariableMapper getVariableMapper()
     122:122:static synthetic freemarker.ext.jsp.FreeMarkerPageContext access$100(freemarker.ext.jsp.FreeMarkerJspApplicationContext$FreeMarkerELContext)
 freemarker.ext.jsp.FreeMarkerJspApplicationContext$FreeMarkerELContext$1
+freemarker.ext.jsp.FreeMarkerJspFactory:
+    protected abstract java.lang.String getSpecificationVersion()
+    36:36:public javax.servlet.jsp.JspEngineInfo getEngineInfo()
+    52:52:public javax.servlet.jsp.PageContext getPageContext(javax.servlet.Servlet,javax.servlet.ServletRequest,javax.servlet.ServletResponse,java.lang.String,boolean,int,boolean)
+    61:61:public void releasePageContext(javax.servlet.jsp.PageContext)
+freemarker.ext.jsp.FreeMarkerJspFactory$1
+freemarker.ext.jsp.FreeMarkerJspFactory2:
+    27:27:protected java.lang.String getSpecificationVersion()
 freemarker.ext.jsp.FreeMarkerJspFactory21:
+    33:33:protected java.lang.String getSpecificationVersion()
     38:49:public javax.servlet.jsp.JspApplicationContext getJspApplicationContext(javax.servlet.ServletContext)
+freemarker.ext.jsp.FreeMarkerPageContext$1:
+    402:402:public java.io.PrintWriter getWriter()
+    407:407:public javax.servlet.ServletOutputStream getOutputStream()
 freemarker.ext.jsp.JspContextModel:
     public static final int ANY_SCOPE
     public static final int PAGE_SCOPE
     public static final int REQUEST_SCOPE
     public static final int SESSION_SCOPE
     public static final int APPLICATION_SCOPE
+freemarker.ext.jsp.JspWriterAdapter:
+    41:41:public java.lang.String toString()
+    46:46:public void clear()
+    51:51:public void clearBuffer()
+    56:56:public void close()
+    61:62:public void flush()
+    66:66:public int getRemaining()
+    71:72:public void newLine()
+    76:77:public void print(boolean)
+    81:82:public void print(char)
+    86:87:public void print(char[])
+    91:92:public void print(double)
+    96:97:public void print(float)
+    101:102:public void print(int)
+    106:107:public void print(long)
+    111:112:public void print(java.lang.Object)
+    116:117:public void print(java.lang.String)
+    121:122:public void println()
+    126:128:public void println(boolean)
+    132:134:public void println(char)
+    138:140:public void println(char[])
+    144:146:public void println(double)
+    150:152:public void println(float)
+    156:158:public void println(int)
+    162:164:public void println(long)
+    168:170:public void println(java.lang.Object)
+    174:176:public void println(java.lang.String)
+    180:181:public void write(int)
+    186:187:public void write(char[],int,int)
 freemarker.ext.jsp.PageContextFactory:
     31:31:PageContextFactory()
+freemarker.ext.jsp.SimpleTagDirectiveModel$1:
+    73:73:public javax.servlet.jsp.JspContext getJspContext()
+    79:83:public void invoke(java.io.Writer)
+freemarker.ext.jsp.SimpleTagDirectiveModel$TemplateExceptionWrapperJspException:
+    107:108:public SimpleTagDirectiveModel$TemplateExceptionWrapperJspException(freemarker.template.TemplateException)
+    104:104:public bridge synthetic java.lang.Throwable getCause()
+freemarker.ext.jsp.TagTransformModel$BodyContentImpl:
+    114:117:public void flush()
+    121:126:public void clear()
+    130:135:public void clearBuffer()
+    139:139:public int getRemaining()
+    144:145:public void newLine()
+    149:149:public void close()
+    153:154:public void print(boolean)
+    158:159:public void print(char)
+    163:164:public void print(char[])
+    168:169:public void print(double)
+    173:174:public void print(float)
+    178:179:public void print(int)
+    183:184:public void print(long)
+    188:189:public void print(java.lang.Object)
+    193:194:public void print(java.lang.String)
+    198:199:public void println()
+    203:205:public void println(boolean)
+    209:211:public void println(char)
+    215:217:public void println(char[])
+    221:223:public void println(double)
+    227:229:public void println(float)
+    233:235:public void println(int)
+    239:241:public void println(long)
+    245:247:public void println(java.lang.Object)
+    251:253:public void println(java.lang.String)
+    257:262:public void write(int)
+    266:271:public void write(char[],int,int)
+    275:275:public java.lang.String getString()
+    280:280:public java.io.Reader getReader()
+    285:286:public void writeOut(java.io.Writer)
 freemarker.ext.jsp.TagTransformModel$TagWriter:
     310:310:javax.servlet.jsp.tagext.Tag getTag()
     314:314:freemarker.ext.jsp.FreeMarkerPageContext getPageContext()
+    397:417:public void close()
 freemarker.ext.jsp.TaglibFactory:
     private static final int URL_TYPE_FULL
     private static final int URL_TYPE_ABSOLUTE
@@ -2266,12 +2413,24 @@ freemarker.ext.jsp.TaglibFactory$WebXmlParser:
     private static final java.lang.String E_TAGLIB_URI
 freemarker.ext.jsp.TaglibMethodUtil:
     31:33:private TaglibMethodUtil()
+freemarker.ext.jsp._FreeMarkerPageContext2$1:
+    81:81:public java.lang.Object resolveVariable(java.lang.String)
+freemarker.ext.jsp._FreeMarkerPageContext21$2:
+    94:94:public java.lang.Object resolveVariable(java.lang.String)
 freemarker.ext.jython.JythonHashModel:
     private static final java.lang.String KEYS
     private static final java.lang.String KEYSET
     private static final java.lang.String VALUES
 freemarker.ext.jython.JythonVersionAdapterHolder:
     32:32:JythonVersionAdapterHolder()
+freemarker.ext.jython.JythonWrapper$TemplateModelToJythonAdapter:
+    185:188:public org.python.core.PyObject __finditem__(org.python.core.PyObject)
+    193:200:public org.python.core.PyObject __finditem__(java.lang.String)
+    205:212:public org.python.core.PyObject __finditem__(int)
+    217:235:public org.python.core.PyObject __call__(org.python.core.PyObject[],java.lang.String[])
+    241:251:public int __len__()
+    257:269:public boolean __nonzero__()
+    273:273:private java.lang.String getModelClass()
 freemarker.ext.servlet.FreemarkerServlet:
     private static final java.lang.String INIT_PARAM_DEBUG
     private static final java.lang.String DEPR_INITPARAM_TEMPLATE_DELAY
@@ -2294,6 +2453,13 @@ freemarker.ext.servlet.FreemarkerServlet:
     private static final java.lang.String ATTR_JETTY_CP_TAGLIB_JAR_PATTERNS
 freemarker.ext.servlet.HttpSessionHashModel:
     private static final long serialVersionUID
+freemarker.ext.servlet.IncludePage$1:
+    108:108:public java.io.PrintWriter getWriter()
+freemarker.ext.servlet.IncludePage$CustomParamsRequest:
+    228:229:public java.lang.String[] getParameterValues(java.lang.String)
+    234:235:public java.lang.String getParameter(java.lang.String)
+    240:240:public java.util.Enumeration getParameterNames()
+    245:250:public java.util.Map getParameterMap()
 freemarker.ext.servlet.InitParamParser:
     static final java.lang.String TEMPLATE_PATH_PREFIX_CLASS
     static final java.lang.String TEMPLATE_PATH_PREFIX_CLASSPATH
@@ -9454,7 +9620,7 @@ tourma.data.Coach:
     private static final java.lang.String CS_MESSAGE2
     1009:1056:java.util.ArrayList getMinimumTeamsBalanced(tourma.data.Round)
 tourma.data.TeamMatch:
-    1311:1330:int getValue(tourma.data.Team,tourma.data.TeamMatch,tourma.data.Criteria,int)
+    1385:1404:int getValue(tourma.data.Team,tourma.data.TeamMatch,tourma.data.Criteria,int)
 tourma.tableModel.MjtAnnexRank:
     170:170:private void writeObject(java.io.ObjectOutputStream)
     174:174:private void readObject(java.io.ObjectInputStream)
@@ -9612,8 +9778,8 @@ tourma.views.parameters.JPNParamGroup:
     private static final java.lang.String CS_EnterNewGroupName
     private static final java.lang.String CS_EnterGroupNewName
 tourma.views.parameters.JPNParamIndiv:
-    676:676:private void writeObject(java.io.ObjectOutputStream)
-    680:680:private void readObject(java.io.ObjectInputStream)
+    679:679:private void writeObject(java.io.ObjectOutputStream)
+    683:683:private void readObject(java.io.ObjectInputStream)
 tourma.views.parameters.JPNParamTeam:
     private static final java.lang.String CS_None
     private static final java.lang.String CS_Points
