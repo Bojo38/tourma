@@ -1738,13 +1738,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 // New
                 if (jcb.getSelectedIndex() == availableCoachs.size()) {
                     sub = new Coach();
+                    sub.setActive(false);
                     sub.setRoster(RosterType.getRosterType(0));
                     JdgCoach jdg = new JdgCoach(this, true, sub);
                     jdg.setVisible(true);
                     if (!sub.getName().equals("")) {
                         Tournament.getTournament().addCoach(sub);
                         sub.setActive(false);
-                        cancel = true;
+                        //cancel = true;
                     }
                 } else {
                     sub = availableCoachs.get(jcb.getSelectedIndex());
