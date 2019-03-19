@@ -345,6 +345,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jcxAllowSpecialSkill = new javax.swing.JCheckBoxMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jmiNafLoad = new javax.swing.JMenuItem();
+        jcxIgnoreCaps = new javax.swing.JCheckBoxMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         jcxPatchPortugal = new javax.swing.JCheckBoxMenuItem();
         jSeparator13 = new javax.swing.JPopupMenu.Separator();
@@ -557,6 +558,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnTools.add(jmiNafLoad);
+
+        jcxIgnoreCaps.setSelected(true);
+        jcxIgnoreCaps.setText(bundle.getString("IgnoreCapitalLetter")); // NOI18N
+        jcxIgnoreCaps.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxIgnoreCapsActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxIgnoreCaps);
         jmnTools.add(jSeparator11);
 
         jcxPatchPortugal.setText(bundle.getString("PortugalPatch")); // NOI18N
@@ -3028,6 +3038,11 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditRosterListActionPerformed
 
+    private void jcxIgnoreCapsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxIgnoreCapsActionPerformed
+        
+        NAF.setIgnoreCaps(jcxIgnoreCaps.isSelected());
+    }//GEN-LAST:event_jcxIgnoreCapsActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3496,6 +3511,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JCheckBoxMenuItem jcxDisplayRosters;
+    private javax.swing.JCheckBoxMenuItem jcxIgnoreCaps;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
     private javax.swing.JCheckBoxMenuItem jcxUseColor;
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
