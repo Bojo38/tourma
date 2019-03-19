@@ -748,4 +748,34 @@ public class TeamMatchNGTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of getTeammatesPoints method, of class TeamMatch.
+     */
+    @Test
+    public void testGetTeammatesPoints() {
+        System.out.println("getTeammatesPoints");
+        Team t = null;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getTeammatesPoints(t);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTeammatesVND method, of class TeamMatch.
+     */
+    @Test
+    public void testGetTeammatesVND() {
+        System.out.println("getTeammatesVND");
+        Team t = null;
+        TeamMatch instance = null;
+        int expResult = 0;
+        int result = instance.getTeammatesVND(t);
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

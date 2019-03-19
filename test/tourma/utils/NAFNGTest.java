@@ -206,5 +206,17 @@ public class NAFNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of setIgnoreCaps method, of class NAF.
+     */
+    @Test
+    public void testSetIgnoreCaps() {
+        System.out.println("setIgnoreCaps");
+        boolean b = false;
+        NAF.setIgnoreCaps(b);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

@@ -41,6 +41,11 @@ import tourma.data.RosterType;
 public final class NAF {
 
     protected static ArrayList<NAFCoach> coachs = new ArrayList<>();
+    protected static boolean _sIgnoreCaps = true;
+
+    public static void setIgnoreCaps(boolean b) {
+        _sIgnoreCaps = b;
+    }
 
     public static ArrayList<NAFCoach> getCoachs() {
         return coachs;
@@ -52,6 +57,13 @@ public final class NAF {
             if (tmp.getName().equals(name)) {
                 c = tmp;
                 break;
+            } else {
+                if (_sIgnoreCaps) {
+                    if (tmp.getName().toLowerCase().equals(name.toLowerCase())) {
+                        c = tmp;
+                        break;
+                    }
+                }
             }
         }
         return c;
@@ -111,11 +123,9 @@ public final class NAF {
                             // Close the streams
                         }
                         out.close();
-                        
+
                         // Store this file in the cache list
                         list.add(tempFile);
-
-                       
 
                     } catch (IOException e) {
                         stop = true;
