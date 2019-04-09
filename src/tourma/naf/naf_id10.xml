@@ -54,11 +54,13 @@
   <coach id="9100" name="Spielmacher" />
   <coach id="9102" name="GuyChaos" />
   <coach id="9103" name="VileGod" />
+  <coach id="9104" name="Big_Man" />
   <coach id="9106" name="Well\\\'ard" />
   <coach id="9109" name="Goldmember" />
   <coach id="9110" name="Rhiannon" />
   <coach id="9111" name="Denmark7" />
   <coach id="9112" name="Starfuryhf" />
+  <coach id="9113" name="Diato" />
   <coach id="9118" name="BBMaxou" />
   <coach id="9120" name="Skarsnikk" />
   <coach id="9121" name="barnsleybowl" />
@@ -266,8 +268,8 @@
   <coach id="9615" name="inyofizzy" />
   <coach id="9619" name="Vendictar" />
   <coach id="9621" name="Jonny_Kanone" />
-  <coach id="9622" name="Ren_Rew" />
-  <coach id="9625" name="Dwarfrunner" />
+  <coach id="9622" name="Anonymous9622" />
+  <coach id="9625" name="Daggers" />
   <coach id="9629" name="BrainLand" />
   <coach id="9630" name="Galanthil" />
   <coach id="9632" name="Heinrichderloewe" />
@@ -373,7 +375,7 @@
   <coach id="9848" name="El_Gobbo" />
   <coach id="9849" name="Pretoriano" />
   <coach id="9851" name="Habig" />
-  <coach id="9857" name="FISTOFGALES" />
+  <coach id="9857" name="VitaminT" />
   <coach id="9861" name="Rodag_Ironskull" />
   <coach id="9862" name="vegeta7913" />
   <coach id="9865" name="Morpheous" />

@@ -969,10 +969,10 @@ public final class LRB {
     }
 
     /**
-     * @param _allowSpecialSkills the _allowSpecialSkills to set
+     * @param allowSpecialSkills the _allowSpecialSkills to set
      */
-    public static void setAllowSpecialSkills(boolean _allowSpecialSkills) {
-        _allowSpecialSkills = _allowSpecialSkills;
+    public static void setAllowSpecialSkills(boolean allowSpecialSkills) {
+        _allowSpecialSkills = allowSpecialSkills;
     }
 
     /**

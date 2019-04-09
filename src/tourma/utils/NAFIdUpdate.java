@@ -22,8 +22,8 @@ import tourma.data.Coach;
  */
 public class NAFIdUpdate {
 
-    public static final int MAX_NAF_ID = 27000;
-    public static final int MIN_NAF_ID = 25001;
+    public static final int MAX_NAF_ID = 30000;
+    public static final int MIN_NAF_ID = 1;
 
     /**
      * @param args the command line arguments
