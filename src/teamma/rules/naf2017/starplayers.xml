@@ -1193,7 +1193,7 @@ and open the template in the editor.
         <team>WoodElfKey</team>
     </starplayer>
     <starplayer>
-        <name>Crumbleberyy *BB2016*</name>
+        <name>Crumbleberry *BB2016*</name>
         <position>Halfling catcher</position>
         <movement>5</movement>
         <strength>2</strength>
@@ -1329,7 +1329,7 @@ and open the template in the editor.
             <skill>Jump Up</skill>
             <skill>Loner</skill>
         </skills>
-        <cost>0</cost>
+        <cost>220000</cost>
         <name>AmazonKey</name>
         <name>BretonianKey</name>
         <team>HalflingKey</team>

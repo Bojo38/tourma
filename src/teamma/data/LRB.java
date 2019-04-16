@@ -47,6 +47,13 @@ public final class LRB {
         return _chef_enabled;
     }
 
+    private E_Version _version=E_Version.NAF2017;
+    
+    public E_Version getVersion()
+    {
+        return _version;
+    }
+    
     public static void setChef_enabled(boolean _chef_enabled) {
         LRB._chef_enabled = _chef_enabled;
     }
@@ -235,7 +242,7 @@ public final class LRB {
         _rosterTypes = new ArrayList<>();
         _starPlayers = new ArrayList<>();
         _skillTypes = new ArrayList<>();
-
+        _version=version;
         String path = "";
         switch (version) {
             case LRB1:
@@ -673,7 +680,7 @@ public final class LRB {
                 }
                 rt.addPlayerType(pt);
             }
-
+            rt.setVersion(this._version);
             addRosterType(rt);
         } catch (JDOMException | IOException jdomexception) {
             JOptionPane.showMessageDialog(null, "Team: from file " + file.toString() + " " + jdomexception.getLocalizedMessage());
