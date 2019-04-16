@@ -727,4 +727,17 @@ public class LRBNGTest {
         assertEquals(result, _check_nb_big_guys);
     }
 
+    /**
+     * Test of getVersion method, of class LRB.
+     */
+    @Test
+    public void testGetVersion() {
+        System.out.println("getVersion");
+        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB.E_Version expResult = LRB.E_Version.NAF2017;
+        LRB.E_Version result = instance.getVersion();
+        assertEquals(result, expResult);
+
+    }
+
 }

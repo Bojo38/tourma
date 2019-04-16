@@ -37,7 +37,7 @@ public class MjtTeamStarsNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB();
+        lrb = LRB.getLRB(LRB.E_Version.NAF2017);
     }
 
     @AfterClass

@@ -43,7 +43,7 @@ public class RosterNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB();
+        lrb = LRB.getLRB(LRB.E_Version.NAF2017);
     }
 
     @AfterClass
@@ -142,7 +142,7 @@ public class RosterNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-       if (roster == null) {
+        if (roster == null) {
             fail("Roster not loaded");
         } else {
             try {
@@ -151,28 +151,28 @@ public class RosterNGTest {
                 final Element racine = document.getRootElement();
                 Roster tmp = new Roster();
                 tmp.setXMLElement(racine);
-                Assert.assertTrue(roster.getAssistants()==tmp.getAssistants());
-                Assert.assertTrue(roster.getBloodweiserbabes()==tmp.getBloodweiserbabes());
-                Assert.assertTrue(roster.getCards()==tmp.getCards());
-                Assert.assertTrue(roster.getChampionCount()==tmp.getChampionCount());
-                Assert.assertTrue(roster.getCheerleaders()==tmp.getCheerleaders());
-                Assert.assertTrue(roster.getCorruptions()==tmp.getCorruptions());
-                Assert.assertTrue(roster.getExtrarerolls()==tmp.getExtrarerolls());
-                Assert.assertTrue(roster.getFanfactor()==tmp.getFanfactor());
-                Assert.assertTrue(roster.getLocalapothecary()==tmp.getLocalapothecary());
-                Assert.assertTrue(roster.getPlayerCount()==tmp.getPlayerCount());
-                Assert.assertTrue(roster.getRerolls()==tmp.getRerolls());
-                Assert.assertTrue(roster.getRoster()==tmp.getRoster());
-                Assert.assertTrue(roster.getValue(true)==tmp.getValue(true));
-                Assert.assertTrue(roster.getValue(false)==tmp.getValue(false));
-                
+                Assert.assertTrue(roster.getAssistants() == tmp.getAssistants());
+                Assert.assertTrue(roster.getBloodweiserbabes() == tmp.getBloodweiserbabes());
+                Assert.assertTrue(roster.getCards() == tmp.getCards());
+                Assert.assertTrue(roster.getChampionCount() == tmp.getChampionCount());
+                Assert.assertTrue(roster.getCheerleaders() == tmp.getCheerleaders());
+                Assert.assertTrue(roster.getCorruptions() == tmp.getCorruptions());
+                Assert.assertTrue(roster.getExtrarerolls() == tmp.getExtrarerolls());
+                Assert.assertTrue(roster.getFanfactor() == tmp.getFanfactor());
+                Assert.assertTrue(roster.getLocalapothecary() == tmp.getLocalapothecary());
+                Assert.assertTrue(roster.getPlayerCount() == tmp.getPlayerCount());
+                Assert.assertTrue(roster.getRerolls() == tmp.getRerolls());
+                Assert.assertTrue(roster.getRoster() == tmp.getRoster());
+                Assert.assertTrue(roster.getValue(true) == tmp.getValue(true));
+                Assert.assertTrue(roster.getValue(false) == tmp.getValue(false));
+
             } catch (JDOMException ex) {
                 Logger.getLogger(RosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(RosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
-       }
+
+        }
     }
 
     /**
@@ -640,7 +640,7 @@ public class RosterNGTest {
     @Test
     public void testGetPlayer() {
         System.out.println("getPlayer");
-       if (lrb == null) {
+        if (lrb == null) {
             fail("lrb is null");
         }
         if (lrb.getRosterTypeCount() == 0) {
@@ -658,10 +658,10 @@ public class RosterNGTest {
         }
         int nb = roster.getPlayerCount();
         for (int i = 0; i < nb; i++) {
-            Player pl=roster.getPlayer(i);
+            Player pl = roster.getPlayer(i);
             Assert.assertNotNull(pl);
         }
-        
+
     }
 
     /**
@@ -670,7 +670,7 @@ public class RosterNGTest {
     @Test
     public void testRemovePlayer() {
         System.out.println("removePlayer");
-       if (lrb == null) {
+        if (lrb == null) {
             fail("lrb is null");
         }
         if (lrb.getRosterTypeCount() == 0) {
@@ -785,7 +785,7 @@ public class RosterNGTest {
         }
         roster.clearPlayers();
         assertEquals(roster.getPlayerCount(), 0);
-        for (Player p:list) {
+        for (Player p : list) {
             roster.addPlayer(p);
         }
 
@@ -892,8 +892,6 @@ public class RosterNGTest {
         boolean expResult = false;
         boolean result = instance.isChaos_wizard();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -905,8 +903,12 @@ public class RosterNGTest {
         boolean _chaos_wizard = false;
         Roster instance = new Roster();
         instance.setChaos_wizard(_chaos_wizard);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean result = instance.isChaos_wizard();
+        assertEquals(result, _chaos_wizard);
+        _chaos_wizard = true;
+        instance.setChaos_wizard(_chaos_wizard);
+        result = instance.isChaos_wizard();
+        assertEquals(result, _chaos_wizard);
     }
 
     /**
@@ -919,8 +921,10 @@ public class RosterNGTest {
         boolean expResult = false;
         boolean result = instance.isHoratio_X_Schottenheim();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setHoratio_X_Schottenheim(true);
+        expResult = true;
+        result = instance.isHoratio_X_Schottenheim();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -932,8 +936,13 @@ public class RosterNGTest {
         boolean Horatio_X_Schottenheim = false;
         Roster instance = new Roster();
         instance.setHoratio_X_Schottenheim(Horatio_X_Schottenheim);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      boolean expResult = false;
+        boolean result = instance.isHoratio_X_Schottenheim();
+        assertEquals(result, expResult);
+        instance.setHoratio_X_Schottenheim(true);
+        expResult = true;
+        result = instance.isHoratio_X_Schottenheim();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -946,8 +955,10 @@ public class RosterNGTest {
         boolean expResult = false;
         boolean result = instance.isKari_Coldsteel();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setKari_Coldsteel(true);
+        expResult = true;
+        result = instance.isKari_Coldsteel();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -959,8 +970,13 @@ public class RosterNGTest {
         boolean Kari_Coldsteel = false;
         Roster instance = new Roster();
         instance.setKari_Coldsteel(Kari_Coldsteel);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       boolean expResult = false;
+        boolean result = instance.isKari_Coldsteel();
+        assertEquals(result, expResult);
+        instance.setKari_Coldsteel(true);
+        expResult = true;
+        result = instance.isKari_Coldsteel();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -973,8 +989,10 @@ public class RosterNGTest {
         boolean expResult = false;
         boolean result = instance.isFink_Da_Fixer();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setFink_Da_Fixer(true);
+        expResult = true;
+        result = instance.isFink_Da_Fixer();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -986,8 +1004,13 @@ public class RosterNGTest {
         boolean Fink_Da_Fixer = false;
         Roster instance = new Roster();
         instance.setFink_Da_Fixer(Fink_Da_Fixer);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        boolean result = instance.isFink_Da_Fixer();
+        assertEquals(result, expResult);
+        instance.setFink_Da_Fixer(true);
+        expResult = true;
+        result = instance.isFink_Da_Fixer();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1000,8 +1023,10 @@ public class RosterNGTest {
         boolean expResult = false;
         boolean result = instance.isPapa_Skullbones();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setPapa_Skullbones(true);
+        expResult = true;
+        result = instance.isPapa_Skullbones();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1013,8 +1038,13 @@ public class RosterNGTest {
         boolean Papa_Skullbones = false;
         Roster instance = new Roster();
         instance.setPapa_Skullbones(Papa_Skullbones);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        boolean result = instance.isPapa_Skullbones();
+        assertEquals(result, expResult);
+        instance.setPapa_Skullbones(true);
+        expResult = true;
+        result = instance.isPapa_Skullbones();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1027,8 +1057,10 @@ public class RosterNGTest {
         boolean expResult = false;
         boolean result = instance.isGalandril_Silverwater();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setGalandril_Silverwater(true);
+        expResult = true;
+        result = instance.isGalandril_Silverwater();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1040,8 +1072,13 @@ public class RosterNGTest {
         boolean Galandril_Silverwater = false;
         Roster instance = new Roster();
         instance.setGalandril_Silverwater(Galandril_Silverwater);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        boolean result = instance.isGalandril_Silverwater();
+        assertEquals(result, expResult);
+        instance.setGalandril_Silverwater(true);
+        expResult = true;
+        result = instance.isGalandril_Silverwater();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1054,8 +1091,10 @@ public class RosterNGTest {
         boolean expResult = false;
         boolean result = instance.isKrot_Shockwhisker();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setKrot_Shockwhisker(true);
+        expResult = true;
+        result = instance.isKrot_Shockwhisker();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1067,8 +1106,13 @@ public class RosterNGTest {
         boolean Krot_Shockwhisker = false;
         Roster instance = new Roster();
         instance.setKrot_Shockwhisker(Krot_Shockwhisker);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        boolean result = instance.isKrot_Shockwhisker();
+        assertEquals(result, expResult);
+        instance.setKrot_Shockwhisker(true);
+        expResult = true;
+        result = instance.isKrot_Shockwhisker();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -1081,8 +1125,6 @@ public class RosterNGTest {
         LRB.E_Version expResult = null;
         LRB.E_Version result = instance.getVersion();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1094,8 +1136,8 @@ public class RosterNGTest {
         LRB.E_Version _version = null;
         Roster instance = new Roster();
         instance.setVersion(_version);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB.E_Version result = instance.getVersion();
+        assertEquals(result, _version);
     }
 
     /**
@@ -1104,11 +1146,12 @@ public class RosterNGTest {
     @Test
     public void testPull() {
         System.out.println("pull");
-        Roster roster = null;
+/*        Roster roster = null;
         Roster instance = new Roster();
         instance.pull(roster);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+  */      
+        // RMI Method, not testable in testng
+
     }
 
 }

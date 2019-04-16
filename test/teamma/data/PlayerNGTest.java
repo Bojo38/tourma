@@ -31,7 +31,7 @@ public class PlayerNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB();
+        lrb = LRB.getLRB(LRB.E_Version.NAF2017);
     }
 
     @AfterClass
@@ -503,12 +503,35 @@ public class PlayerNGTest {
     @Test
     public void testPull() {
         System.out.println("pull");
-        Player player = null;
-        LRB.E_Version version = null;
-        Player instance = null;
-        instance.pull(player, version);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("setName");
+        if (lrb == null) {
+            fail("lrb is null");
+        }
+        if (lrb.getRosterTypeCount() == 0) {
+            fail("No roster type in LRB");
+        }
+        if (roster == null) {
+            fail("Roster is null");
+        }
+
+        if (roster.getPlayerCount() == 0) {
+            fail("No player loaded");
+        }
+        
+        for (int i=0; i<roster.getPlayerCount(); i++)
+        {
+            Player p=roster.getPlayer(i);
+            Assert.assertNotNull(p);
+            
+            String save=p.getName();
+            p.setName("Test");
+            assertEquals(p.getName(), "Test");
+            
+            p.pull(p, LRB.E_Version.NAF2017);
+        }
+        
+        
+  
     }
 
 }

@@ -6,6 +6,8 @@
 package teamma.tableModel;
 
 import java.awt.Component;
+import java.util.ArrayList;
+import javax.swing.JEditorPane;
 import javax.swing.JTable;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
@@ -13,6 +15,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import teamma.data.LRB;
+import teamma.data.PlayerType;
+import teamma.data.RosterType;
+import tourma.data.Tournament;
 
 /**
  *
@@ -25,6 +31,7 @@ public class MjtPlayerTypesNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        
     }
 
     @AfterClass
@@ -45,12 +52,18 @@ public class MjtPlayerTypesNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        MjtPlayerTypes instance = null;
-        int expResult = 0;
+        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        RosterType rt=lrb.getRosterType(0);
+        ArrayList<PlayerType> ar=new ArrayList<>();
+        for (int i=0; i<rt.getPlayerTypeCount(); i++)
+        {
+            ar.add(rt.getPlayerType(i));
+        }
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        int expResult = 10;
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -59,12 +72,18 @@ public class MjtPlayerTypesNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        MjtPlayerTypes instance = null;
-        int expResult = 0;
+        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        RosterType rt=lrb.getRosterType(0);
+        ArrayList<PlayerType> ar=new ArrayList<>();
+        for (int i=0; i<rt.getPlayerTypeCount(); i++)
+        {
+            ar.add(rt.getPlayerType(i));
+        }
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        int expResult = 4;
         int result = instance.getRowCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+ 
     }
 
     /**
@@ -73,13 +92,20 @@ public class MjtPlayerTypesNGTest {
     @Test
     public void testGetColumnName() {
         System.out.println("getColumnName");
-        int col = 0;
-        MjtPlayerTypes instance = null;
-        String expResult = "";
+        int col = 1;
+         LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        RosterType rt=lrb.getRosterType(0);
+        ArrayList<PlayerType> ar=new ArrayList<>();
+        for (int i=0; i<rt.getPlayerTypeCount(); i++)
+        {
+            ar.add(rt.getPlayerType(i));
+        }
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        
+        String expResult = "Position";
         String result = instance.getColumnName(col);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -90,12 +116,18 @@ public class MjtPlayerTypesNGTest {
         System.out.println("getValueAt");
         int row = 0;
         int col = 0;
-        MjtPlayerTypes instance = null;
-        Object expResult = null;
+         LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        RosterType rt=lrb.getRosterType(0);
+        ArrayList<PlayerType> ar=new ArrayList<>();
+        for (int i=0; i<rt.getPlayerTypeCount(); i++)
+        {
+            ar.add(rt.getPlayerType(i));
+        }
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        Object expResult = 4;
         Object result = instance.getValueAt(row, col);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -104,13 +136,20 @@ public class MjtPlayerTypesNGTest {
     @Test
     public void testGetColumnClass() {
         System.out.println("getColumnClass");
-        int c = 0;
-        MjtPlayerTypes instance = null;
-        Class expResult = null;
+        int c = 1;
+        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        RosterType rt=lrb.getRosterType(0);
+        ArrayList<PlayerType> ar=new ArrayList<>();
+        for (int i=0; i<rt.getPlayerTypeCount(); i++)
+        {
+            ar.add(rt.getPlayerType(i));
+        }
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        
+        Class expResult = String.class;
         Class result = instance.getColumnClass(c);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -121,12 +160,18 @@ public class MjtPlayerTypesNGTest {
         System.out.println("isCellEditable");
         int row = 0;
         int col = 0;
-        MjtPlayerTypes instance = null;
+        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        RosterType rt=lrb.getRosterType(0);
+        ArrayList<PlayerType> ar=new ArrayList<>();
+        for (int i=0; i<rt.getPlayerTypeCount(); i++)
+        {
+            ar.add(rt.getPlayerType(i));
+        }
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
         boolean expResult = false;
         boolean result = instance.isCellEditable(row, col);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -136,17 +181,25 @@ public class MjtPlayerTypesNGTest {
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
         JTable table = null;
-        Object value = null;
+        
         boolean isSelected = false;
         boolean hasFocus = false;
         int row = 0;
         int column = 0;
-        MjtPlayerTypes instance = null;
-        Component expResult = null;
-        Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        RosterType rt=lrb.getRosterType(0);
+        ArrayList<PlayerType> ar=new ArrayList<>();
+        for (int i=0; i<rt.getPlayerTypeCount(); i++)
+        {
+            ar.add(rt.getPlayerType(i));
+        }
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        
+        String val="exemple";
+        table=new JTable(instance);
+        Component result = instance.getTableCellRendererComponent(table, val, isSelected, hasFocus, row, column);
+        assertTrue(result instanceof JEditorPane);
+
     }
     
 }

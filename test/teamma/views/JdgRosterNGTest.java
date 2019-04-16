@@ -165,7 +165,7 @@ public class JdgRosterNGTest {
                 window.optionPane().comboBox().selectItem(0);
                 window.optionPane().okButton().click();
             }
-            LRB lrb=LRB.getLRB();
+            LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
 
             // Add Skills to Players
             for (int i = 0; i <5; i++) {               
