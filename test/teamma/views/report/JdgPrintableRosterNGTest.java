@@ -91,7 +91,7 @@ public class JdgPrintableRosterNGTest {
             Thread.sleep(500);
             boolean equals = compareTwoFiles("tmp.html", "test/necros.html");
             Assert.assertTrue(equals);
-            Files.delete(f.toPath());
+            //Files.delete(f.toPath());
 
         } catch (InterruptedException ex) {
             fail("Exception catched");

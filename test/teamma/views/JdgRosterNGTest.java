@@ -80,7 +80,7 @@ public class JdgRosterNGTest {
             window.optionPane().okButton().click();
             Thread.sleep(200);
             String text = window.label("jlbRosterType").text();
-            Assert.assertEquals(text, "Roster: Chaos");
+            Assert.assertEquals(text, "Roster: Elus du Chaos");
 
             // Select tab and Add StarPlayers
             window.tabbedPane("jtpGoods").selectTab(2);
