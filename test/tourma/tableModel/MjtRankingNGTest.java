@@ -22,6 +22,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
+import static tourma.data.CoachMatch.C_STARTING_RANK;
+import static tourma.data.CoachMatch.getCoachTablePoints;
+import static tourma.data.CoachMatch.getOppPointsByCoach;
 import tourma.data.Criteria;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
@@ -31,17 +34,8 @@ import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
 import tourma.languages.Translate;
-import static tourma.tableModel.MjtRanking.C_ELO_K;
-import static tourma.tableModel.MjtRanking.C_STARTING_RANK;
-import static tourma.tableModel.MjtRanking.getCoachNbMatchs;
-import static tourma.tableModel.MjtRanking.getCoachTablePoints;
 import static tourma.tableModel.MjtRanking.getCriteriaByValue;
-import static tourma.tableModel.MjtRanking.getELOByCoach;
-import static tourma.tableModel.MjtRanking.getOppELOByCoach;
-import static tourma.tableModel.MjtRanking.getOppPointsByCoach;
-import static tourma.tableModel.MjtRanking.getPointsByCoach;
 import static tourma.tableModel.MjtRanking.getSubtypeByValue;
-import static tourma.tableModel.MjtRanking.getVNDByCoach;
 import tourma.utility.StringConstants;
 
 /**

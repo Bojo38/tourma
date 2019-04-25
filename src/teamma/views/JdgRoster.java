@@ -1061,7 +1061,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jslChaosWizard.setValue(0);
         jslChaosWizard.setMaximumSize(new java.awt.Dimension(50, 23));
         jslChaosWizard.setMinimumSize(new java.awt.Dimension(30, 23));
-        jslChaosWizard.setName("jslChef"); // NOI18N
+        jslChaosWizard.setName("jslChaosWizard"); // NOI18N
         jslChaosWizard.setPreferredSize(new java.awt.Dimension(50, 23));
         jslChaosWizard.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1073,7 +1073,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jlbNbChaosWizard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNbChaosWizard.setLabelFor(jslWizard);
         jlbNbChaosWizard.setText("0");
-        jlbNbChaosWizard.setName("jlbNbChef"); // NOI18N
+        jlbNbChaosWizard.setName("jlbNbChaosWizard"); // NOI18N
         jlbNbChaosWizard.setPreferredSize(new java.awt.Dimension(10, 14));
         jPanel24.add(jlbNbChaosWizard, new java.awt.GridBagConstraints());
 
@@ -1084,7 +1084,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbPriceChaosWizard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbPriceChaosWizard.setText("150 000");
-        jlbPriceChaosWizard.setName("jlbPriceChef"); // NOI18N
+        jlbPriceChaosWizard.setName("jlbPriceChaosWizard"); // NOI18N
         jlbPriceChaosWizard.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel24.add(jlbPriceChaosWizard, new java.awt.GridBagConstraints());
 
@@ -1095,7 +1095,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbCostChaosWizard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbCostChaosWizard.setText("0");
-        jlbCostChaosWizard.setName("jlbCostChef"); // NOI18N
+        jlbCostChaosWizard.setName("jlbCostChaosWizard"); // NOI18N
         jlbCostChaosWizard.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel24.add(jlbCostChaosWizard, new java.awt.GridBagConstraints());
 
@@ -1119,7 +1119,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jslHoratio.setValue(0);
         jslHoratio.setMaximumSize(new java.awt.Dimension(50, 23));
         jslHoratio.setMinimumSize(new java.awt.Dimension(30, 23));
-        jslHoratio.setName("jslChef"); // NOI18N
+        jslHoratio.setName("jslHoratio"); // NOI18N
         jslHoratio.setPreferredSize(new java.awt.Dimension(50, 23));
         jslHoratio.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1131,7 +1131,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jlbNbHoratio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNbHoratio.setLabelFor(jslWizard);
         jlbNbHoratio.setText("0");
-        jlbNbHoratio.setName("jlbNbChef"); // NOI18N
+        jlbNbHoratio.setName("jlbNbHoratio"); // NOI18N
         jlbNbHoratio.setPreferredSize(new java.awt.Dimension(10, 14));
         jPanel25.add(jlbNbHoratio, new java.awt.GridBagConstraints());
 
@@ -1142,7 +1142,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbPriceHoratio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbPriceHoratio.setText("80 000");
-        jlbPriceHoratio.setName("jlbPriceChef"); // NOI18N
+        jlbPriceHoratio.setName("jlbPriceHoratio"); // NOI18N
         jlbPriceHoratio.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel25.add(jlbPriceHoratio, new java.awt.GridBagConstraints());
 
@@ -1153,7 +1153,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbCostHoratio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbCostHoratio.setText("0");
-        jlbCostHoratio.setName("jlbCostChef"); // NOI18N
+        jlbCostHoratio.setName("jlbCostHoratio"); // NOI18N
         jlbCostHoratio.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel25.add(jlbCostHoratio, new java.awt.GridBagConstraints());
 
@@ -1177,7 +1177,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jslKari.setValue(0);
         jslKari.setMaximumSize(new java.awt.Dimension(50, 23));
         jslKari.setMinimumSize(new java.awt.Dimension(30, 23));
-        jslKari.setName("jslChef"); // NOI18N
+        jslKari.setName("jslKari"); // NOI18N
         jslKari.setPreferredSize(new java.awt.Dimension(50, 23));
         jslKari.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1189,7 +1189,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jlbNbKari.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNbKari.setLabelFor(jslWizard);
         jlbNbKari.setText("0");
-        jlbNbKari.setName("jlbNbChef"); // NOI18N
+        jlbNbKari.setName("jlbNbKari"); // NOI18N
         jlbNbKari.setPreferredSize(new java.awt.Dimension(10, 14));
         jPanel26.add(jlbNbKari, new java.awt.GridBagConstraints());
 
@@ -1200,7 +1200,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbPriceKari.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbPriceKari.setText("50 000");
-        jlbPriceKari.setName("jlbPriceChef"); // NOI18N
+        jlbPriceKari.setName("jlbPriceKari"); // NOI18N
         jlbPriceKari.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel26.add(jlbPriceKari, new java.awt.GridBagConstraints());
 
@@ -1211,7 +1211,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbCostKari.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbCostKari.setText("0");
-        jlbCostKari.setName("jlbCostChef"); // NOI18N
+        jlbCostKari.setName("jlbCostKari"); // NOI18N
         jlbCostKari.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel26.add(jlbCostKari, new java.awt.GridBagConstraints());
 
@@ -1235,7 +1235,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jslFink.setValue(0);
         jslFink.setMaximumSize(new java.awt.Dimension(50, 23));
         jslFink.setMinimumSize(new java.awt.Dimension(30, 23));
-        jslFink.setName("jslChef"); // NOI18N
+        jslFink.setName("jslFink"); // NOI18N
         jslFink.setPreferredSize(new java.awt.Dimension(50, 23));
         jslFink.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1247,7 +1247,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jlbNbFink.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNbFink.setLabelFor(jslWizard);
         jlbNbFink.setText("0");
-        jlbNbFink.setName("jlbNbChef"); // NOI18N
+        jlbNbFink.setName("jlbNbFink"); // NOI18N
         jlbNbFink.setPreferredSize(new java.awt.Dimension(10, 14));
         jPanel27.add(jlbNbFink, new java.awt.GridBagConstraints());
 
@@ -1258,7 +1258,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbPriceFink.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbPriceFink.setText("50 000");
-        jlbPriceFink.setName("jlbPriceChef"); // NOI18N
+        jlbPriceFink.setName("jlbPriceFink"); // NOI18N
         jlbPriceFink.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel27.add(jlbPriceFink, new java.awt.GridBagConstraints());
 
@@ -1269,7 +1269,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbCostFink.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbCostFink.setText("0");
-        jlbCostFink.setName("jlbCostChef"); // NOI18N
+        jlbCostFink.setName("jlbCostFink"); // NOI18N
         jlbCostFink.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel27.add(jlbCostFink, new java.awt.GridBagConstraints());
 
@@ -1293,7 +1293,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jslPapa.setValue(0);
         jslPapa.setMaximumSize(new java.awt.Dimension(50, 23));
         jslPapa.setMinimumSize(new java.awt.Dimension(30, 23));
-        jslPapa.setName("jslChef"); // NOI18N
+        jslPapa.setName("jslPapa"); // NOI18N
         jslPapa.setPreferredSize(new java.awt.Dimension(50, 23));
         jslPapa.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1305,7 +1305,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jlbNbPapa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNbPapa.setLabelFor(jslWizard);
         jlbNbPapa.setText("0");
-        jlbNbPapa.setName("jlbNbChef"); // NOI18N
+        jlbNbPapa.setName("jlbNbPapa"); // NOI18N
         jlbNbPapa.setPreferredSize(new java.awt.Dimension(10, 14));
         jPanel28.add(jlbNbPapa, new java.awt.GridBagConstraints());
 
@@ -1316,7 +1316,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbPricePapa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbPricePapa.setText("80 000");
-        jlbPricePapa.setName("jlbPriceChef"); // NOI18N
+        jlbPricePapa.setName("jlbPricePapa"); // NOI18N
         jlbPricePapa.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel28.add(jlbPricePapa, new java.awt.GridBagConstraints());
 
@@ -1327,7 +1327,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbCostPapa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbCostPapa.setText("0");
-        jlbCostPapa.setName("jlbCostChef"); // NOI18N
+        jlbCostPapa.setName("jlbCostPapa"); // NOI18N
         jlbCostPapa.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel28.add(jlbCostPapa, new java.awt.GridBagConstraints());
 
@@ -1351,7 +1351,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jslGalandril.setValue(0);
         jslGalandril.setMaximumSize(new java.awt.Dimension(50, 23));
         jslGalandril.setMinimumSize(new java.awt.Dimension(30, 23));
-        jslGalandril.setName("jslChef"); // NOI18N
+        jslGalandril.setName("jslGalandril"); // NOI18N
         jslGalandril.setPreferredSize(new java.awt.Dimension(50, 23));
         jslGalandril.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1363,7 +1363,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jlbNbGalandril.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNbGalandril.setLabelFor(jslWizard);
         jlbNbGalandril.setText("0");
-        jlbNbGalandril.setName("jlbNbChef"); // NOI18N
+        jlbNbGalandril.setName("jlbNbGalandril"); // NOI18N
         jlbNbGalandril.setPreferredSize(new java.awt.Dimension(10, 14));
         jPanel29.add(jlbNbGalandril, new java.awt.GridBagConstraints());
 
@@ -1374,7 +1374,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbPriceGalandril.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbPriceGalandril.setText("50 000");
-        jlbPriceGalandril.setName("jlbPriceChef"); // NOI18N
+        jlbPriceGalandril.setName("jlbPriceGalandril"); // NOI18N
         jlbPriceGalandril.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel29.add(jlbPriceGalandril, new java.awt.GridBagConstraints());
 
@@ -1385,7 +1385,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbCostGalandril.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbCostGalandril.setText("0");
-        jlbCostGalandril.setName("jlbCostChef"); // NOI18N
+        jlbCostGalandril.setName("jlbCostGalandril"); // NOI18N
         jlbCostGalandril.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel29.add(jlbCostGalandril, new java.awt.GridBagConstraints());
 
@@ -1409,7 +1409,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jslKrot.setValue(0);
         jslKrot.setMaximumSize(new java.awt.Dimension(50, 23));
         jslKrot.setMinimumSize(new java.awt.Dimension(30, 23));
-        jslKrot.setName("jslChef"); // NOI18N
+        jslKrot.setName("jslKrot"); // NOI18N
         jslKrot.setPreferredSize(new java.awt.Dimension(50, 23));
         jslKrot.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -1421,7 +1421,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jlbNbKrot.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNbKrot.setLabelFor(jslWizard);
         jlbNbKrot.setText("0");
-        jlbNbKrot.setName("jlbNbChef"); // NOI18N
+        jlbNbKrot.setName("jlbNbKrot"); // NOI18N
         jlbNbKrot.setPreferredSize(new java.awt.Dimension(10, 14));
         jPanel30.add(jlbNbKrot, new java.awt.GridBagConstraints());
 
@@ -1432,7 +1432,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbPriceKrot.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbPriceKrot.setText("80 000");
-        jlbPriceKrot.setName("jlbPriceChef"); // NOI18N
+        jlbPriceKrot.setName("jlbPriceKrot"); // NOI18N
         jlbPriceKrot.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel30.add(jlbPriceKrot, new java.awt.GridBagConstraints());
 
@@ -1443,7 +1443,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
         jlbCostKrot.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbCostKrot.setText("0");
-        jlbCostKrot.setName("jlbCostChef"); // NOI18N
+        jlbCostKrot.setName("jlbCostKrot"); // NOI18N
         jlbCostKrot.setPreferredSize(new java.awt.Dimension(70, 14));
         jPanel30.add(jlbCostKrot, new java.awt.GridBagConstraints());
 

@@ -8,6 +8,7 @@ package tourma.utils.display;
 import java.net.Socket;
 import tourma.utils.display.TServerThread;
 import static org.testng.Assert.fail;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;

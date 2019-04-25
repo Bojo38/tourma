@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -185,7 +186,7 @@ public class CompetitorNGTest {
         Competitor instance = new CompetitorImpl();
         ImageIcon icon = new ImageIcon("./test/clan.png");
         BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-        instance.setPicture(p);
+        instance.setPicture(icon);
 
         assertNotNull(instance.getPicture());
         assertEquals(p, instance.getPicture());
@@ -237,7 +238,7 @@ public class CompetitorNGTest {
         Competitor instance = new CompetitorImpl();
         ImageIcon icon = new ImageIcon("./test/clan.png");
         BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-        instance.setPicture(p);
+        instance.setPicture(icon);
 
         assertNotNull(instance.getPicture());
         assertEquals(p, instance.getPicture());
