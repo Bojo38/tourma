@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import org.fest.swing.core.BasicRobot;
 import org.fest.swing.core.Robot;
 import org.fest.swing.fixture.DialogFixture;
+import org.fest.swing.fixture.JComboBoxFixture;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.testng.Assert;
@@ -30,6 +31,7 @@ import teamma.data.Roster;
  */
 public class JdgSelectSkillNGTest {
 
+    
     private DialogFixture window;
     private Roster roster;
     JdgSelectSkill jdg;
@@ -69,7 +71,8 @@ public class JdgSelectSkillNGTest {
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
-        window.close();
+        jdg.setVisible(false);
+        //window.close();
         window.cleanUp();
         window = null;
     }
@@ -82,8 +85,11 @@ public class JdgSelectSkillNGTest {
         System.out.println("hmiGeneralTest");
         try {
             LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+            
+            JComboBoxFixture jcbf=window.comboBox("jcbGeneral");
+            jcbf.component().setEnabled(true);
             window.comboBox("jcbGeneral").selectItem(1);
-            Thread.sleep(200);
+            Thread.sleep(500);
             int nb = player.getSkillCount();
             Assert.assertEquals(nb, player.getSkillCount());
             window.button("cancel").click();
