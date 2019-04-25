@@ -48,7 +48,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         _jcbs = new ArrayList<>();
         int nbcats = lrb.getSkillTypeCount();
         _player = player;
-_lrb=lrb;
+        _lrb=lrb;
         GridLayout layout = new GridLayout(nbcats, 3);
         jpnSkills.setLayout(layout);
         int i;
@@ -63,6 +63,7 @@ _lrb=lrb;
                 sa.add(Translate.translate(st.getSkill(j).getmName()));
             }
             JComboBox jcb = new JComboBox(sa.toArray());
+            jcb.setEnabled(true);
             jcb.setName("jcb"+st.getName());
             System.out.println("SkillType: "+st.getName());
             _jcbs.add(jcb);
