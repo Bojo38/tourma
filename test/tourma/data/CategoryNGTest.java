@@ -30,7 +30,8 @@ public class CategoryNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        Tournament.getTournament().loadXML(new File("./test/category.xml"));
+        Tournament t=Tournament.getTournament();
+        t.loadXML(new File("./test/category.xml"));
     }
 
     @AfterClass
