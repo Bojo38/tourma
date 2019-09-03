@@ -876,7 +876,7 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setRankingTeam4(params.getAttribute(StringConstants.CS_RANK + 4 + "_" + StringConstants.CS_TEAM).getIntValue());
                 this.setRankingTeam5(params.getAttribute(StringConstants.CS_RANK + 5 + "_" + StringConstants.CS_TEAM).getIntValue());
             } catch (NullPointerException ne2) {
-                JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
+            //    JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
             }
 
             try {
@@ -938,7 +938,7 @@ public class Parameters implements IXMLExport, Serializable {
                 this.addCriteria(crit);
             }
         } catch (DataConversionException dce) {
-            JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
+           // JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
         }
 
         try {

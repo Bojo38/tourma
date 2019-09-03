@@ -526,7 +526,7 @@ public class CoachMatch extends Match implements Serializable {
             }
 
         } catch (DataConversionException dce) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
+            //JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
         this.recomputeValues();
     }
