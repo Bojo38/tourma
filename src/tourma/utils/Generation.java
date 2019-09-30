@@ -2496,7 +2496,7 @@ public final class Generation {
                     tour.getParams().getRankingIndiv3(),
                     tour.getParams().getRankingIndiv4(),
                     tour.getParams().getRankingIndiv5(),
-                    coaches, false, false, forPool);
+                    coaches, false, false, forPool,tour.getRound(roundnumber).isCup());
 
         }
         return ranking;
@@ -2515,7 +2515,7 @@ public final class Generation {
                     tour.getParams().getRankingIndiv3(),
                     tour.getParams().getRankingIndiv4(),
                     tour.getParams().getRankingIndiv5(),
-                    p.getCompetitors(), false, false, forPool);
+                    p.getCompetitors(), false, false, forPool,false);
 
         }
         return ranking;

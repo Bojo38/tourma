@@ -474,7 +474,7 @@ public class WebRound {
                 coachs,
                 Tournament.getTournament().getParams().isTeamTournament(),
                 false,
-                false);
+                false,false);
 
         s.append("<div class=\"section\"><table\n"
                 + "             style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
